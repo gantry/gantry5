@@ -1,0 +1,44 @@
+*, *::before, *::after {
+  @include box-sizing(border-box);
+}
+
+body {
+	margin: 0;
+	color: $body-text;
+}
+
+a {
+	color: $body-link;
+	text-decoration: none;
+	background: transparent;
+}
+
+a:hover {
+	color: darken($body-link, 100%);
+}
+
+.container {
+	width: 1200px;
+	margin: 0 auto;
+	@include mediaquery(desktop-range) {
+		width: 960px;
+	}
+	@include mediaquery(tablet-range) {
+		width: 768px;
+	}
+	@include mediaquery(large-mobile-range) {
+		width: 480px;
+	}
+	@include mediaquery(small-mobile-range) {
+		width: 100%;
+	}
+}
+
+.bg {
+	background: #eee;
+}
+
+.content {
+	margin: $block-padding;
+	padding: $content-padding;
+}

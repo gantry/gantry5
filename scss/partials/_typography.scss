@@ -1,0 +1,49 @@
+// Core
+html {
+ 	font-size: 100%;
+}
+
+body {
+	font-family: $font-family-helvetica;
+	font-size: $core-font-size;
+	line-height: $core-line-height;
+}
+
+// Headings
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+	margin: $core-line-height 0;
+}
+
+h1 {
+	font-size: $core-h1;
+	line-height: $core-line-height + 1.313;
+}
+
+h2 {
+	font-size: $core-h2;
+	line-height: $core-line-height + 0.875;
+}
+
+h3 {
+	font-size: $core-h3;
+	line-height: $core-line-height + 0.440;
+}
+
+h4 {
+	font-size: $core-h4;
+	line-height: $core-line-height + 0.063;
+}
+
+h5 {
+	font-size: $core-h5;
+}
+
+h6 {
+	font-size: $core-h6;
+}
+
+// Paragraph
+p {
+	margin: 0 0 $core-line-height 0;
+}

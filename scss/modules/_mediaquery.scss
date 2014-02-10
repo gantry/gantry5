@@ -1,0 +1,24 @@
+// Media Queries
+@mixin mediaquery($point) {
+	@if $point == large-desktop-range {
+		@media only screen and (min-width: 1200px) { @content; }
+	}
+	@else if $point == desktop-range {
+		@media only screen and (min-width: 960px) and (max-width: 1199px) { @content; }
+	}
+	@else if $point == tablet-range {
+		@media only screen and (min-width: 768px) and (max-width: 959px) { @content; }
+	}
+	@else if $point == large-mobile-range {
+		@media only screen and (min-width: 481px) and (max-width: 767px) { @content; }
+	}
+	@else if $point == small-mobile-range {
+		@media only screen and (max-width: 480px) { @content; }
+	}
+	@else if $point == no-mobile {
+		@media only screen and (min-width: 768px) { @content; }
+	}
+	@else if $point == mobile-only {
+		@media only screen and (max-width: 767px) { @content; }
+	}
+}
