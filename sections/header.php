@@ -3,7 +3,7 @@
 		<div class="grid">
 			<div class="block u-1-5">
 				<div class="content">
-					<a href="index.php"><img src="images/logo.png" class="logo" /></a>
+					<a href="index.php"><img src="images/logo.png" alt="Gantry" class="logo" /></a>
 				</div>
 			</div>
 			<div class="block">

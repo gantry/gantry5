@@ -11,10 +11,13 @@ a {
 	color: $body-link;
 	text-decoration: none;
 	background: transparent;
-}
-
-a:hover {
-	color: darken($body-link, 100%);
+	&:hover {
+		color: darken($body-link, 100%);
+		outline: 0;
+	}
+	&:active {
+		outline: 0;
+	}
 }
 
 .container {
@@ -39,6 +42,6 @@ a:hover {
 }
 
 .content {
-	margin: $block-padding;
+	margin: $content-margin;
 	padding: $content-padding;
 }

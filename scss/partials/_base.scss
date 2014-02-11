@@ -12,7 +12,20 @@ $core-h5:						1rem;
 $core-h6:						0.85rem;
 
 // Block Variables
-$block-padding:					0.625rem;
+$content-margin:				0.625rem;
 $content-padding:				0.938rem;
 
 @import "modules/all";
+
+
+// Resets and Normalization
+audio,
+canvas,
+progress,
+video {
+	vertical-align: baseline;
+}
+
+audio:not([controls]) {
+	display: none;
+}

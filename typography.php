@@ -19,6 +19,28 @@
 					<h6>This is an H6 heading</h6>
 				</div>
 			</div>
+			<div class="block u-1-4">
+				<div class="content">
+					<ul>
+						<li>Unordered List Item</li>
+						<li>Unordered List Item</li>
+						<li>Unordered List Item</li>
+						<li>Unordered List Item</li>
+						<li>Unordered List Item</li>
+					</ul>
+				</div>
+			</div>
+			<div class="block u-1-4">
+				<div class="content">
+					<ol>
+						<li>Ordered List Item</li>
+						<li>Ordered List Item</li>
+						<li>Ordered List Item</li>
+						<li>Ordered List Item</li>
+						<li>Ordered List Item</li>
+					</ol>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
