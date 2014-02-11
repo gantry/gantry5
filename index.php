@@ -14,8 +14,8 @@
 
 <section id="main">
 	<div class="container">
-		<div class="grid">
-			<div class="block">
+		<div class="grid pure-g-r">
+			<div class="block pure-u-2-3">
 				<div class="content">
 					<h2>Main Column</h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula. Praesent et nulla eu augue tempus sagittis. Mauris faucibus nibh et nibh cursus in vestibulum sapien egestas. Curabitur ut lectus tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula. Praesent et nulla eu augue tempus sagittis. Mauris faucibus nibh et nibh cursus in vestibulum sapien egestas. Curabitur ut lectus tortor.</p>
@@ -24,7 +24,7 @@
 					<a href="#" class="button">Button</a>
 				</div>
 			</div>
-			<div class="block u-1-3">
+			<div class="block size-1-3 pure-u-1-3">
 				<div class="content">
 					<h2>Side Column</h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula. Praesent et nulla eu augue tempus sagittis.</p>

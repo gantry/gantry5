@@ -8,8 +8,8 @@
 
 <section id="main">
 	<div class="container">
-		<div class="grid">
-			<div class="block">
+		<div class="grid pure-g-r">
+			<div class="block pure-u-1-2">
 				<div class="content">
 					<h1>This is an H1 heading</h1>
 					<h2>This is an H2 heading</h2>
@@ -19,7 +19,7 @@
 					<h6>This is an H6 heading</h6>
 				</div>
 			</div>
-			<div class="block u-1-4">
+			<div class="block size-1-4 pure-u-1-4">
 				<div class="content">
 					<ul>
 						<li>Unordered List Item</li>
@@ -30,7 +30,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="block u-1-4">
+			<div class="block size-1-4 pure-u-1-4">
 				<div class="content">
 					<ol>
 						<li>Ordered List Item</li>
