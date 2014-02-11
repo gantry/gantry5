@@ -15,8 +15,10 @@ $core-h6:						0.85rem;
 $content-margin:				0.625rem;
 $content-padding:				0.938rem;
 
-@import "modules/all";
+// Additional
+$border-radius:					2px;
 
+@import "modules/all";
 
 // Resets and Normalization
 audio,

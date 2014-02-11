@@ -5,6 +5,14 @@
   display: -webkit-flex;
   display: flex; }
 
+.button, .button-secondary {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 2px; }
+  .button:active, .button-secondary:active {
+    margin: 2px -2px -2px 2px;
+    box-shadow: none !important; }
+
 audio,
 canvas,
 progress,
@@ -236,18 +244,22 @@ sub {
   bottom: -0.25em; }
 
 .button {
-  display: inline-block;
   background: #63a6d7;
   color: white;
-  padding: 7px 12px;
   box-shadow: 2px 2px 0 #2b74a9; }
   .button:hover {
     background: #3a8fcd;
     box-shadow: 2px 2px 0 #215880;
     color: white; }
-  .button:active {
-    margin: 2px -2px -2px 2px;
-    box-shadow: none; }
+
+.button-secondary {
+  background: #f06766;
+  color: white;
+  box-shadow: 2px 2px 0 #db1715; }
+  .button-secondary:hover {
+    background: #eb3938;
+    box-shadow: 2px 2px 0 #ac1211;
+    color: white; }
 
 button,
 input,
