@@ -1,0 +1,16 @@
+.button {
+	display: inline-block;
+	background: $core-link;
+	color: $white;
+	padding: 7px 12px;
+	box-shadow: 2px 2px 0 darken($core-link, 20%);
+	&:hover {
+		background: darken($core-link, 10%);
+		box-shadow: 2px 2px 0 darken($core-link, 30%);
+		color: $white;
+	}
+	&:active {
+		margin: 2px -2px -2px 2px;
+		box-shadow: none;
+	}
+}

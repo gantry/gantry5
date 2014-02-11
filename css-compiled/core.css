@@ -24,7 +24,7 @@ body {
   color: #555555; }
 
 a {
-  color: #2698de;
+  color: #63a6d7;
   text-decoration: none;
   background: transparent; }
   a:hover {
@@ -163,6 +163,9 @@ body [class*="u-"] {
   background: #eeeeee;
   box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.05); }
 
+#main {
+  background: white; }
+
 #footer {
   background: #111111;
   color: #cccccc; }
@@ -231,6 +234,20 @@ sup {
 
 sub {
   bottom: -0.25em; }
+
+.button {
+  display: inline-block;
+  background: #63a6d7;
+  color: white;
+  padding: 7px 12px;
+  box-shadow: 2px 2px 0 #2b74a9; }
+  .button:hover {
+    background: #3a8fcd;
+    box-shadow: 2px 2px 0 #215880;
+    color: white; }
+  .button:active {
+    margin: 2px -2px -2px 2px;
+    box-shadow: none; }
 
 button,
 input,

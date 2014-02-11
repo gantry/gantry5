@@ -4,15 +4,15 @@
 
 body {
 	margin: 0;
-	color: $body-text;
+	color: $core-text;
 }
 
 a {
-	color: $body-link;
+	color: $core-link;
 	text-decoration: none;
 	background: transparent;
 	&:hover {
-		color: darken($body-link, 100%);
+		color: darken($core-link, 100%);
 		outline: 0;
 	}
 	&:active {
