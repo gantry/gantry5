@@ -10,8 +10,7 @@
   padding: 7px 12px;
   border-radius: 3px; }
   .button:active, .button-secondary:active {
-    margin: 3px 0 -3px 0;
-    box-shadow: none !important; }
+    margin: 2px 0 -2px 0; }
 
 audio,
 canvas,
@@ -267,6 +266,8 @@ sub {
     background: #3a8fcd;
     box-shadow: 0 3px 0 #2b74a9;
     color: white; }
+  .button:active {
+    box-shadow: 0 1px 0 #2b74a9; }
 
 .button-secondary {
   background: #f06766;
@@ -276,6 +277,8 @@ sub {
     background: #eb3938;
     box-shadow: 0 3px 0 #db1715;
     color: white; }
+  .button-secondary:active {
+    box-shadow: 0 1px 0 #db1715; }
 
 button,
 input,

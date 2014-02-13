@@ -3,8 +3,7 @@
 	padding: 7px 12px;
 	border-radius: $border-radius;
 	&:active {
-		margin: 3px 0 -3px 0;
-		box-shadow: none !important;
+		margin: 2px 0 -2px 0;
 	}
 }
 
@@ -16,5 +15,8 @@
 		background: darken($color, 10%);
 		box-shadow: 0 3px 0 darken($color, 20%);
 		color: $white;
+	}
+	&:active {
+		box-shadow: 0 1px 0 darken($color, 20%);
 	}
 }
