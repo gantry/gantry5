@@ -8,9 +8,9 @@
 .button, .button-secondary {
   display: inline-block;
   padding: 7px 12px;
-  border-radius: 2px; }
+  border-radius: 3px; }
   .button:active, .button-secondary:active {
-    margin: 2px -2px -2px 2px;
+    margin: 3px 0 -3px 0;
     box-shadow: none !important; }
 
 audio,
@@ -138,6 +138,12 @@ body [class*="size-"] {
 .size-1-10 {
   width: 10% !important; }
 
+.size-1-11 {
+  width: 9.09091% !important; }
+
+.size-1-12 {
+  width: 8.33333% !important; }
+
 @media only screen and (max-width: 767px) {
   @supports not (flex-wrap: wrap) {
     .grid {
@@ -256,19 +262,19 @@ sub {
 .button {
   background: #63a6d7;
   color: white;
-  box-shadow: 2px 2px 0 #2b74a9; }
+  box-shadow: 0 3px 0 #3a8fcd; }
   .button:hover {
     background: #3a8fcd;
-    box-shadow: 2px 2px 0 #215880;
+    box-shadow: 0 3px 0 #2b74a9;
     color: white; }
 
 .button-secondary {
   background: #f06766;
   color: white;
-  box-shadow: 2px 2px 0 #db1715; }
+  box-shadow: 0 3px 0 #eb3938; }
   .button-secondary:hover {
     background: #eb3938;
-    box-shadow: 2px 2px 0 #ac1211;
+    box-shadow: 0 3px 0 #db1715;
     color: white; }
 
 button,

@@ -3,7 +3,7 @@
 	padding: 7px 12px;
 	border-radius: $border-radius;
 	&:active {
-		margin: 2px -2px -2px 2px;
+		margin: 3px 0 -3px 0;
 		box-shadow: none !important;
 	}
 }
@@ -11,10 +11,10 @@
 @mixin button-color($color) {
 	background: $color;
 	color: $white;
-	box-shadow: 2px 2px 0 darken($color, 20%);
+	box-shadow: 0 3px 0 darken($color, 10%);
 	&:hover {
 		background: darken($color, 10%);
-		box-shadow: 2px 2px 0 darken($color, 30%);
+		box-shadow: 0 3px 0 darken($color, 20%);
 		color: $white;
 	}
 }

@@ -57,6 +57,14 @@ body [class*="size-"] {
 	width: percentage(1/10) !important;
 }
 
+.size-1-11 {
+	width: percentage(1/11) !important;
+}
+
+.size-1-12 {
+	width: percentage(1/12) !important;
+}
+
 // Fix for Firefox until support is added in Firefox 28
 @include mediaquery(mobile-only) {
 	@supports not (flex-wrap: wrap) {
