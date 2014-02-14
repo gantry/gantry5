@@ -449,7 +449,7 @@
 	</div>
 
 	<div class="grid pure-g-r">
-		<div class="block pure-u-9-10">
+		<div class="block pure-u-11-12">
 			<div class="content bg">
 				Flex
 			</div>
@@ -462,7 +462,7 @@
 	</div>
 
 	<div class="grid pure-g-r">
-		<div class="block pure-u-9-10">
+		<div class="block pure-u-10-11">
 			<div class="content bg">
 				Flex
 			</div>
