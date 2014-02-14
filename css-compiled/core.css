@@ -53,16 +53,16 @@ a {
 .container {
   width: 1200px;
   margin: 0 auto; }
-  @media only screen and (min-width: 960px) and (max-width: 1199px) {
+  @media only screen and (min-width: 60rem) and (max-width: 74.938rem) {
     .container {
       width: 960px; } }
-  @media only screen and (min-width: 768px) and (max-width: 959px) {
+  @media only screen and (min-width: 48rem) and (max-width: 59.938rem) {
     .container {
       width: 768px; } }
-  @media only screen and (min-width: 481px) and (max-width: 767px) {
+  @media only screen and (min-width: 30.063rem) and (max-width: 47.938rem) {
     .container {
       width: 480px; } }
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 30rem) {
     .container {
       width: 100%; } }
 
@@ -87,7 +87,7 @@ a {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1; }
-  @media only screen and (max-width: 767px) {
+  @media only screen and (max-width: 47.938rem) {
     .block {
       -webkit-box-flex: 0 100%;
       -moz-box-flex: 0 100%;
@@ -101,7 +101,7 @@ body [class*="size-"] {
   -webkit-flex: none !important;
   -ms-flex: none !important;
   flex: none !important; }
-  @media only screen and (max-width: 767px) {
+  @media only screen and (max-width: 47.938rem) {
     body [class*="size-"] {
       -webkit-box-flex: 0 100% !important;
       -moz-box-flex: 0 100% !important;
@@ -143,7 +143,7 @@ body [class*="size-"] {
 .size-1-12 {
   width: 8.33333% !important; }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 47.938rem) {
   @supports not (flex-wrap: wrap) {
     .grid {
       display: block;
@@ -178,7 +178,7 @@ body [class*="size-"] {
   box-shadow: inset 0 -3px 10px rgba(0, 0, 0, 0.3); }
   #showcase .spacer {
     height: 180px; }
-    @media only screen and (max-width: 767px) {
+    @media only screen and (max-width: 47.938rem) {
       #showcase .spacer {
         display: none; } }
 
