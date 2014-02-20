@@ -1,7 +1,52 @@
-.nav {
-	@include list-reset;
-	li {
-		display: inline-block;
-		padding: 4px 10px;
+.main-nav {
+	ul {
+		@include list-reset;
+		position: relative;
+		> li {
+			display: inline-block;
+			border-radius: $border-radius $border-radius 0 0;
+			@include transition(all .2s ease-out);
+			> a {
+				display: block;
+				padding: 4px $content-padding;
+			}
+			&:hover {
+				.dropdown {
+					opacity: 1;
+				    visibility: visible;
+				    overflow: visible;
+				}
+				a {
+					color: $white;
+				}
+			}
+			&.parent {
+				&:hover {
+					background: $core-link;
+				}
+			}
+		}
+	}
+	.dropdown {
+		position: absolute;
+		width: auto;
+		background: $core-link;
+		box-shadow: 0 3px 0 darken($core-link, 10%);
+		top: auto;
+		left: 0;
+		opacity: 0;
+	    visibility: hidden;
+	    overflow: hidden;
+	    border-radius: 0 $border-radius $border-radius $border-radius;
+	    @include transition(all .2s ease-out);
+	    color: $white;
+	    .block {
+	    	padding: $content-padding;
+	    }
+	    ul {
+	    	li {
+	    		display: block;
+	    	}
+	    }
 	}
 }

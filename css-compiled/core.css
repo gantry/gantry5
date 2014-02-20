@@ -164,13 +164,47 @@ body [class*="size-"] {
   #header a:hover {
     color: white; }
 
-.nav {
+.main-nav ul {
   margin: 0;
   padding: 0;
-  list-style: none; }
-  .nav li {
+  list-style: none;
+  position: relative; }
+  .main-nav ul > li {
     display: inline-block;
-    padding: 4px 10px; }
+    border-radius: 3px 3px 0 0;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out; }
+    .main-nav ul > li > a {
+      display: block;
+      padding: 4px 0.938rem; }
+    .main-nav ul > li:hover .dropdown {
+      opacity: 1;
+      visibility: visible;
+      overflow: visible; }
+    .main-nav ul > li:hover a {
+      color: white; }
+    .main-nav ul > li.parent:hover {
+      background: #63a6d7; }
+.main-nav .dropdown {
+  position: absolute;
+  width: auto;
+  background: #63a6d7;
+  box-shadow: 0 3px 0 #3a8fcd;
+  top: auto;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  border-radius: 0 3px 3px 3px;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  color: white; }
+  .main-nav .dropdown .block {
+    padding: 0.938rem; }
+  .main-nav .dropdown ul li {
+    display: block; }
 
 #showcase {
   background: #111111 url(../images/showcase.jpg) 50% 100% no-repeat;

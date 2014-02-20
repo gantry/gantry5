@@ -1,25 +1,5 @@
 @import "vendor/bourbon/bourbon";
-
-// Font Family
-$font-family-helvetica:  "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-
-// Font Sizes
-$core-font-size:				1rem;
-$core-line-height:				1.875rem;
-$core-h1:						2.25rem;
-$core-h2:						1.9rem;
-$core-h3:						1.5rem;
-$core-h4:						1.15rem;
-$core-h5:						1rem;
-$core-h6:						0.85rem;
-
-// Block Variables
-$content-margin:				0.625rem;
-$content-padding:				0.938rem;
-
-// Additional
-$border-radius:					3px;
-
+@import "configuration/all";
 @import "modules/all";
 
 // Resets and Normalization

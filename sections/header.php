@@ -8,13 +8,44 @@
 			</div>
 			<div class="block pure-u-4-5">
 				<div class="content">
-					<ul class="nav">
-						<li><a href="index.php">Home</a></li>
-						<li><a href="gridtest.php">Grid Test</a></li>
-						<li><a href="typography.php">Typography</a></li>
-						<li>Menu Three</li>
-						<li>Menu Four</li>
-					</ul>
+					<nav class="main-nav">
+						<ul>
+							<li class="parent">
+								<a href="index.php">Home</a>
+								<div class="dropdown">
+									<div class="grid">
+										<div class="block size-1-5">
+											<ul>
+												<li>Submenu Item</li>
+												<li>Submenu Item</li>
+												<li>Submenu Item</li>
+												<li>Submenu Item</li>
+												<li>Submenu Item</li>
+											</ul>
+										</div>
+										<div class="block">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula. Praesent et nulla eu augue tempus sagittis.
+										</div>
+										<div class="block">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula. Praesent et nulla eu augue tempus sagittis.
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<a href="gridtest.php">Grid Test</a>
+							</li>
+							<li>
+								<a href="typography.php">Typography</a>
+							</li>
+							<li>
+								<a href="#">Menu Item</a>
+							</li>
+							<li>
+								<a href="#">Menu Item</a>
+							</li>
+						</ul>
+					</nav>
 				</div>
 			</div>
 		</div>
