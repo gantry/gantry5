@@ -9,18 +9,18 @@
 			<div class="block pure-u-4-5">
 				<div class="content">
 					<nav class="main-nav">
-						<ul>
+						<ul class="toplevel">
 							<li class="parent">
 								<a href="index.php">Home</a>
 								<div class="dropdown">
 									<div class="grid">
 										<div class="block size-1-5">
-											<ul>
-												<li>Submenu Item</li>
-												<li>Submenu Item</li>
-												<li>Submenu Item</li>
-												<li>Submenu Item</li>
-												<li>Submenu Item</li>
+											<ul class="sublevel">
+												<li><a href="#">Submenu Item</a></li>
+												<li><a href="#">Submenu Item</a></li>
+												<li><a href="#">Submenu Item</a></li>
+												<li><a href="#">Submenu Item</a></li>
+												<li><a href="#">Submenu Item</a></li>
 											</ul>
 										</div>
 										<div class="block">

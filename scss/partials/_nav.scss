@@ -1,11 +1,13 @@
 .main-nav {
 	ul {
 		@include list-reset;
+	}
+	> .toplevel {
 		position: relative;
 		> li {
 			display: inline-block;
 			border-radius: $border-radius $border-radius 0 0;
-			@include transition(all .2s ease-out);
+			@include transition(all .1s ease-out);
 			> a {
 				display: block;
 				padding: 4px $content-padding;
@@ -38,14 +40,20 @@
 	    visibility: hidden;
 	    overflow: hidden;
 	    border-radius: 0 $border-radius $border-radius $border-radius;
-	    @include transition(all .2s ease-out);
+	    @include transition(all .1s ease-out);
 	    color: $white;
 	    .block {
 	    	padding: $content-padding;
 	    }
-	    ul {
+	    .sublevel {
 	    	li {
-	    		display: block;
+	    		margin-left: -10px;
+	    		padding-left: 10px;
+	    		border-radius: $border-radius;
+	    		@include transition(all .1s ease-out);
+	    		&:hover {
+	    			background: darken($core-link, 8%);
+	    		}
 	    	}
 	    }
 	}
