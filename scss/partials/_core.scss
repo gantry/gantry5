@@ -1,3 +1,29 @@
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+	display: block;
+}
+
+audio,
+canvas,
+progress,
+video {
+	vertical-align: baseline;
+}
+
+audio:not([controls]) {
+	display: none;
+}
+
 *, *::before, *::after {
   @include box-sizing(border-box);
 }
@@ -27,16 +53,16 @@ a {
 }
 
 .container {
-	width: 1200px;
+	width: 75.000rem;
 	margin: 0 auto;
 	@include mediaquery(desktop-range) {
-		width: 960px;
+		width: 60.000rem;
 	}
 	@include mediaquery(tablet-range) {
-		width: 768px;
+		width: 48.000rem;
 	}
 	@include mediaquery(large-mobile-range) {
-		width: 480px;
+		width: 30.000rem;
 	}
 	@include mediaquery(small-mobile-range) {
 		width: 100%;

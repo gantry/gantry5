@@ -47,8 +47,8 @@
 	    }
 	    .sublevel {
 	    	li {
-	    		margin-left: -10px;
-	    		padding-left: 10px;
+	    		margin: 0 -10px;
+	    		padding: 0 10px;
 	    		border-radius: $border-radius;
 	    		@include transition(all .1s ease-out);
 	    		&:hover {

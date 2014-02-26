@@ -14,7 +14,7 @@
 								<a href="index.php">Home</a>
 								<div class="dropdown">
 									<div class="grid">
-										<div class="block size-1-5">
+										<div class="block">
 											<ul class="sublevel">
 												<li><a href="#">Submenu Item</a></li>
 												<li><a href="#">Submenu Item</a></li>
@@ -23,12 +23,12 @@
 												<li><a href="#">Submenu Item</a></li>
 											</ul>
 										</div>
-										<div class="block">
+										<!--<div class="block">
 											Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula. Praesent et nulla eu augue tempus sagittis.
 										</div>
 										<div class="block">
 											Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula. Praesent et nulla eu augue tempus sagittis.
-										</div>
+										</div>-->
 									</div>
 								</div>
 							</li>
