@@ -218,15 +218,33 @@ body [class*="size-"] {
   color: white; }
   .main-nav .dropdown .block {
     padding: 0.938rem; }
-  .main-nav .dropdown .sublevel li {
-    margin: 0 -10px;
-    padding: 0 10px;
-    border-radius: 3px;
-    -webkit-transition: all 0.1s ease-out;
-    -moz-transition: all 0.1s ease-out;
-    transition: all 0.1s ease-out; }
-    .main-nav .dropdown .sublevel li:hover {
-      background: #4393cf; }
+.main-nav .flyout {
+  position: absolute;
+  width: auto;
+  top: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #63a6d7;
+  box-shadow: 0 3px 0 #3a8fcd; }
+.main-nav .sublevel > li {
+  margin: 0 -10px;
+  padding: 0 10px;
+  position: relative;
+  border-radius: 3px;
+  -webkit-transition: all 0.1s ease-out;
+  -moz-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out; }
+  .main-nav .sublevel > li:hover {
+    background: #4393cf; }
+    .main-nav .sublevel > li:hover > .flyout {
+      left: 100%;
+      opacity: 1;
+      visibility: visible;
+      overflow: visible; }
+  .main-nav .sublevel > li a {
+    display: block; }
 
 #showcase {
   background: #111111 url(../images/showcase.jpg) 50% 100% no-repeat;

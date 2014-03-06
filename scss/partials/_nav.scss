@@ -2,6 +2,8 @@
 	ul {
 		@include list-reset;
 	}
+
+	// Main Level
 	> .toplevel {
 		position: relative;
 		> li {
@@ -29,6 +31,8 @@
 			}
 		}
 	}
+
+	// First Level Dropdown
 	.dropdown {
 		position: absolute;
 		width: auto;
@@ -45,16 +49,41 @@
 	    .block {
 	    	padding: $content-padding;
 	    }
-	    .sublevel {
-	    	li {
-	    		margin: 0 -10px;
-	    		padding: 0 10px;
-	    		border-radius: $border-radius;
-	    		@include transition(all .1s ease-out);
-	    		&:hover {
-	    			background: darken($core-link, 8%);
-	    		}
-	    	}
-	    }
 	}
+
+	// Additional Level Flyouts
+	.flyout {
+		position: absolute;
+		width: auto;
+		top: 0;
+		opacity: 0;
+		visibility: hidden;
+		overflow: hidden;
+		border-radius: $border-radius;
+		background: $core-link;
+		box-shadow: 0 3px 0 darken($core-link, 10%);
+	}
+
+	// Sublevel Items
+	.sublevel {
+    	> li {
+    		margin: 0 -10px;
+    		padding: 0 10px;
+    		position: relative;
+    		border-radius: $border-radius;
+    		@include transition(all .1s ease-out);
+    		&:hover {
+    			background: darken($core-link, 8%);
+    			> .flyout {
+    				left: 100%;
+    				opacity: 1;
+    				visibility: visible;
+    				overflow: visible;
+    			}
+    		}
+    		a {
+    			display: block;
+    		}
+    	}
+    }
 }
