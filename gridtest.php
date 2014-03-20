@@ -11,6 +11,13 @@
 		<div class="grid pure-g-r">
 			<div class="block pure-u-1">
 				<div class="content">
+					<h2 class="page-title">Grid Test</h2>
+				</div>
+			</div>
+		</div>
+		<div class="grid pure-g-r">
+			<div class="block pure-u-1">
+				<div class="content">
 					<h2>Auto Calculated</h2>
 				</div>
 			</div>

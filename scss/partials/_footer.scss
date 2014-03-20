@@ -1,5 +1,5 @@
 #footer {
 	background: $footer-bg;
 	color: $footer-text;
-	margin-top: 25px;
+	margin: 0 0 $content-margin + $content-padding 0;
 }

@@ -1,6 +1,5 @@
 #showcase {
-	background: url(../images/showcase-bg.jpg) 50% 0 no-repeat;
-	background-size: cover;
+	background: $showcase-bg;
 	color: $showcase-text;
 	.spacer {
 		height: 180px;

@@ -1,17 +1,21 @@
 // Core
-$core-text:				#555;
-$core-link:				#63A6D7;
-$secondary-link:		#F06766;
+$core-text:				#666;
+$core-link:				#4184B6;
+$secondary-link:		#F8B450;
 $white:					#fff;
 $black:					#000;
 
 // Background
-$page-bg:				#292929;
+$page-bg:				#333;
 
 // Header
 $header-text:			#aaa;
 
+// Nav
+$nav-link:				#aaa;
+
 // Showcase
+$showcase-bg:			lighten($core-link, 6%);
 $showcase-text:			#fff;
 
 // Feature
@@ -24,6 +28,10 @@ $body-border:			darken($main-bg, 5%);
 // Sidebar
 $sidebar-text:			#aaa;
 
+// Bottom
+$bottom-bg:				#f7f7f7;
+$bottom-text:			$core-text;
+
 // Footer
-$footer-bg:				#3d3d3d;
+$footer-bg:				#404040;
 $footer-text:			#ccc;

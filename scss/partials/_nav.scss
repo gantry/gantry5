@@ -11,6 +11,7 @@
 			@include transition(all .1s ease-out);
 			> a {
 				display: block;
+				color: $nav-link;
 				padding: 4px $content-padding;
 			}
 			&:hover {

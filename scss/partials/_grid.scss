@@ -1,3 +1,20 @@
+.container {
+	width: 75.000rem;
+	margin: 0 auto;
+	@include mediaquery(desktop-range) {
+		width: 60.000rem;
+	}
+	@include mediaquery(tablet-range) {
+		width: 48.000rem;
+	}
+	@include mediaquery(large-mobile-range) {
+		width: 30.000rem;
+	}
+	@include mediaquery(small-mobile-range) {
+		width: 100%;
+	}
+}
+
 .grid {
 	@extend %flexcontainer;
 	@include flexwrap(wrap);
@@ -11,6 +28,11 @@
 	@include mediaquery(mobile-only) {
 		@include flexblock(0 100%);
 	}
+}
+
+.content {
+	margin: $content-margin;
+	padding: $content-padding;
 }
 
 body [class*="size-"] {

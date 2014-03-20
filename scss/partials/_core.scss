@@ -53,29 +53,7 @@ a {
 	}
 }
 
-.container {
-	width: 75.000rem;
-	margin: 0 auto;
-	@include mediaquery(desktop-range) {
-		width: 60.000rem;
-	}
-	@include mediaquery(tablet-range) {
-		width: 48.000rem;
-	}
-	@include mediaquery(large-mobile-range) {
-		width: 30.000rem;
-	}
-	@include mediaquery(small-mobile-range) {
-		width: 100%;
-	}
-}
-
 .bg {
 	background: #fff;
 	border: 1px solid $body-border;
-}
-
-.content {
-	margin: $content-margin;
-	padding: $content-padding;
 }
