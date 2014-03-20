@@ -6,7 +6,7 @@ $white:					#fff;
 $black:					#000;
 
 // Background
-$page-bg:				#282828;
+$page-bg:				#292929;
 
 // Header
 $header-text:			#aaa;
@@ -18,7 +18,8 @@ $showcase-text:			#fff;
 $feature-bg:			#fff;
 
 // Main Body
-$main-bg:				#f9f9f9;
+$main-bg:				#f7f7f7;
+$body-border:			darken($main-bg, 5%);
 
 // Sidebar
 $sidebar-text:			#aaa;

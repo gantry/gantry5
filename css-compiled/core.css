@@ -51,7 +51,7 @@ audio:not([controls]) {
   width: device-width; }
 body {
   margin: 0;
-  background: #282828;
+  background: #292929;
   color: #555555; }
 
 a {
@@ -81,7 +81,8 @@ a {
       width: 100%; } }
 
 .bg {
-  background: #eee; }
+  background: #fff;
+  border: 1px solid #eaeaea; }
 
 .content {
   margin: 0.625rem;
@@ -172,6 +173,23 @@ body [class*="size-"] {
       -webkit-flex: inherit;
       -ms-flex: inherit;
       flex: inherit; } } }
+.fixed-block {
+  -webkit-box-flex: inherit;
+  -moz-box-flex: inherit;
+  -webkit-flex: inherit;
+  -ms-flex: inherit;
+  flex: inherit;
+  width: 25%; }
+  @media only screen and (min-width: 60rem) and (max-width: 74.938rem) {
+    .fixed-block {
+      width: 33.33333%; } }
+  @media only screen and (min-width: 48rem) and (max-width: 59.938rem) {
+    .fixed-block {
+      width: 50%; } }
+  @media only screen and (max-width: 47.938rem) {
+    .fixed-block {
+      width: 100%; } }
+
 #header {
   color: #aaaaaa; }
   #header a:hover {
@@ -251,10 +269,10 @@ body [class*="size-"] {
 
 #feature {
   background: white;
-  border-bottom: 1px solid #ececec; }
+  border-bottom: 1px solid #eaeaea; }
 
 #main {
-  background: #f9f9f9; }
+  background: #f7f7f7; }
 
 #sidebar {
   color: #aaaaaa; }
@@ -299,6 +317,14 @@ h5 {
 
 h6 {
   font-size: 0.85rem; }
+
+.page-title {
+  margin-top: -25px;
+  padding: 25px;
+  float: left;
+  clear: both;
+  background: #63a6d7;
+  color: white; }
 
 p {
   margin: 0 0 1.875rem 0; }

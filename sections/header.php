@@ -52,7 +52,7 @@
 							<a href="typography.php">Typography</a>
 						</li>
 						<li>
-							<a href="#">Menu Item</a>
+							<a href="blockstest.php">Blocks Test</a>
 						</li>
 						<li>
 							<a href="#">Menu Item</a>

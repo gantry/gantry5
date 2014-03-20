@@ -45,6 +45,15 @@ h6 {
 	font-size: $core-h6;
 }
 
+.page-title {
+	margin-top: -25px;
+	padding: 25px;
+	float: left;
+	clear: both;
+	background: $core-link;
+	color: $white;
+}
+
 // Paragraph
 p {
 	margin: 0 0 $core-line-height 0;

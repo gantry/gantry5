@@ -78,3 +78,18 @@ body [class*="size-"] {
 		}
 	}
 }
+
+// Fixed Grid Style
+.fixed-block {
+	@include flexblock(inherit);
+	width: $fixed-block-full;
+	@include mediaquery(desktop-range) {
+		width: $fixed-block-desktop;
+	}
+	@include mediaquery(tablet-range) {
+		width: $fixed-block-tablet;
+	}
+	@include mediaquery(mobile-only) {
+		width: 100%;
+	}
+}
