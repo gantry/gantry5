@@ -49,6 +49,10 @@ audio:not([controls]) {
   width: device-width; }
 @viewport {
   width: device-width; }
+html {
+  margin-bottom: 1px;
+  height: 100%; }
+
 body {
   margin: 0;
   background: #333333;
@@ -208,9 +212,11 @@ body [class*="size-"] {
     transition: all 0.1s ease-out; }
     .main-nav > .toplevel > li > a {
       display: block;
+      font-size: 1.1rem;
       color: #aaaaaa;
       padding: 4px 0.938rem; }
     .main-nav > .toplevel > li:hover .dropdown {
+      width: 140px;
       opacity: 1;
       visibility: visible;
       overflow: visible; }
@@ -220,7 +226,7 @@ body [class*="size-"] {
   position: absolute;
   width: auto;
   background: #4184b6;
-  box-shadow: 0 3px 0 #346990;
+  box-shadow: 0 3px 0 #39749f;
   top: auto;
   left: 0;
   opacity: 0;
@@ -239,11 +245,11 @@ body [class*="size-"] {
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
-  background: #4184b6;
-  box-shadow: 0 3px 0 #346990; }
+  background: #3c79a7;
+  box-shadow: 0 3px 0 #366e98; }
 .main-nav .sublevel > li {
-  margin: 0 -10px;
-  padding: 0 10px;
+  margin: 0 -15px;
+  padding: 2px 15px;
   position: relative;
   -webkit-transition: all 0.1s ease-out;
   -moz-transition: all 0.1s ease-out;
@@ -252,6 +258,7 @@ body [class*="size-"] {
     background: #366e98; }
     .main-nav .sublevel > li:hover > .flyout {
       left: 100%;
+      width: 140px;
       opacity: 1;
       visibility: visible;
       overflow: visible; }

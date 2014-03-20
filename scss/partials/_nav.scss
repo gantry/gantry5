@@ -11,11 +11,13 @@
 			@include transition(all .1s ease-out);
 			> a {
 				display: block;
+				font-size: 1.1rem;
 				color: $nav-link;
 				padding: 4px $content-padding;
 			}
 			&:hover {
 				.dropdown {
+					width: $dropdown-width;
 					opacity: 1;
 				    visibility: visible;
 				    overflow: visible;
@@ -32,7 +34,7 @@
 		position: absolute;
 		width: auto;
 		background: $core-link;
-		box-shadow: 0 3px 0 darken($core-link, 10%);
+		box-shadow: 0 3px 0 darken($core-link, 6%);
 		top: auto;
 		left: 0;
 		opacity: 0;
@@ -53,21 +55,22 @@
 		opacity: 0;
 		visibility: hidden;
 		overflow: hidden;
-		background: $core-link;
-		box-shadow: 0 3px 0 darken($core-link, 10%);
+		background: darken($core-link, 4%);
+		box-shadow: 0 3px 0 darken($core-link, 8%);
 	}
 
 	// Sublevel Items
 	.sublevel {
     	> li {
-    		margin: 0 -10px;
-    		padding: 0 10px;
+    		margin: 0 -15px;
+    		padding: 2px 15px;
     		position: relative;
     		@include transition(all .1s ease-out);
     		&:hover {
     			background: darken($core-link, 8%);
     			> .flyout {
     				left: 100%;
+    				width: $flyout-width;
     				opacity: 1;
     				visibility: visible;
     				overflow: visible;

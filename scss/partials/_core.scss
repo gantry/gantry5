@@ -34,6 +34,11 @@ audio:not([controls]) {
 @-o-viewport{width:device-width}
 @viewport{width:device-width}
 
+html {
+	margin-bottom: 1px;
+	height: 100%;
+}
+
 body {
 	margin: 0;
 	background: $page-bg;
