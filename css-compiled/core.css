@@ -7,8 +7,7 @@
 
 .button, .button-secondary {
   display: inline-block;
-  padding: 7px 12px;
-  border-radius: 3px; }
+  padding: 7px 12px; }
   .button:active, .button-secondary:active {
     margin: 2px 0 -2px 0; }
 
@@ -52,6 +51,7 @@ audio:not([controls]) {
   width: device-width; }
 body {
   margin: 0;
+  background: #282828;
   color: #555555; }
 
 a {
@@ -173,8 +173,7 @@ body [class*="size-"] {
       -ms-flex: inherit;
       flex: inherit; } } }
 #header {
-  background: #111111;
-  color: #cccccc; }
+  color: #aaaaaa; }
   #header a:hover {
     color: white; }
 
@@ -186,7 +185,6 @@ body [class*="size-"] {
   position: relative; }
   .main-nav > .toplevel > li {
     display: inline-block;
-    border-radius: 3px 3px 0 0;
     -webkit-transition: all 0.1s ease-out;
     -moz-transition: all 0.1s ease-out;
     transition: all 0.1s ease-out; }
@@ -199,8 +197,6 @@ body [class*="size-"] {
       overflow: visible; }
     .main-nav > .toplevel > li:hover a {
       color: white; }
-    .main-nav > .toplevel > li.parent:hover {
-      background: #63a6d7; }
 .main-nav .dropdown {
   position: absolute;
   width: auto;
@@ -211,7 +207,6 @@ body [class*="size-"] {
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
-  border-radius: 0 3px 3px 3px;
   -webkit-transition: all 0.1s ease-out;
   -moz-transition: all 0.1s ease-out;
   transition: all 0.1s ease-out;
@@ -225,14 +220,12 @@ body [class*="size-"] {
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
-  border-radius: 3px;
   background: #63a6d7;
   box-shadow: 0 3px 0 #3a8fcd; }
 .main-nav .sublevel > li {
   margin: 0 -10px;
   padding: 0 10px;
   position: relative;
-  border-radius: 3px;
   -webkit-transition: all 0.1s ease-out;
   -moz-transition: all 0.1s ease-out;
   transition: all 0.1s ease-out; }
@@ -247,9 +240,9 @@ body [class*="size-"] {
     display: block; }
 
 #showcase {
-  background: #111111 url(../images/showcase.jpg) 50% 100% no-repeat;
-  color: #cccccc;
-  box-shadow: inset 0 -3px 10px rgba(0, 0, 0, 0.3); }
+  background: url(../images/showcase-bg.jpg) 50% 0 no-repeat;
+  background-size: cover;
+  color: white; }
   #showcase .spacer {
     height: 180px; }
     @media only screen and (max-width: 47.938rem) {
@@ -257,15 +250,19 @@ body [class*="size-"] {
         display: none; } }
 
 #feature {
-  background: #eeeeee;
-  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.05); }
+  background: white;
+  border-bottom: 1px solid #ececec; }
 
 #main {
-  background: white; }
+  background: #f9f9f9; }
+
+#sidebar {
+  color: #aaaaaa; }
 
 #footer {
-  background: #111111;
-  color: #cccccc; }
+  background: #3d3d3d;
+  color: #cccccc;
+  margin-top: 25px; }
 
 html {
   font-size: 100%;
@@ -279,7 +276,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
-  margin: 1.875rem 0; }
+  margin: 0 0 1.875rem 0; }
 
 h1 {
   font-size: 2.25rem;
@@ -305,6 +302,12 @@ h6 {
 
 p {
   margin: 0 0 1.875rem 0; }
+
+ul {
+  margin: 0; }
+
+ol {
+  margin: 0; }
 
 pre {
   overflow: auto; }

@@ -3,11 +3,12 @@
 <?php include(__DIR__.'/core/head.php'); ?>
 <body>
 
-<!-- Header -->
-<?php include(__DIR__.'/sections/header.php'); ?>
+<div class="container">
 
-<section id="main">
-	<div class="container">
+	<!-- Header -->
+	<?php include(__DIR__.'/sections/header.php'); ?>
+
+	<section id="main">
 		<div class="grid pure-g-r">
 			<div class="block pure-u-1-2">
 				<div class="content">
@@ -42,11 +43,12 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</section>
+	</section>
 
-<!-- Footer -->
-<?php include(__DIR__.'/sections/footer.php'); ?>
+	<!-- Footer -->
+	<?php include(__DIR__.'/sections/footer.php'); ?>
+
+</div>
     
 </body>
 </html>

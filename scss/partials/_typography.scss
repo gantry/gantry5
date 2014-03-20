@@ -14,7 +14,7 @@ body {
 // Headings
 h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
-	margin: $core-line-height 0;
+	margin: 0 0 $core-line-height 0;
 }
 
 h1 {
@@ -48,6 +48,15 @@ h6 {
 // Paragraph
 p {
 	margin: 0 0 $core-line-height 0;
+}
+
+// Lists
+ul {
+	margin: 0;
+}
+
+ol {
+	margin: 0;
 }
 
 // Code and Pre

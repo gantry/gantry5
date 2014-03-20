@@ -8,7 +8,6 @@
 		position: relative;
 		> li {
 			display: inline-block;
-			border-radius: $border-radius $border-radius 0 0;
 			@include transition(all .1s ease-out);
 			> a {
 				display: block;
@@ -22,11 +21,6 @@
 				}
 				a {
 					color: $white;
-				}
-			}
-			&.parent {
-				&:hover {
-					background: $core-link;
 				}
 			}
 		}
@@ -43,7 +37,6 @@
 		opacity: 0;
 	    visibility: hidden;
 	    overflow: hidden;
-	    border-radius: 0 $border-radius $border-radius $border-radius;
 	    @include transition(all .1s ease-out);
 	    color: $white;
 	    .block {
@@ -59,7 +52,6 @@
 		opacity: 0;
 		visibility: hidden;
 		overflow: hidden;
-		border-radius: $border-radius;
 		background: $core-link;
 		box-shadow: 0 3px 0 darken($core-link, 10%);
 	}
@@ -70,7 +62,6 @@
     		margin: 0 -10px;
     		padding: 0 10px;
     		position: relative;
-    		border-radius: $border-radius;
     		@include transition(all .1s ease-out);
     		&:hover {
     			background: darken($core-link, 8%);

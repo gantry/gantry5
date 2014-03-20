@@ -1,7 +1,7 @@
 #showcase {
-	background: $header-bg url(../images/showcase.jpg) 50% 100% no-repeat;
-	color: $header-text;
-	box-shadow: inset 0 -3px 10px rgba(0,0,0,0.3);
+	background: url(../images/showcase-bg.jpg) 50% 0 no-repeat;
+	background-size: cover;
+	color: $showcase-text;
 	.spacer {
 		height: 180px;
 		@include mediaquery(mobile-only) {
