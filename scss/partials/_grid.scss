@@ -1,17 +1,17 @@
 .container {
-	width: 75.000rem;
+	width: $large-desktop-container;
 	margin: 0 auto;
 	@include mediaquery(desktop-range) {
-		width: 60.000rem;
+		width: $desktop-container;
 	}
 	@include mediaquery(tablet-range) {
-		width: 48.000rem;
+		width: $tablet-container;
 	}
 	@include mediaquery(large-mobile-range) {
-		width: 30.000rem;
+		width: $large-mobile-container;
 	}
 	@include mediaquery(small-mobile-range) {
-		width: 100%;
+		width: $mobile-container;
 	}
 }
 

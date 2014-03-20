@@ -72,18 +72,30 @@ a {
   background: #fff;
   border: 1px solid #eaeaea; }
 
+@font-face {
+  font-family: "opensans";
+  font-weight: normal;
+  font-style: normal;
+  src: url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.eot");
+  src: url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.woff") format("woff"), url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.ttf") format("truetype"), url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.svg#opensans") format("svg"); }
+@font-face {
+  font-family: "opensanslight";
+  font-weight: normal;
+  font-style: normal;
+  src: url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.eot");
+  src: url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.woff") format("woff"), url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.ttf") format("truetype"), url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.svg#opensanslight") format("svg"); }
 .container {
-  width: 75.000rem;
+  width: 75rem;
   margin: 0 auto; }
   @media only screen and (min-width: 60rem) and (max-width: 74.938rem) {
     .container {
-      width: 60.000rem; } }
+      width: 60rem; } }
   @media only screen and (min-width: 48rem) and (max-width: 59.938rem) {
     .container {
-      width: 48.000rem; } }
+      width: 48rem; } }
   @media only screen and (min-width: 30.063rem) and (max-width: 47.938rem) {
     .container {
-      width: 30.000rem; } }
+      width: 30rem; } }
   @media only screen and (max-width: 30rem) {
     .container {
       width: 100%; } }
@@ -301,12 +313,13 @@ html {
   -webkit-text-size-adjust: 100%; }
 
 body {
-  font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: "opensanslight", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   font-size: 1rem;
   line-height: 1.875rem; }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
+  font-family: "opensans", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   margin: 0 0 1.875rem 0; }
 
 h1 {

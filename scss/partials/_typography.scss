@@ -6,7 +6,7 @@ html {
 }
 
 body {
-	font-family: $font-family-helvetica;
+	font-family: $font-family-default;
 	font-size: $core-font-size;
 	line-height: $core-line-height;
 }
@@ -14,6 +14,7 @@ body {
 // Headings
 h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
+	font-family: $font-family-bold;
 	margin: 0 0 $core-line-height 0;
 }
 
