@@ -3,7 +3,7 @@
 	color: $showcase-text;
 	.spacer {
 		height: 180px;
-		@include mediaquery(mobile-only) {
+		@include breakpoint(mobile-only) {
 			display: none;
 		}
 	}

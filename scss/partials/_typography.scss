@@ -1,10 +1,4 @@
-// Core
-html {
- 	font-size: 100%;
- 	-ms-text-size-adjust: 100%;
-  	-webkit-text-size-adjust: 100%;
-}
-
+// Body
 body {
 	font-family: $font-family-default;
 	font-size: $core-font-size;
@@ -67,38 +61,4 @@ ul {
 
 ol {
 	margin: 0;
-}
-
-// Code and Pre
-pre {
-	overflow: auto;
-}
-
-code,
-kbd,
-pre,
-samp {
-	font-family: monospace, monospace;
-	font-size: $core-font-size;
-}
-
-// Extras
-small {
-	font-size: $core-font-size - 0.125;
-}
-
-sub,
-sup {
-	font-size: $core-font-size - 0.250;
-	line-height: 0;
-	position: relative;
-	vertical-align: baseline;
-}
-
-sup {
-	top: -0.5em;
-}
-
-sub {
-	bottom: -0.25em;
 }

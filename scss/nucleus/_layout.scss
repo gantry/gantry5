@@ -1,16 +1,17 @@
+// Page Container
 .container {
 	width: $large-desktop-container;
 	margin: 0 auto;
-	@include mediaquery(desktop-range) {
+	@include breakpoint(desktop-range) {
 		width: $desktop-container;
 	}
-	@include mediaquery(tablet-range) {
+	@include breakpoint(tablet-range) {
 		width: $tablet-container;
 	}
-	@include mediaquery(large-mobile-range) {
+	@include breakpoint(large-mobile-range) {
 		width: $large-mobile-container;
 	}
-	@include mediaquery(small-mobile-range) {
+	@include breakpoint(small-mobile-range) {
 		width: $mobile-container;
 	}
 }
@@ -25,7 +26,7 @@
 
 .block {
 	@include flexblock(1);
-	@include mediaquery(mobile-only) {
+	@include breakpoint(mobile-only) {
 		@include flexblock(0 100%);
 	}
 }
@@ -37,7 +38,7 @@
 
 body [class*="size-"] {
 	@include flexblock-important(none);
-	@include mediaquery(mobile-only) {
+	@include breakpoint(mobile-only) {
 		@include flexblock-important(0 100%);
 		width: auto !important;
 	}
@@ -88,7 +89,7 @@ body [class*="size-"] {
 }
 
 // Fix for Firefox until support is added in Firefox 28
-@include mediaquery(mobile-only) {
+@include breakpoint(mobile-only) {
 	@supports not (flex-wrap: wrap) {
 		.grid {
 			display: block;
@@ -105,13 +106,13 @@ body [class*="size-"] {
 .fixed-block {
 	@include flexblock(inherit);
 	width: $fixed-block-full;
-	@include mediaquery(desktop-range) {
+	@include breakpoint(desktop-range) {
 		width: $fixed-block-desktop;
 	}
-	@include mediaquery(tablet-range) {
+	@include breakpoint(tablet-range) {
 		width: $fixed-block-tablet;
 	}
-	@include mediaquery(mobile-only) {
+	@include breakpoint(mobile-only) {
 		width: 100%;
 	}
 }

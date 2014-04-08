@@ -1,60 +1,12 @@
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-nav,
-section,
-summary {
-	display: block;
-}
-
-audio,
-canvas,
-progress,
-video {
-	vertical-align: baseline;
-}
-
-audio:not([controls]) {
-	display: none;
-}
-
-*, *::before, *::after {
-  @include box-sizing(border-box);
-}
-
-@-webkit-viewport{width:device-width}
-@-moz-viewport{width:device-width}
-@-ms-viewport{width:device-width}
-@-o-viewport{width:device-width}
-@viewport{width:device-width}
-
-html {
-	margin-bottom: 1px;
-	height: 100%;
-}
-
 body {
-	margin: 0;
 	background: $page-bg;
 	color: $core-text;
 }
 
 a {
 	color: $core-link;
-	text-decoration: none;
-	background: transparent;
 	&:hover {
 		color: darken($core-link, 100%);
-		outline: 0;
-	}
-	&:active {
-		outline: 0;
 	}
 }
 
