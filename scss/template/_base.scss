@@ -1,11 +1,11 @@
 // Load Configuration
 @import "configuration/all";
 
-// Load Nucleus Library
-@import "nucleus/particles/all";
-
 // Load Third Party Libraries
 @import "vendor/bourbon/bourbon";
+
+// Load Nucleus Library
+@import "nucleus/particles/all";
 
 // Load Template Library
 @import "modules/all";
