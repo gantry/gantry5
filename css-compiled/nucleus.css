@@ -1,10 +1,3 @@
-.grid {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex; }
-
 *, *::before, *::after {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -211,7 +204,18 @@ th {
       width: 100%; } }
 
 .grid {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-lines: multiple;
+  -moz-box-lines: multiple;
+  box-lines: multiple;
   -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   list-style: none;
@@ -221,14 +225,18 @@ th {
 .block {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
+  box-flex: 1;
   -webkit-flex: 1;
+  -moz-flex: 1;
   -ms-flex: 1;
   flex: 1; }
   @media only screen and (max-width: 47.938rem) {
     .block {
-      -webkit-box-flex: 0 100%;
-      -moz-box-flex: 0 100%;
+      -webkit-box-flex: 0;
+      -moz-box-flex: 0;
+      box-flex: 0;
       -webkit-flex: 0 100%;
+      -moz-flex: 0 100%;
       -ms-flex: 0 100%;
       flex: 0 100%; } }
 
@@ -237,18 +245,22 @@ th {
   padding: 0.938rem; }
 
 body [class*="size-"] {
-  -webkit-box-flex: none !important;
-  -moz-box-flex: none !important;
-  -webkit-flex: none !important;
-  -ms-flex: none !important;
-  flex: none !important; }
+  -webkit-box-flex: none;
+  -moz-box-flex: none;
+  box-flex: none;
+  -webkit-flex: none;
+  -moz-flex: none;
+  -ms-flex: none;
+  flex: none; }
   @media only screen and (max-width: 47.938rem) {
     body [class*="size-"] {
-      -webkit-box-flex: 0 100% !important;
-      -moz-box-flex: 0 100% !important;
-      -webkit-flex: 0 100% !important;
-      -ms-flex: 0 100% !important;
-      flex: 0 100% !important;
+      -webkit-box-flex: 0;
+      -moz-box-flex: 0;
+      box-flex: 0;
+      -webkit-flex: 0 100%;
+      -moz-flex: 0 100%;
+      -ms-flex: 0 100%;
+      flex: 0 100%;
       width: auto !important; } }
 
 .size-1-2 {
@@ -288,7 +300,11 @@ body [class*="size-"] {
   @supports not (flex-wrap: wrap) {
     .grid {
       display: block;
+      -webkit-box-lines: inherit;
+      -moz-box-lines: inherit;
+      box-lines: inherit;
       -webkit-flex-wrap: inherit;
+      -moz-flex-wrap: inherit;
       -ms-flex-wrap: inherit;
       flex-wrap: inherit; }
 
@@ -296,13 +312,17 @@ body [class*="size-"] {
       display: block;
       -webkit-box-flex: inherit;
       -moz-box-flex: inherit;
+      box-flex: inherit;
       -webkit-flex: inherit;
+      -moz-flex: inherit;
       -ms-flex: inherit;
       flex: inherit; } } }
 .fixed-block {
   -webkit-box-flex: inherit;
   -moz-box-flex: inherit;
+  box-flex: inherit;
   -webkit-flex: inherit;
+  -moz-flex: inherit;
   -ms-flex: inherit;
   flex: inherit;
   width: 25%; }
@@ -315,5 +335,17 @@ body [class*="size-"] {
   @media only screen and (max-width: 47.938rem) {
     .fixed-block {
       width: 100%; } }
+
+.reverse {
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  -moz-box-direction: reverse;
+  box-direction: reverse;
+  -webkit-flex-direction: row-reverse;
+  -moz-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse; }
 
 /*# sourceMappingURL=nucleus.css.map */

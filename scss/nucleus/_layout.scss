@@ -16,34 +16,37 @@
 	}
 }
 
+// Grid Row and Column Setup
 .grid {
-	@extend %flexcontainer;
-	@include flexwrap(wrap);
+	@include display(flex);
+	@include flex-wrap(wrap);
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 
 .block {
-	@include flexblock(1);
+	@include flex(1);
 	@include breakpoint(mobile-only) {
-		@include flexblock(0 100%);
+		@include flex(0 100%);
 	}
 }
 
+// Content Block Spacing
 .content {
 	margin: $content-margin;
 	padding: $content-padding;
 }
 
 body [class*="size-"] {
-	@include flexblock-important(none);
+	@include flex(none);
 	@include breakpoint(mobile-only) {
-		@include flexblock-important(0 100%);
+		@include flex(0 100%);
 		width: auto !important;
 	}
 }
 
+// Custom Size Modifiers
 .size-1-2 {
 	width: percentage(1/2) !important;
 }
@@ -88,23 +91,23 @@ body [class*="size-"] {
 	width: percentage(1/12) !important;
 }
 
-// Fix for Firefox until support is added in Firefox 28
+// Fix for Firefox versions 27 and below
 @include breakpoint(mobile-only) {
 	@supports not (flex-wrap: wrap) {
 		.grid {
 			display: block;
-			@include flexwrap(inherit);
+			@include flex-wrap(inherit);
 		}
 		.block {
 			display: block;
-			@include flexblock(inherit);
+			@include flex(inherit);
 		}
 	}
 }
 
 // Fixed Grid Style
 .fixed-block {
-	@include flexblock(inherit);
+	@include flex(inherit);
 	width: $fixed-block-full;
 	@include breakpoint(desktop-range) {
 		width: $fixed-block-desktop;
@@ -115,4 +118,9 @@ body [class*="size-"] {
 	@include breakpoint(mobile-only) {
 		width: 100%;
 	}
+}
+
+// RTL Reversed Grid
+.reverse {
+	@include flex-direction(row-reverse);
 }
