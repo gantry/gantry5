@@ -50,6 +50,62 @@
 				</div>
 			</div>
 		</div>
+		<div class="grid pure-g-r">
+			<div class="block pure-u-1-2">
+				<div class="content">
+					<h2>Pre</h2>
+					<pre>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.&lt;/p&gt;</pre>
+				</div>
+			</div>
+			<div class="block pure-u-1-2">
+				<div class="content">
+					<h2>Blockquote</h2>
+					<blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</blockquote>
+				</div>
+			</div>
+		</div>
+		<div class="grid pure-g-r">
+			<div class="block pure-u-1-2">
+				<div class="content">
+					<h2>Table</h2>
+					<table class="table">
+						<thead>
+							<tr>
+							<th>#</th>
+							<th>Header One</th>
+							<th>Header Two</th>
+							<th>Header Three</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>Value One</td>
+								<td>Value Two</td>
+								<td>Value Three</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Value One</td>
+								<td>Value Two</td>
+								<td>Value Three</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>Value One</td>
+								<td>Value Two</td>
+								<td>Value Three</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="block pure-u-1-2">
+				<div class="content">
+					
+				</div>
+			</div>
+		</div>
 	</section>
 
 	<!-- Footer -->

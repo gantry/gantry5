@@ -131,36 +131,11 @@ a {
   margin: 0 0 1.563rem 0; }
 
 body {
-  font-family: "opensanslight", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-  font-size: 1rem;
-  line-height: 1.875rem; }
+  font-family: "opensanslight", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
-  font-family: "opensans", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-  margin: 0 0 1.875rem 0; }
-
-h1 {
-  font-size: 2.25rem;
-  line-height: 3.188rem; }
-
-h2 {
-  font-size: 1.9rem;
-  line-height: 2.75rem; }
-
-h3 {
-  font-size: 1.5rem;
-  line-height: 2.315rem; }
-
-h4 {
-  font-size: 1.15rem;
-  line-height: 1.938rem; }
-
-h5 {
-  font-size: 1rem; }
-
-h6 {
-  font-size: 0.85rem; }
+  font-family: "opensans", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
 
 .page-title {
   margin-top: -25px;
@@ -169,15 +144,6 @@ h6 {
   clear: both;
   background: #4184b6;
   color: white; }
-
-p {
-  margin: 0 0 1.875rem 0; }
-
-ul {
-  margin: 0; }
-
-ol {
-  margin: 0; }
 
 .button {
   background: #4184b6;

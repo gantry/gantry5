@@ -213,9 +213,15 @@ optgroup {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+	table-layout: fixed;
+	width: 100%;
 }
 
-td,
-th {
+tr, td, th {
+	vertical-align: middle;
 	padding: 0;
+}
+
+th {
+	text-align: left;
 }

@@ -181,11 +181,16 @@ optgroup {
 
 table {
   border-collapse: collapse;
-  border-spacing: 0; }
+  border-spacing: 0;
+  table-layout: fixed;
+  width: 100%; }
 
-td,
-th {
+tr, td, th {
+  vertical-align: middle;
   padding: 0; }
+
+th {
+  text-align: left; }
 
 .container {
   width: 75rem;
@@ -244,57 +249,114 @@ th {
   margin: 0.625rem;
   padding: 0.938rem; }
 
-body [class*="size-"] {
-  -webkit-box-flex: none;
-  -moz-box-flex: none;
-  box-flex: none;
-  -webkit-flex: none;
-  -moz-flex: none;
-  -ms-flex: none;
-  flex: none; }
-  @media only screen and (max-width: 47.938rem) {
-    body [class*="size-"] {
-      -webkit-box-flex: 0;
-      -moz-box-flex: 0;
-      box-flex: 0;
-      -webkit-flex: 0 100%;
-      -moz-flex: 0 100%;
-      -ms-flex: 0 100%;
-      flex: 0 100%;
-      width: auto !important; } }
+@media only screen and (max-width: 47.938rem) {
+  body [class*="size-"] {
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    box-flex: 0;
+    -webkit-flex: 0 100%;
+    -moz-flex: 0 100%;
+    -ms-flex: 0 100%;
+    flex: 0 100%; } }
 
 .size-1-2 {
-  width: 50% !important; }
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 50%;
+  -moz-flex: 0 50%;
+  -ms-flex: 0 50%;
+  flex: 0 50%; }
 
 .size-1-3 {
-  width: 33.33333% !important; }
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 33.33333%;
+  -moz-flex: 0 33.33333%;
+  -ms-flex: 0 33.33333%;
+  flex: 0 33.33333%; }
 
 .size-1-4 {
-  width: 25% !important; }
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 25%;
+  -moz-flex: 0 25%;
+  -ms-flex: 0 25%;
+  flex: 0 25%; }
 
 .size-1-5 {
-  width: 20% !important; }
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 20%;
+  -moz-flex: 0 20%;
+  -ms-flex: 0 20%;
+  flex: 0 20%; }
 
 .size-1-6 {
-  width: 16.66667% !important; }
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 16.66667%;
+  -moz-flex: 0 16.66667%;
+  -ms-flex: 0 16.66667%;
+  flex: 0 16.66667%; }
 
 .size-1-7 {
-  width: 14.28571% !important; }
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 14.28571%;
+  -moz-flex: 0 14.28571%;
+  -ms-flex: 0 14.28571%;
+  flex: 0 14.28571%; }
 
 .size-1-8 {
-  width: 12.5% !important; }
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 12.5%;
+  -moz-flex: 0 12.5%;
+  -ms-flex: 0 12.5%;
+  flex: 0 12.5%; }
 
 .size-1-9 {
-  width: 11.11111% !important; }
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 11.11111%;
+  -moz-flex: 0 11.11111%;
+  -ms-flex: 0 11.11111%;
+  flex: 0 11.11111%; }
 
 .size-1-10 {
-  width: 10% !important; }
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 10%;
+  -moz-flex: 0 10%;
+  -ms-flex: 0 10%;
+  flex: 0 10%; }
 
 .size-1-11 {
-  width: 9.09091% !important; }
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 9.09091%;
+  -moz-flex: 0 9.09091%;
+  -ms-flex: 0 9.09091%;
+  flex: 0 9.09091%; }
 
 .size-1-12 {
-  width: 8.33333% !important; }
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 8.33333%;
+  -moz-flex: 0 8.33333%;
+  -ms-flex: 0 8.33333%;
+  flex: 0 8.33333%; }
 
 @media only screen and (max-width: 47.938rem) {
   @supports not (flex-wrap: wrap) {
@@ -347,5 +409,51 @@ body [class*="size-"] {
   -moz-flex-direction: row-reverse;
   flex-direction: row-reverse;
   -ms-flex-direction: row-reverse; }
+
+body {
+  font-size: 1rem;
+  line-height: 1.5; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0.75rem 0 1.5rem 0; }
+
+h1 {
+  font-size: 2.25rem; }
+
+h2 {
+  font-size: 1.9rem; }
+
+h3 {
+  font-size: 1.5rem; }
+
+h4 {
+  font-size: 1.15rem; }
+
+h5 {
+  font-size: 1rem; }
+
+h6 {
+  font-size: 0.85rem; }
+
+p {
+  margin: 1.5rem 0; }
+
+ul, ol {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem; }
+  ul ul, ul ol, ol ul, ol ol {
+    margin-top: 0;
+    margin-bottom: 0; }
+
+blockquote {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem; }
+
+pre {
+  margin: 1.5rem 0;
+  word-wrap: break-word; }
+
+code {
+  vertical-align: bottom; }
 
 /*# sourceMappingURL=nucleus.css.map */

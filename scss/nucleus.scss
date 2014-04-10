@@ -1,14 +1,17 @@
 // Load Configuration
-@import "configuration/all";
+@import "configuration/base";
 
 // Load Third Party Libraries
 @import "vendor/bourbon/bourbon";
 
 // Nucleus Particles
-@import "nucleus/particles/all";
+@import "nucleus/particles/base";
 
 // Core
 @import "nucleus/core";
 
-// Layout
-@import "nucleus/layout";
+// Flex
+@import "nucleus/flex";
+
+// Typography
+@import "nucleus/typography";

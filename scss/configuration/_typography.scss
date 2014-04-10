@@ -1,0 +1,18 @@
+// Font Family
+$font-family-default:  			"opensanslight", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+$font-family-bold:  			"opensans", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+
+// Base Sizes
+$core-font-size:				1rem;
+$core-line-height:				1.5;
+
+// Heading Sizes
+$h1-font-size:					$core-font-size + 1.25;
+$h2-font-size:					$core-font-size + 0.90;
+$h3-font-size:					$core-font-size + 0.50;
+$h4-font-size:					$core-font-size + 0.15;
+$h5-font-size:					$core-font-size;
+$h6-font-size:					$core-font-size - 0.15;
+
+// Spacing
+$leading-margin:				$core-line-height * 1rem;

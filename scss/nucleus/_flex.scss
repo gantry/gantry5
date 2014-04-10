@@ -39,56 +39,54 @@
 }
 
 body [class*="size-"] {
-	@include flex(none);
 	@include breakpoint(mobile-only) {
 		@include flex(0 100%);
-		width: auto !important;
 	}
 }
 
 // Custom Size Modifiers
 .size-1-2 {
-	width: percentage(1/2) !important;
+	@include flex(0 percentage(1/2));
 }
 
 .size-1-3 {
-	width: percentage(1/3) !important;
+	@include flex(0 percentage(1/3));
 }
 
 .size-1-4 {
-	width: percentage(1/4) !important;
+	@include flex(0 percentage(1/4));
 }
 
 .size-1-5 {
-	width: percentage(1/5) !important;
+	@include flex(0 percentage(1/5));
 }
 
 .size-1-6 {
-	width: percentage(1/6) !important;
+	@include flex(0 percentage(1/6));
 }
 
 .size-1-7 {
-	width: percentage(1/7) !important;
+	@include flex(0 percentage(1/7));
 }
 
 .size-1-8 {
-	width: percentage(1/8) !important;
+	@include flex(0 percentage(1/8));
 }
 
 .size-1-9 {
-	width: percentage(1/9) !important;
+	@include flex(0 percentage(1/9));
 }
 
 .size-1-10 {
-	width: percentage(1/10) !important;
+	@include flex(0 percentage(1/10));
 }
 
 .size-1-11 {
-	width: percentage(1/11) !important;
+	@include flex(0 percentage(1/11));
 }
 
 .size-1-12 {
-	width: percentage(1/12) !important;
+	@include flex(0 percentage(1/12));
 }
 
 // Fix for Firefox versions 27 and below
