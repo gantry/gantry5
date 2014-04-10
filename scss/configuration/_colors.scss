@@ -1,37 +1,47 @@
 // Core
-$core-text:				#666;
-$core-link:				#4184B6;
-$secondary-link:		#F8B450;
-$white:					#fff;
-$black:					#000;
+$core-text:						#666;
+$core-link:						#4184B6;
+$secondary-link:				#F8B450;
+$white:							#fff;
+$black:							#000;
+$light-gray:					#ddd;
+
+// Borders
+$core-border-color:				$light-gray;
+$core-border-color-hover: 		darken($core-border-color, 10);
+$core-border-color-focus: 		$core-link;
+
+// Shadows
+$core-box-shadow: 				inset 0 1px 3px hsla(0, 0%, 0%, 0.06);
+$core-box-shadow-focus: 		$core-box-shadow, 0 0 5px rgba(darken($core-border-color-focus, 5), 0.7);
 
 // Background
-$page-bg:				#333;
+$page-bg:						#333;
 
 // Header
-$header-text:			#aaa;
+$header-text:					#aaa;
 
 // Nav
-$nav-link:				#aaa;
+$nav-link:						#aaa;
 
 // Showcase
-$showcase-bg:			lighten($core-link, 6%);
-$showcase-text:			#fff;
+$showcase-bg:					lighten($core-link, 6%);
+$showcase-text:					#fff;
 
 // Feature
-$feature-bg:			#fff;
+$feature-bg:					#fff;
 
 // Main Body
-$main-bg:				#f7f7f7;
-$body-border:			darken($main-bg, 5%);
+$main-bg:						#f7f7f7;
+$body-border:					darken($main-bg, 5%);
 
 // Sidebar
-$sidebar-text:			#aaa;
+$sidebar-text:					#aaa;
 
 // Bottom
-$bottom-bg:				#f7f7f7;
-$bottom-text:			$core-text;
+$bottom-bg:						#f7f7f7;
+$bottom-text:					$core-text;
 
 // Footer
-$footer-bg:				#404040;
-$footer-text:			#ccc;
+$footer-bg:						#404040;
+$footer-text:					#ccc;

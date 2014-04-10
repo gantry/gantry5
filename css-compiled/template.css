@@ -63,7 +63,7 @@ a {
   background: #4184b6;
   box-shadow: 0 3px 0 #39749f;
   top: auto;
-  left: 0;
+  left: auto;
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
@@ -134,8 +134,16 @@ body {
   font-family: "opensanslight", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: normal;
+  font-weight: normal; }
+
+strong, h1, h2, h3, h4, h5, h6, label, th {
   font-family: "opensans", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
+
+blockquote {
+  border-left: 3px solid #dddddd; }
+
+hr {
+  border-bottom: 1px solid #dddddd; }
 
 .page-title {
   margin-top: -25px;
@@ -144,6 +152,9 @@ h1, h2, h3, h4, h5, h6 {
   clear: both;
   background: #4184b6;
   color: white; }
+
+th {
+  font-weight: normal; }
 
 .button {
   background: #4184b6;

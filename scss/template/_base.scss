@@ -1,8 +1,8 @@
-// Load Configuration
-@import "configuration/base";
-
 // Load Third Party Libraries
 @import "vendor/bourbon/bourbon";
+
+// Load Configuration
+@import "configuration/base";
 
 // Load Nucleus Library
 @import "nucleus/particles/base";

@@ -6,7 +6,22 @@ body {
 // Headings
 h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
+	@extend strong;
+}
+
+// Strong
+strong {
 	font-family: $font-family-bold;
+}
+
+// Blockquote
+blockquote {
+	border-left: 3px solid $core-border-color;
+}
+
+// Extras
+hr {
+	border-bottom: 1px solid $core-border-color;
 }
 
 // Page Title

@@ -1,36 +1,37 @@
 // Body Base
 body {
-	@include rem-convert(font-size, $core-font-size);
+	font-size: $core-font-size;
 	line-height: $core-line-height;
 }
 
 // Headings
 h1, h2, h3, h4, h5, h6 {
 	margin: $leading-margin / 2 0 $leading-margin 0;
+	text-rendering: optimizeLegibility;
 }
 
 h1 {
-	@include rem-convert(font-size, $h1-font-size);
+	font-size: $h1-font-size;
 }
 
 h2 {
-	@include rem-convert(font-size, $h2-font-size);
+	font-size: $h2-font-size;
 }
 
 h3 {
-	@include rem-convert(font-size, $h3-font-size);
+	font-size: $h3-font-size;
 }
 
 h4 {
-	@include rem-convert(font-size, $h4-font-size);
+	font-size: $h4-font-size;
 }
 
 h5 {
-	@include rem-convert(font-size, $h5-font-size);
+	font-size: $h5-font-size;
 }
 
 h6 {
-	@include rem-convert(font-size, $h6-font-size);
+	font-size: $h6-font-size;
 }
 
 // Paragraph
@@ -50,8 +51,8 @@ ul, ol {
 
 // Blockquote
 blockquote {
-	margin-top: $leading-margin;
-	margin-bottom: $leading-margin;
+	margin: $leading-margin 0;
+	padding-left: $leading-margin / 2;
 }
 
 // Inline and Code
@@ -62,4 +63,12 @@ pre {
 
 code {
 	vertical-align: bottom;
+}
+
+// Extras
+hr {
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	margin: $leading-margin 0;
 }
