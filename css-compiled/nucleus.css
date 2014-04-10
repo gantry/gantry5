@@ -411,6 +411,7 @@ th {
   -ms-flex-direction: row-reverse; }
 
 body {
+  font-size: 16px;
   font-size: 1rem;
   line-height: 1.5; }
 
@@ -418,21 +419,27 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0.75rem 0 1.5rem 0; }
 
 h1 {
+  font-size: 36px;
   font-size: 2.25rem; }
 
 h2 {
+  font-size: 30.4px;
   font-size: 1.9rem; }
 
 h3 {
+  font-size: 24px;
   font-size: 1.5rem; }
 
 h4 {
+  font-size: 18.4px;
   font-size: 1.15rem; }
 
 h5 {
+  font-size: 16px;
   font-size: 1rem; }
 
 h6 {
+  font-size: 13.6px;
   font-size: 0.85rem; }
 
 p {
