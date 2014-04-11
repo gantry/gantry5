@@ -9,6 +9,10 @@ h1, h2, h3, h4, h5, h6 {
 	@extend strong;
 }
 
+h6 {
+	text-transform: uppercase;
+}
+
 // Strong
 strong {
 	font-family: $font-family-bold;
@@ -17,6 +21,12 @@ strong {
 // Blockquote
 blockquote {
 	border-left: 3px solid $core-border-color;
+}
+
+// Inline and Code
+pre {
+	background: $white;
+	border: 1px solid $core-border-color;
 }
 
 // Extras

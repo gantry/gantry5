@@ -74,9 +74,6 @@ mark {
   background: #ff0;
   color: #000; }
 
-small {
-  font-size: 0.875rem; }
-
 sub,
 sup {
   font-size: 0.75rem;
@@ -452,12 +449,21 @@ blockquote {
   margin: 1.5rem 0;
   padding-left: 0.75rem; }
 
+cite {
+  display: block;
+  font-size: 0.875rem; }
+  cite:before {
+    content: "\2014 \0020"; }
+
 pre {
   margin: 1.5rem 0;
-  word-wrap: break-word; }
+  padding: 0.938rem; }
 
 code {
   vertical-align: bottom; }
+
+small {
+  font-size: 0.875rem; }
 
 hr {
   border-left: none;

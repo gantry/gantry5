@@ -46,19 +46,10 @@
 							</div>
 						</li>
 						<li>
-							<a href="gridtest.php">Grid Test</a>
+							<a href="about.php">Nucleus</a>
 						</li>
 						<li>
-							<a href="typography.php">Typography</a>
-							<div class="dropdown">
-								<div class="grid">
-									<div class="block">
-										<ul class="sublevel">
-											<li><a href="forms.php">Forms</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
+							<a href="gridtest.php">Grid Test</a>
 						</li>
 						<li>
 							<a href="blockstest.php">Blocks Test</a>

@@ -55,10 +55,18 @@ blockquote {
 	padding-left: $leading-margin / 2;
 }
 
+cite {
+	display: block;
+	font-size: $core-font-size - 0.125;
+	&:before {
+      content: "\2014 \0020";
+    }
+}
+
 // Inline and Code
 pre {
 	margin: $leading-margin 0;
- 	word-wrap: break-word;
+ 	padding: $content-padding;
 }
 
 code {
@@ -66,6 +74,10 @@ code {
 }
 
 // Extras
+small {
+	font-size: $core-font-size - 0.125;
+}
+
 hr {
 	border-left: none;
 	border-right: none;
