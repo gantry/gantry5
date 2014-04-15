@@ -46,11 +46,6 @@ h1, h2, h3, h4, h5, h6 {
 	color: $maintitle;
 }
 
-// Logo
-#rt-logo-accent {
-	box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.75);
-}
-
 // Top
 #rt-top-surround {
 	h1, h2, h3, h5, h6 {
@@ -161,7 +156,7 @@ ul.menu {
 		}
 	}
 }
-.breadcrumbs, .breadcrumb {
+.breadcrumbs {
 	a {
 		&:after {
 			color: $bodytextlight;
@@ -182,7 +177,6 @@ ul.menu {
 }
 
 // Extras
-
 .tip-wrap {
 	background: $bodycontrast;
 	box-shadow: 0 0 5px rgba(0,0,0,0.3);
@@ -222,26 +216,6 @@ legend {
   }
 }
 
-select,
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"],
-.uneditable-input {
-  color: $bodytext;
-}
-
 textarea,
 input[type="text"],
 input[type="password"],
@@ -261,6 +235,7 @@ input[type="color"],
   background-color: $bodycontrast;
   border: 1px solid $bodyborder;
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  color: $bodytext;
 }
 
 select {
@@ -319,11 +294,6 @@ textarea[readonly] {
 .table-bordered th {
 	background-color: $bodybackground2;
 }
-.well {
-	background-color: transparent;
-	border: none;
-	box-shadow: none;
-}
 
 .nav-tabs.nav-stacked > li > a {
 	background-color: $bodybackground2;
@@ -348,52 +318,6 @@ textarea[readonly] {
 	background-color: $bodybackground3;
 }
 
-.filter-search.alert-info {
-	background-color: transparent;
-	border-color: transparent;
-	color: inherit;
-	.inputbox {
-		
-	}
-}
-
-// Notice Styles
-p {
-	&.success, &.info, &.error, &.warning {
-		border-radius: 6px;
-		padding: 15px;
-		font-weight: bold;
-		border: 1px solid;
-		a {
-			color: #666 !important;
-			&:hover {
-				color: #000 !important;
-				text-shadow: none;
-			}
-		}			
-	}
-	&.success {
-		background: $successBackground;
-		border-color: $successBorder;
-		color: $successText;
-	}
-	&.info {
-		background: $infoBackground;
-		border-color: $infoBorder;
-		color: $infoText;
-	}
-	&.error {
-		background: $errorBackground;
-		border-color: $errorBorder;
-		color: $errorText;
-	}
-	&.warning {
-		background: $warningBackground;
-		border-color: $warningBorder;
-		color: $warningText;
-	}
-}
-
 // Icon Blocks
 .rt-blue, .rt-green, .rt-red, .rt-grey {
 	color: #fff;
@@ -413,9 +337,3 @@ p {
 .rt-grey {
 	background: $rokgrey;
 }
-
-// Miscellaneous
-.even, .odd {
-	background: inherit;
-	border-bottom: inherit;
-} 

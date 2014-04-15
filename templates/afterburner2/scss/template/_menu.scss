@@ -1,21 +1,12 @@
 // Core
 .gf-menu {
-	// Style
 	background: $menuBackground;
 	border-radius: $menuItemRadius;
-
-	// Menu positioning
-	margin: 0 15px 4px;
+	margin: 0;
 	list-style: none;
 	display: inline-block;
 	padding: 0;
-
-	// Clears
-	&:after {
-		display: table;
-		content: '';
-		clear: both;
-	}
+	vertical-align: middle;
 
 	ul {
 		list-style: none;
@@ -56,6 +47,9 @@
 			position: relative;
 			border-right: 1px solid $menuBorder1;
 			padding: 0 25px;
+			@include breakpoint(tablet-range) {
+				padding: 0 15px;
+			}
 			text-transform: uppercase;
 			color: $menuColor;
 			&:after {

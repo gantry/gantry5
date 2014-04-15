@@ -1,5 +1,4 @@
 fieldset {
-	border: 1px solid $core-border-color;
 	padding: $content-padding;
 	margin: 0 0 $leading-margin 0;
 }
@@ -25,21 +24,12 @@ label {
 textarea, #{$all-text-inputs}, select[multiple=multiple] {
 	@include box-sizing(border-box);
 	@include transition(border-color);
-	background-color: white;
 	border-radius: $core-border-radius;
-	border: 1px solid $core-border-color;
-	box-shadow: $core-box-shadow;
 	margin-bottom: $leading-margin / 2;
 	padding: ($leading-margin / 4) ($leading-margin / 4);
 	width: 100%;
 
-	&:hover {
-		border-color: $core-border-color-hover;
-	}
-
 	&:focus {
-		border-color: $core-border-color-focus;
-		box-shadow: $core-box-shadow-focus;
 		outline: none;
 	}
 }
