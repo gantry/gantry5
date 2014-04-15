@@ -1,0 +1,148 @@
+// Core
+.gf-menu {
+	// Style
+	background: $menuBackground;
+	border-radius: $menuItemRadius;
+
+	// Menu positioning
+	margin: 0 15px 4px;
+	list-style: none;
+	display: inline-block;
+
+	// Clears
+	&:after {
+		display: table;
+		content: '';
+		clear: both;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+
+	// Basic font stuff
+	.item {
+		font-family: $menuFontFamily;
+		font-size: $menuFontSize;
+		line-height: $menuLineHeight;
+		color: $menuDropText;
+
+		padding: 10px 25px;
+		text-align: left;
+		text-decoration: none;
+		display: block;
+		outline: 0;
+		cursor: pointer;
+		@include transition(background 0.2s ease-out, border 0.2s ease-out);
+	}
+
+	// Level 1 Style Overrides
+	&.l1 {
+		> li.active {
+			background: $menuActiveBack;
+			> .item {
+				color: $menuActiveColor;
+				font-weight: bold; 
+			}
+		}
+
+		> li > .item {
+			font-size: $menuFontSize - 3;
+			line-height: $menuLineHeight + 23;
+			position: relative;
+			border-right: 1px solid $menuBorder1;
+			padding: 0 25px;
+			text-transform: uppercase;
+			color: $menuColor;
+			&:after {
+				content: "";
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				border-right: 1px solid $menuBorder2;				
+			}		  
+		}
+		> li:first-child {
+			margin-left: 5px;
+		}
+		> li:last-child {
+			margin-right: 5px;
+		}
+	}
+
+
+	// Default items
+	li {
+		float: left;
+		display: block;
+		text-align: center;
+		position: relative;
+		padding: 0;
+		border: none;
+	}
+
+	// Dropdown styling
+	.dropdown {
+		margin: 0 auto;
+		padding: 10px 0;
+		position: absolute;
+		opacity: 0;
+		left: -999em;
+		text-align: left;
+		border-top: 0;
+		//background: $menuDropBack;
+		@include transition(opacity 0.2s ease-out);
+		z-index: 1000;
+		border-radius: 0 0 4px 4px;
+		box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.5); 
+
+		.flyout {
+			display: block;
+		}
+
+
+		ul {
+			li {
+				display:block;
+				float:none;
+				margin-right: 0;
+				padding: 0;
+
+				&.active {
+					> .item {
+						color: $menuDropHoverText;
+						&:hover {
+							color: $menuDropText
+						}
+					}
+				}			   
+			}
+		}
+	}
+
+	// Flyout Dropdown (3rd Level +)
+	.flyout {
+		border-top: 1px solid $menuBorder1;
+	}
+
+}
+
+// RTL
+body.rtl {
+	.gf-menu {
+		&.l1 {
+			> li {
+				float: right;
+			}
+		}
+		li {
+			.item {
+				text-align: right;
+			}
+		}
+	}
+}

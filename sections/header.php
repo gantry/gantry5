@@ -55,7 +55,16 @@
 							<a href="blockstest.php">Blocks Test</a>
 						</li>
 						<li>
-							<a href="#">Menu Item</a>
+							<a href="#">Templates</a>
+							<div class="dropdown">
+								<div class="grid">
+									<div class="block">
+										<ul class="sublevel">
+											<li><a href="templates/afterburner2/afterburner2.php">Afterburner 2</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
 						</li>
 					</ul>
 				</nav>

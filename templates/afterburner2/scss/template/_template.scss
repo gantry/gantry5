@@ -1,0 +1,260 @@
+// Core
+#rt-transition.rt-hidden {
+	opacity: 0;
+}
+#rt-transition.rt-visible {
+	opacity: 1;
+	@include transition(opacity 0.4s ease-in);
+}
+
+// Logo
+.logo-block {
+	padding: 0;
+	margin: 18px 15px;
+}
+#rt-logo {
+	margin: 0;
+	height: 50px;
+	width: 254px;
+	display: block;
+	position: relative;
+	z-index: 2;
+}
+#rt-logo-accent {
+	position: absolute;
+	width: 36px;
+	height: 36px;
+	top: 14px;
+	left: 219px;
+	z-index: 1;
+	border-radius: 100%;
+	.logo-type-custom & {
+		display: none;
+	}
+}
+
+// Navigation
+.menu-block {
+	padding: 0;
+	margin: 25px 15px;
+}
+
+// Top
+#rt-top-surround {
+	.rt-num {
+		font-size: 24px;
+		width: 70px;
+		height: 70px;
+		line-height: 70px;
+		text-align: center;
+		border-radius: 100%;
+		margin: 0 auto;
+	}
+}
+
+// Main
+
+.title {
+	font-size: $baseFontSize + 5;	
+}
+.component-content h2 {
+	font-size: $baseFontSize + 7;
+}
+.title, .component-content h2 {
+	letter-spacing: normal;
+	margin-top: 0;
+	margin-bottom: 15px;
+	border-bottom: 6px solid;
+}
+.rt-border-left, .rt-border-right {
+	&:before, &:after {
+		content: "";
+		position: absolute;
+		width: 25px;
+		height: 25px;
+		z-index: 1;
+	}
+	&:before {
+		top: -1px;
+	}
+	&:after {
+		bottom: -1px;
+	}
+}
+.rt-border-top {
+	border-top: 1px solid;
+}
+.rt-border-bottom {
+	border-bottom: 1px solid;
+}
+.rt-border-left {
+	border-left: 1px solid;
+	&:before, &:after {
+		left: -1px;
+	}
+}
+.rt-border-right {
+	border-right: 1px solid;
+	&:before, &:after {
+		right: -1px;
+	}
+}
+.box1 {
+	border-radius: 4px;
+}
+
+// Menu Module
+ul.menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	ul {
+		list-style: none;
+	}
+	li {
+		margin-bottom: 8px;
+		a, .item, .separator {
+			display: block;
+			font-size: 1.1em;
+			font-weight: bold;
+		}
+		a:before, .item:before, .separator:before {
+			content: "\2022";
+			font-family: FontAwesome;
+			margin-right: 10px;
+			display: inline;
+			vertical-align: middle;
+			font-size: 1.6em;
+			font-weight: normal;
+		}
+	}
+	li.active.current, li#current.active {
+		> a:before, > .item:before, > .separator:before {
+			content: "\f054";
+			font-size: 1em;
+			margin-right: 11px;
+		}
+	}
+	ul.small {
+		font-size: 14px;
+	}
+}
+
+// Buttons and Inputs
+.button, .readon, .readmore, button.validate, #member-profile a, #member-registration a, .formelm-buttons button {
+	display: inline-block;
+	padding: 6px 25px 6px 15px;
+	line-height: 1.7em;
+	font-size: 0.8em;
+	border-radius: 3px;
+	text-transform: uppercase;
+	position: relative;
+	border: 0;
+	&:after {
+		content: "+";
+		position: absolute;
+		right: 15px;
+		top: 5px;
+	}	
+}
+
+// Extras
+.promo {
+	h1 {
+		position: relative;
+		font-size: 3.9em;
+		line-height: 100%;
+	}
+	> .gantry-width-block  {
+		padding-bottom: 15px;
+		&:hover {
+			margin-top: -35px;
+			padding-top: 35px;
+		}
+	}
+}
+
+.gantry-example {
+	position: relative;
+	margin: 15px 0;
+	padding: 39px 19px 14px;
+	*padding-top: 19px;
+	background-color: $white;
+	border: 1px solid #dddddd;
+	border-radius: 4px;
+	.table, .well, blockquote {
+		margin-bottom: 5px;
+	}
+	.lead {
+		font-size: 18px;
+		line-height: 24px;
+	}
+	> p:last-child {
+		margin-bottom: 0;
+	}
+	+ .prettyprint {
+		margin-top: -20px;
+		padding-top: 15px;
+	}
+}
+.gantry-example:after {
+	content: "Example";
+	position: absolute;
+	top: -1px;
+	left: -1px;
+	padding: 3px 7px;
+	font-size: 12px;
+	font-weight: bold;
+	background-color: #f5f5f5;
+	border: 1px solid #dddddd;
+	color: #9da0a4;
+	border-radius: 4px 0 4px 0;
+	font-style: normal;
+}
+form.gantry-example {
+	padding-bottom: 19px;
+}
+
+// Images
+.gantry-img img, img.gantry-img {
+	max-width: 100%;
+	height: auto;
+}
+
+// Copyright
+.rt-copyright-block {
+	text-align: center;
+	text-transform: uppercase;
+}
+
+// Icon Blocks
+[class^="icon-"], [class*=" icon-"] {
+	&.rt-big-icon, 	&.rt-small-icon, &.rt-mini-icon {
+		text-align: center;
+		border-radius: 4px;
+		float: left;
+	}
+	&.rt-big-icon {
+		width: 175px;
+		height: 132px;
+		font-size: 5em;
+		line-height: 132px;
+		margin-right: 30px;
+		margin-bottom: 10px;
+	}
+	&.rt-small-icon {
+		width: 106px;
+		height: 96px;
+		font-size: 2.5em;
+		line-height: 96px;
+		margin-right: 15px;
+		margin-bottom: 14px;
+	}
+	&.rt-mini-icon {
+		width: 40px;
+		height: 40px;
+		font-size: 1.5em;
+		line-height: 40px;
+		margin-right: 5px;
+	}
+}

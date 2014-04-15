@@ -1,0 +1,63 @@
+// Bottom Section --------------
+$bottombackground:		#495565;
+$bottomtext: 			#B1B9C6;
+$bottomborder:			#314353;
+$bottomtitle:			#BFC3CA;
+
+// Footer Section --------------
+$footerbackground:		#313741;
+$footertext:			#FFFFFF;
+
+// Bottom
+#rt-bottom {
+	background: $bottombackground;
+	color: $bottomtext;
+	.title, h1, h2, h3, h4, h5, h6 {
+		color: $bottomtitle;
+		border-color: $bottomborder;
+	}
+	strong {
+		color: $footertext;
+	}
+	a {
+		&:hover {
+			color: $white;
+		}
+	}
+
+	// Typography
+	[class*="rt-border-"] {
+		border-color: $bottomborder;
+		&:before, &:after {
+			background: $bottombackground;
+		}
+	}
+
+	// Icons
+	.rt-grey {
+		background: $rokdarkgrey;
+	}
+
+	// Buttons and Inputs
+	.button, .readon, .readmore, button.validate, #member-profile a, #member-registration a, .formelm-buttons button {
+		&:hover, &:active {
+			background: $rokdarkgrey;
+		}
+	}	
+}
+
+// Footer
+#rt-footer {
+	background: $footerbackground;
+	color: $footertext;
+	.title, h1, h2, h3, h4, h5, h6 {
+		color: lighten($footerbackground, 60%);
+		border-color: lighten($footerbackground, 10%);
+	}
+	a {
+		color: $footertext;
+		&:hover {
+			color: darken($footertext, 15%);
+		}
+	}
+}
