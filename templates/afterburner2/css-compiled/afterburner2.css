@@ -1,15 +1,6 @@
 body {
   font-family: Helvetica, Arial, FreeSans, sans-serif; }
 
-#rt-transition.rt-hidden {
-  opacity: 0; }
-
-#rt-transition.rt-visible {
-  opacity: 1;
-  -webkit-transition: opacity 0.4s ease-in;
-  -moz-transition: opacity 0.4s ease-in;
-  transition: opacity 0.4s ease-in; }
-
 .logo-block {
   padding: 0;
   margin: 18px 15px;
@@ -59,40 +50,17 @@ body {
       line-height: 60px; } }
 
 .title {
-  font-size: 20px; }
-
-.title {
+  font-size: 1.3rem;
   letter-spacing: normal;
   margin-top: 0;
   margin-bottom: 15px;
   border-bottom: 6px solid; }
-
-.rt-border-left:before, .rt-border-left:after, .rt-border-right:before, .rt-border-right:after {
-  content: "";
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  z-index: 1; }
-.rt-border-left:before, .rt-border-right:before {
-  top: -1px; }
-.rt-border-left:after, .rt-border-right:after {
-  bottom: -1px; }
 
 .rt-border-top {
   border-top: 1px solid; }
 
 .rt-border-bottom {
   border-bottom: 1px solid; }
-
-.rt-border-left {
-  border-left: 1px solid; }
-  .rt-border-left:before, .rt-border-left:after {
-    left: -1px; }
-
-.rt-border-right {
-  border-right: 1px solid; }
-  .rt-border-right:before, .rt-border-right:after {
-    right: -1px; }
 
 .box1 {
   border-radius: 4px; }
@@ -128,7 +96,7 @@ ul.menu {
   display: inline-block;
   padding: 6px 25px 6px 15px;
   line-height: 1.7em;
-  font-size: 0.8em;
+  font-size: 0.8rem;
   border-radius: 3px;
   text-transform: uppercase;
   position: relative;
@@ -143,75 +111,37 @@ ul.menu {
   position: relative;
   font-size: 3.25rem;
   line-height: 100%; }
-.promo > .gantry-width-block {
-  padding-bottom: 15px; }
-  .promo > .gantry-width-block:hover {
-    margin-top: -35px;
-    padding-top: 35px; }
-
-.gantry-example {
-  position: relative;
-  margin: 15px 0;
-  padding: 39px 19px 14px;
-  *padding-top: 19px;
-  background-color: white;
-  border: 1px solid #dddddd;
-  border-radius: 4px; }
-  .gantry-example .table, .gantry-example .well, .gantry-example blockquote {
-    margin-bottom: 5px; }
-  .gantry-example .lead {
-    font-size: 18px;
-    line-height: 24px; }
-  .gantry-example > p:last-child {
-    margin-bottom: 0; }
-  .gantry-example + .prettyprint {
-    margin-top: -20px;
-    padding-top: 15px; }
-
-.gantry-example:after {
-  content: "Example";
-  position: absolute;
-  top: -1px;
-  left: -1px;
-  padding: 3px 7px;
-  font-size: 12px;
-  font-weight: bold;
-  background-color: #f5f5f5;
-  border: 1px solid #dddddd;
-  color: #9da0a4;
-  border-radius: 4px 0 4px 0;
-  font-style: normal; }
-
-form.gantry-example {
-  padding-bottom: 19px; }
-
-.gantry-img img, img.gantry-img {
-  max-width: 100%;
-  height: auto; }
+.promo .content {
+  margin: 0;
+  padding: 25px; }
 
 .rt-copyright-block {
   text-align: center;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  font-size: 0.8rem; }
 
-[class^="fa-"].rt-big-icon, [class^="fa-"].rt-small-icon, [class^="fa-"].rt-mini-icon, [class*=" fa-"].rt-big-icon, [class*=" fa-"].rt-small-icon, [class*=" fa-"].rt-mini-icon {
+.rt-big-icon, .rt-small-icon, .rt-mini-icon {
   text-align: center;
   border-radius: 4px;
   float: left; }
-[class^="fa-"].rt-big-icon, [class*=" fa-"].rt-big-icon {
-  width: 175px;
-  height: 132px;
+
+.rt-big-icon {
+  width: 180px;
+  height: 180px;
   font-size: 5em;
-  line-height: 132px;
+  line-height: 180px;
   margin-right: 30px;
   margin-bottom: 10px; }
-[class^="fa-"].rt-small-icon, [class*=" fa-"].rt-small-icon {
-  width: 106px;
-  height: 96px;
+
+.rt-small-icon {
+  width: 110px;
+  height: 110px;
   font-size: 2.5em;
-  line-height: 96px;
+  line-height: 110px;
   margin-right: 15px;
-  margin-bottom: 14px; }
-[class^="fa-"].rt-mini-icon, [class*=" fa-"].rt-mini-icon {
+  margin-bottom: 15px; }
+
+.rt-mini-icon {
   width: 40px;
   height: 40px;
   font-size: 1.5em;
@@ -220,9 +150,6 @@ form.gantry-example {
 
 h5 {
   text-transform: uppercase; }
-
-.gantry-width-spacer {
-  margin: 15px; }
 
 .gf-menu {
   box-shadow: inset 0 1px 1px white; }
@@ -322,74 +249,16 @@ body.rtl .gf-menu li .item {
 
 body .rt-center {
   text-align: center; }
-body .rt-noborder {
-  border: 0 !important;
-  box-shadow: none !important; }
-body .rt-floatleft {
-  float: left;
-  margin-right: 15px;
-  margin-left: 0; }
-body .rt-floatright {
-  float: right;
-  margin-left: 15px;
-  margin-right: 0; }
-body .normalfont, body .normalfont li {
-  font-size: 100% !important;
-  line-height: inherit !important; }
-body .boldfont {
-  font-weight: bold !important; }
-body .noitalic {
-  font-style: normal !important; }
-body .nobold, body .nobold a, body .nobold li {
+body .nobold {
   font-weight: normal !important; }
-body .rt-displayinline {
-  display: inline !important; }
-body .nomarginall, body .rt-block.nomarginall, body ul.nomarginall, body li.nomarginall {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important; }
-body .nopaddingall, body .rt-block.nopaddingall, body ul.nopaddingall, body li.nopaddingall {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important; }
-body .nomargintop, body .rt-block.nomargintop, body ul.nomargintop, body li.nomargintop {
+body .nomargintop {
   margin-top: 0 !important; }
-body .nomarginbottom, body .rt-block.nomarginbottom, body ul.nomarginbottom, body li.nomarginbottom {
+body .nomarginbottom {
   margin-bottom: 0 !important; }
-body .nomarginleft, body .rt-block.nomarginleft, body ul.nomarginleft, body li.nomarginleft {
-  margin-left: 0 !important; }
-body .nomarginright, body .rt-block.nomarginright, body ul.nomarginright, body li.nomarginright {
-  margin-right: 0 !important; }
-body .nopaddingtop, body .rt-block.nopaddingtop, body ul.nopaddingtop, body li.nopaddingtop {
-  padding-top: 0 !important; }
-body .nopaddingbottom, body .rt-block.nopaddingbottom, body ul.nopaddingbottom, body li.nopaddingbottom {
-  padding-bottom: 0 !important; }
-body .nopaddingleft, body .rt-block.nopaddingleft, body ul.nopaddingleft, body li.nopaddingleft {
-  padding-left: 0 !important; }
-body .nopaddingright, body .rt-block.nopaddingright, body ul.nopaddingright, body li.nopaddingright {
-  padding-right: 0 !important; }
 body .smallmarginbottom {
   margin-bottom: 5px !important; }
 body .smallmargintop {
   margin-top: 5px !important; }
-body .smallmarginleft {
-  margin-left: 5px !important; }
-body .smallmarginright {
-  margin-right: 5px !important; }
-body .smallmarginall {
-  margin: 5px !important; }
-body .medmarginbottom {
-  margin-bottom: 10px !important; }
-body .medmargintop {
-  margin-top: 10px !important; }
-body .medmarginleft {
-  margin-left: 10px !important; }
-body .medmarginright {
-  margin-right: 10px !important; }
-body .medmarginall {
-  margin: 10px !important; }
 body .largemarginbottom {
   margin-bottom: 15px !important; }
 body .largemargintop {
@@ -398,28 +267,6 @@ body .largemarginleft {
   margin-left: 15px !important; }
 body .largemarginright {
   margin-right: 15px !important; }
-body .largemarginall {
-  margin: 15px !important; }
-body .smallpaddingbottom {
-  padding-bottom: 5px !important; }
-body .smallpaddingtop {
-  padding-top: 5px !important; }
-body .smallpaddingleft {
-  padding-left: 5px !important; }
-body .smallpaddingright {
-  padding-right: 5px !important; }
-body .smallpaddingall {
-  padding: 5px !important; }
-body .medpaddingbottom {
-  padding-bottom: 10px !important; }
-body .medpaddingtop {
-  padding-top: 10px !important; }
-body .medpaddingleft {
-  padding-left: 10px !important; }
-body .medpaddingright {
-  padding-right: 10px !important; }
-body .medpaddingall {
-  padding: 10px !important; }
 body .largepaddingbottom {
   padding-bottom: 15px !important; }
 body .largepaddingtop {
@@ -428,99 +275,6 @@ body .largepaddingleft {
   padding-left: 15px !important; }
 body .largepaddingright {
   padding-right: 15px !important; }
-body .largepaddingall {
-  padding: 15px !important; }
-body .subsmallmarginbottom {
-  margin-bottom: -5px !important; }
-body .subsmallmargintop {
-  margin-top: -5px !important; }
-body .subsmallmarginleft {
-  margin-left: -5px !important; }
-body .subsmallmarginright {
-  margin-right: -5px !important; }
-body .subsmallmarginall {
-  margin: -5px !important; }
-body .submedmarginbottom {
-  margin-bottom: -10px !important; }
-body .submedmargintop {
-  margin-top: -10px !important; }
-body .submedmarginleft {
-  margin-left: -10px !important; }
-body .submedmarginright {
-  margin-right: -10px !important; }
-body .submedmarginall {
-  margin: -10px !important; }
-body .sublargemarginbottom {
-  margin-bottom: -15px !important; }
-body .sublargemargintop {
-  margin-top: -15px !important; }
-body .sublargemarginleft {
-  margin-left: -15px !important; }
-body .sublargemarginright {
-  margin-right: -15px !important; }
-body .sublargemarginall {
-  margin: -15px !important; }
-body .rt-relative {
-  position: relative; }
-body [class^="custom"][class*="largepadding"], body [class^="custom"][class*="largemargin"], body [class^="custom"][class*="medpadding"], body [class^="custom"][class*="medmargin"], body [class^="custom"][class*="smallpadding"], body [class^="custom"][class*="smallmargin"] {
-  padding: 0 0 0 0 !important;
-  margin: 0 0 0 0 !important; }
-body [class^="custom"].rt-floatleft, body [class^="custom"].rt-floatright {
-  float: none;
-  margin: 0 0 0 0 !important; }
-
-body.rtl .rt-floatleft {
-  float: right;
-  margin-right: 0;
-  margin-left: 15px; }
-body.rtl .rt-floatright {
-  float: left;
-  margin-left: 0;
-  margin-right: 15px; }
-body.rtl .nomarginleft, body.rtl .rt-block.nomarginleft, body.rtl ul.nomarginleft, body.rtl li.nomarginleft {
-  margin-right: 0; }
-body.rtl .nomarginright, body.rtl .rt-block.nomarginright, body.rtl ul.nomarginright, body.rtl li.nomarginright {
-  margin-left: 0; }
-body.rtl .nopaddingleft, body.rtl .rt-block.nopaddingleft, body.rtl ul.nopaddingleft, body.rtl li.nopaddingleft {
-  padding-right: 0; }
-body.rtl .nopaddingright, body.rtl .rt-block.nopaddingright, body.rtl ul.nopaddingright, body.rtl li.nopaddingright {
-  padding-left: 0; }
-body.rtl .smallmarginleft {
-  margin-right: 5px; }
-body.rtl .smallmarginright {
-  margin-left: 5px; }
-body.rtl .medmarginleft {
-  margin-right: 10px; }
-body.rtl .medmarginright {
-  margin-left: 10px; }
-body.rtl .largemarginleft {
-  margin-right: 15px; }
-body.rtl .largemarginright {
-  margin-left: 15px; }
-body.rtl .smallpaddingleft {
-  padding-right: 5px; }
-body.rtl .smallpaddingright {
-  padding-left: 5px; }
-body.rtl .medpaddingleft {
-  padding-right: 10px; }
-body.rtl .medpaddingright {
-  padding-left: 10px; }
-body.rtl .largepaddingleft {
-  padding-right: 15px; }
-body.rtl .largepaddingright {
-  padding-left: 15px; }
-body.rtl .subsmallmarginleft {
-  margin-right: -5px; }
-body.rtl .subsmallmarginright {
-  margin-left: -5px; }
-body.rtl .submedmarginleft {
-  margin-right: -10px; }
-body.rtl .submedmarginright {
-  margin-left: -10px; }
-body.rtl .sublargemarginleft {
-  margin-right: -15px; }
-body.rtl .sublargemarginright {
-  margin-left: -15px; }
 
 #rt-top-surround {
   background: #252d35;
@@ -528,7 +282,7 @@ body.rtl .sublargemarginright {
   #rt-top-surround .rt-num {
     background: #495565;
     color: #f2f2f2; }
-  #rt-top-surround .promo > .gantry-width-block:hover {
+  #rt-top-surround .promo > .content:hover {
     background-color: #252d35;
     background-image: -webkit-linear-gradient(#252d35, #314353);
     background-image: linear-gradient(#252d35, #314353); }
@@ -565,7 +319,7 @@ h1, h2, h3, h4, h5, h6 {
 #rt-top-surround h4 {
   color: #c7c7c7; }
 
-#rt-mainbody-surround .title, #rt-mainbody-surround .article-title {
+#rt-mainbody-surround .title {
   border-bottom-color: #efefef; }
 #rt-mainbody-surround .box1 {
   background: #d9ebef;
@@ -618,13 +372,6 @@ ul.menu li.active.current > a, ul.menu li.active.current > .item, ul.menu li.act
 
 .login + div .nav-tabs.nav-stacked > li > a {
   background: none; }
-
-.component-content .contact .title {
-  background-color: white;
-  background-image: -webkit-linear-gradient(white, #dddddd);
-  background-image: linear-gradient(white, #dddddd);
-  border: 1px solid #d5d5d5;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); }
 
 .pagination ul li a {
   background-color: white;

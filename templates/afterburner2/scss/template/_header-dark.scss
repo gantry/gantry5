@@ -15,7 +15,7 @@ $topshadow:				#000000;
 		color: $toptitle;
 	}
 	.promo {
-		> .gantry-width-block  {		   
+		> .content  {		   
 			&:hover {
 				@include linear-gradient($topbackground, $topbackground2)
 			}

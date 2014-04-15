@@ -64,7 +64,7 @@ h1, h2, h3, h4, h5, h6 {
 
 // Modules
 #rt-mainbody-surround {
-	.title, .article-title {
+	.title {
 		border-bottom-color: $mainborder;
 	}
 	.box1 {
@@ -144,15 +144,6 @@ ul.menu {
 }
 .login + div .nav-tabs.nav-stacked > li > a {
 	background: none;
-}
-.component-content {
-	.contact {
-		.title {
-			@include linear-gradient($bodycontrast, $bodyborder2);
-			border: 1px solid $bodyborder;
-			text-shadow: 0 1px 1px rgba(255,255,255,.75);
-		}
-	}
 }
 .pagination {
 	ul {

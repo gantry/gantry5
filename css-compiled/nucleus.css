@@ -193,7 +193,8 @@ th {
 
 .container {
   width: 75rem;
-  margin: 0 auto; }
+  margin: 0 auto;
+  padding: 0; }
   @media only screen and (min-width: 60rem) and (max-width: 74.938rem) {
     .container {
       width: 60rem; } }

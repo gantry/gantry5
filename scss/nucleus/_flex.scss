@@ -2,6 +2,7 @@
 .container {
 	width: $large-desktop-container;
 	margin: 0 auto;
+	padding: 0;
 	@include breakpoint(desktop-range) {
 		width: $desktop-container;
 	}
