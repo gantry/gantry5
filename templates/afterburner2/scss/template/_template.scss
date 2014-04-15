@@ -1,4 +1,7 @@
 // Core
+body {
+	font-family: Helvetica, Arial, FreeSans, sans-serif;
+}
 #rt-transition.rt-hidden {
 	opacity: 0;
 }
@@ -11,6 +14,7 @@
 .logo-block {
 	padding: 0;
 	margin: 18px 15px;
+	position: relative;
 }
 #rt-logo {
 	margin: 0;
@@ -42,25 +46,34 @@
 // Top
 #rt-top-surround {
 	.rt-num {
-		font-size: 24px;
-		width: 70px;
-		height: 70px;
-		line-height: 70px;
+		font-size: 28px;
+		width: 80px;
+		height: 80px;
+		line-height: 80px;
 		text-align: center;
 		border-radius: 100%;
-		margin: 0 auto;
+		@include breakpoint(desktop-range) {
+			font-size: 24px;
+			width: 65px;
+			height: 65px;
+			line-height: 65px;
+		}
+		@include breakpoint(tablet-range) {
+			font-size: 22px;
+			width: 60px;
+			height: 60px;
+			line-height: 60px;
+		}
 	}
 }
 
 // Main
 
 .title {
-	font-size: $baseFontSize + 5;	
+	font-size: $baseFontSize + 7;	
 }
-.component-content h2 {
-	font-size: $baseFontSize + 7;
-}
-.title, .component-content h2 {
+
+.title {
 	letter-spacing: normal;
 	margin-top: 0;
 	margin-bottom: 15px;
@@ -162,7 +175,7 @@ ul.menu {
 .promo {
 	h1 {
 		position: relative;
-		font-size: 3.9em;
+		font-size: $h1-font-size + 1;
 		line-height: 100%;
 	}
 	> .gantry-width-block  {
@@ -228,7 +241,7 @@ form.gantry-example {
 }
 
 // Icon Blocks
-[class^="icon-"], [class*=" icon-"] {
+[class^="fa-"], [class*=" fa-"] {
 	&.rt-big-icon, 	&.rt-small-icon, &.rt-mini-icon {
 		text-align: center;
 		border-radius: 4px;
@@ -257,4 +270,12 @@ form.gantry-example {
 		line-height: 40px;
 		margin-right: 5px;
 	}
+}
+
+h5 {
+	text-transform: uppercase;
+}
+
+.gantry-width-spacer {
+	margin: 15px;
 }
