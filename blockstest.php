@@ -186,39 +186,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="grid pure-g">
-			<div class="block pure-u-1">
-				<div class="content">
-					<h3>RTL Reversed Blocks</h3>
-				</div>
-			</div>
-		</div>
-		<div class="grid reverse pure-g">
-			<div class="block pure-u-1-4">
-				<div class="content bg">
-					<h3>Block One</h3>
-					Mauris fermentum porta sem, non hendrerit enim bibendum consectetur
-				</div>
-			</div>
-			<div class="block pure-u-1-4">
-				<div class="content bg">
-					<h3>Block Two</h3>
-					Mauris fermentum porta sem, non hendrerit enim bibendum consectetur
-				</div>
-			</div>
-			<div class="block pure-u-1-4">
-				<div class="content bg">
-					<h3>Block Three</h3>
-					Mauris fermentum porta sem, non hendrerit enim bibendum consectetur
-				</div>
-			</div>
-			<div class="block pure-u-1-4">
-				<div class="content bg">
-					<h3>Block Four</h3>
-					Mauris fermentum porta sem, non hendrerit enim bibendum consectetur
-				</div>
-			</div>
-		</div>
 		
 	</main>
 
