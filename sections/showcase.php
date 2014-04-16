@@ -1,5 +1,5 @@
 <section id="showcase">
-	<div class="grid pure-g-r">
+	<div class="grid pure-g">
 		<div class="block pure-u-1-2">
 			<div class="content">
 				<h2>Unlimited Possibilities</h2>

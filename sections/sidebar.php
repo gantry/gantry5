@@ -1,5 +1,5 @@
 <section id="sidebar">
-	<div class="grid pure-g-r">
+	<div class="grid pure-g">
 		<div class="block pure-u-1-1">
 			<div class="content">
 				<h4>Nucleus Framework</h4>

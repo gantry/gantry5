@@ -1,5 +1,5 @@
 <footer id="footer">
-	<div class="grid pure-g-r">
+	<div class="grid pure-g">
 		<div class="block size-1-6 pure-u-1-6">
 		</div>
 		<div class="block pure-u-3-4">

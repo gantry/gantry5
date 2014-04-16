@@ -7,6 +7,6 @@
 	<!--[if (gte IE 8)&(lte IE 9)]>
 		<script type="text/javascript" src="js/html5shiv-printshiv.min.js"></script>
 		<link rel="stylesheet" href="css/nucleus-ie9.css" type="text/css" />
-		<link rel="stylesheet" href="css/pure/grids-min.css" type="text/css" />
+		<link rel="stylesheet" href="css/pure-0.5.0/grids-min.css" type="text/css" />
 	<![endif]-->
 </head>

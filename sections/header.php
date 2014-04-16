@@ -1,5 +1,5 @@
 <header id="header">
-	<div class="grid pure-g-r">
+	<div class="grid pure-g">
 		<div class="block size-1-5 pure-u-1-5">
 			<div class="content">
 				<a href="index.php"><img src="images/logo.png" alt="Gantry" class="logo" /></a>

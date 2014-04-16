@@ -8,17 +8,17 @@
 	<!-- Header -->
 	<?php include(__DIR__.'/sections/header.php'); ?>
 
-	<div class="grid pure-g-r">
+	<div class="grid pure-g">
 		<div class="block pure-u-4-5">
 			<main id="main">
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1">
 						<div class="content">
 							<h2 class="page-title">Typography</h2>
 						</div>
 					</div>
 				</div>
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1">
 						<div class="content">
 							<h3>Headings</h3>
@@ -26,7 +26,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1-2">
 						<div class="content">
 							<h6>HTML</h6>
@@ -53,7 +53,7 @@
 					</div>
 				</div>
 				<hr>
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1">
 						<div class="content">
 							<h3>Paragraphs</h3>
@@ -61,7 +61,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1-2">
 						<div class="content">
 							<h6>HTML</h6>
@@ -81,7 +81,7 @@
 					</div>
 				</div>
 				<hr>
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1">
 						<div class="content">
 							<h3>Lists</h3>
@@ -89,7 +89,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1-2">
 						<div class="content">
 							<h6>HTML</h6>
@@ -129,7 +129,7 @@
 						</div>
 					</div>
 				</div>
-								<div class="grid pure-g-r">
+								<div class="grid pure-g">
 					<div class="block pure-u-1-2">
 						<div class="content">
 							<h6>HTML</h6>
@@ -170,7 +170,7 @@
 					</div>
 				</div>
 				<hr>
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1">
 						<div class="content">
 							<h3>Blockquote</h3>
@@ -178,7 +178,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1-2">
 						<div class="content">
 							<h6>HTML</h6>
@@ -195,7 +195,7 @@
 					</div>
 				</div>
 				<hr>
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1">
 						<div class="content">
 							<h3>Tables</h3>
@@ -203,7 +203,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1-2">
 						<div class="content">
 							<h6>HTML</h6>

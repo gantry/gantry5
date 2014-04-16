@@ -7,7 +7,7 @@
 	<!-- Header -->
 	<?php include(__DIR__.'/sections/header.php'); ?>
 
-	<div class="grid pure-g-r">
+	<div class="grid pure-g">
 		<div class="block pure-u-3-4">
 			<!-- Showcase -->
 			<?php include(__DIR__.'/sections/showcase.php'); ?>
@@ -17,7 +17,7 @@
 
 			<!-- Main Body -->
 			<main id="main">
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1-1">
 						<div class="content">
 							<h2>Main Column</h2>
@@ -36,7 +36,7 @@
 		</div>
 		<div class="block size-1-4 pure-u-1-4">
 			<section id="sidebar">
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1-1">
 						<div class="content">
 							<h2>Side Column</h2>

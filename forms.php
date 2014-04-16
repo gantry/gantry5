@@ -8,17 +8,17 @@
 	<!-- Header -->
 	<?php include(__DIR__.'/sections/header.php'); ?>
 
-	<div class="grid pure-g-r">
+	<div class="grid pure-g">
 		<div class="block pure-u-4-5">
 			<main id="main">
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1">
 						<div class="content">
 							<h2 class="page-title">Forms</h2>
 						</div>
 					</div>
 				</div>
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1">
 						<div class="content">
 							<fieldset>

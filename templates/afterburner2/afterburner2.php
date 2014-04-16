@@ -8,22 +8,22 @@
 	<link rel="stylesheet" href="font-awesome/css/font-awesome.css" type="text/css" />
 	<link rel="stylesheet" href="css-compiled/afterburner2.css" type="text/css" />
 	<!--[if IE 9]>
-		<link rel="stylesheet" href="css/nucleus-ie9.css" type="text/css" />
-		<link rel="stylesheet" href="css/pure/grids-min.css" type="text/css" />
+		<link rel="stylesheet" href="../../css/nucleus-ie9.css" type="text/css" />
+		<link rel="stylesheet" href="../../css/pure/grids-min.css" type="text/css" />
 	<![endif]-->
 </head>
 <body>
 	<header id="rt-top-surround">
 		<div id="rt-top">
 			<div class="container">
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block size-1-3 pure-u-1-3">
 						<div class="content logo-block">
 							<a href="#" id="rt-logo"></a>
 							<span id="rt-logo-accent"></span>
 						</div>
 					</div>
-					<div class="block pure-2-3">
+					<div class="block pure-u-2-3">
 						<div class="content menu-block">
 							<ul class="gf-menu l1 "> <li class="item101 active last"> <a class="item" href="/live/joomla/afterburner2/"> Home            </a> </li> <li class="item115 parent"> <a class="item" href="javascript:void(0);"> Features            </a> <div class="dropdown " style="width:180px;"> <div class="column"> <ul class="level2"> <li class="item104"> <a class="item" href="/live/joomla/afterburner2/features/module-variations"> Module Variations            </a> </li> <li class="item116"> <a class="item" href="/live/joomla/afterburner2/features/module-positions"> Module Positions            </a> </li> <li class="item117 parent"> <a class="item" href="javascript:void(0);"> Menu Example            </a> <div class="dropdown flyout " style="width:180px;"> <div class="column"> <ul class="level3"> <li class="item121"> <a class="item" href="javascript:void(0);"> Child Item            </a> </li> <li class="item122"> <a class="item" href="javascript:void(0);"> Child Item            </a> </li> <li class="item123"> <a class="item" href="javascript:void(0);"> Child Item            </a> </li> <li class="item124"> <a class="item" href="javascript:void(0);"> Child Item            </a> </li> </ul> </div> </div> </li> </ul> </div> </div> </li> <li class="item103"> <a class="item" href="/live/joomla/afterburner2/typography"> Typography            </a> </li> <li class="item105 parent"> <a class="item" href="/live/joomla/afterburner2/joomla"> Joomla            </a> <div class="dropdown " style="width:180px;"> <div class="column"> <ul class="level2"> <li class="item106"> <a class="item" href="/live/joomla/afterburner2/joomla/category-blog"> Category Blog            </a> </li> <li class="item107"> <a class="item" href="/live/joomla/afterburner2/joomla/member-login"> Member Login            </a> </li> <li class="item108"> <a class="item" href="/live/joomla/afterburner2/joomla/web-links"> Web Links            </a> </li> </ul> </div> </div> </li> <li class="item110 parent"> <a class="item" href="/live/joomla/afterburner2/presets"> Presets            </a> <div class="dropdown " style="width:180px;"> <div class="column"> <ul class="level2"> <li class="item111"> <a class="item" href="/live/joomla/afterburner2/?presets=preset1"> Preset 1            </a> </li> <li class="item112"> <a class="item" href="/live/joomla/afterburner2/?presets=preset2"> Preset 2            </a> </li> <li class="item113"> <a class="item" href="/live/joomla/afterburner2/?presets=preset3"> Preset 3            </a> </li> </ul> </div> </div> </li> </ul>
 						</div>
@@ -33,7 +33,7 @@
 		</div>
 		<div id="rt-header">
 			<div class="container">
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1">
 						<div class="content">
 							<div class="promo">
@@ -45,10 +45,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="grid pure-g-r">
+				<div class="grid pure-g">
 					<div class="block pure-u-1-3 promo">
 						<div class="content">
-							<div class="grid pure-g-r">
+							<div class="grid pure-g">
 								<div class="block size-1-3 pure-u-1-3">     
 									<div class="rt-num">1.0</div>		
 							 	</div>   
@@ -63,7 +63,7 @@
 
 					<div class="block pure-u-1-3 promo">
 						<div class="content">
-							<div class="grid pure-g-r">
+							<div class="grid pure-g">
 								<div class="block size-1-3 pure-u-1-3">        
 									<div class="rt-num">2.0</div>
 								</div>	
@@ -78,7 +78,7 @@
 
 					<div class="block pure-u-1-3 promo">
 						<div class="content">
-							<div class="grid pure-g-r">
+							<div class="grid pure-g">
 								<div class="block size-1-3 pure-u-1-3">       
 									<div class="rt-num">3.0</div>		
 							 	</div>   
@@ -96,7 +96,7 @@
 	</header>
 	<div id="rt-mainbody-surround">
 		<div class="container">			
-			<div class="grid pure-g-r">
+			<div class="grid pure-g">
 				<div class="block pure-u-2-3">
 					<section id="main">
 						<div class="content">
@@ -109,7 +109,7 @@
 								<p><a href="#" class="readon">Read More</a></p>
 							</div>
 							<h2 class="title">Template Extras</h2>
-							<div class="grid pure-g-r">
+							<div class="grid pure-g">
 								<div class="block pure-u-1-2">
 									<div class="largepaddingtop largepaddingright largemarginright largemarginbottom">
 									Afterburner2 is an experiment in how streamlined a Gantry template can be whilst still being stunning and usable. Many extras have been removed, but still contains styling for major elements.
@@ -124,7 +124,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="grid pure-g-r">
+							<div class="grid pure-g">
 								<div class="block pure-u-1-2">
 									<div class="largepaddingtop largepaddingright largemarginright largemarginbottom">
 										<div class="rt-small-icon rt-grey fa fa-list"></div>
@@ -144,7 +144,7 @@
 						</div>
 					</section>
 				</div>
-				<div class="block size-1-3 pure-1-3">
+				<div class="block size-1-3 pure-u-1-3">
 					<section id="sidebar">
 						<div class="content">
 							<h2 class="title">Preset Styles</h2>
@@ -166,7 +166,7 @@
 	</div>
 	<div id="rt-bottom">
 		<div class="container">		
-			<div class="grid pure-g-r">
+			<div class="grid pure-g">
 				<div class="block pure-u-2-3">
 					<div class="content">
 						<h2 class="title">Demo Information</h2>
@@ -178,10 +178,10 @@
 						<span class="rt-grey rt-mini-icon fa fa-rss"></span>
 					</div>
 				</div>
-				<div class="block size-1-3 pure-1-3">
+				<div class="block size-1-3 pure-u-1-3">
 					<div class="content">
 						<h2 class="title">Contact Us</h2>
-						<div class="grid pure-g-r">
+						<div class="grid pure-g">
 							<div class="block size-1-7 pure-u-1-7">
 								<h4><span class="fa fa-phone"></span></h4>	
 							</div>
@@ -190,7 +190,7 @@
 								<br><span>+1 (555) 555-555-5556</span>
 							</div>
 						</div>
-						<div class="grid pure-g-r">
+						<div class="grid pure-g">
 							<div class="block size-1-7 pure-u-1-7">
 								<h4><span class="fa fa-home"></span></h4>	
 							</div>
@@ -199,7 +199,7 @@
 								<br><span>Seattle, WA 00000, USA</span> 
 							</div>
 						</div>
-						<div class="grid pure-g-r">
+						<div class="grid pure-g">
 							<div class="block size-1-7 pure-u-1-7">
 								<h4 class="nomargintop"><span class="fa fa-envelope"></span></h4>	
 							</div>
@@ -214,7 +214,7 @@
 	</div>
 	<div id="rt-footer">
 		<div class="container">
-			<div class="grid pure-g-r">
+			<div class="grid pure-g">
 					<div class="block pure-u-1">
 						<div class="content">
 							<div class="rt-copyright-block">
