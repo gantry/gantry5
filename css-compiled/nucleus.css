@@ -398,18 +398,6 @@ th {
     .fixed-block {
       width: 100%; } }
 
-.reverse {
-  -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
-  box-orient: horizontal;
-  -webkit-box-direction: reverse;
-  -moz-box-direction: reverse;
-  box-direction: reverse;
-  -webkit-flex-direction: row-reverse;
-  -moz-flex-direction: row-reverse;
-  flex-direction: row-reverse;
-  -ms-flex-direction: row-reverse; }
-
 body {
   font-size: 1rem;
   line-height: 1.5; }

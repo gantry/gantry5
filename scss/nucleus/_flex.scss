@@ -118,8 +118,3 @@ body [class*="size-"] {
 		width: 100%;
 	}
 }
-
-// RTL Reversed Grid
-.reverse {
-	@include flex-direction(row-reverse);
-}
