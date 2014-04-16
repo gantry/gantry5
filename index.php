@@ -16,7 +16,7 @@
 			<?php include(__DIR__.'/sections/feature.php'); ?>
 
 			<!-- Main Body -->
-			<section id="main">
+			<main id="main">
 				<div class="grid pure-g-r">
 					<div class="block pure-u-1-1">
 						<div class="content">
@@ -28,7 +28,7 @@
 						</div>
 					</div>
 				</div>
-			</section>
+			</main>
 
 			<!-- Bottom -->
 			<?php include(__DIR__.'/sections/bottom.php'); ?>

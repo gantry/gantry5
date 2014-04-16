@@ -8,7 +8,7 @@
 	<!-- Header -->
 	<?php include(__DIR__.'/sections/header.php'); ?>
 
-	<section id="main">
+	<main id="main">
 		<div class="grid pure-g-r">
 			<div class="block pure-u-1">
 				<div class="content">
@@ -220,7 +220,7 @@
 			</div>
 		</div>
 		
-	</section>
+	</main>
 
 	<!-- Footer -->
 	<?php include(__DIR__.'/sections/footer.php'); ?>

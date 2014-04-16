@@ -10,7 +10,7 @@
 
 	<div class="grid pure-g-r">
 		<div class="block pure-u-4-5">
-			<section id="main">
+			<main id="main">
 				<div class="grid pure-g-r">
 					<div class="block pure-u-1">
 						<div class="content">
@@ -277,7 +277,7 @@
 						</div>
 					</div>
 				</div>
-			</section>
+			</main>
 		</div>
 		<div class="block size-1-5 pure-u-1-5">
 			<?php include(__DIR__.'/sections/sidebar.php'); ?>
