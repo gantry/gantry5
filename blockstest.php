@@ -23,50 +23,50 @@
 				</div>
 			</div>
 		</div>
-		<div class="grid pure-g">
-			<div class="fixed-block pure-u-1-3">
+		<div class="grid fixed-blocks pure-g">
+			<div class="block pure-u-1-3">
 				<div class="content bg">
 					<h3>Block One</h3>
 					Mauris fermentum porta sem, non hendrerit enim bibendum consectetur
 				</div>
 			</div>
-			<div class="fixed-block pure-u-1-3">
+			<div class="block pure-u-1-3">
 				<div class="content bg">
 					<h3>Block Two</h3>
 					Mauris fermentum porta sem, non hendrerit enim bibendum consectetur
 				</div>
 			</div>
-			<div class="fixed-block pure-u-1-3">
+			<div class="block pure-u-1-3">
 				<div class="content bg">
 					<h3>Block Three</h3>
 					Mauris fermentum porta sem, non hendrerit enim bibendum consectetur
 				</div>
 			</div>
-			<div class="fixed-block pure-u-1-3">
+			<div class="block pure-u-1-3">
 				<div class="content bg">
 					<h3>Block Four</h3>
 					Mauris fermentum porta sem, non hendrerit enim bibendum consectetur
 				</div>
 			</div>
-			<div class="fixed-block pure-u-1-3">
+			<div class="block pure-u-1-3">
 				<div class="content bg">
 					<h3>Block Five</h3>
 					Mauris fermentum porta sem, non hendrerit enim bibendum consectetur
 				</div>
 			</div>
-			<div class="fixed-block pure-u-1-3">
+			<div class="block pure-u-1-3">
 				<div class="content bg">
 					<h3>Block Six</h3>
 					Mauris fermentum porta sem, non hendrerit enim bibendum consectetur
 				</div>
 			</div>
-			<div class="fixed-block pure-u-1-3">
+			<div class="block pure-u-1-3">
 				<div class="content bg">
 					<h3>Block Seven</h3>
 					Mauris fermentum porta sem, non hendrerit enim bibendum consectetur
 				</div>
 			</div>
-			<div class="fixed-block pure-u-1-3">
+			<div class="block pure-u-1-3">
 				<div class="content bg">
 					<h3>Block Eight</h3>
 					Mauris fermentum porta sem, non hendrerit enim bibendum consectetur

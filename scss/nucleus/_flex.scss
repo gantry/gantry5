@@ -21,9 +21,13 @@
 .grid {
 	@include display(flex);
 	@include flex-wrap(wrap);
+	@include flex-flow(row);
 	list-style: none;
 	margin: 0;
 	padding: 0;
+	@include breakpoint(mobile-only) {
+		@include flex-flow(row wrap);
+	}
 }
 
 .block {
@@ -48,6 +52,7 @@ body [class*="size-"] {
 // Custom Size Modifiers
 .size-1-2 {
 	@include flex(0 percentage(1/2));
+	margin: 0 5px;
 }
 
 .size-1-3 {
@@ -166,16 +171,19 @@ body [class*="size-"] {
 }
 
 // Fixed Grid Style
-.fixed-block {
-	@include flex(inherit);
-	width: $fixed-block-full;
-	@include breakpoint(desktop-range) {
-		width: $fixed-block-desktop;
-	}
-	@include breakpoint(tablet-range) {
-		width: $fixed-block-tablet;
-	}
-	@include breakpoint(mobile-only) {
-		width: 100%;
+.fixed-blocks {
+	@include flex-flow(row wrap);
+	.block {
+		@include flex(inherit);
+		width: $fixed-block-full;
+		@include breakpoint(desktop-range) {
+			width: $fixed-block-desktop;
+		}
+		@include breakpoint(tablet-range) {
+			width: $fixed-block-tablet;
+		}
+		@include breakpoint(mobile-only) {
+			width: 100%;
+		}
 	}
 }

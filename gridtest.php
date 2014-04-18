@@ -587,7 +587,7 @@
 		</div>
 
 		<div class="grid pure-g">
-			<div class="block pure-u-1-2">
+			<div class="block size-1-2 pure-u-1-2">
 				<div class="content bg">
 					Flex
 				</div>

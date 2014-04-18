@@ -221,9 +221,17 @@ th {
   -moz-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-flex-flow: row;
+  -moz-flex-flow: row;
+  flex-flow: row;
   list-style: none;
   margin: 0;
   padding: 0; }
+  @media only all and (max-width: 47.938rem) {
+    .grid {
+      -webkit-flex-flow: row wrap;
+      -moz-flex-flow: row wrap;
+      flex-flow: row wrap; } }
 
 .block {
   -webkit-box-flex: 1;
@@ -264,7 +272,8 @@ th {
   -webkit-flex: 0 50%;
   -moz-flex: 0 50%;
   -ms-flex: 0 50%;
-  flex: 0 50%; }
+  flex: 0 50%;
+  margin: 0 5px; }
 
 .size-1-3 {
   -webkit-box-flex: 0;
@@ -488,24 +497,28 @@ th {
   -ms-flex-order: 1;
   order: 1; }
 
-.fixed-block {
-  -webkit-box-flex: inherit;
-  -moz-box-flex: inherit;
-  box-flex: inherit;
-  -webkit-flex: inherit;
-  -moz-flex: inherit;
-  -ms-flex: inherit;
-  flex: inherit;
-  width: 25%; }
-  @media only all and (min-width: 60rem) and (max-width: 74.938rem) {
-    .fixed-block {
-      width: 33.33333%; } }
-  @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-    .fixed-block {
-      width: 50%; } }
-  @media only all and (max-width: 47.938rem) {
-    .fixed-block {
-      width: 100%; } }
+.fixed-blocks {
+  -webkit-flex-flow: row wrap;
+  -moz-flex-flow: row wrap;
+  flex-flow: row wrap; }
+  .fixed-blocks .block {
+    -webkit-box-flex: inherit;
+    -moz-box-flex: inherit;
+    box-flex: inherit;
+    -webkit-flex: inherit;
+    -moz-flex: inherit;
+    -ms-flex: inherit;
+    flex: inherit;
+    width: 25%; }
+    @media only all and (min-width: 60rem) and (max-width: 74.938rem) {
+      .fixed-blocks .block {
+        width: 33.33333%; } }
+    @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+      .fixed-blocks .block {
+        width: 50%; } }
+    @media only all and (max-width: 47.938rem) {
+      .fixed-blocks .block {
+        width: 100%; } }
 
 body {
   font-size: 1rem;
