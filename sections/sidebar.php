@@ -2,7 +2,7 @@
 	<div class="grid pure-g">
 		<div class="block pure-u-1-1">
 			<div class="content">
-				<h4>Nucleus Framework</h4>
+				<h4>Nucleus Engine</h4>
 				<ul>
 					<li><a href="about.php">About Nucleus</a></li>
 					<li><a href="#">SCSS</a></li>
