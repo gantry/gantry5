@@ -20,7 +20,6 @@
 // Grid Row and Column Setup
 .grid {
 	@include display(flex);
-	@include flex-wrap(wrap);
 	@include flex-flow(row);
 	list-style: none;
 	margin: 0;
@@ -52,7 +51,6 @@ body [class*="size-"] {
 // Custom Size Modifiers
 .size-1-2 {
 	@include flex(0 percentage(1/2));
-	margin: 0 5px;
 }
 
 .size-1-3 {

@@ -22,7 +22,6 @@ label {
 }
 
 textarea, #{$all-text-inputs}, select[multiple=multiple] {
-	@include box-sizing(border-box);
 	@include transition(border-color);
 	border-radius: $core-border-radius;
 	margin-bottom: $leading-margin / 2;
