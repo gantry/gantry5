@@ -569,6 +569,7 @@ hr {
   margin: 1.5rem 0; }
 
 fieldset {
+  border: 0;
   padding: 0.938rem;
   margin: 0 0 1.5rem 0; }
 

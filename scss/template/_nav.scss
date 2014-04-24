@@ -1,6 +1,6 @@
 .main-nav {
 	ul {
-		@include list-reset;
+		@extend %list-reset;
 	}
 
 	// Main Level
@@ -33,8 +33,8 @@
 	.dropdown {
 		position: absolute;
 		width: auto;
-		background: $core-link;
-		box-shadow: 0 3px 0 darken($core-link, 6%);
+		background: $core-accent;
+		box-shadow: 0 3px 0 darken($core-accent, 6%);
 		top: auto;
 		left: auto;
 		opacity: 0;
@@ -55,8 +55,8 @@
 		opacity: 0;
 		visibility: hidden;
 		overflow: hidden;
-		background: darken($core-link, 4%);
-		box-shadow: 0 3px 0 darken($core-link, 8%);
+		background: darken($core-accent, 4%);
+		box-shadow: 0 3px 0 darken($core-accent, 8%);
 	}
 
 	// Sublevel Items
@@ -67,7 +67,7 @@
     		position: relative;
     		@include transition(all .1s ease-out);
     		&:hover {
-    			background: darken($core-link, 8%);
+    			background: darken($core-accent, 8%);
     			> .flyout {
     				left: 100%;
     				width: $flyout-width;

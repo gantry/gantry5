@@ -1,12 +1,12 @@
 // List Reset
-@mixin list-reset {
+%list-reset {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
 // Vertical Centering
-@mixin vertical-align {
+%vertical-align {
 	position: relative;
 	top: 50%;
 	-webkit-transform: translateY(-50%);
@@ -16,42 +16,13 @@
 	transform: translateY(-50%);
 }
 
-// REM to PX Conversion for Fallback
-@function parseInt($n) {
-	@return $n / ($n * 0 + 1);
+// Columns
+@mixin columns($columns) {
+	width: percentage(1/$columns);
 }
 
-@mixin rem-convert($property, $values) {
-	$px : ();
-	$rem: ();
-  
-	@each $value in $values {
-   
-		@if $value == 0 or $value == auto {
-			$px : append($px , $value);
-			$rem: append($rem, $value);
-		}
-    
-	    @else { 
-			$unit: unit($value);
-			$val: parseInt($value);
-	      
-			@if $unit == "px" {
-				$px : append($px,  $value);
-				$rem: append($rem, ($val / 16 + rem));
-			}
-	      
-			@if $unit == "rem" {
-				$px : append($px,  ($val * 16 + px));
-				$rem: append($rem, $value);
-			}
-		}
-	}
-  
-	@if $px == $rem {
-		#{$property}: $px;
-	} @else {
-		#{$property}: $px;
-		#{$property}: $rem;
-	}
+// Float with margin variable
+@mixin float($direction, $margin: 0) {
+	float: $direction;
+	margin-#{opposite-direction($direction)}: $margin;
 }

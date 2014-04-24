@@ -1,6 +1,6 @@
 .button {
 	@extend %button;
-	@include button-color($core-link);
+	@include button-color($core-accent);
 }
 
 .button-secondary {

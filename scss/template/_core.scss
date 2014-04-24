@@ -4,9 +4,9 @@ body {
 }
 
 a {
-	color: $core-link;
+	color: $core-accent;
 	&:hover {
-		color: darken($core-link, 100%);
+		color: darken($core-accent, 100%);
 	}
 }
 
