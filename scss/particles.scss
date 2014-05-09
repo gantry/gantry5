@@ -4,12 +4,9 @@
 // Load Nucleus Configuration
 @import "configuration/nucleus/base";
 
-// Load Template Configuration
-@import "configuration/template/base";
-
 // Load Nucleus Mixins and Functions
 @import "nucleus/functions/base";
 @import "nucleus/mixins/base";
 
-// Load Template Library
-@import "modules/base";
+// Text Alignment Classes
+@import "nucleus/particles/align-text";

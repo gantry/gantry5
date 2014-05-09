@@ -4,8 +4,9 @@
 // Load Nucleus Configuration
 @import "configuration/nucleus/base";
 
-// Nucleus Particles
-@import "nucleus/particles/base";
+// Load Nucleus Mixins and Functions
+@import "nucleus/functions/base";
+@import "nucleus/mixins/base";
 
 // Core
 @import "nucleus/core";

@@ -7,5 +7,6 @@
 // Load Template Configuration
 @import "configuration/template/base";
 
-// Load Nucleus Library
-@import "nucleus/particles/base";
+// Load Nucleus Mixins and Functions
+@import "nucleus/functions/base";
+@import "nucleus/mixins/base";
