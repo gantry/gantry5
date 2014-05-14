@@ -1,3 +1,5 @@
+// REQUIRED DEPENDENCIES - DO NOT CHANGE
+
 // Load Third Party Libraries
 @import "vendor/bourbon/bourbon";
 
@@ -7,6 +9,10 @@
 // Load Nucleus Mixins and Functions
 @import "nucleus/functions/base";
 @import "nucleus/mixins/base";
+
+//-------------------------------------------
+
+// LOAD NUCLEUS COMPONENTS
 
 // Core
 @import "nucleus/core";

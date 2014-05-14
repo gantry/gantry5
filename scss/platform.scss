@@ -1,3 +1,5 @@
+// REQUIRED DEPENDENCIES - DO NOT CHANGE
+
 // Load Third Party Libraries
 @import "vendor/bourbon/bourbon";
 
@@ -10,3 +12,10 @@
 // Load Nucleus Mixins and Functions
 @import "nucleus/functions/base";
 @import "nucleus/mixins/base";
+
+//-------------------------------------------
+
+// INCLUDE BASED ON PLATFORM
+
+// Load Joomla Platform Components
+@import "platform/joomla/core";

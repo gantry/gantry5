@@ -1,5 +1,26 @@
+// REQUIRED DEPENDENCIES - DO NOT CHANGE
+
+// Load Third Party Libraries
+@import "vendor/bourbon/bourbon";
+
+// Load Nucleus Configuration
+@import "configuration/nucleus/base";
+
+// Load Template Configuration
+@import "configuration/template/base";
+
+// Load Nucleus Mixins and Functions
+@import "nucleus/functions/base";
+@import "nucleus/mixins/base";
+
+// Load Template Library
+@import "template/modules/base";
+
+//-------------------------------------------
+
+// TEMPLATE COMPONENTS
+
 // Core
-@import "template/base";
 @import "template/core";
 @import "template/fonts";
 

@@ -7,16 +7,16 @@
 					<li><a href="about.php">About Nucleus</a></li>
 					<li><a href="#">SCSS</a></li>
 				</ul>
-				<h4>Particles</h4>
+				<h4>Core Elements</h4>
 				<ul>
 					<li><a href="#">Flex Grid</a></li>
 					<li><a href="#">Breakpoints</a></li>
-					<li><a href="bullets.php">Bullets</a></li>
-				</ul>
-				<h4>Core Elements</h4>
-				<ul>
 					<li><a href="typography.php">Typography</a></li>
 					<li><a href="forms.php">Forms</a></li>
+				</ul>
+				<h4>Particles</h4>
+				<ul>
+					<li><a href="bullets.php">Bullets</a></li>
 				</ul>
 			</div>
 		</div>
