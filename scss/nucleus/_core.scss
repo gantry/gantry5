@@ -98,6 +98,8 @@ sub {
 img {
 	border: 0;
 	max-width: 100%;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 svg:not(:root) {
@@ -120,7 +122,7 @@ code,
 kbd,
 pre,
 samp {
-	font-family: monospace, monospace;
+	font-family: $preformatted-font-family;
 	font-size: $core-font-size;
 }
 

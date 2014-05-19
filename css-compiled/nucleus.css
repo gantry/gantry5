@@ -87,7 +87,9 @@ sub {
 
 img {
   border: 0;
-  max-width: 100%; }
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: middle; }
 
 svg:not(:root) {
   overflow: hidden; }
@@ -105,7 +107,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: monospace, monospace;
+  font-family: inherit;
   font-size: 1rem; }
 
 button,
@@ -618,5 +620,19 @@ input[type="submit"] {
   vertical-align: middle;
   white-space: nowrap;
   border: inherit; }
+
+.float-left {
+  float: left !important; }
+
+.float-right {
+  float: right !important; }
+
+.hide {
+  display: none; }
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both; }
 
 /*# sourceMappingURL=nucleus.css.map */
