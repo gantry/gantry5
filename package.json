@@ -1,0 +1,11 @@
+{
+  "name": "gantry-playground",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "~0.4.3",
+    "grunt-contrib-sass": "~0.7.3",
+    "grunt-contrib-watch": "~0.6.0",
+    "grunt-wrapup": "~0.1.2"
+  },
+  "dependencies": {}
+}

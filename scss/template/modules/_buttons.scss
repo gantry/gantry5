@@ -6,14 +6,14 @@
 	}
 }
 
-@mixin button-color($color) {
+@mixin button-color($color, $text: $white) {
 	background: $color;
-	color: $white;
+	color: $text;
 	box-shadow: 0 3px 0 darken($color, 6%);
 	&:hover {
 		background: darken($color, 6%);
 		box-shadow: 0 3px 0 darken($color, 12%);
-		color: $white;
+		color: $text;
 	}
 	&:active {
 		box-shadow: 0 1px 0 darken($color, 12%);
