@@ -1,4 +1,4 @@
-== WordPress playground template
+== WordPress playground theme
 
 How to install it:
 
@@ -14,4 +14,4 @@ ln -s ../js
 ln -s ../scss
 ```
 
-3. Symbolically link the template into your WordPress installation.
+3. Symbolically link the theme into your WordPress installation.
