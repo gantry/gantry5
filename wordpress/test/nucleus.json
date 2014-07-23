@@ -6,7 +6,7 @@
             "name": "Section Header",
             "key": "section-header",
             "type": "header",
-            "id": "header,"
+            "id": "header"
         },
         "children": [
             {
@@ -74,7 +74,7 @@
                             "name": "Section Showcase",
                             "key": "section-showcase",
                             "type": "section",
-                            "id": "showcase,"
+                            "id": "showcase"
                         },
                         "children": [
                             {
@@ -130,7 +130,7 @@
                             "name": "Section Feature",
                             "key": "section-feature",
                             "type": "section",
-                            "id": "feature,"
+                            "id": "feature"
                         },
                         "children": [
                             {
@@ -315,7 +315,7 @@
             "name": "Section Footer",
             "key": "section-footer",
             "type": "footer",
-            "id": "footer,"
+            "id": "footer"
         },
         "children": [
             {

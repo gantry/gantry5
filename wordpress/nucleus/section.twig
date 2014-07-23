@@ -1,6 +1,6 @@
-{% set type = segment.sectiontype in ['header', 'footer'] ? segment.sectiontype : 'section' %}
-{% set attr_id = segment.id ? ' id="' ~ segment.id|lower ~ '"' %}
-{% set attr_class = segment.classes ? ' class="' ~ segment.id|lower ~ '"' %}
+{% set type = segment.attributes.type in ['header', 'footer'] ? segment.attributes.type : 'section' %}
+{% set attr_id = segment.attributes.id ? ' id="' ~ segment.attributes.id|lower ~ '"' %}
+{% set attr_class = segment.classes ? ' class="' ~ segment.classes|join(' ') ~ '"' %}
 
 <{{ type }}{{ attr_id }}{{ attr_class }}>
     {% if  segment.children %}
