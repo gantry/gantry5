@@ -1,4 +1,4 @@
-{% extends "base.twig" %}
+{% extends "partials/base.twig" %}
 {% set twigTemplate = 'index.twig' %}
 
 {% block content %}
@@ -6,7 +6,7 @@
     {% include '@nucleus/mainbody.twig' %}
     {{ pageStructure|print_r }}
 	{% for post in posts %}
-		{% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
+		{% include ['partials/tease-'~post.post_type~'.twig', 'partials/tease.twig'] %}
 	{% endfor %}
 
 {% endblock %}

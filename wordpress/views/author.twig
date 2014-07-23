@@ -1,10 +1,10 @@
-{% extends "base.twig" %}
+{% extends "partials/base.twig" %}
 {% set twigTemplate = 'author.twig' %}
 
 {% block content %}
 
 {% for post in posts %}
-	{% include ["tease-"~post.post_type~".twig", "tease.twig"] %}
+	{% include ["patrials/tease-"~post.post_type~".twig", "patrials/tease.twig"] %}
 {% endfor %}
 
 {% endblock %}
