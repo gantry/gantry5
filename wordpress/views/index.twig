@@ -1,8 +1,8 @@
 {% extends "base.twig" %}
+{% set twigTemplate = 'index.twig' %}
 
 {% block content %}
-	<h2>{{foo}}</h2>
-	<p>{{qux}}</p>
+	<h2>INDEX</h2>
 	{% for post in posts %}
 		{% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
 	{% endfor %}
