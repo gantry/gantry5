@@ -1,8 +1,9 @@
-{% block html_head_container %}
-    {% include 'html-header.twig' %}
-    {% block head %}{% endblock %}
-    </head>
-{% endblock %}
+<!doctype html>
+<html {{site.language_attributes}}>
+    {% block html_head_container %}
+        {% include 'partials/head.twig' %}
+    {% endblock %}
+
     <body class="{{body_class}}" data-template="{{ twigTemplate|default('base.twig') }}">
         <header class="header" >
             {% block header %}

@@ -33,7 +33,7 @@ class GantrySite extends TimberSite {
 		$context['site'] = $this;
 
 		// Include Gantry specific things to the context.
-		$context['pageLayout'] = json_decode(file_get_contents('test/nucleus.json'));
+		$context['pageStructure'] = json_decode(file_get_contents(__DIR__ . '/test/nucleus.json'), true);
 		return $context;
 	}
 
