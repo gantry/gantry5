@@ -47,5 +47,8 @@
             </footer>
             {{ function('wp_footer') }}
         {% endblock %}
+
+        <h2>Nucleus layout</h2
+        {% include '@nucleus/container.twig' with {segments: pageSegments} %}
     </body>
 </html>
