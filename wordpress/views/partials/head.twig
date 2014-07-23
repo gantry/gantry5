@@ -1,16 +1,13 @@
 {% extends "@nucleus/head.twig" %}
 {% set theme_url = site.theme.link %}
 
-{% block head_meta %}
-    <meta charset="{{site.charset}}" />
-    <title>{{wp_title}}</title>
-    <meta name="description" content="{{site.description}}">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="pingback" href="{{site.pingback_url}}" />
+{% block head_title %}
+    <meta http-equiv="Content-Type" content="text/html; charset={{ site.charset }}" />
+    <title>{{ site.title }}</title>
+    <meta name="description" content="{{ site.description }}">
+    <link rel="pingback" href="{{ site.pingback_url }}" />
 {% endblock %}
 
 {% block head_application %}
-    {{function('wp_head')}}
+    {{ function('wp_head') }}
 {% endblock %}
