@@ -1,0 +1,7 @@
+<{{ segment.sectiontype }} id="{{ segment.sectionid }}" class="{{ segment.classes }}">
+    {% if  segment.haschildren %}
+        {% for segment in segments %}
+            {% include segment.type with { 'segments':segment.children } %}
+        {% endfor %}
+    {% endif %}
+</{{ segment.sectiontype() }}>

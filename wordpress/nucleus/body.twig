@@ -1,0 +1,9 @@
+{% block body %}
+<body {% verbatim %}<?php $gantry->bodycontent();?>{% endverbatim %}>
+    <div class="container">
+        {% for segment in segments %}
+            {% include segment.type with { 'segments':segment.children } %}
+        {% endfor %}
+    </div>
+</body>
+{% endblock %}
