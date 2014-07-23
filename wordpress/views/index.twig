@@ -3,6 +3,7 @@
 
 {% block content %}
 	<h2>INDEX</h2>
+    {% include '@nucleus/mainbody.twig' %}
 	{% for post in posts %}
 		{% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
 	{% endfor %}
