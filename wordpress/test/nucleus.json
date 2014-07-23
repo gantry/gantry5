@@ -23,10 +23,9 @@
                         "children": [
                             {
                                 "id": "fb585b76-4db5-4611-a96c-08c09bd8d90f",
-                                "type": "position",
+                                "type": "widget",
                                 "attributes": {
-                                    "name": "Position Logo",
-                                    "key": "position-logo"
+                                    "name": "logo"
                                 },
                                 "children": []
                             }
