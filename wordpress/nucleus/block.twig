@@ -1,4 +1,6 @@
-<div class="block{{ segment.classes ? ' ' ~ segment.classes|join(' ') }}">
+{% set attr_style = segment.attributes.size ? ' style="width:' ~ segment.attributes.size ~ '%"' %}
+
+<div class="block{{ segment.classes ? ' ' ~ segment.classes|join(' ') }}{{ segment.attributes.size|toGrid }}"{{ attr_style }}>
     {% if segment.children %}
         {% for segment in segments %}
             {% include '@nucleus/' ~ segment.type ~ '.twig' with { 'segments':segment.children } %}

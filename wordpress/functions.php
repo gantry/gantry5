@@ -42,7 +42,7 @@ class GantrySite extends TimberSite {
 		$loader = $twig->getLoader();
 		$loader->addPath( __DIR__ . '/nucleus', 'nucleus' );
 		$twig->addExtension( new Twig_Extension_StringLoader() );
-		$twig->addFilter(' myfoo', new Twig_Filter_Function( 'myfoo' ) );
+		$twig->addFilter('toGrid', new Twig_Filter_Function( 'toGrid' ) );
 		return $twig;
 	}
 
@@ -50,7 +50,15 @@ class GantrySite extends TimberSite {
 
 new GantrySite();
 
-function myfoo( $text ) {
-    $text .= ' bar!';
-    return $text;
+function toGrid( $text ) {
+	static $sizes = array(
+		'10'      => 'size-1-10',
+		'20'      => 'size-1-5',
+		'25'      => 'size-1-4',
+		'33.3334' => 'size-1-3',
+		'50'      => 'size-1-2',
+		'100'     => ''
+	);
+
+    return isset($sizes[$text]) ? ' ' . $sizes[$text] : '';
 }

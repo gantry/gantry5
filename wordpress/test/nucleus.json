@@ -25,8 +25,8 @@
                                 "id": "fb585b76-4db5-4611-a96c-08c09bd8d90f",
                                 "type": "position",
                                 "attributes": {
-                                    "name": "Position 1",
-                                    "key": "position-1"
+                                    "name": "Position Logo",
+                                    "key": "position-logo"
                                 },
                                 "children": []
                             }
@@ -44,8 +44,8 @@
                                 "id": "6e85d292-e08b-448c-a46a-f5b2693db83e",
                                 "type": "position",
                                 "attributes": {
-                                    "name": "Position 2",
-                                    "key": "position-2"
+                                    "name": "Position Menu",
+                                    "key": "position-menu"
                                 },
                                 "children": []
                             }
