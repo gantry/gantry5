@@ -1,3 +1,3 @@
 <div class="content{{ segment.classes ? ' ' ~ segment.classes|join(' ') }}">
-   [{{ segment.attributes.name|default('Position') }}]
+   {% include 'widgets/' ~ segment.attributes.name ~ '.twig' %}
 </div>

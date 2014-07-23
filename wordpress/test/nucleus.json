@@ -350,10 +350,9 @@
                         "children": [
                             {
                                 "id": "0f7653c0-909b-4430-afdd-75bc5df8105a",
-                                "type": "position",
+                                "type": "widget",
                                 "attributes": {
-                                    "name": "Position Footer",
-                                    "key": "position-footer"
+                                    "name": "copyright"
                                 },
                                 "children": []
                             }
