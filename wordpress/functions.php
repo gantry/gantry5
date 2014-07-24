@@ -1,5 +1,7 @@
 <?php
 
+use \Symfony\Component\Yaml\Yaml;
+
 if ( !class_exists( 'Timber' ) ) {
 	add_action( 'admin_notices', function() {
 		echo '<div class="error"><p>Timber not activated. Make sure you activate the plugin in <a href="' . admin_url( 'plugins.php#timber' ) . '">' . admin_url( 'plugins.php' ) . '</a></p></div>';
@@ -17,7 +19,24 @@ class GantrySite extends TimberSite {
 		add_filter( 'get_twig', array( $this, 'add_to_twig' ) );
 		add_action( 'init', array( $this, 'register_post_types' ) );
 		add_action( 'init', array( $this, 'register_taxonomies' ) );
+		add_action( 'widgets_init', array( $this, 'widgets_init' ) );
 		parent::__construct();
+	}
+
+	function widgets_init() {
+		$positions = Yaml::parse(__DIR__ . '/test/positions.yaml');
+
+		foreach ($positions['positions'] as $name => $params) {
+			register_sidebar( array(
+				'name'          => __( $params['name'], 'gantry5' ),
+				'id'            => $name,
+				'description'   => __( $params['name'], 'gantry5' ),
+				'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+				'after_widget'  => '</aside>',
+				'before_title'  => '<h3 class="widget-title">',
+				'after_title'   => '</h3>',
+			) );
+		}
 	}
 
 	function register_post_types() {

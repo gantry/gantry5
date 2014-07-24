@@ -1,0 +1,73 @@
+positions:
+  header:
+    name: Header
+    positions: 6
+  drawer:
+    name: Drawer
+    positions: 1
+  top:
+    name: Top
+    positions: 6
+  utility:
+    name: Utility
+    positions: 6
+  showcase:
+    name: Showcase
+    positions: 6
+  slideshow:
+    name: Slideshow
+    positions: 1
+  breadcrumb:
+    name: Breadcrumbs
+    positions: 1
+  feature:
+    name: Feature
+    positions: 6
+  maintop:
+    name: Main Top
+    positions: 6
+  expandedtop:
+    name: Expanded Top
+    positions: 6
+  sidebar:
+    name: sidebar
+    positions: 3
+  content-top:
+    name: Content Top
+    positions: 3
+  content-bottom:
+    name: Content Bottom
+    positions: 3
+  expandedbottom:
+    name: Expanded Bottom
+    positions: 6
+  mainbottom:
+    name: Main Bottom
+    positions: 6
+  extension:
+    name: Extension
+    positions: 6
+  fullwidth:
+    name: Fullwidth
+    positions: 1
+  bottom:
+    name: Bottom
+    positions: 6
+  footer:
+    name: Footer
+    positions: 6
+  copyright:
+    name: Copyright
+    positions: 6
+  debug:
+    name: Debug
+    positions: 1
+  analytics:
+    name: Analytics
+    positions: 1
+  login:
+    name: Login
+    positions: 1
+  popup:
+    name: Popup
+    positions: 1
