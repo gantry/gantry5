@@ -185,7 +185,7 @@
                             "name": "Section Main",
                             "key": "section-main",
                             "type": "main",
-                            "id": "main,"
+                            "id": "main"
                         },
                         "children": [
                             {
@@ -224,7 +224,7 @@
                             "name": "Section Bottom",
                             "key": "section-bottom",
                             "type": "section",
-                            "id": "bottom,"
+                            "id": "bottom"
                         },
                         "children": [
                             {
