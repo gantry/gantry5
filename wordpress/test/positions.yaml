@@ -30,7 +30,7 @@ positions:
     name: Expanded Top
     positions: 6
   sidebar:
-    name: sidebar
+    name: Sidebar
     positions: 3
   content-top:
     name: Content Top
