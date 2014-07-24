@@ -2,8 +2,6 @@
 {% set twigTemplate = 'index.twig' %}
 
 {% block content %}
-	<h2>INDEX</h2>
-    {% include '@nucleus/mainbody.twig' %}
 	{% for post in posts %}
 		{% include ['partials/tease-'~post.post_type~'.twig', 'partials/tease.twig'] %}
 	{% endfor %}
