@@ -1,2 +1,7 @@
 .sass-cache/*
 node_modules/*
+wordpress/css
+wordpress/css-compiled
+wordpress/fonts
+wordpress/images
+wordpress/js
