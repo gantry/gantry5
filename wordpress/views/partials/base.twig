@@ -12,47 +12,5 @@
         {% endset %}
 
         {% include '@nucleus/container.twig' with {segments: pageSegments} %}
-
-        <h2>Original content</h2>
-
-        <header class="header" >
-            {% block header %}
-                <div class="wrapper">
-
-                    <h1 class="hdr-logo" role="banner">
-                        <a class="hdr-logo-link" href="/" title="Timber" rel="home">{{site.name}}</a>
-                    </h1>
-                    <nav id="access" class="main-navigation" role="navigation">
-                        <ul>
-                            {% for item in menu.items %}
-                                <li id="menu-item-{{item.ID}}" class="menu-item menu-item-type-{{item.type}} menu-item-object-{{item.object}} menu-item-{{item.ID}}">
-                                    <a href="{{item.link}}">{{item.title}}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </nav><!-- #access -->
-
-                </div>
-            {% endblock %}
-        </header>
-
-        <section id="content" role="main" class="content-wrapper">
-            {% if title %}<h1>{{title}}</h1>{% endif %}
-            <div class="wrapper {{sidebar_class}}">
-                {{ block('content') }}
-            </div>
-            {% if sidebar %}
-                <aside class="layout-sidebar">
-                    {{sidebar}}
-                </aside>
-            {% endif %}
-        </section>
-
-        {% block footer %}
-            <footer id="footer">
-                {% include 'partials/footer.twig' %}
-            </footer>
-            {{ function('wp_footer') }}
-        {% endblock %}
     </body>
 </html>
