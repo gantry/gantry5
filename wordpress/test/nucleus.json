@@ -275,6 +275,30 @@
                         },
                         "children": [
                             {
+                                "id": "89230c44-26a3-ffff-b135-a2194f05b3b6",
+                                "type": "grid",
+                                "attributes": {},
+                                "children": [
+                                    {
+                                        "id": "6002f826-16c6-ffff-b550-abdb93a9398b",
+                                        "type": "block",
+                                        "attributes": {
+                                            "size": 100
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "fb585b76-4db5-ffff-a96c-08c09bd8d90f",
+                                                "type": "widget",
+                                                "attributes": {
+                                                    "name": "sidebar"
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
                                 "id": "89230c44-26a3-4f4f-b135-a2194f05b3b6",
                                 "type": "grid",
                                 "attributes": {},
