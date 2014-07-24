@@ -41,10 +41,9 @@
                         "children": [
                             {
                                 "id": "6e85d292-e08b-448c-a46a-f5b2693db83e",
-                                "type": "position",
+                                "type": "widget",
                                 "attributes": {
-                                    "name": "Position Menu",
-                                    "key": "position-menu"
+                                    "name": "menu"
                                 },
                                 "children": []
                             }

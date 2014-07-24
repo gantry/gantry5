@@ -1,0 +1,9 @@
+<nav class="main-nav" role="navigation">
+    <ul class="toplevel">
+        {% for item in menu.items %}
+            <li id="menu-item-{{item.ID}}" class="menu-item menu-item-type-{{item.type}} menu-item-object-{{item.object}} menu-item-{{item.ID}}">
+                <a href="{{item.link}}">{{item.title}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
