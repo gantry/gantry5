@@ -1,0 +1,19 @@
+name: Nucleus
+version: 1.0.0
+author: RocketTheme
+url: http://www.rockettheme.com
+email: support@rockettheme.com
+description: This is a test default theme for Grav used for primarily Grav development. Really a work in progress, <em>not intended for final use</em>.
+
+form:
+  fields:
+    enabled:
+        type: toggle
+        label: Theme status
+        highlight: 1
+        default: 1
+        options:
+          1: Enabled
+          0: Disabled
+        validate:
+          type: bool

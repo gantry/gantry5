@@ -5,7 +5,7 @@
 <{{ type }}{{ attr_id }}{{ attr_class }}>
     {% if  segment.children %}
         {% for segment in segments %}
-            {% include '@nucleus/' ~ segment.type ~ '.twig' with { 'segments':segment.children } %}
+            {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
         {% endfor %}
     {% endif %}
 </{{ type }}>

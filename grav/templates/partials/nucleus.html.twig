@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block head %}
+            {% include 'partials/head.html.twig' %}
+        {% endblock %}
+    </head>
+    <body>
+        {% set content %}
+        {% block content %}
+            Sorry, no content!
+        {% endblock %}
+        {% endset %}
+
+        {% include '@nucleus/container.html.twig' with {segments: pageSegments} %}
+    </body>
+</html>
