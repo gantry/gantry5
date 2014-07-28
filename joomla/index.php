@@ -11,6 +11,8 @@ defined('_JEXEC') or die;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+use \Symfony\Component\Yaml\Yaml;
+
 // Getting params from template
 $params = JFactory::getApplication()->getTemplate(true)->params;
 
@@ -52,9 +54,10 @@ $loader->addPath( __DIR__ . '/nucleus', 'nucleus' );
 
 // Include Gantry specific things to the context.
 $context = array();
-$context['pageSegments'] = json_decode(file_get_contents(__DIR__ . '/test/nucleus.json'), true);
+$context['pageSegments'] = (array) json_decode(file_get_contents(__DIR__ . '/test/nucleus.json'), true);
+$context['theme'] = (array) Yaml::parse(file_get_contents(__DIR__ . '/nucleus.yaml'));
 $context['page'] = $this;
-$context['theme_url'] = '/templates/nucleus';
+$context['theme_url'] = JURI::root(false) . '/templates/nucleus';
 
 echo $twig->render('index.html.twig', $context);
 

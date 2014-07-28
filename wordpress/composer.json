@@ -1,7 +1,6 @@
 {
     "require": {
         "php": ">=5.4.0",
-        "twig/twig": "v1.15.1",
         "symfony/yaml": "2.5.*@dev"
     }
 }

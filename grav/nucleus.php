@@ -26,9 +26,11 @@ class Nucleus extends Theme
     public function onAfterSiteTwigVars()
     {
         $file = File\Json::instance(__DIR__ . '/test/nucleus.json');
+        $config = File\Yaml::instance(__DIR__ . '/nucleus.yaml');
 
         $twig = Registry::get('Twig');
         $twig->twig_vars['pageSegments'] = $file->content();
+        $twig->twig_vars['theme'] = $config->content();
     }
 
     /**

@@ -60,8 +60,10 @@ class GantrySite extends TimberSite {
 		$context['site'] = $this;
 
 		// Include Gantry specific things to the context.
-		$context['pageSegments'] = json_decode( file_get_contents( __DIR__ . '/test/nucleus.json' ), true );
-		return $context;
+		$context['pageSegments'] = (array) json_decode( file_get_contents( __DIR__ . '/test/nucleus.json' ), true );
+        $context['theme'] = (array) Yaml::parse(file_get_contents(__DIR__ . '/nucleus.yaml'));
+
+        return $context;
 	}
 
 	function add_to_twig( $twig ) {
