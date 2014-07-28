@@ -56,7 +56,8 @@ class GantrySite extends TimberSite {
 	}
 
 	function add_to_context( $context ) {
-		$context['menu'] = new TimberMenu();
+		$context['menu'] = new TimberMenu;
+        $context['my'] = new TimberUser;
 		$context['site'] = $this;
 
 		// Include Gantry specific things to the context.

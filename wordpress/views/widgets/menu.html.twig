@@ -1,20 +1,24 @@
+{% extends 'partials/widget.html.twig' %}
+
+{% block widget %}
 <nav class="main-nav" role="navigation">
     <ul class="toplevel">
         {% for item in menu.items %}
-            <li id="menu-item-{{item.ID}}" class="menu-item menu-item-type-{{item.type}} menu-item-object-{{item.object}} menu-item-{{item.ID}}">
-                <a href="{{item.link}}">{{item.title}}</a>
-                {% if (item.children) %}
-                    <div class="dropdown">
-                    <ul class="sublevel">
+        <li id="menu-item-{{item.ID}}" class="nav-main-item {{item.classes | join(' ')}}">
+            <a href="{{item.link}}">{{item.title}}</a>
+            {% if (item.children) %}
+            <div class="dropdown">
+                <ul class="sublevel">
                     {% for child in item.children %}
-                        <li id="menu-item-{{child.ID}}" class="menu-item menu-item-type-{{child.type}} menu-item-object-{{child.object}} menu-item-{{child.ID}}">
-                            <a href="{{child.link}}">{{child.title}}</a>
-                         </li>
+                    <li id="menu-item-{{child.ID}}" class="menu-item {{child.classes | join(' ')}}">
+                        <a href="{{child.link}}">{{child.title}}</a>
+                     </li>
                     {% endfor %}
-                    </ul>
-                    </div>
-                {% endif %}
-            </li>
+                </ul>
+            </div>
+            {% endif %}
+        </li>
         {% endfor %}
     </ul>
 </nav>
+{% endblock %}

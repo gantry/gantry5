@@ -1,4 +1,8 @@
+{% extends 'partials/widget.html.twig' %}
+
+{% block widget %}
 Copyright &copy;
-{% if (theme.widgets.copyright.start) %}{{ theme.widgets.copyright.start|e }} - {% endif %}
-{{ theme.widgets.copyright.end in ['now', ''] ? 'now'|date('Y') : theme.widgets.copyright.end|e }}
-{{ theme.widgets.copyright.owner|e }}
+{% if (widget.date.start) %}{{ widget.date.start|e }} - {% endif %}
+{{ widget.date.end in ['now', ''] ? 'now'|date('Y') : widget.date.end|e }}
+{{ widget.owner|e }}
+{% endblock %}

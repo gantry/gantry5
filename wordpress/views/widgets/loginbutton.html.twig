@@ -1,0 +1,15 @@
+{% extends 'partials/widget.html.twig' %}
+
+{% block widget %}
+<div class="rt-block rt-popupmodule-button {{ widget.css.classname }} widget">
+    {% if not me.ID %}
+        <a data-rokbox="" data-rokbox-element="#rt-popuplogin" href="#" class="buttontext button">
+            <span class="desc">{{ widget.logintext }}</span>
+        </a>
+    {% else %}
+        <a href="{{ function('wp_logout_url') }}" class="buttontext button">
+            <span class="desc">{{ widget.logouttext }} {{ my.name|e }}</span>
+        </a>
+    {% endif %}
+</div>
+{% endblock %}

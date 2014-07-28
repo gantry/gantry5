@@ -1,11 +1,21 @@
 widgets:
+  branding:
+    css:
+      classname: 'widget_gantry_branding'
+
   copyright:
-    enabled: false
-    start: 2007
-    end: now
+    date:
+      start: 2007
+      end: now
     owner: 'RocketTheme, LLC'
 
+  loginbutton:
+    title:
+    logintext: Login
+    logouttext: Logout
+    css:
+      classname: 'widget_gantry_loginbutton'
+
   logo:
-    enabled: true
     image: 'images/logo.png'
     text: 'Gantry'

@@ -298,6 +298,30 @@
                                         ]
                                     }
                                 ]
+                            },
+                            {
+                                "id": "89230c44-26a3-ffff-b135-a2194f05b3b6",
+                                "type": "grid",
+                                "attributes": {},
+                                "children": [
+                                    {
+                                        "id": "6002f826-16c6-ffff-b550-abdb93a9398b",
+                                        "type": "block",
+                                        "attributes": {
+                                            "size": 100
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "fb585b76-ffff-4611-a96c-08c09bd8d90f",
+                                                "type": "widget",
+                                                "attributes": {
+                                                    "name": "loginbutton"
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         ]
 
@@ -365,10 +389,9 @@
                         "children": [
                             {
                                 "id": "491e8d6c-c762-401f-9ebf-018d83d4a0fe",
-                                "type": "spacer",
+                                "type": "widget",
                                 "attributes": {
-                                    "name": "Position Footer",
-                                    "key": "footer"
+                                    "name": "branding"
                                 },
                                 "children": []
                             }
