@@ -251,6 +251,31 @@
                                     }
                                 ]
 
+                            },
+                            {
+                                "id": "d59c63b3-ffff-4912-a30a-3b777e3c3bc7",
+                                "type": "grid",
+                                "attributes": {},
+                                "children": [
+                                    {
+                                        "id": "a76cfe58-ffff-4ab0-a741-489084e347be",
+                                        "type": "block",
+                                        "attributes": {
+                                            "size": 100
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "ec9e89e5-ffff-4e3e-a853-fe470247a875",
+                                                "type": "widget",
+                                                "attributes": {
+                                                    "name": "totop"
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+
                             }
                         ]
                     }

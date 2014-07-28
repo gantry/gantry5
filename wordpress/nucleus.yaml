@@ -19,3 +19,7 @@ widgets:
   logo:
     image: 'images/logo.png'
     text: 'Gantry'
+
+  totop:
+    css:
+      classname: 'widget_gantry_totop'
