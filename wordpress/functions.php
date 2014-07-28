@@ -62,6 +62,7 @@ class GantrySite extends TimberSite {
 		// Include Gantry specific things to the context.
 		$context['pageSegments'] = (array) json_decode( file_get_contents( __DIR__ . '/test/nucleus.json' ), true );
         $context['theme'] = (array) Yaml::parse(file_get_contents(__DIR__ . '/nucleus.yaml'));
+        $context['theme_url'] = $context['site']->theme->link;
 
         return $context;
 	}
