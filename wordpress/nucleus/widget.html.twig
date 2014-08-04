@@ -1,3 +1,5 @@
 <div class="content{{ segment.classes ? ' ' ~ segment.classes|join(' ') }}">
-   {% include 'widgets/' ~ segment.attributes.name ~ '.html.twig' with {widget: config.widgets[segment.attributes.name] } %}
+   {% include ['widgets/' ~ segment.attributes.name ~ '.html.twig',
+       '@nucleus/widgets/' ~ segment.attributes.name ~ '.html.twig']
+       ignore missing with {widget: config.widgets[segment.attributes.name] } %}
 </div>

@@ -1,83 +1,40 @@
 <?php
-/**
- * @package     Joomla.Site
- * @subpackage  Templates.protostar
- *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
 
 defined('_JEXEC') or die;
 
-require_once __DIR__ . '/vendor/autoload.php';
+try
+{
+    // Initialize Gantry.
+    $bootstrap = __DIR__ . '/src/bootstrap.php';
 
-use \Symfony\Component\Yaml\Yaml;
+    if (!is_file($bootstrap))
+    {
+        throw new LogicException('Symbolic links missing, please see README.md in your theme!');
+    }
 
-// Getting params from template
-$params = JFactory::getApplication()->getTemplate(true)->params;
+    require_once $bootstrap;
 
-$app = JFactory::getApplication();
-$doc = JFactory::getDocument();
-$this->language = $doc->language;
-$this->direction = $doc->direction;
+    // Define template.
+    class Nucleus extends \Gantry\Theme\Theme {}
 
-// Detecting Active Variables
-$option   = $app->input->getCmd('option', '');
-$view     = $app->input->getCmd('view', '');
-$layout   = $app->input->getCmd('layout', '');
-$task     = $app->input->getCmd('task', '');
-$itemid   = $app->input->getCmd('Itemid', '');
-$sitename = $app->getCfg('sitename');
+    // Create template.
+    $theme = new Nucleus(__DIR__, $this->template);
 
-// Add JavaScript Frameworks
-JHtml::_('bootstrap.framework');
-// Load optional RTL Bootstrap CSS
-JHtml::_('bootstrap.loadCss', false, $this->direction);
+    // Instantiate Gantry.
+    $gantry = \Gantry\Gantry::instance();
+    $gantry->initialize($theme);
+}
+catch (Exception $e)
+{
+    // Oops, something went wrong!
+    // In frontend we want to prevent template from loading.
+    if (!class_exists('\Tracy\Debugger'))
+    {
+        JError::raiseError(500, 'Template cannot be loaded: ' . $e->getMessage());
+    };
 
-$loader_filesystem = new Twig_Loader_Filesystem(__DIR__ . '/twig');
-$loader_string = new Twig_Loader_String();
-$loader_chain = new Twig_Loader_Chain(array($loader_filesystem, $loader_string));
-
-$params = array(
-    'cache' => JPATH_CACHE . '/twig',
-    'debug' => true,
-    'auto_reload' => true,
-    'autoescape' => false
-);
-
-$twig = new Twig_Environment($loader_chain, $params);
-
-$loader = $loader_filesystem;
-
-$twig->addFilter('toGrid', new Twig_Filter_Function('toGrid'));
-$loader->addPath( __DIR__ . '/nucleus', 'nucleus' );
-
-// Include Gantry specific things to the context.
-$context = array();
-$context['pageSegments'] = (array) json_decode(file_get_contents(__DIR__ . '/test/nucleus.json'), true);
-$context['theme'] = (array) Yaml::parse(file_get_contents(__DIR__ . '/nucleus.yaml'));
-$context['page'] = $this;
-$context['theme_url'] = JURI::root(false) . '/templates/nucleus';
-
-echo $twig->render('index.html.twig', $context);
-
-/**
- * @param $text
- * @return string
- */
-function toGrid($text) {
-    static $sizes = array(
-        '10'      => 'size-1-10',
-        '20'      => 'size-1-5',
-        '25'      => 'size-1-4',
-        '33.3334' => 'size-1-3',
-        '50'      => 'size-1-2',
-        '100'     => ''
-    );
-
-    return isset($sizes[$text]) ? ' ' . $sizes[$text] : '';
+    // We have Tracy enabled; will display and/or log error with it.
+    throw $e;
 }
 
-$context = array(
-    'page' => $this,
-);
+echo $theme->render('index.html.twig');

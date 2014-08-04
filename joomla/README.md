@@ -2,6 +2,7 @@
 
 How to install it:
 
+- Run composer in ../src
 - Enter to Gantry Playground ./joomla directory and run in command line:
 
 ```
@@ -13,6 +14,7 @@ ln -s ../js
 ln -s ../scss
 ln -s ../wordpress/nucleus
 ln -s ../wordpress/test
+ln -s ../src
 ```
 
 - Run ```composer install```

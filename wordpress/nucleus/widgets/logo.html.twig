@@ -1,0 +1,7 @@
+{% extends '@nucleus/partials/widget.html.twig' %}
+
+{% block widget %}
+<a href="{{ site.url }}" title="{{ widget.text|e }}" rel="home">
+    <img src="{{ theme.url }}/{{ widget.image }}" alt="{{ widget.text|e }}" />
+</a>
+{% endblock %}

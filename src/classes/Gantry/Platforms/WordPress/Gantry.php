@@ -16,10 +16,13 @@ class Gantry extends Base\Gantry
         }
     }
 
-    public function initialize( Theme\Theme $theme ) {
-        $path = $theme->path;
-        $this->theme = $theme;
-        $this->config = Config::instance( $path . '/cache/config.php', $path );
+    public function initialize( Theme\Theme $theme )
+    {
         $this->site =  new Site\Site;
+
+        $this->theme = $theme;
+
+        $path = $theme->path;
+        $this->config = Config::instance( $path . '/cache/config.php', $path );
     }
 }

@@ -3,20 +3,18 @@ namespace Gantry\Theme;
 
 class Theme
 {
-    protected $folder;
-    protected $config;
-    protected $positions;
+    public $path;
 
     /**
-     * @param $folder
+     * @param string $path
      * @throws \LogicException
      */
-    public function __construct($folder)
+    public function __construct($path)
     {
-        if (!is_dir($folder)) {
+        if (!is_dir($path)) {
             throw new \LogicException('Theme not found!');
         }
 
-        $this->folder = $folder;
+        $this->path = $path;
     }
 }

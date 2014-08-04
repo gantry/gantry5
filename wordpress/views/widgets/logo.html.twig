@@ -1,7 +1,0 @@
-{% extends 'partials/widget.html.twig' %}
-
-{% block widget %}
-<a href="{{ function('home_url') }}" title="{{ widget.text|e }}" rel="home">
-    <img src="{{ theme_url }}/{{ widget.image }}" alt="{{ widget.text|e }}" />
-</a>
-{% endblock %}
