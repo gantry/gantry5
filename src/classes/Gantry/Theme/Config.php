@@ -1,5 +1,5 @@
 <?php
-namespace Gantry\Theme\Config;
+namespace Gantry\Theme;
 
 use Gantry\Data\Blueprints;
 use Gantry\Data\Data;

@@ -23,3 +23,9 @@ widgets:
   totop:
     css:
       classname: 'widget_gantry_totop'
+
+features:
+  analytics:
+    enabled: false
+    code: null
+    plugins: []

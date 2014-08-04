@@ -1,7 +1,7 @@
 <?php
 namespace Gantry\Theme;
 
-abstract class Theme
+class Theme
 {
     protected $folder;
     protected $config;

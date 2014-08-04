@@ -31,12 +31,13 @@ if (!defined('GANTRY5_VERSION')) {
 
     // Load all the independent functions.
     require_once __DIR__ . '/includes/functions.php';
-    // Register platform specific classes.
+
+    // Register platform specific overrides.
     if (defined('JVERSION')) {
-        $classLoader->add('\\Gantry\\Platform', __DIR__ . '/Gantry/Platforms/Joomla');
+        $classLoader->addPsr4('Gantry\\', __DIR__ . '/classes/Gantry/Platforms/Joomla', true);
     } elseif (defined('WP_DEBUG')) {
-        $classLoader->add('\\Gantry\\Platform', __DIR__ . '/Gantry/Platforms/WordPress');
+        $classLoader->addPsr4('Gantry\\', __DIR__ . '/classes/Gantry/Platforms/WordPress', true);
     } elseif (defined('GRAV_VERSION')) {
-        $classLoader->add('\\Gantry\\Platform', __DIR__ . '/Gantry/Platforms/Grav');
+        $classLoader->addPsr4('Gantry\\', __DIR__ . '/classes/Gantry/Platforms/Grav', true);
     }
 }
