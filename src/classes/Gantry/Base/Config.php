@@ -1,5 +1,5 @@
 <?php
-namespace Gantry\Theme;
+namespace Gantry\Base;
 
 use Gantry\Data\Blueprints;
 use Gantry\Data\Data;
@@ -20,6 +20,11 @@ class Config extends Data
     public $filename;
 
     /**
+     * @var string Path to YAML configuration.
+     */
+    public $path;
+
+    /**
      * @var string MD5 from the files.
      */
     public $key;
@@ -37,9 +42,10 @@ class Config extends Data
     /**
      * Constructor.
      */
-    public function __construct($filename)
+    public function __construct($filename, $path)
     {
         $this->filename = realpath(dirname($filename)) . '/' . basename($filename);
+        $this->path = (string) $path;
 
         $this->reload(false);
     }
@@ -54,7 +60,7 @@ class Config extends Data
     {
         // Build file map.
         $files = $this->build();
-        $key = md5(serialize($files) . GRAV_VERSION);
+        $key = md5(serialize($files) . GANTRY5_VERSION);
 
         if ($force || $key != $this->key) {
             // First take non-blocking lock to the file.
@@ -92,7 +98,8 @@ class Config extends Data
             }
             $this->updated = false;
         } catch (\Exception $e) {
-            throw new \RuntimeException('Writing to cache folder failed (configuration).', 500, $e);
+            // TODO: do not require saving to succeed, but display some kind of error anyway.
+            throw new \RuntimeException('Writing configuration to cache folder failed.', 500, $e);
         }
 
         return $this;
@@ -104,21 +111,20 @@ class Config extends Data
      * @param  string  $filename
      * @return Config
      */
-    public static function instance($filename)
+    public static function instance($filename, $path)
     {
         // Load cached version if available..
         if (file_exists($filename)) {
-            clearstatcache(true, $filename);
             require_once $filename;
 
-            if (class_exists('Config')) {
-                $instance = new Config($filename);
+            if (class_exists('\Gantry\Config')) {
+                $instance = new \Gantry\Config($filename, $path);
             }
         }
 
         // Or initialize new configuration object..
         if (!isset($instance)) {
-            $instance = new static($filename);
+            $instance = new static($filename, $path);
         }
 
         // If configuration was updated, store it as cached version.
@@ -149,7 +155,7 @@ class Config extends Data
         $this->updated = true;
 
         // Combine all configuration files into one larger lookup table (only keys matter).
-        $allFiles = $files['user'] + $files['plugins'] + $files['system'];
+        $allFiles = $files['theme'];
 
         // Then sort the files to have all parent nodes first.
         // This is to make sure that child nodes override parents content.
@@ -161,30 +167,21 @@ class Config extends Data
             }
         );
 
-        $systemBlueprints = new Blueprints(SYSTEM_DIR . 'blueprints');
-        $pluginBlueprints = new Blueprints(USER_DIR);
+        $blueprints = new Blueprints($this->path . '/blueprints/config');
 
         $items = array();
         foreach ($allFiles as $name => $dummy) {
             $lookup = array(
-                'system' => SYSTEM_DIR . 'config/' . $name . YAML_EXT,
-                'plugins' => USER_DIR . $name . '/' . basename($name) . YAML_EXT,
-                'user' => USER_DIR . 'config/' . $name . YAML_EXT,
+                'theme' => $this->path . '/config/' . $name . '.yaml',
             );
-            if (strpos($name, 'plugins/') === 0) {
-                $blueprint = $pluginBlueprints->get("{$name}/blueprints");
-            } else {
-                $blueprint = $systemBlueprints->get($name);
-            }
+            $blueprint = $blueprints->get($name);
 
             $data = new Data(array(), $blueprint);
-            foreach ($lookup as $key => $path) {
+            foreach ($lookup as $path) {
                 if (is_file($path)) {
                     $data->merge(File\Yaml::instance($path)->content());
                 }
             }
-//            $data->validate();
-//            $data->filter();
 
             // Find the current sub-tree location.
             $current = &$items;
@@ -212,23 +209,6 @@ class Config extends Data
      */
     protected function build()
     {
-        // Find all plugins with default configuration options.
-        $plugins = array();
-        $iterator = new \DirectoryIterator(PLUGINS_DIR);
-
-        /** @var \DirectoryIterator $plugin */
-        foreach ($iterator as $plugin) {
-            $name = $plugin->getBasename();
-            $file = $plugin->getPathname() . DS . $name . YAML_EXT;
-
-            if (!is_file($file)) {
-                continue;
-            }
-
-            $modified = filemtime($file);
-            $plugins["plugins/{$name}"] = $modified;
-        }
-
         // Find all system and user configuration files.
         $options = array(
             'compare' => 'Filename',
@@ -238,9 +218,8 @@ class Config extends Data
             'value' => 'MTime'
         );
 
-        $system = Folder::all(SYSTEM_DIR . 'config', $options);
-        $user = Folder::all(USER_DIR . 'config', $options);
+        $user = Folder::all($this->path . '/config', $options);
 
-        return array('system' => $system, 'plugins' => $plugins, 'user' => $user);
+        return array('theme' => $user);
     }
 }

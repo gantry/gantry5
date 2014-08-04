@@ -31,8 +31,13 @@ try {
     }
 
     // In frontend we want to prevent template from loading.
-    add_filter( 'template_include', function() use ( $e ) {
-        echo 'Theme cannot be loaded. For more information, please login to administration.';
-        die();
-    });
+    if ( !class_exists( '\Tracy\Debugger' ) ) {
+        add_filter( 'template_include', function() use ( $e ) {
+            echo 'Theme cannot be loaded. For more information, please login to administration.';
+            die();
+        });
+    }
+
+    // We have Tracy enabled; will display and/or log error with it.
+    throw $e;
 }

@@ -7,9 +7,10 @@ use Gantry\Filesystem\File;
 
 class Theme
 {
-    protected $path;
+    public $path;
 
-    public function __construct( $path ) {
+    public function __construct( $path )
+    {
         if (!is_dir( $path )) {
             throw new \LogicException( 'Theme not found!' );
         }
@@ -26,13 +27,16 @@ class Theme
         add_action( 'widgets_init', array( $this, 'widgets_init' ) );
     }
 
-    public function widgets_init() {
-        $positions = File\Yaml::instance( $this->path . '/test/positions.yaml' )->content();
-        if ( !isset( $positions['positions'] ) ) {
-            return;
-        }
+    public function widgets_init()
+    {
+        $gantry = \Gantry\Gantry::instance();
+        $positions = (array) $gantry->config()->get( 'positions' );
 
-        foreach ($positions['positions'] as $name => $params) {
+        foreach ( $positions as $name => $params ) {
+            $params = (array) $params;
+            if ( !isset( $params['name'] ) ) {
+                $params['name'] = ucfirst($name);
+            }
             register_sidebar( array(
                 'name'          => __( $params['name'], 'gantry5' ),
                 'id'            => $name,
@@ -45,23 +49,18 @@ class Theme
         }
     }
 
-    /**
-     * @param int $widget_id
-     * @return \TimberFunctionWrapper
-     */
-    public function sidebar( $widget_id = '' ) {
-        return \TimberHelper::function_wrapper( 'dynamic_sidebar', array( $widget_id ), true );
-    }
-
-    public function register_post_types() {
+    public function register_post_types()
+    {
         //this is where you can register custom post types
     }
 
-    public function register_taxonomies() {
+    public function register_taxonomies()
+    {
         //this is where you can register custom taxonomies
     }
 
-    public function add_to_context( $context ) {
+    public function add_to_context( $context )
+    {
         $gantry = \Gantry\Gantry::instance();
         $context['menu'] = new \TimberMenu;
         $context['my'] = new \TimberUser;
@@ -69,16 +68,16 @@ class Theme
 
         // Include Gantry specific things to the context.
         $file = File\Json::instance( $this->path . '/test/nucleus.json' );
-        $config = File\Yaml::instance( $this->path . '/nucleus.yaml' );
 
+        $context['config'] = $gantry->config();
         $context['pageSegments'] = $file->content();
-        $context['theme'] = $config->content();
         $context['theme_url'] = $context['site']->theme->link;
 
         return $context;
     }
 
-    public function add_to_twig( $twig ) {
+    public function add_to_twig( $twig )
+    {
         /* this is where you can add your own fuctions to twig */
         $loader = $twig->getLoader();
         $loader->addPath( $this->path . '/nucleus', 'nucleus' );
@@ -87,7 +86,8 @@ class Theme
         return $twig;
     }
 
-    public function toGrid( $text ) {
+    public function toGrid( $text )
+    {
         static $sizes = array(
             '10'      => 'size-1-10',
             '20'      => 'size-1-5',

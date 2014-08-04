@@ -3,9 +3,18 @@ namespace Gantry\Base;
 
 abstract class Gantry
 {
+    /**
+     * @var static
+     */
     protected static $instance;
-    protected $theme;
+
+    /**
+     * @var Config
+     */
+    protected $config;
+
     protected $site;
+    protected $theme;
 
     public static function instance()
     {
@@ -18,13 +27,21 @@ abstract class Gantry
 
     abstract function initialize(\Gantry\Theme\Theme $theme);
 
-    public function theme()
+    /**
+     * @return Config
+     */
+    public function config()
     {
-        return $this->theme;
+        return $this->config;
     }
 
     public function site()
     {
         return $this->site;
+    }
+
+    public function theme()
+    {
+        return $this->theme;
     }
 }

@@ -1,6 +1,8 @@
 <?php
 namespace Gantry;
 
+use Gantry\Base\Config;
+
 class Gantry extends Base\Gantry
 {
     /**
@@ -15,7 +17,9 @@ class Gantry extends Base\Gantry
     }
 
     public function initialize( Theme\Theme $theme ) {
+        $path = $theme->path;
         $this->theme = $theme;
+        $this->config = Config::instance( $path . '/cache/config.php', $path );
         $this->site =  new Site\Site;
     }
 }

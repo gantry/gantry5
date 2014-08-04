@@ -48,7 +48,7 @@ class Config extends General
      */
     protected function check($var)
     {
-        if (!($var instanceof Config)) {
+        if (!($var instanceof \Gantry\Base\Config)) {
             throw new \RuntimeException('Provided data is not configuration');
         }
 
@@ -58,13 +58,13 @@ class Config extends General
     /**
      * Encode configuration object into RAW string (PHP class).
      *
-     * @param \Gantry\Config $var
+     * @param \Gantry\Base\Config $var
      * @return string
      * @throws \RuntimeException
      */
     protected function encode($var)
     {
-        if (!($var instanceof \Gantry\Config)) {
+        if ($var && !($var instanceof \Gantry\Base\Config)) {
             throw new \RuntimeException('Provided data is not configuration');
         }
 
@@ -85,7 +85,7 @@ class Config extends General
         }
         $vars = implode("\n", $vars);
 
-       return "<?php\nnamespace Grav;\n\nclass Config extends \\Grav\\Common\\Config {\n {$vars}\n}";
+       return "<?php\nnamespace Gantry;\n\nclass Config extends \\Gantry\\Base\\Config {\n {$vars}\n}";
     }
 
     /**
@@ -124,6 +124,6 @@ class Config extends General
     protected function decode($var)
     {
         // TODO: improve this one later, works only for single file...
-        return class_exists('\Grav\Config') ? new \Grav\Config($this->filename) : new Config($this->filename);
+        return class_exists('\Gantry\Config') ? new \Gantry\Config($this->filename) : new \Gantry\Base\Config($this->filename);
     }
 }

@@ -42,9 +42,9 @@ abstract class Folder
      */
     public static function all($path, array $params = array())
     {
-        $path = realpath($path);
+        $realPath = realpath($path);
 
-        if ($path === false) {
+        if ($realPath === false) {
             throw new \RuntimeException("Path to {$path} doesn't exist.");
         }
 
@@ -54,7 +54,7 @@ abstract class Folder
         $key = $params['key'] ? 'get' . $params['key'] : null;
         $value = $params['value'] ? 'get' . $params['value'] : 'SubPathname';
 
-        $directory = new \RecursiveDirectoryIterator($path,
+        $directory = new \RecursiveDirectoryIterator($realPath,
             \RecursiveDirectoryIterator::SKIP_DOTS + \FilesystemIterator::UNIX_PATHS + \FilesystemIterator::CURRENT_AS_SELF);
         $iterator = new \RecursiveIteratorIterator($directory, \RecursiveIteratorIterator::SELF_FIRST);
 
