@@ -1,54 +1,25 @@
 <?php
 namespace Grav\Theme;
 
-use Grav\Common\Theme;
 use Grav\Common\Registry;
 use Grav\Common\Filesystem\File;
+use Gantry\Theme\Theme;
 
-class Nucleus extends Theme
+// Initialize Gantry.
+$bootstrap = __DIR__ . '/src/bootstrap.php';
+
+if (!is_file($bootstrap))
 {
-    /**
-     * Initialize nucleus layout engine.
-     */
-    public function onAfterTwigInit()
-    {
-        $env = Registry::get('Twig');
-        $twig = $env->twig();
-        $loader = $env->loader();
-
-        $twig->addFilter('toGrid', new \Twig_Filter_Function(array($this, 'toGrid')));
-        $loader->addPath( __DIR__ . '/nucleus', 'nucleus' );
-    }
-
-    /**
-     * Load current layout.
-     */
-    public function onAfterSiteTwigVars()
-    {
-        $file = File\Json::instance(__DIR__ . '/test/nucleus.json');
-        $config = File\Yaml::instance(__DIR__ . '/nucleus.yaml');
-
-        $twig = Registry::get('Twig');
-        $twig->twig_vars['pageSegments'] = $file->content();
-        $twig->twig_vars['theme'] = $config->content();
-    }
-
-    /**
-     * Twig filter.
-     *
-     * @param $text
-     * @return string
-     */
-    public function toGrid($text) {
-        static $sizes = array(
-            '10'      => 'size-1-10',
-            '20'      => 'size-1-5',
-            '25'      => 'size-1-4',
-            '33.3334' => 'size-1-3',
-            '50'      => 'size-1-2',
-            '100'     => ''
-        );
-
-        return isset($sizes[$text]) ? ' ' . $sizes[$text] : '';
-    }
+    throw new \LogicException('Symbolic links missing, please see README.md in your theme!');
 }
+
+require_once $bootstrap;
+require_once __DIR__ . '/class.php';
+
+$theme = new Nucleus(__DIR__, basename(__FILE__, '.php'));
+
+// Instantiate Gantry.
+$gantry = \Gantry\Gantry::instance();
+$gantry->initialize($theme);
+
+return $theme;

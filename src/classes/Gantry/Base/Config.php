@@ -44,7 +44,7 @@ class Config extends Data
      */
     public function __construct($filename, $path)
     {
-        $this->filename = realpath(dirname($filename)) . '/' . basename($filename);
+        $this->filename = $filename;
         $this->path = (string) $path;
 
         $this->reload(false);
