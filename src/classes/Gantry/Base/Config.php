@@ -42,10 +42,16 @@ class Config extends Data
     /**
      * Constructor.
      */
-    public function __construct($filename, $path)
+    public function __construct($filename, $path, array $data = null)
     {
         $this->filename = $filename;
         $this->path = (string) $path;
+
+        if ($data) {
+            $this->key = $data['key'];
+            $this->files = $data['files'];
+            $this->items = $data['items'];
+        }
 
         $this->reload(false);
     }
@@ -64,7 +70,7 @@ class Config extends Data
 
         if ($force || $key != $this->key) {
             // First take non-blocking lock to the file.
-            File\Config::instance($this->filename)->lock(false);
+            File\Php::instance($this->filename)->lock(false);
 
             // Reset configuration.
             $this->items = array();
@@ -88,12 +94,11 @@ class Config extends Data
     {
         // If configuration was updated, store it as cached version.
         try {
-            $file = File\Config::instance($this->filename);
+            $file = File\Php::instance($this->filename);
 
-            // Only save configuration file if it wasn't locked. Also invalidate opcache after saving.
-            // This prevents us from saving the file multiple times in a row and gives faster recovery.
+            // Only save configuration file if it was successfully locked to prevent multiple saves.
             if ($file->locked() !== false) {
-                $file->save($this);
+                $file->save($this->toArray());
                 $file->unlock();
             }
             $this->updated = false;
@@ -109,16 +114,17 @@ class Config extends Data
      * Gets configuration instance.
      *
      * @param  string  $filename
-     * @return Config
+     * @param  string  $path
+     * @return static
      */
     public static function instance($filename, $path)
     {
         // Load cached version if available..
         if (file_exists($filename)) {
-            require_once $filename;
+            $data = require_once $filename;
 
-            if (class_exists('\Gantry\Config')) {
-                $instance = new \Gantry\Config($filename, $path);
+            if (is_array($data) && isset($data['@class']) && $data['@class'] == __CLASS__) {
+                $instance = new static($filename, $path, $data);
             }
         }
 
@@ -142,7 +148,12 @@ class Config extends Data
      */
     public function toArray()
     {
-        return array('key' => $this->key, 'files' => $this->files, 'items' => $this->items);
+        return [
+            '@class' => get_class($this),
+            'key' => $this->key,
+            'files' => $this->files,
+            'items' => $this->items
+        ];
     }
 
     /**
@@ -210,13 +221,13 @@ class Config extends Data
     protected function build()
     {
         // Find all system and user configuration files.
-        $options = array(
+        $options = [
             'compare' => 'Filename',
             'pattern' => '|\.yaml$|',
-            'filters' => array('key' => '|\.yaml$|'),
+            'filters' => ['key' => '|\.yaml$|'],
             'key' => 'SubPathname',
             'value' => 'MTime'
-        );
+        ];
 
         $user = Folder::all($this->path . '/config', $options);
 
