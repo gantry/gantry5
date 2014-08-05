@@ -13,7 +13,7 @@ class Nucleus extends Theme
     public function onAfterTwigInit()
     {
         $env = Registry::get('Twig');
-        $this->add_to_twig($env->twig());
+        $this->add_to_twig($env->twig(), $env->loader());
     }
 
     /**

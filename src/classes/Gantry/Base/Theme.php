@@ -36,12 +36,13 @@ abstract class Theme
         return $context;
     }
 
-    public function add_to_twig(\Twig_Environment $twig)
+    public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
     {
         /* this is where you can add your own functions to twig */
-        $loader = $twig->getLoader();
+        if (!$loader) {
+            $loader = $twig->getLoader();
+        }
         $loader->addPath($this->path . '/nucleus', 'nucleus');
-        $twig->addExtension(new \Twig_Extension_StringLoader());
         $twig->addFilter('toGrid', new \Twig_Filter_Function(array($this, 'toGrid')));
         return $twig;
     }
