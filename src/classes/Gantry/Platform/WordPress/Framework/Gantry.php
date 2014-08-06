@@ -15,7 +15,12 @@ class Gantry extends Base\Gantry
 
         $container = parent::load();
 
-        $container['site'] = function ($c) {
+        $container['config'] = function ( $c ) {
+            $path = $c['theme']->path;
+            return Config::instance( $path . '/cache/config.php', $path );
+        };
+
+        $container['site'] = function ( $c ) {
             return new Site;
         };
 

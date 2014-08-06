@@ -14,11 +14,9 @@ class Nucleus extends \Gantry\Framework\Theme {}
 $gantry['theme'] = function ($c) {
     return new Nucleus(__DIR__, $this->template);
 };
-$gantry['config'] = function ($c) {
-    return \Gantry\Framework\Config::instance(JPATH_CACHE . '/gantry5/config.php', $c['theme']->path);
-};
 
 // Boot the service.
 $theme = $gantry['theme'];
 
+// Render the page.
 echo $theme->render('index.html.twig');

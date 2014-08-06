@@ -1,8 +1,6 @@
 <?php
 namespace Gantry\Framework;
 
-use Gantry\Base\Config;
-
 class Gantry extends Base\Gantry
 {
     /**
@@ -11,6 +9,10 @@ class Gantry extends Base\Gantry
     protected static function load()
     {
         $container = parent::load();
+
+        $container['config'] = function ($c) {
+            return Config::instance(JPATH_CACHE . '/gantry5/config.php', $c['theme']->path);
+        };
 
         $container['site'] = function ($c) {
             return new Site;

@@ -57,7 +57,7 @@ class Theme extends Base\Theme
 
     public function widgets_init()
     {
-        $gantry = \Gantry\Gantry::instance();
+        $gantry = Gantry::instance();
         $positions = (array) $gantry->config()->get('positions');
 
         foreach ($positions as $name => $params) {

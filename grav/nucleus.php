@@ -14,9 +14,6 @@ require_once __DIR__ . '/includes/class.php';
 $gantry['theme'] = function ($c) {
     return new Nucleus(__DIR__, basename(__FILE__, '.php'));
 };
-$gantry['config'] = function ($c) {
-    return \Gantry\Framework\Config::instance(CACHE_DIR . 'gantry5/config.php', $c['theme']->path);
-};
 
 // Boot the service.
 return $gantry['theme'];
