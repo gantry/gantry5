@@ -12,5 +12,6 @@
         {% endset %}
 
         {% include '@nucleus/container.html.twig' with {segments: pageSegments} %}
+        {{ function('wp_footer') }}
     </body>
 </html>
