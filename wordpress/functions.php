@@ -17,4 +17,3 @@ $gantry['theme'] = function ( $c ) {
 
 // Boot the service.
 $theme = $gantry['theme'];
-

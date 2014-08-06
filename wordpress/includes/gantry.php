@@ -20,19 +20,21 @@ try {
     if ( is_admin() ) {
         // In admin display an useful error.
         add_action( 'admin_notices', function() use ( $e ) {
-            echo '<div class="error"><p>Theme error: ' . $e->getMessage(). '</p></div>';
+            echo '<div class="error"><p>Failed to load theme: ' . $e->getMessage(). '</p></div>';
         } );
         return;
     }
 
     // In frontend we want to prevent template from loading.
-    if ( !class_exists( '\Tracy\Debugger' ) ) {
-        add_filter( 'template_include', function() use ( $e ) {
-            echo 'Theme cannot be loaded. For more information, please login to administration.';
-            die();
-        });
+    if (class_exists( '\Tracy\Debugger' ) && \Tracy\Debugger::isEnabled() && !\Tracy\Debugger::$productionMode ) {
+        // We have Tracy enabled; will display and/or log error with it.
+        throw $e;
     }
 
-    // We have Tracy enabled; will display and/or log error with it.
-    throw $e;
+    add_filter( 'template_include', function() use ( $e ) {
+        echo 'Theme cannot be used. For more information, please login to administration.';
+        die();
+    });
+
+    return;
 }

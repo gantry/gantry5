@@ -1,11 +1,8 @@
 <?php
 defined('_JEXEC') or die;
 
-// Bootstrap Gantry framework or fail gracefully.
+// Bootstrap Gantry framework or fail gracefully (inside included file).
 $gantry = include_once __DIR__ . '/includes/gantry.php';
-if (!$gantry) {
-    return;
-}
 
 // Define the template.
 class Nucleus extends \Gantry\Framework\Theme {}

@@ -21,12 +21,12 @@ try
 catch (Exception $e)
 {
     // Oops, something went wrong!
-    // In frontend we want to prevent template from loading.
-    if (!class_exists('\Tracy\Debugger'))
-    {
-        JError::raiseError(500, 'Template cannot be loaded: ' . $e->getMessage());
-    };
 
-    // We have Tracy enabled; will display and/or log error with it.
-    throw $e;
+    if (class_exists( '\Tracy\Debugger' ) && \Tracy\Debugger::isEnabled() && !\Tracy\Debugger::$productionMode ) {
+        // We have Tracy enabled; will display and/or log error with it.
+        throw $e;
+    }
+
+    // In frontend we want to prevent template from loading.
+    JError::raiseError(500, 'Failed to load template: ' . $e->getMessage());
 }

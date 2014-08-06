@@ -1,15 +1,26 @@
 <?php
 
-if (!defined('GANTRY5_VERSION')) {
+require_once __DIR__ . '/includes/defines.php';
 
-    require_once __DIR__ . '/includes/defines.php';
+$errorMessage = 'You are running PHP %s, but Gantry Framework needs at least PHP %s to run.';
 
-    $loader = require_once __DIR__ . '/includes/autoload.php';
+// Fail safe version check for PHP <5.3.2, which do not support Bootstrap.
+if (version_compare($ver = PHP_VERSION, '5.3.2', '<')) {
+    throw new \RuntimeException(sprintf($errorMessage, $ver, GANTRY5_MIN_PHP));
+}
 
-    // Enable tracy.
-    if (DEBUG && !\Tracy\Debugger::isEnabled()) {
-        \Tracy\Debugger::enable();
-    }
+$loader = require_once __DIR__ . '/includes/autoload.php';
+
+use \Tracy\Debugger;
+
+// If debug mode is enabled, enable tracy in development mode.
+if (DEBUG && !Debugger::isEnabled()) {
+    Debugger::enable(Debugger::DEVELOPMENT);
+}
+
+// Allow nice debug messages by using tracy.
+if (version_compare($ver, GANTRY5_MIN_PHP, '<')) {
+    throw new \RuntimeException(sprintf($errorMessage, $ver, GANTRY5_MIN_PHP));
 }
 
 return $loader;
