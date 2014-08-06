@@ -1,25 +1,22 @@
 <?php
 namespace Grav\Theme;
 
-use Grav\Common\Registry;
-use Grav\Common\Filesystem\File;
-use Gantry\Theme\Theme;
-
-// Initialize Gantry.
-$bootstrap = __DIR__ . '/src/bootstrap.php';
-
-if (!is_file($bootstrap))
-{
-    throw new \LogicException('Symbolic links missing, please see README.md in your theme!');
+// Bootstrap Gantry framework or fail gracefully.
+$gantry = include_once __DIR__ . '/includes/gantry.php';
+if (!$gantry) {
+    throw new \RuntimeException('Gantry Framework could not be loaded');
 }
 
-require_once $bootstrap;
-require_once __DIR__ . '/class.php';
+// Define the template.
+require_once __DIR__ . '/includes/class.php';
 
-$theme = new Nucleus(__DIR__, basename(__FILE__, '.php'));
+// Define Gantry services.
+$gantry['theme'] = function ($c) {
+    return new Nucleus(__DIR__, basename(__FILE__, '.php'));
+};
+$gantry['config'] = function ($c) {
+    return \Gantry\Framework\Config::instance(CACHE_DIR . 'gantry5/config.php', $c['theme']->path);
+};
 
-// Instantiate Gantry.
-$gantry = \Gantry\Gantry::instance();
-$gantry->initialize($theme);
-
-return $theme;
+// Boot the service.
+return $gantry['theme'];

@@ -1,2 +1,2 @@
 <?php
-
+namespace Gantry;

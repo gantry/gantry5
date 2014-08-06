@@ -1,40 +1,24 @@
 <?php
-
 defined('_JEXEC') or die;
 
-try
-{
-    // Initialize Gantry.
-    $bootstrap = __DIR__ . '/src/bootstrap.php';
-
-    if (!is_file($bootstrap))
-    {
-        throw new LogicException('Symbolic links missing, please see README.md in your theme!');
-    }
-
-    require_once $bootstrap;
-
-    // Define template.
-    class Nucleus extends \Gantry\Theme\Theme {}
-
-    // Create template.
-    $theme = new Nucleus(__DIR__, $this->template);
-
-    // Instantiate Gantry.
-    $gantry = \Gantry\Gantry::instance();
-    $gantry->initialize($theme);
+// Bootstrap Gantry framework or fail gracefully.
+$gantry = include_once __DIR__ . '/includes/gantry.php';
+if (!$gantry) {
+    return;
 }
-catch (Exception $e)
-{
-    // Oops, something went wrong!
-    // In frontend we want to prevent template from loading.
-    if (!class_exists('\Tracy\Debugger'))
-    {
-        JError::raiseError(500, 'Template cannot be loaded: ' . $e->getMessage());
-    };
 
-    // We have Tracy enabled; will display and/or log error with it.
-    throw $e;
-}
+// Define the template.
+class Nucleus extends \Gantry\Framework\Theme {}
+
+// Define Gantry services.
+$gantry['theme'] = function ($c) {
+    return new Nucleus(__DIR__, $this->template);
+};
+$gantry['config'] = function ($c) {
+    return \Gantry\Framework\Config::instance(JPATH_CACHE . '/gantry5/config.php', $c['theme']->path);
+};
+
+// Boot the service.
+$theme = $gantry['theme'];
 
 echo $theme->render('index.html.twig');
