@@ -3,9 +3,9 @@
 $base = dirname(__DIR__);
 
 // Initialize auto-loading.
-if (file_exists($base . '/vendor/autoload.php')) {
+if (file_exists($base . '/../vendor/autoload.php')) {
     /** @var \Composer\Autoload\ClassLoader $loader */
-    $loader = require_once $base . '/vendor/autoload.php';
+    $loader = require_once $base . '/../vendor/autoload.php';
 } else {
     throw new LogicException('Please run composer in Gantry Library!');
 }

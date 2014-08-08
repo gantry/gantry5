@@ -1,8 +1,8 @@
-.sass-cache/*
-node_modules/*
-src/composer.lock
-src/vendor/**
+# Composer
+composer.lock
+vendor/**
 
+# Symbolic links in themes
 themes/nucleus/*/css
 !themes/nucleus/common/css
 themes/nucleus/*/css-compiled
@@ -20,4 +20,8 @@ themes/nucleus/*/nucleus
 themes/nucleus/*/test
 !themes/nucleus/common/test
 themes/nucleus/*/src
+themes/nucleus/*/vendor
 themes/nucleus/*/cache
+
+.sass-cache/*
+node_modules/*
