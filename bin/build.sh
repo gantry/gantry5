@@ -61,8 +61,11 @@ do
     done;
 done;
 
-if (($OPT_DELETE)); then
-	echo "Removed all symbolic links."
+if ((!$OPT_DELETE)); then
+    composer install
+else
+    rm -rf vendor composer.lock
+    echo "Removed all symbolic links and composer files."
 fi
 
 echo
