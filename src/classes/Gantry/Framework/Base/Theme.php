@@ -29,7 +29,7 @@ abstract class Theme
         $context['theme'] = $this;
 
         // Include Gantry specific things to the context.
-        $file = File\Json::instance($this->path . '/test/nucleus.json');
+        $file = File\Json::instance($this->path . '/layouts/test.json');
         $context['pageSegments'] = $file->content();
 
         return $context;
@@ -41,7 +41,7 @@ abstract class Theme
         if (!$loader) {
             $loader = $twig->getLoader();
         }
-        $loader->addPath($this->path . '/nucleus', 'nucleus');
+        $loader->addPath($this->path . '/engine', 'nucleus');
         $twig->addFilter('toGrid', new \Twig_Filter_Function(array($this, 'toGrid')));
         return $twig;
     }

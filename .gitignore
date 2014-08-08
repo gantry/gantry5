@@ -15,10 +15,10 @@ themes/nucleus/*/js
 !themes/nucleus/common/js
 themes/nucleus/*/scss
 !themes/nucleus/common/scss
-themes/nucleus/*/nucleus
-!themes/nucleus/common/nucleus
-themes/nucleus/*/test
-!themes/nucleus/common/test
+themes/nucleus/*/engine
+!themes/nucleus/common/engine
+themes/nucleus/*/layouts
+!themes/nucleus/common/layouts
 themes/nucleus/*/src
 themes/nucleus/*/vendor
 themes/nucleus/*/cache

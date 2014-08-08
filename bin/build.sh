@@ -28,8 +28,8 @@ sources=(
     "themes/nucleus/common/fonts"
     "themes/nucleus/common/images"
     "themes/nucleus/common/js"
-    "themes/nucleus/common/nucleus"
-    "themes/nucleus/common/test"
+    "themes/nucleus/common/engine"
+    "themes/nucleus/common/layouts"
     "src"
     "vendor"
 )
