@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include(__DIR__.'/core/head.php'); ?>
+<?php include(__DIR__ . '/core/head.php'); ?>
 <body>
 
 <div class="container">
 
 	<!-- Header -->
-	<?php include(__DIR__.'/sections/header.php'); ?>
+	<?php include(__DIR__ . '/sections/header.php'); ?>
 
 	<div class="grid pure-g">
 		<div class="block pure-u-4-5">
@@ -51,14 +51,14 @@
 			</main>
 		</div>
 		<div class="block size-1-5 pure-u-1-5">
-			<?php include(__DIR__.'/sections/sidebar.php'); ?>
+			<?php include(__DIR__ . '/sections/sidebar.php'); ?>
 		</div>
 	</div>
 
 	<!-- Footer -->
-	<?php include(__DIR__.'/sections/footer.php'); ?>
+	<?php include(__DIR__ . '/sections/footer.php'); ?>
 
 </div>
-    
+
 </body>
 </html>

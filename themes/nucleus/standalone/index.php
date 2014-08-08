@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include(__DIR__.'/core/head.php'); ?>
-<body dir="rtl">
+<?php include(__DIR__ . '/core/head.php'); ?>
+<body>
 
 <div class="container">
 	<!-- Header -->
-	<?php include(__DIR__.'/sections/header.php'); ?>
+	<?php include(__DIR__ . '/sections/header.php'); ?>
 
 	<div class="grid pure-g">
 		<div class="block pure-u-3-4">
 			<!-- Showcase -->
-			<?php include(__DIR__.'/sections/showcase.php'); ?>
+			<?php include(__DIR__ . '/sections/showcase.php'); ?>
 
 			<!-- Feature -->
-			<?php include(__DIR__.'/sections/feature.php'); ?>
+			<?php include(__DIR__ . '/sections/feature.php'); ?>
 
 			<!-- Main Body -->
 			<main id="main">
@@ -31,7 +31,7 @@
 			</main>
 
 			<!-- Bottom -->
-			<?php include(__DIR__.'/sections/bottom.php'); ?>
+			<?php include(__DIR__ . '/sections/bottom.php'); ?>
 
 		</div>
 		<div class="block size-1-4 pure-u-1-4">
@@ -54,8 +54,8 @@
 	</div>
 
 	<!-- Footer -->
-	<?php include(__DIR__.'/sections/footer.php'); ?>
+	<?php include(__DIR__ . '/sections/footer.php'); ?>
 </div>
-    
+
 </body>
 </html>
