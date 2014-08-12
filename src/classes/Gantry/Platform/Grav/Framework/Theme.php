@@ -1,9 +1,6 @@
 <?php
 namespace Gantry\Framework;
 
-use Gantry\Base\Gantry;
-use Symfony\Component\Yaml\Yaml;
-use Gantry\Filesystem\File;
 use Grav\Common\Registry;
 
 class Theme extends Base\Theme
