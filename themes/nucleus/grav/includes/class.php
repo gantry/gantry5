@@ -2,10 +2,9 @@
 namespace Grav\Theme;
 
 use Grav\Common\Registry;
-use Grav\Common\Filesystem\File;
-use Gantry\Framework\Theme;
+use Gantry\Framework\Theme as GantryTheme;
 
-class Nucleus extends Theme
+class Nucleus extends GantryTheme
 {
     /**
      * Initialize nucleus layout engine.
