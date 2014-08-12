@@ -18,7 +18,7 @@ class Nucleus extends GantryTheme
     /**
      * Load current layout.
      */
-    public function onAfterSiteTwigVars()
+    public function onAfterTwigSiteVars()
     {
         $twig = Registry::get('Twig');
         $twig->twig_vars = $this->add_to_context($twig->twig_vars);
