@@ -508,6 +508,12 @@ th {
       .fixed-blocks .block {
         width: 100%; } }
 
+@supports not (flex-wrap: wrap) {
+  .fixed-blocks {
+    display: block;
+    -webkit-flex-flow: inherit;
+    -moz-flex-flow: inherit;
+    flex-flow: inherit; } }
 body {
   font-size: 1rem;
   line-height: 1.5; }

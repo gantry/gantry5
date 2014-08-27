@@ -185,3 +185,11 @@ body [class*="size-"] {
 		}
 	}
 }
+
+// Fix for browsers that don't support flex-wrap
+@supports not (flex-wrap: wrap) {
+	.fixed-blocks {
+		display: block;
+		@include flex-flow(inherit);
+	}
+}
