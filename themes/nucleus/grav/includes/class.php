@@ -7,20 +7,30 @@ use Gantry\Framework\Theme as GantryTheme;
 class Nucleus extends GantryTheme
 {
     /**
+     * @return array
+     */
+    public static function getSubscribedEvents() {
+        return [
+            'onTwigInitialized' => ['onTwigInitialized', 0],
+            'onTwigSiteVariables' => ['onTwigSiteVariables', 0]
+        ];
+    }
+
+    /**
      * Initialize nucleus layout engine.
      */
-    public function onAfterTwigInit()
+    public function onTwigInitialized()
     {
-        $env = Registry::get('Twig');
+        $env = $this->grav['twig'];
         $this->add_to_twig($env->twig(), $env->loader());
     }
 
     /**
      * Load current layout.
      */
-    public function onAfterTwigSiteVars()
+    public function onTwigSiteVariables()
     {
-        $twig = Registry::get('Twig');
+        $twig = $this->grav['twig'];
         $twig->twig_vars = $this->add_to_context($twig->twig_vars);
     }
 
