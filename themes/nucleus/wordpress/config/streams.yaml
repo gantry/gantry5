@@ -1,0 +1,25 @@
+schemes:
+  theme:
+    type: ReadOnlyStream
+    prefixes:
+      '':
+      - themes/afterburner2
+      - themes/nucleus
+
+      css/:
+      - themes/afterburner2/css-compiled
+      - themes/afterburner2/css
+      - themes/nucleus/css-compiled
+      - themes/nucleus/css
+
+      js/:
+      - themes/afterburner2/js
+      - themes/nucleus/js
+
+      fonts/:
+      - themes/afterburner2/fonts
+      - themes/nucleus/fonts
+
+      images/:
+      - themes/afterburner2/images
+      - themes/nucleus/images

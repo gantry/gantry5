@@ -1,15 +1,22 @@
 <?php
 namespace Gantry\Framework;
 
-use Grav\Common\Registry;
+use Gantry\Framework\Base\ThemeTrait as GantryThemeTrait;
+use Grav\Common\Theme as BaseTheme;
+use Grav\Common\Grav;
+use Grav\Common\Config;
+use RocketTheme\Toolbox\File\YamlFile;
 
-class Theme extends Base\Theme
+class Theme extends BaseTheme
 {
-    public function __construct( $path, $name = '' )
-    {
-        parent::__construct($path, $name);
+    use GantryThemeTrait;
 
-        $baseUrlRelative = Registry::get('Config')->get('system.base_url_relative');
+    public function __construct(Grav $grav, Config $config, $name)
+    {
+        parent::__construct($grav, $config, $name);
+
+        $baseUrlRelative = $config->get('system.base_url_relative');
+        $this->path = THEMES_DIR . $name;
         $this->url = $baseUrlRelative .'/'. USER_PATH . basename(THEMES_DIR) .'/'. $this->name;
     }
 

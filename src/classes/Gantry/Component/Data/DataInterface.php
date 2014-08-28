@@ -1,7 +1,7 @@
 <?php
 namespace Gantry\Component\Data;
 
-use Gantry\Component\Filesystem\FileInterface;
+use RocketTheme\Toolbox\File\FileInterface;
 
 /**
  * Data interface

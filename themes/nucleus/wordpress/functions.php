@@ -7,6 +7,8 @@ if ( !$gantry ) {
     return;
 }
 
+$gantry['theme.path'] = __DIR__;
+
 // Define the template.
 class Nucleus extends \Gantry\Framework\Theme {}
 

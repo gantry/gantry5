@@ -1,11 +1,15 @@
 <?php
 namespace Grav\Theme;
 
-use Grav\Common\Registry;
 use Gantry\Framework\Theme as GantryTheme;
 
 class Nucleus extends GantryTheme
 {
+    /**
+     * @var GantryTheme
+     */
+    protected $gantryTheme;
+
     /**
      * @return array
      */
@@ -32,24 +36,5 @@ class Nucleus extends GantryTheme
     {
         $twig = $this->grav['twig'];
         $twig->twig_vars = $this->add_to_context($twig->twig_vars);
-    }
-
-    /**
-     * Twig filter.
-     *
-     * @param $text
-     * @return string
-     */
-    public function toGrid($text) {
-        static $sizes = array(
-            '10'      => 'size-1-10',
-            '20'      => 'size-1-5',
-            '25'      => 'size-1-4',
-            '33.3334' => 'size-1-3',
-            '50'      => 'size-1-2',
-            '100'     => ''
-        );
-
-        return isset($sizes[$text]) ? ' ' . $sizes[$text] : '';
     }
 }

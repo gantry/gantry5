@@ -1,6 +1,8 @@
 # Composer
 composer.lock
 vendor/**
+platforms/**/assets
+!platforms/common/assets
 
 # Symbolic links in themes
 themes/nucleus/*/css

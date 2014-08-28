@@ -8,11 +8,11 @@ if (!$gantry) {
 }
 
 // Define the template.
-require_once __DIR__ . '/includes/class.php';
+require 'gantry.theme://includes/class.php';
 
 // Define Gantry services.
-$gantry['theme'] = function ($c) {
-    return new Nucleus(__DIR__, basename(__FILE__, '.php'));
+$gantry['theme'] = function ($c) use ($grav, $config, $name) {
+    return new Nucleus($grav, $config, $name);
 };
 
 // Boot the service.

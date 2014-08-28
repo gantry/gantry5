@@ -3,8 +3,9 @@ namespace Gantry\Framework\Base;
 
 use Gantry\Component\Data\Blueprints;
 use Gantry\Component\Data\Data;
-use Gantry\Component\Filesystem\File;
 use Gantry\Component\Filesystem\Folder;
+use RocketTheme\Toolbox\File\PhpFile;
+use RocketTheme\Toolbox\File\YamlFile;
 
 /**
  * The Config class contains configuration information.
@@ -70,7 +71,7 @@ class Config extends Data
 
         if ($force || $key != $this->key) {
             // First take non-blocking lock to the file.
-            File\Php::instance($this->filename)->lock(false);
+            PhpFile::instance($this->filename)->lock(false);
 
             // Reset configuration.
             $this->items = array();
@@ -94,7 +95,7 @@ class Config extends Data
     {
         // If configuration was updated, store it as cached version.
         try {
-            $file = File\Php::instance($this->filename);
+            $file = PhpFile::instance($this->filename);
 
             // Only save configuration file if it was successfully locked to prevent multiple saves.
             if ($file->locked() !== false) {
@@ -190,7 +191,7 @@ class Config extends Data
             $data = new Data(array(), $blueprint);
             foreach ($lookup as $path) {
                 if (is_file($path)) {
-                    $data->merge(File\Yaml::instance($path)->content());
+                    $data->merge(YamlFile::instance($path)->content());
                 }
             }
 

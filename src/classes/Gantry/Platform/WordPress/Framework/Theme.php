@@ -1,9 +1,6 @@
 <?php
 namespace Gantry\Framework;
 
-use Symfony\Component\Yaml\Yaml;
-use Gantry\Component\Filesystem\File;
-
 class Theme extends Base\Theme
 {
     public $path;

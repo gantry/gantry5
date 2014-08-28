@@ -1,14 +1,17 @@
 <?php
 namespace Gantry\Framework;
 
-use Grav\Common\Registry;
+use Grav\Common\GravTrait;
 
 class Site
 {
+    use GravTrait;
+
     public function __construct()
     {
-        $config = Registry::get('Config');
-        $uri = Registry::get('Uri');
+        $grav = static::$grav;
+        $config = $grav['config'];
+        $uri = $grav['uri'];
         $this->theme = $config->get('system.theme');
         $this->url = $uri->rootUrl();
         $this->title = $config->get('site.title');

@@ -1,7 +1,8 @@
 <?php
 namespace Gantry\Framework\Base;
 
-use Gantry\Component\DI\Container;
+use RocketTheme\Toolbox\DI\Container;
+use Gantry\Component\Filesystem\StreamsServiceProvider;
 
 class Gantry extends Container
 {
@@ -22,6 +23,8 @@ class Gantry extends Container
     protected static function load()
     {
         $instance = new Container();
+
+        $instance->register(new StreamsServiceProvider);
 
         return $instance;
     }

@@ -1,9 +1,9 @@
 <?php
 namespace Gantry\Component\Data;
 
-use Gantry\Component\Getters\Getters;
-use Gantry\Component\Filesystem\FileInterface;
-use Gantry\Component\Filesystem\File;
+use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
+use RocketTheme\Toolbox\ArrayTraits\Export;
+use RocketTheme\Toolbox\File\FileInterface;
 
 /**
  * Recursive data object
@@ -11,15 +11,22 @@ use Gantry\Component\Filesystem\File;
  * @author RocketTheme
  * @license MIT
  */
-class Data extends Getters implements DataInterface
+class Data implements DataInterface
 {
+    use ArrayAccessWithGetters, Export;
+
+    /**
+     * @var array
+     */
+    protected $items;
+
     /**
      * @var Blueprints
      */
     protected $blueprints;
 
     /**
-     * @var File\General
+     * @var FileInterface
      */
     protected $storage;
 

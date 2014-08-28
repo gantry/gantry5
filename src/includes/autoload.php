@@ -15,10 +15,13 @@ require_once __DIR__ . '/functions.php';
 
 // Register platform specific overrides.
 if (defined('JVERSION')) {
+    define('GANTRY5_ROOT', JPATH_ROOT);
     $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/Joomla', true);
 } elseif (defined('WP_DEBUG')) {
+    define('GANTRY5_ROOT', ABSPATH);
     $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/WordPress', true);
 } elseif (defined('GRAV_VERSION')) {
+    define('GANTRY5_ROOT', rtrim(ROOT_DIR, '/'));
     $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/Grav', true);
 }
 

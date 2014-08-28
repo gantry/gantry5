@@ -10,5 +10,15 @@ if (!is_file($bootstrap)) {
 
 require_once $bootstrap;
 
-// Get Gantry instance and return it.
-return Gantry::instance();
+$path = (string) $path;
+
+// Get Gantry instance.
+$gantry = Gantry::instance();
+
+// Set the theme path from Grav variable.
+$gantry['theme.path'] = $path;
+
+// Boot Gantry locator.
+$gantry['locator'];
+
+return $gantry;
