@@ -67,7 +67,8 @@ do
 		ln -s "$source" "$target"
 	fi
 done;
-if ($OPT_DELETE); then
+
+if (($OPT_DELETE)); then
 	echo "Removed development version of Gantry from your web site."
 fi
 
