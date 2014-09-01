@@ -4,12 +4,25 @@ defined( 'ABSPATH' ) or die;
 use Gantry\Framework\Gantry;
 
 try {
-    // Load Gantry Framework.
-    $bootstrap = __DIR__ . '/../src/bootstrap.php';
-    if ( !is_file( $bootstrap ) ) {
-        throw new LogicException( 'Symbolic links missing, please see README.md in your theme!' );
+    // Attempt to locate Gantry Framework if it hasn't already been loaded.
+    if ( !class_exists( 'Gantry' ) ) {
+        $paths = array(
+            __DIR__ . '/../src/bootstrap.php',                      // Look if Gantry has been included to the template.
+            ABSPATH . '/wp_content/themes/gantry/src/bootstrap.php' // Finally look from the default gantry template.
+        );
+
+        foreach ( $paths as $path ) {
+            if ( $path && is_file( $path ) ) {
+                $bootstrap = $path;
+            }
+        }
+
+        if ( !$bootstrap ) {
+            throw new LogicException( 'Gantry Framework not found!' );
+        }
+
+        require_once $bootstrap;
     }
-    require_once $bootstrap;
 
     // Get Gantry instance and return it.
     return Gantry::instance();

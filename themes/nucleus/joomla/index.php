@@ -10,7 +10,7 @@ class Nucleus extends \Gantry\Framework\Theme {}
 
 // Define Gantry services.
 $gantry['theme'] = function ($c) {
-    return new Nucleus(__DIR__, $this->template);
+    return new Nucleus($c['theme.path'], $this->template);
 };
 
 // Boot the service.

@@ -3,23 +3,11 @@ schemes:
     type: ReadOnlyStream
     prefixes:
       '':
-      - templates/afterburner2
-      - templates/nucleus
+        - templates/nucleus
+        - templates/gantry
 
       css/:
-      - templates/afterburner2/css-compiled
-      - templates/afterburner2/css
-      - templates/nucleus/css-compiled
-      - templates/nucleus/css
-
-      js/:
-      - templates/afterburner2/js
-      - templates/nucleus/js
-
-      fonts/:
-      - templates/afterburner2/fonts
-      - templates/nucleus/fonts
-
-      images/:
-      - templates/afterburner2/images
-      - templates/nucleus/images
+        - templates/nucleus/css-compiled
+        - templates/nucleus/css
+        - templates/gantry/css-compiled
+        - templates/gantry/css

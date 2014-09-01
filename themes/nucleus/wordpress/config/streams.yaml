@@ -3,23 +3,11 @@ schemes:
     type: ReadOnlyStream
     prefixes:
       '':
-      - themes/afterburner2
-      - themes/nucleus
+      - wp-content/themes/nucleus
+      - wp-content/themes/gantry
 
       css/:
-      - themes/afterburner2/css-compiled
-      - themes/afterburner2/css
-      - themes/nucleus/css-compiled
-      - themes/nucleus/css
-
-      js/:
-      - themes/afterburner2/js
-      - themes/nucleus/js
-
-      fonts/:
-      - themes/afterburner2/fonts
-      - themes/nucleus/fonts
-
-      images/:
-      - themes/afterburner2/images
-      - themes/nucleus/images
+      - wp-content/themes/nucleus/css-compiled
+      - wp-content/themes/nucleus/css
+      - wp-content/themes/gantry/css-compiled
+      - wp-content/themes/gantry/css
