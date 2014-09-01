@@ -5,20 +5,20 @@ OPT_DELETE=0
 
 if [ -f $GIT_TARGET/configuration.php ]; then
     PLATFORM=Joomla
-    sources=('themes/nucleus/joomla')
-    targets=('templates/nucleus')
+    sources=('themes/nucleus/common' 'themes/nucleus/joomla')
+    targets=('templates/gantry' 'templates/nucleus')
 elif [ -f $GIT_TARGET/wp-config.php ]; then
     PLATFORM=WordPress
-    sources=('themes/nucleus/wordpress')
-    targets=('wp-content/themes/nucleus')
+    sources=('themes/nucleus/common' 'themes/nucleus/wordpress')
+    targets=('wp-content/themes/gantry' 'wp-content/themes/nucleus')
 elif [ -f $GIT_TARGET/system/config/system.yaml ]; then
     PLATFORM=Grav
-    sources=('themes/nucleus/grav')
-    targets=('user/themes/nucleus')
+    sources=('themes/nucleus/common' 'themes/nucleus/grav')
+    targets=('user/themes/gantry' 'user/themes/nucleus')
 elif [ -f $GIT_TARGET/.standalone ]; then
     PLATFORM=Standalone
-    sources=('themes/nucleus/standalone')
-    targets=('nucleus')
+    sources=('themes/nucleus/common' 'themes/nucleus/standalone')
+    targets=('gantry' 'nucleus')
 
 else
     echo

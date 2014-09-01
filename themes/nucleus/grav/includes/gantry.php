@@ -1,24 +1,23 @@
 <?php
+namespace Gantry\Framework;
 
-use Gantry\Framework\Gantry;
+/** @var $locator */
+/** @var $path */
 
-// Load Gantry Framework.
-$bootstrap = __DIR__ . '/../src/bootstrap.php';
-if (!is_file($bootstrap)) {
-    throw new LogicException( 'Symbolic links missing, please see README.md in your theme!' );
+// Attempt to locate Gantry Framework if it hasn't already been loaded.
+if (!class_exists('Gantry')) {
+    $bootstrap = $locator('theme://src/bootstrap.php');
+    if (!$bootstrap) {
+        throw new \LogicException('Gantry Framework not found!');
+    }
+
+    // Load Gantry Framework.
+    require_once $bootstrap;
 }
-
-require_once $bootstrap;
-
-$path = (string) $path;
 
 // Get Gantry instance.
 $gantry = Gantry::instance();
 
 // Set the theme path from Grav variable.
-$gantry['theme.path'] = $path;
-
-// Boot Gantry locator.
-$gantry['locator'];
-
+$gantry['theme.path'] = $locator('theme://');
 return $gantry;

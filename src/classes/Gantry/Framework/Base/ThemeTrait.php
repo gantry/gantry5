@@ -2,6 +2,7 @@
 namespace Gantry\Framework\Base;
 
 use RocketTheme\Toolbox\File\JsonFile;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
  * Class ThemeTrait
@@ -27,11 +28,18 @@ trait ThemeTrait
 
     public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
     {
-        /* this is where you can add your own functions to twig */
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
         if (!$loader) {
             $loader = $twig->getLoader();
         }
-        $loader->addPath($this->path . '/engine', 'nucleus');
+
+        foreach ($locator->findResources('theme://engine') as $path) {
+            $loader->addPath($path, 'nucleus');
+        }
         $twig->addFilter('toGrid', new \Twig_Filter_Function(array($this, 'toGrid')));
         return $twig;
     }

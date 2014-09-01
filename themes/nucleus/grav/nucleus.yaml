@@ -9,3 +9,18 @@ widgets:
     enabled: true
     image: 'images/logo.png'
     text: 'Gantry'
+
+streams:
+  schemes:
+    theme:
+      type: ReadOnlyStream
+      prefixes:
+        '':
+          - user/themes/nucleus
+          - user/themes/gantry
+
+        css/:
+          - user/themes/nucleus/css-compiled
+          - user/themes/nucleus/css
+          - user/themes/gantry/css-compiled
+          - user/themes/gantry/css
