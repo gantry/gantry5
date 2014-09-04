@@ -16,11 +16,17 @@ streams:
       type: ReadOnlyStream
       prefixes:
         '':
+          - user/themes/afterburner2
+          - user/themes/afterburner2/common
           - user/themes/nucleus
-          - user/themes/nucleus/common
+          - user/themes/gantry
 
         css/:
+          - user/themes/afterburner2/common/css-compiled
+          - user/themes/afterburner2/common/css
+          - user/themes/afterburner2/css-compiled
+          - user/themes/afterburner2/css
           - user/themes/nucleus/css-compiled
           - user/themes/nucleus/css
-          - user/themes/nucleus/common/css-compiled
-          - user/themes/nucleus/common/css
+          - user/themes/gantry/css-compiled
+          - user/themes/gantry/css

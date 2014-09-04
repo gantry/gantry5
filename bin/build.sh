@@ -23,13 +23,7 @@ do
 done
 
 sources=(
-    "themes/nucleus/common/css"
-    "themes/nucleus/common/css-compiled"
-    "themes/nucleus/common/fonts"
-    "themes/nucleus/common/images"
-    "themes/nucleus/common/js"
-    "themes/nucleus/common/engine"
-    "themes/nucleus/common/layouts"
+    "themes/nucleus/common"
     "src"
     "vendor"
 )

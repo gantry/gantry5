@@ -5,6 +5,8 @@ platforms/**/assets
 !platforms/common/assets
 
 # Symbolic links in themes
+themes/nucleus/*/common
+!themes/nucleus/common
 themes/nucleus/*/css
 !themes/nucleus/common/css
 themes/nucleus/*/css-compiled

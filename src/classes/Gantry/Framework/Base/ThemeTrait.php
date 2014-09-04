@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Framework\Base;
 
+use Gantry\Component\Twig\TwigExtension;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -19,8 +20,11 @@ trait ThemeTrait
         $context['config'] = $gantry['config'];
         $context['theme'] = $this;
 
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
         // Include Gantry specific things to the context.
-        $file = JsonFile::instance($this->path . '/layouts/test.json');
+        $file = JsonFile::instance($locator('theme://layouts/test.json'));
         $context['pageSegments'] = $file->content();
 
         return $context;
@@ -36,10 +40,9 @@ trait ThemeTrait
         if (!$loader) {
             $loader = $twig->getLoader();
         }
+        $loader->setPaths($locator->findResources('theme://engine'), 'nucleus');
 
-        foreach ($locator->findResources('theme://engine') as $path) {
-            $loader->addPath($path, 'nucleus');
-        }
+        $twig->addExtension(new TwigExtension);
         $twig->addFilter('toGrid', new \Twig_Filter_Function(array($this, 'toGrid')));
         return $twig;
     }

@@ -2,6 +2,6 @@
 
 {% block widget %}
 <a href="{{ site.url }}" title="{{ widget.text|e }}" rel="home">
-    <img src="{{ theme.url }}/{{ widget.image }}" alt="{{ widget.text|e }}" />
+    <img src="{{ url("theme://" ~ widget.image) }}" alt="{{ widget.text|e }}" />
 </a>
 {% endblock %}

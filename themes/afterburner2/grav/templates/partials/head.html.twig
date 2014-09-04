@@ -1,0 +1,21 @@
+{% extends "@nucleus/head.html.twig" %}
+
+{% block head_title %}
+    <meta charset="utf-8" />
+    <title>{% if header.title %}{{ header.title }} | {% endif %}{{ site.title }}</title>
+    {% if header.description %}
+        <meta name="description" content="{{ header.description }}">
+    {% else %}
+        <meta name="description" content="{{ site.description }}">
+    {% endif %}
+    {% if header.robots %}
+        <meta name="robots" content="{{ header.robots }}">
+    {% endif %}
+{% endblock %}
+
+{% block head_application %}
+    <link rel="stylesheet" href="{{ url("theme://css/afterburner2.css") }}" type="text/css" />
+    {% for stylesheet in stylesheets %}
+        <link rel="stylesheet" href="{{ base_url_relative }}/{{ stylesheet }}" type="text/css" />
+    {% endfor %}
+{% endblock %}
