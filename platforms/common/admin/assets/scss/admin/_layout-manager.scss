@@ -1,0 +1,268 @@
+#g5-container { // wrapper
+
+.lm-blocks {
+    &.empty {
+        min-height: 150px;
+        border: 2px dashed #dfdfdf;
+    }
+
+    .grid, .block {
+        position: relative;
+    }
+
+    // resizers
+    .grid > .block {
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            right: -8px;
+            bottom: 0;
+            width: 8px;
+            background: red;
+            z-index: 3;
+            cursor: ew-resize;
+            display: none; // temp
+        }
+
+        &:last-child:after {
+            display: none;
+        }
+    }
+
+    &.moving .grid > .block:after {
+        display: none;
+    }
+
+    /* THIS IS FOR PAGES */
+
+    .grid {
+        margin: 10px;
+        border-radius: 3px;
+        //border: 1px solid lighten($aqua, 20%);//9AD5E7;
+        box-shadow: inset 0 0 0 1px lighten($aqua, 20%);//9AD5E7;
+    }
+
+    .section {
+        background: $main-bg;
+        cursor: move;
+
+        margin: 10px;
+        box-shadow: inset 0 0 0 1px $light-gray;
+        border-radius: 3px;
+        padding: 10px 5px;
+        // with box shadows: $gap: 11px;
+        // with box shadows: margin: 0;
+        // with box shadows: box-shadow: inset 0 0 0 $gap $white, inset 0 0 0 ($gap + 1) $light-gray;
+        // with box shadows: border-radius: $gap + 3;
+        // with box shadows: padding: (10px + $gap) (5px + $gap);
+
+
+
+        &:hover {
+            box-shadow: inset 0 0 0 1px $green;
+            //box-shadow: inset 0 0 0 $gap $white, inset 0 0 0 ($gap + 1) $green; // with box shadows
+        }
+
+        .section-header {
+            margin: 0 5px 8px;
+
+            .button {
+                pointer-events: visible;
+            }
+        }
+
+        .grid {
+            margin: 0;
+            border: 0;
+            box-shadow: none;
+
+            .block:after {
+                display: none;
+            }
+        }
+
+    }
+
+    .grid > .block {
+        .placeholder:not(:first-child):not(:last-child) {
+            //margin: -6px 0;
+        }
+        .in-between-sections:first-child, .in-between-sections:last-child {
+            margin: 6px;
+        }
+
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 8px;
+            right: -4px;
+            bottom: 8px;
+            width: 8px;
+            //background: $blue-gray;
+            @include stripes-background(lighten($blue-gray, 40%), 40px);
+            z-index: 3;
+            cursor: ew-resize;
+            border-radius: 8px;
+        }
+
+        &:last-child:after {
+            display: none;
+        }
+    }
+
+    .position, .spacer, .mainbody {
+        padding: 8px;
+        color: $sidebar-active;
+        background: $white;
+        margin: 0 4px;
+        border: 1px solid $light-gray;
+        border-radius: 3px;
+    }
+
+    /* END THIS IS FOR PAGES */
+
+    /* .block {
+        padding: 8px;
+        //border: 1px solid #dfdfdf;
+        box-shadow: inset 0 0 0 1px #dfdfdf;
+        margin: 4px;
+        background: white;
+    }
+
+    .position, .spacer, .placeholder {
+        background-color: #ecf3f6;
+        padding: 12px;
+        box-shadow: 0 0 0 4px white inset, 0 0 0 5px #d3e5f0 inset;
+        color: #888;
+    }
+
+    .section {
+        background: #f9f9f9;
+    }
+
+    .spacer {
+        text-align: center;
+        color: rgb(89, 135, 160);
+        text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+        //border: 1px solid #97AFC5;
+        background-color: #D8DFE4;
+        text-transform: uppercase;
+        @include background-image(linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent));
+        background-size: 50px 50px;
+    } */
+
+    .placeholder {
+        text-align: center;
+        color: rgb(89, 135, 160);
+        text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+        //border: 1px solid #97AFC5;
+        background-color: lighten($lavender, 20%);
+        box-shadow: inset 0 0 0 1px lighten($lavender, 15%); //DBCFF8
+        @include background-image(linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent));
+        background-size: 50px 50px;
+        border: 0;
+        padding: 2px;
+        flex: 0 1 50%;
+        //margin: 10px;
+        border-radius: 3px;
+        min-height: 6px;
+
+        &.in-between {
+            margin: -2px 0;
+            border-radius: 10px;
+            display: block;
+            flex: 0 0 0px;
+            margin: 10px -3px;
+            width: 0px;
+            padding: 3px;
+            text-indent: -10000px;
+            font-size: 0px;
+            flex: 0 1 0%;
+        }
+
+        &.in-between-sections {
+            //background-color: $pink;
+            box-shadow: inset 0 0 0 3px $white, inset 0 0 0 4px lighten($lavender, 15%); //DBCFF8
+            margin: -11px 6px;
+            min-height: 12px;
+            border-radius: 10px;
+        }
+
+        &.in-between.in-between-sections {
+            width: auto;
+            margin: -10px 6px;
+        }
+    }
+}
+
+/* history */
+#history {
+    display: inline-block;
+    float: right;
+    span {
+        display: inline-block;
+        background: #eee;
+        border-radius: 30px;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        margin-left: 5px;
+        font-size: 16px;
+        color: #777;
+        text-shadow: 0 1px $white;
+
+        &.disabled {
+            color: #ccc;
+        }
+    }
+}
+
+.sidebar [data-lm-blocktype] {
+    position: relative;
+    z-index: 5;
+}
+
+/* new blocks */
+.lm-newblocks {
+    padding-bottom: 8px;
+
+    .block {
+        cursor: move;
+        display: inline-block;
+        text-align: center;
+        background: $sidebar-bg;
+        padding: 4px 8px;
+        border-radius: 3px;
+        margin-right: 8px;
+    }
+}
+
+/* deletion */
+
+#trash {
+    @include position(absolute, -100px 0 inherit 0);
+    text-align: center;
+    font-weight: bold;
+    color: $white;
+    padding: $content-padding;
+
+    .trash-zone {
+        background-color: $red;
+        font-size: $core-font-size * 2;
+        border-radius: 100px;
+        @include size(50px 50px);
+        line-height: 50px;
+        margin: 0 auto;
+    }
+
+    span {
+        font-size: $sidebar-font-size;
+        color: $dark-gray;
+    }
+}
+
+} //end wrapper

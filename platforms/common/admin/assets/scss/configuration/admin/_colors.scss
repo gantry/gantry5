@@ -1,0 +1,41 @@
+// Core
+$core-text:                     #666;
+$core-accent:                   #5D9CEC;
+$secondary-link:                #F8B450;
+$white:                         #fff;
+$black:                         #000;
+$light-gray:                    #eee;
+$medium-gray:                   #ccd1d9;
+$dark-gray:                     #656d78;
+
+$blue-gray:                     #54606e;
+$aqua:                          #4fc1e9;
+$yellow:                        #ffce54;
+$green:                         #a0d468;
+$orange:                        #fc6e51;
+$red:                           #ed5565;
+$lavender:                      #ac92ec;
+$pink:                          #ec87c0;
+
+// Body
+$body-bg:                       #e7e7e7;
+
+// Sidebar
+$sidebar-bg:                    #f4f5f9;
+$sidebar-shadow:                inset -3px 0 0 -1px transparentize($black, 0.96);
+$sidebar-color:                 #a2a9bc;
+$sidebar-active:                #c3c9d5;
+$sidebar-active-color:          $white;
+
+// Main
+$main-bg:                       #fafafa;
+$main-border-sides:             #dfe0e4;
+$main-border-bottom:            #d0d1d5;
+$main-border:                   $main-bg $main-border-sides $main-border-bottom;
+
+$main-header-bg:                $white;
+$main-header-border:            #ddd;
+
+// Mode Indicator
+$production:                    #48cfad;//#bceb9e;//#85db81;
+$development:                   #f27a40;//#fbba79;//#ef5d5d;

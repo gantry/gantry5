@@ -1,0 +1,91 @@
+body #g5-container {
+    background-color: $body-bg;
+    color: $core-text;
+}
+
+#g5-container { // wrapper
+
+.fa-spin {
+    @include animation(spin 0.8s infinite linear);
+}
+
+.block {
+    position: relative;
+}
+
+&.container, .container {
+    width: 100%;
+}
+
+[data-mode-indicator]{
+    padding: 2px;
+    @include transition (background-color 0.3s ease-in-out);
+
+    border-width: 0 1px 0;
+    border-style: solid;
+    border-color: transparent darken($main-border-sides, 20%) transparent;
+
+    #sidebar & {
+        border-width: 0 0 1px 0;
+        border-style: solid;
+        border-color: transparent transparent darken($main-border-sides, 20%) transparent;
+    }
+}
+
+[data-mode-indicator="production"] {
+    background-color: $production;
+
+    #sidebar & {
+        background-color: darken($production, 15%);
+    }
+}
+
+[data-mode-indicator="development"] {
+    background-color: $development;
+
+    #sidebar & {
+        background-color: darken($development, 15%);
+    }
+}
+
+// cards
+.cards-wrapper {
+    margin: -10px;
+}
+
+.card {
+    display: inline-block;
+    background: $white;
+    border-radius: 3px;
+    box-shadow: 0 1px rgba(0, 0, 0, 0.1), -1px 0 $light-gray, 1px 0 $light-gray, 0 -1px transparentize($light-gray, 0.57);
+    padding: 10px;
+    min-width: 250px;
+    vertical-align: top;
+    margin: 10px;
+
+    &.full-width {
+        margin: 0;
+        display: block;
+    }
+
+
+    h4 {
+        margin: 0;
+
+        .enabler {
+            float: right;
+        }
+    }
+
+    .enabler {
+        @include enabler($green, $medium-gray);
+    }
+
+    .inner-params {
+        margin: $content-margin 0 0;
+        padding-top: $content-margin;
+        border-top: 1px solid $light-gray;
+    }
+}
+
+} // end wrapper

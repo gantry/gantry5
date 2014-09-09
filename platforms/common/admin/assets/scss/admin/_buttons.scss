@@ -1,0 +1,28 @@
+#g5-container {//wrapper
+
+.button {
+    @extend %button;
+    @include button-color($light-gray, $dark-gray);
+}
+
+.button-primary {
+    @extend %button;
+    @include button-color($core-accent);
+}
+
+.button-secondary {
+    @extend %button;
+    @include button-color($secondary-link);
+}
+
+.button.red {
+    @extend %button;
+    @include button-color($red);
+}
+
+.button.yellow {
+    @extend %button;
+    @include button-color($yellow, darken($yellow, 40%));
+}
+
+}//endwrapper

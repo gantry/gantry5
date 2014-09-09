@@ -1,0 +1,58 @@
+// REQUIRED DEPENDENCIES - DO NOT CHANGE
+
+// Load Third Party Libraries
+@import "vendor/bourbon/bourbon";
+
+// Load Nucleus Configuration
+@import "configuration/nucleus/base";
+
+// Load Template Configuration
+@import "configuration/admin/base";
+
+// Load Nucleus Mixins and Functions
+@import "nucleus/functions/base";
+@import "nucleus/mixins/base";
+
+// Load Admin Mixins
+@import "admin/mixins/base";
+
+// Text Alignment Classes
+@import "nucleus/particles/align-text";
+
+// Show and Hide Based on Screen Size
+@import "nucleus/particles/visibility";
+
+
+// Load Template Library
+@import "admin/modules/base";
+
+// TEMPLATE COMPONENTS
+
+// Core
+@import "admin/core";
+@import "admin/fonts";
+
+// Main
+@import "admin/main";
+@import "admin/overview";
+
+// Settings
+@import "admin/settings";
+
+// Page Setup
+@import "admin/page-setup";
+
+// Sidebar
+@import "admin/sidebar";
+
+// Headers
+@import "admin/headers";
+
+// Typography
+@import "admin/typography";
+
+// Buttons
+@import "admin/buttons";
+
+// Layout Manager
+@import "admin/layout-manager";

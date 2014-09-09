@@ -1,0 +1,87 @@
+// Body Base
+body #g5-container {
+	font-size: $core-font-size;
+	line-height: $core-line-height;
+}
+
+// Headings
+#g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
+	margin: $leading-margin / 2 0 $leading-margin 0;
+	line-height: inherit;
+	text-rendering: optimizeLegibility;
+}
+
+#g5-container h1 {
+	font-size: $h1-font-size;
+}
+
+#g5-container h2 {
+	font-size: $h2-font-size;
+}
+
+#g5-container h3 {
+	font-size: $h3-font-size;
+}
+
+#g5-container h4 {
+	font-size: $h4-font-size;
+}
+
+#g5-container h5 {
+	font-size: $h5-font-size;
+}
+
+#g5-container h6 {
+	font-size: $h6-font-size;
+}
+
+// Paragraph
+#g5-container p {
+	margin: $leading-margin 0;
+}
+
+// Lists
+#g5-container ul, #g5-container ol {
+	margin-top: $leading-margin;
+	margin-bottom: $leading-margin;
+	ul, ol {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+
+// Blockquote
+#g5-container blockquote {
+	margin: $leading-margin 0;
+	padding-left: $leading-margin / 2;
+}
+
+#g5-container cite {
+	display: block;
+	font-size: $core-font-size - 0.125;
+	&:before {
+      content: "\2014 \0020";
+    }
+}
+
+// Inline and Code
+#g5-container pre {
+	margin: $leading-margin 0;
+ 	padding: $content-padding;
+}
+
+#g5-container code {
+	vertical-align: bottom;
+}
+
+// Extras
+#g5-container small {
+	font-size: $core-font-size - 0.125;
+}
+
+#g5-container hr {
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	margin: $leading-margin 0;
+}

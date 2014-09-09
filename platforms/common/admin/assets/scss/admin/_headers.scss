@@ -1,0 +1,90 @@
+#g5-container { //wrapper
+
+#main-header {
+    background-color: $main-header-bg;
+    border-bottom: 1px solid $main-header-border;
+    font-size: $core-font-size - 0.2;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    .content {
+        margin: 0;
+        padding: $content-padding-short;
+        line-height: 1rem;
+    }
+
+
+
+    [data-sidebar-toggle] {
+        display: inline-block;
+        font-size: $sidebar-font-size + 0.3;
+        padding: $content-padding-short;
+        margin: -($content-padding / 2) (-$content-padding);
+        @include transform-origin(center center);
+
+        .fa-chevron-left {
+            font-size: 55%;
+            vertical-align: middle;
+        }
+
+        &.sidebar-closed {
+            @include transform(rotate(-180deg));
+        }
+
+        &.sidebar-icons {
+            .fa-chevron-left {
+                display: none;
+            }
+
+            @include transform(rotate(-90deg));
+        }
+
+        @include transition (all 0.3s ease-in-out);
+    }
+
+    [data-mode-toggle] {
+        text-align: center;
+        font-weight: normal;
+
+        > span {
+            vertical-align: middle;
+        }
+
+        .toggle {
+            @include toggle-ui();
+        }
+
+        &.production .toggle {
+            background-color: $production;
+
+            .knob {
+                top: 1px;
+                left: 35px - 20px; // toggle size - knob size - 1px compensation
+            }
+        }
+
+        &.development .toggle {
+            background-color: $development;
+
+            .knob {
+                top: 1px;
+                left: 1px;
+            }
+        }
+    }
+}
+
+.ribbon {
+    padding: $content-padding-short;
+    background-color: $light-gray;
+    color: darken($light-gray, 30%);
+    border-left: 1px solid darken($light-gray, 5%);
+
+    &.master {
+        background-color: $yellow;
+        color: darken($yellow, 30%);
+        border-left: 1px solid darken($yellow, 15%);
+    }
+}
+
+}// endwrapper

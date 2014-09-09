@@ -1,0 +1,37 @@
+#g5-container {//wrapper
+
+#page-picker {
+    ul {
+        @extend %list-reset;
+    }
+
+    img {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .add-new {
+        a {
+            display: block;
+            @include position(absolute, 0);
+        }
+
+        i {
+            @include transform(translate(-50%, -50%));
+            @include position(absolute, 50% inherit inherit 50%);
+            font-size: 70px;
+            color: #ddd;
+            display: block;
+        }
+
+        .page {
+            vertical-align: middle;
+            height: 347px;
+            line-height: 343px + 35px;
+            text-align: center;
+            position: relative;
+        }
+    }
+}
+
+} //endwrapper

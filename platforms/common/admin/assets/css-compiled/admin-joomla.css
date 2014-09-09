@@ -1,0 +1,32 @@
+header, .subhead-collapse, .btn-subhead, /* J3 */
+#toolbar-box /* J25 */ {
+    display: none;
+}
+
+.container-main /* J3 */ {
+    padding: 0;
+}
+
+div#element-box, div#element-box div.m /* J25 */ {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+#content-box /* J25 */ {
+    width: 100%;
+}
+
+#element-box #g5-container #sidebar /* J25 */ {
+    border-left: 0;
+}
+
+#element-box #g5-container #main /* J25 */ {
+    border-right: 0;
+}
+
+#g5-container .page span, #g5-container .blank span { /* J25 */
+    color: inherit;
+    font-weight: normal;
+}

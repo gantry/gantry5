@@ -1,0 +1,58 @@
+#g5-container {//wrapper
+
+.settings-block {
+    //@extend .card;
+
+    .advanced {
+        color: $orange;
+    }
+
+    .settings-param {
+        padding: 5px;
+
+        &:nth-child(even){
+            background-color: #fafafa;
+            border-radius: 3px;
+        }
+    }
+
+    .settings-param-title {
+        max-width: 150px;
+    }
+
+    .settings-param-field {
+        margin-left: 150px;
+    }
+
+    i {
+        vertical-align: middle;
+    }
+
+    input {
+        padding: 2px 4px;
+        border: 1px solid $medium-gray;
+        margin: 0;
+    }
+
+    select {
+        margin: 0 0 10px;
+        display: inline-block;
+    }
+
+    img {
+        display: block;
+    }
+}
+
+// fields styles
+.settings-param-field-colorpicker {
+    position: relative;
+
+    .settings-param-field-colorpicker-preview {
+        @include position(absolute, 2px 2px 2px inherit);
+        width: $core-line-height + em(1px);
+        border-radius: 3px;
+    }
+}
+
+}//endwrapper
