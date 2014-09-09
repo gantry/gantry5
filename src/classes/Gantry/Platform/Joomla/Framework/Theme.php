@@ -45,7 +45,7 @@ class Theme extends Base\Theme
         $layout   = $app->input->getCmd('layout', '');
         $task     = $app->input->getCmd('task', '');
         $itemid   = $app->input->getCmd('Itemid', '');
-        $sitename = $app->getCfg('sitename');
+        $sitename = $app->get('sitename');
 
         // Add JavaScript Frameworks
         \JHtml::_('bootstrap.framework');

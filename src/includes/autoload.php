@@ -10,9 +10,6 @@ if (file_exists($base . '/../vendor/autoload.php')) {
     throw new LogicException('Please run composer in Gantry Library!');
 }
 
-// Load all the independent functions.
-require_once __DIR__ . '/functions.php';
-
 // Register platform specific overrides.
 if (defined('JVERSION')) {
     define('GANTRY5_ROOT', JPATH_ROOT);

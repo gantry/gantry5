@@ -5,7 +5,7 @@
 	<title>Gantry Playground</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../../css-compiled/nucleus.css" type="text/css" />
-	<link rel="stylesheet" href="font-awesome/css/font-awesome.css" type="text/css" />
+	<link rel="stylesheet" href="common/css/font-awesome.min.css" type="text/css" />
 	<link rel="stylesheet" href="css-compiled/afterburner2.css" type="text/css" />
 	<!--[if IE 9]>
 		<link rel="stylesheet" href="../../css/nucleus-ie9.css" type="text/css" />
@@ -49,9 +49,9 @@
 					<div class="block pure-u-1-3 promo">
 						<div class="content">
 							<div class="grid pure-g">
-								<div class="block size-1-3 pure-u-1-3">     
-									<div class="rt-num">1.0</div>		
-							 	</div>   
+								<div class="block size-1-3 pure-u-1-3">
+									<div class="rt-num">1.0</div>
+							 	</div>
 								<div class="block pure-u-2-3">
 						        	<h5>Gantry 4 Core</h5>
 									<p>Built on the Gantry 4 Framework, Afterburner2 benefits from its rich, powerful core.</p>
@@ -64,11 +64,11 @@
 					<div class="block pure-u-1-3 promo">
 						<div class="content">
 							<div class="grid pure-g">
-								<div class="block size-1-3 pure-u-1-3">        
+								<div class="block size-1-3 pure-u-1-3">
 									<div class="rt-num">2.0</div>
-								</div>	
+								</div>
 								<div class="block pure-u-2-3">
-						        	<h5>Performance</h5>  
+						        	<h5>Performance</h5>
 									<p>An optimized amount of features and extras are used in this template to focus on speed.</p>
 									<a href="#" class="readon">Read More</a>
 								</div>
@@ -79,11 +79,11 @@
 					<div class="block pure-u-1-3 promo">
 						<div class="content">
 							<div class="grid pure-g">
-								<div class="block size-1-3 pure-u-1-3">       
-									<div class="rt-num">3.0</div>		
-							 	</div>   
+								<div class="block size-1-3 pure-u-1-3">
+									<div class="rt-num">3.0</div>
+							 	</div>
 								<div class="block pure-u-2-3">
-						        	<h5>RokBooster<span class="hidden-tablet"> Ready</span></h5>  
+						        	<h5>RokBooster<span class="hidden-tablet"> Ready</span></h5>
 									<p>Compress CSS/scripts/images <span class="hidden-tablet">with RokBooster </span>to increase speed even further.</p>
 									<a href="#" class="readon">Read More</a>
 								</div>
@@ -95,7 +95,7 @@
 		</div>
 	</header>
 	<div id="rt-mainbody-surround">
-		<div class="container">			
+		<div class="container">
 			<div class="grid pure-g">
 				<div class="block pure-u-2-3">
 					<section id="main">
@@ -165,7 +165,7 @@
 		</div>
 	</div>
 	<div id="rt-bottom">
-		<div class="container">		
+		<div class="container">
 			<div class="grid pure-g">
 				<div class="block pure-u-2-3">
 					<div class="content">
@@ -183,7 +183,7 @@
 						<h2 class="title">Contact Us</h2>
 						<div class="grid pure-g">
 							<div class="block size-1-7 pure-u-1-7">
-								<h4><span class="fa fa-phone"></span></h4>	
+								<h4><span class="fa fa-phone"></span></h4>
 							</div>
 							<div class="block pure-u-6-7">
 								<strong>+1 (555) 555-555-5555</strong>
@@ -192,16 +192,16 @@
 						</div>
 						<div class="grid pure-g">
 							<div class="block size-1-7 pure-u-1-7">
-								<h4><span class="fa fa-home"></span></h4>	
+								<h4><span class="fa fa-home"></span></h4>
 							</div>
 							<div class="block pure-u-6-7">
 								<span>123 Joomla! Boulevard</span>
-								<br><span>Seattle, WA 00000, USA</span> 
+								<br><span>Seattle, WA 00000, USA</span>
 							</div>
 						</div>
 						<div class="grid pure-g">
 							<div class="block size-1-7 pure-u-1-7">
-								<h4 class="nomargintop"><span class="fa fa-envelope"></span></h4>	
+								<h4 class="nomargintop"><span class="fa fa-envelope"></span></h4>
 							</div>
 							<div class="block pure-u-6-7">
 								<a href="mailto:noreply@domain.com">noreply@domain.com</a>
@@ -224,6 +224,6 @@
 					</div>
 				</div>
 		</div>
-	</div>		
+	</div>
 </body>
 </html>

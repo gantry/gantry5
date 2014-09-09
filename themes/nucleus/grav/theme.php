@@ -1,10 +1,10 @@
 <?php
 namespace Grav\Theme;
 
-/** @var $locator */
 /** @var $grav */
 /** @var $config */
 /** @var $name */
+/** @var $locator */
 
 // Bootstrap Gantry framework or fail gracefully.
 $gantry = include_once $locator('theme://includes/gantry.php');
