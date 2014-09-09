@@ -1,0 +1,8 @@
+schemes:
+  gantry-admin:
+    type: ReadOnlyStream
+    prefixes:
+      '':
+        - administrator/components/com_gantry5admin/assets
+        - administrator/components/com_gantry5admin
+        - templates/nucleus

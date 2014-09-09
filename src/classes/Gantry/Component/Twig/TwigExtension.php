@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Component\Twig;
 
+use Gantry\Framework\DocumentHeader;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -24,7 +25,8 @@ class TwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('url', array($this, 'urlFunc'))
+            new \Twig_SimpleFunction('url', array($this, 'urlFunc')),
+            new \Twig_SimpleFunction('parseHtmlHeader', array($this, 'parseHtmlHeaderFunc'))
         );
     }
 
@@ -42,5 +44,32 @@ class TwigExtension extends \Twig_Extension
         $locator = $gantry['locator'];
 
         return $locator->findResource($input, false);
+    }
+
+    /**
+     * Move supported document head elements into platform document object, return all
+     * unsupported tags in a string.
+     *
+     * @param $input
+     * @return string
+     */
+    public function parseHtmlHeaderFunc($input)
+    {
+        $doc = new \DOMDocument();
+        $doc->loadHTML('<html><head>' . $input . '</head><body></body></html>');
+        $raw = [];
+        /** @var \DomElement $element */
+        foreach ($doc->getElementsByTagName('head')->item(0)->childNodes as $element) {
+            $result = ['tag' => $element->tagName, 'content' => $element->textContent];
+            foreach ($element->attributes as $attribute) {
+                $result[$attribute->name] = $attribute->value;
+            }
+            $success = DocumentHeader::add($result);
+            if (!$success) {
+                $raw[] = $doc->saveHTML($element);
+            }
+        }
+
+        return implode("\n  ", $raw);
     }
 }
