@@ -1,7 +1,7 @@
 <?php
 namespace Gantry\Component\Twig;
 
-use Gantry\Framework\DocumentHeader;
+use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -25,8 +25,8 @@ class TwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('url', array($this, 'urlFunc')),
-            new \Twig_SimpleFunction('parseHtmlHeader', array($this, 'parseHtmlHeaderFunc'))
+            new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
+            new \Twig_SimpleFunction('parseHtmlHeader', [$this, 'parseHtmlHeaderFunc'])
         );
     }
 
@@ -43,7 +43,7 @@ class TwigExtension extends \Twig_Extension
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        return $locator->findResource($input, false);
+        return Document::rootUri() . $locator->findResource($input, false);
     }
 
     /**
@@ -64,12 +64,12 @@ class TwigExtension extends \Twig_Extension
             foreach ($element->attributes as $attribute) {
                 $result[$attribute->name] = $attribute->value;
             }
-            $success = DocumentHeader::add($result);
+            $success = Document::addHeaderTag($result);
             if (!$success) {
                 $raw[] = $doc->saveHTML($element);
             }
         }
 
-        return implode("\n  ", $raw);
+        return implode("\n", $raw);
     }
 }

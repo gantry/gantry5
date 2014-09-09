@@ -1,19 +1,19 @@
 <?php
 namespace Gantry\Framework;
 
-class DocumentHeader
+class Document
 {
-    public static function add(array $element)
+    public static function addHeaderTag(array $element)
     {
         $doc = \JFactory::getDocument();
         switch ($element['tag']) {
             case 'link':
-                if (!empty($element['href'])) {
+                if (!empty($element['href']) && !empty($element['rel']) && $element['rel'] == 'stylesheet') {
                     $href = $element['href'];
                     $type = !empty($element['type']) ? $element['type'] : 'text/css';
                     $media = !empty($element['media']) ? $element['media'] : null;
-                    unset($element['tag'], $element['content'], $element['href'], $element['type'], $element['media']);
-                    $doc->AddStyleSheet(\JUri::root(true) .'/'. $href, $type, $media, $element);
+                    unset($element['tag'], $element['rel'], $element['content'], $element['href'], $element['type'], $element['media']);
+                    $doc->AddStyleSheet($href, $type, $media, $element);
                     return true;
                 }
                 break;
@@ -31,7 +31,7 @@ class DocumentHeader
                 if (!empty($element['src'])) {
                     $src = $element['src'];
                     $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
-                    $doc->addScript(\JUri::root(true) .'/'. $src, $type);
+                    $doc->addScript($src, $type);
                     return true;
 
                 } elseif (!empty($element['content'])) {
@@ -43,5 +43,10 @@ class DocumentHeader
                 break;
         }
         return false;
+    }
+
+    public static function rootUri()
+    {
+        return '/' . trim(\JUri::root(true), '/');
     }
 }

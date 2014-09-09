@@ -6,3 +6,9 @@ schemes:
         - administrator/components/com_gantry5admin/assets
         - administrator/components/com_gantry5admin
         - templates/nucleus
+
+      'assets':
+        - administrator/components/com_gantry5admin/assets
+        - administrator/components/com_gantry5admin
+        - templates/nucleus/common
+        - templates/nucleus
