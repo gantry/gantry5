@@ -1,12 +1,12 @@
 {
-   "project":"grav-plugin-admin",
+   "project":"grav-plugin-gantryadmin",
    "platforms":{
       "grav":{
          "nodes":{
             "plugin":[
                {
                   "source":"/",
-                  "destination":"/user/plugins/admin"
+                  "destination":"/user/plugins/gantryadmin"
                }
             ]
          }

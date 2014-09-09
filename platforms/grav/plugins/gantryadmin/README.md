@@ -1,4 +1,4 @@
-grav-plugin-admin
-=================
+grav-plugin-gantryadmin
+=======================
 
-Grav Admin Plugin
+Gantry Admin Plugin

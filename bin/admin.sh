@@ -1,10 +1,10 @@
 #!/bin/bash
 GIT_SOURCE=${PWD}
-GIT_TARGET=${GIT_SOURCE}/themes/nucleus
+GIT_TARGET=${GIT_SOURCE}/platforms
 OPT_DELETE=0
 
 echo
-echo "Initialize Gantry Platforms"
+echo "Initialize Gantry Admin"
 echo "GIT repository: ${GIT_SOURCE}"
 echo
 
@@ -23,21 +23,13 @@ do
 done
 
 sources=(
-    "themes/nucleus/common/css"
-    "themes/nucleus/common/css-compiled"
-    "themes/nucleus/common/fonts"
-    "themes/nucleus/common/images"
-    "themes/nucleus/common/js"
-    "themes/nucleus/common/engine"
-    "themes/nucleus/common/layouts"
-    "src"
-    "vendor"
+    "platforms/common/admin/assets"
 )
 targets=(
-    "joomla"
-    "wordpress"
-    "grav"
-    "standalone"
+    "joomla/com_gantryadmin"
+    "wordpress/plugins/gantryadmin"
+    "grav/plugins/gantryadmin"
+    "standalone/gantryadmin"
 )
 
 for (( t = 0 ; t < ${#targets[@]} ; t++ ))

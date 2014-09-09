@@ -1,13 +1,8 @@
 ---
-title: Dashboard Login
+title: Gantry Admin
 
-form:
-    - name: username
-      type: text
-      label: Username
-
-    - name: password
-      type: password
-      label: Password
+access:
+    admin.themes: true
+    admin.super: true
 ---
 
