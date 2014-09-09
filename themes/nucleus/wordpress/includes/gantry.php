@@ -8,7 +8,7 @@ try {
     if ( !class_exists( 'Gantry' ) ) {
         $paths = array(
             __DIR__ . '/../src/bootstrap.php',                      // Look if Gantry has been included to the template.
-            ABSPATH . '/wp-content/themes/gantry/src/bootstrap.php' // Finally look from the default gantry template.
+            WP_CONTENT_DIR . '/themes/gantry/src/bootstrap.php'     // Finally look from the default gantry template.
         );
         foreach ( $paths as $path ) {
             if ( $path && is_file( $path ) ) {
