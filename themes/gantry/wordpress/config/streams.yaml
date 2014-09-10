@@ -3,11 +3,11 @@ schemes:
     type: ReadOnlyStream
     prefixes:
       '':
-      - wp-content/themes/nucleus
       - wp-content/themes/gantry
+      - wp-content/themes/gantry/common
 
       css/:
-      - wp-content/themes/nucleus/css-compiled
-      - wp-content/themes/nucleus/css
       - wp-content/themes/gantry/css-compiled
       - wp-content/themes/gantry/css
+      - wp-content/themes/gantry/common/css-compiled
+      - wp-content/themes/gantry/common/css
