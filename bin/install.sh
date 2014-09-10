@@ -22,14 +22,16 @@ if [ -f $GIT_TARGET/configuration.php ]; then
         'administrator/components/com_gantryadmin/vendor'
         'templates/gantry'
         'templates/gantry/common'
-        'templates/gantry/common/src'
-        'templates/gantry/common/vendor'
+        'templates/gantry/src'
+        'templates/gantry/vendor'
         )
 elif [ -f $GIT_TARGET/wp-config.php ]; then
     PLATFORM=WordPress
     sources=(
         'platforms/wordpress/gantryadmin'
         'platforms/common'
+        'src'
+        'vendor'
         'themes/gantry/wordpress'
         'themes/gantry/common'
         'src'
@@ -38,16 +40,20 @@ elif [ -f $GIT_TARGET/wp-config.php ]; then
     targets=(
         'wp-content/plugins/gantryadmin'
         'wp-content/plugins/gantryadmin/common'
+        'wp-content/plugins/gantryadmin/src'
+        'wp-content/plugins/gantryadmin/vendor'
         'wp-content/themes/gantry'
         'wp-content/themes/gantry/common'
-        'wp-content/themes/gantry/common/src'
-        'wp-content/themes/gantry/common/vendor'
+        'wp-content/themes/gantry/src'
+        'wp-content/themes/gantry/vendor'
         )
 elif [ -f $GIT_TARGET/system/config/system.yaml ]; then
     PLATFORM=Grav
     sources=(
         'platforms/grav/gantryadmin'
         'platforms/common'
+        'src'
+        'vendor'
         'themes/gantry/grav'
         'themes/gantry/common'
         'src'
@@ -56,16 +62,20 @@ elif [ -f $GIT_TARGET/system/config/system.yaml ]; then
     targets=(
         'user/plugins/gantryadmin'
         'user/plugins/gantryadmin/common'
+        'user/plugins/gantryadmin/src'
+        'user/plugins/gantryadmin/vendor'
         'user/themes/gantry'
         'user/themes/gantry/common'
-        'user/themes/gantry/common/src'
-        'user/themes/gantry/common/vendor'
+        'user/themes/gantry/src'
+        'user/themes/gantry/vendor'
         )
 elif [ -f $GIT_TARGET/.standalone ]; then
     PLATFORM=Standalone
     sources=(
         'platforms/standalone/gantryadmin'
         'platforms/common'
+        'src'
+        'vendor'
         'themes/gantry/standalone'
         'themes/gantry/common'
         'src'
@@ -74,10 +84,12 @@ elif [ -f $GIT_TARGET/.standalone ]; then
     targets=(
         'gantry/admin'
         'gantry/admin/common'
+        'gantry/admin/src'
+        'gantry/admin/vendor'
         'gantry'
         'gantry/common'
-        'gantry/common/src'
-        'gantry/common/vendor'
+        'gantry/src'
+        'gantry/vendor'
         )
 
 else

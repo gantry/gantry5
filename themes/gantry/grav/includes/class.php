@@ -3,7 +3,7 @@ namespace Grav\Theme;
 
 use Gantry\Framework\Theme as GantryTheme;
 
-class Nucleus extends GantryTheme
+class Gantry extends GantryTheme
 {
     /**
      * @var GantryTheme

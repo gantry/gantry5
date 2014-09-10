@@ -17,7 +17,7 @@ require $locator('theme://includes/class.php');
 
 // Define Gantry services.
 $gantry['theme'] = function ($c) use ($grav, $config, $name) {
-    return new Nucleus($grav, $config, $name);
+    return new Gantry($grav, $config, $name);
 };
 
 // Boot the service.

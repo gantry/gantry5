@@ -77,7 +77,7 @@ class GantryAdminPlugin extends Plugin {
         /** @var UniformResourceLocator $locator */
         $locator = $this->grav['locator'];
         $locator->addPath('gantry-admin', '', 'user/plugins/gantryadmin');
-        $locator->addPath('gantry-admin', 'assets', array('user/plugins/gantryadmin/assets', 'user/themes/nucleus/common'));
+        $locator->addPath('gantry-admin', 'assets', array('user/plugins/gantryadmin/common', 'user/themes/nucleus/common'));
     }
 
 
@@ -90,7 +90,7 @@ class GantryAdminPlugin extends Plugin {
         $twig = $this->grav['twig'];
 
         $twig->twig_paths[] = __DIR__ . '/templates';
-        $twig->twig_paths[] = __DIR__ . '/assets/templates';
+        $twig->twig_paths[] = __DIR__ . '/common/templates';
     }
 
     /**
