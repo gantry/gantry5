@@ -1,0 +1,33 @@
+<section id="sidebar">
+    <div data-mode-indicator="production"></div>
+    <div class="content">
+        <ul>
+            <li class="{{ (location == 'overview') ? 'active' : '' }}">
+                <a href="{{ gantry_url }}"><i class="fa fa-desktop"></i>Overview</a>
+            </li>
+            <li class="{{ (location == 'settings') ? 'active' : '' }}">
+                <a href="{{ gantry_url }}/settings"><i class="fa fa-wrench"></i>Settings</a>
+                <ul>
+                    <li>
+                        <a href="#">General</a>
+                    </li>
+                    <li>
+                        <a href="#">Google Fonts</a>
+                    </li>
+                    <li>
+                        <a href="#">Social Buttons</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="{{ (location == 'page-setup') ? 'active' : '' }}">
+                <a href="{{ gantry_url }}/page-setup"><i class="fa fa-sitemap"></i>Page Setup</a>
+            </li>
+            <li class="{{ (location == 'assignments') ? 'active' : '' }}">
+                <a href="{{ gantry_url }}/assignments"><i class="fa fa-check-square-o"></i>Assignments</a>
+            </li>
+            <li class="{{ (location == 'updates') ? 'active' : '' }}">
+                <a href="{{ gantry_url }}/updates"><i class="fa fa-cloud-download"></i>Updates</a>
+            </li>
+        </ul>
+    </div>
+</section>

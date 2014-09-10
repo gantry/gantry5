@@ -3,15 +3,15 @@ Gantry Themes
 
 ## Common
 
-Common folder consists of all the content that is shared between all platforms. We can also call this our base theme.
+Shared code between all platforms.
 
 ## Grav
 
-Native Grav template.
+Grav template.
 
 ## Joomla
 
-Native Joomla 3.4 template.
+Joomla 3.4 template.
 
 ## Standalone
 
@@ -21,4 +21,4 @@ Standalone template which can be used to develop the template as it should conta
 
 ## WordPress
 
-Native WordPress 2.0 template.
+WordPress 2.0 template.

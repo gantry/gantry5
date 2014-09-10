@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension method="upgrade" type="component" version="3.3">
-    <name>Gantry5 Admin</name>
+    <name>Gantry Admin</name>
     <author>RocketTheme, LLC</author>
     <creationDate>September 4th, 2014</creationDate>
     <copyright>(C) 2005 - 2014 RocketTheme, LLC. All rights reserved.</copyright>
@@ -13,15 +13,15 @@
     <administration>
         <files>
             <filename>controller.php</filename>
-            <filename>gantry5admin.php</filename>
+            <filename>gantryadmin.php</filename>
             <folder>assets</folder>
             <folder>classes</folder>
             <folder>language</folder>
             <folder>views</folder>
         </files>
         <languages folder="language">
-            <language tag="en-GB">en-GB/en-GB.com_gantry5admin.ini</language>
-            <language tag="en-GB">en-GB/en-GB.com_gantry5admin.sys.ini</language>
+            <language tag="en-GB">en-GB/en-GB.com_gantryadmin.ini</language>
+            <language tag="en-GB">en-GB/en-GB.com_gantryadmin.sys.ini</language>
         </languages>
     </administration>
 </extension>

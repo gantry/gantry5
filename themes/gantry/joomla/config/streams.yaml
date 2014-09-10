@@ -3,11 +3,11 @@ schemes:
     type: ReadOnlyStream
     prefixes:
       '':
-        - templates/nucleus
         - templates/gantry
+        - templates/gantry/common
 
       css/:
-        - templates/nucleus/css-compiled
-        - templates/nucleus/css
         - templates/gantry/css-compiled
         - templates/gantry/css
+        - templates/gantry/common/css-compiled
+        - templates/gantry/common/css

@@ -16,11 +16,11 @@ streams:
       type: ReadOnlyStream
       prefixes:
         '':
-          - user/themes/nucleus
-          - user/themes/nucleus/common
+          - themes://gantry
+          - themes://gantry/common
 
         css/:
-          - user/themes/nucleus/css-compiled
-          - user/themes/nucleus/css
-          - user/themes/nucleus/common/css-compiled
-          - user/themes/nucleus/common/css
+          - themes://gantry/css-compiled
+          - themes://gantry/css
+          - themes://gantry/common/css-compiled
+          - themes://gantry/common/css

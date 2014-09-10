@@ -1,0 +1,28 @@
+{% extends "gantry/partials/base.html.twig" %}
+
+{% block gantry %}
+    <h2>
+        <span class="title">TITLE</span>
+        <i class="fa fa-edit"></i>
+        <span class="float-right">
+            <a href="#" class="button button-primary"><i class="fa fa-check"></i> Save</a>
+            <a href="#" class="button"><i class="fa fa-sign-in"></i> Import</a>
+            <a href="#" class="button"><i class="fa fa-sign-out"></i> Export</a>
+            <a href="#" class="button red"><i class="fa fa-times-circle"></i> Cancel</a>
+        </span>
+    </h2>
+
+    <div class="lm-newblocks" data-lm-blocktypes>
+        <div class="block button" data-lm-blocktype="section"><i class="fa fa-plus"></i> New Section</div>
+        <span class="float-right">
+            <a href="#" class="button"><i class="fa fa-arrow-left"></i></a>
+            <a href="#" class="button"><i class="fa fa-history"></i> History</a>
+            <a href="#" class="button"><i class="fa fa-arrow-right"></i></a>
+        </span>
+    </div>
+    <div id="page" class="card full-width">
+        <div class="lm-blocks" data-lm-root="page" data-lm-dropzone></div>
+    </div>
+
+    <div id="trash" data-lm-eraseblock><div class="trash-zone">&times;</div><span>Drop here to delete</span></div>
+{% endblock %}

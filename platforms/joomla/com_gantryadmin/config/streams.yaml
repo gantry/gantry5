@@ -3,12 +3,12 @@ schemes:
     type: ReadOnlyStream
     prefixes:
       '':
-        - administrator/components/com_gantry5admin/assets
-        - administrator/components/com_gantry5admin
+        - administrator/components/com_gantryadmin
+        - administrator/components/com_gantryadmin/common
         - templates/nucleus
 
       'assets':
-        - administrator/components/com_gantry5admin/assets
-        - administrator/components/com_gantry5admin
-        - templates/nucleus/common
+        - administrator/components/com_gantryadmin
+        - administrator/components/com_gantryadmin/common
         - templates/nucleus
+        - templates/nucleus/common

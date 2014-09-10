@@ -5,20 +5,80 @@ OPT_DELETE=0
 
 if [ -f $GIT_TARGET/configuration.php ]; then
     PLATFORM=Joomla
-    sources=('themes/nucleus/common' 'themes/nucleus/joomla')
-    targets=('templates/gantry' 'templates/nucleus')
+    sources=(
+        'platforms/joomla/com_gantryadmin'
+        'platforms/common'
+        'src'
+        'vendor'
+        'themes/gantry/joomla'
+        'themes/gantry/common'
+        'src'
+        'vendor'
+    )
+    targets=(
+        'administrator/components/com_gantryadmin'
+        'administrator/components/com_gantryadmin/common'
+        'administrator/components/com_gantryadmin/src'
+        'administrator/components/com_gantryadmin/vendor'
+        'templates/gantry'
+        'templates/gantry/common'
+        'templates/gantry/common/src'
+        'templates/gantry/common/vendor'
+        )
 elif [ -f $GIT_TARGET/wp-config.php ]; then
     PLATFORM=WordPress
-    sources=('themes/nucleus/common' 'themes/nucleus/wordpress')
-    targets=('wp-content/themes/gantry' 'wp-content/themes/nucleus')
+    sources=(
+        'platforms/wordpress/gantryadmin'
+        'platforms/common'
+        'themes/gantry/wordpress'
+        'themes/gantry/common'
+        'src'
+        'vendor'
+        )
+    targets=(
+        'wp-content/plugins/gantryadmin'
+        'wp-content/plugins/gantryadmin/common'
+        'wp-content/themes/gantry'
+        'wp-content/themes/gantry/common'
+        'wp-content/themes/gantry/common/src'
+        'wp-content/themes/gantry/common/vendor'
+        )
 elif [ -f $GIT_TARGET/system/config/system.yaml ]; then
     PLATFORM=Grav
-    sources=('themes/nucleus/common' 'themes/nucleus/grav')
-    targets=('user/themes/gantry' 'user/themes/nucleus')
+    sources=(
+        'platforms/grav/gantryadmin'
+        'platforms/common'
+        'themes/gantry/grav'
+        'themes/gantry/common'
+        'src'
+        'vendor'
+        )
+    targets=(
+        'user/plugins/gantryadmin'
+        'user/plugins/gantryadmin/common'
+        'user/themes/gantry'
+        'user/themes/gantry/common'
+        'user/themes/gantry/common/src'
+        'user/themes/gantry/common/vendor'
+        )
 elif [ -f $GIT_TARGET/.standalone ]; then
     PLATFORM=Standalone
-    sources=('themes/nucleus/common' 'themes/nucleus/standalone')
-    targets=('gantry' 'nucleus')
+    sources=(
+        'platforms/standalone/gantryadmin'
+        'platforms/common'
+        'themes/gantry/standalone'
+        'themes/gantry/common'
+        'src'
+        'vendor'
+        )
+    targets=(
+        'gantry/admin'
+        'gantry/admin/common'
+        'gantry'
+        'gantry/common'
+        'gantry/common/src'
+        'gantry/common/vendor'
+        )
 
 else
     echo
@@ -53,10 +113,16 @@ while getopts ":d" optname
 		esac
 	done
 
+old='xXx';
 for (( i = 0 ; i < ${#sources[@]} ; i++ ))
 do
 	source="$GIT_SOURCE/${sources[$i]}"
 	target="$GIT_TARGET/${targets[$i]}"
+	if (($OPT_DELETE)); then
+		if [[ $target == $old* ]]; then
+			continue
+		fi
+	fi
 	if [ ! -L $target ]; then
 		rm -rf "$target"
 	else
@@ -66,6 +132,7 @@ do
 		echo "Linking ${targets[$i]}"
 		ln -s "$source" "$target"
 	fi
+	old=$target
 done;
 
 if (($OPT_DELETE)); then

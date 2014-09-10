@@ -1,31 +1,18 @@
 # Composer
 composer.lock
 vendor/**
-platforms/**/assets
-!platforms/common/assets
+
+# Symbolic links in admin
+platforms/*/*/common
+platforms/*/*/src
+platforms/*/*/vendor
 
 # Symbolic links in themes
-themes/nucleus/*/common
-!themes/nucleus/common
-themes/nucleus/*/css
-!themes/nucleus/common/css
-themes/nucleus/*/css-compiled
-!themes/nucleus/common/css-compiled
-themes/nucleus/*/fonts
-!themes/nucleus/common/fonts
-themes/nucleus/*/images
-!themes/nucleus/common/images
-themes/nucleus/*/js
-!themes/nucleus/common/js
-themes/nucleus/*/scss
-!themes/nucleus/common/scss
-themes/nucleus/*/engine
-!themes/nucleus/common/engine
-themes/nucleus/*/layouts
-!themes/nucleus/common/layouts
-themes/nucleus/*/src
-themes/nucleus/*/vendor
-themes/nucleus/*/cache
+themes/*/*/common
+themes/*/*/src
+themes/*/*/vendor
+themes/*/*/cache
 
+# Compiled
 .sass-cache/*
 node_modules/*
