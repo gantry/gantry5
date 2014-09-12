@@ -19,7 +19,28 @@ class Theme extends Base\Theme
         add_action( 'widgets_init', array( $this, 'widgets_init' ) );
     }
 
-    public function render($file, array $context = array()) {}
+    public function render($file, array $context = array())
+    {
+        $loader = new \Twig_Loader_Filesystem(
+            [$this->path . '/templates', $this->path . '/common/templates']
+        );
+
+        $params = array(
+            'cache' => GANTRYADMIN_PATH . '/cache',
+            'debug' => true,
+            'auto_reload' => true,
+            'autoescape' => false
+        );
+
+        $twig = new \Twig_Environment($loader, $params);
+
+        $this->add_to_twig($twig);
+
+        // Include Gantry specific things to the context.
+        $context = $this->add_to_context($context);
+
+        return $twig->render($file, $context);
+    }
 
     public function widgets_init()
     {

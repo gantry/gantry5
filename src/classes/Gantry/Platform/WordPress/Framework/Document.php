@@ -1,11 +1,54 @@
 <?php
 namespace Gantry\Framework;
 
-class Document
+abstract class Document
 {
+    public static $styles = array();
+    public static $scripts = array();
+
     public static function addHeaderTag(array $element)
     {
-        // TODO: use new class
+        switch ($element['tag']) {
+            case 'link':
+                if (!empty($element['href']) && !empty($element['rel']) && $element['rel'] == 'stylesheet') {
+                    $href = $element['href'];
+                    $media = !empty($element['media']) ? $element['media'] : null;
+                    wp_enqueue_style(basename($href, '.css'), $href, array(), false, $media);
+                    return true;
+                }
+                break;
+
+            case 'style':
+                if (!empty($element['content'])) {
+                    $content = $element['content'];
+                    if (is_admin()) {
+                        $type = !empty($element['type']) ? $element['type'] : 'text/css';
+                        self::$styles[] = "<style type=\"{$type}\">{$content}</style>";
+                    } else {
+                        wp_add_inline_style( md5($content), $content );
+                    }
+                    return true;
+                }
+                break;
+
+            case 'script':
+                if (!empty($element['src'])) {
+                    $src = $element['src'];
+                    wp_enqueue_script( basename($src, '.js'), $src, array(), false );
+                    return true;
+
+                } elseif (!empty($element['content'])) {
+                    $content = $element['content'];
+                    if (i_admin()) {
+                        $type = !empty($element['type']) ? $element['type'] : 'text/css';
+                        self::$scripts[] = "<script type=\"{$type}\">{$content}</script>";
+                    } else {
+                        wp_add_inline_script( md5($content), $content );
+                    }
+                    return true;
+                }
+                break;
+        }
         return false;
     }
 

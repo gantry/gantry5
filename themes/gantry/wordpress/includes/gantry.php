@@ -23,8 +23,8 @@ try {
         require_once $bootstrap;
     }
 
-    // Get Gantry instance and return it.
-    return Gantry::instance();
+    // Get Gantry instance.
+    $gantry = Gantry::instance();
 
 } catch ( Exception $e ) {
     // Oops, something went wrong!
@@ -49,3 +49,21 @@ try {
 
     return;
 }
+
+// Hook into administration.
+if ( is_admin() ) {
+    if ( file_exists(__DIR__ . '/admin/init.php') ) {
+        define( 'GANTRYADMIN_PATH', __DIR__ . '/admin' );
+    }
+
+    add_action(
+        'init',
+        function () {
+            if ( defined('GANTRYADMIN_PATH') ) {
+                require_once GANTRYADMIN_PATH . '/init.php';
+            }
+        }
+    );
+}
+
+return $gantry;

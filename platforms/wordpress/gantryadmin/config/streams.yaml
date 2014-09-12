@@ -1,0 +1,14 @@
+schemes:
+  gantry-admin:
+    type: ReadOnlyStream
+    prefixes:
+      '':
+        - wp-content/plugins/gantryadmin
+        - wp-content/plugins/gantryadmin/common
+        - templates/gantry
+
+      'assets':
+        - wp-content/plugins/gantryadmin
+        - wp-content/plugins/gantryadmin/common
+        - templates/gantry
+        - templates/gantry/common
