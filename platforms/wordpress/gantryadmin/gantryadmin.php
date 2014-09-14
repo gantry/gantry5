@@ -17,5 +17,5 @@ if (!is_admin()) {
 }
 
 if (!defined('GANTRYADMIN_PATH')) {
-    define('GANTRYADMIN_PATH', rtrim(ABSPATH, '/\\') . '/wp-content/plugins/gantryadmin');
+    define('GANTRYADMIN_PATH', rtrim(WP_PLUGIN_DIR, '/\\') . '/gantryadmin');
 }
