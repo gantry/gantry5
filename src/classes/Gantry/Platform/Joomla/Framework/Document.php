@@ -47,6 +47,6 @@ class Document
 
     public static function rootUri()
     {
-        return '/' . trim(\JUri::root(true), '/');
+        return rtrim(\JUri::root(true), '/');
     }
 }

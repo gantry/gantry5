@@ -54,6 +54,6 @@ abstract class Document
 
     public static function rootUri()
     {
-        return get_site_url() . '/';
+        return get_site_url();
     }
 }

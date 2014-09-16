@@ -43,7 +43,7 @@ class TwigExtension extends \Twig_Extension
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        return Document::rootUri() . $locator->findResource($input, false);
+        return Document::rootUri() .'/'. $locator->findResource($input, false);
     }
 
     /**

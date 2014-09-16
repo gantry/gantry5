@@ -14,6 +14,6 @@ class Document
     public static function rootUri()
     {
         $config = Grav::instance()['config'];
-        return $config->get('base_url_relative');
+        return rtrim($config->get('base_url_relative'), '/');
     }
 }
