@@ -16,3 +16,4 @@ themes/*/*/cache
 # Compiled
 .sass-cache/*
 node_modules/*
+platforms/wordpress/gantryadmin/cache
