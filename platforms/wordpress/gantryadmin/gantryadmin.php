@@ -8,14 +8,12 @@
  * Author URI: http://www.rockettheme.com/
  * License: GPL2
  */
-defined('ABSPATH') or die;
+defined( 'ABSPATH' ) or die;
 
-use Gantry\Framework\Gantry;
-
-if (!is_admin()) {
+if ( !is_admin() ) {
     return;
 }
 
-if (!defined('GANTRYADMIN_PATH')) {
-    define('GANTRYADMIN_PATH', rtrim(ABSPATH, '/\\') . '/wp-content/plugins/gantryadmin');
+if ( !defined('GANTRYADMIN_PATH') ) {
+    define( 'GANTRYADMIN_PATH', rtrim( ABSPATH, '/\\' ) . '/wp-content/plugins/gantryadmin' );
 }

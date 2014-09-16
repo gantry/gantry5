@@ -16,6 +16,7 @@ trait ThemeTrait
     public function add_to_context(array $context)
     {
         $gantry = \Gantry\Framework\Gantry::instance();
+        $context['gantry'] = $gantry;
         $context['site'] = $gantry['site'];
         $context['config'] = $gantry['config'];
         $context['theme'] = $this;

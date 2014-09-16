@@ -1,8 +1,6 @@
 <?php
 namespace Gantry\Framework;
 
-use Symfony\Component\Yaml\Yaml;
-
 class Theme extends Base\Theme
 {
     public function __construct($path, $name = '')

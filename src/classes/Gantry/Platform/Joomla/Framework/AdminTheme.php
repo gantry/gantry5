@@ -1,25 +1,68 @@
 <?php
-namespace Gantry\Admin;
+namespace Gantry\Framework;
 
 use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Base\Theme as BaseTheme;
+use RocketTheme\Toolbox\StreamWrapper\Stream;
+use RocketTheme\Toolbox\StreamWrapper\ReadOnlyStream;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
-use Symfony\Component\Yaml\Yaml;
 
-class Theme extends BaseTheme
+class AdminTheme extends BaseTheme
 {
     public function __construct($path, $name = '')
     {
         parent::__construct($path, $name);
 
         $this->url = \JUri::root(true) . '/templates/' . $this->name;
+        $this->boot();
+    }
+
+
+    protected function boot()
+    {
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        /** @var ResourceLocatorInterface $locator */
+        $locator = $gantry['locator'];
+        $schemes = $gantry['admin.config']->get('streams.schemes');
+
+        if (!$schemes) {
+            return;
+        }
+
+        // Set locator to both streams.
+        Stream::setLocator($locator);
+        ReadOnlyStream::setLocator($locator);
+
+        $registered = stream_get_wrappers();
+
+        foreach ($schemes as $scheme => $config) {
+            if (isset($config['paths'])) {
+                $locator->addPath($scheme, '', $config['paths']);
+            }
+            if (isset($config['prefixes'])) {
+                foreach ($config['prefixes'] as $prefix => $paths) {
+                    $locator->addPath($scheme, $prefix, $paths);
+                }
+            }
+
+            if (in_array($scheme, $registered)) {
+                stream_wrapper_unregister($scheme);
+            }
+            $type = !empty($config['type']) ? $config['type'] : 'ReadOnlyStream';
+            if ($type[0] != '\\') {
+                $type = '\\Rockettheme\\Toolbox\\StreamWrapper\\' . $type;
+            }
+
+            if (!stream_wrapper_register($scheme, $type)) {
+                throw new \InvalidArgumentException("Stream '{$type}' could not be initialized.");
+            }
+        }
     }
 
     public function add_to_context(array $context)
     {
-        $gantry = \Gantry\Framework\Gantry::instance();
-        $context['config'] = $gantry['config'];
-        $context['theme'] = $this;
+        $context = parent::add_to_context( $context );
 
         return $context;
     }

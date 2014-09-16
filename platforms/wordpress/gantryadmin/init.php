@@ -22,14 +22,14 @@ function gantry_admin_scripts() {
 }
 function gantry_admin_print_styles() {
     $styles = \Gantry\Framework\Document::$styles;
-    if ($styles) {
-        echo implode("\n", $styles) . "\n";
+    if ( $styles ) {
+        echo implode( "\n", $styles ) . "\n";
     }
 }
 function gantry_admin_print_scripts() {
     $scripts = \Gantry\Framework\Document::$scripts;
-    if ($scripts) {
-        echo implode("\n", $scripts) . "\n";
+    if ( $scripts ) {
+        echo implode( "\n", $scripts ) . "\n";
     }
 }
 
@@ -40,27 +40,43 @@ function gantry_layout_manager() {
         wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
     }
 
-    if ($output) {
+    if ( $output ) {
         echo $output;
         return;
     }
 
     // Define Gantry Admin services.
     $gantry = Gantry\Framework\Gantry::instance();
-    $gantry['admin.config'] = function ($c) {
+    $gantry['admin.config'] = function ( $c ) {
         return \Gantry\Framework\Config::instance(
             GANTRYADMIN_PATH . '/cache/config.php',
             GANTRYADMIN_PATH
         );
     };
-    $gantry['admin.template'] = function ( $c ) {
+    $gantry['admin.theme'] = function ( $c ) {
         return new \Gantry\Framework\AdminTheme( GANTRYADMIN_PATH );
     };
 
     // Boot the service.
     $config = $gantry['admin.config'];
-    $theme = $gantry['admin.template'];
+    $theme = $gantry['admin.theme'];
+    $gantry['base_url'] = \admin_url( 'themes.php?page=layout-manager' );
+    $gantry['routes'] = [
+        'overview' => '',
+        'settings' => '&view=settings',
+        'page_setup' => '&view=page_setup',
+        'page_setup_edit' => '&view=page_setup_edit',
+        'page_setup_new' => '&view=page_setup_new',
+        'assignments' => '&view=assignments',
+        'updates' => '&view=updates',
+    ];
+
+    $view = isset( $_GET['view'] ) ? sanitize_key( $_GET['view'] ) : 'overview';
 
     // Render the page.
-    $output = $theme->render( 'gantry/overview.html.twig' );
+    try {
+        $output = $theme->render( "gantry/{$view}.html.twig" );
+    } catch (Exception $e) {
+        wp_die($e->getMessage());
+    }
 }

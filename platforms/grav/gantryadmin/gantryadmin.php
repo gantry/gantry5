@@ -55,6 +55,20 @@ class GantryAdminPlugin extends Plugin {
             return;
         }
 
+        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry['base_url'] = $this->base;
+        $gantry['routes'] = [
+            'overview' => '/overview',
+            'settings' => '/settings',
+            'page_setup' => '/page_setup',
+            'page_setup_edit' => '/page_setup_edit',
+            'page_setup_new' => '/page_setup_new',
+            'assignments' => '/assignments',
+            'updates' => '/updates',
+        ];
+
+        $this->grav['gantry'] = $gantry;
+
         $this->enable([
             'onPagesInitialized' => ['onPagesInitialized', 900],
             'onTwigTemplatePaths' => ['onTwigTemplatePaths', 900],

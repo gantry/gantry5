@@ -20,9 +20,19 @@ class Gantry extends Container
         return self::$instance;
     }
 
+    public function route($route)
+    {
+        $routes = $this->offsetGet('routes');
+        if (!isset($routes[$route])) {
+            throw new \InvalidArgumentException(sprintf('Invalid route: %s', $route));
+        }
+
+        return $this->offsetGet('base_url') . $routes[$route];
+    }
+
     protected static function load()
     {
-        $instance = new Container();
+        $instance = new static();
 
         $instance->register(new StreamsServiceProvider);
 
