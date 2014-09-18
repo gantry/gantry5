@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SASS_PATH=../common/scss:../../gantry/grav/scss:../../gantry/common/scss
+SASS_PATH=../common/scss:../../gantry/standalone/scss:../../gantry/common/scss
 
 #====================================================================
 

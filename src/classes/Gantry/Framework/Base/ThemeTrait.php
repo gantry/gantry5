@@ -13,6 +13,12 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 trait ThemeTrait
 {
+    public function init()
+    {
+        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry['streams'];
+    }
+
     public function add_to_context(array $context)
     {
         $gantry = \Gantry\Framework\Gantry::instance();

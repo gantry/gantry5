@@ -15,6 +15,8 @@ class Theme extends BaseTheme
     {
         parent::__construct($grav, $config, $name);
 
+        // $this->init();
+
         $baseUrlRelative = $config->get('system.base_url_relative');
         $this->name = $name;
         $this->path = THEMES_DIR . $name;

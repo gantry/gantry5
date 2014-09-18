@@ -19,6 +19,7 @@ abstract class Theme
 
         $this->path = $path;
         $this->name = $name ? $name : basename($path);
+        $this->init();
     }
 
     abstract public function render($file, array $context = array());

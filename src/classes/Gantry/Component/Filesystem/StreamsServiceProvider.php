@@ -15,48 +15,15 @@ class StreamsServiceProvider implements ServiceProviderInterface
         $sp = $this;
 
         $gantry['locator'] = function($c) use ($sp) {
-            $locator = new UniformResourceLocator(GANTRY5_ROOT);
-            $sp->boot($c, $locator);
-
-            return $locator;
+            return new UniformResourceLocator(GANTRY5_ROOT);
         };
-    }
+        $gantry['streams'] = function($c) use ($sp) {
+            $schemes = (array) $c['config']->get('streams.schemes');
 
-    protected function boot(Container $gantry, ResourceLocatorInterface $locator)
-    {
-        $schemes = $gantry['config']->get('streams.schemes');
+            $streams = new Streams($c['locator']);
+            $streams->add($schemes);
 
-        if (!$schemes) {
-            return;
-        }
-
-        // Set locator to both streams.
-        Stream::setLocator($locator);
-        ReadOnlyStream::setLocator($locator);
-
-        $registered = stream_get_wrappers();
-
-        foreach ($schemes as $scheme => $config) {
-            if (isset($config['paths'])) {
-                $locator->addPath($scheme, '', $config['paths']);
-            }
-            if (isset($config['prefixes'])) {
-                foreach ($config['prefixes'] as $prefix => $paths) {
-                    $locator->addPath($scheme, $prefix, $paths);
-                }
-            }
-
-            if (in_array($scheme, $registered)) {
-                stream_wrapper_unregister($scheme);
-            }
-            $type = !empty($config['type']) ? $config['type'] : 'ReadOnlyStream';
-            if ($type[0] != '\\') {
-                $type = '\\Rockettheme\\Toolbox\\StreamWrapper\\' . $type;
-            }
-
-            if (!stream_wrapper_register($scheme, $type)) {
-                throw new \InvalidArgumentException("Stream '{$type}' could not be initialized.");
-            }
-        }
+            return $streams;
+        };
     }
 }

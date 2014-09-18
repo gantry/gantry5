@@ -1,13 +1,19 @@
 schemes:
+  themes:
+    type: ReadOnlyStream
+    prefixes:
+      '':
+      - templates
+
   theme:
     type: ReadOnlyStream
     prefixes:
       '':
-        - templates/gantry
-        - templates/gantry/common
+        - themes://gantry
+        - themes://gantry/common
 
       css/:
-        - templates/gantry/css-compiled
-        - templates/gantry/css
-        - templates/gantry/common/css-compiled
-        - templates/gantry/common/css
+        - themes://gantry/css-compiled
+        - themes://gantry/css
+        - themes://gantry/common/css-compiled
+        - themes://gantry/common/css
