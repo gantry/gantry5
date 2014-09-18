@@ -116,12 +116,6 @@ form:
               validate:
                 type: bool
 
-            header.template:
-              type: themeselect
-              label: Theme override
-              options:
-                '': - Select theme -
-
             header.routable:
               type: toggle
               label: Access by URL
