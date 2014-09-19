@@ -1,0 +1,20 @@
+header:
+  - [widget-logo 20, widget-menu 80]
+
+1:
+  - showcase 75:
+      - [position-showcase-1, position-showcase-2]
+    feature:
+      - [position-feature-1, position-feature-2]
+    main:
+      - mainbody
+    bottom:
+      - position-bottom
+
+  - sidebar 25:
+    - position-sidebar
+    - widget-login
+    - widget-popup
+
+footer:
+  - [spacer 25, widget-copyright 50, widget-branding 25]

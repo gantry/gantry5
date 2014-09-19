@@ -2,6 +2,9 @@
 composer.lock
 vendor/**
 
+# PhpStorm
+.idea
+
 # Symbolic links in admin
 platforms/*/*/common
 platforms/*/*/src

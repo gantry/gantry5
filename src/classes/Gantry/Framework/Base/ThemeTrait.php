@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Framework\Base;
 
+use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Twig\TwigExtension;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -31,8 +32,11 @@ trait ThemeTrait
         $locator = $gantry['locator'];
 
         // Include Gantry specific things to the context.
-        $file = JsonFile::instance($locator('theme://layouts/test.json'));
-        $context['pageSegments'] = $file->content();
+        // $file = JsonFile::instance($locator('theme://layouts/test.json'));
+        // $context['pageSegments'] = $file->content();
+
+        // Include Gantry specific things to the context.
+        $context['pageSegments'] = LayoutReader::read($locator('theme://layouts/test.yaml'));
 
         return $context;
     }
