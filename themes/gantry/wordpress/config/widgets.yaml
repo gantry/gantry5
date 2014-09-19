@@ -8,12 +8,17 @@ copyright:
     end: now
   owner: 'RocketTheme, LLC'
 
-loginbutton:
+login:
   title:
   logintext: Login
   logouttext: Logout
   css:
-    classname: 'widget_gantry_loginbutton'
+    classname: 'widget_gantry_login'
+
+popup:
+  text: Popup
+  css:
+    classname: 'widget_gantry_popup'
 
 logo:
   image: 'images/logo.png'
