@@ -89,10 +89,10 @@
                                         "children": [
                                             {
                                                 "id": "8462e204-f196-498f-a71b-c1c8799e2e80",
-                                                "type": "position",
+                                                "type": "widget",
                                                 "attributes": {
                                                     "name": "Position Showcase 1",
-                                                    "key": "showcase"
+                                                    "key": "popup"
                                                 },
                                                 "children": []
                                             }
@@ -340,7 +340,7 @@
                                                 "id": "fb585b76-ffff-4611-a96c-08c09bd8d90f",
                                                 "type": "widget",
                                                 "attributes": {
-                                                    "name": "loginbutton"
+                                                    "name": "login"
                                                 },
                                                 "children": []
                                             }
