@@ -41,7 +41,7 @@ abstract class Document
 
                 } elseif (!empty($element['content'])) {
                     $content = $element['content'];
-                    if (i_admin()) {
+                    if (is_admin()) {
                         $type = !empty($element['type']) ? $element['type'] : 'text/css';
                         self::$scripts[] = "<script type=\"{$type}\">{$content}</script>";
                     } else {
