@@ -72,25 +72,27 @@ elif [ -f $GIT_TARGET/system/config/system.yaml ]; then
 elif [ -f $GIT_TARGET/.standalone ]; then
     PLATFORM=Standalone
     sources=(
-        'platforms/standalone/gantryadmin'
-        'platforms/common'
-        'src'
-        'vendor'
+#        'platforms/standalone/gantryadmin'
+#        'platforms/common'
+#        'src'
+#        'vendor'
         'themes/gantry/standalone'
         'themes/gantry/common'
         'src'
         'vendor'
         )
     targets=(
-        'gantry/admin'
-        'gantry/admin/common'
-        'gantry/admin/src'
-        'gantry/admin/vendor'
+#        'gantry/admin'
+#        'gantry/admin/common'
+#        'gantry/admin/src'
+#        'gantry/admin/vendor'
         'gantry'
         'gantry/common'
         'gantry/src'
         'gantry/vendor'
         )
+    rm -rf "$GIT_TARGET/cache"
+    mkdir "$GIT_TARGET/cache"
 
 else
     echo

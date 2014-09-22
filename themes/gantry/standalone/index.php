@@ -1,61 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<?php include(__DIR__ . '/core/head.php'); ?>
-<body>
+<?php
+define('STANDALONE_ROOT', dirname(dirname($_SERVER['SCRIPT_FILENAME'])));
 
-<div class="container">
-	<!-- Header -->
-	<?php include(__DIR__ . '/sections/header.php'); ?>
+// Bootstrap Gantry framework or fail gracefully (inside included file).
+$gantry = include_once __DIR__ . '/includes/gantry.php';
+$gantry['theme.path'] = __DIR__;
 
-	<div class="grid pure-g">
-		<div class="block pure-u-3-4">
-			<!-- Showcase -->
-			<?php include(__DIR__ . '/sections/showcase.php'); ?>
+// Define the template.
+class Nucleus extends \Gantry\Framework\Theme {}
 
-			<!-- Feature -->
-			<?php include(__DIR__ . '/sections/feature.php'); ?>
+// Define Gantry services.
+$gantry['theme'] = function ($c) {
+    return new Nucleus($c['theme.path'], basename(__DIR__));
+};
 
-			<!-- Main Body -->
-			<main id="main">
-				<div class="grid pure-g">
-					<div class="block pure-u-1-1">
-						<div class="content">
-							<h2>Main Column</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula. Praesent et nulla eu augue tempus sagittis. Mauris faucibus nibh et nibh cursus in vestibulum sapien egestas. Curabitur ut lectus tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-							<h2>Main Column</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula. Praesent et nulla eu augue tempus sagittis. Mauris faucibus nibh et nibh cursus in vestibulum sapien egestas. Curabitur ut lectus tortor.</p>
-							<a href="#" class="button">Button</a>
-						</div>
-					</div>
-				</div>
-			</main>
+// Boot the service.
+$theme = $gantry['theme'];
 
-			<!-- Bottom -->
-			<?php include(__DIR__ . '/sections/bottom.php'); ?>
-
-		</div>
-		<div class="block size-1-4 pure-u-1-4">
-			<section id="sidebar">
-				<div class="grid pure-g">
-					<div class="block pure-u-1-1">
-						<div class="content">
-							<h2>Side Column</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula. Praesent et nulla eu augue tempus sagittis.</p>
-							<a href="#" class="button">Button</a>
-						</div>
-						<div class="content">
-							<h2>Side Column</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula. Praesent et nulla eu augue tempus sagittis.</p>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-	</div>
-
-	<!-- Footer -->
-	<?php include(__DIR__ . '/sections/footer.php'); ?>
-</div>
-
-</body>
-</html>
+// Render the page.
+echo $theme->render('index.html.twig');

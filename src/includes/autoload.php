@@ -20,6 +20,9 @@ if (defined('JVERSION')) {
 } elseif (defined('GRAV_VERSION')) {
     define('GANTRY5_ROOT', rtrim(ROOT_DIR, '/'));
     $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/Grav', true);
+} elseif (defined('STANDALONE_ROOT')) {
+    define('GANTRY5_ROOT', STANDALONE_ROOT);
+    $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/Standalone', true);
 }
 
 return $loader;

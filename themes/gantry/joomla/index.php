@@ -8,9 +8,11 @@ $gantry['theme.path'] = __DIR__;
 // Define the template.
 class Nucleus extends \Gantry\Framework\Theme {}
 
+$template = $this->template;
+
 // Define Gantry services.
-$gantry['theme'] = function ($c) {
-    return new Nucleus($c['theme.path'], $this->template);
+$gantry['theme'] = function ($c) use ($template) {
+    return new Nucleus($c['theme.path'], $template);
 };
 
 // Boot the service.
