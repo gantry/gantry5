@@ -6,14 +6,15 @@ abstract class Document
     public static $styles = array();
     public static $scripts = array();
 
-    public static function addHeaderTag(array $element)
+    public static function addHeaderTag(array $element, $in_footer = false)
     {
         switch ($element['tag']) {
             case 'link':
                 if (!empty($element['href']) && !empty($element['rel']) && $element['rel'] == 'stylesheet') {
                     $href = $element['href'];
                     $media = !empty($element['media']) ? $element['media'] : null;
-                    wp_enqueue_style(basename($href, '.css'), $href, array(), false, $media);
+                    wp_register_style(basename($href, '.css'), $href, array(), false, $media);
+                    wp_enqueue_style(basename($href, '.css'));
                     return true;
                 }
                 break;
@@ -34,7 +35,8 @@ abstract class Document
             case 'script':
                 if (!empty($element['src'])) {
                     $src = $element['src'];
-                    wp_enqueue_script( basename($src, '.js'), $src, array(), false );
+                    wp_register_script(basename($src, '.js'), $src, array(), false, $in_footer);
+                    wp_enqueue_script(basename($src, '.js'));
                     return true;
 
                 } elseif (!empty($element['content'])) {
