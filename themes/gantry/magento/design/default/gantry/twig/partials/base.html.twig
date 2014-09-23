@@ -6,6 +6,7 @@
 
     <body{{ gantry.page.getBodyClass() ? ' class="' ~ gantry.page.getBodyClass()~ '"' : '' }}>
         {{ gantry.page.getChildHtml('after_body_start') }}
+        {{ gantry.page.getChildHtml('global_notices') }}
         {% set content %}
             {% block content %}
                 Sorry, no content

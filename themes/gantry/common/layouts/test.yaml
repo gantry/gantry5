@@ -1,6 +1,5 @@
 header:
   - [widget-logo 20, widget-menu 80]
-  - position-global_notices
   - position-header
 
 1:

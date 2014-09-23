@@ -1,5 +1,11 @@
-<div class="content{{ segment.classes ? ' ' ~ segment.classes|join(' ') }}">
+{% set html %}
    {% include ['widgets/' ~ segment.attributes.name ~ '.html.twig',
-       '@nucleus/widgets/' ~ segment.attributes.name ~ '.html.twig']
-       ignore missing with {widget: config.widgets[segment.attributes.name] } %}
+   '@nucleus/widgets/' ~ segment.attributes.name ~ '.html.twig']
+   ignore missing with {widget: config.widgets[segment.attributes.name] } %}
+{% endset %}
+
+{% if html|trim %}
+<div class="content{{ segment.classes ? ' ' ~ segment.classes|join(' ') }}">
+    {{ html }}
 </div>
+{% endif %}
