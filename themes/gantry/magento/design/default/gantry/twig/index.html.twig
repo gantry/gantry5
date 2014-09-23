@@ -1,5 +1,5 @@
 {% extends "partials/base.html.twig" %}
 
 {% block content %}
-    Lorem ipsum
+    {{ gantry.page.getChildHtml('content') }}
 {% endblock %}

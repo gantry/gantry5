@@ -1,10 +1,11 @@
-<!doctype html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ gantry.page.getLang }}" lang="{{ gantry.page.getLang }}">
     {% block html_head_container %}
         {% include 'partials/head.html.twig' %}
     {% endblock %}
 
-    <body>
+    <body{{ gantry.page.getBodyClass() ? ' class="' ~ gantry.page.getBodyClass()~ '"' : '' }}>
+        {{ gantry.page.getChildHtml('after_body_start') }}
         {% set content %}
             {% block content %}
                 Sorry, no content
@@ -12,5 +13,9 @@
         {% endset %}
 
         {% include '@nucleus/container.html.twig' with {segments: pageSegments} %}
+
+        {{ gantry.page.getChildHtml('global_cookie_notice') }}
+        {{ gantry.page.getChildHtml('before_body_end') }}
+        {{ gantry.page.getAbsoluteFooter }}
     </body>
 </html>

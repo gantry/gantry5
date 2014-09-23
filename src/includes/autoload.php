@@ -20,8 +20,8 @@ if (defined('JVERSION')) {
 } elseif (defined('GRAV_VERSION')) {
     define('GANTRY5_ROOT', rtrim(ROOT_DIR, '/'));
     $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/Grav', true);
-} elseif (class_exists('Mage')) {
-    define('GANTRY5_ROOT', Mage::getBaseDir('base'));
+} elseif (defined('MAGENTO_ROOT')) {
+    define('GANTRY5_ROOT', MAGENTO_ROOT);
     $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/Magento', true);
 } elseif (defined('STANDALONE_ROOT')) {
     define('GANTRY5_ROOT', STANDALONE_ROOT);

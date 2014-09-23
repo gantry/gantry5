@@ -25,6 +25,8 @@ class Theme extends Base\Theme
 
         $this->add_to_twig($twig);
 
+        $gantry = \Gantry\Framework\Gantry::instance();
+
         // Include Gantry specific things to the context.
         $context = $this->add_to_context($context);
 
