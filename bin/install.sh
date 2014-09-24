@@ -85,7 +85,7 @@ elif [ -f $GIT_TARGET/mage ]; then
         'app/design/frontend/gantry/default/gantry/src'
         'app/design/frontend/gantry/default/gantry/vendor'
         'skin/frontend/gantry'
-        'skin/frontend/gantry/common'
+        'skin/frontend/gantry/default/common'
         )
 elif [ -f $GIT_TARGET/viewtopic.php ]; then
     PLATFORM=phpBB
