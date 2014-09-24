@@ -69,6 +69,28 @@ elif [ -f $GIT_TARGET/system/config/system.yaml ]; then
         'user/themes/gantry/src'
         'user/themes/gantry/vendor'
         )
+elif [ -f $GIT_TARGET/viewtopic.php ]; then
+    PLATFORM=phpBB
+    sources=(
+        'platforms/phpbb'
+        'platforms/common'
+        'src'
+        'vendor'
+        'themes/gantry/phpbb'
+        'themes/gantry/common'
+        'src'
+        'vendor'
+        )
+    targets=(
+        'ext/rockettheme'
+        'ext/rockettheme/gantry/common'
+        'ext/rockettheme/gantry/src'
+        'ext/rockettheme/gantry/vendor'
+        'styles/gantry'
+        'styles/gantry/common'
+        'styles/gantry/src'
+        'styles/gantry/vendor'
+        )
 elif [ -f $GIT_TARGET/.standalone ]; then
     PLATFORM=Standalone
     sources=(

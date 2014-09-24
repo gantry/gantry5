@@ -1,7 +1,6 @@
 <?php
 namespace rockettheme\gantry\template\twig;
 
-
 class twig extends \phpbb\template\twig\twig
 {
     public function __construct(\phpbb\path_helper $path_helper, $config, $user, \phpbb\template\context $context, \phpbb\extension\manager $extension_manager = null)
