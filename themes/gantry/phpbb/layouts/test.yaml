@@ -1,6 +1,6 @@
 header:
   - [widget-logo 20, widget-menu 80]
-  - position-header
+  - [phpbb-header, phpbb-search]
 
 1:
   - showcase 75:
@@ -8,18 +8,12 @@ header:
     feature:
       - [position-feature-1, position-feature-2]
     main:
-      - position-breadcrumbs
-      - position-global_messages
       - mainbody
     bottom:
       - position-bottom
 
   - sidebar 25:
-    - position-sidebar
-    - position-right
-    - widget-login
-    - widget-popup
+    - phpbb-navbar
 
 footer:
-  - position-footer
   - [spacer 25, widget-copyright 50, widget-branding 25]
