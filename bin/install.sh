@@ -69,6 +69,24 @@ elif [ -f $GIT_TARGET/system/config/system.yaml ]; then
         'user/themes/gantry/src'
         'user/themes/gantry/vendor'
         )
+elif [ -f $GIT_TARGET/mage ]; then
+    PLATFORM=Magento
+    sources=(
+        'themes/gantry/magento/design'
+        'themes/gantry/common'
+        'src'
+        'vendor'
+        'themes/gantry/magento/skin'
+        'themes/gantry/common'
+        )
+    targets=(
+        'app/design/frontend/gantry'
+        'app/design/frontend/gantry/default/gantry/common'
+        'app/design/frontend/gantry/default/gantry/src'
+        'app/design/frontend/gantry/default/gantry/vendor'
+        'skin/frontend/gantry'
+        'skin/frontend/gantry/common'
+        )
 elif [ -f $GIT_TARGET/viewtopic.php ]; then
     PLATFORM=phpBB
     sources=(
