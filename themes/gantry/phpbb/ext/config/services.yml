@@ -1,0 +1,9 @@
+services:
+    template:
+        class: rockettheme\gantry\template\twig\twig
+        arguments:
+            - @path_helper
+            - @config
+            - @user
+            - @template_context
+            - @ext.manager
