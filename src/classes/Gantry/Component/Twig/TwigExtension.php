@@ -53,7 +53,7 @@ class TwigExtension extends \Twig_Extension
      * @param $input
      * @return string
      */
-    public function parseHtmlHeaderFunc($input)
+    public function parseHtmlHeaderFunc($input, $in_footer = false)
     {
         $doc = new \DOMDocument();
         $doc->loadHTML('<html><head>' . $input . '</head><body></body></html>');
@@ -64,7 +64,7 @@ class TwigExtension extends \Twig_Extension
             foreach ($element->attributes as $attribute) {
                 $result[$attribute->name] = $attribute->value;
             }
-            $success = Document::addHeaderTag($result);
+            $success = Document::addHeaderTag($result, $in_footer);
             if (!$success) {
                 $raw[] = $doc->saveHTML($element);
             }

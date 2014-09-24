@@ -13,8 +13,8 @@ abstract class Document
                 if (!empty($element['href']) && !empty($element['rel']) && $element['rel'] == 'stylesheet') {
                     $href = $element['href'];
                     $media = !empty($element['media']) ? $element['media'] : null;
-                    wp_register_style(basename($href, '.css'), $href, array(), false, $media);
-                    wp_enqueue_style(basename($href, '.css'));
+                    \wp_register_style(basename($href, '.css'), $href, array(), false, $media);
+                    \wp_enqueue_style(basename($href, '.css'));
                     return true;
                 }
                 break;
@@ -26,7 +26,7 @@ abstract class Document
                         $type = !empty($element['type']) ? $element['type'] : 'text/css';
                         self::$styles[] = "<style type=\"{$type}\">{$content}</style>";
                     } else {
-                        wp_add_inline_style( md5($content), $content );
+                        \wp_add_inline_style( md5($content), $content );
                     }
                     return true;
                 }
@@ -35,8 +35,8 @@ abstract class Document
             case 'script':
                 if (!empty($element['src'])) {
                     $src = $element['src'];
-                    wp_register_script(basename($src, '.js'), $src, array(), false, $in_footer);
-                    wp_enqueue_script(basename($src, '.js'));
+                    \wp_register_script(basename($src, '.js'), $src, array(), false, $in_footer);
+                    \wp_enqueue_script(basename($src, '.js'));
                     return true;
 
                 } elseif (!empty($element['content'])) {
@@ -45,7 +45,7 @@ abstract class Document
                         $type = !empty($element['type']) ? $element['type'] : 'text/css';
                         self::$scripts[] = "<script type=\"{$type}\">{$content}</script>";
                     } else {
-                        wp_add_inline_script( md5($content), $content );
+                        \wp_add_inline_script( md5($content), $content );
                     }
                     return true;
                 }
@@ -56,6 +56,6 @@ abstract class Document
 
     public static function rootUri()
     {
-        return get_site_url();
+        return \get_site_url();
     }
 }

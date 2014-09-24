@@ -11,6 +11,12 @@
 {% endset %}
 {% do parseHtmlHeader(headerContent) %}
 
+{% set footerContent %}
+{% block javascript_footer %}
+{% endblock %}
+{% endset %}
+{% do parseHtmlHeader(footerContent, true) %}
+
 {% block content %}
     <div id="g5-container" class="container">
         <div class="grid pure-g">
