@@ -1,0 +1,26 @@
+{% set content %}
+    {% block content %}
+    {% endblock %}
+{% endset %}
+
+{% set page_layout %}
+    {% include '@nucleus/container.html.twig' with {segments: pageSegments} %}
+{% endset %}
+
+{% set page_bottom %}
+    {% block page_bottom %}
+    {% endblock %}
+{% endset %}
+
+{% block page %}
+<!doctype html>
+<html>
+    {% block page_head %}
+        {% include 'partials/page_head.html.twig' %}
+    {% endblock %}
+
+    {% block page_body %}
+        {% include 'partials/page_body.html.twig' %}
+    {% endblock %}
+</html>
+{% endblock %}
