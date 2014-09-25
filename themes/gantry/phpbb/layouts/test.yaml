@@ -6,14 +6,17 @@ header:
   - showcase 75:
       - [position-showcase-1, position-showcase-2]
     feature:
-      - [position-feature-1, position-feature-2]
+      - phpbb-pathway
     main:
       - mainbody
     bottom:
-      - position-bottom
+      - [phpbb-online, phpbb-statistics]
+      - phpbb-birthday
 
   - sidebar 25:
     - phpbb-navbar
+    - phpbb-post_info
+    - phpbb-login
 
 footer:
   - [spacer 25, widget-copyright 50, widget-branding 25]
