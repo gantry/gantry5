@@ -10,6 +10,7 @@ class Gantry extends Container
      * @var static
      */
     protected static $instance;
+    protected $wrapper;
 
     public static function instance()
     {
@@ -28,6 +29,15 @@ class Gantry extends Container
         }
 
         return $this->offsetGet('base_url') . $routes[$route];
+    }
+
+    public function wrapper($value = null)
+    {
+        if ($value !== null ) {
+            $this->wrapper = $value;
+        }
+
+        return $this->wrapper;
     }
 
     protected static function load()

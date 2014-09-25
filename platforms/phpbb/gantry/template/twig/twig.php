@@ -56,6 +56,42 @@ class twig extends \phpbb\template\twig\twig
     }
 
     /**
+     * Display a template for provided handle.
+     *
+     * The template will be loaded and compiled, if necessary, first.
+     *
+     * This function calls hooks.
+     *
+     * @param string $handle Handle to display
+     * @return \phpbb\template\template $this
+     */
+    public function display($handle)
+    {
+        $context = $this->get_template_vars();
+
+        $result = $this->call_hook($handle, __FUNCTION__);
+        if ($result !== false)
+        {
+            return $result[0];
+        }
+
+        $content = $this->twig->render($this->get_filename_from_handle($handle), $context);
+
+        if ($this->gantry->wrapper())
+        {
+            $context['content'] = $content;
+
+            echo $this->twig->render('wrapper.html.twig', $context);
+        }
+        else
+        {
+            echo $content;
+        }
+
+        return $this;
+    }
+
+    /**
     * Get template vars in a format Twig will use (from the context)
     *
     * @return array
