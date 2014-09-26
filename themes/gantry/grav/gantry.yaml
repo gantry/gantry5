@@ -1,3 +1,10 @@
+page:
+  doctype: xhtml
+  html:
+    lang: en
+  body:
+    class: gantry
+
 widgets:
   copyright:
     enabled: false

@@ -18,6 +18,10 @@ class Gantry extends Base\Gantry
             return new Site;
         };
 
+        $container['page'] = function ($c) {
+            return new Page($c);
+        };
+
         return $container;
     }
 }
