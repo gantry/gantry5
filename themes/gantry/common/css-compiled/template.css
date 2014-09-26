@@ -23,17 +23,17 @@ a {
   border: 1px solid #eaeaea; }
 
 @font-face {
-  font-family: "opensans";
+  font-family: "walkwaybold";
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.eot");
-  src: url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.woff") format("woff"), url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.ttf") format("truetype"), url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.svg#opensans") format("svg"); }
+  src: url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.eot");
+  src: url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.woff") format("woff"), url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.ttf") format("truetype"), url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.svg#walkwaybold") format("svg"); }
 @font-face {
-  font-family: "opensanslight";
+  font-family: "latolight";
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.eot");
-  src: url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.woff") format("woff"), url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.ttf") format("truetype"), url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.svg#opensanslight") format("svg"); }
+  src: url("../fonts/lato-light/lato-light-webfont.eot");
+  src: url("../fonts/lato-light/lato-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato-light/lato-light-webfont.woff") format("woff"), url("../fonts/lato-light/lato-light-webfont.ttf") format("truetype"), url("../fonts/lato-light/lato-light-webfont.svg#latolight") format("svg"); }
 #header {
   color: #aaaaaa; }
   #header a:hover {
@@ -134,7 +134,7 @@ a {
   margin: 0 0 1.563rem 0; }
 
 body {
-  font-family: "opensanslight", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
+  font-family: "latolight", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal; }
@@ -143,7 +143,7 @@ h6 {
   text-transform: uppercase; }
 
 strong, h1, h2, h3, h4, h5, h6, label, th {
-  font-family: "opensans", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
+  font-family: "walkwaybold", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
 
 blockquote {
   border-left: 3px solid #dddddd; }
