@@ -40,10 +40,10 @@ p {
 }
 
 // Lists
-ul, ol {
+ul, ol, dl {
 	margin-top: $leading-margin;
 	margin-bottom: $leading-margin;
-	ul, ol {
+	ul, ol, dl {
 		margin-top: 0;
 		margin-bottom: 0;
 	}

@@ -431,10 +431,6 @@ ol.inline > li {
   *zoom: 1;
 }
 
-.dl-horizontal {
-  *zoom: 1;
-}
-
 .dl-horizontal:before,
 .dl-horizontal:after {
   display: table;
@@ -458,6 +454,12 @@ ol.inline > li {
 
 .dl-horizontal dd {
   margin-left: 180px;
+}
+
+abbr[title],
+abbr[data-original-title] {
+  cursor: help;
+  border-bottom: 1px dotted #999999;
 }
 
 abbr.initialism {
