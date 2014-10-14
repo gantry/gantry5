@@ -35,11 +35,12 @@ class GantryAdminPlugin extends Plugin {
             return;
         }
 
+        $base = rtrim($this->config->get('system.base_url_relative'), '/');
         $results = explode('/', $admin->route, 3);
         $theme = array_shift($results);
         $this->template = array_shift($results) ?: 'overview';
         $this->route = array_shift($results);
-        $this->base =  "{$admin->base}/{$admin->location}/{$theme}";
+        $this->base =  "{$base}{$admin->base}/{$admin->location}/{$theme}";
 
         $this->config->set('system.pages.theme', $theme);
 

@@ -12,8 +12,8 @@
 {% endblock %}
 
 {% block javascript %}
-    <script type="text/javascript" src="{{ url('gantry-admin://assets/js/main.js') }}"></script>
     {{ parent() }}
+    <script type="text/javascript" src="{{ url('gantry-admin://assets/js/main.js') }}"></script>
 {% endblock %}
 
 {% block content %}

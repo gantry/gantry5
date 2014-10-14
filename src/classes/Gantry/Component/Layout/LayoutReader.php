@@ -3,10 +3,19 @@ namespace Gantry\Component\Layout;
 
 use RocketTheme\Toolbox\File\YamlFile;
 
+/**
+ * Read layout from simplified yaml file.
+ */
 class LayoutReader
 {
     protected static $scopes = [0 => 'grid', 1 => 'block'];
 
+    /**
+     * Read layout from yaml file and return parsed version of it.
+     *
+     * @param string $file
+     * @return array
+     */
     public static function read($file) {
         $file = YamlFile::instance($file);
         $content = $file->content();
@@ -22,7 +31,13 @@ class LayoutReader
         return $result;
     }
 
-    public static function parse($field, $content, $scope)
+    /**
+     * @param int|string $field
+     * @param array $content
+     * @param int $scope
+     * @return array
+     */
+    protected static function parse($field, $content, $scope)
     {
         if (is_numeric($field))  {
             $result = ['type' => self::$scopes[$scope]];
@@ -60,7 +75,12 @@ class LayoutReader
         return $result;
     }
 
-    public static function resolve($field, $scope)
+    /**
+     * @param string $field
+     * @param int $scope
+     * @return array
+     */
+    protected static function resolve($field, $scope)
     {
         $list = explode(' ', $field, 2);
         $list2 = explode('-', array_shift($list), 2);

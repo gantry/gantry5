@@ -4,7 +4,7 @@ namespace Gantry\Framework;
 use Gantry\Framework\Base\ThemeTrait as GantryThemeTrait;
 use Grav\Common\Theme as BaseTheme;
 use Grav\Common\Grav;
-use Grav\Common\Config as GravConfig;
+use Grav\Common\Config\Config as GravConfig;
 use RocketTheme\Toolbox\File\YamlFile;
 
 class Theme extends BaseTheme
