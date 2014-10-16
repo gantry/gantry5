@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.3" type="plugin" group="system" method="upgrade">
+    <name>PLG_SYSTEM_GANTRYADMIN</name>
+    <author>${author}</author>
+    <creationDate>${build_date}</creationDate>
+    <copyright>${copyright}</copyright>
+    <license>${license}</license>
+    <authorEmail>${authorEmail}</authorEmail>
+    <authorUrl>${authorUrl}</authorUrl>
+    <version>${project.version}</version>
+    <description>${project.description}</description>
+    <files>
+        <filename plugin="gantryadmin">gantryadmin.php</filename>
+        <folder>language</folder>
+    </files>
+    <config>
+        <fields name="params">
+        </fields>
+    </config>
+</extension>
