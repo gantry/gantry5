@@ -1,3 +1,106 @@
+hr .dashed {
+  border-top-style: dashed; }
+hr .divider {
+  display: none; }
 
+p .right {
+  text-align: right; }
+p .jumpbox-return {
+  margin-top: 1em; }
+
+.navbar {
+  padding: 3px 10px; }
+
+.forabg, .forumbg {
+  margin-bottom: 4px;
+  padding: 5px;
+  clear: both; }
+
+.panel {
+  margin-bottom: 4px;
+  padding: 5px 10px; }
+
+.post {
+  padding: 5px 10px;
+  margin-bottom: 4px;
+  position: relative; }
+
+.rowbg {
+  margin: 5px 5px 2px 5px; }
+
+/* Horizontal lists
+----------------------------------------*/
+.navbar ul.linklist {
+  padding: 2px 0; }
+
+ul.linklist {
+  display: block;
+  margin: 0; }
+
+#cp-main .panel {
+  padding: 5px 10px; }
+
+ul.linklist > li {
+  float: left;
+  width: auto; }
+
+ul.linklist > li.rightside, p.rightside, a.rightside {
+  float: right;
+  margin-right: 0;
+  margin-left: 7px;
+  text-align: right; }
+
+ul.leftside {
+  float: left;
+  margin-left: 0;
+  margin-right: 5px;
+  text-align: left; }
+
+ul.rightside {
+  float: right;
+  margin-left: 5px;
+  margin-right: -5px;
+  text-align: right; }
+
+ul.linklist li.responsive-menu {
+  position: relative;
+  margin: 0 5px; }
+
+ul.linklist li.responsive-menu a.responsive-menu-link {
+  display: inline-block;
+  margin: 0 5px;
+  position: relative;
+  width: 16px;
+  line-height: 20px;
+  text-decoration: none; }
+
+ul.linklist li.responsive-menu a.responsive-menu-link:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  height: .125em;
+  width: 14px;
+  border-bottom: 0.125em solid transparent;
+  border-top: 0.375em double transparent; }
+
+.hasjs ul.linklist.leftside, .hasjs ul.linklist.rightside {
+  max-width: 48%; }
+
+.hasjs ul.linklist.fullwidth {
+  max-width: none; }
+
+li.responsive-menu.dropdown-right .dropdown {
+  left: -9px; }
+
+li.responsive-menu.dropdown-left .dropdown {
+  right: -6px; }
+
+ul.linklist .dropdown {
+  top: 22px; }
+
+ul.linklist .dropdown-up .dropdown {
+  bottom: 18px;
+  top: auto; }
 
 /*# sourceMappingURL=phpbb.css.map */
