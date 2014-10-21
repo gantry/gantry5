@@ -1,3 +1,18 @@
+a.button1, input.button1, input.button3, a.button2, input.button2 {
+  display: inline-block;
+  padding: 7px 12px; }
+  a.button1:active, input.button1:active, input.button3:active, a.button2:active, input.button2:active {
+    margin: 2px 0 -2px 0; }
 
+a.button1, input.button1, input.button3, a.button2, input.button2 {
+  background: #4184B6;
+  color: #fff;
+  box-shadow: 0 3px 0 #39749f; }
+  a.button1:hover, input.button1:hover, input.button3:hover, a.button2:hover, input.button2:hover {
+    background: #39749f;
+    box-shadow: 0 3px 0 #316389;
+    color: #fff; }
+  a.button1:active, input.button1:active, input.button3:active, a.button2:active, input.button2:active {
+    box-shadow: 0 1px 0 #316389; }
 
 /*# sourceMappingURL=phpbb.css.map */

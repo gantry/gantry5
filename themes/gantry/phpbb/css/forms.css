@@ -3,119 +3,125 @@
 
 /* General form styles
 ----------------------------------------*/
-fieldset {
+#wrap fieldset {
 	border-width: 0;
+	margin: 0;
+	padding: 0;
 }
 
-input {
+#wrap input {
 	vertical-align: middle;
 	padding: 0 3px;
 }
 
-select {
+#wrap select {
 	cursor: pointer;
 	vertical-align: middle;
 	padding: 1px;
+	display: inline-block;
+	margin-bottom: 0;
 }
-option {
+#wrap option {
 	padding-right: 1em;
 }
 
-select optgroup option {
+#wrap select optgroup option {
 	padding-right: 1em;
 }
 
-textarea {
+#wrap textarea {
 	width: 60%;
 	padding: 2px;
 }
 
-label {
+#wrap label {
 	cursor: default;
 	padding-right: 5px;
-}
-
-label input {
+	display: inline-block;
 	vertical-align: middle;
 }
 
-label img {
+#wrap label input {
+	vertical-align: middle;
+}
+
+#wrap label img {
 	vertical-align: middle;
 }
 
 /* Definition list layout for forms
 ---------------------------------------- */
-fieldset dl {
+#wrap fieldset dl {
 	padding: 4px 0;
 }
 
-fieldset dt {
+#wrap fieldset dt {
 	float: left;
 	width: 40%;
 	text-align: left;
 	display: block;
 }
 
-fieldset dd {
+#wrap fieldset dd {
 	margin-left: 41%;
 	vertical-align: top;
 	margin-bottom: 3px;
 }
 
 /* Specific layout 1 */
-fieldset.fields1 dt {
+#wrap fieldset.fields1 dt {
 	width: 15em;
 	border-right-width: 0;
 }
 
-fieldset.fields1 dd {
+#wrap fieldset.fields1 dd {
 	margin-left: 15em;
 	border-left-width: 0;
 }
 
-fieldset.fields1 div {
+#wrap fieldset.fields1 div {
 	margin-bottom: 3px;
 }
 
 /* Set it back to 0px for the reCaptcha divs: PHPBB3-9587 */
-fieldset.fields1 #recaptcha_widget_div div, fieldset.fields1 .live-search div {
+#wrap fieldset.fields1 #recaptcha_widget_div div, fieldset.fields1 .live-search div {
 	margin-bottom: 0;
 }
 
 /* Specific layout 2 */
-fieldset.fields2 dt {
+#wrap fieldset.fields2 dt {
 	width: 15em;
 	border-right-width: 0;
 }
 
-fieldset.fields2 dd {
+#wrap fieldset.fields2 dd {
 	margin-left: 16em;
 	border-left-width: 0;
 }
 
 /* Form elements */
-dt label {
+#wrap dt label {
 	font-weight: bold;
 	text-align: left;
 }
 
-dd label {
+#wrap dd label {
 	white-space: nowrap;
 }
 
-dd input, dd textarea {
+#wrap dd input, dd textarea {
 	margin-right: 3px;
 }
 
-dd select {
+#wrap dd select {
 	width: auto;
 }
 
-dd select[multiple] {
+#wrap dd select[multiple] {
 	width: 100%;
 }
 
-dd textarea {
+#wrap dd textarea {
 	width: 85%;
 }
 
@@ -238,13 +244,11 @@ fieldset.submit-buttons input {
 
 /* Input field styles
 ---------------------------------------- */
-.inputbox {
-	border: 1px solid transparent;
-	padding: 2px;
+#wrap .inputbox {
+	width: inherit;
 }
 
 .inputbox:hover, .inputbox:focus {
-	border: 1px solid transparent;
 	outline-style: none;
 }
 
@@ -278,66 +282,6 @@ input[type="search"]::-webkit-search-cancel-button {
 	cursor: pointer;
 }
 
-/* Form button styles
----------------------------------------- */
-input.button1, input.button2 {
-	font-size: 1em;
-}
-
-a.button1, input.button1, input.button3, a.button2, input.button2 {
-	width: auto !important;
-	padding-top: 1px;
-	padding-bottom: 1px;
-	background: transparent none repeat-x top left;
-}
-
-a.button1, input.button1 {
-	font-weight: bold;
-	border: 1px solid transparent;
-}
-
-input.button3 {
-	padding: 0;
-	margin: 0;
-	line-height: 5px;
-	height: 12px;
-	background-image: none;
-	font-variant: small-caps;
-}
-
-input[type="button"], input[type="submit"], input[type="reset"], input[type="checkbox"], input[type="radio"] {
-	cursor: pointer;
-}
-
-/* Alternative button */
-a.button2, input.button2, input.button3 {
-	border: 1px solid transparent;
-}
-
-/* <a> button in the style of the form buttons */
-a.button1, a.button1:link, a.button1:visited, a.button1:active, a.button2, a.button2:link, a.button2:visited, a.button2:active {
-	text-decoration: none;
-	padding: 2px 8px;
-	line-height: 250%;
-	vertical-align: text-bottom;
-	background-position: 0 1px;
-}
-
-/* Hover states */
-a.button1:hover, input.button1:hover, a.button2:hover, input.button2:hover, input.button3:hover {
-	border: 1px solid transparent;
-	background-position: 0 100%;
-}
-
-input.disabled {
-	font-weight: normal;
-}
-
-/* Focus states */
-input.button1:focus, input.button2:focus, input.button3:focus {
-	outline-style: none;
-}
-
 /* Topic and forum Search */
 .search-box {
 	float: left;
@@ -348,7 +292,7 @@ input.button1:focus, input.button2:focus, input.button3:focus {
 	border-right-width: 0;
 	border-radius: 4px 0 0 4px;
 	float: left;
-	height: 24px;
+	height: 41px;
 	padding: 3px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -362,9 +306,6 @@ input.button1:focus, input.button2:focus, input.button3:focus {
 .search-box button.search-icon {
 	border-radius: 0;
 	font-size: 0;
-	height: 24px;
-	margin: 0;
-	padding: 3px 5px;
 }
 
 .search-box a.button {
@@ -372,7 +313,6 @@ input.button1:focus, input.button2:focus, input.button3:focus {
 	border-radius: 0 4px 4px 0;
 	font-size: 0;
 	margin: 0;
-	padding: 2px 5px 2px 3px;
 }
 
 /* Search box (header)

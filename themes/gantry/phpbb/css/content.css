@@ -72,6 +72,7 @@ ul.topiclist dd {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+	margin-left: 0;
 }
 
 ul.topiclist dfn {
@@ -328,7 +329,9 @@ dd.option {
 	overflow: hidden;
 	line-height: 1.4em;
 	font-size: 1em;
+	padding: 0;
 	padding-bottom: 1px;
+	margin: 0;
 }
 
 #wrap .content h2, #wrap .panel h2 {
