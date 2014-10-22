@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "AAAA,iEAAQ;EACP,OAAO,EAAE,YAAY;EACrB,OAAO,EAAE,QAAQ;EACjB,oGAAS;IACR,MAAM,EAAE,YAAY;;ACJtB,iEAAkE;EDSjE,UAAU,EEPa,OAAY;EFQnC,KAAK,EGNQ,IAAI;EHOjB,UAAU,EAAE,eAA0B;EACtC,+FAAQ;IACP,UAAU,EAAE,OAAkB;IAC9B,UAAU,EAAE,eAA2B;IACvC,KAAK,EGXO,IAAI;EHajB,oGAAS;IACR,UAAU,EAAE,eAA2B",
-"sources": ["../common/scss/template/modules/_buttons.scss","../scss/phpbb/core/_buttons.scss","../common/scss/configuration/template/_bullets.scss","../common/scss/configuration/template/_colors.scss"],
+"mappings": "AAAA,iEAAQ;EACP,OAAO,EAAE,YAAY;EACrB,OAAO,EAAE,QAAQ;EACjB,oGAAS;IACR,MAAM,EAAE,YAAY;;ACJtB,iEAAkE;EDSjE,UAAU,EEPa,OAAY;EFQnC,KAAK,EGNQ,IAAI;EHOjB,UAAU,EAAE,eAA0B;EACtC,+FAAQ;IACP,UAAU,EAAE,OAAkB;IAC9B,UAAU,EAAE,eAA2B;IACvC,KAAK,EGXO,IAAI;EHajB,oGAAS;IACR,UAAU,EAAE,eAA2B;;AIlBzC,wBAAyB;EACxB,QAAQ,EAAE,QAAQ;EAClB,SAAS,EAAE,IAAI;EACf,UAAU,EAAE,IAAI;;AAIhB,sBAAU;EACT,MAAM,EAAE,MAAM",
+"sources": ["../common/scss/template/modules/_buttons.scss","../scss/phpbb/core/_buttons.scss","../common/scss/configuration/template/_bullets.scss","../common/scss/configuration/template/_colors.scss","../scss/phpbb/core/_common.scss"],
 "names": [],
 "file": "phpbb.css"
 }

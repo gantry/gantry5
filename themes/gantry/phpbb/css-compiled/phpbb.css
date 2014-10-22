@@ -15,4 +15,12 @@ a.button1, input.button1, input.button3, a.button2, input.button2 {
   a.button1:active, input.button1:active, input.button3:active, a.button2:active, input.button2:active {
     box-shadow: 0 1px 0 #316389; }
 
+.forum-icon, .topic-icon {
+  position: absolute;
+  font-size: 30px;
+  margin-top: 10px; }
+
+ul.topiclist li.header {
+  margin: 15px 0; }
+
 /*# sourceMappingURL=phpbb.css.map */
