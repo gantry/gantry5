@@ -1,3 +1,12 @@
+/* CSS dirty reset */
+.phpbb p, .phpbb blockquote, .phpbb pre, .phpbb abbr, .phpbb acronym, .phpbb address, .phpbb big, .phpbb cite, .phpbb code, .phpbb del, .phpbb dfn, .phpbb em, .phpbb img, .phpbb ins, .phpbb kbd, .phpbb q, .phpbb s, .phpbb samp, .phpbb small, .phpbb strike, .phpbb strong, .phpbb sub, .phpbb sup, .phpbb tt, .phpbb var, .phpbb b, .phpbb u, .phpbb i, .phpbb center, .phpbb dl, .phpbb dt, .phpbb dd, .phpbb ol, .phpbb ul, .phpbb li, .phpbb fieldset, .phpbb form, .phpbb label, .phpbb legend, .phpbb table, .phpbb caption, .phpbb tbody, .phpbb tfoot, .phpbb thead, .phpbb tr, .phpbb th, .phpbb td, .phpbb article, .phpbb aside, .phpbb canvas, .phpbb details, .phpbb input, .phpbb figure, .phpbb figcaption, .phpbb footer, .phpbb header, .phpbb hgroup, .phpbb menu, .phpbb nav, .phpbb output, .phpbb ruby, .phpbb section, .phpbb summary, .phpbb time, .phpbb mark, .phpbb audio, .phpbb video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
 
 /* General Markup Styles
 ---------------------------------------- */
@@ -289,8 +298,6 @@ ul.linklist.bulletin > li.no-bulletin:before {
 	left: 0;
 	top: 1.2em;
 	z-index: 2;
-	border: 1px solid transparent;
-	border-radius: 5px;
 	padding: 9px 0 0;
 	margin-right: -500px;
 }
@@ -374,8 +381,6 @@ ul.linklist.bulletin > li.no-bulletin:before {
 	z-index: 2;
 	overflow: hidden;
 	overflow-y: auto;
-	border: 1px solid transparent;
-	border-radius: 5px;
 	padding: 5px;
 	position: relative;
 	min-width: 40px;
