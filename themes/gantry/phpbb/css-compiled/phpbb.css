@@ -15,6 +15,53 @@ a.button1, input.button1, input.button3, a.button2, input.button2 {
   a.button1:active, input.button1:active, input.button3:active, a.button2:active, input.button2:active {
     box-shadow: 0 1px 0 #316389; }
 
+.button.icon-button:before, p.author:before {
+  font: normal normal normal 14px/1 FontAwesome;
+  padding-top: 4px;
+  text-align: center;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.dropdown-select:after {
+  font: normal normal normal 14px/1 FontAwesome;
+  text-align: center;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f0d7"; }
+
+.post-buttons .button.icon-button {
+  padding: 5px;
+  padding-left: 8px;
+  padding-right: 8px; }
+  .post-buttons .button.icon-button:before {
+    padding: 0;
+    margin: 0;
+    padding-top: 1px; }
+
+.button.icon-button.search-icon:before {
+  content: "\f002"; }
+.button.icon-button.tools-icon:before {
+  content: "\f0ad"; }
+.button.icon-button.modtools-icon:before {
+  content: "\f085"; }
+.button.icon-button.search-adv-icon:before {
+  content: "\f013"; }
+.button.icon-button.quote-icon:before {
+  content: "\f10e"; }
+.button.icon-button.info-icon:before {
+  content: "\f129"; }
+.button.icon-button.report-icon:before {
+  content: "\f071"; }
+.button.icon-button.delete-icon:before {
+  content: "\f1f8"; }
+.button.icon-button.edit-icon:before {
+  content: "\f040"; }
+
+p.author:before {
+  content: "\f007"; }
+
 .forum-icon, .topic-icon {
   position: absolute;
   font-size: 30px;

@@ -26,23 +26,20 @@
 }
 
 .dropdown-select.icon-button:before {
-	margin-right: 4px;
+	margin-right: 15px;
+	margin-left: -5px;
 }
 
 .dropdown-select:after {
-	background-position: -103px 10px;
-	border-left: 1px solid;
-	content: '';
+	border-left: 1px solid rgba(255,255,255, 0.6);
 	position: absolute;
 	top: 0;
 	right: 0;
-	height: 22px;
-	width: 16px;
+	height: 100%;
+	width: 20px;
+	padding-top: 13px;
 }
 
-.dropdown-visible .dropdown-select:after, .nojs .dropdown-container:hover .dropdown-select:after {
-	background-position: -103px -10px;
-}
 
 .buttons, .buttons .button {
 	float: left;
@@ -54,6 +51,7 @@
 
 #jumpbox .dropdown-select {
 	margin: 0;
+	padding-right: 30px;
 }
 
 .modtools-icon {
