@@ -2,7 +2,7 @@ a.button1, input.button1, input.button3, a.button2, input.button2 {
 	@extend %button;
 	@include button-color($core-accent);
 }
-.button.icon-button, p.author {
+.button.icon-button {
 	&:before {
 		font: normal normal normal 14px/1 FontAwesome;
 		padding-top: 4px;
@@ -44,5 +44,3 @@ a.button1, input.button1, input.button3, a.button2, input.button2 {
 	&.delete-icon:before {content: "\f1f8";}
 	&.edit-icon:before {content: "\f040";}
 }
-
-p.author:before {content: "\f007";}

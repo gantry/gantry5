@@ -210,12 +210,13 @@ fieldset.submit-buttons input {
 ----------------------------------------*/
 
 /* Buttons used in the editor */
-#format-buttons {
-	margin: 15px 0 2px 0;
+#wrap #format-buttons {
+	margin: 15px 0 10px 0;
 }
 
 #format-buttons input, #format-buttons select {
 	vertical-align: middle;
+	font-size: 12px;
 }
 
 /* Main message box */

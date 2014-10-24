@@ -15,7 +15,7 @@ a.button1, input.button1, input.button3, a.button2, input.button2 {
   a.button1:active, input.button1:active, input.button3:active, a.button2:active, input.button2:active {
     box-shadow: 0 1px 0 #316389; }
 
-.button.icon-button:before, p.author:before {
+.button.icon-button:before {
   font: normal normal normal 14px/1 FontAwesome;
   padding-top: 4px;
   text-align: center;
@@ -58,9 +58,6 @@ a.button1, input.button1, input.button3, a.button2, input.button2 {
   content: "\f1f8"; }
 .button.icon-button.edit-icon:before {
   content: "\f040"; }
-
-p.author:before {
-  content: "\f007"; }
 
 .forum-icon, .topic-icon {
   position: absolute;
@@ -177,5 +174,96 @@ ul.topiclist li.header {
 
 .icon-unsubscribe:before {
   content: "\f146"; }
+
+/* Global imageset items */
+.imageset:before, .contact-icon:before {
+  font: normal normal normal 14px/1 FontAwesome;
+  text-align: center;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: absolute; }
+.imageset.subforum_read:before, .contact-icon.subforum_read:before {
+  content: "\f07b"; }
+.imageset.subforum_unread:before, .contact-icon.subforum_unread:before {
+  content: "\f07c";
+  color: #4184B6; }
+.imageset.pm_read:before, .imageset.pm-icon:before, .contact-icon.pm_read:before, .contact-icon.pm-icon:before {
+  content: "\f003"; }
+.imageset.pm_unread:before, .contact-icon.pm_unread:before {
+  content: "\f0e0";
+  color: #4184B6; }
+.imageset.icon_back_top:before, .contact-icon.icon_back_top:before {
+  content: "\f106"; }
+.imageset.phpbb_aol-icon:before, .imageset.icon_contact_aim:before, .contact-icon.phpbb_aol-icon:before, .contact-icon.icon_contact_aim:before {
+  content: "\f0ac"; }
+.imageset.icon_contact_email:before, .imageset.email-icon:before, .contact-icon.icon_contact_email:before, .contact-icon.email-icon:before {
+  content: "\f0e0"; }
+.imageset.icon_contact_icq:before, .imageset.phpbb_icq-icon:before, .contact-icon.icon_contact_icq:before, .contact-icon.phpbb_icq-icon:before {
+  content: "\f075"; }
+.imageset.icon_contact_jabber:before, .imageset.jabber-icon:before, .contact-icon.icon_contact_jabber:before, .contact-icon.jabber-icon:before {
+  content: "\f0eb"; }
+.imageset.phpbb_wlm-icon:before, .imageset.icon_contact_msnm:before, .contact-icon.phpbb_wlm-icon:before, .contact-icon.icon_contact_msnm:before {
+  content: "\f17a"; }
+.imageset.icon_contact_www:before, .imageset.phpbb_website-icon:before, .contact-icon.icon_contact_www:before, .contact-icon.phpbb_website-icon:before {
+  content: "\f0ac"; }
+.imageset.icon_contact_yahoo:before, .imageset.phpbb_yahoo-icon:before, .contact-icon.icon_contact_yahoo:before, .contact-icon.phpbb_yahoo-icon:before {
+  content: "\f19e"; }
+.imageset.phpbb_youtube-icon:before, .contact-icon.phpbb_youtube-icon:before {
+  content: "\f167"; }
+.imageset.phpbb_facebook-icon:before, .contact-icon.phpbb_facebook-icon:before {
+  content: "\f09a"; }
+.imageset.phpbb_googleplus-icon:before, .contact-icon.phpbb_googleplus-icon:before {
+  content: "\f0d5"; }
+.imageset.phpbb_skype-icon:before, .contact-icon.phpbb_skype-icon:before {
+  content: "\f17e"; }
+.imageset.phpbb_twitter-icon:before, .contact-icon.phpbb_twitter-icon:before {
+  content: "\f099"; }
+.imageset.icon_post_delete:before, .contact-icon.icon_post_delete:before {
+  content: "\f00d"; }
+.imageset.icon_post_info:before, .contact-icon.icon_post_info:before {
+  content: "\f129"; }
+.imageset.icon_post_report:before, .contact-icon.icon_post_report:before {
+  content: "\f071"; }
+.imageset.icon_post_target:before, .contact-icon.icon_post_target:before {
+  content: "\f15b"; }
+.imageset.icon_post_target_unread:before, .contact-icon.icon_post_target_unread:before {
+  content: "\f15b";
+  color: #4184B6; }
+.imageset.icon_topic_attach:before, .contact-icon.icon_topic_attach:before {
+  content: "\f0c6"; }
+.imageset.icon_topic_latest:before, .contact-icon.icon_topic_latest:before {
+  content: "\f016"; }
+.imageset.icon_topic_newest:before, .contact-icon.icon_topic_newest:before {
+  content: "\f15b"; }
+.imageset.icon_topic_reported:before, .contact-icon.icon_topic_reported:before {
+  content: "\f071"; }
+.imageset.icon_topic_deleted:before, .contact-icon.icon_topic_deleted:before {
+  content: "\f00d"; }
+.imageset.icon_topic_unapproved:before, .contact-icon.icon_topic_unapproved:before {
+  content: "\f05e"; }
+.imageset.icon_topic_poll:before, .contact-icon.icon_topic_poll:before {
+  content: "\f080"; }
+.imageset.icon_user_warn:before, .contact-icon.icon_user_warn:before {
+  content: "\f071"; }
+.imageset.icon_contact:before, .contact-icon.icon_contact:before {
+  content: "\f086";
+  color: #4184B6;
+  top: 0;
+  left: 4px;
+  margin-top: -12px !important; }
+.imageset.icon_user_online:before, .contact-icon.icon_user_online:before {
+  content: "\f097"; }
+
+.imageset {
+  width: 0;
+  height: 0;
+  display: inline-block !important;
+  overflow: hidden; }
+  .imageset:before {
+    color: #666;
+    margin-top: -16px; }
+  .imageset.icon_post_target {
+    margin-right: 15px; }
 
 /*# sourceMappingURL=phpbb.css.map */
