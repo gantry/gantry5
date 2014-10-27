@@ -18,6 +18,18 @@ class TwigExtension extends \Twig_Extension
     }
 
     /**
+     * Return a list of all filters.
+     *
+     * @return array
+     */
+    public function getFilters()
+    {
+        return array(
+            new \Twig_SimpleFilter('base64', 'base64_encode')
+        );
+    }
+
+    /**
      * Return a list of all functions.
      *
      * @return array

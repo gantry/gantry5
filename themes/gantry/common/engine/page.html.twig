@@ -4,7 +4,9 @@
 {% endset %}
 
 {%- set page_layout %}
+    {% block page_layout %}
     {% include '@nucleus/container.html.twig' with {segments: pageSegments} %}
+    {% endblock %}
 {% endset %}
 
 {%- set page_top %}

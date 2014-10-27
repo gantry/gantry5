@@ -2,3 +2,7 @@ analytics:
   enabled: false
   code: null
   plugins: []
+
+feedburner:
+  enabled: false
+  uri: null

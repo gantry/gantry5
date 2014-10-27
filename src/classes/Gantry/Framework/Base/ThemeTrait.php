@@ -28,15 +28,8 @@ trait ThemeTrait
         $context['config'] = $gantry['config'];
         $context['theme'] = $this;
 
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
         // Include Gantry specific things to the context.
-        // $file = JsonFile::instance($locator('theme://layouts/test.json'));
-        // $context['pageSegments'] = $file->content();
-
-        // Include Gantry specific things to the context.
-        $context['pageSegments'] = LayoutReader::read($locator('theme://layouts/test.yaml'));
+        $context['pageSegments'] = $gantry['layout'];
 
         return $context;
     }

@@ -1,8 +1,10 @@
 <?php
 namespace Gantry\Framework\Base;
 
+use Gantry\Component\Layout\LayoutReader;
 use RocketTheme\Toolbox\DI\Container;
 use Gantry\Component\Filesystem\StreamsServiceProvider;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Gantry extends Container
 {
@@ -45,6 +47,17 @@ class Gantry extends Container
         $instance = new static();
 
         $instance->register(new StreamsServiceProvider);
+
+        $instance['layout'] = function ($c) {
+            /** @var UniformResourceLocator $locator */
+            $locator = $c['locator'];
+
+            // Include Gantry specific things to the context.
+            // $file = JsonFile::instance($locator('theme://layouts/test.json'));
+            // return $file->content();
+
+            return LayoutReader::read($locator('theme://layouts/test.yaml'));
+        };
 
         return $instance;
     }

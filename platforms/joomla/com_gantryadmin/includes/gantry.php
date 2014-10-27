@@ -42,5 +42,5 @@ catch (Exception $e)
     }
 
     // In frontend we want to prevent template from loading.
-    JError::raiseError(500, 'Failed to load template: ' . $e->getMessage());
+    JError::raiseError(500, 'Failed to load admin: ' . $e->getMessage());
 }
