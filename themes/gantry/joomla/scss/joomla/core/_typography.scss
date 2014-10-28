@@ -6,3 +6,81 @@ dl {
 dd {
 	margin-left: $leading-margin;
 }
+
+.list-striped,
+.row-striped {
+	list-style: none;
+	line-height: 18px;
+	text-align: left;
+	vertical-align: middle;
+	margin-left: 0;
+}
+
+.list-striped li,
+.list-striped dd,
+.row-striped .row,
+.row-striped .row-fluid {
+	padding: $leading-margin / 2;
+}
+
+.row-striped .row-fluid {
+	width: 97%;
+}
+
+.row-striped .row-fluid [class*="span"] {
+	min-height: 10px;
+}
+
+.row-striped .row-fluid [class*="span"] {
+	margin-left: $leading-margin / 2;
+}
+
+.row-striped .row-fluid [class*="span"]:first-child {
+	margin-left: 0;
+}
+
+.list-condensed li {
+	padding: 4px 5px;
+}
+
+.row-condensed .row,
+.row-condensed .row-fluid {
+	padding: 4px 5px;
+}
+
+.list-bordered,
+.row-bordered {
+	list-style: none;
+	line-height: $core-line-height;
+	text-align: left;
+	vertical-align: middle;
+	margin-left: 0;
+	border-radius: 4px;
+}
+
+.blog-row-rule,
+.blog-item-rule {
+	border: 0;
+}
+
+.row-even,
+.row-odd {
+	padding: 5px;
+	width: 99%;
+}
+
+.row-odd {
+	background-color: transparent;
+}
+
+.row-fluid .row-reveal {
+	visibility: hidden;
+}
+
+.row-fluid:hover .row-reveal {
+	visibility: visible;
+}
+
+hr.hr-condensed {
+	margin: 10px 0;
+}

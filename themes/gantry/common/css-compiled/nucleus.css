@@ -110,6 +110,10 @@ img {
   display: inline-block;
   vertical-align: middle; }
 
+iframe,
+svg {
+  max-width: 100%; }
+
 svg:not(:root) {
   overflow: hidden; }
 
@@ -588,7 +592,8 @@ p {
 
 ul, ol, dl {
   margin-top: 1.5rem;
-  margin-bottom: 1.5rem; }
+  margin-bottom: 1.5rem;
+  padding: 0; }
   ul ul, ul ol, ul dl, ol ul, ol ol, ol dl, dl ul, dl ol, dl dl {
     margin-top: 0;
     margin-bottom: 0; }
@@ -683,5 +688,8 @@ input[type="submit"] {
   content: "";
   display: table;
   clear: both; }
+
+.center {
+  text-align: center; }
 
 /*# sourceMappingURL=nucleus.css.map */

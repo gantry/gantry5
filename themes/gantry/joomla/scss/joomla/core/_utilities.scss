@@ -1,0 +1,130 @@
+// MOdal
+body.modal {
+	padding-top: 0;
+}
+
+// Sizes
+.width-10 {
+	width: 10px;
+}
+
+.width-20 {
+	width: 20px;
+}
+
+.width-30 {
+	width: 30px;
+}
+
+.width-40 {
+	width: 40px;
+}
+
+.width-50 {
+	width: 50px;
+}
+
+.width-60 {
+	width: 60px;
+}
+
+.width-70 {
+	width: 70px;
+}
+
+.width-80 {
+	width: 80px;
+}
+
+.width-90 {
+	width: 90px;
+}
+
+.width-100 {
+	width: 100px;
+}
+
+.height-10 {
+	height: 10px;
+}
+
+.height-20 {
+	height: 20px;
+}
+
+.height-30 {
+	height: 30px;
+}
+
+.height-40 {
+	height: 40px;
+}
+
+.height-50 {
+	height: 50px;
+}
+
+.height-60 {
+	height: 60px;
+}
+
+.height-70 {
+	height: 70px;
+}
+
+.height-80 {
+	height: 80px;
+}
+
+.height-90 {
+	height: 90px;
+}
+
+.height-100 {
+	height: 100px;
+}
+
+.width-auto {
+	width: auto;
+}
+
+// Thumbnails
+.thumbnail.pull-left {
+	margin: 0 10px 10px 0;
+}
+.thumbnail.pull-right {
+	margin: 0 0 10px 10px;
+}
+
+// Accordian
+.accordion-body.in:hover {
+	overflow: visible;
+}
+
+// Tooltips
+.tip-wrap {
+	max-width: 200px;
+	padding: 3px 8px;
+	text-align: center;
+	text-decoration: none;
+	border-radius: $core-border-radius;
+	z-index: 100;
+}
+
+.tooltip {
+	max-width: 400px;
+}
+.tooltip-inner {
+	max-width: none;
+	text-align: left;
+	text-shadow: none;
+}
+th .tooltip-inner {
+	font-weight: normal;
+}
+.tooltip.hasimage {
+	opacity: 1;
+}
+.tip-text {
+	text-align: left;
+}

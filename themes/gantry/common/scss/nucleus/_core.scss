@@ -102,6 +102,11 @@ img {
 	vertical-align: middle;
 }
 
+iframe,
+svg {
+	max-width: 100%;
+}
+
 svg:not(:root) {
 	overflow: hidden;
 }
