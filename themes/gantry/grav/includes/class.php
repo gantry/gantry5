@@ -11,6 +11,11 @@ class Gantry extends GantryTheme
     protected $gantryTheme;
 
     /**
+     * @var string
+     */
+    public $layout;
+
+    /**
      * @return array
      */
     public static function getSubscribedEvents() {

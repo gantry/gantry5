@@ -10,6 +10,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  * @package Gantry\Framework\Base
  *
  * @property string $path
+ * @property string $layout
  */
 trait ThemeTrait
 {
