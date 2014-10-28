@@ -1,13 +1,14 @@
 <?php
-namespace Gantry\Framework;
+namespace Gantry\Admin\Theme;
 
 use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Base\Theme as BaseTheme;
 use RocketTheme\Toolbox\StreamWrapper\Stream;
 use RocketTheme\Toolbox\StreamWrapper\ReadOnlyStream;
+use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class AdminTheme extends BaseTheme
+class Theme extends BaseTheme
 {
     public function __construct($path, $name = '')
     {
@@ -24,6 +25,7 @@ class AdminTheme extends BaseTheme
 
         /** @var ResourceLocatorInterface $locator */
         $locator = $gantry['locator'];
+
         $schemes = $gantry['admin.config']->get('streams.schemes');
 
         if (!$schemes) {
@@ -58,11 +60,13 @@ class AdminTheme extends BaseTheme
                 throw new \InvalidArgumentException("Stream '{$type}' could not be initialized.");
             }
         }
+
+        $locator->addPath('gantry-admin', '', 'theme://admin');
     }
 
     public function add_to_context(array $context)
     {
-        $context = parent::add_to_context( $context );
+        $context = parent::add_to_context($context);
 
         return $context;
     }
@@ -73,10 +77,11 @@ class AdminTheme extends BaseTheme
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
+
         if (!$loader) {
             $loader = $twig->getLoader();
         }
-        $loader->setPaths($locator->findResources('gantry-admin://templates'));
+        $loader->setPaths($locator->findResources('gantry-admin://templates'), 'gantry-admin');
 
         $twig->addExtension(new TwigExtension);
         return $twig;
@@ -100,27 +105,8 @@ class AdminTheme extends BaseTheme
         // Include Gantry specific things to the context.
         $context = $this->add_to_context($context);
 
-        // Getting params from template
-        $app = \JFactory::getApplication();
-        $doc = \JFactory::getDocument();
-
-        $params = $app->getTemplate(true)->params;
-
-        $this->language = $doc->language;
-        $this->direction = $doc->direction;
-
-        // Detecting Active Variables
-        $option   = $app->input->getCmd('option', '');
-        $view     = $app->input->getCmd('view', '');
-        $layout   = $app->input->getCmd('layout', '');
-        $task     = $app->input->getCmd('task', '');
-        $itemid   = $app->input->getCmd('Itemid', '');
-        $sitename = $app->get('sitename');
-
         // Add JavaScript Frameworks
         \JHtml::_('bootstrap.framework');
-        // Load optional RTL Bootstrap CSS
-        \JHtml::_('bootstrap.loadCss', false, $this->direction);
 
         return $twig->render($file, $context);
     }

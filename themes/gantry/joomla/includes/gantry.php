@@ -8,25 +8,27 @@ try
     // Attempt to locate Gantry Framework if it hasn't already been loaded.
     if (!class_exists('Gantry'))
     {
-        $paths = array(
+        $gantryPaths = array(
             __DIR__ . '/../src/bootstrap.php',          // Look if Gantry has been included to the template.
             JPATH_ROOT . '/administrator/components/com_gantryadmin/src/bootstrap.php', // Look for the admin.
         );
 
-        foreach ($paths as $path)
+        foreach ($gantryPaths as $gantryPath)
         {
-            if ($path && is_file($path))
+            if ($gantryPath && is_file($gantryPath))
             {
-                $bootstrap = $path;
+                $gantryBootstrap = $gantryPath;
             }
         }
 
-        if (!$bootstrap)
+        if (!isset($gantryBootstrap))
         {
             throw new LogicException('Gantry Framework not found!');
         }
 
-        require_once $bootstrap;
+        require_once $gantryBootstrap;
+
+        unset($gantryPaths, $gantryPath, $gantryBootstrap);
     }
 
     // Get Gantry instance and return it.

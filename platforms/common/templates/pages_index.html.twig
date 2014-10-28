@@ -1,9 +1,9 @@
-{% extends "gantry/partials/base.html.twig" %}
+{% extends "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
     <h2>
         Page Setup
-        <a href="{{ gantry.route('page_setup_new') }}" class="button button-primary"><i class="fa fa-plus"></i></a>
+        <a href="{{ gantry.route('pages/create') }}" class="button button-primary"><i class="fa fa-plus"></i></a>
     </h2>
     <div id="page-picker" class="cards-wrapper">
         <ul>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="inner-params">
                     <span class="float-left">
-                        <a href="{{ gantry.route('page_setup_edit') }}" class="button">
+                        <a href="{{ gantry.route('pages/edit') }}" class="button">
                             <i class="fa fa-pencil-square-o"></i>
                             Edit
                         </a>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="inner-params">
                     <span class="float-left">
-                        <a href="{{ gantry.route('page_setup_edit') }}" class="button">
+                        <a href="{{ gantry.route('pages/edit') }}" class="button">
                             <i class="fa fa-pencil-square-o"></i>
                             Edit
                         </a>
@@ -59,7 +59,7 @@
             </li>
             <li class="card add-new">
                 <div class="page">
-                    <a href="{{ gantry.route('page_setup_new') }}"><i class="fa fa-plus"></i></a>
+                    <a href="{{ gantry.route('pages/create') }}"><i class="fa fa-plus"></i></a>
                 </div>
             </li>
         </ul>

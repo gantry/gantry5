@@ -2,10 +2,10 @@
     <div data-mode-indicator="production"></div>
     <div class="content">
         <ul>
-            <li class="{{ (location == 'overview') ? 'active' : '' }}">
+            <li class="{{ (location == 'overview') ? 'active' }}">
                 <a href="{{ gantry.route('overview') }}"><i class="fa fa-desktop"></i>Overview</a>
             </li>
-            <li class="{{ (location == 'settings') ? 'active' : '' }}">
+            <li class="{{ (location == 'settings') ? 'active' }}">
                 <a href="{{ gantry.route('settings') }}"><i class="fa fa-wrench"></i>Settings</a>
                 <ul>
                     <li>
@@ -19,13 +19,13 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ (location == 'page_setup') ? 'active' : '' }}">
-                <a href="{{ gantry.route('page_setup') }}"><i class="fa fa-sitemap"></i>Page Setup</a>
+            <li class="{{ (location == 'pages') ? 'active' }}">
+                <a href="{{ gantry.route('pages') }}"><i class="fa fa-sitemap"></i>Page Setup</a>
             </li>
-            <li class="{{ (location == 'assignments') ? 'active' : '' }}">
+            <li class="{{ (location == 'assignments') ? 'active' }}">
                 <a href="{{ gantry.route('assignments') }}"><i class="fa fa-check-square-o"></i>Assignments</a>
             </li>
-            <li class="{{ (location == 'updates') ? 'active' : '' }}">
+            <li class="{{ (location == 'updates') ? 'active' }}">
                 <a href="{{ gantry.route('updates') }}"><i class="fa fa-cloud-download"></i>Updates</a>
             </li>
         </ul>
