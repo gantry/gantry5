@@ -1,7 +1,9 @@
 <?php
 namespace Gantry\Framework;
 
-class Theme extends Base\Theme
+use Gantry\Framework\Base\Theme as BaseTheme;
+
+class Theme extends BaseTheme
 {
     public function __construct($path, $name = '')
     {
@@ -28,22 +30,9 @@ class Theme extends Base\Theme
         // Include Gantry specific things to the context.
         $context = $this->add_to_context($context);
 
-        // Getting params from template
-        $app = \JFactory::getApplication();
         $doc = \JFactory::getDocument();
-
-        $params = $app->getTemplate(true)->params;
-
         $this->language = $doc->language;
         $this->direction = $doc->direction;
-
-        // Detecting Active Variables
-        $option   = $app->input->getCmd('option', '');
-        $view     = $app->input->getCmd('view', '');
-        $layout   = $app->input->getCmd('layout', '');
-        $task     = $app->input->getCmd('task', '');
-        $itemid   = $app->input->getCmd('Itemid', '');
-        $sitename = $app->get('sitename');
 
         // Add JavaScript Frameworks
         \JHtml::_('bootstrap.framework');
@@ -56,7 +45,7 @@ class Theme extends Base\Theme
     public function widgets_init()
     {
         $gantry = Gantry::instance();
-        $positions = (array) $gantry->config()->get('positions');
+        $positions = (array) $gantry['config']->get('positions');
 
         foreach ($positions as $name => $params) {
             $params = (array) $params;

@@ -48,17 +48,6 @@ class Gantry extends Container
 
         $instance->register(new StreamsServiceProvider);
 
-        $instance['layout'] = function ($c) {
-            /** @var UniformResourceLocator $locator */
-            $locator = $c['locator'];
-
-            // Include Gantry specific things to the context.
-            // $file = JsonFile::instance($locator('theme://layouts/test.json'));
-            // return $file->content();
-
-            return LayoutReader::read($locator('theme://layouts/test.yaml'));
-        };
-
         return $instance;
     }
 }

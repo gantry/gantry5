@@ -8,6 +8,4 @@ $gantry = include_once __DIR__ . '/includes/template.php';
 $theme = $gantry['theme'];
 
 // Render the page.
-echo $theme
-    ->setLayout('theme://layouts/test.yaml')
-    ->render('index.html.twig');
+echo $theme->render('comingsoon.html.twig');
