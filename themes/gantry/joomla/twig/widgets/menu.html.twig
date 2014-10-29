@@ -1,4 +1,7 @@
-<nav class="main-nav" role="navigation">
+{% extends '@nucleus/partials/widget.html.twig' %}
+
+{% block widget %}
+<nav class="{{ widget.css.class }}" role="navigation">
     <ul class="toplevel">
         {% for item in menu.items %}
             <li id="menu-item-{{item.ID}}" class="menu-item menu-item-type-{{item.type}} menu-item-object-{{item.object}} menu-item-{{item.ID}}">
@@ -18,3 +21,4 @@
         {% endfor %}
     </ul>
 </nav>
+{% endblock %}
