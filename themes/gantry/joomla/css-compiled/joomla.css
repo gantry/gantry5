@@ -32,11 +32,11 @@ dd {
   margin-left: 0; }
 
 .list-condensed li {
-  padding: 4px 5px; }
+  padding: 0.5rem; }
 
 .row-condensed .row,
 .row-condensed .row-fluid {
-  padding: 4px 5px; }
+  padding: 0.5rem; }
 
 .list-bordered,
 .row-bordered {
@@ -67,6 +67,41 @@ dd {
 
 hr.hr-condensed {
   margin: 10px 0; }
+
+.img_caption .left {
+  float: left;
+  margin-right: 1.5rem; }
+
+.img_caption .right {
+  float: right;
+  margin-left: 1.5rem; }
+
+.img_caption .left p {
+  clear: left;
+  text-align: center; }
+
+.img_caption .right p {
+  clear: right;
+  text-align: center; }
+
+.img_caption {
+  text-align: center !important; }
+
+.img_caption.none {
+  margin-left: auto;
+  margin-right: auto; }
+
+figure {
+  display: table; }
+
+figure.pull-center,
+img.pull-center {
+  margin-left: auto;
+  margin-right: auto; }
+
+figcaption {
+  display: table-caption;
+  caption-side: bottom; }
 
 .btn .caret {
   margin-bottom: 7px; }
@@ -181,8 +216,7 @@ fieldset.radio.btn-group {
   margin-left: 0; }
 
 .invalid {
-  color: #9d261d;
-  font-weight: bold; }
+  color: #9d261d; }
 
 input.invalid {
   border: 1px solid #9d261d; }
@@ -319,6 +353,24 @@ th .tooltip-inner {
 .tip-text {
   text-align: left; }
 
+#helpsite-refresh {
+  vertical-align: top; }
+
+#pop-print {
+  float: right;
+  margin: 10px; }
+
+#filter-search {
+  vertical-align: top; }
+
+.editor {
+  overflow: hidden;
+  position: relative; }
+
+.search span.highlight {
+  font-weight: bold;
+  padding: 1px 4px; }
+
 .list-striped,
 .row-striped {
   border-top: 1px solid #ddd; }
@@ -383,5 +435,8 @@ th .tooltip-inner {
 .tip-wrap {
   color: #fff;
   background-color: #000; }
+
+.search span.highlight {
+  background-color: #fcfcfc; }
 
 /*# sourceMappingURL=joomla.css.map */

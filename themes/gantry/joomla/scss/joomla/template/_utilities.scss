@@ -3,3 +3,8 @@
 	color: #fff;
 	background-color: #000;
 }
+
+// Search Highlight
+.search span.highlight {
+	background-color: lighten($main-bg, 2%);
+}

@@ -16,7 +16,3 @@ textarea, #{$all-text-inputs}, select[multiple=multiple] {
 		box-shadow: $core-box-shadow-focus;
 	}
 }
-
-label {
-	@extend strong;
-}

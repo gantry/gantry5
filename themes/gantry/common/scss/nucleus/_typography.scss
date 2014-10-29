@@ -43,11 +43,18 @@ p {
 ul, ol, dl {
 	margin-top: $leading-margin;
 	margin-bottom: $leading-margin;
-	padding: 0;
 	ul, ol, dl {
 		margin-top: 0;
 		margin-bottom: 0;
 	}
+}
+
+ul, dl {
+	padding: 0;
+}
+
+ol {
+	padding-left: $leading-margin;
 }
 
 // Blockquote

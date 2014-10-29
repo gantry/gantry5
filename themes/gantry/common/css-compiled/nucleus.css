@@ -592,11 +592,16 @@ p {
 
 ul, ol, dl {
   margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-  padding: 0; }
+  margin-bottom: 1.5rem; }
   ul ul, ul ol, ul dl, ol ul, ol ol, ol dl, dl ul, dl ol, dl dl {
     margin-top: 0;
     margin-bottom: 0; }
+
+ul, dl {
+  padding: 0; }
+
+ol {
+  padding-left: 1.5rem; }
 
 blockquote {
   margin: 1.5rem 0;
