@@ -152,3 +152,17 @@ th .tooltip-inner {
 	font-weight: bold;
 	padding: 1px 4px;
 }
+
+// Images
+.img-rounded {
+	border-radius: $core-border-radius;
+}
+
+.img-polaroid {
+	padding: 4px;
+}
+
+// System Messages and Alerts
+.alert {
+	border-radius: $core-border-radius;
+}

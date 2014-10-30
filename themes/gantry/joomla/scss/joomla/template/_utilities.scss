@@ -8,3 +8,86 @@
 .search span.highlight {
 	background-color: lighten($main-bg, 2%);
 }
+
+// Images
+.img-polaroid {
+	background-color: $white;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+// System Messages and Alerts
+.muted {
+	color: #999999;
+}
+
+a.muted:hover,
+a.muted:focus {
+	color: #808080;
+}
+
+.alert {
+	background-color: lighten($warning-color, 41%);
+	border-color: lighten($warning-color, 34%);
+}
+
+.alert,
+.alert h4,
+.text-warning {
+	color: $warning-color;
+}
+
+a.text-warning:hover,
+a.text-warning:focus {
+	color: darken($warning-color, 5%);
+}
+
+.alert-success {
+	color: $success-color;
+	background-color: lighten($success-color, 50%);
+	border-color: lighten($success-color, 42%);
+}
+
+.alert-success h4, 
+.text-success {
+	color: $success-color;
+}
+
+a.text-success:hover,
+a.text-success:focus {
+	color: darken($success-color, 5%);
+}
+
+.alert-danger,
+.alert-error {
+	color: $error-color;
+	background-color: lighten($error-color, 43%);
+	border-color: lighten($error-color, 37%);
+}
+
+.alert-danger h4,
+.alert-error h4, 
+.text-error {
+	color: $error-color;
+}
+
+a.text-error:hover,
+a.text-error:focus {
+	color: darken($error-color, 5%);
+}
+
+.alert-info {
+	color: $info-color;
+	background-color: lighten($info-color, 47%);
+	border-color: lighten($info-color, 40%);
+}
+
+.alert-info h4, 
+.text-info {
+	color: $info-color;
+}
+
+a.text-info:hover,
+a.text-info:focus {
+	color: darken($info-color, 5%);
+}

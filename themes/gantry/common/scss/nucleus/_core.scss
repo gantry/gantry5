@@ -96,10 +96,13 @@ sub {
 }
 
 img {
-	border: 0;
+	width: auto\9;
+	height: auto;
 	max-width: 100%;
 	display: inline-block;
 	vertical-align: middle;
+	border: 0;
+	-ms-interpolation-mode: bicubic;
 }
 
 iframe,
