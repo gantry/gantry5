@@ -104,7 +104,7 @@ var Modal = new prime({
         options.id = this.globalID++;
 
         var elements = {};
-        console.log(options);
+
         // container
         elements.container = zen('div')
             .addClass(options.baseClassNames.container)
@@ -140,8 +140,9 @@ var Modal = new prime({
         // remote
         if (options.remote && options.remote.length > 1) {
             this.showLoading();
-            
+
             request(options.remote, bind(function(error, response){
+                console.log(response, error);
                 elements.content.html(response.body);
                 this.hideLoading();
             }, this));
@@ -285,7 +286,6 @@ var Modal = new prime({
 
     showLoading: function () {
         this.hideLoading();
-        console.log('div.g5-dialog-loading-spinner.' + this.options.className);
         return $('body').appendChild(zen('div.g5-dialog-loading-spinner.' + this.options.className));
     },
 

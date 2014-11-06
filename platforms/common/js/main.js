@@ -172,7 +172,6 @@ var G5;
                     options = merge(this.options, options);
                     options.id = this.globalID++;
                     var elements = {};
-                    console.log(options);
                     elements.container = zen('div').addClass(options.baseClassNames.container).addClass(options.className).style(options.css);
                     storage.set(elements.container, { dialog: options });
                     elements.overlay = zen('div').addClass(options.baseClassNames.overlay).addClass(options.overlayClassName).style(options.overlayCSS);
@@ -187,6 +186,7 @@ var G5;
                     if (options.remote && options.remote.length > 1) {
                         this.showLoading();
                         request(options.remote, bind(function (error, response) {
+                            console.log(response, error);
                             elements.content.html(response.body);
                             this.hideLoading();
                         }, this));
@@ -290,7 +290,6 @@ var G5;
                 },
                 showLoading: function () {
                     this.hideLoading();
-                    console.log('div.g5-dialog-loading-spinner.' + this.options.className);
                     return $('body').appendChild(zen('div.g5-dialog-loading-spinner.' + this.options.className));
                 },
                 hideLoading: function () {
@@ -1151,7 +1150,7 @@ var G5;
         module.exports = hasOwn;
     },
     'k': function (require, module, exports, global) {
-        var forOwn = require('1k');
+        var forOwn = require('1b');
         function mixIn(target, objects) {
             var i = 0, n = arguments.length, obj;
             while (++i < n) {
@@ -1193,11 +1192,11 @@ var G5;
     'n': function (require, module, exports, global) {
         'use strict';
         var $ = require('i');
-        require('1b');
-        require('4');
         require('1c');
+        require('4');
         require('1d');
         require('1e');
+        require('1f');
         module.exports = $;
     },
     'o': function (require, module, exports, global) {
@@ -1217,7 +1216,7 @@ var G5;
     },
     'p': function (require, module, exports, global) {
         'use strict';
-        module.exports = 'document' in global ? require('1f') : { parse: require('s') };
+        module.exports = 'document' in global ? require('1k') : { parse: require('s') };
     },
     'q': function (require, module, exports, global) {
         function forEach(arr, callback, thisObj) {
@@ -1738,6 +1737,18 @@ var G5;
         module.exports = some;
     },
     '1b': function (require, module, exports, global) {
+        var hasOwn = require('j');
+        var forIn = require('16');
+        function forOwn(obj, fn, thisObj) {
+            forIn(obj, function (val, key) {
+                if (hasOwn(obj, key)) {
+                    return fn.call(thisObj, obj[key], key, obj);
+                }
+            });
+        }
+        module.exports = forOwn;
+    },
+    '1c': function (require, module, exports, global) {
         'use strict';
         var $ = require('i');
         var trim = require('14'), forEach = require('q'), filter = require('18'), indexOf = require('t');
@@ -1910,7 +1921,7 @@ var G5;
         });
         module.exports = $;
     },
-    '1c': function (require, module, exports, global) {
+    '1d': function (require, module, exports, global) {
         'use strict';
         var $ = require('i');
         $.implement({
@@ -1980,7 +1991,7 @@ var G5;
         });
         module.exports = $;
     },
-    '1d': function (require, module, exports, global) {
+    '1e': function (require, module, exports, global) {
         'use strict';
         var map = require('r');
         var slick = require('p');
@@ -2066,11 +2077,11 @@ var G5;
         });
         module.exports = $;
     },
-    '1e': function (require, module, exports, global) {
+    '1f': function (require, module, exports, global) {
         'use strict';
         var Map = require('8');
         var $ = require('4');
-        require('1d');
+        require('1e');
         $.implement({
             delegate: function (event, selector, handle) {
                 return this.forEach(function (node) {
@@ -2118,598 +2129,6 @@ var G5;
             }
         });
         module.exports = $;
-    },
-    '1f': function (require, module, exports, global) {
-        'use strict';
-        var parse = require('s');
-        var index = 0, counter = document.__counter = (parseInt(document.__counter || -1, 36) + 1).toString(36), key = 'uid:' + counter;
-        var uniqueID = function (n, xml) {
-            if (n === window)
-                return 'window';
-            if (n === document)
-                return 'document';
-            if (n === document.documentElement)
-                return 'html';
-            if (xml) {
-                var uid = n.getAttribute(key);
-                if (!uid) {
-                    uid = (index++).toString(36);
-                    n.setAttribute(key, uid);
-                }
-                return uid;
-            } else {
-                return n[key] || (n[key] = (index++).toString(36));
-            }
-        };
-        var uniqueIDXML = function (n) {
-            return uniqueID(n, true);
-        };
-        var isArray = Array.isArray || function (object) {
-                return Object.prototype.toString.call(object) === '[object Array]';
-            };
-        var uniqueIndex = 0;
-        var HAS = {
-                GET_ELEMENT_BY_ID: function (test, id) {
-                    id = 'slick_' + uniqueIndex++;
-                    test.innerHTML = '<a id="' + id + '"></a>';
-                    return !!this.getElementById(id);
-                },
-                QUERY_SELECTOR: function (test) {
-                    test.innerHTML = '_<style>:nth-child(2){}</style>';
-                    test.innerHTML = '<a class="MiX"></a>';
-                    return test.querySelectorAll('.MiX').length === 1;
-                },
-                EXPANDOS: function (test, id) {
-                    id = 'slick_' + uniqueIndex++;
-                    test._custom_property_ = id;
-                    return test._custom_property_ === id;
-                },
-                MATCHES_SELECTOR: function (test) {
-                    test.className = 'MiX';
-                    var matches = test.matchesSelector || test.mozMatchesSelector || test.webkitMatchesSelector;
-                    if (matches)
-                        try {
-                            matches.call(test, ':slick');
-                        } catch (e) {
-                            return matches.call(test, '.MiX') ? matches : false;
-                        }
-                    return false;
-                },
-                GET_ELEMENTS_BY_CLASS_NAME: function (test) {
-                    test.innerHTML = '<a class="f"></a><a class="b"></a>';
-                    if (test.getElementsByClassName('b').length !== 1)
-                        return false;
-                    test.firstChild.className = 'b';
-                    if (test.getElementsByClassName('b').length !== 2)
-                        return false;
-                    test.innerHTML = '<a class="a"></a><a class="f b a"></a>';
-                    if (test.getElementsByClassName('a').length !== 2)
-                        return false;
-                    return true;
-                },
-                GET_ATTRIBUTE: function (test) {
-                    var shout = 'fus ro dah';
-                    test.innerHTML = '<a class="' + shout + '"></a>';
-                    return test.firstChild.getAttribute('class') === shout;
-                }
-            };
-        var Finder = function Finder(document) {
-            this.document = document;
-            var root = this.root = document.documentElement;
-            this.tested = {};
-            this.uniqueID = this.has('EXPANDOS') ? uniqueID : uniqueIDXML;
-            this.getAttribute = this.has('GET_ATTRIBUTE') ? function (node, name) {
-                return node.getAttribute(name);
-            } : function (node, name) {
-                node = node.getAttributeNode(name);
-                return node && node.specified ? node.value : null;
-            };
-            this.hasAttribute = root.hasAttribute ? function (node, attribute) {
-                return node.hasAttribute(attribute);
-            } : function (node, attribute) {
-                node = node.getAttributeNode(attribute);
-                return !!(node && node.specified);
-            };
-            this.contains = document.contains && root.contains ? function (context, node) {
-                return context.contains(node);
-            } : root.compareDocumentPosition ? function (context, node) {
-                return context === node || !!(context.compareDocumentPosition(node) & 16);
-            } : function (context, node) {
-                do {
-                    if (node === context)
-                        return true;
-                } while (node = node.parentNode);
-                return false;
-            };
-            this.sorter = root.compareDocumentPosition ? function (a, b) {
-                if (!a.compareDocumentPosition || !b.compareDocumentPosition)
-                    return 0;
-                return a.compareDocumentPosition(b) & 4 ? -1 : a === b ? 0 : 1;
-            } : 'sourceIndex' in root ? function (a, b) {
-                if (!a.sourceIndex || !b.sourceIndex)
-                    return 0;
-                return a.sourceIndex - b.sourceIndex;
-            } : document.createRange ? function (a, b) {
-                if (!a.ownerDocument || !b.ownerDocument)
-                    return 0;
-                var aRange = a.ownerDocument.createRange(), bRange = b.ownerDocument.createRange();
-                aRange.setStart(a, 0);
-                aRange.setEnd(a, 0);
-                bRange.setStart(b, 0);
-                bRange.setEnd(b, 0);
-                return aRange.compareBoundaryPoints(Range.START_TO_END, bRange);
-            } : null;
-            this.failed = {};
-            var nativeMatches = this.has('MATCHES_SELECTOR');
-            if (nativeMatches)
-                this.matchesSelector = function (node, expression) {
-                    if (this.failed[expression])
-                        return null;
-                    try {
-                        return nativeMatches.call(node, expression);
-                    } catch (e) {
-                        if (slick.debug)
-                            console.warn('matchesSelector failed on ' + expression);
-                        this.failed[expression] = true;
-                        return null;
-                    }
-                };
-            if (this.has('QUERY_SELECTOR')) {
-                this.querySelectorAll = function (node, expression) {
-                    if (this.failed[expression])
-                        return true;
-                    var result, _id, _expression, _combinator, _node;
-                    if (node !== this.document) {
-                        _combinator = expression[0].combinator;
-                        _id = node.getAttribute('id');
-                        _expression = expression;
-                        if (!_id) {
-                            _node = node;
-                            _id = '__slick__';
-                            _node.setAttribute('id', _id);
-                        }
-                        expression = '#' + _id + ' ' + _expression;
-                        if (_combinator.indexOf('~') > -1 || _combinator.indexOf('+') > -1) {
-                            node = node.parentNode;
-                            if (!node)
-                                result = true;
-                        }
-                    }
-                    if (!result)
-                        try {
-                            result = node.querySelectorAll(expression.toString());
-                        } catch (e) {
-                            if (slick.debug)
-                                console.warn('querySelectorAll failed on ' + (_expression || expression));
-                            result = this.failed[_expression || expression] = true;
-                        }
-                    if (_node)
-                        _node.removeAttribute('id');
-                    return result;
-                };
-            }
-        };
-        Finder.prototype.has = function (FEATURE) {
-            var tested = this.tested, testedFEATURE = tested[FEATURE];
-            if (testedFEATURE != null)
-                return testedFEATURE;
-            var root = this.root, document = this.document, testNode = document.createElement('div');
-            testNode.setAttribute('style', 'display: none;');
-            root.appendChild(testNode);
-            var TEST = HAS[FEATURE], result = false;
-            if (TEST)
-                try {
-                    result = TEST.call(document, testNode);
-                } catch (e) {
-                }
-            if (slick.debug && !result)
-                console.warn('document has no ' + FEATURE);
-            root.removeChild(testNode);
-            return tested[FEATURE] = result;
-        };
-        var combinators = {
-                ' ': function (node, part, push) {
-                    var item, items;
-                    var noId = !part.id, noTag = !part.tag, noClass = !part.classes;
-                    if (part.id && node.getElementById && this.has('GET_ELEMENT_BY_ID')) {
-                        item = node.getElementById(part.id);
-                        if (item && item.getAttribute('id') === part.id) {
-                            items = [item];
-                            noId = true;
-                            if (part.tag === '*')
-                                noTag = true;
-                        }
-                    }
-                    if (!items) {
-                        if (part.classes && node.getElementsByClassName && this.has('GET_ELEMENTS_BY_CLASS_NAME')) {
-                            items = node.getElementsByClassName(part.classList);
-                            noClass = true;
-                            if (part.tag === '*')
-                                noTag = true;
-                        } else {
-                            items = node.getElementsByTagName(part.tag);
-                            if (part.tag !== '*')
-                                noTag = true;
-                        }
-                        if (!items || !items.length)
-                            return false;
-                    }
-                    for (var i = 0; item = items[i++];)
-                        if (noTag && noId && noClass && !part.attributes && !part.pseudos || this.match(item, part, noTag, noId, noClass))
-                            push(item);
-                    return true;
-                },
-                '>': function (node, part, push) {
-                    if (node = node.firstChild)
-                        do {
-                            if (node.nodeType == 1 && this.match(node, part))
-                                push(node);
-                        } while (node = node.nextSibling);
-                },
-                '+': function (node, part, push) {
-                    while (node = node.nextSibling)
-                        if (node.nodeType == 1) {
-                            if (this.match(node, part))
-                                push(node);
-                            break;
-                        }
-                },
-                '^': function (node, part, push) {
-                    node = node.firstChild;
-                    if (node) {
-                        if (node.nodeType === 1) {
-                            if (this.match(node, part))
-                                push(node);
-                        } else {
-                            combinators['+'].call(this, node, part, push);
-                        }
-                    }
-                },
-                '~': function (node, part, push) {
-                    while (node = node.nextSibling) {
-                        if (node.nodeType === 1 && this.match(node, part))
-                            push(node);
-                    }
-                },
-                '++': function (node, part, push) {
-                    combinators['+'].call(this, node, part, push);
-                    combinators['!+'].call(this, node, part, push);
-                },
-                '~~': function (node, part, push) {
-                    combinators['~'].call(this, node, part, push);
-                    combinators['!~'].call(this, node, part, push);
-                },
-                '!': function (node, part, push) {
-                    while (node = node.parentNode)
-                        if (node !== this.document && this.match(node, part))
-                            push(node);
-                },
-                '!>': function (node, part, push) {
-                    node = node.parentNode;
-                    if (node !== this.document && this.match(node, part))
-                        push(node);
-                },
-                '!+': function (node, part, push) {
-                    while (node = node.previousSibling)
-                        if (node.nodeType == 1) {
-                            if (this.match(node, part))
-                                push(node);
-                            break;
-                        }
-                },
-                '!^': function (node, part, push) {
-                    node = node.lastChild;
-                    if (node) {
-                        if (node.nodeType == 1) {
-                            if (this.match(node, part))
-                                push(node);
-                        } else {
-                            combinators['!+'].call(this, node, part, push);
-                        }
-                    }
-                },
-                '!~': function (node, part, push) {
-                    while (node = node.previousSibling) {
-                        if (node.nodeType === 1 && this.match(node, part))
-                            push(node);
-                    }
-                }
-            };
-        Finder.prototype.search = function (context, expression, found) {
-            if (!context)
-                context = this.document;
-            else if (!context.nodeType && context.document)
-                context = context.document;
-            var expressions = parse(expression);
-            if (!expressions || !expressions.length)
-                throw new Error('invalid expression');
-            if (!found)
-                found = [];
-            var uniques, push = isArray(found) ? function (node) {
-                    found[found.length] = node;
-                } : function (node) {
-                    found[found.length++] = node;
-                };
-            if (expressions.length > 1) {
-                uniques = {};
-                var plush = push;
-                push = function (node) {
-                    var uid = uniqueID(node);
-                    if (!uniques[uid]) {
-                        uniques[uid] = true;
-                        plush(node);
-                    }
-                };
-            }
-            var node, nodes, part;
-            main:
-                for (var i = 0; expression = expressions[i++];) {
-                    if (!slick.noQSA && this.querySelectorAll) {
-                        nodes = this.querySelectorAll(context, expression);
-                        if (nodes !== true) {
-                            if (nodes && nodes.length)
-                                for (var j = 0; node = nodes[j++];)
-                                    if (node.nodeName > '@') {
-                                        push(node);
-                                    }
-                            continue main;
-                        }
-                    }
-                    if (expression.length === 1) {
-                        part = expression[0];
-                        combinators[part.combinator].call(this, context, part, push);
-                    } else {
-                        var cs = [context], c, f, u, p = function (node) {
-                                var uid = uniqueID(node);
-                                if (!u[uid]) {
-                                    u[uid] = true;
-                                    f[f.length] = node;
-                                }
-                            };
-                        for (var j = 0; part = expression[j++];) {
-                            f = [];
-                            u = {};
-                            for (var k = 0; c = cs[k++];)
-                                combinators[part.combinator].call(this, c, part, p);
-                            if (!f.length)
-                                continue main;
-                            cs = f;
-                        }
-                        if (i === 0)
-                            found = f;
-                        else
-                            for (var l = 0; l < f.length; l++)
-                                push(f[l]);
-                    }
-                }
-            if (uniques && found && found.length > 1)
-                this.sort(found);
-            return found;
-        };
-        Finder.prototype.sort = function (nodes) {
-            return this.sorter ? Array.prototype.sort.call(nodes, this.sorter) : nodes;
-        };
-        var pseudos = {
-                'empty': function () {
-                    return !(this && this.nodeType === 1) && !(this.innerText || this.textContent || '').length;
-                },
-                'not': function (expression) {
-                    return !slick.match(this, expression);
-                },
-                'contains': function (text) {
-                    return (this.innerText || this.textContent || '').indexOf(text) > -1;
-                },
-                'first-child': function () {
-                    var node = this;
-                    while (node = node.previousSibling)
-                        if (node.nodeType == 1)
-                            return false;
-                    return true;
-                },
-                'last-child': function () {
-                    var node = this;
-                    while (node = node.nextSibling)
-                        if (node.nodeType == 1)
-                            return false;
-                    return true;
-                },
-                'only-child': function () {
-                    var prev = this;
-                    while (prev = prev.previousSibling)
-                        if (prev.nodeType == 1)
-                            return false;
-                    var next = this;
-                    while (next = next.nextSibling)
-                        if (next.nodeType == 1)
-                            return false;
-                    return true;
-                },
-                'first-of-type': function () {
-                    var node = this, nodeName = node.nodeName;
-                    while (node = node.previousSibling)
-                        if (node.nodeName == nodeName)
-                            return false;
-                    return true;
-                },
-                'last-of-type': function () {
-                    var node = this, nodeName = node.nodeName;
-                    while (node = node.nextSibling)
-                        if (node.nodeName == nodeName)
-                            return false;
-                    return true;
-                },
-                'only-of-type': function () {
-                    var prev = this, nodeName = this.nodeName;
-                    while (prev = prev.previousSibling)
-                        if (prev.nodeName == nodeName)
-                            return false;
-                    var next = this;
-                    while (next = next.nextSibling)
-                        if (next.nodeName == nodeName)
-                            return false;
-                    return true;
-                },
-                'enabled': function () {
-                    return !this.disabled;
-                },
-                'disabled': function () {
-                    return this.disabled;
-                },
-                'checked': function () {
-                    return this.checked || this.selected;
-                },
-                'selected': function () {
-                    return this.selected;
-                },
-                'focus': function () {
-                    var doc = this.ownerDocument;
-                    return doc.activeElement === this && (this.href || this.type || slick.hasAttribute(this, 'tabindex'));
-                },
-                'root': function () {
-                    return this === this.ownerDocument.documentElement;
-                }
-            };
-        Finder.prototype.match = function (node, bit, noTag, noId, noClass) {
-            if (!slick.noQSA && this.matchesSelector) {
-                var matches = this.matchesSelector(node, bit);
-                if (matches !== null)
-                    return matches;
-            }
-            if (!noTag && bit.tag) {
-                var nodeName = node.nodeName.toLowerCase();
-                if (bit.tag === '*') {
-                    if (nodeName < '@')
-                        return false;
-                } else if (nodeName != bit.tag) {
-                    return false;
-                }
-            }
-            if (!noId && bit.id && node.getAttribute('id') !== bit.id)
-                return false;
-            var i, part;
-            if (!noClass && bit.classes) {
-                var className = this.getAttribute(node, 'class');
-                if (!className)
-                    return false;
-                for (part in bit.classes)
-                    if (!RegExp('(^|\\s)' + bit.classes[part] + '(\\s|$)').test(className))
-                        return false;
-            }
-            var name, value;
-            if (bit.attributes)
-                for (i = 0; part = bit.attributes[i++];) {
-                    var operator = part.operator, escaped = part.escapedValue;
-                    name = part.name;
-                    value = part.value;
-                    if (!operator) {
-                        if (!this.hasAttribute(node, name))
-                            return false;
-                    } else {
-                        var actual = this.getAttribute(node, name);
-                        if (actual == null)
-                            return false;
-                        switch (operator) {
-                        case '^=':
-                            if (!RegExp('^' + escaped).test(actual))
-                                return false;
-                            break;
-                        case '$=':
-                            if (!RegExp(escaped + '$').test(actual))
-                                return false;
-                            break;
-                        case '~=':
-                            if (!RegExp('(^|\\s)' + escaped + '(\\s|$)').test(actual))
-                                return false;
-                            break;
-                        case '|=':
-                            if (!RegExp('^' + escaped + '(-|$)').test(actual))
-                                return false;
-                            break;
-                        case '=':
-                            if (actual !== value)
-                                return false;
-                            break;
-                        case '*=':
-                            if (actual.indexOf(value) === -1)
-                                return false;
-                            break;
-                        default:
-                            return false;
-                        }
-                    }
-                }
-            if (bit.pseudos)
-                for (i = 0; part = bit.pseudos[i++];) {
-                    name = part.name;
-                    value = part.value;
-                    if (pseudos[name])
-                        return pseudos[name].call(node, value);
-                    if (value != null) {
-                        if (this.getAttribute(node, name) !== value)
-                            return false;
-                    } else {
-                        if (!this.hasAttribute(node, name))
-                            return false;
-                    }
-                }
-            return true;
-        };
-        Finder.prototype.matches = function (node, expression) {
-            var expressions = parse(expression);
-            if (expressions.length === 1 && expressions[0].length === 1) {
-                return this.match(node, expressions[0][0]);
-            }
-            if (!slick.noQSA && this.matchesSelector) {
-                var matches = this.matchesSelector(node, expressions);
-                if (matches !== null)
-                    return matches;
-            }
-            var nodes = this.search(this.document, expression, { length: 0 });
-            for (var i = 0, res; res = nodes[i++];)
-                if (node === res)
-                    return true;
-            return false;
-        };
-        var finders = {};
-        var finder = function (context) {
-            var doc = context || document;
-            if (doc.ownerDocument)
-                doc = doc.ownerDocument;
-            else if (doc.document)
-                doc = doc.document;
-            if (doc.nodeType !== 9)
-                throw new TypeError('invalid document');
-            var uid = uniqueID(doc);
-            return finders[uid] || (finders[uid] = new Finder(doc));
-        };
-        var slick = function (expression, context) {
-            return slick.search(expression, context);
-        };
-        slick.search = function (expression, context, found) {
-            return finder(context).search(context, expression, found);
-        };
-        slick.find = function (expression, context) {
-            return finder(context).search(context, expression)[0] || null;
-        };
-        slick.getAttribute = function (node, name) {
-            return finder(node).getAttribute(node, name);
-        };
-        slick.hasAttribute = function (node, name) {
-            return finder(node).hasAttribute(node, name);
-        };
-        slick.contains = function (context, node) {
-            return finder(context).contains(context, node);
-        };
-        slick.matches = function (node, expression) {
-            return finder(node).matches(node, expression);
-        };
-        slick.sort = function (nodes) {
-            if (nodes && nodes.length > 1)
-                finder(nodes[0]).sort(nodes);
-            return nodes;
-        };
-        slick.parse = parse;
-        module.exports = slick;
     },
     '1g': function (require, module, exports, global) {
         'use strict';
@@ -2844,7 +2263,7 @@ var G5;
     },
     '1h': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('20');
+        var indexOf = require('27');
         var requestFrame = global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame || global.oRequestAnimationFrame || global.msRequestAnimationFrame || function (callback) {
                 return setTimeout(function () {
                     callback();
@@ -2876,9 +2295,9 @@ var G5;
         'use strict';
         var color = require('1g'), frame = require('1h');
         var cancelFrame = frame.cancel, requestFrame = frame.request;
-        var prime = require('21');
-        var camelize = require('22'), clean = require('23'), capitalize = require('24'), hyphenateString = require('25');
-        var map = require('26'), forEach = require('27'), indexOf = require('20');
+        var prime = require('20');
+        var camelize = require('21'), clean = require('22'), capitalize = require('23'), hyphenateString = require('24');
+        var map = require('25'), forEach = require('26'), indexOf = require('27');
         var elements = require('28');
         var fx = require('1j');
         var matchString = function (s, r) {
@@ -3568,8 +2987,8 @@ var G5;
     },
     '1j': function (require, module, exports, global) {
         'use strict';
-        var prime = require('21'), requestFrame = require('1h').request, bezier = require('2a');
-        var map = require('26');
+        var prime = require('20'), requestFrame = require('1h').request, bezier = require('2a');
+        var map = require('25');
         var sDuration = '([\\d.]+)(s|ms)?', sCubicBezier = 'cubic-bezier\\(([-.\\d]+),([-.\\d]+),([-.\\d]+),([-.\\d]+)\\)';
         var rDuration = RegExp(sDuration), rCubicBezier = RegExp(sCubicBezier), rgCubicBezier = RegExp(sCubicBezier, 'g');
         var equations = {
@@ -3735,16 +3154,596 @@ var G5;
         module.exports = fx;
     },
     '1k': function (require, module, exports, global) {
-        var hasOwn = require('j');
-        var forIn = require('16');
-        function forOwn(obj, fn, thisObj) {
-            forIn(obj, function (val, key) {
-                if (hasOwn(obj, key)) {
-                    return fn.call(thisObj, obj[key], key, obj);
+        'use strict';
+        var parse = require('s');
+        var index = 0, counter = document.__counter = (parseInt(document.__counter || -1, 36) + 1).toString(36), key = 'uid:' + counter;
+        var uniqueID = function (n, xml) {
+            if (n === window)
+                return 'window';
+            if (n === document)
+                return 'document';
+            if (n === document.documentElement)
+                return 'html';
+            if (xml) {
+                var uid = n.getAttribute(key);
+                if (!uid) {
+                    uid = (index++).toString(36);
+                    n.setAttribute(key, uid);
                 }
-            });
-        }
-        module.exports = forOwn;
+                return uid;
+            } else {
+                return n[key] || (n[key] = (index++).toString(36));
+            }
+        };
+        var uniqueIDXML = function (n) {
+            return uniqueID(n, true);
+        };
+        var isArray = Array.isArray || function (object) {
+                return Object.prototype.toString.call(object) === '[object Array]';
+            };
+        var uniqueIndex = 0;
+        var HAS = {
+                GET_ELEMENT_BY_ID: function (test, id) {
+                    id = 'slick_' + uniqueIndex++;
+                    test.innerHTML = '<a id="' + id + '"></a>';
+                    return !!this.getElementById(id);
+                },
+                QUERY_SELECTOR: function (test) {
+                    test.innerHTML = '_<style>:nth-child(2){}</style>';
+                    test.innerHTML = '<a class="MiX"></a>';
+                    return test.querySelectorAll('.MiX').length === 1;
+                },
+                EXPANDOS: function (test, id) {
+                    id = 'slick_' + uniqueIndex++;
+                    test._custom_property_ = id;
+                    return test._custom_property_ === id;
+                },
+                MATCHES_SELECTOR: function (test) {
+                    test.className = 'MiX';
+                    var matches = test.matchesSelector || test.mozMatchesSelector || test.webkitMatchesSelector;
+                    if (matches)
+                        try {
+                            matches.call(test, ':slick');
+                        } catch (e) {
+                            return matches.call(test, '.MiX') ? matches : false;
+                        }
+                    return false;
+                },
+                GET_ELEMENTS_BY_CLASS_NAME: function (test) {
+                    test.innerHTML = '<a class="f"></a><a class="b"></a>';
+                    if (test.getElementsByClassName('b').length !== 1)
+                        return false;
+                    test.firstChild.className = 'b';
+                    if (test.getElementsByClassName('b').length !== 2)
+                        return false;
+                    test.innerHTML = '<a class="a"></a><a class="f b a"></a>';
+                    if (test.getElementsByClassName('a').length !== 2)
+                        return false;
+                    return true;
+                },
+                GET_ATTRIBUTE: function (test) {
+                    var shout = 'fus ro dah';
+                    test.innerHTML = '<a class="' + shout + '"></a>';
+                    return test.firstChild.getAttribute('class') === shout;
+                }
+            };
+        var Finder = function Finder(document) {
+            this.document = document;
+            var root = this.root = document.documentElement;
+            this.tested = {};
+            this.uniqueID = this.has('EXPANDOS') ? uniqueID : uniqueIDXML;
+            this.getAttribute = this.has('GET_ATTRIBUTE') ? function (node, name) {
+                return node.getAttribute(name);
+            } : function (node, name) {
+                node = node.getAttributeNode(name);
+                return node && node.specified ? node.value : null;
+            };
+            this.hasAttribute = root.hasAttribute ? function (node, attribute) {
+                return node.hasAttribute(attribute);
+            } : function (node, attribute) {
+                node = node.getAttributeNode(attribute);
+                return !!(node && node.specified);
+            };
+            this.contains = document.contains && root.contains ? function (context, node) {
+                return context.contains(node);
+            } : root.compareDocumentPosition ? function (context, node) {
+                return context === node || !!(context.compareDocumentPosition(node) & 16);
+            } : function (context, node) {
+                do {
+                    if (node === context)
+                        return true;
+                } while (node = node.parentNode);
+                return false;
+            };
+            this.sorter = root.compareDocumentPosition ? function (a, b) {
+                if (!a.compareDocumentPosition || !b.compareDocumentPosition)
+                    return 0;
+                return a.compareDocumentPosition(b) & 4 ? -1 : a === b ? 0 : 1;
+            } : 'sourceIndex' in root ? function (a, b) {
+                if (!a.sourceIndex || !b.sourceIndex)
+                    return 0;
+                return a.sourceIndex - b.sourceIndex;
+            } : document.createRange ? function (a, b) {
+                if (!a.ownerDocument || !b.ownerDocument)
+                    return 0;
+                var aRange = a.ownerDocument.createRange(), bRange = b.ownerDocument.createRange();
+                aRange.setStart(a, 0);
+                aRange.setEnd(a, 0);
+                bRange.setStart(b, 0);
+                bRange.setEnd(b, 0);
+                return aRange.compareBoundaryPoints(Range.START_TO_END, bRange);
+            } : null;
+            this.failed = {};
+            var nativeMatches = this.has('MATCHES_SELECTOR');
+            if (nativeMatches)
+                this.matchesSelector = function (node, expression) {
+                    if (this.failed[expression])
+                        return null;
+                    try {
+                        return nativeMatches.call(node, expression);
+                    } catch (e) {
+                        if (slick.debug)
+                            console.warn('matchesSelector failed on ' + expression);
+                        this.failed[expression] = true;
+                        return null;
+                    }
+                };
+            if (this.has('QUERY_SELECTOR')) {
+                this.querySelectorAll = function (node, expression) {
+                    if (this.failed[expression])
+                        return true;
+                    var result, _id, _expression, _combinator, _node;
+                    if (node !== this.document) {
+                        _combinator = expression[0].combinator;
+                        _id = node.getAttribute('id');
+                        _expression = expression;
+                        if (!_id) {
+                            _node = node;
+                            _id = '__slick__';
+                            _node.setAttribute('id', _id);
+                        }
+                        expression = '#' + _id + ' ' + _expression;
+                        if (_combinator.indexOf('~') > -1 || _combinator.indexOf('+') > -1) {
+                            node = node.parentNode;
+                            if (!node)
+                                result = true;
+                        }
+                    }
+                    if (!result)
+                        try {
+                            result = node.querySelectorAll(expression.toString());
+                        } catch (e) {
+                            if (slick.debug)
+                                console.warn('querySelectorAll failed on ' + (_expression || expression));
+                            result = this.failed[_expression || expression] = true;
+                        }
+                    if (_node)
+                        _node.removeAttribute('id');
+                    return result;
+                };
+            }
+        };
+        Finder.prototype.has = function (FEATURE) {
+            var tested = this.tested, testedFEATURE = tested[FEATURE];
+            if (testedFEATURE != null)
+                return testedFEATURE;
+            var root = this.root, document = this.document, testNode = document.createElement('div');
+            testNode.setAttribute('style', 'display: none;');
+            root.appendChild(testNode);
+            var TEST = HAS[FEATURE], result = false;
+            if (TEST)
+                try {
+                    result = TEST.call(document, testNode);
+                } catch (e) {
+                }
+            if (slick.debug && !result)
+                console.warn('document has no ' + FEATURE);
+            root.removeChild(testNode);
+            return tested[FEATURE] = result;
+        };
+        var combinators = {
+                ' ': function (node, part, push) {
+                    var item, items;
+                    var noId = !part.id, noTag = !part.tag, noClass = !part.classes;
+                    if (part.id && node.getElementById && this.has('GET_ELEMENT_BY_ID')) {
+                        item = node.getElementById(part.id);
+                        if (item && item.getAttribute('id') === part.id) {
+                            items = [item];
+                            noId = true;
+                            if (part.tag === '*')
+                                noTag = true;
+                        }
+                    }
+                    if (!items) {
+                        if (part.classes && node.getElementsByClassName && this.has('GET_ELEMENTS_BY_CLASS_NAME')) {
+                            items = node.getElementsByClassName(part.classList);
+                            noClass = true;
+                            if (part.tag === '*')
+                                noTag = true;
+                        } else {
+                            items = node.getElementsByTagName(part.tag);
+                            if (part.tag !== '*')
+                                noTag = true;
+                        }
+                        if (!items || !items.length)
+                            return false;
+                    }
+                    for (var i = 0; item = items[i++];)
+                        if (noTag && noId && noClass && !part.attributes && !part.pseudos || this.match(item, part, noTag, noId, noClass))
+                            push(item);
+                    return true;
+                },
+                '>': function (node, part, push) {
+                    if (node = node.firstChild)
+                        do {
+                            if (node.nodeType == 1 && this.match(node, part))
+                                push(node);
+                        } while (node = node.nextSibling);
+                },
+                '+': function (node, part, push) {
+                    while (node = node.nextSibling)
+                        if (node.nodeType == 1) {
+                            if (this.match(node, part))
+                                push(node);
+                            break;
+                        }
+                },
+                '^': function (node, part, push) {
+                    node = node.firstChild;
+                    if (node) {
+                        if (node.nodeType === 1) {
+                            if (this.match(node, part))
+                                push(node);
+                        } else {
+                            combinators['+'].call(this, node, part, push);
+                        }
+                    }
+                },
+                '~': function (node, part, push) {
+                    while (node = node.nextSibling) {
+                        if (node.nodeType === 1 && this.match(node, part))
+                            push(node);
+                    }
+                },
+                '++': function (node, part, push) {
+                    combinators['+'].call(this, node, part, push);
+                    combinators['!+'].call(this, node, part, push);
+                },
+                '~~': function (node, part, push) {
+                    combinators['~'].call(this, node, part, push);
+                    combinators['!~'].call(this, node, part, push);
+                },
+                '!': function (node, part, push) {
+                    while (node = node.parentNode)
+                        if (node !== this.document && this.match(node, part))
+                            push(node);
+                },
+                '!>': function (node, part, push) {
+                    node = node.parentNode;
+                    if (node !== this.document && this.match(node, part))
+                        push(node);
+                },
+                '!+': function (node, part, push) {
+                    while (node = node.previousSibling)
+                        if (node.nodeType == 1) {
+                            if (this.match(node, part))
+                                push(node);
+                            break;
+                        }
+                },
+                '!^': function (node, part, push) {
+                    node = node.lastChild;
+                    if (node) {
+                        if (node.nodeType == 1) {
+                            if (this.match(node, part))
+                                push(node);
+                        } else {
+                            combinators['!+'].call(this, node, part, push);
+                        }
+                    }
+                },
+                '!~': function (node, part, push) {
+                    while (node = node.previousSibling) {
+                        if (node.nodeType === 1 && this.match(node, part))
+                            push(node);
+                    }
+                }
+            };
+        Finder.prototype.search = function (context, expression, found) {
+            if (!context)
+                context = this.document;
+            else if (!context.nodeType && context.document)
+                context = context.document;
+            var expressions = parse(expression);
+            if (!expressions || !expressions.length)
+                throw new Error('invalid expression');
+            if (!found)
+                found = [];
+            var uniques, push = isArray(found) ? function (node) {
+                    found[found.length] = node;
+                } : function (node) {
+                    found[found.length++] = node;
+                };
+            if (expressions.length > 1) {
+                uniques = {};
+                var plush = push;
+                push = function (node) {
+                    var uid = uniqueID(node);
+                    if (!uniques[uid]) {
+                        uniques[uid] = true;
+                        plush(node);
+                    }
+                };
+            }
+            var node, nodes, part;
+            main:
+                for (var i = 0; expression = expressions[i++];) {
+                    if (!slick.noQSA && this.querySelectorAll) {
+                        nodes = this.querySelectorAll(context, expression);
+                        if (nodes !== true) {
+                            if (nodes && nodes.length)
+                                for (var j = 0; node = nodes[j++];)
+                                    if (node.nodeName > '@') {
+                                        push(node);
+                                    }
+                            continue main;
+                        }
+                    }
+                    if (expression.length === 1) {
+                        part = expression[0];
+                        combinators[part.combinator].call(this, context, part, push);
+                    } else {
+                        var cs = [context], c, f, u, p = function (node) {
+                                var uid = uniqueID(node);
+                                if (!u[uid]) {
+                                    u[uid] = true;
+                                    f[f.length] = node;
+                                }
+                            };
+                        for (var j = 0; part = expression[j++];) {
+                            f = [];
+                            u = {};
+                            for (var k = 0; c = cs[k++];)
+                                combinators[part.combinator].call(this, c, part, p);
+                            if (!f.length)
+                                continue main;
+                            cs = f;
+                        }
+                        if (i === 0)
+                            found = f;
+                        else
+                            for (var l = 0; l < f.length; l++)
+                                push(f[l]);
+                    }
+                }
+            if (uniques && found && found.length > 1)
+                this.sort(found);
+            return found;
+        };
+        Finder.prototype.sort = function (nodes) {
+            return this.sorter ? Array.prototype.sort.call(nodes, this.sorter) : nodes;
+        };
+        var pseudos = {
+                'empty': function () {
+                    return !(this && this.nodeType === 1) && !(this.innerText || this.textContent || '').length;
+                },
+                'not': function (expression) {
+                    return !slick.match(this, expression);
+                },
+                'contains': function (text) {
+                    return (this.innerText || this.textContent || '').indexOf(text) > -1;
+                },
+                'first-child': function () {
+                    var node = this;
+                    while (node = node.previousSibling)
+                        if (node.nodeType == 1)
+                            return false;
+                    return true;
+                },
+                'last-child': function () {
+                    var node = this;
+                    while (node = node.nextSibling)
+                        if (node.nodeType == 1)
+                            return false;
+                    return true;
+                },
+                'only-child': function () {
+                    var prev = this;
+                    while (prev = prev.previousSibling)
+                        if (prev.nodeType == 1)
+                            return false;
+                    var next = this;
+                    while (next = next.nextSibling)
+                        if (next.nodeType == 1)
+                            return false;
+                    return true;
+                },
+                'first-of-type': function () {
+                    var node = this, nodeName = node.nodeName;
+                    while (node = node.previousSibling)
+                        if (node.nodeName == nodeName)
+                            return false;
+                    return true;
+                },
+                'last-of-type': function () {
+                    var node = this, nodeName = node.nodeName;
+                    while (node = node.nextSibling)
+                        if (node.nodeName == nodeName)
+                            return false;
+                    return true;
+                },
+                'only-of-type': function () {
+                    var prev = this, nodeName = this.nodeName;
+                    while (prev = prev.previousSibling)
+                        if (prev.nodeName == nodeName)
+                            return false;
+                    var next = this;
+                    while (next = next.nextSibling)
+                        if (next.nodeName == nodeName)
+                            return false;
+                    return true;
+                },
+                'enabled': function () {
+                    return !this.disabled;
+                },
+                'disabled': function () {
+                    return this.disabled;
+                },
+                'checked': function () {
+                    return this.checked || this.selected;
+                },
+                'selected': function () {
+                    return this.selected;
+                },
+                'focus': function () {
+                    var doc = this.ownerDocument;
+                    return doc.activeElement === this && (this.href || this.type || slick.hasAttribute(this, 'tabindex'));
+                },
+                'root': function () {
+                    return this === this.ownerDocument.documentElement;
+                }
+            };
+        Finder.prototype.match = function (node, bit, noTag, noId, noClass) {
+            if (!slick.noQSA && this.matchesSelector) {
+                var matches = this.matchesSelector(node, bit);
+                if (matches !== null)
+                    return matches;
+            }
+            if (!noTag && bit.tag) {
+                var nodeName = node.nodeName.toLowerCase();
+                if (bit.tag === '*') {
+                    if (nodeName < '@')
+                        return false;
+                } else if (nodeName != bit.tag) {
+                    return false;
+                }
+            }
+            if (!noId && bit.id && node.getAttribute('id') !== bit.id)
+                return false;
+            var i, part;
+            if (!noClass && bit.classes) {
+                var className = this.getAttribute(node, 'class');
+                if (!className)
+                    return false;
+                for (part in bit.classes)
+                    if (!RegExp('(^|\\s)' + bit.classes[part] + '(\\s|$)').test(className))
+                        return false;
+            }
+            var name, value;
+            if (bit.attributes)
+                for (i = 0; part = bit.attributes[i++];) {
+                    var operator = part.operator, escaped = part.escapedValue;
+                    name = part.name;
+                    value = part.value;
+                    if (!operator) {
+                        if (!this.hasAttribute(node, name))
+                            return false;
+                    } else {
+                        var actual = this.getAttribute(node, name);
+                        if (actual == null)
+                            return false;
+                        switch (operator) {
+                        case '^=':
+                            if (!RegExp('^' + escaped).test(actual))
+                                return false;
+                            break;
+                        case '$=':
+                            if (!RegExp(escaped + '$').test(actual))
+                                return false;
+                            break;
+                        case '~=':
+                            if (!RegExp('(^|\\s)' + escaped + '(\\s|$)').test(actual))
+                                return false;
+                            break;
+                        case '|=':
+                            if (!RegExp('^' + escaped + '(-|$)').test(actual))
+                                return false;
+                            break;
+                        case '=':
+                            if (actual !== value)
+                                return false;
+                            break;
+                        case '*=':
+                            if (actual.indexOf(value) === -1)
+                                return false;
+                            break;
+                        default:
+                            return false;
+                        }
+                    }
+                }
+            if (bit.pseudos)
+                for (i = 0; part = bit.pseudos[i++];) {
+                    name = part.name;
+                    value = part.value;
+                    if (pseudos[name])
+                        return pseudos[name].call(node, value);
+                    if (value != null) {
+                        if (this.getAttribute(node, name) !== value)
+                            return false;
+                    } else {
+                        if (!this.hasAttribute(node, name))
+                            return false;
+                    }
+                }
+            return true;
+        };
+        Finder.prototype.matches = function (node, expression) {
+            var expressions = parse(expression);
+            if (expressions.length === 1 && expressions[0].length === 1) {
+                return this.match(node, expressions[0][0]);
+            }
+            if (!slick.noQSA && this.matchesSelector) {
+                var matches = this.matchesSelector(node, expressions);
+                if (matches !== null)
+                    return matches;
+            }
+            var nodes = this.search(this.document, expression, { length: 0 });
+            for (var i = 0, res; res = nodes[i++];)
+                if (node === res)
+                    return true;
+            return false;
+        };
+        var finders = {};
+        var finder = function (context) {
+            var doc = context || document;
+            if (doc.ownerDocument)
+                doc = doc.ownerDocument;
+            else if (doc.document)
+                doc = doc.document;
+            if (doc.nodeType !== 9)
+                throw new TypeError('invalid document');
+            var uid = uniqueID(doc);
+            return finders[uid] || (finders[uid] = new Finder(doc));
+        };
+        var slick = function (expression, context) {
+            return slick.search(expression, context);
+        };
+        slick.search = function (expression, context, found) {
+            return finder(context).search(context, expression, found);
+        };
+        slick.find = function (expression, context) {
+            return finder(context).search(context, expression)[0] || null;
+        };
+        slick.getAttribute = function (node, name) {
+            return finder(node).getAttribute(node, name);
+        };
+        slick.hasAttribute = function (node, name) {
+            return finder(node).hasAttribute(node, name);
+        };
+        slick.contains = function (context, node) {
+            return finder(context).contains(context, node);
+        };
+        slick.matches = function (node, expression) {
+            return finder(node).matches(node, expression);
+        };
+        slick.sort = function (nodes) {
+            if (nodes && nodes.length > 1)
+                finder(nodes[0]).sort(nodes);
+            return nodes;
+        };
+        slick.parse = parse;
+        module.exports = slick;
     },
     '1l': function (require, module, exports, global) {
         var identity = require('2b');
@@ -4004,17 +4003,6 @@ var G5;
     },
     '20': function (require, module, exports, global) {
         'use strict';
-        var indexOf = function (self, item, from) {
-            for (var l = self.length >>> 0, i = from < 0 ? Math.max(0, l + from) : from || 0; i < l; i++) {
-                if (self[i] === item)
-                    return i;
-            }
-            return -1;
-        };
-        module.exports = indexOf;
-    },
-    '21': function (require, module, exports, global) {
-        'use strict';
         var hasOwn = require('2h'), forIn = require('2i'), mixIn = require('2j'), filter = require('2k'), create = require('2l'), type = require('2m');
         var defineProperty = Object.defineProperty, getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
         try {
@@ -4070,7 +4058,7 @@ var G5;
         };
         module.exports = prime;
     },
-    '22': function (require, module, exports, global) {
+    '21': function (require, module, exports, global) {
         'use strict';
         var camelize = function (self) {
             return (self + '').replace(/-\D/g, function (match) {
@@ -4079,7 +4067,7 @@ var G5;
         };
         module.exports = camelize;
     },
-    '23': function (require, module, exports, global) {
+    '22': function (require, module, exports, global) {
         'use strict';
         var trim = require('2n');
         var clean = function (self) {
@@ -4087,7 +4075,7 @@ var G5;
         };
         module.exports = clean;
     },
-    '24': function (require, module, exports, global) {
+    '23': function (require, module, exports, global) {
         'use strict';
         var capitalize = function (self) {
             return (self + '').replace(/\b[a-z]/g, function (match) {
@@ -4096,7 +4084,7 @@ var G5;
         };
         module.exports = capitalize;
     },
-    '25': function (require, module, exports, global) {
+    '24': function (require, module, exports, global) {
         'use strict';
         var hyphenate = function (self) {
             return (self + '').replace(/[A-Z]/g, function (match) {
@@ -4105,7 +4093,7 @@ var G5;
         };
         module.exports = hyphenate;
     },
-    '26': function (require, module, exports, global) {
+    '25': function (require, module, exports, global) {
         'use strict';
         var map = function (self, method, context) {
             var length = self.length >>> 0, results = Array(length);
@@ -4116,7 +4104,7 @@ var G5;
         };
         module.exports = map;
     },
-    '27': function (require, module, exports, global) {
+    '26': function (require, module, exports, global) {
         'use strict';
         var forEach = function (self, method, context) {
             for (var i = 0, l = self.length >>> 0; i < l; i++) {
@@ -4127,9 +4115,20 @@ var G5;
         };
         module.exports = forEach;
     },
+    '27': function (require, module, exports, global) {
+        'use strict';
+        var indexOf = function (self, item, from) {
+            for (var l = self.length >>> 0, i = from < 0 ? Math.max(0, l + from) : from || 0; i < l; i++) {
+                if (self[i] === item)
+                    return i;
+            }
+            return -1;
+        };
+        module.exports = indexOf;
+    },
     '28': function (require, module, exports, global) {
         'use strict';
-        var prime = require('21'), forEach = require('27'), map = require('26'), filter = require('2o'), every = require('2p'), some = require('2q');
+        var prime = require('20'), forEach = require('26'), map = require('25'), filter = require('2o'), every = require('2p'), some = require('2q');
         var uniqueIndex = 0;
         var uniqueID = function (n) {
             return n === global ? 'global' : n.uniqueNumber || (n.uniqueNumber = 'n:' + (uniqueIndex++).toString(36));
@@ -4321,7 +4320,7 @@ var G5;
         module.exports = prop;
     },
     '2d': function (require, module, exports, global) {
-        var forOwn = require('1k');
+        var forOwn = require('1b');
         var isArray = require('12');
         function containsMatch(array, pattern) {
             var i = -1, length = array.length;
