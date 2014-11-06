@@ -1,0 +1,19 @@
+{
+  "name": "gantry-admin",
+  "version": "0.1.0",
+  "dependencies": {
+    "agent": "^0.2.1",
+    "elements": "^0.5.0",
+    "moofx": "^3.2.0",
+    "mout": "~0.10.0",
+    "prime": "^0.4.2",
+    "prime-util": "^0.5.0",
+    "slick": "^1.12.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-sass": "~0.8.1",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-wrapup": "~0.1.3"
+  }
+}

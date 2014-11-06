@@ -1,0 +1,62 @@
+{
+    "name": "Simple",
+    "layout": [
+        {
+            "header": {
+                "type": "section",
+                "attributes": {
+                    "type": "header",
+                    "id": "header"
+                }
+            },
+            "main": {
+                "type": "grid",
+                "attributes": {},
+                "children": [
+                    {
+                        "left": {
+                            "type": "block",
+                            "attributes": {
+                                "size": 75
+                            },
+                            "children:": [
+                                {
+                                    "showcase": {
+                                        "type": "section",
+                                        "attributes": {}
+                                    },
+                                    "feature": {
+                                        "type": "section",
+                                        "attributes": {}
+                                    },
+                                    "main": {
+                                        "type": "section",
+                                        "attributes": {}
+                                    },
+                                    "bottom": {
+                                        "type": "section",
+                                        "attributes": {}
+                                    }
+                                }
+                            ]
+                        },
+                        "right": {
+                            "type": "block",
+                            "attributes": {
+                                "size": 25
+                            },
+                            "children": [
+                                {
+                                    "sidebar": {
+                                        "type": "section",
+                                        "attributes": {}
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

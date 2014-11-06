@@ -34,8 +34,8 @@ module.exports = {
     zen     : zen,
     domready: domready,
     agent   : require('agent'),*/
-    ui      : require('./ui'),
-    lm      : require('./lm')
+    //lm      : require('./lm'),
+    ui      : require('./ui')
 };
 
 

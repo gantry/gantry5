@@ -1,18 +1,28 @@
 // Float Classes
-#g5-container .float-left {
+.float-left {
 	float: left !important;
 }
 
-#g5-container .float-right {
+.float-right {
 	float: right !important;
 }
 
 // Visibility (additional responsive based classes available in the visibility particle)
-#g5-container .hide {
+.hide {
 	display: none;
 }
 
 // Clearfix
-#g5-container .clearfix {
+.clearfix {
 	@include clearfix;
+}
+
+// Center
+.center {
+	text-align: center;
+}
+
+// Full Height Section
+.full-height {
+	min-height: 100vh;
 }
