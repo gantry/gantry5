@@ -12,15 +12,15 @@ abstract class Folder
     /**
      * Recursively find the last modified time under given path.
      *
-     * @param string $path
+     * @param  string $path
      * @return int
      */
-    public static function lastModified($path)
+    public static function lastModifiedFolder($path)
     {
+        $last_modified = 0;
+
         $directory = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new \RecursiveIteratorIterator($directory, \RecursiveIteratorIterator::SELF_FIRST);
-
-        $last_modified = 0;
 
         /** @var \RecursiveDirectoryIterator $file */
         foreach ($iterator as $file) {
@@ -29,34 +29,56 @@ abstract class Folder
                 $last_modified = $dir_modified;
             }
         }
+
         return $last_modified;
+    }
+
+    /**
+     * Get relative path between target and base path. If path isn't relative, return full path.
+     *
+     * @param  string  $path
+     * @param  string  $base
+     * @return string
+     */
+    public static function getRelativePath($path, $base = GANTRY5_ROOT)
+    {
+        $base = preg_replace('![\\|/]+!', '/', $base);
+        $path = preg_replace('![\\|/]+!', '/', $path);
+        if (strpos($path, $base) === 0) {
+            $path = substr($path, strlen($base));
+        }
+
+        return $path;
     }
 
     /**
      * Return recursive list of all files and directories under given path.
      *
-     * @param string $path
-     * @param array  $params
+     * @param  string            $path
+     * @param  array             $params
      * @return array
      * @throws \RuntimeException
      */
     public static function all($path, array $params = array())
     {
-        $realPath = realpath($path);
-
-        if ($realPath === false) {
+        if ($path === false) {
             throw new \RuntimeException("Path to {$path} doesn't exist.");
         }
 
-        $compare = $params['compare'] ? 'get' . $params['compare'] : null;
-        $pattern = $params['pattern'] ? $params['pattern'] : null;
-        $filters = $params['filters'] ? $params['filters'] : null;
-        $key = $params['key'] ? 'get' . $params['key'] : null;
-        $value = $params['value'] ? 'get' . $params['value'] : 'SubPathname';
+        $compare = isset($params['compare']) ? 'get' . $params['compare'] : null;
+        $pattern = isset($params['pattern']) ? $params['pattern'] : null;
+        $filters = isset($params['filters']) ? $params['filters'] : null;
+        $recursive = isset($params['recursive']) ? $params['recursive'] : true;
+        $key = isset($params['key']) ? 'get' . $params['key'] : null;
+        $value = isset($params['value']) ? 'get' . $params['value'] : ($recursive ? 'getSubPathname' : 'getFilename');
 
-        $directory = new \RecursiveDirectoryIterator($realPath,
-            \RecursiveDirectoryIterator::SKIP_DOTS + \FilesystemIterator::UNIX_PATHS + \FilesystemIterator::CURRENT_AS_SELF);
-        $iterator = new \RecursiveIteratorIterator($directory, \RecursiveIteratorIterator::SELF_FIRST);
+        if ($recursive) {
+            $directory = new \RecursiveDirectoryIterator($path,
+                \RecursiveDirectoryIterator::SKIP_DOTS + \FilesystemIterator::UNIX_PATHS + \FilesystemIterator::CURRENT_AS_SELF);
+            $iterator = new \RecursiveIteratorIterator($directory, \RecursiveIteratorIterator::SELF_FIRST);
+        } else {
+            $iterator = new \FilesystemIterator($path);
+        }
 
         $results = array();
 
@@ -72,12 +94,22 @@ abstract class Folder
                     $fileKey = preg_replace($filters['key'], '', $fileKey);
                 }
                 if (isset($filters['value'])) {
-                    $filePath = preg_replace($filters['value'], '', $filePath);
+                    $filter = $filters['value'];
+                    if (is_callable($filter)) {
+                        $filePath = call_user_func($filter, $file);
+                    } else {
+                        $filePath = preg_replace($filter, '', $filePath);
+                    }
                 }
             }
 
-            $results[$fileKey] = $filePath;
+            if ($fileKey !== null) {
+                $results[$fileKey] = $filePath;
+            } else {
+                $results[] = $filePath;
+            }
         }
+
         return $results;
     }
 

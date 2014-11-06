@@ -18,7 +18,7 @@ class StreamsServiceProvider implements ServiceProviderInterface
             return new UniformResourceLocator(GANTRY5_ROOT);
         };
         $gantry['streams'] = function($c) use ($sp) {
-            $schemes = (array) $c['config']->get('streams.schemes');
+            $schemes = (array) $c['setup']->get('streams');
 
             $streams = new Streams($c['locator']);
             $streams->add($schemes);
