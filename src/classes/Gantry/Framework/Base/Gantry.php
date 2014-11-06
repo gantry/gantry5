@@ -1,8 +1,10 @@
 <?php
 namespace Gantry\Framework\Base;
 
+use Gantry\Component\Layout\LayoutReader;
 use RocketTheme\Toolbox\DI\Container;
 use Gantry\Component\Filesystem\StreamsServiceProvider;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Gantry extends Container
 {

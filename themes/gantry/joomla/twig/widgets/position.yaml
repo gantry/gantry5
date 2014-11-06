@@ -1,0 +1,10 @@
+name: Module Positions
+description: Joomla module positions are needed to display Joomla modules in the page.
+
+form:
+  fields:
+    enabled:
+      type: checkbox
+      label: Enabled
+      description: Globally enable the widget.
+      default: true

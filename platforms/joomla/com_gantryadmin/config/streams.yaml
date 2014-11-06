@@ -5,10 +5,7 @@ schemes:
       '':
         - administrator/components/com_gantryadmin
         - administrator/components/com_gantryadmin/common
-        - templates/gantry
 
-      'assets':
+      'assets/':
         - administrator/components/com_gantryadmin
         - administrator/components/com_gantryadmin/common
-        - templates/gantry
-        - templates/gantry/common

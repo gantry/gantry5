@@ -64,9 +64,9 @@ function gantry_layout_manager() {
     $gantry['routes'] = [
         'overview' => '',
         'settings' => '&view=settings',
-        'page_setup' => '&view=page_setup',
-        'page_setup_edit' => '&view=page_setup_edit',
-        'page_setup_new' => '&view=page_setup_new',
+        'pages' => '&view=pages_index',
+        'pages/edit' => '&view=pages_edit',
+        'pages/create' => '&view=pages_create',
         'assignments' => '&view=assignments',
         'updates' => '&view=updates',
     ];
@@ -75,7 +75,7 @@ function gantry_layout_manager() {
 
     // Render the page.
     try {
-        $output = $theme->render( "gantry/{$view}.html.twig" );
+        $output = $theme->render( "{$view}.html.twig" );
     } catch (Exception $e) {
         wp_die($e->getMessage());
     }

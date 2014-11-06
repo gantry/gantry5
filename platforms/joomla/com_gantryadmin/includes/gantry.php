@@ -8,25 +8,26 @@ try
     // Attempt to locate Gantry Framework if it hasn't already been loaded.
     if (!class_exists('Gantry'))
     {
-        $paths = array(
-            __DIR__ . '/../src/bootstrap.php',          // Look if Gantry has been included to the template.
-//            JPATH_THEMES . '/gantry/src/bootstrap.php'  // Finally look from the default gantry template.
+        $gantryPaths = array(
+            GANTRYADMIN_PATH . '/src/bootstrap.php',          // Look if Gantry has been included to the admin.
         );
 
-        foreach ($paths as $path)
+        foreach ($gantryPaths as $gantryPath)
         {
-            if ($path && is_file($path))
+            if ($gantryPath && is_file($gantryPath))
             {
-                $bootstrap = $path;
+                $gantryBootstrap = $gantryPath;
             }
         }
 
-        if (!$bootstrap)
+        if (!isset($gantryBootstrap))
         {
             throw new LogicException('Gantry Framework not found!');
         }
 
-        require_once $bootstrap;
+        require_once $gantryBootstrap;
+
+        unset($gantryPaths, $gantryPath, $gantryBootstrap);
     }
 
     // Get Gantry instance and return it.
@@ -42,5 +43,5 @@ catch (Exception $e)
     }
 
     // In frontend we want to prevent template from loading.
-    JError::raiseError(500, 'Failed to load template: ' . $e->getMessage());
+    JError::raiseError(500, 'Failed to load admin: ' . $e->getMessage());
 }

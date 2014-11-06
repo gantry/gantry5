@@ -1,0 +1,22 @@
+name: Popup Widget
+description: Create a popup button.
+
+form:
+  fields:
+    enabled:
+      type: checkbox
+      label: Enabled
+      description: Globally enable popup buttons.
+      default: true
+
+    text:
+      type: text
+      label: Text
+      description: Button Text
+      default: Popup Widget
+
+    css.classname:
+      type: text
+      label: Class
+      description: CSS class name for the widget.
+      default: popup

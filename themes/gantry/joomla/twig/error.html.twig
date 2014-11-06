@@ -1,0 +1,6 @@
+{% extends "@nucleus/page.html.twig" %}
+
+{% block content %}
+    <jdoc:include type="message" />
+    {{ errorcode|default(500) }} {{ error|default('Unknown Error') }}
+{% endblock %}

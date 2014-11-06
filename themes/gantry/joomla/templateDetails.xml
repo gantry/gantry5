@@ -2,12 +2,13 @@
 <!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "http://www.joomla.org/xml/dtd/2.5/template-install.dtd">
 <extension version="3.3" type="template" client="site">
 	<name>gantry</name>
-	<version></version>
-	<creationDate></creationDate>
-	<author></author>
-	<authorEmail></authorEmail>
-	<copyright></copyright>
-	<description></description>
+	<version>1.0</version>
+	<creationDate>October 21, 2014</creationDate>
+	<author>RocketTheme, LLC</author>
+	<authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+	<copyright>(C) 2005 - 2014 RocketTheme, LLC. All rights reserved.</copyright>
+	<description>Gantry Base Template</description>
 	<files>
 	</files>
 	<positions>

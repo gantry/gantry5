@@ -17,6 +17,10 @@ class LayoutReader
      * @return array
      */
     public static function read($file) {
+        if (!$file) {
+            return [];
+        }
+
         $file = YamlFile::instance($file);
         $content = $file->content();
 

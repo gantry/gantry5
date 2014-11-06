@@ -1,0 +1,8 @@
+header:
+  - [widget-logo 20, widget-menu 80]
+
+body:
+  - mainbody
+
+footer:
+  - [spacer 25, widget-copyright 50, widget-branding 25]

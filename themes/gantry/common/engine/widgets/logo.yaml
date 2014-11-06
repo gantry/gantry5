@@ -1,0 +1,20 @@
+name: Logo Widget
+description: Display a logo.
+
+form:
+  fields:
+    enabled:
+      type: checkbox
+      label: Enabled
+      description: Globally enable logo widgets.
+      default: true
+
+    text:
+      type: text
+      label: Text
+      description: Logo text
+
+    image:
+      type: text
+      label: Image
+      description: Relative path to image.
