@@ -1,9 +1,9 @@
 <?php
-namespace Gantry\Admin\Controller;
+namespace Gantry\Admin\Controller\Html;
 
-use Gantry\Component\Controller\BaseController;
+use Gantry\Component\Controller\HtmlController;
 
-class Updates extends BaseController
+class Updates extends HtmlController
 {
     public function index()
     {

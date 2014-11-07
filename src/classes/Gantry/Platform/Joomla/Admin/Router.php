@@ -49,10 +49,11 @@ class Router implements RouterInterface
         $input = \JFactory::getApplication()->input;
         $view = $input->getCmd('view', 'themes');
         $layout = $input->getCmd('layout', 'index');
+        $format = $input->getCmd('format', 'html');
 
         // Render the page.
         try {
-            $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($view);
+            $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . ucfirst($view);
 
             if (class_exists($class) && method_exists($class, $layout)) {
                 $controller = new $class($this->container);

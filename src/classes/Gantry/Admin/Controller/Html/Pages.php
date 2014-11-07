@@ -1,9 +1,9 @@
 <?php
-namespace Gantry\Admin\Controller;
+namespace Gantry\Admin\Controller\Html;
 
-use Gantry\Component\Controller\BaseController;
+use Gantry\Component\Controller\HtmlController;
 
-class Pages extends BaseController
+class Pages extends HtmlController
 {
     public function index()
     {
