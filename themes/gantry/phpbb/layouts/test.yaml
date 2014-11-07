@@ -1,5 +1,5 @@
 header:
-  - [widget-logo 20, widget-menu 80]
+  - [particle-logo 20, particle-menu 80]
   - [phpbb-header, phpbb-search]
 
 1:
@@ -18,4 +18,4 @@ header:
     - phpbb-login
 
 footer:
-  - [spacer 25, widget-copyright 50, widget-branding 25]
+  - [spacer 25, particle-copyright 50, particle-branding 25]

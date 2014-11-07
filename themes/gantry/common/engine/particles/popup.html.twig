@@ -1,0 +1,9 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+<div class="rt-block rt-popupmodule-button {{ particle.css.classname }} particle">
+	<a class="buttontext button" data-rokbox href="#" data-rokbox-element="#rt-popupmodule">
+		<span class="desc">{{ particle.text }}</span>
+	</a>
+</div>
+{% endblock %}

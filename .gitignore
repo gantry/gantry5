@@ -1,3 +1,8 @@
+# OS Generated
+.DS_Store*
+ehthumbs.db
+Thumbs.db
+
 # Composer
 composer.lock
 vendor/**
@@ -15,6 +20,10 @@ themes/*/*/common
 themes/*/*/src
 themes/*/*/vendor
 themes/*/*/cache
+themes/*/magento/design/default/gantry/common
+themes/*/magento/design/default/gantry/src
+themes/*/magento/design/default/gantry/vendor
+themes/*/magento/skin/default/common
 
 # Compiled
 .sass-cache/*
