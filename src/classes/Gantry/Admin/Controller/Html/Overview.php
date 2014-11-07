@@ -7,6 +7,6 @@ class Overview extends HtmlController
 {
     public function index()
     {
-        echo $this->container['admin.theme']->render('@gantry-admin/overview.html.twig');
+        return $this->container['admin.theme']->render('@gantry-admin/overview.html.twig');
     }
 }

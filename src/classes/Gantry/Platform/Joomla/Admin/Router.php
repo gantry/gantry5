@@ -1,8 +1,9 @@
 <?php
 namespace Gantry\Admin;
 
-use Gantry\Component\Response\Json;
+use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Router\RouterInterface;
+use Gantry\Framework\Exception;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -48,25 +49,26 @@ class Router implements RouterInterface
         ];
 
         $input = \JFactory::getApplication()->input;
+        $format = $input->getCmd('format', 'html');
         $view = $input->getCmd('view', 'themes');
         $layout = $input->getCmd('layout', 'index');
-        $format = $input->getCmd('format', 'html');
+
+        $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . ucfirst($view);
 
         // Render the page.
         $contents = '';
         try {
-            $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . ucfirst($view);
-
-            if (class_exists($class) && method_exists($class, $layout)) {
-                $controller = new $class($this->container);
-                $contents = (string) $controller->{$layout}();
-            } else {
+            if (!class_exists($class) || !method_exists($class, $layout)) {
                 throw new \RuntimeException('Not Found', 404);
             }
 
+            $controller = new $class($this->container);
+            $contents = $controller->{$layout}();
+
         } catch (\Exception $e) {
             if ($format == 'json') {
-                $contents = new Json($e);
+                $contents = new JsonResponse($e);
+
             } else {
                 if (class_exists('\Tracy\Debugger') && \Tracy\Debugger::isEnabled() && !\Tracy\Debugger::$productionMode )  {
                     // We have Tracy enabled; will display and/or log error with it.
@@ -75,6 +77,16 @@ class Router implements RouterInterface
 
                 \JError::raiseError($e->getCode() ?: 500, $e->getMessage());
             }
+        }
+
+        if ($contents instanceof JsonResponse) {
+            // Tell the browser that our response is in JSON.
+            header('Content-Type: application/json', true, $contents->getResponseCode());
+
+            echo $contents;
+
+            // It's much faster and safer to exit now than let Joomla to send the response.
+            \JFactory::getApplication()->close();
         }
 
         echo $contents;

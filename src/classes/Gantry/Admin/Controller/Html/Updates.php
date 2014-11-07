@@ -7,6 +7,6 @@ class Updates extends HtmlController
 {
     public function index()
     {
-        echo $this->container['admin.theme']->render('@gantry-admin/updates.html.twig');
+        return $this->container['admin.theme']->render('@gantry-admin/updates.html.twig');
     }
 }

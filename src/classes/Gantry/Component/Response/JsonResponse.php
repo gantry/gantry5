@@ -1,17 +1,29 @@
 <?php
 namespace Gantry\Component\Response;
 
-class Json
+class JsonResponse
 {
     public $code = 200;
     public $success = true;
     public $data = null;
     public $messages = null;
 
+    protected $responseCodes = [
+        200 => '200 OK',
+        400 => '400 Bad Request',
+        401 => '401 Unauthorized',
+        403 => '403 Forbidden',
+        404 => '404 Not Found',
+        410 => '410 Gone',
+        500 => '500 Internal Server Error',
+        501 => '501 Not Implemented',
+        503 => '503 Service Temporarily Unavailable'
+    ];
+
     public function __construct($response = null, $success = true, array $messages = [])
     {
         // If messages exist add them to the output.
-        $this->messages = $messages ?: null;
+        $this->messages = $messages;
 
         // Check if we are dealing with an error.
         if ($response instanceof \Exception)
@@ -63,6 +75,20 @@ class Json
                 $this->messages['php'][] = $output;
             }
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function getResponseCode() {
+        return isset($this->responseCodes[$this->code]) ? (int) $this->code : 500;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResponseStatus() {
+        return $this->responseCodes[$this->getResponseCode()];
     }
 
     /**

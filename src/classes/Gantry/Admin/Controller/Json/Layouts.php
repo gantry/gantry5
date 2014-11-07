@@ -2,12 +2,12 @@
 namespace Gantry\Admin\Controller\Json;
 
 use Gantry\Component\Controller\JsonController;
-use Gantry\Component\Response\Json;
+use Gantry\Component\Response\JsonResponse;
 
 class Layouts extends JsonController
 {
     public function index()
     {
-        echo new Json(['foo' => 1]);
+        return new JsonResponse(['foo' => 1]);
     }
 }
