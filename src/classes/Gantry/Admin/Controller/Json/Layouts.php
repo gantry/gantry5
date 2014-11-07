@@ -10,8 +10,4 @@ class Layouts extends JsonController
     {
         echo new Json(['foo' => 1]);
     }
-
-    public function display($id)
-    {
-    }
 }

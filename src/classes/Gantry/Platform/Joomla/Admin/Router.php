@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Admin;
 
+use Gantry\Component\Response\Json;
 use Gantry\Component\Router\RouterInterface;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -52,23 +53,30 @@ class Router implements RouterInterface
         $format = $input->getCmd('format', 'html');
 
         // Render the page.
+        $contents = '';
         try {
             $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . ucfirst($view);
 
             if (class_exists($class) && method_exists($class, $layout)) {
                 $controller = new $class($this->container);
-                $controller->{$layout}();
+                $contents = (string) $controller->{$layout}();
             } else {
                 throw new \RuntimeException('Not Found', 404);
             }
 
         } catch (\Exception $e) {
-            if (class_exists('\Tracy\Debugger') && \Tracy\Debugger::isEnabled() && !\Tracy\Debugger::$productionMode ) {
-                // We have Tracy enabled; will display and/or log error with it.
-                throw $e;
-            }
+            if ($format == 'json') {
+                $contents = new Json($e);
+            } else {
+                if (class_exists('\Tracy\Debugger') && \Tracy\Debugger::isEnabled() && !\Tracy\Debugger::$productionMode )  {
+                    // We have Tracy enabled; will display and/or log error with it.
+                    throw $e;
+                }
 
-            \JError::raiseError(500, $e->getMessage());
+                \JError::raiseError($e->getCode() ?: 500, $e->getMessage());
+            }
         }
+
+        echo $contents;
     }
 }
