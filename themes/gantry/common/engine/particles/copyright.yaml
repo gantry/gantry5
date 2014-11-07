@@ -1,4 +1,4 @@
-name: Copyright Widget
+name: Copyright
 description: Display copyrights.
 
 form:
@@ -6,7 +6,7 @@ form:
     enabled:
       type: checkbox
       label: Enabled
-      description: Globally enable the widget.
+      description: Globally enable the particle.
       default: true
 
     date.start:

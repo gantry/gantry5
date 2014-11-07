@@ -1,4 +1,4 @@
-name: Popup Widget
+name: Popup
 description: Create a popup button.
 
 form:
@@ -13,10 +13,10 @@ form:
       type: text
       label: Text
       description: Button Text
-      default: Popup Widget
+      default: Popup Particle
 
     css.classname:
       type: text
       label: Class
-      description: CSS class name for the widget.
+      description: CSS class name for the particle.
       default: popup

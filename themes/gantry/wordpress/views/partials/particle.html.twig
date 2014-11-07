@@ -12,8 +12,8 @@
 {% endset %}
 {% do parseHtmlHeader(footerContent, true) %}
 
-{% if widget.title %}
-<h4>{{ widget.title|apply_filters('widget_title') }}</h4>
+{% if particle.title %}
+<h4>{{ particle.title|apply_filters('widget_title') }}</h4>
 {% endif %}
-{% block widget %}
+{% block particle %}
 {% endblock %}

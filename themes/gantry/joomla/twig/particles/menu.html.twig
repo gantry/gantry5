@@ -1,7 +1,7 @@
-{% extends '@nucleus/partials/widget.html.twig' %}
+{% extends '@nucleus/partials/particle.html.twig' %}
 
-{% block widget %}
-<nav class="{{ widget.css.class }}" role="navigation">
+{% block particle %}
+<nav class="{{ particle.css.class }}" role="navigation">
     <ul class="toplevel">
         {% for item in menu.items %}
             <li id="menu-item-{{item.ID}}" class="menu-item menu-item-type-{{item.type}} menu-item-object-{{item.object}} menu-item-{{item.ID}}">

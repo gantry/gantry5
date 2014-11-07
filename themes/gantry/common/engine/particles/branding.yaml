@@ -6,11 +6,11 @@ form:
     enabled:
       type: checkbox
       label: Enabled
-      description: Globally enable to the widget.
+      description: Globally enable to the particles.
       default: true
 
     css.classname:
       type: text
       label: Class
-      description: CSS class name for the widget.
+      description: CSS class name for the particle.
       default: branding

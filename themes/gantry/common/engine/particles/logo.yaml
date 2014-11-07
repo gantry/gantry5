@@ -1,4 +1,4 @@
-name: Logo Widget
+name: Logo
 description: Display a logo.
 
 form:
@@ -6,7 +6,7 @@ form:
     enabled:
       type: checkbox
       label: Enabled
-      description: Globally enable logo widgets.
+      description: Globally enable logo particles.
       default: true
 
     text:

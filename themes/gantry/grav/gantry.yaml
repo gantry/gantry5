@@ -5,7 +5,7 @@ page:
   body:
     class: gantry
 
-widgets:
+particles:
   copyright:
     enabled: false
     start: 2007
