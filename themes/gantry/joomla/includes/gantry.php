@@ -36,6 +36,8 @@ try
     $gantry['theme.path'] = dirname(__DIR__);
     $gantry['theme.name'] = isset($this->template) ? $this->template : basename($gantry['theme.path']);
 
+    include_once(__DIR__ . '/template.php');
+
     return $gantry;
 }
 catch (Exception $e)

@@ -12,17 +12,70 @@ class plgSystemGantryadmin extends JPlugin
     {
         $this->app = JFactory::getApplication();
 
-        // Only initialize plugin in admin.
-        if ($this->app->isAdmin())
-        {
-            parent::__construct($subject, $config);
-        }
-    }
+        parent::__construct($subject, $config);
+}
 
     /**
      * Re-route Gantry templates to Gantry Administration component.
      */
     public function onAfterRoute()
+    {
+        if ($this->app->isSite())
+        {
+            $this->onAfterRouteSite();
+        }
+        elseif ($this->app->isAdmin())
+        {
+            $this->onAfterRouteAdmin();
+        }
+    }
+
+    /**
+     * Convert links in com_templates to point into Gantry Administrator component.
+     */
+    public function onAfterRender()
+    {
+        if (!$this->app->isAdmin()) {
+            return;
+        }
+
+        $document = JFactory::getDocument();
+        $type   = $document->getType();
+
+        $option = $this->app->input->getString('option');
+        $view   = $this->app->input->getString('view', 'styles');
+        $task   = $this->app->input->getString('task');
+
+        if ($option == 'com_templates' && $view == 'styles' && !$task && $type == 'html')
+        {
+            $this->styles = $this->getStyles();
+
+            $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', [$this, 'appendHtml'], $this->app->getBody());
+
+            $this->app->setBody($body);
+        }
+    }
+
+    /**
+     * Load Gantry framework before dispatching to the component.
+     */
+    private function onAfterRouteSite()
+    {
+        $template = $this->app->getTemplate(true);
+        $path = JPATH_THEMES . '/' . $template->template;
+
+        if (!file_exists("{$path}/includes/gantry.php"))
+        {
+            return;
+        }
+
+        include "{$path}/includes/gantry.php";
+    }
+
+    /**
+     * Re-route Gantry templates to Gantry Administration component.
+     */
+    private function onAfterRouteAdmin()
     {
         $input = $this->app->input;
 
@@ -58,28 +111,6 @@ class plgSystemGantryadmin extends JPlugin
                         break;
                 }
             }
-        }
-    }
-
-    /**
-     * Convert links in com_templates to point into Gantry Administrator component.
-     */
-    public function onAfterRender()
-    {
-        $document = JFactory::getDocument();
-        $type   = $document->getType();
-
-        $option = $this->app->input->getString('option');
-        $view   = $this->app->input->getString('view', 'styles');
-        $task   = $this->app->input->getString('task');
-
-        if ($option == 'com_templates' && $view == 'styles' && !$task && $type == 'html')
-        {
-            $this->styles = $this->getStyles();
-
-            $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', [$this, 'appendHtml'], $this->app->getBody());
-
-            $this->app->setBody($body);
         }
     }
 
