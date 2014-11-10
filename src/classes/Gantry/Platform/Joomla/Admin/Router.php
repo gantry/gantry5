@@ -35,20 +35,27 @@ class Router implements RouterInterface
         // Boot the service.
         $this->container['admin.theme'];
         $this->container['base_url'] = \JUri::base(false) . 'index.php?option=com_gantryadmin';
-        $this->container['routes'] = [
-            'themes' => '',
-            'overview' => '&view=overview',
-            'settings' => '&view=settings',
-            'pages' => '&view=pages',
-            'pages/edit' => '&view=pages&layout=edit',
-            'pages/create' => '&view=pages&layout=create',
-            'assignments' => '&view=assignments',
-            'updates' => '&view=updates',
-        ];
 
-        $input = \JFactory::getApplication()->input;
+        $app = \JFactory::getApplication();
+        $input = $app->input;
         $view = $input->getCmd('view', 'themes');
         $layout = $input->getCmd('layout', 'index');
+        $style = $input->getInt('style', 0);
+        $params = [
+            'style' => $style,
+            'id' => $input->getInt('id')
+        ];
+
+        $this->container['routes'] = [
+            'themes' => '',
+            'overview' => '&view=overview&style=' . $style,
+            'settings' => '&view=settings&style=' . $style,
+            'pages' => '&view=pages&style=' . $style,
+            'pages/edit' => '&view=pages&layout=edit&style=' . $style,
+            'pages/create' => '&view=pages&layout=create&style=' . $style,
+            'assignments' => '&view=assignments&style=' . $style,
+            'updates' => '&view=updates&style=' . $style,
+        ];
 
         // Render the page.
         try {
@@ -56,7 +63,7 @@ class Router implements RouterInterface
 
             if (class_exists($class) && method_exists($class, $layout)) {
                 $controller = new $class($this->container);
-                $controller->{$layout}();
+                $controller->{$layout}($params);
             } else {
                 throw new \RuntimeException('Not Found', 404);
             }

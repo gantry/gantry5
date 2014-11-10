@@ -16,37 +16,37 @@ abstract class BaseController implements RestfulControllerInterface
         $this->container = $container;
     }
 
-    public function index()
+    public function index(array $params)
     {
         throw new RuntimeException('Not Found', 404);
     }
 
-    public function create()
+    public function create(array $params)
     {
         throw new RuntimeException('Method Not Allowed', 405);
     }
 
-    public function store()
+    public function store(array $params)
     {
         throw new RuntimeException('Method Not Allowed', 405);
     }
 
-    public function display($id)
+    public function display(array $params)
     {
         throw new RuntimeException('Not Found', 404);
     }
 
-    public function edit($id)
+    public function edit(array $params)
     {
         throw new RuntimeException('Method Not Allowed', 405);
     }
 
-    public function update($id)
+    public function update(array $params)
     {
         throw new RuntimeException('Method Not Allowed', 405);
     }
 
-    public function destroy($id)
+    public function destroy(array $params)
     {
         throw new RuntimeException('Method Not Allowed', 405);
     }

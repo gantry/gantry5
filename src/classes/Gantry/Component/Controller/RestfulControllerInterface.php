@@ -3,11 +3,11 @@ namespace Gantry\Component\Controller;
 
 interface RestfulControllerInterface
 {
-    public function index();
-    public function create();
-    public function store();
-    public function display($id);
-    public function edit($id);
-    public function update($id);
-    public function destroy($id);
+    public function index(array $params);
+    public function create(array $params);
+    public function store(array $params);
+    public function display(array $params);
+    public function edit(array $params);
+    public function update(array $params);
+    public function destroy(array $params);
 }

@@ -24,22 +24,38 @@ class plgSystemGantryadmin extends JPlugin
      */
     public function onAfterRoute()
     {
-        $option = $this->app->input->getCmd('option');
-        $task   = $this->app->input->getCmd('task');
+        $input = $this->app->input;
 
-        if ($option == 'com_templates' && $task)
+        $option = $input->getCmd('option');
+        $task   = $input->getCmd('task');
+
+        if ($option == 'com_templates' && $task && strpos($task, 'style') === 0)
         {
-            $id = $this->app->input->getInt('id');
-            if (!$id) {
-                $pks = $this->app->input->post->get('cid', array(), 'array');
-                $id = array_shift($pks);
-            }
+            // Get all ids.
+            $cid = $input->post->get('cid', (array) $input->getInt('id'), 'array');
 
-            if ($id) {
+            if ($cid)
+            {
                 $styles = $this->getStyles();
+                $selected = array_intersect(array_keys($styles), $cid);
 
-                if (isset($styles[$id])) {
-                    $this->setRequestOption('option', 'com_gantryadmin');
+                // If no Gantry templates were selected, just let com_templates deal with the request.
+                if (!$selected)
+                {
+                    return;
+                }
+
+                // Special handling for tasks coming from com_template.
+                switch ($task) {
+                    case 'style.edit':
+                        $id = (int) array_shift($cid);
+                        if (isset($styles[$id])) {
+                            $this->app->redirect('index.php?option=com_gantryadmin&view=overview&style=' . $id);
+                        }
+                        break;
+                    default:
+                        // $this->setRequestOption('option', 'com_gantryadmin');
+                        break;
                 }
             }
         }
@@ -93,11 +109,11 @@ class plgSystemGantryadmin extends JPlugin
         if (strpos($matches[2], 'task=style.edit'))
         {
             $uri = new JUri($matches[2]);
-            $id = $uri->getVar('id');
+            $id = (int) $uri->getVar('id');
 
             if ($id && $uri->getVar('option') == 'com_templates' && isset($this->styles[$id]))
             {
-                $uri->setVar('option', 'com_gantryadmin');
+//                $uri->setVar('option', 'com_gantryadmin');
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
 
                 if ($this->styles[$id])
