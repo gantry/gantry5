@@ -20,7 +20,7 @@ class plgSystemGantryadmin extends JPlugin
     }
 
     /**
-     * Re-route templates to Gantry if needed.
+     * Re-route Gantry templates to Gantry Administration component.
      */
     public function onAfterRoute()
     {
@@ -29,41 +29,41 @@ class plgSystemGantryadmin extends JPlugin
 
         if ($option == 'com_templates' && $task)
         {
-            // Redirect styles.duplicate to template.duplicate to handle gantry template styles.
-            if ($task == 'styles.duplicate')
-            {
-                $this->setRequestOption('option', 'com_gantry');
-                $this->setRequestOption('task', 'template.duplicate');
+            $id = $this->app->input->getInt('id');
+            if (!$id) {
+                $pks = $this->app->input->post->get('cid', array(), 'array');
+                $id = array_shift($pks);
             }
 
-            // Redirect styles.delete to not let a gantry master template style be deleted.
-            if ($task == 'styles.delete')
-            {
-                $this->setRequestOption('option', 'com_gantry');
-                $this->setRequestOption('task', 'template.delete');
-            }
-
-            // Redirect styles.edit if the template style is a gantry one.
-            if ($task == 'style.edit')
-            {
-                $id = $this->app->input->getInt('id', 0);
-
-                if (!$id) {
-                    // Initialise variables.
-                    $pks = $this->app->input->post->get('cid', array(), 'array');
-                    $id = array_shift($pks);
-                }
-
+            if ($id) {
                 $styles = $this->getStyles();
 
-                // Redirect Gantry templates.
-                if (isset($styles[$id]))
-                {
-                    $this->setRequestOption('option', 'com_gantry');
-                    $this->setRequestOption('task', 'template.edit');
-                    $this->setRequestOption('id', $id);
+                if (isset($styles[$id])) {
+                    $this->setRequestOption('option', 'com_gantryadmin');
                 }
             }
+        }
+    }
+
+    /**
+     * Convert links in com_templates to point into Gantry Administrator component.
+     */
+    public function onAfterRender()
+    {
+        $document = JFactory::getDocument();
+        $type   = $document->getType();
+
+        $option = $this->app->input->getString('option');
+        $view   = $this->app->input->getString('view', 'styles');
+        $task   = $this->app->input->getString('task');
+
+        if ($option == 'com_templates' && $view == 'styles' && !$task && $type == 'html')
+        {
+            $this->styles = $this->getStyles();
+
+            $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', [$this, 'appendHtml'], $this->app->getBody());
+
+            $this->app->setBody($body);
         }
     }
 
@@ -75,37 +75,18 @@ class plgSystemGantryadmin extends JPlugin
     {
         $this->app->input->set($key, $value);
         $this->app->input->get->set($key, $value);
-        $this->app->input->post->set($key, $value);
 
         if (class_exists('JRequest'))
         {
             JRequest::setVar($key, $value, 'GET');
-            JRequest::setVar($key, $value, 'POST');
         }
     }
 
     /**
-     *
+     * @param array $matches
+     * @return string
      */
-    public function onAfterRender()
-    {
-        $document = JFactory::getDocument();
-
-        $option = $this->app->input->getString('option');
-        $view   = $this->app->input->getString('view', 'styles');
-        $task   = $this->app->input->getString('task');
-
-        if ($option == 'com_templates' && $view == 'styles' && !$task && $document->getType() == 'html')
-        {
-            $this->styles = $this->getStyles();
-
-            $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', [$this, 'appendHtml'], $this->app->getBody());
-
-            $this->app->setBody($body);
-        }
-    }
-
-    public function appendHtml($matches)
+    private function appendHtml(array $matches)
     {
         $html = $matches[0];
 
