@@ -17,10 +17,12 @@ schemes:
         - designs://gantry/default/gantry/common
 
       css/:
-        - skins://gantry/default/css-compiled
         - skins://gantry/default/css
-        - skins://gantry/default/common/css-compiled
         - skins://gantry/default/common/css
+
+      css-compiled/:
+        - skins://gantry/default/css-compiled
+        - skins://gantry/default/common/css-compiled
 
       fonts/:
         - skins://gantry/default/fonts
