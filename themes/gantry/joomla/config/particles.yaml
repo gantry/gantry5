@@ -22,3 +22,6 @@ logo:
 totop:
   css:
     classname: 'widget_gantry_totop'
+
+position:
+  header: true
