@@ -32,12 +32,12 @@ try
     }
 
     // Get Gantry instance and return it.
+    $app = JFactory::getApplication();
     $gantry = Gantry::instance();
 
     // Initialize the template if not done already.
     if (!isset($gantry['theme.id']))
     {
-        $app = JFactory::getApplication();
         if ($app->isSite())
         {
             $template = $app->getTemplate(true);
@@ -58,8 +58,6 @@ try
     {
         include_once(__DIR__ . '/template.php');
     }
-
-    include_once(__DIR__ . '/template.php');
 
     return $gantry;
 }
