@@ -11,6 +11,9 @@ class Gantry extends Base\Gantry
         $container = parent::load();
 
         $container['config'] = function ($c) {
+            if (!isset($c['theme.path'])) {
+                return null;
+            }
             return Config::instance(JPATH_CACHE . '/gantry5/config.php', $c['theme.path']);
         };
 
