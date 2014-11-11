@@ -1,9 +1,9 @@
 <?php
 namespace Gantry\Admin;
 
+use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Router\RouterInterface;
 use RocketTheme\Toolbox\DI\Container;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Router implements RouterInterface
 {
@@ -19,7 +19,33 @@ class Router implements RouterInterface
 
     public function dispatch()
     {
-        $this->container['theme.path'] = JPATH_SITE . '/templates/gantry';
+        $app = \JFactory::getApplication();
+        $input = $app->input;
+        $format = $input->getCmd('format', 'html');
+        $view = $input->getCmd('view', 'themes');
+        $layout = $input->getCmd('layout', 'index');
+        $style = $input->getInt('style', 0);
+
+        $params = [
+            'id' => $input->getInt('id')
+        ];
+
+        // If style is set, resolve the template and load it.
+        if ($style) {
+            \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
+            $table = \JTable::getInstance('Style', 'TemplatesTable');
+            $table->load($style);
+
+            $this->container['theme.id'] = $table->id;
+            $this->container['theme.path'] = $path = JPATH_SITE . '/templates/' . $table->template;
+            $this->container['theme.name'] = $table->template;
+            $this->container['theme.title'] = $table->title;
+            $this->container['theme.params'] = (new \JRegistry($table->params))->toArray();
+
+            if (!file_exists($path . '/includes/gantry.php')) {
+                include $path . '/includes/gantry.php';
+            }
+        }
 
         // Define Gantry Admin services.
         $this->container['admin.config'] = function () {
@@ -36,16 +62,6 @@ class Router implements RouterInterface
         $this->container['admin.theme'];
         $this->container['base_url'] = \JUri::base(false) . 'index.php?option=com_gantryadmin';
 
-        $app = \JFactory::getApplication();
-        $input = $app->input;
-        $format = $input->getCmd('format', 'html');
-        $view = $input->getCmd('view', 'themes');
-        $layout = $input->getCmd('layout', 'index');
-        $style = $input->getInt('style', 0);
-        $params = [
-            'style' => $style,
-            'id' => $input->getInt('id')
-        ];
 
         $this->container['routes'] = [
             'themes' => '',
