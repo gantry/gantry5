@@ -1,5 +1,6 @@
 {% set html %}
-    {% include 'particles/position.html.twig' with { site: site, page: gantry.page, position: segment.attributes } only %}
+    {% include ['particles/position.html.twig',
+    '@nucleus/particles/position.html.twig'] with { site: site, page: gantry.page, position: segment.attributes } only %}
 {% endset %}
 
 {% if html|trim %}
