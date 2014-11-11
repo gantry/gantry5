@@ -1,6 +1,11 @@
 .panel.bg3, #tabs .activetab > a {
 	background-color: lighten($core-accent, 45%);
 }
+
+#showcase a {
+	color: $white;
+}
+
 .dropdown-contents {
 	background-color: $core-accent;
 	a {
@@ -8,9 +13,13 @@
 	}
 }
 
+.dropdown li.separator {
+	border-color: transparentize($white, 0.56);
+}
+
 .small-icon:before, .imageset:before {
 	font: normal normal normal 14px/1 FontAwesome;
-	padding-top: 4px;
+	padding-top: 5px;
 	text-align: center;
 	text-rendering:auto;
 	-webkit-font-smoothing:antialiased;
@@ -46,6 +55,6 @@
 .icon-search-unread:before			{ content: "\f15c"; }
 .icon-sendemail:before				{ content: "\f003";}
 .icon-subscribe:before				{ content: "\f0fe"; }
-.icon-team:before					{ content: "\f0c0"; }
+.icon-team:before					{ content: "\f1ab"; }
 .icon-ucp:before					{ content: "\f0f0"; }
 .icon-unsubscribe:before			{ content: "\f146";}

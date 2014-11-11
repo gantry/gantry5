@@ -1,0 +1,38 @@
+.nav-list > li.offset > a {
+	padding-left: 30px;
+	font-size: 12px;
+}
+
+.navbar .nav > li > a.btn {
+	padding: 4px 10px;
+	line-height: 18px;
+}
+
+.nav-tabs.nav-dark > .active > a,
+.nav-tabs.nav-dark > .active > a:hover {
+	border-bottom-color: transparent;
+}
+
+.tab-content {
+	overflow: visible;
+}
+
+.tabs-left .tab-content {
+	overflow: auto;
+}
+
+.nav-tabs > li > span {
+	display: block;
+	margin-right: 2px;
+	padding-right: 12px;
+	padding-left: 12px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	line-height: 18px;
+	border: 1px solid transparent;
+	border-radius: $core-border-radius $core-border-radius 0 0;
+}
+
+.dropdown-menu {
+	text-align: left;
+}

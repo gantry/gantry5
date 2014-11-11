@@ -23,7 +23,7 @@ a.button1, input.button1, input.button3, a.button2, input.button2 {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
-.dropdown-select:after {
+.dropdown-select:after, #quick-links a.dropdown-toggle:before {
   font: normal normal normal 14px/1 FontAwesome;
   text-align: center;
   text-rendering: auto;
@@ -67,17 +67,29 @@ a.button1, input.button1, input.button3, a.button2, input.button2 {
 ul.topiclist li.header {
   margin: 15px 0; }
 
+#nav-breadcrumbs {
+  display: none; }
+
+#nav-main .small-icon {
+  margin-right: 15px; }
+
 .panel.bg3, #tabs .activetab > a {
   background-color: #e6eff6; }
+
+#showcase a {
+  color: #fff; }
 
 .dropdown-contents {
   background-color: #4184B6; }
   .dropdown-contents a {
     color: #fff; }
 
+.dropdown li.separator {
+  border-color: rgba(255, 255, 255, 0.44); }
+
 .small-icon:before, .imageset:before {
   font: normal normal normal 14px/1 FontAwesome;
-  padding-top: 4px;
+  padding-top: 5px;
   text-align: center;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
@@ -167,7 +179,7 @@ ul.topiclist li.header {
   content: "\f0fe"; }
 
 .icon-team:before {
-  content: "\f0c0"; }
+  content: "\f1ab"; }
 
 .icon-ucp:before {
   content: "\f0f0"; }

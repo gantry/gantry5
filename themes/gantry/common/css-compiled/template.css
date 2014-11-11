@@ -94,7 +94,7 @@ h1, h2, h3, h4, h5, h6 {
 h6 {
   text-transform: uppercase; }
 
-strong, h1, h2, h3, h4, h5, h6, label, th {
+strong, h1, h2, h3, h4, h5, h6, th {
   font-family: "walkwaybold", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
 
 blockquote {

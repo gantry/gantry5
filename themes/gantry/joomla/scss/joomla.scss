@@ -20,6 +20,13 @@
 
 // JOOMLA COMPONENTS
 @import "joomla/core/typography";
+@import "joomla/core/buttons";
+@import "joomla/core/forms";
+@import "joomla/core/tabs";
+@import "joomla/core/utilities";
 
 // JOOMLA TEMPLATE SPECIFIC
 @import "joomla/template/typography";
+@import "joomla/template/forms";
+@import "joomla/template/tabs";
+@import "joomla/template/utilities";
