@@ -11,9 +11,3 @@ schemes:
       '':
         - themes://gantry
         - themes://gantry/common
-
-      css/:
-        - themes://gantry/css-compiled
-        - themes://gantry/css
-        - themes://gantry/common/css-compiled
-        - themes://gantry/common/css

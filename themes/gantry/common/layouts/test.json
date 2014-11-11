@@ -23,7 +23,7 @@
                         "children": [
                             {
                                 "id": "fb585b76-4db5-4611-a96c-08c09bd8d90f",
-                                "type": "widget",
+                                "type": "particle",
                                 "attributes": {
                                     "name": "logo"
                                 },
@@ -41,7 +41,7 @@
                         "children": [
                             {
                                 "id": "6e85d292-e08b-448c-a46a-f5b2693db83e",
-                                "type": "widget",
+                                "type": "particle",
                                 "attributes": {
                                     "name": "menu"
                                 },
@@ -89,7 +89,7 @@
                                         "children": [
                                             {
                                                 "id": "8462e204-f196-498f-a71b-c1c8799e2e80",
-                                                "type": "widget",
+                                                "type": "particle",
                                                 "attributes": {
                                                     "name": "popup"
                                                 },
@@ -265,7 +265,7 @@
                                         "children": [
                                             {
                                                 "id": "ec9e89e5-ffff-4e3e-a853-fe470247a875",
-                                                "type": "widget",
+                                                "type": "particle",
                                                 "attributes": {
                                                     "name": "totop"
                                                 },
@@ -337,7 +337,7 @@
                                         "children": [
                                             {
                                                 "id": "fb585b76-ffff-4611-a96c-08c09bd8d90f",
-                                                "type": "widget",
+                                                "type": "particle",
                                                 "attributes": {
                                                     "name": "login"
                                                 },
@@ -396,7 +396,7 @@
                         "children": [
                             {
                                 "id": "0f7653c0-909b-4430-afdd-75bc5df8105a",
-                                "type": "widget",
+                                "type": "particle",
                                 "attributes": {
                                     "name": "copyright"
                                 },
@@ -413,7 +413,7 @@
                         "children": [
                             {
                                 "id": "491e8d6c-c762-401f-9ebf-018d83d4a0fe",
-                                "type": "widget",
+                                "type": "particle",
                                 "attributes": {
                                     "name": "branding"
                                 },

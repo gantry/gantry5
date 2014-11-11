@@ -1,8 +1,0 @@
-{% extends '@nucleus/partials/widget.html.twig' %}
-
-{% block widget %}
-Copyright &copy;
-{% if (widget.date.start) %}{{ widget.date.start|e }} - {% endif %}
-{{ widget.date.end in ['now', ''] ? 'now'|date('Y') : widget.date.end|e }}
-{{ widget.owner|e }}
-{% endblock %}

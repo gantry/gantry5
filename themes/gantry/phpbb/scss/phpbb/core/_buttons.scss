@@ -13,7 +13,7 @@ a.button1, input.button1, input.button3, a.button2, input.button2 {
 	}
 }
 
-.dropdown-select:after  {
+.dropdown-select:after, #quick-links a.dropdown-toggle:before  {
 	font: normal normal normal 14px/1 FontAwesome;
 	text-align: center;
 	text-rendering:auto;

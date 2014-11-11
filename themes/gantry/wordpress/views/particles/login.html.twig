@@ -1,0 +1,15 @@
+{% extends 'partials/particle.html.twig' %}
+
+{% block particle %}
+<div class="rt-block rt-popupmodule-button {{ particle.css.classname }} particle">
+    {% if not me.ID %}
+        <a data-rokbox="" data-rokbox-element="#rt-popuplogin" href="#" class="buttontext button">
+            <span class="desc">{{ particle.logintext }}</span>
+        </a>
+    {% else %}
+        <a href="{{ function('wp_logout_url') }}" class="buttontext button">
+            <span class="desc">{{ particle.logouttext }} {{ my.name|e }}</span>
+        </a>
+    {% endif %}
+</div>
+{% endblock %}

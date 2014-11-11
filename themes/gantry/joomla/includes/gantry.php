@@ -33,8 +33,31 @@ try
 
     // Get Gantry instance and return it.
     $gantry = Gantry::instance();
-    $gantry['theme.path'] = dirname(__DIR__);
-    $gantry['theme.name'] = isset($this->template) ? $this->template : basename($gantry['theme.path']);
+
+    // Initialize the template if not done already.
+    if (!isset($gantry['theme.id']))
+    {
+        $app = JFactory::getApplication();
+        if ($app->isSite())
+        {
+            $template = $app->getTemplate(true);
+
+            $gantry['theme.id'] = $template->id;
+            $gantry['theme.path'] = dirname(__DIR__);
+            $gantry['theme.name'] = $template->template;
+            $gantry['theme.params'] = $template->params->toArray();
+        }
+        else
+        {
+            throw new RuntimeException('Template was loaded in administration without properly initializing Gantry!');
+        }
+    }
+
+    // Only a single template can be loaded at any time.
+    if (!isset($gantry['theme']))
+    {
+        include_once(__DIR__ . '/template.php');
+    }
 
     return $gantry;
 }
@@ -42,7 +65,8 @@ catch (Exception $e)
 {
     // Oops, something went wrong!
 
-    if (class_exists( '\Tracy\Debugger' ) && \Tracy\Debugger::isEnabled() && !\Tracy\Debugger::$productionMode ) {
+    if (class_exists( '\Tracy\Debugger' ) && \Tracy\Debugger::isEnabled() && !\Tracy\Debugger::$productionMode )
+    {
         // We have Tracy enabled; will display and/or log error with it.
         throw $e;
     }

@@ -20,50 +20,66 @@ class plgSystemGantryadmin extends JPlugin
     }
 
     /**
-     * Re-route templates to Gantry if needed.
+     * Re-route Gantry templates to Gantry Administration component.
      */
     public function onAfterRoute()
     {
-        $option = $this->app->input->getCmd('option');
-        $task   = $this->app->input->getCmd('task');
+        $input = $this->app->input;
 
-        if ($option == 'com_templates' && $task)
+        $option = $input->getCmd('option');
+        $task   = $input->getCmd('task');
+
+        if ($option == 'com_templates' && $task && strpos($task, 'style') === 0)
         {
-            // Redirect styles.duplicate to template.duplicate to handle gantry template styles.
-            if ($task == 'styles.duplicate')
+            // Get all ids.
+            $cid = $input->post->get('cid', (array) $input->getInt('id'), 'array');
+
+            if ($cid)
             {
-                $this->setRequestOption('option', 'com_gantry');
-                $this->setRequestOption('task', 'template.duplicate');
-            }
-
-            // Redirect styles.delete to not let a gantry master template style be deleted.
-            if ($task == 'styles.delete')
-            {
-                $this->setRequestOption('option', 'com_gantry');
-                $this->setRequestOption('task', 'template.delete');
-            }
-
-            // Redirect styles.edit if the template style is a gantry one.
-            if ($task == 'style.edit')
-            {
-                $id = $this->app->input->getInt('id', 0);
-
-                if (!$id) {
-                    // Initialise variables.
-                    $pks = $this->app->input->post->get('cid', array(), 'array');
-                    $id = array_shift($pks);
-                }
-
                 $styles = $this->getStyles();
+                $selected = array_intersect(array_keys($styles), $cid);
 
-                // Redirect Gantry templates.
-                if (isset($styles[$id]))
+                // If no Gantry templates were selected, just let com_templates deal with the request.
+                if (!$selected)
                 {
-                    $this->setRequestOption('option', 'com_gantry');
-                    $this->setRequestOption('task', 'template.edit');
-                    $this->setRequestOption('id', $id);
+                    return;
+                }
+
+                // Special handling for tasks coming from com_template.
+                switch ($task) {
+                    case 'style.edit':
+                        $id = (int) array_shift($cid);
+                        if (isset($styles[$id])) {
+                            $this->app->redirect('index.php?option=com_gantryadmin&view=overview&style=' . $id);
+                        }
+                        break;
+                    default:
+                        // $this->setRequestOption('option', 'com_gantryadmin');
+                        break;
                 }
             }
+        }
+    }
+
+    /**
+     * Convert links in com_templates to point into Gantry Administrator component.
+     */
+    public function onAfterRender()
+    {
+        $document = JFactory::getDocument();
+        $type   = $document->getType();
+
+        $option = $this->app->input->getString('option');
+        $view   = $this->app->input->getString('view', 'styles');
+        $task   = $this->app->input->getString('task');
+
+        if ($option == 'com_templates' && $view == 'styles' && !$task && $type == 'html')
+        {
+            $this->styles = $this->getStyles();
+
+            $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', [$this, 'appendHtml'], $this->app->getBody());
+
+            $this->app->setBody($body);
         }
     }
 
@@ -75,48 +91,29 @@ class plgSystemGantryadmin extends JPlugin
     {
         $this->app->input->set($key, $value);
         $this->app->input->get->set($key, $value);
-        $this->app->input->post->set($key, $value);
 
         if (class_exists('JRequest'))
         {
             JRequest::setVar($key, $value, 'GET');
-            JRequest::setVar($key, $value, 'POST');
         }
     }
 
     /**
-     *
+     * @param array $matches
+     * @return string
      */
-    public function onAfterRender()
-    {
-        $document = JFactory::getDocument();
-
-        $option = $this->app->input->getString('option');
-        $view   = $this->app->input->getString('view', 'styles');
-        $task   = $this->app->input->getString('task');
-
-        if ($option == 'com_templates' && $view == 'styles' && !$task && $document->getType() == 'html')
-        {
-            $this->styles = $this->getStyles();
-
-            $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', [$this, 'appendHtml'], $this->app->getBody());
-
-            $this->app->setBody($body);
-        }
-    }
-
-    public function appendHtml($matches)
+    private function appendHtml(array $matches)
     {
         $html = $matches[0];
 
         if (strpos($matches[2], 'task=style.edit'))
         {
             $uri = new JUri($matches[2]);
-            $id = $uri->getVar('id');
+            $id = (int) $uri->getVar('id');
 
             if ($id && $uri->getVar('option') == 'com_templates' && isset($this->styles[$id]))
             {
-                $uri->setVar('option', 'com_gantryadmin');
+//                $uri->setVar('option', 'com_gantryadmin');
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
 
                 if ($this->styles[$id])

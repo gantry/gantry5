@@ -1,10 +1,10 @@
 header:
-  - [widget-logo 20, widget-menu 80]
+  - [particle-logo 20, particle-menu 80]
   - [phpbb-header, phpbb-search]
 
 1:
   - showcase 75:
-      - [position-showcase-1, position-showcase-2]
+      - phpbb-navbar
     feature:
       - phpbb-pathway
     main:
@@ -14,9 +14,8 @@ header:
       - phpbb-birthday
 
   - sidebar 25:
-    - phpbb-navbar
     - phpbb-post_info
     - phpbb-login
 
 footer:
-  - [spacer 25, widget-copyright 50, widget-branding 25]
+  - [spacer 25, particle-copyright 50, particle-branding 25]
