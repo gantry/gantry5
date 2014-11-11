@@ -8,14 +8,18 @@ if ( !$gantry ) {
 }
 
 $gantry['theme.path'] = __DIR__;
+$gantry['theme.name'] = get_option( 'template' );
 
 // Define the template.
-class Nucleus extends \Gantry\Framework\Theme {}
+class Theme extends \Gantry\Framework\Theme {}
 
 // Define Gantry services.
 $gantry['theme'] = function ( $c ) {
-    return new Nucleus( $c[ 'theme.path' ], get_option( 'template' ) );
+    return new Theme( $c[ 'theme.path' ], $c[ 'theme.name' ] );
 };
 
-// Boot the service.
+/** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
+
+// Boot the service.
+$theme->setLayout('theme://layouts/test.yaml');

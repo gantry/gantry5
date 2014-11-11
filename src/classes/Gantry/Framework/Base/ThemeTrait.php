@@ -3,7 +3,6 @@ namespace Gantry\Framework\Base;
 
 use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Twig\TwigExtension;
-use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -11,6 +10,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  * @package Gantry\Framework\Base
  *
  * @property string $path
+ * @property string $layout
  */
 trait ThemeTrait
 {
@@ -18,6 +18,13 @@ trait ThemeTrait
     {
         $gantry = \Gantry\Framework\Gantry::instance();
         $gantry['streams'];
+    }
+
+    public function setLayout($file)
+    {
+        $this->layout = $file;
+
+        return $this;
     }
 
     public function add_to_context(array $context)
@@ -28,8 +35,11 @@ trait ThemeTrait
         $context['config'] = $gantry['config'];
         $context['theme'] = $this;
 
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
         // Include Gantry specific things to the context.
-        $context['pageSegments'] = $gantry['layout'];
+        $context['pageSegments'] = $this->layout ? LayoutReader::read($locator($this->layout)) : [];
 
         return $context;
     }

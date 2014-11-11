@@ -22,7 +22,7 @@ class Page extends Base\Page
         $this->task     = $input->getCmd('task', '');
         $this->itemid   = $input->getCmd('Itemid', '');
 
-        $this->sitename = $app->getCfg('sitename');
+        $this->sitename = $app->get('sitename');
         $this->theme = $document->template;
         $this->baseUrl = $document->baseurl;
         $this->title = $document->title;

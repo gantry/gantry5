@@ -1,5 +1,4 @@
 <?php
-die('FOO');
 // Bootstrap Gantry framework or fail gracefully (inside included file).
 $gantry = include_once __DIR__ . '/includes/gantry.php';
 $gantry['theme.path'] = __DIR__;
@@ -12,8 +11,4 @@ $gantry['theme'] = function ($c) {
     return new Nucleus($c['theme.path'], basename(__DIR__));
 };
 
-// Boot the service.
-$theme = $gantry['theme'];
-
-// Render the page.
-echo $theme->render('index.html.twig');
+return $gantry['theme'];

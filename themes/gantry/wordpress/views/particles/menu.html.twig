@@ -1,0 +1,24 @@
+{% extends 'partials/particle.html.twig' %}
+
+{% block particle %}
+<nav class="main-nav" role="navigation">
+    <ul class="toplevel">
+        {% for item in menu.items %}
+        <li id="menu-item-{{item.ID}}" class="nav-main-item {{item.classes | join(' ')}}">
+            <a href="{{item.link}}">{{item.title}}</a>
+            {% if (item.children) %}
+            <div class="dropdown">
+                <ul class="sublevel">
+                    {% for child in item.children %}
+                    <li id="menu-item-{{child.ID}}" class="menu-item {{child.classes | join(' ')}}">
+                        <a href="{{child.link}}">{{child.title}}</a>
+                     </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endblock %}

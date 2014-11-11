@@ -1,5 +1,5 @@
 header:
-  - [widget-logo 20, widget-menu 80]
+  - [particle-logo 20, particle-menu 80]
   - position-header
 
 1:
@@ -17,9 +17,9 @@ header:
   - sidebar 25:
     - position-sidebar
     - position-right
-    - widget-login
-    - widget-popup
+    - particle-login
+    - particle-popup
 
 footer:
   - position-footer
-  - [spacer 25, widget-copyright 50, widget-branding 25]
+  - [spacer 25, particle-copyright 50, particle-branding 25]

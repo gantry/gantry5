@@ -10,6 +10,7 @@ abstract class Theme
     public $name;
     public $url;
     public $path;
+    public $layout;
 
     public function __construct($path, $name = '')
     {
