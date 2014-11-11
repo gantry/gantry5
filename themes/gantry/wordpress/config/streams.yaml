@@ -3,17 +3,11 @@ schemes:
     type: ReadOnlyStream
     prefixes:
       '':
-      - wp-content/themes
+        - wp-content/themes
 
   theme:
     type: ReadOnlyStream
     prefixes:
       '':
-      - themes://gantry
-      - themes://gantry/common
-
-      css/:
-      - themes://gantry/css-compiled
-      - themes://gantry/css
-      - themes://gantry/common/css-compiled
-      - themes://gantry/common/css
+        - themes://gantry
+        - themes://gantry/common
