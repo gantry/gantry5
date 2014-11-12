@@ -19,13 +19,16 @@ class Layouts extends JsonController
         ];
 
         // FIXME: need access to current theme stream 'theme://common/layouts'
-        $files = Folder::all(realpath(JPATH_THEMES . '/../../templates/gantry/common/layouts'), $options);
+        $files = Folder::all(realpath(JPATH_THEMES . '/../../templates/gantry/common/layouts/presets'), $options);
 
         $response = [];
-        foreach($files as $structure) {
+        foreach($files as $name => $structure) {
             $content = JsonFile::instance($structure)->content();
-            $response[$content['name']] = $content;
+            $response[$name] = $content;
         }
+
+        $response['html'] = $this->container['admin.theme']->render('@gantry-admin/layouts/picker.html.twig', ['presets' => $response]);
+
         return new JsonResponse($response);
     }
 }

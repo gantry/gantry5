@@ -1,0 +1,29 @@
+{
+    "name": "Simple",
+    "layout": {
+        "header": {
+            "type": "section",
+            "attributes": {
+                "type": "header",
+                "id": "header"
+            }
+        },
+        "showcase": {
+            "type": "section",
+            "attributes": {}
+        },
+        "feature": {
+            "type": "section",
+            "attributes": {}
+        },
+        "main": {
+            "type": "section",
+            "attributes": {}
+        },
+        "bottom": {
+            "type": "section",
+            "attributes": {}
+        }
+    }
+
+}
