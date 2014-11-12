@@ -61,7 +61,9 @@ class Theme extends BaseTheme
             }
         }
 
-        $locator->addPath('gantry-admin', '', 'theme://admin');
+        if (isset($gantry['theme'])) {
+            $locator->addPath('gantry-admin', '', 'theme://admin');
+        }
     }
 
     public function add_to_context(array $context)
