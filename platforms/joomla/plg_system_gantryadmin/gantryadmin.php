@@ -166,9 +166,8 @@ class plgSystemGantryadmin extends JPlugin
      */
     private function getStyles()
     {
-        $tag   = JFactory::getLanguage()->getTag();
         $cache = JFactory::getCache('com_templates', '');
-        $list = $cache->get('gantry-templates-' . $tag);
+        $list = $cache->get('gantry-templates');
 
         if ($list === false)
         {
@@ -198,7 +197,7 @@ class plgSystemGantryadmin extends JPlugin
                 }
             }
 
-            $cache->store($list, 'gantry-templates-' . $tag);
+            $cache->store($list, 'gantry-templates');
         }
 
         return $list;

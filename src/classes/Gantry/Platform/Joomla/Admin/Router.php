@@ -42,7 +42,7 @@ class Router implements RouterInterface
             $this->container['theme.title'] = $table->title;
             $this->container['theme.params'] = (new \JRegistry($table->params))->toArray();
 
-            if (!file_exists($path . '/includes/gantry.php')) {
+            if (file_exists($path . '/includes/gantry.php')) {
                 include $path . '/includes/gantry.php';
             }
         }
