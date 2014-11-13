@@ -3,7 +3,6 @@
     "version":"5.0.0@dev",
     "description": "Gantry Library",
     "license": "GPLv2",
-    "minimum-stability": "dev",
     "type": "phpbb-extension",
 
     "authors": [
@@ -29,12 +28,9 @@
             "url": "https://github.com/rockettheme/toolbox"
         }
     ],
-    "require-dev": {
-        "phpunit/phpunit": "3.7.*"
-    },
     "autoload": {
         "psr-4": {
-            "Gantry\\": "src/classes/Gantry"
+            "Gantry\\": ["src/classes/Gantry/Platform/PhpBB", "src/classes/Gantry"]
         }
     },
     "extra": {
