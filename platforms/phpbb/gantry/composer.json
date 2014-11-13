@@ -1,0 +1,46 @@
+{
+    "name": "rockettheme/gantry",
+    "version":"5.0.0@dev",
+    "description": "Gantry Library",
+    "license": "GPLv2",
+    "minimum-stability": "dev",
+    "type": "phpbb-extension",
+
+    "authors": [
+        {
+            "name": "RocketTheme",
+            "email": "support@rockettheme.com",
+            "homepage": "http://www.rockettheme.com",
+            "role": "Developer"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/yaml": "2.5.*",
+        "twig/twig": "v1.15.1",
+        "tracy/tracy": "dev-master",
+        "pimple/pimple": "~3.0",
+        "rockettheme/toolbox": "dev-develop"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/rockettheme/toolbox"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gantry\\": "src/classes/Gantry"
+        }
+    },
+    "extra": {
+        "display-name": "Gantry",
+        "soft-require": {
+             "phpbb/phpbb": "3.1.*@dev"
+        }
+    }
+}
