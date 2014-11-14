@@ -40,6 +40,24 @@ class main_module
 		$error = array();
 		$this->tpl_name = 'acp_gantry';
 		
+		$xml = \rockettheme\gantry\event\load_xml_file($user->style['style_path']);
+
+		/* TODO */
+		foreach ($xml->xpath('//form/fieldset') as $group) {
+			echo $group['label']."<br />";
+
+			foreach ($group->xpath('field') as $item) {
+				echo $item['name'];
+
+				foreach ($item->xpath('option') as $option) {
+					echo $option['value'];
+				}
+
+			}
+
+			echo "<br /><hr>";
+		}
+
 		include("global_conf.".$phpEx);
 
 		if (isset($display_vars['lang']))
