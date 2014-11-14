@@ -31,6 +31,7 @@ class main_listener implements EventSubscriberInterface
 		return array(
 			'core.user_setup'		=> 'load_language_on_setup',
 			'core.adm_page_header' => 'add_admin_header_vars',
+			'core.page_header' => 'add_header_vars',
 			);
 	}
 
@@ -70,11 +71,25 @@ class main_listener implements EventSubscriberInterface
 			'lang_set' => 'gantry',
 			);
 		$event['lang_set_ext'] = $lang_set_ext;
+
+		/* Set up xml options file */
+		function load_xml_file($style_name) {
+			global $phpbb_root_path;
+			if (file_exists($phpbb_root_path. 'styles/'.$style_name.'/phpbb-options.xml')) {
+				global $xml;
+				$xml = simplexml_load_file($phpbb_root_path. 'styles/'.$style_name.'/phpbb-options.xml');
+				return $xml;
+			} else {
+				exit('Failed to open phpbb-options.xml. Please make sure that you installed style correctly.');
+			}
+		}
+
+
 	}
 	
 	public function add_admin_header_vars($event)
 	{
-		global $phpbb_root_path, $mode;
+		global $phpbb_root_path, $mode, $user;
 
 		$this->template->assign_vars(array(
 			'MODE'		=> $mode,

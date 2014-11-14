@@ -21,11 +21,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 		'TITLE'	=> 'Global Configuration',
-		'TITLE_EXPLAIN'	=> 'Here you can set various options for your RocketTheme Phpbb3 style.',
-		'ALLOW_JMENU'	=> 'Show Joomla menu',
-		'ALLOW_JMENU_EXPLAIN'	=> 'Show Joomla menu instead of phpbb3 menu at the top of the page.',
-		'JOOMLA_MENU_PATH' => 'Joomla menu path',
-		'JOOMLA_MENU_PATH_EXPLAIN' => 'Relative path to directory of your Joomla installation.Remember about ending slash.',
+		'TITLE_EXPLAIN'	=> 'Here you can set various phpBB specific options for your RocketTheme template.',
 		'AVATAR_POSITION'	=> 'Avatar position',
 		'AVATAR_POSITION_EXPLAIN' => 'Set avatar and user profile position.',
 		'STYLE_CONFIGURATION' => 'Style Configuration',

@@ -1,90 +1,52 @@
 <!-- INCLUDE overall_header.html -->
-<a name="maincontent"></a>
+
+<a id="maincontent"></a>
 
 <h1>{L_TITLE}</h1>
+
 <p>{L_TITLE_EXPLAIN}</p>
 
-
 <!-- IF S_ERROR -->
-<div class="errorbox">
-	<h3>{L_WARNING}</h3>
-	<p>{ERROR_MSG}</p>
-</div>
-<!-- ENDIF -->
-
-<!-- IF ROKBB3_MODULE_STYLE -->
-<!-- PHP -->
-global $phpbb_root_path, $template, $mode;
-$template->set_custom_style($mode,$phpbb_root_path."styles".DIRECTORY_SEPARATOR.$mode."/admin/");
-$template->set_filenames(array(
-'body' => 'rokbb_style.html',
-));
-$template->display('body');
-<!-- ENDPHP -->
-<!-- ELSE -->
-<form id="rokbb" method="post" action="{U_ACTION}">
-
-	<div class="gantry-wrapper">            
-
-		<ul id="gantry-tabs">
-			<!-- BEGIN options -->
-			<!-- IF options.S_LEGEND -->   	
-			<li <!-- IF options.S_FIRST_ROW -->class="first active "<!-- ENDIF -->><span class="outer"><span class="inner"><span style="float:left;">{options.LEGEND}</span></span></span></li>
-			<!-- ENDIF --> 
-			<!-- END options -->                                           
-		</ul>
-
-		<div id="gantry-panel">
-			<!-- BEGIN options -->
-
-			<!-- IF options.S_LEGEND -->
-			<!-- IF not options.S_FIRST_ROW -->
-			<p class="submit-buttons">
-				<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
-				<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
-			</p>
-			{S_FORM_TOKEN}
-		</fieldset>
+	<div class="errorbox">
+		<h3>{L_WARNING}</h3>
+		<p>{ERROR_MSG}</p>
 	</div>
-</div>
-</div>
 <!-- ENDIF -->
-<div class="gantry-panel panel-{options.S_ROW_COUNT} <!-- IF options.S_ROW_COUNT eq '0' -->active-panel<!-- ENDIF --> <!-- IF options.S_FIRST_ROW --> first<!-- ENDIF --> <!-- IF options.S_LAST_ROW -->last<!-- ENDIF -->">
-	<div class="gantry-panel-left">
-		<div class="panelform">
-			<fieldset>
-				<!-- ELSE -->
 
-				<dl>
-					<dt><label for="{options.KEY}">{options.TITLE}:</label><!-- IF options.S_EXPLAIN --><br /><span>{options.TITLE_EXPLAIN}</span><!-- ENDIF --></dt>
-					<dd>{options.CONTENT}</dd>
-				</dl>
+<form id="acp_gantry" method="post" action="{U_ACTION}">
 
-				<!-- ENDIF -->
-				<!-- END options -->
-			</div>
-		</div>
+<!-- BEGIN options -->
+	<!-- IF options.S_LEGEND -->
+		<!-- IF not options.S_FIRST_ROW -->
+			</fieldset>
 		<!-- ENDIF -->
-		<!-- IF S_AUTH -->
-		<!-- BEGIN auth_tpl -->
-		{auth_tpl.TPL}
-		<!-- END auth_tpl -->
-		<!-- ENDIF -->
-		<p class="submit-buttons">
-			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
-			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
-		</p>
-		{S_FORM_TOKEN}
+		<fieldset>
+			<legend>{options.LEGEND}</legend>
+	<!-- ELSE -->
+
+		<dl>
+			<dt><label for="{options.KEY}">{options.TITLE}{L_COLON}</label><!-- IF options.S_EXPLAIN --><br /><span>{options.TITLE_EXPLAIN}</span><!-- ENDIF --></dt>
+			<dd>{options.CONTENT}</dd>
+		</dl>
+
+	<!-- ENDIF -->
+<!-- END options -->
+
+<!-- IF S_AUTH -->
 	</fieldset>
-</form>	
+	<!-- BEGIN auth_tpl -->
+		<!-- INCLUDE {auth_tpl.TEMPLATE_FILE} -->
+	<!-- END auth_tpl -->
+	<fieldset>
+		<legend>{L_ACP_SUBMIT_CHANGES}</legend>
+<!-- ENDIF -->
 
-</div>
-</div>
-<div class="clear"></div>
-</div>
-</div>
-</div>
-</div>
+	<p class="submit-buttons">
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	</p>
+	{S_FORM_TOKEN}
+</fieldset>
+</form>
 
-</body>
-</html>
+<!-- INCLUDE overall_footer.html -->
