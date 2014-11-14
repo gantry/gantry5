@@ -13,7 +13,7 @@ class Document
 
     public static function rootUri()
     {
-        $config = Grav::instance()['config'];
-        return rtrim($config->get('system.base_url_relative'), '/');
+        $grav = Grav::instance();
+        return rtrim($grav['base_url'], '/');
     }
 }
