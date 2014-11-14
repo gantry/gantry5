@@ -42,6 +42,7 @@ class main_module
 		
 		$xml = \rockettheme\gantry\event\load_xml_file($user->style['style_path']);
 
+		/* TODO */
 		foreach ($xml->xpath('//form/fieldset') as $group) {
 			echo $group['label']."<br />";
 

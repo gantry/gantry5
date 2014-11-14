@@ -89,8 +89,7 @@ class main_listener implements EventSubscriberInterface
 	
 	public function add_admin_header_vars($event)
 	{
-		global $phpbb_root_path, $mode, $user;
-
+		global $phpbb_root_path, $mode;
 		$this->template->assign_vars(array(
 			'MODE'		=> $mode,
 			)
