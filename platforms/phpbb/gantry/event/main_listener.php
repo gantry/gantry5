@@ -1,0 +1,84 @@
+<?php
+
+/**
+*
+* @package RT Gantry Extension
+* @copyright (c) 2013 rockettheme
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+*/
+
+namespace rockettheme\gantry\event;
+
+/**
+* @ignore
+*/
+
+if (!defined('IN_PHPBB'))
+{
+	exit;
+}
+
+/**
+* Event listener
+*/
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+class main_listener implements EventSubscriberInterface
+{
+	static public function getSubscribedEvents()
+	{
+		return array(
+			'core.user_setup'		=> 'load_language_on_setup',
+			'core.adm_page_header' => 'add_admin_header_vars',
+			);
+	}
+
+	/* @var \phpbb\controller\helper */
+	protected $helper;
+
+	/* @var \phpbb\template\template */
+	protected $template;
+
+	/* @var \phpbb\user */
+	protected $user;
+
+	/* @var string phpEx */
+	protected $php_ext;
+
+	/**
+	* Constructor
+	*
+	* @param \phpbb\controller\helper	$helper		Controller helper object
+	* @param \phpbb\template			$template	Template object
+	* @param \phpbb\user				$user		User object
+	* @param string						$php_ext	phpEx
+	*/
+	public function __construct(\phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\user $user, $php_ext)
+	{
+		$this->helper = $helper;
+		$this->template = $template;
+		$this->user = $user;
+		$this->php_ext = $php_ext;
+	}
+
+	public function load_language_on_setup($event)
+	{
+		$lang_set_ext = $event['lang_set_ext'];
+		$lang_set_ext[] = array(
+			'ext_name' => 'rockettheme/gantry',
+			'lang_set' => 'gantry',
+			);
+		$event['lang_set_ext'] = $lang_set_ext;
+	}
+	
+	public function add_admin_header_vars($event)
+	{
+		global $phpbb_root_path, $mode;
+
+		$this->template->assign_vars(array(
+			'MODE'		=> $mode,
+			)
+		);
+	}
+}

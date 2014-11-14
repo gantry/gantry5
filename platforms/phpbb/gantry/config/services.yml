@@ -7,3 +7,12 @@ services:
             - @user
             - @template_context
             - @ext.manager
+    rockettheme.rokbb.listener:
+        class: rockettheme\gantry\event\main_listener
+        arguments:
+            - @controller.helper
+            - @template
+            - @user
+            - %core.php_ext%
+        tags:
+            - { name: event.listener }

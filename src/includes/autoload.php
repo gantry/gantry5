@@ -29,7 +29,6 @@ function autoload()
     } elseif (defined('IN_PHPBB')) {
         global $phpbb_root_path;
         define('GANTRY5_ROOT', $phpbb_root_path);
-        $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/PhpBB', true);
     } elseif (defined('STANDALONE_ROOT')) {
         define('GANTRY5_ROOT', STANDALONE_ROOT);
         $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/Standalone', true);
