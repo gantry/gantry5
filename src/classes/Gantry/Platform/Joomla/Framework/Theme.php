@@ -35,6 +35,7 @@ class Theme extends BaseTheme
 
         // Include Gantry specific things to the context.
         $context = $this->add_to_context($context);
+        $context['menu'] = new Menu;
 
         $doc = \JFactory::getDocument();
         $this->language = $doc->language;
