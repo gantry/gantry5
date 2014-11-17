@@ -83,8 +83,6 @@ class main_listener implements EventSubscriberInterface
 				exit('Failed to open phpbb-options.xml. Please make sure that you installed style correctly.');
 			}
 		}
-
-
 	}
 	
 	public function add_admin_header_vars($event)

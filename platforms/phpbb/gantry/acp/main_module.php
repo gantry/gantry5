@@ -50,10 +50,14 @@ class main_module
 			foreach ($group->xpath('field') as $item) {
 				$template->assign_block_vars('gantry.fields', array(
 					'NAME' => $item['name'],
+					'LABEL' => $item['label'],
+					'TYPE' => $item['type'],
+					'DESCRIPTION' => $item['description'],
 					));
 				foreach ($item->xpath('option') as $option) {
 					$template->assign_block_vars('gantry.fields.options', array(
 					'VALUE' => $option['value'],
+					'LABEL' => $option,
 					));
 				}
 			}
