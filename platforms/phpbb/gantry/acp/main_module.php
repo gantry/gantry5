@@ -42,20 +42,21 @@ class main_module
 		
 		$xml = \rockettheme\gantry\event\load_xml_file($user->style['style_path']);
 
-		/* TODO */
+		// Assign template vars
 		foreach ($xml->xpath('//form/fieldset') as $group) {
-			echo $group['label']."<br />";
-
+			$template->assign_block_vars('gantry', array(
+				'GROUP_NAME' => $group['label'],
+				));
 			foreach ($group->xpath('field') as $item) {
-				echo $item['name'];
-
+				$template->assign_block_vars('gantry.fields', array(
+					'NAME' => $item['name'],
+					));
 				foreach ($item->xpath('option') as $option) {
-					echo $option['value'];
+					$template->assign_block_vars('gantry.fields.options', array(
+					'VALUE' => $option['value'],
+					));
 				}
-
 			}
-
-			echo "<br /><hr>";
 		}
 
 		include("global_conf.".$phpEx);

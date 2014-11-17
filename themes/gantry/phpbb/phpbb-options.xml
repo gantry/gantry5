@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form name="template-options">
+	<fieldset name="toolbar-panel" label="TOOLBAR">
+		<field name="presets" type="preset" mode="scroller" default="preset1" setbyurl="true" setinoverride="false" panel_position="left" show_label="false"/>
+	</fieldset>
+
+	<fieldset name="overview" label="OVERVIEW">
+		<field name="overviewtips" type="tips" tab="overview" panel_position="right" show_label="false" />
+		<field name="overview" type="file" path="/template-overview.php" show_label="false"/>
+	</fieldset>
+	<fieldset name="style" label="STYLE">
+		<field name="master" type="hidden" value="false" default="true"/>
+		<field name="current_id" type="hidden" value="false" default="true"/>
+		<field name="gantry" type="gantry" value="" panel_position="hiddens"/>
+		<field name="template_full_name" type="hidden" default="Chimera"/>
+		<field name="grid_system" type="hidden" default="12"/>
+		<field name="template_prefix" type="hidden" default="chimera-"/>
+		<field name="cookie_time" type="hidden" default="31536000"/>
+
+		<field name="override_set" type="hidden" default="2.5"/>
+
+		<field name="name" type="hidden" default="Preset1" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+		<field name="copy_lang_files_if_diff" type="hidden" default="1"/>
+
+		<!-- Logo -->
+		<fields name="logo" type="selectedset" label="LOGO" description="LOGO_DESC">
+			<field name="enabled" type="toggle" default="1" label="SHOW" />
+			<field name="position" type="position" translation="false" default="header-a" label="POSITION" />
+			<field name="type" type="selectbox" selector="true" default="chimera" label="TYPE" isbodyclass="true" setbyurl="true" setinsession="true" setbysession="true" setincookie="true" setbycookie="true"/>
+			<fields type="set" name="chimera" label="Chimera Template"></fields>
+			<fields type="set" name="custom" label="CUSTOM">
+				<field name="image" type="imagepicker" default="" label="LOGO_PICKER" description="LOGO_PICKER_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			</fields>
+		</fields>
+
+		<!-- Accent -->
+		<fields name="accent" type="selectedset" label="ACCENT_STYLE" description="ACCENT_STYLE_DESC">
+			<field name="color1" type="colorchooser" default="#B17E15" label="ACCENT_COLOR1" description="ACCENT_COLOR1_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="color2" type="colorchooser" default="#B2301A" label="ACCENT_COLOR2" description="ACCENT_COLOR2_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+		</fields>
+
+		<!-- Demo Style -->
+		<fields name="demostyle" type="selectedset" label="DEMOSTYLE" description="DEMOSTYLE_DESC">
+			<field name="type" type="selectbox" selector="true" default="preset1" label="TYPE" isbodyclass="true" setbyurl="true" setinsession="true" setbysession="true" setincookie="true" setbycookie="true"/>
+			<fields type="set" name="preset1" label="Preset 1"></fields>
+			<fields type="set" name="preset2" label="Preset 2"></fields>
+			<fields type="set" name="preset3" label="Preset 3"></fields>
+			<fields type="set" name="preset4" label="Preset 4"></fields>
+			<fields type="set" name="preset5" label="Preset 5"></fields>
+			<fields type="set" name="preset6" label="Preset 6"></fields>
+			<fields type="set" name="custom" label="CUSTOM"></fields>
+		</fields>
+
+		<!-- Slideshow -->
+		<fields name="slideshow" type="selectedset" label="SLIDESHOW_STYLE" description="SLIDESHOW_STYLE_DESC">
+			<field name="textcolor" type="colorchooser" default="#FFFFFF" label="TEXT_COLOR" description="TEXT_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="background" type="colorchooser" default="#555555" label="BACKGROUND_COLOR" description="BACKGROUND_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+		</fields>
+
+		<!-- Header -->
+		<fields name="header" type="selectedset" label="HEADER_STYLE" description="HEADER_STYLE_DESC">
+			<field name="textcolor" type="colorchooser" default="#FFFFFF" label="TEXT_COLOR" description="TEXT_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="background" type="colorchooser" default="#3B3B3B" label="BACKGROUND_COLOR" description="BACKGROUND_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="type" type="selectbox" default="normal" label="HEADER_TYPE" description="HEADER_TYPE_DESC" isbodyclass="true" setinsession="true" setbysession="true" setincookie="true" setbycookie="true">
+				<option value="scroll">SCROLLING_HEADER</option>
+				<option value="fixed">FIXED_HEADER</option>
+				<option value="normal">NORMAL_HEADER</option>
+			</field>
+		</fields>
+
+		<!-- Showcase -->
+		<fields name="showcase" type="selectedset" label="SHOWCASE_STYLE" description="SHOWCASE_STYLE_DESC">
+			<field name="textcolor" type="colorchooser" default="#FFFFFF" label="TEXT_COLOR" description="TEXT_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="background" type="colorchooser" default="#B17E15" label="BACKGROUND_COLOR" description="BACKGROUND_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+		</fields>
+
+		<!-- Feature -->
+		<fields name="feature" type="selectedset" label="FEATURE_STYLE" description="FEATURE_STYLE_DESC">
+			<field name="textcolor" type="colorchooser" default="#444444" label="TEXT_COLOR" description="TEXT_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="background" type="colorchooser" default="#FFFFFF" label="BACKGROUND_COLOR" description="BACKGROUND_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+		</fields>
+
+		<!-- Utility -->
+		<fields name="utility" type="selectedset" label="UTILITY_STYLE" description="UTILITY_STYLE_DESC">
+			<field name="textcolor" type="colorchooser" default="#444444" label="TEXT_COLOR" description="TEXT_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="background" type="colorchooser" default="#FFFFFF" label="BACKGROUND_COLOR" description="BACKGROUND_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+		</fields>
+
+		<!-- ExpandedTop -->
+		<fields name="expandedtop" type="selectedset" label="EXPANDEDTOP_STYLE" description="EXPANDEDTOP_STYLE_DESC">
+			<field name="textcolor" type="colorchooser" default="#FFFFFF" label="TEXT_COLOR" description="TEXT_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="background" type="colorchooser" default="#D14C3B" label="BACKGROUND_COLOR" description="BACKGROUND_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+		</fields>
+
+		<!-- MainTop -->
+		<fields name="maintop" type="selectedset" label="MAINTOP_STYLE" description="MAINTOP_STYLE_DESC">
+			<field name="textcolor" type="colorchooser" default="#444444" label="TEXT_COLOR" description="TEXT_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="background" type="colorchooser" default="#FFFFFF" label="BACKGROUND_COLOR" description="BACKGROUND_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+		</fields>
+
+		<!-- MainBottom -->
+		<fields name="mainbottom" type="selectedset" label="MAINBOTTOM_STYLE" description="MAINBOTTOM_STYLE_DESC">
+			<field name="textcolor" type="colorchooser" default="#444444" label="TEXT_COLOR" description="TEXT_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="background" type="colorchooser" default="#FFFFFF" label="BACKGROUND_COLOR" description="BACKGROUND_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+		</fields>
+
+		<!-- MainBody -->
+		<fields name="mainbody" type="selectedset" label="MAINBODY_STYLE" description="MAINBODY_STYLE_DESC">
+			<field name="overlay" type="selectbox" default="light" label="OVERLAY" description="OVERLAY_DESC" isbodyclass="true" setbyurl="true" setinsession="true" setbysession="true" setincookie="true" setbycookie="true">
+				<option value="light">LIGHT</option>
+				<option value="dark">DARK</option>
+			</field>
+		</fields>
+
+		<!-- Extension -->
+		<fields name="extension" type="selectedset" label="EXTENSION_STYLE" description="EXTENSION_STYLE_DESC">
+			<field name="textcolor" type="colorchooser" default="#444444" label="TEXT_COLOR" description="TEXT_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="background" type="colorchooser" default="#F7F7F7" label="BACKGROUND_COLOR" description="BACKGROUND_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+		</fields>
+
+		<!-- Bottom -->
+		<fields name="bottom" type="selectedset" label="BOTTOM_STYLE" description="BOTTOM_STYLE_DESC">
+			<field name="textcolor" type="colorchooser" default="#AAAAAA" label="TEXT_COLOR" description="TEXT_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="background" type="colorchooser" default="#3B3B3B" label="BACKGROUND_COLOR" description="BACKGROUND_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+		</fields>
+
+		<!-- Footer -->
+		<fields name="footer" type="selectedset" label="FOOTER_STYLE" description="FOOTER_STYLE_DESC">
+			<field name="textcolor" type="colorchooser" default="#AAAAAA" label="TEXT_COLOR" description="TEXT_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="background" type="colorchooser" default="#333333" label="BACKGROUND_COLOR" description="BACKGROUND_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+		</fields>
+
+		<!-- Copyright -->
+		<fields name="copyright" type="selectedset" label="COPYRIGHT_STYLE" description="COPYRIGHT_STYLE_DESC">
+			<field name="textcolor" type="colorchooser" default="#AAAAAA" label="TEXT_COLOR" description="TEXT_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+			<field name="background" type="colorchooser" default="#3B3B3B" label="BACKGROUND_COLOR" description="BACKGROUND_COLOR_DESC" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" />
+		</fields>
+
+		<!-- Font -->
+		<fields name="font" type="chain" label="FONT_SETTINGS" description="FONT_SETTINGS_DESC">
+			<field name="family" type="fonts" default="s:chimera" primary="chimera" label="FONT_FAMILY" isbodyclass="true" setbyurl="true" setinsession="true" setbysession="true" setincookie="true" setbycookie="true">
+				<option value="chimera">Chimera</option>
+				<option value="geneva">Geneva</option>
+				<option value="georgia">Georgia</option>
+				<option value="helvetica">Helvetica</option>
+				<option value="lucida">Lucida</option>
+				<option value="optima">Optima</option>
+				<option value="palatino">Palatino</option>
+				<option value="trebuchet">Trebuchet</option>
+			</field>
+			<field name="size" type="hidden" default="default" setbyurl="true"/>
+			<field name="size-is" type="selectbox" default="default" label="FONT_SIZE" isbodyclass="true" setbyurl="true" setinsession="true" setbysession="true" setincookie="true" setbycookie="true">
+				<option value="xsmall">F_XSMALL</option>
+				<option value="small">F_SMALL</option>
+				<option value="default">F_DEFAULT</option>
+				<option value="large">F_LARGE</option>
+				<option value="xlarge">F_XLARGE</option>
+			</field>
+		</fields>
+
+	</fieldset>
+	<fieldset name="features" label="FEATURES">
+
+		<field name="viewswitcher-priority" type="hidden" default="1"/>
+		<field name="logo-priority" type="hidden" default="2"/>
+		<field name="copyright-priority" type="hidden" default="3"/>
+		<field name="styledeclaration-priority" type="hidden" default="4"/>
+		<field name="fontsizer-priority" type="hidden" default="5"/>
+		<field name="date-priority" type="hidden" default="7"/>
+		<field name="totop-priority" type="hidden" default="8"/>
+		<field name="systemmessages-priority" type="hidden" default="9"/>
+		<field name="smartload-priority" type="hidden" default="13"/>
+		<field name="pagesuffix-priority" type="hidden" default="14"/>
+		<field name="resetsettings-priority" type="hidden" default="15"/>
+		<field name="analytics-priority" type="hidden" default="16"/>
+		<field name="dropdownmenu-priority" type="hidden" default="18"/>
+		<field name="jstools-priority" type="hidden" default="21"/>
+		<field name="moduleoverlays-priority" type="hidden" default="22"/>
+		<field name="rtl-priority" type="hidden" default="23"/>
+		<field name="splitmenu-priority" type="hidden" default="24"/>
+		<field name="webfonts-priority" type="hidden" default="27"/>
+
+
+		<field name="styledeclaration-enabled" type="hidden" default="1"/>
+
+        <fields name="social" type="columns" label="SOCIAL_BUTTONS"  description="SOCIAL_BUTTONS_DESC">
+            <field name="enabled" type="toggle" default="0" position="left" label="SHOW" />
+            <field name="position" type="position" translation="false" default="copyright-a" position="right" label="POSITION"/>
+            <field name="target" type="selectbox" default="_blank" position="left" label="TARGET" description="TARGET_DESC">
+				<option value="_parent">PARENT</option>
+				<option value="_blank">NEW_WINDOW</option>
+			</field>
+			<field name="hidden-spacer" type="hidden" position="right" />
+            <field name="button-1-icon" type="text" default="" label="SOCIAL_BUTTON_1_ICON" position="left" class="text-med" />
+            <field name="button-1-text" type="text" default="" label="SOCIAL_BUTTON_1_TEXT" position="left" class="text-med" />
+            <field name="button-1-link" type="text" default="" label="SOCIAL_BUTTON_1_LINK" position="left" class="text-long" />
+            <field name="button-2-icon" type="text" default="" label="SOCIAL_BUTTON_2_ICON" position="right" class="text-med" />
+ 			<field name="button-2-text" type="text" default="" label="SOCIAL_BUTTON_2_TEXT" position="right" class="text-med" />
+            <field name="button-2-link" type="text" default="" label="SOCIAL_BUTTON_2_LINK" position="right" class="text-long" />
+            <field name="button-3-icon" type="text" default="" label="SOCIAL_BUTTON_3_ICON" position="left" class="text-med" />
+            <field name="button-3-text" type="text" default="" label="SOCIAL_BUTTON_3_TEXT" position="left" class="text-med" />
+            <field name="button-3-link" type="text" default="" label="SOCIAL_BUTTON_3_LINK" position="left" class="text-long" />
+            <field name="button-4-icon" type="text" default="" label="SOCIAL_BUTTON_4_ICON" position="right" class="text-med" />
+ 			<field name="button-4-text" type="text" default="" label="SOCIAL_BUTTON_4_TEXT" position="right" class="text-med" />
+            <field name="button-4-link" type="text" default="" label="SOCIAL_BUTTON_4_LINK" position="right" class="text-long" />
+            <field name="button-5-icon" type="text" default="" label="SOCIAL_BUTTON_5_ICON" position="left" class="text-med" />
+            <field name="button-5-text" type="text" default="" label="SOCIAL_BUTTON_5_TEXT" position="left" class="text-med" />
+            <field name="button-5-link" type="text" default="" label="SOCIAL_BUTTON_5_LINK" position="left" class="text-long" />
+            <field name="button-6-icon" type="text" default="" label="SOCIAL_BUTTON_6_ICON" position="right" class="text-med" />
+ 			<field name="button-6-text" type="text" default="" label="SOCIAL_BUTTON_6_TEXT" position="right" class="text-med" />
+            <field name="button-6-link" type="text" default="" label="SOCIAL_BUTTON_6_LINK" position="right" class="text-long" />
+        </fields>
+
+        <field name="chart-enabled" type="toggle" default="1" label="CHART_ENABLE" description="CHART_ENABLE_DESC"/>
+
+		<fields name="comingsoon" type="chain" label="COMINGSOON_ENABLE" description="COMINGSOON_ENABLE_DESC">
+			<field name="enabled" type="toggle" default="0" label="SHOW"/>
+			<field name="date" type="selectbox" default="1" label="DATE">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+				<option value="11">11</option>
+				<option value="12">12</option>
+				<option value="13">13</option>
+				<option value="14">14</option>
+				<option value="15">15</option>
+				<option value="16">16</option>
+				<option value="17">17</option>
+				<option value="18">18</option>
+				<option value="19">19</option>
+				<option value="20">20</option>
+				<option value="21">21</option>
+				<option value="22">22</option>
+				<option value="23">23</option>
+				<option value="24">24</option>
+				<option value="25">25</option>
+				<option value="26">26</option>
+				<option value="27">27</option>
+				<option value="28">28</option>
+				<option value="29">29</option>
+				<option value="30">30</option>
+				<option value="31">31</option>
+			</field>
+			<field name="month" type="selectbox" default="0" label="MONTH">
+				<option value="0">JANUARY</option>
+				<option value="1">FEBRUARY</option>
+				<option value="2">MARCH</option>
+				<option value="3">APRIL</option>
+				<option value="4">MAY</option>
+				<option value="5">JUNE</option>
+				<option value="6">JULY</option>
+				<option value="7">AUGUST</option>
+				<option value="8">SEPTEMBER</option>
+				<option value="9">OCTOBER</option>
+				<option value="10">NOVEMBER</option>
+				<option value="11">DECEMBER</option>
+			</field>
+			<field name="year" type="text" default="2020" label="YEAR" class="text-short" />
+		</fields>
+
+		<fields name="email-subscription" type="chain" label="EMAIL_SUBSCRIPTION" description="EMAIL_SUBSCRIPTION_DESC">
+			<field name="enabled" type="toggle" default="1" label="SHOW"/>
+		</fields>
+
+		<field name="feedburner-uri" type="text" label="FEEDBURNER_URI" description="FEEDBURNER_URI_DESC" />
+
+		<fields name="systemmessages" type="chain" label="SYSMESSAGE" description="SYSMESSAGE_DESC">
+			<field name="enabled" type="toggle" default="1" label="SHOW"/>
+			<field name="position" type="position" default="drawer" label="POSITION"/>
+		</fields>
+
+		<fields name="date" type="chain" label="DATE" description="DATE_DESC">
+			<field name="enabled" type="toggle" default="0" label="SHOW"/>
+			<field name="position" type="position" translation="false" default="utility-a" label="POSITION"/>
+			<field name="clientside" type="toggle" default="0" label="DATE_CLIENTSIDE"/>
+			<field name="formats" type="dateformats" default="%A, %B %d, %Y" label=" ">
+				<option value="%A, %B %d, %Y"/>
+				<option value="%B %d, %Y"/>
+				<option value="%d %h, %Y"/>
+				<option value="%d %h, %y"/>
+				<option value="%a, %h %d, %Y"/>
+				<option value="%a, %h %d, %y"/>
+				<option value="%A, %d %m %Y"/>
+				<option value="%A %e %B %Y"/>
+			</field>
+		</fields>
+
+		<fields name="fontsizer" type="chain" label="FONT_SIZER" description="FONT_SIZER_DESC">
+			<field name="enabled" type="toggle" default="0" label="SHOW"/>
+			<field name="position" type="position" translation="false" default="utility-b" label="POSITION"/>
+		</fields>
+
+		<fields name="login" type="chain" label="LOGIN" description="LOGIN_DESC">
+			<field name="enabled" type="toggle" default="0" label="SHOW" />
+			<field name="position" type="position" default="utility-c" label="POSITION" />
+			<field name="text" type="text" default="Member Login" label="LOGIN_TEXT" class="text-medium" />
+			<field name="logouttext" type="text" default="Logout" label="LOGOUT_TEXT" class="text-medium" />
+		</fields>
+
+		<fields name="popup" type="chain" label="POPUP" description="POPUP_DESC">
+			<field name="enabled" type="toggle" default="0" label="SHOW" />
+			<field name="position" type="position" default="utility-d" label="POSITION" />
+			<field name="text" type="text" default="Popup Module" label="POPUP_TEXT" class="text-medium" />
+		</fields>
+
+		<fields name="branding" type="chain" label="BRANDING" description="BRANDING_DESC">
+			<field name="enabled" type="toggle" default="1" label="SHOW" />
+			<field name="position" type="position" default="copyright-a" label="POSITION" />
+		</fields>
+
+		<fields name="copyright" type="chain" label="COPYRIGHT" description="COPYRIGHT_DESC">
+			<field name="enabled" type="toggle" default="1" label="SHOW" />
+			<field name="position" type="position" default="copyright-b" label="POSITION" />
+			<field name="text" type="text" default="Designed by RocketTheme" label="TEXT" class="text-long" />
+		</fields>
+
+		<fields name="totop" type="chain" label="TOTOP" description="TOTOP_DESC">
+			<field name="enabled" type="toggle" default="1" label="SHOW"/>
+			<field name="position" type="position" default="copyright-c" label="POSITION"/>
+			<field name="text" type="text" default="" label="TEXT" class="text-long" />
+		</fields>
+
+		<fields name="resetsettings" type="chain" label="RESETSETTINGS" description="RESETSETTINGS_DESC">
+			<field name="enabled" type="toggle" default="0" label="SHOW"/>
+			<field name="position" type="position" translation="false" default="copyright-d" label="POSITION"/>
+			<field name="text" type="text" default="Reset Settings" label="TEXT" class="text-long"/>
+		</fields>
+
+		<fields name="analytics" type="chain" label="ANALYTICS" description="ANALYTICS_DESC">
+			<field name="enabled" type="toggle" default="0" label="ANALYTICS_ENABLE"/>
+			<field name="code" type="text" default="" label="ANALYTICS_CODE" class="text-long"/>
+			<field name="position" type="hidden" default="analytics" />
+		</fields>
+	</fieldset>
+	<fieldset name="menu" label="MENU">
+		<fields name="menu" type="selectedset" label="MENU_CTRL" description="MENU_CTRL_DESC">
+			<field name="enabled" type="toggle" default="1" label="SHOW" enabler="true" />
+			<field name="type" type="selectbox" selector="true" default="dropdownmenu" label="TYPE" isbodyclass="true" setbyurl="true" setinsession="true" setbysession="true" setincookie="true" setbycookie="true"/>
+			<fields type="set" name="dropdownmenu" label="DROPDOWN">
+				<field name="theme" type="hidden" default="gantry-dropdown"/>
+				<field name="limit_levels" type="hidden" default="0"/>
+				<field name="startLevel" type="hidden" default="0"/>
+				<field name="showAllChildren" type="hidden" default="1"/>
+				<field name="class_sfx" type="hidden" default="top"/>
+				<field name="cache" type="hidden" default="0"/>
+
+				<field name="menutype" type="menus" default="mainmenu" label="MENU_SELECT" description="MENU_SELECT_DESC"/>
+				<field name="position" type="position" translation="false" default="header-b" label="POSITION" description="POSITION_DESC"/>
+				<field name="responsive-menu" type="selectbox" default="panel" label="RESPONSIVE_MENU" description="RESPONSIVE_MENU_DESC">
+					<option value="panel">PANEL</option>
+					<option value="selectbox">SELECTBOX</option>
+				</field>
+				<field name="enable-current-id" type="toggle" default="0" label="ENABLE_ID" description="ENABLE_ID_DESC"/>
+				<field name="module_cache" label="MODULE_CACHE" description="MODULE_CACHE_DESC" type="toggle" default="1"/>
+			</fields>
+			<fields type="set" name="splitmenu" label="SPLITMENU">
+				<field name="mainmenu-limit_levels" type="hidden" default="1"/>
+				<field name="mainmenu-startLevel" type="hidden" default="0"/>
+				<field name="mainmenu-endLevel" type="hidden" default="0"/>
+				<field name="mainmenu-class_sfx" type="hidden" default="top"/>
+				<field name="submenu-limit_levels" type="hidden" default="1"/>
+				<field name="submenu-startLevel" type="hidden" default="1"/>
+				<field name="submenu-endLevel" type="hidden" default="9"/>
+				<field name="cache" type="hidden" default="0"/>
+
+
+				<field name="menutype" type="menus" default="mainmenu" label="MENU_SELECT" description="MENU_SELECT_DESC"/>
+				<field name="theme" type="hidden" default="gantry-splitmenu"/>
+				<field name="mainmenu-position" type="position" translation="false" default="header-b" label="MAINMENU_POS" description="MAINMENU_POS_DESC"/>
+				<field name="submenu-position" type="position" translation="false" default="sidebar-a" label="SUBMENU_POS" description="SUBMENU_POS_DESC"/>
+				<field name="submenu-title" type="toggle" default="1" label="SUBMENU_TITLE" description="SUBMENU_TITLE_DESC" />
+				<field name="submenu-class_sfx" type="text" default="" label="SUBMENU_CLASS_SFX" description="SUBMENU_CLASS_SFX_DESC" class="text-medium" />
+				<field name="submenu-module_sfx" type="text" default="" label="SUBMENUMODULE_CLASS_SFX" description="SUBMENUMODULE_CLASS_SFX_DESC" class="text-medium" />
+				<field name="responsive-menu" type="selectbox" default="panel" label="RESPONSIVE_MENU" description="RESPONSIVE_MENU_DESC">
+					<option value="panel">PANEL</option>
+					<option value="selectbox">SELECTBOX</option>
+				</field>
+				<field name="roknavmenu_dropdown_enable-current-id" type="toggle" default="0" label="ENABLE_ID" description="ENABLE_ID_DESC"/>
+				<field name="module_cache" label="MODULE_CACHE" description="MODULE_CACHE_DESC" type="toggle" default="1"/>
+			</fields>
+		</fields>
+	</fieldset>
+	<fieldset name="layouts" label="LAYOUTS">
+
+		<fields name="top" type="position" label="TOP_POS" description="LAYOUT_POS_DESC">
+			<field name="layout" type="positions" default="3,3,3,3" label="">
+				<schemas>1,2,3,4,5,6</schemas>
+				<words>2,3,4,5,6,7,8,9,10</words>
+			</field>
+			<field name="showall" type="toggle" default="0" label="FORCE_POS"/>
+			<field name="showmax" type="showmax" default="6" label="POS_COUNT"/>
+		</fields>
+
+		<fields name="header" type="position" label="HEADER_POS" description="LAYOUT_POS_DESC">
+			<field name="layout" type="positions" default="3,3,3,3" label="">
+				<schemas>1,2,3,4,5,6</schemas>
+				<words>2,3,4,5,6,7,8,9,10</words>
+			</field>
+			<field name="showall" type="toggle" default="0" label="FORCE_POS"/>
+			<field name="showmax" type="showmax" default="6" label="POS_COUNT"/>
+		</fields>
+
+		<fields name="showcase" type="position" label="SHOWCASE_POS" description="LAYOUT_POS_DESC">
+			<field name="layout" type="positions" default="3,3,3,3" label="">
+				<schemas>1,2,3,4,5,6</schemas>
+				<words>2,3,4,5,6,7,8,9,10</words>
+			</field>
+			<field name="showall" type="toggle" default="0" label="FORCE_POS"/>
+			<field name="showmax" type="showmax" default="6" label="POS_COUNT"/>
+		</fields>
+
+		<fields name="feature" type="position" label="FEATURE_POS" description="LAYOUT_POS_DESC">
+			<field name="layout" type="positions" default="3,3,3,3" label="">
+				<schemas>1,2,3,4,5,6</schemas>
+				<words>2,3,4,5,6,7,8,9,10</words>
+			</field>
+			<field name="showall" type="toggle" default="0" label="FORCE_POS"/>
+			<field name="showmax" type="showmax" default="6" label="POS_COUNT"/>
+		</fields>
+
+		<fields name="utility" type="position" label="UTILITY_POS" description="LAYOUT_POS_DESC">
+			<field name="layout" type="positions" default="3,3,3,3" label="">
+				<schemas>1,2,3,4,5,6</schemas>
+				<words>2,3,4,5,6,7,8,9,10</words>
+			</field>
+			<field name="showall" type="toggle" default="0" label="FORCE_POS"/>
+			<field name="showmax" type="showmax" default="6" label="POS_COUNT"/>
+		</fields>
+
+		<fields name="maintop" type="position" label="MAINTOP_POS" description="LAYOUT_POS_DESC">
+			<field name="layout" type="positions" default="3,3,3,3" label="">
+				<schemas>1,2,3,4,5,6</schemas>
+				<words>2,3,4,5,6,7,8,9,10</words>
+			</field>
+			<field name="showall" type="toggle" default="0" label="FORCE_POS"/>
+			<field name="showmax" type="showmax" default="6" label="POS_COUNT"/>
+		</fields>
+
+		<fields name="expandedtop" type="position" label="EXPANDEDTOP_POS" description="LAYOUT_POS_DESC">
+			<field name="layout" type="positions" default="3,3,3,3" label="">
+				<schemas>1,2,3,4,5,6</schemas>
+				<words>2,3,4,5,6,7,8,9,10</words>
+			</field>
+			<field name="showall" type="toggle" default="0" label="FORCE_POS"/>
+			<field name="showmax" type="showmax" default="6" label="POS_COUNT"/>
+		</fields>
+
+		<field name="mainbodyPosition" type="positions" default="6,3,3" label="MAINBODY_POS" description="LAYOUT_POS_DESC">
+			<schemas>1,2,3,4</schemas>
+			<words>sa,sb,sc,mb</words>
+			<type>custom</type>
+		</field>
+
+		<fields name="mainbottom" type="position" label="MAINBOTTOM_POS" description="LAYOUT_POS_DESC">
+			<field name="layout" type="positions" default="3,3,3,3" label="">
+				<schemas>1,2,3,4,5,6</schemas>
+				<words>2,3,4,5,6,7,8,9,10</words>
+			</field>
+			<field name="showall" type="toggle" default="0" label="FORCE_POS"/>
+			<field name="showmax" type="showmax" default="6" label="POS_COUNT"/>
+		</fields>
+
+		<fields name="expandedbottom" type="position" label="EXPANDEDBOTTOM_POS" description="LAYOUT_POS_DESC">
+			<field name="layout" type="positions" default="3,3,3,3" label="">
+				<schemas>1,2,3,4,5,6</schemas>
+				<words>2,3,4,5,6,7,8,9,10</words>
+			</field>
+			<field name="showall" type="toggle" default="0" label="FORCE_POS"/>
+			<field name="showmax" type="showmax" default="6" label="POS_COUNT"/>
+		</fields>
+
+		<fields name="extension" type="position" label="EXTENSION_POS" description="LAYOUT_POS_DESC">
+			<field name="layout" type="positions" default="3,3,3,3" label="">
+				<schemas>1,2,3,4,5,6</schemas>
+				<words>2,3,4,5,6,7,8,9,10</words>
+			</field>
+			<field name="showall" type="toggle" default="0" label="FORCE_POS"/>
+			<field name="showmax" type="showmax" default="6" label="POS_COUNT"/>
+		</fields>
+
+		<fields name="bottom" type="position" label="BOTTOM_POS" description="LAYOUT_POS_DESC">
+			<field name="layout" type="positions" default="3,3,3,3" label="">
+				<schemas>1,2,3,4,5,6</schemas>
+				<words>2,3,4,5,6,7,8,9,10</words>
+			</field>
+			<field name="showall" type="toggle" default="0" label="FORCE_POS"/>
+			<field name="showmax" type="showmax" default="6" label="POS_COUNT"/>
+		</fields>
+
+		<fields name="footer" type="position" label="FOOTER_POS" description="LAYOUT_POS_DESC">
+			<field name="layout" type="positions" default="3,3,3,3" label="">
+				<schemas>1,2,3,4,5,6</schemas>
+				<words>2,3,4,5,6,7,8,9,10</words>
+			</field>
+			<field name="showall" type="toggle" default="0" label="FORCE_POS"/>
+			<field name="showmax" type="showmax" default="6" label="POS_COUNT"/>
+		</fields>
+
+		<fields name="copyright" type="position" label="COPYRIGHT_POS" description="LAYOUT_POS_DESC">
+			<field name="layout" type="positions" default="3,3,3,3" label="">
+				<schemas>1,2,3,4,5,6</schemas>
+				<words>2,3,4,5,6,7,8,9,10</words>
+			</field>
+			<field name="showall" type="toggle" default="0" label="FORCE_POS"/>
+			<field name="showmax" type="showmax" default="6" label="POS_COUNT"/>
+		</fields>
+	</fieldset>
+
+	<fieldset name="advanced" label="ADVANCED">
+
+		<field name="layout-mode" type="selectbox" default="responsive" label="LAYOUT_MODE" description="LAYOUT_MODE_DESC" setbyurl="true" setinsession="true" setbysession="true" setincookie="true" setbycookie="true" isbodyclass="true">
+			<option value="responsive">RESPONSIVE</option>
+			<option value="1200fixed">L1200FIXED</option>
+			<option value="960fixed">L960FIXED</option>
+		</field>
+
+		<field name="component-enabled" type="toggle" default="1" label="COMPONENT_ENABLED" description="COMPONENT_ENABLED_DESC"/>
+
+		<field name="mainbody-enabled" type="toggle" default="1" label="MAINBODY_ENABLED" description="MAINBODY_ENABLED_DESC"/>
+
+		<field name="rtl-enabled" type="toggle" default="0" label="RTL" description="RTL_DESC" setinoverride="false"/>
+
+		<field name="pagesuffix-enabled" type="toggle" default="1" label="PAGESUFFIX" description="PAGESUFFIX_DESC"/>
+
+		<field name="selectivizr-enabled" type="toggle" default="1" label="SELECTIVIZR" description="SELECTIVIZR_DESC"/>
+
+		<fields name="less" type="chain" label="LESS_COMPILER" description="LESS_COMPILER_DESC">
+			<field name="compression" type="toggle" default="1" label="LESS_COMPRESSION" description="LESS_COMPRESSION_DESC"/>
+			<field name="compilewait" type="textplus" default="2" append="sec" label="LESS_COMPILEWAIT" description="LESS_COMPILEWAIT_DESC" class="text-short" />
+			<field name="debugheader" type="toggle" default="0" label="LESS_DEBUGHEADER" description="LESS_DEBUGHEADER_DESC"/>
+			<field name="clear" type="ajaxbutton" text="LESS_COMPILE_CLEAR_TEXT" model="lesscompiler" action="clear" label="LESS_COMPILE_CLEAR" setinoverride="false" />
+		</fields>
+
+		<field name="ie7splash-enabled" type="toggle" default="1" label="IE7SPLASH" description="IE7SPLASH_DESC"/>
+
+		<field name="demo" type="toggle" default="1" label="DEMO_STYLING" description="DEMO_STYLING_DESC" />
+
+		<field name="k2" type="toggle" default="0" label="K2_STYLING" description="K2_STYLING_DESC" />
+
+	</fieldset>
+	<fieldset name="assignment" label="ASSIGNMENTS">
+		<field name="assignments" type="assignments" panel_position="left" setinoverride="false"/>
+	</fieldset>
+</form>

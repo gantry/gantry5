@@ -15,31 +15,15 @@
 
 <form id="acp_gantry" method="post" action="{U_ACTION}">
 
-<!-- BEGIN options -->
-	<!-- IF options.S_LEGEND -->
-		<!-- IF not options.S_FIRST_ROW -->
-			</fieldset>
-		<!-- ENDIF -->
-		<fieldset>
-			<legend>{options.LEGEND}</legend>
-	<!-- ELSE -->
-
-		<dl>
-			<dt><label for="{options.KEY}">{options.TITLE}{L_COLON}</label><!-- IF options.S_EXPLAIN --><br /><span>{options.TITLE_EXPLAIN}</span><!-- ENDIF --></dt>
-			<dd>{options.CONTENT}</dd>
-		</dl>
-
-	<!-- ENDIF -->
-<!-- END options -->
-
-<!-- IF S_AUTH -->
-	</fieldset>
-	<!-- BEGIN auth_tpl -->
-		<!-- INCLUDE {auth_tpl.TEMPLATE_FILE} -->
-	<!-- END auth_tpl -->
-	<fieldset>
-		<legend>{L_ACP_SUBMIT_CHANGES}</legend>
-<!-- ENDIF -->
+<!-- BEGIN gantry -->
+	{gantry.GROUP_NAME}
+		<!-- BEGIN gantry.fields -->
+			{gantry.fields.NAME}
+			<!-- BEGIN gantry.fields.options -->
+				{gantry.fields.options.VALUE}
+			<!-- END gantry.fields.options -->
+		<!-- END gantry.fields -->
+<!-- END gantry -->
 
 	<p class="submit-buttons">
 		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
