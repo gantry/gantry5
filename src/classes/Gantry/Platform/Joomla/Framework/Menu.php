@@ -1,19 +1,32 @@
 <?php
 namespace Gantry\Framework;
 
-class Menu
+use RocketTheme\Toolbox\ArrayTraits\Iterator;
+
+class Menu implements \Iterator
 {
+    use Iterator;
+
     protected $app;
 
     protected $default;
+    protected $base;
     protected $active;
+    protected $params;
+
+    /**
+     * @var array
+     */
+    protected $items;
 
     protected $defaults = [
         'menu' => null,
         'base' => 0,
         'startLevel' => 1,
         'endLevel' => 0,
-        'showAllChildren' => false
+        'showAllChildren' => false,
+        'highlightAlias' => true,
+        'highlightParentAlias' => true
     ];
 
     public function __construct()
@@ -29,13 +42,83 @@ class Menu
         $this->active  = $menu->getActive();
     }
 
-    public function load(array $params = [])
+    public function instance(array $params = [])
     {
         $params += $this->defaults;
 
-        $items = $this->getList($params);
+        $instance = clone $this;
+        $instance->params = $params;
+        $instance->items = $instance->getList($params);
 
-        return $items;
+        return $instance;
+    }
+
+    /**
+     * @return object
+     */
+    public function getBase()
+    {
+        return $this->base;
+    }
+
+    /**
+     * @return object
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    public function isActive($item)
+    {
+        $path = $this->base->tree;
+
+        if (in_array($item->id, $path)) {
+            return true;
+        } elseif ($item->type == 'alias') {
+            $aliasToId = $item->params->get('aliasoptions');
+
+            if (count($path) > 0 && $aliasToId == $path[count($path) - 1]) {
+                return (bool) $this->params['highlightAlias'];
+            } elseif (in_array($aliasToId, $path)) {
+                return (bool) $this->params['highlightParentAlias'];
+            }
+        }
+
+        return false;
+    }
+
+    public function isCurrent($item)
+    {
+        return $item->id == $this->active->id
+        || ($item->type == 'alias' && $item->params->get('aliasoptions') == $this->active->id);
+    }
+
+    /**
+     * Get base menu item.
+     *
+     * If itemid is not specified or does not exist, return active menu item.
+     * If there is no active menu item, fall back to home page for the current language.
+     * If there is no home page, return null.
+     *
+     * @param   int  $itemid
+     *
+     * @return  object|null
+     */
+    protected function calcBase($itemid = null)
+    {
+        $menu = $this->app->getMenu();
+
+        // Get base menu item.
+        $base = $itemid ? $menu->getItem($itemid) : null;
+
+        if (!$base) {
+            // Use active menu item or fall back to default menu item.
+            $base = $this->active ?: $this->default;
+        }
+
+        // Return base menu item.
+        return $base;
     }
 
     /**
@@ -51,23 +134,23 @@ class Menu
     protected function getList(array $params)
     {
         // Get base menu item for this menu (defaults to active menu item).
-        $base = $this->getBase($params['base']);
+        $this->base = $this->calcBase($params['base']);
 
         // Make sure that the menu item exists.
-        if (!$base) {
+        if (!$this->base) {
             return [];
         }
 
         $levels = \JFactory::getUser()->getAuthorisedViewLevels();
         asort($levels);
 
-        $key = 'gantry_menu_items.' . json_encode($params) . json_encode($levels) . '.' . $base->id;
+        $key = 'gantry_menu_items.' . json_encode($params) . json_encode($levels) . '.' . $this->base->id;
         $cache = \JFactory::getCache('mod_menu', '');
         $tree = $cache->get($key);
 
         if (!$tree) {
             $menu    = $this->app->getMenu();
-            $path    = $base->tree;
+            $path    = $this->base->tree;
             $start   = $params['startLevel'];
             $end     = $params['endLevel'];
             $showAll = $params['showAllChildren'];
@@ -179,32 +262,5 @@ class Menu
         }
 
         return $tree;
-    }
-
-    /**
-     * Get base menu item.
-     *
-     * If itemid is not specified or does not exist, return active menu item.
-     * If there is no active menu item, fall back to home page for the current language.
-     * If there is no home page, return null.
-     *
-     * @param   int  $itemid
-     *
-     * @return  object|null
-     */
-    protected function getBase($itemid = null)
-    {
-        $menu = $this->app->getMenu();
-
-        // Get base menu item.
-        $base = $itemid ? $menu->getItem($itemid) : null;
-
-        if (!$base) {
-            // Use active menu item or fall back to default menu item.
-            $base = $this->active ?: $this->default;
-        }
-
-        // Return base menu item.
-        return $base;
     }
 }
