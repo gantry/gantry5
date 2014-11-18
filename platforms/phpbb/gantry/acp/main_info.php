@@ -24,19 +24,6 @@ function module()
 	{
 		global $phpbb_root_path;
 		
-		$output = array(
-			'filename'	=> '\rockettheme\gantry\acp\main_module',
-			'title'		=> 'Gantry',
-			'version'      => '1.0.0',
-			'modes'        => array(
-				'global_conf'        => array(
-					'title' => 'Global configuration',
-					'auth'  => 'acl_a_group',
-					'cat'   => array('ACP_CAT_RTSTYLES')
-				)
-			),
-		);
-
 		$info_files  = array();
 		$styles_path = $phpbb_root_path . DIRECTORY_SEPARATOR . 'styles';
 		$dh          = opendir($styles_path);
