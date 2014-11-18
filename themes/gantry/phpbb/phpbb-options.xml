@@ -19,5 +19,4 @@
 		<field name="example2_item2" type="toggle" default="1" label="Example Toggle" description="Nulla vitae elit libero, a pharetra augue."/>
 		<field name="example2_item3" type="input" default="" label="Example Input" description="Curabitur blandit tempus porttitor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit."/>
 	</fieldset>
-
 </form>
