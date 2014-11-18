@@ -34,13 +34,15 @@
 {% endmacro %}
 
 {% macro displaySubmenu(children, menu) %}
-    <div class="dropdown">
-        <ul class="sublevel">
-            {% for item in children %}
-            {{ _self.displayItem(item, menu) }}
-            {% endfor %}
-        </ul>
-    </div>
+    <ul class="dropdown">
+        <li class="dropdown-column">
+            <ul class="sublevel">
+                {% for item in children %}
+                {{ _self.displayItem(item, menu) }}
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
 {% endmacro %}
 
 {% block particle %}

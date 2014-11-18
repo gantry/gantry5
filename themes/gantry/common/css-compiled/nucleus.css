@@ -1,6 +1,5 @@
 .main-nav .dropdown, .main-nav .dropdown .dropdown {
   position: absolute;
-  width: 170px;
   top: auto;
   left: auto;
   opacity: 0;
@@ -11,6 +10,10 @@
   opacity: 1;
   visibility: visible;
   overflow: visible; }
+
+.main-nav .dropdown-column {
+  width: 170px;
+  float: left; }
 
 .main-nav ul {
   margin: 0;
