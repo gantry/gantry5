@@ -25,8 +25,9 @@ class main_module
 	function main($id, $mode)
 	{
 		global $db, $user, $auth, $template, $cache, $request;
-		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx;
+		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx, $lang;
 		$template->assign_vars(array(
+			'ACTUAL_STYLE' => $user->style['style_path'],
 			'MODE'	=>  $mode,
 			));	
 		$submit	= request_var('submit', '');

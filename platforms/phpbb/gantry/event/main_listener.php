@@ -87,11 +87,16 @@ class main_listener implements EventSubscriberInterface
 	
 	public function add_admin_header_vars($event)
 	{
-		global $phpbb_root_path, $mode;
+		global $phpbb_root_path, $mode, $config, $user;
 		$this->template->assign_vars(array(
 			'MODE'		=> $mode,
 			)
 		);
+
+		if ($config['actual_style'] !== $user->style['style_path'] ) {
+			$config->set('actual_style', $user->style['style_path']);
+		}
+
 	}
 	public function add_header_vars($event)
 	{

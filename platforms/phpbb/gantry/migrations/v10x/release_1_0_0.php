@@ -62,10 +62,11 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 				'ACP_CAT_RTSTYLES',
 				array(
 					'module_basename'	=> '\rockettheme\gantry\acp\main_module',
-					'modes'				=> array_keys($output['modes']),
+					'modes'				=> array('rt_style_conf'),
 					),
 				),
 			),
+
 
 			array('config.add', array('gantry_mod_version', '1.0.0')),
 			array('config.add', array('gantry_is_installed', '1')),
