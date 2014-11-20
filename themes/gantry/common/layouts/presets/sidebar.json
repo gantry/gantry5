@@ -17,7 +17,7 @@
                 {
                     "type": "block",
                     "attributes": {
-                        "size": 75
+                        "size": 50
                     },
                     "children": [
                         {
@@ -53,7 +53,7 @@
                 {
                     "type": "block",
                     "attributes": {
-                        "size": 25
+                        "size": 50
                     },
                     "children": [
                         {
