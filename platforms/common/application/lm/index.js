@@ -27,7 +27,7 @@ ready(function () {
 
             // -!- Popovers
             // particles picker
-            $('[data-lm-addparticle]').popover({type: 'async', placement: 'left-bottom', width: '200', url: 'index.php?option=com_gantryadmin&view=particles&format=json'});
+            $('[data-lm-addparticle]').popover({type: 'async', placement: 'left-bottom', width: '200', style: 'fixed', url: 'index.php?option=com_gantryadmin&view=particles&format=json'});
         });
 
         modal.close();

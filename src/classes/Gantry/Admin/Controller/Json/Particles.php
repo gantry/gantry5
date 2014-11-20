@@ -8,6 +8,7 @@ class Particles extends JsonController
 {
     public function index(array $params)
     {
+        // FIXME: This needs to be dynamic, right now is hardcoded.
         $particles = [
             'position' => ['Position'],
             'spacer' => ['Spacer'],
