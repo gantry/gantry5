@@ -1,0 +1,6 @@
+<h1>Layout Presets</h1>
+<ul>
+    {% for name,layout in presets %}
+        <li data-g5-lm-picker="{{ layout | json_encode | e('html_attr') }}">[{{ name }}.json] -> {{ layout.name|e }}</li>
+    {% endfor %}
+</ul>

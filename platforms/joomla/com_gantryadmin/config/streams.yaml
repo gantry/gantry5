@@ -1,4 +1,9 @@
 schemes:
+  themes:
+    type: ReadOnlyStream
+    prefixes:
+      '': templates
+
   gantry-admin:
     type: ReadOnlyStream
     prefixes:

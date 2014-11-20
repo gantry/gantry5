@@ -1,72 +1,53 @@
-var ready       = require('elements/domready'),
-    json        = require('./json_test'),
-    $           = require('elements/attributes'),
+"use strict";
+var ready   = require('elements/domready'),
+    json    = require('./json_test'),
+    $       = require('elements/attributes'),
+    modal   = require('../ui').modal,
+    request = require('agent'),
+    zen     = require('elements/zen'),
 
-    Builder     = require('./builder'),
-    DropManager = require('./drop'),
-    History     = require('./history');
+    Builder = require('./builder');
 
-var builder, dropmanager, history;
+require('../ui/popover');
 
-ready(function(){
-    builder     = new Builder(json).load();
-    history     = new History(builder.serialize());
+var builder;
 
-    ready(function(){
-    dropmanager = new DropManager('#main', {
-        delegate:       '[data-lm-root="page"] .section, [data-lm-root="section"] .section > .grid [data-lm-blocktype]:not([data-lm-nodrag]), .lm-newblocks [data-lm-blocktype]',
-        droppables:     '[data-lm-dropzone]',
-        exclude:        '.section-header .button, .lm-newblocks .float-right .button',
-        resize_handles: '[data-lm-root="section"] .grid > .block:not(:last-child)',
-        builder:        builder,
-        history:        history
+builder = new Builder(json);
+
+ready(function () {
+    // attach events
+    // Picker
+    $('body').delegate('click', '[data-g5-lm-picker]', function(event, element){
+        var data = JSON.parse(element.data('g5-lm-picker'));
+        request('index.php?option=com_gantryadmin&view=page&layout=pages_create&format=json', function(error, response){
+            var content = zen('div').html(response.body.data.html).find('[data-g5-content]');
+            $('[data-g5-content]').html(content.html()).find('.title').text(data.name);
+            builder = new Builder(data.layout);
+            builder.load();
+
+            // -!- Popovers
+            // particles picker
+            $('[data-lm-addparticle]').popover({type: 'async', placement: 'left-bottom', width: '200', style: 'fixed', url: 'index.php?option=com_gantryadmin&view=particles&format=json'});
+        });
+
+        modal.close();
+
     });
-    });
-    //console.log('Serialized: ', builder.serialize());
-    //console.log('Map: ', builder.map);
-});
+    var addPage = $('[data-g5-lm-add]');
+    if (addPage) {
+        addPage.on('click', function (e) {
+            e.preventDefault();
+            modal.open({
+                content: 'Loading',
+                remote: 'index.php?option=com_gantryadmin&view=layouts&format=json'
+            });
+        });
+    }
 
-ready(function(){
-    var HM = {
-        back:    $('[data-lm-back]'),
-        forward: $('[data-lm-forward]')
-    };
-
-    if (!HM.back && !HM.forward) return;
-
-    HM.back.on('click', function(){
-        if ($(this).hasClass('disabled')) return false;
-        history.undo();
-    });
-
-    HM.forward.on('click', function(){
-        if ($(this).hasClass('disabled')) return false;
-        history.redo();
-    });
-
-    /* history events */
-    history.on('push', function(session, index, reset){
-        if (index && HM.back.hasClass('disabled')) HM.back.removeClass('disabled');
-        if (reset && !HM.forward.hasClass('disabled')) HM.forward.addClass('disabled');
-    });
-    history.on('undo', function(session, index){
-        builder.reset(session.data);
-        HM.forward.removeClass('disabled');
-        if (!index) HM.back.addClass('disabled');
-        dropmanager.singles('disable');
-    });
-    history.on('redo', function(session, index){
-        builder.reset(session.data);
-        HM.back.removeClass('disabled');
-        if (index == this.session.length - 1) HM.forward.addClass('disabled');
-        dropmanager.singles('disable');
-    });
-
+    //builder.load();
 });
 
 module.exports = {
-    builder:     builder,
-    dropmanager: dropmanager,
-    history:     history,
-    $:           $
+    $: $,
+    builder: builder
 };

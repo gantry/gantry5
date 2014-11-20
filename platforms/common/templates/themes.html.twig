@@ -13,16 +13,15 @@
                         <h1><i class="fa fa-fw fa-plug"></i> Themes</h1>
 
                         <div class="themes card-row grid fixed-blocks pure-g">
-                            {% for slug, theme in {'gantry': {'name': 'Gantry', 'icon': 'lock', 'version': '1.0', 'thumbnail': 'template_thumbnail.png'},
-                            'foo': {'name': 'Foo', 'icon': 'lock', 'version': '1.0'}} %}
+                            {% for id, theme in styles %}
                                 <div class="theme card-item pure-u-1-3">
                                     <div class="theme-name">
-                                        <i class="fa fa-fw fa-{{ theme.icon }}"></i>
-                                        <a href="?option=com_gantryadmin&view=overview&template={{ slug|url_encode }}">{{ theme.name }}</a>
-                                        <span class="theme-version">v{{ theme.version }}</span>
+                                        <i class="fa fa-fw fa-{{ theme.icon|default('lock')|e }}"></i>
+                                        <a href="?option=com_gantryadmin&view=overview&style={{ id|url_encode }}">{{ theme.name|title|e }}</a>
                                     </div>
+                                    <div class="theme-id">{{ theme.title|e }}</div>
                                     <div class="theme-screenshot">
-                                        <a href="?option=com_gantryadmin&view=overview&template={{ slug|url_encode }}"><img src="{{ url('themes://' ~ slug|url_encode ~ '/' ~ theme.thumbnail)|default('http://www.placehold.it/206x150/f4f4f4') }}" /></a>
+                                        <a href="?option=com_gantryadmin&view=overview&style={{ id|url_encode }}"><img src="{{ url('themes://' ~ theme.name|url_encode ~ '/' ~ theme.thumbnail|url_encode)|default('http://www.placehold.it/206x150/f4f4f4') }}" /></a>
                                     </div>
                                 </div>
                             {% endfor %}

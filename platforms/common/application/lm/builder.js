@@ -1,8 +1,6 @@
 var prime     = require('prime'),
     $         = require('elements'),
-    Emitter   = require('prime/emitter'),
-    Bound     = require('prime-utils/prime/bound'),
-    Options   = require('prime-utils/prime/options');
+    Emitter   = require('prime/emitter');
 
 var Blocks    = require('./blocks/');
 
@@ -11,6 +9,7 @@ var forOwn    = require('mout/object/forOwn'),
     size      = require('mout/collection/size'),
     isArray   = require('mout/lang/isArray'),
     flatten   = require('mout/array/flatten'),
+    guid      = require('mout/random/guid'),
 
     set       = require('mout/object/set'),
     unset     = require('mout/object/unset'),
@@ -200,7 +199,8 @@ var Builder = new prime({
         callback = callback || this.insert;
 
         forEach(data, function(value, key, object){
-            //console.log(rpad(repeat('    ', depth) + '' + value.type, 35) + ' ('+rpad(value.id, 36)+') parent: ' + parent);
+            if (!value.id) { value.id = guid(); }
+            console.log(rpad(repeat('    ', depth) + '' + value.type, 35) + ' ('+rpad(value.id, 36)+') parent: ' + parent);
             this.emit('loading', callback.call(this, value.id, value, parent, depth));
             if (value.children && size(value.children)){
                 //this.recursiveLoad(value.children, callback, ++depth, value.id);

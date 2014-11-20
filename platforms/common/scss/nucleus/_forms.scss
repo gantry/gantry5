@@ -1,16 +1,16 @@
-#g5-container fieldset {
+fieldset {
 	border: 0;
 	padding: $content-padding;
 	margin: 0 0 $leading-margin 0;
 }
 
-#g5-container input,
-#g5-container label,
-#g5-container select {
+input,
+label,
+select {
 	display: block;
 }
 
-#g5-container label {
+label {
 	margin-bottom: $leading-margin / 4;
 
 	&.required:after {
@@ -22,43 +22,38 @@
 	}
 }
 
-#g5-container textarea, #g5-container #{$all-text-inputs}, #g5-container select[multiple=multiple] {
+textarea, #{$all-text-inputs}, select[multiple=multiple] {
 	@include transition(border-color);
 	border-radius: $core-border-radius;
 	margin-bottom: $leading-margin / 2;
 	padding: ($leading-margin / 4) ($leading-margin / 4);
-	width: 100%;
-	height: auto;
 
 	&:focus {
 		outline: none;
 	}
 }
 
-#g5-container textarea {
+textarea {
 	resize: vertical;
 }
 
-#g5-container input[type="checkbox"], input[type="radio"] {
+input[type="checkbox"], input[type="radio"] {
 	display: inline;
 	margin-right: $leading-margin / 4;
 }
 
-#g5-container input[type="file"] {
+input[type="file"] {
 	width: 100%;
 }
 
-#g5-container select {
+select {
 	width: auto;
-	height: inherit;
-	line-height: inherit;
-	vertical-align: inherit;
 	max-width: 100%;
 	margin-bottom: $leading-margin;
 }
 
-#g5-container button,
-#g5-container input[type="submit"] {
+button,
+input[type="submit"] {
 	cursor: pointer;
 	user-select: none;
 	vertical-align: middle;

@@ -1,8 +1,8 @@
 <?php
 defined('_JEXEC') or die;
 
-// Bootstrap the template.
-$gantry = include_once __DIR__ . '/includes/template.php';
+// Bootstrap Gantry framework or fail gracefully (inside included file).
+$gantry = include __DIR__ . '/includes/gantry.php';
 
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];

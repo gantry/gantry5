@@ -1,3 +1,4 @@
+"use strict";
 var getSupportedEvent = function(events){
     events = events.split(' ');
 
@@ -10,7 +11,7 @@ var getSupportedEvent = function(events){
 
         if (!isSupported){
             element.setAttribute(event, 'return;');
-            isSupported = typeof element[event] == 'function';
+            isSupported = typeof element[event] === 'function';
         }
 
         if (isSupported){
@@ -26,7 +27,7 @@ var getSupportedEvent = function(events){
 var EVENT = {
     START: getSupportedEvent('mousedown touchstart MSPointerDown pointerdown'),
     MOVE:  getSupportedEvent('mousemove touchmove MSPointerMove pointermove'),
-    STOP:  getSupportedEvent('mouseup touchend MSPointerUp pointerup'),
+    STOP:  getSupportedEvent('mouseup touchend MSPointerUp pointerup')
 };
 
 

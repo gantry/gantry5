@@ -59,6 +59,8 @@ try
         include_once(__DIR__ . '/template.php');
     }
 
+    include_once(__DIR__ . '/template.php');
+
     return $gantry;
 }
 catch (Exception $e)

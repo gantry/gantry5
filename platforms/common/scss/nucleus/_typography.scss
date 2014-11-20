@@ -1,62 +1,70 @@
 // Body Base
-body #g5-container {
+body {
 	font-size: $core-font-size;
 	line-height: $core-line-height;
 }
 
 // Headings
-#g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
+h1, h2, h3, h4, h5, h6 {
 	margin: $leading-margin / 2 0 $leading-margin 0;
-	line-height: inherit;
 	text-rendering: optimizeLegibility;
 }
 
-#g5-container h1 {
+h1 {
 	font-size: $h1-font-size;
 }
 
-#g5-container h2 {
+h2 {
 	font-size: $h2-font-size;
 }
 
-#g5-container h3 {
+h3 {
 	font-size: $h3-font-size;
 }
 
-#g5-container h4 {
+h4 {
 	font-size: $h4-font-size;
 }
 
-#g5-container h5 {
+h5 {
 	font-size: $h5-font-size;
 }
 
-#g5-container h6 {
+h6 {
 	font-size: $h6-font-size;
 }
 
 // Paragraph
-#g5-container p {
+p {
 	margin: $leading-margin 0;
 }
 
 // Lists
-#g5-container ul, #g5-container ol {
+ul, ol, dl {
 	margin-top: $leading-margin;
 	margin-bottom: $leading-margin;
-	ul, ol {
+	ul, ol, dl {
 		margin-top: 0;
 		margin-bottom: 0;
 	}
 }
 
+ul, dl {
+	margin-left: $leading-margin;
+	padding: 0;
+}
+
+ol {
+	padding-left: $leading-margin;
+}
+
 // Blockquote
-#g5-container blockquote {
+blockquote {
 	margin: $leading-margin 0;
 	padding-left: $leading-margin / 2;
 }
 
-#g5-container cite {
+cite {
 	display: block;
 	font-size: $core-font-size - 0.125;
 	&:before {
@@ -65,21 +73,21 @@ body #g5-container {
 }
 
 // Inline and Code
-#g5-container pre {
+pre {
 	margin: $leading-margin 0;
  	padding: $content-padding;
 }
 
-#g5-container code {
+code {
 	vertical-align: bottom;
 }
 
 // Extras
-#g5-container small {
+small {
 	font-size: $core-font-size - 0.125;
 }
 
-#g5-container hr {
+hr {
 	border-left: none;
 	border-right: none;
 	border-top: none;

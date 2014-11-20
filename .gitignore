@@ -29,3 +29,5 @@ themes/*/magento/skin/default/common
 .sass-cache/*
 node_modules/*
 platforms/wordpress/gantryadmin/cache
+platforms/common/node_modules
+.sass-cache
