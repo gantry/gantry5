@@ -3,7 +3,6 @@ module.exports = function(grunt) {
         sass: {
             dist: {
                 options: {
-                    sourcemap: true,
                     trace: true,
                     style: 'expanded',
                     lineNumbers: true

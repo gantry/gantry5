@@ -1,3 +1,4 @@
+"use strict";
 var DragEvents = require('./drag.events'),
     prime      = require('prime'),
     Emitter    = require('prime/emitter'),
@@ -43,7 +44,7 @@ var Resizer = new prime({
 
     start: function(event, element, siblings){
         this.map = this.builder.map;
-        if (event.which && event.which != 1) return true;
+        if (event.which && event.which !== 1) { return true; }
         // stops text selection
         event.preventDefault();
 
@@ -63,9 +64,11 @@ var Resizer = new prime({
             }, this);
         }
 
-        if (this.siblings.prevs) this.siblings.prevs.forEach(function(sibling){
-            this.siblings.sizeBefore += this.getSize(sibling);
-        }, this);
+        if (this.siblings.prevs) {
+            this.siblings.prevs.forEach(function(sibling){
+                this.siblings.sizeBefore += this.getSize(sibling);
+            }, this);
+        }
 
         this.origin = {
             size: this.getSize(this.element),
@@ -130,7 +133,7 @@ var Resizer = new prime({
         $(document).off(this.EVENTS.MOVE, this.bound('move'));
         $(document).off(this.EVENTS.STOP, this.bound('stop'));
 
-        if (this.origin.size !== this.getSize(this.element)) this.history.push(this.builder.serialize());
+        if (this.origin.size !== this.getSize(this.element)) { this.history.push(this.builder.serialize()); }
     },
 
     evenResize: function(elements, animated){
@@ -138,16 +141,16 @@ var Resizer = new prime({
             size  = precision(100 / total, 4),
             block;
 
-        if (typeof animated == 'undefined') animated = true;
+        if (typeof animated === 'undefined') { animated = true; }
 
         elements.forEach(function(element){
             element = $(element);
             block = this.getBlock(element);
             if (block && block.hasAttribute('size')){
                 //console.log(size, block.getSize());
-                block[animated ? 'setAnimatedSize' : 'setSize'](size, (size != block.getSize() ? true : false));
+                block[animated ? 'setAnimatedSize' : 'setSize'](size, (size !== block.getSize() ? true : false));
             } else {
-                if (element) element[animated ? 'animate' : 'style']({flex: '0 1 '+size+'%'});
+                if (element) { element[animated ? 'animate' : 'style']({flex: '0 1 '+size+'%'}); }
             }
             //console.log(block.getId());
         }, this);

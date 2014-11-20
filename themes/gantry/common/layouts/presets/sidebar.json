@@ -4,6 +4,8 @@
         "header": {
             "type": "section",
             "attributes": {
+                "name": "Header",
+                "key": "header",
                 "type": "header",
                 "id": "header"
             }
@@ -13,46 +15,55 @@
             "attributes": {},
             "children": [
                 {
-                    "left": {
-                        "type": "block",
-                        "attributes": {
-                            "size": 75
-                        },
-                        "children:": [
-                            {
-                                "showcase": {
-                                    "type": "section",
-                                    "attributes": {}
-                                },
-                                "feature": {
-                                    "type": "section",
-                                    "attributes": {}
-                                },
-                                "main": {
-                                    "type": "section",
-                                    "attributes": {}
-                                },
-                                "bottom": {
-                                    "type": "section",
-                                    "attributes": {}
-                                }
-                            }
-                        ]
+                    "type": "block",
+                    "attributes": {
+                        "size": 75
                     },
-                    "right": {
-                        "type": "block",
-                        "attributes": {
-                            "size": 25
-                        },
-                        "children": [
-                            {
-                                "sidebar": {
-                                    "type": "section",
-                                    "attributes": {}
-                                }
+                    "children": [
+                        {
+                            "type": "section",
+                            "attributes": {
+                                "name": "Showcase",
+                                "key": "showcase"
                             }
-                        ]
-                    }
+                        },
+                        {
+                            "type": "section",
+                            "attributes": {
+                                "name": "Feature",
+                                "key": "feature"
+                            }
+                        },
+                        {
+                            "type": "section",
+                            "attributes": {
+                                "name": "Main",
+                                "key": "main"
+                            }
+                        },
+                        {
+                            "type": "section",
+                            "attributes": {
+                                "name": "Bottom",
+                                "key": "bottom"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "block",
+                    "attributes": {
+                        "size": 25
+                    },
+                    "children": [
+                        {
+                            "type": "section",
+                            "attributes": {
+                                "name": "Sidebar",
+                                "key": "sidebar"
+                            }
+                        }
+                    ]
                 }
             ]
         }

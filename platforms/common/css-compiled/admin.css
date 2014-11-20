@@ -1495,4 +1495,231 @@ body.g5-dialog-open {
   bottom: auto;
 }
 
+/*  webui popover  */
+/* line 47, ../scss/admin/_popover.scss */
+.g5-popover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1060;
+  display: none;
+  width: 276px;
+  min-height: 50px;
+  padding: 1px;
+  text-align: left;
+  white-space: normal;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+/* line 65, ../scss/admin/_popover.scss */
+.g5-popover.top, .g5-popover.top-left, .g5-popover.top-right {
+  margin-top: -10px;
+}
+/* line 66, ../scss/admin/_popover.scss */
+.g5-popover.right, .g5-popover.right-top, .g5-popover.right-bottom {
+  margin-left: 10px;
+}
+/* line 67, ../scss/admin/_popover.scss */
+.g5-popover.bottom, .g5-popover.bottom-left, .g5-popover.bottom-right {
+  margin-top: 10px;
+}
+/* line 68, ../scss/admin/_popover.scss */
+.g5-popover.left, .g5-popover.left-top, .g5-popover.left-bottom {
+  margin-left: -10px;
+}
+
+/* line 73, ../scss/admin/_popover.scss */
+.g5-popover-inner .close {
+  font-family: arial;
+  margin: 5px 10px 0 0;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 20px;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.2;
+  text-decoration: none;
+}
+/* line 84, ../scss/admin/_popover.scss */
+.g5-popover-inner .close:hover, .g5-popover-inner .close:focus {
+  opacity: 0.5;
+}
+
+/* line 89, ../scss/admin/_popover.scss */
+.g5-popover-title {
+  padding: 8px 14px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 18px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ebebeb;
+  border-radius: 5px 5px 0 0;
+}
+
+/* line 100, ../scss/admin/_popover.scss */
+.g5-popover-content {
+  padding: 9px 14px;
+  overflow: auto;
+}
+
+/* line 106, ../scss/admin/_popover.scss */
+.g5-popover-inverse {
+  background-color: #333;
+  color: #eee;
+}
+/* line 110, ../scss/admin/_popover.scss */
+.g5-popover-inverse .g5-popover-title {
+  background: #3b3b3b;
+  border-bottom: none;
+  color: #eee;
+}
+
+/* line 118, ../scss/admin/_popover.scss */
+.webui-no-padding .g5-popover-content {
+  padding: 0;
+}
+/* line 121, ../scss/admin/_popover.scss */
+.webui-no-padding .list-group-item {
+  border-right: none;
+  border-left: none;
+}
+/* line 124, ../scss/admin/_popover.scss */
+.webui-no-padding .list-group-item:first-child {
+  border-top: 0;
+}
+/* line 127, ../scss/admin/_popover.scss */
+.webui-no-padding .list-group-item:last-child {
+  border-bottom: 0;
+}
+
+/* line 135, ../scss/admin/_popover.scss */
+.g5-popover > .arrow, .g5-popover > .arrow:after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+/* line 145, ../scss/admin/_popover.scss */
+.g5-popover > .arrow {
+  border-width: 11px;
+}
+
+/* line 148, ../scss/admin/_popover.scss */
+.g5-popover > .arrow:after {
+  border-width: 10px;
+  content: "";
+}
+
+/* line 154, ../scss/admin/_popover.scss */
+.g5-popover.top > .arrow, .g5-popover.top-right > .arrow, .g5-popover.top-left > .arrow {
+  bottom: -11px;
+  left: 50%;
+  margin-left: -11px;
+  border-top-color: #999999;
+  border-top-color: fadein(rgba(0, 0, 0, 0.2), 5%);
+  border-bottom-width: 0;
+}
+/* line 164, ../scss/admin/_popover.scss */
+.g5-popover.top > .arrow:after, .g5-popover.top-right > .arrow:after, .g5-popover.top-left > .arrow:after {
+  content: " ";
+  bottom: 1px;
+  margin-left: -10px;
+  border-top-color: #fff;
+  border-bottom-width: 0;
+}
+/* line 172, ../scss/admin/_popover.scss */
+.g5-popover.right > .arrow, .g5-popover.right-top > .arrow, .g5-popover.right-bottom > .arrow {
+  top: 50%;
+  left: -11px;
+  margin-top: -11px;
+  border-left-width: 0;
+  border-right-color: #999999;
+  border-right-color: fadein(rgba(0, 0, 0, 0.2), 5%);
+}
+/* line 181, ../scss/admin/_popover.scss */
+.g5-popover.right > .arrow:after, .g5-popover.right-top > .arrow:after, .g5-popover.right-bottom > .arrow:after {
+  content: " ";
+  left: 1px;
+  bottom: -10px;
+  border-left-width: 0;
+  border-right-color: #fff;
+}
+/* line 189, ../scss/admin/_popover.scss */
+.g5-popover.bottom > .arrow, .g5-popover.bottom-right > .arrow, .g5-popover.bottom-left > .arrow {
+  top: -11px;
+  left: 50%;
+  margin-left: -11px;
+  border-bottom-color: #999999;
+  border-bottom-color: fadein(rgba(0, 0, 0, 0.2), 5%);
+  border-top-width: 0;
+}
+/* line 199, ../scss/admin/_popover.scss */
+.g5-popover.bottom > .arrow:after, .g5-popover.bottom-right > .arrow:after, .g5-popover.bottom-left > .arrow:after {
+  content: " ";
+  top: 1px;
+  margin-left: -10px;
+  border-bottom-color: #fff;
+  border-top-width: 0;
+}
+/* line 207, ../scss/admin/_popover.scss */
+.g5-popover.left > .arrow, .g5-popover.left-top > .arrow, .g5-popover.left-bottom > .arrow {
+  top: 50%;
+  right: -11px;
+  margin-top: -11px;
+  border-right-width: 0;
+  border-left-color: #999999;
+  border-left-color: fadein(rgba(0, 0, 0, 0.2), 5%);
+}
+/* line 216, ../scss/admin/_popover.scss */
+.g5-popover.left > .arrow:after, .g5-popover.left-top > .arrow:after, .g5-popover.left-bottom > .arrow:after {
+  content: " ";
+  right: 1px;
+  border-right-width: 0;
+  border-left-color: #fff;
+  bottom: -10px;
+}
+
+/* line 230, ../scss/admin/_popover.scss */
+.g5-popover-inverse.top > .arrow, .g5-popover-inverse.top > .arrow:after, .g5-popover-inverse.top-left > .arrow, .g5-popover-inverse.top-left > .arrow:after, .g5-popover-inverse.top-right > .arrow, .g5-popover-inverse.top-right > .arrow:after {
+  border-top-color: #333;
+}
+/* line 237, ../scss/admin/_popover.scss */
+.g5-popover-inverse.right > .arrow, .g5-popover-inverse.right > .arrow:after, .g5-popover-inverse.right-top > .arrow, .g5-popover-inverse.right-top > .arrow:after, .g5-popover-inverse.right-bottom > .arrow, .g5-popover-inverse.right-bottom > .arrow:after {
+  border-right-color: #333;
+}
+/* line 244, ../scss/admin/_popover.scss */
+.g5-popover-inverse.bottom > .arrow, .g5-popover-inverse.bottom > .arrow:after, .g5-popover-inverse.bottom-left > .arrow, .g5-popover-inverse.bottom-left > .arrow:after, .g5-popover-inverse.bottom-right > .arrow, .g5-popover-inverse.bottom-right > .arrow:after {
+  border-bottom-color: #333;
+}
+/* line 251, ../scss/admin/_popover.scss */
+.g5-popover-inverse.left > .arrow, .g5-popover-inverse.left > .arrow:after, .g5-popover-inverse.left-top > .arrow, .g5-popover-inverse.left-top > .arrow:after, .g5-popover-inverse.left-bottom > .arrow, .g5-popover-inverse.left-bottom > .arrow:after {
+  border-left-color: #333;
+}
+
+/* line 257, ../scss/admin/_popover.scss */
+.g5-popover i.icon-refresh:before {
+  content: "";
+}
+
+/* line 261, ../scss/admin/_popover.scss */
+.g5-popover i.icon-refresh {
+  display: block;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  background: url(../img/loading.gif) no-repeat;
+}
+
 /*# sourceMappingURL=admin.css.map */

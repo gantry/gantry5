@@ -1,3 +1,5 @@
+"use strict";
+
 var prime      = require('prime'),
     Emitter    = require('prime/emitter'),
     Bound      = require('prime-util/prime/bound'),
@@ -6,13 +8,13 @@ var prime      = require('prime'),
     contains   = require('mout/array/contains'),
     DragEvents = require('./drag.events'),
     $          = require('../utils/elements.moofx');
-                 // $ utils
-                 require('elements/events');
-                 require('elements/delegation');
-                 //require('elements/insertion');
-                 //require('elements/attributes');
+// $ utils
+require('elements/events');
+require('elements/delegation');
+//require('elements/insertion');
+//require('elements/attributes');
 
-var isIE = (navigator.appName == "Microsoft Internet Explorer");
+var isIE = (navigator.appName === "Microsoft Internet Explorer");
 
 var DragDrop = new prime({
 
@@ -27,13 +29,21 @@ var DragDrop = new prime({
 
     EVENTS: DragEvents,
 
-    constructor: function(container, options){
+    constructor: function (container, options) {
         this.container = $(container);
-        if (!this.container) return;
+        if (!this.container) { return; }
         this.setOptions(options);
 
         this.element = null;
-        this.origin  = {x: 0, y: 0, transform: null, offset: {x: 0, y: 0}};
+        this.origin = {
+            x: 0,
+            y: 0,
+            transform: null,
+            offset: {
+                x: 0,
+                y: 0
+            }
+        };
 
         this.matched = false;
         this.lastMatched = false;
@@ -42,23 +52,28 @@ var DragDrop = new prime({
         this.attach();
     },
 
-    attach: function(){
+    attach: function () {
         this.container.delegate(this.EVENTS.START, this.options.delegate, this.bound('start'));
     },
 
-    detach: function(){
+    detach: function () {
         this.container.undelegate(this.EVENTS.START, this.options.delegate, this.bound('start'));
     },
 
-    start: function(event, element){
-        if (event.which && event.which != 1 || $(event.target).matches(this.options.exclude)) return true;
+    start: function (event, element) {
+        if (event.which && event.which !== 1 || $(event.target).matches(this.options.exclude)) { return true; }
         this.element = $(element);
         this.matched = false;
 
         this.emit('dragdrop:beforestart', event, this.element);
 
         // stops default MS touch actions since preventDefault doesn't work
-        if (isIE) this.element.style({'-ms-touch-action': 'none', 'touch-action': 'none'});
+        if (isIE) {
+            this.element.style({
+                '-ms-touch-action': 'none',
+                'touch-action': 'none'
+            });
+        }
 
         // stops text selection
         event.preventDefault();
@@ -66,22 +81,26 @@ var DragDrop = new prime({
         this.origin = {
             x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX,
             y: event.changedTouches ? event.changedTouches[0].pageY : event.pageY,
-            transform:  this.element.compute('transform')
+            transform: this.element.compute('transform')
         };
 
         var clientRect = this.element[0].getBoundingClientRect();
         this.origin.offset = {
             clientRect: clientRect,
             x: this.origin.x - clientRect.right,
-            y: clientRect.top  - this.origin.y
+            y: clientRect.top - this.origin.y
         };
 
-        if (this.origin.offset.x > 0){
+        if (this.origin.offset.x > 0) {
             this.emit('dragdrop:resize', event, this.element, this.element.siblings());
             return false;
         }
 
-        this.element.style({'pointer-events': 'none', opacity: 0.5, zIndex: 100});
+        this.element.style({
+            'pointer-events': 'none',
+            opacity: 0.5,
+            zIndex: 100
+        });
         $(document).on(this.EVENTS.MOVE, this.bound('move'));
         $(document).on(this.EVENTS.STOP, this.bound('stop'));
         this.emit('dragdrop:start', event, this.element);
@@ -89,19 +108,28 @@ var DragDrop = new prime({
         return this.element;
     },
 
-    stop: function(event){
-        var settings = {duration: '250ms'};
+    stop: function (event) {
+        var settings = { duration: '250ms' };
 
-        if (this.removeElement) return this.emit('dragdrop:stop:erase', event, this.element);
+        if (this.removeElement) { return this.emit('dragdrop:stop:erase', event, this.element); }
 
-        if (this.element){
+        if (this.element) {
 
             this.emit('dragdrop:stop', event, this.matched, this.element);
 
-            this.element.style({position: 'relative', width: 'auto', height: 'auto'});
+            this.element.style({
+                position: 'relative',
+                width: 'auto',
+                height: 'auto'
+            });
 
-            if (this.matched) this.element.style({opacity: 0, transform: 'translate(0, 0)'});
-            settings.callback = bind(function(element){
+            if (this.matched) {
+                this.element.style({
+                    opacity: 0,
+                    transform: 'translate(0, 0)'
+                });
+            }
+            settings.callback = bind(function (element) {
                 this._removeStyleAttribute(element);
                 this.emit('dragdrop:stop:animation', element);
             }, this, this.element);
@@ -117,22 +145,22 @@ var DragDrop = new prime({
         this.element = null;
     },
 
-    move: function(event){
-        var clientX   = event.clientX || (event.touches && event.touches[0].clientX) || 0,
-            clientY   = event.clientY || (event.touches && event.touches[0].clientY) || 0,
-            overing   = document.elementFromPoint(clientX, clientY);
+    move: function (event) {
+        var clientX = event.clientX || (event.touches && event.touches[0].clientX) || 0,
+            clientY = event.clientY || (event.touches && event.touches[0].clientY) || 0,
+            overing = document.elementFromPoint(clientX, clientY);
 
-        if (!overing) return false;
+        if (!overing) { return false; }
 
-        this.matched        = $(overing).matches(this.options.droppables) ? overing : ($(overing).parent(this.options.droppables) || [false])[0];
+        this.matched = $(overing).matches(this.options.droppables) ? overing : ($(overing).parent(this.options.droppables) || [false])[0];
         this.isPlaceHolder = $(overing).matches('[data-lm-placeholder]') ? true : ($(overing).parent('[data-lm-placeholder]') ? true : false);
 
-        var deltaX    = this.lastX - clientX,
-            deltaY    = this.lastY - clientY,
-            direction = Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0 && 'left'  ||
-                        Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0 && 'right' ||
-                        Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0 && 'up'    ||
-                                                                             'down';
+        var deltaX = this.lastX - clientX,
+            deltaY = this.lastY - clientY,
+            direction = Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0 && 'left' ||
+                Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0 && 'right' ||
+                Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0 && 'up' ||
+                'down';
 
 
         deltaX = (event.changedTouches ? event.changedTouches[0].pageX : event.pageX) - this.origin.x;
@@ -141,51 +169,51 @@ var DragDrop = new prime({
         //console.log('x', this.origin.x, 'y', this.origin.y, 'ox', this.origin.offset.x, 'oy', this.origin.offset.y, 'dx', deltaX, 'dy', deltaY);
 
         this.direction = direction;
-        this.element.style({transform: 'translate('+deltaX+'px, '+deltaY+'px)'});
+        this.element.style({ transform: 'translate(' + deltaX + 'px, ' + deltaY + 'px)' });
 
-        if (!this.isPlaceHolder){
-            if (this.lastMatched && this.matched !== this.lastMatched){
+        if (!this.isPlaceHolder) {
+            if (this.lastMatched && this.matched !== this.lastMatched) {
                 this.emit('dragdrop:leave', event, this.lastMatched, this.element);
                 this.lastMatched = false;
             }
 
-            if (this.matched && this.matched !== this.lastMatched && overing !== this.lastOvered){
+            if (this.matched && this.matched !== this.lastMatched && overing !== this.lastOvered) {
                 this.emit('dragdrop:enter', event, this.matched, this.element);
                 this.lastMatched = this.matched;
             }
 
-            if (this.matched && this.lastMatched){
+            if (this.matched && this.lastMatched) {
                 var rect = this.matched.getBoundingClientRect();
                 var x = clientX - rect.left,
                     y = clientY - rect.top;
 
                 var location = {
-                    x:  Math.abs((clientX - rect.left)) < (rect.width / 3)  && 'before'||
-                        Math.abs((clientX - rect.left)) >= (rect.width - (rect.width / 3)) && 'after' ||
-                                                                               'other',
-                    y:  Math.abs((clientY - rect.top)) < (rect.height / 2)  && 'above' ||
-                        Math.abs((clientY - rect.top)) >= (rect.height / 2) && 'below' ||
-                                                                               'other'
+                    x: Math.abs((clientX - rect.left)) < (rect.width / 3) && 'before' ||
+                    Math.abs((clientX - rect.left)) >= (rect.width - (rect.width / 3)) && 'after' ||
+                    'other',
+                    y: Math.abs((clientY - rect.top)) < (rect.height / 2) && 'above' ||
+                    Math.abs((clientY - rect.top)) >= (rect.height / 2) && 'below' ||
+                    'other'
                 };
 
                 //if (!equals(location, this.lastLocation)){
-                    this.emit('dragdrop:location', event, location, this.matched, this.element);
-                    this.lastLocation = location;
+                this.emit('dragdrop:location', event, location, this.matched, this.element);
+                this.lastLocation = location;
                 //}
             } else {
                 this.emit('dragdrop:nolocation', event);
             }
         }
 
-        this.lastOvered    = overing;
+        this.lastOvered = overing;
         this.lastDirection = direction;
-        this.lastX         = clientX;
-        this.lastY         = clientY;
+        this.lastX = clientX;
+        this.lastY = clientY;
 
         this.emit('dragdrop:move', event, this.element);
     },
 
-    _removeStyleAttribute: function(element){
+    _removeStyleAttribute: function (element) {
         //var flex = $(element).compute('flex');
         $(element || this.element).attribute('style', null);//.style({flex: flex});
         //$(element || this.element).style({'pointer-events': 'auto', 'position': 'inherit', 'z-index': 'inherit'});

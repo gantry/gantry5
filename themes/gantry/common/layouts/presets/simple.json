@@ -4,25 +4,39 @@
         "header": {
             "type": "section",
             "attributes": {
+                "name": "Header",
+                "key": "header",
                 "type": "header",
                 "id": "header"
             }
         },
         "showcase": {
             "type": "section",
-            "attributes": {}
+            "attributes": {
+                "name": "Showcase",
+                "key": "showcase"
+            }
         },
         "feature": {
             "type": "section",
-            "attributes": {}
+            "attributes": {
+                "name": "Feature",
+                "key": "feature"
+            }
         },
         "main": {
             "type": "section",
-            "attributes": {}
+            "attributes": {
+                "name": "Main",
+                "key": "main"
+            }
         },
-        "bottom": {
+        "footer": {
             "type": "section",
-            "attributes": {}
+            "attributes": {
+                "name": "Bottom",
+                "key": "bottom"
+            }
         }
     }
 

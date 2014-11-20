@@ -1,7 +1,7 @@
 var prime = require('prime'),
     Base  = require('./base');
 
-$     = require('../../utils/elements.moofx');
+$     = require('../utils/elements.moofx');
 
 var Block = new prime({
     inherits: Base,
@@ -34,7 +34,7 @@ var Block = new prime({
     },
 
     layout: function(){
-        return '<div class="block" data-lm-id="' + this.getId() + '" data-lm-blocktype="block"></div>';
+        return '<div class="block" data-lm-id="' + this.getId() + '" ' + this.dropZone() +' data-lm-blocktype="block"></div>';
     }
 });
 
