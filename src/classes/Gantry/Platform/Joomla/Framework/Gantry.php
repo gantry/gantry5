@@ -22,6 +22,10 @@ class Gantry extends Base\Gantry
             return new Page($c);
         };
 
+        $container['menu'] = function ($c) {
+            return new Menu;
+        };
+
         return $container;
     }
 }

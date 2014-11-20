@@ -1,7 +1,6 @@
 // Inactive Dropdown
 %inactive-dropdown {
 	position: absolute;
-	width: $dropdown-width;
 	top: auto;
 	left: auto;
 	opacity: 0;
@@ -14,4 +13,11 @@
 	opacity: 1;
 	visibility: visible;
 	overflow: visible;
+}
+
+// Inactive Dropdown
+%dropdown-column {
+	width: $dropdown-col-width;
+	//height: $dropdown-height;
+	float: left;
 }

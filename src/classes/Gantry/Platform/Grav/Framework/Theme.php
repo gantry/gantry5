@@ -17,7 +17,7 @@ class Theme extends BaseTheme
 
         // $this->init();
 
-        $baseUrlRelative = $config->get('system.base_url_relative');
+        $baseUrlRelative = $grav['base_url_relative'];
         $this->name = $name;
         $this->path = THEMES_DIR . $name;
         $this->url = $baseUrlRelative .'/'. USER_PATH . basename(THEMES_DIR) .'/'. $this->name;

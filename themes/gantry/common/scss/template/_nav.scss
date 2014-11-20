@@ -8,7 +8,7 @@
 				padding: $nav-item-padding;
 				color: $nav-link;
 			}
-			&:hover {
+			&:hover, &.active {
 				a {
 					color: $white;
 				}
@@ -36,7 +36,7 @@
     			font-size: $dropdown-font-size;
     			padding: $nav-item-padding;
     		}
-    		&:hover {
+    		&:hover, &.active {
     			background: darken($core-accent, 8%);
     		}
     	}

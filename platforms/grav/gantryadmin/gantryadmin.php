@@ -40,7 +40,7 @@ class GantryAdminPlugin extends Plugin
             return;
         }
 
-        $base = rtrim($this->config->get('system.base_url_relative'), '/');
+        $base = rtrim($this->grav['base_url'], '/');
         $results = explode('/', $admin->route, 3);
         $theme = array_shift($results);
         $this->template = array_shift($results) ?: 'overview';
