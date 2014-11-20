@@ -47,4 +47,9 @@
     		}
     	}
     }
+
+    // Megamenu Options
+    .dropdown-column {
+    	@extend %dropdown-column;
+    }
 }

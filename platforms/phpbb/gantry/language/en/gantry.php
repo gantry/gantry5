@@ -19,11 +19,14 @@ if (empty($lang) || !is_array($lang))
 	$lang = array();
 }
 
+global $config;
+
 $lang = array_merge($lang, array(
-		'TITLE'	=> 'Global Configuration',
-		'TITLE_EXPLAIN'	=> 'Here you can set various phpBB specific options for your RocketTheme template.',
+		'TITLE'	=> 'Style Configuration',
+		'TITLE_EXPLAIN'	=> 'Here you can set various phpBB specific options for your RocketTheme style.',
 		'AVATAR_POSITION'	=> 'Avatar position',
 		'AVATAR_POSITION_EXPLAIN' => 'Set avatar and user profile position.',
 		'STYLE_CONFIGURATION' => 'Style Configuration',
-		'ACP_CAT_RTSTYLES' => 'RocketTheme Styles',
+		'ACP_CAT_RTSTYLES' => 'RocketTheme',
+		'L_RT_SETTINGS' => 'Style Configuration',
 ));

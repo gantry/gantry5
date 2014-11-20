@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form name="template-options">
+	<fieldset name="example" label="Example Label">
+		<field name="example_item1" type="selectbox" label="Example SelectBox" description="Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.">
+			<option value="item1">Item 1</option>
+			<option value="item2">Item 2</option>
+			<option value="Item3">Item 3</option>
+		</field>
+		<field name="example_item2" type="toggle" default="1" label="Example Toggle" description="Nulla vitae elit libero, a pharetra augue."/>
+		<field name="example_item3" type="input" default="" label="Example Input" description="Curabitur blandit tempus porttitor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit."/>
+	</fieldset>
+
+	<fieldset name="example2" label="Example Label 2">
+		<field name="example2_item1" type="selectbox" label="Example SelectBox" description="Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.">
+			<option value="item1">Item 1</option>
+			<option value="item2">Item 2</option>
+			<option value="Item3">Item 3</option>
+		</field>
+		<field name="example2_item2" type="toggle" default="1" label="Example Toggle" description="Nulla vitae elit libero, a pharetra augue."/>
+		<field name="example2_item3" type="input" default="" label="Example Input" description="Curabitur blandit tempus porttitor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit."/>
+	</fieldset>
+</form>
