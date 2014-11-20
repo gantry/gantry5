@@ -1,6 +1,5 @@
 .main-nav .dropdown, .main-nav .dropdown .dropdown {
   position: absolute;
-  width: 170px;
   top: auto;
   left: auto;
   opacity: 0;
@@ -11,6 +10,10 @@
   opacity: 1;
   visibility: visible;
   overflow: visible; }
+
+.main-nav .dropdown-column {
+  width: 170px;
+  float: left; }
 
 .main-nav ul {
   margin: 0;
@@ -105,10 +108,17 @@ sub {
   bottom: -0.25em; }
 
 img {
-  border: 0;
+  width: auto\9;
+  height: auto;
   max-width: 100%;
   display: inline-block;
-  vertical-align: middle; }
+  vertical-align: middle;
+  border: 0;
+  -ms-interpolation-mode: bicubic; }
+
+iframe,
+svg {
+  max-width: 100%; }
 
 svg:not(:root) {
   overflow: hidden; }
@@ -593,6 +603,13 @@ ul, ol, dl {
     margin-top: 0;
     margin-bottom: 0; }
 
+ul, dl {
+  margin-left: 1.5rem;
+  padding: 0; }
+
+ol {
+  padding-left: 1.5rem; }
+
 blockquote {
   margin: 1.5rem 0;
   padding-left: 0.75rem; }
@@ -642,8 +659,7 @@ textarea, input[type="email"], input[type="number"], input[type="password"], inp
   transition: border-color;
   border-radius: 0.1875rem;
   margin-bottom: 0.75rem;
-  padding: 0.375rem 0.375rem;
-  width: 100%; }
+  padding: 0.375rem 0.375rem; }
   textarea:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, select[multiple=multiple]:focus {
     outline: none; }
 
@@ -683,5 +699,11 @@ input[type="submit"] {
   content: "";
   display: table;
   clear: both; }
+
+.center {
+  text-align: center; }
+
+.full-height {
+  min-height: 100vh; }
 
 /*# sourceMappingURL=nucleus.css.map */

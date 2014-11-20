@@ -230,15 +230,10 @@ ul.linklist .dropdown-up .dropdown {
 ----------------------------------------*/
 ul.linklist.bulletin > li:before {
 	display: inline-block;
-	content: "\2022";
 	font-size: inherit;
 	line-height: inherit;
-	padding-right: 4px;
-}
-
-ul.linklist.bulletin > li:first-child:before,
-ul.linklist.bulletin > li.rightside:last-child:before {
-	content: none;
+	padding-top: 1px;
+	margin-left: -4px;
 }
 
 ul.linklist.bulletin > li.no-bulletin:before {
@@ -1007,7 +1002,6 @@ ul.linklist:after,
 	font-size: 11px;
 	font-weight: bold;
 	text-align: left;
-	text-shadow: 1px 1px 1px white;
 	text-transform: uppercase;
 	line-height: 30px;
 	border-bottom: 1px solid;

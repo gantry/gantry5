@@ -1,3 +1,4 @@
+// Lists and Tables
 dl {
 	margin-top: $leading-margin;
 	margin-bottom: $leading-margin;
@@ -5,4 +6,171 @@ dl {
 
 dd {
 	margin-left: $leading-margin;
+}
+
+.list-striped,
+.row-striped {
+	list-style: none;
+	line-height: 18px;
+	text-align: left;
+	vertical-align: middle;
+	margin-left: 0;
+}
+
+.list-striped li,
+.list-striped dd,
+.row-striped .row,
+.row-striped .row-fluid {
+	padding: $leading-margin / 2;
+}
+
+.row-striped .row-fluid {
+	width: 97%;
+}
+
+.row-striped .row-fluid [class*="span"] {
+	min-height: 10px;
+}
+
+.row-striped .row-fluid [class*="span"] {
+	margin-left: $leading-margin / 2;
+}
+
+.row-striped .row-fluid [class*="span"]:first-child {
+	margin-left: 0;
+}
+
+.list-condensed li {
+	padding: $leading-margin / 3;
+}
+
+.row-condensed .row,
+.row-condensed .row-fluid {
+	padding: $leading-margin / 3;
+}
+
+.list-bordered,
+.row-bordered {
+	list-style: none;
+	line-height: $core-line-height;
+	text-align: left;
+	vertical-align: middle;
+	margin-left: 0;
+	border-radius: 4px;
+}
+
+.blog-row-rule,
+.blog-item-rule {
+	border: 0;
+}
+
+.row-even,
+.row-odd {
+	padding: 5px;
+	width: 99%;
+}
+
+.row-odd {
+	background-color: transparent;
+}
+
+.row-fluid .row-reveal {
+	visibility: hidden;
+}
+
+.row-fluid:hover .row-reveal {
+	visibility: visible;
+}
+
+hr.hr-condensed {
+	margin: 10px 0;
+}
+
+// Captions
+.img_caption .left {
+	float: left;
+	margin-right: $leading-margin;
+}
+
+.img_caption .right {
+	float: right;
+	margin-left: $leading-margin;
+}
+
+.img_caption .left p {
+	clear: left;
+	text-align: center;
+}
+
+.img_caption .right p {
+	clear: right;
+	text-align: center;
+}
+
+.img_caption {
+	text-align: center !important;
+}
+
+.img_caption.none {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+figure {
+	display: table;
+}
+
+figure.pull-center,
+img.pull-center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+figcaption {
+	display: table-caption;
+	caption-side: bottom;
+}
+
+// Blockquote and Code
+blockquote {
+	padding: 0 0 0 $content-padding;
+	margin: 0 0 $leading-margin;
+}
+
+blockquote p {
+	font-size: $core-font-size + .2;
+	line-height: $core-line-height;
+}
+
+blockquote small {
+	line-height: $core-line-height;
+}
+
+
+blockquote.pull-right {
+	padding-right: $leading-margin;
+}
+
+address {
+	margin-bottom: $leading-margin;
+	line-height: $core-line-height;
+}
+
+code,
+pre {
+	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+	font-size: $core-font-size - .2;
+	border-radius: $core-border-radius;
+}
+
+pre {
+	padding: $content-padding;
+	margin: 0 0 $leading-margin;
+	font-size: $core-font-size - .2;
+	line-height: $core-line-height;
+	border-radius: $core-border-radius;
+}
+
+pre.prettyprint {
+	margin-bottom: $leading-margin;
 }

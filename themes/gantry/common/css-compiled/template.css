@@ -38,7 +38,7 @@ a {
   font-size: 1.1rem;
   padding: 0.75rem 0.938rem;
   color: #aaa; }
-.main-nav > .toplevel > li:hover a {
+.main-nav > .toplevel > li:hover a, .main-nav > .toplevel > li.active a {
   color: #fff; }
 .main-nav .dropdown {
   background: #4184B6;
@@ -50,7 +50,7 @@ a {
 .main-nav .sublevel > li > a {
   font-size: 1rem;
   padding: 0.75rem 0.938rem; }
-.main-nav .sublevel > li:hover {
+.main-nav .sublevel > li:hover, .main-nav .sublevel > li.active {
   background: #366e98; }
 
 #showcase {
@@ -94,7 +94,7 @@ h1, h2, h3, h4, h5, h6 {
 h6 {
   text-transform: uppercase; }
 
-strong, h1, h2, h3, h4, h5, h6, label, th {
+strong, h1, h2, h3, h4, h5, h6, th {
   font-family: "walkwaybold", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
 
 blockquote {
