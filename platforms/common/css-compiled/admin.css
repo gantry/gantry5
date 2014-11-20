@@ -1581,20 +1581,20 @@ body.g5-dialog-open {
 }
 
 /* line 118, ../scss/admin/_popover.scss */
-.webui-no-padding .g5-popover-content {
+.g5-popover-no-padding .g5-popover-content {
   padding: 0;
 }
 /* line 121, ../scss/admin/_popover.scss */
-.webui-no-padding .list-group-item {
+.g5-popover-no-padding .list-group-item {
   border-right: none;
   border-left: none;
 }
 /* line 124, ../scss/admin/_popover.scss */
-.webui-no-padding .list-group-item:first-child {
+.g5-popover-no-padding .list-group-item:first-child {
   border-top: 0;
 }
 /* line 127, ../scss/admin/_popover.scss */
-.webui-no-padding .list-group-item:last-child {
+.g5-popover-no-padding .list-group-item:last-child {
   border-bottom: 0;
 }
 

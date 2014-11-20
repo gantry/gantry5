@@ -24,6 +24,10 @@ ready(function () {
             $('[data-g5-content]').html(content.html()).find('.title').text(data.name);
             builder = new Builder(data.layout);
             builder.load();
+
+            // -!- Popovers
+            // particles picker
+            $('[data-lm-addparticle]').popover({type: 'async', placement: 'left-bottom', width: '200', url: 'index.php?option=com_gantryadmin&view=particles&format=json'});
         });
 
         modal.close();

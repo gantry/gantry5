@@ -102,7 +102,7 @@ var Popover = new prime({
 
     hideAll: function () {
         var elements = $('div.' + this.options.mainClass + ':not(.' + this.options.mainClass + '-fixed)');
-        if (!elements) return null;
+        if (!elements) { return null; }
         elements.removeClass('in').style({ display: 'none' });
     },
 
@@ -183,8 +183,8 @@ var Popover = new prime({
         }
 
         if (!this.options.padding) {
-            $targetContent.css('height', $targetContent.outerHeight());
-            this.$target.addClass('webui-no-padding');
+            targetContent.css('height', targetContent.position().height);
+            this.$target.addClass('g5-popover-no-padding');
         }
         if (!this.options.arrow) {
             this.$target.style({ 'margin': 0 });
@@ -314,6 +314,9 @@ var Popover = new prime({
         this.hideAll();
     },
 
+    targetClickHandler: function(e){
+        e.stopPropagation();
+    },
 
     initTargetEvents: function () {
         if (this.options.trigger !== 'click') {
@@ -329,7 +332,7 @@ var Popover = new prime({
             close.off('click', this.bound('hide')).on('click', this.bound('hide'));
         }
 
-        this.$target.off('click', this.bound('toggle')).on('click', this.bound('toggle'));
+        this.$target.off('click', this.bound('targetClickHandler')).on('click', this.bound('targetClickHandler'));
     },
 
     /* utils methods */
@@ -498,6 +501,7 @@ $.implement({
             }
         });
     },
+
     position: function () {
         var node = this[0], box = {
                 left: 0,
@@ -518,7 +522,7 @@ $.implement({
             scrollTop = win.pageYOffset || docElem.scrollTop,
             scrollLeft = win.pageXOffset || docElem.scrollLeft,
             dx = scrollLeft - clientLeft,
-            dy = scrollTop - clientTop
+            dy = scrollTop - clientTop;
 
         return {
             x: box.left + dx,
