@@ -27,7 +27,8 @@ class Router implements RouterInterface
         $style = $input->getInt('style', 0);
 
         $params = [
-            'id' => $input->getInt('id')
+            'id'   => $input->getInt('id'),
+            'ajax' => ($format == 'json')
         ];
 
         // If style is set, resolve the template and load it.

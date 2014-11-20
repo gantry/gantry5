@@ -13,21 +13,21 @@ class Page extends JsonController
 
     public function overview(array $params)
     {
-        $layout = $this->container['admin.theme']->render('@gantry-admin/overview.html.twig');
+        $layout = $this->container['admin.theme']->render('@gantry-admin/overview.html.twig', ['ajax' => $params['ajax']]);
 
         return new JsonResponse(['html' => $layout]);
     }
 
     public function pages_index(array $params)
     {
-        $layout = $this->container['admin.theme']->render('@gantry-admin/pages_index.html.twig');
+        $layout = $this->container['admin.theme']->render('@gantry-admin/pages_index.html.twig', ['ajax' => $params['ajax']]);
 
         return new JsonResponse(['html' => $layout]);
     }
 
     public function pages_create(array $params)
     {
-        $layout = $this->container['admin.theme']->render('@gantry-admin/pages_create.html.twig');
+        $layout = $this->container['admin.theme']->render('@gantry-admin/pages_create.html.twig', ['ajax' => $params['ajax']]);
 
         return new JsonResponse(['html' => $layout]);
     }

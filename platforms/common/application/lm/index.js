@@ -6,22 +6,25 @@ var ready   = require('elements/domready'),
     request = require('agent'),
     zen     = require('elements/zen'),
 
+    AjaxURL = require('../utils/ajax-uri'),
+
     Builder = require('./builder');
 
 require('../ui/popover');
 
 var builder;
 
+
 builder = new Builder(json);
 
 ready(function () {
+    console.log(AjaxURL('foo'));
     // attach events
     // Picker
     $('body').delegate('click', '[data-g5-lm-picker]', function(event, element){
         var data = JSON.parse(element.data('g5-lm-picker'));
         request('index.php?option=com_gantryadmin&view=page&layout=pages_create&format=json', function(error, response){
-            var content = zen('div').html(response.body.data.html).find('[data-g5-content]');
-            $('[data-g5-content]').html(content.html()).find('.title').text(data.name);
+            $('[data-g5-content]').html(response.body.data.html).find('.title').text(data.name);
             builder = new Builder(data.layout);
             builder.load();
 
