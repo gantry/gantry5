@@ -127,7 +127,7 @@
     margin: 1px 0 -1px 0; }
 
 body #g5-container {
-  background-color: #122749; }
+  background-color: #404040; }
 
 #g5-container .fa-spin {
   -webkit-animation: spin 0.8s infinite linear;
@@ -398,7 +398,7 @@ body #g5-container {
         top: 1px;
         left: 1px; }
 #g5-container .inner-header {
-  background-color: #214886;
+  background-color: #222;
   padding: 1rem;
   color: #3180C2; }
 #g5-container .ribbon {
