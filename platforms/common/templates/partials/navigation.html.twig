@@ -1,22 +1,19 @@
 <section id="sidebar">
-    <div data-mode-indicator="production"></div>
-    <div class="content">
-        <ul>
-            <li class="{{ (location == 'overview') ? 'active' }}">
-                <a data-g5-ajaxify="{{ '{"view":"page", "method":"overview"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('overview') }}"><i class="fa fa-desktop"></i>Overview</a>
-            </li>
-            <li class="{{ (location == 'settings') ? 'active' }}">
-                <a data-g5-ajaxify="{{ '{"view":"page", "method":"settings"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('settings') }}"><i class="fa fa-wrench"></i>Settings</a>
-            </li>
-            <li class="{{ (location == 'pages') ? 'active' }}">
-                <a data-g5-ajaxify="{{ '{"view":"page", "method":"pages_index"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('pages') }}"><i class="fa fa-sitemap"></i>Page Setup</a>
-            </li>
-            <li class="{{ (location == 'assignments') ? 'active' }}">
-                <a data-g5-ajaxify="{{ '{"view":"page", "method":"assignments"}' | e }}" ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('assignments') }}"><i class="fa fa-check-square-o"></i>Assignments</a>
-            </li>
-            <li class="{{ (location == 'updates') ? 'active' }}">
-                <a data-g5-ajaxify="{{ '{"view":"page", "method":"updates"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('updates') }}"><i class="fa fa-cloud-download"></i>Updates</a>
-            </li>
-        </ul>
-    </div>
+    <ul>
+        <li class="{{ (location == 'overview') ? 'active' }}">
+            <a data-g5-ajaxify="{{ '{"view":"page", "method":"overview"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('overview') }}"><i class="fa fa-adjust"></i>Overview</a>
+        </li>
+        <li class="{{ (location == 'settings') ? 'active' }}">
+            <a data-g5-ajaxify="{{ '{"view":"page", "method":"settings"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('settings') }}"><i class="fa fa-wrench"></i>Settings</a>
+        </li>
+        <li class="{{ (location == 'pages') ? 'active' }}">
+            <a data-g5-ajaxify="{{ '{"view":"page", "method":"pages_index"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('pages') }}"><i class="fa fa-star"></i>Page Setup</a>
+        </li>
+        <li class="{{ (location == 'assignments') ? 'active' }}">
+            <a data-g5-ajaxify="{{ '{"view":"page", "method":"assignments"}' | e }}" ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('assignments') }}"><i class="fa fa-check-square-o"></i>Assignments</a>
+        </li>
+        <li class="{{ (location == 'updates') ? 'active' }}">
+            <a data-g5-ajaxify="{{ '{"view":"page", "method":"updates"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('updates') }}"><i class="fa fa-cloud-download"></i>Updates</a>
+        </li>
+    </ul>
 </section>

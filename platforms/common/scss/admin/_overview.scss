@@ -1,49 +1,5 @@
 #g5-container {//wrapper
 
-.overview-header {
-    color: $white;
-    text-align: center;
-    margin: -1.60rem -1.563rem 100px;
-    max-height: 370px;
-    padding: 1px;
-    background: url(../images/bg-blurred.jpg) 50% 100%;
-    background-size: 100% 100%;
 
-    .content {
-        text-align: center;
-    }
-
-    img {
-        display: block;
-        margin: 0 auto;
-    }
-
-    .circle {
-        display: inline-block;
-        @include size(120px);
-        line-height: 120px;
-        border-radius: 120px;
-        margin-bottom: -80px;
-        box-shadow: 0 0 0 1px $white;
-        font-weight: bold;
-        text-align: center;
-
-
-        &.yellow {
-            background-color: $yellow;
-            color: darken($yellow, 30%);
-        }
-
-        &.green {
-            background-color: $green;
-            color: darken($green, 30%);
-        }
-
-        &.pink {
-            background-color: $orange;
-            color: darken($orange, 30%);
-        }
-    }
-}
 
 } //endwrapper
