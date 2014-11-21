@@ -19,15 +19,16 @@ var G5;
         require('5');
         require('6');
         require('7');
+        require('8');
         module.exports = {
-            lm: require('8'),
-            ui: require('9'),
+            lm: require('9'),
+            ui: require('a'),
             '$': elements
         };
     },
     '1': function (require, module, exports, global) {
         'use strict';
-        var $ = require('a');
+        var $ = require('b');
         require('2');
         require('3');
         require('5');
@@ -37,8 +38,8 @@ var G5;
     },
     '2': function (require, module, exports, global) {
         'use strict';
-        var $ = require('a');
-        var trim = require('d'), forEach = require('e'), filter = require('f'), indexOf = require('g');
+        var $ = require('b');
+        var trim = require('c'), forEach = require('d'), filter = require('e'), indexOf = require('f');
         $.implement({
             setAttribute: function (name, value) {
                 return this.forEach(function (node) {
@@ -210,8 +211,8 @@ var G5;
     },
     '3': function (require, module, exports, global) {
         'use strict';
-        var Emitter = require('b');
-        var $ = require('a');
+        var Emitter = require('g');
+        var $ = require('b');
         var html = document.documentElement;
         var addEventListener = html.addEventListener ? function (node, event, handle, useCapture) {
                 node.addEventListener(event, handle, useCapture || false);
@@ -266,7 +267,7 @@ var G5;
     },
     '4': function (require, module, exports, global) {
         'use strict';
-        var Map = require('c');
+        var Map = require('h');
         var $ = require('3');
         require('6');
         $.implement({
@@ -319,7 +320,7 @@ var G5;
     },
     '5': function (require, module, exports, global) {
         'use strict';
-        var $ = require('a');
+        var $ = require('b');
         $.implement({
             appendChild: function (child) {
                 this[0].appendChild($(child)[0]);
@@ -389,9 +390,9 @@ var G5;
     },
     '6': function (require, module, exports, global) {
         'use strict';
-        var map = require('h');
-        var slick = require('i');
-        var $ = require('a');
+        var map = require('i');
+        var slick = require('j');
+        var $ = require('b');
         var gen = function (combinator, expression) {
             return map(slick.parse(expression || '*'), function (part) {
                 return combinator + ' ' + part;
@@ -475,7 +476,7 @@ var G5;
     },
     '7': function (require, module, exports, global) {
         'use strict';
-        var prime = require('j'), $ = require('k'), zen = require('l'), storage = require('c')(), Emitter = require('b'), Bound = require('m'), Options = require('n'), domready = require('o'), bind = require('p'), map = require('q'), forEach = require('r'), last = require('s'), merge = require('t'), isFunct = require('u'), request = require('v');
+        var prime = require('k'), $ = require('l'), zen = require('m'), storage = require('h')(), Emitter = require('g'), Bound = require('u'), Options = require('v'), domready = require('n'), bind = require('w'), map = require('x'), forEach = require('y'), last = require('z'), merge = require('p'), isFunct = require('10'), request = require('r');
         var animationEndSupport = false, popovers = {};
         var Popover = new prime({
                 mixin: [
@@ -886,53 +887,101 @@ var G5;
     },
     '8': function (require, module, exports, global) {
         'use strict';
-        var ready = require('o'), json = require('w'), $ = require('2'), modal = require('9').modal, request = require('v'), zen = require('l'), AjaxURL = require('x'), Builder = require('y');
+        var prime = require('k'), $ = require('l'), zen = require('m'), domready = require('n'), storage = require('h')(), size = require('o'), merge = require('p'), guid = require('q'), request = require('r')(), History = require('s'), AjaxURL = require('t');
+        History.Adapter.bind(window, 'statechange', function () {
+            if (request.running()) {
+                return false;
+            }
+            var State = History.getState(), URI = State.url, Data = State.data;
+            if (size(Data) && storage.get(Data.uuid)) {
+                Data = storage.get(Data.uuid);
+                URI = History.getBaseUrl() + AjaxURL(Data.view, Data.method || null);
+            }
+            if (Data.element) {
+                $('body').emit('statechangeBefore', { target: Data.element });
+            }
+            request.url(URI).send(function (error, response) {
+                var target = $(Data.target);
+                if (response.body && response.body.data && response.body.data.html) {
+                    (target || $('body')).html(response.body.data.html);
+                } else {
+                    (target || $('body')).html(response.body);
+                }
+                if (Data.element) {
+                    $('body').emit('statechangeAfter', { target: Data.element });
+                }
+            });
+        });
+        domready(function () {
+            $('body').delegate('click', '[data-g5-ajaxify]', function (event, element) {
+                if (event) {
+                    if (event.which === 2 || event.metaKey) {
+                        return true;
+                    }
+                    event.preventDefault();
+                }
+                var data = element.data('g5-ajaxify'), target = element.data('g5-ajaxify-target'), url = element.attribute('href') || element.data('g5-ajaxify-href'), title = element.attribute('title') || '';
+                data = data ? JSON.parse(data) : null;
+                if (data) {
+                    var uuid = guid();
+                    storage.set(uuid, merge({}, data, {
+                        target: target,
+                        element: element,
+                        event: event
+                    }));
+                    data = { uuid: uuid };
+                }
+                History.pushState(data, title, url);
+            });
+        });
+        module.exports = {};
+    },
+    '9': function (require, module, exports, global) {
+        'use strict';
+        var ready = require('n'), json = require('11'), $ = require('2'), modal = require('a').modal, request = require('r'), zen = require('m'), AjaxURL = require('t'), Builder = require('12'), History = require('13');
         require('7');
         var builder;
         builder = new Builder(json);
         ready(function () {
             ;
-            $('body').delegate('click', '[data-g5-lm-picker]', function (event, element) {
-                var data = JSON.parse(element.data('g5-lm-picker'));
-                request(AjaxURL('page', 'pages_create'), function (error, response) {
-                    $('[data-g5-content]').html(response.body.data.html).find('.title').text(data.name);
-                    builder = new Builder(data.layout);
-                    builder.load();
-                    $('[data-lm-addparticle]').popover({
-                        type: 'async',
-                        placement: 'left-bottom',
-                        width: '200',
-                        style: 'fixed',
-                        url: AjaxURL('particles')
-                    });
-                });
+            $('body').delegate('statechangeBefore', '[data-g5-lm-picker]', function () {
                 modal.close();
             });
-            var addPage = $('[data-g5-lm-add]');
-            if (addPage) {
-                addPage.on('click', function (e) {
-                    e.preventDefault();
-                    modal.open({
-                        content: 'Loading',
-                        remote: AjaxURL('layouts')
-                    });
+            $('body').delegate('statechangeAfter', '[data-g5-lm-picker]', function (event, element) {
+                var data = JSON.parse(element.data('g5-lm-picker'));
+                $('[data-g5-content]').find('.title').text(data.name);
+                builder = new Builder(data.layout);
+                builder.load();
+                $('[data-lm-addparticle]').popover({
+                    type: 'async',
+                    placement: 'left-bottom',
+                    width: '200',
+                    style: 'fixed',
+                    url: AjaxURL('particles')
                 });
-            }
+            });
+            $('body').delegate('click', '[data-g5-lm-add]', function (event, element) {
+                event.preventDefault();
+                modal.open({
+                    content: 'Loading',
+                    remote: AjaxURL('layouts')
+                });
+            });
         });
         module.exports = {
             $: $,
             builder: builder
         };
     },
-    '9': function (require, module, exports, global) {
-        'use strict';
-        var ready = require('o'), Modal = require('z');
-        module.exports = { modal: new Modal() };
-    },
     'a': function (require, module, exports, global) {
         'use strict';
-        var prime = require('j');
-        var forEach = require('e'), map = require('h'), filter = require('f'), every = require('10'), some = require('11');
+        var ready = require('n'), Modal = require('14');
+        module.exports = { modal: new Modal() };
+    },
+    'b': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('k');
+        var forEach = require('d'), map = require('i'), filter = require('e'), every = require('15'), some = require('16');
         var index = 0, __dc = document.__counter, counter = document.__counter = (__dc ? parseInt(__dc, 36) + 1 : 0).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n) {
             if (n === window)
@@ -1016,10 +1065,72 @@ var G5;
             });
         module.exports = $;
     },
-    'b': function (require, module, exports, global) {
+    'c': function (require, module, exports, global) {
+        var toString = require('17');
+        var WHITE_SPACES = require('18');
+        var ltrim = require('19');
+        var rtrim = require('1a');
+        function trim(str, chars) {
+            str = toString(str);
+            chars = chars || WHITE_SPACES;
+            return ltrim(rtrim(str, chars), chars);
+        }
+        module.exports = trim;
+    },
+    'd': function (require, module, exports, global) {
+        function forEach(arr, callback, thisObj) {
+            if (arr == null) {
+                return;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (callback.call(thisObj, arr[i], i, arr) === false) {
+                    break;
+                }
+            }
+        }
+        module.exports = forEach;
+    },
+    'e': function (require, module, exports, global) {
+        var makeIterator = require('1b');
+        function filter(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var results = [];
+            if (arr == null) {
+                return results;
+            }
+            var i = -1, len = arr.length, value;
+            while (++i < len) {
+                value = arr[i];
+                if (callback(value, i, arr)) {
+                    results.push(value);
+                }
+            }
+            return results;
+        }
+        module.exports = filter;
+    },
+    'f': function (require, module, exports, global) {
+        function indexOf(arr, item, fromIndex) {
+            fromIndex = fromIndex || 0;
+            if (arr == null) {
+                return -1;
+            }
+            var len = arr.length, i = fromIndex < 0 ? len + fromIndex : fromIndex;
+            while (i < len) {
+                if (arr[i] === item) {
+                    return i;
+                }
+                i++;
+            }
+            return -1;
+        }
+        module.exports = indexOf;
+    },
+    'g': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('g'), forEach = require('e');
-        var prime = require('j'), defer = require('12');
+        var indexOf = require('f'), forEach = require('d');
+        var prime = require('k'), defer = require('1c');
         var slice = Array.prototype.slice;
         var Emitter = prime({
                 on: function (event, fn) {
@@ -1064,10 +1175,10 @@ var G5;
         Emitter.EMIT_SYNC = {};
         module.exports = Emitter;
     },
-    'c': function (require, module, exports, global) {
+    'h': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('g');
-        var prime = require('j');
+        var indexOf = require('f');
+        var prime = require('k');
         var Map = prime({
                 constructor: function Map() {
                     this.length = 0;
@@ -1165,70 +1276,8 @@ var G5;
         map.prototype = Map.prototype;
         module.exports = map;
     },
-    'd': function (require, module, exports, global) {
-        var toString = require('13');
-        var WHITE_SPACES = require('14');
-        var ltrim = require('15');
-        var rtrim = require('16');
-        function trim(str, chars) {
-            str = toString(str);
-            chars = chars || WHITE_SPACES;
-            return ltrim(rtrim(str, chars), chars);
-        }
-        module.exports = trim;
-    },
-    'e': function (require, module, exports, global) {
-        function forEach(arr, callback, thisObj) {
-            if (arr == null) {
-                return;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (callback.call(thisObj, arr[i], i, arr) === false) {
-                    break;
-                }
-            }
-        }
-        module.exports = forEach;
-    },
-    'f': function (require, module, exports, global) {
-        var makeIterator = require('17');
-        function filter(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var results = [];
-            if (arr == null) {
-                return results;
-            }
-            var i = -1, len = arr.length, value;
-            while (++i < len) {
-                value = arr[i];
-                if (callback(value, i, arr)) {
-                    results.push(value);
-                }
-            }
-            return results;
-        }
-        module.exports = filter;
-    },
-    'g': function (require, module, exports, global) {
-        function indexOf(arr, item, fromIndex) {
-            fromIndex = fromIndex || 0;
-            if (arr == null) {
-                return -1;
-            }
-            var len = arr.length, i = fromIndex < 0 ? len + fromIndex : fromIndex;
-            while (i < len) {
-                if (arr[i] === item) {
-                    return i;
-                }
-                i++;
-            }
-            return -1;
-        }
-        module.exports = indexOf;
-    },
-    'h': function (require, module, exports, global) {
-        var makeIterator = require('17');
+    'i': function (require, module, exports, global) {
+        var makeIterator = require('1b');
         function map(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var results = [];
@@ -1243,13 +1292,13 @@ var G5;
         }
         module.exports = map;
     },
-    'i': function (require, module, exports, global) {
-        'use strict';
-        module.exports = 'document' in global ? require('18') : { parse: require('19') };
-    },
     'j': function (require, module, exports, global) {
         'use strict';
-        var hasOwn = require('1a'), mixIn = require('1b'), create = require('1c'), kindOf = require('1d');
+        module.exports = 'document' in global ? require('1d') : { parse: require('1e') };
+    },
+    'k': function (require, module, exports, global) {
+        'use strict';
+        var hasOwn = require('1f'), mixIn = require('1g'), create = require('1h'), kindOf = require('1i');
         var hasDescriptors = true;
         try {
             Object.defineProperty({}, '~', {});
@@ -1312,8 +1361,8 @@ var G5;
         };
         module.exports = prime;
     },
-    'k': function (require, module, exports, global) {
-        var $ = require('1'), moofx = require('1e'), map = require('q'), slick = require('i');
+    'l': function (require, module, exports, global) {
+        var $ = require('1'), moofx = require('1j'), map = require('x'), slick = require('j');
         var walk = function (combinator, method) {
             return function (expression) {
                 var parts = slick.parse(expression || '*');
@@ -1343,11 +1392,11 @@ var G5;
         });
         module.exports = $;
     },
-    'l': function (require, module, exports, global) {
+    'm': function (require, module, exports, global) {
         'use strict';
-        var forEach = require('e'), map = require('h');
-        var parse = require('19');
-        var $ = require('a');
+        var forEach = require('d'), map = require('i');
+        var parse = require('1e');
+        var $ = require('b');
         module.exports = function (expression, doc) {
             return $(map(parse(expression), function (expression) {
                 var previous, result;
@@ -1382,36 +1431,7 @@ var G5;
             }));
         };
     },
-    'm': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('j');
-        var bind = require('p');
-        var bound = prime({
-                bound: function (name) {
-                    var bound = this._bound || (this._bound = {});
-                    return bound[name] || (bound[name] = bind(this[name], this));
-                }
-            });
-        module.exports = bound;
-    },
     'n': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('j');
-        var merge = require('t');
-        var Options = prime({
-                setOptions: function (options) {
-                    var args = [
-                            {},
-                            this.options
-                        ];
-                    args.push.apply(args, arguments);
-                    this.options = merge.apply(null, args);
-                    return this;
-                }
-            });
-        module.exports = Options;
-    },
-    'o': function (require, module, exports, global) {
         'use strict';
         var $ = require('3');
         var readystatechange = 'onreadystatechange' in document, shouldPoll = false, loaded = false, readys = [], checks = [], ready = null, timer = null, test = document.createElement('div'), doc = $(document), win = $(window);
@@ -1477,59 +1497,24 @@ var G5;
             return null;
         };
     },
+    'o': function (require, module, exports, global) {
+        var isArray = require('1k');
+        var objSize = require('1l');
+        function size(list) {
+            if (!list) {
+                return 0;
+            }
+            if (isArray(list)) {
+                return list.length;
+            }
+            return objSize(list);
+        }
+        module.exports = size;
+    },
     'p': function (require, module, exports, global) {
-        var slice = require('1f');
-        function bind(fn, context, args) {
-            var argsArr = slice(arguments, 2);
-            return function () {
-                return fn.apply(context, argsArr.concat(slice(arguments)));
-            };
-        }
-        module.exports = bind;
-    },
-    'q': function (require, module, exports, global) {
-        var makeIterator = require('1g');
-        function map(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var results = [];
-            if (arr == null) {
-                return results;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                results[i] = callback(arr[i], i, arr);
-            }
-            return results;
-        }
-        module.exports = map;
-    },
-    'r': function (require, module, exports, global) {
-        function forEach(arr, callback, thisObj) {
-            if (arr == null) {
-                return;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (callback.call(thisObj, arr[i], i, arr) === false) {
-                    break;
-                }
-            }
-        }
-        module.exports = forEach;
-    },
-    's': function (require, module, exports, global) {
-        function last(arr) {
-            if (arr == null || arr.length < 1) {
-                return undefined;
-            }
-            return arr[arr.length - 1];
-        }
-        module.exports = last;
-    },
-    't': function (require, module, exports, global) {
-        var hasOwn = require('1h');
-        var deepClone = require('1i');
-        var isObject = require('1j');
+        var hasOwn = require('1o');
+        var deepClone = require('1p');
+        var isObject = require('1q');
         function merge() {
             var i = 1, key, val, obj, target;
             target = deepClone(arguments[0]);
@@ -1550,17 +1535,18 @@ var G5;
         }
         module.exports = merge;
     },
-    'u': function (require, module, exports, global) {
-        var isKind = require('1k');
-        function isFunction(val) {
-            return isKind(val, 'Function');
+    'q': function (require, module, exports, global) {
+        var randHex = require('1m');
+        var choice = require('1n');
+        function guid() {
+            return randHex(8) + '-' + randHex(4) + '-' + '4' + randHex(3) + '-' + choice(8, 9, 'a', 'b') + randHex(3) + '-' + randHex(12);
         }
-        module.exports = isFunction;
+        module.exports = guid;
     },
-    'v': function (require, module, exports, global) {
+    'r': function (require, module, exports, global) {
         'use strict';
-        var prime = require('j'), Emitter = require('b');
-        var isObject = require('1l'), isString = require('1m'), isArray = require('1n'), isFunction = require('1o'), trim = require('d'), upperCase = require('1p'), forIn = require('1q'), mixIn = require('1b'), remove = require('1r'), forEach = require('e');
+        var prime = require('k'), Emitter = require('g');
+        var isObject = require('1r'), isString = require('1s'), isArray = require('1t'), isFunction = require('1u'), trim = require('c'), upperCase = require('1v'), forIn = require('1w'), mixIn = require('1g'), remove = require('1x'), forEach = require('d');
         var capitalize = function (str) {
             return str.replace(/\b[a-z]/g, upperCase);
         };
@@ -1863,7 +1849,931 @@ var G5;
         agent.Response = Response;
         module.exports = agent;
     },
+    's': function (require, module, exports, global) {
+        'use strict';
+        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('1y') || {}, history = window.history;
+        try {
+            sessionStorage = window.sessionStorage;
+            sessionStorage.setItem('TEST', '1');
+            sessionStorage.removeItem('TEST');
+        } catch (e) {
+            sessionStorage = false;
+        }
+        JSON.stringify = JSON.stringify || JSON.encode;
+        JSON.parse = JSON.parse || JSON.decode;
+        if (typeof History.init === 'undefined') {
+            History.init = function (options) {
+                if (typeof History.Adapter === 'undefined') {
+                    return false;
+                }
+                if (typeof History.initCore !== 'undefined') {
+                    History.initCore();
+                }
+                if (typeof History.initHtml4 !== 'undefined') {
+                    History.initHtml4();
+                }
+                return true;
+            };
+            History.initCore = function (options) {
+                if (typeof History.initCore.initialized !== 'undefined') {
+                    return false;
+                } else {
+                    History.initCore.initialized = true;
+                }
+                History.options = History.options || {};
+                History.options.hashChangeInterval = History.options.hashChangeInterval || 100;
+                History.options.safariPollInterval = History.options.safariPollInterval || 500;
+                History.options.doubleCheckInterval = History.options.doubleCheckInterval || 500;
+                History.options.disableSuid = History.options.disableSuid || false;
+                History.options.storeInterval = History.options.storeInterval || 1000;
+                History.options.busyDelay = History.options.busyDelay || 250;
+                History.options.debug = History.options.debug || false;
+                History.options.initialTitle = History.options.initialTitle || document.title;
+                History.options.html4Mode = History.options.html4Mode || false;
+                History.options.delayInit = History.options.delayInit || false;
+                History.intervalList = [];
+                History.clearAllIntervals = function () {
+                    var i, il = History.intervalList;
+                    if (typeof il !== 'undefined' && il !== null) {
+                        for (i = 0; i < il.length; i++) {
+                            clearInterval(il[i]);
+                        }
+                        History.intervalList = null;
+                    }
+                };
+                History.debug = function () {
+                    if (History.options.debug || false) {
+                        History.log.apply(History, arguments);
+                    }
+                };
+                History.log = function () {
+                    var consoleExists = !(typeof console === 'undefined' || typeof console.log === 'undefined' || typeof console.log.apply === 'undefined'), textarea = document.getElementById('log'), message, i, n, args, arg;
+                    ;
+                    if (consoleExists) {
+                        args = Array.prototype.slice.call(arguments);
+                        message = args.shift();
+                        if (typeof console.debug !== 'undefined') {
+                            console.debug.apply(console, [
+                                message,
+                                args
+                            ]);
+                        } else {
+                            console.log.apply(console, [
+                                message,
+                                args
+                            ]);
+                        }
+                    } else {
+                        message = '\n' + arguments[0] + '\n';
+                    }
+                    for (i = 1, n = arguments.length; i < n; ++i) {
+                        arg = arguments[i];
+                        if (typeof arg === 'object' && typeof JSON !== 'undefined') {
+                            try {
+                                arg = JSON.stringify(arg);
+                            } catch (Exception) {
+                            }
+                        }
+                        message += '\n' + arg + '\n';
+                    }
+                    if (textarea) {
+                        textarea.value += message + '\n-----\n';
+                        textarea.scrollTop = textarea.scrollHeight - textarea.clientHeight;
+                    } else if (!consoleExists) {
+                        alert(message);
+                    }
+                    return true;
+                };
+                History.getInternetExplorerMajorVersion = function () {
+                    var result = History.getInternetExplorerMajorVersion.cached = typeof History.getInternetExplorerMajorVersion.cached !== 'undefined' ? History.getInternetExplorerMajorVersion.cached : function () {
+                            var v = 3, div = document.createElement('div'), all = div.getElementsByTagName('i');
+                            while ((div.innerHTML = '<!--[if gt IE ' + ++v + ']><i></i><![endif]-->') && all[0]) {
+                            }
+                            return v > 4 ? v : false;
+                        }();
+                    ;
+                    return result;
+                };
+                History.isInternetExplorer = function () {
+                    var result = History.isInternetExplorer.cached = typeof History.isInternetExplorer.cached !== 'undefined' ? History.isInternetExplorer.cached : Boolean(History.getInternetExplorerMajorVersion());
+                    ;
+                    return result;
+                };
+                if (History.options.html4Mode) {
+                    History.emulated = {
+                        pushState: true,
+                        hashChange: true
+                    };
+                } else {
+                    History.emulated = {
+                        pushState: !Boolean(window.history && window.history.pushState && window.history.replaceState && !(/ Mobile\/([1-7][a-z]|(8([abcde]|f(1[0-8]))))/i.test(navigator.userAgent) || /AppleWebKit\/5([0-2]|3[0-2])/i.test(navigator.userAgent))),
+                        hashChange: Boolean(!('onhashchange' in window || 'onhashchange' in document) || History.isInternetExplorer() && History.getInternetExplorerMajorVersion() < 8)
+                    };
+                }
+                History.enabled = !History.emulated.pushState;
+                History.bugs = {
+                    setHash: Boolean(!History.emulated.pushState && navigator.vendor === 'Apple Computer, Inc.' && /AppleWebKit\/5([0-2]|3[0-3])/.test(navigator.userAgent)),
+                    safariPoll: Boolean(!History.emulated.pushState && navigator.vendor === 'Apple Computer, Inc.' && /AppleWebKit\/5([0-2]|3[0-3])/.test(navigator.userAgent)),
+                    ieDoubleCheck: Boolean(History.isInternetExplorer() && History.getInternetExplorerMajorVersion() < 8),
+                    hashEscape: Boolean(History.isInternetExplorer() && History.getInternetExplorerMajorVersion() < 7)
+                };
+                History.isEmptyObject = function (obj) {
+                    for (var name in obj) {
+                        if (obj.hasOwnProperty(name)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                };
+                History.cloneObject = function (obj) {
+                    var hash, newObj;
+                    if (obj) {
+                        hash = JSON.stringify(obj);
+                        newObj = JSON.parse(hash);
+                    } else {
+                        newObj = {};
+                    }
+                    return newObj;
+                };
+                History.getRootUrl = function () {
+                    var rootUrl = document.location.protocol + '//' + (document.location.hostname || document.location.host);
+                    if (document.location.port || false) {
+                        rootUrl += ':' + document.location.port;
+                    }
+                    rootUrl += '/';
+                    return rootUrl;
+                };
+                History.getBaseHref = function () {
+                    var baseElements = document.getElementsByTagName('base'), baseElement = null, baseHref = '';
+                    if (baseElements.length === 1) {
+                        baseElement = baseElements[0];
+                        baseHref = baseElement.href.replace(/[^\/]+$/, '');
+                    }
+                    baseHref = baseHref.replace(/\/+$/, '');
+                    if (baseHref)
+                        baseHref += '/';
+                    return baseHref;
+                };
+                History.getBaseUrl = function () {
+                    var baseUrl = History.getBaseHref() || History.getBasePageUrl() || History.getRootUrl();
+                    return baseUrl;
+                };
+                History.getPageUrl = function () {
+                    var State = History.getState(false, false), stateUrl = (State || {}).url || History.getLocationHref(), pageUrl;
+                    pageUrl = stateUrl.replace(/\/+$/, '').replace(/[^\/]+$/, function (part, index, string) {
+                        return /\./.test(part) ? part : part + '/';
+                    });
+                    return pageUrl;
+                };
+                History.getBasePageUrl = function () {
+                    var basePageUrl = History.getLocationHref().replace(/[#\?].*/, '').replace(/[^\/]+$/, function (part, index, string) {
+                            return /[^\/]$/.test(part) ? '' : part;
+                        }).replace(/\/+$/, '') + '/';
+                    return basePageUrl;
+                };
+                History.getFullUrl = function (url, allowBaseHref) {
+                    var fullUrl = url, firstChar = url.substring(0, 1);
+                    allowBaseHref = typeof allowBaseHref === 'undefined' ? true : allowBaseHref;
+                    if (/[a-z]+\:\/\//.test(url)) {
+                    } else if (firstChar === '/') {
+                        fullUrl = History.getRootUrl() + url.replace(/^\/+/, '');
+                    } else if (firstChar === '#') {
+                        fullUrl = History.getPageUrl().replace(/#.*/, '') + url;
+                    } else if (firstChar === '?') {
+                        fullUrl = History.getPageUrl().replace(/[\?#].*/, '') + url;
+                    } else {
+                        if (allowBaseHref) {
+                            fullUrl = History.getBaseUrl() + url.replace(/^(\.\/)+/, '');
+                        } else {
+                            fullUrl = History.getBasePageUrl() + url.replace(/^(\.\/)+/, '');
+                        }
+                    }
+                    return fullUrl.replace(/\#$/, '');
+                };
+                History.getShortUrl = function (url) {
+                    var shortUrl = url, baseUrl = History.getBaseUrl(), rootUrl = History.getRootUrl();
+                    if (History.emulated.pushState) {
+                        shortUrl = shortUrl.replace(baseUrl, '');
+                    }
+                    shortUrl = shortUrl.replace(rootUrl, '/');
+                    if (History.isTraditionalAnchor(shortUrl)) {
+                        shortUrl = './' + shortUrl;
+                    }
+                    shortUrl = shortUrl.replace(/^(\.\/)+/g, './').replace(/\#$/, '');
+                    return shortUrl;
+                };
+                History.getLocationHref = function (doc) {
+                    doc = doc || document;
+                    if (doc.URL === doc.location.href)
+                        return doc.location.href;
+                    if (doc.location.href === decodeURIComponent(doc.URL))
+                        return doc.URL;
+                    if (doc.location.hash && decodeURIComponent(doc.location.href.replace(/^[^#]+/, '')) === doc.location.hash)
+                        return doc.location.href;
+                    if (doc.URL.indexOf('#') == -1 && doc.location.href.indexOf('#') != -1)
+                        return doc.location.href;
+                    return doc.URL || doc.location.href;
+                };
+                History.store = {};
+                History.idToState = History.idToState || {};
+                History.stateToId = History.stateToId || {};
+                History.urlToId = History.urlToId || {};
+                History.storedStates = History.storedStates || [];
+                History.savedStates = History.savedStates || [];
+                History.normalizeStore = function () {
+                    History.store.idToState = History.store.idToState || {};
+                    History.store.urlToId = History.store.urlToId || {};
+                    History.store.stateToId = History.store.stateToId || {};
+                };
+                History.getState = function (friendly, create) {
+                    if (typeof friendly === 'undefined') {
+                        friendly = true;
+                    }
+                    if (typeof create === 'undefined') {
+                        create = true;
+                    }
+                    var State = History.getLastSavedState();
+                    if (!State && create) {
+                        State = History.createStateObject();
+                    }
+                    if (friendly) {
+                        State = History.cloneObject(State);
+                        State.url = State.cleanUrl || State.url;
+                    }
+                    return State;
+                };
+                History.getIdByState = function (newState) {
+                    var id = History.extractId(newState.url), str;
+                    if (!id) {
+                        str = History.getStateString(newState);
+                        if (typeof History.stateToId[str] !== 'undefined') {
+                            id = History.stateToId[str];
+                        } else if (typeof History.store.stateToId[str] !== 'undefined') {
+                            id = History.store.stateToId[str];
+                        } else {
+                            while (true) {
+                                id = new Date().getTime() + String(Math.random()).replace(/\D/g, '');
+                                if (typeof History.idToState[id] === 'undefined' && typeof History.store.idToState[id] === 'undefined') {
+                                    break;
+                                }
+                            }
+                            History.stateToId[str] = id;
+                            History.idToState[id] = newState;
+                        }
+                    }
+                    return id;
+                };
+                History.normalizeState = function (oldState) {
+                    var newState, dataNotEmpty;
+                    if (!oldState || typeof oldState !== 'object') {
+                        oldState = {};
+                    }
+                    if (typeof oldState.normalized !== 'undefined') {
+                        return oldState;
+                    }
+                    if (!oldState.data || typeof oldState.data !== 'object') {
+                        oldState.data = {};
+                    }
+                    newState = {};
+                    newState.normalized = true;
+                    newState.title = oldState.title || '';
+                    newState.url = History.getFullUrl(oldState.url ? oldState.url : History.getLocationHref());
+                    newState.hash = History.getShortUrl(newState.url);
+                    newState.data = History.cloneObject(oldState.data);
+                    newState.id = History.getIdByState(newState);
+                    newState.cleanUrl = newState.url.replace(/\??\&_suid.*/, '');
+                    newState.url = newState.cleanUrl;
+                    dataNotEmpty = !History.isEmptyObject(newState.data);
+                    if ((newState.title || dataNotEmpty) && History.options.disableSuid !== true) {
+                        newState.hash = History.getShortUrl(newState.url).replace(/\??\&_suid.*/, '');
+                        if (!/\?/.test(newState.hash)) {
+                            newState.hash += '?';
+                        }
+                        newState.hash += '&_suid=' + newState.id;
+                    }
+                    newState.hashedUrl = History.getFullUrl(newState.hash);
+                    if ((History.emulated.pushState || History.bugs.safariPoll) && History.hasUrlDuplicate(newState)) {
+                        newState.url = newState.hashedUrl;
+                    }
+                    return newState;
+                };
+                History.createStateObject = function (data, title, url) {
+                    var State = {
+                            'data': data,
+                            'title': title,
+                            'url': url
+                        };
+                    State = History.normalizeState(State);
+                    return State;
+                };
+                History.getStateById = function (id) {
+                    id = String(id);
+                    var State = History.idToState[id] || History.store.idToState[id] || undefined;
+                    return State;
+                };
+                History.getStateString = function (passedState) {
+                    var State, cleanedState, str;
+                    State = History.normalizeState(passedState);
+                    cleanedState = {
+                        data: State.data,
+                        title: passedState.title,
+                        url: passedState.url
+                    };
+                    str = JSON.stringify(cleanedState);
+                    return str;
+                };
+                History.getStateId = function (passedState) {
+                    var State, id;
+                    State = History.normalizeState(passedState);
+                    id = State.id;
+                    return id;
+                };
+                History.getHashByState = function (passedState) {
+                    var State, hash;
+                    State = History.normalizeState(passedState);
+                    hash = State.hash;
+                    return hash;
+                };
+                History.extractId = function (url_or_hash) {
+                    var id, parts, url, tmp;
+                    if (url_or_hash.indexOf('#') != -1) {
+                        tmp = url_or_hash.split('#')[0];
+                    } else {
+                        tmp = url_or_hash;
+                    }
+                    parts = /(.*)\&_suid=([0-9]+)$/.exec(tmp);
+                    url = parts ? parts[1] || url_or_hash : url_or_hash;
+                    id = parts ? String(parts[2] || '') : '';
+                    return id || false;
+                };
+                History.isTraditionalAnchor = function (url_or_hash) {
+                    var isTraditional = !/[\/\?\.]/.test(url_or_hash);
+                    return isTraditional;
+                };
+                History.extractState = function (url_or_hash, create) {
+                    var State = null, id, url;
+                    create = create || false;
+                    id = History.extractId(url_or_hash);
+                    if (id) {
+                        State = History.getStateById(id);
+                    }
+                    if (!State) {
+                        url = History.getFullUrl(url_or_hash);
+                        id = History.getIdByUrl(url) || false;
+                        if (id) {
+                            State = History.getStateById(id);
+                        }
+                        if (!State && create && !History.isTraditionalAnchor(url_or_hash)) {
+                            State = History.createStateObject(null, null, url);
+                        }
+                    }
+                    return State;
+                };
+                History.getIdByUrl = function (url) {
+                    var id = History.urlToId[url] || History.store.urlToId[url] || undefined;
+                    return id;
+                };
+                History.getLastSavedState = function () {
+                    return History.savedStates[History.savedStates.length - 1] || undefined;
+                };
+                History.getLastStoredState = function () {
+                    return History.storedStates[History.storedStates.length - 1] || undefined;
+                };
+                History.hasUrlDuplicate = function (newState) {
+                    var hasDuplicate = false, oldState;
+                    oldState = History.extractState(newState.url);
+                    hasDuplicate = oldState && oldState.id !== newState.id;
+                    return hasDuplicate;
+                };
+                History.storeState = function (newState) {
+                    History.urlToId[newState.url] = newState.id;
+                    History.storedStates.push(History.cloneObject(newState));
+                    return newState;
+                };
+                History.isLastSavedState = function (newState) {
+                    var isLast = false, newId, oldState, oldId;
+                    if (History.savedStates.length) {
+                        newId = newState.id;
+                        oldState = History.getLastSavedState();
+                        oldId = oldState.id;
+                        isLast = newId === oldId;
+                    }
+                    return isLast;
+                };
+                History.saveState = function (newState) {
+                    if (History.isLastSavedState(newState)) {
+                        return false;
+                    }
+                    History.savedStates.push(History.cloneObject(newState));
+                    return true;
+                };
+                History.getStateByIndex = function (index) {
+                    var State = null;
+                    if (typeof index === 'undefined') {
+                        State = History.savedStates[History.savedStates.length - 1];
+                    } else if (index < 0) {
+                        State = History.savedStates[History.savedStates.length + index];
+                    } else {
+                        State = History.savedStates[index];
+                    }
+                    return State;
+                };
+                History.getCurrentIndex = function () {
+                    var index = null;
+                    if (History.savedStates.length < 1) {
+                        index = 0;
+                    } else {
+                        index = History.savedStates.length - 1;
+                    }
+                    return index;
+                };
+                History.getHash = function (doc) {
+                    var url = History.getLocationHref(doc), hash;
+                    hash = History.getHashByUrl(url);
+                    return hash;
+                };
+                History.unescapeHash = function (hash) {
+                    var result = History.normalizeHash(hash);
+                    result = decodeURIComponent(result);
+                    return result;
+                };
+                History.normalizeHash = function (hash) {
+                    var result = hash.replace(/[^#]*#/, '').replace(/#.*/, '');
+                    return result;
+                };
+                History.setHash = function (hash, queue) {
+                    var State, pageUrl;
+                    if (queue !== false && History.busy()) {
+                        History.pushQueue({
+                            scope: History,
+                            callback: History.setHash,
+                            args: arguments,
+                            queue: queue
+                        });
+                        return false;
+                    }
+                    History.busy(true);
+                    State = History.extractState(hash, true);
+                    if (State && !History.emulated.pushState) {
+                        History.pushState(State.data, State.title, State.url, false);
+                    } else if (History.getHash() !== hash) {
+                        if (History.bugs.setHash) {
+                            pageUrl = History.getPageUrl();
+                            History.pushState(null, null, pageUrl + '#' + hash, false);
+                        } else {
+                            document.location.hash = hash;
+                        }
+                    }
+                    return History;
+                };
+                History.escapeHash = function (hash) {
+                    var result = History.normalizeHash(hash);
+                    result = window.encodeURIComponent(result);
+                    if (!History.bugs.hashEscape) {
+                        result = result.replace(/\%21/g, '!').replace(/\%26/g, '&').replace(/\%3D/g, '=').replace(/\%3F/g, '?');
+                    }
+                    return result;
+                };
+                History.getHashByUrl = function (url) {
+                    var hash = String(url).replace(/([^#]*)#?([^#]*)#?(.*)/, '$2');
+                    ;
+                    hash = History.unescapeHash(hash);
+                    return hash;
+                };
+                History.setTitle = function (newState) {
+                    var title = newState.title, firstState;
+                    if (!title) {
+                        firstState = History.getStateByIndex(0);
+                        if (firstState && firstState.url === newState.url) {
+                            title = firstState.title || History.options.initialTitle;
+                        }
+                    }
+                    try {
+                        document.getElementsByTagName('title')[0].innerHTML = title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+                    } catch (Exception) {
+                    }
+                    document.title = title;
+                    return History;
+                };
+                History.queues = [];
+                History.busy = function (value) {
+                    if (typeof value !== 'undefined') {
+                        History.busy.flag = value;
+                    } else if (typeof History.busy.flag === 'undefined') {
+                        History.busy.flag = false;
+                    }
+                    if (!History.busy.flag) {
+                        clearTimeout(History.busy.timeout);
+                        var fireNext = function () {
+                            var i, queue, item;
+                            if (History.busy.flag)
+                                return;
+                            for (i = History.queues.length - 1; i >= 0; --i) {
+                                queue = History.queues[i];
+                                if (queue.length === 0)
+                                    continue;
+                                item = queue.shift();
+                                History.fireQueueItem(item);
+                                History.busy.timeout = setTimeout(fireNext, History.options.busyDelay);
+                            }
+                        };
+                        History.busy.timeout = setTimeout(fireNext, History.options.busyDelay);
+                    }
+                    return History.busy.flag;
+                };
+                History.busy.flag = false;
+                History.fireQueueItem = function (item) {
+                    return item.callback.apply(item.scope || History, item.args || []);
+                };
+                History.pushQueue = function (item) {
+                    History.queues[item.queue || 0] = History.queues[item.queue || 0] || [];
+                    History.queues[item.queue || 0].push(item);
+                    return History;
+                };
+                History.queue = function (item, queue) {
+                    if (typeof item === 'function') {
+                        item = { callback: item };
+                    }
+                    if (typeof queue !== 'undefined') {
+                        item.queue = queue;
+                    }
+                    if (History.busy()) {
+                        History.pushQueue(item);
+                    } else {
+                        History.fireQueueItem(item);
+                    }
+                    return History;
+                };
+                History.clearQueue = function () {
+                    History.busy.flag = false;
+                    History.queues = [];
+                    return History;
+                };
+                History.stateChanged = false;
+                History.doubleChecker = false;
+                History.doubleCheckComplete = function () {
+                    History.stateChanged = true;
+                    History.doubleCheckClear();
+                    return History;
+                };
+                History.doubleCheckClear = function () {
+                    if (History.doubleChecker) {
+                        clearTimeout(History.doubleChecker);
+                        History.doubleChecker = false;
+                    }
+                    return History;
+                };
+                History.doubleCheck = function (tryAgain) {
+                    History.stateChanged = false;
+                    History.doubleCheckClear();
+                    if (History.bugs.ieDoubleCheck) {
+                        History.doubleChecker = setTimeout(function () {
+                            History.doubleCheckClear();
+                            if (!History.stateChanged) {
+                                tryAgain();
+                            }
+                            return true;
+                        }, History.options.doubleCheckInterval);
+                    }
+                    return History;
+                };
+                History.safariStatePoll = function () {
+                    var urlState = History.extractState(History.getLocationHref()), newState;
+                    if (!History.isLastSavedState(urlState)) {
+                        newState = urlState;
+                    } else {
+                        return;
+                    }
+                    if (!newState) {
+                        newState = History.createStateObject();
+                    }
+                    History.Adapter.trigger(window, 'popstate');
+                    return History;
+                };
+                History.back = function (queue) {
+                    if (queue !== false && History.busy()) {
+                        History.pushQueue({
+                            scope: History,
+                            callback: History.back,
+                            args: arguments,
+                            queue: queue
+                        });
+                        return false;
+                    }
+                    History.busy(true);
+                    History.doubleCheck(function () {
+                        History.back(false);
+                    });
+                    history.go(-1);
+                    return true;
+                };
+                History.forward = function (queue) {
+                    if (queue !== false && History.busy()) {
+                        History.pushQueue({
+                            scope: History,
+                            callback: History.forward,
+                            args: arguments,
+                            queue: queue
+                        });
+                        return false;
+                    }
+                    History.busy(true);
+                    History.doubleCheck(function () {
+                        History.forward(false);
+                    });
+                    history.go(1);
+                    return true;
+                };
+                History.go = function (index, queue) {
+                    var i;
+                    if (index > 0) {
+                        for (i = 1; i <= index; ++i) {
+                            History.forward(queue);
+                        }
+                    } else if (index < 0) {
+                        for (i = -1; i >= index; --i) {
+                            History.back(queue);
+                        }
+                    } else {
+                        throw new Error('History.go: History.go requires a positive or negative integer passed.');
+                    }
+                    return History;
+                };
+                if (History.emulated.pushState) {
+                    var emptyFunction = function () {
+                    };
+                    History.pushState = History.pushState || emptyFunction;
+                    History.replaceState = History.replaceState || emptyFunction;
+                } else {
+                    History.onPopState = function (event, extra) {
+                        var stateId = false, newState = false, currentHash, currentState;
+                        History.doubleCheckComplete();
+                        currentHash = History.getHash();
+                        if (currentHash) {
+                            currentState = History.extractState(currentHash || History.getLocationHref(), true);
+                            if (currentState) {
+                                History.replaceState(currentState.data, currentState.title, currentState.url, false);
+                            } else {
+                                History.Adapter.trigger(window, 'anchorchange');
+                                History.busy(false);
+                            }
+                            History.expectedStateId = false;
+                            return false;
+                        }
+                        stateId = History.Adapter.extractEventData('state', event, extra) || false;
+                        if (stateId) {
+                            newState = History.getStateById(stateId);
+                        } else if (History.expectedStateId) {
+                            newState = History.getStateById(History.expectedStateId);
+                        } else {
+                            newState = History.extractState(History.getLocationHref());
+                        }
+                        if (!newState) {
+                            newState = History.createStateObject(null, null, History.getLocationHref());
+                        }
+                        History.expectedStateId = false;
+                        if (History.isLastSavedState(newState)) {
+                            History.busy(false);
+                            return false;
+                        }
+                        History.storeState(newState);
+                        History.saveState(newState);
+                        History.setTitle(newState);
+                        History.Adapter.trigger(window, 'statechange');
+                        History.busy(false);
+                        return true;
+                    };
+                    History.Adapter.bind(window, 'popstate', History.onPopState);
+                    History.pushState = function (data, title, url, queue) {
+                        if (History.getHashByUrl(url) && History.emulated.pushState) {
+                            throw new Error('History.js does not support states with fragement-identifiers (hashes/anchors).');
+                        }
+                        if (queue !== false && History.busy()) {
+                            History.pushQueue({
+                                scope: History,
+                                callback: History.pushState,
+                                args: arguments,
+                                queue: queue
+                            });
+                            return false;
+                        }
+                        History.busy(true);
+                        var newState = History.createStateObject(data, title, url);
+                        if (History.isLastSavedState(newState)) {
+                            History.busy(false);
+                        } else {
+                            History.storeState(newState);
+                            History.expectedStateId = newState.id;
+                            history.pushState(newState.id, newState.title, newState.url);
+                            History.Adapter.trigger(window, 'popstate');
+                        }
+                        return true;
+                    };
+                    History.replaceState = function (data, title, url, queue) {
+                        if (History.getHashByUrl(url) && History.emulated.pushState) {
+                            throw new Error('History.js does not support states with fragement-identifiers (hashes/anchors).');
+                        }
+                        if (queue !== false && History.busy()) {
+                            History.pushQueue({
+                                scope: History,
+                                callback: History.replaceState,
+                                args: arguments,
+                                queue: queue
+                            });
+                            return false;
+                        }
+                        History.busy(true);
+                        var newState = History.createStateObject(data, title, url);
+                        if (History.isLastSavedState(newState)) {
+                            History.busy(false);
+                        } else {
+                            History.storeState(newState);
+                            History.expectedStateId = newState.id;
+                            history.replaceState(newState.id, newState.title, newState.url);
+                            History.Adapter.trigger(window, 'popstate');
+                        }
+                        return true;
+                    };
+                }
+                if (sessionStorage) {
+                    try {
+                        History.store = JSON.parse(sessionStorage.getItem('History.store')) || {};
+                    } catch (err) {
+                        History.store = {};
+                    }
+                    History.normalizeStore();
+                } else {
+                    History.store = {};
+                    History.normalizeStore();
+                }
+                History.Adapter.bind(window, 'unload', History.clearAllIntervals);
+                History.saveState(History.storeState(History.extractState(History.getLocationHref(), true)));
+                if (sessionStorage) {
+                    History.onUnload = function () {
+                        var currentStore, item, currentStoreString;
+                        try {
+                            currentStore = JSON.parse(sessionStorage.getItem('History.store')) || {};
+                        } catch (err) {
+                            currentStore = {};
+                        }
+                        currentStore.idToState = currentStore.idToState || {};
+                        currentStore.urlToId = currentStore.urlToId || {};
+                        currentStore.stateToId = currentStore.stateToId || {};
+                        for (item in History.idToState) {
+                            if (!History.idToState.hasOwnProperty(item)) {
+                                continue;
+                            }
+                            currentStore.idToState[item] = History.idToState[item];
+                        }
+                        for (item in History.urlToId) {
+                            if (!History.urlToId.hasOwnProperty(item)) {
+                                continue;
+                            }
+                            currentStore.urlToId[item] = History.urlToId[item];
+                        }
+                        for (item in History.stateToId) {
+                            if (!History.stateToId.hasOwnProperty(item)) {
+                                continue;
+                            }
+                            currentStore.stateToId[item] = History.stateToId[item];
+                        }
+                        History.store = currentStore;
+                        History.normalizeStore();
+                        currentStoreString = JSON.stringify(currentStore);
+                        try {
+                            sessionStorage.setItem('History.store', currentStoreString);
+                        } catch (e) {
+                            if (e.code === DOMException.QUOTA_EXCEEDED_ERR) {
+                                if (sessionStorage.length) {
+                                    sessionStorage.removeItem('History.store');
+                                    sessionStorage.setItem('History.store', currentStoreString);
+                                } else {
+                                }
+                            } else {
+                                throw e;
+                            }
+                        }
+                    };
+                    History.intervalList.push(setInterval(History.onUnload, History.options.storeInterval));
+                    History.Adapter.bind(window, 'beforeunload', History.onUnload);
+                    History.Adapter.bind(window, 'unload', History.onUnload);
+                }
+                if (!History.emulated.pushState) {
+                    if (History.bugs.safariPoll) {
+                        History.intervalList.push(setInterval(History.safariStatePoll, History.options.safariPollInterval));
+                    }
+                    if (navigator.vendor === 'Apple Computer, Inc.' || (navigator.appCodeName || '') === 'Mozilla') {
+                        History.Adapter.bind(window, 'hashchange', function () {
+                            History.Adapter.trigger(window, 'popstate');
+                        });
+                        if (History.getHash()) {
+                            History.Adapter.onDomLoad(function () {
+                                History.Adapter.trigger(window, 'hashchange');
+                            });
+                        }
+                    }
+                }
+            };
+            if (!History.options || !History.options.delayInit) {
+                History.init();
+            }
+        }
+        module.exports = History;
+    },
+    't': function (require, module, exports, global) {
+        var getGantryURI = function (view, method) {
+            if (!method)
+                method = 'index';
+            return GANTRY_AJAX_URL.replace(/\{view\}/, view).replace(/\{method\}/, method);
+        };
+        module.exports = getGantryURI;
+    },
+    'u': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('k');
+        var bind = require('w');
+        var bound = prime({
+                bound: function (name) {
+                    var bound = this._bound || (this._bound = {});
+                    return bound[name] || (bound[name] = bind(this[name], this));
+                }
+            });
+        module.exports = bound;
+    },
+    'v': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('k');
+        var merge = require('p');
+        var Options = prime({
+                setOptions: function (options) {
+                    var args = [
+                            {},
+                            this.options
+                        ];
+                    args.push.apply(args, arguments);
+                    this.options = merge.apply(null, args);
+                    return this;
+                }
+            });
+        module.exports = Options;
+    },
     'w': function (require, module, exports, global) {
+        var slice = require('1z');
+        function bind(fn, context, args) {
+            var argsArr = slice(arguments, 2);
+            return function () {
+                return fn.apply(context, argsArr.concat(slice(arguments)));
+            };
+        }
+        module.exports = bind;
+    },
+    'x': function (require, module, exports, global) {
+        var makeIterator = require('20');
+        function map(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var results = [];
+            if (arr == null) {
+                return results;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                results[i] = callback(arr[i], i, arr);
+            }
+            return results;
+        }
+        module.exports = map;
+    },
+    'y': function (require, module, exports, global) {
+        function forEach(arr, callback, thisObj) {
+            if (arr == null) {
+                return;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (callback.call(thisObj, arr[i], i, arr) === false) {
+                    break;
+                }
+            }
+        }
+        module.exports = forEach;
+    },
+    'z': function (require, module, exports, global) {
+        function last(arr) {
+            if (arr == null || arr.length < 1) {
+                return undefined;
+            }
+            return arr[arr.length - 1];
+        }
+        module.exports = last;
+    },
+    '10': function (require, module, exports, global) {
+        var isKind = require('21');
+        function isFunction(val) {
+            return isKind(val, 'Function');
+        }
+        module.exports = isFunction;
+    },
+    '11': function (require, module, exports, global) {
         module.exports = [
             {
                 'id': '2330cbf9-25f2-4416-a0de-446fdce1ad0c',
@@ -2167,21 +3077,13 @@ var G5;
             }
         ];
     },
-    'x': function (require, module, exports, global) {
-        var getGantryURI = function (view, method) {
-            if (!method)
-                method = 'index';
-            return GANTRY_AJAX_URL.replace(/\{view\}/, view).replace(/\{method\}/, method);
-        };
-        module.exports = getGantryURI;
-    },
-    'y': function (require, module, exports, global) {
-        var prime = require('j'), $ = require('1'), Emitter = require('b');
-        var Blocks = require('1s');
-        var forOwn = require('1t'), forEach = require('1u'), size = require('1v'), isArray = require('1w'), flatten = require('1x'), guid = require('1y'), set = require('1z'), unset = require('20'), get = require('21');
+    '12': function (require, module, exports, global) {
+        var prime = require('k'), $ = require('1'), Emitter = require('g');
+        var Blocks = require('22');
+        var forOwn = require('23'), forEach = require('24'), size = require('o'), isArray = require('1k'), flatten = require('25'), guid = require('q'), set = require('26'), unset = require('27'), get = require('28');
         require('2');
         require('6');
-        var rpad = require('22'), repeat = require('23');
+        var rpad = require('29'), repeat = require('2a');
         $.implement({
             empty: function () {
                 return this.forEach(function (node) {
@@ -2349,9 +3251,840 @@ var G5;
             });
         module.exports = Builder;
     },
-    'z': function (require, module, exports, global) {
+    '13': function (require, module, exports, global) {
         'use strict';
-        var prime = require('j'), $ = require('k'), zen = require('l'), storage = require('c')(), Emitter = require('b'), Bound = require('m'), Options = require('n'), domready = require('o'), bind = require('p'), map = require('q'), forEach = require('r'), last = require('s'), merge = require('t'), request = require('v');
+        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('1y') || {}, history = window.history;
+        try {
+            sessionStorage = window.sessionStorage;
+            sessionStorage.setItem('TEST', '1');
+            sessionStorage.removeItem('TEST');
+        } catch (e) {
+            sessionStorage = false;
+        }
+        JSON.stringify = JSON.stringify || JSON.encode;
+        JSON.parse = JSON.parse || JSON.decode;
+        if (typeof History.init === 'undefined') {
+            History.init = function (options) {
+                if (typeof History.Adapter === 'undefined') {
+                    return false;
+                }
+                if (typeof History.initCore !== 'undefined') {
+                    History.initCore();
+                }
+                if (typeof History.initHtml4 !== 'undefined') {
+                    History.initHtml4();
+                }
+                return true;
+            };
+            History.initCore = function (options) {
+                if (typeof History.initCore.initialized !== 'undefined') {
+                    return false;
+                } else {
+                    History.initCore.initialized = true;
+                }
+                History.options = History.options || {};
+                History.options.hashChangeInterval = History.options.hashChangeInterval || 100;
+                History.options.safariPollInterval = History.options.safariPollInterval || 500;
+                History.options.doubleCheckInterval = History.options.doubleCheckInterval || 500;
+                History.options.disableSuid = History.options.disableSuid || false;
+                History.options.storeInterval = History.options.storeInterval || 1000;
+                History.options.busyDelay = History.options.busyDelay || 250;
+                History.options.debug = History.options.debug || false;
+                History.options.initialTitle = History.options.initialTitle || document.title;
+                History.options.html4Mode = History.options.html4Mode || false;
+                History.options.delayInit = History.options.delayInit || false;
+                History.intervalList = [];
+                History.clearAllIntervals = function () {
+                    var i, il = History.intervalList;
+                    if (typeof il !== 'undefined' && il !== null) {
+                        for (i = 0; i < il.length; i++) {
+                            clearInterval(il[i]);
+                        }
+                        History.intervalList = null;
+                    }
+                };
+                History.debug = function () {
+                    if (History.options.debug || false) {
+                        History.log.apply(History, arguments);
+                    }
+                };
+                History.log = function () {
+                    var consoleExists = !(typeof console === 'undefined' || typeof console.log === 'undefined' || typeof console.log.apply === 'undefined'), textarea = document.getElementById('log'), message, i, n, args, arg;
+                    ;
+                    if (consoleExists) {
+                        args = Array.prototype.slice.call(arguments);
+                        message = args.shift();
+                        if (typeof console.debug !== 'undefined') {
+                            console.debug.apply(console, [
+                                message,
+                                args
+                            ]);
+                        } else {
+                            console.log.apply(console, [
+                                message,
+                                args
+                            ]);
+                        }
+                    } else {
+                        message = '\n' + arguments[0] + '\n';
+                    }
+                    for (i = 1, n = arguments.length; i < n; ++i) {
+                        arg = arguments[i];
+                        if (typeof arg === 'object' && typeof JSON !== 'undefined') {
+                            try {
+                                arg = JSON.stringify(arg);
+                            } catch (Exception) {
+                            }
+                        }
+                        message += '\n' + arg + '\n';
+                    }
+                    if (textarea) {
+                        textarea.value += message + '\n-----\n';
+                        textarea.scrollTop = textarea.scrollHeight - textarea.clientHeight;
+                    } else if (!consoleExists) {
+                        alert(message);
+                    }
+                    return true;
+                };
+                History.getInternetExplorerMajorVersion = function () {
+                    var result = History.getInternetExplorerMajorVersion.cached = typeof History.getInternetExplorerMajorVersion.cached !== 'undefined' ? History.getInternetExplorerMajorVersion.cached : function () {
+                            var v = 3, div = document.createElement('div'), all = div.getElementsByTagName('i');
+                            while ((div.innerHTML = '<!--[if gt IE ' + ++v + ']><i></i><![endif]-->') && all[0]) {
+                            }
+                            return v > 4 ? v : false;
+                        }();
+                    ;
+                    return result;
+                };
+                History.isInternetExplorer = function () {
+                    var result = History.isInternetExplorer.cached = typeof History.isInternetExplorer.cached !== 'undefined' ? History.isInternetExplorer.cached : Boolean(History.getInternetExplorerMajorVersion());
+                    ;
+                    return result;
+                };
+                if (History.options.html4Mode) {
+                    History.emulated = {
+                        pushState: true,
+                        hashChange: true
+                    };
+                } else {
+                    History.emulated = {
+                        pushState: !Boolean(window.history && window.history.pushState && window.history.replaceState && !(/ Mobile\/([1-7][a-z]|(8([abcde]|f(1[0-8]))))/i.test(navigator.userAgent) || /AppleWebKit\/5([0-2]|3[0-2])/i.test(navigator.userAgent))),
+                        hashChange: Boolean(!('onhashchange' in window || 'onhashchange' in document) || History.isInternetExplorer() && History.getInternetExplorerMajorVersion() < 8)
+                    };
+                }
+                History.enabled = !History.emulated.pushState;
+                History.bugs = {
+                    setHash: Boolean(!History.emulated.pushState && navigator.vendor === 'Apple Computer, Inc.' && /AppleWebKit\/5([0-2]|3[0-3])/.test(navigator.userAgent)),
+                    safariPoll: Boolean(!History.emulated.pushState && navigator.vendor === 'Apple Computer, Inc.' && /AppleWebKit\/5([0-2]|3[0-3])/.test(navigator.userAgent)),
+                    ieDoubleCheck: Boolean(History.isInternetExplorer() && History.getInternetExplorerMajorVersion() < 8),
+                    hashEscape: Boolean(History.isInternetExplorer() && History.getInternetExplorerMajorVersion() < 7)
+                };
+                History.isEmptyObject = function (obj) {
+                    for (var name in obj) {
+                        if (obj.hasOwnProperty(name)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                };
+                History.cloneObject = function (obj) {
+                    var hash, newObj;
+                    if (obj) {
+                        hash = JSON.stringify(obj);
+                        newObj = JSON.parse(hash);
+                    } else {
+                        newObj = {};
+                    }
+                    return newObj;
+                };
+                History.getRootUrl = function () {
+                    var rootUrl = document.location.protocol + '//' + (document.location.hostname || document.location.host);
+                    if (document.location.port || false) {
+                        rootUrl += ':' + document.location.port;
+                    }
+                    rootUrl += '/';
+                    return rootUrl;
+                };
+                History.getBaseHref = function () {
+                    var baseElements = document.getElementsByTagName('base'), baseElement = null, baseHref = '';
+                    if (baseElements.length === 1) {
+                        baseElement = baseElements[0];
+                        baseHref = baseElement.href.replace(/[^\/]+$/, '');
+                    }
+                    baseHref = baseHref.replace(/\/+$/, '');
+                    if (baseHref)
+                        baseHref += '/';
+                    return baseHref;
+                };
+                History.getBaseUrl = function () {
+                    var baseUrl = History.getBaseHref() || History.getBasePageUrl() || History.getRootUrl();
+                    return baseUrl;
+                };
+                History.getPageUrl = function () {
+                    var State = History.getState(false, false), stateUrl = (State || {}).url || History.getLocationHref(), pageUrl;
+                    pageUrl = stateUrl.replace(/\/+$/, '').replace(/[^\/]+$/, function (part, index, string) {
+                        return /\./.test(part) ? part : part + '/';
+                    });
+                    return pageUrl;
+                };
+                History.getBasePageUrl = function () {
+                    var basePageUrl = History.getLocationHref().replace(/[#\?].*/, '').replace(/[^\/]+$/, function (part, index, string) {
+                            return /[^\/]$/.test(part) ? '' : part;
+                        }).replace(/\/+$/, '') + '/';
+                    return basePageUrl;
+                };
+                History.getFullUrl = function (url, allowBaseHref) {
+                    var fullUrl = url, firstChar = url.substring(0, 1);
+                    allowBaseHref = typeof allowBaseHref === 'undefined' ? true : allowBaseHref;
+                    if (/[a-z]+\:\/\//.test(url)) {
+                    } else if (firstChar === '/') {
+                        fullUrl = History.getRootUrl() + url.replace(/^\/+/, '');
+                    } else if (firstChar === '#') {
+                        fullUrl = History.getPageUrl().replace(/#.*/, '') + url;
+                    } else if (firstChar === '?') {
+                        fullUrl = History.getPageUrl().replace(/[\?#].*/, '') + url;
+                    } else {
+                        if (allowBaseHref) {
+                            fullUrl = History.getBaseUrl() + url.replace(/^(\.\/)+/, '');
+                        } else {
+                            fullUrl = History.getBasePageUrl() + url.replace(/^(\.\/)+/, '');
+                        }
+                    }
+                    return fullUrl.replace(/\#$/, '');
+                };
+                History.getShortUrl = function (url) {
+                    var shortUrl = url, baseUrl = History.getBaseUrl(), rootUrl = History.getRootUrl();
+                    if (History.emulated.pushState) {
+                        shortUrl = shortUrl.replace(baseUrl, '');
+                    }
+                    shortUrl = shortUrl.replace(rootUrl, '/');
+                    if (History.isTraditionalAnchor(shortUrl)) {
+                        shortUrl = './' + shortUrl;
+                    }
+                    shortUrl = shortUrl.replace(/^(\.\/)+/g, './').replace(/\#$/, '');
+                    return shortUrl;
+                };
+                History.getLocationHref = function (doc) {
+                    doc = doc || document;
+                    if (doc.URL === doc.location.href)
+                        return doc.location.href;
+                    if (doc.location.href === decodeURIComponent(doc.URL))
+                        return doc.URL;
+                    if (doc.location.hash && decodeURIComponent(doc.location.href.replace(/^[^#]+/, '')) === doc.location.hash)
+                        return doc.location.href;
+                    if (doc.URL.indexOf('#') == -1 && doc.location.href.indexOf('#') != -1)
+                        return doc.location.href;
+                    return doc.URL || doc.location.href;
+                };
+                History.store = {};
+                History.idToState = History.idToState || {};
+                History.stateToId = History.stateToId || {};
+                History.urlToId = History.urlToId || {};
+                History.storedStates = History.storedStates || [];
+                History.savedStates = History.savedStates || [];
+                History.normalizeStore = function () {
+                    History.store.idToState = History.store.idToState || {};
+                    History.store.urlToId = History.store.urlToId || {};
+                    History.store.stateToId = History.store.stateToId || {};
+                };
+                History.getState = function (friendly, create) {
+                    if (typeof friendly === 'undefined') {
+                        friendly = true;
+                    }
+                    if (typeof create === 'undefined') {
+                        create = true;
+                    }
+                    var State = History.getLastSavedState();
+                    if (!State && create) {
+                        State = History.createStateObject();
+                    }
+                    if (friendly) {
+                        State = History.cloneObject(State);
+                        State.url = State.cleanUrl || State.url;
+                    }
+                    return State;
+                };
+                History.getIdByState = function (newState) {
+                    var id = History.extractId(newState.url), str;
+                    if (!id) {
+                        str = History.getStateString(newState);
+                        if (typeof History.stateToId[str] !== 'undefined') {
+                            id = History.stateToId[str];
+                        } else if (typeof History.store.stateToId[str] !== 'undefined') {
+                            id = History.store.stateToId[str];
+                        } else {
+                            while (true) {
+                                id = new Date().getTime() + String(Math.random()).replace(/\D/g, '');
+                                if (typeof History.idToState[id] === 'undefined' && typeof History.store.idToState[id] === 'undefined') {
+                                    break;
+                                }
+                            }
+                            History.stateToId[str] = id;
+                            History.idToState[id] = newState;
+                        }
+                    }
+                    return id;
+                };
+                History.normalizeState = function (oldState) {
+                    var newState, dataNotEmpty;
+                    if (!oldState || typeof oldState !== 'object') {
+                        oldState = {};
+                    }
+                    if (typeof oldState.normalized !== 'undefined') {
+                        return oldState;
+                    }
+                    if (!oldState.data || typeof oldState.data !== 'object') {
+                        oldState.data = {};
+                    }
+                    newState = {};
+                    newState.normalized = true;
+                    newState.title = oldState.title || '';
+                    newState.url = History.getFullUrl(oldState.url ? oldState.url : History.getLocationHref());
+                    newState.hash = History.getShortUrl(newState.url);
+                    newState.data = History.cloneObject(oldState.data);
+                    newState.id = History.getIdByState(newState);
+                    newState.cleanUrl = newState.url.replace(/\??\&_suid.*/, '');
+                    newState.url = newState.cleanUrl;
+                    dataNotEmpty = !History.isEmptyObject(newState.data);
+                    if ((newState.title || dataNotEmpty) && History.options.disableSuid !== true) {
+                        newState.hash = History.getShortUrl(newState.url).replace(/\??\&_suid.*/, '');
+                        if (!/\?/.test(newState.hash)) {
+                            newState.hash += '?';
+                        }
+                        newState.hash += '&_suid=' + newState.id;
+                    }
+                    newState.hashedUrl = History.getFullUrl(newState.hash);
+                    if ((History.emulated.pushState || History.bugs.safariPoll) && History.hasUrlDuplicate(newState)) {
+                        newState.url = newState.hashedUrl;
+                    }
+                    return newState;
+                };
+                History.createStateObject = function (data, title, url) {
+                    var State = {
+                            'data': data,
+                            'title': title,
+                            'url': url
+                        };
+                    State = History.normalizeState(State);
+                    return State;
+                };
+                History.getStateById = function (id) {
+                    id = String(id);
+                    var State = History.idToState[id] || History.store.idToState[id] || undefined;
+                    return State;
+                };
+                History.getStateString = function (passedState) {
+                    var State, cleanedState, str;
+                    State = History.normalizeState(passedState);
+                    cleanedState = {
+                        data: State.data,
+                        title: passedState.title,
+                        url: passedState.url
+                    };
+                    str = JSON.stringify(cleanedState);
+                    return str;
+                };
+                History.getStateId = function (passedState) {
+                    var State, id;
+                    State = History.normalizeState(passedState);
+                    id = State.id;
+                    return id;
+                };
+                History.getHashByState = function (passedState) {
+                    var State, hash;
+                    State = History.normalizeState(passedState);
+                    hash = State.hash;
+                    return hash;
+                };
+                History.extractId = function (url_or_hash) {
+                    var id, parts, url, tmp;
+                    if (url_or_hash.indexOf('#') != -1) {
+                        tmp = url_or_hash.split('#')[0];
+                    } else {
+                        tmp = url_or_hash;
+                    }
+                    parts = /(.*)\&_suid=([0-9]+)$/.exec(tmp);
+                    url = parts ? parts[1] || url_or_hash : url_or_hash;
+                    id = parts ? String(parts[2] || '') : '';
+                    return id || false;
+                };
+                History.isTraditionalAnchor = function (url_or_hash) {
+                    var isTraditional = !/[\/\?\.]/.test(url_or_hash);
+                    return isTraditional;
+                };
+                History.extractState = function (url_or_hash, create) {
+                    var State = null, id, url;
+                    create = create || false;
+                    id = History.extractId(url_or_hash);
+                    if (id) {
+                        State = History.getStateById(id);
+                    }
+                    if (!State) {
+                        url = History.getFullUrl(url_or_hash);
+                        id = History.getIdByUrl(url) || false;
+                        if (id) {
+                            State = History.getStateById(id);
+                        }
+                        if (!State && create && !History.isTraditionalAnchor(url_or_hash)) {
+                            State = History.createStateObject(null, null, url);
+                        }
+                    }
+                    return State;
+                };
+                History.getIdByUrl = function (url) {
+                    var id = History.urlToId[url] || History.store.urlToId[url] || undefined;
+                    return id;
+                };
+                History.getLastSavedState = function () {
+                    return History.savedStates[History.savedStates.length - 1] || undefined;
+                };
+                History.getLastStoredState = function () {
+                    return History.storedStates[History.storedStates.length - 1] || undefined;
+                };
+                History.hasUrlDuplicate = function (newState) {
+                    var hasDuplicate = false, oldState;
+                    oldState = History.extractState(newState.url);
+                    hasDuplicate = oldState && oldState.id !== newState.id;
+                    return hasDuplicate;
+                };
+                History.storeState = function (newState) {
+                    History.urlToId[newState.url] = newState.id;
+                    History.storedStates.push(History.cloneObject(newState));
+                    return newState;
+                };
+                History.isLastSavedState = function (newState) {
+                    var isLast = false, newId, oldState, oldId;
+                    if (History.savedStates.length) {
+                        newId = newState.id;
+                        oldState = History.getLastSavedState();
+                        oldId = oldState.id;
+                        isLast = newId === oldId;
+                    }
+                    return isLast;
+                };
+                History.saveState = function (newState) {
+                    if (History.isLastSavedState(newState)) {
+                        return false;
+                    }
+                    History.savedStates.push(History.cloneObject(newState));
+                    return true;
+                };
+                History.getStateByIndex = function (index) {
+                    var State = null;
+                    if (typeof index === 'undefined') {
+                        State = History.savedStates[History.savedStates.length - 1];
+                    } else if (index < 0) {
+                        State = History.savedStates[History.savedStates.length + index];
+                    } else {
+                        State = History.savedStates[index];
+                    }
+                    return State;
+                };
+                History.getCurrentIndex = function () {
+                    var index = null;
+                    if (History.savedStates.length < 1) {
+                        index = 0;
+                    } else {
+                        index = History.savedStates.length - 1;
+                    }
+                    return index;
+                };
+                History.getHash = function (doc) {
+                    var url = History.getLocationHref(doc), hash;
+                    hash = History.getHashByUrl(url);
+                    return hash;
+                };
+                History.unescapeHash = function (hash) {
+                    var result = History.normalizeHash(hash);
+                    result = decodeURIComponent(result);
+                    return result;
+                };
+                History.normalizeHash = function (hash) {
+                    var result = hash.replace(/[^#]*#/, '').replace(/#.*/, '');
+                    return result;
+                };
+                History.setHash = function (hash, queue) {
+                    var State, pageUrl;
+                    if (queue !== false && History.busy()) {
+                        History.pushQueue({
+                            scope: History,
+                            callback: History.setHash,
+                            args: arguments,
+                            queue: queue
+                        });
+                        return false;
+                    }
+                    History.busy(true);
+                    State = History.extractState(hash, true);
+                    if (State && !History.emulated.pushState) {
+                        History.pushState(State.data, State.title, State.url, false);
+                    } else if (History.getHash() !== hash) {
+                        if (History.bugs.setHash) {
+                            pageUrl = History.getPageUrl();
+                            History.pushState(null, null, pageUrl + '#' + hash, false);
+                        } else {
+                            document.location.hash = hash;
+                        }
+                    }
+                    return History;
+                };
+                History.escapeHash = function (hash) {
+                    var result = History.normalizeHash(hash);
+                    result = window.encodeURIComponent(result);
+                    if (!History.bugs.hashEscape) {
+                        result = result.replace(/\%21/g, '!').replace(/\%26/g, '&').replace(/\%3D/g, '=').replace(/\%3F/g, '?');
+                    }
+                    return result;
+                };
+                History.getHashByUrl = function (url) {
+                    var hash = String(url).replace(/([^#]*)#?([^#]*)#?(.*)/, '$2');
+                    ;
+                    hash = History.unescapeHash(hash);
+                    return hash;
+                };
+                History.setTitle = function (newState) {
+                    var title = newState.title, firstState;
+                    if (!title) {
+                        firstState = History.getStateByIndex(0);
+                        if (firstState && firstState.url === newState.url) {
+                            title = firstState.title || History.options.initialTitle;
+                        }
+                    }
+                    try {
+                        document.getElementsByTagName('title')[0].innerHTML = title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+                    } catch (Exception) {
+                    }
+                    document.title = title;
+                    return History;
+                };
+                History.queues = [];
+                History.busy = function (value) {
+                    if (typeof value !== 'undefined') {
+                        History.busy.flag = value;
+                    } else if (typeof History.busy.flag === 'undefined') {
+                        History.busy.flag = false;
+                    }
+                    if (!History.busy.flag) {
+                        clearTimeout(History.busy.timeout);
+                        var fireNext = function () {
+                            var i, queue, item;
+                            if (History.busy.flag)
+                                return;
+                            for (i = History.queues.length - 1; i >= 0; --i) {
+                                queue = History.queues[i];
+                                if (queue.length === 0)
+                                    continue;
+                                item = queue.shift();
+                                History.fireQueueItem(item);
+                                History.busy.timeout = setTimeout(fireNext, History.options.busyDelay);
+                            }
+                        };
+                        History.busy.timeout = setTimeout(fireNext, History.options.busyDelay);
+                    }
+                    return History.busy.flag;
+                };
+                History.busy.flag = false;
+                History.fireQueueItem = function (item) {
+                    return item.callback.apply(item.scope || History, item.args || []);
+                };
+                History.pushQueue = function (item) {
+                    History.queues[item.queue || 0] = History.queues[item.queue || 0] || [];
+                    History.queues[item.queue || 0].push(item);
+                    return History;
+                };
+                History.queue = function (item, queue) {
+                    if (typeof item === 'function') {
+                        item = { callback: item };
+                    }
+                    if (typeof queue !== 'undefined') {
+                        item.queue = queue;
+                    }
+                    if (History.busy()) {
+                        History.pushQueue(item);
+                    } else {
+                        History.fireQueueItem(item);
+                    }
+                    return History;
+                };
+                History.clearQueue = function () {
+                    History.busy.flag = false;
+                    History.queues = [];
+                    return History;
+                };
+                History.stateChanged = false;
+                History.doubleChecker = false;
+                History.doubleCheckComplete = function () {
+                    History.stateChanged = true;
+                    History.doubleCheckClear();
+                    return History;
+                };
+                History.doubleCheckClear = function () {
+                    if (History.doubleChecker) {
+                        clearTimeout(History.doubleChecker);
+                        History.doubleChecker = false;
+                    }
+                    return History;
+                };
+                History.doubleCheck = function (tryAgain) {
+                    History.stateChanged = false;
+                    History.doubleCheckClear();
+                    if (History.bugs.ieDoubleCheck) {
+                        History.doubleChecker = setTimeout(function () {
+                            History.doubleCheckClear();
+                            if (!History.stateChanged) {
+                                tryAgain();
+                            }
+                            return true;
+                        }, History.options.doubleCheckInterval);
+                    }
+                    return History;
+                };
+                History.safariStatePoll = function () {
+                    var urlState = History.extractState(History.getLocationHref()), newState;
+                    if (!History.isLastSavedState(urlState)) {
+                        newState = urlState;
+                    } else {
+                        return;
+                    }
+                    if (!newState) {
+                        newState = History.createStateObject();
+                    }
+                    History.Adapter.trigger(window, 'popstate');
+                    return History;
+                };
+                History.back = function (queue) {
+                    if (queue !== false && History.busy()) {
+                        History.pushQueue({
+                            scope: History,
+                            callback: History.back,
+                            args: arguments,
+                            queue: queue
+                        });
+                        return false;
+                    }
+                    History.busy(true);
+                    History.doubleCheck(function () {
+                        History.back(false);
+                    });
+                    history.go(-1);
+                    return true;
+                };
+                History.forward = function (queue) {
+                    if (queue !== false && History.busy()) {
+                        History.pushQueue({
+                            scope: History,
+                            callback: History.forward,
+                            args: arguments,
+                            queue: queue
+                        });
+                        return false;
+                    }
+                    History.busy(true);
+                    History.doubleCheck(function () {
+                        History.forward(false);
+                    });
+                    history.go(1);
+                    return true;
+                };
+                History.go = function (index, queue) {
+                    var i;
+                    if (index > 0) {
+                        for (i = 1; i <= index; ++i) {
+                            History.forward(queue);
+                        }
+                    } else if (index < 0) {
+                        for (i = -1; i >= index; --i) {
+                            History.back(queue);
+                        }
+                    } else {
+                        throw new Error('History.go: History.go requires a positive or negative integer passed.');
+                    }
+                    return History;
+                };
+                if (History.emulated.pushState) {
+                    var emptyFunction = function () {
+                    };
+                    History.pushState = History.pushState || emptyFunction;
+                    History.replaceState = History.replaceState || emptyFunction;
+                } else {
+                    History.onPopState = function (event, extra) {
+                        var stateId = false, newState = false, currentHash, currentState;
+                        History.doubleCheckComplete();
+                        currentHash = History.getHash();
+                        if (currentHash) {
+                            currentState = History.extractState(currentHash || History.getLocationHref(), true);
+                            if (currentState) {
+                                History.replaceState(currentState.data, currentState.title, currentState.url, false);
+                            } else {
+                                History.Adapter.trigger(window, 'anchorchange');
+                                History.busy(false);
+                            }
+                            History.expectedStateId = false;
+                            return false;
+                        }
+                        stateId = History.Adapter.extractEventData('state', event, extra) || false;
+                        if (stateId) {
+                            newState = History.getStateById(stateId);
+                        } else if (History.expectedStateId) {
+                            newState = History.getStateById(History.expectedStateId);
+                        } else {
+                            newState = History.extractState(History.getLocationHref());
+                        }
+                        if (!newState) {
+                            newState = History.createStateObject(null, null, History.getLocationHref());
+                        }
+                        History.expectedStateId = false;
+                        if (History.isLastSavedState(newState)) {
+                            History.busy(false);
+                            return false;
+                        }
+                        History.storeState(newState);
+                        History.saveState(newState);
+                        History.setTitle(newState);
+                        History.Adapter.trigger(window, 'statechange');
+                        History.busy(false);
+                        return true;
+                    };
+                    History.Adapter.bind(window, 'popstate', History.onPopState);
+                    History.pushState = function (data, title, url, queue) {
+                        if (History.getHashByUrl(url) && History.emulated.pushState) {
+                            throw new Error('History.js does not support states with fragement-identifiers (hashes/anchors).');
+                        }
+                        if (queue !== false && History.busy()) {
+                            History.pushQueue({
+                                scope: History,
+                                callback: History.pushState,
+                                args: arguments,
+                                queue: queue
+                            });
+                            return false;
+                        }
+                        History.busy(true);
+                        var newState = History.createStateObject(data, title, url);
+                        if (History.isLastSavedState(newState)) {
+                            History.busy(false);
+                        } else {
+                            History.storeState(newState);
+                            History.expectedStateId = newState.id;
+                            history.pushState(newState.id, newState.title, newState.url);
+                            History.Adapter.trigger(window, 'popstate');
+                        }
+                        return true;
+                    };
+                    History.replaceState = function (data, title, url, queue) {
+                        if (History.getHashByUrl(url) && History.emulated.pushState) {
+                            throw new Error('History.js does not support states with fragement-identifiers (hashes/anchors).');
+                        }
+                        if (queue !== false && History.busy()) {
+                            History.pushQueue({
+                                scope: History,
+                                callback: History.replaceState,
+                                args: arguments,
+                                queue: queue
+                            });
+                            return false;
+                        }
+                        History.busy(true);
+                        var newState = History.createStateObject(data, title, url);
+                        if (History.isLastSavedState(newState)) {
+                            History.busy(false);
+                        } else {
+                            History.storeState(newState);
+                            History.expectedStateId = newState.id;
+                            history.replaceState(newState.id, newState.title, newState.url);
+                            History.Adapter.trigger(window, 'popstate');
+                        }
+                        return true;
+                    };
+                }
+                if (sessionStorage) {
+                    try {
+                        History.store = JSON.parse(sessionStorage.getItem('History.store')) || {};
+                    } catch (err) {
+                        History.store = {};
+                    }
+                    History.normalizeStore();
+                } else {
+                    History.store = {};
+                    History.normalizeStore();
+                }
+                History.Adapter.bind(window, 'unload', History.clearAllIntervals);
+                History.saveState(History.storeState(History.extractState(History.getLocationHref(), true)));
+                if (sessionStorage) {
+                    History.onUnload = function () {
+                        var currentStore, item, currentStoreString;
+                        try {
+                            currentStore = JSON.parse(sessionStorage.getItem('History.store')) || {};
+                        } catch (err) {
+                            currentStore = {};
+                        }
+                        currentStore.idToState = currentStore.idToState || {};
+                        currentStore.urlToId = currentStore.urlToId || {};
+                        currentStore.stateToId = currentStore.stateToId || {};
+                        for (item in History.idToState) {
+                            if (!History.idToState.hasOwnProperty(item)) {
+                                continue;
+                            }
+                            currentStore.idToState[item] = History.idToState[item];
+                        }
+                        for (item in History.urlToId) {
+                            if (!History.urlToId.hasOwnProperty(item)) {
+                                continue;
+                            }
+                            currentStore.urlToId[item] = History.urlToId[item];
+                        }
+                        for (item in History.stateToId) {
+                            if (!History.stateToId.hasOwnProperty(item)) {
+                                continue;
+                            }
+                            currentStore.stateToId[item] = History.stateToId[item];
+                        }
+                        History.store = currentStore;
+                        History.normalizeStore();
+                        currentStoreString = JSON.stringify(currentStore);
+                        try {
+                            sessionStorage.setItem('History.store', currentStoreString);
+                        } catch (e) {
+                            if (e.code === DOMException.QUOTA_EXCEEDED_ERR) {
+                                if (sessionStorage.length) {
+                                    sessionStorage.removeItem('History.store');
+                                    sessionStorage.setItem('History.store', currentStoreString);
+                                } else {
+                                }
+                            } else {
+                                throw e;
+                            }
+                        }
+                    };
+                    History.intervalList.push(setInterval(History.onUnload, History.options.storeInterval));
+                    History.Adapter.bind(window, 'beforeunload', History.onUnload);
+                    History.Adapter.bind(window, 'unload', History.onUnload);
+                }
+                if (!History.emulated.pushState) {
+                    if (History.bugs.safariPoll) {
+                        History.intervalList.push(setInterval(History.safariStatePoll, History.options.safariPollInterval));
+                    }
+                    if (navigator.vendor === 'Apple Computer, Inc.' || (navigator.appCodeName || '') === 'Mozilla') {
+                        History.Adapter.bind(window, 'hashchange', function () {
+                            History.Adapter.trigger(window, 'popstate');
+                        });
+                        if (History.getHash()) {
+                            History.Adapter.onDomLoad(function () {
+                                History.Adapter.trigger(window, 'hashchange');
+                            });
+                        }
+                    }
+                }
+            };
+            if (!History.options || !History.options.delayInit) {
+                History.init();
+            }
+        }
+        module.exports = History;
+    },
+    '14': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('k'), $ = require('l'), zen = require('m'), storage = require('h')(), Emitter = require('g'), Bound = require('u'), Options = require('v'), domready = require('n'), bind = require('w'), map = require('x'), forEach = require('y'), last = require('z'), merge = require('p'), request = require('r');
         var animationEndSupport = false;
         domready(function () {
             var style = (document.body || document.documentElement).style;
@@ -2574,8 +4307,8 @@ var G5;
             });
         module.exports = Modal;
     },
-    '10': function (require, module, exports, global) {
-        var makeIterator = require('17');
+    '15': function (require, module, exports, global) {
+        var makeIterator = require('1b');
         function every(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = true;
@@ -2593,8 +4326,8 @@ var G5;
         }
         module.exports = every;
     },
-    '11': function (require, module, exports, global) {
-        var makeIterator = require('17');
+    '16': function (require, module, exports, global) {
+        var makeIterator = require('1b');
         function some(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = false;
@@ -2612,9 +4345,114 @@ var G5;
         }
         module.exports = some;
     },
-    '12': function (require, module, exports, global) {
+    '17': function (require, module, exports, global) {
+        function toString(val) {
+            return val == null ? '' : val.toString();
+        }
+        module.exports = toString;
+    },
+    '18': function (require, module, exports, global) {
+        module.exports = [
+            ' ',
+            '\n',
+            '\r',
+            '\t',
+            '\f',
+            '\x0B',
+            '\xa0',
+            '\u1680',
+            '\u180e',
+            '\u2000',
+            '\u2001',
+            '\u2002',
+            '\u2003',
+            '\u2004',
+            '\u2005',
+            '\u2006',
+            '\u2007',
+            '\u2008',
+            '\u2009',
+            '\u200a',
+            '\u2028',
+            '\u2029',
+            '\u202f',
+            '\u205f',
+            '\u3000'
+        ];
+    },
+    '19': function (require, module, exports, global) {
+        var toString = require('17');
+        var WHITE_SPACES = require('18');
+        function ltrim(str, chars) {
+            str = toString(str);
+            chars = chars || WHITE_SPACES;
+            var start = 0, len = str.length, charLen = chars.length, found = true, i, c;
+            while (found && start < len) {
+                found = false;
+                i = -1;
+                c = str.charAt(start);
+                while (++i < charLen) {
+                    if (c === chars[i]) {
+                        found = true;
+                        start++;
+                        break;
+                    }
+                }
+            }
+            return start >= len ? '' : str.substr(start, len);
+        }
+        module.exports = ltrim;
+    },
+    '1a': function (require, module, exports, global) {
+        var toString = require('17');
+        var WHITE_SPACES = require('18');
+        function rtrim(str, chars) {
+            str = toString(str);
+            chars = chars || WHITE_SPACES;
+            var end = str.length - 1, charLen = chars.length, found = true, i, c;
+            while (found && end >= 0) {
+                found = false;
+                i = -1;
+                c = str.charAt(end);
+                while (++i < charLen) {
+                    if (c === chars[i]) {
+                        found = true;
+                        end--;
+                        break;
+                    }
+                }
+            }
+            return end >= 0 ? str.substring(0, end + 1) : '';
+        }
+        module.exports = rtrim;
+    },
+    '1b': function (require, module, exports, global) {
+        var identity = require('2b');
+        var prop = require('2c');
+        var deepMatches = require('2d');
+        function makeIterator(src, thisObj) {
+            if (src == null) {
+                return identity;
+            }
+            switch (typeof src) {
+            case 'function':
+                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
+                    return src.call(thisObj, val, i, arr);
+                } : src;
+            case 'object':
+                return function (val) {
+                    return deepMatches(val, src);
+                };
+            case 'string':
+            case 'number':
+                return prop(src);
+            }
+        }
+        module.exports = makeIterator;
+    },
+    '1c': function (require, module, exports, global) {
         'use strict';
-        var kindOf = require('1d'), now = require('24'), forEach = require('e'), indexOf = require('g');
+        var kindOf = require('1i'), now = require('2e'), forEach = require('d'), indexOf = require('f');
         var callbacks = {
                 timeout: {},
                 frame: [],
@@ -2693,114 +4531,9 @@ var G5;
         };
         module.exports = defer;
     },
-    '13': function (require, module, exports, global) {
-        function toString(val) {
-            return val == null ? '' : val.toString();
-        }
-        module.exports = toString;
-    },
-    '14': function (require, module, exports, global) {
-        module.exports = [
-            ' ',
-            '\n',
-            '\r',
-            '\t',
-            '\f',
-            '\x0B',
-            '\xa0',
-            '\u1680',
-            '\u180e',
-            '\u2000',
-            '\u2001',
-            '\u2002',
-            '\u2003',
-            '\u2004',
-            '\u2005',
-            '\u2006',
-            '\u2007',
-            '\u2008',
-            '\u2009',
-            '\u200a',
-            '\u2028',
-            '\u2029',
-            '\u202f',
-            '\u205f',
-            '\u3000'
-        ];
-    },
-    '15': function (require, module, exports, global) {
-        var toString = require('13');
-        var WHITE_SPACES = require('14');
-        function ltrim(str, chars) {
-            str = toString(str);
-            chars = chars || WHITE_SPACES;
-            var start = 0, len = str.length, charLen = chars.length, found = true, i, c;
-            while (found && start < len) {
-                found = false;
-                i = -1;
-                c = str.charAt(start);
-                while (++i < charLen) {
-                    if (c === chars[i]) {
-                        found = true;
-                        start++;
-                        break;
-                    }
-                }
-            }
-            return start >= len ? '' : str.substr(start, len);
-        }
-        module.exports = ltrim;
-    },
-    '16': function (require, module, exports, global) {
-        var toString = require('13');
-        var WHITE_SPACES = require('14');
-        function rtrim(str, chars) {
-            str = toString(str);
-            chars = chars || WHITE_SPACES;
-            var end = str.length - 1, charLen = chars.length, found = true, i, c;
-            while (found && end >= 0) {
-                found = false;
-                i = -1;
-                c = str.charAt(end);
-                while (++i < charLen) {
-                    if (c === chars[i]) {
-                        found = true;
-                        end--;
-                        break;
-                    }
-                }
-            }
-            return end >= 0 ? str.substring(0, end + 1) : '';
-        }
-        module.exports = rtrim;
-    },
-    '17': function (require, module, exports, global) {
-        var identity = require('25');
-        var prop = require('26');
-        var deepMatches = require('27');
-        function makeIterator(src, thisObj) {
-            if (src == null) {
-                return identity;
-            }
-            switch (typeof src) {
-            case 'function':
-                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
-                    return src.call(thisObj, val, i, arr);
-                } : src;
-            case 'object':
-                return function (val) {
-                    return deepMatches(val, src);
-                };
-            case 'string':
-            case 'number':
-                return prop(src);
-            }
-        }
-        module.exports = makeIterator;
-    },
-    '18': function (require, module, exports, global) {
+    '1d': function (require, module, exports, global) {
         'use strict';
-        var parse = require('19');
+        var parse = require('1e');
         var index = 0, counter = document.__counter = (parseInt(document.__counter || -1, 36) + 1).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n, xml) {
             if (n === window)
@@ -3390,7 +5123,7 @@ var G5;
         slick.parse = parse;
         module.exports = slick;
     },
-    '19': function (require, module, exports, global) {
+    '1e': function (require, module, exports, global) {
         'use strict';
         var escapeRe = /([-.*+?^${}()|[\]\/\\])/g, unescapeRe = /\\/g;
         var escape = function (string) {
@@ -3524,14 +5257,14 @@ var G5;
         };
         module.exports = parse;
     },
-    '1a': function (require, module, exports, global) {
+    '1f': function (require, module, exports, global) {
         function hasOwn(obj, prop) {
             return Object.prototype.hasOwnProperty.call(obj, prop);
         }
         module.exports = hasOwn;
     },
-    '1b': function (require, module, exports, global) {
-        var forOwn = require('28');
+    '1g': function (require, module, exports, global) {
+        var forOwn = require('2f');
         function mixIn(target, objects) {
             var i = 0, n = arguments.length, obj;
             while (++i < n) {
@@ -3547,8 +5280,8 @@ var G5;
         }
         module.exports = mixIn;
     },
-    '1c': function (require, module, exports, global) {
-        var mixIn = require('1b');
+    '1h': function (require, module, exports, global) {
+        var mixIn = require('1g');
         function createObject(parent, props) {
             function F() {
             }
@@ -3557,7 +5290,7 @@ var G5;
         }
         module.exports = createObject;
     },
-    '1d': function (require, module, exports, global) {
+    '1i': function (require, module, exports, global) {
         var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
         function kindOf(val) {
             if (val === null) {
@@ -3570,10 +5303,10 @@ var G5;
         }
         module.exports = kindOf;
     },
-    '1e': function (require, module, exports, global) {
+    '1j': function (require, module, exports, global) {
         'use strict';
-        var color = require('29'), frame = require('2a');
-        var moofx = typeof document !== 'undefined' ? require('2b') : require('2c');
+        var color = require('2g'), frame = require('2h');
+        var moofx = typeof document !== 'undefined' ? require('2i') : require('2j');
         moofx.requestFrame = function (callback) {
             frame.request(callback);
             return this;
@@ -3585,66 +5318,57 @@ var G5;
         moofx.color = color;
         module.exports = moofx;
     },
-    '1f': function (require, module, exports, global) {
-        function slice(arr, start, end) {
-            var len = arr.length;
-            if (start == null) {
-                start = 0;
-            } else if (start < 0) {
-                start = Math.max(len + start, 0);
-            } else {
-                start = Math.min(start, len);
-            }
-            if (end == null) {
-                end = len;
-            } else if (end < 0) {
-                end = Math.max(len + end, 0);
-            } else {
-                end = Math.min(end, len);
-            }
-            var result = [];
-            while (start < end) {
-                result.push(arr[start++]);
-            }
-            return result;
-        }
-        module.exports = slice;
+    '1k': function (require, module, exports, global) {
+        var isKind = require('21');
+        var isArray = Array.isArray || function (val) {
+                return isKind(val, 'Array');
+            };
+        module.exports = isArray;
     },
-    '1g': function (require, module, exports, global) {
-        var identity = require('2d');
-        var prop = require('2e');
-        var deepMatches = require('2f');
-        function makeIterator(src, thisObj) {
-            if (src == null) {
-                return identity;
-            }
-            switch (typeof src) {
-            case 'function':
-                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
-                    return src.call(thisObj, val, i, arr);
-                } : src;
-            case 'object':
-                return function (val) {
-                    return deepMatches(val, src);
-                };
-            case 'string':
-            case 'number':
-                return prop(src);
-            }
+    '1l': function (require, module, exports, global) {
+        var forOwn = require('23');
+        function size(obj) {
+            var count = 0;
+            forOwn(obj, function () {
+                count++;
+            });
+            return count;
         }
-        module.exports = makeIterator;
+        module.exports = size;
     },
-    '1h': function (require, module, exports, global) {
+    '1m': function (require, module, exports, global) {
+        var choice = require('1n');
+        var _chars = '0123456789abcdef'.split('');
+        function randHex(size) {
+            size = size && size > 0 ? size : 6;
+            var str = '';
+            while (size--) {
+                str += choice(_chars);
+            }
+            return str;
+        }
+        module.exports = randHex;
+    },
+    '1n': function (require, module, exports, global) {
+        var randInt = require('2k');
+        var isArray = require('1k');
+        function choice(items) {
+            var target = arguments.length === 1 && isArray(items) ? items : arguments;
+            return target[randInt(0, target.length - 1)];
+        }
+        module.exports = choice;
+    },
+    '1o': function (require, module, exports, global) {
         function hasOwn(obj, prop) {
             return Object.prototype.hasOwnProperty.call(obj, prop);
         }
         module.exports = hasOwn;
     },
-    '1i': function (require, module, exports, global) {
-        var clone = require('2g');
-        var forOwn = require('1t');
-        var kindOf = require('2h');
-        var isPlainObject = require('2i');
+    '1p': function (require, module, exports, global) {
+        var clone = require('2l');
+        var forOwn = require('23');
+        var kindOf = require('2m');
+        var isPlainObject = require('2n');
         function deepClone(val, instanceClone) {
             switch (kindOf(val)) {
             case 'Object':
@@ -3677,58 +5401,51 @@ var G5;
         }
         module.exports = deepClone;
     },
-    '1j': function (require, module, exports, global) {
-        var isKind = require('1k');
+    '1q': function (require, module, exports, global) {
+        var isKind = require('21');
         function isObject(val) {
             return isKind(val, 'Object');
         }
         module.exports = isObject;
     },
-    '1k': function (require, module, exports, global) {
-        var kindOf = require('2h');
-        function isKind(val, kind) {
-            return kindOf(val) === kind;
-        }
-        module.exports = isKind;
-    },
-    '1l': function (require, module, exports, global) {
-        var isKind = require('2j');
+    '1r': function (require, module, exports, global) {
+        var isKind = require('2o');
         function isObject(val) {
             return isKind(val, 'Object');
         }
         module.exports = isObject;
     },
-    '1m': function (require, module, exports, global) {
-        var isKind = require('2j');
+    '1s': function (require, module, exports, global) {
+        var isKind = require('2o');
         function isString(val) {
             return isKind(val, 'String');
         }
         module.exports = isString;
     },
-    '1n': function (require, module, exports, global) {
-        var isKind = require('2j');
+    '1t': function (require, module, exports, global) {
+        var isKind = require('2o');
         var isArray = Array.isArray || function (val) {
                 return isKind(val, 'Array');
             };
         module.exports = isArray;
     },
-    '1o': function (require, module, exports, global) {
-        var isKind = require('2j');
+    '1u': function (require, module, exports, global) {
+        var isKind = require('2o');
         function isFunction(val) {
             return isKind(val, 'Function');
         }
         module.exports = isFunction;
     },
-    '1p': function (require, module, exports, global) {
-        var toString = require('13');
+    '1v': function (require, module, exports, global) {
+        var toString = require('17');
         function upperCase(str) {
             str = toString(str);
             return str.toUpperCase();
         }
         module.exports = upperCase;
     },
-    '1q': function (require, module, exports, global) {
-        var hasOwn = require('1a');
+    '1w': function (require, module, exports, global) {
+        var hasOwn = require('1f');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -3770,8 +5487,8 @@ var G5;
         }
         module.exports = forIn;
     },
-    '1r': function (require, module, exports, global) {
-        var indexOf = require('g');
+    '1x': function (require, module, exports, global) {
+        var indexOf = require('f');
         function remove(arr, item) {
             var idx = indexOf(arr, item);
             if (idx !== -1)
@@ -3779,20 +5496,103 @@ var G5;
         }
         module.exports = remove;
     },
-    '1s': function (require, module, exports, global) {
+    '1y': function (require, module, exports, global) {
+        'use strict';
+        var $ = require('1'), domready = require('n');
+        var History = {};
+        if (typeof History.Adapter !== 'undefined') {
+            throw new Error('History.js Adapter has already been loaded...');
+        }
+        History.Adapter = {
+            bind: function (el, event, callback) {
+                $(el).on(event, callback);
+            },
+            trigger: function (el, event, extra) {
+                $(el).emit(event, extra);
+            },
+            extractEventData: function (key, event) {
+                var result = event && event.event && event.event[key] || event && event[key] || undefined;
+                return result;
+            },
+            onDomLoad: function (callback) {
+                domready(callback);
+            }
+        };
+        if (typeof History.init !== 'undefined') {
+            History.init();
+        }
+        module.exports = History;
+    },
+    '1z': function (require, module, exports, global) {
+        function slice(arr, start, end) {
+            var len = arr.length;
+            if (start == null) {
+                start = 0;
+            } else if (start < 0) {
+                start = Math.max(len + start, 0);
+            } else {
+                start = Math.min(start, len);
+            }
+            if (end == null) {
+                end = len;
+            } else if (end < 0) {
+                end = Math.max(len + end, 0);
+            } else {
+                end = Math.min(end, len);
+            }
+            var result = [];
+            while (start < end) {
+                result.push(arr[start++]);
+            }
+            return result;
+        }
+        module.exports = slice;
+    },
+    '20': function (require, module, exports, global) {
+        var identity = require('2p');
+        var prop = require('2q');
+        var deepMatches = require('2r');
+        function makeIterator(src, thisObj) {
+            if (src == null) {
+                return identity;
+            }
+            switch (typeof src) {
+            case 'function':
+                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
+                    return src.call(thisObj, val, i, arr);
+                } : src;
+            case 'object':
+                return function (val) {
+                    return deepMatches(val, src);
+                };
+            case 'string':
+            case 'number':
+                return prop(src);
+            }
+        }
+        module.exports = makeIterator;
+    },
+    '21': function (require, module, exports, global) {
+        var kindOf = require('2m');
+        function isKind(val, kind) {
+            return kindOf(val) === kind;
+        }
+        module.exports = isKind;
+    },
+    '22': function (require, module, exports, global) {
         module.exports = {
-            base: require('2k'),
-            section: require('2l'),
-            grid: require('2m'),
-            block: require('2n'),
-            position: require('2o'),
-            mainbody: require('2p'),
-            spacer: require('2q')
+            base: require('2s'),
+            section: require('2t'),
+            grid: require('2u'),
+            block: require('2v'),
+            position: require('2w'),
+            mainbody: require('2x'),
+            spacer: require('2y')
         };
     },
-    '1t': function (require, module, exports, global) {
-        var hasOwn = require('1h');
-        var forIn = require('2r');
+    '23': function (require, module, exports, global) {
+        var hasOwn = require('1o');
+        var forIn = require('2z');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
                 if (hasOwn(obj, key)) {
@@ -3802,36 +5602,15 @@ var G5;
         }
         module.exports = forOwn;
     },
-    '1u': function (require, module, exports, global) {
-        var make = require('2s');
-        var arrForEach = require('r');
-        var objForEach = require('1t');
+    '24': function (require, module, exports, global) {
+        var make = require('30');
+        var arrForEach = require('y');
+        var objForEach = require('23');
         module.exports = make(arrForEach, objForEach);
     },
-    '1v': function (require, module, exports, global) {
-        var isArray = require('1w');
-        var objSize = require('2t');
-        function size(list) {
-            if (!list) {
-                return 0;
-            }
-            if (isArray(list)) {
-                return list.length;
-            }
-            return objSize(list);
-        }
-        module.exports = size;
-    },
-    '1w': function (require, module, exports, global) {
-        var isKind = require('1k');
-        var isArray = Array.isArray || function (val) {
-                return isKind(val, 'Array');
-            };
-        module.exports = isArray;
-    },
-    '1x': function (require, module, exports, global) {
-        var isArray = require('1w');
-        var append = require('2u');
+    '25': function (require, module, exports, global) {
+        var isArray = require('1k');
+        var append = require('31');
         function flattenTo(arr, result, level) {
             if (arr == null) {
                 return result;
@@ -3856,16 +5635,8 @@ var G5;
         }
         module.exports = flatten;
     },
-    '1y': function (require, module, exports, global) {
-        var randHex = require('2v');
-        var choice = require('2w');
-        function guid() {
-            return randHex(8) + '-' + randHex(4) + '-' + '4' + randHex(3) + '-' + choice(8, 9, 'a', 'b') + randHex(3) + '-' + randHex(12);
-        }
-        module.exports = guid;
-    },
-    '1z': function (require, module, exports, global) {
-        var namespace = require('2y');
+    '26': function (require, module, exports, global) {
+        var namespace = require('32');
         function set(obj, prop, val) {
             var parts = /^(.+)\.(.+)$/.exec(prop);
             if (parts) {
@@ -3876,8 +5647,8 @@ var G5;
         }
         module.exports = set;
     },
-    '20': function (require, module, exports, global) {
-        var has = require('2x');
+    '27': function (require, module, exports, global) {
+        var has = require('33');
         function unset(obj, prop) {
             if (has(obj, prop)) {
                 var parts = prop.split('.'), last = parts.pop();
@@ -3891,8 +5662,8 @@ var G5;
         }
         module.exports = unset;
     },
-    '21': function (require, module, exports, global) {
-        var isPrimitive = require('2z');
+    '28': function (require, module, exports, global) {
+        var isPrimitive = require('34');
         function get(obj, prop) {
             var parts = prop.split('.'), last = parts.pop();
             while (prop = parts.shift()) {
@@ -3904,9 +5675,9 @@ var G5;
         }
         module.exports = get;
     },
-    '22': function (require, module, exports, global) {
-        var toString = require('30');
-        var repeat = require('23');
+    '29': function (require, module, exports, global) {
+        var toString = require('35');
+        var repeat = require('2a');
         function rpad(str, minLen, ch) {
             str = toString(str);
             ch = ch || ' ';
@@ -3914,9 +5685,9 @@ var G5;
         }
         module.exports = rpad;
     },
-    '23': function (require, module, exports, global) {
-        var toString = require('30');
-        var toInt = require('31');
+    '2a': function (require, module, exports, global) {
+        var toString = require('35');
+        var toInt = require('36');
         function repeat(str, n) {
             var result = '';
             str = toString(str);
@@ -3935,22 +5706,13 @@ var G5;
         }
         module.exports = repeat;
     },
-    '24': function (require, module, exports, global) {
-        function now() {
-            return now.get();
-        }
-        now.get = typeof Date.now === 'function' ? Date.now : function () {
-            return +new Date();
-        };
-        module.exports = now;
-    },
-    '25': function (require, module, exports, global) {
+    '2b': function (require, module, exports, global) {
         function identity(val) {
             return val;
         }
         module.exports = identity;
     },
-    '26': function (require, module, exports, global) {
+    '2c': function (require, module, exports, global) {
         function prop(name) {
             return function (obj) {
                 return obj[name];
@@ -3958,9 +5720,9 @@ var G5;
         }
         module.exports = prop;
     },
-    '27': function (require, module, exports, global) {
-        var forOwn = require('28');
-        var isArray = require('1n');
+    '2d': function (require, module, exports, global) {
+        var forOwn = require('2f');
+        var isArray = require('1t');
         function containsMatch(array, pattern) {
             var i = -1, length = array.length;
             while (++i < length) {
@@ -4001,9 +5763,18 @@ var G5;
         }
         module.exports = deepMatches;
     },
-    '28': function (require, module, exports, global) {
-        var hasOwn = require('1a');
-        var forIn = require('1q');
+    '2e': function (require, module, exports, global) {
+        function now() {
+            return now.get();
+        }
+        now.get = typeof Date.now === 'function' ? Date.now : function () {
+            return +new Date();
+        };
+        module.exports = now;
+    },
+    '2f': function (require, module, exports, global) {
+        var hasOwn = require('1f');
+        var forIn = require('1w');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
                 if (hasOwn(obj, key)) {
@@ -4013,7 +5784,7 @@ var G5;
         }
         module.exports = forOwn;
     },
-    '29': function (require, module, exports, global) {
+    '2g': function (require, module, exports, global) {
         'use strict';
         var colors = {
                 maroon: '#800000',
@@ -4144,9 +5915,9 @@ var G5;
         ].join('|'), 'gi');
         module.exports = color;
     },
-    '2a': function (require, module, exports, global) {
+    '2h': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('32');
+        var indexOf = require('37');
         var requestFrame = global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame || global.oRequestAnimationFrame || global.msRequestAnimationFrame || function (callback) {
                 return setTimeout(function () {
                     callback();
@@ -4174,15 +5945,15 @@ var G5;
         exports.request = request;
         exports.cancel = cancel;
     },
-    '2b': function (require, module, exports, global) {
+    '2i': function (require, module, exports, global) {
         'use strict';
-        var color = require('29'), frame = require('2a');
+        var color = require('2g'), frame = require('2h');
         var cancelFrame = frame.cancel, requestFrame = frame.request;
-        var prime = require('33');
-        var camelize = require('34'), clean = require('35'), capitalize = require('36'), hyphenateString = require('37');
-        var map = require('38'), forEach = require('39'), indexOf = require('32');
-        var elements = require('3a');
-        var fx = require('2c');
+        var prime = require('38');
+        var camelize = require('39'), clean = require('3a'), capitalize = require('3b'), hyphenateString = require('3c');
+        var map = require('3d'), forEach = require('3e'), indexOf = require('37');
+        var elements = require('3f');
+        var fx = require('2j');
         var matchString = function (s, r) {
             return String.prototype.match.call(s, r);
         };
@@ -4481,7 +6252,7 @@ var G5;
         var parseTransform2d, Transform2d;
         if (!transitionName && transformName)
             (function () {
-                var unmatrix = require('3b');
+                var unmatrix = require('3g');
                 var v = '\\s*([-\\d\\w.]+)\\s*';
                 var rMatrix = RegExp('matrix\\(' + [
                         v,
@@ -4868,10 +6639,10 @@ var G5;
         };
         module.exports = moofx;
     },
-    '2c': function (require, module, exports, global) {
+    '2j': function (require, module, exports, global) {
         'use strict';
-        var prime = require('33'), requestFrame = require('2a').request, bezier = require('3c');
-        var map = require('38');
+        var prime = require('38'), requestFrame = require('2h').request, bezier = require('3h');
+        var map = require('3d');
         var sDuration = '([\\d.]+)(s|ms)?', sCubicBezier = 'cubic-bezier\\(([-.\\d]+),([-.\\d]+),([-.\\d]+),([-.\\d]+)\\)';
         var rDuration = RegExp(sDuration), rCubicBezier = RegExp(sCubicBezier), rgCubicBezier = RegExp(sCubicBezier, 'g');
         var equations = {
@@ -5036,13 +6807,90 @@ var G5;
         fx.prototype = Fx.prototype;
         module.exports = fx;
     },
-    '2d': function (require, module, exports, global) {
+    '2k': function (require, module, exports, global) {
+        var MIN_INT = require('3i');
+        var MAX_INT = require('3j');
+        var rand = require('3k');
+        function randInt(min, max) {
+            min = min == null ? MIN_INT : ~~min;
+            max = max == null ? MAX_INT : ~~max;
+            return Math.round(rand(min - 0.5, max + 0.499999999999));
+        }
+        module.exports = randInt;
+    },
+    '2l': function (require, module, exports, global) {
+        var kindOf = require('2m');
+        var isPlainObject = require('2n');
+        var mixIn = require('3l');
+        function clone(val) {
+            switch (kindOf(val)) {
+            case 'Object':
+                return cloneObject(val);
+            case 'Array':
+                return cloneArray(val);
+            case 'RegExp':
+                return cloneRegExp(val);
+            case 'Date':
+                return cloneDate(val);
+            default:
+                return val;
+            }
+        }
+        function cloneObject(source) {
+            if (isPlainObject(source)) {
+                return mixIn({}, source);
+            } else {
+                return source;
+            }
+        }
+        function cloneRegExp(r) {
+            var flags = '';
+            flags += r.multiline ? 'm' : '';
+            flags += r.global ? 'g' : '';
+            flags += r.ignorecase ? 'i' : '';
+            return new RegExp(r.source, flags);
+        }
+        function cloneDate(date) {
+            return new Date(+date);
+        }
+        function cloneArray(arr) {
+            return arr.slice();
+        }
+        module.exports = clone;
+    },
+    '2m': function (require, module, exports, global) {
+        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
+        function kindOf(val) {
+            if (val === null) {
+                return 'Null';
+            } else if (val === UNDEF) {
+                return 'Undefined';
+            } else {
+                return _rKind.exec(_toString.call(val))[1];
+            }
+        }
+        module.exports = kindOf;
+    },
+    '2n': function (require, module, exports, global) {
+        function isPlainObject(value) {
+            return !!value && typeof value === 'object' && value.constructor === Object;
+        }
+        module.exports = isPlainObject;
+    },
+    '2o': function (require, module, exports, global) {
+        var kindOf = require('1i');
+        function isKind(val, kind) {
+            return kindOf(val) === kind;
+        }
+        module.exports = isKind;
+    },
+    '2p': function (require, module, exports, global) {
         function identity(val) {
             return val;
         }
         module.exports = identity;
     },
-    '2e': function (require, module, exports, global) {
+    '2q': function (require, module, exports, global) {
         function prop(name) {
             return function (obj) {
                 return obj[name];
@@ -5050,9 +6898,9 @@ var G5;
         }
         module.exports = prop;
     },
-    '2f': function (require, module, exports, global) {
-        var forOwn = require('1t');
-        var isArray = require('1w');
+    '2r': function (require, module, exports, global) {
+        var forOwn = require('23');
+        var isArray = require('1k');
         function containsMatch(array, pattern) {
             var i = -1, length = array.length;
             while (++i < length) {
@@ -5093,75 +6941,9 @@ var G5;
         }
         module.exports = deepMatches;
     },
-    '2g': function (require, module, exports, global) {
-        var kindOf = require('2h');
-        var isPlainObject = require('2i');
-        var mixIn = require('3d');
-        function clone(val) {
-            switch (kindOf(val)) {
-            case 'Object':
-                return cloneObject(val);
-            case 'Array':
-                return cloneArray(val);
-            case 'RegExp':
-                return cloneRegExp(val);
-            case 'Date':
-                return cloneDate(val);
-            default:
-                return val;
-            }
-        }
-        function cloneObject(source) {
-            if (isPlainObject(source)) {
-                return mixIn({}, source);
-            } else {
-                return source;
-            }
-        }
-        function cloneRegExp(r) {
-            var flags = '';
-            flags += r.multiline ? 'm' : '';
-            flags += r.global ? 'g' : '';
-            flags += r.ignorecase ? 'i' : '';
-            return new RegExp(r.source, flags);
-        }
-        function cloneDate(date) {
-            return new Date(+date);
-        }
-        function cloneArray(arr) {
-            return arr.slice();
-        }
-        module.exports = clone;
-    },
-    '2h': function (require, module, exports, global) {
-        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
-        function kindOf(val) {
-            if (val === null) {
-                return 'Null';
-            } else if (val === UNDEF) {
-                return 'Undefined';
-            } else {
-                return _rKind.exec(_toString.call(val))[1];
-            }
-        }
-        module.exports = kindOf;
-    },
-    '2i': function (require, module, exports, global) {
-        function isPlainObject(value) {
-            return !!value && typeof value === 'object' && value.constructor === Object;
-        }
-        module.exports = isPlainObject;
-    },
-    '2j': function (require, module, exports, global) {
-        var kindOf = require('1d');
-        function isKind(val, kind) {
-            return kindOf(val) === kind;
-        }
-        module.exports = isKind;
-    },
-    '2k': function (require, module, exports, global) {
+    '2s': function (require, module, exports, global) {
         'use strict';
-        var prime = require('j'), Options = require('n'), guid = require('1y'), zen = require('l'), $ = require('1'), get = require('21'), has = require('2x'), set = require('1z');
+        var prime = require('k'), Options = require('v'), guid = require('q'), zen = require('m'), $ = require('1'), get = require('28'), has = require('33'), set = require('26');
         require('6');
         var Base = new prime({
                 mixin: Options,
@@ -5229,8 +7011,8 @@ var G5;
             });
         module.exports = Base;
     },
-    '2l': function (require, module, exports, global) {
-        var prime = require('j'), Base = require('2k'), $ = require('1'), zen = require('l');
+    '2t': function (require, module, exports, global) {
+        var prime = require('k'), Base = require('2s'), $ = require('1'), zen = require('m');
         require('5');
         var UID = 0;
         var Section = new prime({
@@ -5249,8 +7031,8 @@ var G5;
             });
         module.exports = Section;
     },
-    '2m': function (require, module, exports, global) {
-        var prime = require('j'), Base = require('2k');
+    '2u': function (require, module, exports, global) {
+        var prime = require('k'), Base = require('2s');
         var Grid = new prime({
                 inherits: Base,
                 options: { type: 'grid' },
@@ -5263,9 +7045,9 @@ var G5;
             });
         module.exports = Grid;
     },
-    '2n': function (require, module, exports, global) {
-        var prime = require('j'), Base = require('2k');
-        $ = require('k');
+    '2v': function (require, module, exports, global) {
+        var prime = require('k'), Base = require('2s');
+        $ = require('l');
         var Block = new prime({
                 inherits: Base,
                 options: {
@@ -5296,8 +7078,8 @@ var G5;
             });
         module.exports = Block;
     },
-    '2o': function (require, module, exports, global) {
-        var prime = require('j'), Base = require('2k'), $ = require('1'), zen = require('l');
+    '2w': function (require, module, exports, global) {
+        var prime = require('k'), Base = require('2s'), $ = require('1'), zen = require('m');
         require('5');
         var UID = 0;
         var Position = new prime({
@@ -5317,8 +7099,8 @@ var G5;
             });
         module.exports = Position;
     },
-    '2p': function (require, module, exports, global) {
-        var prime = require('j'), Base = require('2k'), $ = require('1'), zen = require('l');
+    '2x': function (require, module, exports, global) {
+        var prime = require('k'), Base = require('2s'), $ = require('1'), zen = require('m');
         require('5');
         var UID = 0;
         var Mainbody = new prime({
@@ -5337,8 +7119,8 @@ var G5;
             });
         module.exports = Mainbody;
     },
-    '2q': function (require, module, exports, global) {
-        var prime = require('j'), Position = require('2o');
+    '2y': function (require, module, exports, global) {
+        var prime = require('k'), Position = require('2w');
         var UID = 0;
         var Spacer = new prime({
                 inherits: Position,
@@ -5353,8 +7135,8 @@ var G5;
             });
         module.exports = Spacer;
     },
-    '2r': function (require, module, exports, global) {
-        var hasOwn = require('1h');
+    '2z': function (require, module, exports, global) {
+        var hasOwn = require('1o');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -5396,8 +7178,8 @@ var G5;
         }
         module.exports = forIn;
     },
-    '2s': function (require, module, exports, global) {
-        var slice = require('1f');
+    '30': function (require, module, exports, global) {
+        var slice = require('1z');
         function makeCollectionMethod(arrMethod, objMethod, defaultReturn) {
             return function () {
                 var args = slice(arguments);
@@ -5409,18 +7191,7 @@ var G5;
         }
         module.exports = makeCollectionMethod;
     },
-    '2t': function (require, module, exports, global) {
-        var forOwn = require('1t');
-        function size(obj) {
-            var count = 0;
-            forOwn(obj, function () {
-                count++;
-            });
-            return count;
-        }
-        module.exports = size;
-    },
-    '2u': function (require, module, exports, global) {
+    '31': function (require, module, exports, global) {
         function append(arr1, arr2) {
             if (arr2 == null) {
                 return arr1;
@@ -5433,38 +7204,8 @@ var G5;
         }
         module.exports = append;
     },
-    '2v': function (require, module, exports, global) {
-        var choice = require('2w');
-        var _chars = '0123456789abcdef'.split('');
-        function randHex(size) {
-            size = size && size > 0 ? size : 6;
-            var str = '';
-            while (size--) {
-                str += choice(_chars);
-            }
-            return str;
-        }
-        module.exports = randHex;
-    },
-    '2w': function (require, module, exports, global) {
-        var randInt = require('3e');
-        var isArray = require('1w');
-        function choice(items) {
-            var target = arguments.length === 1 && isArray(items) ? items : arguments;
-            return target[randInt(0, target.length - 1)];
-        }
-        module.exports = choice;
-    },
-    '2x': function (require, module, exports, global) {
-        var get = require('21');
-        var UNDEF;
-        function has(obj, prop) {
-            return get(obj, prop) !== UNDEF;
-        }
-        module.exports = has;
-    },
-    '2y': function (require, module, exports, global) {
-        var forEach = require('r');
+    '32': function (require, module, exports, global) {
+        var forEach = require('y');
         function namespace(obj, path) {
             if (!path)
                 return obj;
@@ -5478,7 +7219,15 @@ var G5;
         }
         module.exports = namespace;
     },
-    '2z': function (require, module, exports, global) {
+    '33': function (require, module, exports, global) {
+        var get = require('28');
+        var UNDEF;
+        function has(obj, prop) {
+            return get(obj, prop) !== UNDEF;
+        }
+        module.exports = has;
+    },
+    '34': function (require, module, exports, global) {
         function isPrimitive(value) {
             switch (typeof value) {
             case 'string':
@@ -5490,19 +7239,19 @@ var G5;
         }
         module.exports = isPrimitive;
     },
-    '30': function (require, module, exports, global) {
+    '35': function (require, module, exports, global) {
         function toString(val) {
             return val == null ? '' : val.toString();
         }
         module.exports = toString;
     },
-    '31': function (require, module, exports, global) {
+    '36': function (require, module, exports, global) {
         function toInt(val) {
             return ~~val;
         }
         module.exports = toInt;
     },
-    '32': function (require, module, exports, global) {
+    '37': function (require, module, exports, global) {
         'use strict';
         var indexOf = function (self, item, from) {
             for (var l = self.length >>> 0, i = from < 0 ? Math.max(0, l + from) : from || 0; i < l; i++) {
@@ -5513,9 +7262,9 @@ var G5;
         };
         module.exports = indexOf;
     },
-    '33': function (require, module, exports, global) {
+    '38': function (require, module, exports, global) {
         'use strict';
-        var hasOwn = require('3f'), forIn = require('3g'), mixIn = require('3h'), filter = require('3i'), create = require('3j'), type = require('3k');
+        var hasOwn = require('3m'), forIn = require('3n'), mixIn = require('3o'), filter = require('3p'), create = require('3q'), type = require('3r');
         var defineProperty = Object.defineProperty, getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
         try {
             defineProperty({}, '~', {});
@@ -5570,7 +7319,7 @@ var G5;
         };
         module.exports = prime;
     },
-    '34': function (require, module, exports, global) {
+    '39': function (require, module, exports, global) {
         'use strict';
         var camelize = function (self) {
             return (self + '').replace(/-\D/g, function (match) {
@@ -5579,15 +7328,15 @@ var G5;
         };
         module.exports = camelize;
     },
-    '35': function (require, module, exports, global) {
+    '3a': function (require, module, exports, global) {
         'use strict';
-        var trim = require('3l');
+        var trim = require('3s');
         var clean = function (self) {
             return trim((self + '').replace(/\s+/g, ' '));
         };
         module.exports = clean;
     },
-    '36': function (require, module, exports, global) {
+    '3b': function (require, module, exports, global) {
         'use strict';
         var capitalize = function (self) {
             return (self + '').replace(/\b[a-z]/g, function (match) {
@@ -5596,7 +7345,7 @@ var G5;
         };
         module.exports = capitalize;
     },
-    '37': function (require, module, exports, global) {
+    '3c': function (require, module, exports, global) {
         'use strict';
         var hyphenate = function (self) {
             return (self + '').replace(/[A-Z]/g, function (match) {
@@ -5605,7 +7354,7 @@ var G5;
         };
         module.exports = hyphenate;
     },
-    '38': function (require, module, exports, global) {
+    '3d': function (require, module, exports, global) {
         'use strict';
         var map = function (self, method, context) {
             var length = self.length >>> 0, results = Array(length);
@@ -5616,7 +7365,7 @@ var G5;
         };
         module.exports = map;
     },
-    '39': function (require, module, exports, global) {
+    '3e': function (require, module, exports, global) {
         'use strict';
         var forEach = function (self, method, context) {
             for (var i = 0, l = self.length >>> 0; i < l; i++) {
@@ -5627,9 +7376,9 @@ var G5;
         };
         module.exports = forEach;
     },
-    '3a': function (require, module, exports, global) {
+    '3f': function (require, module, exports, global) {
         'use strict';
-        var prime = require('33'), forEach = require('39'), map = require('38'), filter = require('3m'), every = require('3n'), some = require('3o');
+        var prime = require('38'), forEach = require('3e'), map = require('3d'), filter = require('3t'), every = require('3u'), some = require('3v');
         var uniqueIndex = 0;
         var uniqueID = function (n) {
             return n === global ? 'global' : n.uniqueNumber || (n.uniqueNumber = 'n:' + (uniqueIndex++).toString(36));
@@ -5705,7 +7454,7 @@ var G5;
             });
         module.exports = $;
     },
-    '3b': function (require, module, exports, global) {
+    '3g': function (require, module, exports, global) {
         'use strict';
         var length = function (a) {
             return Math.sqrt(a[0] * a[0] + a[1] * a[1]);
@@ -5762,7 +7511,7 @@ var G5;
             ];
         };
     },
-    '3c': function (require, module, exports, global) {
+    '3h': function (require, module, exports, global) {
         module.exports = function (x1, y1, x2, y2, epsilon) {
             var curveX = function (t) {
                 var v = 1 - t;
@@ -5806,8 +7555,25 @@ var G5;
             };
         };
     },
-    '3d': function (require, module, exports, global) {
-        var forOwn = require('1t');
+    '3i': function (require, module, exports, global) {
+        module.exports = -2147483648;
+    },
+    '3j': function (require, module, exports, global) {
+        module.exports = 2147483647;
+    },
+    '3k': function (require, module, exports, global) {
+        var random = require('3w');
+        var MIN_INT = require('3i');
+        var MAX_INT = require('3j');
+        function rand(min, max) {
+            min = min == null ? MIN_INT : min;
+            max = max == null ? MAX_INT : max;
+            return min + (max - min) * random();
+        }
+        module.exports = rand;
+    },
+    '3l': function (require, module, exports, global) {
+        var forOwn = require('23');
         function mixIn(target, objects) {
             var i = 0, n = arguments.length, obj;
             while (++i < n) {
@@ -5823,18 +7589,7 @@ var G5;
         }
         module.exports = mixIn;
     },
-    '3e': function (require, module, exports, global) {
-        var MIN_INT = require('3p');
-        var MAX_INT = require('3q');
-        var rand = require('3r');
-        function randInt(min, max) {
-            min = min == null ? MIN_INT : ~~min;
-            max = max == null ? MAX_INT : ~~max;
-            return Math.round(rand(min - 0.5, max + 0.499999999999));
-        }
-        module.exports = randInt;
-    },
-    '3f': function (require, module, exports, global) {
+    '3m': function (require, module, exports, global) {
         'use strict';
         var hasOwnProperty = Object.hasOwnProperty;
         var hasOwn = function (self, key) {
@@ -5842,9 +7597,9 @@ var G5;
         };
         module.exports = hasOwn;
     },
-    '3g': function (require, module, exports, global) {
+    '3n': function (require, module, exports, global) {
         'use strict';
-        var has = require('3f');
+        var has = require('3m');
         var forIn = function (self, method, context) {
             for (var key in self)
                 if (method.call(context, self[key], key, self) === false)
@@ -5868,9 +7623,9 @@ var G5;
         }
         module.exports = forIn;
     },
-    '3h': function (require, module, exports, global) {
+    '3o': function (require, module, exports, global) {
         'use strict';
-        var forOwn = require('3s');
+        var forOwn = require('3x');
         var copy = function (value, key) {
             this[key] = value;
         };
@@ -5881,9 +7636,9 @@ var G5;
         };
         module.exports = mixIn;
     },
-    '3i': function (require, module, exports, global) {
+    '3p': function (require, module, exports, global) {
         'use strict';
-        var forIn = require('3g');
+        var forIn = require('3n');
         var filter = function (self, method, context) {
             var results = {};
             forIn(self, function (value, key) {
@@ -5894,7 +7649,7 @@ var G5;
         };
         module.exports = filter;
     },
-    '3j': function (require, module, exports, global) {
+    '3q': function (require, module, exports, global) {
         'use strict';
         var create = function (self) {
             var constructor = function () {
@@ -5904,7 +7659,7 @@ var G5;
         };
         module.exports = create;
     },
-    '3k': function (require, module, exports, global) {
+    '3r': function (require, module, exports, global) {
         'use strict';
         var toString = Object.prototype.toString, types = /number|object|array|string|function|date|regexp|boolean/;
         var type = function (object) {
@@ -5919,14 +7674,14 @@ var G5;
         };
         module.exports = type;
     },
-    '3l': function (require, module, exports, global) {
+    '3s': function (require, module, exports, global) {
         'use strict';
         var trim = function (self) {
             return (self + '').replace(/^\s+|\s+$/g, '');
         };
         module.exports = trim;
     },
-    '3m': function (require, module, exports, global) {
+    '3t': function (require, module, exports, global) {
         'use strict';
         var filter = function (self, method, context) {
             var results = [];
@@ -5939,7 +7694,7 @@ var G5;
         };
         module.exports = filter;
     },
-    '3n': function (require, module, exports, global) {
+    '3u': function (require, module, exports, global) {
         'use strict';
         var every = function (self, method, context) {
             for (var i = 0, l = self.length >>> 0; i < l; i++) {
@@ -5950,7 +7705,7 @@ var G5;
         };
         module.exports = every;
     },
-    '3o': function (require, module, exports, global) {
+    '3v': function (require, module, exports, global) {
         'use strict';
         var some = function (self, method, context) {
             for (var i = 0, l = self.length >>> 0; i < l; i++) {
@@ -5961,26 +7716,16 @@ var G5;
         };
         module.exports = some;
     },
-    '3p': function (require, module, exports, global) {
-        module.exports = -2147483648;
-    },
-    '3q': function (require, module, exports, global) {
-        module.exports = 2147483647;
-    },
-    '3r': function (require, module, exports, global) {
-        var random = require('3t');
-        var MIN_INT = require('3p');
-        var MAX_INT = require('3q');
-        function rand(min, max) {
-            min = min == null ? MIN_INT : min;
-            max = max == null ? MAX_INT : max;
-            return min + (max - min) * random();
+    '3w': function (require, module, exports, global) {
+        function random() {
+            return random.get();
         }
-        module.exports = rand;
+        random.get = Math.random;
+        module.exports = random;
     },
-    '3s': function (require, module, exports, global) {
+    '3x': function (require, module, exports, global) {
         'use strict';
-        var forIn = require('3g'), hasOwn = require('3f');
+        var forIn = require('3n'), hasOwn = require('3m');
         var forOwn = function (self, method, context) {
             forIn(self, function (value, key) {
                 if (hasOwn(self, key))
@@ -5989,13 +7734,6 @@ var G5;
             return self;
         };
         module.exports = forOwn;
-    },
-    '3t': function (require, module, exports, global) {
-        function random() {
-            return random.get();
-        }
-        random.get = Math.random;
-        module.exports = random;
     }
 }, this));
 //# sourceMappingURL=main.js.map

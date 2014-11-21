@@ -4,8 +4,10 @@ var elements =  require('elements');
                 require('elements/delegation');
                 require('elements/insertion');
                 require('elements/traversal');
+                require('./ui/popover');
+                require('./utils/ajaxify-links');
 
-require('./ui/popover');
+
 /*
 var zen      = require('elements/zen'),
     domready = require('elements/domready'),
