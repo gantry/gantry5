@@ -13,7 +13,6 @@ vendor/**
 # Symbolic links in admin
 platforms/*/*/common
 platforms/*/*/src
-platforms/*/*/vendor
 
 # Symbolic links in themes
 themes/*/*/common
