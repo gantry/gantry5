@@ -1,8 +1,10 @@
 <?php
 namespace Gantry\Framework;
 
-use Gantry\Component\Config\Config as Config;
 use Gantry\Component\Filesystem\Folder;
+use RocketTheme\Toolbox\ArrayTraits\Export;
+use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
+use RocketTheme\Toolbox\DI\Container;
 
 /**
  * The Platform Configuration class contains configuration information.
@@ -10,13 +12,20 @@ use Gantry\Component\Filesystem\Folder;
  * @author RocketTheme
  * @license MIT
  */
-class Platform extends Config
+
+class Platform
 {
+    use NestedArrayAccess, Export;
+
     protected $items;
 
-    public function __construct()
+    public function __construct(Container $container)
     {
-        $cache = Folder::getRelativePath(JPATH_CACHE);
+        $cache = Folder::getRelativePath(JPATH_CACHE) . '/gantry';
+
+        //Make sure that cache folder exists, otherwise it will be removed from the lookup.
+        Folder::create($cache);
+
         $this->items = [
             'streams' => [
                 'cache' => [
@@ -34,30 +43,30 @@ class Platform extends Config
                 'theme' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [
+                        '' => [] // Always define
                     ]
                 ],
                 'engine' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [
-
+                        '' => ['theme://engine']
                     ]
                 ],
-                'widgets' => [
+                'particles' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [
-                        '' => ['engine://widgets', 'theme://twig/widgets']
+                        '' => ['engine://particles']
                     ]
                 ],
-                'admin' => [
+                'gantry-admin' => [
                     'type' => 'ReadOnlyStream',
-                    'prefixes' => [
-                    ]
+                    'prefixes' => []
                 ],
                 'blueprints' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [
                         '' => ['engine://blueprints', 'theme://blueprints'],
-                        'widgets/' => ['widgets://']
+                        'particles/' => ['particles://']
                     ]
                 ],
                 'config' => [

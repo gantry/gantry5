@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Component\Config;
 
+use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\File\PhpFile;
 
 /**
@@ -12,6 +13,11 @@ abstract class CompiledBase
      * @var string|bool  Configuration checksum.
      */
     public $checksum;
+
+    /**
+     * @var string Cache folder to be used.
+     */
+    protected $cacheFolder;
 
     /**
      * @var string  Filename
@@ -29,9 +35,19 @@ abstract class CompiledBase
     protected $object;
 
     /**
+     * @param  string $cacheFolder  Cache folder to be used.
      * @param  array  $files  List of files as returned from ConfigFileFinder class.
+     * @throws \BadMethodCallException
      */
-    abstract public function __construct(array $files);
+    public function __construct($cacheFolder, array $files)
+    {
+        if (!$cacheFolder) {
+            throw new \BadMethodCallException('Cache folder not defined.');
+        }
+
+        $this->cacheFolder = $cacheFolder;
+        $this->files = $files;
+    }
 
     /**
      * Load the configuration.
@@ -44,8 +60,9 @@ abstract class CompiledBase
             return $this->object;
         }
 
-        if (!$this->loadCompiledFile($this->filename) && $this->loadFiles()) {
-            $this->saveCompiledFile($this->filename);
+        $filename = $this->filename();
+        if (!$this->loadCompiledFile($filename) && $this->loadFiles()) {
+            $this->saveCompiledFile($filename);
         }
 
         return $this->object;
@@ -65,6 +82,18 @@ abstract class CompiledBase
         }
 
         return $this->checksum;
+    }
+
+    /**
+     * Get filename for the compiled PHP file.
+     *
+     * @return string
+     */
+    protected function filename()
+    {
+        $name = md5(json_encode(array_keys($this->files)));
+
+        return "{$this->cacheFolder}/{$name}.php";
     }
 
     /**

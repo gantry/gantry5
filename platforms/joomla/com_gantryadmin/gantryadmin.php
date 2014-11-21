@@ -17,7 +17,7 @@ if (!$user->authorise('core.manage', 'com_templates')
 
 if (!defined('GANTRYADMIN_PATH'))
 {
-    define('GANTRYADMIN_PATH', __DIR__);
+    define('GANTRYADMIN_PATH', JPATH_COMPONENT_ADMINISTRATOR);
 }
 
 // Bootstrap Gantry framework or fail gracefully (inside included file).

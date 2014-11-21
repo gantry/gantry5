@@ -45,7 +45,7 @@ abstract class Folder
         $base = preg_replace('![\\|/]+!', '/', $base);
         $path = preg_replace('![\\|/]+!', '/', $path);
         if (strpos($path, $base) === 0) {
-            $path = substr($path, strlen($base));
+            $path = ltrim(substr($path, strlen($base)), '/');
         }
 
         return $path;
@@ -130,7 +130,7 @@ abstract class Folder
         }
 
         // Make sure that path to the target exists before copying.
-        self::mkdir($target);
+        self::create($target);
 
         $success = true;
 
@@ -172,7 +172,7 @@ abstract class Folder
         }
 
         // Make sure that path to the target exists before moving.
-        self::mkdir(dirname($target));
+        self::create(dirname($target));
 
         // Just rename the directory.
         $success = @rename($source, $target);
@@ -211,6 +211,25 @@ abstract class Folder
     }
 
     /**
+     * @param  string  $folder
+     * @throws \RuntimeException
+     * @internal
+     */
+    public static function create($folder)
+    {
+        if (is_dir($folder)) {
+            return;
+        }
+
+        $success = @mkdir($folder, 0777, true);
+
+        if (!$success) {
+            $error = error_get_last();
+            throw new \RuntimeException($error['message']);
+        }
+    }
+
+    /**
      * @param  string $folder
      * @return bool
      * @internal
@@ -230,24 +249,5 @@ abstract class Folder
         }
 
         return @rmdir($folder);
-    }
-
-    /**
-     * @param  string  $folder
-     * @throws \RuntimeException
-     * @internal
-     */
-    protected static function mkdir($folder)
-    {
-        if (is_dir($folder)) {
-            return;
-        }
-
-        $success = @mkdir($folder, 0777, true);
-
-        if (!$success) {
-            $error = error_get_last();
-            throw new \RuntimeException($error['message']);
-        }
     }
 }

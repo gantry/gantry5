@@ -1,7 +1,7 @@
 <?php
 namespace Gantry\Component\Config;
 
-use Grav\Common\File\CompiledYamlFile;
+use Gantry\Component\File\CompiledYamlFile;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
 
 /**
@@ -13,18 +13,6 @@ class CompiledBlueprints extends CompiledBase
      * @var Blueprints  Blueprints object.
      */
     protected $object;
-
-    /**
-     * @param  array  $files  List of files as returned from ConfigFileFinder class.
-     */
-    public function __construct(array $files)
-    {
-        $this->files = $files;
-
-        $name = md5(json_encode(array_keys($files)));
-
-        $this->filename = CACHE_DIR . 'compiled/blueprints/' . $name . '.php';
-    }
 
     /**
      * Create configuration object.

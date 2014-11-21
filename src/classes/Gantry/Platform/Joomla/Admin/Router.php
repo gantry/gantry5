@@ -21,13 +21,6 @@ class Router implements RouterInterface
     {
         $this->container['theme.path'] = JPATH_SITE . '/templates/gantry';
 
-        // Define Gantry Admin services.
-        $this->container['admin.config'] = function () {
-            return \Gantry\Framework\Config::instance(
-                JPATH_CACHE . '/gantry/config.php',
-                GANTRYADMIN_PATH
-            );
-        };
         $this->container['admin.theme'] = function () {
             return new \Gantry\Admin\Theme\Theme(GANTRYADMIN_PATH);
         };

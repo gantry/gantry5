@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Framework\Base;
 
+use Gantry\Component\Config\ConfigServiceProvider;
 use Gantry\Component\Layout\LayoutReader;
 use RocketTheme\Toolbox\DI\Container;
 use Gantry\Component\Filesystem\StreamsServiceProvider;
@@ -46,6 +47,7 @@ class Gantry extends Container
     {
         $instance = new static();
 
+        $instance->register(new ConfigServiceProvider);
         $instance->register(new StreamsServiceProvider);
 
         return $instance;
