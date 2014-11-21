@@ -1,9 +1,9 @@
 <?php
 namespace Gantry\Admin;
 
+use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Router\RouterInterface;
 use RocketTheme\Toolbox\DI\Container;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Router implements RouterInterface
 {
@@ -19,7 +19,34 @@ class Router implements RouterInterface
 
     public function dispatch()
     {
-        $this->container['theme.path'] = JPATH_SITE . '/templates/gantry';
+        $app = \JFactory::getApplication();
+        $input = $app->input;
+        $format = $input->getCmd('format', 'html');
+        $view = $input->getCmd('view', 'themes');
+        $layout = $input->getCmd('layout', 'index');
+        $style = $input->getInt('style', 0);
+
+        $params = [
+            'id'   => $input->getInt('id'),
+            'ajax' => ($format == 'json')
+        ];
+
+        // If style is set, resolve the template and load it.
+        if ($style) {
+            \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
+            $table = \JTable::getInstance('Style', 'TemplatesTable');
+            $table->load($style);
+
+            $this->container['theme.id'] = $table->id;
+            $this->container['theme.path'] = $path = JPATH_SITE . '/templates/' . $table->template;
+            $this->container['theme.name'] = $table->template;
+            $this->container['theme.title'] = $table->title;
+            $this->container['theme.params'] = (new \JRegistry($table->params))->toArray();
+
+            if (file_exists($path . '/includes/gantry.php')) {
+                include $path . '/includes/gantry.php';
+            }
+        }
 
         $this->container['admin.theme'] = function () {
             return new \Gantry\Admin\Theme\Theme(GANTRYADMIN_PATH);
@@ -29,15 +56,6 @@ class Router implements RouterInterface
         $this->container['admin.theme'];
         $this->container['base_url'] = \JUri::base(false) . 'index.php?option=com_gantryadmin';
 
-        $app = \JFactory::getApplication();
-        $input = $app->input;
-        $view = $input->getCmd('view', 'themes');
-        $layout = $input->getCmd('layout', 'index');
-        $style = $input->getInt('style', 0);
-        $params = [
-            'style' => $style,
-            'id' => $input->getInt('id')
-        ];
 
         $this->container['routes'] = [
             'themes' => '',
@@ -50,24 +68,42 @@ class Router implements RouterInterface
             'updates' => '&view=updates&style=' . $style,
         ];
 
-        // Render the page.
-        try {
-            $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($view);
+        $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . ucfirst($view);
 
-            if (class_exists($class) && method_exists($class, $layout)) {
-                $controller = new $class($this->container);
-                $controller->{$layout}($params);
-            } else {
+        // Render the page.
+        $contents = '';
+        try {
+            if (!class_exists($class) || !method_exists($class, $layout)) {
                 throw new \RuntimeException('Not Found', 404);
             }
 
-        } catch (\Exception $e) {
-            if (class_exists('\Tracy\Debugger') && \Tracy\Debugger::isEnabled() && !\Tracy\Debugger::$productionMode ) {
-                // We have Tracy enabled; will display and/or log error with it.
-                throw $e;
-            }
+            $controller = new $class($this->container);
+            $contents = $controller->{$layout}($params);
 
-            \JError::raiseError(500, $e->getMessage());
+        } catch (\Exception $e) {
+            if ($format == 'json') {
+                $contents = new JsonResponse($e);
+
+            } else {
+                if (class_exists('\Tracy\Debugger') && \Tracy\Debugger::isEnabled() && !\Tracy\Debugger::$productionMode )  {
+                    // We have Tracy enabled; will display and/or log error with it.
+                    throw $e;
+                }
+
+                \JError::raiseError($e->getCode() ?: 500, $e->getMessage());
+            }
         }
+
+        if ($contents instanceof JsonResponse) {
+            // Tell the browser that our response is in JSON.
+            header('Content-Type: application/json', true, $contents->getResponseCode());
+
+            echo $contents;
+
+            // It's much faster and safer to exit now than let Joomla to send the response.
+            \JFactory::getApplication()->close();
+        }
+
+        echo $contents;
     }
 }

@@ -3,7 +3,7 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/nucleus.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/admin.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/fonts/awesome/font-awesome.min.css') }}" type="text/css" />
     {{ parent() }}
 {% endblock %}
 
@@ -26,7 +26,7 @@
                 <div id="main-header">
                     {% include "@gantry-admin/partials/header.html.twig" %}
                 </div>
-                <div class="content">
+                <div class="content" data-g5-content>
                     {% block gantry %}
                     {% endblock %}
                 </div>

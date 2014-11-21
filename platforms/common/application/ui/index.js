@@ -1,4 +1,4 @@
-var ready = require('elements/domready'),
+/*var ready = require('elements/domready'),
     $     = require('elements');
 
 ready(function(){
@@ -33,6 +33,13 @@ ready(function(){
         if (!hiddens) return true;
         if (hiddens) hiddens.value(hiddens.value() == '0' ? '1' : '0');
     });
-});
+});*/
+"use strict";
 
-module.exports = {};
+var ready = require('elements/domready'),
+    Modal = require('./modal');
+
+
+module.exports = {
+    modal: new Modal()
+};

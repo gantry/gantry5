@@ -1,10 +1,14 @@
-/*var elements =  require('elements');
+var elements =  require('elements');
                 require('elements/attributes');
                 require('elements/events');
                 require('elements/delegation');
                 require('elements/insertion');
                 require('elements/traversal');
+                require('./ui/popover');
+                require('./utils/ajaxify-links');
 
+
+/*
 var zen      = require('elements/zen'),
     domready = require('elements/domready'),
     $        = require('elements/attributes');
@@ -34,8 +38,9 @@ module.exports = {
     zen     : zen,
     domready: domready,
     agent   : require('agent'),*/
+    lm      : require('./lm'),
     ui      : require('./ui'),
-    lm      : require('./lm')
+    "$"     : elements
 };
 
 

@@ -1,0 +1,17 @@
+// Inactive Dropdown
+%inactive-dropdown {
+	position: absolute;
+	width: $dropdown-width;
+	top: auto;
+	left: auto;
+	opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+}
+
+// Inactive Dropdown
+%active-dropdown {
+	opacity: 1;
+	visibility: visible;
+	overflow: visible;
+}

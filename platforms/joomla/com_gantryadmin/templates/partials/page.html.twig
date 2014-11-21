@@ -1,17 +1,25 @@
 {% set headerContent %}
-{% block stylesheets %}
-    <style>
-        .subhead-collapse.collapse,
-        .header
-        { display: none; }
-        .container-main { padding: 0; }
-        #footer { text-align: center; }
-    </style>
-{% endblock %}
-{% block javascript %}
-{% endblock %}
+
+    {% block stylesheets %}
+        <style>
+            .subhead-collapse.collapse,
+            .header
+            { display: none; }
+            .container-main { padding: 0; }
+            #footer { text-align: center; }
+        </style>
+    {% endblock %}
+
+    {% block javascript %}
+        <script>
+            var GANTRY_AJAX_URL = 'index.php?option=com_gantryadmin&view={view}&layout={method}&format=json';
+        </script>
+    {% endblock %}
+
 {% endset %}
+
 {% do parseHtmlHeader(headerContent) %}
+
 
 {% block content %}
     <div id="g5-container" class="container">

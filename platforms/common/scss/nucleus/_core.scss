@@ -8,213 +8,221 @@
 @-o-viewport{width:device-width}
 @viewport{width:device-width}
 
-html #g5-container {
+html {
 	font-size: 100%;
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
 }
 
-body #g5-container {
+body {
 	margin: 0;
 }
 
-#g5-container article,
-#g5-container aside,
-#g5-container details,
-#g5-container figcaption,
-#g5-container figure,
-#g5-container footer,
-#g5-container header,
-#g5-container hgroup,
-#g5-container main,
-#g5-container nav,
-#g5-container section,
-#g5-container summary {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
 	display: block;
 }
 
-#g5-container audio,
-#g5-container canvas,
-#g5-container progress,
-#g5-container video {
+audio,
+canvas,
+progress,
+video {
 	display: inline-block;
 	vertical-align: baseline;
 }
 
-#g5-container audio:not([controls]) {
+audio:not([controls]) {
 	display: none;
 	height: 0;
 }
 
-#g5-container [hidden],
+[hidden],
 template {
 	display: none;
 }
 
-#g5-container a {
+a {
 	background: transparent;
 	text-decoration: none;
 }
 
-#g5-container a:active,
-#g5-container a:hover {
+a:active,
+a:hover {
 	outline: 0;
 }
 
-#g5-container abbr[title] {
+abbr[title] {
 	border-bottom: 1px dotted;
 }
 
-#g5-container b,
-#g5-container strong {
+b,
+strong {
 	font-weight: bold;
 }
 
-#g5-container dfn {
+dfn {
 	font-style: italic;
 }
 
-#g5-container mark {
+mark {
 	background: #ff0;
 	color: #000;
 }
 
-#g5-container sub,
-#g5-container sup {
+sub,
+sup {
 	font-size: $core-font-size - 0.250;
 	line-height: 0;
 	position: relative;
 	vertical-align: baseline;
 }
 
-#g5-container sup {
+sup {
 	top: -0.5em;
 }
 
-#g5-container sub {
+sub {
 	bottom: -0.25em;
 }
 
-#g5-container img {
-	border: 0;
+img {
+	width: auto\9;
+	height: auto;
 	max-width: 100%;
 	display: inline-block;
 	vertical-align: middle;
+	border: 0;
+	-ms-interpolation-mode: bicubic;
 }
 
-#g5-container svg:not(:root) {
+iframe,
+svg {
+	max-width: 100%;
+}
+
+svg:not(:root) {
 	overflow: hidden;
 }
 
-#g5-container figure {
+figure {
 	margin: 1em 40px;
 }
 
-#g5-container hr {
+hr {
 	height: 0;
 }
 
-#g5-container pre {
+pre {
 	overflow: auto;
 }
 
-#g5-container code,
-#g5-container kbd,
-#g5-container pre,
-#g5-container samp {
+code,
+kbd,
+pre,
+samp {
 	font-family: $preformatted-font-family;
 	font-size: $core-font-size;
 }
 
-#g5-container button,
-#g5-container input,
-#g5-container optgroup,
-#g5-container select,
-#g5-container textarea {
+button,
+input,
+optgroup,
+select,
+textarea {
 	color: inherit;
 	font: inherit;
 	margin: 0;
 }
 
-#g5-container button {
+button {
 	overflow: visible;
 }
 
-#g5-container button,
-#g5-container select {
+button,
+select {
 	text-transform: none;
 }
 
-#g5-container button,
-#g5-container html input[type="button"],
-#g5-container input[type="reset"],
-#g5-container input[type="submit"] {
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
 	-webkit-appearance: button;
 	cursor: pointer;
 }
 
-#g5-container button[disabled],
-#g5-container html input[disabled] {
+button[disabled],
+html input[disabled] {
 	cursor: default;
 }
 
-#g5-container button::-moz-focus-inner,
-#g5-container input::-moz-focus-inner {
+button::-moz-focus-inner,
+input::-moz-focus-inner {
 	border: 0;
 	padding: 0;
 }
 
-#g5-container input {
+input {
 	line-height: normal;
 }
 
-#g5-container input[type="checkbox"],
-#g5-container input[type="radio"] {
+input[type="checkbox"],
+input[type="radio"] {
 	padding: 0;
 }
 
-#g5-container input[type="number"]::-webkit-inner-spin-button,
-#g5-container input[type="number"]::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
 	height: auto;
 }
 
-#g5-container input[type="search"] {
+input[type="search"] {
 	-webkit-appearance: textfield;
 }
 
-#g5-container input[type="search"]::-webkit-search-cancel-button,
-#g5-container input[type="search"]::-webkit-search-decoration {
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
 	-webkit-appearance: none;
 }
 
-#g5-container legend {
+legend {
 	border: 0;
 	padding: 0;
 }
 
-#g5-container textarea {
+textarea {
 	overflow: auto;
 }
 
-#g5-container optgroup {
+optgroup {
 	font-weight: bold;
 }
 
-#g5-container table {
+table {
 	border-collapse: collapse;
 	border-spacing: 0;
 	table-layout: fixed;
 	width: 100%;
 }
 
-#g5-container tr, #g5-container td, #g5-container th {
+tr, td, th {
 	vertical-align: middle;
 }
 
-#g5-container th, #g5-container td {
+th, td {
 	padding: ($leading-margin / 4) 0;
 }
 
-#g5-container th {
+th {
 	text-align: left;
 }

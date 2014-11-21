@@ -21,7 +21,7 @@ if (!defined('GANTRYADMIN_PATH'))
 }
 
 // Bootstrap Gantry framework or fail gracefully (inside included file).
-$gantry = include_once __DIR__ . '/includes/gantry.php';
+$gantry = include __DIR__ . '/includes/gantry.php';
 
 $gantry['router'] = function ($c)
 {
