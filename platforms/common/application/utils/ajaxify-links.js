@@ -5,6 +5,7 @@ var prime = require('prime'),
     zen = require('elements/zen'),
     domready = require('elements/domready'),
     storage = require('prime/map')(),
+    modal   = require('../ui').modal,
 
     size = require('mout/collection/size'),
     merge = require('mout/object/merge'),
@@ -32,6 +33,18 @@ History.Adapter.bind(window, 'statechange', function () {
         $('body').emit('statechangeBefore', { target: Data.element });
     }
     request.url(URI).send(function (error, response) {
+        if (response.error){
+            var messages = [];
+            response.body.data.exceptions.forEach(function(error){
+                messages.push('<h1>Error ' + error.code + ' - ' + error.message + '</h1><div>File: ' + error.file + ':' + error.line + '</div>')
+            });
+
+            modal.open({content: messages.join('<br />') });
+            //History.back();
+
+            return false;
+        }
+
         var target = $(Data.target);
         if (response.body && response.body.data && response.body.data.html) {
             (target || $('body')).html(response.body.data.html);

@@ -39,6 +39,13 @@ class Page extends JsonController
         return new JsonResponse(['html' => $layout]);
     }
 
+    public function assignments(array $params)
+    {
+        $layout = $this->container['admin.theme']->render('@gantry-admin/assignments.html.twig', ['ajax' => $params['ajax']]);
+
+        return new JsonResponse(['html' => $layout]);
+    }
+
     public function updates(array $params)
     {
         $layout = $this->container['admin.theme']->render('@gantry-admin/updates.html.twig', ['ajax' => $params['ajax']]);
