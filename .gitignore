@@ -13,6 +13,7 @@ vendor/**
 # Symbolic links in admin
 platforms/*/*/common
 platforms/*/*/src
+platforms/*/*/vendor
 
 # Symbolic links in themes
 themes/*/*/common
@@ -23,6 +24,8 @@ themes/*/magento/design/default/gantry/common
 themes/*/magento/design/default/gantry/src
 themes/*/magento/design/default/gantry/vendor
 themes/*/magento/skin/default/common
+
+!**/scss/vendor
 
 # Compiled
 .sass-cache/*
