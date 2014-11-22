@@ -87,13 +87,11 @@ domready(function () {
 
         History.pushState(data, title, url);
 
-        /*if (data) {
-         data = JSON.parse(data);
-         url = History.getBaseUrl();
-         url += AjaxURL(data.view, data.method || null);
-         }*/
-
-        //return false;
+        var sidebar;
+        if (sidebar = element.parent('#sidebar')){
+            sidebar.search('.active').removeClass('active');
+            element.parent('li').addClass('active');
+        }
     });
 });
 
