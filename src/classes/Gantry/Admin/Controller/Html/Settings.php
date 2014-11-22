@@ -7,6 +7,6 @@ class Settings extends HtmlController
 {
     public function index(array $params)
     {
-        return $this->container['admin.theme']->render('@gantry-admin/settings.html.twig');
+        return $this->container['admin.theme']->render('@gantry-admin/settings.html.twig', ['location' => $params['location']]);
     }
 }
