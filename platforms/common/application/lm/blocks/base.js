@@ -1,5 +1,4 @@
 "use strict";
-
 var prime   = require('prime'),
     Options = require('prime-util/prime/options'),
     guid    = require('mout/random/guid'),
@@ -17,10 +16,10 @@ var Base = new prime({
     options: {
         attributes: {}
     },
-    constructor: function(options){
+    constructor: function(options) {
         this.setOptions(options);
-        this.fresh      = !this.options.id;
-        this.id         = this.options.id || this.guid();
+        this.fresh = !this.options.id;
+        this.id = this.options.id || this.guid();
         this.attributes = this.options.attributes || {};
 
         this.block = zen('div').html(this.layout()).firstChild();
@@ -28,66 +27,70 @@ var Base = new prime({
         return this;
     },
 
-    guid: function(){
+    guid: function() {
         return guid();
     },
 
-    getId: function(){
+    getId: function() {
         return this.id || (this.id = this.guid());
     },
 
-    getType: function(){
+    getType: function() {
         return this.options.type || '';
     },
 
-    getTitle: function(){
+    getTitle: function() {
         return '';
     },
 
-    getAttribute: function(key){
+    getAttribute: function(key) {
         return get(this.attributes, key);
     },
 
-    getAttributes: function(){
+    getAttributes: function() {
         return this.attributes || {};
     },
 
-    setAttribute: function(key, value){
+    setAttribute: function(key, value) {
         set(this.attributes, key, value);
         return this;
     },
 
-    hasAttribute: function(key){
+    hasAttribute: function(key) {
         return has(this.attributes, key);
     },
 
-    insert: function(target, location){
+    insert: function(target, location) {
         this.block[location || 'after'](target);
         return this;
     },
 
-    adopt: function(element){
+    adopt: function(element) {
         element.insert(this.block);
         return this;
     },
 
-    isNew: function(fresh){
-        if (typeof fresh !== 'undefined') { this.fresh = !!fresh; }
+    isNew: function(fresh) {
+        if (typeof fresh !== 'undefined') {
+            this.fresh = !!fresh;
+        }
         return this.fresh;
     },
 
-    dropZone: function(){
+    dropZone: function() {
         var root = $('[data-lm-root]'),
             mode = root.data('lm-root'),
             type = this.getType();
 
-        if (mode == 'page' && type != 'section' && type != 'grid' && type != 'block') { return ''; }
+        if (mode === 'page' && type !== 'section' && type !== 'grid' && type !== 'block') {
+            return '';
+        }
         return 'data-lm-dropzone';
     },
 
-    layout: function(){},
+    layout: function() {},
 
-    setLayout: function(layout){
+    setLayout: function(layout) {
         this.block = layout;
         return this;
     }

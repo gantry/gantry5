@@ -5,7 +5,7 @@
     <ul>
         {% for key,list in particles %}
             {% for particle in list %}
-            <li class="g5-lm-particle-{{ key | e }}" data-g5-lm-particle="{{ key | e }}">{{ particle | e }}</li>
+            <li class="g5-lm-particle-{{ key | e }}" data-lm-blocktype="{{ key | e }}">{{ particle | e }}</li>
             {% endfor %}
         {% endfor %}
     </ul>

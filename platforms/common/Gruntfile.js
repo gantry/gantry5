@@ -3,9 +3,9 @@ module.exports = function(grunt) {
         sass: {
             dist: {
                 options: {
-                    trace: true,
-                    style: 'expanded',
-                    lineNumbers: true
+                    //trace: true,
+                    //style: 'expanded'
+                    //lineNumbers: true
                 },
                 files: [{
                     expand: true,

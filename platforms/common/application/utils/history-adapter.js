@@ -20,7 +20,7 @@ History.Adapter = {
      * @param {function} callback
      * @return {void}
      */
-    bind: function (el, event, callback) {
+    bind: function(el, event, callback) {
         $(el).on(event, callback);
     },
 
@@ -31,7 +31,7 @@ History.Adapter = {
      * @param {Object=} extra - a object of extra event data (optional)
      * @return void
      */
-    trigger: function (el, event, extra) {
+    trigger: function(el, event, extra) {
         $(el).emit(event, extra);
     },
 
@@ -39,14 +39,10 @@ History.Adapter = {
      * History.Adapter.extractEventData(key,event,extra)
      * @param {string} key - key for the event data to extract
      * @param {string} event - custom and standard events
-     * @return {mixed}
      */
-    extractEventData: function (key, event) {
+    extractEventData: function(key, event) {
         // MooTools Native then MooTools Custom
-        var result = (event && event.event && event.event[key]) || (event && event[key]) || undefined;
-
-        // Return
-        return result;
+        return (event && event.event && event.event[key]) || (event && event[key]) || undefined;
     },
 
     /**
@@ -54,7 +50,7 @@ History.Adapter = {
      * @param {function} callback
      * @return {void}
      */
-    onDomLoad: function (callback) {
+    onDomLoad: function(callback) {
         domready(callback);
     }
 };

@@ -1,31 +1,35 @@
 "use strict";
-var ready   = require('elements/domready'),
-    json    = require('./json_test'),
-    $       = require('elements/attributes'),
-    modal   = require('../ui').modal,
-    request = require('agent'),
-    zen     = require('elements/zen'),
+var ready         = require('elements/domready'),
+    json          = require('./json_test'),
+    $             = require('elements/attributes'),
+    modal         = require('../ui').modal,
+    request       = require('agent'),
+    zen           = require('elements/zen'),
 
-    AjaxURL = require('../utils/ajax-uri'),
+    AjaxURL       = require('../utils/ajax-uri'),
 
-    Builder = require('./builder'),
-    History = require('../utils/History');
+    Builder       = require('./builder'),
+    History       = require('../utils/History'),
+    LMHistory     = require('./history'),
+    LayoutManager = require('./layoutmanager');
 
 require('../ui/popover');
 
-var builder;
+var builder, layoutmanager, lmhistory;
 
 
 builder = new Builder(json);
+lmhistory = new LMHistory(builder.serialize());
 
-ready(function () {;
+ready(function() {
+    console.log('a');
     // attach events
     // Picker
-    $('body').delegate('statechangeBefore', '[data-g5-lm-picker]', function(){
+    $('body').delegate('statechangeBefore', '[data-g5-lm-picker]', function() {
         modal.close();
     });
 
-    $('body').delegate('statechangeAfter', '[data-g5-lm-picker]', function(event, element){
+    $('body').delegate('statechangeAfter', '[data-g5-lm-picker]', function(event, element) {
         var data = JSON.parse(element.data('g5-lm-picker'));
         $('[data-g5-content]').find('.title').text(data.name);
         builder = new Builder(data.layout);
@@ -33,10 +37,20 @@ ready(function () {;
 
         // -!- Popovers
         // particles picker
-        $('[data-lm-addparticle]').popover({type: 'async', placement: 'left-bottom', width: '200', style: 'fixed', url: AjaxURL('particles')});
+        $('[data-lm-addparticle]').popover({
+            type: 'async',
+            placement: 'left-bottom',
+            width: '200',
+            style: 'fixed, nooverflow',
+            url: AjaxURL('particles')
+        });
+
+        // refresh LM eraser
+        layoutmanager.eraser.element = $('[data-lm-eraseblock]');
+        layoutmanager.eraser.hide();
     });
 
-    $('body').delegate('click', '[data-g5-lm-add]', function(event, element){
+    $('body').delegate('click', '[data-g5-lm-add]', function(event, element) {
         event.preventDefault();
         modal.open({
             content: 'Loading',
@@ -44,9 +58,21 @@ ready(function () {;
         });
     });
 
+    // layoutmanager
+    layoutmanager = new LayoutManager('body', {
+        delegate: '[data-lm-root="section"] .section > .grid [data-lm-blocktype]:not([data-lm-nodrag]), .g5-lm-particles-picker [data-lm-blocktype]',
+        droppables: '[data-lm-dropzone]',
+        exclude: '.section-header .button, .lm-newblocks .float-right .button',
+        resize_handles: '[data-lm-root="section"] .grid > .block:not(:last-child)',
+        builder: builder,
+        history: lmhistory
+    });
+
 });
 
 module.exports = {
     $: $,
-    builder: builder
+    builder: builder,
+    layoutmanager: layoutmanager,
+    history: lmhistory
 };

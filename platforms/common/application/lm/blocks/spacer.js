@@ -1,5 +1,6 @@
-var prime = require('prime'),
-    Position  = require('./position');
+"use strict";
+var prime    = require('prime'),
+    Position = require('./position');
 
 var UID = 0;
 
@@ -9,12 +10,12 @@ var Spacer = new prime({
         type: 'spacer'
     },
 
-    constructor: function(options){
+    constructor: function(options) {
         ++UID;
         Position.call(this, options);
     },
 
-    getTitle: function(){
+    getTitle: function() {
         return 'Spacer';
     }
 });

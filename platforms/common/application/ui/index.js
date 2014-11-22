@@ -39,7 +39,6 @@ ready(function(){
 var ready = require('elements/domready'),
     Modal = require('./modal');
 
-
 module.exports = {
     modal: new Modal()
 };
