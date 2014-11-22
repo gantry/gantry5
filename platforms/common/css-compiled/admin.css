@@ -200,17 +200,17 @@ body {
     border-top: 1px solid #eee; }
 
 @font-face {
-  font-family: "opensans";
+  font-family: "lato";
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.eot");
-  src: url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.woff") format("woff"), url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.ttf") format("truetype"), url("../fonts/opensans_regular_macroman/OpenSans-Regular-webfont.svg#opensans") format("svg"); }
+  src: url("../fonts/lato_regular/lato-regular-webfont.eot");
+  src: url("../fonts/lato_regular/lato-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato_regular/lato-regular-webfont.woff") format("woff"), url("../fonts/lato_regular/lato-regular-webfont.ttf") format("truetype"), url("../fonts/lato_regular/lato-regular-webfont.svg#lato") format("svg"); }
 @font-face {
-  font-family: "opensanslight";
+  font-family: "montserrat";
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.eot");
-  src: url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.woff") format("woff"), url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.ttf") format("truetype"), url("../fonts/opensans_light_macroman/OpenSans-Light-webfont.svg#opensanslight") format("svg"); }
+  src: url("../fonts/montserrat_regular/montserrat-regular-webfont.eot");
+  src: url("../fonts/montserrat_regular/montserrat-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/montserrat_regular/montserrat-regular-webfont.woff") format("woff"), url("../fonts/montserrat_regular/montserrat-regular-webfont.ttf") format("truetype"), url("../fonts/montserrat_regular/montserrat-regular-webfont.svg#montserrat") format("svg"); }
 #g5-container .main-block {
   background-color: #eeeeee; }
 #g5-container #main {
@@ -289,7 +289,7 @@ body {
   border-color: #C6C6C6; }
 #g5-container #sidebar {
   font-size: 0.8rem;
-  font-weight: bold;
+  font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   margin-right: -1px; }
   #g5-container #sidebar .content {
     padding: 0;
@@ -340,7 +340,7 @@ body {
   background-color: #439A86; }
 #g5-container #main-header {
   font-size: 1.2rem;
-  font-weight: bold;
+  font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   color: #fff; }
   #g5-container #main-header .content {
     margin: 0;
@@ -415,22 +415,23 @@ body {
     color: #ba8500;
     border-left: 1px solid #ffb807; }
 
-body #g5-container {
-  font-family: "opensanslight", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
-
-#g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
-  font-weight: normal; }
-#g5-container h6 {
-  text-transform: uppercase; }
-#g5-container strong, #g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
-  font-family: "opensans", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
-#g5-container .page-title {
-  margin-top: -25px;
-  padding: 25px;
-  float: left;
-  clear: both;
-  background: #5D9CEC;
-  color: #fff; }
+#g5-container {
+  font-family: "lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
+  #g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
+    font-weight: normal;
+    font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
+  #g5-container h6 {
+    text-transform: uppercase; }
+  #g5-container b, #g5-container strong {
+    font-weight: normal;
+    color: #262626; }
+  #g5-container .page-title {
+    margin-top: -25px;
+    padding: 25px;
+    float: left;
+    clear: both;
+    background: #5D9CEC;
+    color: #fff; }
 
 #g5-container .button {
   background: #eee;

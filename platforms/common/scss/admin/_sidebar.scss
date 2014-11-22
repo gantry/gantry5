@@ -8,7 +8,7 @@
 
 #sidebar {
     font-size: $sidebar-font-size;
-    font-weight: bold;
+    font-family: $font-family-headers;
     margin-right: -1px;
 
     &, li:hover, li.active {

@@ -1,14 +1,10 @@
-// Body Base
-body #g5-container {
-    font-family: $font-family-default;
-}
-
 #g5-container {//wrapper
+    font-family: $font-family-default;
 
 // Headings
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
-    @extend strong;
+    font-family: $font-family-headers;
 }
 
 h6 {
@@ -16,8 +12,9 @@ h6 {
 }
 
 // Strong
-strong {
-    font-family: $font-family-bold;
+b, strong {
+    font-weight: normal;
+    color: darken($core-text, 25%);
 }
 
 // Page Title

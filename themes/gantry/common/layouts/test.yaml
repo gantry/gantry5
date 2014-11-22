@@ -17,8 +17,6 @@ header:
   - sidebar 25:
     - position-sidebar
     - position-right
-    - particle-login
-    - particle-popup
 
 footer:
   - position-footer
