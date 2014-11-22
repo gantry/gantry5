@@ -1,3 +1,4 @@
+"use strict";
 var prime = require('prime'),
     Base  = require('./base'),
     $     = require('elements'),
@@ -13,18 +14,18 @@ var Position = new prime({
         type: 'position'
     },
 
-    constructor: function(options){
+    constructor: function(options) {
         ++UID;
         Base.call(this, options);
         this.setAttribute('name', this.getTitle());
     },
 
-    getTitle: function(){
+    getTitle: function() {
         return this.getAttribute('name') || 'Position ' + UID;
     },
 
-    layout: function(){
-        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" ' + this.dropZone() +' data-lm-blocktype="' + this.getType() +'">' + this.getTitle() + '</div>';
+    layout: function() {
+        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" ' + this.dropZone() + ' data-lm-blocktype="' + this.getType() + '">' + this.getTitle() + '</div>';
     }
 });
 

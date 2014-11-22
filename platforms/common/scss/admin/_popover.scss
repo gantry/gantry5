@@ -66,6 +66,14 @@ $close-color:               #000;
     &.right,&.right-top,&.right-bottom   { margin-left: $popover-arrow-width; }
     &.bottom,&.bottom-left,&.bottom-right { margin-top: $popover-arrow-width; }
     &.left,&.left-top,&.left-bottom    { margin-left: -$popover-arrow-width; }
+
+    // addons
+    &.g5-popover-nooverflow {
+        .g5-popover-content {
+            overflow: visible;
+
+        }
+    }
 }
 
 
@@ -266,7 +274,7 @@ $close-color:               #000;
     top:50%;
     left:50%;
     position: absolute;
-    background:url(../img/loading.gif) no-repeat;
+    //background:url(../img/loading.gif) no-repeat;
     // .animation(rotate 1s linear 0 infinite);
 }
 

@@ -1,11 +1,10 @@
 #g5-container { //wrapper
 
-#main {
+.main-block {
     background-color: $main-bg;
-    border-width: 0 1px 1px;
-    border-style: solid;
-    border-color: $main-border;
-    border-radius: 0 0 $core-border-radius 0;
+}
+
+#main {
     min-height: 400px;
 
     h2 {

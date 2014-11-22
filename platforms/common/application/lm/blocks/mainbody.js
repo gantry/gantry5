@@ -1,3 +1,4 @@
+"use strict";
 var prime = require('prime'),
     Base  = require('./base'),
     $     = require('elements'),
@@ -13,17 +14,17 @@ var Mainbody = new prime({
         type: 'mainbody'
     },
 
-    constructor: function(options){
+    constructor: function(options) {
         ++UID;
         Base.call(this, options);
     },
 
-    getTitle: function(){
+    getTitle: function() {
         return 'Mainbody ' + UID;
     },
 
-    layout: function(){
-        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" ' + this.dropZone() +' data-lm-blocktype="' + this.getType() +'">' + this.getTitle() + '</div>';
+    layout: function() {
+        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" ' + this.dropZone() + ' data-lm-blocktype="' + this.getType() + '">' + this.getTitle() + '</div>';
     }
 });
 

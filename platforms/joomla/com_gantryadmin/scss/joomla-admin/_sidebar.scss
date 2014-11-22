@@ -1,0 +1,15 @@
+body.com_gantryadmin {
+    #g5-container {
+        #sidebar {
+            ul {
+                li {
+                    &.active {
+                        a {
+                            color: $sidebar-active-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

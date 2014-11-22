@@ -1,22 +1,22 @@
 "use strict";
 
-var prime = require('prime'),
-    $ = require('../utils/elements.moofx'),
-    zen = require('elements/zen'),
+var prime    = require('prime'),
+    $        = require('../utils/elements.moofx'),
+    zen      = require('elements/zen'),
     domready = require('elements/domready'),
-    storage = require('prime/map')(),
-    modal   = require('../ui').modal,
+    storage  = require('prime/map')(),
+    modal    = require('../ui').modal,
 
-    size = require('mout/collection/size'),
-    merge = require('mout/object/merge'),
-    guid = require('mout/random/guid'),
+    size     = require('mout/collection/size'),
+    merge    = require('mout/object/merge'),
+    guid     = require('mout/random/guid'),
 
-    request = require('agent')(),
-    History = require('./history'),
-    AjaxURL = require('./ajax-uri');
+    request  = require('agent')(),
+    History  = require('./history'),
+    AjaxURL  = require('./ajax-uri');
 
 
-History.Adapter.bind(window, 'statechange', function () {
+History.Adapter.bind(window, 'statechange', function() {
     if (request.running()) {
         return false;
     }
@@ -32,14 +32,14 @@ History.Adapter.bind(window, 'statechange', function () {
     if (Data.element) {
         $('body').emit('statechangeBefore', { target: Data.element });
     }
-    request.url(URI).send(function (error, response) {
-        if (response.error){
+    request.url(URI).send(function(error, response) {
+        if (response.error) {
             var messages = [];
-            response.body.data.exceptions.forEach(function(error){
+            response.body.data.exceptions.forEach(function(error) {
                 messages.push('<h1>Error ' + error.code + ' - ' + error.message + '</h1><div>File: ' + error.file + ':' + error.line + '</div>')
             });
 
-            modal.open({content: messages.join('<br />') });
+            modal.open({ content: messages.join('<br />') });
             //History.back();
 
             return false;
@@ -59,8 +59,8 @@ History.Adapter.bind(window, 'statechange', function () {
 });
 
 
-domready(function () {
-    $('body').delegate('click', '[data-g5-ajaxify]', function (event, element) {
+domready(function() {
+    $('body').delegate('click', '[data-g5-ajaxify]', function(event, element) {
         if (event) {
             if (event.which === 2 || event.metaKey) {
                 return true;
@@ -87,13 +87,11 @@ domready(function () {
 
         History.pushState(data, title, url);
 
-        /*if (data) {
-         data = JSON.parse(data);
-         url = History.getBaseUrl();
-         url += AjaxURL(data.view, data.method || null);
-         }*/
-
-        //return false;
+        var sidebar;
+        if (sidebar = element.parent('#sidebar')) {
+            sidebar.search('.active').removeClass('active');
+            element.parent('li').addClass('active');
+        }
     });
 });
 

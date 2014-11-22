@@ -7,16 +7,16 @@ class Pages extends HtmlController
 {
     public function index(array $params)
     {
-        return $this->container['admin.theme']->render('@gantry-admin/pages_index.html.twig');
+        return $this->container['admin.theme']->render('@gantry-admin/pages_index.html.twig', ['location' => $params['location']]);
     }
 
     public function create(array $params)
     {
-        return $this->container['admin.theme']->render('@gantry-admin/pages_create.html.twig');
+        return $this->container['admin.theme']->render('@gantry-admin/pages_create.html.twig', ['location' => $params['location']]);
     }
 
     public function edit(array $params)
     {
-        return $this->container['admin.theme']->render('@gantry-admin/pages_edit.html.twig');
+        return $this->container['admin.theme']->render('@gantry-admin/pages_edit.html.twig', ['location' => $params['location']]);
     }
 }

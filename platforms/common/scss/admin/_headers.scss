@@ -1,90 +1,100 @@
 #g5-container { //wrapper
 
-#main-header {
-    background-color: $main-header-bg;
-    border-bottom: 1px solid $main-header-border;
-    font-size: $core-font-size - 0.2;
-    font-weight: bold;
-    text-transform: uppercase;
-
-    .content {
-        margin: 0;
-        padding: $content-padding-short;
-        line-height: 1rem;
+    [data-mode-indicator="production"] {
+        background-color: $production;
     }
 
+    #main-header {
+        font-size: $core-font-size + 0.2;
+        font-family: $font-family-headers;
+        color: $main-header-text;
 
-
-    [data-sidebar-toggle] {
-        display: inline-block;
-        font-size: $sidebar-font-size + 0.3;
-        padding: $content-padding-short;
-        margin: -($content-padding / 2) (-$content-padding);
-        @include transform-origin(center center);
-
-        .fa-chevron-left {
-            font-size: 55%;
-            vertical-align: middle;
+        .content {
+            margin: 0;
+            padding: 1.5rem 2.5rem;
+            line-height: 1rem;
         }
 
-        &.sidebar-closed {
-            @include transform(rotate(-180deg));
+        .theme-title {
+            float: left;
+            margin-right: 2rem;
         }
 
-        &.sidebar-icons {
+        [data-sidebar-toggle] {
+            display: inline-block;
+            font-size: $sidebar-font-size + 0.3;
+            padding: $content-padding-short;
+            margin: -($content-padding / 2) (-$content-padding);
+            @include transform-origin(center center);
+
             .fa-chevron-left {
-                display: none;
+                font-size: 55%;
+                vertical-align: middle;
             }
 
-            @include transform(rotate(-90deg));
+            &.sidebar-closed {
+                @include transform(rotate(-180deg));
+            }
+
+            &.sidebar-icons {
+                .fa-chevron-left {
+                    display: none;
+                }
+
+                @include transform(rotate(-90deg));
+            }
+
+            @include transition (all 0.3s ease-in-out);
         }
 
-        @include transition (all 0.3s ease-in-out);
-    }
+        [data-mode-toggle] {
+            font-weight: normal;
 
-    [data-mode-toggle] {
-        text-align: center;
-        font-weight: normal;
+            > span {
+                vertical-align: middle;
+            }
 
-        > span {
-            vertical-align: middle;
-        }
+            .toggle {
+                @include toggle-ui();
+            }
 
-        .toggle {
-            @include toggle-ui();
-        }
+            &.production .toggle {
+                background-color: $production;
 
-        &.production .toggle {
-            background-color: $production;
+                .knob {
+                    top: 1px;
+                    left: 35px - 20px; // toggle size - knob size - 1px compensation
+                }
+            }
 
-            .knob {
-                top: 1px;
-                left: 35px - 20px; // toggle size - knob size - 1px compensation
+            &.development .toggle {
+                background-color: $development;
+
+                .knob {
+                    top: 1px;
+                    left: 1px;
+                }
             }
         }
+    }
 
-        &.development .toggle {
-            background-color: $development;
+    .inner-header {
+        background-color: $inner-header-bg;
+        padding: 1rem;
+        color: $inner-header-text;
+    }
 
-            .knob {
-                top: 1px;
-                left: 1px;
-            }
+    .ribbon {
+        padding: $content-padding-short;
+        background-color: $light-gray;
+        color: darken($light-gray, 30%);
+        border-left: 1px solid darken($light-gray, 5%);
+
+        &.master {
+            background-color: $yellow;
+            color: darken($yellow, 30%);
+            border-left: 1px solid darken($yellow, 15%);
         }
     }
-}
-
-.ribbon {
-    padding: $content-padding-short;
-    background-color: $light-gray;
-    color: darken($light-gray, 30%);
-    border-left: 1px solid darken($light-gray, 5%);
-
-    &.master {
-        background-color: $yellow;
-        color: darken($yellow, 30%);
-        border-left: 1px solid darken($yellow, 15%);
-    }
-}
 
 }// endwrapper

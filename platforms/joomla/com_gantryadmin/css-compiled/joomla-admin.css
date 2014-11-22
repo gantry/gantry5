@@ -1,0 +1,25 @@
+body.com_gantryadmin {
+  background-color: #404040 !important; }
+  body.com_gantryadmin .subhead-collapse.collapse, body.com_gantryadmin .header {
+    display: none; }
+  body.com_gantryadmin .container-main {
+    padding: 0; }
+  body.com_gantryadmin #footer {
+    text-align: center; }
+  body.com_gantryadmin #status {
+    box-shadow: none !important; }
+
+body.com_gantryadmin #g5-container [data-mode-indicator="production"] {
+  background-color: #3180C2; }
+body.com_gantryadmin #g5-container #main-header [data-mode-toggle].production .toggle {
+  background-color: #3180C2; }
+body.com_gantryadmin #g5-container #main-header [data-mode-toggle].development .toggle {
+  background-color: #f27a40; }
+body.com_gantryadmin #g5-container .inner-header {
+  background-color: #222;
+  color: #3180C2; }
+
+body.com_gantryadmin #g5-container #sidebar ul li.active a {
+  color: #3180C2; }
+
+/*# sourceMappingURL=joomla-admin.css.map */

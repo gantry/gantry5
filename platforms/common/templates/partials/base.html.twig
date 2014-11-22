@@ -15,22 +15,34 @@
 {% block content %}
 <div id="g5-container" class="container">
     <div class="grid pure-g">
-        <div class="block sidebar-block size-1-7 pure-u-1-7">
-            <nav id="gantry" class="block sidebar-block">
-                {% include "@gantry-admin/partials/navigation.html.twig" %}
-            </nav>
+        <div class="block pure-u-1">
+            <div id="main-header" data-mode-indicator="production">
+                {% include "@gantry-admin/partials/header.html.twig" %}
+            </div>
         </div>
-        <div class="block pure-u-6-7">
-            <div data-mode-indicator="production"></div>
-            <section id="main">
-                <div id="main-header">
-                    {% include "@gantry-admin/partials/header.html.twig" %}
+    </div>
+    <div class="inner-container">
+        <div class="grid pure-g">
+            <div class="block pure-u-1">
+                <div class="inner-header">
+                    <div data-sidebar-toggle><i class="fa fa-bars"></i></div>
                 </div>
-                <div class="content" data-g5-content>
-                    {% block gantry %}
-                    {% endblock %}
-                </div>
-            </section>
+            </div>
+        </div>
+        <div class="grid pure-g">
+            <div class="block sidebar-block size-1-7 pure-u-1-7">
+                <nav id="gantry">
+                    {% include "@gantry-admin/partials/navigation.html.twig" %}
+                </nav>
+            </div>
+            <div class="block main-block pure-u-6-7">
+                <section id="main">
+                    <div class="content" data-g5-content>
+                        {% block gantry %}
+                        {% endblock %}
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
 </div>

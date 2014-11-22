@@ -1,5 +1,7 @@
+"use strict";
 var prime = require('prime'),
     Base  = require('./base'),
+    Grid  = require('./grid'),
     $     = require('elements'),
     zen   = require('elements/zen');
 
@@ -15,11 +17,13 @@ var Section = new prime({
 
     constructor: function(options){
         ++UID;
+        this.grid = new Grid();
         Base.call(this, options);
     },
 
     layout: function(){
-        return '<div class="section" data-lm-id="' + this.getId() + '" ' + this.dropZone() +' data-lm-blocktype="' + this.getType() +'"><div class="section-header clearfix"><h4 class="float-left">'+(this.getAttribute('name'))+'</h4><a href="#" class="button float-right"><i class="fa fa-pencil-square-o"></i> Edit</a></div></div>';
+        return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() +'"><div class="section-header clearfix"><h4 class="float-left">'+(this.getAttribute('name'))+'</h4><div class="float-right"><i class="fa fa-plus"></i> <i class="fa fa-cog"></i></div></div>' + this.grid.layout() + '</div>';
+
         //return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-dropzone data-lm-blocktype="' + this.getType() +'"></div>';
     },
 

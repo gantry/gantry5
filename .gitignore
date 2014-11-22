@@ -25,6 +25,8 @@ themes/*/magento/design/default/gantry/src
 themes/*/magento/design/default/gantry/vendor
 themes/*/magento/skin/default/common
 
+!**/scss/vendor
+
 # Compiled
 .sass-cache/*
 node_modules/*

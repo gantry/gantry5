@@ -179,7 +179,13 @@ var Popover = new prime({
         }
 
         if (this.options.style) {
-            this.$target.addClass(this.options.mainClass + '-' + this.options.style);
+            if (typeof this.options.style === 'string'){
+                this.options.style = this.options.style.split(',').map(Function.prototype.call, String.prototype.trim);
+            }
+
+            this.options.style.forEach(function(style) {
+                this.$target.addClass(this.options.mainClass + '-' + style);
+            }, this);
         }
 
         if (!this.options.padding) {

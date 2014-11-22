@@ -27,7 +27,7 @@
 	<fieldset>
 	<!-- BEGIN gantry.fields -->
 		<dl>
-			<dt><label for="{gantry.fields.NAME}">{gantry.fields.LABEL}</label><br><span>{gantry.fields.DESCRIPTION}</span></dt>
+			<dt><label for="{gantry.fields.NAME}">{gantry.fields.LABEL}</label><!-- IF gantry.fields.DESCRIPTION --><br><span>{gantry.fields.DESCRIPTION}</span><!-- ENDIF --></dt>
 			<dd>
 				<!-- IF gantry.fields.TYPE eq 'selectbox' -->
 				<select name="{gantry.fields.NAME}">
@@ -41,6 +41,9 @@
 				<label><input type="radio" name="{gantry.fields.NAME}" value="0" class="radio" <!-- BEGIN !!!!!gantry_template -->{% if gantry_template[gantry.fields.NAME|upper] == 0 %}checked="checked"{% endif %}<!-- END !!!!!gantry_template -->>{L_NO}</label>
 				<!-- ENDIF -->
 				<!-- IF gantry.fields.TYPE eq 'input' -->
+				<input id="{gantry.fields.NAME}" type="text" size="20" maxlength="200" name="{gantry.fields.NAME}" value="<!-- BEGIN !!!!!gantry_template -->{{ gantry_template[gantry.fields.NAME|upper]}}<!-- END !!!!!gantry_template -->">
+				<!-- ENDIF -->
+				<!-- IF gantry.fields.TYPE eq 'iconpicker' -->
 				<input id="{gantry.fields.NAME}" type="text" size="20" maxlength="200" name="{gantry.fields.NAME}" value="<!-- BEGIN !!!!!gantry_template -->{{ gantry_template[gantry.fields.NAME|upper]}}<!-- END !!!!!gantry_template -->">
 				<!-- ENDIF -->
 			</dd>
