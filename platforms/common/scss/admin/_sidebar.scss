@@ -32,12 +32,14 @@
 
                 a {
                     color: $sidebar-active-color;
+                    border-right: 0;
                 }
             }
 
             a {
                 color: $sidebar-color;
                 border-bottom: 1px solid;
+                border-right: 1px solid;
                 border-color: $sidebar-border;
                 display: block;
                 white-space: nowrap;

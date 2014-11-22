@@ -297,13 +297,15 @@ body #g5-container {
   #g5-container #sidebar ul li:hover {
     background-color: #d5d5d5; }
   #g5-container #sidebar ul li.active {
-    background-color: #314C59;
-    box-shadow: inset 3px 0 0 #283e49; }
+    background-color: #eeeeee;
+    box-shadow: inset 3px 0 0 #e1e1e1; }
     #g5-container #sidebar ul li.active a {
-      color: #fff; }
+      color: #3180C2;
+      border-right: 0; }
   #g5-container #sidebar ul li a {
     color: #888888;
     border-bottom: 1px solid;
+    border-right: 1px solid;
     border-color: #C6C6C6;
     display: block;
     white-space: nowrap;
@@ -580,7 +582,7 @@ body #g5-container {
       display: none; }
     #g5-container .lm-blocks .position, #g5-container .lm-blocks .spacer, #g5-container .lm-blocks .mainbody {
       padding: 8px;
-      color: #314C59;
+      color: #eeeeee;
       background: #fff;
       margin: 0 4px;
       border: 1px solid #eee;
