@@ -126,8 +126,8 @@
   #g5-container .button:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
     margin: 1px 0 -1px 0; }
 
-body #g5-container {
-  background-color: #404040; }
+body {
+  background-color: #354D59 !important; }
 
 #g5-container .fa-spin {
   -webkit-animation: spin 0.8s infinite linear;
@@ -284,35 +284,37 @@ body #g5-container {
   min-height: 250px; }
 
 #g5-container .sidebar-block {
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-  background: #DADADA; }
+  background: #DADADA;
+  border-right: 1px solid;
+  border-color: #C6C6C6; }
 #g5-container #sidebar {
   font-size: 0.8rem;
-  font-weight: bold; }
+  font-weight: bold;
+  margin-right: -1px; }
   #g5-container #sidebar .content {
     padding: 0;
     margin: 0.625rem 0; }
-  #g5-container #sidebar ul li:hover {
-    background-color: #d5d5d5; }
-  #g5-container #sidebar ul li.active {
-    background-color: #eeeeee;
-    box-shadow: inset 3px 0 0 #e1e1e1; }
-    #g5-container #sidebar ul li.active a {
-      color: #3180C2;
-      border-right: 0; }
-  #g5-container #sidebar ul li a {
-    color: #888888;
-    border-bottom: 1px solid;
-    border-right: 1px solid;
-    border-color: #C6C6C6;
-    display: block;
-    white-space: nowrap;
-    padding: 1rem;
-    font-size: 1rem; }
-    #g5-container #sidebar ul li a i {
-      margin-right: 0.6rem; }
+  #g5-container #sidebar ul li {
+    -webkit-transition: background-color 0.2s ease-in-out;
+    -moz-transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out; }
+    #g5-container #sidebar ul li:hover {
+      background-color: #d2d2d2; }
+    #g5-container #sidebar ul li.active {
+      background-color: #eeeeee;
+      box-shadow: inset 3px 0 0 #e1e1e1; }
+      #g5-container #sidebar ul li.active a {
+        color: #439A86; }
+    #g5-container #sidebar ul li a {
+      color: #888888;
+      border-bottom: 1px solid;
+      border-color: #C6C6C6;
+      display: block;
+      white-space: nowrap;
+      padding: 1rem;
+      font-size: 1rem; }
+      #g5-container #sidebar ul li a i {
+        margin-right: 0.6rem; }
   #g5-container #sidebar ul ul {
     text-transform: none; }
     #g5-container #sidebar ul ul li a {
@@ -335,7 +337,7 @@ body #g5-container {
   flex: 0; }
 
 #g5-container [data-mode-indicator="production"] {
-  background-color: #3180C2; }
+  background-color: #439A86; }
 #g5-container #main-header {
   font-size: 1.2rem;
   font-weight: bold;
@@ -390,7 +392,7 @@ body #g5-container {
         width: 20px;
         border-radius: 20px; }
     #g5-container #main-header [data-mode-toggle].production .toggle {
-      background-color: #3180C2; }
+      background-color: #439A86; }
       #g5-container #main-header [data-mode-toggle].production .toggle .knob {
         top: 1px;
         left: 15px; }
@@ -400,9 +402,9 @@ body #g5-container {
         top: 1px;
         left: 1px; }
 #g5-container .inner-header {
-  background-color: #222;
+  background-color: #253A47;
   padding: 1rem;
-  color: #3180C2; }
+  color: #439A86; }
 #g5-container .ribbon {
   padding: 0.469rem 0.938rem;
   background-color: #eee;

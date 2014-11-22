@@ -1,13 +1,7 @@
 {% set headerContent %}
 
     {% block stylesheets %}
-        <style>
-            .subhead-collapse.collapse,
-            .header
-            { display: none; }
-            .container-main { padding: 0; }
-            #footer { text-align: center; }
-        </style>
+        <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/joomla-admin.css') }}" type="text/css" />
     {% endblock %}
 
     {% block javascript %}
@@ -22,31 +16,9 @@
 
 
 {% block content %}
-    <div id="g5-container" class="container">
-        <div class="grid pure-g">
-            <div class="block sidebar-block size-1-7 pure-u-1-7">
-                <nav id="gantry" class="block sidebar-block">
-                    {% include "@gantry-admin/partials/navigation.html.twig" %}
-                </nav>
-            </div>
-            <div class="block pure-u-6-7">
-                <div data-mode-indicator="production"></div>
-                <section id="main">
-                    <div id="main-header">
-                        {% include "@gantry-admin/partials/header.html.twig" %}
-                    </div>
-                    <div class="content">
-                        {% block gantry %}
-                        {% endblock %}
-                    </div>
-                </section>
-            </div>
-        </div>
-    </div>
+
 {% endblock %}
 
 {% block footer_section %}
-    <footer id="footer">
-        <a href="http://gantry-framework.org">Gantry Administration</a> by <a href="http://www.rockettheme.com">RocketTheme</a>.
-    </footer>
+
 {% endblock %}

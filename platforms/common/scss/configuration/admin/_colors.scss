@@ -18,15 +18,15 @@ $lavender:                      #ac92ec;
 $pink:                          #ec87c0;
 
 // Mode Indicator
-$production:                    #3180C2;//#bceb9e;//#85db81;
-$development:                   #f27a40;//#fbba79;//#ef5d5d;
+$production:                    #439A86;
+$development:                   #f27a40;
 
 // Body
-$body-bg:                       #404040;
+$body-bg:                       #354D59;
 
 // Headers
 $main-header-text:				$white;
-$inner-header-bg:				#222;
+$inner-header-bg:				#253A47;
 $inner-header-text:				$production;
 
 // Main
@@ -34,7 +34,7 @@ $main-bg:                       #eeeeee;
 
 // Sidebar
 $sidebar-bg:                    #DADADA;
+$sidebar-border:				#C6C6C6;
 $sidebar-color:                 #888888;
 $sidebar-active:                $main-bg;
 $sidebar-active-color:          $production;
-$sidebar-border:				#C6C6C6;

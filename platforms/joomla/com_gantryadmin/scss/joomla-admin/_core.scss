@@ -1,0 +1,19 @@
+body.com_gantryadmin {
+    background-color: $body-bg !important;
+    
+    .subhead-collapse.collapse, .header {
+    	display: none;
+    }
+
+    .container-main {
+    	padding: 0;
+    }
+
+    #footer {
+    	text-align: center;
+    }
+
+    #status {
+    	box-shadow: none !important;
+    }
+}

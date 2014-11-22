@@ -1,0 +1,28 @@
+body.com_gantryadmin {	
+	#g5-container {
+
+	    [data-mode-indicator="production"] {
+	        background-color: $production;
+	    }
+
+	    #main-header {
+
+	        [data-mode-toggle] {
+
+	            &.production .toggle {
+	                background-color: $production;
+	            }
+
+	            &.development .toggle {
+	                background-color: $development;
+	            }
+	        }
+	    }
+
+	    .inner-header {
+	        background-color: $inner-header-bg;
+	        color: $inner-header-text;
+	    }
+
+	}
+}
