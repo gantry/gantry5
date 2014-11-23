@@ -49,7 +49,7 @@ var singles = {
         if (mode === 'page') {
             var sectionChildren = root.search('.section *:not(.button)');
             if (sectionChildren) {
-                sectionChildren.style({ 'pointer-events': 'none' });
+                //sectionChildren.style({ 'pointer-events': 'none' });
             }
             return;
         }
@@ -59,7 +59,7 @@ var singles = {
         children.attribute('style', null).forEach(function(element) {
             element = $(element);
             if (!element.siblings()) {
-                element.style({ 'pointer-events': 'none' });
+                //element.style({ 'pointer-events': 'none' });
             }
         });
     },

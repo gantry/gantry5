@@ -67,10 +67,14 @@
 
         .section-header {
             font-size: 22px;
+            line-height: 2em;
 
             h4 {
                 margin: 0;
                 padding: 0;
+                font-weight: 100;
+                font-family: "lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+                font-size: 24px;
             }
 
             .button {
@@ -79,36 +83,54 @@
         }
 
         .grid {
-            margin: 0;
+            margin: 8px 0;
             padding: 4px;
             border: 0;
             box-shadow: none;
             background-color: #f6f6f6;
-            min-height: 50px;
+            min-height: 58px;
+
+            &:first-child {
+                margin-top: 0;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
 
             .block:after {
                 display: none;
             }
 
-            &:after {
+            &:empty:after {
                 content: "Drop particle here...";
                 display: block;
                 text-align: center;
                 margin: 0 auto;
                 position: relative;
                 vertical-align: middle;
-                line-height: 50px;
+                line-height: 58px;
                 color: #dadada;
             }
         }
 
     }
 
-    .grid > .block {
+    > .grid > .block {
         margin-right: 14px;
+    }
+
+    .grid > .block {
+        .block {
+            margin: 0;
+        }
 
         &:last-child {
             margin-right: 0;
+
+            .particle, .position, .spacer, .mainbody {
+                margin-right: 0;
+            }
         }
 
         .placeholder:not(:first-child):not(:last-child) {
@@ -134,13 +156,11 @@
         }
     }
 
-    .position, .spacer, .mainbody {
-        padding: 8px;
-        color: $sidebar-active;
-        background: $white;
-        margin: 0 4px;
-        border: 1px solid $light-gray;
-        border-radius: 3px;
+    .particle, .position, .spacer, .mainbody {
+        padding: 13px;
+        color: $white;
+        background: #aaaaaa;
+        margin-right: 4px;
     }
 
     /* END THIS IS FOR PAGES */
