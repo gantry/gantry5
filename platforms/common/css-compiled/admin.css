@@ -567,15 +567,18 @@ body {
       }*/ }
       #g5-container .lm-blocks .section .section-header {
         font-size: 22px;
-        line-height: 2em; }
+        line-height: 2em;
+        padding: 0 4px; }
         #g5-container .lm-blocks .section .section-header h4 {
           margin: 0;
           padding: 0;
           font-weight: 100;
           font-family: "lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
           font-size: 24px; }
-        #g5-container .lm-blocks .section .section-header .button {
-          pointer-events: visible; }
+        #g5-container .lm-blocks .section .section-header i {
+          pointer-events: visible;
+          color: #999;
+          margin: 0 4px; }
       #g5-container .lm-blocks .section .grid {
         margin: 8px 0;
         padding: 4px;

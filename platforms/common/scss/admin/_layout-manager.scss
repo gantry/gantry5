@@ -68,6 +68,7 @@
         .section-header {
             font-size: 22px;
             line-height: 2em;
+            padding: 0 4px;
 
             h4 {
                 margin: 0;
@@ -77,8 +78,10 @@
                 font-size: 24px;
             }
 
-            .button {
+            i {
                 pointer-events: visible;
+                color: #999;
+                margin: 0 4px;
             }
         }
 
