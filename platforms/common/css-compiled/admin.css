@@ -627,6 +627,14 @@ body {
       color: #fff;
       background: #aaaaaa;
       margin-right: 4px; }
+      #g5-container .lm-blocks .particle .particle-size, #g5-container .lm-blocks .position .particle-size, #g5-container .lm-blocks .spacer .particle-size, #g5-container .lm-blocks .mainbody .particle-size {
+        font-weight: 100;
+        font-size: 30px;
+        line-height: 30px;
+        vertical-align: middle;
+        display: inline-block;
+        margin-top: -5px;
+        margin-right: 5px; }
     #g5-container .lm-blocks .placeholder {
       text-align: center;
       color: #5987a0;
