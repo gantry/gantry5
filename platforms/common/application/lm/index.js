@@ -22,7 +22,9 @@ builder = new Builder(json);
 lmhistory = new LMHistory(builder.serialize());
 
 ready(function() {
-    console.log('a');
+    // test
+    builder.load();
+
     // attach events
     // Picker
     $('body').delegate('statechangeBefore', '[data-g5-lm-picker]', function() {

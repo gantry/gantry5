@@ -201,6 +201,18 @@ body {
 
 @font-face {
   font-family: "lato";
+  font-weight: 100;
+  font-style: normal;
+  src: url("../fonts/lato_hairline/Lato-Hairline.eot");
+  src: url("../fonts/lato_hairline/Lato-Hairline.eot?#iefix") format("embedded-opentype"), url("../fonts/lato_hairline/Lato-Hairline.woff") format("woff"), url("../fonts/lato_hairline/Lato-Hairline.ttf") format("truetype"), url("../fonts/lato_hairline/Lato-Hairline.svg#lato") format("svg"); }
+@font-face {
+  font-family: "lato";
+  font-weight: 300;
+  font-style: normal;
+  src: url("../fonts/lato_light/Lato-Light.eot");
+  src: url("../fonts/lato_light/Lato-Light.eot?#iefix") format("embedded-opentype"), url("../fonts/lato_light/Lato-Light.woff") format("woff"), url("../fonts/lato_light/Lato-Light.ttf") format("truetype"), url("../fonts/lato_light/Lato-Light.svg#lato") format("svg"); }
+@font-face {
+  font-family: "lato";
   font-weight: normal;
   font-style: normal;
   src: url("../fonts/lato_regular/lato-regular-webfont.eot");
@@ -554,54 +566,75 @@ body {
           //box-shadow: inset 0 0 0 $gap $white, inset 0 0 0 ($gap + 1) $green; // with box shadows
       }*/ }
       #g5-container .lm-blocks .section .section-header {
-        font-size: 22px; }
+        font-size: 22px;
+        line-height: 2em;
+        padding: 0 4px; }
         #g5-container .lm-blocks .section .section-header h4 {
           margin: 0;
-          padding: 0; }
-        #g5-container .lm-blocks .section .section-header .button {
-          pointer-events: visible; }
+          padding: 0;
+          font-weight: 100;
+          font-family: "lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+          font-size: 24px; }
+        #g5-container .lm-blocks .section .section-header i {
+          pointer-events: visible;
+          color: #999;
+          margin: 0 4px; }
       #g5-container .lm-blocks .section .grid {
-        margin: 0;
+        margin: 8px 0;
         padding: 4px;
         border: 0;
         box-shadow: none;
         background-color: #f6f6f6;
-        min-height: 50px; }
+        min-height: 58px; }
+        #g5-container .lm-blocks .section .grid:first-child {
+          margin-top: 0; }
+        #g5-container .lm-blocks .section .grid:last-child {
+          margin-bottom: 0; }
         #g5-container .lm-blocks .section .grid .block:after {
           display: none; }
-        #g5-container .lm-blocks .section .grid:after {
+        #g5-container .lm-blocks .section .grid:empty:after {
           content: "Drop particle here...";
           display: block;
           text-align: center;
           margin: 0 auto;
           position: relative;
           vertical-align: middle;
-          line-height: 50px;
+          line-height: 58px;
           color: #dadada; }
-    #g5-container .lm-blocks .grid > .block {
+    #g5-container .lm-blocks > .grid > .block {
       margin-right: 14px; }
-      #g5-container .lm-blocks .grid > .block:last-child {
+    #g5-container .lm-blocks .grid > .block .block {
+      margin: 0; }
+    #g5-container .lm-blocks .grid > .block:last-child {
+      margin-right: 0; }
+      #g5-container .lm-blocks .grid > .block:last-child .particle, #g5-container .lm-blocks .grid > .block:last-child .position, #g5-container .lm-blocks .grid > .block:last-child .spacer, #g5-container .lm-blocks .grid > .block:last-child .mainbody {
         margin-right: 0; }
-      #g5-container .lm-blocks .grid > .block .in-between-sections:first-child, #g5-container .lm-blocks .grid > .block .in-between-sections:last-child {
-        margin: 6px; }
-      #g5-container .lm-blocks .grid > .block:after {
-        content: "";
-        display: block;
-        position: absolute;
-        right: -10px;
-        width: 6px;
-        background: #00baaa;
-        z-index: 3;
-        cursor: ew-resize; }
-      #g5-container .lm-blocks .grid > .block:last-child:after {
-        display: none; }
-    #g5-container .lm-blocks .position, #g5-container .lm-blocks .spacer, #g5-container .lm-blocks .mainbody {
-      padding: 8px;
-      color: #eeeeee;
-      background: #fff;
-      margin: 0 4px;
-      border: 1px solid #eee;
-      border-radius: 3px; }
+    #g5-container .lm-blocks .grid > .block .in-between-sections:first-child, #g5-container .lm-blocks .grid > .block .in-between-sections:last-child {
+      margin: 6px; }
+    #g5-container .lm-blocks .grid > .block:after {
+      content: "";
+      display: block;
+      position: absolute;
+      right: -10px;
+      width: 6px;
+      background: #00baaa;
+      z-index: 3;
+      cursor: ew-resize; }
+    #g5-container .lm-blocks .grid > .block:last-child:after {
+      display: none; }
+    #g5-container .lm-blocks .particle, #g5-container .lm-blocks .position, #g5-container .lm-blocks .spacer, #g5-container .lm-blocks .mainbody {
+      padding: 13px;
+      color: #fff;
+      background: #aaaaaa;
+      margin-right: 4px; }
+      #g5-container .lm-blocks .particle .particle-size, #g5-container .lm-blocks .position .particle-size, #g5-container .lm-blocks .spacer .particle-size, #g5-container .lm-blocks .mainbody .particle-size {
+        font-weight: 100;
+        font-size: 30px;
+        line-height: 30px;
+        vertical-align: middle;
+        display: inline-block;
+        margin-top: -5px;
+        margin-right: 5px; }
     #g5-container .lm-blocks .placeholder {
       text-align: center;
       color: #5987a0;
