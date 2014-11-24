@@ -1,6 +1,7 @@
 "use strict";
 var prime   = require('prime'),
     Options = require('prime-util/prime/options'),
+    Emitter = require('prime/emitter'),
     guid    = require('mout/random/guid'),
     zen     = require('elements/zen'),
     $       = require('elements'),
@@ -13,6 +14,7 @@ require('elements/traversal');
 
 var Base = new prime({
     mixin: Options,
+    inherits: Emitter,
     options: {
         attributes: {}
     },

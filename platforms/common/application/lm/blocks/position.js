@@ -2,7 +2,9 @@
 var prime = require('prime'),
     Base  = require('./base'),
     $     = require('elements'),
-    zen   = require('elements/zen');
+    zen   = require('elements/zen'),
+
+    bind  = require('mout/function/bind');
 
 require('elements/insertion');
 
@@ -18,10 +20,18 @@ var Position = new prime({
         ++UID;
         Base.call(this, options);
         this.setAttribute('name', this.getTitle());
+
+        this.on('rendered', bind(function(element, parent){
+            var size = parent.getSize() || 100,
+                label = this.block.find('.particle-size');
+
+            if (size % 1 > 0) { size = size.toFixed(1); }
+            if (label) { label.text(size + '%'); }
+        }, this));
     },
 
     getTitle: function() {
-        return this.getAttribute('name') || 'Position ' + UID;
+        return "Position: <strong>" + (this.getAttribute('key') || this.getAttribute('name') || 'Position ' + UID) + "</strong>";
     },
 
     layout: function() {

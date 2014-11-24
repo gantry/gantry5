@@ -164,6 +164,16 @@
         color: $white;
         background: #aaaaaa;
         margin-right: 4px;
+        position: relative;
+
+        .float-right {
+            position: absolute;
+            right: 13px;
+            top: 0;
+            bottom: 0;
+            line-height: 50px;
+            float: inherit;
+        }
 
         .particle-size {
             font-weight: 100;

@@ -173,6 +173,7 @@ var Builder = new prime({
         }
 
         this.add(Element);
+        Element.emit('rendered', Element, parent ? get(this.map, parent) : null);
 
         return Element;
     },
