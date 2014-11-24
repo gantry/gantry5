@@ -1,7 +1,7 @@
 //** Popover body background color
 $popover-bg:                        #fff;
 
-$popover-inverse-bg:				#333;
+$popover-inverse-bg:				#777;
 
 $popover-inverse-color:				#eee;
 //** Popover maximum width
@@ -74,6 +74,78 @@ $close-color:               #000;
 
         }
     }
+
+    &.g5-popover-particles {
+        font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+        font-size: 16px;
+
+        ul, li {
+            @extend %list-reset;
+        }
+
+        ul {
+            padding: 1px;
+            background-color: $white;
+        }
+
+        li {
+            line-height: 42px;
+            margin: 1px 0;
+            text-align: center;
+
+            &:first-child, &:last-child {
+                margin: 0;
+            }
+
+            &[data-lm-blocktype="spacer"] {
+                color: #aaa;
+                background-color: #eee;
+            }
+
+            &[data-lm-blocktype="position"] {
+                color: #fff;
+                background-color: #aaa;
+            }
+
+            &[data-lm-blocktype="particle"] {
+                color: #fff;
+                background-color: #13B0DA;
+            }
+
+            &[data-lm-blocktype="page-content"] {
+                color: #fff;
+                background-color: #218fda;
+            }
+
+            &[data-lm-blocktype="hidden"] {
+                color: #fff;
+                background-color: #9055AF;
+            }
+        }
+
+        .search {
+            position: relative;
+            margin-bottom: 10px;
+
+            input {
+                font-size: 16px;
+                border: 0;
+                border-radius: 0;
+                line-height: 26px;
+                height: auto;
+                background: rgba(0, 0, 0, 0.1);
+                color: white;
+                box-shadow: none;
+                margin: 0;
+            }
+
+            i {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+            }
+        }
+    }
 }
 
 
@@ -111,11 +183,11 @@ $close-color:               #000;
 }
 
 
-.g5-popover-inverse{
+.g5-popover-inverse {
     background-color:$popover-inverse-bg;
     color:$popover-inverse-color;
 
-    .g5-popover-title{
+    .g5-popover-title {
         background: $popover-inverse-title-bg;
         border-bottom: none;
         color:$popover-inverse-color;

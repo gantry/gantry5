@@ -1,4 +1,4 @@
-#g5-container #page-picker ul, #g5-container #sidebar ul {
+#g5-container #page-picker ul, #g5-container #sidebar ul, .g5-popover.g5-popover-particles ul, .g5-popover.g5-popover-particles li {
   margin: 0;
   padding: 0;
   list-style: none; }
@@ -721,7 +721,8 @@ body {
       height: 50px;
       width: 50px;
       line-height: 50px;
-      margin: 0 auto; }
+      margin: 0 auto;
+      font-weight: 300; }
     #g5-container #trash span {
       font-size: 0.8rem;
       color: #656d78; }
@@ -1077,6 +1078,50 @@ body.g5-dialog-open {
     margin-left: -10px; }
   .g5-popover.g5-popover-nooverflow .g5-popover-content {
     overflow: visible; }
+  .g5-popover.g5-popover-particles {
+    font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+    font-size: 16px; }
+    .g5-popover.g5-popover-particles ul {
+      padding: 1px;
+      background-color: #fff; }
+    .g5-popover.g5-popover-particles li {
+      line-height: 42px;
+      margin: 1px 0;
+      text-align: center; }
+      .g5-popover.g5-popover-particles li:first-child, .g5-popover.g5-popover-particles li:last-child {
+        margin: 0; }
+      .g5-popover.g5-popover-particles li[data-lm-blocktype="spacer"] {
+        color: #aaa;
+        background-color: #eee; }
+      .g5-popover.g5-popover-particles li[data-lm-blocktype="position"] {
+        color: #fff;
+        background-color: #aaa; }
+      .g5-popover.g5-popover-particles li[data-lm-blocktype="particle"] {
+        color: #fff;
+        background-color: #13B0DA; }
+      .g5-popover.g5-popover-particles li[data-lm-blocktype="page-content"] {
+        color: #fff;
+        background-color: #218fda; }
+      .g5-popover.g5-popover-particles li[data-lm-blocktype="hidden"] {
+        color: #fff;
+        background-color: #9055AF; }
+    .g5-popover.g5-popover-particles .search {
+      position: relative;
+      margin-bottom: 10px; }
+      .g5-popover.g5-popover-particles .search input {
+        font-size: 16px;
+        border: 0;
+        border-radius: 0;
+        line-height: 26px;
+        height: auto;
+        background: rgba(0, 0, 0, 0.1);
+        color: white;
+        box-shadow: none;
+        margin: 0; }
+      .g5-popover.g5-popover-particles .search i {
+        position: absolute;
+        right: 10px;
+        top: 10px; }
 
 .g5-popover-inner .close {
   font-family: arial;
@@ -1107,10 +1152,10 @@ body.g5-dialog-open {
   overflow: auto; }
 
 .g5-popover-inverse {
-  background-color: #333;
+  background-color: #777;
   color: #eee; }
   .g5-popover-inverse .g5-popover-title {
-    background: #3b3b3b;
+    background: #7f7f7f;
     border-bottom: none;
     color: #eee; }
 
@@ -1193,13 +1238,13 @@ body.g5-dialog-open {
     bottom: -10px; }
 
 .g5-popover-inverse.top > .arrow, .g5-popover-inverse.top > .arrow:after, .g5-popover-inverse.top-left > .arrow, .g5-popover-inverse.top-left > .arrow:after, .g5-popover-inverse.top-right > .arrow, .g5-popover-inverse.top-right > .arrow:after {
-  border-top-color: #333; }
+  border-top-color: #777; }
 .g5-popover-inverse.right > .arrow, .g5-popover-inverse.right > .arrow:after, .g5-popover-inverse.right-top > .arrow, .g5-popover-inverse.right-top > .arrow:after, .g5-popover-inverse.right-bottom > .arrow, .g5-popover-inverse.right-bottom > .arrow:after {
-  border-right-color: #333; }
+  border-right-color: #777; }
 .g5-popover-inverse.bottom > .arrow, .g5-popover-inverse.bottom > .arrow:after, .g5-popover-inverse.bottom-left > .arrow, .g5-popover-inverse.bottom-left > .arrow:after, .g5-popover-inverse.bottom-right > .arrow, .g5-popover-inverse.bottom-right > .arrow:after {
-  border-bottom-color: #333; }
+  border-bottom-color: #777; }
 .g5-popover-inverse.left > .arrow, .g5-popover-inverse.left > .arrow:after, .g5-popover-inverse.left-top > .arrow, .g5-popover-inverse.left-top > .arrow:after, .g5-popover-inverse.left-bottom > .arrow, .g5-popover-inverse.left-bottom > .arrow:after {
-  border-left-color: #333; }
+  border-left-color: #777; }
 
 .g5-popover i.icon-refresh:before {
   content: ""; }
