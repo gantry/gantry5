@@ -66,6 +66,15 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 					),
 				),
 			),
+			array('module.add', array(
+				'acp',
+				'ACP_STYLE_MANAGEMENT',
+				array(
+					'module_basename'	=> '\rockettheme\gantry\acp\gantryadmin_module',
+					'modes'				=> array('gantryadmin'),
+					),
+				),
+			),
 
 
 			array('config.add', array('gantry_mod_version', '1.0.0')),
@@ -74,5 +83,5 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 
 			);
 
+		}
 	}
-}
