@@ -69,6 +69,11 @@ var Builder = new prime({
         unset(this.map, block);
     },
 
+    get: function(block) {
+        var id = typeof block == 'string' ? block : block.id;
+        return get(this.map, id, block);
+    },
+
     load: function(data) {
         this.recursiveLoad(data);
         //console.log('---');
@@ -224,6 +229,7 @@ var Builder = new prime({
         callback = callback || this.insert;
 
         forEach(data, function(value/*, key, object*/) {
+
             if (!value.id) {
                 value.id = guid();
             }
@@ -237,7 +243,9 @@ var Builder = new prime({
                 }, this);
             }
 
-            //    depth--;
+            this.get(value.id).emit('done', this.get(value.id));
+
+            depth--;
         }, this);
     },
 

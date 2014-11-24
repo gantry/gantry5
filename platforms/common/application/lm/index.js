@@ -23,7 +23,9 @@ lmhistory = new LMHistory(builder.serialize());
 
 ready(function() {
     // test
-    builder.load();
+    if ($('[data-lm-root]')) {
+        builder.load();
+    }
 
     // attach events
     // Picker
