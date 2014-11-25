@@ -41,7 +41,20 @@ class twig extends \phpbb\template\twig\twig
         // Initialize Gantry.
         $style = 'gantry';
         $this->gantry = require_once $this->phpbb_root_path . "styles/{$style}/gantry.php";
+        $this->gantry['streams'];
         $this->gantry['theme']->add_to_twig($this->twig);
+
+        if (defined('ADMIN_START')) {
+            // We are in admin.
+            define('GANTRYADMIN_PATH', GANTRY5_ROOT . '/ext/rockettheme/gantry');
+
+            $this->gantry['admin.theme'] = function () {
+                return new \Gantry\Admin\Theme\Theme(GANTRYADMIN_PATH);
+            };
+
+            // Boot the service.
+            $this->gantry['admin.theme'];
+        }
 
         // Initialize lexer.
         $lexer = new \phpbb\template\twig\lexer($this->twig);

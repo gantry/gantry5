@@ -44,7 +44,7 @@ class JsonResponse
                     'message' => $e->getMessage()
                 );
 
-                if (DEBUG)
+                if (GANTRY_DEBUG)
                 {
                     $exception += array(
                         'type' => get_class($e),
@@ -56,7 +56,7 @@ class JsonResponse
                 $exceptions[] = $exception;
                 $e = $e->getPrevious();
             }
-            while (DEBUG && $e);
+            while (GANTRY_DEBUG && $e);
 
             // Create response data on exceptions.
             $this->data = array('exceptions' => $exceptions);
@@ -71,7 +71,7 @@ class JsonResponse
         while (($output = ob_get_clean()) !== false)
         {
             // In debug mode send also output buffers (debug dumps, PHP notices and warnings).
-            if ($output && defined(DEBUG)) {
+            if ($output && defined(GANTRY_DEBUG)) {
                 $this->messages['php'][] = $output;
             }
         }
