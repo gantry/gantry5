@@ -26,6 +26,8 @@ class Router implements RouterInterface
         $layout = $input->getCmd('layout', 'index');
         $style = $input->getInt('style', 0);
 
+        \JHtml::_('behavior.keepalive');
+
         $params = [
             'id'   => $input->getInt('id'),
             'ajax' => ($format == 'json'),
