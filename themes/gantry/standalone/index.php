@@ -6,6 +6,7 @@ define('THEME', basename(dirname($_SERVER['SCRIPT_FILENAME'])));
 $gantry = include_once __DIR__ . '/includes/gantry.php';
 
 // Boot the service.
+/** @var Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
 
 // Render the page.
