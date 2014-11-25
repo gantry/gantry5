@@ -13,6 +13,12 @@ $gantry['theme.name'] = $style;
 // Define the template.
 class Theme extends \Gantry\Framework\Theme {}
 
+// Initialize theme stream.
+$gantry['platform']->set(
+    'streams.gantry-theme.prefixes',
+    ['' => ["gantry-themes://{$gantry['theme.name']}", "gantry-themes://{$gantry['theme.name']}/common"]]
+);
+
 // Define Gantry services.
 $gantry['theme'] = function ($c) {
     return new Theme($c['theme.path'], $c['theme.name']);
@@ -20,7 +26,7 @@ $gantry['theme'] = function ($c) {
 
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
-$theme->setLayout('theme://layouts/test.yaml');
+$theme->setLayout('gantry-theme://layouts/test.yaml');
 
 // Return the service.
 return $gantry;

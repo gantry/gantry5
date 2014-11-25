@@ -54,7 +54,7 @@ trait ThemeTrait
         if (!$loader) {
             $loader = $twig->getLoader();
         }
-        $loader->setPaths($locator->findResources('theme://engine'), 'nucleus');
+        $loader->setPaths($locator->findResources('gantry-theme://engine'), 'nucleus');
 
         $twig->addExtension(new TwigExtension);
         $twig->addFilter('toGrid', new \Twig_Filter_Function(array($this, 'toGrid')));

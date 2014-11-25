@@ -16,12 +16,3 @@ particles:
     enabled: true
     image: 'images/logo.png'
     text: 'Gantry'
-
-streams:
-  schemes:
-    theme:
-      type: ReadOnlyStream
-      prefixes:
-        '':
-          - themes://gantry
-          - themes://gantry/common

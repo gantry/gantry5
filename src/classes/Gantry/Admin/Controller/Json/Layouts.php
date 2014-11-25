@@ -18,7 +18,7 @@ class Layouts extends JsonController
             'value' => 'Pathname'
         ];
 
-        // FIXME: need access to current theme stream 'theme://common/layouts'
+        // FIXME: need access to current theme stream 'gantry-theme://common/layouts'
         $files = Folder::all(realpath(JPATH_THEMES . '/../../templates/gantry/common/layouts/presets'), $options);
 
         $response = [];

@@ -17,5 +17,5 @@ if (isset($this->error))
 
 // Render the page.
 echo $theme
-    ->setLayout('theme://layouts/error.yaml')
+    ->setLayout('gantry-theme://layouts/error.yaml')
     ->render('error.html.twig', $context);

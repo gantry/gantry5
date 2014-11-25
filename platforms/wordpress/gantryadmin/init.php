@@ -47,18 +47,11 @@ function gantry_layout_manager() {
 
     // Define Gantry Admin services.
     $gantry = Gantry\Framework\Gantry::instance();
-    $gantry['admin.config'] = function ( $c ) {
-        return \Gantry\Framework\Config::instance(
-            GANTRYADMIN_PATH . '/cache/config.php',
-            GANTRYADMIN_PATH
-        );
-    };
     $gantry['admin.theme'] = function ( $c ) {
-        return new \Gantry\Framework\AdminTheme( GANTRYADMIN_PATH );
+        return new \Gantry\Admin\Theme\Theme( GANTRYADMIN_PATH );
     };
 
     // Boot the service.
-    $config = $gantry['admin.config'];
     $theme = $gantry['admin.theme'];
     $gantry['base_url'] = \admin_url( 'themes.php?page=layout-manager' );
     $gantry['routes'] = [

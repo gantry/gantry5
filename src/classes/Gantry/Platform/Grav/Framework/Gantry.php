@@ -1,6 +1,8 @@
 <?php
 namespace Gantry\Framework;
 
+use Grav\Common\Grav;
+
 class Gantry extends Base\Gantry
 {
     /**
@@ -10,12 +12,13 @@ class Gantry extends Base\Gantry
     {
         $container = parent::load();
 
-        $container['config'] = function ($c) {
-            return Config::instance(CACHE_DIR . 'gantry5/config.php', $c['theme.path']);
-        };
-
         $container['site'] = function ($c) {
             return new Site;
+        };
+
+        // Use locator from Grav.
+        $container['locator'] = function($c) {
+             return Grav::instance()['locator'];
         };
 
         return $container;

@@ -21,7 +21,7 @@
                                     </div>
                                     <div class="theme-id">{{ theme.title|e }}</div>
                                     <div class="theme-screenshot">
-                                        <a href="?option=com_gantryadmin&view=overview&style={{ id|url_encode }}"><img src="{{ url('themes://' ~ theme.name|url_encode ~ '/' ~ theme.thumbnail|url_encode)|default('http://www.placehold.it/206x150/f4f4f4') }}" /></a>
+                                        <a href="?option=com_gantryadmin&view=overview&style={{ id|url_encode }}"><img src="{{ url('gantry-themes://' ~ theme.name|url_encode ~ '/' ~ theme.thumbnail|url_encode)|default('http://www.placehold.it/206x150/f4f4f4') }}" /></a>
                                     </div>
                                 </div>
                             {% endfor %}

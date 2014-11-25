@@ -1,17 +1,30 @@
 <?php
 namespace Gantry\Admin\Theme;
 
+use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Base\Theme as BaseTheme;
 use RocketTheme\Toolbox\StreamWrapper\Stream;
 use RocketTheme\Toolbox\StreamWrapper\ReadOnlyStream;
-use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Theme extends BaseTheme
 {
     public function __construct($path, $name = '')
     {
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        $relpath = Folder::getRelativePath($path);
+
+        // Initialize admin streams.
+        $gantry['platform']->set(
+            'streams.gantry-admin.prefixes', [
+                ''        => [$relpath, $relpath . '/common'],
+                'assets/' => [$relpath, $relpath . '/common']
+            ]
+        );
+
         parent::__construct($path, $name);
 
         $this->url = \JUri::root(true) . '/templates/' . $this->name;
@@ -23,47 +36,13 @@ class Theme extends BaseTheme
     {
         $gantry = \Gantry\Framework\Gantry::instance();
 
-        /** @var ResourceLocatorInterface $locator */
+        /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
+        $locator->addPath('gantry-admin', '', 'gantry-theme://admin');
 
-        $schemes = $gantry['admin.config']->get('streams.schemes');
-
-        if (!$schemes) {
-            return;
-        }
-
-        // Set locator to both streams.
-        Stream::setLocator($locator);
-        ReadOnlyStream::setLocator($locator);
-
-        $registered = stream_get_wrappers();
-
-        foreach ($schemes as $scheme => $config) {
-            if (isset($config['paths'])) {
-                $locator->addPath($scheme, '', $config['paths']);
-            }
-            if (isset($config['prefixes'])) {
-                foreach ($config['prefixes'] as $prefix => $paths) {
-                    $locator->addPath($scheme, $prefix, $paths);
-                }
-            }
-
-            if (in_array($scheme, $registered)) {
-                stream_wrapper_unregister($scheme);
-            }
-            $type = !empty($config['type']) ? $config['type'] : 'ReadOnlyStream';
-            if ($type[0] != '\\') {
-                $type = '\\Rockettheme\\Toolbox\\StreamWrapper\\' . $type;
-            }
-
-            if (!stream_wrapper_register($scheme, $type)) {
-                throw new \InvalidArgumentException("Stream '{$type}' could not be initialized.");
-            }
-        }
-
-        if (isset($gantry['theme'])) {
-            $locator->addPath('gantry-admin', '', 'theme://admin');
-        }
+        /** @var Streams $streams */
+        $streams = $gantry['streams'];
+        $streams->register();
     }
 
     public function add_to_context(array $context)
@@ -91,10 +70,15 @@ class Theme extends BaseTheme
 
     public function render($file, array $context = array())
     {
-        $loader = new \Twig_Loader_Filesystem($this->path . '/templates');
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-admin://templates'));
 
         $params = array(
-            'cache' => JPATH_CACHE . '/gantry5admin/twig',
+            'cache' => $locator->findResource('gantry-cache://') . '/twig',
             'debug' => true,
             'auto_reload' => true,
             'autoescape' => false

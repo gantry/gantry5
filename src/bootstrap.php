@@ -18,7 +18,7 @@ function bootstrap()
     $loader = autoload();
 
     // If debug mode is enabled, enable tracy in development mode.
-    if (DEBUG && !Debugger::isEnabled()) {
+    if (GANTRY_DEBUG && !Debugger::isEnabled()) {
         Debugger::enable(Debugger::DEVELOPMENT);
     }
 

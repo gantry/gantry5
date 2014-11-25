@@ -10,6 +10,7 @@ class Themes extends HtmlController
     {
         $styles = (new ThemeList)->getStyles();
 
-        return $this->container['admin.theme']->render('@gantry-admin/themes.html.twig', ['styles' => $styles, 'location' => $location]);
+        return $this->container['admin.theme']
+            ->render('@gantry-admin/themes.html.twig', ['styles' => $styles, 'location' => $params['location']]);
     }
 }

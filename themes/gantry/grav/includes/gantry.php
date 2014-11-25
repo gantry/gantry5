@@ -19,5 +19,17 @@ if (!class_exists('Gantry')) {
 $gantry = Gantry::instance();
 
 // Set the theme path from Grav variable.
+$gantry['theme.id'] = 0;
 $gantry['theme.path'] = $locator('theme://');
+$gantry['theme.name'] = basename($gantry['theme.path']);
+$gantry['theme.params'] = [];
+
+// Initialize theme stream.
+$gantry['platform']->set(
+    'streams.gantry-theme.prefixes',
+    ['' => ["gantry-themes://{$gantry['theme.name']}", "gantry-themes://{$gantry['theme.name']}/common"]]
+);
+
+$gantry['streams'];
+
 return $gantry;

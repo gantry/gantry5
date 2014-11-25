@@ -1,6 +1,8 @@
 <?php
 namespace Gantry\Framework;
 
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+
 class Theme extends Base\Theme
 {
     public function __construct($path, $name = '')
@@ -17,10 +19,15 @@ class Theme extends Base\Theme
     }
     public function render($file, array $context = array())
     {
-        $loader = new \Twig_Loader_Filesystem($this->path . '/twig');
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-theme://twig'));
 
         $params = array(
-            'cache' => GANTRY5_ROOT . '/cache',
+            'cache' => $locator('gantry-cache://') . '/twig',
             'debug' => true,
             'auto_reload' => true,
             'autoescape' => false

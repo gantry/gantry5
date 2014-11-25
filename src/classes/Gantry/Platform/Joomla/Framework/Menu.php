@@ -26,7 +26,8 @@ class Menu implements \Iterator
         'endLevel' => 0,
         'showAllChildren' => false,
         'highlightAlias' => true,
-        'highlightParentAlias' => true
+        'highlightParentAlias' => true,
+        'window_open' => null
     ];
 
     public function __construct()
@@ -42,8 +43,9 @@ class Menu implements \Iterator
         $this->active  = $menu->getActive();
     }
 
-    public function instance(array $params = [])
+    public function instance(array $params = null)
     {
+        $params = $params ?: [];
         $params += $this->defaults;
 
         $instance = clone $this;

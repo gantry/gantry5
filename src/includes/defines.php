@@ -11,6 +11,6 @@ if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
 
-if (!defined('DEBUG')) {
-    define('DEBUG', true);
+if (!defined('GANTRY_DEBUG')) {
+    define('GANTRY_DEBUG', false);
 }
