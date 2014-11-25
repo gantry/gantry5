@@ -17,7 +17,6 @@ var DragEvents = require('./drag.events'),
                  //require('elements/insertion');
                  //require('elements/attributes');
 
-
 var Resizer = new prime({
     mixin: [Bound, Options],
     EVENTS: DragEvents,
@@ -114,7 +113,7 @@ var Resizer = new prime({
             var size     = this.getSize(this.element) - deltaX,
                 diff     = 100 - this.siblings.occupied;
 
-            size = nMap(clientX - 8 + (!this.siblings.prevs ? this.origin.offset.x : this.siblings.prevs.length * 8), parentRect.left, parentRect.right, 0, 100);
+            size = nMap(clientX + (!this.siblings.prevs ? this.origin.offset.x : this.siblings.prevs.length), parentRect.left, parentRect.right, 0, 100);
             size = size - this.siblings.sizeBefore;
             size = precision(clamp(size, 0, 100), 4);
             diff = precision(diff - size, 4);

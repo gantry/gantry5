@@ -70,10 +70,10 @@ ready(function() {
 
     // layoutmanager
     layoutmanager = new LayoutManager('body', {
-        delegate: '[data-lm-root="section"] .section > .grid [data-lm-blocktype]:not([data-lm-nodrag]), .g5-lm-particles-picker [data-lm-blocktype]',
+        delegate: '[data-lm-root] .section .grid .block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .block, .g5-lm-particles-picker [data-lm-blocktype]',
         droppables: '[data-lm-dropzone]',
         exclude: '.section-header .button, .lm-newblocks .float-right .button',
-        resize_handles: '[data-lm-root="section"] .grid > .block:not(:last-child)',
+        resize_handles: '[data-lm-root] .grid > .block:not(:last-child)',
         builder: builder,
         history: lmhistory
     });
