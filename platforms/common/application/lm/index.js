@@ -32,6 +32,7 @@ var particlesPopover = function(){
 };
 
 ready(function() {
+    var body = $('body');
     // test
     if ($('[data-lm-root]')) {
         builder.load();
@@ -40,11 +41,11 @@ ready(function() {
 
     // attach events
     // Picker
-    $('body').delegate('statechangeBefore', '[data-g5-lm-picker]', function() {
+    body.delegate('statechangeBefore', '[data-g5-lm-picker]', function() {
         modal.close();
     });
 
-    $('body').delegate('statechangeAfter', '[data-g5-lm-picker]', function(event, element) {
+    body.delegate('statechangeAfter', '[data-g5-lm-picker]', function(event, element) {
         var data = JSON.parse(element.data('g5-lm-picker'));
         $('[data-g5-content]').find('.title').text(data.name);
         builder = new Builder(data.layout);
@@ -59,7 +60,7 @@ ready(function() {
         layoutmanager.eraser.hide();
     });
 
-    $('body').delegate('click', '[data-g5-lm-add]', function(event, element) {
+    body.delegate('click', '[data-g5-lm-add]', function(event, element) {
         event.preventDefault();
         modal.open({
             content: 'Loading',
