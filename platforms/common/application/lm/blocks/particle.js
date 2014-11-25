@@ -1,7 +1,8 @@
 "use strict";
-var prime = require('prime'),
-    Atom  = require('./atom'),
-    bind  = require('mout/function/bind');
+var prime     = require('prime'),
+    Atom      = require('./atom'),
+    bind      = require('mout/function/bind'),
+    precision = require('mout/number/enforcePrecision');
 
 var UID = 0;
 
@@ -19,8 +20,11 @@ var Particle = new prime({
             var size = parent.getSize() || 100,
                 label = this.block.find('.particle-size');
 
-            if (size % 1 > 0) { size = size.toFixed(1); }
-            if (label) { label.text(size + '%'); }
+            if (label) { label.text(precision(size, 1) + '%'); }
+
+            parent.on('resized', bind(function(resize, a, b){
+                if (label) { label.text(precision(resize, 1) + '%'); }
+            }, this));
         }, this));
     },
 

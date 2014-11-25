@@ -91,7 +91,7 @@ var DragDrop = new prime({
             y: clientRect.top - this.origin.y
         };
 
-        if (this.origin.offset.x > 0) {
+        if (Math.abs(this.origin.offset.x) < 4) {
             this.emit('dragdrop:resize', event, this.element, this.element.siblings());
             return false;
         }
