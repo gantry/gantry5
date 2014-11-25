@@ -48,7 +48,7 @@ $close-color:               #000;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1060;
+    z-index: 1020;
     display: none;
     width: $popover-width;
     min-height:$popover-min-height;
@@ -85,7 +85,7 @@ $close-color:               #000;
 
         ul {
             padding: 1px;
-            background-color: $white;
+            background-color: #ddd;
         }
 
         li {

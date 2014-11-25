@@ -1069,7 +1069,7 @@ body.g5-dialog-open {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1060;
+  z-index: 1020;
   display: none;
   width: 276px;
   min-height: 50px;
@@ -1097,7 +1097,7 @@ body.g5-dialog-open {
     font-size: 16px; }
     .g5-popover.g5-popover-particles ul {
       padding: 1px;
-      background-color: #fff; }
+      background-color: #ddd; }
     .g5-popover.g5-popover-particles li {
       line-height: 42px;
       margin: 1px 0;
