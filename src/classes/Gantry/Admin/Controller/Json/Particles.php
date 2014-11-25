@@ -14,7 +14,7 @@ class Particles extends JsonController
             'spacer' => ['Spacer'],
             'pagecontent' => ['Page Content'],
             'particle' => ['Logo', 'Menu', 'Social Buttons', 'Feed Buttons'],
-            'hidden' => ['Accent Colors', 'Secondary Colors', 'Google Analytics']
+            'atom' => ['Accent Colors', 'Secondary Colors', 'Google Analytics']
         ];
 
         $response = ['particles' => $particles];

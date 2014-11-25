@@ -7,11 +7,10 @@ var UID = 0;
 var Spacer = new prime({
     inherits: Particle,
     options: {
-        type: 'spacer'
-    },
-
-    getTitle: function() {
-        return 'Spacer';
+        type: 'spacer',
+        attributes: {
+            name: "Spacer"
+        }
     }
 });
 

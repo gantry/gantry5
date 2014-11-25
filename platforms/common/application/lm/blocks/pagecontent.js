@@ -2,12 +2,13 @@
 var prime    = require('prime'),
     Particle = require('./particle');
 
-require('elements/insertion');
-
 var Pagecontent = new prime({
     inherits: Particle,
     options: {
-        type: 'pagecontent'
+        type: 'pagecontent',
+        attributes: {
+            name: "Page Content"
+        }
     }
 });
 

@@ -1,19 +1,19 @@
 "use strict";
 var prime = require('prime'),
-    Base  = require('./base'),
+    Atom  = require('./atom'),
     bind  = require('mout/function/bind');
 
 var UID = 0;
 
 var Particle = new prime({
-    inherits: Base,
+    inherits: Atom,
     options: {
         type: 'particle'
     },
 
     constructor: function(options) {
         ++UID;
-        Base.call(this, options);
+        Atom.call(this, options);
 
         this.on('rendered', bind(function(element, parent) {
             var size = parent.getSize() || 100,
@@ -22,10 +22,6 @@ var Particle = new prime({
             if (size % 1 > 0) { size = size.toFixed(1); }
             if (label) { label.text(size + '%'); }
         }, this));
-    },
-
-    getTitle: function() {
-        return this.getAttribute('name');
     },
 
     layout: function() {

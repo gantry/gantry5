@@ -687,7 +687,7 @@ body {
     #g5-container .lm-blocks .spacer {
       background-color: #eee;
       color: #666; }
-    #g5-container .lm-blocks .hidden {
+    #g5-container .lm-blocks .atom {
       background-color: #9055AF; }
     #g5-container .lm-blocks .pagecontent {
       background-color: #218fda; }
@@ -1150,7 +1150,7 @@ body.g5-dialog-open {
       .g5-popover.g5-popover-particles li[data-lm-blocktype="pagecontent"] {
         color: #fff;
         background-color: #218fda; }
-      .g5-popover.g5-popover-particles li[data-lm-blocktype="hidden"] {
+      .g5-popover.g5-popover-particles li[data-lm-blocktype="atom"] {
         color: #fff;
         background-color: #9055AF; }
     .g5-popover.g5-popover-particles .search {
