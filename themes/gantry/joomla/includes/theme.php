@@ -1,8 +1,8 @@
 <?php
-defined('_JEXEC') or die;
+class_exists('\\Gantry\\Framework\\Gantry') or die;
 
 // Define the template.
-class GantryTemplate extends \Gantry\Framework\Theme {}
+class GantryTheme extends \Gantry\Framework\Theme {}
 
 // Initialize theme stream.
 $gantry['platform']->set(
@@ -12,5 +12,5 @@ $gantry['platform']->set(
 
 // Define Gantry services.
 $gantry['theme'] = function ($c)  {
-    return new GantryTemplate($c['theme.path'], $c['theme.name']);
+    return new GantryTheme($c['theme.path'], $c['theme.name']);
 };

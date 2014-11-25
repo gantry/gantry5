@@ -10,10 +10,6 @@ class Gantry extends Base\Gantry
     {
         $container = parent::load();
 
-        $container['platform'] = function ($c) {
-            return new Platform($c);
-        };
-
         $container['site'] = function ($c) {
             return new Site;
         };

@@ -56,10 +56,8 @@ try
     // Only a single template can be loaded at any time.
     if (!isset($gantry['theme']))
     {
-        include_once(__DIR__ . '/template.php');
+        include_once __DIR__ . '/theme.php';
     }
-
-    include_once(__DIR__ . '/template.php');
 
     return $gantry;
 }

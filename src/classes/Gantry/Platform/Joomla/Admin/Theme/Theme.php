@@ -70,10 +70,15 @@ class Theme extends BaseTheme
 
     public function render($file, array $context = array())
     {
-        $loader = new \Twig_Loader_Filesystem($this->path . '/templates');
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-admin://templates'));
 
         $params = array(
-            'cache' => JPATH_CACHE . '/gantry5admin/twig',
+            'cache' => $locator->findResource('cache://') . '/twig',
             'debug' => true,
             'auto_reload' => true,
             'autoescape' => false
