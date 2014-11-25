@@ -166,6 +166,11 @@
         margin-right: 4px;
         position: relative;
 
+        strong {
+            font-weight: bold;
+            color: $white;
+        }
+
         .float-right {
             position: absolute;
             right: 13px;
@@ -184,6 +189,23 @@
             margin-top: -5px;
             margin-right: 5px;
         }
+    }
+
+    .particle {
+        background-color: #00B1D9;
+    }
+
+    .spacer {
+        background-color: #eee;
+        color: #666;
+    }
+
+    .hidden {
+        background-color: #9055AF;
+    }
+
+    .pagecontent {
+        background-color: #218fda;
     }
 
     /* END THIS IS FOR PAGES */

@@ -642,6 +642,9 @@ body {
       background: #aaaaaa;
       margin-right: 4px;
       position: relative; }
+      #g5-container .lm-blocks .particle strong, #g5-container .lm-blocks .position strong, #g5-container .lm-blocks .spacer strong, #g5-container .lm-blocks .pagecontent strong {
+        font-weight: bold;
+        color: #fff; }
       #g5-container .lm-blocks .particle .float-right, #g5-container .lm-blocks .position .float-right, #g5-container .lm-blocks .spacer .float-right, #g5-container .lm-blocks .pagecontent .float-right {
         position: absolute;
         right: 13px;
@@ -657,6 +660,15 @@ body {
         display: inline-block;
         margin-top: -5px;
         margin-right: 5px; }
+    #g5-container .lm-blocks .particle {
+      background-color: #00B1D9; }
+    #g5-container .lm-blocks .spacer {
+      background-color: #eee;
+      color: #666; }
+    #g5-container .lm-blocks .hidden {
+      background-color: #9055AF; }
+    #g5-container .lm-blocks .pagecontent {
+      background-color: #218fda; }
     #g5-container .lm-blocks .placeholder {
       text-align: center;
       color: #5987a0;
