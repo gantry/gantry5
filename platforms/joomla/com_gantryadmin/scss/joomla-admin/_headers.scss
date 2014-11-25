@@ -26,6 +26,10 @@ body.com_gantryadmin {
 	    .inner-header {
 	        background-color: $inner-header-bg;
 	        color: $inner-header-text;
+
+	        .gantry-logo {
+	        	background-image: url(../images/gantrylogo.png);
+	        }
 	    }
 
 	    .settings-state {

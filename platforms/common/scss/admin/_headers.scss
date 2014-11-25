@@ -27,33 +27,6 @@
             @include button-color(lighten($production, 15%), $white);
         }
 
-        [data-sidebar-toggle] {
-            display: inline-block;
-            font-size: $sidebar-font-size + 0.3;
-            padding: $content-padding-short;
-            margin: -($content-padding / 2) (-$content-padding);
-            @include transform-origin(center center);
-
-            .fa-chevron-left {
-                font-size: 55%;
-                vertical-align: middle;
-            }
-
-            &.sidebar-closed {
-                @include transform(rotate(-180deg));
-            }
-
-            &.sidebar-icons {
-                .fa-chevron-left {
-                    display: none;
-                }
-
-                @include transform(rotate(-90deg));
-            }
-
-            @include transition (all 0.3s ease-in-out);
-        }
-
         [data-mode-toggle] {
             font-weight: normal;
 
@@ -90,6 +63,21 @@
         background-color: $inner-header-bg;
         padding: $content-padding;
         color: $inner-header-text;
+
+        .gantry-logo {
+            width: 92px;
+            height: 28px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        [data-sidebar-toggle] {
+            display: inline-block;
+            font-size: $sidebar-font-size + 0.2;
+            vertical-align: middle;
+            margin-right: $content-padding;
+            cursor: pointer;
+        }
     }
 
     .update-text {

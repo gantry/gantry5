@@ -31,6 +31,8 @@ body.com_gantryadmin #g5-container #main-header [data-mode-toggle].development .
 body.com_gantryadmin #g5-container .inner-header {
   background-color: #222;
   color: #3180C2; }
+  body.com_gantryadmin #g5-container .inner-header .gantry-logo {
+    background-image: url(../images/gantrylogo.png); }
 body.com_gantryadmin #g5-container .settings-state {
   background: #3180C2;
   color: #fff; }
@@ -42,6 +44,9 @@ body.com_gantryadmin #g5-container .button.button-update {
     color: #fff; }
 
 body.com_gantryadmin #g5-container #sidebar ul li.active a {
+  color: #3180C2; }
+
+#g5-container .overview-header .theme-title {
   color: #3180C2; }
 
 /*# sourceMappingURL=joomla-admin.css.map */
