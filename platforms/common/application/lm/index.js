@@ -21,9 +21,22 @@ var builder, layoutmanager, lmhistory;
 builder = new Builder(json);
 lmhistory = new LMHistory(builder.serialize());
 
+var particlesPopover = function(){
+    $('[data-lm-addparticle]').popover({
+        type: 'async',
+        placement: 'left-bottom',
+        width: '200',
+        style: 'particles, inverse, fixed, nooverflow',
+        url: AjaxURL('particles')
+    });
+};
+
 ready(function() {
     // test
-    builder.load();
+    if ($('[data-lm-root]')) {
+        builder.load();
+        particlesPopover();
+    }
 
     // attach events
     // Picker
@@ -39,13 +52,7 @@ ready(function() {
 
         // -!- Popovers
         // particles picker
-        $('[data-lm-addparticle]').popover({
-            type: 'async',
-            placement: 'left-bottom',
-            width: '200',
-            style: 'fixed, nooverflow',
-            url: AjaxURL('particles')
-        });
+        particlesPopover();
 
         // refresh LM eraser
         layoutmanager.eraser.element = $('[data-lm-eraseblock]');

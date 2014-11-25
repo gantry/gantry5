@@ -131,7 +131,7 @@
         &:last-child {
             margin-right: 0;
 
-            .particle, .position, .spacer, .mainbody {
+            .particle, .position, .spacer, .pagecontent {
                 margin-right: 0;
             }
         }
@@ -159,11 +159,26 @@
         }
     }
 
-    .particle, .position, .spacer, .mainbody {
+    .particle, .position, .spacer, .pagecontent {
         padding: 13px;
         color: $white;
         background: #aaaaaa;
         margin-right: 4px;
+        position: relative;
+
+        strong {
+            font-weight: bold;
+            color: $white;
+        }
+
+        .float-right {
+            position: absolute;
+            right: 13px;
+            top: 0;
+            bottom: 0;
+            line-height: 50px;
+            float: inherit;
+        }
 
         .particle-size {
             font-weight: 100;
@@ -174,6 +189,23 @@
             margin-top: -5px;
             margin-right: 5px;
         }
+    }
+
+    .particle {
+        background-color: #00B1D9;
+    }
+
+    .spacer {
+        background-color: #eee;
+        color: #666;
+    }
+
+    .hidden {
+        background-color: #9055AF;
+    }
+
+    .pagecontent {
+        background-color: #218fda;
     }
 
     /* END THIS IS FOR PAGES */
@@ -310,6 +342,7 @@
         @include size(50px 50px);
         line-height: 50px;
         margin: 0 auto;
+        font-weight: 300;
     }
 
     span {

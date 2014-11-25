@@ -2,7 +2,7 @@
 
 .button {
     @extend %button;
-    @include button-color($light-gray, $dark-gray);
+    @include button-color($button-bg, $white);
 }
 
 .button-primary {

@@ -79,8 +79,6 @@ class main_listener implements EventSubscriberInterface
 				global $xml;
 				$xml = simplexml_load_file($phpbb_root_path. 'styles/'.$style_name.'/phpbb-options.xml');
 				return $xml;
-			} else {
-				exit('Failed to open phpbb-options.xml. Please make sure that you installed style correctly.');
 			}
 		}
 	}
@@ -103,22 +101,24 @@ class main_listener implements EventSubscriberInterface
 		global $phpbb_root_path, $user, $template, $config;
 
 		$xml = load_xml_file($user->style['style_path']);
-		$style_prefix = $user->style['style_path'].'_';
+		if (!empty($xml)) {
+			$style_prefix = $user->style['style_path'].'_';
 
 		// Assign template vars
-		foreach ($xml->xpath('//form/fieldset') as $group) {
-			foreach ($group->xpath('field') as $item) {
-				$item_list[] = $item['name'];
+			foreach ($xml->xpath('//form/fieldset') as $group) {
+				foreach ($group->xpath('field') as $item) {
+					$item_list[] = $item['name'];
+				}
 			}
-		}
-		$items = array();
-		foreach($item_list as $item) {
-			$items[] = array(
-				strtoupper((string)$item) => $config[(string)$style_prefix.$item],
-				);
-		}
+			$items = array();
+			foreach($item_list as $item) {
+				$items[] = array(
+					strtoupper((string)$item) => $config[(string)$style_prefix.$item],
+					);
+			}
 
-		$template_vars = call_user_func_array('array_merge', $items);
-		$template->assign_vars($template_vars);	
+			$template_vars = call_user_func_array('array_merge', $items);
+			$template->assign_vars($template_vars);	
+		}
 	}
 }

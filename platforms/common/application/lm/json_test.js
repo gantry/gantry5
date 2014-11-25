@@ -42,10 +42,10 @@ module.exports = [
                         "children": [
                             {
                                 "id": "6e85d292-e08b-448c-a46a-f5b2693db83e",
-                                "type": "position",
+                                "type": "particle",
                                 "attributes": {
-                                    "name": "Position 2",
-                                    "key": "position-2"
+                                    "name": "Menu",
+                                    "key": "menu"
                                 },
                                 "children": []
                             }
@@ -203,10 +203,10 @@ module.exports = [
                                         "children": [
                                             {
                                                 "id": "f03448da-fb1b-49ec-8d33-b58152ac8b0d",
-                                                "type": "mainbody",
+                                                "type": "pagecontent",
                                                 "attributes": {
-                                                    "name": "Mainbody",
-                                                    "key": "mainbody"
+                                                    "name": "Page Content",
+                                                    "key": "pagecontent"
                                                 },
                                                 "children": []
                                             }
@@ -282,6 +282,31 @@ module.exports = [
                                 "attributes": {},
                                 "children": [
                                     {
+                                        "id": "5f71de41-07a8-4cca-837c-16b81a29361e",
+                                        "type": "block",
+                                        "attributes": {
+                                            "size": 100
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "9d45007f-78eb-4e1b-b9ee-f52a72fed80a",
+                                                "type": "position",
+                                                "attributes": {
+                                                    "name": "Position Sidebar",
+                                                    "key": "position-sidebar"
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "3f44b134-1552-4f49-86b8-670d1add1000",
+                                "type": "grid",
+                                "attributes": {},
+                                "children": [
+                                    {
                                         "id": "6002f826-16c6-4920-b550-abdb93a9398b",
                                         "type": "block",
                                         "attributes": {
@@ -290,10 +315,10 @@ module.exports = [
                                         "children": [
                                             {
                                                 "id": "fb585b76-4db5-4611-a96c-08c09bd8d90f",
-                                                "type": "position",
+                                                "type": "particle",
                                                 "attributes": {
-                                                    "name": "Position Sidebar",
-                                                    "key": "position-sidebar"
+                                                    "name": "Social Buttons",
+                                                    "key": "social-buttons"
                                                 },
                                                 "children": []
                                             }
