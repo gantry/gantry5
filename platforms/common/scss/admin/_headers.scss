@@ -12,7 +12,7 @@
         .content {
             margin: 0;
             padding: 1.5rem 2.5rem;
-            line-height: 1rem;
+            line-height: $content-padding;
         }
 
         .theme-title {
@@ -78,10 +78,32 @@
         }
     }
 
+    // Gantry Header Bar
     .inner-header {
         background-color: $inner-header-bg;
-        padding: 1rem;
+        padding: $content-padding;
         color: $inner-header-text;
+    }
+
+    .settings-state {
+        padding: $content-padding;
+        display: block;
+        text-align: center;
+        cursor: pointer;
+        background: $production;
+        color: $main-header-text;
+    }
+
+    // Update Header Bar
+    .update-header {
+        padding: $content-padding;
+        background: $update-header-bg;
+        color: $main-header-text;
+    }
+
+    .button-update {
+        float: right;
+        color: $main-header-text;
     }
 
     .ribbon {
