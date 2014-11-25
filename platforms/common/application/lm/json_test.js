@@ -358,10 +358,7 @@ module.exports = [
                             {
                                 "id": "825a6498-c19b-42df-bffc-86dae90b64d8",
                                 "type": "spacer",
-                                "attributes": {
-                                    "name": "Position Footer",
-                                    "key": "position-footer"
-                                },
+                                "attributes": {},
                                 "children": []
                             }
                         ]
@@ -394,10 +391,7 @@ module.exports = [
                             {
                                 "id": "491e8d6c-c762-401f-9ebf-018d83d4a0fe",
                                 "type": "spacer",
-                                "attributes": {
-                                    "name": "Position Footer",
-                                    "key": "position-footer"
-                                },
+                                "attributes": {},
                                 "children": []
                             }
                         ]
