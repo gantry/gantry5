@@ -10,8 +10,7 @@
 
         .content {
             margin: 0;
-            padding: 1.5rem 2.5rem;
-            line-height: $content-padding;
+            padding: $content-padding $content-padding + 1.5;
         }
 
         .theme-title {
@@ -21,6 +20,11 @@
             i {
                 margin-right: 8px;
             }
+        }
+
+        .button-save {
+            float: right;
+            @include button-color(lighten($production, 15%), $white);
         }
 
         [data-sidebar-toggle] {
@@ -107,14 +111,15 @@
 
     // Update Header Bar
     .update-header {
-        padding: $content-padding - 0.3 $content-padding;
+        padding: $content-padding - 0.4 $content-padding;
         background: $update-header-bg;
         color: $main-header-text;
     }
 
     .button.button-update {
         float: right;
-        @include button-color(rgba(0,0,0,0.3), $white);
+        box-shadow: none;
+        @include button-color(darken($update-header-bg, 15%), $white);
     }
 
     .ribbon {

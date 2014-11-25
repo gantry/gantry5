@@ -7,6 +7,10 @@ body.com_gantryadmin {
 
 	    #main-header {
 
+	    	.button-save {
+	            @include button-color(lighten($production, 15%), $white);
+	        }
+
 	        [data-mode-toggle] {
 
 	            &.production .toggle {
@@ -27,6 +31,10 @@ body.com_gantryadmin {
 	    .settings-state {
 	        background: $production;
 	        color: $main-header-text;
+	    }
+
+	    .button.button-update {
+	        @include button-color(darken($update-header-bg, 15%), $white);
 	    }
 
 	}

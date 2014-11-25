@@ -118,15 +118,15 @@
 
 #g5-container .button, #g5-container .button-primary, #g5-container .button-secondary, #g5-container .button.red, #g5-container .button.yellow {
   display: inline-block;
-  border-radius: 2px;
-  padding: 4px 12px;
+  border-radius: 3px;
+  padding: 6px 12px;
   vertical-align: middle;
   font-size: 1rem;
   font-weight: normal; }
   #g5-container .button:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
     margin: 1px 0 -1px 0; }
-  #g5-container .button i, #g5-container .button-primary i, #g5-container .button-secondary i, #g5-container .button.red i, #g5-container .button.yellow i {
-    margin-right: 8px; }
+  #g5-container .button i + span, #g5-container .button-primary i + span, #g5-container .button-secondary i + span, #g5-container .button.red i + span, #g5-container .button.yellow i + span {
+    margin-left: 8px; }
 
 body {
   background-color: #354D59 !important; }
@@ -361,14 +361,20 @@ body {
   color: #fff; }
   #g5-container #main-header .content {
     margin: 0;
-    padding: 1.5rem 2.5rem;
-    line-height: 0.938rem; }
+    padding: 0.938rem 2.438rem; }
   #g5-container #main-header .theme-title {
     float: left;
     margin-right: 2rem;
     font-size: 1.3rem; }
     #g5-container #main-header .theme-title i {
       margin-right: 8px; }
+  #g5-container #main-header .button-save {
+    float: right;
+    background: #6bbfab;
+    color: #fff; }
+    #g5-container #main-header .button-save:hover {
+      background: #56b59f;
+      color: #fff; }
   #g5-container #main-header [data-sidebar-toggle] {
     display: inline-block;
     font-size: 1.1rem;
@@ -438,20 +444,17 @@ body {
   #g5-container .settings-state i {
     margin-left: 8px; }
 #g5-container .update-header {
-  padding: 0.638rem 0.938rem;
+  padding: 0.538rem 0.938rem;
   background: #8F4DAE;
   color: #fff; }
 #g5-container .button.button-update {
   float: right;
-  background: rgba(0, 0, 0, 0.3);
-  color: #fff;
-  box-shadow: 0 1px rgba(0, 0, 0, 0.3), -1px 0 rgba(0, 0, 0, 0.3), 1px 0 rgba(0, 0, 0, 0.3), 0 -1px rgba(0, 0, 0, 0.3); }
+  box-shadow: none;
+  background: #633679;
+  color: #fff; }
   #g5-container .button.button-update:hover {
-    background: rgba(0, 0, 0, 0.3);
-    box-shadow: 0 1px rgba(0, 0, 0, 0.3), -1px 0 rgba(0, 0, 0, 0.3), 1px 0 rgba(0, 0, 0, 0.3), 0 -1px rgba(0, 0, 0, 0.3);
+    background: #522c64;
     color: #fff; }
-  #g5-container .button.button-update:active {
-    box-shadow: 0 1px rgba(0, 0, 0, 0.3), -1px 0 rgba(0, 0, 0, 0.3), 1px 0 rgba(0, 0, 0, 0.3), 0 -1px rgba(0, 0, 0, 0.3); }
 #g5-container .ribbon {
   padding: 0.469rem 0.938rem;
   background-color: #eee;
@@ -483,54 +486,34 @@ body {
 
 #g5-container .button {
   background: #999999;
-  color: #fff;
-  box-shadow: 0 1px #7a7a7a, -1px 0 #878787, 1px 0 #878787, 0 -1px #919191; }
+  color: #fff; }
   #g5-container .button:hover {
     background: #8a8a8a;
-    box-shadow: 0 1px #6b6b6b, -1px 0 #787878, 1px 0 #787878, 0 -1px #828282;
     color: #fff; }
-  #g5-container .button:active {
-    box-shadow: 0 1px #6b6b6b, -1px 0 #787878, 1px 0 #787878, 0 -1px #828282; }
 #g5-container .button-primary {
   background: #439A86;
-  color: #fff;
-  box-shadow: 0 1px #306f61, -1px 0 #388170, 1px 0 #388170, 0 -1px #3e8f7d; }
+  color: #fff; }
   #g5-container .button-primary:hover {
     background: #3a8573;
-    box-shadow: 0 1px #275a4e, -1px 0 #2f6c5e, 1px 0 #2f6c5e, 0 -1px #357a6a;
     color: #fff; }
-  #g5-container .button-primary:active {
-    box-shadow: 0 1px #275a4e, -1px 0 #2f6c5e, 1px 0 #2f6c5e, 0 -1px #357a6a; }
 #g5-container .button-secondary {
   background: #F8B450;
-  color: #fff;
-  box-shadow: 0 1px #f69b15, -1px 0 #f7a52e, 1px 0 #f7a52e, 0 -1px #f7ae41; }
+  color: #fff; }
   #g5-container .button-secondary:hover {
     background: #f7a733;
-    box-shadow: 0 1px #e38b09, -1px 0 #f59910, 1px 0 #f59910, 0 -1px #f6a124;
     color: #fff; }
-  #g5-container .button-secondary:active {
-    box-shadow: 0 1px #e38b09, -1px 0 #f59910, 1px 0 #f59910, 0 -1px #f6a124; }
 #g5-container .button.red {
   background: #ed5565;
-  color: #fff;
-  box-shadow: 0 1px #e71e33, -1px 0 #ea3548, 1px 0 #ea3548, 0 -1px #ec4758; }
+  color: #fff; }
   #g5-container .button.red:hover {
     background: #ea394c;
-    box-shadow: 0 1px #d0162a, -1px 0 #e7192f, 1px 0 #e7192f, 0 -1px #e92b3f;
     color: #fff; }
-  #g5-container .button.red:active {
-    box-shadow: 0 1px #d0162a, -1px 0 #e7192f, 1px 0 #e7192f, 0 -1px #e92b3f; }
 #g5-container .button.yellow {
   background: #ffce54;
-  color: #876000;
-  box-shadow: 0 1px #ffbc17, -1px 0 #ffc430, 1px 0 #ffc430, 0 -1px #ffca45; }
+  color: #876000; }
   #g5-container .button.yellow:hover {
     background: #ffc535;
-    box-shadow: 0 1px #f7b000, -1px 0 #ffbb12, 1px 0 #ffbb12, 0 -1px #ffc126;
     color: #876000; }
-  #g5-container .button.yellow:active {
-    box-shadow: 0 1px #f7b000, -1px 0 #ffbb12, 1px 0 #ffbb12, 0 -1px #ffc126; }
 
 #g5-container {
   /* history */

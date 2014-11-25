@@ -1,29 +1,29 @@
 %button {
     display: inline-block;
-    border-radius: 2px;
-    padding: 4px 12px;
+    border-radius: 3px;
+    padding: 6px 12px;
     vertical-align: middle;
     font-size: $core-font-size;
     font-weight: normal;
     &:active {
         margin: 1px 0 -1px 0;
     }
-    i {
-        margin-right: 8px;
+    i + span {
+        margin-left: 8px;
     }
 }
 
 @mixin button-color($color, $text: $white) {
     background: $color;
     color: $text;
-    box-shadow: 0 1px darken($color, 12%), -1px 0 darken($color, 7%), 1px 0 darken($color, 7%), 0 -1px darken($color, 3%);
+    //box-shadow: 0 1px darken($color, 12%), -1px 0 darken($color, 7%), 1px 0 darken($color, 7%), 0 -1px darken($color, 3%);
     //box-shadow: 0 1px rgba(0, 0, 0, 0.1), -1px 0 $light-gray, 1px 0 $light-gray, 0 -1px transparentize($light-gray, 0.57);
     &:hover {
         background: darken($color, 6%);
-        box-shadow: 0 1px darken($color, 18%), -1px 0 darken($color, 13%), 1px 0 darken($color, 13%), 0 -1px darken($color, 9%);
+        //box-shadow: 0 1px darken($color, 18%), -1px 0 darken($color, 13%), 1px 0 darken($color, 13%), 0 -1px darken($color, 9%);
         color: $text;
     }
     &:active {
-        box-shadow: 0 1px darken($color, 18%), -1px 0 darken($color, 13%), 1px 0 darken($color, 13%), 0 -1px darken($color, 9%);
+        //box-shadow: 0 1px darken($color, 18%), -1px 0 darken($color, 13%), 1px 0 darken($color, 13%), 0 -1px darken($color, 9%);
     }
 }
