@@ -26,6 +26,21 @@ try {
     // Get Gantry instance.
     $gantry = Gantry::instance();
 
+    // Initialize the template if not done already.
+    if (!isset($gantry[ 'theme.id' ]))
+    {
+        $gantry[ 'theme.id' ] = 0;
+        $gantry[ 'theme.path' ] = get_stylesheet_directory();
+        $gantry[ 'theme.name' ] = get_option( 'template' );
+        $gantry[ 'theme.params' ] = [];
+    }
+
+    // Only a single template can be loaded at any time.
+    if (!isset($gantry[ 'theme' ]))
+    {
+        include_once __DIR__ . '/theme.php';
+    }
+
 } catch ( Exception $e ) {
     // Oops, something went wrong!
     if ( is_admin() ) {
