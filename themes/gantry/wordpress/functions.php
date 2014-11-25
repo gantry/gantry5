@@ -11,4 +11,4 @@ if ( !$gantry ) {
 $theme = $gantry[ 'theme' ];
 
 // Boot the service.
-$theme->setLayout( 'theme://layouts/test.yaml' );
+$theme->setLayout( 'gantry-theme://layouts/test.yaml' );

@@ -9,4 +9,4 @@ $gantry = include_once __DIR__ . '/includes/gantry.php';
 $theme = $gantry['theme'];
 
 // Render the page.
-echo $theme->setLayout('theme://layouts/test.yaml')->render('index.html.twig');
+echo $theme->setLayout('gantry-theme://layouts/test.yaml')->render('index.html.twig');

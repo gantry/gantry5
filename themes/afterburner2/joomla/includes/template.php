@@ -6,12 +6,12 @@ class AfterburnerTemplate extends \Gantry\Framework\Theme {}
 
 // Initialize theme stream.
 $gantry['platform']->set(
-    'streams.theme.prefixes',
+    'streams.gantry-theme.prefixes',
     ['' => [
-        "themes://{$gantry['theme.name']}",
-        "themes://{$gantry['theme.name']}/common",
-        "themes://gantry",
-        "themes://gantry/common"]
+        "gantry-themes://{$gantry['theme.name']}",
+        "gantry-themes://{$gantry['theme.name']}/common",
+        "gantry-themes://gantry",
+        "gantry-themes://gantry/common"]
     ]
 );
 

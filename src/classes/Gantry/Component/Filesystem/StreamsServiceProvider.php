@@ -27,7 +27,7 @@ class StreamsServiceProvider implements ServiceProviderInterface
             $streams = new Streams($locator);
             $streams->add($schemes);
 
-            CompiledYamlFile::setCachePath($locator->findResource('cache://') . '/compiled/yaml');
+            CompiledYamlFile::setCachePath($locator->findResource('gantry-cache://') . '/compiled/yaml');
 
             return $streams;
         };

@@ -39,7 +39,7 @@ class Theme extends BaseTheme
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
-        $locator->addPath('gantry-admin', '', 'theme://admin');
+        $locator->addPath('gantry-admin', '', 'gantry-theme://admin');
 
         /** @var Streams $streams */
         $streams = $gantry['streams'];
@@ -79,7 +79,7 @@ class Theme extends BaseTheme
         $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-admin://templates'));
 
         $params = array(
-            'cache' => $locator->findResource('cache://') . '/twig',
+            'cache' => $locator->findResource('gantry-cache://') . '/twig',
             'debug' => true,
             'auto_reload' => true,
             'autoescape' => false

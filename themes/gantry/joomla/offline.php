@@ -13,5 +13,5 @@ $context = [
 
 // Render the page.
 echo $theme
-    ->setLayout('theme://layouts/offline.yaml')
+    ->setLayout('gantry-theme://layouts/offline.yaml')
     ->render('offline.html.twig', $context);

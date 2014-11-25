@@ -13,8 +13,8 @@ class ConfigServiceProvider implements ServiceProviderInterface
             /** @var ResourceLocatorInterface $locator */
             $locator = $c['locator'];
 
-            $cache = $locator->findResource('cache://compiled/blueprints', true, true);
-            $paths = $locator->findResources('blueprints://config');
+            $cache = $locator->findResource('gantry-cache://compiled/blueprints', true, true);
+            $paths = $locator->findResources('gantry-blueprints://config');
             $files = (new ConfigFileFinder)->locateFiles($paths);
 
             $config = new CompiledBlueprints($cache, $files);
@@ -25,8 +25,8 @@ class ConfigServiceProvider implements ServiceProviderInterface
             /** @var ResourceLocatorInterface $locator */
             $locator = $c['locator'];
 
-            $cache = $locator->findResource('cache://compiled/config', true, true);
-            $paths = $locator->findResources('config://');
+            $cache = $locator->findResource('gantry-cache://compiled/config', true, true);
+            $paths = $locator->findResources('gantry-config://');
             $files = (new ConfigFileFinder)->locateFiles($paths);
 
             $config = new CompiledConfig($cache, $files, function() use ($c) {

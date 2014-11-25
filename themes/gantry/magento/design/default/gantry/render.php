@@ -18,8 +18,8 @@ $gantry['page'] = function ($c) use ($self) {
 
 // Initialize theme stream.
 $gantry['platform']->set(
-    'streams.theme.prefixes',
-    ['' => ["themes://{$gantry['theme.name']}/default", "themes://{$gantry['theme.name']}/default/common"]]
+    'streams.gantry-theme.prefixes',
+    ['' => ["gantry-themes://{$gantry['theme.name']}/default", "gantry-themes://{$gantry['theme.name']}/default/common"]]
 );
 
 // Define Gantry services.
@@ -32,5 +32,5 @@ $theme = $gantry['theme'];
 
 // Render the page.
 echo $theme
-    ->setLayout('theme://layouts/test.yaml')
+    ->setLayout('gantry-theme://layouts/test.yaml')
     ->render('index.html.twig');

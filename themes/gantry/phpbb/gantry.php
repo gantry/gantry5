@@ -15,8 +15,8 @@ class Theme extends \Gantry\Framework\Theme {}
 
 // Initialize theme stream.
 $gantry['platform']->set(
-    'streams.theme.prefixes',
-    ['' => ["themes://{$gantry['theme.name']}", "themes://{$gantry['theme.name']}/common"]]
+    'streams.gantry-theme.prefixes',
+    ['' => ["gantry-themes://{$gantry['theme.name']}", "gantry-themes://{$gantry['theme.name']}/common"]]
 );
 
 // Define Gantry services.
@@ -26,7 +26,7 @@ $gantry['theme'] = function ($c) {
 
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
-$theme->setLayout('theme://layouts/test.yaml');
+$theme->setLayout('gantry-theme://layouts/test.yaml');
 
 // Return the service.
 return $gantry;

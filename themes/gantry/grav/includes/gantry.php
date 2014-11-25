@@ -25,8 +25,8 @@ $gantry['theme.name'] = basename($gantry['theme.path']);
 
 // Initialize theme stream.
 $gantry['platform']->set(
-    'streams.theme.prefixes',
-    ['' => ["themes://{$gantry['theme.name']}", "themes://{$gantry['theme.name']}/common"]]
+    'streams.gantry-theme.prefixes',
+    ['' => ["gantry-themes://{$gantry['theme.name']}", "gantry-themes://{$gantry['theme.name']}/common"]]
 );
 
 return $gantry;

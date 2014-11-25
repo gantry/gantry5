@@ -9,8 +9,8 @@ class Nucleus extends \Gantry\Framework\Theme {}
 
 // Initialize theme stream.
 $gantry['platform']->set(
-    'streams.theme.prefixes',
-    ['' => ["themes://{$gantry['theme.name']}/default", "themes://{$gantry['theme.name']}/default/common"]]
+    'streams.gantry-theme.prefixes',
+    ['' => ["gantry-themes://{$gantry['theme.name']}/default", "gantry-themes://{$gantry['theme.name']}/default/common"]]
 );
 
 // Define Gantry services.

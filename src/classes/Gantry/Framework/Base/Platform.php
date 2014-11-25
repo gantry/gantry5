@@ -19,9 +19,6 @@ abstract class Platform
 
     protected $items;
 
-    protected $cachePath;
-    protected $themePath;
-
     public function __construct(Container $container)
     {
         //Make sure that cache folder exists, otherwise it will be removed from the lookup.
@@ -30,47 +27,47 @@ abstract class Platform
 
         $this->items = [
             'streams' => [
-                'cache' => [
+                'gantry-cache' => [
                     'type' => 'Stream',
                     'prefixes' => [
                         '' => [$cachePath]
                     ]
                 ],
-                'themes' => [
+                'gantry-themes' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => $this->getThemesPaths()
                 ],
-                'theme' => [
+                'gantry-theme' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => $this->getThemePaths()
                 ],
-                'engine' => [
+                'gantry-engine' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [
-                        '' => ['theme://engine']
+                        '' => ['gantry-theme://engine']
                     ]
                 ],
-                'particles' => [
+                'gantry-particles' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [
-                        '' => ['engine://particles']
+                        '' => ['gantry-engine://particles']
                     ]
                 ],
                 'gantry-admin' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => []
                 ],
-                'blueprints' => [
+                'gantry-blueprints' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [
-                        '' => ['engine://blueprints', 'theme://blueprints'],
-                        'particles/' => ['particles://']
+                        '' => ['gantry-engine://blueprints', 'gantry-theme://blueprints'],
+                        'particles/' => ['gantry-particles://']
                     ]
                 ],
-                'config' => [
+                'gantry-config' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [
-                        '' => ['engine://config', 'theme://config']
+                        '' => ['gantry-engine://config', 'gantry-theme://config']
                     ]
                 ]
             ]

@@ -116,7 +116,7 @@ class twig extends \phpbb\template\twig\twig
         $locator = $this->gantry['locator'];
         $loader = $this->twig->getLoader();
 
-        foreach ($locator->findResources('theme://twig') as $path) {
+        foreach ($locator->findResources('gantry-theme://twig') as $path) {
             $loader->addPath($path);
         }
 
