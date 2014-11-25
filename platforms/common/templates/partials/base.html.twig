@@ -14,37 +14,37 @@
 
 {% block content %}
 <div id="g5-container" class="container">
-    <div class="grid pure-g">
-        <div class="block pure-u-1">
+    <div class="grid">
+        <div class="block">
             <div id="main-header" data-mode-indicator="production">
                 {% include "@gantry-admin/partials/header.html.twig" %}
             </div>
         </div>
     </div>
     <div class="inner-container">
-        <div class="grid pure-g">
-            <div class="block pure-u-1">
+        <div class="grid">
+            <div class="block">
                 <div class="update-header clearfix">
                     <!--FIX ME--><span class="update-text">Updates Available: Theme Name v1.0, Gantry Framework v.5.0.1</span>
-                    <a href="#" class="button button-update"><i class="fa fa-refresh"></i> Update</a>
+                    <a href="#" class="button button-update"><i class="fa fa-refresh"></i> <span>Update</span></a>
                 </div>
             </div>
         </div>
-        <div class="grid pure-g">
-            <div class="block pure-u-5-6 inner-header">
+        <div class="grid">
+            <div class="block inner-header">
                     <span data-sidebar-toggle><i class="fa fa-bars"></i></span>
             </div>
-            <div class="block size-1-6 pure-u-1-6 settings-state">
+            <div class="block size-1-7 settings-state">
                 <!--FIX ME--><span class="master-toggle">Master <i class="fa fa-chevron-down"></i></span>
             </div>
         </div>
-        <div class="grid pure-g">
-            <div class="block sidebar-block size-1-7 pure-u-1-7">
+        <div class="grid">
+            <div class="block sidebar-block size-1-7">
                 <nav id="gantry">
                     {% include "@gantry-admin/partials/navigation.html.twig" %}
                 </nav>
             </div>
-            <div class="block main-block pure-u-6-7">
+            <div class="block main-block">
                 <section id="main">
                     <div class="content" data-g5-content>
                         {% block gantry %}
