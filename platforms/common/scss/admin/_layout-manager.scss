@@ -131,7 +131,7 @@
         &:last-child {
             margin-right: 0;
 
-            .particle, .position, .spacer, .mainbody {
+            .particle, .position, .spacer, .pagecontent {
                 margin-right: 0;
             }
         }
@@ -159,7 +159,7 @@
         }
     }
 
-    .particle, .position, .spacer, .mainbody {
+    .particle, .position, .spacer, .pagecontent {
         padding: 13px;
         color: $white;
         background: #aaaaaa;

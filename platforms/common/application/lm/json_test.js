@@ -203,10 +203,10 @@ module.exports = [
                                         "children": [
                                             {
                                                 "id": "f03448da-fb1b-49ec-8d33-b58152ac8b0d",
-                                                "type": "mainbody",
+                                                "type": "pagecontent",
                                                 "attributes": {
-                                                    "name": "Mainbody",
-                                                    "key": "mainbody"
+                                                    "name": "Page Content",
+                                                    "key": "pagecontent"
                                                 },
                                                 "children": []
                                             }
