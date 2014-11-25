@@ -85,6 +85,16 @@
             }
         }
 
+        .section-actions {
+            display: none;
+        }
+
+        &:hover {
+            .section-actions {
+                display: block;
+            }
+        }
+
         .grid {
             margin: 8px 0;
             padding: 4px;
@@ -123,6 +133,24 @@
         margin-right: 14px;
     }
 
+    .grid {
+        &:hover > .block {
+            > .particle, > .position, > .spacer, > .pagecontent {
+                &:after {
+                    content: "";
+                    top: 0;
+                    bottom: 0;
+                    width: 2px;
+                    background: #00baaa;
+                    position: absolute;
+                    right: -3px;
+                    cursor: ew-resize;
+                    z-index: 10;
+                }
+            }
+        }
+    }
+
     .grid > .block {
         .block {
             margin: 0;
@@ -133,6 +161,12 @@
 
             .particle, .position, .spacer, .pagecontent, .atom {
                 margin-right: 0;
+            }
+
+            > .particle, > .position, > .spacer, > .pagecontent {
+                &:after {
+                    display: none;
+                }
             }
         }
 
