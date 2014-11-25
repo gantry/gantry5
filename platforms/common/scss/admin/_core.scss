@@ -47,7 +47,7 @@ body {
         display: inline-block;
         background: $white;
         border-radius: 3px;
-        box-shadow: 0 1px rgba(0, 0, 0, 0.1), -1px 0 $light-gray, 1px 0 $light-gray, 0 -1px transparentize($light-gray, 0.57);
+        border: 1px solid $medium-gray;
         padding: 10px;
         min-width: 250px;
         vertical-align: top;

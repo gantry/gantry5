@@ -2,6 +2,13 @@
 
 .settings-block {
     //@extend .card;
+    margin: 1%;
+    width: 47.5%;
+    min-width: inherit;
+    @include breakpoint(mobile-only) {
+        margin: 1% 0;
+        width: 100%;
+    }
 
     .advanced {
         color: $orange;
@@ -29,9 +36,10 @@
     }
 
     input {
-        padding: 2px 4px;
+        padding: 6px 12px;
         border: 1px solid $medium-gray;
         margin: 0;
+        height: auto;
     }
 
     select {
