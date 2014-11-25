@@ -1,6 +1,6 @@
 // Core
 $core-text:                     #666;
-$core-accent:                   #5D9CEC;
+$core-accent:                   #439A86;
 $secondary-link:                #F8B450;
 $white:                         #fff;
 $black:                         #000;
@@ -21,7 +21,7 @@ $pink:                          #ec87c0;
 $button-bg:						#999999;
 
 // Mode Indicator
-$production:                    #439A86;
+$production:                    $core-accent;
 $development:                   #f27a40;
 
 // Body

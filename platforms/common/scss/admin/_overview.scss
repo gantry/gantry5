@@ -1,5 +1,10 @@
 #g5-container {//wrapper
 
-
+.overview-header {
+    .button {
+        float: right;
+        margin-left: $content-padding;
+    }
+}
 
 } //endwrapper

@@ -121,10 +121,12 @@
   border-radius: 2px;
   padding: 4px 12px;
   vertical-align: middle;
-  font-weight: bold;
-  font-size: 0.9rem; }
+  font-size: 1rem;
+  font-weight: normal; }
   #g5-container .button:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
     margin: 1px 0 -1px 0; }
+  #g5-container .button i, #g5-container .button-primary i, #g5-container .button-secondary i, #g5-container .button.red i, #g5-container .button.yellow i {
+    margin-right: 8px; }
 
 body {
   background-color: #354D59 !important; }
@@ -221,8 +223,8 @@ body {
   font-family: "montserrat";
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/montserrat_regular/montserrat-regular-webfont.eot");
-  src: url("../fonts/montserrat_regular/montserrat-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/montserrat_regular/montserrat-regular-webfont.woff") format("woff"), url("../fonts/montserrat_regular/montserrat-regular-webfont.ttf") format("truetype"), url("../fonts/montserrat_regular/montserrat-regular-webfont.svg#montserrat") format("svg"); }
+  src: url("../fonts/montserrat_light/montserrat-light-webfont.eot");
+  src: url("../fonts/montserrat_light/montserrat-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/montserrat_light/montserrat-light-webfont.woff") format("woff"), url("../fonts/montserrat_light/montserrat-light-webfont.ttf") format("truetype"), url("../fonts/montserrat_light/montserrat-light-webfont.svg#montserrat") format("svg"); }
 #g5-container .main-block {
   background-color: #eeeeee; }
 #g5-container #main {
@@ -230,6 +232,10 @@ body {
   #g5-container #main h2 .fa-edit {
     font-size: 60%;
     vertical-align: middle; }
+
+#g5-container .overview-header .button {
+  float: right;
+  margin-left: 0.938rem; }
 
 #g5-container .settings-block .advanced {
   color: #fc6e51; }
@@ -351,7 +357,6 @@ body {
 #g5-container [data-mode-indicator="production"] {
   background-color: #439A86; }
 #g5-container #main-header {
-  font-size: 1.2rem;
   font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   color: #fff; }
   #g5-container #main-header .content {
@@ -360,7 +365,10 @@ body {
     line-height: 0.938rem; }
   #g5-container #main-header .theme-title {
     float: left;
-    margin-right: 2rem; }
+    margin-right: 2rem;
+    font-size: 1.3rem; }
+    #g5-container #main-header .theme-title i {
+      margin-right: 8px; }
   #g5-container #main-header [data-sidebar-toggle] {
     display: inline-block;
     font-size: 1.1rem;
@@ -417,20 +425,33 @@ body {
   background-color: #253A47;
   padding: 0.938rem;
   color: #439A86; }
+#g5-container .update-text {
+  vertical-align: middle; }
 #g5-container .settings-state {
   padding: 0.938rem;
   display: block;
   text-align: center;
   cursor: pointer;
   background: #439A86;
-  color: #fff; }
+  color: #fff;
+  font-size: 1.1rem; }
+  #g5-container .settings-state i {
+    margin-left: 8px; }
 #g5-container .update-header {
-  padding: 0.938rem;
+  padding: 0.638rem 0.938rem;
   background: #8F4DAE;
   color: #fff; }
-#g5-container .button-update {
+#g5-container .button.button-update {
   float: right;
-  color: #fff; }
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  box-shadow: 0 1px rgba(0, 0, 0, 0.3), -1px 0 rgba(0, 0, 0, 0.3), 1px 0 rgba(0, 0, 0, 0.3), 0 -1px rgba(0, 0, 0, 0.3); }
+  #g5-container .button.button-update:hover {
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px rgba(0, 0, 0, 0.3), -1px 0 rgba(0, 0, 0, 0.3), 1px 0 rgba(0, 0, 0, 0.3), 0 -1px rgba(0, 0, 0, 0.3);
+    color: #fff; }
+  #g5-container .button.button-update:active {
+    box-shadow: 0 1px rgba(0, 0, 0, 0.3), -1px 0 rgba(0, 0, 0, 0.3), 1px 0 rgba(0, 0, 0, 0.3), 0 -1px rgba(0, 0, 0, 0.3); }
 #g5-container .ribbon {
   padding: 0.469rem 0.938rem;
   background-color: #eee;
@@ -442,6 +463,7 @@ body {
     border-left: 1px solid #ffb807; }
 
 #g5-container {
+  font-weight: 300;
   font-family: "lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
   #g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
     font-weight: normal;
@@ -456,7 +478,7 @@ body {
     padding: 25px;
     float: left;
     clear: both;
-    background: #5D9CEC;
+    background: #439A86;
     color: #fff; }
 
 #g5-container .button {
@@ -470,15 +492,15 @@ body {
   #g5-container .button:active {
     box-shadow: 0 1px #6b6b6b, -1px 0 #787878, 1px 0 #787878, 0 -1px #828282; }
 #g5-container .button-primary {
-  background: #5D9CEC;
+  background: #439A86;
   color: #fff;
-  box-shadow: 0 1px #267be6, -1px 0 #3d88e8, 1px 0 #3d88e8, 0 -1px #4f94ea; }
+  box-shadow: 0 1px #306f61, -1px 0 #388170, 1px 0 #388170, 0 -1px #3e8f7d; }
   #g5-container .button-primary:hover {
-    background: #428be9;
-    box-shadow: 0 1px #196bd4, -1px 0 #2278e5, 1px 0 #2278e5, 0 -1px #3483e7;
+    background: #3a8573;
+    box-shadow: 0 1px #275a4e, -1px 0 #2f6c5e, 1px 0 #2f6c5e, 0 -1px #357a6a;
     color: #fff; }
   #g5-container .button-primary:active {
-    box-shadow: 0 1px #196bd4, -1px 0 #2278e5, 1px 0 #2278e5, 0 -1px #3483e7; }
+    box-shadow: 0 1px #275a4e, -1px 0 #2f6c5e, 1px 0 #2f6c5e, 0 -1px #357a6a; }
 #g5-container .button-secondary {
   background: #F8B450;
   color: #fff;

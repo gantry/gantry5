@@ -3,10 +3,13 @@
     border-radius: 2px;
     padding: 4px 12px;
     vertical-align: middle;
-    font-weight: bold;
-    font-size: 0.9rem;
+    font-size: $core-font-size;
+    font-weight: normal;
     &:active {
         margin: 1px 0 -1px 0;
+    }
+    i {
+        margin-right: 8px;
     }
 }
 

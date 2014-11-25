@@ -1,5 +1,9 @@
+// Core
+$core-accent:                   #3180C2;
+$white:							#fff;
+
 // Mode Indicator
-$production:                    #3180C2;
+$production:                    $core-accent;
 $development:                   #f27a40;
 
 // Body

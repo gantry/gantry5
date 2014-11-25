@@ -1,8 +1,17 @@
 {% extends ajax ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-    <div class="overview-header">
-        <!--FIX ME--><h1>Gantry <strong>v1.0</strong></h1>
+    <div class="grid pure-g overview-header">
+        <div class="block pure-u-1-2">
+            <!--FIX ME--><h1>Gantry <strong>v1.0</strong></h1>
+        </div>
+        <div class="block pure-u-1-2">
+            <a href="#" class="button button-primary"><i class="fa fa-support"></i>Support</a>
+            <a href="#" class="button"><i class="fa fa-book"></i>Documentation</a>
+        </div>
+    </div>
+
+    <div class="overview-details">
         <img src="{{ url(('gantry-admin://images/preview.png')) }}" alt="">
     </div>
 

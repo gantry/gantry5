@@ -9,6 +9,17 @@ body.com_gantryadmin {
   body.com_gantryadmin #status {
     box-shadow: none !important; }
 
+#g5-container .button-primary {
+  background: #3180C2;
+  color: #fff;
+  box-shadow: 0 1px #256091, -1px 0 #2a6da5, 1px 0 #2a6da5, 0 -1px #2e78b6; }
+  #g5-container .button-primary:hover {
+    background: #2b70aa;
+    box-shadow: 0 1px #1e5079, -1px 0 #245d8d, 1px 0 #245d8d, 0 -1px #28689d;
+    color: #fff; }
+  #g5-container .button-primary:active {
+    box-shadow: 0 1px #1e5079, -1px 0 #245d8d, 1px 0 #245d8d, 0 -1px #28689d; }
+
 body.com_gantryadmin #g5-container [data-mode-indicator="production"] {
   background-color: #3180C2; }
 body.com_gantryadmin #g5-container #main-header [data-mode-toggle].production .toggle {
