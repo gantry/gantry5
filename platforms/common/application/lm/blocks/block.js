@@ -1,7 +1,8 @@
 "use strict";
-var prime = require('prime'),
-    Base  = require('./base'),
-    $     = require('../../utils/elements.moofx');
+var prime     = require('prime'),
+    Base      = require('./base'),
+    precision = require('mout/number/enforcePrecision'),
+    $         = require('../../utils/elements.moofx');
 
 var Block = new prime({
     inherits: Base,
@@ -30,11 +31,11 @@ var Block = new prime({
     },
 
     setAnimatedSize: function(size, store) {
-        size = typeof size === 'undefined' ? this.getSize() : Math.max(0, Math.min(100, parseFloat(size)));
+        size = typeof size === 'undefined' ? this.getSize() : size;
         if (store) {
             this.setAttribute('size', size);
         }
-        $(this.block).animate({ flex: '0 1 ' + size + '%' });
+        $(this.block).animate({ flex: '0 1 ' + precision(size, 1) + '%' });
     },
 
     layout: function() {
