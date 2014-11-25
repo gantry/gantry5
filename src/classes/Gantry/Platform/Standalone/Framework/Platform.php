@@ -20,6 +20,6 @@ class Platform extends BasePlatform
 
     public function getThemesPaths()
     {
-        return  ['' => ['themes']];
+        return  ['' => ['']];
     }
 }

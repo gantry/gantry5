@@ -1,6 +1,8 @@
 <?php
 namespace Gantry\Framework;
 
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+
 class Theme extends Base\Theme
 {
     public function __construct($path, $name = '')
@@ -12,10 +14,15 @@ class Theme extends Base\Theme
 
     public function render($file, array $context = array())
     {
-        $loader = new \Twig_Loader_Filesystem($this->path . '/twig');
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $loader = new \Twig_Loader_Filesystem($locator->findResources('theme://gantry/twig'));
 
         $params = array(
-            'cache' => \Mage::getBaseDir('cache') . '/cache',
+            'cache' => $locator('cache://') . '/twig',
             'debug' => true,
             'auto_reload' => true,
             'autoescape' => false
@@ -24,8 +31,6 @@ class Theme extends Base\Theme
         $twig = new \Twig_Environment($loader, $params);
 
         $this->add_to_twig($twig);
-
-        $gantry = \Gantry\Framework\Gantry::instance();
 
         // Include Gantry specific things to the context.
         $context = $this->add_to_context($context);

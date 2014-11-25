@@ -123,7 +123,7 @@ abstract class CompiledBase
 
         foreach ($this->files as $files) {
             foreach ($files as $name => $item) {
-                $this->loadFile($name, $item['file']);
+                $this->loadFile($name, GANTRY5_ROOT . '/' . $item['file']);
             }
         }
 

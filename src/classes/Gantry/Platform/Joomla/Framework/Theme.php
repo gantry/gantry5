@@ -23,7 +23,7 @@ class Theme extends BaseTheme
         $loader = new \Twig_Loader_Filesystem($locator->findResources('theme://twig'));
 
         $params = array(
-            'cache' => JPATH_CACHE . '/gantry5/twig',
+            'cache' => $locator('cache://') . '/twig',
             'debug' => true,
             'auto_reload' => true,
             'autoescape' => false

@@ -15,7 +15,7 @@ class Platform extends BasePlatform
 {
     public function getCachePath()
     {
-        return 'var/cache/gantry5';
+        return Folder::getRelativePath(\Mage::getBaseDir('cache')) . '/gantry5';
     }
 
     public function getThemesPaths()
