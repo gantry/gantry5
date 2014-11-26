@@ -1,5 +1,5 @@
 <?php
-namespace Gantry\Admin\Theme;
+namespace Gantry\Admin\Base;
 
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Filesystem\Streams;
@@ -27,7 +27,6 @@ class Theme extends BaseTheme
 
         parent::__construct($path, $name);
 
-        $this->url = $this->name;
         $this->boot();
     }
 
