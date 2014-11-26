@@ -1,4 +1,5 @@
 body.com_gantryadmin {
+    color: $light-gray; 
     background-color: $body-bg !important;
 
     .subhead-collapse.collapse, .header {
@@ -9,11 +10,13 @@ body.com_gantryadmin {
     	padding: 0;
     }
 
-    #footer {
-    	text-align: center;
-    }
-
     #status {
     	box-shadow: none !important;
+    }
+
+    #footer {
+        a {
+            color: $core-accent;
+        }
     }
 }

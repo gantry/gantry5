@@ -1,5 +1,7 @@
 body {
+    color: $white;
     background-color: $body-bg !important;
+    margin: 0;
 }
 
 #g5-container { // wrapper
@@ -100,3 +102,13 @@ body {
     }
 
 } // end wrapper
+
+// Footer
+#footer {
+    text-align: center;
+    font-family: $font-family-headers;
+    a {
+        color: $core-accent;
+        text-decoration: none;
+    }
+}

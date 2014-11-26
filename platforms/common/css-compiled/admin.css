@@ -33,7 +33,9 @@
     margin-left: 8px; }
 
 body {
-  background-color: #354D59 !important; }
+  color: #fff;
+  background-color: #354D59 !important;
+  margin: 0; }
 
 #g5-container .fa-spin {
   -webkit-animation: spin 0.8s infinite linear;
@@ -115,6 +117,13 @@ body {
     display: block; }
   #g5-container .card .theme-screenshot a {
     display: block; }
+
+#footer {
+  text-align: center;
+  font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
+  #footer a {
+    color: #439A86;
+    text-decoration: none; }
 
 @font-face {
   font-family: "lato";
