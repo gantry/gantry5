@@ -76,6 +76,27 @@ body {
             padding-top: $content-margin;
             border-top: 1px solid $light-gray;
         }
+
+        .theme-id {
+            text-align: center;
+            margin-bottom: 10px;
+            font-family: $font-family-headers;
+        }
+
+        .theme-name {
+            text-align: center;
+        }
+
+        .theme-screenshot {
+            img {
+                margin: 0 auto 10px auto;
+                display: block;
+            }
+
+            a {
+                display: block;
+            }
+        }
     }
 
 } // end wrapper

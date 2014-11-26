@@ -1,7 +1,9 @@
 // Core
 $core-text:                     #666;
+$secondary-text:				#314C59;
 $core-accent:                   #439A86;
-$secondary-link:                #F8B450;
+$secondary-accent:              #729DAE;
+$tertiary-accent:              	#48B0D7;
 $white:                         #fff;
 $black:                         #000;
 $light-gray:                    #eee;
@@ -41,4 +43,4 @@ $sidebar-bg:                    #DADADA;
 $sidebar-border:				#C6C6C6;
 $sidebar-color:                 #888888;
 $sidebar-active:                $main-bg;
-$sidebar-active-color:          $production;
+$sidebar-active-color:          $secondary-text;

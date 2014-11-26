@@ -12,7 +12,7 @@
 
 .button-secondary {
     @extend %button;
-    @include button-color($secondary-link);
+    @include button-color($secondary-text);
 }
 
 .button.red {

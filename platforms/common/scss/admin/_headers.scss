@@ -62,13 +62,14 @@
     .inner-header {
         background-color: $inner-header-bg;
         padding: $content-padding;
-        color: $inner-header-text;
+        color: $secondary-accent;
 
         .gantry-logo {
             width: 92px;
             height: 28px;
             display: inline-block;
             vertical-align: middle;
+            background-image: url(../images/gantrylogo.png);
         }
 
         [data-sidebar-toggle] {
@@ -89,7 +90,7 @@
         display: block;
         text-align: center;
         cursor: pointer;
-        background: $production;
+        background: $tertiary-accent;
         color: $main-header-text;
         font-size: $core-font-size + 0.1;
         i {
