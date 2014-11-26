@@ -162,7 +162,9 @@ var LayoutManager = new prime({
      },*/
 
     start: function(event, element) {
-        var root = $('[data-lm-root]');
+        var root = $('[data-lm-root]'),
+            size = $(element).position(),
+            margins = $(element).find('[data-lm-blocktype]').compute('margin');
         this.block = this.dirty = null;
         this.mode = root.data('lm-root') || 'page';
 
@@ -182,9 +184,9 @@ var LayoutManager = new prime({
             element.style({
                 position: 'absolute',
                 zIndex: 1000,
-                width: element[0].offsetWidth,
-                height: element[0].offsetHeight
-            });
+                width: Math.ceil(size.width),
+                height: Math.ceil(size.height)
+            }).find('[data-lm-blocktype]').style({margin: margins});
             this.placeholder.after(element);
             this.eraser.show();
         } else {
@@ -230,30 +232,30 @@ var LayoutManager = new prime({
         switch (dataType) {
             case 'root':
                 /*if (location.x === 'other') {
-                    position = (location.y === 'above' ? 'top' : 'bottom');
+                 position = (location.y === 'above' ? 'top' : 'bottom');
 
-                    this.placeholder[position](target);
-                }*/
+                 this.placeholder[position](target);
+                 }*/
                 break;
             case 'section':
                 /*position = (location.x === 'other') ? (location.y === 'above' ? 'before' : 'after') : (location.x === 'before' ? 'left' : 'right');
-                if (['left', 'right'].indexOf(position) === -1) { this.placeholder[position](target); }
-                else {
-                    if (target.parent('.block').data('lm-id') || target.parent().data('lm-root')) {
-                        grid = zen('div.grid[data-lm-id="' + this.block.guid() + '"][data-lm-dropzone][data-lm-blocktype="grid"]').before(target);
-                        block = zen('div.block[data-lm-id="' + this.block.guid() + '"][data-lm-dropzone][data-lm-blocktype="block"]').insert(grid);
-                        target.insert(block);
+                 if (['left', 'right'].indexOf(position) === -1) { this.placeholder[position](target); }
+                 else {
+                 if (target.parent('.block').data('lm-id') || target.parent().data('lm-root')) {
+                 grid = zen('div.grid[data-lm-id="' + this.block.guid() + '"][data-lm-dropzone][data-lm-blocktype="grid"]').before(target);
+                 block = zen('div.block[data-lm-id="' + this.block.guid() + '"][data-lm-dropzone][data-lm-blocktype="block"]').insert(grid);
+                 target.insert(block);
 
-                        this.placeholder[position === 'left' ? 'before' : 'after'](block);
-                        this.dirty = {
-                            element: grid,
-                            target: target
-                        };
-                    } else {
-                        this.placeholder[position === 'left' ? 'before' : 'after'](target.parent('.block'));
-                    }
+                 this.placeholder[position === 'left' ? 'before' : 'after'](block);
+                 this.dirty = {
+                 element: grid,
+                 target: target
+                 };
+                 } else {
+                 this.placeholder[position === 'left' ? 'before' : 'after'](target.parent('.block'));
+                 }
 
-                }*/
+                 }*/
 
                 break;
             case 'grid':
@@ -349,7 +351,7 @@ var LayoutManager = new prime({
         this.block.block.remove();
 
         if (this.placeholder) { this.placeholder.remove(); }
-        if (this.original)    { this.original.remove(); }
+        if (this.original) { this.original.remove(); }
         this.element = this.block = this.dirty = null;
 
         singles.disable();
@@ -360,8 +362,6 @@ var LayoutManager = new prime({
     },
 
     stop: function(event, target/*, element*/) {
-        $('[data-lm-root]').removeClass('moving');
-
         // we are removing the block
         var lastOvered = $(this.dragdrop.lastOvered);
         if (lastOvered && lastOvered.matches(this.eraser.element.find('.trash-zone'))) {
@@ -371,7 +371,7 @@ var LayoutManager = new prime({
         if (!this.block.isNew()) { this.eraser.hide(); }
         if (!this.dragdrop.matched) {
             if (this.placeholder) { this.placeholder.remove(); }
-            if (this.original)    { this.original.remove(); }
+            //if (this.original) { this.original.remove(); }
 
             return;
         }
@@ -384,10 +384,10 @@ var LayoutManager = new prime({
             targetType = !targetId ? false : get(this.builder.map, targetId) ? get(this.builder.map, targetId).getType() : target.data('lm-blocktype'),
             parentId = this.placeholder.parent().data('lm-id'),
             parentType = get(this.builder.map, parentId || '') ? get(this.builder.map, parentId).getType() : false;
-            //originalParent = this.original.parent('[data-lm-id]');
+        //originalParent = this.original.parent('[data-lm-id]');
 
         var resizeCase = false;
-            //originalSiblings = this.original.siblings(':not(.original-placeholder):not([data-lm-id="' + this.block.getId() + '"])') || [];
+        //originalSiblings = this.original.siblings(':not(.original-placeholder):not([data-lm-id="' + this.block.getId() + '"])') || [];
 
         this.original.remove();
 
@@ -493,9 +493,12 @@ var LayoutManager = new prime({
     },
 
     stopAnimation: function(element) {
+        $('[data-lm-root]').removeClass('moving');
+        if (this.original) { this.original.remove(); }
         singles.disable();
         if (!this.block) { this.block = get(this.builder.map, element.data('lm-id')); }
         if (this.block && this.block.getType() === 'block') { this.block.setSize(); }
+
     }
 });
 

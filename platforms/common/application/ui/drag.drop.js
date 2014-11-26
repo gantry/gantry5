@@ -117,11 +117,11 @@ var DragDrop = new prime({
 
             this.emit('dragdrop:stop', event, this.matched, this.element);
 
-            this.element.style({
-                position: 'relative',
+            /*this.element.style({
+                position: 'absolute',
                 width: 'auto',
                 height: 'auto'
-            });
+            });*/
 
             if (this.matched) {
                 this.element.style({

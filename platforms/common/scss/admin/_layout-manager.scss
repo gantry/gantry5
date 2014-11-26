@@ -31,7 +31,8 @@
         }
     }
 
-    &.moving .grid > .block:after {
+    &.moving .grid > .block:after, &.moving .grid > .block > [data-lm-blocktype]:after,
+    &.moving .grid:hover > .block [data-lm-blocktype]:after {
         display: none;
     }
 
