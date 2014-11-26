@@ -15,21 +15,28 @@ var Particle = new prime({
     constructor: function(options) {
         ++UID;
         Atom.call(this, options);
-
-        this.on('rendered', bind(function(element, parent) {
-            var size = parent.getSize() || 100,
-                label = this.block.find('.particle-size');
-
-            if (label) { label.text(precision(size, 1) + '%'); }
-
-            parent.on('resized', bind(function(resize, a, b){
-                if (label) { label.text(precision(resize, 1) + '%'); }
-            }, this));
-        }, this));
     },
 
     layout: function() {
         return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" ' + this.dropZone() + ' data-lm-blocktype="' + this.getType() + '">' + this.getTitle() + '<div class="float-right"><span class="particle-size"></span> <i class="fa fa-cog"></i></div></div>';
+    },
+
+    setLabelSize: function(size){
+        var label = this.block.find('.particle-size');
+        if (!label) { return false; }
+
+        label.text(precision(size, 1) + '%');
+    },
+
+    onRendered: function(element, parent) {
+        var size = parent.getSize() || 100;
+
+        this.setLabelSize(size);
+        parent.on('resized', this.bound('onParentResize'));
+    },
+
+    onParentResize: function(resize) {
+        this.setLabelSize(resize);
     }
 });
 

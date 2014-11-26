@@ -14,6 +14,12 @@ var Grid = new prime({
 
     layout: function() {
         return '<div class="grid" data-lm-id="' + this.getId() + '" ' + this.dropZone() + ' data-lm-blocktype="grid"></div>';
+    },
+
+    onRendered: function(){
+        if (this.block.find('[data-lm-id]')){
+            this.block.data('lm-dropzone', null);
+        }
     }
 });
 

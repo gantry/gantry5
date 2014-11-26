@@ -1,6 +1,7 @@
 "use strict";
 var prime   = require('prime'),
     Options = require('prime-util/prime/options'),
+    Bound    = require('prime-util/prime/bound'),
     Emitter = require('prime/emitter'),
     guid    = require('mout/random/guid'),
     zen     = require('elements/zen'),
@@ -13,7 +14,7 @@ var prime   = require('prime'),
 require('elements/traversal');
 
 var Base = new prime({
-    mixin: Options,
+    mixin: [Bound, Options],
     inherits: Emitter,
     options: {
         attributes: {}
@@ -25,6 +26,8 @@ var Base = new prime({
         this.attributes = this.options.attributes || {};
 
         this.block = zen('div').html(this.layout()).firstChild();
+
+        this.on('rendered', this.bound('onRendered'));
 
         return this;
     },
@@ -91,6 +94,8 @@ var Base = new prime({
     },
 
     layout: function() {},
+
+    onRendered: function(){},
 
     setLayout: function(layout) {
         this.block = layout;

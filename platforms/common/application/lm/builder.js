@@ -169,9 +169,9 @@ var Builder = new prime({
             Element.block.insert($('[data-lm-id="' + parent + '"]'));
         }
 
-        if (value.type === 'grid' && (parent && get(this.map, parent).getType() === 'section')) {
+        /*if (value.type === 'grid') {
             Element.block.data('lm-dropzone', null);
-        }
+        }*/
 
         if (Element.getType() === 'block') {
             Element.setSize();
