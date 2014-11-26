@@ -14,6 +14,8 @@ vendor/**
 platforms/*/*/common
 platforms/*/*/src
 platforms/*/*/vendor
+platforms/standalone/src
+platforms/standalone/vendor
 
 # Symbolic links in themes
 themes/*/*/common

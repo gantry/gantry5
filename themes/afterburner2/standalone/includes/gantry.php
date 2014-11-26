@@ -3,14 +3,6 @@ use Gantry\Framework\Gantry;
 
 try
 {
-    $bootstrap = __DIR__ . '/../src/bootstrap.php';
-    if (!$bootstrap)
-    {
-        throw new LogicException('Gantry Framework not found!');
-    }
-
-    require_once $bootstrap;
-
     // Get Gantry instance and return it.
     $gantry = Gantry::instance();
 
@@ -19,7 +11,7 @@ try
     {
         $gantry['theme.id'] = 0;
         $gantry['theme.path'] = dirname(__DIR__);
-        $gantry['theme.name'] = THEME;
+        $gantry['theme.name'] = $theme;
         $gantry['theme.params'] = [];
     }
 

@@ -114,27 +114,37 @@ elif [ -f $GIT_TARGET/viewtopic.php ]; then
 elif [ -f $GIT_TARGET/.standalone ]; then
     PLATFORM=Standalone
     sources=(
-#        'platforms/standalone/gantryadmin'
-#        'platforms/common'
-#        'src'
-#        'vendor'
-        'themes/gantry/standalone'
-        'themes/gantry/common'
+        'platforms/standalone/admin'
+        'platforms/common'
+        'platforms/standalone/includes'
+        'platforms/standalone/pages'
         'src'
         'vendor'
+        'platforms/standalone/.htaccess'
+        'platforms/standalone/index.php'
+        'themes/gantry/standalone'
+        'themes/gantry/common'
+        'themes/afterburner2/standalone'
+        'themes/afterburner2/common'
         )
     targets=(
-#        'gantry/admin'
-#        'gantry/admin/common'
-#        'gantry/admin/src'
-#        'gantry/admin/vendor'
-        'gantry'
-        'gantry/common'
-        'gantry/src'
-        'gantry/vendor'
+        'admin'
+        'admin/common'
+        'includes'
+        'pages'
+        'src'
+        'vendor'
+        '.htaccess'
+        'index.php'
+        'themes/gantry'
+        'themes/gantry/common'
+        'themes/afterburner2'
+        'themes/afterburner2/common'
         )
     rm -rf "$GIT_TARGET/cache"
     mkdir "$GIT_TARGET/cache"
+    mkdir "$GIT_TARGET/themes"
+    chmod a+w "$GIT_TARGET/cache"
 
 else
     echo

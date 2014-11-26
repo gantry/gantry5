@@ -11,6 +11,6 @@ class Document
 
     public static function rootUri()
     {
-        return dirname(dirname($_SERVER['SCRIPT_NAME']));
+        return STANDALONE_URI;
     }
 }

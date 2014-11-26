@@ -57,7 +57,7 @@ class TwigExtension extends \Twig_Extension
 
         $resource = $locator->findResource($input, false);
 
-        return $resource ? Document::rootUri() .'/'. $resource : false;
+        return $resource ? rtrim(Document::rootUri(), '/') .'/'. $resource : false;
     }
 
     /**
