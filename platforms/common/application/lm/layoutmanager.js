@@ -163,8 +163,8 @@ var LayoutManager = new prime({
 
     start: function(event, element) {
         var root = $('[data-lm-root]'),
-            size = $(element).position(),
-            margins = $(element).find('[data-lm-blocktype]').compute('margin');
+            size = $(element).position();
+
         this.block = this.dirty = null;
         this.mode = root.data('lm-root') || 'page';
 
@@ -181,6 +181,7 @@ var LayoutManager = new prime({
         this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]();
 
         if (!this.block.isNew()) {
+            var margins = $(element).find('[data-lm-blocktype]').compute('margin');
             element.style({
                 position: 'absolute',
                 zIndex: 1000,
