@@ -34,7 +34,7 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function __construct()
     {
-        $this->default = 'index';
+        $this->default = 'home';
         $this->active  = PAGE_PATH;
     }
 
@@ -77,7 +77,7 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function isActive($item)
     {
-        if (strpos($item->link, $this->getBase()->link) === 0) {
+        if (strpos($item->id, $this->getBase()->id) === 0) {
             return true;
         }
 
@@ -86,7 +86,7 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function isCurrent($item)
     {
-        return $item->link == $this->getActive()->link;
+        return $item->id == $this->getActive()->id;
     }
 
     /**
@@ -159,7 +159,7 @@ class Menu implements \ArrayAccess, \Iterator
                 'id' => $item,
                 'type' => 'default',
                 'link' => $item,
-                'parent' => dirname($item) ?: ($item != 'index' ? 'index' : null),
+                'parent' => dirname($item) ?: ($item != 'home' ? 'home' : null),
                 'children' => [],
                 'active' => false,
                 'title' => ucfirst(basename($item)),
@@ -184,7 +184,7 @@ class Menu implements \ArrayAccess, \Iterator
                     break;
 
                 default:
-                    $link = STANDALONE_URI . '/' . THEME . '/' . $item->link;
+                    $link = STANDALONE_URI . '/' . THEME . ($item->link != 'home' ? '/' . $item->link : '');
             }
 
             $item->link = $link;

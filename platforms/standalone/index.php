@@ -8,7 +8,7 @@ $gantry = include_once STANDALONE_ROOT . '/includes/gantry.php';
 // Get current theme and path.
 $path = explode('/', Gantry\Component\Filesystem\Folder::getRelativePath($_SERVER['REQUEST_URI'], STANDALONE_URI), 2);
 $theme = array_shift($path);
-$path = trim(array_shift($path), '/') ?: 'index';
+$path = trim(array_shift($path), '/') ?: 'home';
 
 define('THEME', $theme);
 define('PAGE_PATH', $path);
