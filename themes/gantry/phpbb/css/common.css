@@ -703,7 +703,7 @@ fieldset.fields1 dl.pmlist dd.recipients {
 .pagination li.page-jump a, .pagination li.next a, .pagination li.previous a {
 	background-repeat: no-repeat;
 	font-size: 0;
-	height: 13px;
+	height: 20px;
 	width: 11px;
 }
 

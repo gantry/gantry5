@@ -198,6 +198,25 @@ ul.topiclist li.header {
 .icon-unsubscribe:before {
   content: "\f146"; }
 
+li.previous {
+  margin-right: 10px; }
+li.next a:before, li.previous a:before {
+  font: normal normal normal 14px/1 FontAwesome;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: absolute; }
+li.next a:before {
+  content: "\f054"; }
+li.previous a:before {
+  content: "\f053"; }
+
+div.rules {
+  background-color: #ECD5D8;
+  color: #BC2A4D; }
+  div.rules strong {
+    font-weight: bold; }
+
 /* Global imageset items */
 .imageset:before, .contact-icon:before {
   font: normal normal normal 14px/1 FontAwesome;
