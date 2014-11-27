@@ -10,6 +10,9 @@ $path = explode('/', Gantry\Component\Filesystem\Folder::getRelativePath($_SERVE
 $theme = array_shift($path);
 $path = trim(array_shift($path), '/') ?: 'index';
 
+define('THEME', $theme);
+define('PAGE_PATH', $path);
+
 // Bootstrap selected theme.
 $include = STANDALONE_ROOT . "/themes/{$theme}/includes/gantry.php";
 if (is_file($include)) {

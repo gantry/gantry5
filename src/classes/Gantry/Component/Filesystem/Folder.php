@@ -69,6 +69,7 @@ abstract class Folder
         $pattern = isset($params['pattern']) ? $params['pattern'] : null;
         $filters = isset($params['filters']) ? $params['filters'] : null;
         $recursive = isset($params['recursive']) ? $params['recursive'] : true;
+        $levels = isset($params['levels']) ? $params['levels'] : -1;
         $key = isset($params['key']) ? 'get' . $params['key'] : null;
         $value = isset($params['value']) ? 'get' . $params['value'] : ($recursive ? 'getSubPathname' : 'getFilename');
 
@@ -76,6 +77,7 @@ abstract class Folder
             $directory = new \RecursiveDirectoryIterator($path,
                 \RecursiveDirectoryIterator::SKIP_DOTS + \FilesystemIterator::UNIX_PATHS + \FilesystemIterator::CURRENT_AS_SELF);
             $iterator = new \RecursiveIteratorIterator($directory, \RecursiveIteratorIterator::SELF_FIRST);
+            $iterator->setMaxDepth(max($levels, -1));
         } else {
             $iterator = new \FilesystemIterator($path);
         }
