@@ -12,13 +12,12 @@ $path = trim(array_shift($path), '/') ?: 'index';
 
 // Bootstrap selected theme.
 $include = STANDALONE_ROOT . "/themes/{$theme}/includes/gantry.php";
-
 if (is_file($include)) {
     include $include;
 }
 
+// Enter to administration if we are in /ROOT/theme/admin. Also display installed themes if no theme has been selected.
 if (!isset($gantry['theme']) || strpos($path, 'admin') === 0) {
-    // Enter to administration.
     require_once STANDALONE_ROOT . '/admin/admin.php';
     exit();
 }
@@ -27,9 +26,10 @@ if (!isset($gantry['theme']) || strpos($path, 'admin') === 0) {
 /** @var Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
 
-// Render the page.
 try {
+    // Render the page.
     echo $theme->setLayout('gantry-theme://layouts/test.yaml')->render($path . '.html.twig');
 } catch (Twig_Error_Loader $e) {
+    // Or display error if template file couldn't be found.
     echo $theme->setLayout('gantry-theme://layouts/error.yaml')->render('_error.html.twig', ['error' => $e]);
 }

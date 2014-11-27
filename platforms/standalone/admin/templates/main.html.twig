@@ -19,13 +19,13 @@
                                     <div class="themes cards-wrapper grid fixed-blocks">
                                         {% for id, theme in styles %}
                                             <div class="theme card">
-                                                <div class="theme-id">{{ theme.title|e }}</div>
+                                                <div class="theme-id">{{ theme.name|title|e }}</div>
                                                 <div class="theme-screenshot">
                                                     <a href="{{ theme.name }}"><img src="{{ url('gantry-themes://' ~ theme.name ~ '/' ~ theme.thumbnail)|default('http://www.placehold.it/206x150/f4f4f4') }}" /></a>
                                                 </div>
                                                 <div class="theme-name">
-                                                    <a class="button button-primary" href="{{ theme.name }}"><i class="fa fa-fw fa-{{ theme.icon|default('lock')|e }}"></i> {{ theme.name|title|e }}</a>
-                                                    <a class="button" href="{{ theme.name }}/admin">Admin</a>
+                                                    <a class="button button-primary" href="{{ theme.name }}">Preview</a>
+                                                    <a class="button" href="{{ theme.name }}/admin">Configure</a>
                                                 </div>
                                             </div>
                                         {% endfor %}
