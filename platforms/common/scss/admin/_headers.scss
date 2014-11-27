@@ -27,33 +27,57 @@
             @include button-color(lighten($production, 15%), $white);
         }
 
-        [data-mode-toggle] {
-            font-weight: normal;
+        .dev-mode-toggle {
+            position: relative;
+            height: 36px;
+            float: left;
+            background: darken($production, 10%);
+            border-radius: $core-border-radius;
 
-            > span {
+            input {
+                position: absolute;
+                opacity: 0;
+            }
+
+            input + label {
+                position: relative;
+                z-index: 2;
+                float: left;
+                width: 50%;
+                height: 100%;
+                margin: 0;
+                text-align: center;
+            }
+
+            label {
+                padding: 8px 20px;
                 vertical-align: middle;
+                cursor: pointer;
+                font-size: $core-font-size;
+                opacity: 0.5;
+                @include transition(opacity 0.1s ease-out);
             }
 
-            .toggle {
-                @include toggle-ui();
+            input:checked + label {
+                opacity: 1;
             }
 
-            &.production .toggle {
-                background-color: $production;
-
-                .knob {
-                    top: 1px;
-                    left: 35px - 20px; // toggle size - knob size - 1px compensation
-                }
+            a {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding: 0;
+                z-index: 1;
+                width: 50%;
+                height: 100%;
+                border-radius: $core-border-radius;
+                background: lighten($production, 15%);
+                @include transition(all 0.1s ease-out);
             }
 
-            &.development .toggle {
-                background-color: $development;
-
-                .knob {
-                    top: 1px;
-                    left: 1px;
-                }
+            input:last-of-type:checked ~ a {
+                left: 50%;
             }
         }
     }

@@ -2,12 +2,12 @@
     <div class="block">
         <div class="content">
             <!--FIX ME--><span class="theme-title"><i class="fa fa-tint"></i> Theme: Theme Name</span>
-            <div data-mode-toggle class="production">
-                <span class="development">Dev</span>
-                <span class="toggle">
-                    <span class="knob"></span>
-                </span>
-                <span class="production">Prod</span>
+            <div data-mode-toggle class="dev-mode-toggle">
+                <input type="radio" value="dev" id="dev-mode-toggle" name="mode" checked>
+                <label for="dev-mode-toggle">Dev</label>
+                <input type="radio" value="prod" id="prod-mode-toggle" name="mode">
+                <label for="prod-mode-toggle">Prod</label>
+                <a></a>
             </div>
         </div>
     </div>
