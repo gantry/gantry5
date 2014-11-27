@@ -2,8 +2,10 @@
 	background-color: lighten($core-accent, 45%);
 }
 
-#showcase a {
-	color: $white;
+#showcase {
+	a {
+		color: $white;
+	}
 }
 
 .dropdown-contents {

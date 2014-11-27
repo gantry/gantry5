@@ -153,7 +153,7 @@ dl.icon {
 
 dl.icon dt {
 	background-repeat: no-repeat;
-	background-position: 5px 95%;		/* Position of topic icon */
+	background-position: 15px 65%;		/* Position of topic icon */
 }
 
 dl.icon dt .list-inner {

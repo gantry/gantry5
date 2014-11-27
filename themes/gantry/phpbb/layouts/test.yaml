@@ -16,6 +16,7 @@ header:
   - sidebar 25:
     - phpbb-post_info
     - phpbb-login
+    - phpbb-footer
 
 footer:
-  - [spacer 25, particle-copyright 50, particle-branding 25]
+  - phpbb-navfooter
