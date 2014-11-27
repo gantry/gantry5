@@ -77,12 +77,16 @@ ul.topiclist li.header {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 20px 20px 20px;
+  border-width: 0 9px 9px 9px;
   border-color: transparent transparent #4184B6 transparent; }
 
 .dropdown-up .dropdown .pointer {
-  border-width: 20px 20px 0 20px;
+  border-width: 9px 9px 0 9px;
   border-color: #4184B6 transparent transparent transparent; }
+
+div.post {
+  border: 1px solid #eaeaea;
+  border-radius: 0; }
 
 .panel.bg3, #tabs .activetab > a {
   background-color: #e6eff6; }
