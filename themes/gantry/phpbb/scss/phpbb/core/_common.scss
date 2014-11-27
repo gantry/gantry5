@@ -19,3 +19,19 @@ ul.topiclist {
 		margin-right: 15px;
 	}
 }
+.dropdown .pointer {
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 9px 9px 9px;
+	border-color: transparent transparent $core-accent transparent;
+}
+.dropdown-up .dropdown .pointer {
+	border-width: 9px 9px 0 9px;
+	border-color:  $core-accent transparent transparent transparent;
+}
+
+div.post {
+	border: 1px solid $body-border;
+	border-radius: 0;
+}

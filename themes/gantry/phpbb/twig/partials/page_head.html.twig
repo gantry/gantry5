@@ -19,18 +19,29 @@
     <link rel="canonical" href="{U_CANONICAL}" />
     <!-- ENDIF -->
 
-    <!-- IF S_PLUPLOAD -->
-	<link href="{T_THEME_PATH}/plupload.css?assets_version={T_ASSETS_VERSION}" rel="stylesheet" type="text/css" media="screen, projection" />
-    <!-- ENDIF -->
-
-    <!-- EVENT overall_header_head_append -->
-
-    {$STYLESHEETS}
     <link rel="stylesheet" href="{{ url('gantry-theme://css/font-awesome.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url('gantry-theme://css/stylesheet.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url('gantry-theme://css/en/stylesheet.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url('gantry-theme://css-compiled/phpbb.css') }}" type="text/css" />
     <link href="{{ url('gantry-theme://css/responsive.css') }}?assets_version={T_ASSETS_VERSION}" rel="stylesheet" type="text/css" media="only screen and (max-width: 979px), only screen and (max-device-width: 979px)" />
+
+    <!-- IF S_CONTENT_DIRECTION eq 'rtl' -->
+    <link rel="stylesheet" href="{{ url('gantry-theme://css/bidi.css?assets_version={T_ASSETS_VERSION}') }}" type="text/css" />
+    <!-- ENDIF -->
+
+    <!-- IF S_PLUPLOAD -->
+    <link rel="stylesheet" href="{{ url('gantry-theme://css/plupload.css?assets_version={T_ASSETS_VERSION}') }}" type="text/css" />
+    <!-- ENDIF -->
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="{{ url('gantry-theme://css/tweaks.css?assets_version={T_ASSETS_VERSION}') }}" type="text/css" />
+    <![endif]-->
+
+    <!-- EVENT overall_header_stylesheets_after -->
+
+    <!-- EVENT overall_header_head_append -->
+
+    {$STYLESHEETS}
 
     <!-- EVENT overall_header_stylesheets_after -->
 

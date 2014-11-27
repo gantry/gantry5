@@ -2,8 +2,10 @@
 	background-color: lighten($core-accent, 45%);
 }
 
-#showcase a {
-	color: $white;
+#showcase {
+	a {
+		color: $white;
+	}
 }
 
 .dropdown-contents {
@@ -58,3 +60,24 @@
 .icon-team:before					{ content: "\f1ab"; }
 .icon-ucp:before					{ content: "\f0f0"; }
 .icon-unsubscribe:before			{ content: "\f146";}
+
+li {
+	&.previous {margin-right: 10px;}
+	&.next, &.previous {
+		a:before {
+			font: normal normal normal 14px/1 FontAwesome;
+			text-rendering:auto;
+			-webkit-font-smoothing:antialiased;
+			-moz-osx-font-smoothing:grayscale;
+			position: absolute;
+		}
+	}
+	&.next a:before {content: "\f054";}
+	&.previous a:before {content: "\f053";}
+}
+
+div.rules {
+	strong {font-weight: bold;}
+	background-color: #ECD5D8;
+	color: #BC2A4D;
+}
