@@ -3,7 +3,7 @@
 {% block gantry %}
     <h2>
         Page Setup
-        <a data-g5-lm-add href="{{ gantry.route('pages/create') }}" class="button button-primary"><i class="fa fa-plus"></i></a>
+        <a data-g5-lm-add href="{{ gantry.route('pages/create')|e }}" class="button button-primary"><i class="fa fa-plus"></i></a>
     </h2>
     <div id="page-picker" class="cards-wrapper">
         <ul>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="inner-params">
                     <span class="float-left">
-                        <a href="{{ gantry.route('pages/edit') }}" class="button">
+                        <a href="{{ gantry.route('pages/edit')|e }}" class="button">
                             <i class="fa fa-pencil-square-o"></i>
                             <span>Edit</span>
                         </a>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="inner-params">
                     <span class="float-left">
-                        <a href="{{ gantry.route('pages/edit') }}" class="button">
+                        <a href="{{ gantry.route('pages/edit')|e }}" class="button">
                             <i class="fa fa-pencil-square-o"></i>
                             <span>Edit</span>
                         </a>
@@ -59,7 +59,7 @@
             </li>
             <li class="card add-new" data-g5-lm-add>
                 <div class="page">
-                    <a href="{{ gantry.route('pages/create') }}"><i class="fa fa-plus"></i></a>
+                    <a href="{{ gantry.route('pages/create')|e }}"><i class="fa fa-plus"></i></a>
                 </div>
             </li>
         </ul>
