@@ -1,6 +1,10 @@
 <?php
 namespace Gantry\Admin\Theme;
 
+use Gantry\Component\Theme\ThemeDetails;
+use Gantry\Framework\Gantry;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+
 class ThemeList
 {
     /**
@@ -22,24 +26,60 @@ class ThemeList
         $db->setQuery($query);
         $templates = (array) $db->loadObjectList();
 
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
         $list = array();
 
         foreach ($templates as $template)
         {
             if (file_exists(JPATH_SITE . '/templates/' . $template->name . '/includes/gantry.php'))
             {
-                $params = new \JRegistry;
-                $params->loadString($template->params);
+                $details = new ThemeDetails($template->name);
 
-                $template->thumbnail = 'template_thumbnail.png';
-                $template->preview_url = \JUri::root(false) . 'index.php?templateStyle=' . $template->id;
-                $template->admin_url = \JRoute::_('index.php?option=com_gantryadmin&view=overview&style=' . $template->id, false);
-                $template->params = $params->toArray();
+                if (!$locator->schemeExists('gantry-theme-' . $template->name)) {
+                    $locator->addPath('gantry-themes-' . $template->name, '', $details->getPaths());
+                }
 
-                $list[$template->id] = $template;
+                $params = new \JRegistry($template->params);
+
+                $details['id'] = $template->id;
+                $details['name'] = $template->name;
+                $details['title'] = $template->title;
+                $details['thumbnail'] = 'template_thumbnail.png';
+                $details['preview_url'] = \JUri::root(false) . 'index.php?templateStyle=' . $template->id;
+                $details['admin_url'] = \JRoute::_('index.php?option=com_gantryadmin&view=overview&style=' . $template->id, false);
+                $details['params'] = $params->toArray();
+
+                $list[$template->id] = $details;
             }
         }
 
+        // Add Thumbnails links.
+        foreach ($list as $details) {
+            $details['thumbnail'] = self::getImage($locator, $details, 'thumbnail');
+        }
+
         return $list;
+    }
+
+    protected static function getImage(UniformResourceLocator $locator, $details, $image)
+    {
+        $image = $details["details.images.{$image}"];
+
+        if (!strpos($image, '://')) {
+            $name = $details['name'];
+            $image = "gantry-themes-{$name}://{$image}";
+        }
+
+        try {
+            $image = $locator->findResource($image, false);
+        } catch (\Exception $e) {
+            $image = false;
+        }
+
+        return $image;
     }
 }

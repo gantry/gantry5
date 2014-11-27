@@ -51,11 +51,19 @@ class TwigExtension extends \Twig_Extension
      */
     public function urlFunc($input, $domain = false)
     {
-        $gantry = Gantry::instance();
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
+        if (!trim((string) $input)) {
+            return false;
+        }
 
-        $resource = $locator->findResource($input, false);
+        if (strpos((string) $input, '://')) {
+            $gantry = Gantry::instance();
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+
+            $resource = $locator->findResource((string) $input, false);
+        } else {
+            $resource = (string) $input;
+        }
 
         return $resource ? rtrim(Document::rootUri(), '/') .'/'. $resource : false;
     }
