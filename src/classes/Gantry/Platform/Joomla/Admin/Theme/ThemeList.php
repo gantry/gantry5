@@ -32,6 +32,8 @@ class ThemeList
                 $params->loadString($template->params);
 
                 $template->thumbnail = 'template_thumbnail.png';
+                $template->preview_url = \JUri::root(false) . 'index.php?templateStyle=' . $template->id;
+                $template->admin_url = \JRoute::_('index.php?option=com_gantryadmin&view=overview&style=' . $template->id, false);
                 $template->params = $params->toArray();
 
                 $list[$template->id] = $template;

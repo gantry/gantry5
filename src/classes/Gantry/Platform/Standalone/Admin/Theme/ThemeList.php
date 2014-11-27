@@ -17,8 +17,11 @@ class ThemeList
             if (file_exists(STANDALONE_ROOT . '/themes/' . $theme . '/includes/gantry.php')) {
                 $template = new \stdClass();
                 $template->name = $theme;
+                $template->title = ucfirst($theme);
                 // TODO: We need to be able to add proper lookup paths for gantry-themes://name
                 $template->thumbnail = 'common/admin/images/template_thumbnail.png';
+                $template->preview_url = rtrim(STANDALONE_URI, '/') . '/' . $theme;
+                $template->admin_url = rtrim(STANDALONE_URI, '/') . '/' . $theme . '/admin';
                 $template->params = [];
 
                 $list[$template->name] = $template;

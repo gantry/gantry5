@@ -26,7 +26,7 @@ class Router implements RouterInterface
             $layout = 'index';
             $style = $this->container['theme.name'];
         } else {
-            $view = 'main';
+            $view = 'themes';
             $layout = 'index';
             $style = 'gantry';
         }

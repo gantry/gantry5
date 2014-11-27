@@ -1,5 +1,6 @@
 {% extends ajax ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
+
 {% block content %}
     <div id="g5-container" class="container">
         <div class="inner-container">
@@ -11,30 +12,35 @@
             <div class="grid">
                 <div class="block main-block">
                     <section id="main">
-                        <div class="content">
-                            <div class="button-bar">
-                                <button class="button" type="submit" name="task" value="add"><i class="fa fa-plus"></i> Add</button>
-                            </div>
-                            <h1><i class="fa fa-fw fa-plug"></i> Available Themes</h1>
-
-                            <div class="themes cards-wrapper grid fixed-blocks">
-                                {% for id, theme in styles %}
-                                    <div class="theme card">
-                                        <div class="theme-id">{{ theme.title|e }}</div>
-                                        <div class="theme-screenshot">
-                                            <a href="?option=com_gantryadmin&view=overview&style={{ id|url_encode }}"><img src="{{ url('gantry-themes://' ~ theme.name ~ '/' ~ theme.thumbnail)|default('http://www.placehold.it/206x150/f4f4f4') }}" /></a>
-                                        </div>
-                                        <div class="theme-name">
-                                            <a class="button" href="?option=com_gantryadmin&view=overview&style={{ id|url_encode }}"><i class="fa fa-fw fa-{{ theme.icon|default('lock')|e }}"></i> {{ theme.name|title|e }}</a>
-                                        </div>
+                        <div data-g5-content>
+                            {% block gantry %}
+                                <div class="content" data-g5-content>
+                                    <h1><i class="fa fa-fw fa-plug"></i> Available Themes</h1>
+                                    <div class="themes cards-wrapper grid fixed-blocks">
+                                        {% for id, theme in styles %}
+                                            <div class="theme card">
+                                                <div class="theme-id">{{ theme.title|e }}</div>
+                                                <div class="theme-screenshot">
+                                                    <a href="{{ theme.admin_url|e }}"><img src="{{ url('gantry-themes://' ~ theme.name ~ '/' ~ theme.thumbnail)|default('http://www.placehold.it/206x150/f4f4f4')|e }}" /></a>
+                                                </div>
+                                                <div class="theme-name">
+                                                    {% if theme.preview_url %}
+                                                    <a class="button" href="{{ theme.preview_url|e }}">Preview</a>
+                                                    {% endif %}
+                                                    <a class="button button-primary" href="{{ theme.admin_url|e }}">Configure</a>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
                                     </div>
-                                {% endfor %}
-                            </div>
-
+                                </div>
+                            {% endblock %}
                         </div>
                     </section>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block footer_section %}
 {% endblock %}
