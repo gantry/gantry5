@@ -44,3 +44,6 @@ items:
     menu_image:
     menu_icon: lock
 
+  special/title:
+    type: heading
+    title:

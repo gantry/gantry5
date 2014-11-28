@@ -1,8 +1,8 @@
 details:
-  name: Gantry
-  version: 1.0
+  name: Afterburner
+  version: 2.0
   icon: tint
-  platform: standalone
+  platform: prime
   date: November 27, 2014
   author:
     name: RocketTheme, LLC

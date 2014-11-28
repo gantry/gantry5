@@ -111,21 +111,21 @@ elif [ -f $GIT_TARGET/viewtopic.php ]; then
         'styles/gantry/src'
         'styles/gantry/vendor'
         )
-elif [ -f $GIT_TARGET/.standalone ]; then
-    PLATFORM=Standalone
+elif [ -f $GIT_TARGET/.prime ]; then
+    PLATFORM=prime
     sources=(
-        'platforms/standalone/admin'
+        'platforms/prime/admin'
         'platforms/common'
-        'platforms/standalone/includes'
-        'platforms/standalone/pages'
-        'platforms/standalone/positions'
+        'platforms/prime/includes'
+        'platforms/prime/pages'
+        'platforms/prime/positions'
         'src'
         'vendor'
-        'platforms/standalone/.htaccess'
-        'platforms/standalone/index.php'
-        'themes/gantry/standalone'
+        'platforms/prime/.htaccess'
+        'platforms/prime/index.php'
+        'themes/gantry/prime'
         'themes/gantry/common'
-        'themes/afterburner2/standalone'
+        'themes/afterburner2/prime'
         'themes/afterburner2/common'
         )
     targets=(
@@ -150,8 +150,9 @@ elif [ -f $GIT_TARGET/.standalone ]; then
 
 else
     echo
-	echo "ERROR: No Joomla / WordPress / Grav installation was found!"
+	echo "ERROR: No CMS installation was found!"
 	echo "Please run this command in your web root directory!"
+	echo "To install Gantry Prime, please run 'touch .prime' where you want to install it into."
 	echo
 	echo "Add symbolic links to repository (as user www-data):"
 	echo "sudo -u www-data $0"
