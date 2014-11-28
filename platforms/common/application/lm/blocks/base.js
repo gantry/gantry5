@@ -82,15 +82,18 @@ var Base = new prime({
         return this.fresh;
     },
 
-    dropZone: function() {
-        var root = $('[data-lm-root]'),
-            mode = root.data('lm-root'),
-            type = this.getType();
+    dropzone: function() {
+        var type = this.getType();
 
-        if (mode === 'page' && type !== 'section' && type !== 'grid' && type !== 'block') {
-            return '';
-        }
         return 'data-lm-dropzone';
+    },
+
+    addDropzone: function(){
+        this.block.data('lm-dropzone', true);
+    },
+
+    removeDropzone: function(){
+        this.block.data('lm-dropzone', null);
     },
 
     layout: function() {},

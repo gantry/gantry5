@@ -29,8 +29,6 @@ var Section = new prime({
 
     layout: function() {
         return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4><div class="section-actions float-right"><i class="fa fa-plus"></i> <i class="fa fa-cog"></i></div></div></div>';
-
-        //return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-dropzone data-lm-blocktype="' + this.getType() +'"></div>';
     },
 
     adopt: function(child) {

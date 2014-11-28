@@ -40,7 +40,13 @@ var Block = new prime({
     },
 
     layout: function() {
-        return '<div class="block" data-lm-id="' + this.getId() + '" data-lm-blocktype="block"></div>';
+        return '<div class="block" data-lm-id="' + this.getId() + '"' + this.dropzone() + ' data-lm-blocktype="block"></div>';
+    },
+
+    onRendered: function(element, parent){
+        if (element.block.find('> [data-lm-blocktype="section"]')){
+            this.removeDropzone();
+        }
     }
 });
 

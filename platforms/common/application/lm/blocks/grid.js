@@ -13,7 +13,7 @@ var Grid = new prime({
     },
 
     layout: function() {
-        return '<div class="grid" data-lm-id="' + this.getId() + '" ' + this.dropZone() + ' data-lm-blocktype="grid"></div>';
+        return '<div class="grid" data-lm-id="' + this.getId() + '" ' + this.dropzone() + ' data-lm-blocktype="grid"></div>';
     },
 
     onRendered: function(){

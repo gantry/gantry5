@@ -273,6 +273,8 @@ var LayoutManager = new prime({
                 break;
 
             case 'position':
+            case 'particle':
+            case 'pagecontent':
             case 'spacer':
                 position = (location.x === 'other') ? (location.y === 'above' ? 'before' : 'after') : (location.x === 'before' ? 'left' : 'right');
                 if (['left', 'right'].indexOf(position) === -1) { this.placeholder[position](target); }
