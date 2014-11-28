@@ -30,7 +30,7 @@ class Config
      * @param  array  $items  Initial items inside the iterator.
      * @param  callable $blueprints  Function to load Blueprints for the configuration.
      */
-    public function __construct(array $items, callable $blueprints)
+    public function __construct(array $items, callable $blueprints = null)
     {
         $this->items = $items;
         $this->blueprints = $blueprints;

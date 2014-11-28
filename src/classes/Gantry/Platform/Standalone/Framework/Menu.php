@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\Filesystem\Folder;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccess;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
@@ -121,8 +122,12 @@ class Menu implements \ArrayAccess, \Iterator
      *
      * @return array
      */
-    protected function getList(array $params)
+    protected function getList(array $config)
     {
+        $items = (array) isset($config['items']) ? $config['items'] : null;
+        $params = (array) isset($config['config']) ? $config['config'] : null;
+        $ordering = new Config((array) isset($config['ordering']) ? $config['ordering'] : []);
+
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
 
@@ -131,7 +136,7 @@ class Menu implements \ArrayAccess, \Iterator
         $end     = $params['endLevel'];
         $showAll = $params['showAllChildren'];
 
-        $params = [
+        $options = [
             'levels' => $end - $start,
             'pattern' => '|\.html\.twig|',
             'filters' => ['value' => '|\.html\.twig|']
@@ -141,34 +146,36 @@ class Menu implements \ArrayAccess, \Iterator
         if (!is_dir($folder)) {
             return [];
         }
-        $menuItems = Folder::all($folder, $params);
+        $menuItems = Folder::all($folder, $options);
 
         $all = $tree = [];
-        foreach ($menuItems as $item) {
-            $level = substr_count($item, '/') + 1;
+        foreach ($menuItems as $name) {
+            $level = substr_count($name, '/') + 1;
             if (($start && $start > $level)
                 || ($end && $level > $end)
-                || (!$showAll && $level > 1 && strpos(dirname($item), $path) !== 0)
-                || ($start > 1 && strpos(dirname(dirname($item)), $path) !== 0)
-                || ($item[0] == '_' || strpos($item, '_'))) {
+                || (!$showAll && $level > 1 && strpos(dirname($name), $path) !== 0)
+                || ($start > 1 && strpos(dirname(dirname($name)), $path) !== 0)
+                || ($name[0] == '_' || strpos($name, '_'))) {
                 continue;
             }
 
-            $item = (object) [
-                'id' => preg_replace('|[^a-z0-9]|i', '-', $item),
+            $item = isset($items[$name]) ? $items[$name] : [];
+            $item += [
+                'id' => preg_replace('|[^a-z0-9]|i', '-', $name),
                 'type' => 'link',
-                'path' => $item,
-                'link' => $item != 'home' ? $item : '',
-                'parent' => dirname($item) ?: ($item != 'home' ? 'home' : null),
+                'path' => $name,
+                'title' => ucfirst(basename($name)),
+                'link' => $name != 'home' ? $name : '',
+                'parent' => dirname($name) != '.' ? dirname($name) : '',
                 'children' => [],
-                'active' => false,
-                'title' => ucfirst(basename($item)),
                 'browserNav' => 0,
-                'params' => []
+                'menu_text' => true
             ];
 
+            $item = (object) $item;
+
             // Placeholder page.
-            if (!is_file(STANDALONE_ROOT . "/pages/{$item->path}.html.twig")) {
+            if ($item->type == 'link' && !is_file(STANDALONE_ROOT . "/pages/{$item->path}.html.twig")) {
                 $item->type = 'separator';
             }
 
@@ -176,31 +183,16 @@ class Menu implements \ArrayAccess, \Iterator
                 case 'separator':
                 case 'heading':
                     // Separator and heading has no link.
-                    $link = null;
+                    $item->link = null;
                     break;
 
                 case 'url':
-                    $link = $item->link;
                     break;
 
                 case 'alias':
-                    // If this is an alias use the item id stored in the parameters to make the link.
-                    $link = '/' . trim(STANDALONE_URI . '/' . THEME . '/' . $item->params['alias'], '/');
-                    break;
-
                 default:
-                    $link = '/' . trim(STANDALONE_URI . '/' . THEME . '/' . $item->link, '/');
+                    $item->link = '/' . trim(STANDALONE_URI . '/' . THEME . '/' . $item->link, '/');
             }
-
-            $item->link = $link;
-
-            // We prevent the double encoding because for some reason the $item is shared for menu modules and we get double encoding
-            // when the cause of that is found the argument should be removed
-            $item->title        = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8', false);
-            $item->anchor_css   = ''; //htmlspecialchars($item->params->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
-            $item->anchor_title = ''; //htmlspecialchars($item->params->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
-            $item->menu_image   = ''; //$item->params->get('menu_image', '') ? htmlspecialchars($item->params->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
-            $item->menu_text    = true; //(bool) $item->params->get('menu_text', true);
 
             switch ($item->browserNav)
             {
@@ -221,14 +213,33 @@ class Menu implements \ArrayAccess, \Iterator
 
             // Build nested tree structure.
             if (isset($all[$item->parent])) {
-                $all[$item->parent]->children[] = $item;
+                $all[$item->parent]->children[$item->path] = $item;
             } else {
                 $tree[$item->path] = $item;
             }
             $all[$item->path] = $item;
-
         }
 
+        foreach ($all as $item) {
+            $item->children = $this->sort($item->children, $ordering->get($item->path, null, '/'), $item->path . '/');
+
+        }
+        $tree = $this->sort($tree, $ordering->toArray());
+
         return $tree;
+    }
+
+    protected function sort(array $items, $ordering, $path = '')
+    {
+        if (!$ordering) {
+            return $items;
+        }
+        $list = [];
+        foreach ($ordering as $key => $value) {
+            if (isset($items[$path . $key])) {
+                $list[$path . $key] = $items[$path . $key];
+            }
+        }
+        return $list + $items;
     }
 }

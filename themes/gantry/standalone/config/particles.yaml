@@ -19,18 +19,6 @@ logo:
   image: 'images/logo.png'
   text: 'Gantry'
 
-menu:
-  items:
-    menu: ''
-    base: 0
-    startLevel: 1
-    endLevel: 0
-    showAllChildren: true
-    window_open: 'width=200,height=300'
-  css:
-    id:
-    class: 'main-nav'
-
 totop:
   css:
     classname: 'particle_gantry_totop'

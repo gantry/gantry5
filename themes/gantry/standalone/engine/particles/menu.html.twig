@@ -1,12 +1,17 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
-{% set menu = gantry.menu.instance(particle.items) %}
+{% set menu = gantry.menu.instance(particle) %}
 
 {% macro displayTitle(item) %}
     {% if item.menu_image %}
         <img src="{{ item.menu_image }}" alt="{{ item.title }}" />
         {% if item.menu_text %}
         <span class="image-title">{{ item.title }}</span>
+        {% endif %}
+    {% elseif item.menu_icon %}
+        <i class="fa fa-fw fa-{{ item.menu_icon|e }}"></i>
+        {% if item.menu_text %}
+        {{ item.title }}
         {% endif %}
     {% else %}
         {{ item.title }}
