@@ -77,7 +77,7 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function isActive($item)
     {
-        if (strpos($item->id, $this->getBase()->id) === 0) {
+        if (strpos($this->base, $item->id) === 0) {
             return true;
         }
 
@@ -102,7 +102,7 @@ class Menu implements \ArrayAccess, \Iterator
      */
     protected function calcBase($path)
     {
-        if (!is_file(STANDALONE_ROOT . "/{$path}.html.twig")) {
+        if (!$path || !is_file(STANDALONE_ROOT . "/pages/{$path}.html.twig")) {
             // Use active menu item or fall back to default menu item.
             $path = $this->active ?: $this->default;
         }
@@ -126,11 +126,6 @@ class Menu implements \ArrayAccess, \Iterator
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
 
-        // Make sure that the menu item exists.
-        if (!$this->base) {
-            return [];
-        }
-
         $path    = $this->base;
         $start   = $params['startLevel'];
         $end     = $params['endLevel'];
@@ -142,7 +137,11 @@ class Menu implements \ArrayAccess, \Iterator
             'filters' => ['value' => '|\.html\.twig|']
         ];
 
-        $menuItems = Folder::all(STANDALONE_ROOT . '/pages/' . dirname($path), $params);
+        $folder = STANDALONE_ROOT . '/pages';
+        if (!is_dir($folder)) {
+            return [];
+        }
+        $menuItems = Folder::all($folder, $params);
 
         $all = $tree = [];
         foreach ($menuItems as $item) {
@@ -158,7 +157,7 @@ class Menu implements \ArrayAccess, \Iterator
             $item = (object) [
                 'id' => $item,
                 'type' => 'default',
-                'link' => $item,
+                'link' => $item != 'home' ? $item : '',
                 'parent' => dirname($item) ?: ($item != 'home' ? 'home' : null),
                 'children' => [],
                 'active' => false,
@@ -180,11 +179,11 @@ class Menu implements \ArrayAccess, \Iterator
 
                 case 'alias':
                     // If this is an alias use the item id stored in the parameters to make the link.
-                    $link = STANDALONE_URI . '/' . THEME . '/' . $item->params['alias'];
+                    $link = '/' . trim(STANDALONE_URI . '/' . THEME . '/' . $item->params['alias'], '/');
                     break;
 
                 default:
-                    $link = STANDALONE_URI . '/' . THEME . ($item->link != 'home' ? '/' . $item->link : '');
+                    $link = '/' . trim(STANDALONE_URI . '/' . THEME . '/' . $item->link, '/');
             }
 
             $item->link = $link;
