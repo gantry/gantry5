@@ -27,12 +27,12 @@ if (!isset($gantry['theme']) || strpos($path, 'admin') === 0) {
 
 // Boot the service.
 /** @var Gantry\Framework\Theme $theme */
-$theme = $gantry['theme'];
+$theme = $gantry['theme']->setLayout('gantry-theme://layouts/test.yaml');
 
 try {
     // Render the page.
-    echo $theme->setLayout('gantry-theme://layouts/test.yaml')->render($path . '.html.twig');
+    echo $theme->render($path . '.html.twig');
 } catch (Twig_Error_Loader $e) {
     // Or display error if template file couldn't be found.
-    echo $theme->setLayout('gantry-theme://layouts/error.yaml')->render('_error.html.twig', ['error' => $e]);
+    echo $theme->render('_error.html.twig', ['error' => $e]);
 }

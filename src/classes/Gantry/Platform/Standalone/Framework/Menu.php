@@ -77,7 +77,7 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function isActive($item)
     {
-        if (strpos($this->base, $item->id) === 0) {
+        if (strpos($this->base, $item->path) === 0) {
             return true;
         }
 
@@ -86,7 +86,7 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function isCurrent($item)
     {
-        return $item->id == $this->getActive()->id;
+        return $item->path == $this->getActive()->path;
     }
 
     /**
@@ -155,8 +155,9 @@ class Menu implements \ArrayAccess, \Iterator
             }
 
             $item = (object) [
-                'id' => $item,
-                'type' => 'default',
+                'id' => preg_replace('|[^a-z0-9]|i', '-', $item),
+                'type' => 'link',
+                'path' => $item,
                 'link' => $item != 'home' ? $item : '',
                 'parent' => dirname($item) ?: ($item != 'home' ? 'home' : null),
                 'children' => [],
@@ -165,6 +166,11 @@ class Menu implements \ArrayAccess, \Iterator
                 'browserNav' => 0,
                 'params' => []
             ];
+
+            // Placeholder page.
+            if (!is_file(STANDALONE_ROOT . "/pages/{$item->path}.html.twig")) {
+                $item->type = 'separator';
+            }
 
             switch ($item->type) {
                 case 'separator':
@@ -217,9 +223,9 @@ class Menu implements \ArrayAccess, \Iterator
             if (isset($all[$item->parent])) {
                 $all[$item->parent]->children[] = $item;
             } else {
-                $tree[$item->id] = $item;
+                $tree[$item->path] = $item;
             }
-            $all[$item->id] = $item;
+            $all[$item->path] = $item;
 
         }
 

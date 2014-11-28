@@ -35,13 +35,16 @@ trait ThemeTrait
         $context['config'] = $gantry['config'];
         $context['theme'] = $this;
 
+        return $context;
+    }
+
+    public function segments() {
+        $gantry = \Gantry\Framework\Gantry::instance();
+
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        // Include Gantry specific things to the context.
-        $context['pageSegments'] = $this->layout ? LayoutReader::read($locator($this->layout)) : [];
-
-        return $context;
+        return $this->layout ? LayoutReader::read($locator($this->layout)) : [];
     }
 
     public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)

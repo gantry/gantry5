@@ -20,7 +20,9 @@ class Theme extends Base\Theme
         $locator = $gantry['locator'];
 
         $search = array_merge($locator->findResources('gantry-theme://twig'), [STANDALONE_ROOT . '/pages']);
+
         $loader = new \Twig_Loader_Filesystem($search);
+        $loader->setPaths([STANDALONE_ROOT . '/positions'], 'positions');
 
         $params = array(
             'cache' => $locator('gantry-cache://') . '/twig',

@@ -22,4 +22,21 @@ class Platform extends BasePlatform
     {
         return  ['' => ['themes']];
     }
+
+    public function getModules($position)
+    {
+        $path = STANDALONE_ROOT . '/positions/' . $position;
+
+        if (!is_dir($path)) {
+            return [];
+        }
+
+        $params = [
+            'levels' => 0,
+            'pattern' => '|\.html\.twig|',
+            'filters' => ['value' => '|\.html\.twig|']
+        ];
+
+        return Folder::all($path, $params);
+    }
 }
