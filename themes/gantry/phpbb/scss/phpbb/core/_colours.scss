@@ -1,6 +1,9 @@
 .panel.bg3, #tabs .activetab > a {
 	background-color: lighten($core-accent, 45%);
 }
+.panel-container .panel, #navigation #active-subsection a {
+	background-color: $main-bg;
+}
 
 #showcase {
 	a {
@@ -19,7 +22,7 @@
 	border-color: transparentize($white, 0.56);
 }
 
-.small-icon:before, .imageset:before {
+.small-icon:before, .imageset:before, .file-status:before {
 	font: normal normal normal 14px/1 FontAwesome;
 	padding-top: 5px;
 	text-align: center;
@@ -81,3 +84,38 @@ div.rules {
 	background-color: #ECD5D8;
 	color: #BC2A4D;
 }
+
+.file-status {
+	border-radius: 100%;
+	&:before {
+		margin-left: -6px;
+		padding-top: 3px;
+	}
+	&.file-uploaded {
+		background-color: $core-accent;
+		&:before {
+			content: "\f00c";
+		}
+	}
+	&.file-working {
+		background-color: $core-accent;
+		&:before {
+			content: "\f110";
+		}
+	}
+	&.file-error {
+		background-color: red;
+		&:before {
+			content: "\f00d";
+		}
+	}
+}
+
+.file-progress {
+	background-color: $core-text;
+}
+
+.file-progress-bar, #file-total-progress-bar {
+	background-color: $core-accent;
+}
+
