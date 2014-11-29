@@ -23,6 +23,10 @@
 	width: 5%;
 }
 
+.attach-comment textarea {
+	margin-bottom: -5px;
+}
+
 .attach-filesize, .attach-status {
 	text-align: center;
 }
@@ -44,35 +48,21 @@
 }
 
 .file-progress {
-	background-color: #CCCCCC;
 	display:inline-block;
 	height: 8px;
 	width: 50px;
 }
 
 .file-progress-bar, #file-total-progress-bar {
-	background-color: green;
 	display: block;
 	height: 100%;
 	width: 0;
 }
 
-.file-status.file-working {
-	background: url('./images/plupload/throbber.gif');
-}
-
-.file-status.file-uploaded {
-	background: url('./images/plupload/done.gif');
-}
-
-.file-status.file-error {
-	background: url('./images/plupload/error.gif');
-}
-
 .file-status {
 	display: inline-block;
-	height: 16px;
-	width: 16px;
+	height: 20px;
+	width: 20px;
 }
 
 .file-name {

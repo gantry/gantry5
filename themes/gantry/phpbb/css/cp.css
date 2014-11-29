@@ -130,6 +130,7 @@ ul.cplist {
 ----------------------------------------*/
 #tabs {
 	margin: 20px 0 0 7px;
+	font-size: 0.9em;
 }
 
 #tabs .tab > a {
@@ -219,7 +220,8 @@ ul.cplist {
 /* Container for sub-navigation list */
 #navigation {
 	width: 100%;
-	padding-top: 36px;
+	padding-top: 60px;
+	font-size: 0.9em;
 }
 
 #navigation ul {
@@ -252,6 +254,7 @@ ul.cplist {
 	border-bottom: none;
 	padding: 0;
 	margin-left: 10px;
+	margin-bottom: 0 !important;
 }
 
 /* Friends list */

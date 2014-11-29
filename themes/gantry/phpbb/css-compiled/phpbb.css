@@ -91,6 +91,9 @@ div.post {
 .panel.bg3, #tabs .activetab > a {
   background-color: #e6eff6; }
 
+.panel-container .panel, #navigation #active-subsection a {
+  background-color: #f7f7f7; }
+
 #showcase a {
   color: #fff; }
 
@@ -102,7 +105,7 @@ div.post {
 .dropdown li.separator {
   border-color: rgba(255, 255, 255, 0.44); }
 
-.small-icon:before, .imageset:before {
+.small-icon:before, .imageset:before, .file-status:before {
   font: normal normal normal 14px/1 FontAwesome;
   padding-top: 5px;
   text-align: center;
@@ -220,6 +223,30 @@ div.rules {
   color: #BC2A4D; }
   div.rules strong {
     font-weight: bold; }
+
+.file-status {
+  border-radius: 100%; }
+  .file-status:before {
+    margin-left: -6px;
+    padding-top: 3px; }
+  .file-status.file-uploaded {
+    background-color: #4184B6; }
+    .file-status.file-uploaded:before {
+      content: "\f00c"; }
+  .file-status.file-working {
+    background-color: #4184B6; }
+    .file-status.file-working:before {
+      content: "\f110"; }
+  .file-status.file-error {
+    background-color: red; }
+    .file-status.file-error:before {
+      content: "\f00d"; }
+
+.file-progress {
+  background-color: #666; }
+
+.file-progress-bar, #file-total-progress-bar {
+  background-color: #4184B6; }
 
 /* Global imageset items */
 .imageset:before, .contact-icon:before {
