@@ -40,7 +40,7 @@ class Router implements RouterInterface
         // If style is set, resolve the template and load it.
         if ($style) {
             $this->container['theme.id'] = 0;
-            $this->container['theme.path'] = $path = STANDALONE_ROOT . '/themes/' . $style;
+            $this->container['theme.path'] = $path = PRIME_ROOT . '/themes/' . $style;
             $this->container['theme.name'] = $style;
             $this->container['theme.title'] = ucfirst($style);
             $this->container['theme.params'] = [];
@@ -56,7 +56,7 @@ class Router implements RouterInterface
 
         // Boot the service.
         $this->container['admin.theme'];
-        $this->container['base_url'] = rtrim(STANDALONE_URI, '/') . "/{$style}/admin";
+        $this->container['base_url'] = rtrim(PRIME_URI, '/') . "/{$style}/admin";
 
         $this->container['routes'] = [
             'themes' => '',

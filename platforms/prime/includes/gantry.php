@@ -1,5 +1,5 @@
 <?php
-defined('STANDALONE_ROOT') or die;
+defined('PRIME_ROOT') or die;
 
 use Gantry\Framework\Gantry;
 
@@ -9,7 +9,7 @@ try
     if (!class_exists('Gantry'))
     {
         $gantryPaths = array(
-            STANDALONE_ROOT . '/src/bootstrap.php',          // Look if Gantry has been included to the admin.
+            PRIME_ROOT . '/src/bootstrap.php',          // Look if Gantry has been included to the admin.
         );
 
         foreach ($gantryPaths as $gantryPath)

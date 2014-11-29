@@ -1,7 +1,12 @@
 Gantry Framework
 ================
 
-You should run composer before installing Gantry 5.
+Documentation for all the supported platforms can be found from [themes](themes/README.md) folder.
+
+Best place to get started is to take a look into Gantry Prime which is our primary theme development and testing environment.
+
+PS. You should run 'composer install' before installing Gantry 5 to your sites.
+
 
 After you have done that, just go into your Joomla / WordPress / phpBB / Magento / Grav and run ```{PATH_TO_REPO}/bin/install.sh``` in there.
 

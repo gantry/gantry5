@@ -1,12 +1,12 @@
 <?php
-define('STANDALONE_ROOT', dirname($_SERVER['SCRIPT_FILENAME']));
-define('STANDALONE_URI', dirname($_SERVER['SCRIPT_NAME']));
+define('PRIME_ROOT', dirname($_SERVER['SCRIPT_FILENAME']));
+define('PRIME_URI', dirname($_SERVER['SCRIPT_NAME']));
 
 // Bootstrap Gantry framework or fail gracefully (inside included file).
-$gantry = include_once STANDALONE_ROOT . '/includes/gantry.php';
+$gantry = include_once PRIME_ROOT . '/includes/gantry.php';
 
 // Get current theme and path.
-$path = explode('/', Gantry\Component\Filesystem\Folder::getRelativePath($_SERVER['REQUEST_URI'], STANDALONE_URI), 2);
+$path = explode('/', Gantry\Component\Filesystem\Folder::getRelativePath($_SERVER['REQUEST_URI'], PRIME_URI), 2);
 $theme = array_shift($path);
 $path = trim(array_shift($path), '/') ?: 'home';
 
@@ -14,14 +14,14 @@ define('THEME', $theme);
 define('PAGE_PATH', $path);
 
 // Bootstrap selected theme.
-$include = STANDALONE_ROOT . "/themes/{$theme}/includes/gantry.php";
+$include = PRIME_ROOT . "/themes/{$theme}/includes/gantry.php";
 if (is_file($include)) {
     include $include;
 }
 
 // Enter to administration if we are in /ROOT/theme/admin. Also display installed themes if no theme has been selected.
 if (!isset($gantry['theme']) || strpos($path, 'admin') === 0) {
-    require_once STANDALONE_ROOT . '/admin/admin.php';
+    require_once PRIME_ROOT . '/admin/admin.php';
     exit();
 }
 
