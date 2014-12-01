@@ -101,6 +101,7 @@ var DragDrop = new prime({
             opacity: 0.5,
             zIndex: 100
         });
+
         $(document).on(this.EVENTS.MOVE, this.bound('move'));
         $(document).on(this.EVENTS.STOP, this.bound('stop'));
         this.emit('dragdrop:start', event, this.element);
@@ -167,13 +168,27 @@ var DragDrop = new prime({
                 });
             }
 
-            this.element.style({
-                transform: this.origin.transform || 'translate(0, 0)',
-                opacity: 1
-            });
+            if (!this.matched) {
 
-            this._removeStyleAttribute(this.element);
-            this.emit('dragdrop:stop:animation', this.element);
+                settings.callback = bind(function (element) {
+                    this._removeStyleAttribute(element);
+                    this.emit('dragdrop:stop:animation', element);
+                }, this, this.element);
+
+                this.element.animate({
+                    transform: this.origin.transform || 'translate(0, 0)',
+                    opacity: 1
+                }, settings);
+            } else {
+
+                this.element.style({
+                    transform: this.origin.transform || 'translate(0, 0)',
+                    opacity: 1
+                });
+
+                this._removeStyleAttribute(this.element);
+                this.emit('dragdrop:stop:animation', this.element);
+            }
         }
 
         $(document).off(this.EVENTS.MOVE, this.bound('move'));
@@ -190,6 +205,13 @@ var DragDrop = new prime({
 
         this.matched = $(overing).matches(this.options.droppables) ? overing : ($(overing).parent(this.options.droppables) || [false])[0];
         this.isPlaceHolder = $(overing).matches('[data-lm-placeholder]') ? true : ($(overing).parent('[data-lm-placeholder]') ? true : false);
+
+        // we only allow new particles to go anywhere and particles to reposition within the grid boundaries
+        if (this.matched && this.element.data('lm-id')) {
+            if ($(this.matched).parent('.grid') !== this.element.parent('.grid')) {
+                this.matched = false;
+            }
+        }
 
         var deltaX = this.lastX - clientX,
             deltaY = this.lastY - clientY,

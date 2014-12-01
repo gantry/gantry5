@@ -847,7 +847,7 @@ body {
   margin: 0 auto;
   position: relative;
   vertical-align: middle;
-  line-height: 58px;
+  line-height: 47px;
   color: #dadada;
 }
 /* line 133, ../scss/admin/_layout-manager.scss */
@@ -951,10 +951,10 @@ body {
   text-align: center;
   color: #5987a0;
   text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
-  background-color: black;
+  background-color: #ddd;
   border: 0;
   padding: 2px;
-  flex: 0 1 50%;
+  flex: 0 1 100%;
   min-height: 6px;
 }
 /* line 290, ../scss/admin/_layout-manager.scss */
@@ -967,22 +967,23 @@ body {
   text-indent: -10000px;
   font-size: 0px;
   flex: 0 1 0%;
+  background-color: #555;
 }
-/* line 301, ../scss/admin/_layout-manager.scss */
+/* line 302, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between-sections {
   box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 4px #ded3f7;
   min-height: 12px;
 }
-/* line 307, ../scss/admin/_layout-manager.scss */
+/* line 308, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between.in-between-sections {
   width: auto;
 }
-/* line 314, ../scss/admin/_layout-manager.scss */
+/* line 315, ../scss/admin/_layout-manager.scss */
 #g5-container #history {
   display: inline-block;
   float: right;
 }
-/* line 317, ../scss/admin/_layout-manager.scss */
+/* line 318, ../scss/admin/_layout-manager.scss */
 #g5-container #history span {
   display: inline-block;
   background: #eee;
@@ -996,20 +997,20 @@ body {
   color: #777;
   text-shadow: 0 1px #fff;
 }
-/* line 330, ../scss/admin/_layout-manager.scss */
+/* line 331, ../scss/admin/_layout-manager.scss */
 #g5-container #history span.disabled {
   color: #ccc;
 }
-/* line 336, ../scss/admin/_layout-manager.scss */
+/* line 337, ../scss/admin/_layout-manager.scss */
 #g5-container .sidebar [data-lm-blocktype] {
   position: relative;
   z-index: 5;
 }
-/* line 342, ../scss/admin/_layout-manager.scss */
+/* line 343, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-newblocks {
   padding-bottom: 8px;
 }
-/* line 345, ../scss/admin/_layout-manager.scss */
+/* line 346, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-newblocks .block {
   display: inline-block;
   text-align: center;
@@ -1018,7 +1019,7 @@ body {
   border-radius: 3px;
   margin-right: 8px;
 }
-/* line 357, ../scss/admin/_layout-manager.scss */
+/* line 358, ../scss/admin/_layout-manager.scss */
 #g5-container #trash {
   position: absolute;
   top: -100px;
@@ -1029,7 +1030,7 @@ body {
   color: #fff;
   padding: 0.938rem;
 }
-/* line 364, ../scss/admin/_layout-manager.scss */
+/* line 365, ../scss/admin/_layout-manager.scss */
 #g5-container #trash .trash-zone {
   background-color: #ed5565;
   font-size: 2rem;
@@ -1040,7 +1041,7 @@ body {
   margin: 0 auto;
   font-weight: 300;
 }
-/* line 374, ../scss/admin/_layout-manager.scss */
+/* line 375, ../scss/admin/_layout-manager.scss */
 #g5-container #trash span {
   font-size: 0.8rem;
   color: #666;

@@ -205,13 +205,6 @@ var LayoutManager = new prime({
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' }); }
         //this.original.style({display: 'none'});
 
-        // we only allow new particles to go anywhere and particles to reposition within the grid boundaries
-        if (target && element.data('lm-id')) {
-            if ($(target).parent('.grid') !== element.parent('.grid')) {
-                return false;
-            }
-        }
-
         // cleanup for the dirty flag
         if (this.dirty) {
             var dirty = this.dirty.target.parent('.grid');
@@ -243,68 +236,15 @@ var LayoutManager = new prime({
         var grid, block;
         switch (dataType) {
             case 'root':
-                /*if (location.x === 'other') {
-                 position = (location.y === 'above' ? 'top' : 'bottom');
-
-                 this.placeholder[position](target);
-                 }*/
-                break;
             case 'section':
-                /*position = (location.x === 'other') ? (location.y === 'above' ? 'before' : 'after') : (location.x === 'before' ? 'left' : 'right');
-                 if (['left', 'right'].indexOf(position) === -1) { this.placeholder[position](target); }
-                 else {
-                 if (target.parent('.block').data('lm-id') || target.parent().data('lm-root')) {
-                 grid = zen('div.grid[data-lm-id="' + this.block.guid() + '"][data-lm-dropzone][data-lm-blocktype="grid"]').before(target);
-                 block = zen('div.block[data-lm-id="' + this.block.guid() + '"][data-lm-dropzone][data-lm-blocktype="block"]').insert(grid);
-                 target.insert(block);
-
-                 this.placeholder[position === 'left' ? 'before' : 'after'](block);
-                 this.dirty = {
-                 element: grid,
-                 target: target
-                 };
-                 } else {
-                 this.placeholder[position === 'left' ? 'before' : 'after'](target.parent('.block'));
-                 }
-
-                 }*/
-
                 break;
             case 'grid':
-            case 'block':
-                var method;
-                if (dataType === 'section' || dataType === 'grid') { method = (location.y === 'above' ? 'before' : 'after'); }
-                if (dataType === 'block') { method = (location.y === 'above' ? 'top' : 'bottom'); }
-
-                position = (location.x === 'other') ? method : location.x;
-
-                if (dataType === 'block' && position === method) { this.placeholder.removeClass('in-between'); }
-
-                this.placeholder[position](target);
+                this.placeholder.bottom(target);
                 break;
-
-            case 'position':
-            case 'particle':
-            case 'pagecontent':
-            case 'spacer':
-                position = (location.x === 'other') ? (location.y === 'above' ? 'before' : 'after') : (location.x === 'before' ? 'left' : 'right');
-                if (['left', 'right'].indexOf(position) === -1) { this.placeholder[position](target); }
-                else {
-                    if (target.parent('.block').data('lm-id')) {
-                        grid = zen('div.grid[data-lm-id="' + this.block.guid() + '"][data-lm-dropzone][data-lm-blocktype="grid"]').before(target);
-                        block = zen('div.block[data-lm-id="' + this.block.guid() + '"][data-lm-dropzone][data-lm-blocktype="block"]').insert(grid);
-                        target.insert(block);
-
-                        this.placeholder[position === 'left' ? 'before' : 'after'](block);
-                        this.dirty = {
-                            element: grid,
-                            target: target
-                        };
-                    } else {
-                        this.placeholder[position === 'left' ? 'before' : 'after'](target.parent('.block'));
-                    }
-
-                }
+            case 'block':
+                var method = (location.y === 'above' ? 'top' : 'bottom');
+                position = (location.x === 'other') ? method : location.x;
+                this.placeholder[position](target);
 
                 break;
         }
@@ -397,7 +337,11 @@ var LayoutManager = new prime({
             type = this.block.getType(),
             targetId = target.data('lm-id'),
             targetType = !targetId ? false : get(this.builder.map, targetId) ? get(this.builder.map, targetId).getType() : target.data('lm-blocktype'),
-            parentId = this.placeholder.parent().data('lm-id'),
+            placeholderParent = this.placeholder.parent();
+
+        if (!placeholderParent) { return; }
+
+        var parentId = placeholderParent.data('lm-id'),
             parentType = get(this.builder.map, parentId || '') ? get(this.builder.map, parentId).getType() : false;
         //originalParent = this.original.parent('[data-lm-id]');
 
