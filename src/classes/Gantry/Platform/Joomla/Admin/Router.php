@@ -61,6 +61,7 @@ class Router implements RouterInterface
 
 
         $this->container['routes'] = [
+            'ajax' => '&view={view}&layout={method}&style=' . $style. '&format=json',
             'themes' => '',
             'overview' => '&view=overview&style=' . $style,
             'settings' => '&view=settings&style=' . $style,

@@ -6,7 +6,7 @@
 
     {% block javascript %}
         <script>
-            var GANTRY_AJAX_URL = 'index.php?option=com_gantryadmin&view={view}&layout={method}&format=json';
+            var GANTRY_AJAX_URL = '{{ gantry.route('ajax') }}&view={view}&layout={method}&format=json';
         </script>
     {% endblock %}
 

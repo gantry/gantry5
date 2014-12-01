@@ -65,7 +65,7 @@ class Router implements RouterInterface
         $this->container['base_url'] = rtrim(PRIME_URI, '/') . "/{$style}/admin";
 
         $this->container['routes'] = [
-            'ajax' => '',
+            'ajax' => '/{view}/{method}.json',
             'themes' => '',
             'overview' => '/overview',
             'settings' => '/settings',
