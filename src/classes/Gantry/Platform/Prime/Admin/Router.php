@@ -20,11 +20,12 @@ class Router implements RouterInterface
     public function dispatch()
     {
         $path = explode('/', PAGE_PATH);
+
         if (isset($path[0]) && $path[0] == 'admin') {
             array_shift($path);
         }
 
-        $format = 'html';
+        $format = PAGE_EXTENSION;
 
         if (isset($this->container['theme.name'])) {
             $view = array_shift($path) ?: 'overview';
@@ -38,7 +39,7 @@ class Router implements RouterInterface
 
         $params = [
             'id'   => 0,
-            'ajax' => 0,
+            'ajax' => $format == 'json',
             'location' => $view
         ];
 

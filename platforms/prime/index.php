@@ -8,10 +8,13 @@ $gantry = include_once PRIME_ROOT . '/includes/gantry.php';
 // Get current theme and path.
 $path = explode('/', Gantry\Component\Filesystem\Folder::getRelativePath($_SERVER['REQUEST_URI'], PRIME_URI), 2);
 $theme = array_shift($path);
-$path = trim(array_shift($path), '/') ?: 'home';
+$path = array_shift($path);
+$extension = strrchr(basename($path), '.');
+$path = substr(trim($path, '/') ?: 'home', 0, -strlen($extension) ?: 9999);
 
 define('THEME', $theme);
 define('PAGE_PATH', $path);
+define('PAGE_EXTENSION', trim($extension, '.') ?: 'html');
 
 // Bootstrap selected theme.
 $include = PRIME_ROOT . "/themes/{$theme}/includes/gantry.php";
