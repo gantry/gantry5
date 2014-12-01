@@ -103,7 +103,7 @@ class Menu implements \ArrayAccess, \Iterator
      */
     protected function calcBase($path)
     {
-        if (!$path || !is_file(STANDALONE_ROOT . "/pages/{$path}.html.twig")) {
+        if (!$path || !is_file(PRIME_ROOT . "/pages/{$path}.html.twig")) {
             // Use active menu item or fall back to default menu item.
             $path = $this->active ?: $this->default;
         }
@@ -142,7 +142,7 @@ class Menu implements \ArrayAccess, \Iterator
             'filters' => ['value' => '|\.html\.twig|']
         ];
 
-        $folder = STANDALONE_ROOT . '/pages';
+        $folder = PRIME_ROOT . '/pages';
         if (!is_dir($folder)) {
             return [];
         }
@@ -175,7 +175,7 @@ class Menu implements \ArrayAccess, \Iterator
             $item = (object) $item;
 
             // Placeholder page.
-            if ($item->type == 'link' && !is_file(STANDALONE_ROOT . "/pages/{$item->path}.html.twig")) {
+            if ($item->type == 'link' && !is_file(PRIME_ROOT . "/pages/{$item->path}.html.twig")) {
                 $item->type = 'separator';
             }
 
@@ -191,7 +191,7 @@ class Menu implements \ArrayAccess, \Iterator
 
                 case 'alias':
                 default:
-                    $item->link = '/' . trim(STANDALONE_URI . '/' . THEME . '/' . $item->link, '/');
+                    $item->link = '/' . trim(PRIME_URI . '/' . THEME . '/' . $item->link, '/');
             }
 
             switch ($item->browserNav)

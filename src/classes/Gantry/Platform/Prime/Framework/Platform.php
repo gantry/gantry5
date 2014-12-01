@@ -25,7 +25,7 @@ class Platform extends BasePlatform
 
     public function getModules($position)
     {
-        $path = STANDALONE_ROOT . '/positions/' . $position;
+        $path = PRIME_ROOT . '/positions/' . $position;
 
         if (!is_dir($path)) {
             return [];

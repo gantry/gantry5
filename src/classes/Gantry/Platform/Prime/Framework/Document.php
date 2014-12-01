@@ -11,6 +11,6 @@ class Document
 
     public static function rootUri()
     {
-        return STANDALONE_URI;
+        return PRIME_URI;
     }
 }

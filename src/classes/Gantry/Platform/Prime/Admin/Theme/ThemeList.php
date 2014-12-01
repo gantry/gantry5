@@ -22,7 +22,7 @@ class ThemeList
         $list = array();
 
         foreach ($files as $theme) {
-            if (file_exists(STANDALONE_ROOT . '/themes/' . $theme . '/includes/gantry.php')) {
+            if (file_exists(PRIME_ROOT . '/themes/' . $theme . '/includes/gantry.php')) {
                 $details = new ThemeDetails($theme);
 
                 if (!$locator->schemeExists('gantry-theme-' . $theme)) {
@@ -31,8 +31,8 @@ class ThemeList
 
                 $details['name'] = $theme;
                 $details['title'] = ucfirst($theme);
-                $details['preview_url'] = rtrim(STANDALONE_URI, '/') . '/' . $theme;
-                $details['admin_url'] = rtrim(STANDALONE_URI, '/') . '/' . $theme . '/admin';
+                $details['preview_url'] = rtrim(PRIME_URI, '/') . '/' . $theme;
+                $details['admin_url'] = rtrim(PRIME_URI, '/') . '/' . $theme . '/admin';
                 $details['params'] = [];
 
                 $list[$details->name] = $details;
