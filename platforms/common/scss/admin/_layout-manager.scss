@@ -356,7 +356,7 @@
 /* deletion */
 
 #trash {
-    @include position(absolute, -100px 0 inherit 0);
+    @include position(fixed, -100px 0 inherit 0);
     text-align: center;
     font-weight: bold;
     color: $white;

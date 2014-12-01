@@ -1021,7 +1021,7 @@ body {
 }
 /* line 358, ../scss/admin/_layout-manager.scss */
 #g5-container #trash {
-  position: absolute;
+  position: fixed;
   top: -100px;
   right: 0;
   left: 0;

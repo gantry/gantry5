@@ -22,7 +22,7 @@ var Eraser = new prime({
 
     show: function(fast){
         this.out();
-        this.element[fast ? 'style' : 'animate']({top: 0}, {duration: '150ms'});
+        this.element[fast ? 'style' : 'animate']({top: 20}, {duration: '150ms'});
     },
 
     hide: function(fast){
