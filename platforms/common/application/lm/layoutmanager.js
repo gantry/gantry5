@@ -43,25 +43,27 @@ var singles = {
         var root = $('[data-lm-root]');
         if (!root) { return; }
 
-        var mode = root.data('lm-root') || 'page',
-            children = root.search('.grid .block [data-lm-id]:not([data-lm-blocktype="grid"]):not([data-lm-blocktype="block"])');
+        var children = root.search('.grid .block [data-lm-id]:not([data-lm-blocktype="grid"]):not([data-lm-blocktype="block"])');
+        /*,
+         mode = root.data('lm-root') || 'page';*/
 
-        if (mode === 'page') {
-            var sectionChildren = root.search('.section *:not(.button)');
-            if (sectionChildren) {
-                //sectionChildren.style({ 'pointer-events': 'none' });
-            }
-            return;
-        }
+        /*if (mode === 'page') {
+         var sectionChildren = root.search('.section *:not(.button)');
+         if (sectionChildren) {
+         //sectionChildren.style({ 'pointer-events': 'none' });
+         }
 
-        if (!children) { return; }
+         return;
+         }*/
 
-        children.attribute('style', null).forEach(function(element) {
-            element = $(element);
-            if (!element.siblings()) {
-                //element.style({ 'pointer-events': 'none' });
-            }
-        });
+        if (!children) { return false; }
+
+        /*children.attribute('style', null).forEach(function(element) {
+         element = $(element);
+         if (!element.siblings()) {
+         //element.style({ 'pointer-events': 'none' });
+         }
+         });*/
     },
     enable: function() {
         var root = $('[data-lm-root]'),
@@ -109,7 +111,7 @@ var singles = {
             grids.forEach(function(grid) {
                 grid = $(grid);
                 children = grid.children();
-                console.log(children);
+                //console.log(children);
                 if (children && children.length <= 1) {
                     container = grid.firstChild();
                     container.children().before(grid);
@@ -172,7 +174,7 @@ var LayoutManager = new prime({
         var type = $(element).data('lm-blocktype'),
             clone = element[0].cloneNode(true);
 
-        this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' });
+        if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' }); }
         this.original = $(clone).after(element).style({
             display: 'block',
             opacity: 0.5
@@ -187,7 +189,7 @@ var LayoutManager = new prime({
                 zIndex: 1000,
                 width: Math.ceil(size.width),
                 height: Math.ceil(size.height)
-            }).find('[data-lm-blocktype]').style({margin: margins});
+            }).find('[data-lm-blocktype]').style({ margin: margins });
             this.placeholder.after(element);
             this.eraser.show();
         } else {
@@ -199,6 +201,7 @@ var LayoutManager = new prime({
 
     location: function(event, location, target/*, element*/) {
         target = $(target);
+        if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' }); }
         //this.original.style({display: 'none'});
 
         // cleanup for the dirty flag
@@ -305,7 +308,7 @@ var LayoutManager = new prime({
     },
 
     nolocation: function(event) {
-        if (this.placeholder) { this.placeholder.style({ display: 'none' }); }
+        if (this.placeholder) { this.placeholder.remove(); }
 
         //var siblings = this.placeholder.siblings();
 
@@ -382,6 +385,7 @@ var LayoutManager = new prime({
         target = $(target);
 
         var wrapper, insider,
+            blockWasNew = this.block.isNew(),
             type = this.block.getType(),
             targetId = target.data('lm-id'),
             targetType = !targetId ? false : get(this.builder.map, targetId) ? get(this.builder.map, targetId).getType() : target.data('lm-blocktype'),
@@ -403,9 +407,10 @@ var LayoutManager = new prime({
             this.block = wrapper;
             this.builder.add(wrapper);
             this.builder.add(insider);
-            console.log('1. resize me and my siblings');
+            insider.emit('rendered', insider, wrapper);
+            wrapper.emit('rendered', wrapper, null);
+            //console.log('1. resize me and my siblings');
             resizeCase = { case: 1 };
-            console.log(this.block);
         }
 
         // case 2: it's a block that turns into position/spacer, we need to kill the wrapper and unregister it
@@ -419,15 +424,18 @@ var LayoutManager = new prime({
             };
             block.block.remove();
             this.builder.remove(block);
-            console.log('2. im leaving, resize my siblings');
+            //console.log('2. im leaving, resize my siblings');
         }
 
         // case 3: moving a block around, need to reset the sizes
         if (this.originalType === 'block' && this.block.getType() === 'block') {
-            console.log('3. im a block and ive been moved, resize my new siblings and the ones where i come from');
+            //console.log('3. im a block and ive been moved, resize my new siblings and the ones where i come from');
             resizeCase = { case: 3 };
-            var previous = this.block.block.parent.siblings(':not(.original-placeholder)');
-            if (previous.length) { this.resizer.evenResize(previous); }
+            var previous = this.block.block.parent().siblings(':not(.original-placeholder)');
+            if (!this.block.isNew() && previous.length) { this.resizer.evenResize(previous); }
+
+            this.block.block.attribute('style', null);
+            this.block.setSize();
         }
 
         // case 4: it's a section in a grid that goes out and the grid needs to be removed
@@ -436,7 +444,7 @@ var LayoutManager = new prime({
         //console.log('case4', $('[data-lm-root="page"] .grid > .block:empty'));
         //return;
         //}
-        console.log(targetType);
+        //console.log(targetType);
         /*if (type == 'section' && !originalSiblings.length && originalParent.data('lm-blocktype') == 'block'){
          if (originalParent.siblings().length > 1){
          resizeCase = {case: 4, siblings: originalParent.siblings()};
@@ -457,6 +465,7 @@ var LayoutManager = new prime({
          }*/
 
         // it's dirty, let's register all the blocks that are missing.
+        //console.log('is dirty,', this.dirty);
         if (this.dirty) {
             var structure = $([this.dirty.element, this.dirty.element.search('[data-lm-id]')]);
             var dirtyId, dirtyType, dirtyMap, dirtyBlock;
@@ -470,20 +479,22 @@ var LayoutManager = new prime({
                     dirtyBlock = new Blocks[dirtyType]({ id: dirtyId }).setLayout(element);
                     if (dirtyType === 'block') { dirtyBlock.setSize(50, true); }
                     this.builder.add(dirtyBlock);
+                    dirtyBlock.emit('rendered', dirtyBlock, null);
                 }
             }, this);
         }
-
 
         if (this.block.hasAttribute('size')) { this.block.setSize(this.placeholder.compute('flex')); }
         this.block.insert(this.placeholder);
         this.placeholder.remove();
 
-        if (resizeCase.case === 1) {
-            console.log(this.block.block);
+        if (blockWasNew) {
+            if (resizeCase.case === 1) {
+                //console.log(this.block.block);
+            }
+            if (resizeCase && resizeCase.case === 1 || resizeCase.case === 3) { this.resizer.evenResize($([this.block.block, this.block.block.siblings()]), !this.dirty); }
+            if (resizeCase && resizeCase.case === 2 || resizeCase.case === 4) { this.resizer.evenResize(resizeCase.siblings); }
         }
-        if (resizeCase && resizeCase.case === 1 || resizeCase.case === 3) { this.resizer.evenResize($([this.block.block, this.block.block.siblings()]), !this.dirty); }
-        if (resizeCase && resizeCase.case === 2 || resizeCase.case === 4) { this.resizer.evenResize(resizeCase.siblings); }
 
         singles.disable();
         singles.cleanup(this.builder);

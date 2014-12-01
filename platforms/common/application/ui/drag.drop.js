@@ -108,7 +108,7 @@ var DragDrop = new prime({
         return this.element;
     },
 
-    stop: function (event) {
+    stopANIMATED: function (event) {
         var settings = { duration: '250ms' };
 
         if (this.removeElement) { return this.emit('dragdrop:stop:erase', event, this.element); }
@@ -118,10 +118,10 @@ var DragDrop = new prime({
             this.emit('dragdrop:stop', event, this.matched, this.element);
 
             /*this.element.style({
-                position: 'absolute',
-                width: 'auto',
-                height: 'auto'
-            });*/
+             position: 'absolute',
+             width: 'auto',
+             height: 'auto'
+             });*/
 
             if (this.matched) {
                 this.element.style({
@@ -138,6 +138,42 @@ var DragDrop = new prime({
                 transform: this.origin.transform || 'translate(0, 0)',
                 opacity: 1
             }, settings);
+        }
+
+        $(document).off(this.EVENTS.MOVE, this.bound('move'));
+        $(document).off(this.EVENTS.STOP, this.bound('stop'));
+        this.element = null;
+    },
+
+    stop: function (event) {
+        var settings = { duration: '250ms' };
+
+        if (this.removeElement) { return this.emit('dragdrop:stop:erase', event, this.element); }
+
+        if (this.element) {
+
+            this.emit('dragdrop:stop', event, this.matched, this.element);
+
+            /*this.element.style({
+             position: 'absolute',
+             width: 'auto',
+             height: 'auto'
+             });*/
+
+            if (this.matched) {
+                this.element.style({
+                    opacity: 0,
+                    transform: 'translate(0, 0)'
+                });
+            }
+
+            this.element.style({
+                transform: this.origin.transform || 'translate(0, 0)',
+                opacity: 1
+            });
+
+            this._removeStyleAttribute(this.element);
+            this.emit('dragdrop:stop:animation', this.element);
         }
 
         $(document).off(this.EVENTS.MOVE, this.bound('move'));
@@ -187,9 +223,10 @@ var DragDrop = new prime({
                 var x = clientX - rect.left,
                     y = clientY - rect.top;
 
+                // divide x axis by 3 rather than 2 for 4 directions
                 var location = {
-                    x: Math.abs((clientX - rect.left)) < (rect.width / 3) && 'before' ||
-                    Math.abs((clientX - rect.left)) >= (rect.width - (rect.width / 3)) && 'after' ||
+                    x: Math.abs((clientX - rect.left)) < (rect.width / 2) && 'before' ||
+                    Math.abs((clientX - rect.left)) >= (rect.width - (rect.width / 2)) && 'after' ||
                     'other',
                     y: Math.abs((clientY - rect.top)) < (rect.height / 2) && 'above' ||
                     Math.abs((clientY - rect.top)) >= (rect.height / 2) && 'below' ||

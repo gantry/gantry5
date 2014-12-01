@@ -154,7 +154,7 @@
 
     .grid > .block {
         .block {
-            margin: 0;
+            //margin: 0;
         }
 
         &:last-child {
@@ -280,25 +280,19 @@
         color: rgb(89, 135, 160);
         text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
         //border: 1px solid #97AFC5;
-        background-color: lighten($lavender, 20%);
-        box-shadow: inset 0 0 0 1px lighten($lavender, 15%); //DBCFF8
-        @include background-image(linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent));
-        background-size: 50px 50px;
+        background-color: black;
         border: 0;
         padding: 2px;
         flex: 0 1 50%;
         //margin: 10px;
-        border-radius: 3px;
         min-height: 6px;
 
         &.in-between {
-            margin: -2px 0;
-            border-radius: 10px;
             display: block;
             flex: 0 0 0px;
-            margin: 10px -3px;
+            margin: 0 2px 0 -2px;
             width: 0px;
-            padding: 3px;
+            padding: 1px;
             text-indent: -10000px;
             font-size: 0px;
             flex: 0 1 0%;
@@ -307,14 +301,11 @@
         &.in-between-sections {
             //background-color: $pink;
             box-shadow: inset 0 0 0 3px $white, inset 0 0 0 4px lighten($lavender, 15%); //DBCFF8
-            margin: -11px 6px;
             min-height: 12px;
-            border-radius: 10px;
         }
 
         &.in-between.in-between-sections {
             width: auto;
-            margin: -10px 6px;
         }
     }
 }
