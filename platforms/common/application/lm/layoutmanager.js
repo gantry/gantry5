@@ -236,68 +236,15 @@ var LayoutManager = new prime({
         var grid, block;
         switch (dataType) {
             case 'root':
-                /*if (location.x === 'other') {
-                 position = (location.y === 'above' ? 'top' : 'bottom');
-
-                 this.placeholder[position](target);
-                 }*/
-                break;
             case 'section':
-                /*position = (location.x === 'other') ? (location.y === 'above' ? 'before' : 'after') : (location.x === 'before' ? 'left' : 'right');
-                 if (['left', 'right'].indexOf(position) === -1) { this.placeholder[position](target); }
-                 else {
-                 if (target.parent('.block').data('lm-id') || target.parent().data('lm-root')) {
-                 grid = zen('div.grid[data-lm-id="' + this.block.guid() + '"][data-lm-dropzone][data-lm-blocktype="grid"]').before(target);
-                 block = zen('div.block[data-lm-id="' + this.block.guid() + '"][data-lm-dropzone][data-lm-blocktype="block"]').insert(grid);
-                 target.insert(block);
-
-                 this.placeholder[position === 'left' ? 'before' : 'after'](block);
-                 this.dirty = {
-                 element: grid,
-                 target: target
-                 };
-                 } else {
-                 this.placeholder[position === 'left' ? 'before' : 'after'](target.parent('.block'));
-                 }
-
-                 }*/
-
                 break;
             case 'grid':
-            case 'block':
-                var method;
-                if (dataType === 'section' || dataType === 'grid') { method = (location.y === 'above' ? 'before' : 'after'); }
-                if (dataType === 'block') { method = (location.y === 'above' ? 'top' : 'bottom'); }
-
-                position = (location.x === 'other') ? method : location.x;
-
-                if (dataType === 'block' && position === method) { this.placeholder.removeClass('in-between'); }
-
-                this.placeholder[position](target);
+                this.placeholder.bottom(target);
                 break;
-
-            case 'position':
-            case 'particle':
-            case 'pagecontent':
-            case 'spacer':
-                position = (location.x === 'other') ? (location.y === 'above' ? 'before' : 'after') : (location.x === 'before' ? 'left' : 'right');
-                if (['left', 'right'].indexOf(position) === -1) { this.placeholder[position](target); }
-                else {
-                    if (target.parent('.block').data('lm-id')) {
-                        grid = zen('div.grid[data-lm-id="' + this.block.guid() + '"][data-lm-dropzone][data-lm-blocktype="grid"]').before(target);
-                        block = zen('div.block[data-lm-id="' + this.block.guid() + '"][data-lm-dropzone][data-lm-blocktype="block"]').insert(grid);
-                        target.insert(block);
-
-                        this.placeholder[position === 'left' ? 'before' : 'after'](block);
-                        this.dirty = {
-                            element: grid,
-                            target: target
-                        };
-                    } else {
-                        this.placeholder[position === 'left' ? 'before' : 'after'](target.parent('.block'));
-                    }
-
-                }
+            case 'block':
+                var method = (location.y === 'above' ? 'top' : 'bottom');
+                position = (location.x === 'other') ? method : location.x;
+                this.placeholder[position](target);
 
                 break;
         }

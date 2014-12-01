@@ -101,7 +101,7 @@ var DragDrop = new prime({
             opacity: 0.5,
             zIndex: 100
         });
-        
+
         $(document).on(this.EVENTS.MOVE, this.bound('move'));
         $(document).on(this.EVENTS.STOP, this.bound('stop'));
         this.emit('dragdrop:start', event, this.element);
