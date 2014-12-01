@@ -19,11 +19,16 @@ class Router implements RouterInterface
 
     public function dispatch()
     {
+        $path = explode('/', PAGE_PATH);
+        if (isset($path[0]) && $path[0] == 'admin') {
+            array_shift($path);
+        }
+
         $format = 'html';
 
         if (isset($this->container['theme.name'])) {
-            $view = 'overview';
-            $layout = 'index';
+            $view = array_shift($path) ?: 'overview';
+            $layout = array_shift($path) ?: 'index';
             $style = $this->container['theme.name'];
         } else {
             $view = 'themes';

@@ -24,7 +24,6 @@ ordering:
     component:
     raw:
   admin:
-    themes:
 
 items:
   features:
@@ -60,6 +59,31 @@ items:
     type: alias
     link: admin
     title: Admin
+
+  admin/overview:
+    type: alias
+    link: admin
+    title: Overview
+
+  admin/settings:
+    type: alias
+    link: admin/settings
+    title: Settings
+
+  admin/pages:
+    type: alias
+    link: admin/pages
+    title: Page Setup
+
+  admin/assignments:
+    type: alias
+    link: admin/assignments
+    title: Assignments
+
+  admin/updates:
+    type: alias
+    link: admin/updates
+    title: Updates
 
   admin/themes:
     type: alias
