@@ -26,7 +26,7 @@ History.Adapter.bind(window, 'statechange', function() {
 
     if (size(Data) && storage.get(Data.uuid)) {
         Data = storage.get(Data.uuid);
-        URI = History.getBaseUrl() + AjaxURL(Data.view, Data.method || null);
+        URI = AjaxURL(Data.view, Data.method || null);
     }
 
     if (Data.element) {
