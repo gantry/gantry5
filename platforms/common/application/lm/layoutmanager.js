@@ -199,10 +199,18 @@ var LayoutManager = new prime({
         singles.enable();
     },
 
-    location: function(event, location, target/*, element*/) {
+    location: function(event, location, target, element) {
         target = $(target);
+        element = $(element);
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' }); }
         //this.original.style({display: 'none'});
+
+        // we only allow new particles to go anywhere and particles to reposition within the grid boundaries
+        if (target && element.data('lm-id')) {
+            if ($(target).parent('.grid') !== element.parent('.grid')) {
+                return false;
+            }
+        }
 
         // cleanup for the dirty flag
         if (this.dirty) {
