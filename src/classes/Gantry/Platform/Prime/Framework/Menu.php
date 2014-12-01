@@ -146,7 +146,7 @@ class Menu implements \ArrayAccess, \Iterator
         if (!is_dir($folder)) {
             return [];
         }
-        $menuItems = Folder::all($folder, $options);
+        $menuItems = array_unique(array_merge(Folder::all($folder, $options), array_keys($items)));
 
         $all = $tree = [];
         foreach ($menuItems as $name) {

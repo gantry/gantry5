@@ -15,12 +15,16 @@ ordering:
   features:
     typography:
   special:
+    title:
     error:
     unsupported:
     offline:
     comingsoon:
+    separator:
     component:
     raw:
+  admin:
+    themes:
 
 items:
   features:
@@ -46,4 +50,18 @@ items:
 
   special/title:
     type: heading
-    title:
+    title: Special Pages
+
+  special/separator:
+    type: separator
+    title: Component Stuff
+
+  admin:
+    type: alias
+    link: admin
+    title: Admin
+
+  admin/themes:
+    type: alias
+    link: ../
+    title: Back to Themes
