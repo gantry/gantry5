@@ -288,6 +288,8 @@ var LayoutManager = new prime({
         });
 
 
+        console.log(this.block.getSize(), this.block);
+
         this.eraser.hide();
 
         $(document).off(this.dragdrop.EVENTS.MOVE, this.dragdrop.bound('move'));
