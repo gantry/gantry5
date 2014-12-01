@@ -34,7 +34,7 @@ $theme = $gantry['theme']->setLayout('gantry-theme://layouts/test.yaml');
 
 try {
     // Render the page.
-    echo $theme->render($path . '.html.twig');
+    echo $theme->render(PAGE_PATH . '.' . PAGE_EXTENSION . '.twig');
 } catch (Twig_Error_Loader $e) {
     // Or display error if template file couldn't be found.
     echo $theme->render('_error.html.twig', ['error' => $e]);

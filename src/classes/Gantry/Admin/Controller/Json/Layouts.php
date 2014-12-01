@@ -4,7 +4,9 @@ namespace Gantry\Admin\Controller\Json;
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Response\JsonResponse;
+use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\File\JsonFile;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Layouts extends JsonController
 {
@@ -18,8 +20,10 @@ class Layouts extends JsonController
             'value' => 'Pathname'
         ];
 
-        // FIXME: need access to current theme stream 'gantry-theme://common/layouts'
-        $files = Folder::all(realpath(JPATH_THEMES . '/../../templates/gantry/common/layouts/presets'), $options);
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        $files = Folder::all($locator->findResource('gantry-theme://layouts/presets'), $options);
 
         $response = [];
         foreach($files as $name => $structure) {

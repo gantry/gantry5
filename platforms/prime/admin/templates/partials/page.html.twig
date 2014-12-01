@@ -12,6 +12,9 @@
         {% endblock %}
 
         {% block javascript %}
+        <script>
+            var GANTRY_AJAX_URL = '{{ gantry.route('ajax') }}/{view}/{method}.json';
+        </script>
         {% endblock %}
     </head>
     <body>
