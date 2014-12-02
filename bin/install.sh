@@ -129,6 +129,8 @@ elif [ -f $GIT_TARGET/.prime ]; then
         'themes/gantry/common'
         'themes/afterburner2/prime'
         'themes/afterburner2/common'
+        'themes/ricochet/prime'
+        'themes/ricochet/common'
         )
     targets=(
         'admin'
@@ -146,6 +148,8 @@ elif [ -f $GIT_TARGET/.prime ]; then
         'themes/gantry/common'
         'themes/afterburner2'
         'themes/afterburner2/common'
+        'themes/ricochet'
+        'themes/ricochet/common'
         )
     rm -rf "$GIT_TARGET/cache"
     mkdir "$GIT_TARGET/cache"

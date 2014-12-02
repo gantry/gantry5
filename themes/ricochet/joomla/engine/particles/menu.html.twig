@@ -1,0 +1,58 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% set menu = gantry.menu.instance(particle.items) %}
+
+{% macro displayTitle(item) %}
+    {% if item.menu_image %}
+        <img src="{{ item.menu_image }}" alt="{{ item.title }}" />
+        {% if item.menu_text %}
+        <span class="image-title">{{ item.title }}</span>
+        {% endif %}
+    {% else %}
+        {{ item.title }}
+    {% endif %}
+{% endmacro %}
+
+{% macro displayItem(item, menu) %}
+    {% set title = item.anchor_title ? ' title="' ~ item.anchor_title ~ '"' %}
+    {% set class = item.anchor_css ? ' class="' ~ item.anchor_css ~ '"' %}
+    {% set active = menu.isActive(item) ? ' active' : '' %}
+    <li id="menu-item-{{ item.id }}" class="menu-item menu-item-type-{{ item.type }} menu-item-{{ item.id }}{{ active }}">
+        {% if item.link %}
+            <a href="{{ item.link }}"{{ class ~ title ~ item.anchor_attributes }}>{{ _self.displayTitle(item) }}</a>
+        {% else %}
+            {% if item.type == 'heading' %}
+            <span class="nav-header"{{ title }}>{{ item.title }}</span>
+            {% else %}
+            <span class="separator"{{ title }}>{{ _self.displayTitle(item) }}</span>
+            {% endif %}
+        {% endif %}
+        {% if (item.children) -%}
+            {{ _self.displaySubmenu(item.children, menu) }}
+        {%- endif %}
+        </li>
+{% endmacro %}
+
+{% macro displaySubmenu(children, menu) %}
+    <ul class="dropdown">
+        <li class="dropdown-column">
+            <ul class="sublevel">
+                {% for item in children %}
+                {{ _self.displayItem(item, menu) }}
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+{% endmacro %}
+
+{% block particle %}
+<nav
+{%- if particle.css.id %} id="{{ particle.css.id }}"{% endif %}
+{%- if particle.css.class %} class="{{ particle.css.class }}"{% endif %} role="navigation">
+    <ul class="toplevel">
+        {% for item in menu %}
+            {{ _self.displayItem(item, menu) }}
+        {% endfor %}
+    </ul>
+</nav>
+{% endblock %}

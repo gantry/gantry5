@@ -1,0 +1,16 @@
+body {
+	background: $page-bg;
+	color: $core-text;
+}
+
+a {
+	color: $core-accent;
+	&:hover {
+		color: darken($core-accent, 100%);
+	}
+}
+
+.bg {
+	background: #fff;
+	border: 1px solid $body-border;
+}

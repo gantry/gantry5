@@ -1,0 +1,39 @@
+branding:
+  css:
+    classname: 'widget_gantry_branding'
+
+copyright:
+  date:
+    start: 2007
+    end: now
+  owner: 'RocketTheme, LLC'
+
+loginbutton:
+  title:
+  logintext: Login
+  logouttext: Logout
+  css:
+    classname: 'widget_gantry_loginbutton'
+
+logo:
+  image: 'images/logo.png'
+  text: 'Gantry'
+
+menu:
+  items:
+    menu: ''
+    base: 0
+    startLevel: 1
+    endLevel: 0
+    showAllChildren: true
+    window_open: 'width=200,height=300'
+  css:
+    id:
+    class: 'main-nav'
+
+totop:
+  css:
+    classname: 'widget_gantry_totop'
+
+position:
+  header: true

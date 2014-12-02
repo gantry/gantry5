@@ -1,0 +1,18 @@
+page:
+  doctype: xhtml
+  html:
+    lang: en
+  body:
+    class: gantry
+
+particles:
+  copyright:
+    enabled: false
+    start: 2007
+    end: now
+    owner: 'RocketTheme, LLC'
+
+  logo:
+    enabled: true
+    image: 'images/logo.png'
+    text: 'Gantry'

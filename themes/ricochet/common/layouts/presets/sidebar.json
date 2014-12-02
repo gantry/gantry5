@@ -1,0 +1,72 @@
+{
+    "name": "Sidebar",
+    "layout": {
+        "header": {
+            "type": "section",
+            "attributes": {
+                "name": "Header",
+                "key": "header",
+                "type": "header",
+                "id": "header"
+            }
+        },
+        "main": {
+            "type": "grid",
+            "attributes": {},
+            "children": [
+                {
+                    "type": "block",
+                    "attributes": {
+                        "size": 50
+                    },
+                    "children": [
+                        {
+                            "type": "section",
+                            "attributes": {
+                                "name": "Showcase",
+                                "key": "showcase"
+                            }
+                        },
+                        {
+                            "type": "section",
+                            "attributes": {
+                                "name": "Feature",
+                                "key": "feature"
+                            }
+                        },
+                        {
+                            "type": "section",
+                            "attributes": {
+                                "name": "Main",
+                                "key": "main"
+                            }
+                        },
+                        {
+                            "type": "section",
+                            "attributes": {
+                                "name": "Bottom",
+                                "key": "bottom"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "block",
+                    "attributes": {
+                        "size": 50
+                    },
+                    "children": [
+                        {
+                            "type": "section",
+                            "attributes": {
+                                "name": "Sidebar",
+                                "key": "sidebar"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+
+}

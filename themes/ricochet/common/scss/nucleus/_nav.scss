@@ -1,0 +1,55 @@
+.main-nav {
+	ul {
+		@extend %list-reset;
+	}
+
+	// Main Level
+	> .toplevel {
+		position: relative;
+		> li {
+			display: inline-block;
+			@include transition(all .1s ease-out);
+			> a, > .separator {
+				display: block;
+			}
+			&:hover {
+				> .dropdown {
+					@extend %active-dropdown;
+				}
+			}
+		}
+	}
+
+	// First Level Dropdown
+	.dropdown {
+		@extend %inactive-dropdown;
+	    @include transition(all .1s ease-out);
+	    // Additional Level Dropdowns
+	    .dropdown {
+	    	left: 100%;
+    		top: 0;
+	    	@extend %inactive-dropdown;
+	    }
+	}
+
+	// Sublevel Items
+	.sublevel {
+    	> li {
+    		position: relative;
+    		@include transition(all .1s ease-out);
+    		&:hover {
+    			> .dropdown {
+    				@extend %active-dropdown;
+    			}
+    		}
+    		a, .separator, .nav-header {
+    			display: block;
+    		}
+    	}
+    }
+
+    // Megamenu Options
+    .dropdown-column {
+    	@extend %dropdown-column;
+    }
+}

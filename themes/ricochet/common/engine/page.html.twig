@@ -1,0 +1,37 @@
+{%- set content %}
+    {% block content %}
+    {% endblock %}
+{% endset %}
+
+{%- set page_layout %}
+    {% block page_layout %}
+    {% include '@nucleus/container.html.twig' with {segments: gantry.theme.segments} %}
+    {% endblock %}
+{% endset %}
+
+{%- set page_top %}
+    {% block page_top %}
+    {% endblock %}
+{% endset %}
+
+{%- set page_bottom %}
+    {% block page_bottom %}
+    {% endblock %}
+{% endset %}
+
+{%- block page %}
+<!DOCTYPE {{ gantry.page.doctype|default('xhtml') }}>
+<html{{ gantry.page.htmlAttributes }}>
+    {% block page_head %}
+        {% include 'partials/page_head.html.twig' %}
+    {% endblock %}
+
+    {% block page_body %}
+    <body{{ gantry.page.bodyAttributes }}>
+        {{ page_top }}
+        {{ page_layout }}
+        {{ page_bottom }}
+    </body>
+    {% endblock %}
+</html>
+{% endblock %}

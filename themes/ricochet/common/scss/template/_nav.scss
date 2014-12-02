@@ -1,0 +1,44 @@
+.main-nav {
+
+	// Main Level
+	> .toplevel {
+		> li {
+			> a, >.separator {
+				font-size: $toplevel-font-size;
+				padding: $nav-item-padding;
+				color: $nav-link;
+			}
+			&:hover, &.active {
+				a, .separator {
+					color: $white;
+				}
+			}
+		}
+	}
+
+	// First Level Dropdown
+	.dropdown {
+		background: $core-accent;
+		box-shadow: 0 3px 0 darken($core-accent, 6%);
+	    color: $white;
+
+	    // Additional Level Dropdowns
+	    .dropdown {
+			background: darken($core-accent, 4%);
+			box-shadow: 0 3px 0 darken($core-accent, 8%);
+	    }
+	}
+
+	// Sublevel Items
+	.sublevel {
+    	> li {
+    		> a, > .separator, > .nav-header {
+    			font-size: $dropdown-font-size;
+    			padding: $nav-item-padding;
+    		}
+    		&:hover > a, &.active > a {
+    			background: darken($core-accent, 8%);
+    		}
+    	}
+    }
+}

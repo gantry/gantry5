@@ -1,0 +1,5 @@
+{% set modules = gantry.platform.getModules(position.name) %}
+
+{% for module in modules %}
+    {% include '@positions/' ~ position.name ~ '/' ~ module ~ '.html.twig' %}
+{% endfor %}

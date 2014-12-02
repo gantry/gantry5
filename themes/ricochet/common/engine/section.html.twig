@@ -1,0 +1,19 @@
+{% set type = segment.attributes.type in ['header', 'footer'] ? segment.attributes.type : 'section' %}
+{% set attr_id = segment.attributes.id ? ' id="' ~ segment.attributes.id|lower ~ '"' %}
+{% set attr_class = segment.classes ? ' class="' ~ segment.classes|join(' ') ~ '"' %}
+
+{% set html %}
+    {% if segment.children %}
+        {% for segment in segments %}
+        <div class="container">
+            {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
+        </div>
+        {% endfor %}
+    {% endif %}
+{% endset %}
+
+{% if html|trim %}
+    <{{ type }}{{ attr_id }}{{ attr_class }}>
+        {{ html }}
+    </{{ type }}>
+{% endif %}

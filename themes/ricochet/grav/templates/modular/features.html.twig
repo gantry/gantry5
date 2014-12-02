@@ -1,0 +1,17 @@
+<div class="features {{ page.header.class}} clear">
+    {{ content }}
+    {% for feature in page.header.features %}
+        <div class="feature">
+            {% if feature.icon %}
+            <i class="fa fa-{{ feature.icon }}"></i>
+            {% endif %}
+            {% if feature.header %}
+            <h4>{{ feature.header }}</h4>
+            {% endif %}
+            {% if feature.text %}
+            <p>{{ feature.text }}</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+</div>

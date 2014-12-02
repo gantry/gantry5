@@ -1,0 +1,93 @@
+enabled: true
+
+config:
+  menu: ''
+  base: 0
+  startLevel: 1
+  endLevel: 0
+  showAllChildren: true
+  window_open: 'width=200,height=300'
+css:
+  id:
+  class: 'main-nav'
+
+ordering:
+  home:
+  about:
+  features:
+    typography:
+  special:
+    title:
+    error:
+    unsupported:
+    offline:
+    comingsoon:
+    separator:
+    component:
+    raw:
+  admin:
+
+items:
+  features:
+    type: alias
+    link: features/typography
+    title: Features
+    browserNav: 0
+    params:
+    anchor_css:
+    anchor_title:
+    menu_image:
+    menu_icon: lock
+
+  special:
+    type: alias
+    link: special/error
+    title: Special Pages
+    browserNav: 0
+    anchor_css:
+    anchor_title:
+    menu_image:
+    menu_icon: lock
+
+  special/title:
+    type: heading
+    title: Special Pages
+
+  special/separator:
+    type: separator
+    title: Component Stuff
+
+  admin:
+    type: alias
+    link: admin
+    title: Admin
+
+  admin/overview:
+    type: alias
+    link: admin
+    title: Overview
+
+  admin/settings:
+    type: alias
+    link: admin/settings
+    title: Settings
+
+  admin/pages:
+    type: alias
+    link: admin/pages
+    title: Page Setup
+
+  admin/assignments:
+    type: alias
+    link: admin/assignments
+    title: Assignments
+
+  admin/updates:
+    type: alias
+    link: admin/updates
+    title: Updates
+
+  admin/themes:
+    type: alias
+    link: ../
+    title: Back to Themes

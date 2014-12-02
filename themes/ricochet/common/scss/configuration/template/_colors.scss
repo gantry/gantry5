@@ -1,0 +1,50 @@
+// Core
+$core-text:						#666;
+$core-accent:					#4184B6;
+$secondary-link:				#F8B450;
+$white:							#fff;
+$black:							#000;
+$light-gray:					#ddd;
+
+// Borders
+$core-border-color:				$light-gray;
+$core-border-color-hover: 		darken($core-border-color, 10);
+$core-border-color-focus: 		$core-accent;
+
+// Shadows
+$core-box-shadow: 				inset 0 1px 3px hsla(0, 0%, 0%, 0.06);
+$core-box-shadow-focus: 		$core-box-shadow, 0 0 5px rgba(darken($core-border-color-focus, 5), 0.7);
+
+// Background
+$page-bg:						#fff;
+
+// Header
+$header-text:					#aaa;
+
+// Nav
+$nav-link:						#aaa;
+
+// Feature
+$feature-bg:					#333 url(../images/backgrounds/feature/bg.jpg);
+$feature-text:					#fff;
+
+// Main Body
+$main-bg:						#f7f7f7;
+$body-border:					darken($main-bg, 5%);
+
+// Sidebar
+$sidebar-text:					#aaa;
+
+// Bottom
+$bottom-bg:						#f7f7f7;
+$bottom-text:					$core-text;
+
+// Footer
+$footer-bg:						#404040;
+$footer-text:					#ccc;
+
+// System Messsages and Alerts
+$warning-color:					#c09853;
+$error-color:					#b94a48;
+$info-color:					#3a87ad;
+$success-color:					#468847;
