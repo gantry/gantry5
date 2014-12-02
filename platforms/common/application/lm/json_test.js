@@ -26,7 +26,7 @@ module.exports = [
                                 "type": "position",
                                 "attributes": {
                                     "name": "Position 1",
-                                    "key": "position-1"
+                                    "key": "Position 1"
                                 },
                                 "children": []
                             }
@@ -94,7 +94,7 @@ module.exports = [
                                                 "type": "position",
                                                 "attributes": {
                                                     "name": "Position Showcase 1",
-                                                    "key": "position-showcase-1"
+                                                    "key": "showcase-1"
                                                 },
                                                 "children": []
                                             }
@@ -112,7 +112,7 @@ module.exports = [
                                                 "type": "position",
                                                 "attributes": {
                                                     "name": "Position Showcase 2",
-                                                    "key": "position-showcase-2"
+                                                    "key": "showcase-2"
                                                 },
                                                 "children": []
                                             }
@@ -150,7 +150,7 @@ module.exports = [
                                                 "type": "position",
                                                 "attributes": {
                                                     "name": "Position Feature 1",
-                                                    "key": "position-feature-1"
+                                                    "key": "feature-1"
                                                 },
                                                 "children": []
                                             }
@@ -168,7 +168,7 @@ module.exports = [
                                                 "type": "position",
                                                 "attributes": {
                                                     "name": "Position Feature 2",
-                                                    "key": "position-feature-2"
+                                                    "key": "feature-2"
                                                 },
                                                 "children": []
                                             }
@@ -245,7 +245,7 @@ module.exports = [
                                                 "type": "position",
                                                 "attributes": {
                                                     "name": "Position Bottom",
-                                                    "key": "position-bottom"
+                                                    "key": "bottom"
                                                 },
                                                 "children": []
                                             }
@@ -293,7 +293,7 @@ module.exports = [
                                                 "type": "position",
                                                 "attributes": {
                                                     "name": "Position Sidebar",
-                                                    "key": "position-sidebar"
+                                                    "key": "sidebar"
                                                 },
                                                 "children": []
                                             }
@@ -375,7 +375,7 @@ module.exports = [
                                 "type": "position",
                                 "attributes": {
                                     "name": "Position Footer",
-                                    "key": "position-footer"
+                                    "key": "footer"
                                 },
                                 "children": []
                             }
@@ -426,7 +426,7 @@ module.exports = [
                 "type": "position",
                 "attributes": {
                     "name": "Position 1",
-                    "key": "position-1"
+                    "key": "1"
                 },
                 "children": []
             }]
@@ -442,7 +442,7 @@ module.exports = [
                 "type": "position",
                 "attributes": {
                     "name": "Position Test",
-                    "key": "position-test"
+                    "key": "test"
                 },
                 "children": []
             }, {
@@ -450,7 +450,7 @@ module.exports = [
                 "type": "position",
                 "attributes": {
                     "name": "Position 2",
-                    "key": "position-2"
+                    "key": "2"
                 },
                 "children": []
             }, {
@@ -468,7 +468,7 @@ module.exports = [
                         "type": "position",
                         "attributes": {
                             "name": "Position 3",
-                            "key": "position-3"
+                            "key": "3"
                         },
                         "children": []
                     }]
@@ -497,7 +497,7 @@ module.exports = [
                 "type": "position",
                 "attributes": {
                     "name": "Position A",
-                    "key": "position-a"
+                    "key": "a"
                 },
                 "children": []
             }]
