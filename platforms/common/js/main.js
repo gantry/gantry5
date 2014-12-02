@@ -1890,7 +1890,7 @@ var G5;
     },
     's': function (require, module, exports, global) {
         'use strict';
-        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('23') || {}, history = window.history;
+        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('20') || {}, history = window.history;
         try {
             sessionStorage = window.sessionStorage;
             sessionStorage.setItem('TEST', '1');
@@ -2730,7 +2730,7 @@ var G5;
     'u': function (require, module, exports, global) {
         'use strict';
         var prime = require('k');
-        var bind = require('20');
+        var bind = require('21');
         var bound = prime({
                 bound: function (name) {
                     var bound = this._bound || (this._bound = {});
@@ -2757,7 +2757,7 @@ var G5;
         module.exports = Options;
     },
     'w': function (require, module, exports, global) {
-        var slice = require('21');
+        var slice = require('23');
         function bind(fn, context, args) {
             var argsArr = slice(arguments, 2);
             return function () {
@@ -3320,7 +3320,7 @@ var G5;
     },
     '13': function (require, module, exports, global) {
         'use strict';
-        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('23') || {}, history = window.history;
+        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('20') || {}, history = window.history;
         try {
             sessionStorage = window.sessionStorage;
             sessionStorage.setItem('TEST', '1');
@@ -4150,7 +4150,7 @@ var G5;
         module.exports = History;
     },
     '14': function (require, module, exports, global) {
-        var prime = require('k'), Emitter = require('g'), slice = require('21'), merge = require('p');
+        var prime = require('k'), Emitter = require('g'), slice = require('23'), merge = require('p');
         var History = new prime({
                 inherits: Emitter,
                 constructor: function (session) {
@@ -4436,6 +4436,7 @@ var G5;
                 stop: function (event, target) {
                     var lastOvered = $(this.dragdrop.lastOvered);
                     if (lastOvered && lastOvered.matches(this.eraser.element.find('.trash-zone'))) {
+                        this.eraser.hide();
                         return;
                     }
                     if (!this.block.isNew()) {
@@ -5965,6 +5966,32 @@ var G5;
         module.exports = remove;
     },
     '20': function (require, module, exports, global) {
+        'use strict';
+        var $ = require('1'), domready = require('n');
+        var History = {};
+        if (typeof History.Adapter !== 'undefined') {
+            throw new Error('History.js Adapter has already been loaded...');
+        }
+        History.Adapter = {
+            bind: function (el, event, callback) {
+                $(el).on(event, callback);
+            },
+            trigger: function (el, event, extra) {
+                $(el).emit(event, extra);
+            },
+            extractEventData: function (key, event) {
+                return event && event.event && event.event[key] || event && event[key] || undefined;
+            },
+            onDomLoad: function (callback) {
+                domready(callback);
+            }
+        };
+        if (typeof History.init !== 'undefined') {
+            History.init();
+        }
+        module.exports = History;
+    },
+    '21': function (require, module, exports, global) {
         var slice = require('2y');
         function bind(fn, context, args) {
             var argsArr = slice(arguments, 2);
@@ -5973,31 +6000,6 @@ var G5;
             };
         }
         module.exports = bind;
-    },
-    '21': function (require, module, exports, global) {
-        function slice(arr, start, end) {
-            var len = arr.length;
-            if (start == null) {
-                start = 0;
-            } else if (start < 0) {
-                start = Math.max(len + start, 0);
-            } else {
-                start = Math.min(start, len);
-            }
-            if (end == null) {
-                end = len;
-            } else if (end < 0) {
-                end = Math.max(len + end, 0);
-            } else {
-                end = Math.min(end, len);
-            }
-            var result = [];
-            while (start < end) {
-                result.push(arr[start++]);
-            }
-            return result;
-        }
-        module.exports = slice;
     },
     '22': function (require, module, exports, global) {
         var hasOwn = require('2z');
@@ -6024,30 +6026,29 @@ var G5;
         module.exports = merge;
     },
     '23': function (require, module, exports, global) {
-        'use strict';
-        var $ = require('1'), domready = require('n');
-        var History = {};
-        if (typeof History.Adapter !== 'undefined') {
-            throw new Error('History.js Adapter has already been loaded...');
-        }
-        History.Adapter = {
-            bind: function (el, event, callback) {
-                $(el).on(event, callback);
-            },
-            trigger: function (el, event, extra) {
-                $(el).emit(event, extra);
-            },
-            extractEventData: function (key, event) {
-                return event && event.event && event.event[key] || event && event[key] || undefined;
-            },
-            onDomLoad: function (callback) {
-                domready(callback);
+        function slice(arr, start, end) {
+            var len = arr.length;
+            if (start == null) {
+                start = 0;
+            } else if (start < 0) {
+                start = Math.max(len + start, 0);
+            } else {
+                start = Math.min(start, len);
             }
-        };
-        if (typeof History.init !== 'undefined') {
-            History.init();
+            if (end == null) {
+                end = len;
+            } else if (end < 0) {
+                end = Math.max(len + end, 0);
+            } else {
+                end = Math.min(end, len);
+            }
+            var result = [];
+            while (start < end) {
+                result.push(arr[start++]);
+            }
+            return result;
         }
-        module.exports = History;
+        module.exports = slice;
     },
     '24': function (require, module, exports, global) {
         var identity = require('32');
@@ -8235,7 +8236,7 @@ var G5;
         module.exports = forIn;
     },
     '3f': function (require, module, exports, global) {
-        var slice = require('21');
+        var slice = require('23');
         function makeCollectionMethod(arrMethod, objMethod, defaultReturn) {
             return function () {
                 var args = slice(arguments);

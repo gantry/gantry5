@@ -330,6 +330,7 @@ var LayoutManager = new prime({
         // we are removing the block
         var lastOvered = $(this.dragdrop.lastOvered);
         if (lastOvered && lastOvered.matches(this.eraser.element.find('.trash-zone'))) {
+            this.eraser.hide();
             return;
         }
 
