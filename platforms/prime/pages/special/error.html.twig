@@ -1,6 +1,6 @@
 {% extends "@nucleus/page.html.twig" %}
 
-{% do gantry.theme.setLayout('gantry-theme://layouts/error.yaml') %}
+{% do gantry.theme.setLayout('gantry-layouts://error.yaml') %}
 
 {% block content %}
     <h1>{{ errorcode|default(500) }} {{ error|default('Unknown Error') }}</h1>

@@ -30,12 +30,12 @@ if (!isset($gantry['theme']) || strpos($path, 'admin') === 0) {
 
 // Boot the service.
 /** @var Gantry\Framework\Theme $theme */
-$theme = $gantry['theme']->setLayout('gantry-theme://layouts/test.yaml');
+$theme = $gantry['theme']->setLayout('gantry-layouts://test.yaml');
 
 try {
     // Render the page.
-    echo $theme->render(PAGE_PATH . '.' . PAGE_EXTENSION . '.twig');
+    echo $theme->render('@pages/' . PAGE_PATH . '.' . PAGE_EXTENSION . '.twig');
 } catch (Twig_Error_Loader $e) {
     // Or display error if template file couldn't be found.
-    echo $theme->render('_error.html.twig', ['error' => $e]);
+    echo $theme->render('@pages/_error.html.twig', ['error' => $e]);
 }

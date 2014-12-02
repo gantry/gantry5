@@ -65,3 +65,32 @@ Simple module file is defined below:
 
 Layouts define the structure of the page.
 
+Lookup paths for layouts (against the repository):
+
+/theme/[current]/layouts
+/theme/[current]/common/layouts
+/platform/prime/layouts
+
+## Streams
+
+Platform specific streams:
+
+    gantry-prime://         /prime
+    gantry-layouts://       /prime/layouts, gantry-theme://layouts
+    gantry-pages://         /prime/pages
+    gantry-positions://     /prime/positions
+
+Common streams:
+
+    gantry-admin://         /prime/admin (only available in admin)
+    gantry-media://         /prime/media
+    gantry-themes://        /prime/themes
+    gantry-theme://         /prime/themes/[current]
+
+Internal streams:
+
+    gantry-cache://         Cached Files
+    gantry-blueprints://    Blueprint Files
+    gantry-config://        Configuration Files
+    gantry-engine://        Nucleus Engine
+    gantry-particles://     Gantry Particles

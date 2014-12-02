@@ -3,6 +3,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
+use RocketTheme\Toolbox\DI\Container;
 
 /**
  * The Platform Configuration class contains configuration information.
@@ -13,6 +14,38 @@ use Gantry\Framework\Base\Platform as BasePlatform;
 
 class Platform extends BasePlatform
 {
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
+
+        $this->items['streams'] += [
+            'gantry-prime' => [
+                'type' => 'ReadOnlyStream',
+                'prefixes' => [
+                    '' => ['']
+                ]
+            ],
+            'gantry-layouts' => [
+                'type' => 'ReadOnlyStream',
+                'prefixes' => [
+                    '' => ['gantry-theme://layouts', 'layouts']
+                ]
+            ],
+            'gantry-pages' => [
+                'type' => 'ReadOnlyStream',
+                'prefixes' => [
+                    '' => ['pages']
+                ]
+            ],
+            'gantry-positions' => [
+                'type' => 'ReadOnlyStream',
+                'prefixes' => [
+                    '' => ['positions']
+                ]
+            ]
+        ];
+    }
+
     public function getCachePath()
     {
         return 'cache';
