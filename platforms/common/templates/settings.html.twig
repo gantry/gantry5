@@ -15,7 +15,7 @@
                 </div>
             </h4>
             <div class="inner-params">
-                {% include 'forms/fields.html.twig' with {'blueprints': particle.form, 'value': null} %}
+                {% include 'forms/fields.html.twig' with {'blueprints': particle.form, 'data': config, 'prefix': 'particles.' ~ id ~ '.'} %}
             </div>
         </div>
         {% endfor %}
