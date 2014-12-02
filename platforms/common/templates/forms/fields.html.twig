@@ -1,6 +1,7 @@
 {% for name, field in blueprints.fields %}
     {% if field.type and name not in skip %}
-        {% set value = data.get(prefix ~ name) %}
+        {% set field = field + {'name': prefix ~ name} %}
+        {% set value = data.get(field.name) %}
 
         <div class="block block-{{ field.type }}">
             {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/text/text.html.twig'] %}
