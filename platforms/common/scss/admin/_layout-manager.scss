@@ -104,6 +104,35 @@
             background-color: #f6f6f6;
             min-height: 58px;
 
+            // handles
+            &:hover {
+                &:not(:empty):before, &:not(:empty):after {
+                    display: block;
+                    position: absolute;
+                    background: #f6f6f6;
+                    top: 0;
+                    bottom: 0;
+                    width: 25px;
+                    vertical-align: middle;
+                    line-height: 58px;
+                    text-align: center;
+                    z-index: 5;
+                }
+
+                &:not(:empty):before {
+                    content: 'm';
+                    border-radius: 3px 0 0 3px;
+                    left: -21px;
+                }
+
+                &:not(:empty):after {
+                    content: 'g';
+                    border-radius: 0 3px 3px 0;
+                    right: -21px;
+                }
+            }
+
+
             &:first-child {
                 margin-top: 0;
             }
