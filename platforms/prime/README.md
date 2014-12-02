@@ -39,20 +39,16 @@ All the Gantry Prime pages are located in pages/ folder. Content pages are writt
 
 Gantry prime uses very simple routing where it just looks if there is a file which has identical path to URI appended with .html.twig for regular html output.
 
-path/to/my/page => PRIME_ROOT/pages/path/to/my/page.html.twig
-another/path => PRIME_ROOT/pages/another/path.html.twig
+    path/to/my/page => PRIME_ROOT/pages/path/to/my/page.html.twig
+    another/path => PRIME_ROOT/pages/another/path.html.twig
 
 Basic structure of the file is:
 
-´´´
-{% extends "@nucleus/page.html.twig" %}
-
-{% do gantry.theme.setLayout('gantry-theme://layouts/test.yaml') %}
-
-{% block content %}
-Here comes your content.
-{% endblock %}
-´´´
+    {% extends "@nucleus/page.html.twig" %}
+    {% do gantry.theme.setLayout('gantry-theme://layouts/test.yaml') %}
+    {% block content %}
+        Here comes your content.
+    {% endblock %}
 
 ## Module positions
 
@@ -60,14 +56,10 @@ Module positions work in a similar way to Joomla; named module positions are def
 
 Simple module file is defined below:
 
-´´´
-{% extends "@nucleus/partials/module.html.twig" %}
-
-{% set title = position.name %}
-
-{% block module %}
-{% endblock %}
-´´´
+    {% extends "@nucleus/partials/module.html.twig" %}
+    {% set title = position.name %}
+    {% block module %}
+    {% endblock %}
 
 ## Layouts
 
