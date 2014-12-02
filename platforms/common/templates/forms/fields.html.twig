@@ -1,5 +1,5 @@
 {% for name, field in blueprints.fields %}
-    {% if field.type %}
+    {% if field.type and name not in skip %}
         {% set value = data.get(prefix ~ name) %}
 
         <div class="block block-{{ field.type }}">

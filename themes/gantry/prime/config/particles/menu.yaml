@@ -1,3 +1,5 @@
+enabled: true
+
 config:
   menu: ''
   base: 0
