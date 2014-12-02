@@ -123,12 +123,14 @@
                     content: 'm';
                     border-radius: 3px 0 0 3px;
                     left: -21px;
+                    border-left: 1px solid #ddd;
                 }
 
                 &:not(:empty):after {
                     content: 'g';
                     border-radius: 0 3px 3px 0;
                     right: -21px;
+                    border-right: 1px solid #ddd;
                 }
             }
 
