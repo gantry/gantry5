@@ -325,6 +325,7 @@ var LayoutManager = new prime({
         singles.cleanup(this.builder);
 
         this.history.push(this.builder.serialize());
+        $('[data-lm-root]').removeClass('moving');
 
     },
 
