@@ -88,7 +88,7 @@ var Resizer = new prime({
 
         this.origin.offset = {
             clientRect: clientRect,
-            parentRect: parentRect,
+            parentRect: {left: parentRect.left, right: parentRect.right},
             x: this.origin.x - clientRect.right,
             y: clientRect.top - this.origin.y
         };
