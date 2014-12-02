@@ -40,11 +40,12 @@ var deepEquals = function(a, b, callback) {
 
 var singles = {
     disable: function() {
-        var root = $('[data-lm-root]');
+        return;
+        /*var root = $('[data-lm-root]');
         if (!root) { return; }
 
         var children = root.search('.grid .block [data-lm-id]:not([data-lm-blocktype="grid"]):not([data-lm-blocktype="block"])');
-        /*,
+        ,
          mode = root.data('lm-root') || 'page';*/
 
         /*if (mode === 'page') {
@@ -54,10 +55,10 @@ var singles = {
          }
 
          return;
-         }*/
+         }
 
         if (!children) { return false; }
-
+         */
         /*children.attribute('style', null).forEach(function(element) {
          element = $(element);
          if (!element.siblings()) {
@@ -66,7 +67,8 @@ var singles = {
          });*/
     },
     enable: function() {
-        var root = $('[data-lm-root]'),
+        return;
+        /*var root = $('[data-lm-root]'),
             mode = root.data('lm-root') || 'page',
             children = root.search('.grid .block [data-lm-id]:not([data-lm-blocktype="grid"]):not([data-lm-blocktype="block"])');
         if (!children || mode === 'page') { return; }
@@ -76,9 +78,10 @@ var singles = {
             if (!element.siblings()) {
                 element.attribute('style', null);
             }
-        });
+        });*/
     },
     cleanup: function(builder) {
+        return;
         var roots = $('[data-lm-root] .section > .grid'),
             grids = $('[data-lm-root] .section > .grid .grid'),
             sects = $('[data-lm-root="page"] .grid > .block:empty');
@@ -199,9 +202,8 @@ var LayoutManager = new prime({
         singles.enable();
     },
 
-    location: function(event, location, target, element) {
+    location: function(event, location, target/*, element*/) {
         target = $(target);
-        element = $(element);
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' }); }
         //this.original.style({display: 'none'});
 
@@ -453,9 +455,6 @@ var LayoutManager = new prime({
         this.placeholder.remove();
 
         if (blockWasNew) {
-            if (resizeCase.case === 1) {
-                //console.log(this.block.block);
-            }
             if (resizeCase && resizeCase.case === 1 || resizeCase.case === 3) { this.resizer.evenResize($([this.block.block, this.block.block.siblings()]), !this.dirty); }
             if (resizeCase && resizeCase.case === 2 || resizeCase.case === 4) { this.resizer.evenResize(resizeCase.siblings); }
         }
