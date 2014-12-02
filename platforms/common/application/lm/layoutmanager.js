@@ -287,8 +287,17 @@ var LayoutManager = new prime({
             duration: '150ms'
         });
 
+        var siblings = this.block.block.siblings(':not(.original-placeholder)'),
+            size = this.block.getSize();
 
-        console.log(this.block.getSize(), this.block);
+        if (siblings) {
+            var diff = size / siblings.length, block;
+            siblings.forEach(function(sibling){
+                sibling = $(sibling);
+                block = get(this.builder.map, sibling.data('lm-id'));
+                block.setSize(block.getSize() + diff, true);
+            }, this);
+        }
 
         this.eraser.hide();
 

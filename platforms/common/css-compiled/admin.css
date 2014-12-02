@@ -1045,6 +1045,7 @@ body {
 #g5-container #trash span {
   font-size: 0.8rem;
   color: #666;
+  text-shadow: 0 0 1px #fff;
 }
 
 @-webkit-keyframes fadeIn {
