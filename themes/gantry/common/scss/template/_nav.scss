@@ -3,13 +3,13 @@
 	// Main Level
 	> .toplevel {
 		> li {
-			> a {
+			> a, >.separator {
 				font-size: $toplevel-font-size;
 				padding: $nav-item-padding;
 				color: $nav-link;
 			}
 			&:hover, &.active {
-				a {
+				a, .separator {
 					color: $white;
 				}
 			}
@@ -32,11 +32,11 @@
 	// Sublevel Items
 	.sublevel {
     	> li {
-    		> a {
+    		> a, > .separator, > .nav-header {
     			font-size: $dropdown-font-size;
     			padding: $nav-item-padding;
     		}
-    		&:hover, &.active {
+    		&:hover > a, &.active > a {
     			background: darken($core-accent, 8%);
     		}
     	}

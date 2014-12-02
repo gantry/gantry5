@@ -550,7 +550,7 @@ th {
     -webkit-transition: all 0.1s ease-out;
     -moz-transition: all 0.1s ease-out;
     transition: all 0.1s ease-out; }
-    .main-nav > .toplevel > li > a {
+    .main-nav > .toplevel > li > a, .main-nav > .toplevel > li > .separator {
       display: block; }
 .main-nav .dropdown {
   -webkit-transition: all 0.1s ease-out;
@@ -564,7 +564,7 @@ th {
   -webkit-transition: all 0.1s ease-out;
   -moz-transition: all 0.1s ease-out;
   transition: all 0.1s ease-out; }
-  .main-nav .sublevel > li a {
+  .main-nav .sublevel > li a, .main-nav .sublevel > li .separator, .main-nav .sublevel > li .nav-header {
     display: block; }
 
 body {

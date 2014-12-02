@@ -9,7 +9,7 @@
 		> li {
 			display: inline-block;
 			@include transition(all .1s ease-out);
-			> a {
+			> a, > .separator {
 				display: block;
 			}
 			&:hover {
@@ -42,7 +42,7 @@
     				@extend %active-dropdown;
     			}
     		}
-    		a {
+    		a, .separator, .nav-header {
     			display: block;
     		}
     	}
