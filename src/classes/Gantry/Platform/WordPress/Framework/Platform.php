@@ -22,4 +22,9 @@ class Platform extends BasePlatform
     {
         return ['' => Folder::getRelativePath(get_theme_root())];
     }
+
+    public function getMediaPaths()
+    {
+        return ['' => ['media']];
+    }
 }

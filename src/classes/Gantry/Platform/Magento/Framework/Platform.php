@@ -27,4 +27,9 @@ class Platform extends BasePlatform
             ]
         ];
     }
+
+    public function getMediaPaths()
+    {
+        return ['' => ['media']];
+    }
 }

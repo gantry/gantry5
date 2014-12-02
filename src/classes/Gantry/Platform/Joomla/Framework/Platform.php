@@ -22,4 +22,9 @@ class Platform extends BasePlatform
     {
         return ['' => ['templates']];
     }
+
+    public function getMediaPaths()
+    {
+        return ['' => ['media/gantry5']];
+    }
 }

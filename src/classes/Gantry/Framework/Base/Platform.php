@@ -41,6 +41,10 @@ abstract class Platform
                     'type' => 'ReadOnlyStream',
                     'prefixes' => $this->getThemePaths()
                 ],
+                'gantry-media' => [
+                    'type' => 'ReadOnlyStream',
+                    'prefixes' => $this->getMediaPaths()
+                ],
                 'gantry-engine' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [
@@ -76,6 +80,7 @@ abstract class Platform
 
     abstract public function getCachePath();
     abstract public function getThemesPaths();
+    abstract public function getMediaPaths();
 
     public function getThemePaths()
     {

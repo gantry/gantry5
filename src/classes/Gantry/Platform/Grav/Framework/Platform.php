@@ -52,4 +52,9 @@ class Platform extends BasePlatform
 
         return $locator->getPaths('theme');
     }
+
+    public function getMediaPaths()
+    {
+        return ['' => ['user://']];
+    }
 }

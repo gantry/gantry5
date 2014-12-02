@@ -23,6 +23,11 @@ class Platform extends BasePlatform
         return  ['' => ['themes']];
     }
 
+    public function getMediaPaths()
+    {
+        return ['' => ['media']];
+    }
+
     public function getModules($position)
     {
         $path = PRIME_ROOT . '/positions/' . $position;
