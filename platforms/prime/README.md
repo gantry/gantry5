@@ -67,9 +67,9 @@ Layouts define the structure of the page.
 
 Lookup paths for layouts (against the repository):
 
-/theme/[current]/layouts
-/theme/[current]/common/layouts
-/platform/prime/layouts
+    /theme/[current]/layouts
+    /theme/[current]/common/layouts
+    /platform/prime/layouts
 
 ## Streams
 

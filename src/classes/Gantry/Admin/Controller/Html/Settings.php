@@ -4,6 +4,7 @@ namespace Gantry\Admin\Controller\Html;
 use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -15,10 +16,17 @@ class Settings extends HtmlController
         /** @var UniformResourceLocator $locator */
         $locator = Gantry::instance()['locator'];
         $paths = $locator->findResources('gantry-particles://');
-        $files = (new ConfigFileFinder)->locateFiles($paths);
+        $files = (new ConfigFileFinder)->listFiles($paths);
 
-        print_r($files);
+        $particles = [];
+        foreach ($files as $key => $file) {
+            $filename = key($file);
+            $particles[$key] = CompiledYamlFile::instance($filename)->content();
+        }
 
-        return $this->container['admin.theme']->render('@gantry-admin/settings.html.twig', ['location' => $params['location']]);
+        return $this->container['admin.theme']->render(
+            '@gantry-admin/settings.html.twig',
+            ['particles' => $particles, 'location' => $params['location']]
+        );
     }
 }

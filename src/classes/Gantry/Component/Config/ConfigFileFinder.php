@@ -35,7 +35,7 @@ class ConfigFileFinder
     {
         $list = [];
         foreach ($paths as $folder) {
-            $list += $this->detectRecursive($folder, $pattern);
+            $list = array_merge_recursive($list, $this->detectAll($folder, $pattern));
         }
         return $list;
     }
@@ -101,5 +101,41 @@ class ConfigFileFinder
         }
 
         return [$path => $list];
+    }
+
+    /**
+     * Detects all plugins with a configuration file and returns them with last modification time.
+     *
+     * @param  string $folder   Location to look up from.
+     * @param  string $pattern  Pattern to match the file. Pattern will also be removed from the key.
+     * @return array
+     * @internal
+     */
+    protected function detectAll($folder, $pattern)
+    {
+        $path = trim(Folder::getRelativePath($folder), '/');
+
+        if (is_dir($folder)) {
+            // Find all system and user configuration files.
+            $options = [
+                'compare' => 'Filename',
+                'pattern' => $pattern,
+                'filters' => [
+                    'key' => $pattern,
+                    'value' => function (\RecursiveDirectoryIterator $file) use ($path) {
+                        return ["{$path}/{$file->getSubPathname()}" => $file->getMTime()];
+                    }
+                ],
+                'key' => 'SubPathname'
+            ];
+
+            $list = Folder::all($folder, $options);
+
+            ksort($list);
+        } else {
+            $list = [];
+        }
+
+        return $list;
     }
 }

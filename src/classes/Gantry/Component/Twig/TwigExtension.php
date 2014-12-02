@@ -25,6 +25,7 @@ class TwigExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
+            new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode')
         );
     }
@@ -40,6 +41,19 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
             new \Twig_SimpleFunction('parseHtmlHeader', [$this, 'parseHtmlHeaderFunc'])
         );
+    }
+
+    /**
+     * Filters field name by changing dot notation into array notation.
+     *
+     * @param  string  $str
+     * @return string
+     */
+    public function fieldNameFilter($str)
+    {
+        $path = explode('.', $str);
+
+        return array_shift($path) . ($path ? '[' . implode('][', $path) . ']' : '');
     }
 
     /**

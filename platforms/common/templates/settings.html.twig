@@ -1,7 +1,27 @@
 {% extends ajax ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-    <h2>Settings</h2>
+    <h2>Particle Settings</h2>
+
+    <div id="settings" class="cards-wrapper">
+
+        {% for id, particle in particles %}
+        <div class="card settings-block">
+            <h4>
+                {{ particle.name }}
+                <div class="enabler">
+                    <input type="hidden" value="0" />
+                    <div class="toggle"><div class="knob"></div></div>
+                </div>
+            </h4>
+            <div class="inner-params">
+                {% include 'forms/fields.html.twig' with {'blueprints': particle.form, 'value': null} %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2>Example Settings</h2>
 
     <div id="settings" class="cards-wrapper">
         <div class="card settings-block">
