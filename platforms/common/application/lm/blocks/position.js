@@ -14,6 +14,8 @@ var Position = new prime({
         ++UID;
         Particle.call(this, options);
         this.setAttribute('name', this.getTitle());
+
+        if (this.isNew()) { --UID; }
     },
 
     getTitle: function() {
