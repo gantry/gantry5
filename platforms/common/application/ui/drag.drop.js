@@ -92,7 +92,7 @@ var DragDrop = new prime({
         };
 
         if (Math.abs(this.origin.offset.x) < 4) {
-            this.emit('dragdrop:resize', event, this.element, this.element.siblings());
+            this.emit('dragdrop:resize', event, this.element, this.element.siblings(':not(.placeholder)'));
             return false;
         }
 
