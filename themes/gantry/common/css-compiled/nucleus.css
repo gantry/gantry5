@@ -258,7 +258,9 @@ th {
   -webkit-flex: 1;
   -moz-flex: 1;
   -ms-flex: 1;
-  flex: 1; }
+  flex: 1;
+  min-width: 0;
+  min-height: 0; }
   @media only all and (max-width: 47.938rem) {
     .block {
       -webkit-box-flex: 0;

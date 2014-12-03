@@ -1,0 +1,4 @@
+// Headers
+@mixin header($margin-top: $leading-margin / 2, $margin-bottom: $leading-margin) {
+	margin: $margin-top 0 $margin-bottom 0;
+}
