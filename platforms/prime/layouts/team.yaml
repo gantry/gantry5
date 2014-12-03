@@ -2,6 +2,7 @@ header:
   - [particle-logo 20, particle-menu 80]
 
 body:
+  - mainbody
   - particle-team
 
 footer:
