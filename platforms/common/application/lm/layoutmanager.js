@@ -123,7 +123,7 @@ var LayoutManager = new prime({
             opacity: 0.5
         }).addClass('original-placeholder').data('lm-dropzone', null);
         this.originalType = type;
-        this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]();
+        this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({builder: this.builder});
 
         if (!this.block.isNew()) {
             var margins = $(element).find('[data-lm-blocktype]').compute('margin');
@@ -306,9 +306,9 @@ var LayoutManager = new prime({
         this.original.remove();
 
         // case 1: it's a position/spacer and needs to be wrapped by a block (dropped at root or next to another block)
-        if (type !== 'block' && ((this.dirty || targetType === 'section' || targetType === 'grid') || (!this.dirty && targetType === 'block' && parentType !== 'block'))) {
-            wrapper = new Blocks.block({ attributes: { size: 50 } }).adopt(this.block.block);
-            insider = new Blocks[this.block.block.data('lm-blocktype')]({ id: this.block.block.data('lm-id') }).setLayout(this.block.block);
+        if (type !== 'block' && type !== 'grid' && ((this.dirty || targetType === 'section' || targetType === 'grid') || (!this.dirty && targetType === 'block' && parentType !== 'block'))) {
+            wrapper = new Blocks.block({ attributes: { size: 50 }, builder: this.builder }).adopt(this.block.block);
+            insider = new Blocks[this.block.block.data('lm-blocktype')]({ id: this.block.block.data('lm-id'), builder: this.builder }).setLayout(this.block.block);
 
             wrapper.setSize();
             this.block = wrapper;
@@ -383,7 +383,7 @@ var LayoutManager = new prime({
                 dirtyMap = get(this.builder.map, dirtyId);
 
                 if (!dirtyMap) {
-                    dirtyBlock = new Blocks[dirtyType]({ id: dirtyId }).setLayout(element);
+                    dirtyBlock = new Blocks[dirtyType]({ id: dirtyId, builder: this.builder }).setLayout(element);
                     if (dirtyType === 'block') { dirtyBlock.setSize(50, true); }
                     this.builder.add(dirtyBlock);
                     dirtyBlock.emit('rendered', dirtyBlock, null);

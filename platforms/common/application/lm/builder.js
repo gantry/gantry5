@@ -70,7 +70,7 @@ var Builder = new prime({
     },
 
     get: function(block) {
-        var id = typeof block == 'string' ? block : block.id;
+        var id = typeof block === 'string' ? block : block.id;
         return get(this.map, id, block);
     },
 
@@ -159,7 +159,8 @@ var Builder = new prime({
         }
         var Element = new Blocks[value.type]({
             id: key,
-            attributes: value.attributes || {}
+            attributes: value.attributes || {},
+            builder: this
         });
 
         if (!parent) {
