@@ -133,6 +133,14 @@ var LayoutManager = new prime({
                 width: Math.ceil(size.width),
                 height: Math.ceil(size.height)
             }).find('[data-lm-blocktype]').style({ margin: margins });
+
+            if (this.block.getType() === 'grid'){
+                var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header)');
+                if (siblings) {
+                    siblings.search('[data-lm-id]').style({'pointer-events': 'none'});
+                }
+            }
+
             this.placeholder.after(element);
             this.eraser.show();
         } else {
@@ -156,7 +164,8 @@ var LayoutManager = new prime({
         }
 
         var position,
-            dataType = target.data('lm-blocktype');
+            dataType = target.data('lm-blocktype'),
+            originalType = this.block.getType();
 
         if (!dataType && target.data('lm-root')) { dataType = 'root'; }
         if (this.mode !== 'page' && dataType === 'section') { return; }
@@ -170,21 +179,36 @@ var LayoutManager = new prime({
 
         if (adjacents.before) { adjacents.before = $(adjacents.before[0]); }
         if (adjacents.after) { adjacents.after = $(adjacents.after[0]); }
-        if (dataType === 'block' && (adjacents.before === target && location.x === 'after') || (adjacents.after === target && location.x === 'before')) {
+        if (dataType === 'block' && ((adjacents.before === target && location.x === 'after') || (adjacents.after === target && location.x === 'before'))) {
+            return;
+        }
+        if (dataType === 'grid' && ((adjacents.before === target && location.y === 'below') || (adjacents.after === target && location.y === 'above'))) {
             return;
         }
 
         // handles the types cases and normalizes the locations (x and y)
-        var grid, block;
+        var grid, block, method;
+
         switch (dataType) {
             case 'root':
             case 'section':
                 break;
             case 'grid':
-                this.placeholder.bottom(target);
+                var empty = !target.children(':not(.placeholder)');
+                // new particles cannot be dropped in existing grids, only empty ones
+                if (originalType !== 'grid' && !empty) { return; }
+
+                // we are dropping a new particle into an empty grid, placeholder goes inside
+                if (empty) { this.placeholder.bottom(target); }
+                else {
+                    // we are sorting grids ordering, placeholder goes above/below
+                    method = (location.y === 'above' ? 'before' : 'after');
+                    this.placeholder[method](target);
+                }
+
                 break;
             case 'block':
-                var method = (location.y === 'above' ? 'top' : 'bottom');
+                method = (location.y === 'above' ? 'top' : 'bottom');
                 position = (location.x === 'other') ? method : location.x;
                 this.placeholder[position](target);
 
@@ -192,9 +216,9 @@ var LayoutManager = new prime({
         }
 
         // If it's not a block we don't want a small version of the placeholder
-        this.placeholder.removeClass('in-between').removeClass('in-between-sections');
+        this.placeholder.removeClass('in-between').removeClass('in-between-grids');
         this.placeholder.style({ display: 'block' })[dataType !== 'block' ? 'removeClass' : 'addClass']('in-between');
-        if (this.placeholder.parent().data('lm-blocktype') === 'block') { this.placeholder.addClass('in-between-sections'); }
+        if (originalType === 'grid' && dataType === 'grid') { this.placeholder.addClass('in-between-grids'); }
     },
 
     nolocation: function(event) {
@@ -331,12 +355,12 @@ var LayoutManager = new prime({
             };
             block.block.remove();
             this.builder.remove(block);
-            //console.log('2. im leaving, resize my siblings');
+            console.log('2. im leaving, resize my siblings');
         }
 
         // case 3: moving a block around, need to reset the sizes
         if (this.originalType === 'block' && this.block.getType() === 'block') {
-            //console.log('3. im a block and ive been moved, resize my new siblings and the ones where i come from');
+            console.log('3. im a block and ive been moved, resize my new siblings and the ones where i come from');
             resizeCase = { case: 3 };
             var previous = this.block.block.parent().siblings(':not(.original-placeholder)');
             if (!this.block.isNew() && previous.length) { this.resizer.evenResize(previous); }
@@ -345,35 +369,10 @@ var LayoutManager = new prime({
             this.block.setSize();
         }
 
-        // case 4: it's a section in a grid that goes out and the grid needs to be removed
-        // if (type == 'section' && originalSiblings && originalParent.parent().data('lm-blocktype') == 'grid'){
-        //console.log(this.original, originalSiblings);
-        //console.log('case4', $('[data-lm-root="page"] .grid > .block:empty'));
-        //return;
-        //}
-        //console.log(targetType);
-        /*if (type == 'section' && !originalSiblings.length && originalParent.data('lm-blocktype') == 'block'){
-         if (originalParent.siblings().length > 1){
-         resizeCase = {case: 4, siblings: originalParent.siblings()};
-         if (targetType == 'block') resizeCase.siblings = $(this.block.block, resizeCase.siblings);
-         this.builder.remove(originalParent.data('lm-id'));
-         originalParent.remove();
-         console.log(resizeCase);
-         } else {
-         var container = originalParent.parent('[data-lm-blocktype="grid"]');
-         this.builder.remove(originalParent.data('lm-id'));
-         originalParent.siblings().children().before(container);
-         this.builder.remove(container.data('lm-id'));
-         this.builder.remove(originalParent.siblings().data('lm-id'));
-         originalParent.remove();
-         //originalParent.siblings().remove();
-         container.remove();
-         }
-         }*/
 
         // it's dirty, let's register all the blocks that are missing.
-        //console.log('is dirty,', this.dirty);
         if (this.dirty) {
+            console.log('it\'s dirty');
             var structure = $([this.dirty.element, this.dirty.element.search('[data-lm-id]')]);
             var dirtyId, dirtyType, dirtyMap, dirtyBlock;
             structure.forEach(function(element) {
@@ -390,6 +389,20 @@ var LayoutManager = new prime({
                 }
             }, this);
         }
+
+        if (this.block.getType() === 'grid'){
+            var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header)');
+            if (siblings) {
+                siblings.search('[data-lm-id]').style({'pointer-events': 'inherit'});
+            }
+        }
+
+        /*// if the grid is freshly created we add it to the builder map
+        var parent = this.placeholder.parent('[data-lm-id]');
+        if (parent && !this.builder.get(parent.data('lm-id'))){
+            this.builder.add(parent.data('lm-id'));
+        }
+*/
 
         if (this.block.hasAttribute('size')) { this.block.setSize(this.placeholder.compute('flex')); }
         this.block.insert(this.placeholder);

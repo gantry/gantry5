@@ -17,9 +17,9 @@ var Grid = new prime({
     },
 
     onRendered: function(){
-        if (this.block.find('[data-lm-id]')){
+        /*if (this.block.find('[data-lm-id]')){
             this.block.data('lm-dropzone', null);
-        }
+        }*/
     }
 });
 
