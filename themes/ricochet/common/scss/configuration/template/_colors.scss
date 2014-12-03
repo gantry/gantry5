@@ -1,10 +1,13 @@
-// Core
-$core-text:						#666;
-$core-accent:					#4184B6;
-$secondary-link:				#F8B450;
+// Basics
 $white:							#fff;
 $black:							#000;
 $light-gray:					#ddd;
+
+// Core
+$core-text:						#7a7a7a;
+$core-accent:					#66BDBB;
+$core-accent2:					#80C294;
+$core-accent3:					#FEFCD0;
 
 // Borders
 $core-border-color:				$light-gray;
@@ -19,10 +22,11 @@ $core-box-shadow-focus: 		$core-box-shadow, 0 0 5px rgba(darken($core-border-col
 $page-bg:						#fff;
 
 // Header
-$header-text:					#aaa;
+$header-bg:						#fff;
+$header-text:					#333;
 
 // Nav
-$nav-link:						#aaa;
+$nav-link:						$header-text;
 
 // Feature
 $feature-bg:					#333 url(../images/backgrounds/feature/bg.jpg);
@@ -32,16 +36,13 @@ $feature-text:					#fff;
 $main-bg:						#f7f7f7;
 $body-border:					darken($main-bg, 5%);
 
-// Sidebar
-$sidebar-text:					#aaa;
-
 // Bottom
-$bottom-bg:						#f7f7f7;
+$bottom-bg:						#fff;
 $bottom-text:					$core-text;
 
 // Footer
-$footer-bg:						#404040;
-$footer-text:					#ccc;
+$footer-bg:						#eee;
+$footer-text:					#888;
 
 // System Messsages and Alerts
 $warning-color:					#c09853;

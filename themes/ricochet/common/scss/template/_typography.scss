@@ -5,8 +5,8 @@ body {
 
 // Headings
 h1, h2, h3, h4, h5, h6 {
-	font-weight: normal;
-	@extend strong;
+	font-family: $font-family-alt;
+	font-weight: bold;
 }
 
 h6 {
@@ -15,7 +15,7 @@ h6 {
 
 // Strong
 strong {
-	font-family: $font-family-bold;
+	font-family: $font-family-default;
 }
 
 // Blockquote
@@ -32,14 +32,4 @@ pre {
 // Extras
 hr {
 	border-bottom: 1px solid $core-border-color;
-}
-
-// Page Title
-.page-title {
-	margin-top: -25px;
-	padding: 25px;
-	float: left;
-	clear: both;
-	background: $core-accent;
-	color: $white;
 }

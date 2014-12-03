@@ -1,2 +1,6 @@
-@include font-face('walkwaybold', '../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont');
-@include font-face('latolight', '../fonts/lato-light/lato-light-webfont');
+@include font-face('merriweather', '../fonts/merriweather-regular-webfont');
+@include font-face('merriweather', '../fonts/merriweather-italic-webfont', normal, italic);
+@include font-face('merriweather', '../fonts/merriweather-bold-webfont', bold);
+@include font-face('merriweather', '../fonts/merriweather-bolditalic-webfont', bold, italic);
+@include font-face('nexa', '../fonts/nexa-light-webfont');
+@include font-face('nexa', '../fonts/nexa-bold-webfont', bold);
