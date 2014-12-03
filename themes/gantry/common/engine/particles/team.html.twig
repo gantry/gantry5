@@ -2,15 +2,17 @@
 
 {% block particle %}
     <div class="grid pure-g">
+        {% for member in particle.members %}
         <div class="block">
-            <img alt="image" src="{{ url(particle.members.0.image) }}">
+            <img alt="image" src="{{ url(member.image)|default('http://www.placehold.it/200x250/f4f4f4') }}">
         </div>
         <div class="block">
             <div class="content">
-                <h3>{{ particle.members.0.name|e }}</h3>
-                <h6>{{ particle.members.0.role|e }}</h6>
-                {{ particle.members.0.description }}
+                <h3>{{ member.name|e }}</h3>
+                <h6>{{ member.role|e }}</h6>
+                {{ member.description }}
             </div>
         </div>
+    {% endfor %}
     </div>
 {% endblock %}

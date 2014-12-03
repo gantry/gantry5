@@ -7,5 +7,10 @@ css:
 members:
   - name: Robert Smith
     role: CEO of Chimera
-    image: images/rocketlauncher/pages/the-team/img-01.jpg
-    description: '<p>Globally incubate standards compliant channels before scalable benefits. Quickly disseminate superior deliverables whereas web-enabled applications. <span class="hidden-tablet">Quickly drive clicks-and-mortar catalysts for change before vertical architectures.</span></p><p class="success hidden-tablet">Image attribution: <a href="http://www.flickr.com/photos/astragony/8260117875/sizes/l/">AMaze by Daniele Zedda.</a></p>'
+    image: gantry-prime://images/rocketlauncher/pages/the-team/img-01.jpg
+    description: '<p>Globally incubate standards compliant channels before scalable benefits. Quickly disseminate superior deliverables whereas web-enabled applications. <span class="hidden-tablet">Quickly drive clicks-and-mortar catalysts for change before vertical architectures.</span></p></p>'
+
+  - name: Matias the Awesome
+    role: Lead Developer
+    image: gantry-prime://images/rocketlauncher/pages/the-team/img-02.jpg
+    description: '<p>This is an example on how we could implement team page in Gantry5.</p><p>No more custom HTML: check administrator for team particle configuration.</p>'

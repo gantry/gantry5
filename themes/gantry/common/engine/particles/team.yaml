@@ -16,6 +16,9 @@ form:
       default: branding
 
 # TODO: make this a list of members.
+    separator:
+      type: separator
+
     members.0.name:
       type: text
       label: Name
@@ -29,5 +32,24 @@ form:
       label: Image
 
     members.0.description:
+      type: textarea
+      label: Name
+
+    separator2:
+      type: separator
+
+    members.1.name:
+      type: text
+      label: Name
+
+    members.1.role:
+      type: text
+      label: Role
+
+    members.1.image:
+      type: text
+      label: Image
+
+    members.1.description:
       type: textarea
       label: Name
