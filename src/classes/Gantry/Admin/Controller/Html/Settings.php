@@ -24,9 +24,7 @@ class Settings extends HtmlController
             $particles[$key] = CompiledYamlFile::instance($filename)->content();
         }
 
-        return $this->container['admin.theme']->render(
-            '@gantry-admin/settings.html.twig',
-            ['particles' => $particles, 'location' => $params['location']]
-        );
+        $params['particles'] = $particles;
+        return $this->container['admin.theme']->render('@gantry-admin/settings.html.twig', $params);
     }
 }
