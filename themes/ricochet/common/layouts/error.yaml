@@ -1,8 +1,0 @@
-header:
-  - [particle-logo 20, particle-menu 80]
-
-body:
-  - mainbody
-
-footer:
-  - [spacer 25, particle-copyright 50, particle-branding 25]

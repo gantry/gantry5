@@ -1,8 +1,0 @@
-{% extends '@nucleus/partials/particle.html.twig' %}
-
-{% block particle %}
-Copyright &copy;
-{% if (particle.date.start) %}{{ particle.date.start|e }} - {% endif %}
-{{ particle.date.end in ['now', ''] ? 'now'|date('Y') : particle.date.end|e }}
-{{ particle.owner|e }}
-{% endblock %}

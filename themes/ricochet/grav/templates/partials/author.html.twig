@@ -1,8 +1,0 @@
-<div class="author">
-    <div class="avatar">
-        {{ (author.assets.images|first).resize('150','150').html }}
-        <h3>{{ author.header.name }}</h3>
-        <h5>{{ author.header.email|safe_email }}</h5>
-    </div>
-    <p>{{ author.content }}</p>
-</div>
