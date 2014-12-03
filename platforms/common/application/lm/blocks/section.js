@@ -49,6 +49,7 @@ var Section = new prime({
 
                 this.grid = new Grid();
                 this.grid.insert(this.block, 'bottom');
+                this.options.builder.add(this.grid);
             }, this));
         }
     }
