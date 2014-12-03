@@ -21,7 +21,7 @@ class Settings extends HtmlController
         $particles = [];
         foreach ($files as $key => $file) {
             $filename = key($file);
-            $particles[$key] = CompiledYamlFile::instance($filename)->content();
+            $particles[$key] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
         }
 
         $params['particles'] = $particles;
