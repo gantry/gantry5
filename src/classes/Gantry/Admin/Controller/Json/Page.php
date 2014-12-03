@@ -43,6 +43,7 @@ class Page extends JsonController
 
     public function updates(array $params)
     {
+        throw new \Exception('booo');
         return new JsonResponse(['html' => (new Updates($this->container))->index($params)]);
     }
 }

@@ -33,21 +33,16 @@ History.Adapter.bind(window, 'statechange', function() {
         $('body').emit('statechangeBefore', { target: Data.element });
     }
     request.url(URI).send(function(error, response) {
-        if (response.error) {
-            var messages = [];
-            response.body.data.exceptions.forEach(function(error) {
-                messages.push('<h1>Error ' + error.code + ' - ' + error.message + '</h1><div>File: ' + error.file + ':' + error.line + '</div>')
-            });
-
-            modal.open({ content: messages.join('<br />') });
+        if (!response.body.success) {
+            modal.open({ content: response.body.html });
             //History.back();
 
             return false;
         }
 
         var target = $(Data.target);
-        if (response.body && response.body.data && response.body.data.html) {
-            (target || $('body')).html(response.body.data.html);
+        if (response.body && response.body.html) {
+            (target || $('body')).html(response.body.html);
         } else {
             (target || $('body')).html(response.body);
         }

@@ -25,10 +25,10 @@ class Layouts extends JsonController
 
         $files = Folder::all($locator->findResource('gantry-theme://layouts/presets'), $options);
 
-        $response = [];
+        $response = ['layouts'];
         foreach($files as $name => $structure) {
             $content = JsonFile::instance($structure)->content();
-            $response[$name] = $content;
+            $response['layouts'][$name] = $content;
         }
 
         $response['html'] = $this->container['admin.theme']->render('@gantry-admin/layouts/picker.html.twig', ['presets' => $response]);

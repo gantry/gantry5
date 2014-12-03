@@ -276,7 +276,7 @@ var Popover = new prime({
             if (content && isFunct(content)) {
                 this.content = content.apply(this.element[0], [response]);
             } else {
-                this.content = response.body.data.html;
+                this.content = response.body.html;
             }
 
             this.setContent(this.content);

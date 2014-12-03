@@ -58,9 +58,6 @@ class JsonResponse
             // Create response data on exceptions.
             $this->html = $this->renderError($response);
             $this->exceptions = $exceptions;
-
-            // TODO: remove.
-            $this->data = array('exceptions' => $exceptions, 'html' => $this->html);
         }
         else
         {
@@ -72,9 +69,6 @@ class JsonResponse
             } else {
                 $this->data = $response;
             }
-
-            // TODO: remove.
-            $this->data = $response;
         }
 
         // Empty output buffer to make sure that the response is clean and valid.
