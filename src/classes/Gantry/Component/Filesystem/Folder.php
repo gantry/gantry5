@@ -86,6 +86,10 @@ abstract class Folder
 
         /** @var \RecursiveDirectoryIterator $file */
         foreach ($iterator as $file) {
+            // Ignore hidden files.
+            if ($file->getFilename()[0] == '.') {
+                continue;
+            }
             if ($compare && $pattern && !preg_match($pattern, $file->{$compare}())) {
                 continue;
             }
