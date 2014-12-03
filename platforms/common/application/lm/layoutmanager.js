@@ -116,7 +116,8 @@ var LayoutManager = new prime({
         var type = $(element).data('lm-blocktype'),
             clone = element[0].cloneNode(true);
 
-        if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' }); }
+        if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]'); }
+        this.placeholder.style({ display: 'none' });
         this.original = $(clone).after(element).style({
             display: 'block',
             opacity: 0.5
