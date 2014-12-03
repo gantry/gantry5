@@ -40,94 +40,33 @@ var deepEquals = function(a, b, callback) {
 
 var singles = {
     disable: function() {
-        return;
-        /*var root = $('[data-lm-root]');
-        if (!root) { return; }
+        var grids = $('[data-lm-root] [data-lm-blocktype="grid"]'),
+            sections = $('[data-lm-root] [data-lm-blocktype="section"]');
 
-        var children = root.search('.grid .block [data-lm-id]:not([data-lm-blocktype="grid"]):not([data-lm-blocktype="block"])');
-        ,
-         mode = root.data('lm-root') || 'page';*/
-
-        /*if (mode === 'page') {
-         var sectionChildren = root.search('.section *:not(.button)');
-         if (sectionChildren) {
-         //sectionChildren.style({ 'pointer-events': 'none' });
-         }
-
-         return;
-         }
-
-        if (!children) { return false; }
-         */
-        /*children.attribute('style', null).forEach(function(element) {
-         element = $(element);
-         if (!element.siblings()) {
-         //element.style({ 'pointer-events': 'none' });
-         }
-         });*/
+        if (grids) { grids.removeClass('no-hover'); }
+        if (sections) {
+            sections.forEach(function(section){
+                var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty)');
+                if (subGrids && subGrids.length === 1) { subGrids.addClass('no-move'); }
+                else { subGrids.removeClass('no-move'); }
+            }, this);
+        }
     },
     enable: function() {
-        return;
-        /*var root = $('[data-lm-root]'),
-            mode = root.data('lm-root') || 'page',
-            children = root.search('.grid .block [data-lm-id]:not([data-lm-blocktype="grid"]):not([data-lm-blocktype="block"])');
-        if (!children || mode === 'page') { return; }
+        var grids = $('[data-lm-root] [data-lm-blocktype="grid"]'),
+            sections = $('[data-lm-root] [data-lm-blocktype="section"]');
 
-        children.forEach(function(element) {
-            element = $(element);
-            if (!element.siblings()) {
-                element.attribute('style', null);
-            }
-        });*/
+        if (grids) { grids.addClass('no-hover'); }
+        if (sections) {
+            sections.forEach(function(section){
+                var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty)');
+                if (subGrids && subGrids.length === 1) { subGrids.addClass('no-move'); }
+                else { subGrids.removeClass('no-move'); }
+            }, this);
+        }
     },
-    cleanup: function(builder) {
-        return;
-        var roots = $('[data-lm-root] .section > .grid'),
-            grids = $('[data-lm-root] .section > .grid .grid'),
-            sects = $('[data-lm-root="page"] .grid > .block:empty');
-        if (!grids && !roots && !sects) {
-            return;
-        }
+    cleanup: function(builder) {}
 
-        var children, container;//, siblings;
-        /*if (sects) sects.forEach(function(sect){
-         sect     = $(sect);
-         siblings = sect.siblings();
-
-         if (siblings.length >= 1){
-         builder.remove(sect.data('lm-id'));
-         sect.remove();
-         } else {
-         // one sibling only, we don't need the parent grid and block anymore
-         container = sect.parent('[data-lm-blocktype="grid"]');
-         builder.remove(sect.data('lm-id'));
-         siblings.children().before(container);
-         builder.remove(container.data('lm-id'));
-         builder.remove(siblings.data('lm-id'));
-         sect.remove();
-         siblings.remove();
-         container.remove();
-         }
-         });*/
-
-        if (grids) {
-            grids.forEach(function(grid) {
-                grid = $(grid);
-                children = grid.children();
-                //console.log(children);
-                if (children && children.length <= 1) {
-                    container = grid.firstChild();
-                    container.children().before(grid);
-                    builder.remove(container.data('lm-id'));
-                    builder.remove(grid.data('lm-id'));
-                    container.remove();
-                    grid.remove();
-                }
-            });
-        }
-
-        if (roots) { roots.data('lm-dropzone', null); }
-    }
 };
 
 var LayoutManager = new prime({

@@ -828,7 +828,7 @@ body {
   min-height: 58px;
 }
 /* line 109, ../scss/admin/_layout-manager.scss */
-#g5-container .lm-blocks .section .grid:hover:not(:empty):before, #g5-container .lm-blocks .section .grid:hover:not(:empty):after {
+#g5-container .lm-blocks .section .grid:hover:not(:empty):not(.no-hover):not(.no-move):before, #g5-container .lm-blocks .section .grid:hover:not(:empty):not(.no-hover):not(.no-gear):after {
   display: block;
   position: absolute;
   background: #f6f6f6;
@@ -841,14 +841,14 @@ body {
   z-index: 5;
 }
 /* line 122, ../scss/admin/_layout-manager.scss */
-#g5-container .lm-blocks .section .grid:hover:not(:empty):before {
+#g5-container .lm-blocks .section .grid:hover:not(:empty):not(.no-hover):not(.no-move):before {
   content: 'm';
   border-radius: 3px 0 0 3px;
   left: -21px;
   border-left: 1px solid #ddd;
 }
 /* line 129, ../scss/admin/_layout-manager.scss */
-#g5-container .lm-blocks .section .grid:hover:not(:empty):after {
+#g5-container .lm-blocks .section .grid:hover:not(:empty):not(.no-hover):not(.no-gear):after {
   content: 'g';
   border-radius: 0 3px 3px 0;
   right: -21px;
