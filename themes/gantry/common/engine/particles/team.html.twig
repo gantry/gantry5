@@ -1,0 +1,16 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+    <div class="grid pure-g">
+        <div class="block">
+            <img alt="image" src="{{ url(particle.members.0.image) }}">
+        </div>
+        <div class="block">
+            <div class="content">
+                <h3>{{ particle.members.0.name|e }}</h3>
+                <h6>{{ particle.members.0.role|e }}</h6>
+                {{ particle.members.0.description }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

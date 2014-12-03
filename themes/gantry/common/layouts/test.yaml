@@ -13,6 +13,7 @@ header:
       - mainbody
     bottom:
       - position-bottom
+      - particle-team
 
   - sidebar 25:
     - position-sidebar

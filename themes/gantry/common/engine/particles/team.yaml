@@ -1,0 +1,33 @@
+name: Team
+description: Displays a single team member (test particle).
+
+form:
+  fields:
+    enabled:
+      type: checkbox
+      label: Enabled
+      description: Globally enable to the particles.
+      default: true
+
+    css.classname:
+      type: text
+      label: Class
+      description: CSS class name for the particle.
+      default: branding
+
+# TODO: make this a list of members.
+    members.0.name:
+      type: text
+      label: Name
+
+    members.0.role:
+      type: text
+      label: Role
+
+    members.0.image:
+      type: text
+      label: Image
+
+    members.0.description:
+      type: textarea
+      label: Name
