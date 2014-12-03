@@ -5,12 +5,8 @@ body {
 
 a {
 	color: $core-accent;
+	@include transition(all 0.2s ease-out);
 	&:hover {
-		color: darken($core-accent, 100%);
+		color: inherit;
 	}
-}
-
-.bg {
-	background: #fff;
-	border: 1px solid $body-border;
 }

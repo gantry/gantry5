@@ -1,6 +1,6 @@
 // Font Size
-$toplevel-font-size:				$core-font-size + .1;
-$dropdown-font-size:				$core-font-size;
+$toplevel-font-size:				$core-font-size - .2;
+$dropdown-font-size:				$core-font-size - .3;
 
 // Padding
 $nav-item-padding:					$leading-margin / 2 $content-padding;
