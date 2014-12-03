@@ -84,24 +84,13 @@ a {
   background: #333 url(../images/backgrounds/feature/bg.jpg);
   color: #fff; }
 
-#main {
-  background: #f7f7f7;
-  margin: 0 0 1.563rem 0; }
-
-#sidebar {
-  color: #aaa; }
-  #sidebar a:hover {
-    color: #fff; }
-
 #bottom {
   background: #fff;
-  color: #7a7a7a;
-  margin: 0 0 1.563rem 0; }
+  color: #7a7a7a; }
 
 #footer {
   background: #eee;
-  color: #888;
-  margin: 0 0 1.563rem 0; }
+  color: #888; }
 
 body {
   font-family: "merriweather", Verdana, Helvetica, Arial, sans-serif; }
@@ -125,14 +114,6 @@ pre {
 
 hr {
   border-bottom: 1px solid #ddd; }
-
-.page-title {
-  margin-top: -25px;
-  padding: 25px;
-  float: left;
-  clear: both;
-  background: #66BDBB;
-  color: #fff; }
 
 fieldset {
   border: 1px solid #ddd; }
