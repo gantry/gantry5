@@ -106,31 +106,36 @@
 
             // handles
             &:hover {
+                box-shadow: 0 0 0 1px #ddd;
                 &:not(:empty):not(.no-hover):not(.no-move):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
                     display: block;
                     position: absolute;
                     background: #f6f6f6;
-                    top: 0;
-                    bottom: 0;
+                    top: -1px;
+                    bottom: -1px;
                     width: 25px;
                     vertical-align: middle;
                     line-height: 58px;
                     text-align: center;
                     z-index: 5;
+                    color: #aaa;
+                    border: 1px solid #ddd;
                 }
 
                 &:not(:empty):not(.no-hover):not(.no-move):before {
-                    content: 'm';
+                    font-family: FontAwesome, sans-serif;
+                    content: "\f0c9";
                     border-radius: 3px 0 0 3px;
                     left: -21px;
-                    border-left: 1px solid #ddd;
+                    border-right: 0;
                 }
 
                 &:not(:empty):not(.no-hover):not(.no-gear):after {
-                    content: 'g';
+                    font-family: FontAwesome, sans-serif;
+                    content: "\f013";
                     border-radius: 0 3px 3px 0;
                     right: -21px;
-                    border-right: 1px solid #ddd;
+                    border-left: 0;
                 }
             }
 
