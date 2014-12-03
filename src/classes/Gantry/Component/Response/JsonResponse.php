@@ -1,12 +1,12 @@
 <?php
 namespace Gantry\Component\Response;
 
+use Gantry\Framework\Base\Gantry;
+
 class JsonResponse
 {
     public $code = 200;
     public $success = true;
-    public $data = null;
-    public $messages = null;
 
     protected $responseCodes = [
         200 => '200 OK',
@@ -20,11 +20,8 @@ class JsonResponse
         503 => '503 Service Temporarily Unavailable'
     ];
 
-    public function __construct($response = null, $success = true, array $messages = [])
+    public function __construct($response = null, $success = true)
     {
-        // If messages exist add them to the output.
-        $this->messages = $messages;
-
         // Check if we are dealing with an error.
         if ($response instanceof \Exception)
         {
@@ -59,11 +56,24 @@ class JsonResponse
             while (GANTRY_DEBUG && $e);
 
             // Create response data on exceptions.
-            $this->data = array('exceptions' => $exceptions);
+            $this->html = $this->renderError($response);
+            $this->exceptions = $exceptions;
+
+            // TODO: remove.
+            $this->data = array('exceptions' => $exceptions, 'html' => $this->html);
         }
         else
         {
             $this->success = $success;
+            if (is_array($response)) {
+                foreach ($response as $key => $value) {
+                    $this->{$key} = $value;
+                }
+            } else {
+                $this->data = $response;
+            }
+
+            // TODO: remove.
             $this->data = $response;
         }
 
@@ -74,6 +84,19 @@ class JsonResponse
             if ($output && defined(GANTRY_DEBUG)) {
                 $this->messages['php'][] = $output;
             }
+        }
+    }
+
+    protected function renderError(\Exception $exception) {
+        try {
+            $gantry = Gantry::instance();
+
+            return $gantry['admin.theme']->render(
+                '@gantry-admin/error.html.twig',
+                ['title' => $this->getResponseStatus(), 'error' => $exception, 'ajax' => 1]
+            );
+        } catch (\Exception $e) {
+            return "<h1>{$this->getResponseStatus()}</h1><p>{$exception->getMessage()}</p>";
         }
     }
 

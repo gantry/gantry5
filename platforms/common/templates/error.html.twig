@@ -1,0 +1,7 @@
+{% extends ajax ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+    <h1>{{ title }}</h1>
+
+    <p>Application returned error: {{ error.getMessage }}</p>
+{% endblock %}
