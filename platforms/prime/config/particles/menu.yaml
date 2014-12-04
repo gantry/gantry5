@@ -18,8 +18,12 @@ ordering:
   features:
     typography:
   sample-pages:
-    about-us-1:
-    our-team-1:
+    about-us:
+      layout-1:
+      layout-2:
+      layout-3:
+    our-team:
+      layout-1:
   special:
     title:
     error:
@@ -47,11 +51,13 @@ items:
     type: separator
     title: Sample Pages
 
-  sample-pages/about-us-1:
-    title: About Us 1
+  sample-pages/about-us:
+    type: separator
+    title: About Us
 
-  sample-pages/our-team-1:
-    title: Our Team 1
+  sample-pages/our-team:
+    type: separator
+    title: Our Team
 
   special:
     type: alias
