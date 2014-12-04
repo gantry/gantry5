@@ -7,7 +7,14 @@ details:
   author:
     name: RocketTheme, LLC
     email: support@rockettheme.com
-    url: http://www.rockettheme.com
+    link: http://www.rockettheme.com
+
+  documentation:
+    link: http://www.rockettheme.com/docs/joomla
+
+  support:
+    link: http://www.rockettheme.com/forum
+
   copyright: (C) 2005 - 2014 RocketTheme, LLC. All rights reserved.
   license: GPLv2
   description: Gantry Base Template

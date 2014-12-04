@@ -2,6 +2,7 @@
 namespace Gantry\Framework\Base;
 
 use Gantry\Component\Layout\LayoutReader;
+use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Component\Twig\TwigExtension;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -64,6 +65,14 @@ trait ThemeTrait
         return $twig;
     }
 
+    public function details()
+    {
+        if (!$this->details) {
+            $this->details = new ThemeDetails($this->name);
+        }
+        return $this->details;
+    }
+
     public function toGrid($text)
     {
         static $sizes = array(
@@ -76,5 +85,70 @@ trait ThemeTrait
         );
 
         return isset($sizes[$text]) ? ' ' . $sizes[$text] : '';
+    }
+
+    /**
+     * Magic setter method
+     *
+     * @param mixed $offset Asset name value
+     * @param mixed $value  Asset value
+     */
+    public function __set($offset, $value)
+    {
+        if ($offset == 'title') {
+            $offset = 'name';
+        }
+
+        $this->details()->offsetSet('details.' . $offset, $value);
+    }
+
+    /**
+     * Magic getter method
+     *
+     * @param  mixed $offset Asset name value
+     * @return mixed         Asset value
+     */
+    public function __get($offset)
+    {
+        if ($offset == 'title') {
+            $offset = 'name';
+        }
+
+        $value = $this->details()->offsetGet('details.' . $offset);
+
+        if ($offset == 'version' && is_int($value)) {
+            $value .= '.0';
+        }
+
+        return $value;
+    }
+
+    /**
+     * Magic method to determine if the attribute is set
+     *
+     * @param  mixed   $offset Asset name value
+     * @return boolean         True if the value is set
+     */
+    public function __isset($offset)
+    {
+        if ($offset == 'title') {
+            $offset = 'name';
+        }
+
+        return $this->details()->offsetExists('details.' . $offset);
+    }
+
+    /**
+     * Magic method to unset the attribute
+     *
+     * @param mixed $offset The name value to unset
+     */
+    public function __unset($offset)
+    {
+        if ($offset == 'title') {
+            $offset = 'name';
+        }
+
+        $this->details()->offsetUnset('details.' . $offset);
     }
 }

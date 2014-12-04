@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Framework;
 
+use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Base\ThemeTrait as GantryThemeTrait;
 use Grav\Common\Theme as BaseTheme;
 use Grav\Common\Grav;
@@ -10,6 +11,11 @@ use RocketTheme\Toolbox\File\YamlFile;
 class Theme extends BaseTheme
 {
     use GantryThemeTrait;
+
+    /**
+     * @var ThemeDetails
+     */
+    protected $details;
 
     public function __construct(Grav $grav, GravConfig $config, $name)
     {

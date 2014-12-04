@@ -3,18 +3,23 @@ namespace Gantry\Component\Theme;
 
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Framework\Base\Gantry;
+use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class ThemeDetails implements \ArrayAccess
 {
-    use NestedArrayAccess;
+    use NestedArrayAccess, Export;
 
     protected $items;
 
     public function __construct($theme)
     {
-        $this->items = CompiledYamlFile::instance("gantry-themes://{$theme}/theme.yaml")->content();
+        $gantry = Gantry::instance();
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $this->items = CompiledYamlFile::instance($locator("gantry-themes://{$theme}/theme.yaml"))->content();
         $this->offsetSet('name', $theme);
     }
 

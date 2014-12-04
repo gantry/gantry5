@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Framework\Base;
 
+use Gantry\Component\Theme\ThemeDetails;
 use RocketTheme\Toolbox\File\JsonFile;
 
 abstract class Theme
@@ -11,6 +12,11 @@ abstract class Theme
     public $url;
     public $path;
     public $layout;
+
+    /**
+     * @var ThemeDetails
+     */
+    protected $details;
 
     public function __construct($path, $name = '')
     {
