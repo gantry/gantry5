@@ -38,6 +38,7 @@ var Section = new prime({
     onDone: function(event) {
         if (!this.block.search('[data-lm-id]')) {
             this.grid.insert(this.block, 'bottom');
+            this.options.builder.add(this.grid);
         }
 
         var plus = this.block.find('.fa-plus');

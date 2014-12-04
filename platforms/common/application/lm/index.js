@@ -48,7 +48,7 @@ ready(function() {
     body.delegate('statechangeAfter', '[data-g5-lm-picker]', function(event, element) {
         var data = JSON.parse(element.data('g5-lm-picker'));
         $('[data-g5-content]').find('.title').text(data.name);
-        builder = new Builder(data.layout);
+        builder.setStructure(data.layout);
         builder.load();
 
         // -!- Popovers
