@@ -116,6 +116,7 @@ elif [ -f $GIT_TARGET/.prime ]; then
     sources=(
         'platforms/prime/admin'
         'platforms/common'
+        'platforms/prime/config'
         'platforms/prime/includes'
         'platforms/prime/layouts'
         'platforms/prime/media'
@@ -135,6 +136,7 @@ elif [ -f $GIT_TARGET/.prime ]; then
     targets=(
         'admin'
         'admin/common'
+        'config'
         'includes'
         'layouts'
         'media'

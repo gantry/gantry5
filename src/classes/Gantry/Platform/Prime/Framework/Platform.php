@@ -44,6 +44,8 @@ class Platform extends BasePlatform
                 ]
             ]
         ];
+
+        array_unshift($this->items['streams']['gantry-config']['prefixes'], 'gantry-prime://config');
     }
 
     public function getCachePath()
