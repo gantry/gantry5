@@ -91,6 +91,11 @@ var DragDrop = new prime({
             y: clientRect.top - this.origin.y
         };
 
+        // only allow to sort grids when targeting the left handle
+        if (this.element.data('lm-blocktype') === 'grid' && Math.abs(this.origin.offset.x) < clientRect.width) {
+            return false;
+        }
+
         if (Math.abs(this.origin.offset.x) < 4) {
             this.emit('dragdrop:resize', event, this.element, this.element.siblings(':not(.placeholder)'));
             return false;
