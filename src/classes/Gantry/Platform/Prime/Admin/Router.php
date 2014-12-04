@@ -68,12 +68,13 @@ class Router implements RouterInterface
             'ajax' => '/{view}/{method}.json',
             'themes' => '',
             'overview' => '/overview',
+            'presets' => '/presets',
             'settings' => '/settings',
+            'menu' => '/menu',
             'pages' => '/pages',
             'pages/edit' => '/pages/edit',
             'pages/create' => '/pages/create',
             'assignments' => '/assignments',
-            'updates' => '/updates',
         ];
 
         $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . ucfirst($view);

@@ -64,12 +64,13 @@ class Router implements RouterInterface
             'ajax' => '&view={view}&layout={method}&style=' . $style. '&format=json',
             'themes' => '',
             'overview' => '&view=overview&style=' . $style,
+            'presets' => '&view=presets&style=' . $style,
             'settings' => '&view=settings&style=' . $style,
+            'menu' => '&view=menu&style=' . $style,
             'pages' => '&view=pages&style=' . $style,
             'pages/edit' => '&view=pages&layout=edit&style=' . $style,
             'pages/create' => '&view=pages&layout=create&style=' . $style,
             'assignments' => '&view=assignments&style=' . $style,
-            'updates' => '&view=updates&style=' . $style,
         ];
 
         $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . ucfirst($view);

@@ -3,10 +3,10 @@ namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Controller\HtmlController;
 
-class Updates extends HtmlController
+class Menu extends HtmlController
 {
     public function index(array $params)
     {
-        return $this->container['admin.theme']->render('@gantry-admin/updates.html.twig', $params);
+        return $this->container['admin.theme']->render('@gantry-admin/menu.html.twig', $params);
     }
 }

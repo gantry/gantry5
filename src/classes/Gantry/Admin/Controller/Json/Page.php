@@ -2,10 +2,11 @@
 namespace Gantry\Admin\Controller\Json;
 
 use Gantry\Admin\Controller\Html\Assignments;
+use Gantry\Admin\Controller\Html\Menu;
 use Gantry\Admin\Controller\Html\Overview;
 use Gantry\Admin\Controller\Html\Pages;
+use Gantry\Admin\Controller\Html\Presets;
 use Gantry\Admin\Controller\Html\Settings;
-use Gantry\Admin\Controller\Html\Updates;
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\Response\JsonResponse;
 
@@ -21,9 +22,19 @@ class Page extends JsonController
         return new JsonResponse(['html' => (new Overview($this->container))->index($params)]);
     }
 
+    public function presets(array $params)
+    {
+        return new JsonResponse(['html' => (new Presets($this->container))->index($params)]);
+    }
+
     public function settings(array $params)
     {
         return new JsonResponse(['html' => (new Settings($this->container))->index($params)]);
+    }
+
+    public function menu(array $params)
+    {
+        return new JsonResponse(['html' => (new Menu($this->container))->index($params)]);
     }
 
     public function pages_index(array $params)
@@ -39,11 +50,5 @@ class Page extends JsonController
     public function assignments(array $params)
     {
         return new JsonResponse(['html' => (new Assignments($this->container))->index($params)]);
-    }
-
-    public function updates(array $params)
-    {
-        throw new \Exception('booo');
-        return new JsonResponse(['html' => (new Updates($this->container))->index($params)]);
     }
 }
