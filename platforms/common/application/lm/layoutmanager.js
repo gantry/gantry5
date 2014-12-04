@@ -45,7 +45,7 @@ var singles = {
 
         if (grids) { grids.removeClass('no-hover'); }
         if (sections) {
-            sections.forEach(function(section){
+            sections.forEach(function(section) {
                 var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty)');
                 if (subGrids) {
                     if (subGrids.length === 1) { subGrids.addClass('no-move'); }
@@ -60,7 +60,7 @@ var singles = {
 
         if (grids) { grids.addClass('no-hover'); }
         if (sections) {
-            sections.forEach(function(section){
+            sections.forEach(function(section) {
                 var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty)');
                 if (subGrids) {
                     if (subGrids.length === 1) { subGrids.addClass('no-move'); }
@@ -126,8 +126,9 @@ var LayoutManager = new prime({
             display: 'block',
             opacity: 0.5
         }).addClass('original-placeholder').data('lm-dropzone', null);
+        if (type === 'grid') { this.original.style({ display: 'flex' }); }
         this.originalType = type;
-        this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({builder: this.builder});
+        this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({ builder: this.builder });
 
         if (!this.block.isNew()) {
             var margins = $(element).find('[data-lm-blocktype]').compute('margin');
@@ -138,10 +139,10 @@ var LayoutManager = new prime({
                 height: Math.ceil(size.height)
             }).find('[data-lm-blocktype]').style({ margin: margins });
 
-            if (this.block.getType() === 'grid'){
+            if (this.block.getType() === 'grid') {
                 var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header)');
                 if (siblings) {
-                    siblings.search('[data-lm-id]').style({'pointer-events': 'none'});
+                    siblings.search('[data-lm-id]').style({ 'pointer-events': 'none' });
                 }
             }
 
@@ -220,18 +221,22 @@ var LayoutManager = new prime({
         }
 
         // If it's not a block we don't want a small version of the placeholder
-        this.placeholder.removeClass('in-between').removeClass('in-between-grids');
+        this.placeholder.removeClass('in-between').removeClass('in-between-grids').removeClass('in-between-grids-first').removeClass('in-between-grids-last');
         this.placeholder.style({ display: 'block' })[dataType !== 'block' ? 'removeClass' : 'addClass']('in-between');
-        if (originalType === 'grid' && dataType === 'grid') { this.placeholder.addClass('in-between-grids'); }
+        if (originalType === 'grid' && dataType === 'grid') {
+            var next = this.placeholder.nextSibling(),
+                previous = this.placeholder.previousSibling();
+
+            this.placeholder.addClass('in-between-grids');
+            if (previous && !previous.data('lm-blocktype')) { this.placeholder.addClass('in-between-grids-first'); }
+            if (!next || !next.data('lm-blocktype')) { this.placeholder.addClass('in-between-grids-last'); }
+        }
     },
 
     nolocation: function(event) {
         if (this.placeholder) { this.placeholder.remove(); }
 
-        //var siblings = this.placeholder.siblings();
-
         if (!this.block.isNew()) {
-
             if ($(event.target).matches(this.eraser.element.find('.trash-zone'))) {
                 this.dragdrop.removeElement = true;
                 this.eraser.over();
@@ -262,7 +267,7 @@ var LayoutManager = new prime({
 
         if (siblings) {
             var diff = size / siblings.length, block;
-            siblings.forEach(function(sibling){
+            siblings.forEach(function(sibling) {
                 sibling = $(sibling);
                 block = get(this.builder.map, sibling.data('lm-id'));
                 block.setSize(block.getSize() + diff, true);
@@ -305,10 +310,17 @@ var LayoutManager = new prime({
             return;
         }
 
+        if (this.block.getType() === 'grid') {
+            var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header)');
+            if (siblings) {
+                siblings.search('[data-lm-id]').style({ 'pointer-events': 'inherit' });
+            }
+        }
+
         if (!this.block.isNew()) { this.eraser.hide(); }
         if (!this.dragdrop.matched) {
             if (this.placeholder) { this.placeholder.remove(); }
-            //if (this.original) { this.original.remove(); }
+            if (this.original) { this.original.remove(); }
 
             return;
         }
@@ -335,8 +347,14 @@ var LayoutManager = new prime({
 
         // case 1: it's a position/spacer and needs to be wrapped by a block (dropped at root or next to another block)
         if (type !== 'block' && type !== 'grid' && ((this.dirty || targetType === 'section' || targetType === 'grid') || (!this.dirty && targetType === 'block' && parentType !== 'block'))) {
-            wrapper = new Blocks.block({ attributes: { size: 50 }, builder: this.builder }).adopt(this.block.block);
-            insider = new Blocks[this.block.block.data('lm-blocktype')]({ id: this.block.block.data('lm-id'), builder: this.builder }).setLayout(this.block.block);
+            wrapper = new Blocks.block({
+                attributes: { size: 50 },
+                builder: this.builder
+            }).adopt(this.block.block);
+            insider = new Blocks[this.block.block.data('lm-blocktype')]({
+                id: this.block.block.data('lm-id'),
+                builder: this.builder
+            }).setLayout(this.block.block);
 
             wrapper.setSize();
             this.block = wrapper;
@@ -386,27 +404,16 @@ var LayoutManager = new prime({
                 dirtyMap = get(this.builder.map, dirtyId);
 
                 if (!dirtyMap) {
-                    dirtyBlock = new Blocks[dirtyType]({ id: dirtyId, builder: this.builder }).setLayout(element);
+                    dirtyBlock = new Blocks[dirtyType]({
+                        id: dirtyId,
+                        builder: this.builder
+                    }).setLayout(element);
                     if (dirtyType === 'block') { dirtyBlock.setSize(50, true); }
                     this.builder.add(dirtyBlock);
                     dirtyBlock.emit('rendered', dirtyBlock, null);
                 }
             }, this);
         }
-
-        if (this.block.getType() === 'grid'){
-            var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header)');
-            if (siblings) {
-                siblings.search('[data-lm-id]').style({'pointer-events': 'inherit'});
-            }
-        }
-
-        /*// if the grid is freshly created we add it to the builder map
-        var parent = this.placeholder.parent('[data-lm-id]');
-        if (parent && !this.builder.get(parent.data('lm-id'))){
-            this.builder.add(parent.data('lm-id'));
-        }
-*/
 
         if (this.block.hasAttribute('size')) { this.block.setSize(this.placeholder.compute('flex')); }
         this.block.insert(this.placeholder);
