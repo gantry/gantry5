@@ -237,12 +237,18 @@
             padding: 13px;
             color: $white;
             background: #aaaaaa;
+            text-shadow: 1px 1px 0 #8F8F8F, -1px -1px 0 #8F8F8F, 1px -1px 0 #8F8F8F, -1px 1px 0 #8F8F8F, 1px 1px 0 #8F8F8F;
             margin-right: 4px;
             position: relative;
 
             strong {
                 font-weight: bold;
                 color: $white;
+            }
+            
+            > span {
+                position: relative;
+                z-index: 2;
             }
 
             .float-right {
@@ -262,24 +268,30 @@
                 display: inline-block;
                 margin-top: -5px;
                 margin-right: 5px;
+                text-shadow: none;
+                opacity: 0.8;
             }
         }
 
         .particle {
             background-color: #00B1D9;
+            text-shadow: 1px 1px 0 #008DAD, -1px -1px 0 #008DAD, 1px -1px 0 #008DAD, -1px 1px 0 #008DAD, 1px 1px 0 #008DAD;
         }
 
         .spacer {
             background-color: #eee;
             color: #666;
+            text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
         }
 
         .atom {
             background-color: #9055AF;
+            text-shadow: 1px 1px 0 #633979, -1px -1px 0 #633979, 1px -1px 0 #633979, -1px 1px 0 #633979, 1px 1px 0 #633979;
         }
 
         .pagecontent {
             background-color: #218fda;
+            text-shadow: 1px 1px 0 #116AA6, -1px -1px 0 #116AA6, 1px -1px 0 #116AA6, -1px 1px 0 #116AA6, 1px 1px 0 #116AA6;
         }
 
         /* END THIS IS FOR PAGES */
