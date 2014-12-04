@@ -320,7 +320,7 @@ var LayoutManager = new prime({
         if (!this.block.isNew()) { this.eraser.hide(); }
         if (!this.dragdrop.matched) {
             if (this.placeholder) { this.placeholder.remove(); }
-            if (this.original) { this.original.remove(); }
+            //if (this.original) { this.original.remove(); }
 
             return;
         }
