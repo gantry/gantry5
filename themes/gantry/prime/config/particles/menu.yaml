@@ -17,6 +17,9 @@ ordering:
   team:
   features:
     typography:
+  sample-pages:
+    about-us-1:
+    our-team-1:
   special:
     title:
     error:
@@ -39,6 +42,16 @@ items:
     anchor_title:
     menu_image:
     menu_icon: lock
+
+  sample-pages:
+    type: separator
+    title: Sample Pages
+
+  sample-pages/about-us-1:
+    title: About Us 1
+
+  sample-pages/our-team-1:
+    title: Our Team 1
 
   special:
     type: alias
