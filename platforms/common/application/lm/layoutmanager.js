@@ -47,8 +47,10 @@ var singles = {
         if (sections) {
             sections.forEach(function(section){
                 var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty)');
-                if (subGrids && subGrids.length === 1) { subGrids.addClass('no-move'); }
-                else { subGrids.removeClass('no-move'); }
+                if (subGrids) {
+                    if (subGrids.length === 1) { subGrids.addClass('no-move'); }
+                    else { subGrids.removeClass('no-move'); }
+                }
             }, this);
         }
     },
@@ -60,8 +62,10 @@ var singles = {
         if (sections) {
             sections.forEach(function(section){
                 var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty)');
-                if (subGrids && subGrids.length === 1) { subGrids.addClass('no-move'); }
-                else { subGrids.removeClass('no-move'); }
+                if (subGrids) {
+                    if (subGrids.length === 1) { subGrids.addClass('no-move'); }
+                    else { subGrids.removeClass('no-move'); }
+                }
             }, this);
         }
     },
