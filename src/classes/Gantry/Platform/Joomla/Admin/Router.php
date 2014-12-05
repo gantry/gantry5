@@ -31,7 +31,8 @@ class Router implements RouterInterface
         $params = [
             'id'   => $input->getInt('id'),
             'ajax' => ($format == 'json'),
-            'location' => $view
+            'location' => $view,
+            'params' => isset($_POST['params']) && is_string($_POST['params']) ? json_decode($_POST['params']) : []
         ];
 
         // If style is set, resolve the template and load it.
