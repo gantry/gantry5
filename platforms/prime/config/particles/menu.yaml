@@ -165,3 +165,9 @@ items:
     menu_icon: tint
     link: ../
     title: Back to Themes
+
+  admin/learn:
+    type: alias
+    menu_icon: book
+    link: ../learn
+    title: Documentation
