@@ -24,6 +24,12 @@ ordering:
       layout-3:
     our-team:
       layout-1:
+      layout-2:
+      layout-3:
+    pricing:
+      layout-1:
+      layout-2:
+      layout-3:
   special:
     title:
     error:
@@ -36,6 +42,15 @@ ordering:
   admin:
 
 items:
+  home:
+    menu_icon: home
+
+  about:
+    menu_icon: check
+
+  team:
+    menu_icon: users
+
   features:
     type: alias
     link: features/typography
@@ -45,19 +60,27 @@ items:
     anchor_css:
     anchor_title:
     menu_image:
-    menu_icon: lock
+    menu_icon: bolt
 
   sample-pages:
     type: separator
     title: Sample Pages
+    menu_icon: fire
 
   sample-pages/about-us:
     type: separator
     title: About Us
+    menu_icon: ra
 
   sample-pages/our-team:
     type: separator
     title: Our Team
+    menu_icon: users
+
+  sample-pages/pricing:
+    type: separator
+    title: Pricing
+    menu_icon: usd
 
   special:
     type: alias
@@ -67,47 +90,78 @@ items:
     anchor_css:
     anchor_title:
     menu_image:
-    menu_icon: lock
+    menu_icon: shield
 
   special/title:
     type: heading
     title: Special Pages
 
+  special/error:
+    menu_icon: warning
+
+  special/unsupported:
+    menu_icon: wheelchair
+
+  special/offline:
+    menu_icon: power-off
+
+  special/comingsoon:
+    menu_icon: paint-brush
+
   special/separator:
     type: separator
     title: Component Stuff
 
+  special/component:
+    menu_icon: file-text-o
+
+  special/raw:
+    menu_icon: file-code-o
+
   admin:
     type: alias
+    menu_icon: cogs
     link: admin
     title: Admin
 
   admin/overview:
     type: alias
+    menu_icon: adjust
     link: admin
     title: Overview
 
+  admin/presets:
+    type: alias
+    menu_icon: star
+    link: admin/presets
+    title: Presets
+
   admin/settings:
     type: alias
+    menu_icon: wrench
     link: admin/settings
     title: Settings
 
   admin/pages:
     type: alias
+    menu_icon: columns
     link: admin/pages
-    title: Page Setup
+    title: Layouts
+
+  admin/menu:
+    type: alias
+    menu_icon: list
+    link: admin/menu
+    title: Menu
 
   admin/assignments:
     type: alias
+    menu_icon: check
     link: admin/assignments
     title: Assignments
 
-  admin/updates:
-    type: alias
-    link: admin/updates
-    title: Updates
-
   admin/themes:
     type: alias
+    menu_icon: tint
     link: ../
     title: Back to Themes
