@@ -88,6 +88,35 @@ a {
   background: #333 url(../images/backgrounds/feature/bg.jpg);
   color: #fff; }
 
+#main {
+  background: #fff; }
+
+#main-top {
+  background: #66BDBB;
+  color: #fff; }
+  #main-top a {
+    color: #398482; }
+    #main-top a:hover {
+      color: inherit; }
+  #main-top .button {
+    color: #fff;
+    background: #398482; }
+    #main-top .button:hover {
+      background: #2a605f; }
+
+#main-bottom {
+  background: #66BDBB;
+  color: #fff; }
+  #main-bottom a {
+    color: #398482; }
+    #main-bottom a:hover {
+      color: inherit; }
+  #main-bottom .button {
+    color: #fff;
+    background: #47955f; }
+    #main-bottom .button:hover {
+      background: #377249; }
+
 #bottom {
   background: #fff;
   color: #7a7a7a; }
@@ -95,6 +124,10 @@ a {
 #footer {
   background: #eee;
   color: #888; }
+
+.box1 {
+  color: #fff;
+  background: #66BDBB; }
 
 body {
   font-family: "merriweather", Verdana, Helvetica, Arial, sans-serif; }

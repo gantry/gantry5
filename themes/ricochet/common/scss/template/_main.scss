@@ -1,3 +1,39 @@
 #main {
+	background: $main-bg;
+}
 
+#main-top {
+	background: $maintop-bg;
+	color: $maintop-text;
+	a {
+		color: darken($core-accent, 20%);
+		&:hover {
+			color: inherit;
+		}
+	}
+	.button {
+		color: $white;
+		background: darken($core-accent, 20%);
+		&:hover {
+			background: darken($core-accent, 30%);
+		}
+	}
+}
+
+#main-bottom {
+	background: $maintop-bg;
+	color: $maintop-text;
+	a {
+		color: darken($core-accent, 20%);
+		&:hover {
+			color: inherit;
+		}
+	}
+	.button {
+		color: $white;
+		background: darken($core-accent2, 20%);
+		&:hover {
+			background: darken($core-accent2, 30%);
+		}
+	}
 }

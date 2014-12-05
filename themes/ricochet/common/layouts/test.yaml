@@ -12,10 +12,14 @@ feature:
     - [position-feature-1, position-feature-2]
 
 container:
-  main:
-    - position-breadcrumbs
-    - position-global_messages
-    - mainbody
+  1:
+    - main:
+      - position-breadcrumbs
+      - position-global_messages
+      - mainbody
+    - sidebar 25:
+      - position-sidebar
+      - position-right
 
 bottom:
   container:
