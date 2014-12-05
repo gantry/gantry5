@@ -80,6 +80,10 @@ a {
   .main-nav .sublevel > li:hover > a, .main-nav .sublevel > li.active > a {
     background: #4bafad; }
 
+#showcase {
+  background: #fff;
+  color: #7A7A7A; }
+
 #feature {
   background: #333 url(../images/backgrounds/feature/bg.jpg);
   color: #fff; }
