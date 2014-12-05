@@ -21,12 +21,20 @@ $core-box-shadow-focus: 		$core-box-shadow, 0 0 5px rgba(darken($core-border-col
 // Background
 $page-bg:						#fff;
 
+// Side Slider
+$sideslider-text:				#7A7A7A;
+$sideslider-bg:					#F6F6F6;
+
 // Header
 $header-bg:						#fff;
 $header-text:					#333;
 
 // Nav
 $nav-link:						$header-text;
+
+// Showcase
+$showcase-text:					#7A7A7A;
+$showcase-bg:					#fff;
 
 // Feature
 $feature-bg:					#333 url(../images/backgrounds/feature/bg.jpg);
