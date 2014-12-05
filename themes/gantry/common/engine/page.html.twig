@@ -5,7 +5,9 @@
 
 {%- set page_layout %}
     {% block page_layout %}
-    {% include '@nucleus/container.html.twig' with {segments: gantry.theme.segments} %}
+    {% for segment in gantry.theme.segments %}
+        {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
+    {% endfor %}
     {% endblock %}
 {% endset %}
 

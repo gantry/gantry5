@@ -46,6 +46,8 @@ class LayoutReader
         if (is_numeric($field))  {
             $result = ['type' => self::$scopes[$scope]];
             $scope = ($scope + 1) % 2;
+        } elseif ($field == 'container') {
+            $result = ['type' => $field];
         } else {
             $list = explode(' ', $field, 2);
             $field = array_shift($list);

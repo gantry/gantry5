@@ -1,9 +1,10 @@
-header:
-  - [particle-logo 20, particle-menu 80]
+container:
+  header:
+    - [particle-logo 20, particle-menu 80]
 
-body:
-  - mainbody
-  - particle-team
+  body:
+    - mainbody
+    - particle-team
 
-footer:
-  - [spacer 25, particle-copyright 50, particle-branding 25]
+  footer:
+    - [spacer 25, particle-copyright 50, particle-branding 25]
