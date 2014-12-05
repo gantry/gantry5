@@ -21,7 +21,17 @@ abstract class BaseController implements RestfulControllerInterface
         throw new RuntimeException('Not Found', 404);
     }
 
+    public function display(array $params)
+    {
+        throw new RuntimeException('Not Found', 404);
+    }
+
     public function create(array $params)
+    {
+        throw new RuntimeException('Method Not Allowed', 405);
+    }
+
+    public function edit(array $params)
     {
         throw new RuntimeException('Method Not Allowed', 405);
     }
@@ -31,12 +41,7 @@ abstract class BaseController implements RestfulControllerInterface
         throw new RuntimeException('Method Not Allowed', 405);
     }
 
-    public function display(array $params)
-    {
-        throw new RuntimeException('Not Found', 404);
-    }
-
-    public function edit(array $params)
+    public function replace(array $params)
     {
         throw new RuntimeException('Method Not Allowed', 405);
     }

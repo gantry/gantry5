@@ -52,6 +52,21 @@ abstract class Folder
     }
 
     /**
+     * Shift first directory out of the path.
+     *
+     * @param string $path
+     * @return string
+     */
+    public static function shift(&$path)
+    {
+        $parts = explode('/', trim($path, '/'), 2);
+        $result = array_shift($parts);
+        $path = array_shift($parts);
+
+        return $result ?: null;
+    }
+
+    /**
      * Return recursive list of all files and directories under given path.
      *
      * @param  string            $path

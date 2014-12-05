@@ -23,24 +23,24 @@ class Router implements RouterInterface
 
         if (isset($path[0]) && $path[0] == 'admin') {
             array_shift($path);
+
+            $view = array_shift($path) ?: 'overview';
+            $layout = array_shift($path) ?: 'index';
+            $style = isset($this->container['theme.name']) ? $this->container['theme.name'] : '';
+
+        } else {
+            $view = array_shift($path) ?: 'themes';
+            $layout = array_shift($path) ?: 'index';
+            $style = '';
         }
 
         $format = PAGE_EXTENSION;
-
-        if (isset($this->container['theme.name'])) {
-            $view = array_shift($path) ?: 'overview';
-            $layout = array_shift($path) ?: 'index';
-            $style = $this->container['theme.name'];
-        } else {
-            $view = 'themes';
-            $layout = 'index';
-            $style = 'gantry';
-        }
 
         $params = [
             'id'   => 0,
             'ajax' => $format == 'json',
             'location' => $view,
+            'path' => $path,
             'params' => isset($_POST['params']) && is_string($_POST['params']) ? json_decode($_POST['params'], true) : []
         ];
 
@@ -84,11 +84,17 @@ class Router implements RouterInterface
         $contents = '';
         try {
             if (!class_exists($class) || !method_exists($class, $layout)) {
-                throw new \RuntimeException('Not Found', 404);
-            }
 
-            $controller = new $class($this->container);
-            $contents = $controller->{$layout}($params);
+                $params = [
+                    'title' => '404 Not Found',
+                    'error' => new \RuntimeException('Page Not Found ' . $class, 404)
+                ];
+                $contents = $this->container['admin.theme']->render('@gantry-admin/error.html.twig', $params);
+            } else {
+
+                $controller = new $class($this->container);
+                $contents = $controller->{$layout}($params);
+            }
 
         } catch (\Exception $e) {
             if ($format == 'json') {

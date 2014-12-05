@@ -1,4 +1,6 @@
 <?php
+use Gantry\Component\Filesystem\Folder;
+
 define('PRIME_ROOT', dirname($_SERVER['SCRIPT_FILENAME']));
 define('PRIME_URI', dirname($_SERVER['SCRIPT_NAME']));
 
@@ -6,14 +8,15 @@ define('PRIME_URI', dirname($_SERVER['SCRIPT_NAME']));
 $gantry = include_once PRIME_ROOT . '/includes/gantry.php';
 
 // Get current theme and path.
-$path = explode('/', Gantry\Component\Filesystem\Folder::getRelativePath($_SERVER['REQUEST_URI'], PRIME_URI), 2);
-$theme = array_shift($path);
-$path = array_shift($path);
+$path = Folder::getRelativePath($_SERVER['REQUEST_URI'], PRIME_URI);
 $extension = strrchr(basename($path), '.');
-$path = substr(trim($path, '/') ?: 'home', 0, -strlen($extension) ?: 9999);
+if ($extension) {
+    $path = substr($path, 0, -strlen($extension));
+}
+$theme = strpos($path, 'admin') !== 0 ? Folder::shift($path) : null;
 
 define('THEME', $theme);
-define('PAGE_PATH', $path);
+define('PAGE_PATH', $path ?: ($theme ? 'home' : ''));
 define('PAGE_EXTENSION', trim($extension, '.') ?: 'html');
 
 // Bootstrap selected theme.

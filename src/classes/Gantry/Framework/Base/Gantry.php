@@ -32,7 +32,7 @@ class Gantry extends Container
             throw new \InvalidArgumentException(sprintf('Invalid route: %s', $route));
         }
 
-        return $this->offsetGet('base_url') . $routes[$route];
+        return '/' . ltrim($this->offsetGet('base_url') . $routes[$route], '/');
     }
 
     public function wrapper($value = null)

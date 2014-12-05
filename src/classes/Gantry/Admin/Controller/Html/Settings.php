@@ -13,10 +13,7 @@ class Settings extends HtmlController
 {
     public function index(array $params)
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = Gantry::instance()['locator'];
-        $paths = $locator->findResources('gantry-particles://');
-        $files = (new ConfigFileFinder)->listFiles($paths);
+        $files = $this->locateParticles();
 
         $particles = [];
         foreach ($files as $key => $file) {
@@ -26,5 +23,29 @@ class Settings extends HtmlController
 
         $params['particles'] = $particles;
         return $this->container['admin.theme']->render('@gantry-admin/settings.html.twig', $params);
+    }
+
+    public function display(array $params)
+    {
+        $files = $this->locateParticles();
+
+        $key = !empty($params['id']) ? $params['id'] : null;
+
+        $particles = [];
+        if (!empty($files[$key])) {
+            $filename = $files[$key];
+            $particles[$key] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+        }
+
+        $params['particles'] = $particles;
+        return $this->container['admin.theme']->render('@gantry-admin/settings.html.twig', $params);
+    }
+
+    protected function locateParticles() {
+        /** @var UniformResourceLocator $locator */
+        $locator = Gantry::instance()['locator'];
+        $paths = $locator->findResources('gantry-particles://');
+
+        return (new ConfigFileFinder)->listFiles($paths);
     }
 }
