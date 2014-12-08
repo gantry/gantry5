@@ -11,7 +11,7 @@
 				color: $nav-link;
 				font-weight: bold;
 			}
-			&:hover, &.active {
+			&:hover, &:focus, &.active {
 				> a, > .separator {
 					color: $core-accent;
 				}
@@ -22,28 +22,36 @@
 	// First Level Dropdown
 	.dropdown {
 		background: $core-accent;
-		box-shadow: 0 3px 0 darken($core-accent, 6%);
 	    color: $white;
-
-	    // Additional Level Dropdowns
-	    .dropdown {
-			background: darken($core-accent, 4%);
-			box-shadow: 0 3px 0 darken($core-accent, 8%);
-	    }
+	    border: 1px solid darken($core-accent, 15%);
+	    margin-top: -2px;
 	}
 
 	// Sublevel Items
 	.sublevel {
     	> li {
+    		padding: 0.3rem;
+    		border-bottom: 1px solid darken($core-accent, 15%);
+			border-top: 1px solid lighten($core-accent, 10%);
+
+			&:last-child {
+				border-bottom: 0;
+			}
+
     		> a, > .separator, > .nav-header {
     			font-size: $dropdown-font-size;
-    			padding: $nav-item-padding;
+    			padding: $subnav-item-padding;
     			font-weight: normal;
     			color: $white;
+    			border-radius: $core-border-radius;
+    			border: 1px solid transparent;
     		}
-    		&:hover > a, &.active > a {
-    			background: darken($core-accent, 8%);
-    		}
+    		&:hover, &:focus, &.active {
+				> a, > .separator {
+					background: darken($core-accent, 10%);
+					border: 1px solid darken($core-accent, 15%);
+				}
+			}
     	}
     }
 }

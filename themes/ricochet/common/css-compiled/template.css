@@ -60,25 +60,32 @@ a {
   text-transform: uppercase; }
   .main-nav > .toplevel > li > a, .main-nav > .toplevel > li > .separator {
     font-size: 0.8rem;
-    padding: 0.75rem 0.938rem;
+    padding: 0.75rem 0.62533rem;
     color: #333;
     font-weight: bold; }
-  .main-nav > .toplevel > li:hover > a, .main-nav > .toplevel > li:hover > .separator, .main-nav > .toplevel > li.active > a, .main-nav > .toplevel > li.active > .separator {
+  .main-nav > .toplevel > li:hover > a, .main-nav > .toplevel > li:hover > .separator, .main-nav > .toplevel > li:focus > a, .main-nav > .toplevel > li:focus > .separator, .main-nav > .toplevel > li.active > a, .main-nav > .toplevel > li.active > .separator {
     color: #66BDBB; }
   .main-nav .dropdown {
     background: #66BDBB;
-    box-shadow: 0 3px 0 #51b4b1;
-    color: #fff; }
-    .main-nav .dropdown .dropdown {
-      background: #58b7b5;
-      box-shadow: 0 3px 0 #4bafad; }
-  .main-nav .sublevel > li > a, .main-nav .sublevel > li > .separator, .main-nav .sublevel > li > .nav-header {
-    font-size: 0.7rem;
-    padding: 0.75rem 0.938rem;
-    font-weight: normal;
-    color: #fff; }
-  .main-nav .sublevel > li:hover > a, .main-nav .sublevel > li.active > a {
-    background: #4bafad; }
+    color: #fff;
+    border: 1px solid #419694;
+    margin-top: -2px; }
+  .main-nav .sublevel > li {
+    padding: 0.3rem;
+    border-bottom: 1px solid #419694;
+    border-top: 1px solid #8acccb; }
+    .main-nav .sublevel > li:last-child {
+      border-bottom: 0; }
+    .main-nav .sublevel > li > a, .main-nav .sublevel > li > .separator, .main-nav .sublevel > li > .nav-header {
+      font-size: 0.7rem;
+      padding: 0.5rem 0.469rem;
+      font-weight: normal;
+      color: #fff;
+      border-radius: 0.1875rem;
+      border: 1px solid transparent; }
+    .main-nav .sublevel > li:hover > a, .main-nav .sublevel > li:hover > .separator, .main-nav .sublevel > li:focus > a, .main-nav .sublevel > li:focus > .separator, .main-nav .sublevel > li.active > a, .main-nav .sublevel > li.active > .separator {
+      background: #48a8a5;
+      border: 1px solid #419694; }
 
 #showcase {
   background: #fff;
