@@ -2,6 +2,7 @@ module.exports = {
     base: require('./base'),
     atom: require('./atom'),
     section: require('./section'),
+    "non-visible": require('./non-visible'),
     grid: require('./grid'),
     block: require('./block'),
     particle: require('./particle'),

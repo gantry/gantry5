@@ -70,7 +70,7 @@ ready(function() {
 
     // layoutmanager
     layoutmanager = new LayoutManager('body', {
-        delegate: '[data-lm-root] .section .grid .block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move)',
+        delegate: '[data-lm-root] .grid .block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move)',
         droppables: '[data-lm-dropzone]',
         exclude: '.section-header .button, .lm-newblocks .float-right .button',
         resize_handles: '[data-lm-root] .grid > .block:not(:last-child)',

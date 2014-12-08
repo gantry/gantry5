@@ -49,7 +49,7 @@
             }
         }
 
-        .section {
+        .section, .non-visible-section {
             background: $white;
 
             margin: 14px 0;
@@ -164,6 +164,22 @@
                 }
             }
 
+        }
+
+        .non-visible-section {
+            background-color: #e5e5e5;
+
+            .grid {
+                background: $white;
+                &:empty:after {
+                    content: "Drop non-visible particle here...";
+                }
+                &:hover {
+                    &:not(:empty):before, &:not(:empty):after {
+                        display: none !important;
+                    }
+                }
+            }
         }
 
         > .grid > .block {
@@ -414,6 +430,7 @@
 
     #trash {
         @include position(fixed, -100px 0 inherit 0);
+        z-index: 50;
         text-align: center;
         font-weight: bold;
         color: $white;
