@@ -30,6 +30,18 @@ ordering:
       layout-1:
       layout-2:
       layout-3:
+    faq:
+      layout-1:
+      layout-2:
+      layout-3:
+    services:
+      layout-1:
+      layout-2:
+      layout-3:
+    blog:
+      layout-1:
+      layout-2:
+      layout-3:
   special:
     title:
     error:
@@ -81,6 +93,21 @@ items:
     type: separator
     title: Pricing
     menu_icon: usd
+
+  sample-pages/faq:
+    type: separator
+    title: FAQ
+    menu_icon: book
+
+  sample-pages/services:
+    type: separator
+    title: Services
+    menu_icon: taxi
+
+  sample-pages/blog:
+    type: separator
+    title: Blog
+    menu_icon: calendar-o
 
   special:
     type: alias
