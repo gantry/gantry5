@@ -1,7 +1,9 @@
 // Basics
 $white:							#fff;
 $black:							#000;
-$light-gray:					#ddd;
+$gray:                          #555555;
+$light-gray:					#e6e6e6;
+$dark-gray:						#3B3B3B;
 
 // Core
 $core-text:						#7a7a7a;
@@ -37,7 +39,8 @@ $showcase-text:					#7A7A7A;
 $showcase-bg:					#fff;
 
 // Feature
-$feature-bg:					#333 url(../images/backgrounds/feature/bg.jpg);
+$feature-bg:					#333;
+$feature-bg-image:				url(../images/backgrounds/feature/bg.jpg);
 $feature-text:					#fff;
 
 // Utility

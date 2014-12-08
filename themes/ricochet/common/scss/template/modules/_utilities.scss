@@ -1,0 +1,8 @@
+@mixin content-border($color: $core-border-color) {
+	border-right: 1px solid $color;
+	border-left: 1px solid $color;
+	border-bottom: 1px solid $color;
+	&:first-child {
+		border-top: 1px solid $color;
+	}
+}

@@ -1,21 +1,16 @@
 %button {
 	display: inline-block;
-	padding: 7px 12px;
-	&:active {
-		margin: 2px 0 -2px 0;
-	}
+	padding: 8px 15px;
+	font-size: $core-font-size - 0.2;
+	font-family: $font-family-alt;
+	text-transform: uppercase;
 }
 
-@mixin button-color($color, $text: $white) {
+@mixin button-color($color: $core-accent, $text: $white) {
 	background: $color;
 	color: $text;
-	box-shadow: 0 3px 0 darken($color, 6%);
 	&:hover {
-		background: darken($color, 6%);
-		box-shadow: 0 3px 0 darken($color, 12%);
+		background: lighten($color, 10%);
 		color: $text;
-	}
-	&:active {
-		box-shadow: 0 1px 0 darken($color, 12%);
 	}
 }

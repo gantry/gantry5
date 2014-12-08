@@ -1,4 +1,7 @@
 #feature {
-	background: $feature-bg;
+	background-color: $feature-bg;
+	background-image: $feature-bg-image;
+	background-repeat: no-repeat;
+	background-size: cover;
 	color: $feature-text;
 }

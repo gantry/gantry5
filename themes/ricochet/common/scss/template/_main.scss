@@ -1,5 +1,8 @@
 #main {
 	background: $main-bg;
+	.content {
+		@include content-border;
+	}
 }
 
 #main-top {
