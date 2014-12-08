@@ -9,47 +9,28 @@ form:
       description: Globally enable to the particles.
       default: true
 
-    css.classname:
+    css.class:
       type: text
       label: Class
       description: CSS class name for the particle.
       default: branding
 
-# TODO: make this a list of members.
-    separator:
-      type: separator
+    members:
+      type: list
 
-    members.0.name:
-      type: text
-      label: Name
+      fields:
+        name:
+          type: text
+          label: Name
 
-    members.0.role:
-      type: text
-      label: Role
+        role:
+          type: text
+          label: Role
 
-    members.0.image:
-      type: text
-      label: Image
+        image:
+          type: text
+          label: Image
 
-    members.0.description:
-      type: textarea
-      label: Name
-
-    separator2:
-      type: separator
-
-    members.1.name:
-      type: text
-      label: Name
-
-    members.1.role:
-      type: text
-      label: Role
-
-    members.1.image:
-      type: text
-      label: Image
-
-    members.1.description:
-      type: textarea
-      label: Name
+        description:
+          type: textarea
+          label: Name

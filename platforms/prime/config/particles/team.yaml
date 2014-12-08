@@ -2,7 +2,7 @@ enabled: true
 
 css:
   id:
-  classname: 'members-list'
+  class: 'members-list'
 
 members:
   - name: Robert Smith

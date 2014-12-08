@@ -1,3 +1,4 @@
+{% set name = (name is null ? field.name : name) %}
 {% set value = (value is null ? field.default : value) %}
 
-<input type="hidden" class="input" name="{{ (scope ~ field.name)|fieldName }}" value="{{ value|join(', ') }}" />
+<input type="hidden" class="input" name="{{ (scope ~ name)|fieldName }}" value="{{ value|join(', ') }}" />

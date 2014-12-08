@@ -1,7 +1,7 @@
 branding:
   enabled: true
   css:
-    classname: 'particle_gantry_branding'
+    class: 'particle_gantry_branding'
 
 copyright:
   enabled: true
@@ -16,7 +16,7 @@ loginbutton:
   logintext: Login
   logouttext: Logout
   css:
-    classname: 'particle_gantry_loginbutton'
+    class: 'particle_gantry_loginbutton'
 
 logo:
   enabled: true
@@ -26,4 +26,4 @@ logo:
 totop:
   enabled: false
   css:
-    classname: 'particle_gantry_totop'
+    class: 'particle_gantry_totop'

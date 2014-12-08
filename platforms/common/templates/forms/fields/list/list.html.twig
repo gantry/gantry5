@@ -1,0 +1,23 @@
+{% set name = (name is null ? field.name : name) %}
+{% set value = (value is null ? field.default : value) %}
+
+{% block input %}
+    {% if field.fields %}
+        {% if field.label %}
+        <div>{{ field.label }}</div>
+        {% endif %}
+
+        {% for key, val in value %}
+        <hr />
+        {% for childName, child in field.fields %}
+            {% if child.type  == 'key' %}
+                {% include 'forms/fields/text/text.html.twig'
+                with {name: field.name ~ '.' ~ key ~ '.' ~ childName, field: child, value: key} %}
+            {% elseif child.type %}
+                {% include ["forms/fields/#{child.type}/#{child.type}.html.twig", 'forms/fields/unknown/unknown.html.twig']
+                with {name: field.name ~ '.' ~ key ~ '.' ~ childName, field: child, value: val[childName]} %}
+            {% endif %}
+        {% endfor %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

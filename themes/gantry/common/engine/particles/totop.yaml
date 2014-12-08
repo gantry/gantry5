@@ -9,7 +9,7 @@ form:
       description: Globally enable to top particles.
       default: true
 
-    css.classname:
+    css.class:
       type: text
       label: Class
       description: CSS class name for the particle.

@@ -1,6 +1,6 @@
 branding:
   css:
-    classname: 'widget_gantry_branding'
+    class: 'widget_gantry_branding'
 
 copyright:
   date:
@@ -13,7 +13,7 @@ loginbutton:
   logintext: Login
   logouttext: Logout
   css:
-    classname: 'widget_gantry_loginbutton'
+    class: 'widget_gantry_loginbutton'
 
 logo:
   image: 'images/logo.png'
@@ -33,7 +33,7 @@ menu:
 
 totop:
   css:
-    classname: 'widget_gantry_totop'
+    class: 'widget_gantry_totop'
 
 position:
   header: true

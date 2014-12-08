@@ -1,6 +1,6 @@
 branding:
   css:
-    classname: 'particle_gantry_branding'
+    class: 'particle_gantry_branding'
 
 copyright:
   date:
@@ -13,7 +13,7 @@ loginbutton:
   logintext: Login
   logouttext: Logout
   css:
-    classname: 'particle_gantry_loginbutton'
+    class: 'particle_gantry_loginbutton'
 
 logo:
   image: 'images/logo.png'
@@ -21,4 +21,4 @@ logo:
 
 totop:
   css:
-    classname: 'particle_gantry_totop'
+    class: 'particle_gantry_totop'

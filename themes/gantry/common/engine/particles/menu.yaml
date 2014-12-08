@@ -3,14 +3,92 @@ description: Gantry menu.
 
 form:
   fields:
+
     enabled:
       type: checkbox
       label: Enabled
       description: Globally enable to top particles.
       default: true
 
-    css.classname:
+    css.id:
+      type: text
+      label: Id
+      description: CSS Id name for the particle.
+      default:
+
+    css.class:
       type: text
       label: Class
       description: CSS class name for the particle.
-      default: totop
+      default: main-nav
+
+    config.base:
+      type: text
+      label: Base Path
+      default: /
+
+    config.startLevel:
+      type: text
+      label: Start Level
+      default: 1
+
+    config.endLevel:
+      type: text
+      label: End Level
+      default: 0
+
+    config.showAllChildren:
+      type: text
+      label: Show All Menu Items
+      default: false
+
+    config.window_open:
+      type: text
+      label: Target Position
+
+    items:
+      type: list
+      label: Members
+      key: path
+
+      fields:
+        path:
+          type: key
+          label: Path
+
+        id:
+          type: text
+          label: Menu Item Id
+
+        type:
+          type: text
+          label: Menu Item Type
+          default: link
+
+        link:
+          type: text
+          label: Link
+
+        title:
+          type: text
+          label: Menu Title
+
+        browserNav:
+          type: text
+          label: Target Window
+
+        anchor_css:
+          type: text
+          label: Link CSS Style
+
+        anchor_title:
+          type: text
+          label: Link Hover Title
+
+        menu_image:
+          type: text
+          label: Link Image
+
+        menu_icon:
+          type: text
+          label: Link Icon

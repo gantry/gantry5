@@ -1,15 +1,15 @@
 enabled: true
 
+css:
+  id:
+  class: 'main-nav'
+
 config:
-  menu: ''
-  base: 0
+  base: /
   startLevel: 1
   endLevel: 0
   showAllChildren: true
   window_open: 'width=200,height=300'
-css:
-  id:
-  class: 'main-nav'
 
 ordering:
   home:

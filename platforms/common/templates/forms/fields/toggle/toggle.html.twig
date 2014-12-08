@@ -1,15 +1,16 @@
 {% extends "forms/field.html.twig" %}
 
+{% set name = (name is null ? field.name : name) %}
 {% set value = (value is null ? field.default : value) %}
 {% set value = (value is same as(false) ? 0 : value) %}
 
 {% block input %}
     {% for key, text in field.options %}
-        {% set id = "toggle_" ~ field.name ~ key %}
+        {% set id = "toggle_" ~ name ~ key %}
         <input type="radio"
                value="{{ key }}"
                id="{{ id }}"
-               name="{{ (scope ~ field.name)|fieldName }}"
+               name="{{ (scope ~ name)|fieldName }}"
                 {% if field.highlight is defined %}
                     class="{{ field.highlight == '' ~ key ? 'highlight' : '' }}"
                 {% endif %}

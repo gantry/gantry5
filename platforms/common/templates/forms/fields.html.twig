@@ -4,7 +4,7 @@
         {% set value = data.get(field.name) %}
 
         <div class="block block-{{ field.type }}">
-            {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/text/text.html.twig'] %}
+            {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
         </div>
     {% endif %}
 {% endfor %}

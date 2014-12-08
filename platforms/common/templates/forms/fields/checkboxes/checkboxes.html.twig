@@ -1,21 +1,22 @@
 {% extends "forms/field.html.twig" %}
 
+{% set name = (name is null ? field.name : name) %}
 {% set value = (value is null ? field.default : value) %}
 
 {% block input %}
     {% for key, text in field.options %}
         {% set checked = (field.use == 'keys' ? value[key] : key in value) %}
-        {% set name = field.name|fieldName ~ '[' ~ (field.use == 'keys' ? key : '') ~ ']' %}
+        {% set childName = name|fieldName ~ '[' ~ (field.use == 'keys' ? key : '') ~ ']' %}
         {% set key = (field.use == 'keys' ? '1' : key) %}
         <span class="checkboxes">
             <input type="checkbox"
-                   id="{{ name|e }}"
+                   id="{{ childName|e }}"
                    value="{{ key|e }}"
-                   name="{{ (scope ~ name)|fieldName }}"
+                   name="{{ (scope ~ childName)|fieldName }}"
                    {% if checked %}checked="checked"{% endif %}
                     {% if field.validate.required %}required="required"{% endif %}
                     >
-            <label for="{{ name|e }}">{{ text|e }}</label>
+            <label for="{{ childName|e }}">{{ text|e }}</label>
         </span>
     {% endfor %}
 {% endblock %}

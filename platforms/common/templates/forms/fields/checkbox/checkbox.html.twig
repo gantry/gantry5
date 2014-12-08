@@ -1,10 +1,11 @@
 {% extends "forms/field.html.twig" %}
 
+{% set name = (name is null ? field.name : name) %}
 {% set value = (value is null ? field.default : value) %}
 
 {% block input %}
     <input type="checkbox"
-           name="{{ (scope ~ field.name)|fieldName }}"
+           name="{{ (scope ~ name)|fieldName }}"
             {% if value == true %} checked="checked" {% endif %}
             {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
             {% if field.novalidate in ['on', 'true', 1] %}novalidate="novalidate"{% endif %}

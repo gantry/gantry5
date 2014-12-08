@@ -1,7 +1,8 @@
 {% extends "forms/field.html.twig" %}
 
+{% set name = (name is null ? field.name : name) %}
 {% set value = (value is null ? field.default : value) %}
 
 {% block input %}
-    <textarea class="input" name="{{ (scope ~ field.name)|fieldName }}">{{ value|join("\n") }}</textarea>
+    <textarea class="input" name="{{ (scope ~ name)|fieldName }}">{{ value|join("\n") }}</textarea>
 {% endblock %}
