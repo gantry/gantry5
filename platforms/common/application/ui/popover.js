@@ -53,7 +53,7 @@ var Popover = new prime({
         '</div>'
     },
 
-    constructor: function (element, options) {
+    constructor: function(element, options) {
         this.setOptions(options);
         this.element = $(element);
 
@@ -69,7 +69,7 @@ var Popover = new prime({
         this._inited = true;
     },
 
-    destroy: function () {
+    destroy: function() {
         this.hide();
         storage.set(this.element[0], null);
         this.element.off('click', this.bound('toggle')).off('mouseenter', this.bound('mouseenterHandler')).off('mouseleave', this.bound('mouseleaveHandler'));
@@ -79,7 +79,7 @@ var Popover = new prime({
         }
     },
 
-    hide: function (event) {
+    hide: function(event) {
         if (event) {
             event.preventDefault();
             event.stopPropagation();
@@ -92,7 +92,7 @@ var Popover = new prime({
         this.element.emit('hidden.popover', this);
     },
 
-    toggle: function (e) {
+    toggle: function(e) {
         if (e) {
             e.preventDefault();
             e.stopPropagation();
@@ -100,13 +100,17 @@ var Popover = new prime({
         this[this.getTarget().hasClass('in') ? 'hide' : 'show']();
     },
 
-    hideAll: function () {
-        var elements = $('div.' + this.options.mainClass + ':not(.' + this.options.mainClass + '-fixed)');
+    hideAll: function(force) {
+        var css = '';
+        if (force) { css = 'div.' + this.options.mainClass; }
+        else { css = 'div.' + this.options.mainClass + ':not(.' + this.options.mainClass + '-fixed)'; }
+
+        var elements = $(css);
         if (!elements) { return null; }
         elements.removeClass('in').style({ display: 'none' });
     },
 
-    show: function () {
+    show: function() {
         var target = this.getTarget().attribute('class', null).addClass(this.options.mainClass);
 
         if (!this.options.multi) {
@@ -137,7 +141,7 @@ var Popover = new prime({
         this.bindBodyEvents();
     },
 
-    displayContent: function () {
+    displayContent: function() {
         var elementPos = this.element.position(),
             target = this.getTarget().attribute('class', null).addClass(this.options.mainClass),
             targetContent = this.getContentElement(),
@@ -179,7 +183,7 @@ var Popover = new prime({
         }
 
         if (this.options.style) {
-            if (typeof this.options.style === 'string'){
+            if (typeof this.options.style === 'string') {
                 this.options.style = this.options.style.split(',').map(Function.prototype.call, String.prototype.trim);
             }
 
@@ -209,26 +213,26 @@ var Popover = new prime({
 
 
     /*getter setters */
-    getTarget: function () {
+    getTarget: function() {
         if (!this.$target) {
             this.$target = $(zen('div').html(this.options.template).children()[0]);
         }
         return this.$target;
     },
 
-    getTitleElement: function () {
+    getTitleElement: function() {
         return this.getTarget().find('.' + this.options.mainClass + '-title');
     },
 
-    getContentElement: function () {
+    getContentElement: function() {
         return this.getTarget().find('.' + this.options.mainClass + '-content');
     },
 
-    getTitle: function () {
+    getTitle: function() {
         return this.options.title || this.element.data('g5-popover-title') || this.element.attribute('title');
     },
 
-    setTitle: function (title) {
+    setTitle: function(title) {
         var element = this.getTitleElement();
         if (title) {
             element.html(title);
@@ -238,11 +242,11 @@ var Popover = new prime({
         }
     },
 
-    hasContent: function () {
+    hasContent: function() {
         return this.getContent();
     },
 
-    getContent: function () {
+    getContent: function() {
         if (this.options.url) {
             if (this.options.type === 'iframe') {
                 this.content = $('<iframe frameborder="0"></iframe>').attribute('src', this.options.url);
@@ -259,20 +263,20 @@ var Popover = new prime({
         return this.content;
     },
 
-    setContent: function (content) {
+    setContent: function(content) {
         var target = this.getTarget();
         this.getContentElement().html(content);
         this.$target = target;
     },
 
-    isAsync: function () {
+    isAsync: function() {
         return this.options.type === 'async';
     },
 
-    setContentASync: function (content) {
+    setContentASync: function(content) {
         var that = this;
 
-        request(this.options.url, bind(function (error, response) {
+        request(this.options.url, bind(function(error, response) {
             if (content && isFunct(content)) {
                 this.content = content.apply(this.element[0], [response]);
             } else {
@@ -288,14 +292,14 @@ var Popover = new prime({
         }, this));
     },
 
-    bindBodyEvents: function () {
+    bindBodyEvents: function() {
         $('body').off('keyup', this.bound('escapeHandler')).on('keyup', this.bound('escapeHandler'));
         $('body').off('click', this.bound('bodyClickHandler')).on('click', this.bound('bodyClickHandler'));
     },
 
 
     /* event handlers */
-    mouseenterHandler: function () {
+    mouseenterHandler: function() {
         if (this._timeout) {
             clearTimeout(this._timeout);
         }
@@ -303,28 +307,28 @@ var Popover = new prime({
             this.show();
         }
     },
-    mouseleaveHandler: function () {
+    mouseleaveHandler: function() {
         //key point, set the _timeout  then use clearTimeout when mouse leave
-        this._timeout = setTimeout(bind(function () {
+        this._timeout = setTimeout(bind(function() {
             this.hide();
         }, this), this.options.delay);
     },
 
-    escapeHandler: function (e) {
+    escapeHandler: function(e) {
         if (e.keyCode === 27) {
             this.hideAll();
         }
     },
 
-    bodyClickHandler: function () {
+    bodyClickHandler: function() {
         this.hideAll();
     },
 
-    targetClickHandler: function(e){
+    targetClickHandler: function(e) {
         e.stopPropagation();
     },
 
-    initTargetEvents: function () {
+    initTargetEvents: function() {
         if (this.options.trigger !== 'click') {
             this.$target
                 .off('mouseenter', this.bound('mouseenter'))
@@ -342,7 +346,7 @@ var Popover = new prime({
     },
 
     /* utils methods */
-    getPlacement: function (pos, targetHeight) {
+    getPlacement: function(pos, targetHeight) {
         var
             placement,
             de = document.documentElement,
@@ -394,7 +398,7 @@ var Popover = new prime({
         return placement;
     },
 
-    getTargetPositin: function (elementPos, placement, targetWidth, targetHeight) {
+    getTargetPositin: function(elementPos, placement, targetWidth, targetHeight) {
         var pos = elementPos,
             elementW = this.element.position().width,
             elementH = this.element.position().height,
