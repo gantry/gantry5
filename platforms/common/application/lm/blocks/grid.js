@@ -16,9 +16,9 @@ var Grid = new prime({
         return '<div class="grid" data-lm-id="' + this.getId() + '" ' + this.dropzone() + ' data-lm-blocktype="grid"></div>';
     },
 
-    onRendered: function(){
+    onRendered: function() {
         var parent = this.block.parent();
-        if (parent && parent.data('lm-root')){
+        if (parent && parent.data('lm-root')) {
             this.removeDropzone();
         }
     }

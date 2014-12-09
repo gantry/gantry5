@@ -96,7 +96,11 @@ var DragDrop = new prime({
             return false;
         }
 
-        if (Math.abs(this.origin.offset.x) < 4) {
+
+        var offset = Math.abs(this.origin.offset.x),
+            columns = this.element.parent().parent().data('lm-root');
+
+        if (offset < 4 || (columns && offset > 3 && offset < 10)) {
             this.emit('dragdrop:resize', event, this.element, this.element.siblings(':not(.placeholder)'));
             return false;
         }

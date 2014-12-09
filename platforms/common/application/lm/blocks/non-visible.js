@@ -1,6 +1,6 @@
 "use strict";
-var prime = require('prime'),
-    Section  = require('./section');
+var prime   = require('prime'),
+    Section = require('./section');
 
 var NonVisible = new prime({
     inherits: Section,
