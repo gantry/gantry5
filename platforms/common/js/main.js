@@ -4936,9 +4936,9 @@ var G5;
         module.exports = rtrim;
     },
     '1d': function (require, module, exports, global) {
-        var identity = require('2k');
-        var prop = require('2l');
-        var deepMatches = require('2m');
+        var identity = require('2l');
+        var prop = require('2m');
+        var deepMatches = require('2n');
         function makeIterator(src, thisObj) {
             if (src == null) {
                 return identity;
@@ -4961,7 +4961,7 @@ var G5;
     },
     '1e': function (require, module, exports, global) {
         'use strict';
-        var kindOf = require('1k'), now = require('2n'), forEach = require('d'), indexOf = require('f');
+        var kindOf = require('1k'), now = require('2k'), forEach = require('d'), indexOf = require('f');
         var callbacks = {
                 timeout: {},
                 frame: [],
@@ -6655,12 +6655,21 @@ var G5;
         module.exports = equals;
     },
     '2k': function (require, module, exports, global) {
+        function now() {
+            return now.get();
+        }
+        now.get = typeof Date.now === 'function' ? Date.now : function () {
+            return +new Date();
+        };
+        module.exports = now;
+    },
+    '2l': function (require, module, exports, global) {
         function identity(val) {
             return val;
         }
         module.exports = identity;
     },
-    '2l': function (require, module, exports, global) {
+    '2m': function (require, module, exports, global) {
         function prop(name) {
             return function (obj) {
                 return obj[name];
@@ -6668,7 +6677,7 @@ var G5;
         }
         module.exports = prop;
     },
-    '2m': function (require, module, exports, global) {
+    '2n': function (require, module, exports, global) {
         var forOwn = require('2o');
         var isArray = require('1w');
         function containsMatch(array, pattern) {
@@ -6710,15 +6719,6 @@ var G5;
             }
         }
         module.exports = deepMatches;
-    },
-    '2n': function (require, module, exports, global) {
-        function now() {
-            return now.get();
-        }
-        now.get = typeof Date.now === 'function' ? Date.now : function () {
-            return +new Date();
-        };
-        module.exports = now;
     },
     '2o': function (require, module, exports, global) {
         var hasOwn = require('1h');

@@ -153,7 +153,7 @@
                 }
 
                 &:empty:after {
-                    content: "Drop particle here...";
+                    content: "Drop particles here...";
                     display: block;
                     text-align: center;
                     margin: 0 auto;
@@ -172,7 +172,7 @@
             .grid {
                 background: $white;
                 &:empty:after {
-                    content: "Drop non-visible particle here...";
+                    content: "Drop non-visible particles here...";
                 }
                 &:hover {
                     &:not(:empty):before, &:not(:empty):after {
@@ -277,6 +277,7 @@
 
                 i {
                     line-height: 52px;
+                    cursor: pointer;
                 }
             }
 
