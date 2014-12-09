@@ -58,8 +58,7 @@ class Router implements RouterInterface
 
         // Boot the service.
         $this->container['admin.theme'];
-        $this->container['base_url'] = \JUri::base(false) . 'index.php?option=com_gantryadmin';
-
+        $this->container['base_url'] = \JUri::base(true) . '/index.php?option=com_gantryadmin';
 
         $this->container['routes'] = [
             'ajax' => '&view={view}&layout={method}&style=' . $style. '&format=json',
