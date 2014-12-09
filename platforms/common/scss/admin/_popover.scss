@@ -86,6 +86,8 @@ $close-color:               #000;
         ul {
             padding: 1px;
             background-color: #ddd;
+            max-height: 250px;
+            overflow: auto;
         }
 
         li {

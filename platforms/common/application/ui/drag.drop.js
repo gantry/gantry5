@@ -120,43 +120,6 @@ var DragDrop = new prime({
         return this.element;
     },
 
-    stopANIMATED: function (event) {
-        var settings = { duration: '250ms' };
-
-        if (this.removeElement) { return this.emit('dragdrop:stop:erase', event, this.element); }
-
-        if (this.element) {
-
-            this.emit('dragdrop:stop', event, this.matched, this.element);
-
-            /*this.element.style({
-             position: 'absolute',
-             width: 'auto',
-             height: 'auto'
-             });*/
-
-            if (this.matched) {
-                this.element.style({
-                    opacity: 0,
-                    transform: 'translate(0, 0)'
-                });
-            }
-            settings.callback = bind(function (element) {
-                this._removeStyleAttribute(element);
-                this.emit('dragdrop:stop:animation', element);
-            }, this, this.element);
-
-            this.element.animate({
-                transform: this.origin.transform || 'translate(0, 0)',
-                opacity: 1
-            }, settings);
-        }
-
-        $(document).off(this.EVENTS.MOVE, this.bound('move'));
-        $(document).off(this.EVENTS.STOP, this.bound('stop'));
-        this.element = null;
-    },
-
     stop: function (event) {
         var settings = { duration: '250ms' };
 

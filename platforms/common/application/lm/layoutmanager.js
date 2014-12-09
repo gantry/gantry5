@@ -149,7 +149,11 @@ var LayoutManager = new prime({
             this.placeholder.after(element);
             this.eraser.show();
         } else {
-            this.original.remove();
+            var position = element.position(),
+                parentOffset = {top: element.parent()[0].scrollTop, left: element.parent()[0].scrollLeft};
+            this.original.style({position: 'absolute'}).style({left: element[0].offsetLeft - parentOffset.left, top: element[0].offsetTop - parentOffset.top, width: position.width, height: position.height});
+            this.element = this.dragdrop.element;
+            this.dragdrop.element = this.original;
         }
 
         singles.enable();
@@ -391,6 +395,8 @@ var LayoutManager = new prime({
         if (blockWasNew) {
             if (resizeCase && resizeCase.case === 1 || resizeCase.case === 3) { this.resizer.evenResize($([this.block.block, this.block.block.siblings()])); }
             if (resizeCase && resizeCase.case === 2 || resizeCase.case === 4) { this.resizer.evenResize(resizeCase.siblings); }
+
+            this.element.attribute('style', null);
         }
 
         singles.disable();
@@ -409,7 +415,7 @@ var LayoutManager = new prime({
         singles.disable();
         if (!this.block) { this.block = get(this.builder.map, element.data('lm-id')); }
         if (this.block && this.block.getType() === 'block') { this.block.setSize(); }
-
+        if (this.block && this.block.isNew()) { this.element.attribute('style', null); }
     }
 });
 
