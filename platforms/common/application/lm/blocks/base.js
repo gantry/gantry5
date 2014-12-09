@@ -1,7 +1,7 @@
 "use strict";
 var prime   = require('prime'),
     Options = require('prime-util/prime/options'),
-    Bound   = require('prime-util/prime/bound'),
+    Bound    = require('prime-util/prime/bound'),
     Emitter = require('prime/emitter'),
     guid    = require('mout/random/guid'),
     zen     = require('elements/zen'),
@@ -88,17 +88,17 @@ var Base = new prime({
         return 'data-lm-dropzone';
     },
 
-    addDropzone: function() {
+    addDropzone: function(){
         this.block.data('lm-dropzone', true);
     },
 
-    removeDropzone: function() {
+    removeDropzone: function(){
         this.block.data('lm-dropzone', null);
     },
 
     layout: function() {},
 
-    onRendered: function() {},
+    onRendered: function(){},
 
     setLayout: function(layout) {
         this.block = layout;

@@ -402,7 +402,6 @@ module.exports = [
         ]
 
     },
-
     {
         "id": "a845861d-03fd-4ce2-8a05-48ecc458a768",
         "type": "non-visible",

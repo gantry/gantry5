@@ -14,7 +14,6 @@ var UID = 0;
 
 var Section = new prime({
     inherits: Base,
-    mixin: Bound,
     options: {
         type: 'section'
     },
