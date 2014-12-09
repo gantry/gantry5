@@ -113,7 +113,7 @@ var LayoutManager = new prime({
         var root = $('[data-lm-root]'),
             size = $(element).position();
 
-        this.block = this.dirty = null;
+        this.block = null;
         this.mode = root.data('lm-root') || 'page';
 
         root.addClass('moving');
@@ -159,14 +159,6 @@ var LayoutManager = new prime({
         target = $(target);
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' }); }
         //this.original.style({display: 'none'});
-
-        // cleanup for the dirty flag
-        if (this.dirty) {
-            var dirty = this.dirty.target.parent('.grid');
-            this.dirty.target.before(dirty);
-            dirty.remove();
-            this.dirty = null;
-        }
 
         var position,
             dataType = target.data('lm-blocktype'),
@@ -292,7 +284,7 @@ var LayoutManager = new prime({
 
         if (this.placeholder) { this.placeholder.remove(); }
         if (this.original) { this.original.remove(); }
-        this.element = this.block = this.dirty = null;
+        this.element = this.block =  null;
 
         singles.disable();
         singles.cleanup(this.builder);
@@ -346,7 +338,7 @@ var LayoutManager = new prime({
         this.original.remove();
 
         // case 1: it's a position/spacer and needs to be wrapped by a block (dropped at root or next to another block)
-        if (type !== 'block' && type !== 'grid' && ((this.dirty || targetType === 'section' || targetType === 'grid') || (!this.dirty && targetType === 'block' && parentType !== 'block'))) {
+        if (type !== 'block' && type !== 'grid' && ((targetType === 'section' || targetType === 'grid') || (targetType === 'block' && parentType !== 'block'))) {
             wrapper = new Blocks.block({
                 attributes: { size: 50 },
                 builder: this.builder
@@ -392,35 +384,12 @@ var LayoutManager = new prime({
         }
 
 
-        // it's dirty, let's register all the blocks that are missing.
-        if (this.dirty) {
-            console.log('it\'s dirty');
-            var structure = $([this.dirty.element, this.dirty.element.search('[data-lm-id]')]);
-            var dirtyId, dirtyType, dirtyMap, dirtyBlock;
-            structure.forEach(function(element) {
-                element = $(element);
-                dirtyId = element.data('lm-id');
-                dirtyType = element.data('lm-blocktype');
-                dirtyMap = get(this.builder.map, dirtyId);
-
-                if (!dirtyMap) {
-                    dirtyBlock = new Blocks[dirtyType]({
-                        id: dirtyId,
-                        builder: this.builder
-                    }).setLayout(element);
-                    if (dirtyType === 'block') { dirtyBlock.setSize(50, true); }
-                    this.builder.add(dirtyBlock);
-                    dirtyBlock.emit('rendered', dirtyBlock, null);
-                }
-            }, this);
-        }
-
         if (this.block.hasAttribute('size')) { this.block.setSize(this.placeholder.compute('flex')); }
         this.block.insert(this.placeholder);
         this.placeholder.remove();
 
         if (blockWasNew) {
-            if (resizeCase && resizeCase.case === 1 || resizeCase.case === 3) { this.resizer.evenResize($([this.block.block, this.block.block.siblings()]), !this.dirty); }
+            if (resizeCase && resizeCase.case === 1 || resizeCase.case === 3) { this.resizer.evenResize($([this.block.block, this.block.block.siblings()])); }
             if (resizeCase && resizeCase.case === 2 || resizeCase.case === 4) { this.resizer.evenResize(resizeCase.siblings); }
         }
 
