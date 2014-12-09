@@ -42,7 +42,7 @@ History.Adapter.bind(window, 'statechange', function() {
         }
 
         var target = $(Data.target);
-        $('body').getPopover().hideAll(true);
+        $('body').getPopover().hideAll(true).destroy();
         if (response.body && response.body.html) {
             (target || $('body')).html(response.body.html);
         } else {

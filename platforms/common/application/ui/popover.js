@@ -106,8 +106,10 @@ var Popover = new prime({
         else { css = 'div.' + this.options.mainClass + ':not(.' + this.options.mainClass + '-fixed)'; }
 
         var elements = $(css);
-        if (!elements) { return null; }
+        if (!elements) { return this; }
         elements.removeClass('in').style({ display: 'none' });
+
+        return this;
     },
 
     show: function() {
