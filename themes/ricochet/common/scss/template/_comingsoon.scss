@@ -1,0 +1,191 @@
+#rt-comingsoon {
+	#rt-header-surround {
+		padding-top: 0;
+	}
+}
+#system-message-container {
+    position: relative;
+    z-index: 1000;
+}
+.rt-comingsoon-logo {
+	width: 240px;
+	margin: 0 auto 50px auto;
+	#rt-logo {
+		margin: 0 auto;
+	}
+}
+.rt-logo-block {
+	background: rgba(255, 255, 255, 0.45);
+	border-radius: 5px;
+}
+.rt-comingsoon-body {
+	margin: 150px auto;
+	padding: 50px 0;
+	background: fadeout($core-accent, 50%);
+	width: 80%;
+	border-radius: 3px;
+	@include breakpoint(mobile-only) {
+		width: 100%;
+		margin: 50px 0;
+	}
+	@include breakpoint(small-mobile-range) {
+		width: 100%;
+		margin: 0;
+	}
+	a {
+		color: darken($core-accent, 45%);
+		&:hover {
+			color: inherit;
+		}
+	}
+}
+.rt-comingsoon-title {
+	margin: 30px 0;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+}
+.rt-comingsoon-message,
+.rt-authorized-login-message {
+	text-align: center;
+	width: 80%;
+	margin: auto;
+}
+.rt-counter-block {
+	display: block;
+	padding: 30px 0 0 0;
+	margin: 0;
+}
+#rt-comingsoon-counter {
+	text-align: center;
+	.counter-block {
+		display: inline-block;
+		margin: 0 5px;
+		padding: 0;
+	}
+	.number, .word {
+		display: block;
+		margin: 0;
+		padding: 0;
+	}
+	.number {
+		width: 100px;
+		height: 80px;
+		line-height: 80px;
+		font-size: 2.3em;
+		font-weight: normal;
+		border-radius: 4px;
+		margin-bottom: 10px;
+
+		color: darken($core-accent2, 35%);
+		background: $core-accent2;
+		background: -moz-linear-gradient(top, darken($core-accent2, 10%) 0%, darken($core-accent2, 10%) 50%, $core-accent2 50%, $core-accent2 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,darken($core-accent2, 10%)), color-stop(50%,darken($core-accent2, 10%)), color-stop(50%,$core-accent2), color-stop(100%,$core-accent2));
+		background: -webkit-linear-gradient(top, darken($core-accent2, 10%) 0%,darken($core-accent2, 10%) 50%,$core-accent2 50%,$core-accent2 100%);
+		background: -o-linear-gradient(top, darken($core-accent2, 10%) 0%,darken($core-accent2, 10%) 50%,$core-accent2 50%,$core-accent2 100%);
+		background: -ms-linear-gradient(top, darken($core-accent2, 10%) 0%,darken($core-accent2, 10%) 50%,$core-accent2 50%,$core-accent2 100%);
+		background: linear-gradient(to bottom, darken($core-accent2, 10%) 0%,darken($core-accent2, 10%) 50%,$core-accent2 50%,$core-accent2 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='darken($core-accent2, 5%)', endColorstr='$core-accent2',GradientType=0 );
+	}
+	.word {
+		font-size: 80%;
+		text-transform: uppercase;
+	}
+}
+
+.rt-subscription-title,
+.rt-authorized-form-title {
+	font-size: 160%;
+	margin-bottom: 25px;
+	text-align: center;
+}
+
+#rt-subscription-form {
+	padding: 80px 0;
+	width: 100%;
+	.rt-container {
+		background: none;
+	}
+	.inputbox {
+		border: 1px solid darken($white, 15%);
+	}
+}
+
+#rt-authorized-form {
+	padding: 50px 0;
+}
+
+.rt-comingsoon-form,
+.rt-authorized-login-form {
+    margin: auto;
+    text-align: center;
+    width: 90%;
+	.inputbox {
+		color: $gray;
+		border: 1px solid darken($white, 15%);
+		@include linear-gradient(fadeout($white, 30%), fadeout($white, 30%));
+		width: 280px;
+		&.rt-secretkey-input {
+			width: 100px;
+		}
+	}
+}
+
+.rt-secretkey-help {
+	padding: 0 10px;
+	vertical-align: middle;
+}
+
+#rt-form-login {
+	margin: 25px auto;
+}
+
+// Mobile Modes
+@include breakpoint(mobile-only) {
+	.rt-comingsoon-body {
+		padding: 50px 0;
+	}
+	.rt-comingsoon-title {
+		letter-spacing: 5px;
+		width: 80%;
+		margin: auto;
+	}
+	.rt-comingsoon-form,
+	.rt-authorized-login-form {
+		.inputbox, .button {
+			width: 80%;
+		    height: 60px;
+		    margin: auto;
+			display: block;
+		}
+		.inputbox {
+			margin: 15px auto;
+		}
+		.readon, .button {
+		    padding: 10px 25px;
+		}
+	}
+	#rt-subscription-form {
+		background-position: 50% 150px;
+	}
+}
+
+// Small Screen Mobile Modes
+@include breakpoint(small-mobile-range) {
+	.rt-comingsoon-title {
+		font-size: 1.5em;
+		letter-spacing: 3px;
+		width: 90%;
+		margin: auto;
+	}
+	#rt-comingsoon-counter {
+		.number {
+			width: 50px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 1.2em;
+		}
+		.word {
+			font-size: 60%;
+		}
+	}
+}

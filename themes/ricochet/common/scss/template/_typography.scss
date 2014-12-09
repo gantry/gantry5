@@ -33,3 +33,99 @@ pre {
 hr {
 	border-bottom: 1px solid $core-border-color;
 }
+
+.promo1 {
+	font-size: $core-font-size * 3;
+	line-height: $core-line-height * 3;
+}
+.promo2 {
+	font-size: $core-font-size * 1.5;
+	line-height: $core-line-height * 1.5;
+	font-family: Georgia, Times, "Times New Roman", serif;
+	font-style: italic;
+}
+.rt-text-large {
+	display: block;
+	font-size: $core-font-size * 2.5;
+	line-height: $core-line-height * 2;
+}
+.rt-text-medium {
+	display: block;
+	font-size: $core-font-size * 1.3;
+	line-height: $core-line-height * 1.3;
+}
+.rt-text-small {
+	display: block;
+	font-size: $core-font-size * 0.8;
+	line-height: $core-line-height 1.0;
+}
+.rt-title-large {
+	.title {
+		font-family: $font-family-alt;
+		font-size: $core-font-size * 1.8;
+		line-height: $core-line-height * 1.5;
+		text-transform: none;
+	}
+}
+.rt-title-tag {
+	display: block;
+	font-size: $core-font-size * 1.2;
+	font-weight: normal;
+	text-transform: none;
+	opacity: 0.5;
+}
+
+// Tablet Modes
+@include breakpoint(tablet-range) {
+	body.layout-mode-responsive {
+		// General Typography
+		.promo1 {
+			font-size: $core-font-size * 3;
+			line-height: $core-line-height * 3;
+		}
+		.promo2 {
+			font-size: $core-font-size * 1.5;
+			line-height: $core-line-height * 1.5;
+			font-family: Georgia, Times, "Times New Roman", serif;
+			font-style: italic;
+		}
+	}
+}
+
+// Mobile Modes
+@include breakpoint(mobile-only) {
+	body.layout-mode-responsive {
+		// General Typography
+		.promo1 {
+			font-size: $core-font-size * 2.8;
+			line-height: $core-line-height * 2.8;
+		}
+		.promo2 {
+			font-size: $core-font-size * 1.3;
+			line-height: $core-line-height * 1.3;
+			font-family: Georgia, Times, "Times New Roman", serif;
+			font-style: italic;
+		}
+		.rt-title-tag {
+			font-size: $core-font-size * 1.1;
+			line-height: $core-line-height * 1.1;
+		}
+	}
+}
+
+// Small Screen Mobile Modes
+@include breakpoint(small-mobile-range) {
+	body.layout-mode-responsive {
+		// General Typography
+		.promo1 {
+			font-size: $core-font-size * 2;
+			line-height: $core-line-height * 1.8;
+		}
+		.promo2 {
+			font-size: $core-font-size * 1.2;
+			line-height: $core-line-height * 1.2;
+			font-family: Georgia, Times, "Times New Roman", serif;
+			font-style: italic;
+		}
+	}
+}

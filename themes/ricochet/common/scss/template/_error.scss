@@ -1,0 +1,68 @@
+#rt-error {
+	#rt-header-surround {
+		padding-top: 5px;
+	}
+}
+.rt-error-body {
+	margin: 150px auto;
+	padding: 50px 0;
+	background: fadeout($core-accent, 50%);
+	width: 80%;
+	border-radius: 3px;
+	@include breakpoint(mobile-only) {
+		width: 100%;
+		margin: 50px 0;
+	}
+	@include breakpoint(small-mobile-range) {
+		width: 100%;
+		margin: 0;
+	}
+	a {
+		color: darken($core-accent, 45%);
+		&:hover {
+			color: inherit;
+		}
+	}
+}
+.rt-error-header {
+	text-align: center;
+	margin: 25px 0;
+}
+
+.rt-error-code {
+	font-size: 6em;
+	line-height: 1.5em;
+}
+
+.rt-error-code-desc {
+	text-transform: uppercase;
+}
+
+.rt-error-content {
+	text-align: center;
+	margin: 25px 0;
+}
+
+.rt-error-title {
+	font-size: 2em;
+	line-height: 1.5em;
+	text-transform: uppercase;
+}
+
+.rt-error-message {
+	font-size: 1em;
+	margin: 15px 0;
+}
+
+.rt-error-button {
+	margin: 25px 0;
+	.readon {
+		color: $white;
+		border: 1px solid darken($core-accent, 12%);
+		background: darken($core-accent, 5%);
+		&:hover {
+			color: $white;
+			background: lighten($core-accent, 10%);
+		}
+	}
+}
