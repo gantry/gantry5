@@ -28,6 +28,23 @@ var particlesPopover = function(){
         width: '200',
         style: 'particles, inverse, fixed, nooverflow',
         url: AjaxURL('particles')
+    }).on('shown.popover', function(popover){
+        if (popover.$target.particleFilter) { return false; }
+
+        var search = popover.$target.find('input[type=text]'),
+            list   = popover.$target.search('[data-lm-blocktype]');
+        if (!search) { return false; }
+
+        popover.$target.particleFilter = true;
+        search.on('input', function(e){
+            list.style({display: 'none'}).forEach(function(blocktype){
+                var value = this.value().toLowerCase();
+                blocktype = $(blocktype);
+                if (blocktype.data('lm-blocktype').toLowerCase().match(value) || blocktype.text().toLowerCase().match(value)) {
+                    blocktype.style({display: 'block'});
+                }
+            }, this);
+        });
     });
 };
 

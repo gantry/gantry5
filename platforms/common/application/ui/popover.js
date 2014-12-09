@@ -85,11 +85,11 @@ var Popover = new prime({
             event.stopPropagation();
         }
         //var e = $.Event('hide.' + pluginType);
-        this.element.emit('hide.popover');
+        this.element.emit('hide.popover', this);
         if (this.$target) {
             this.$target.removeClass('in').style({ display: 'none' });
         }
-        this.element.emit('hidden.popover');
+        this.element.emit('hidden.popover', this);
     },
 
     toggle: function (e) {
@@ -145,7 +145,7 @@ var Popover = new prime({
             targetHeight = target[0].offsetHeight,
             placement = 'bottom';
 
-        this.element.emit('show.popover');
+        this.element.emit('show.popover', this);
 
         if (this.options.width !== 'auto') {
             target.style({ width: this.options.width });
@@ -203,7 +203,7 @@ var Popover = new prime({
             }
         }
         this._poped = true;
-        this.element.emit('shown.popover');
+        this.element.emit('shown.popover', this);
 
     },
 
