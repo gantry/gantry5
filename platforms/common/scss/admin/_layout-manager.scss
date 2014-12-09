@@ -184,6 +184,23 @@
 
         > .grid > .block {
             margin-right: 14px;
+            background: $white;
+            padding-bottom: 50px;
+
+            > .section {
+                border-bottom: 14px solid #eee;
+                
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+
+            > .particle-size {
+                margin-right: 0;
+                position: absolute;
+                bottom: 12px;
+                right: 12px;
+            }
         }
 
         .grid {
@@ -280,18 +297,18 @@
                     cursor: pointer;
                 }
             }
+        }
 
-            .particle-size {
-                font-weight: 100;
-                font-size: 30px;
-                line-height: 30px;
-                vertical-align: middle;
-                display: inline-block;
-                margin-top: -5px;
-                margin-right: 5px;
-                text-shadow: none;
-                opacity: 0.8;
-            }
+        .particle-size {
+            font-weight: 100;
+            font-size: 30px;
+            line-height: 30px;
+            vertical-align: middle;
+            display: inline-block;
+            margin-top: -5px;
+            margin-right: 5px;
+            text-shadow: none;
+            opacity: 0.8;
         }
 
         .particle {

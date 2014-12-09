@@ -1,7 +1,8 @@
 "use strict";
 var prime = require('prime'),
     Base  = require('./base'),
-    $     = require('../../utils/elements.moofx');
+    $     = require('../../utils/elements.moofx'),
+    zen   = require('elements/zen');
 
 var Block = new prime({
     inherits: Base,
@@ -47,6 +48,10 @@ var Block = new prime({
     onRendered: function(element, parent){
         if (element.block.find('> [data-lm-blocktype="section"]')){
             this.removeDropzone();
+        }
+
+        if (parent.block.parent().data('lm-root')) {
+            zen('span.particle-size').text(this.getSize() + '%').top(element.block);
         }
     }
 });
