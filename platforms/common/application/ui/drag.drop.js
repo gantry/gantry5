@@ -105,6 +105,8 @@ var DragDrop = new prime({
             return false;
         }
 
+        if (columns) { return false; }
+
         this.element.style({
             'pointer-events': 'none',
             opacity: 0.5,
