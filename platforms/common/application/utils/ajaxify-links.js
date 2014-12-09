@@ -15,6 +15,7 @@ var prime    = require('prime'),
     History  = require('./history'),
     AjaxURL  = require('./ajax-uri');
 
+require('../ui/popover');
 
 History.Adapter.bind(window, 'statechange', function() {
     if (request.running()) {
@@ -41,6 +42,7 @@ History.Adapter.bind(window, 'statechange', function() {
         }
 
         var target = $(Data.target);
+        $('body').getPopover().hideAll(true);
         if (response.body && response.body.html) {
             (target || $('body')).html(response.body.html);
         } else {
