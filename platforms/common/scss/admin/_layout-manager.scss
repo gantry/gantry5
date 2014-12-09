@@ -167,7 +167,9 @@
         }
 
         .non-visible-section {
-            background-color: #e5e5e5;
+            background-color: transparent;
+            margin-top: 28px;
+            border-top: 1px solid #ddd;
 
             .grid {
                 background: $white;
