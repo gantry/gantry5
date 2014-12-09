@@ -500,8 +500,20 @@ var Popover = new prime({
 });
 
 $.implement({
-    popover: function (options) {
-        return this.forEach(function (element) {
+    getPopover: function(options) {
+        var popover = storage.get(this);
+
+        if (!popover && options !== 'destroy') {
+            options = options || {};
+            popover = new Popover(this, options);
+            storage.set(this, popover);
+        }
+
+        return popover;
+    },
+
+    popover: function(options) {
+        return this.forEach(function(element) {
             var popover = storage.get(element);
 
             if (!popover && options !== 'destroy') {
@@ -512,7 +524,7 @@ $.implement({
         });
     },
 
-    position: function () {
+    position: function() {
         var node = this[0], box = {
                 left: 0,
                 right: 0,
