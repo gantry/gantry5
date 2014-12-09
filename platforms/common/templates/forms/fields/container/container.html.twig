@@ -2,26 +2,18 @@
 
 {% block input %}
     {% if field.fields %}
-        {% for key, val in value %}
-        <hr />
-
         {% for childName, child in field.fields %}
             {% if childName starts with '.' %}
                 {% set childValue = value[childName[1:]] %}
-                {% set childName = name ~ '.' ~ key ~ childName %}
+                {% set childName = name ~ childName %}
             {% else %}
-                {% set childName = childName|replace({'*': key}) %}
                 {% set childValue = data.get(scope ~ childName) %}
             {% endif %}
 
-            {% if child.type  == 'key' %}
-                {% include 'forms/fields/text/text.html.twig'
-                with {name: childName, field: child, value: key} %}
-            {% elseif child.type %}
+            {% if child.type %}
                 {% include ["forms/fields/#{child.type}/#{child.type}.html.twig", 'forms/fields/unknown/unknown.html.twig']
-                with {name:childName, field: child, value: childValue} %}
+                with {name: childName, field: child, value: childValue} %}
             {% endif %}
-        {% endfor %}
         {% endfor %}
     {% endif %}
 {% endblock %}

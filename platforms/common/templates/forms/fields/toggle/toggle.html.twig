@@ -1,10 +1,9 @@
 {% extends "forms/field.html.twig" %}
 
-{% set name = (name is null ? field.name : name) %}
-{% set value = (value is null ? field.default : value) %}
 {% set value = (value is same as(false) ? 0 : value) %}
 
 {% block input %}
+    <div class="switch-toggle switch switch-{{ field.options|length }}">
     {% for key, text in field.options %}
         {% set id = "toggle_" ~ name ~ key %}
         <input type="radio"
@@ -20,4 +19,5 @@
         <label for="{{ id }}">{{ text }}</label>
         <a></a>
     {% endfor %}
+    </div>
 {% endblock %}

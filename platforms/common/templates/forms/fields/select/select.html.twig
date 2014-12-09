@@ -1,8 +1,5 @@
 {% extends "forms/field.html.twig" %}
 
-{% set name = (name is null ? field.name : name) %}
-{% set value = (value is null ? field.default : value) %}
-
 {% block input %}
     <select class="{{ field.classes }}" name="{{ (scope ~ name)|fieldName }}"
             {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}

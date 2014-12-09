@@ -1,4 +1,5 @@
-{% set name = (name is null ? field.name : name) %}
-{% set value = (value is null ? field.default : value) %}
+{% extends "forms/field.html.twig" %}
 
-<input type="hidden" class="input" name="{{ (scope ~ name)|fieldName }}" value="{{ value|join(', ') }}" />
+{% block field %}
+    <input type="hidden" class="input" name="{{ (scope ~ name)|fieldName }}" value="{{ value|join(', ') }}" />
+{% endblock %}

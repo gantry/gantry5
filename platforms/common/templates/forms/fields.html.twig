@@ -1,11 +1,15 @@
 {% for name, field in blueprints.fields %}
-    {% if field.type and name not in skip %}
-        {% set field = field + {'name': prefix ~ name} %}
-        {% set value = data.get(field.name) %}
+    {% if name starts with '.' %}
+        {% set name = name[1:] %}
+    {% endif %}
 
-        <div class="block block-{{ field.type }}">
-            {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
-        </div>
+    {% set scope = prefix %}
+
+    {% if field.type and name not in skip %}
+        {% set field = field + {'name': name} %}
+        {% set value = data.get(scope ~ name) %}
+
+        {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
     {% endif %}
 {% endfor %}
 

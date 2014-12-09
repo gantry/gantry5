@@ -10,41 +10,51 @@ form:
       description: Globally enable to top particles.
       default: true
 
-    css.id:
-      type: text
-      label: Id
-      description: CSS Id name for the particle.
-      default:
+    css:
+      type: container
+      label: Styling
+      fields:
 
-    css.class:
-      type: text
-      label: Class
-      description: CSS class name for the particle.
-      default: main-nav
+        .id:
+          type: text
+          label: Id
+          description: CSS Id name for the particle.
+          default:
 
-    config.base:
-      type: text
-      label: Base Path
-      default: /
+        .class:
+          type: text
+          label: Class
+          description: CSS class name for the particle.
+          default: main-nav
 
-    config.startLevel:
-      type: text
-      label: Start Level
-      default: 1
+    .config:
+      type: container
+      label: Configuration
+      fields:
 
-    config.endLevel:
-      type: text
-      label: End Level
-      default: 0
+        config.base:
+          type: text
+          label: Base Path
+          default: /
 
-    config.showAllChildren:
-      type: text
-      label: Show All Menu Items
-      default: false
+        .startLevel:
+          type: text
+          label: Start Level
+          default: 1
 
-    config.window_open:
-      type: text
-      label: Target Position
+        .endLevel:
+          type: text
+          label: End Level
+          default: 0
+
+        .showAllChildren:
+            type: text
+            label: Show All Menu Items
+            default: false
+
+        .window_open:
+          type: text
+          label: Target Position
 
     items:
       type: list
@@ -52,43 +62,43 @@ form:
       key: path
 
       fields:
-        path:
+        .path:
           type: key
           label: Path
 
-        id:
+        .id:
           type: text
           label: Menu Item Id
 
-        type:
+        .type:
           type: text
           label: Menu Item Type
           default: link
 
-        link:
+        .link:
           type: text
           label: Link
 
-        title:
+        .title:
           type: text
           label: Menu Title
 
-        browserNav:
+        .browserNav:
           type: text
           label: Target Window
 
-        anchor_css:
+        .anchor_css:
           type: text
           label: Link CSS Style
 
-        anchor_title:
+        .anchor_title:
           type: text
           label: Link Hover Title
 
-        menu_image:
+        .menu_image:
           type: text
           label: Link Image
 
-        menu_icon:
+        .menu_icon:
           type: text
           label: Link Icon

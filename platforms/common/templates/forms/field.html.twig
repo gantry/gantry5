@@ -1,14 +1,23 @@
-<div class="settings-param">
-    <span class="settings-param-title float-left">
-        {% if field.help %}
-            <span class="tooltip" data-asTooltip-position="w" title="{{ field.help|e }}">{{ field.label|e }}</span>
-        {% else %}
-            {{ field.label|e }}
-        {% endif %}
-        {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
-    </span>
-    <div class="settings-param-field">
-        {% block input %}
+{% set name = (name is null ? field.name : name) %}
+{% set value = (value is null ? field.default : value) %}
+
+{% block field %}
+    <div class="settings-param">
+        {% block contents %}
+        <span class="settings-param-title float-left">
+            {% block label %}
+            {% if field.description %}
+                <span class="tooltip" data-asTooltip-position="w" title="{{ field.description|e }}">{{ field.label|e }}</span>
+            {% else %}
+                {{ field.label|e }}
+            {% endif %}
+            {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
+            {% endblock %}
+        </span>
+        <div class="settings-param-field">
+            {% block input %}
+            {% endblock %}
+        </div>
         {% endblock %}
     </div>
-</div>
+{% endblock %}
