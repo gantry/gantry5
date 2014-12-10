@@ -18,7 +18,9 @@ require('elements/delegation');
 var Resizer = new prime({
     mixin: [Bound, Options],
     EVENTS: DragEvents,
-    options: {},
+    options: {
+        minSize: 5
+    },
     constructor: function(container, options) {
         this.setOptions(options);
         this.history = this.options.history;
@@ -122,7 +124,7 @@ var Resizer = new prime({
 
         size = nMap(normalized, parentRect.left, parentRect.right, 0, 100);
         size = size - this.siblings.sizeBefore;
-        size = precision(clamp(size, 0, this.origin.maxSize), 4);
+        size = precision(clamp(size, this.options.minSize, this.origin.maxSize - this.options.minSize), 4);
         diff = precision(diff - size, 4);
 
         this.getBlock(this.element).setSize(size, true);
