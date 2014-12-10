@@ -100,8 +100,10 @@ var DragDrop = new prime({
         var offset = Math.abs(this.origin.offset.x),
             columns = this.element.parent().data('lm-blocktype') == 'grid' && this.element.parent().parent().data('lm-root');
 
-        // resizing
+        // resizing and only if it's not a non-visible section
         if ((offset < 6 && this.element.parent().find(':last-child') !== this.element) || (columns && offset > 3 && offset < 10)) {
+            if (this.element.parent('[data-lm-blocktype="non-visible"]')) { return false; }
+            
             this.emit('dragdrop:resize', event, this.element, this.element.siblings(':not(.placeholder)'), this.origin.offset.x);
             return false;
         }
