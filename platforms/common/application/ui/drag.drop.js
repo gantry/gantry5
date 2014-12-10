@@ -147,7 +147,9 @@ var DragDrop = new prime({
 
                 settings.callback = bind(function (element) {
                     this._removeStyleAttribute(element);
-                    this.emit('dragdrop:stop:animation', element);
+                    setTimeout(bind(function(){
+                        this.emit('dragdrop:stop:animation', element);
+                    }, this), 1);
                 }, this, this.element);
 
                 this.element.animate({
