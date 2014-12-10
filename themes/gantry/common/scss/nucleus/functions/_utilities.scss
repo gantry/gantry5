@@ -1,0 +1,7 @@
+@function textcolor-tint($color, $amount: 65%) {
+ 	@if (lightness($color) > 50) {
+ 		@return darken($color, $amount);
+	} @else {
+    	@return lighten($color, $amount);
+  	}	
+}

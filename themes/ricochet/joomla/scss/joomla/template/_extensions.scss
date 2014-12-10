@@ -1,0 +1,711 @@
+// RokSprocket Arrow & Pagination
+.sprocket-features.layout-showcase .sprocket-features-arrows {
+	.arrow {
+		border-radius: 0;
+		background: $core-accent;
+	}
+}
+.sprocket-strips .sprocket-strips-arrows .arrow {
+	border-radius: 100%;
+}
+.sprocket-features.layout-showcase .sprocket-features-pagination li {
+	border: 2px solid $core-accent;
+	padding: 5px;
+	background: transparent;
+	&.active {
+		border: 2px solid darken($core-accent, 10%);
+		background: $core-accent;
+	}
+}
+
+// RokSprocket Features
+.sprocket-features-title {
+    @include breakpoint(desktop-range) {
+		font-size: $core-font-size * 2.75;
+		line-height: $core-line-height * 1.75;
+	}
+	@media only screen and (min-width: 1280px) and (max-width: 1499px) {
+		body.sideslider-type-static#with-sideslider & {
+			font-size: $core-font-size * 2.75;
+			line-height: $core-line-height * 1.75;
+		}
+	}
+    @include breakpoint(tablet-range) {
+		font-size: $core-font-size * 2.25;
+		line-height: $core-line-height * 1.55;
+	}
+	@media only screen and (min-width: 1080px) and (max-width: 1279px) {
+		body.sideslider-type-static#with-sideslider & {
+			font-size: $core-font-size * 2.25;
+			line-height: $core-line-height * 1.55;
+		}
+	}
+    @include breakpoint(mobile-only) {
+		font-size: $core-font-size * 1.85;
+		line-height: $core-line-height * 1.25;
+	}
+	@media only screen and (max-width: 1079px)  {
+		body.sideslider-type-static#with-sideslider & {
+			font-size: $core-font-size * 1.85;
+			line-height: $core-line-height * 1.25;
+		}
+	}
+}
+.layout-scroller {
+	.sprocket-features-flex-wrapper {
+		@include display(flex);
+	}
+	.sprocket-features-pagination {
+		color: $white;
+		li {
+			border-top: 1px solid rgba(255, 255, 255, 0.2);
+			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+			&:first-child {
+				border-top: 0;
+			}
+			&:last-child {
+				border-bottom: 0;
+			}
+		}
+	}
+	#sprocket-features-scroller-scrollbar {
+		.scrollbar, .track {
+			background: none;
+		}
+		.thumb, .end {
+			background: fadeout(darken($core-accent2, 15%), 25%);
+		}
+		.scrollbar {
+			opacity: 0;
+			@include transition(opacity 0.2s ease);
+		}
+		&:hover {
+			.scrollbar {
+				opacity: 1;
+			}
+		}
+	}
+}
+
+// RokSprocket Tabs
+.sprocket-tabs {
+	.sprocket-tabs-nav li {
+		@include breakpoint(mobile-only) {
+			float: none;
+			text-align: center;
+			margin-bottom: 15px;
+			margin-right: 0;
+			margin-left: 0;
+		}
+	}
+	.sprocket-tabs-nav li .sprocket-tabs-inner {
+		color: $gray;
+		background: none;
+		padding: 8px 25px;
+		border-radius: 3px;
+		opacity: 1;
+		@include breakpoint(mobile-only) {
+			padding: 0;
+		}
+	}
+	.sprocket-tabs-nav > li {
+		&:hover > .sprocket-tabs-inner {
+			background: $light-gray;
+		}
+		&.active > .sprocket-tabs-inner,
+		&.active:hover > .sprocket-tabs-inner {
+			color: $white;
+			background: darken($light-gray, 25%);
+		}
+	}
+	.sprocket-tabs-panels {
+		border: 0;
+		@include breakpoint(mobile-only) {
+			margin-top: 0;
+			padding-top: 0;
+			text-align: center;
+		}
+	}
+}
+
+// RokSprocket Lists
+.sprocket-lists {
+	.sprocket-lists-container {
+		.sprocket-lists-title {
+			font-family: $font-family-alt;
+			.indicator:before {
+				font-size: 1em;
+			}
+		}
+	}
+}
+
+// RokSprocket Mosaic
+.sprocket-mosaic {
+	.sprocket-mosaic-filter li, .sprocket-mosaic-order li {
+		color: inherit;
+		background: transparent;
+		font-family: $font-family-alt;
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+	.sprocket-padding {
+		.sprocket-mosaic-tags {
+			background: $core-accent2;
+			padding: 10px 5px;
+			text-align: center;
+			li {
+				background: transparent;
+				font-family: $font-family-alt;
+				text-transform: uppercase;
+				font-weight: bold;
+				&:before {
+					font-family: FontAwesome;
+					content: '\f0f4';
+					margin: 0 5px;
+				}
+			}
+		}
+	}
+	.sprocket-mosaic-item {
+		.sprocket-mosaic-head {
+			padding: 15px 15px 0 15px;
+		}
+		.sprocket-mosaic-text {
+			padding: 0 15px 15px 15px;
+			margin: 0;
+		}
+	}
+	.sprocket-mosaic-title {
+	    font-size: 2em;
+	    line-height: 1.35em;
+	    font-family: $font-family-alt;
+	    font-weight: bold;
+		a {
+			text-decoration: none;
+		}
+	}
+	.sprocket-mosaic-loadmore {
+		font-family: $font-family-alt;
+		color: $gray;
+		border: 2px solid darken($white, 10%);
+		background: darken($white, 5%);
+		@include transition(all 0.2s ease-in);
+		&:hover, &.loader {
+			color: $white;
+			background: $core-accent;
+			border: 2px solid darken($core-accent, 15%);
+		}
+	}
+	.loadmore-text {
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+
+	.sprocket-mosaic-filter, .sprocket-mosaic-order {
+		$filter-background: $white;
+		$filter-item-background: $light-gray;
+		$filter-item-textcolor: $black;
+		$active-filter-item-background: $black;
+		$active-filter-item-textcolor: $white;
+		text-align: center;
+		ul {
+			list-style: none;
+			display: inline;
+			li {
+				display: inline;
+				padding: 0 !important;
+				span {
+					display: block;
+					float: left;
+					height: 30px;
+					background: $filter-item-background;
+					text-align: center;
+					padding: 10px 20px 0 40px;
+					position: relative;
+					margin: 0 5px 0 0;
+					text-decoration: none;
+					color: $filter-item-textcolor;
+					@include transition(all 0.3s ease);
+					@include breakpoint(desktop-range) {
+						padding: 10px 10px 0 40px;
+					}
+					@include breakpoint(tablet-range) {
+						padding: 10px 5px 0 35px;
+					}
+					@include breakpoint(mobile-only) {
+						margin: 5px;
+						padding: 10px 10px 0 30px;
+					}
+					&:after {
+						content: "";
+						border-top: 20px solid transparent;
+						border-bottom: 20px solid transparent;
+						border-left: 20px solid $filter-item-background;
+						position: absolute;
+						right: -20px;
+						top: 0;
+						z-index: 1;
+						@include transition(all 0.3s ease);
+					}
+					&:before {
+						content: "";
+						border-top: 20px solid transparent;
+						border-bottom: 20px solid transparent;
+						border-left: 20px solid $filter-background;
+						position: absolute; left: 0; top: 0;
+						@include transition(all 0.3s ease);
+					}
+					&:hover {
+						color: $active-filter-item-textcolor;
+						background: $active-filter-item-background;
+						&:after {
+							border-left-color: $active-filter-item-background;
+						}
+					}
+				}
+				&:last-child {
+					span {
+						padding-right: 20px;
+					}
+				}
+				&.active {
+					span {
+						color: $active-filter-item-textcolor;
+						background: $active-filter-item-background;
+						&:after {
+							content: "";
+							border-top: 20px solid transparent;
+							border-bottom: 20px solid transparent;
+							border-left: 20px solid $active-filter-item-background;
+							position: absolute;
+							right: -20px;
+							top: 0;
+							z-index: 1;
+						}
+					}
+				}
+			}
+		}
+	}
+	.sprocket-mosaic-order {
+		margin-right: 17px;
+	}
+}
+
+// RokSprocket Strips
+.sprocket-strips {
+	.sprocket-strips-title {
+	    font-size: 2em;
+	    line-height: 1.35em;
+	    font-family: $font-family-alt;
+	    font-weight: bold;
+	}
+}
+
+// RokSprocket Tables
+.sprocket-tables {
+	.sprocket-tables-link .readon {
+		color: $core-accent;
+		border: 1px solid $core-accent;
+		background: none;
+		display: inline-block;
+		padding: 8px 20px;
+		line-height: normal;
+		font-size: $core-font-size + 2;
+		border-radius: 0;
+		text-transform: uppercase;
+		text-shadow: none;
+		text-decoration: none;
+		@include transition(all 0.2s ease-in);
+		&:hover {
+			color: $white;
+			background: lighten($core-accent, 10%);
+		}
+		.demostyle-type-preset5 & {
+			color: $core-accent2;
+			border-color: $core-accent2;
+			&:hover {
+				background: lighten($core-accent2, 10%);
+			}
+		}
+	}
+}
+
+// RokAjaxSearch
+#roksearch_search_str {
+	width: 100%;
+}
+#roksearch_results {
+	background: darken($page-bg, 8%);
+	border: 1px solid darken($page-bg, 10%);
+	.roksearch_result_wrapper1 {
+		@include linear-gradient($page-bg, darken($page-bg, 8%));
+		&:hover {
+			@include linear-gradient(lighten($core-accent, 35%), lighten($core-accent, 25%));
+			color: darken($core-accent, 25%);
+			border-color: darken($core-accent, 8%);
+		}
+	}
+	span.highlight {
+		color: $white;
+		background-color: darken($core-accent, 20%);
+		text-shadow: none;
+	}
+	a#roksearch_link {
+		background: none;
+	}
+}
+#rokajaxsearch {
+	margin: 0;
+	> .rokajaxsearch {
+		background: none;
+		box-shadow: none;
+		border: none;
+	}
+}
+.rokajaxsearch {
+	.search_options {
+		margin-top: 8px;
+		padding-bottom: 15px;
+		label {
+			margin-right: 10px !important;
+			input[type="radio"], input[type="checkbox"] {
+				margin: 0 5px 0 0;
+			}
+		}
+	}
+	.clr {
+		clear: both;
+	}
+	.searchintro {
+		overflow: hidden;
+	}
+}
+#roksearch_results {
+	z-index: 10000;
+	position: absolute;
+	width: 400px;
+	float: right;
+	text-align: left;
+	visibility: hidden;
+	margin-top: 5px;
+	@include breakpoint(small-mobile-range) {
+		width: 90% !important;
+	}
+	.small {
+		display: inline;
+		position: relative;
+		text-align: inherit;
+		bottom: 0;
+		right: 0;
+		font-size: 11px;
+		font-style: italic;
+	}
+	a.clr {
+		margin: 10px 0 5px 0;
+	}
+	h3 {
+		margin-top: 0;
+		margin-bottom: 2px;
+		line-height: 110%;
+		font-size: 110%;
+		padding-bottom: 0;
+	}
+	.container-wrapper {
+		overflow: hidden;
+	}
+	.page {
+		float: left;
+	}
+	.roksearch_header, .roksearch_row_btm {
+		padding: 10px 15px;
+		line-height: 130%;
+		text-transform: none;
+		font-weight: normal;
+		font-size: 14px;
+	}
+	.roksearch_row_btm {
+		overflow: hidden;
+		border-top: 1px solid darken($page-bg, 12%);
+	}
+	.roksearch_even, .roksearch_odd {
+		padding: 15px;
+		border-bottom: none;
+		span {
+			margin-top: 15px;
+			line-height: 140%;
+			&.highlight {
+				margin-top: 0;
+				padding: 0 3px;
+			}
+		}
+	}
+	.viewall {
+		float: left;
+		margin: 0 5px;
+		span {
+			line-height: 130%;
+			text-transform: none;
+		}
+	}
+	.estimated_res {
+		font-size: 9px;
+		font-style: italic;
+		text-transform: none;
+		float: left;
+	}
+	.pagination_res {
+		font-style: normal;
+		float: right;
+		text-transform: none;
+		font-size: 11px;
+		span {
+			padding: 0 5px;
+		}
+	}
+	.powered-by-google {
+		text-transform: lowercase;
+		font-style: italic;
+		font-size: 9px;
+	}
+	.google-search {
+		#roksearch_link {
+			margin-top: 5px;
+		}
+	}
+	.google-thumb-image {
+		margin: 0 auto;
+	}
+	.readon {
+		margin-top: 15px;
+		span, .button {
+			font-size: 13px;
+			line-height: 22px;
+		}
+	}
+	.container-arrows {
+		height: 12px;
+		width: 30px;
+		float: left;
+		margin-right: 5px;
+		position: relative;
+	}
+	#roksearch_link:before{
+		content: "×";
+	    font-size: 1.5em;
+	    position: absolute;
+	    right: 10px;
+	    top: 8px;
+	    z-index: 100;
+	}
+	.arrow-left, .arrow-left-disabled, .arrow-right, .arrow-right-disabled {
+		position: absolute;
+		&:before {
+			font-family: FontAwesome;
+			font-size: 1.3em;
+		}
+	}
+	.arrow-left, .arrow-right {
+		cursor: pointer;
+		&:before {
+			color: $core-accent;
+		}
+	}
+	.arrow-left, .arrow-left-disabled {
+		left: 0;
+		&:before {
+			content: '\f104';
+		}
+	}
+	.arrow-right, .arrow-right-disabled {
+		left: 18px;
+		&:before {
+			content: '\f105';
+		}
+	}
+}
+
+// RokBox
+.rokbox-wrapper .rokbox-outer .rokbox-row .rokbox-inner .rokbox-container .rokbox-content {
+	color: textcolor-tint($white);
+	background: $white;
+}
+
+// RokGallery
+.rg-sc {
+	.rg-scr-info {
+		position: absolute;
+		left: 0;
+		right: 0;
+	}
+	.layout-left .rg-scr-info {
+		left: 0;
+	}
+	.layout-right .rg-scr-info {
+		right: 0;
+	}
+	.rg-scr-content {
+		vertical-align: top;
+	}
+	.rg-scr-title-span {
+		margin: 0 0 15px 0;
+	}
+	.rg-scr-desc-surround {
+		clear: both;
+	}
+	.rg-ss-title {
+		line-height: 180%;
+	}
+	.rg-ss-caption {
+		text-indent: 0;
+		line-height: 180%;
+	}
+}
+.rg-sc-slide {
+	.rg-sc-title-span {
+		margin: 0 0 15px 0;
+	}
+	.rg-sc-desc-surround {
+		clear: both;
+	}
+}
+.rg-ss-controls.onhover {
+	visibility: hidden;
+}
+.rg-ss-slice-container:hover {
+	.rg-ss-controls.onhover {
+		visibility: visible;
+	}
+}
+.rg-ss-container {
+	.arrows-enabled .rg-ss-thumb-scroller {
+		margin: 0 10px;
+	}
+	.rg-ss-title {
+		margin-bottom: 25px;
+	}
+	.rg-ss-caption {
+		text-indent: 0;
+	}
+}
+
+
+// Tablet Modes
+@include breakpoint(tablet-range) {
+	// RokSprocket Mosaic
+	.sprocket-mosaic-columns-1 > li,
+	.sprocket-mosaic-columns-5 > li,
+	.sprocket-mosaic-columns-7 > li,
+	.sprocket-mosaic-columns-11 > li {
+		width: 100% !important;
+	}
+	.sprocket-mosaic-columns-2 > li,
+	.sprocket-mosaic-columns-1 > li {
+		width: 50% !important;
+	}
+	.sprocket-mosaic-columns-4 > li,
+	.sprocket-mosaic-columns-8 > li,
+	.sprocket-mosaic-columns-12 > li {
+		width: 25% !important;
+	}
+	.sprocket-mosaic-columns-3 > li,
+	.sprocket-mosaic-columns-6 > li,
+	.sprocket-mosaic-columns-9 > li {
+		width: 33.33% !important;
+	}
+
+	// RokSprocket Strips
+	.sprocket-strips-container.cols-1 li,
+	.sprocket-strips-container.cols-5 li,
+	.sprocket-strips-container.cols-7 li,
+	.sprocket-strips-container.cols-11 li {
+		width: 100% !important;
+	}
+	.sprocket-strips-container.cols-2 li,
+	.sprocket-strips-container.cols-10 li {
+		width: 48% !important;
+	}
+	.sprocket-strips-container.cols-4 li,
+	.sprocket-strips-container.cols-8 li,
+	.sprocket-strips-container.cols-12 li {
+		width: 23% !important;
+	}
+	.sprocket-strips-container.cols-3 li,
+	.sprocket-strips-container.cols-6 li,
+	.sprocket-strips-container.cols-9 li {
+		width: 31.33% !important;
+	}
+
+	// RokSprocket Grids
+	.sprocket-grids-b-columns-1 > li,
+	.sprocket-grids-b-columns-5 > li,
+	.sprocket-grids-b-columns-7 > li,
+	.sprocket-grids-b-columns-11 > li {
+		width: 100% !important;
+	}
+	.sprocket-grids-b-columns-2 > li,
+	.sprocket-grids-b-columns-1 > li {
+		width: 50% !important;
+	}
+	.sprocket-grids-b-columns-4 > li,
+	.sprocket-grids-b-columns-8 > li,
+	.sprocket-grids-b-columns-12 > li {
+		width: 25% !important;
+	}
+	.sprocket-grids-b-columns-3 > li,
+	.sprocket-grids-b-columns-6 > li,
+	.sprocket-grids-b-columns-9 > li {
+		width: 33.33% !important;
+	}
+}
+
+// Mobile Modes
+@include breakpoint(mobile-only) {
+	// RokSprocket Mosaic
+	.sprocket-mosaic-columns-1 > li, .sprocket-mosaic-columns-2 > li, .sprocket-mosaic-columns-3 > li, .sprocket-mosaic-columns-4 > li, .sprocket-mosaic-columns-5 > li, .sprocket-mosaic-columns-6 > li {
+		width: 100% !important;
+	}
+	.sprocket-mosaic .sprocket-mosaic-header .sprocket-mosaic-filter, .sprocket-mosaic .sprocket-mosaic-header .sprocket-mosaic-order {
+		float: none;
+		text-align: center;
+		margin-bottom: 15px;
+	}
+
+	// RokSprocket Strips
+	.sprocket-strips-container.cols-1 li, .sprocket-strips-container.cols-2 li, .sprocket-strips-container.cols-3 li, .sprocket-strips-container.cols-4 li, .sprocket-strips-container.cols-5 li, .sprocket-strips-container.cols-6 li, .sprocket-strips-container.cols-7 li, .sprocket-strips-container.cols-8 li, .sprocket-strips-container.cols-9 li {
+		width: 100% !important;
+	}
+
+	// RokSprocket Grids
+	.sprocket-grids-b-content {text-align: center;}
+	.sprocket-grids-b-text {display: block;}
+	.sprocket-grids-b-info, .sprocket-grids-b-text {font-size: 80%;}
+}
+
+// Small Screen Mobile Modes
+@include breakpoint(small-mobile-range) {
+	[class*="sprocket"] .sprocket-mosaic-filter li, [class*="sprocket"] .sprocket-mosaic-order li {
+		font-size: 0.8em;
+		padding: 0 5px;
+	}
+}
+
+// RokSprocket Strips Arrow
+@media
+only screen and (min-width: 1195px) and (max-width: 1275px),
+only screen and (min-width: 960px) and (max-width: 1070px),
+only screen and (min-width: 768px) and (max-width: 880px),
+only screen and (min-width: 482px) and (max-width: 600px),
+only screen and (max-width: 480px) {
+	.sprocket-strips {
+		.sprocket-strips-arrows .arrow {
+			&.prev {
+				left: -10px;
+			}
+			&.next {
+				right: -10px;
+			}
+		}
+	}
+}

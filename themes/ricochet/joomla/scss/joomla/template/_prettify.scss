@@ -1,0 +1,43 @@
+.com {
+	color: #93a1a1;
+}
+.lit {
+	color: #195f91;
+}
+.pun, .opn, .clo {
+	color: #93a1a1;
+}
+.fun {
+	color: #dc322f;
+}
+.str, .atv {
+	color: #dd1144;
+}
+.kwd, .linenums .tag {
+	color: #3A87B2;
+}
+.typ, .atn, .dec, .var {
+	color: teal;
+}
+.tag, .pln {
+	color: $core-text;
+}
+
+.prettyprint {
+	padding: 8px;
+	background-color: $light-gray;
+	border: 1px solid darken($light-gray, 10%);
+}
+.prettyprint.linenums {
+	box-shadow: 40px 0 0 $light-gray inset, 41px 0 0 darken($light-gray, 10%) inset;
+}
+
+ol.linenums {
+	margin: 0 0 0 33px;
+	padding-left: 0;
+	li {
+		padding-left: 12px;
+		color: $core-text-light;
+		line-height: 18px; 
+	}
+}
