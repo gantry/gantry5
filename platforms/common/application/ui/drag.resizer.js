@@ -47,7 +47,7 @@ var Resizer = new prime({
         return this.getAttribute($(element), 'size');
     },
 
-    start: function(event, element, siblings) {
+    start: function(event, element, siblings, offset) {
         this.map = this.builder.map;
         if (event.which && event.which !== 1) { return true; }
 
@@ -79,7 +79,7 @@ var Resizer = new prime({
         this.origin = {
             size: this.getSize(this.element),
             maxSize: this.getSize(this.element) + this.getSize(this.siblings.next),
-            x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX,
+            x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX + 6,
             y: event.changedTouches ? event.changedTouches[0].pageY : event.pageY
         };
 
@@ -90,7 +90,8 @@ var Resizer = new prime({
             clientRect: clientRect,
             parentRect: {left: parentRect.left, right: parentRect.right},
             x: this.origin.x - clientRect.right,
-            y: clientRect.top - this.origin.y
+            y: clientRect.top - this.origin.y,
+            down: offset
         };
 
         this.origin.offset.parentRect.left = this.element.parent().find('> [data-lm-id]:first-child')[0].getBoundingClientRect().left;
@@ -116,7 +117,7 @@ var Resizer = new prime({
 
         var size,
             diff = 100 - this.siblings.occupied,
-            value = clientX + (!this.siblings.prevs ? this.origin.offset.x : this.siblings.prevs.length),
+            value = clientX + (!this.siblings.prevs ? this.origin.offset.x - this.origin.offset.down : this.siblings.prevs.length),
             normalized = clamp(value, parentRect.left, parentRect.right);
 
         size = nMap(normalized, parentRect.left, parentRect.right, 0, 100);

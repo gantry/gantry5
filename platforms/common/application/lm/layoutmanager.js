@@ -48,8 +48,8 @@ var singles = {
             sections.forEach(function(section) {
                 var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty)');
                 if (subGrids) {
-                    if (subGrids.length === 1) { subGrids.addClass('no-move'); }
-                    else { subGrids.removeClass('no-move'); }
+                    if (subGrids.length === 1) { subGrids.addClass('no-move').data('lm-nodrag', 'true'); }
+                    else { subGrids.removeClass('no-move').data('lm-nodrag', null); }
                 }
             }, this);
         }
@@ -63,8 +63,8 @@ var singles = {
             sections.forEach(function(section) {
                 var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty)');
                 if (subGrids) {
-                    if (subGrids.length === 1) { subGrids.addClass('no-move'); }
-                    else { subGrids.removeClass('no-move'); }
+                    if (subGrids.length === 1) { subGrids.addClass('no-move').data('lm-nodrag', 'true'); }
+                    else { subGrids.removeClass('no-move').data('lm-nodrag', null); }
                 }
             }, this);
         }
@@ -137,7 +137,7 @@ var LayoutManager = new prime({
                 zIndex: 1000,
                 width: Math.ceil(size.width),
                 height: Math.ceil(size.height)
-            }).find('[data-lm-blocktype]').style({ margin: margins });
+            }).find('[data-lm-blocktype]');//.style({ margin: margins });
 
             if (this.block.getType() === 'grid') {
                 var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header)');
@@ -146,7 +146,7 @@ var LayoutManager = new prime({
                 }
             }
 
-            this.placeholder.after(element);
+            this.placeholder.before(element);
             this.eraser.show();
         } else {
             var position = element.position(),
@@ -243,8 +243,8 @@ var LayoutManager = new prime({
         }
     },
 
-    resize: function(event, element, siblings) {
-        this.resizer.start(event, element, siblings);
+    resize: function(event, element, siblings, offset) {
+        this.resizer.start(event, element, siblings, offset);
     },
 
     removeElement: function(event, element) {
@@ -298,7 +298,7 @@ var LayoutManager = new prime({
 
     },
 
-    stop: function(event, target/*, element*/) {
+    stop: function(event, target, element) {
         // we are removing the block
         var lastOvered = $(this.dragdrop.lastOvered);
         if (lastOvered && lastOvered.matches(this.eraser.element.find('.trash-zone'))) {
@@ -373,12 +373,12 @@ var LayoutManager = new prime({
             };
             block.block.remove();
             this.builder.remove(block);
-            console.log('2. im leaving, resize my siblings');
+            //console.log('2. im leaving, resize my siblings');
         }
 
         // case 3: moving a block around, need to reset the sizes
         if (this.originalType === 'block' && this.block.getType() === 'block') {
-            console.log('3. im a block and ive been moved, resize my new siblings and the ones where i come from');
+            //console.log('3. im a block and ive been moved, resize my new siblings and the ones where i come from');
             resizeCase = { case: 3 };
             var previous = this.block.block.parent().siblings(':not(.original-placeholder)');
             if (!this.block.isNew() && previous.length) { this.resizer.evenResize(previous); }

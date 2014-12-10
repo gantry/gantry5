@@ -212,10 +212,10 @@
                         content: "";
                         top: 0;
                         bottom: 0;
-                        width: 2px;
+                        width: 4px;
                         background: #00baaa;
                         position: absolute;
-                        right: -3px;
+                        right: -5px;
                         cursor: ew-resize;
                         z-index: 10;
                     }
@@ -273,7 +273,7 @@
             color: $white;
             background: #aaaaaa;
             text-shadow: 1px 1px 0 #8F8F8F, -1px -1px 0 #8F8F8F, 1px -1px 0 #8F8F8F, -1px 1px 0 #8F8F8F, 1px 1px 0 #8F8F8F;
-            margin-right: 4px;
+            margin-right: 6px;
             position: relative;
 
             strong {
