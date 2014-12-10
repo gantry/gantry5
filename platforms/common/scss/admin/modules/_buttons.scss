@@ -4,7 +4,8 @@
     padding: 6px 12px;
     vertical-align: middle;
     font-size: $core-font-size;
-    font-weight: normal;
+    font-weight: 300;
+    font-family: $font-family-default;
     &:active {
         margin: 1px 0 -1px 0;
     }
@@ -15,7 +16,7 @@
 
 @mixin button-color($color, $text: $white) {
     background: $color;
-    color: $text;
+    color: rgba($text, 0.9);
     //box-shadow: 0 1px darken($color, 12%), -1px 0 darken($color, 7%), 1px 0 darken($color, 7%), 0 -1px darken($color, 3%);
     //box-shadow: 0 1px rgba(0, 0, 0, 0.1), -1px 0 $light-gray, 1px 0 $light-gray, 0 -1px transparentize($light-gray, 0.57);
     &:hover {

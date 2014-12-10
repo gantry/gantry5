@@ -33,13 +33,14 @@
   padding: 6px 12px;
   vertical-align: middle;
   font-size: 1rem;
-  font-weight: normal;
+  font-weight: 300;
+  font-family: "lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
-/* line 8, ../scss/admin/modules/_buttons.scss */
+/* line 9, ../scss/admin/modules/_buttons.scss */
 #g5-container .button:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
   margin: 1px 0 -1px 0;
 }
-/* line 11, ../scss/admin/modules/_buttons.scss */
+/* line 12, ../scss/admin/modules/_buttons.scss */
 #g5-container .button i + span, #g5-container .button-primary i + span, #g5-container .button-secondary i + span, #g5-container .button.red i + span, #g5-container .button.yellow i + span {
   margin-left: 8px;
 }
@@ -484,9 +485,9 @@ body {
 #g5-container #main-header .button-save {
   float: right;
   background: #6bbfab;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.9);
 }
-/* line 21, ../scss/admin/modules/_buttons.scss */
+/* line 22, ../scss/admin/modules/_buttons.scss */
 #g5-container #main-header .button-save:hover {
   background: #56b59f;
   color: #fff;
@@ -520,16 +521,19 @@ body {
   vertical-align: middle;
   cursor: pointer;
   font-size: 1rem;
+  font-family: "lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-weight: 300;
   opacity: 0.5;
+  line-height: 1.2;
   -webkit-transition: opacity 0.1s ease-out;
   -moz-transition: opacity 0.1s ease-out;
   transition: opacity 0.1s ease-out;
 }
-/* line 61, ../scss/admin/_headers.scss */
+/* line 64, ../scss/admin/_headers.scss */
 #g5-container #main-header .dev-mode-toggle input:checked + label {
   opacity: 1;
 }
-/* line 65, ../scss/admin/_headers.scss */
+/* line 68, ../scss/admin/_headers.scss */
 #g5-container #main-header .dev-mode-toggle a {
   display: block;
   position: absolute;
@@ -545,17 +549,17 @@ body {
   -moz-transition: all 0.1s ease-out;
   transition: all 0.1s ease-out;
 }
-/* line 79, ../scss/admin/_headers.scss */
+/* line 82, ../scss/admin/_headers.scss */
 #g5-container #main-header .dev-mode-toggle input:last-of-type:checked ~ a {
   left: 50%;
 }
-/* line 86, ../scss/admin/_headers.scss */
+/* line 89, ../scss/admin/_headers.scss */
 #g5-container .inner-header {
   background-color: #253A47;
   padding: 0.938rem;
   color: #729DAE;
 }
-/* line 91, ../scss/admin/_headers.scss */
+/* line 94, ../scss/admin/_headers.scss */
 #g5-container .inner-header .gantry-logo {
   width: 92px;
   height: 28px;
@@ -563,7 +567,7 @@ body {
   vertical-align: middle;
   background-image: url(../images/gantrylogo.png);
 }
-/* line 99, ../scss/admin/_headers.scss */
+/* line 102, ../scss/admin/_headers.scss */
 #g5-container .inner-header [data-sidebar-toggle] {
   display: inline-block;
   font-size: 1rem;
@@ -571,11 +575,11 @@ body {
   margin-right: 0.938rem;
   cursor: pointer;
 }
-/* line 108, ../scss/admin/_headers.scss */
+/* line 111, ../scss/admin/_headers.scss */
 #g5-container .update-text {
   vertical-align: middle;
 }
-/* line 112, ../scss/admin/_headers.scss */
+/* line 115, ../scss/admin/_headers.scss */
 #g5-container .settings-state {
   padding: 0.938rem;
   display: block;
@@ -585,36 +589,36 @@ body {
   color: #fff;
   font-size: 1.1rem;
 }
-/* line 120, ../scss/admin/_headers.scss */
+/* line 123, ../scss/admin/_headers.scss */
 #g5-container .settings-state i {
   margin-left: 8px;
 }
-/* line 126, ../scss/admin/_headers.scss */
+/* line 129, ../scss/admin/_headers.scss */
 #g5-container .update-header {
   padding: 0.538rem 0.938rem;
   background: #8F4DAE;
   color: #fff;
 }
-/* line 132, ../scss/admin/_headers.scss */
+/* line 135, ../scss/admin/_headers.scss */
 #g5-container .button.button-update {
   float: right;
   box-shadow: none;
   background: #633679;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.9);
 }
-/* line 21, ../scss/admin/modules/_buttons.scss */
+/* line 22, ../scss/admin/modules/_buttons.scss */
 #g5-container .button.button-update:hover {
   background: #522c64;
   color: #fff;
 }
-/* line 138, ../scss/admin/_headers.scss */
+/* line 141, ../scss/admin/_headers.scss */
 #g5-container .ribbon {
   padding: 0.469rem 0.938rem;
   background-color: #eee;
   color: #a2a2a2;
   border-left: 1px solid #e1e1e1;
 }
-/* line 144, ../scss/admin/_headers.scss */
+/* line 147, ../scss/admin/_headers.scss */
 #g5-container .ribbon.master {
   background-color: #ffce54;
   color: #ba8500;
@@ -653,9 +657,9 @@ body {
 /* line 3, ../scss/admin/_buttons.scss */
 #g5-container .button {
   background: #999999;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.9);
 }
-/* line 21, ../scss/admin/modules/_buttons.scss */
+/* line 22, ../scss/admin/modules/_buttons.scss */
 #g5-container .button:hover {
   background: #8a8a8a;
   color: #fff;
@@ -663,9 +667,9 @@ body {
 /* line 8, ../scss/admin/_buttons.scss */
 #g5-container .button-primary {
   background: #439A86;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.9);
 }
-/* line 21, ../scss/admin/modules/_buttons.scss */
+/* line 22, ../scss/admin/modules/_buttons.scss */
 #g5-container .button-primary:hover {
   background: #3a8573;
   color: #fff;
@@ -673,9 +677,9 @@ body {
 /* line 13, ../scss/admin/_buttons.scss */
 #g5-container .button-secondary {
   background: #314C59;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.9);
 }
-/* line 21, ../scss/admin/modules/_buttons.scss */
+/* line 22, ../scss/admin/modules/_buttons.scss */
 #g5-container .button-secondary:hover {
   background: #263b45;
   color: #fff;
@@ -683,9 +687,9 @@ body {
 /* line 18, ../scss/admin/_buttons.scss */
 #g5-container .button.red {
   background: #ed5565;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.9);
 }
-/* line 21, ../scss/admin/modules/_buttons.scss */
+/* line 22, ../scss/admin/modules/_buttons.scss */
 #g5-container .button.red:hover {
   background: #ea394c;
   color: #fff;
@@ -693,9 +697,9 @@ body {
 /* line 23, ../scss/admin/_buttons.scss */
 #g5-container .button.yellow {
   background: #ffce54;
-  color: #876000;
+  color: rgba(135, 96, 0, 0.9);
 }
-/* line 21, ../scss/admin/modules/_buttons.scss */
+/* line 22, ../scss/admin/modules/_buttons.scss */
 #g5-container .button.yellow:hover {
   background: #ffc535;
   color: #876000;

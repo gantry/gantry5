@@ -54,7 +54,10 @@
                 vertical-align: middle;
                 cursor: pointer;
                 font-size: $core-font-size;
+                font-family: $font-family-default;
+                font-weight: 300;
                 opacity: 0.5;
+                line-height: 1.2;
                 @include transition(opacity 0.1s ease-out);
             }
 
