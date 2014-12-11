@@ -211,7 +211,7 @@ var G5;
     },
     '3': function (require, module, exports, global) {
         'use strict';
-        var Emitter = require('j');
+        var Emitter = require('h');
         var $ = require('b');
         var html = document.documentElement;
         var addEventListener = html.addEventListener ? function (node, event, handle, useCapture) {
@@ -267,7 +267,7 @@ var G5;
     },
     '4': function (require, module, exports, global) {
         'use strict';
-        var Map = require('i');
+        var Map = require('g');
         var $ = require('3');
         require('6');
         $.implement({
@@ -390,8 +390,8 @@ var G5;
     },
     '6': function (require, module, exports, global) {
         'use strict';
-        var map = require('g');
-        var slick = require('h');
+        var map = require('z');
+        var slick = require('10');
         var $ = require('b');
         var gen = function (combinator, expression) {
             return map(slick.parse(expression || '*'), function (part) {
@@ -476,7 +476,7 @@ var G5;
     },
     '7': function (require, module, exports, global) {
         'use strict';
-        var prime = require('u'), $ = require('v'), zen = require('o'), storage = require('i')(), Emitter = require('j'), Bound = require('w'), Options = require('x'), domready = require('k'), bind = require('y'), map = require('z'), forEach = require('10'), last = require('11'), merge = require('12'), isFunct = require('13'), request = require('n');
+        var prime = require('i'), $ = require('j'), zen = require('k'), storage = require('g')(), Emitter = require('h'), Bound = require('s'), Options = require('t'), domready = require('l'), bind = require('u'), map = require('v'), forEach = require('w'), last = require('x'), merge = require('n'), isFunct = require('y'), request = require('p');
         var animationEndSupport = false, popovers = {};
         var Popover = new prime({
                 mixin: [
@@ -908,7 +908,7 @@ var G5;
     },
     '8': function (require, module, exports, global) {
         'use strict';
-        var prime = require('u'), $ = require('v'), zen = require('o'), domready = require('k'), storage = require('i')(), modal = require('a').modal, size = require('14'), merge = require('12'), guid = require('15'), request = require('n')(), History = require('16'), AjaxURL = require('p');
+        var prime = require('i'), $ = require('j'), zen = require('k'), domready = require('l'), storage = require('g')(), modal = require('a').modal, size = require('m'), merge = require('n'), guid = require('o'), request = require('p')(), History = require('q'), AjaxURL = require('r');
         require('7');
         History.Adapter.bind(window, 'statechange', function () {
             if (request.running()) {
@@ -970,7 +970,7 @@ var G5;
     },
     '9': function (require, module, exports, global) {
         'use strict';
-        var ready = require('k'), json = require('m'), $ = require('2'), modal = require('a').modal, request = require('n'), zen = require('o'), AjaxURL = require('p'), Builder = require('q'), History = require('r'), LMHistory = require('s'), LayoutManager = require('t');
+        var ready = require('l'), json = require('11'), $ = require('2'), modal = require('a').modal, request = require('p'), zen = require('k'), AjaxURL = require('r'), Builder = require('12'), History = require('13'), LMHistory = require('14'), LayoutManager = require('15');
         require('7');
         var builder, layoutmanager, lmhistory;
         builder = new Builder(json);
@@ -1045,13 +1045,13 @@ var G5;
     },
     'a': function (require, module, exports, global) {
         'use strict';
-        var ready = require('k'), Modal = require('l');
+        var ready = require('l'), Modal = require('16');
         module.exports = { modal: new Modal() };
     },
     'b': function (require, module, exports, global) {
         'use strict';
-        var prime = require('u');
-        var forEach = require('d'), map = require('g'), filter = require('e'), every = require('17'), some = require('18');
+        var prime = require('i');
+        var forEach = require('d'), map = require('z'), filter = require('e'), every = require('17'), some = require('18');
         var index = 0, __dc = document.__counter, counter = document.__counter = (__dc ? parseInt(__dc, 36) + 1 : 0).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n) {
             if (n === window)
@@ -1198,29 +1198,9 @@ var G5;
         module.exports = indexOf;
     },
     'g': function (require, module, exports, global) {
-        var makeIterator = require('1d');
-        function map(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var results = [];
-            if (arr == null) {
-                return results;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                results[i] = callback(arr[i], i, arr);
-            }
-            return results;
-        }
-        module.exports = map;
-    },
-    'h': function (require, module, exports, global) {
-        'use strict';
-        module.exports = 'document' in global ? require('1e') : { parse: require('1f') };
-    },
-    'i': function (require, module, exports, global) {
         'use strict';
         var indexOf = require('f');
-        var prime = require('u');
+        var prime = require('i');
         var Map = prime({
                 constructor: function Map() {
                     this.length = 0;
@@ -1318,10 +1298,10 @@ var G5;
         map.prototype = Map.prototype;
         module.exports = map;
     },
-    'j': function (require, module, exports, global) {
+    'h': function (require, module, exports, global) {
         'use strict';
         var indexOf = require('f'), forEach = require('d');
-        var prime = require('u'), defer = require('1g');
+        var prime = require('i'), defer = require('1e');
         var slice = Array.prototype.slice;
         var Emitter = prime({
                 on: function (event, fn) {
@@ -1366,7 +1346,143 @@ var G5;
         Emitter.EMIT_SYNC = {};
         module.exports = Emitter;
     },
+    'i': function (require, module, exports, global) {
+        'use strict';
+        var hasOwn = require('1f'), mixIn = require('1g'), create = require('1h'), kindOf = require('1i');
+        var hasDescriptors = true;
+        try {
+            Object.defineProperty({}, '~', {});
+            Object.getOwnPropertyDescriptor({}, '~');
+        } catch (e) {
+            hasDescriptors = false;
+        }
+        var hasEnumBug = !{ valueOf: 0 }.propertyIsEnumerable('valueOf'), buggy = [
+                'toString',
+                'valueOf'
+            ];
+        var verbs = /^constructor|inherits|mixin$/;
+        var implement = function (proto) {
+            var prototype = this.prototype;
+            for (var key in proto) {
+                if (key.match(verbs))
+                    continue;
+                if (hasDescriptors) {
+                    var descriptor = Object.getOwnPropertyDescriptor(proto, key);
+                    if (descriptor) {
+                        Object.defineProperty(prototype, key, descriptor);
+                        continue;
+                    }
+                }
+                prototype[key] = proto[key];
+            }
+            if (hasEnumBug)
+                for (var i = 0; key = buggy[i]; i++) {
+                    var value = proto[key];
+                    if (value !== Object.prototype[key])
+                        prototype[key] = value;
+                }
+            return this;
+        };
+        var prime = function (proto) {
+            if (kindOf(proto) === 'Function')
+                proto = { constructor: proto };
+            var superprime = proto.inherits;
+            var constructor = hasOwn(proto, 'constructor') ? proto.constructor : superprime ? function () {
+                    return superprime.apply(this, arguments);
+                } : function () {
+                };
+            if (superprime) {
+                mixIn(constructor, superprime);
+                var superproto = superprime.prototype;
+                var cproto = constructor.prototype = create(superproto);
+                constructor.parent = superproto;
+                cproto.constructor = constructor;
+            }
+            if (!constructor.implement)
+                constructor.implement = implement;
+            var mixins = proto.mixin;
+            if (mixins) {
+                if (kindOf(mixins) !== 'Array')
+                    mixins = [mixins];
+                for (var i = 0; i < mixins.length; i++)
+                    constructor.implement(create(mixins[i].prototype));
+            }
+            return constructor.implement(proto);
+        };
+        module.exports = prime;
+    },
+    'j': function (require, module, exports, global) {
+        'use strict';
+        var $ = require('1'), moofx = require('1j'), map = require('v'), slick = require('10');
+        var walk = function (combinator, method) {
+            return function (expression) {
+                var parts = slick.parse(expression || '*');
+                expression = map(parts, function (part) {
+                    return combinator + ' ' + part;
+                }).join(', ');
+                return this[method](expression);
+            };
+        };
+        $.implement({
+            style: function () {
+                var moo = moofx(this);
+                moo.style.apply(moo, arguments);
+                return this;
+            },
+            animate: function () {
+                var moo = moofx(this);
+                moo.animate.apply(moo, arguments);
+                return this;
+            },
+            compute: function () {
+                var moo = moofx(this);
+                return moo.compute.apply(moo, arguments);
+            },
+            sibling: walk('++', 'find'),
+            siblings: walk('~~', 'search')
+        });
+        module.exports = $;
+    },
     'k': function (require, module, exports, global) {
+        'use strict';
+        var forEach = require('d'), map = require('z');
+        var parse = require('1m');
+        var $ = require('b');
+        module.exports = function (expression, doc) {
+            return $(map(parse(expression), function (expression) {
+                var previous, result;
+                forEach(expression, function (part, i) {
+                    var node = (doc || document).createElement(part.tag);
+                    if (part.id)
+                        node.id = part.id;
+                    if (part.classList)
+                        node.className = part.classList.join(' ');
+                    if (part.attributes)
+                        forEach(part.attributes, function (attribute) {
+                            node.setAttribute(attribute.name, attribute.value || '');
+                        });
+                    if (part.pseudos)
+                        forEach(part.pseudos, function (pseudo) {
+                            var n = $(node), method = n[pseudo.name];
+                            if (method)
+                                method.call(n, pseudo.value);
+                        });
+                    if (i === 0) {
+                        result = node;
+                    } else if (part.combinator === ' ') {
+                        previous.appendChild(node);
+                    } else if (part.combinator === '+') {
+                        var parentNode = previous.parentNode;
+                        if (parentNode)
+                            parentNode.appendChild(node);
+                    }
+                    previous = node;
+                });
+                return result;
+            }));
+        };
+    },
+    'l': function (require, module, exports, global) {
         'use strict';
         var $ = require('3');
         var readystatechange = 'onreadystatechange' in document, shouldPoll = false, loaded = false, readys = [], checks = [], ready = null, timer = null, test = document.createElement('div'), doc = $(document), win = $(window);
@@ -1432,560 +1548,56 @@ var G5;
             return null;
         };
     },
-    'l': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u'), $ = require('v'), zen = require('o'), storage = require('i')(), Emitter = require('j'), Bound = require('w'), Options = require('x'), domready = require('k'), bind = require('y'), map = require('z'), forEach = require('10'), last = require('11'), merge = require('12'), request = require('n');
-        var animationEndSupport = false;
-        domready(function () {
-            var style = (document.body || document.documentElement).style;
-            forEach([
-                'animation',
-                'WebkitAnimation',
-                'MozAnimation',
-                'MsAnimation',
-                'OAnimation'
-            ], function (animation, index) {
-                if (animationEndSupport) {
-                    return;
-                }
-                animationEndSupport = style[animation] !== undefined ? Modal.prototype.animationEndEvent[index] : false;
-            });
-        });
-        var Modal = new prime({
-                mixin: [
-                    Bound,
-                    Options
-                ],
-                inherits: Emitter,
-                animationEndEvent: [
-                    'animationend',
-                    'webkitAnimationEnd',
-                    'mozAnimationEnd',
-                    'MSAnimationEnd',
-                    'oanimationend'
-                ],
-                globalID: 1,
-                options: {
-                    baseClassNames: {
-                        container: 'g5-dialog',
-                        content: 'g5-content',
-                        overlay: 'g5-overlay',
-                        close: 'g5-close',
-                        closing: 'g5-closing',
-                        open: 'g5-dialog-open'
-                    },
-                    content: '',
-                    remote: '',
-                    showCloseButton: true,
-                    escapeToClose: true,
-                    overlayClickToClose: true,
-                    appendNode: 'body',
-                    className: 'g5-dialog-theme-default',
-                    css: {},
-                    overlayClassName: '',
-                    overlayCSS: '',
-                    contentClassName: '',
-                    contentCSS: '',
-                    closeClassName: '',
-                    closeCSS: '',
-                    afterOpen: null,
-                    afterClose: null
-                },
-                constructor: function (options) {
-                    this.setOptions(options);
-                    this.defaults = this.options;
-                    var self = this;
-                    domready(function () {
-                        $(window).on('keyup', function (event) {
-                            if (event.keyCode === 27) {
-                                return self.closeByEscape();
-                            }
-                        });
-                        self.animationEndEvent = animationEndSupport;
-                    });
-                    this.on('dialogOpen', function (options) {
-                        $('body').addClass(options.baseClassNames.open);
-                    }).on('dialogAfterClose', bind(function (options) {
-                        var all = this.getAll();
-                        if (!all || !all.length) {
-                            $('body').removeClass(options.baseClassNames.open);
-                        }
-                    }, this));
-                },
-                storage: function () {
-                    return storage;
-                },
-                open: function (options) {
-                    options = merge(this.options, options);
-                    options.id = this.globalID++;
-                    var elements = {};
-                    elements.container = zen('div').addClass(options.baseClassNames.container).addClass(options.className).style(options.css);
-                    storage.set(elements.container, { dialog: options });
-                    elements.overlay = zen('div').addClass(options.baseClassNames.overlay).addClass(options.overlayClassName).style(options.overlayCSS);
-                    storage.set(elements.overlay, { dialog: options });
-                    if (options.overlayClickToClose) {
-                        elements.overlay.on('click', bind(this._overlayClick, this, elements.overlay[0]));
-                    }
-                    elements.container.appendChild(elements.overlay);
-                    elements.content = zen('div').addClass(options.baseClassNames.content).addClass(options.contentClassName).style(options.contentCSS).html(options.content);
-                    storage.set(elements.content, { dialog: options });
-                    elements.container.appendChild(elements.content);
-                    if (options.remote && options.remote.length > 1) {
-                        this.showLoading();
-                        request(options.remote, bind(function (error, response) {
-                            elements.content.html(response.body.html || response.body);
-                            this.hideLoading();
-                            if (options.remoteLoaded) {
-                                options.remoteLoaded(response, options);
-                            }
-                        }, this));
-                    }
-                    if (options.showCloseButton) {
-                        elements.closeButton = zen('div').addClass(options.baseClassNames.close).addClass(options.closeClassName).style(options.closeCSS);
-                        storage.set(elements.closeButton, { dialog: options });
-                        elements.closeButton.on('click', bind(this._closeButtonClick, this, elements.closeButton[0]));
-                        elements.content.appendChild(elements.closeButton);
-                    }
-                    $(options.appendNode).appendChild(elements.container);
-                    options.elements = elements;
-                    if (options.afterOpen) {
-                        options.afterOpen(elements.content, options);
-                    }
-                    setTimeout(bind(function () {
-                        return this.emit('dialogOpen', options);
-                    }, this), 0);
-                    return elements.content;
-                },
-                getAll: function () {
-                    var options = this.options;
-                    return $('.' + options.baseClassNames.container + ':not(.' + options.baseClassNames.closing + ') .' + options.baseClassNames.content);
-                },
-                getByID: function (id) {
-                    return $(this.getAll().filter(function (element) {
-                        element = $(element);
-                        return storage.get(element).dialog.id === id;
-                    }));
-                },
-                close: function (id) {
-                    if (!id) {
-                        var element = $(last(this.getAll()));
-                        if (!element) {
-                            return false;
-                        }
-                        id = storage.get(element).dialog.id;
-                    }
-                    return this.closeByID(id);
-                },
-                closeAll: function () {
-                    var ids;
-                    ids = map(this.getAll(), function (element) {
-                        element = $(element);
-                        return storage.get(element).dialog.id;
-                    });
-                    if (!ids.length) {
-                        return false;
-                    }
-                    forEach(ids.reverse(), function (value, id) {
-                        return this.closeByID(id);
-                    }, this);
-                    return true;
-                },
-                closeByID: function (id) {
-                    var content = this.getByID(id);
-                    if (!content || !content.length) {
-                        return false;
-                    }
-                    var container, options;
-                    container = storage.get(content).dialog.elements.container;
-                    options = merge({}, storage.get(content).dialog);
-                    var beforeClose = function () {
-                            if (options.beforeClose) {
-                                return options.beforeClose(content, options);
-                            }
-                        }, close = bind(function () {
-                            content.emit('dialogClose', options);
-                            container.remove();
-                            this.emit('dialogAfterClose', options);
-                            if (options.afterClose) {
-                                return options.afterClose(content, options);
-                            }
-                        }, this);
-                    if (animationEndSupport) {
-                        beforeClose();
-                        container.off(this.animationEndEvent).on(this.animationEndEvent, function () {
-                            return close();
-                        }).addClass(options.baseClassNames.closing);
-                    } else {
-                        beforeClose();
-                        close();
-                    }
-                    return true;
-                },
-                closeByEscape: function () {
-                    var ids, id;
-                    ids = map(this.getAll(), function (element) {
-                        element = $(element);
-                        return storage.get(element).dialog.id;
-                    });
-                    if (!ids.length) {
-                        return false;
-                    }
-                    id = Math.max.apply(Math, ids);
-                    var element = this.getByID(id);
-                    if (!storage.get(element).dialog.escapeToClose) {
-                        return false;
-                    }
-                    return this.closeByID(id);
-                },
-                showLoading: function () {
-                    this.hideLoading();
-                    return $('body').appendChild(zen('div.g5-dialog-loading-spinner.' + this.options.className));
-                },
-                hideLoading: function () {
-                    var spinner = $('.g5-dialog-loading-spinner');
-                    return spinner ? spinner.remove() : false;
-                },
-                _overlayClick: function (element, event) {
-                    if (event.target !== element) {
-                        return;
-                    }
-                    return this.close(storage.get($(element)).dialog.id);
-                },
-                _closeButtonClick: function (element) {
-                    return this.close(storage.get($(element)).dialog.id);
-                }
-            });
-        module.exports = Modal;
-    },
     'm': function (require, module, exports, global) {
-        module.exports = [
-            {
-                'id': '2330cbf9-25f2-4416-a0de-446fdce1ad0c',
-                'type': 'section',
-                'attributes': {
-                    'name': 'Header',
-                    'key': 'section-header',
-                    'type': 'header',
-                    'id': 'header'
-                },
-                'children': [{
-                        'id': 'ac1962c1-5587-4a24-8983-be8bfd9b1d2f',
-                        'type': 'grid',
-                        'attributes': {},
-                        'children': [
-                            {
-                                'id': '359b6022-55ce-45b9-880c-8974876a873d',
-                                'type': 'block',
-                                'attributes': { 'size': 20 },
-                                'children': [{
-                                        'id': 'fb585b76-4db5-4611-a96c-08c09bd8d90f',
-                                        'type': 'position',
-                                        'attributes': {
-                                            'name': 'Position 1',
-                                            'key': 'Position 1'
-                                        },
-                                        'children': []
-                                    }]
-                            },
-                            {
-                                'id': '388f9ef2-68ad-40bb-ba5e-8d534b24bdfc',
-                                'type': 'block',
-                                'attributes': { 'size': 80 },
-                                'children': [{
-                                        'id': '6e85d292-e08b-448c-a46a-f5b2693db83e',
-                                        'type': 'particle',
-                                        'attributes': {
-                                            'name': 'Menu',
-                                            'key': 'menu'
-                                        },
-                                        'children': []
-                                    }]
-                            }
-                        ]
-                    }]
-            },
-            {
-                'id': '43b618ab-5066-410f-9a9d-0601adeeea02',
-                'type': 'grid',
-                'attributes': {},
-                'children': [
-                    {
-                        'id': '0cc9d063-1447-4335-963b-aee05fa28398',
-                        'type': 'block',
-                        'attributes': { 'size': 75 },
-                        'children': [
-                            {
-                                'id': 'f29bf0b7-7348-48de-b979-e10008de799e',
-                                'type': 'section',
-                                'attributes': {
-                                    'name': 'Showcase',
-                                    'key': 'section-showcase',
-                                    'type': 'section',
-                                    'id': 'showcase'
-                                },
-                                'children': [{
-                                        'id': 'e5f91d76-81c8-4e46-bb24-86164ca6f52c',
-                                        'type': 'grid',
-                                        'attributes': {},
-                                        'children': [
-                                            {
-                                                'id': '2f2622ca-01ba-44fb-845f-6028285a0176',
-                                                'type': 'block',
-                                                'attributes': { 'size': 50 },
-                                                'children': [{
-                                                        'id': '8462e204-f196-498f-a71b-c1c8799e2e80',
-                                                        'type': 'position',
-                                                        'attributes': {
-                                                            'name': 'Position Showcase 1',
-                                                            'key': 'showcase-1'
-                                                        },
-                                                        'children': []
-                                                    }]
-                                            },
-                                            {
-                                                'id': 'dbcafc00-a3c9-42ea-bac0-8d9a85d3284d',
-                                                'type': 'block',
-                                                'attributes': { 'size': 50 },
-                                                'children': [{
-                                                        'id': 'f568d0bb-0964-4091-9971-b49cb8fd01e3',
-                                                        'type': 'position',
-                                                        'attributes': {
-                                                            'name': 'Position Showcase 2',
-                                                            'key': 'showcase-2'
-                                                        },
-                                                        'children': []
-                                                    }]
-                                            }
-                                        ]
-                                    }]
-                            },
-                            {
-                                'id': '5672f5b7-01c3-4f6a-a826-f2537e881b6d',
-                                'type': 'section',
-                                'attributes': {
-                                    'name': 'Feature',
-                                    'key': 'section-feature',
-                                    'type': 'section',
-                                    'id': 'feature'
-                                },
-                                'children': [{
-                                        'id': '5df8ef8d-8dfa-46a8-b8c1-b4520f8d1ebc',
-                                        'type': 'grid',
-                                        'attributes': {},
-                                        'children': [
-                                            {
-                                                'id': '837e1ebe-c18e-49e3-ada6-1efbeb62c76f',
-                                                'type': 'block',
-                                                'attributes': { 'size': 50 },
-                                                'children': [{
-                                                        'id': '1875d46e-639f-4a36-b553-ef6b561bccdc',
-                                                        'type': 'position',
-                                                        'attributes': {
-                                                            'name': 'Position Feature 1',
-                                                            'key': 'feature-1'
-                                                        },
-                                                        'children': []
-                                                    }]
-                                            },
-                                            {
-                                                'id': 'd872554e-da74-4452-87f0-b8d96fe6b711',
-                                                'type': 'block',
-                                                'attributes': { 'size': 50 },
-                                                'children': [{
-                                                        'id': '51d44206-6a78-45b6-9da0-ffee380a1d16',
-                                                        'type': 'position',
-                                                        'attributes': {
-                                                            'name': 'Position Feature 2',
-                                                            'key': 'feature-2'
-                                                        },
-                                                        'children': []
-                                                    }]
-                                            }
-                                        ]
-                                    }]
-                            },
-                            {
-                                'id': 'b40f50f7-1950-461e-8307-d277d30fc54f',
-                                'type': 'section',
-                                'attributes': {
-                                    'name': 'Main',
-                                    'key': 'section-main',
-                                    'type': 'main',
-                                    'id': 'main'
-                                },
-                                'children': [{
-                                        'id': '6d51de8b-e954-4135-8ce3-7665bb6b5d07',
-                                        'type': 'grid',
-                                        'attributes': {},
-                                        'children': [{
-                                                'id': '51673446-865a-4999-b789-6a864d64e115',
-                                                'type': 'block',
-                                                'attributes': { 'size': 100 },
-                                                'children': [{
-                                                        'id': 'f03448da-fb1b-49ec-8d33-b58152ac8b0d',
-                                                        'type': 'pagecontent',
-                                                        'attributes': {
-                                                            'name': 'Page Content',
-                                                            'key': 'pagecontent'
-                                                        },
-                                                        'children': []
-                                                    }]
-                                            }]
-                                    }]
-                            },
-                            {
-                                'id': 'c8315bcd-37c2-4691-8c14-32d44980a173',
-                                'type': 'section',
-                                'attributes': {
-                                    'name': 'Bottom',
-                                    'key': 'section-bottom',
-                                    'type': 'section',
-                                    'id': 'bottom'
-                                },
-                                'children': [{
-                                        'id': 'd59c63b3-6bce-4912-a30a-3b777e3c3bc7',
-                                        'type': 'grid',
-                                        'attributes': {},
-                                        'children': [{
-                                                'id': 'a76cfe58-e9f3-4ab0-a741-489084e347be',
-                                                'type': 'block',
-                                                'attributes': { 'size': 100 },
-                                                'children': [{
-                                                        'id': 'ec9e89e5-5043-4e3e-a853-fe470247a875',
-                                                        'type': 'position',
-                                                        'attributes': {
-                                                            'name': 'Position Bottom',
-                                                            'key': 'bottom'
-                                                        },
-                                                        'children': []
-                                                    }]
-                                            }]
-                                    }]
-                            }
-                        ]
-                    },
-                    {
-                        'id': '6b28344b-7ce3-431c-907f-204b851f7218',
-                        'type': 'block',
-                        'attributes': { 'size': 25 },
-                        'children': [{
-                                'id': '303ea0a4-5279-436f-b808-b37d99c5de90',
-                                'type': 'section',
-                                'attributes': {
-                                    'name': 'Sidebar',
-                                    'key': 'section-sidebar',
-                                    'type': 'section',
-                                    'id': 'sidebar'
-                                },
-                                'children': [
-                                    {
-                                        'id': '89230c44-26a3-4f4f-b135-a2194f05b3b6',
-                                        'type': 'grid',
-                                        'attributes': {},
-                                        'children': [{
-                                                'id': '5f71de41-07a8-4cca-837c-16b81a29361e',
-                                                'type': 'block',
-                                                'attributes': { 'size': 100 },
-                                                'children': [{
-                                                        'id': '9d45007f-78eb-4e1b-b9ee-f52a72fed80a',
-                                                        'type': 'position',
-                                                        'attributes': {
-                                                            'name': 'Position Sidebar',
-                                                            'key': 'sidebar'
-                                                        },
-                                                        'children': []
-                                                    }]
-                                            }]
-                                    },
-                                    {
-                                        'id': '3f44b134-1552-4f49-86b8-670d1add1000',
-                                        'type': 'grid',
-                                        'attributes': {},
-                                        'children': [{
-                                                'id': '6002f826-16c6-4920-b550-abdb93a9398b',
-                                                'type': 'block',
-                                                'attributes': { 'size': 100 },
-                                                'children': [{
-                                                        'id': 'fb585b76-4db5-4611-a96c-08c09bd8d90f',
-                                                        'type': 'particle',
-                                                        'attributes': {
-                                                            'name': 'Social Buttons',
-                                                            'key': 'social-buttons'
-                                                        },
-                                                        'children': []
-                                                    }]
-                                            }]
-                                    }
-                                ]
-                            }]
-                    }
-                ]
-            },
-            {
-                'id': 'ddeb26e3-caeb-4a5c-82c4-9f72a556f107',
-                'type': 'section',
-                'attributes': {
-                    'name': 'Section Footer',
-                    'key': 'section-footer',
-                    'type': 'footer',
-                    'id': 'footer'
-                },
-                'children': [{
-                        'id': '9550d178-71b5-4e04-a566-137e6350ea70',
-                        'type': 'grid',
-                        'attributes': {},
-                        'children': [
-                            {
-                                'id': '54bb2fd9-fc27-462b-ada8-de41912bd8fa',
-                                'type': 'block',
-                                'attributes': { 'size': 16.6667 },
-                                'children': [{
-                                        'id': '825a6498-c19b-42df-bffc-86dae90b64d8',
-                                        'type': 'spacer',
-                                        'attributes': {},
-                                        'children': []
-                                    }]
-                            },
-                            {
-                                'id': 'c3390225-81c8-4403-91d4-14a2b01fb1bd',
-                                'type': 'block',
-                                'attributes': { 'size': 66.6667 },
-                                'children': [{
-                                        'id': '0f7653c0-909b-4430-afdd-75bc5df8105a',
-                                        'type': 'position',
-                                        'attributes': {
-                                            'name': 'Position Footer',
-                                            'key': 'footer'
-                                        },
-                                        'children': []
-                                    }]
-                            },
-                            {
-                                'id': 'b853fa65-3ccb-4994-b266-01b398961063',
-                                'type': 'block',
-                                'attributes': { 'size': 16.6667 },
-                                'children': [{
-                                        'id': '491e8d6c-c762-401f-9ebf-018d83d4a0fe',
-                                        'type': 'spacer',
-                                        'attributes': {},
-                                        'children': []
-                                    }]
-                            }
-                        ]
-                    }]
-            },
-            {
-                'id': 'a845861d-03fd-4ce2-8a05-48ecc458a768',
-                'type': 'non-visible',
-                'attributes': {},
-                'children': []
+        var isArray = require('1k');
+        var objSize = require('1l');
+        function size(list) {
+            if (!list) {
+                return 0;
             }
-        ];
+            if (isArray(list)) {
+                return list.length;
+            }
+            return objSize(list);
+        }
+        module.exports = size;
     },
     'n': function (require, module, exports, global) {
+        var hasOwn = require('1n');
+        var deepClone = require('1o');
+        var isObject = require('1p');
+        function merge() {
+            var i = 1, key, val, obj, target;
+            target = deepClone(arguments[0]);
+            while (obj = arguments[i++]) {
+                for (key in obj) {
+                    if (!hasOwn(obj, key)) {
+                        continue;
+                    }
+                    val = obj[key];
+                    if (isObject(val) && isObject(target[key])) {
+                        target[key] = merge(target[key], val);
+                    } else {
+                        target[key] = deepClone(val);
+                    }
+                }
+            }
+            return target;
+        }
+        module.exports = merge;
+    },
+    'o': function (require, module, exports, global) {
+        var randHex = require('1q');
+        var choice = require('1r');
+        function guid() {
+            return randHex(8) + '-' + randHex(4) + '-' + '4' + randHex(3) + '-' + choice(8, 9, 'a', 'b') + randHex(3) + '-' + randHex(12);
+        }
+        module.exports = guid;
+    },
+    'p': function (require, module, exports, global) {
         'use strict';
-        var prime = require('u'), Emitter = require('j');
-        var isObject = require('1h'), isString = require('1i'), isArray = require('1j'), isFunction = require('1k'), trim = require('c'), upperCase = require('1l'), forIn = require('1m'), mixIn = require('1n'), remove = require('1o'), forEach = require('d');
+        var prime = require('i'), Emitter = require('h');
+        var isObject = require('1s'), isString = require('1t'), isArray = require('1u'), isFunction = require('1v'), trim = require('c'), upperCase = require('1w'), forIn = require('1x'), mixIn = require('1g'), remove = require('1y'), forEach = require('d');
         var capitalize = function (str) {
             return str.replace(/\b[a-z]/g, upperCase);
         };
@@ -2288,244 +1900,9 @@ var G5;
         agent.Response = Response;
         module.exports = agent;
     },
-    'o': function (require, module, exports, global) {
-        'use strict';
-        var forEach = require('d'), map = require('g');
-        var parse = require('1f');
-        var $ = require('b');
-        module.exports = function (expression, doc) {
-            return $(map(parse(expression), function (expression) {
-                var previous, result;
-                forEach(expression, function (part, i) {
-                    var node = (doc || document).createElement(part.tag);
-                    if (part.id)
-                        node.id = part.id;
-                    if (part.classList)
-                        node.className = part.classList.join(' ');
-                    if (part.attributes)
-                        forEach(part.attributes, function (attribute) {
-                            node.setAttribute(attribute.name, attribute.value || '');
-                        });
-                    if (part.pseudos)
-                        forEach(part.pseudos, function (pseudo) {
-                            var n = $(node), method = n[pseudo.name];
-                            if (method)
-                                method.call(n, pseudo.value);
-                        });
-                    if (i === 0) {
-                        result = node;
-                    } else if (part.combinator === ' ') {
-                        previous.appendChild(node);
-                    } else if (part.combinator === '+') {
-                        var parentNode = previous.parentNode;
-                        if (parentNode)
-                            parentNode.appendChild(node);
-                    }
-                    previous = node;
-                });
-                return result;
-            }));
-        };
-    },
-    'p': function (require, module, exports, global) {
-        var getGantryURI = function (view, method) {
-            if (!method)
-                method = 'index';
-            return GANTRY_AJAX_URL.replace(/\{view\}/, view).replace(/\{method\}/, method);
-        };
-        module.exports = getGantryURI;
-    },
     'q': function (require, module, exports, global) {
         'use strict';
-        var prime = require('u'), $ = require('1'), Emitter = require('j');
-        var Blocks = require('1p');
-        var forOwn = require('1q'), forEach = require('1r'), size = require('14'), isArray = require('1s'), flatten = require('1t'), guid = require('15'), set = require('1u'), unset = require('1v'), get = require('1w');
-        require('2');
-        require('6');
-        var rpad = require('1x'), repeat = require('1y');
-        $.implement({
-            empty: function () {
-                return this.forEach(function (node) {
-                    var first;
-                    while (first = node.firstChild) {
-                        node.removeChild(first);
-                    }
-                });
-            }
-        });
-        var Builder = new prime({
-                inherits: Emitter,
-                constructor: function (structure) {
-                    if (structure) {
-                        this.setStructure(structure);
-                    }
-                    this.map = {};
-                    return this;
-                },
-                setStructure: function (structure) {
-                    try {
-                        this.structure = typeof structure === 'object' ? structure : JSON.parse(structure);
-                    } catch (e) {
-                        console.error('Parsing error:', e);
-                    }
-                },
-                add: function (block) {
-                    var id = typeof block === 'string' ? block : block.id;
-                    set(this.map, id, block);
-                    block.isNew(false);
-                },
-                remove: function (block) {
-                    block = typeof block === 'string' ? block : block.id;
-                    unset(this.map, block);
-                },
-                get: function (block) {
-                    var id = typeof block === 'string' ? block : block.id;
-                    return get(this.map, id, block);
-                },
-                load: function (data) {
-                    this.recursiveLoad(data);
-                    this.emit('loaded', data);
-                    return this;
-                },
-                serialize: function (root) {
-                    var serieChildren = [];
-                    root = root || $('[data-lm-root]');
-                    if (!root) {
-                        return;
-                    }
-                    var blocks = root.search('> [data-lm-id]'), id, type, serial, hasChildren, children;
-                    forEach(blocks, function (element) {
-                        element = $(element);
-                        id = element.data('lm-id');
-                        type = element.data('lm-blocktype');
-                        hasChildren = element.search('> [data-lm-id]');
-                        children = hasChildren ? this.serialize(element) : [];
-                        serial = {
-                            id: id,
-                            type: type,
-                            attributes: get(this.map, id) ? get(this.map, id).getAttributes() : {},
-                            children: children
-                        };
-                        serieChildren.push(serial);
-                    }, this);
-                    return serieChildren;
-                },
-                __serialize: function (root) {
-                    var serie = {}, serieChildren = {};
-                    root = root || $('[data-lm-root]');
-                    var blocks = root.search('> [data-lm-id]'), id, type, serial, hasChildren, children, keysSort;
-                    forEach(blocks, function (element) {
-                        element = $(element);
-                        id = element.data('lm-id');
-                        type = element.data('lm-blocktype');
-                        hasChildren = element.search('> [data-lm-id]');
-                        children = hasChildren ? this.serialize(element) : false;
-                        keysSort = [];
-                        serial = {
-                            type: type,
-                            attributes: get(this.map, id).getAttributes(),
-                            children: children
-                        };
-                        if (blocks.length <= 1) {
-                            set(serie, id, serial);
-                        } else {
-                            keysSort.push(id);
-                            set(serieChildren, id, serial);
-                        }
-                    }, this);
-                    return size(serieChildren) ? serieChildren : serie;
-                },
-                insert: function (key, value, parent) {
-                    var root = $('[data-lm-root]');
-                    if (!root) {
-                        return;
-                    }
-                    var Element = new Blocks[value.type]({
-                            id: key,
-                            attributes: value.attributes || {},
-                            builder: this
-                        });
-                    if (!parent) {
-                        Element.block.insert(root);
-                    } else {
-                        Element.block.insert($('[data-lm-id="' + parent + '"]'));
-                    }
-                    if (Element.getType() === 'block') {
-                        Element.setSize();
-                    }
-                    this.add(Element);
-                    Element.emit('rendered', Element, parent ? get(this.map, parent) : null);
-                    return Element;
-                },
-                reset: function (data) {
-                    this.map = {};
-                    this.setStructure(data || {});
-                    $('[data-lm-root]').empty();
-                    this.load();
-                },
-                cleanupLonely: function () {
-                    var ghosts = [], parent, children = $('[data-lm-root] > .section > .grid > .block .grid > .block, [data-lm-root] > .section > .grid > .block > .block');
-                    if (!children) {
-                        return;
-                    }
-                    var isGrid;
-                    children.forEach(function (child) {
-                        child = $(child);
-                        parent = null;
-                        isGrid = child.parent().hasClass('grid');
-                        if (isGrid && child.siblings()) {
-                            return false;
-                        }
-                        if (isGrid) {
-                            ghosts.push(child.data('lm-id'));
-                            parent = child.parent();
-                        }
-                        ghosts.push(child.data('lm-id'));
-                        child.children().before(parent ? parent : child);
-                        (parent ? parent : child).remove();
-                    });
-                    return ghosts;
-                },
-                recursiveLoad: function (data, callback, depth, parent) {
-                    data = data || this.structure;
-                    depth = depth || 0;
-                    parent = parent || false;
-                    callback = callback || this.insert;
-                    forEach(data, function (value) {
-                        if (!value.id) {
-                            value.id = guid();
-                        }
-                        console.log(rpad(repeat('    ', depth) + '' + value.type, 35) + ' (' + rpad(value.id, 36) + ') parent: ' + parent);
-                        this.emit('loading', callback.call(this, value.id, value, parent, depth));
-                        if (value.children && size(value.children)) {
-                            depth++;
-                            forEach(value.children, function (childValue) {
-                                this.recursiveLoad([childValue], callback, depth, value.id);
-                            }, this);
-                        }
-                        this.get(value.id).emit('done', this.get(value.id));
-                        depth--;
-                    }, this);
-                },
-                __recursiveLoad: function (data, callback, depth, parent) {
-                    data = data || this.structure;
-                    depth = depth || 0;
-                    parent = parent || false;
-                    callback = callback || this.insert;
-                    forEach(data, function (value, key, object) {
-                        this.emit('loading', callback.call(this, key, value, parent, depth, object));
-                        if (value.children && size(value.children)) {
-                            this.recursiveLoad(value.children, callback, ++depth, key);
-                        }
-                        depth--;
-                    }, this);
-                }
-            });
-        module.exports = Builder;
-    },
-    'r': function (require, module, exports, global) {
-        'use strict';
-        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('1z') || {}, history = window.history;
+        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('21') || {}, history = window.history;
         try {
             sessionStorage = window.sessionStorage;
             sessionStorage.setItem('TEST', '1');
@@ -3354,8 +2731,1465 @@ var G5;
         }
         module.exports = History;
     },
+    'r': function (require, module, exports, global) {
+        var getGantryURI = function (view, method) {
+            if (!method)
+                method = 'index';
+            return GANTRY_AJAX_URL.replace(/\{view\}/, view).replace(/\{method\}/, method);
+        };
+        module.exports = getGantryURI;
+    },
     's': function (require, module, exports, global) {
-        var prime = require('u'), Emitter = require('j'), slice = require('20'), merge = require('12');
+        'use strict';
+        var prime = require('i');
+        var bind = require('20');
+        var bound = prime({
+                bound: function (name) {
+                    var bound = this._bound || (this._bound = {});
+                    return bound[name] || (bound[name] = bind(this[name], this));
+                }
+            });
+        module.exports = bound;
+    },
+    't': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('i');
+        var merge = require('1z');
+        var Options = prime({
+                setOptions: function (options) {
+                    var args = [
+                            {},
+                            this.options
+                        ];
+                    args.push.apply(args, arguments);
+                    this.options = merge.apply(null, args);
+                    return this;
+                }
+            });
+        module.exports = Options;
+    },
+    'u': function (require, module, exports, global) {
+        var slice = require('23');
+        function bind(fn, context, args) {
+            var argsArr = slice(arguments, 2);
+            return function () {
+                return fn.apply(context, argsArr.concat(slice(arguments)));
+            };
+        }
+        module.exports = bind;
+    },
+    'v': function (require, module, exports, global) {
+        var makeIterator = require('22');
+        function map(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var results = [];
+            if (arr == null) {
+                return results;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                results[i] = callback(arr[i], i, arr);
+            }
+            return results;
+        }
+        module.exports = map;
+    },
+    'w': function (require, module, exports, global) {
+        function forEach(arr, callback, thisObj) {
+            if (arr == null) {
+                return;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (callback.call(thisObj, arr[i], i, arr) === false) {
+                    break;
+                }
+            }
+        }
+        module.exports = forEach;
+    },
+    'x': function (require, module, exports, global) {
+        function last(arr) {
+            if (arr == null || arr.length < 1) {
+                return undefined;
+            }
+            return arr[arr.length - 1];
+        }
+        module.exports = last;
+    },
+    'y': function (require, module, exports, global) {
+        var isKind = require('24');
+        function isFunction(val) {
+            return isKind(val, 'Function');
+        }
+        module.exports = isFunction;
+    },
+    'z': function (require, module, exports, global) {
+        var makeIterator = require('1d');
+        function map(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var results = [];
+            if (arr == null) {
+                return results;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                results[i] = callback(arr[i], i, arr);
+            }
+            return results;
+        }
+        module.exports = map;
+    },
+    '10': function (require, module, exports, global) {
+        'use strict';
+        module.exports = 'document' in global ? require('25') : { parse: require('1m') };
+    },
+    '11': function (require, module, exports, global) {
+        module.exports = [
+            {
+                'id': '2330cbf9-25f2-4416-a0de-446fdce1ad0c',
+                'type': 'section',
+                'attributes': {
+                    'name': 'Header',
+                    'key': 'section-header',
+                    'type': 'header',
+                    'id': 'header'
+                },
+                'children': [{
+                        'id': 'ac1962c1-5587-4a24-8983-be8bfd9b1d2f',
+                        'type': 'grid',
+                        'attributes': {},
+                        'children': [
+                            {
+                                'id': '359b6022-55ce-45b9-880c-8974876a873d',
+                                'type': 'block',
+                                'attributes': { 'size': 20 },
+                                'children': [{
+                                        'id': 'fb585b76-4db5-4611-a96c-08c09bd8d90f',
+                                        'type': 'position',
+                                        'attributes': {
+                                            'name': 'Position 1',
+                                            'key': 'Position 1'
+                                        },
+                                        'children': []
+                                    }]
+                            },
+                            {
+                                'id': '388f9ef2-68ad-40bb-ba5e-8d534b24bdfc',
+                                'type': 'block',
+                                'attributes': { 'size': 80 },
+                                'children': [{
+                                        'id': '6e85d292-e08b-448c-a46a-f5b2693db83e',
+                                        'type': 'particle',
+                                        'attributes': {
+                                            'name': 'Menu',
+                                            'key': 'menu'
+                                        },
+                                        'children': []
+                                    }]
+                            }
+                        ]
+                    }]
+            },
+            {
+                'id': '43b618ab-5066-410f-9a9d-0601adeeea02',
+                'type': 'grid',
+                'attributes': {},
+                'children': [
+                    {
+                        'id': '0cc9d063-1447-4335-963b-aee05fa28398',
+                        'type': 'block',
+                        'attributes': { 'size': 75 },
+                        'children': [
+                            {
+                                'id': 'f29bf0b7-7348-48de-b979-e10008de799e',
+                                'type': 'section',
+                                'attributes': {
+                                    'name': 'Showcase',
+                                    'key': 'section-showcase',
+                                    'type': 'section',
+                                    'id': 'showcase'
+                                },
+                                'children': [{
+                                        'id': 'e5f91d76-81c8-4e46-bb24-86164ca6f52c',
+                                        'type': 'grid',
+                                        'attributes': {},
+                                        'children': [
+                                            {
+                                                'id': '2f2622ca-01ba-44fb-845f-6028285a0176',
+                                                'type': 'block',
+                                                'attributes': { 'size': 50 },
+                                                'children': [{
+                                                        'id': '8462e204-f196-498f-a71b-c1c8799e2e80',
+                                                        'type': 'position',
+                                                        'attributes': {
+                                                            'name': 'Position Showcase 1',
+                                                            'key': 'showcase-1'
+                                                        },
+                                                        'children': []
+                                                    }]
+                                            },
+                                            {
+                                                'id': 'dbcafc00-a3c9-42ea-bac0-8d9a85d3284d',
+                                                'type': 'block',
+                                                'attributes': { 'size': 50 },
+                                                'children': [{
+                                                        'id': 'f568d0bb-0964-4091-9971-b49cb8fd01e3',
+                                                        'type': 'position',
+                                                        'attributes': {
+                                                            'name': 'Position Showcase 2',
+                                                            'key': 'showcase-2'
+                                                        },
+                                                        'children': []
+                                                    }]
+                                            }
+                                        ]
+                                    }]
+                            },
+                            {
+                                'id': '5672f5b7-01c3-4f6a-a826-f2537e881b6d',
+                                'type': 'section',
+                                'attributes': {
+                                    'name': 'Feature',
+                                    'key': 'section-feature',
+                                    'type': 'section',
+                                    'id': 'feature'
+                                },
+                                'children': [{
+                                        'id': '5df8ef8d-8dfa-46a8-b8c1-b4520f8d1ebc',
+                                        'type': 'grid',
+                                        'attributes': {},
+                                        'children': [
+                                            {
+                                                'id': '837e1ebe-c18e-49e3-ada6-1efbeb62c76f',
+                                                'type': 'block',
+                                                'attributes': { 'size': 50 },
+                                                'children': [{
+                                                        'id': '1875d46e-639f-4a36-b553-ef6b561bccdc',
+                                                        'type': 'position',
+                                                        'attributes': {
+                                                            'name': 'Position Feature 1',
+                                                            'key': 'feature-1'
+                                                        },
+                                                        'children': []
+                                                    }]
+                                            },
+                                            {
+                                                'id': 'd872554e-da74-4452-87f0-b8d96fe6b711',
+                                                'type': 'block',
+                                                'attributes': { 'size': 50 },
+                                                'children': [{
+                                                        'id': '51d44206-6a78-45b6-9da0-ffee380a1d16',
+                                                        'type': 'position',
+                                                        'attributes': {
+                                                            'name': 'Position Feature 2',
+                                                            'key': 'feature-2'
+                                                        },
+                                                        'children': []
+                                                    }]
+                                            }
+                                        ]
+                                    }]
+                            },
+                            {
+                                'id': 'b40f50f7-1950-461e-8307-d277d30fc54f',
+                                'type': 'section',
+                                'attributes': {
+                                    'name': 'Main',
+                                    'key': 'section-main',
+                                    'type': 'main',
+                                    'id': 'main'
+                                },
+                                'children': [{
+                                        'id': '6d51de8b-e954-4135-8ce3-7665bb6b5d07',
+                                        'type': 'grid',
+                                        'attributes': {},
+                                        'children': [{
+                                                'id': '51673446-865a-4999-b789-6a864d64e115',
+                                                'type': 'block',
+                                                'attributes': { 'size': 100 },
+                                                'children': [{
+                                                        'id': 'f03448da-fb1b-49ec-8d33-b58152ac8b0d',
+                                                        'type': 'pagecontent',
+                                                        'attributes': {
+                                                            'name': 'Page Content',
+                                                            'key': 'pagecontent'
+                                                        },
+                                                        'children': []
+                                                    }]
+                                            }]
+                                    }]
+                            },
+                            {
+                                'id': 'c8315bcd-37c2-4691-8c14-32d44980a173',
+                                'type': 'section',
+                                'attributes': {
+                                    'name': 'Bottom',
+                                    'key': 'section-bottom',
+                                    'type': 'section',
+                                    'id': 'bottom'
+                                },
+                                'children': [{
+                                        'id': 'd59c63b3-6bce-4912-a30a-3b777e3c3bc7',
+                                        'type': 'grid',
+                                        'attributes': {},
+                                        'children': [{
+                                                'id': 'a76cfe58-e9f3-4ab0-a741-489084e347be',
+                                                'type': 'block',
+                                                'attributes': { 'size': 100 },
+                                                'children': [{
+                                                        'id': 'ec9e89e5-5043-4e3e-a853-fe470247a875',
+                                                        'type': 'position',
+                                                        'attributes': {
+                                                            'name': 'Position Bottom',
+                                                            'key': 'bottom'
+                                                        },
+                                                        'children': []
+                                                    }]
+                                            }]
+                                    }]
+                            }
+                        ]
+                    },
+                    {
+                        'id': '6b28344b-7ce3-431c-907f-204b851f7218',
+                        'type': 'block',
+                        'attributes': { 'size': 25 },
+                        'children': [{
+                                'id': '303ea0a4-5279-436f-b808-b37d99c5de90',
+                                'type': 'section',
+                                'attributes': {
+                                    'name': 'Sidebar',
+                                    'key': 'section-sidebar',
+                                    'type': 'section',
+                                    'id': 'sidebar'
+                                },
+                                'children': [
+                                    {
+                                        'id': '89230c44-26a3-4f4f-b135-a2194f05b3b6',
+                                        'type': 'grid',
+                                        'attributes': {},
+                                        'children': [{
+                                                'id': '5f71de41-07a8-4cca-837c-16b81a29361e',
+                                                'type': 'block',
+                                                'attributes': { 'size': 100 },
+                                                'children': [{
+                                                        'id': '9d45007f-78eb-4e1b-b9ee-f52a72fed80a',
+                                                        'type': 'position',
+                                                        'attributes': {
+                                                            'name': 'Position Sidebar',
+                                                            'key': 'sidebar'
+                                                        },
+                                                        'children': []
+                                                    }]
+                                            }]
+                                    },
+                                    {
+                                        'id': '3f44b134-1552-4f49-86b8-670d1add1000',
+                                        'type': 'grid',
+                                        'attributes': {},
+                                        'children': [{
+                                                'id': '6002f826-16c6-4920-b550-abdb93a9398b',
+                                                'type': 'block',
+                                                'attributes': { 'size': 100 },
+                                                'children': [{
+                                                        'id': 'fb585b76-4db5-4611-a96c-08c09bd8d90f',
+                                                        'type': 'particle',
+                                                        'attributes': {
+                                                            'name': 'Social Buttons',
+                                                            'key': 'social-buttons'
+                                                        },
+                                                        'children': []
+                                                    }]
+                                            }]
+                                    }
+                                ]
+                            }]
+                    }
+                ]
+            },
+            {
+                'id': 'ddeb26e3-caeb-4a5c-82c4-9f72a556f107',
+                'type': 'section',
+                'attributes': {
+                    'name': 'Section Footer',
+                    'key': 'section-footer',
+                    'type': 'footer',
+                    'id': 'footer'
+                },
+                'children': [{
+                        'id': '9550d178-71b5-4e04-a566-137e6350ea70',
+                        'type': 'grid',
+                        'attributes': {},
+                        'children': [
+                            {
+                                'id': '54bb2fd9-fc27-462b-ada8-de41912bd8fa',
+                                'type': 'block',
+                                'attributes': { 'size': 16.6667 },
+                                'children': [{
+                                        'id': '825a6498-c19b-42df-bffc-86dae90b64d8',
+                                        'type': 'spacer',
+                                        'attributes': {},
+                                        'children': []
+                                    }]
+                            },
+                            {
+                                'id': 'c3390225-81c8-4403-91d4-14a2b01fb1bd',
+                                'type': 'block',
+                                'attributes': { 'size': 66.6667 },
+                                'children': [{
+                                        'id': '0f7653c0-909b-4430-afdd-75bc5df8105a',
+                                        'type': 'position',
+                                        'attributes': {
+                                            'name': 'Position Footer',
+                                            'key': 'footer'
+                                        },
+                                        'children': []
+                                    }]
+                            },
+                            {
+                                'id': 'b853fa65-3ccb-4994-b266-01b398961063',
+                                'type': 'block',
+                                'attributes': { 'size': 16.6667 },
+                                'children': [{
+                                        'id': '491e8d6c-c762-401f-9ebf-018d83d4a0fe',
+                                        'type': 'spacer',
+                                        'attributes': {},
+                                        'children': []
+                                    }]
+                            }
+                        ]
+                    }]
+            },
+            {
+                'id': 'a845861d-03fd-4ce2-8a05-48ecc458a768',
+                'type': 'non-visible',
+                'attributes': {},
+                'children': []
+            }
+        ];
+    },
+    '12': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('i'), $ = require('1'), Emitter = require('h');
+        var Blocks = require('26');
+        var forOwn = require('27'), forEach = require('28'), size = require('m'), isArray = require('1k'), flatten = require('29'), guid = require('o'), set = require('2a'), unset = require('2b'), get = require('2c');
+        require('2');
+        require('6');
+        var rpad = require('2d'), repeat = require('2e');
+        $.implement({
+            empty: function () {
+                return this.forEach(function (node) {
+                    var first;
+                    while (first = node.firstChild) {
+                        node.removeChild(first);
+                    }
+                });
+            }
+        });
+        var Builder = new prime({
+                inherits: Emitter,
+                constructor: function (structure) {
+                    if (structure) {
+                        this.setStructure(structure);
+                    }
+                    this.map = {};
+                    return this;
+                },
+                setStructure: function (structure) {
+                    try {
+                        this.structure = typeof structure === 'object' ? structure : JSON.parse(structure);
+                    } catch (e) {
+                        console.error('Parsing error:', e);
+                    }
+                },
+                add: function (block) {
+                    var id = typeof block === 'string' ? block : block.id;
+                    set(this.map, id, block);
+                    block.isNew(false);
+                },
+                remove: function (block) {
+                    block = typeof block === 'string' ? block : block.id;
+                    unset(this.map, block);
+                },
+                get: function (block) {
+                    var id = typeof block === 'string' ? block : block.id;
+                    return get(this.map, id, block);
+                },
+                load: function (data) {
+                    this.recursiveLoad(data);
+                    this.emit('loaded', data);
+                    return this;
+                },
+                serialize: function (root) {
+                    var serieChildren = [];
+                    root = root || $('[data-lm-root]');
+                    if (!root) {
+                        return;
+                    }
+                    var blocks = root.search('> [data-lm-id]'), id, type, serial, hasChildren, children;
+                    forEach(blocks, function (element) {
+                        element = $(element);
+                        id = element.data('lm-id');
+                        type = element.data('lm-blocktype');
+                        hasChildren = element.search('> [data-lm-id]');
+                        children = hasChildren ? this.serialize(element) : [];
+                        serial = {
+                            id: id,
+                            type: type,
+                            attributes: get(this.map, id) ? get(this.map, id).getAttributes() : {},
+                            children: children
+                        };
+                        serieChildren.push(serial);
+                    }, this);
+                    return serieChildren;
+                },
+                __serialize: function (root) {
+                    var serie = {}, serieChildren = {};
+                    root = root || $('[data-lm-root]');
+                    var blocks = root.search('> [data-lm-id]'), id, type, serial, hasChildren, children, keysSort;
+                    forEach(blocks, function (element) {
+                        element = $(element);
+                        id = element.data('lm-id');
+                        type = element.data('lm-blocktype');
+                        hasChildren = element.search('> [data-lm-id]');
+                        children = hasChildren ? this.serialize(element) : false;
+                        keysSort = [];
+                        serial = {
+                            type: type,
+                            attributes: get(this.map, id).getAttributes(),
+                            children: children
+                        };
+                        if (blocks.length <= 1) {
+                            set(serie, id, serial);
+                        } else {
+                            keysSort.push(id);
+                            set(serieChildren, id, serial);
+                        }
+                    }, this);
+                    return size(serieChildren) ? serieChildren : serie;
+                },
+                insert: function (key, value, parent) {
+                    var root = $('[data-lm-root]');
+                    if (!root) {
+                        return;
+                    }
+                    var Element = new Blocks[value.type]({
+                            id: key,
+                            attributes: value.attributes || {},
+                            builder: this
+                        });
+                    if (!parent) {
+                        Element.block.insert(root);
+                    } else {
+                        Element.block.insert($('[data-lm-id="' + parent + '"]'));
+                    }
+                    if (Element.getType() === 'block') {
+                        Element.setSize();
+                    }
+                    this.add(Element);
+                    Element.emit('rendered', Element, parent ? get(this.map, parent) : null);
+                    return Element;
+                },
+                reset: function (data) {
+                    this.map = {};
+                    this.setStructure(data || {});
+                    $('[data-lm-root]').empty();
+                    this.load();
+                },
+                cleanupLonely: function () {
+                    var ghosts = [], parent, children = $('[data-lm-root] > .section > .grid > .block .grid > .block, [data-lm-root] > .section > .grid > .block > .block');
+                    if (!children) {
+                        return;
+                    }
+                    var isGrid;
+                    children.forEach(function (child) {
+                        child = $(child);
+                        parent = null;
+                        isGrid = child.parent().hasClass('grid');
+                        if (isGrid && child.siblings()) {
+                            return false;
+                        }
+                        if (isGrid) {
+                            ghosts.push(child.data('lm-id'));
+                            parent = child.parent();
+                        }
+                        ghosts.push(child.data('lm-id'));
+                        child.children().before(parent ? parent : child);
+                        (parent ? parent : child).remove();
+                    });
+                    return ghosts;
+                },
+                recursiveLoad: function (data, callback, depth, parent) {
+                    data = data || this.structure;
+                    depth = depth || 0;
+                    parent = parent || false;
+                    callback = callback || this.insert;
+                    forEach(data, function (value) {
+                        if (!value.id) {
+                            value.id = guid();
+                        }
+                        console.log(rpad(repeat('    ', depth) + '' + value.type, 35) + ' (' + rpad(value.id, 36) + ') parent: ' + parent);
+                        this.emit('loading', callback.call(this, value.id, value, parent, depth));
+                        if (value.children && size(value.children)) {
+                            depth++;
+                            forEach(value.children, function (childValue) {
+                                this.recursiveLoad([childValue], callback, depth, value.id);
+                            }, this);
+                        }
+                        this.get(value.id).emit('done', this.get(value.id));
+                        depth--;
+                    }, this);
+                },
+                __recursiveLoad: function (data, callback, depth, parent) {
+                    data = data || this.structure;
+                    depth = depth || 0;
+                    parent = parent || false;
+                    callback = callback || this.insert;
+                    forEach(data, function (value, key, object) {
+                        this.emit('loading', callback.call(this, key, value, parent, depth, object));
+                        if (value.children && size(value.children)) {
+                            this.recursiveLoad(value.children, callback, ++depth, key);
+                        }
+                        depth--;
+                    }, this);
+                }
+            });
+        module.exports = Builder;
+    },
+    '13': function (require, module, exports, global) {
+        'use strict';
+        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('21') || {}, history = window.history;
+        try {
+            sessionStorage = window.sessionStorage;
+            sessionStorage.setItem('TEST', '1');
+            sessionStorage.removeItem('TEST');
+        } catch (e) {
+            sessionStorage = false;
+        }
+        JSON.stringify = JSON.stringify || JSON.encode;
+        JSON.parse = JSON.parse || JSON.decode;
+        if (typeof History.init === 'undefined') {
+            History.init = function (options) {
+                if (typeof History.Adapter === 'undefined') {
+                    return false;
+                }
+                if (typeof History.initCore !== 'undefined') {
+                    History.initCore();
+                }
+                if (typeof History.initHtml4 !== 'undefined') {
+                    History.initHtml4();
+                }
+                return true;
+            };
+            History.initCore = function (options) {
+                if (typeof History.initCore.initialized !== 'undefined') {
+                    return false;
+                } else {
+                    History.initCore.initialized = true;
+                }
+                History.options = History.options || {};
+                History.options.hashChangeInterval = History.options.hashChangeInterval || 100;
+                History.options.safariPollInterval = History.options.safariPollInterval || 500;
+                History.options.doubleCheckInterval = History.options.doubleCheckInterval || 500;
+                History.options.disableSuid = History.options.disableSuid || false;
+                History.options.storeInterval = History.options.storeInterval || 1000;
+                History.options.busyDelay = History.options.busyDelay || 250;
+                History.options.debug = History.options.debug || false;
+                History.options.initialTitle = History.options.initialTitle || document.title;
+                History.options.html4Mode = History.options.html4Mode || false;
+                History.options.delayInit = History.options.delayInit || false;
+                History.intervalList = [];
+                History.clearAllIntervals = function () {
+                    var i, il = History.intervalList;
+                    if (typeof il !== 'undefined' && il !== null) {
+                        for (i = 0; i < il.length; i++) {
+                            clearInterval(il[i]);
+                        }
+                        History.intervalList = null;
+                    }
+                };
+                History.debug = function () {
+                    if (History.options.debug || false) {
+                        History.log.apply(History, arguments);
+                    }
+                };
+                History.log = function () {
+                    var consoleExists = !(typeof console === 'undefined' || typeof console.log === 'undefined' || typeof console.log.apply === 'undefined'), textarea = document.getElementById('log'), message, i, n, args, arg;
+                    ;
+                    if (consoleExists) {
+                        args = Array.prototype.slice.call(arguments);
+                        message = args.shift();
+                        if (typeof console.debug !== 'undefined') {
+                            console.debug.apply(console, [
+                                message,
+                                args
+                            ]);
+                        } else {
+                            console.log.apply(console, [
+                                message,
+                                args
+                            ]);
+                        }
+                    } else {
+                        message = '\n' + arguments[0] + '\n';
+                    }
+                    for (i = 1, n = arguments.length; i < n; ++i) {
+                        arg = arguments[i];
+                        if (typeof arg === 'object' && typeof JSON !== 'undefined') {
+                            try {
+                                arg = JSON.stringify(arg);
+                            } catch (Exception) {
+                            }
+                        }
+                        message += '\n' + arg + '\n';
+                    }
+                    if (textarea) {
+                        textarea.value += message + '\n-----\n';
+                        textarea.scrollTop = textarea.scrollHeight - textarea.clientHeight;
+                    } else if (!consoleExists) {
+                        alert(message);
+                    }
+                    return true;
+                };
+                History.getInternetExplorerMajorVersion = function () {
+                    var result = History.getInternetExplorerMajorVersion.cached = typeof History.getInternetExplorerMajorVersion.cached !== 'undefined' ? History.getInternetExplorerMajorVersion.cached : function () {
+                            var v = 3, div = document.createElement('div'), all = div.getElementsByTagName('i');
+                            while ((div.innerHTML = '<!--[if gt IE ' + ++v + ']><i></i><![endif]-->') && all[0]) {
+                            }
+                            return v > 4 ? v : false;
+                        }();
+                    ;
+                    return result;
+                };
+                History.isInternetExplorer = function () {
+                    var result = History.isInternetExplorer.cached = typeof History.isInternetExplorer.cached !== 'undefined' ? History.isInternetExplorer.cached : Boolean(History.getInternetExplorerMajorVersion());
+                    ;
+                    return result;
+                };
+                if (History.options.html4Mode) {
+                    History.emulated = {
+                        pushState: true,
+                        hashChange: true
+                    };
+                } else {
+                    History.emulated = {
+                        pushState: !Boolean(window.history && window.history.pushState && window.history.replaceState && !(/ Mobile\/([1-7][a-z]|(8([abcde]|f(1[0-8]))))/i.test(navigator.userAgent) || /AppleWebKit\/5([0-2]|3[0-2])/i.test(navigator.userAgent))),
+                        hashChange: Boolean(!('onhashchange' in window || 'onhashchange' in document) || History.isInternetExplorer() && History.getInternetExplorerMajorVersion() < 8)
+                    };
+                }
+                History.enabled = !History.emulated.pushState;
+                History.bugs = {
+                    setHash: Boolean(!History.emulated.pushState && navigator.vendor === 'Apple Computer, Inc.' && /AppleWebKit\/5([0-2]|3[0-3])/.test(navigator.userAgent)),
+                    safariPoll: Boolean(!History.emulated.pushState && navigator.vendor === 'Apple Computer, Inc.' && /AppleWebKit\/5([0-2]|3[0-3])/.test(navigator.userAgent)),
+                    ieDoubleCheck: Boolean(History.isInternetExplorer() && History.getInternetExplorerMajorVersion() < 8),
+                    hashEscape: Boolean(History.isInternetExplorer() && History.getInternetExplorerMajorVersion() < 7)
+                };
+                History.isEmptyObject = function (obj) {
+                    for (var name in obj) {
+                        if (obj.hasOwnProperty(name)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                };
+                History.cloneObject = function (obj) {
+                    var hash, newObj;
+                    if (obj) {
+                        hash = JSON.stringify(obj);
+                        newObj = JSON.parse(hash);
+                    } else {
+                        newObj = {};
+                    }
+                    return newObj;
+                };
+                History.getRootUrl = function () {
+                    var rootUrl = document.location.protocol + '//' + (document.location.hostname || document.location.host);
+                    if (document.location.port || false) {
+                        rootUrl += ':' + document.location.port;
+                    }
+                    rootUrl += '/';
+                    return rootUrl;
+                };
+                History.getBaseHref = function () {
+                    var baseElements = document.getElementsByTagName('base'), baseElement = null, baseHref = '';
+                    if (baseElements.length === 1) {
+                        baseElement = baseElements[0];
+                        baseHref = baseElement.href.replace(/[^\/]+$/, '');
+                    }
+                    baseHref = baseHref.replace(/\/+$/, '');
+                    if (baseHref)
+                        baseHref += '/';
+                    return baseHref;
+                };
+                History.getBaseUrl = function () {
+                    var baseUrl = History.getBaseHref() || History.getBasePageUrl() || History.getRootUrl();
+                    return baseUrl;
+                };
+                History.getPageUrl = function () {
+                    var State = History.getState(false, false), stateUrl = (State || {}).url || History.getLocationHref(), pageUrl;
+                    pageUrl = stateUrl.replace(/\/+$/, '').replace(/[^\/]+$/, function (part, index, string) {
+                        return /\./.test(part) ? part : part + '/';
+                    });
+                    return pageUrl;
+                };
+                History.getBasePageUrl = function () {
+                    var basePageUrl = History.getLocationHref().replace(/[#\?].*/, '').replace(/[^\/]+$/, function (part, index, string) {
+                            return /[^\/]$/.test(part) ? '' : part;
+                        }).replace(/\/+$/, '') + '/';
+                    return basePageUrl;
+                };
+                History.getFullUrl = function (url, allowBaseHref) {
+                    var fullUrl = url, firstChar = url.substring(0, 1);
+                    allowBaseHref = typeof allowBaseHref === 'undefined' ? true : allowBaseHref;
+                    if (/[a-z]+\:\/\//.test(url)) {
+                    } else if (firstChar === '/') {
+                        fullUrl = History.getRootUrl() + url.replace(/^\/+/, '');
+                    } else if (firstChar === '#') {
+                        fullUrl = History.getPageUrl().replace(/#.*/, '') + url;
+                    } else if (firstChar === '?') {
+                        fullUrl = History.getPageUrl().replace(/[\?#].*/, '') + url;
+                    } else {
+                        if (allowBaseHref) {
+                            fullUrl = History.getBaseUrl() + url.replace(/^(\.\/)+/, '');
+                        } else {
+                            fullUrl = History.getBasePageUrl() + url.replace(/^(\.\/)+/, '');
+                        }
+                    }
+                    return fullUrl.replace(/\#$/, '');
+                };
+                History.getShortUrl = function (url) {
+                    var shortUrl = url, baseUrl = History.getBaseUrl(), rootUrl = History.getRootUrl();
+                    if (History.emulated.pushState) {
+                        shortUrl = shortUrl.replace(baseUrl, '');
+                    }
+                    shortUrl = shortUrl.replace(rootUrl, '/');
+                    if (History.isTraditionalAnchor(shortUrl)) {
+                        shortUrl = './' + shortUrl;
+                    }
+                    shortUrl = shortUrl.replace(/^(\.\/)+/g, './').replace(/\#$/, '');
+                    return shortUrl;
+                };
+                History.getLocationHref = function (doc) {
+                    doc = doc || document;
+                    if (doc.URL === doc.location.href)
+                        return doc.location.href;
+                    if (doc.location.href === decodeURIComponent(doc.URL))
+                        return doc.URL;
+                    if (doc.location.hash && decodeURIComponent(doc.location.href.replace(/^[^#]+/, '')) === doc.location.hash)
+                        return doc.location.href;
+                    if (doc.URL.indexOf('#') == -1 && doc.location.href.indexOf('#') != -1)
+                        return doc.location.href;
+                    return doc.URL || doc.location.href;
+                };
+                History.store = {};
+                History.idToState = History.idToState || {};
+                History.stateToId = History.stateToId || {};
+                History.urlToId = History.urlToId || {};
+                History.storedStates = History.storedStates || [];
+                History.savedStates = History.savedStates || [];
+                History.normalizeStore = function () {
+                    History.store.idToState = History.store.idToState || {};
+                    History.store.urlToId = History.store.urlToId || {};
+                    History.store.stateToId = History.store.stateToId || {};
+                };
+                History.getState = function (friendly, create) {
+                    if (typeof friendly === 'undefined') {
+                        friendly = true;
+                    }
+                    if (typeof create === 'undefined') {
+                        create = true;
+                    }
+                    var State = History.getLastSavedState();
+                    if (!State && create) {
+                        State = History.createStateObject();
+                    }
+                    if (friendly) {
+                        State = History.cloneObject(State);
+                        State.url = State.cleanUrl || State.url;
+                    }
+                    return State;
+                };
+                History.getIdByState = function (newState) {
+                    var id = History.extractId(newState.url), str;
+                    if (!id) {
+                        str = History.getStateString(newState);
+                        if (typeof History.stateToId[str] !== 'undefined') {
+                            id = History.stateToId[str];
+                        } else if (typeof History.store.stateToId[str] !== 'undefined') {
+                            id = History.store.stateToId[str];
+                        } else {
+                            while (true) {
+                                id = new Date().getTime() + String(Math.random()).replace(/\D/g, '');
+                                if (typeof History.idToState[id] === 'undefined' && typeof History.store.idToState[id] === 'undefined') {
+                                    break;
+                                }
+                            }
+                            History.stateToId[str] = id;
+                            History.idToState[id] = newState;
+                        }
+                    }
+                    return id;
+                };
+                History.normalizeState = function (oldState) {
+                    var newState, dataNotEmpty;
+                    if (!oldState || typeof oldState !== 'object') {
+                        oldState = {};
+                    }
+                    if (typeof oldState.normalized !== 'undefined') {
+                        return oldState;
+                    }
+                    if (!oldState.data || typeof oldState.data !== 'object') {
+                        oldState.data = {};
+                    }
+                    newState = {};
+                    newState.normalized = true;
+                    newState.title = oldState.title || '';
+                    newState.url = History.getFullUrl(oldState.url ? oldState.url : History.getLocationHref());
+                    newState.hash = History.getShortUrl(newState.url);
+                    newState.data = History.cloneObject(oldState.data);
+                    newState.id = History.getIdByState(newState);
+                    newState.cleanUrl = newState.url.replace(/\??\&_suid.*/, '');
+                    newState.url = newState.cleanUrl;
+                    dataNotEmpty = !History.isEmptyObject(newState.data);
+                    if ((newState.title || dataNotEmpty) && History.options.disableSuid !== true) {
+                        newState.hash = History.getShortUrl(newState.url).replace(/\??\&_suid.*/, '');
+                        if (!/\?/.test(newState.hash)) {
+                            newState.hash += '?';
+                        }
+                        newState.hash += '&_suid=' + newState.id;
+                    }
+                    newState.hashedUrl = History.getFullUrl(newState.hash);
+                    if ((History.emulated.pushState || History.bugs.safariPoll) && History.hasUrlDuplicate(newState)) {
+                        newState.url = newState.hashedUrl;
+                    }
+                    return newState;
+                };
+                History.createStateObject = function (data, title, url) {
+                    var State = {
+                            'data': data,
+                            'title': title,
+                            'url': url
+                        };
+                    State = History.normalizeState(State);
+                    return State;
+                };
+                History.getStateById = function (id) {
+                    id = String(id);
+                    var State = History.idToState[id] || History.store.idToState[id] || undefined;
+                    return State;
+                };
+                History.getStateString = function (passedState) {
+                    var State, cleanedState, str;
+                    State = History.normalizeState(passedState);
+                    cleanedState = {
+                        data: State.data,
+                        title: passedState.title,
+                        url: passedState.url
+                    };
+                    str = JSON.stringify(cleanedState);
+                    return str;
+                };
+                History.getStateId = function (passedState) {
+                    var State, id;
+                    State = History.normalizeState(passedState);
+                    id = State.id;
+                    return id;
+                };
+                History.getHashByState = function (passedState) {
+                    var State, hash;
+                    State = History.normalizeState(passedState);
+                    hash = State.hash;
+                    return hash;
+                };
+                History.extractId = function (url_or_hash) {
+                    var id, parts, url, tmp;
+                    if (url_or_hash.indexOf('#') != -1) {
+                        tmp = url_or_hash.split('#')[0];
+                    } else {
+                        tmp = url_or_hash;
+                    }
+                    parts = /(.*)\&_suid=([0-9]+)$/.exec(tmp);
+                    url = parts ? parts[1] || url_or_hash : url_or_hash;
+                    id = parts ? String(parts[2] || '') : '';
+                    return id || false;
+                };
+                History.isTraditionalAnchor = function (url_or_hash) {
+                    var isTraditional = !/[\/\?\.]/.test(url_or_hash);
+                    return isTraditional;
+                };
+                History.extractState = function (url_or_hash, create) {
+                    var State = null, id, url;
+                    create = create || false;
+                    id = History.extractId(url_or_hash);
+                    if (id) {
+                        State = History.getStateById(id);
+                    }
+                    if (!State) {
+                        url = History.getFullUrl(url_or_hash);
+                        id = History.getIdByUrl(url) || false;
+                        if (id) {
+                            State = History.getStateById(id);
+                        }
+                        if (!State && create && !History.isTraditionalAnchor(url_or_hash)) {
+                            State = History.createStateObject(null, null, url);
+                        }
+                    }
+                    return State;
+                };
+                History.getIdByUrl = function (url) {
+                    var id = History.urlToId[url] || History.store.urlToId[url] || undefined;
+                    return id;
+                };
+                History.getLastSavedState = function () {
+                    return History.savedStates[History.savedStates.length - 1] || undefined;
+                };
+                History.getLastStoredState = function () {
+                    return History.storedStates[History.storedStates.length - 1] || undefined;
+                };
+                History.hasUrlDuplicate = function (newState) {
+                    var hasDuplicate = false, oldState;
+                    oldState = History.extractState(newState.url);
+                    hasDuplicate = oldState && oldState.id !== newState.id;
+                    return hasDuplicate;
+                };
+                History.storeState = function (newState) {
+                    History.urlToId[newState.url] = newState.id;
+                    History.storedStates.push(History.cloneObject(newState));
+                    return newState;
+                };
+                History.isLastSavedState = function (newState) {
+                    var isLast = false, newId, oldState, oldId;
+                    if (History.savedStates.length) {
+                        newId = newState.id;
+                        oldState = History.getLastSavedState();
+                        oldId = oldState.id;
+                        isLast = newId === oldId;
+                    }
+                    return isLast;
+                };
+                History.saveState = function (newState) {
+                    if (History.isLastSavedState(newState)) {
+                        return false;
+                    }
+                    History.savedStates.push(History.cloneObject(newState));
+                    return true;
+                };
+                History.getStateByIndex = function (index) {
+                    var State = null;
+                    if (typeof index === 'undefined') {
+                        State = History.savedStates[History.savedStates.length - 1];
+                    } else if (index < 0) {
+                        State = History.savedStates[History.savedStates.length + index];
+                    } else {
+                        State = History.savedStates[index];
+                    }
+                    return State;
+                };
+                History.getCurrentIndex = function () {
+                    var index = null;
+                    if (History.savedStates.length < 1) {
+                        index = 0;
+                    } else {
+                        index = History.savedStates.length - 1;
+                    }
+                    return index;
+                };
+                History.getHash = function (doc) {
+                    var url = History.getLocationHref(doc), hash;
+                    hash = History.getHashByUrl(url);
+                    return hash;
+                };
+                History.unescapeHash = function (hash) {
+                    var result = History.normalizeHash(hash);
+                    result = decodeURIComponent(result);
+                    return result;
+                };
+                History.normalizeHash = function (hash) {
+                    var result = hash.replace(/[^#]*#/, '').replace(/#.*/, '');
+                    return result;
+                };
+                History.setHash = function (hash, queue) {
+                    var State, pageUrl;
+                    if (queue !== false && History.busy()) {
+                        History.pushQueue({
+                            scope: History,
+                            callback: History.setHash,
+                            args: arguments,
+                            queue: queue
+                        });
+                        return false;
+                    }
+                    History.busy(true);
+                    State = History.extractState(hash, true);
+                    if (State && !History.emulated.pushState) {
+                        History.pushState(State.data, State.title, State.url, false);
+                    } else if (History.getHash() !== hash) {
+                        if (History.bugs.setHash) {
+                            pageUrl = History.getPageUrl();
+                            History.pushState(null, null, pageUrl + '#' + hash, false);
+                        } else {
+                            document.location.hash = hash;
+                        }
+                    }
+                    return History;
+                };
+                History.escapeHash = function (hash) {
+                    var result = History.normalizeHash(hash);
+                    result = window.encodeURIComponent(result);
+                    if (!History.bugs.hashEscape) {
+                        result = result.replace(/\%21/g, '!').replace(/\%26/g, '&').replace(/\%3D/g, '=').replace(/\%3F/g, '?');
+                    }
+                    return result;
+                };
+                History.getHashByUrl = function (url) {
+                    var hash = String(url).replace(/([^#]*)#?([^#]*)#?(.*)/, '$2');
+                    ;
+                    hash = History.unescapeHash(hash);
+                    return hash;
+                };
+                History.setTitle = function (newState) {
+                    var title = newState.title, firstState;
+                    if (!title) {
+                        firstState = History.getStateByIndex(0);
+                        if (firstState && firstState.url === newState.url) {
+                            title = firstState.title || History.options.initialTitle;
+                        }
+                    }
+                    try {
+                        document.getElementsByTagName('title')[0].innerHTML = title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+                    } catch (Exception) {
+                    }
+                    document.title = title;
+                    return History;
+                };
+                History.queues = [];
+                History.busy = function (value) {
+                    if (typeof value !== 'undefined') {
+                        History.busy.flag = value;
+                    } else if (typeof History.busy.flag === 'undefined') {
+                        History.busy.flag = false;
+                    }
+                    if (!History.busy.flag) {
+                        clearTimeout(History.busy.timeout);
+                        var fireNext = function () {
+                            var i, queue, item;
+                            if (History.busy.flag)
+                                return;
+                            for (i = History.queues.length - 1; i >= 0; --i) {
+                                queue = History.queues[i];
+                                if (queue.length === 0)
+                                    continue;
+                                item = queue.shift();
+                                History.fireQueueItem(item);
+                                History.busy.timeout = setTimeout(fireNext, History.options.busyDelay);
+                            }
+                        };
+                        History.busy.timeout = setTimeout(fireNext, History.options.busyDelay);
+                    }
+                    return History.busy.flag;
+                };
+                History.busy.flag = false;
+                History.fireQueueItem = function (item) {
+                    return item.callback.apply(item.scope || History, item.args || []);
+                };
+                History.pushQueue = function (item) {
+                    History.queues[item.queue || 0] = History.queues[item.queue || 0] || [];
+                    History.queues[item.queue || 0].push(item);
+                    return History;
+                };
+                History.queue = function (item, queue) {
+                    if (typeof item === 'function') {
+                        item = { callback: item };
+                    }
+                    if (typeof queue !== 'undefined') {
+                        item.queue = queue;
+                    }
+                    if (History.busy()) {
+                        History.pushQueue(item);
+                    } else {
+                        History.fireQueueItem(item);
+                    }
+                    return History;
+                };
+                History.clearQueue = function () {
+                    History.busy.flag = false;
+                    History.queues = [];
+                    return History;
+                };
+                History.stateChanged = false;
+                History.doubleChecker = false;
+                History.doubleCheckComplete = function () {
+                    History.stateChanged = true;
+                    History.doubleCheckClear();
+                    return History;
+                };
+                History.doubleCheckClear = function () {
+                    if (History.doubleChecker) {
+                        clearTimeout(History.doubleChecker);
+                        History.doubleChecker = false;
+                    }
+                    return History;
+                };
+                History.doubleCheck = function (tryAgain) {
+                    History.stateChanged = false;
+                    History.doubleCheckClear();
+                    if (History.bugs.ieDoubleCheck) {
+                        History.doubleChecker = setTimeout(function () {
+                            History.doubleCheckClear();
+                            if (!History.stateChanged) {
+                                tryAgain();
+                            }
+                            return true;
+                        }, History.options.doubleCheckInterval);
+                    }
+                    return History;
+                };
+                History.safariStatePoll = function () {
+                    var urlState = History.extractState(History.getLocationHref()), newState;
+                    if (!History.isLastSavedState(urlState)) {
+                        newState = urlState;
+                    } else {
+                        return;
+                    }
+                    if (!newState) {
+                        newState = History.createStateObject();
+                    }
+                    History.Adapter.trigger(window, 'popstate');
+                    return History;
+                };
+                History.back = function (queue) {
+                    if (queue !== false && History.busy()) {
+                        History.pushQueue({
+                            scope: History,
+                            callback: History.back,
+                            args: arguments,
+                            queue: queue
+                        });
+                        return false;
+                    }
+                    History.busy(true);
+                    History.doubleCheck(function () {
+                        History.back(false);
+                    });
+                    history.go(-1);
+                    return true;
+                };
+                History.forward = function (queue) {
+                    if (queue !== false && History.busy()) {
+                        History.pushQueue({
+                            scope: History,
+                            callback: History.forward,
+                            args: arguments,
+                            queue: queue
+                        });
+                        return false;
+                    }
+                    History.busy(true);
+                    History.doubleCheck(function () {
+                        History.forward(false);
+                    });
+                    history.go(1);
+                    return true;
+                };
+                History.go = function (index, queue) {
+                    var i;
+                    if (index > 0) {
+                        for (i = 1; i <= index; ++i) {
+                            History.forward(queue);
+                        }
+                    } else if (index < 0) {
+                        for (i = -1; i >= index; --i) {
+                            History.back(queue);
+                        }
+                    } else {
+                        throw new Error('History.go: History.go requires a positive or negative integer passed.');
+                    }
+                    return History;
+                };
+                if (History.emulated.pushState) {
+                    var emptyFunction = function () {
+                    };
+                    History.pushState = History.pushState || emptyFunction;
+                    History.replaceState = History.replaceState || emptyFunction;
+                } else {
+                    History.onPopState = function (event, extra) {
+                        var stateId = false, newState = false, currentHash, currentState;
+                        History.doubleCheckComplete();
+                        currentHash = History.getHash();
+                        if (currentHash) {
+                            currentState = History.extractState(currentHash || History.getLocationHref(), true);
+                            if (currentState) {
+                                History.replaceState(currentState.data, currentState.title, currentState.url, false);
+                            } else {
+                                History.Adapter.trigger(window, 'anchorchange');
+                                History.busy(false);
+                            }
+                            History.expectedStateId = false;
+                            return false;
+                        }
+                        stateId = History.Adapter.extractEventData('state', event, extra) || false;
+                        if (stateId) {
+                            newState = History.getStateById(stateId);
+                        } else if (History.expectedStateId) {
+                            newState = History.getStateById(History.expectedStateId);
+                        } else {
+                            newState = History.extractState(History.getLocationHref());
+                        }
+                        if (!newState) {
+                            newState = History.createStateObject(null, null, History.getLocationHref());
+                        }
+                        History.expectedStateId = false;
+                        if (History.isLastSavedState(newState)) {
+                            History.busy(false);
+                            return false;
+                        }
+                        History.storeState(newState);
+                        History.saveState(newState);
+                        History.setTitle(newState);
+                        History.Adapter.trigger(window, 'statechange');
+                        History.busy(false);
+                        return true;
+                    };
+                    History.Adapter.bind(window, 'popstate', History.onPopState);
+                    History.pushState = function (data, title, url, queue) {
+                        if (History.getHashByUrl(url) && History.emulated.pushState) {
+                            throw new Error('History.js does not support states with fragement-identifiers (hashes/anchors).');
+                        }
+                        if (queue !== false && History.busy()) {
+                            History.pushQueue({
+                                scope: History,
+                                callback: History.pushState,
+                                args: arguments,
+                                queue: queue
+                            });
+                            return false;
+                        }
+                        History.busy(true);
+                        var newState = History.createStateObject(data, title, url);
+                        if (History.isLastSavedState(newState)) {
+                            History.busy(false);
+                        } else {
+                            History.storeState(newState);
+                            History.expectedStateId = newState.id;
+                            history.pushState(newState.id, newState.title, newState.url);
+                            History.Adapter.trigger(window, 'popstate');
+                        }
+                        return true;
+                    };
+                    History.replaceState = function (data, title, url, queue) {
+                        if (History.getHashByUrl(url) && History.emulated.pushState) {
+                            throw new Error('History.js does not support states with fragement-identifiers (hashes/anchors).');
+                        }
+                        if (queue !== false && History.busy()) {
+                            History.pushQueue({
+                                scope: History,
+                                callback: History.replaceState,
+                                args: arguments,
+                                queue: queue
+                            });
+                            return false;
+                        }
+                        History.busy(true);
+                        var newState = History.createStateObject(data, title, url);
+                        if (History.isLastSavedState(newState)) {
+                            History.busy(false);
+                        } else {
+                            History.storeState(newState);
+                            History.expectedStateId = newState.id;
+                            history.replaceState(newState.id, newState.title, newState.url);
+                            History.Adapter.trigger(window, 'popstate');
+                        }
+                        return true;
+                    };
+                }
+                if (sessionStorage) {
+                    try {
+                        History.store = JSON.parse(sessionStorage.getItem('History.store')) || {};
+                    } catch (err) {
+                        History.store = {};
+                    }
+                    History.normalizeStore();
+                } else {
+                    History.store = {};
+                    History.normalizeStore();
+                }
+                History.Adapter.bind(window, 'unload', History.clearAllIntervals);
+                History.saveState(History.storeState(History.extractState(History.getLocationHref(), true)));
+                if (sessionStorage) {
+                    History.onUnload = function () {
+                        var currentStore, item, currentStoreString;
+                        try {
+                            currentStore = JSON.parse(sessionStorage.getItem('History.store')) || {};
+                        } catch (err) {
+                            currentStore = {};
+                        }
+                        currentStore.idToState = currentStore.idToState || {};
+                        currentStore.urlToId = currentStore.urlToId || {};
+                        currentStore.stateToId = currentStore.stateToId || {};
+                        for (item in History.idToState) {
+                            if (!History.idToState.hasOwnProperty(item)) {
+                                continue;
+                            }
+                            currentStore.idToState[item] = History.idToState[item];
+                        }
+                        for (item in History.urlToId) {
+                            if (!History.urlToId.hasOwnProperty(item)) {
+                                continue;
+                            }
+                            currentStore.urlToId[item] = History.urlToId[item];
+                        }
+                        for (item in History.stateToId) {
+                            if (!History.stateToId.hasOwnProperty(item)) {
+                                continue;
+                            }
+                            currentStore.stateToId[item] = History.stateToId[item];
+                        }
+                        History.store = currentStore;
+                        History.normalizeStore();
+                        currentStoreString = JSON.stringify(currentStore);
+                        try {
+                            sessionStorage.setItem('History.store', currentStoreString);
+                        } catch (e) {
+                            if (e.code === DOMException.QUOTA_EXCEEDED_ERR) {
+                                if (sessionStorage.length) {
+                                    sessionStorage.removeItem('History.store');
+                                    sessionStorage.setItem('History.store', currentStoreString);
+                                } else {
+                                }
+                            } else {
+                                throw e;
+                            }
+                        }
+                    };
+                    History.intervalList.push(setInterval(History.onUnload, History.options.storeInterval));
+                    History.Adapter.bind(window, 'beforeunload', History.onUnload);
+                    History.Adapter.bind(window, 'unload', History.onUnload);
+                }
+                if (!History.emulated.pushState) {
+                    if (History.bugs.safariPoll) {
+                        History.intervalList.push(setInterval(History.safariStatePoll, History.options.safariPollInterval));
+                    }
+                    if (navigator.vendor === 'Apple Computer, Inc.' || (navigator.appCodeName || '') === 'Mozilla') {
+                        History.Adapter.bind(window, 'hashchange', function () {
+                            History.Adapter.trigger(window, 'popstate');
+                        });
+                        if (History.getHash()) {
+                            History.Adapter.onDomLoad(function () {
+                                History.Adapter.trigger(window, 'hashchange');
+                            });
+                        }
+                    }
+                }
+            };
+            if (!History.options || !History.options.delayInit) {
+                History.init();
+            }
+        }
+        module.exports = History;
+    },
+    '14': function (require, module, exports, global) {
+        var prime = require('i'), Emitter = require('h'), slice = require('23'), merge = require('n');
         var History = new prime({
                 inherits: Emitter,
                 constructor: function (session) {
@@ -3418,9 +4252,9 @@ var G5;
             });
         module.exports = History;
     },
-    't': function (require, module, exports, global) {
+    '15': function (require, module, exports, global) {
         'use strict';
-        var prime = require('u'), $ = require('v'), zen = require('o'), Emitter = require('j'), Bound = require('w'), Options = require('x'), Blocks = require('1p'), DragDrop = require('21'), Resizer = require('22'), Eraser = require('23'), get = require('1w'), every = require('24'), isArray = require('1s'), isObject = require('25'), equals = require('26');
+        var prime = require('i'), $ = require('j'), zen = require('k'), Emitter = require('h'), Bound = require('s'), Options = require('t'), Blocks = require('26'), DragDrop = require('2f'), Resizer = require('2g'), Eraser = require('2h'), get = require('2c'), every = require('2i'), isArray = require('1k'), isObject = require('1p'), equals = require('2j');
         var deepEquals = function (a, b, callback) {
             function compare(a, b) {
                 return deepEquals(a, b, callback);
@@ -3775,1064 +4609,230 @@ var G5;
             });
         module.exports = LayoutManager;
     },
-    'u': function (require, module, exports, global) {
-        'use strict';
-        var hasOwn = require('27'), mixIn = require('1n'), create = require('28'), kindOf = require('29');
-        var hasDescriptors = true;
-        try {
-            Object.defineProperty({}, '~', {});
-            Object.getOwnPropertyDescriptor({}, '~');
-        } catch (e) {
-            hasDescriptors = false;
-        }
-        var hasEnumBug = !{ valueOf: 0 }.propertyIsEnumerable('valueOf'), buggy = [
-                'toString',
-                'valueOf'
-            ];
-        var verbs = /^constructor|inherits|mixin$/;
-        var implement = function (proto) {
-            var prototype = this.prototype;
-            for (var key in proto) {
-                if (key.match(verbs))
-                    continue;
-                if (hasDescriptors) {
-                    var descriptor = Object.getOwnPropertyDescriptor(proto, key);
-                    if (descriptor) {
-                        Object.defineProperty(prototype, key, descriptor);
-                        continue;
-                    }
-                }
-                prototype[key] = proto[key];
-            }
-            if (hasEnumBug)
-                for (var i = 0; key = buggy[i]; i++) {
-                    var value = proto[key];
-                    if (value !== Object.prototype[key])
-                        prototype[key] = value;
-                }
-            return this;
-        };
-        var prime = function (proto) {
-            if (kindOf(proto) === 'Function')
-                proto = { constructor: proto };
-            var superprime = proto.inherits;
-            var constructor = hasOwn(proto, 'constructor') ? proto.constructor : superprime ? function () {
-                    return superprime.apply(this, arguments);
-                } : function () {
-                };
-            if (superprime) {
-                mixIn(constructor, superprime);
-                var superproto = superprime.prototype;
-                var cproto = constructor.prototype = create(superproto);
-                constructor.parent = superproto;
-                cproto.constructor = constructor;
-            }
-            if (!constructor.implement)
-                constructor.implement = implement;
-            var mixins = proto.mixin;
-            if (mixins) {
-                if (kindOf(mixins) !== 'Array')
-                    mixins = [mixins];
-                for (var i = 0; i < mixins.length; i++)
-                    constructor.implement(create(mixins[i].prototype));
-            }
-            return constructor.implement(proto);
-        };
-        module.exports = prime;
-    },
-    'v': function (require, module, exports, global) {
-        'use strict';
-        var $ = require('1'), moofx = require('2a'), map = require('z'), slick = require('h');
-        var walk = function (combinator, method) {
-            return function (expression) {
-                var parts = slick.parse(expression || '*');
-                expression = map(parts, function (part) {
-                    return combinator + ' ' + part;
-                }).join(', ');
-                return this[method](expression);
-            };
-        };
-        $.implement({
-            style: function () {
-                var moo = moofx(this);
-                moo.style.apply(moo, arguments);
-                return this;
-            },
-            animate: function () {
-                var moo = moofx(this);
-                moo.animate.apply(moo, arguments);
-                return this;
-            },
-            compute: function () {
-                var moo = moofx(this);
-                return moo.compute.apply(moo, arguments);
-            },
-            sibling: walk('++', 'find'),
-            siblings: walk('~~', 'search')
-        });
-        module.exports = $;
-    },
-    'w': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u');
-        var bind = require('2c');
-        var bound = prime({
-                bound: function (name) {
-                    var bound = this._bound || (this._bound = {});
-                    return bound[name] || (bound[name] = bind(this[name], this));
-                }
-            });
-        module.exports = bound;
-    },
-    'x': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u');
-        var merge = require('2b');
-        var Options = prime({
-                setOptions: function (options) {
-                    var args = [
-                            {},
-                            this.options
-                        ];
-                    args.push.apply(args, arguments);
-                    this.options = merge.apply(null, args);
-                    return this;
-                }
-            });
-        module.exports = Options;
-    },
-    'y': function (require, module, exports, global) {
-        var slice = require('20');
-        function bind(fn, context, args) {
-            var argsArr = slice(arguments, 2);
-            return function () {
-                return fn.apply(context, argsArr.concat(slice(arguments)));
-            };
-        }
-        module.exports = bind;
-    },
-    'z': function (require, module, exports, global) {
-        var makeIterator = require('2d');
-        function map(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var results = [];
-            if (arr == null) {
-                return results;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                results[i] = callback(arr[i], i, arr);
-            }
-            return results;
-        }
-        module.exports = map;
-    },
-    '10': function (require, module, exports, global) {
-        function forEach(arr, callback, thisObj) {
-            if (arr == null) {
-                return;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (callback.call(thisObj, arr[i], i, arr) === false) {
-                    break;
-                }
-            }
-        }
-        module.exports = forEach;
-    },
-    '11': function (require, module, exports, global) {
-        function last(arr) {
-            if (arr == null || arr.length < 1) {
-                return undefined;
-            }
-            return arr[arr.length - 1];
-        }
-        module.exports = last;
-    },
-    '12': function (require, module, exports, global) {
-        var hasOwn = require('2e');
-        var deepClone = require('2f');
-        var isObject = require('25');
-        function merge() {
-            var i = 1, key, val, obj, target;
-            target = deepClone(arguments[0]);
-            while (obj = arguments[i++]) {
-                for (key in obj) {
-                    if (!hasOwn(obj, key)) {
-                        continue;
-                    }
-                    val = obj[key];
-                    if (isObject(val) && isObject(target[key])) {
-                        target[key] = merge(target[key], val);
-                    } else {
-                        target[key] = deepClone(val);
-                    }
-                }
-            }
-            return target;
-        }
-        module.exports = merge;
-    },
-    '13': function (require, module, exports, global) {
-        var isKind = require('2g');
-        function isFunction(val) {
-            return isKind(val, 'Function');
-        }
-        module.exports = isFunction;
-    },
-    '14': function (require, module, exports, global) {
-        var isArray = require('1s');
-        var objSize = require('2h');
-        function size(list) {
-            if (!list) {
-                return 0;
-            }
-            if (isArray(list)) {
-                return list.length;
-            }
-            return objSize(list);
-        }
-        module.exports = size;
-    },
-    '15': function (require, module, exports, global) {
-        var randHex = require('2i');
-        var choice = require('2j');
-        function guid() {
-            return randHex(8) + '-' + randHex(4) + '-' + '4' + randHex(3) + '-' + choice(8, 9, 'a', 'b') + randHex(3) + '-' + randHex(12);
-        }
-        module.exports = guid;
-    },
     '16': function (require, module, exports, global) {
         'use strict';
-        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('1z') || {}, history = window.history;
-        try {
-            sessionStorage = window.sessionStorage;
-            sessionStorage.setItem('TEST', '1');
-            sessionStorage.removeItem('TEST');
-        } catch (e) {
-            sessionStorage = false;
-        }
-        JSON.stringify = JSON.stringify || JSON.encode;
-        JSON.parse = JSON.parse || JSON.decode;
-        if (typeof History.init === 'undefined') {
-            History.init = function (options) {
-                if (typeof History.Adapter === 'undefined') {
-                    return false;
+        var prime = require('i'), $ = require('j'), zen = require('k'), storage = require('g')(), Emitter = require('h'), Bound = require('s'), Options = require('t'), domready = require('l'), bind = require('u'), map = require('v'), forEach = require('w'), last = require('x'), merge = require('n'), request = require('p');
+        var animationEndSupport = false;
+        domready(function () {
+            var style = (document.body || document.documentElement).style;
+            forEach([
+                'animation',
+                'WebkitAnimation',
+                'MozAnimation',
+                'MsAnimation',
+                'OAnimation'
+            ], function (animation, index) {
+                if (animationEndSupport) {
+                    return;
                 }
-                if (typeof History.initCore !== 'undefined') {
-                    History.initCore();
-                }
-                if (typeof History.initHtml4 !== 'undefined') {
-                    History.initHtml4();
-                }
-                return true;
-            };
-            History.initCore = function (options) {
-                if (typeof History.initCore.initialized !== 'undefined') {
-                    return false;
-                } else {
-                    History.initCore.initialized = true;
-                }
-                History.options = History.options || {};
-                History.options.hashChangeInterval = History.options.hashChangeInterval || 100;
-                History.options.safariPollInterval = History.options.safariPollInterval || 500;
-                History.options.doubleCheckInterval = History.options.doubleCheckInterval || 500;
-                History.options.disableSuid = History.options.disableSuid || false;
-                History.options.storeInterval = History.options.storeInterval || 1000;
-                History.options.busyDelay = History.options.busyDelay || 250;
-                History.options.debug = History.options.debug || false;
-                History.options.initialTitle = History.options.initialTitle || document.title;
-                History.options.html4Mode = History.options.html4Mode || false;
-                History.options.delayInit = History.options.delayInit || false;
-                History.intervalList = [];
-                History.clearAllIntervals = function () {
-                    var i, il = History.intervalList;
-                    if (typeof il !== 'undefined' && il !== null) {
-                        for (i = 0; i < il.length; i++) {
-                            clearInterval(il[i]);
-                        }
-                        History.intervalList = null;
-                    }
-                };
-                History.debug = function () {
-                    if (History.options.debug || false) {
-                        History.log.apply(History, arguments);
-                    }
-                };
-                History.log = function () {
-                    var consoleExists = !(typeof console === 'undefined' || typeof console.log === 'undefined' || typeof console.log.apply === 'undefined'), textarea = document.getElementById('log'), message, i, n, args, arg;
-                    ;
-                    if (consoleExists) {
-                        args = Array.prototype.slice.call(arguments);
-                        message = args.shift();
-                        if (typeof console.debug !== 'undefined') {
-                            console.debug.apply(console, [
-                                message,
-                                args
-                            ]);
-                        } else {
-                            console.log.apply(console, [
-                                message,
-                                args
-                            ]);
-                        }
-                    } else {
-                        message = '\n' + arguments[0] + '\n';
-                    }
-                    for (i = 1, n = arguments.length; i < n; ++i) {
-                        arg = arguments[i];
-                        if (typeof arg === 'object' && typeof JSON !== 'undefined') {
-                            try {
-                                arg = JSON.stringify(arg);
-                            } catch (Exception) {
+                animationEndSupport = style[animation] !== undefined ? Modal.prototype.animationEndEvent[index] : false;
+            });
+        });
+        var Modal = new prime({
+                mixin: [
+                    Bound,
+                    Options
+                ],
+                inherits: Emitter,
+                animationEndEvent: [
+                    'animationend',
+                    'webkitAnimationEnd',
+                    'mozAnimationEnd',
+                    'MSAnimationEnd',
+                    'oanimationend'
+                ],
+                globalID: 1,
+                options: {
+                    baseClassNames: {
+                        container: 'g5-dialog',
+                        content: 'g5-content',
+                        overlay: 'g5-overlay',
+                        close: 'g5-close',
+                        closing: 'g5-closing',
+                        open: 'g5-dialog-open'
+                    },
+                    content: '',
+                    remote: '',
+                    showCloseButton: true,
+                    escapeToClose: true,
+                    overlayClickToClose: true,
+                    appendNode: 'body',
+                    className: 'g5-dialog-theme-default',
+                    css: {},
+                    overlayClassName: '',
+                    overlayCSS: '',
+                    contentClassName: '',
+                    contentCSS: '',
+                    closeClassName: '',
+                    closeCSS: '',
+                    afterOpen: null,
+                    afterClose: null
+                },
+                constructor: function (options) {
+                    this.setOptions(options);
+                    this.defaults = this.options;
+                    var self = this;
+                    domready(function () {
+                        $(window).on('keyup', function (event) {
+                            if (event.keyCode === 27) {
+                                return self.closeByEscape();
                             }
+                        });
+                        self.animationEndEvent = animationEndSupport;
+                    });
+                    this.on('dialogOpen', function (options) {
+                        $('body').addClass(options.baseClassNames.open);
+                    }).on('dialogAfterClose', bind(function (options) {
+                        var all = this.getAll();
+                        if (!all || !all.length) {
+                            $('body').removeClass(options.baseClassNames.open);
                         }
-                        message += '\n' + arg + '\n';
+                    }, this));
+                },
+                storage: function () {
+                    return storage;
+                },
+                open: function (options) {
+                    options = merge(this.options, options);
+                    options.id = this.globalID++;
+                    var elements = {};
+                    elements.container = zen('div').addClass(options.baseClassNames.container).addClass(options.className).style(options.css);
+                    storage.set(elements.container, { dialog: options });
+                    elements.overlay = zen('div').addClass(options.baseClassNames.overlay).addClass(options.overlayClassName).style(options.overlayCSS);
+                    storage.set(elements.overlay, { dialog: options });
+                    if (options.overlayClickToClose) {
+                        elements.overlay.on('click', bind(this._overlayClick, this, elements.overlay[0]));
                     }
-                    if (textarea) {
-                        textarea.value += message + '\n-----\n';
-                        textarea.scrollTop = textarea.scrollHeight - textarea.clientHeight;
-                    } else if (!consoleExists) {
-                        alert(message);
-                    }
-                    return true;
-                };
-                History.getInternetExplorerMajorVersion = function () {
-                    var result = History.getInternetExplorerMajorVersion.cached = typeof History.getInternetExplorerMajorVersion.cached !== 'undefined' ? History.getInternetExplorerMajorVersion.cached : function () {
-                            var v = 3, div = document.createElement('div'), all = div.getElementsByTagName('i');
-                            while ((div.innerHTML = '<!--[if gt IE ' + ++v + ']><i></i><![endif]-->') && all[0]) {
+                    elements.container.appendChild(elements.overlay);
+                    elements.content = zen('div').addClass(options.baseClassNames.content).addClass(options.contentClassName).style(options.contentCSS).html(options.content);
+                    storage.set(elements.content, { dialog: options });
+                    elements.container.appendChild(elements.content);
+                    if (options.remote && options.remote.length > 1) {
+                        this.showLoading();
+                        request(options.remote, bind(function (error, response) {
+                            elements.content.html(response.body.html || response.body);
+                            this.hideLoading();
+                            if (options.remoteLoaded) {
+                                options.remoteLoaded(response, options);
                             }
-                            return v > 4 ? v : false;
-                        }();
-                    ;
-                    return result;
-                };
-                History.isInternetExplorer = function () {
-                    var result = History.isInternetExplorer.cached = typeof History.isInternetExplorer.cached !== 'undefined' ? History.isInternetExplorer.cached : Boolean(History.getInternetExplorerMajorVersion());
-                    ;
-                    return result;
-                };
-                if (History.options.html4Mode) {
-                    History.emulated = {
-                        pushState: true,
-                        hashChange: true
-                    };
-                } else {
-                    History.emulated = {
-                        pushState: !Boolean(window.history && window.history.pushState && window.history.replaceState && !(/ Mobile\/([1-7][a-z]|(8([abcde]|f(1[0-8]))))/i.test(navigator.userAgent) || /AppleWebKit\/5([0-2]|3[0-2])/i.test(navigator.userAgent))),
-                        hashChange: Boolean(!('onhashchange' in window || 'onhashchange' in document) || History.isInternetExplorer() && History.getInternetExplorerMajorVersion() < 8)
-                    };
-                }
-                History.enabled = !History.emulated.pushState;
-                History.bugs = {
-                    setHash: Boolean(!History.emulated.pushState && navigator.vendor === 'Apple Computer, Inc.' && /AppleWebKit\/5([0-2]|3[0-3])/.test(navigator.userAgent)),
-                    safariPoll: Boolean(!History.emulated.pushState && navigator.vendor === 'Apple Computer, Inc.' && /AppleWebKit\/5([0-2]|3[0-3])/.test(navigator.userAgent)),
-                    ieDoubleCheck: Boolean(History.isInternetExplorer() && History.getInternetExplorerMajorVersion() < 8),
-                    hashEscape: Boolean(History.isInternetExplorer() && History.getInternetExplorerMajorVersion() < 7)
-                };
-                History.isEmptyObject = function (obj) {
-                    for (var name in obj) {
-                        if (obj.hasOwnProperty(name)) {
+                        }, this));
+                    }
+                    if (options.showCloseButton) {
+                        elements.closeButton = zen('div').addClass(options.baseClassNames.close).addClass(options.closeClassName).style(options.closeCSS);
+                        storage.set(elements.closeButton, { dialog: options });
+                        elements.closeButton.on('click', bind(this._closeButtonClick, this, elements.closeButton[0]));
+                        elements.content.appendChild(elements.closeButton);
+                    }
+                    $(options.appendNode).appendChild(elements.container);
+                    options.elements = elements;
+                    if (options.afterOpen) {
+                        options.afterOpen(elements.content, options);
+                    }
+                    setTimeout(bind(function () {
+                        return this.emit('dialogOpen', options);
+                    }, this), 0);
+                    return elements.content;
+                },
+                getAll: function () {
+                    var options = this.options;
+                    return $('.' + options.baseClassNames.container + ':not(.' + options.baseClassNames.closing + ') .' + options.baseClassNames.content);
+                },
+                getByID: function (id) {
+                    return $(this.getAll().filter(function (element) {
+                        element = $(element);
+                        return storage.get(element).dialog.id === id;
+                    }));
+                },
+                close: function (id) {
+                    if (!id) {
+                        var element = $(last(this.getAll()));
+                        if (!element) {
                             return false;
                         }
+                        id = storage.get(element).dialog.id;
                     }
-                    return true;
-                };
-                History.cloneObject = function (obj) {
-                    var hash, newObj;
-                    if (obj) {
-                        hash = JSON.stringify(obj);
-                        newObj = JSON.parse(hash);
-                    } else {
-                        newObj = {};
-                    }
-                    return newObj;
-                };
-                History.getRootUrl = function () {
-                    var rootUrl = document.location.protocol + '//' + (document.location.hostname || document.location.host);
-                    if (document.location.port || false) {
-                        rootUrl += ':' + document.location.port;
-                    }
-                    rootUrl += '/';
-                    return rootUrl;
-                };
-                History.getBaseHref = function () {
-                    var baseElements = document.getElementsByTagName('base'), baseElement = null, baseHref = '';
-                    if (baseElements.length === 1) {
-                        baseElement = baseElements[0];
-                        baseHref = baseElement.href.replace(/[^\/]+$/, '');
-                    }
-                    baseHref = baseHref.replace(/\/+$/, '');
-                    if (baseHref)
-                        baseHref += '/';
-                    return baseHref;
-                };
-                History.getBaseUrl = function () {
-                    var baseUrl = History.getBaseHref() || History.getBasePageUrl() || History.getRootUrl();
-                    return baseUrl;
-                };
-                History.getPageUrl = function () {
-                    var State = History.getState(false, false), stateUrl = (State || {}).url || History.getLocationHref(), pageUrl;
-                    pageUrl = stateUrl.replace(/\/+$/, '').replace(/[^\/]+$/, function (part, index, string) {
-                        return /\./.test(part) ? part : part + '/';
+                    return this.closeByID(id);
+                },
+                closeAll: function () {
+                    var ids;
+                    ids = map(this.getAll(), function (element) {
+                        element = $(element);
+                        return storage.get(element).dialog.id;
                     });
-                    return pageUrl;
-                };
-                History.getBasePageUrl = function () {
-                    var basePageUrl = History.getLocationHref().replace(/[#\?].*/, '').replace(/[^\/]+$/, function (part, index, string) {
-                            return /[^\/]$/.test(part) ? '' : part;
-                        }).replace(/\/+$/, '') + '/';
-                    return basePageUrl;
-                };
-                History.getFullUrl = function (url, allowBaseHref) {
-                    var fullUrl = url, firstChar = url.substring(0, 1);
-                    allowBaseHref = typeof allowBaseHref === 'undefined' ? true : allowBaseHref;
-                    if (/[a-z]+\:\/\//.test(url)) {
-                    } else if (firstChar === '/') {
-                        fullUrl = History.getRootUrl() + url.replace(/^\/+/, '');
-                    } else if (firstChar === '#') {
-                        fullUrl = History.getPageUrl().replace(/#.*/, '') + url;
-                    } else if (firstChar === '?') {
-                        fullUrl = History.getPageUrl().replace(/[\?#].*/, '') + url;
-                    } else {
-                        if (allowBaseHref) {
-                            fullUrl = History.getBaseUrl() + url.replace(/^(\.\/)+/, '');
-                        } else {
-                            fullUrl = History.getBasePageUrl() + url.replace(/^(\.\/)+/, '');
-                        }
-                    }
-                    return fullUrl.replace(/\#$/, '');
-                };
-                History.getShortUrl = function (url) {
-                    var shortUrl = url, baseUrl = History.getBaseUrl(), rootUrl = History.getRootUrl();
-                    if (History.emulated.pushState) {
-                        shortUrl = shortUrl.replace(baseUrl, '');
-                    }
-                    shortUrl = shortUrl.replace(rootUrl, '/');
-                    if (History.isTraditionalAnchor(shortUrl)) {
-                        shortUrl = './' + shortUrl;
-                    }
-                    shortUrl = shortUrl.replace(/^(\.\/)+/g, './').replace(/\#$/, '');
-                    return shortUrl;
-                };
-                History.getLocationHref = function (doc) {
-                    doc = doc || document;
-                    if (doc.URL === doc.location.href)
-                        return doc.location.href;
-                    if (doc.location.href === decodeURIComponent(doc.URL))
-                        return doc.URL;
-                    if (doc.location.hash && decodeURIComponent(doc.location.href.replace(/^[^#]+/, '')) === doc.location.hash)
-                        return doc.location.href;
-                    if (doc.URL.indexOf('#') == -1 && doc.location.href.indexOf('#') != -1)
-                        return doc.location.href;
-                    return doc.URL || doc.location.href;
-                };
-                History.store = {};
-                History.idToState = History.idToState || {};
-                History.stateToId = History.stateToId || {};
-                History.urlToId = History.urlToId || {};
-                History.storedStates = History.storedStates || [];
-                History.savedStates = History.savedStates || [];
-                History.normalizeStore = function () {
-                    History.store.idToState = History.store.idToState || {};
-                    History.store.urlToId = History.store.urlToId || {};
-                    History.store.stateToId = History.store.stateToId || {};
-                };
-                History.getState = function (friendly, create) {
-                    if (typeof friendly === 'undefined') {
-                        friendly = true;
-                    }
-                    if (typeof create === 'undefined') {
-                        create = true;
-                    }
-                    var State = History.getLastSavedState();
-                    if (!State && create) {
-                        State = History.createStateObject();
-                    }
-                    if (friendly) {
-                        State = History.cloneObject(State);
-                        State.url = State.cleanUrl || State.url;
-                    }
-                    return State;
-                };
-                History.getIdByState = function (newState) {
-                    var id = History.extractId(newState.url), str;
-                    if (!id) {
-                        str = History.getStateString(newState);
-                        if (typeof History.stateToId[str] !== 'undefined') {
-                            id = History.stateToId[str];
-                        } else if (typeof History.store.stateToId[str] !== 'undefined') {
-                            id = History.store.stateToId[str];
-                        } else {
-                            while (true) {
-                                id = new Date().getTime() + String(Math.random()).replace(/\D/g, '');
-                                if (typeof History.idToState[id] === 'undefined' && typeof History.store.idToState[id] === 'undefined') {
-                                    break;
-                                }
-                            }
-                            History.stateToId[str] = id;
-                            History.idToState[id] = newState;
-                        }
-                    }
-                    return id;
-                };
-                History.normalizeState = function (oldState) {
-                    var newState, dataNotEmpty;
-                    if (!oldState || typeof oldState !== 'object') {
-                        oldState = {};
-                    }
-                    if (typeof oldState.normalized !== 'undefined') {
-                        return oldState;
-                    }
-                    if (!oldState.data || typeof oldState.data !== 'object') {
-                        oldState.data = {};
-                    }
-                    newState = {};
-                    newState.normalized = true;
-                    newState.title = oldState.title || '';
-                    newState.url = History.getFullUrl(oldState.url ? oldState.url : History.getLocationHref());
-                    newState.hash = History.getShortUrl(newState.url);
-                    newState.data = History.cloneObject(oldState.data);
-                    newState.id = History.getIdByState(newState);
-                    newState.cleanUrl = newState.url.replace(/\??\&_suid.*/, '');
-                    newState.url = newState.cleanUrl;
-                    dataNotEmpty = !History.isEmptyObject(newState.data);
-                    if ((newState.title || dataNotEmpty) && History.options.disableSuid !== true) {
-                        newState.hash = History.getShortUrl(newState.url).replace(/\??\&_suid.*/, '');
-                        if (!/\?/.test(newState.hash)) {
-                            newState.hash += '?';
-                        }
-                        newState.hash += '&_suid=' + newState.id;
-                    }
-                    newState.hashedUrl = History.getFullUrl(newState.hash);
-                    if ((History.emulated.pushState || History.bugs.safariPoll) && History.hasUrlDuplicate(newState)) {
-                        newState.url = newState.hashedUrl;
-                    }
-                    return newState;
-                };
-                History.createStateObject = function (data, title, url) {
-                    var State = {
-                            'data': data,
-                            'title': title,
-                            'url': url
-                        };
-                    State = History.normalizeState(State);
-                    return State;
-                };
-                History.getStateById = function (id) {
-                    id = String(id);
-                    var State = History.idToState[id] || History.store.idToState[id] || undefined;
-                    return State;
-                };
-                History.getStateString = function (passedState) {
-                    var State, cleanedState, str;
-                    State = History.normalizeState(passedState);
-                    cleanedState = {
-                        data: State.data,
-                        title: passedState.title,
-                        url: passedState.url
-                    };
-                    str = JSON.stringify(cleanedState);
-                    return str;
-                };
-                History.getStateId = function (passedState) {
-                    var State, id;
-                    State = History.normalizeState(passedState);
-                    id = State.id;
-                    return id;
-                };
-                History.getHashByState = function (passedState) {
-                    var State, hash;
-                    State = History.normalizeState(passedState);
-                    hash = State.hash;
-                    return hash;
-                };
-                History.extractId = function (url_or_hash) {
-                    var id, parts, url, tmp;
-                    if (url_or_hash.indexOf('#') != -1) {
-                        tmp = url_or_hash.split('#')[0];
-                    } else {
-                        tmp = url_or_hash;
-                    }
-                    parts = /(.*)\&_suid=([0-9]+)$/.exec(tmp);
-                    url = parts ? parts[1] || url_or_hash : url_or_hash;
-                    id = parts ? String(parts[2] || '') : '';
-                    return id || false;
-                };
-                History.isTraditionalAnchor = function (url_or_hash) {
-                    var isTraditional = !/[\/\?\.]/.test(url_or_hash);
-                    return isTraditional;
-                };
-                History.extractState = function (url_or_hash, create) {
-                    var State = null, id, url;
-                    create = create || false;
-                    id = History.extractId(url_or_hash);
-                    if (id) {
-                        State = History.getStateById(id);
-                    }
-                    if (!State) {
-                        url = History.getFullUrl(url_or_hash);
-                        id = History.getIdByUrl(url) || false;
-                        if (id) {
-                            State = History.getStateById(id);
-                        }
-                        if (!State && create && !History.isTraditionalAnchor(url_or_hash)) {
-                            State = History.createStateObject(null, null, url);
-                        }
-                    }
-                    return State;
-                };
-                History.getIdByUrl = function (url) {
-                    var id = History.urlToId[url] || History.store.urlToId[url] || undefined;
-                    return id;
-                };
-                History.getLastSavedState = function () {
-                    return History.savedStates[History.savedStates.length - 1] || undefined;
-                };
-                History.getLastStoredState = function () {
-                    return History.storedStates[History.storedStates.length - 1] || undefined;
-                };
-                History.hasUrlDuplicate = function (newState) {
-                    var hasDuplicate = false, oldState;
-                    oldState = History.extractState(newState.url);
-                    hasDuplicate = oldState && oldState.id !== newState.id;
-                    return hasDuplicate;
-                };
-                History.storeState = function (newState) {
-                    History.urlToId[newState.url] = newState.id;
-                    History.storedStates.push(History.cloneObject(newState));
-                    return newState;
-                };
-                History.isLastSavedState = function (newState) {
-                    var isLast = false, newId, oldState, oldId;
-                    if (History.savedStates.length) {
-                        newId = newState.id;
-                        oldState = History.getLastSavedState();
-                        oldId = oldState.id;
-                        isLast = newId === oldId;
-                    }
-                    return isLast;
-                };
-                History.saveState = function (newState) {
-                    if (History.isLastSavedState(newState)) {
+                    if (!ids.length) {
                         return false;
                     }
-                    History.savedStates.push(History.cloneObject(newState));
+                    forEach(ids.reverse(), function (value, id) {
+                        return this.closeByID(id);
+                    }, this);
                     return true;
-                };
-                History.getStateByIndex = function (index) {
-                    var State = null;
-                    if (typeof index === 'undefined') {
-                        State = History.savedStates[History.savedStates.length - 1];
-                    } else if (index < 0) {
-                        State = History.savedStates[History.savedStates.length + index];
-                    } else {
-                        State = History.savedStates[index];
-                    }
-                    return State;
-                };
-                History.getCurrentIndex = function () {
-                    var index = null;
-                    if (History.savedStates.length < 1) {
-                        index = 0;
-                    } else {
-                        index = History.savedStates.length - 1;
-                    }
-                    return index;
-                };
-                History.getHash = function (doc) {
-                    var url = History.getLocationHref(doc), hash;
-                    hash = History.getHashByUrl(url);
-                    return hash;
-                };
-                History.unescapeHash = function (hash) {
-                    var result = History.normalizeHash(hash);
-                    result = decodeURIComponent(result);
-                    return result;
-                };
-                History.normalizeHash = function (hash) {
-                    var result = hash.replace(/[^#]*#/, '').replace(/#.*/, '');
-                    return result;
-                };
-                History.setHash = function (hash, queue) {
-                    var State, pageUrl;
-                    if (queue !== false && History.busy()) {
-                        History.pushQueue({
-                            scope: History,
-                            callback: History.setHash,
-                            args: arguments,
-                            queue: queue
-                        });
+                },
+                closeByID: function (id) {
+                    var content = this.getByID(id);
+                    if (!content || !content.length) {
                         return false;
                     }
-                    History.busy(true);
-                    State = History.extractState(hash, true);
-                    if (State && !History.emulated.pushState) {
-                        History.pushState(State.data, State.title, State.url, false);
-                    } else if (History.getHash() !== hash) {
-                        if (History.bugs.setHash) {
-                            pageUrl = History.getPageUrl();
-                            History.pushState(null, null, pageUrl + '#' + hash, false);
-                        } else {
-                            document.location.hash = hash;
-                        }
-                    }
-                    return History;
-                };
-                History.escapeHash = function (hash) {
-                    var result = History.normalizeHash(hash);
-                    result = window.encodeURIComponent(result);
-                    if (!History.bugs.hashEscape) {
-                        result = result.replace(/\%21/g, '!').replace(/\%26/g, '&').replace(/\%3D/g, '=').replace(/\%3F/g, '?');
-                    }
-                    return result;
-                };
-                History.getHashByUrl = function (url) {
-                    var hash = String(url).replace(/([^#]*)#?([^#]*)#?(.*)/, '$2');
-                    ;
-                    hash = History.unescapeHash(hash);
-                    return hash;
-                };
-                History.setTitle = function (newState) {
-                    var title = newState.title, firstState;
-                    if (!title) {
-                        firstState = History.getStateByIndex(0);
-                        if (firstState && firstState.url === newState.url) {
-                            title = firstState.title || History.options.initialTitle;
-                        }
-                    }
-                    try {
-                        document.getElementsByTagName('title')[0].innerHTML = title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
-                    } catch (Exception) {
-                    }
-                    document.title = title;
-                    return History;
-                };
-                History.queues = [];
-                History.busy = function (value) {
-                    if (typeof value !== 'undefined') {
-                        History.busy.flag = value;
-                    } else if (typeof History.busy.flag === 'undefined') {
-                        History.busy.flag = false;
-                    }
-                    if (!History.busy.flag) {
-                        clearTimeout(History.busy.timeout);
-                        var fireNext = function () {
-                            var i, queue, item;
-                            if (History.busy.flag)
-                                return;
-                            for (i = History.queues.length - 1; i >= 0; --i) {
-                                queue = History.queues[i];
-                                if (queue.length === 0)
-                                    continue;
-                                item = queue.shift();
-                                History.fireQueueItem(item);
-                                History.busy.timeout = setTimeout(fireNext, History.options.busyDelay);
+                    var container, options;
+                    container = storage.get(content).dialog.elements.container;
+                    options = merge({}, storage.get(content).dialog);
+                    var beforeClose = function () {
+                            if (options.beforeClose) {
+                                return options.beforeClose(content, options);
                             }
-                        };
-                        History.busy.timeout = setTimeout(fireNext, History.options.busyDelay);
-                    }
-                    return History.busy.flag;
-                };
-                History.busy.flag = false;
-                History.fireQueueItem = function (item) {
-                    return item.callback.apply(item.scope || History, item.args || []);
-                };
-                History.pushQueue = function (item) {
-                    History.queues[item.queue || 0] = History.queues[item.queue || 0] || [];
-                    History.queues[item.queue || 0].push(item);
-                    return History;
-                };
-                History.queue = function (item, queue) {
-                    if (typeof item === 'function') {
-                        item = { callback: item };
-                    }
-                    if (typeof queue !== 'undefined') {
-                        item.queue = queue;
-                    }
-                    if (History.busy()) {
-                        History.pushQueue(item);
-                    } else {
-                        History.fireQueueItem(item);
-                    }
-                    return History;
-                };
-                History.clearQueue = function () {
-                    History.busy.flag = false;
-                    History.queues = [];
-                    return History;
-                };
-                History.stateChanged = false;
-                History.doubleChecker = false;
-                History.doubleCheckComplete = function () {
-                    History.stateChanged = true;
-                    History.doubleCheckClear();
-                    return History;
-                };
-                History.doubleCheckClear = function () {
-                    if (History.doubleChecker) {
-                        clearTimeout(History.doubleChecker);
-                        History.doubleChecker = false;
-                    }
-                    return History;
-                };
-                History.doubleCheck = function (tryAgain) {
-                    History.stateChanged = false;
-                    History.doubleCheckClear();
-                    if (History.bugs.ieDoubleCheck) {
-                        History.doubleChecker = setTimeout(function () {
-                            History.doubleCheckClear();
-                            if (!History.stateChanged) {
-                                tryAgain();
+                        }, close = bind(function () {
+                            content.emit('dialogClose', options);
+                            container.remove();
+                            this.emit('dialogAfterClose', options);
+                            if (options.afterClose) {
+                                return options.afterClose(content, options);
                             }
-                            return true;
-                        }, History.options.doubleCheckInterval);
-                    }
-                    return History;
-                };
-                History.safariStatePoll = function () {
-                    var urlState = History.extractState(History.getLocationHref()), newState;
-                    if (!History.isLastSavedState(urlState)) {
-                        newState = urlState;
+                        }, this);
+                    if (animationEndSupport) {
+                        beforeClose();
+                        container.off(this.animationEndEvent).on(this.animationEndEvent, function () {
+                            return close();
+                        }).addClass(options.baseClassNames.closing);
                     } else {
+                        beforeClose();
+                        close();
+                    }
+                    return true;
+                },
+                closeByEscape: function () {
+                    var ids, id;
+                    ids = map(this.getAll(), function (element) {
+                        element = $(element);
+                        return storage.get(element).dialog.id;
+                    });
+                    if (!ids.length) {
+                        return false;
+                    }
+                    id = Math.max.apply(Math, ids);
+                    var element = this.getByID(id);
+                    if (!storage.get(element).dialog.escapeToClose) {
+                        return false;
+                    }
+                    return this.closeByID(id);
+                },
+                showLoading: function () {
+                    this.hideLoading();
+                    return $('body').appendChild(zen('div.g5-dialog-loading-spinner.' + this.options.className));
+                },
+                hideLoading: function () {
+                    var spinner = $('.g5-dialog-loading-spinner');
+                    return spinner ? spinner.remove() : false;
+                },
+                _overlayClick: function (element, event) {
+                    if (event.target !== element) {
                         return;
                     }
-                    if (!newState) {
-                        newState = History.createStateObject();
-                    }
-                    History.Adapter.trigger(window, 'popstate');
-                    return History;
-                };
-                History.back = function (queue) {
-                    if (queue !== false && History.busy()) {
-                        History.pushQueue({
-                            scope: History,
-                            callback: History.back,
-                            args: arguments,
-                            queue: queue
-                        });
-                        return false;
-                    }
-                    History.busy(true);
-                    History.doubleCheck(function () {
-                        History.back(false);
-                    });
-                    history.go(-1);
-                    return true;
-                };
-                History.forward = function (queue) {
-                    if (queue !== false && History.busy()) {
-                        History.pushQueue({
-                            scope: History,
-                            callback: History.forward,
-                            args: arguments,
-                            queue: queue
-                        });
-                        return false;
-                    }
-                    History.busy(true);
-                    History.doubleCheck(function () {
-                        History.forward(false);
-                    });
-                    history.go(1);
-                    return true;
-                };
-                History.go = function (index, queue) {
-                    var i;
-                    if (index > 0) {
-                        for (i = 1; i <= index; ++i) {
-                            History.forward(queue);
-                        }
-                    } else if (index < 0) {
-                        for (i = -1; i >= index; --i) {
-                            History.back(queue);
-                        }
-                    } else {
-                        throw new Error('History.go: History.go requires a positive or negative integer passed.');
-                    }
-                    return History;
-                };
-                if (History.emulated.pushState) {
-                    var emptyFunction = function () {
-                    };
-                    History.pushState = History.pushState || emptyFunction;
-                    History.replaceState = History.replaceState || emptyFunction;
-                } else {
-                    History.onPopState = function (event, extra) {
-                        var stateId = false, newState = false, currentHash, currentState;
-                        History.doubleCheckComplete();
-                        currentHash = History.getHash();
-                        if (currentHash) {
-                            currentState = History.extractState(currentHash || History.getLocationHref(), true);
-                            if (currentState) {
-                                History.replaceState(currentState.data, currentState.title, currentState.url, false);
-                            } else {
-                                History.Adapter.trigger(window, 'anchorchange');
-                                History.busy(false);
-                            }
-                            History.expectedStateId = false;
-                            return false;
-                        }
-                        stateId = History.Adapter.extractEventData('state', event, extra) || false;
-                        if (stateId) {
-                            newState = History.getStateById(stateId);
-                        } else if (History.expectedStateId) {
-                            newState = History.getStateById(History.expectedStateId);
-                        } else {
-                            newState = History.extractState(History.getLocationHref());
-                        }
-                        if (!newState) {
-                            newState = History.createStateObject(null, null, History.getLocationHref());
-                        }
-                        History.expectedStateId = false;
-                        if (History.isLastSavedState(newState)) {
-                            History.busy(false);
-                            return false;
-                        }
-                        History.storeState(newState);
-                        History.saveState(newState);
-                        History.setTitle(newState);
-                        History.Adapter.trigger(window, 'statechange');
-                        History.busy(false);
-                        return true;
-                    };
-                    History.Adapter.bind(window, 'popstate', History.onPopState);
-                    History.pushState = function (data, title, url, queue) {
-                        if (History.getHashByUrl(url) && History.emulated.pushState) {
-                            throw new Error('History.js does not support states with fragement-identifiers (hashes/anchors).');
-                        }
-                        if (queue !== false && History.busy()) {
-                            History.pushQueue({
-                                scope: History,
-                                callback: History.pushState,
-                                args: arguments,
-                                queue: queue
-                            });
-                            return false;
-                        }
-                        History.busy(true);
-                        var newState = History.createStateObject(data, title, url);
-                        if (History.isLastSavedState(newState)) {
-                            History.busy(false);
-                        } else {
-                            History.storeState(newState);
-                            History.expectedStateId = newState.id;
-                            history.pushState(newState.id, newState.title, newState.url);
-                            History.Adapter.trigger(window, 'popstate');
-                        }
-                        return true;
-                    };
-                    History.replaceState = function (data, title, url, queue) {
-                        if (History.getHashByUrl(url) && History.emulated.pushState) {
-                            throw new Error('History.js does not support states with fragement-identifiers (hashes/anchors).');
-                        }
-                        if (queue !== false && History.busy()) {
-                            History.pushQueue({
-                                scope: History,
-                                callback: History.replaceState,
-                                args: arguments,
-                                queue: queue
-                            });
-                            return false;
-                        }
-                        History.busy(true);
-                        var newState = History.createStateObject(data, title, url);
-                        if (History.isLastSavedState(newState)) {
-                            History.busy(false);
-                        } else {
-                            History.storeState(newState);
-                            History.expectedStateId = newState.id;
-                            history.replaceState(newState.id, newState.title, newState.url);
-                            History.Adapter.trigger(window, 'popstate');
-                        }
-                        return true;
-                    };
+                    return this.close(storage.get($(element)).dialog.id);
+                },
+                _closeButtonClick: function (element) {
+                    return this.close(storage.get($(element)).dialog.id);
                 }
-                if (sessionStorage) {
-                    try {
-                        History.store = JSON.parse(sessionStorage.getItem('History.store')) || {};
-                    } catch (err) {
-                        History.store = {};
-                    }
-                    History.normalizeStore();
-                } else {
-                    History.store = {};
-                    History.normalizeStore();
-                }
-                History.Adapter.bind(window, 'unload', History.clearAllIntervals);
-                History.saveState(History.storeState(History.extractState(History.getLocationHref(), true)));
-                if (sessionStorage) {
-                    History.onUnload = function () {
-                        var currentStore, item, currentStoreString;
-                        try {
-                            currentStore = JSON.parse(sessionStorage.getItem('History.store')) || {};
-                        } catch (err) {
-                            currentStore = {};
-                        }
-                        currentStore.idToState = currentStore.idToState || {};
-                        currentStore.urlToId = currentStore.urlToId || {};
-                        currentStore.stateToId = currentStore.stateToId || {};
-                        for (item in History.idToState) {
-                            if (!History.idToState.hasOwnProperty(item)) {
-                                continue;
-                            }
-                            currentStore.idToState[item] = History.idToState[item];
-                        }
-                        for (item in History.urlToId) {
-                            if (!History.urlToId.hasOwnProperty(item)) {
-                                continue;
-                            }
-                            currentStore.urlToId[item] = History.urlToId[item];
-                        }
-                        for (item in History.stateToId) {
-                            if (!History.stateToId.hasOwnProperty(item)) {
-                                continue;
-                            }
-                            currentStore.stateToId[item] = History.stateToId[item];
-                        }
-                        History.store = currentStore;
-                        History.normalizeStore();
-                        currentStoreString = JSON.stringify(currentStore);
-                        try {
-                            sessionStorage.setItem('History.store', currentStoreString);
-                        } catch (e) {
-                            if (e.code === DOMException.QUOTA_EXCEEDED_ERR) {
-                                if (sessionStorage.length) {
-                                    sessionStorage.removeItem('History.store');
-                                    sessionStorage.setItem('History.store', currentStoreString);
-                                } else {
-                                }
-                            } else {
-                                throw e;
-                            }
-                        }
-                    };
-                    History.intervalList.push(setInterval(History.onUnload, History.options.storeInterval));
-                    History.Adapter.bind(window, 'beforeunload', History.onUnload);
-                    History.Adapter.bind(window, 'unload', History.onUnload);
-                }
-                if (!History.emulated.pushState) {
-                    if (History.bugs.safariPoll) {
-                        History.intervalList.push(setInterval(History.safariStatePoll, History.options.safariPollInterval));
-                    }
-                    if (navigator.vendor === 'Apple Computer, Inc.' || (navigator.appCodeName || '') === 'Mozilla') {
-                        History.Adapter.bind(window, 'hashchange', function () {
-                            History.Adapter.trigger(window, 'popstate');
-                        });
-                        if (History.getHash()) {
-                            History.Adapter.onDomLoad(function () {
-                                History.Adapter.trigger(window, 'hashchange');
-                            });
-                        }
-                    }
-                }
-            };
-            if (!History.options || !History.options.delayInit) {
-                History.init();
-            }
-        }
-        module.exports = History;
+            });
+        module.exports = Modal;
     },
     '17': function (require, module, exports, global) {
         var makeIterator = require('1d');
@@ -4954,9 +4954,9 @@ var G5;
         module.exports = rtrim;
     },
     '1d': function (require, module, exports, global) {
-        var identity = require('2k');
-        var prop = require('2l');
-        var deepMatches = require('2m');
+        var identity = require('2l');
+        var prop = require('2m');
+        var deepMatches = require('2n');
         function makeIterator(src, thisObj) {
             if (src == null) {
                 return identity;
@@ -4979,7 +4979,577 @@ var G5;
     },
     '1e': function (require, module, exports, global) {
         'use strict';
-        var parse = require('1f');
+        var kindOf = require('1i'), now = require('2k'), forEach = require('d'), indexOf = require('f');
+        var callbacks = {
+                timeout: {},
+                frame: [],
+                immediate: []
+            };
+        var push = function (collection, callback, context, defer) {
+            var iterator = function () {
+                iterate(collection);
+            };
+            if (!collection.length)
+                defer(iterator);
+            var entry = {
+                    callback: callback,
+                    context: context
+                };
+            collection.push(entry);
+            return function () {
+                var io = indexOf(collection, entry);
+                if (io > -1)
+                    collection.splice(io, 1);
+            };
+        };
+        var iterate = function (collection) {
+            var time = now();
+            forEach(collection.splice(0), function (entry) {
+                entry.callback.call(entry.context, time);
+            });
+        };
+        var defer = function (callback, argument, context) {
+            return kindOf(argument) === 'Number' ? defer.timeout(callback, argument, context) : defer.immediate(callback, argument);
+        };
+        if (global.process && process.nextTick) {
+            defer.immediate = function (callback, context) {
+                return push(callbacks.immediate, callback, context, process.nextTick);
+            };
+        } else if (global.setImmediate) {
+            defer.immediate = function (callback, context) {
+                return push(callbacks.immediate, callback, context, setImmediate);
+            };
+        } else if (global.postMessage && global.addEventListener) {
+            addEventListener('message', function (event) {
+                if (event.source === global && event.data === '@deferred') {
+                    event.stopPropagation();
+                    iterate(callbacks.immediate);
+                }
+            }, true);
+            defer.immediate = function (callback, context) {
+                return push(callbacks.immediate, callback, context, function () {
+                    postMessage('@deferred', '*');
+                });
+            };
+        } else {
+            defer.immediate = function (callback, context) {
+                return push(callbacks.immediate, callback, context, function (iterator) {
+                    setTimeout(iterator, 0);
+                });
+            };
+        }
+        var requestAnimationFrame = global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame || global.oRequestAnimationFrame || global.msRequestAnimationFrame || function (callback) {
+                setTimeout(callback, 1000 / 60);
+            };
+        defer.frame = function (callback, context) {
+            return push(callbacks.frame, callback, context, requestAnimationFrame);
+        };
+        var clear;
+        defer.timeout = function (callback, ms, context) {
+            var ct = callbacks.timeout;
+            if (!clear)
+                clear = defer.immediate(function () {
+                    clear = null;
+                    callbacks.timeout = {};
+                });
+            return push(ct[ms] || (ct[ms] = []), callback, context, function (iterator) {
+                setTimeout(iterator, ms);
+            });
+        };
+        module.exports = defer;
+    },
+    '1f': function (require, module, exports, global) {
+        function hasOwn(obj, prop) {
+            return Object.prototype.hasOwnProperty.call(obj, prop);
+        }
+        module.exports = hasOwn;
+    },
+    '1g': function (require, module, exports, global) {
+        var forOwn = require('2s');
+        function mixIn(target, objects) {
+            var i = 0, n = arguments.length, obj;
+            while (++i < n) {
+                obj = arguments[i];
+                if (obj != null) {
+                    forOwn(obj, copyProp, target);
+                }
+            }
+            return target;
+        }
+        function copyProp(val, key) {
+            this[key] = val;
+        }
+        module.exports = mixIn;
+    },
+    '1h': function (require, module, exports, global) {
+        var mixIn = require('1g');
+        function createObject(parent, props) {
+            function F() {
+            }
+            F.prototype = parent;
+            return mixIn(new F(), props);
+        }
+        module.exports = createObject;
+    },
+    '1i': function (require, module, exports, global) {
+        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
+        function kindOf(val) {
+            if (val === null) {
+                return 'Null';
+            } else if (val === UNDEF) {
+                return 'Undefined';
+            } else {
+                return _rKind.exec(_toString.call(val))[1];
+            }
+        }
+        module.exports = kindOf;
+    },
+    '1j': function (require, module, exports, global) {
+        'use strict';
+        var color = require('2o'), frame = require('2p');
+        var moofx = typeof document !== 'undefined' ? require('2q') : require('2r');
+        moofx.requestFrame = function (callback) {
+            frame.request(callback);
+            return this;
+        };
+        moofx.cancelFrame = function (callback) {
+            frame.cancel(callback);
+            return this;
+        };
+        moofx.color = color;
+        module.exports = moofx;
+    },
+    '1k': function (require, module, exports, global) {
+        var isKind = require('24');
+        var isArray = Array.isArray || function (val) {
+                return isKind(val, 'Array');
+            };
+        module.exports = isArray;
+    },
+    '1l': function (require, module, exports, global) {
+        var forOwn = require('27');
+        function size(obj) {
+            var count = 0;
+            forOwn(obj, function () {
+                count++;
+            });
+            return count;
+        }
+        module.exports = size;
+    },
+    '1m': function (require, module, exports, global) {
+        'use strict';
+        var escapeRe = /([-.*+?^${}()|[\]\/\\])/g, unescapeRe = /\\/g;
+        var escape = function (string) {
+            return (string + '').replace(escapeRe, '\\$1');
+        };
+        var unescape = function (string) {
+            return (string + '').replace(unescapeRe, '');
+        };
+        var slickRe = RegExp('^(?:\\s*(,)\\s*|\\s*(<combinator>+)\\s*|(\\s+)|(<unicode>+|\\*)|\\#(<unicode>+)|\\.(<unicode>+)|\\[\\s*(<unicode1>+)(?:\\s*([*^$!~|]?=)(?:\\s*(?:(["\']?)(.*?)\\9)))?\\s*\\](?!\\])|(:+)(<unicode>+)(?:\\((?:(?:(["\'])([^\\13]*)\\13)|((?:\\([^)]+\\)|[^()]*)+))\\))?)'.replace(/<combinator>/, '[' + escape('>+~`!@$%^&={}\\;</') + ']').replace(/<unicode>/g, '(?:[\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])').replace(/<unicode1>/g, '(?:[:\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])'));
+        var Part = function Part(combinator) {
+            this.combinator = combinator || ' ';
+            this.tag = '*';
+        };
+        Part.prototype.toString = function () {
+            if (!this.raw) {
+                var xpr = '', k, part;
+                xpr += this.tag || '*';
+                if (this.id)
+                    xpr += '#' + this.id;
+                if (this.classes)
+                    xpr += '.' + this.classList.join('.');
+                if (this.attributes)
+                    for (k = 0; part = this.attributes[k++];) {
+                        xpr += '[' + part.name + (part.operator ? part.operator + '"' + part.value + '"' : '') + ']';
+                    }
+                if (this.pseudos)
+                    for (k = 0; part = this.pseudos[k++];) {
+                        xpr += ':' + part.name;
+                        if (part.value)
+                            xpr += '(' + part.value + ')';
+                    }
+                this.raw = xpr;
+            }
+            return this.raw;
+        };
+        var Expression = function Expression() {
+            this.length = 0;
+        };
+        Expression.prototype.toString = function () {
+            if (!this.raw) {
+                var xpr = '';
+                for (var j = 0, bit; bit = this[j++];) {
+                    if (j !== 1)
+                        xpr += ' ';
+                    if (bit.combinator !== ' ')
+                        xpr += bit.combinator + ' ';
+                    xpr += bit;
+                }
+                this.raw = xpr;
+            }
+            return this.raw;
+        };
+        var replacer = function (rawMatch, separator, combinator, combinatorChildren, tagName, id, className, attributeKey, attributeOperator, attributeQuote, attributeValue, pseudoMarker, pseudoClass, pseudoQuote, pseudoClassQuotedValue, pseudoClassValue) {
+            var expression, current;
+            if (separator || !this.length) {
+                expression = this[this.length++] = new Expression();
+                if (separator)
+                    return '';
+            }
+            if (!expression)
+                expression = this[this.length - 1];
+            if (combinator || combinatorChildren || !expression.length) {
+                current = expression[expression.length++] = new Part(combinator);
+            }
+            if (!current)
+                current = expression[expression.length - 1];
+            if (tagName) {
+                current.tag = unescape(tagName);
+            } else if (id) {
+                current.id = unescape(id);
+            } else if (className) {
+                var unescaped = unescape(className);
+                var classes = current.classes || (current.classes = {});
+                if (!classes[unescaped]) {
+                    classes[unescaped] = escape(className);
+                    var classList = current.classList || (current.classList = []);
+                    classList.push(unescaped);
+                    classList.sort();
+                }
+            } else if (pseudoClass) {
+                pseudoClassValue = pseudoClassValue || pseudoClassQuotedValue;
+                ;
+                (current.pseudos || (current.pseudos = [])).push({
+                    type: pseudoMarker.length == 1 ? 'class' : 'element',
+                    name: unescape(pseudoClass),
+                    escapedName: escape(pseudoClass),
+                    value: pseudoClassValue ? unescape(pseudoClassValue) : null,
+                    escapedValue: pseudoClassValue ? escape(pseudoClassValue) : null
+                });
+            } else if (attributeKey) {
+                attributeValue = attributeValue ? escape(attributeValue) : null;
+                ;
+                (current.attributes || (current.attributes = [])).push({
+                    operator: attributeOperator,
+                    name: unescape(attributeKey),
+                    escapedName: escape(attributeKey),
+                    value: attributeValue ? unescape(attributeValue) : null,
+                    escapedValue: attributeValue ? escape(attributeValue) : null
+                });
+            }
+            return '';
+        };
+        var Expressions = function Expressions(expression) {
+            this.length = 0;
+            var self = this;
+            var original = expression, replaced;
+            while (expression) {
+                replaced = expression.replace(slickRe, function () {
+                    return replacer.apply(self, arguments);
+                });
+                if (replaced === expression)
+                    throw new Error(original + ' is an invalid expression');
+                expression = replaced;
+            }
+        };
+        Expressions.prototype.toString = function () {
+            if (!this.raw) {
+                var expressions = [];
+                for (var i = 0, expression; expression = this[i++];)
+                    expressions.push(expression);
+                this.raw = expressions.join(', ');
+            }
+            return this.raw;
+        };
+        var cache = {};
+        var parse = function (expression) {
+            if (expression == null)
+                return null;
+            expression = ('' + expression).replace(/^\s+|\s+$/g, '');
+            return cache[expression] || (cache[expression] = new Expressions(expression));
+        };
+        module.exports = parse;
+    },
+    '1n': function (require, module, exports, global) {
+        function hasOwn(obj, prop) {
+            return Object.prototype.hasOwnProperty.call(obj, prop);
+        }
+        module.exports = hasOwn;
+    },
+    '1o': function (require, module, exports, global) {
+        var clone = require('2t');
+        var forOwn = require('27');
+        var kindOf = require('2u');
+        var isPlainObject = require('2v');
+        function deepClone(val, instanceClone) {
+            switch (kindOf(val)) {
+            case 'Object':
+                return cloneObject(val, instanceClone);
+            case 'Array':
+                return cloneArray(val, instanceClone);
+            default:
+                return clone(val);
+            }
+        }
+        function cloneObject(source, instanceClone) {
+            if (isPlainObject(source)) {
+                var out = {};
+                forOwn(source, function (val, key) {
+                    this[key] = deepClone(val, instanceClone);
+                }, out);
+                return out;
+            } else if (instanceClone) {
+                return instanceClone(source);
+            } else {
+                return source;
+            }
+        }
+        function cloneArray(arr, instanceClone) {
+            var out = [], i = -1, n = arr.length, val;
+            while (++i < n) {
+                out[i] = deepClone(arr[i], instanceClone);
+            }
+            return out;
+        }
+        module.exports = deepClone;
+    },
+    '1p': function (require, module, exports, global) {
+        var isKind = require('24');
+        function isObject(val) {
+            return isKind(val, 'Object');
+        }
+        module.exports = isObject;
+    },
+    '1q': function (require, module, exports, global) {
+        var choice = require('1r');
+        var _chars = '0123456789abcdef'.split('');
+        function randHex(size) {
+            size = size && size > 0 ? size : 6;
+            var str = '';
+            while (size--) {
+                str += choice(_chars);
+            }
+            return str;
+        }
+        module.exports = randHex;
+    },
+    '1r': function (require, module, exports, global) {
+        var randInt = require('2w');
+        var isArray = require('1k');
+        function choice(items) {
+            var target = arguments.length === 1 && isArray(items) ? items : arguments;
+            return target[randInt(0, target.length - 1)];
+        }
+        module.exports = choice;
+    },
+    '1s': function (require, module, exports, global) {
+        var isKind = require('2x');
+        function isObject(val) {
+            return isKind(val, 'Object');
+        }
+        module.exports = isObject;
+    },
+    '1t': function (require, module, exports, global) {
+        var isKind = require('2x');
+        function isString(val) {
+            return isKind(val, 'String');
+        }
+        module.exports = isString;
+    },
+    '1u': function (require, module, exports, global) {
+        var isKind = require('2x');
+        var isArray = Array.isArray || function (val) {
+                return isKind(val, 'Array');
+            };
+        module.exports = isArray;
+    },
+    '1v': function (require, module, exports, global) {
+        var isKind = require('2x');
+        function isFunction(val) {
+            return isKind(val, 'Function');
+        }
+        module.exports = isFunction;
+    },
+    '1w': function (require, module, exports, global) {
+        var toString = require('19');
+        function upperCase(str) {
+            str = toString(str);
+            return str.toUpperCase();
+        }
+        module.exports = upperCase;
+    },
+    '1x': function (require, module, exports, global) {
+        var hasOwn = require('1f');
+        var _hasDontEnumBug, _dontEnums;
+        function checkDontEnum() {
+            _dontEnums = [
+                'toString',
+                'toLocaleString',
+                'valueOf',
+                'hasOwnProperty',
+                'isPrototypeOf',
+                'propertyIsEnumerable',
+                'constructor'
+            ];
+            _hasDontEnumBug = true;
+            for (var key in { 'toString': null }) {
+                _hasDontEnumBug = false;
+            }
+        }
+        function forIn(obj, fn, thisObj) {
+            var key, i = 0;
+            if (_hasDontEnumBug == null)
+                checkDontEnum();
+            for (key in obj) {
+                if (exec(fn, obj, key, thisObj) === false) {
+                    break;
+                }
+            }
+            if (_hasDontEnumBug) {
+                var ctor = obj.constructor, isProto = !!ctor && obj === ctor.prototype;
+                while (key = _dontEnums[i++]) {
+                    if ((key !== 'constructor' || !isProto && hasOwn(obj, key)) && obj[key] !== Object.prototype[key]) {
+                        if (exec(fn, obj, key, thisObj) === false) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        function exec(fn, obj, key, thisObj) {
+            return fn.call(thisObj, obj[key], key, obj);
+        }
+        module.exports = forIn;
+    },
+    '1y': function (require, module, exports, global) {
+        var indexOf = require('f');
+        function remove(arr, item) {
+            var idx = indexOf(arr, item);
+            if (idx !== -1)
+                arr.splice(idx, 1);
+        }
+        module.exports = remove;
+    },
+    '1z': function (require, module, exports, global) {
+        var hasOwn = require('2y');
+        var deepClone = require('2z');
+        var isObject = require('30');
+        function merge() {
+            var i = 1, key, val, obj, target;
+            target = deepClone(arguments[0]);
+            while (obj = arguments[i++]) {
+                for (key in obj) {
+                    if (!hasOwn(obj, key)) {
+                        continue;
+                    }
+                    val = obj[key];
+                    if (isObject(val) && isObject(target[key])) {
+                        target[key] = merge(target[key], val);
+                    } else {
+                        target[key] = deepClone(val);
+                    }
+                }
+            }
+            return target;
+        }
+        module.exports = merge;
+    },
+    '20': function (require, module, exports, global) {
+        var slice = require('34');
+        function bind(fn, context, args) {
+            var argsArr = slice(arguments, 2);
+            return function () {
+                return fn.apply(context, argsArr.concat(slice(arguments)));
+            };
+        }
+        module.exports = bind;
+    },
+    '21': function (require, module, exports, global) {
+        'use strict';
+        var $ = require('1'), domready = require('l');
+        var History = {};
+        if (typeof History.Adapter !== 'undefined') {
+            throw new Error('History.js Adapter has already been loaded...');
+        }
+        History.Adapter = {
+            bind: function (el, event, callback) {
+                $(el).on(event, callback);
+            },
+            trigger: function (el, event, extra) {
+                $(el).emit(event, extra);
+            },
+            extractEventData: function (key, event) {
+                return event && event.event && event.event[key] || event && event[key] || undefined;
+            },
+            onDomLoad: function (callback) {
+                domready(callback);
+            }
+        };
+        if (typeof History.init !== 'undefined') {
+            History.init();
+        }
+        module.exports = History;
+    },
+    '22': function (require, module, exports, global) {
+        var identity = require('31');
+        var prop = require('32');
+        var deepMatches = require('33');
+        function makeIterator(src, thisObj) {
+            if (src == null) {
+                return identity;
+            }
+            switch (typeof src) {
+            case 'function':
+                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
+                    return src.call(thisObj, val, i, arr);
+                } : src;
+            case 'object':
+                return function (val) {
+                    return deepMatches(val, src);
+                };
+            case 'string':
+            case 'number':
+                return prop(src);
+            }
+        }
+        module.exports = makeIterator;
+    },
+    '23': function (require, module, exports, global) {
+        function slice(arr, start, end) {
+            var len = arr.length;
+            if (start == null) {
+                start = 0;
+            } else if (start < 0) {
+                start = Math.max(len + start, 0);
+            } else {
+                start = Math.min(start, len);
+            }
+            if (end == null) {
+                end = len;
+            } else if (end < 0) {
+                end = Math.max(len + end, 0);
+            } else {
+                end = Math.min(end, len);
+            }
+            var result = [];
+            while (start < end) {
+                result.push(arr[start++]);
+            }
+            return result;
+        }
+        module.exports = slice;
+    },
+    '24': function (require, module, exports, global) {
+        var kindOf = require('2u');
+        function isKind(val, kind) {
+            return kindOf(val) === kind;
+        }
+        module.exports = isKind;
+    },
+    '25': function (require, module, exports, global) {
+        'use strict';
+        var parse = require('1m');
         var index = 0, counter = document.__counter = (parseInt(document.__counter || -1, 36) + 1).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n, xml) {
             if (n === window)
@@ -5569,343 +6139,23 @@ var G5;
         slick.parse = parse;
         module.exports = slick;
     },
-    '1f': function (require, module, exports, global) {
-        'use strict';
-        var escapeRe = /([-.*+?^${}()|[\]\/\\])/g, unescapeRe = /\\/g;
-        var escape = function (string) {
-            return (string + '').replace(escapeRe, '\\$1');
-        };
-        var unescape = function (string) {
-            return (string + '').replace(unescapeRe, '');
-        };
-        var slickRe = RegExp('^(?:\\s*(,)\\s*|\\s*(<combinator>+)\\s*|(\\s+)|(<unicode>+|\\*)|\\#(<unicode>+)|\\.(<unicode>+)|\\[\\s*(<unicode1>+)(?:\\s*([*^$!~|]?=)(?:\\s*(?:(["\']?)(.*?)\\9)))?\\s*\\](?!\\])|(:+)(<unicode>+)(?:\\((?:(?:(["\'])([^\\13]*)\\13)|((?:\\([^)]+\\)|[^()]*)+))\\))?)'.replace(/<combinator>/, '[' + escape('>+~`!@$%^&={}\\;</') + ']').replace(/<unicode>/g, '(?:[\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])').replace(/<unicode1>/g, '(?:[:\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])'));
-        var Part = function Part(combinator) {
-            this.combinator = combinator || ' ';
-            this.tag = '*';
-        };
-        Part.prototype.toString = function () {
-            if (!this.raw) {
-                var xpr = '', k, part;
-                xpr += this.tag || '*';
-                if (this.id)
-                    xpr += '#' + this.id;
-                if (this.classes)
-                    xpr += '.' + this.classList.join('.');
-                if (this.attributes)
-                    for (k = 0; part = this.attributes[k++];) {
-                        xpr += '[' + part.name + (part.operator ? part.operator + '"' + part.value + '"' : '') + ']';
-                    }
-                if (this.pseudos)
-                    for (k = 0; part = this.pseudos[k++];) {
-                        xpr += ':' + part.name;
-                        if (part.value)
-                            xpr += '(' + part.value + ')';
-                    }
-                this.raw = xpr;
-            }
-            return this.raw;
-        };
-        var Expression = function Expression() {
-            this.length = 0;
-        };
-        Expression.prototype.toString = function () {
-            if (!this.raw) {
-                var xpr = '';
-                for (var j = 0, bit; bit = this[j++];) {
-                    if (j !== 1)
-                        xpr += ' ';
-                    if (bit.combinator !== ' ')
-                        xpr += bit.combinator + ' ';
-                    xpr += bit;
-                }
-                this.raw = xpr;
-            }
-            return this.raw;
-        };
-        var replacer = function (rawMatch, separator, combinator, combinatorChildren, tagName, id, className, attributeKey, attributeOperator, attributeQuote, attributeValue, pseudoMarker, pseudoClass, pseudoQuote, pseudoClassQuotedValue, pseudoClassValue) {
-            var expression, current;
-            if (separator || !this.length) {
-                expression = this[this.length++] = new Expression();
-                if (separator)
-                    return '';
-            }
-            if (!expression)
-                expression = this[this.length - 1];
-            if (combinator || combinatorChildren || !expression.length) {
-                current = expression[expression.length++] = new Part(combinator);
-            }
-            if (!current)
-                current = expression[expression.length - 1];
-            if (tagName) {
-                current.tag = unescape(tagName);
-            } else if (id) {
-                current.id = unescape(id);
-            } else if (className) {
-                var unescaped = unescape(className);
-                var classes = current.classes || (current.classes = {});
-                if (!classes[unescaped]) {
-                    classes[unescaped] = escape(className);
-                    var classList = current.classList || (current.classList = []);
-                    classList.push(unescaped);
-                    classList.sort();
-                }
-            } else if (pseudoClass) {
-                pseudoClassValue = pseudoClassValue || pseudoClassQuotedValue;
-                ;
-                (current.pseudos || (current.pseudos = [])).push({
-                    type: pseudoMarker.length == 1 ? 'class' : 'element',
-                    name: unescape(pseudoClass),
-                    escapedName: escape(pseudoClass),
-                    value: pseudoClassValue ? unescape(pseudoClassValue) : null,
-                    escapedValue: pseudoClassValue ? escape(pseudoClassValue) : null
-                });
-            } else if (attributeKey) {
-                attributeValue = attributeValue ? escape(attributeValue) : null;
-                ;
-                (current.attributes || (current.attributes = [])).push({
-                    operator: attributeOperator,
-                    name: unescape(attributeKey),
-                    escapedName: escape(attributeKey),
-                    value: attributeValue ? unescape(attributeValue) : null,
-                    escapedValue: attributeValue ? escape(attributeValue) : null
-                });
-            }
-            return '';
-        };
-        var Expressions = function Expressions(expression) {
-            this.length = 0;
-            var self = this;
-            var original = expression, replaced;
-            while (expression) {
-                replaced = expression.replace(slickRe, function () {
-                    return replacer.apply(self, arguments);
-                });
-                if (replaced === expression)
-                    throw new Error(original + ' is an invalid expression');
-                expression = replaced;
-            }
-        };
-        Expressions.prototype.toString = function () {
-            if (!this.raw) {
-                var expressions = [];
-                for (var i = 0, expression; expression = this[i++];)
-                    expressions.push(expression);
-                this.raw = expressions.join(', ');
-            }
-            return this.raw;
-        };
-        var cache = {};
-        var parse = function (expression) {
-            if (expression == null)
-                return null;
-            expression = ('' + expression).replace(/^\s+|\s+$/g, '');
-            return cache[expression] || (cache[expression] = new Expressions(expression));
-        };
-        module.exports = parse;
-    },
-    '1g': function (require, module, exports, global) {
-        'use strict';
-        var kindOf = require('29'), now = require('2n'), forEach = require('d'), indexOf = require('f');
-        var callbacks = {
-                timeout: {},
-                frame: [],
-                immediate: []
-            };
-        var push = function (collection, callback, context, defer) {
-            var iterator = function () {
-                iterate(collection);
-            };
-            if (!collection.length)
-                defer(iterator);
-            var entry = {
-                    callback: callback,
-                    context: context
-                };
-            collection.push(entry);
-            return function () {
-                var io = indexOf(collection, entry);
-                if (io > -1)
-                    collection.splice(io, 1);
-            };
-        };
-        var iterate = function (collection) {
-            var time = now();
-            forEach(collection.splice(0), function (entry) {
-                entry.callback.call(entry.context, time);
-            });
-        };
-        var defer = function (callback, argument, context) {
-            return kindOf(argument) === 'Number' ? defer.timeout(callback, argument, context) : defer.immediate(callback, argument);
-        };
-        if (global.process && process.nextTick) {
-            defer.immediate = function (callback, context) {
-                return push(callbacks.immediate, callback, context, process.nextTick);
-            };
-        } else if (global.setImmediate) {
-            defer.immediate = function (callback, context) {
-                return push(callbacks.immediate, callback, context, setImmediate);
-            };
-        } else if (global.postMessage && global.addEventListener) {
-            addEventListener('message', function (event) {
-                if (event.source === global && event.data === '@deferred') {
-                    event.stopPropagation();
-                    iterate(callbacks.immediate);
-                }
-            }, true);
-            defer.immediate = function (callback, context) {
-                return push(callbacks.immediate, callback, context, function () {
-                    postMessage('@deferred', '*');
-                });
-            };
-        } else {
-            defer.immediate = function (callback, context) {
-                return push(callbacks.immediate, callback, context, function (iterator) {
-                    setTimeout(iterator, 0);
-                });
-            };
-        }
-        var requestAnimationFrame = global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame || global.oRequestAnimationFrame || global.msRequestAnimationFrame || function (callback) {
-                setTimeout(callback, 1000 / 60);
-            };
-        defer.frame = function (callback, context) {
-            return push(callbacks.frame, callback, context, requestAnimationFrame);
-        };
-        var clear;
-        defer.timeout = function (callback, ms, context) {
-            var ct = callbacks.timeout;
-            if (!clear)
-                clear = defer.immediate(function () {
-                    clear = null;
-                    callbacks.timeout = {};
-                });
-            return push(ct[ms] || (ct[ms] = []), callback, context, function (iterator) {
-                setTimeout(iterator, ms);
-            });
-        };
-        module.exports = defer;
-    },
-    '1h': function (require, module, exports, global) {
-        var isKind = require('2o');
-        function isObject(val) {
-            return isKind(val, 'Object');
-        }
-        module.exports = isObject;
-    },
-    '1i': function (require, module, exports, global) {
-        var isKind = require('2o');
-        function isString(val) {
-            return isKind(val, 'String');
-        }
-        module.exports = isString;
-    },
-    '1j': function (require, module, exports, global) {
-        var isKind = require('2o');
-        var isArray = Array.isArray || function (val) {
-                return isKind(val, 'Array');
-            };
-        module.exports = isArray;
-    },
-    '1k': function (require, module, exports, global) {
-        var isKind = require('2o');
-        function isFunction(val) {
-            return isKind(val, 'Function');
-        }
-        module.exports = isFunction;
-    },
-    '1l': function (require, module, exports, global) {
-        var toString = require('19');
-        function upperCase(str) {
-            str = toString(str);
-            return str.toUpperCase();
-        }
-        module.exports = upperCase;
-    },
-    '1m': function (require, module, exports, global) {
-        var hasOwn = require('27');
-        var _hasDontEnumBug, _dontEnums;
-        function checkDontEnum() {
-            _dontEnums = [
-                'toString',
-                'toLocaleString',
-                'valueOf',
-                'hasOwnProperty',
-                'isPrototypeOf',
-                'propertyIsEnumerable',
-                'constructor'
-            ];
-            _hasDontEnumBug = true;
-            for (var key in { 'toString': null }) {
-                _hasDontEnumBug = false;
-            }
-        }
-        function forIn(obj, fn, thisObj) {
-            var key, i = 0;
-            if (_hasDontEnumBug == null)
-                checkDontEnum();
-            for (key in obj) {
-                if (exec(fn, obj, key, thisObj) === false) {
-                    break;
-                }
-            }
-            if (_hasDontEnumBug) {
-                var ctor = obj.constructor, isProto = !!ctor && obj === ctor.prototype;
-                while (key = _dontEnums[i++]) {
-                    if ((key !== 'constructor' || !isProto && hasOwn(obj, key)) && obj[key] !== Object.prototype[key]) {
-                        if (exec(fn, obj, key, thisObj) === false) {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        function exec(fn, obj, key, thisObj) {
-            return fn.call(thisObj, obj[key], key, obj);
-        }
-        module.exports = forIn;
-    },
-    '1n': function (require, module, exports, global) {
-        var forOwn = require('2p');
-        function mixIn(target, objects) {
-            var i = 0, n = arguments.length, obj;
-            while (++i < n) {
-                obj = arguments[i];
-                if (obj != null) {
-                    forOwn(obj, copyProp, target);
-                }
-            }
-            return target;
-        }
-        function copyProp(val, key) {
-            this[key] = val;
-        }
-        module.exports = mixIn;
-    },
-    '1o': function (require, module, exports, global) {
-        var indexOf = require('f');
-        function remove(arr, item) {
-            var idx = indexOf(arr, item);
-            if (idx !== -1)
-                arr.splice(idx, 1);
-        }
-        module.exports = remove;
-    },
-    '1p': function (require, module, exports, global) {
+    '26': function (require, module, exports, global) {
         module.exports = {
-            base: require('2q'),
-            atom: require('2r'),
-            section: require('2s'),
-            'non-visible': require('2t'),
-            grid: require('2u'),
-            block: require('2v'),
-            particle: require('2w'),
-            position: require('2x'),
-            pagecontent: require('2y'),
-            spacer: require('2z')
+            base: require('37'),
+            atom: require('38'),
+            section: require('39'),
+            'non-visible': require('3a'),
+            grid: require('3b'),
+            block: require('3c'),
+            particle: require('3d'),
+            position: require('3e'),
+            pagecontent: require('3f'),
+            spacer: require('3g')
         };
     },
-    '1q': function (require, module, exports, global) {
-        var hasOwn = require('2e');
-        var forIn = require('30');
+    '27': function (require, module, exports, global) {
+        var hasOwn = require('1n');
+        var forIn = require('35');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
                 if (hasOwn(obj, key)) {
@@ -5915,22 +6165,15 @@ var G5;
         }
         module.exports = forOwn;
     },
-    '1r': function (require, module, exports, global) {
-        var make = require('31');
-        var arrForEach = require('10');
-        var objForEach = require('1q');
+    '28': function (require, module, exports, global) {
+        var make = require('36');
+        var arrForEach = require('w');
+        var objForEach = require('27');
         module.exports = make(arrForEach, objForEach);
     },
-    '1s': function (require, module, exports, global) {
-        var isKind = require('2g');
-        var isArray = Array.isArray || function (val) {
-                return isKind(val, 'Array');
-            };
-        module.exports = isArray;
-    },
-    '1t': function (require, module, exports, global) {
-        var isArray = require('1s');
-        var append = require('33');
+    '29': function (require, module, exports, global) {
+        var isArray = require('1k');
+        var append = require('3h');
         function flattenTo(arr, result, level) {
             if (arr == null) {
                 return result;
@@ -5955,8 +6198,8 @@ var G5;
         }
         module.exports = flatten;
     },
-    '1u': function (require, module, exports, global) {
-        var namespace = require('32');
+    '2a': function (require, module, exports, global) {
+        var namespace = require('3i');
         function set(obj, prop, val) {
             var parts = /^(.+)\.(.+)$/.exec(prop);
             if (parts) {
@@ -5967,8 +6210,8 @@ var G5;
         }
         module.exports = set;
     },
-    '1v': function (require, module, exports, global) {
-        var has = require('34');
+    '2b': function (require, module, exports, global) {
+        var has = require('3j');
         function unset(obj, prop) {
             if (has(obj, prop)) {
                 var parts = prop.split('.'), last = parts.pop();
@@ -5982,8 +6225,8 @@ var G5;
         }
         module.exports = unset;
     },
-    '1w': function (require, module, exports, global) {
-        var isPrimitive = require('35');
+    '2c': function (require, module, exports, global) {
+        var isPrimitive = require('3l');
         function get(obj, prop) {
             var parts = prop.split('.'), last = parts.pop();
             while (prop = parts.shift()) {
@@ -5995,9 +6238,9 @@ var G5;
         }
         module.exports = get;
     },
-    '1x': function (require, module, exports, global) {
-        var toString = require('36');
-        var repeat = require('1y');
+    '2d': function (require, module, exports, global) {
+        var toString = require('3k');
+        var repeat = require('2e');
         function rpad(str, minLen, ch) {
             str = toString(str);
             ch = ch || ' ';
@@ -6005,9 +6248,9 @@ var G5;
         }
         module.exports = rpad;
     },
-    '1y': function (require, module, exports, global) {
-        var toString = require('36');
-        var toInt = require('37');
+    '2e': function (require, module, exports, global) {
+        var toString = require('3k');
+        var toInt = require('3o');
         function repeat(str, n) {
             var result = '';
             str = toString(str);
@@ -6026,60 +6269,9 @@ var G5;
         }
         module.exports = repeat;
     },
-    '1z': function (require, module, exports, global) {
+    '2f': function (require, module, exports, global) {
         'use strict';
-        var $ = require('1'), domready = require('k');
-        var History = {};
-        if (typeof History.Adapter !== 'undefined') {
-            throw new Error('History.js Adapter has already been loaded...');
-        }
-        History.Adapter = {
-            bind: function (el, event, callback) {
-                $(el).on(event, callback);
-            },
-            trigger: function (el, event, extra) {
-                $(el).emit(event, extra);
-            },
-            extractEventData: function (key, event) {
-                return event && event.event && event.event[key] || event && event[key] || undefined;
-            },
-            onDomLoad: function (callback) {
-                domready(callback);
-            }
-        };
-        if (typeof History.init !== 'undefined') {
-            History.init();
-        }
-        module.exports = History;
-    },
-    '20': function (require, module, exports, global) {
-        function slice(arr, start, end) {
-            var len = arr.length;
-            if (start == null) {
-                start = 0;
-            } else if (start < 0) {
-                start = Math.max(len + start, 0);
-            } else {
-                start = Math.min(start, len);
-            }
-            if (end == null) {
-                end = len;
-            } else if (end < 0) {
-                end = Math.max(len + end, 0);
-            } else {
-                end = Math.min(end, len);
-            }
-            var result = [];
-            while (start < end) {
-                result.push(arr[start++]);
-            }
-            return result;
-        }
-        module.exports = slice;
-    },
-    '21': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u'), Emitter = require('j'), Bound = require('w'), Options = require('x'), bind = require('y'), contains = require('38'), DragEvents = require('39'), $ = require('v');
+        var prime = require('i'), Emitter = require('h'), Bound = require('s'), Options = require('t'), bind = require('u'), contains = require('3m'), DragEvents = require('3n'), $ = require('j');
         require('3');
         require('4');
         var isIE = navigator.appName === 'Microsoft Internet Explorer';
@@ -6149,7 +6341,7 @@ var G5;
                     if (this.element.data('lm-blocktype') === 'grid' && Math.abs(this.origin.offset.x) < clientRect.width) {
                         return false;
                     }
-                    var offset = Math.abs(this.origin.offset.x), columns = this.element.parent().data('lm-blocktype') == 'grid' && this.element.parent().parent().data('lm-root');
+                    var offset = Math.abs(this.origin.offset.x), columns = this.element.parent().data('lm-blocktype') === 'grid' && this.element.parent().parent().data('lm-root');
                     if (offset < 6 && this.element.parent().find(':last-child') !== this.element || columns && offset > 3 && offset < 10) {
                         if (this.element.parent('[data-lm-blocktype="non-visible"]')) {
                             return false;
@@ -6261,9 +6453,9 @@ var G5;
             });
         module.exports = DragDrop;
     },
-    '22': function (require, module, exports, global) {
+    '2g': function (require, module, exports, global) {
         'use strict';
-        var DragEvents = require('39'), prime = require('u'), Emitter = require('j'), Bound = require('w'), Options = require('x'), bind = require('y'), isString = require('3a'), nMap = require('3b'), clamp = require('3c'), precision = require('3d'), get = require('1w'), $ = require('v');
+        var DragEvents = require('3n'), prime = require('i'), Emitter = require('h'), Bound = require('s'), Options = require('t'), bind = require('u'), isString = require('3r'), nMap = require('3s'), clamp = require('3t'), precision = require('3u'), get = require('2c'), $ = require('j');
         require('3');
         require('4');
         var Resizer = new prime({
@@ -6385,9 +6577,9 @@ var G5;
             });
         module.exports = Resizer;
     },
-    '23': function (require, module, exports, global) {
+    '2h': function (require, module, exports, global) {
         'use strict';
-        var prime = require('u'), $ = require('v'), Emitter = require('j'), Bound = require('w'), Options = require('x');
+        var prime = require('i'), $ = require('j'), Emitter = require('h'), Bound = require('s'), Options = require('t');
         var Eraser = new prime({
                 mixin: [
                     Options,
@@ -6426,8 +6618,8 @@ var G5;
             });
         module.exports = Eraser;
     },
-    '24': function (require, module, exports, global) {
-        var makeIterator = require('2d');
+    '2i': function (require, module, exports, global) {
+        var makeIterator = require('22');
         function every(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = true;
@@ -6445,18 +6637,11 @@ var G5;
         }
         module.exports = every;
     },
-    '25': function (require, module, exports, global) {
-        var isKind = require('2g');
-        function isObject(val) {
-            return isKind(val, 'Object');
-        }
-        module.exports = isObject;
-    },
-    '26': function (require, module, exports, global) {
-        var hasOwn = require('2e');
-        var every = require('3e');
-        var isObject = require('25');
-        var is = require('3f');
+    '2j': function (require, module, exports, global) {
+        var hasOwn = require('1n');
+        var every = require('3p');
+        var isObject = require('1p');
+        var is = require('3q');
         function makeCompare(callback) {
             return function (value, key) {
                 return hasOwn(this, key) && callback(value, this[key]);
@@ -6474,198 +6659,22 @@ var G5;
         }
         module.exports = equals;
     },
-    '27': function (require, module, exports, global) {
-        function hasOwn(obj, prop) {
-            return Object.prototype.hasOwnProperty.call(obj, prop);
-        }
-        module.exports = hasOwn;
-    },
-    '28': function (require, module, exports, global) {
-        var mixIn = require('1n');
-        function createObject(parent, props) {
-            function F() {
-            }
-            F.prototype = parent;
-            return mixIn(new F(), props);
-        }
-        module.exports = createObject;
-    },
-    '29': function (require, module, exports, global) {
-        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
-        function kindOf(val) {
-            if (val === null) {
-                return 'Null';
-            } else if (val === UNDEF) {
-                return 'Undefined';
-            } else {
-                return _rKind.exec(_toString.call(val))[1];
-            }
-        }
-        module.exports = kindOf;
-    },
-    '2a': function (require, module, exports, global) {
-        'use strict';
-        var color = require('3g'), frame = require('3h');
-        var moofx = typeof document !== 'undefined' ? require('3i') : require('3j');
-        moofx.requestFrame = function (callback) {
-            frame.request(callback);
-            return this;
-        };
-        moofx.cancelFrame = function (callback) {
-            frame.cancel(callback);
-            return this;
-        };
-        moofx.color = color;
-        module.exports = moofx;
-    },
-    '2b': function (require, module, exports, global) {
-        var hasOwn = require('3k');
-        var deepClone = require('3l');
-        var isObject = require('3m');
-        function merge() {
-            var i = 1, key, val, obj, target;
-            target = deepClone(arguments[0]);
-            while (obj = arguments[i++]) {
-                for (key in obj) {
-                    if (!hasOwn(obj, key)) {
-                        continue;
-                    }
-                    val = obj[key];
-                    if (isObject(val) && isObject(target[key])) {
-                        target[key] = merge(target[key], val);
-                    } else {
-                        target[key] = deepClone(val);
-                    }
-                }
-            }
-            return target;
-        }
-        module.exports = merge;
-    },
-    '2c': function (require, module, exports, global) {
-        var slice = require('3n');
-        function bind(fn, context, args) {
-            var argsArr = slice(arguments, 2);
-            return function () {
-                return fn.apply(context, argsArr.concat(slice(arguments)));
-            };
-        }
-        module.exports = bind;
-    },
-    '2d': function (require, module, exports, global) {
-        var identity = require('3o');
-        var prop = require('3p');
-        var deepMatches = require('3q');
-        function makeIterator(src, thisObj) {
-            if (src == null) {
-                return identity;
-            }
-            switch (typeof src) {
-            case 'function':
-                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
-                    return src.call(thisObj, val, i, arr);
-                } : src;
-            case 'object':
-                return function (val) {
-                    return deepMatches(val, src);
-                };
-            case 'string':
-            case 'number':
-                return prop(src);
-            }
-        }
-        module.exports = makeIterator;
-    },
-    '2e': function (require, module, exports, global) {
-        function hasOwn(obj, prop) {
-            return Object.prototype.hasOwnProperty.call(obj, prop);
-        }
-        module.exports = hasOwn;
-    },
-    '2f': function (require, module, exports, global) {
-        var clone = require('3s');
-        var forOwn = require('1q');
-        var kindOf = require('3r');
-        var isPlainObject = require('3t');
-        function deepClone(val, instanceClone) {
-            switch (kindOf(val)) {
-            case 'Object':
-                return cloneObject(val, instanceClone);
-            case 'Array':
-                return cloneArray(val, instanceClone);
-            default:
-                return clone(val);
-            }
-        }
-        function cloneObject(source, instanceClone) {
-            if (isPlainObject(source)) {
-                var out = {};
-                forOwn(source, function (val, key) {
-                    this[key] = deepClone(val, instanceClone);
-                }, out);
-                return out;
-            } else if (instanceClone) {
-                return instanceClone(source);
-            } else {
-                return source;
-            }
-        }
-        function cloneArray(arr, instanceClone) {
-            var out = [], i = -1, n = arr.length, val;
-            while (++i < n) {
-                out[i] = deepClone(arr[i], instanceClone);
-            }
-            return out;
-        }
-        module.exports = deepClone;
-    },
-    '2g': function (require, module, exports, global) {
-        var kindOf = require('3r');
-        function isKind(val, kind) {
-            return kindOf(val) === kind;
-        }
-        module.exports = isKind;
-    },
-    '2h': function (require, module, exports, global) {
-        var forOwn = require('1q');
-        function size(obj) {
-            var count = 0;
-            forOwn(obj, function () {
-                count++;
-            });
-            return count;
-        }
-        module.exports = size;
-    },
-    '2i': function (require, module, exports, global) {
-        var choice = require('2j');
-        var _chars = '0123456789abcdef'.split('');
-        function randHex(size) {
-            size = size && size > 0 ? size : 6;
-            var str = '';
-            while (size--) {
-                str += choice(_chars);
-            }
-            return str;
-        }
-        module.exports = randHex;
-    },
-    '2j': function (require, module, exports, global) {
-        var randInt = require('3u');
-        var isArray = require('1s');
-        function choice(items) {
-            var target = arguments.length === 1 && isArray(items) ? items : arguments;
-            return target[randInt(0, target.length - 1)];
-        }
-        module.exports = choice;
-    },
     '2k': function (require, module, exports, global) {
+        function now() {
+            return now.get();
+        }
+        now.get = typeof Date.now === 'function' ? Date.now : function () {
+            return +new Date();
+        };
+        module.exports = now;
+    },
+    '2l': function (require, module, exports, global) {
         function identity(val) {
             return val;
         }
         module.exports = identity;
     },
-    '2l': function (require, module, exports, global) {
+    '2m': function (require, module, exports, global) {
         function prop(name) {
             return function (obj) {
                 return obj[name];
@@ -6673,9 +6682,9 @@ var G5;
         }
         module.exports = prop;
     },
-    '2m': function (require, module, exports, global) {
-        var forOwn = require('2p');
-        var isArray = require('1j');
+    '2n': function (require, module, exports, global) {
+        var forOwn = require('2s');
+        var isArray = require('1u');
         function containsMatch(array, pattern) {
             var i = -1, length = array.length;
             while (++i < length) {
@@ -6716,559 +6725,7 @@ var G5;
         }
         module.exports = deepMatches;
     },
-    '2n': function (require, module, exports, global) {
-        function now() {
-            return now.get();
-        }
-        now.get = typeof Date.now === 'function' ? Date.now : function () {
-            return +new Date();
-        };
-        module.exports = now;
-    },
     '2o': function (require, module, exports, global) {
-        var kindOf = require('29');
-        function isKind(val, kind) {
-            return kindOf(val) === kind;
-        }
-        module.exports = isKind;
-    },
-    '2p': function (require, module, exports, global) {
-        var hasOwn = require('27');
-        var forIn = require('1m');
-        function forOwn(obj, fn, thisObj) {
-            forIn(obj, function (val, key) {
-                if (hasOwn(obj, key)) {
-                    return fn.call(thisObj, obj[key], key, obj);
-                }
-            });
-        }
-        module.exports = forOwn;
-    },
-    '2q': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u'), Options = require('x'), Bound = require('w'), Emitter = require('j'), guid = require('15'), zen = require('o'), $ = require('1'), get = require('1w'), has = require('34'), set = require('1u');
-        require('6');
-        var Base = new prime({
-                mixin: [
-                    Bound,
-                    Options
-                ],
-                inherits: Emitter,
-                options: { attributes: {} },
-                constructor: function (options) {
-                    this.setOptions(options);
-                    this.fresh = !this.options.id;
-                    this.id = this.options.id || this.guid();
-                    this.attributes = this.options.attributes || {};
-                    this.block = zen('div').html(this.layout()).firstChild();
-                    this.on('rendered', this.bound('onRendered'));
-                    return this;
-                },
-                guid: function () {
-                    return guid();
-                },
-                getId: function () {
-                    return this.id || (this.id = this.guid());
-                },
-                getType: function () {
-                    return this.options.type || '';
-                },
-                getTitle: function () {
-                    return '';
-                },
-                getAttribute: function (key) {
-                    return get(this.attributes, key);
-                },
-                getAttributes: function () {
-                    return this.attributes || {};
-                },
-                setAttribute: function (key, value) {
-                    set(this.attributes, key, value);
-                    return this;
-                },
-                hasAttribute: function (key) {
-                    return has(this.attributes, key);
-                },
-                insert: function (target, location) {
-                    this.block[location || 'after'](target);
-                    return this;
-                },
-                adopt: function (element) {
-                    element.insert(this.block);
-                    return this;
-                },
-                isNew: function (fresh) {
-                    if (typeof fresh !== 'undefined') {
-                        this.fresh = !!fresh;
-                    }
-                    return this.fresh;
-                },
-                dropzone: function () {
-                    var type = this.getType();
-                    return 'data-lm-dropzone';
-                },
-                addDropzone: function () {
-                    this.block.data('lm-dropzone', true);
-                },
-                removeDropzone: function () {
-                    this.block.data('lm-dropzone', null);
-                },
-                layout: function () {
-                },
-                onRendered: function () {
-                },
-                setLayout: function (layout) {
-                    this.block = layout;
-                    return this;
-                }
-            });
-        module.exports = Base;
-    },
-    '2r': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u'), Base = require('2q');
-        var Atom = new prime({
-                inherits: Base,
-                options: { type: 'atom' },
-                constructor: function (options) {
-                    Base.call(this, options);
-                },
-                getTitle: function () {
-                    return this.getAttribute('name');
-                },
-                layout: function () {
-                    return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '">' + this.getTitle() + '<div class="float-right"><i class="fa fa-cog" data-lm-nodrag></i></div></div>';
-                }
-            });
-        module.exports = Atom;
-    },
-    '2s': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u'), Base = require('2q'), Bound = require('w'), Grid = require('2u'), $ = require('1'), zen = require('o'), bind = require('y');
-        require('5');
-        var UID = 0;
-        var Section = new prime({
-                inherits: Base,
-                options: { type: 'section' },
-                constructor: function (options) {
-                    ++UID;
-                    this.grid = new Grid();
-                    Base.call(this, options);
-                    this.on('done', this.bound('onDone'));
-                },
-                layout: function () {
-                    return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + this.getAttribute('name') + '</h4><div class="section-actions float-right"><i class="fa fa-plus"></i> <i class="fa fa-cog"></i></div></div></div>';
-                },
-                adopt: function (child) {
-                    $(child).insert(this.block.find('.grid'));
-                },
-                onDone: function (event) {
-                    if (!this.block.search('[data-lm-id]')) {
-                        this.grid.insert(this.block, 'bottom');
-                        this.options.builder.add(this.grid);
-                    }
-                    var plus = this.block.find('.fa-plus');
-                    if (plus) {
-                        plus.on('click', bind(function (e) {
-                            e.preventDefault();
-                            if (this.block.find('.grid:last-child:empty')) {
-                                return false;
-                            }
-                            this.grid = new Grid();
-                            this.grid.insert(this.block, 'bottom');
-                            this.options.builder.add(this.grid);
-                        }, this));
-                    }
-                }
-            });
-        module.exports = Section;
-    },
-    '2t': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u'), Section = require('2s');
-        var NonVisible = new prime({
-                inherits: Section,
-                options: {
-                    type: 'non-visible',
-                    attributes: { name: 'Non-Visible Section' }
-                },
-                layout: function () {
-                    return '<div class="non-visible-section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + this.getAttribute('name') + '</h4></div></div>';
-                },
-                onDone: function (event) {
-                    if (!this.block.search('[data-lm-id]')) {
-                        this.grid.insert(this.block, 'bottom');
-                        this.options.builder.add(this.grid);
-                    }
-                }
-            });
-        module.exports = NonVisible;
-    },
-    '2u': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u'), Base = require('2q');
-        var Grid = new prime({
-                inherits: Base,
-                options: { type: 'grid' },
-                constructor: function (options) {
-                    Base.call(this, options);
-                },
-                layout: function () {
-                    return '<div class="grid" data-lm-id="' + this.getId() + '" ' + this.dropzone() + ' data-lm-blocktype="grid"></div>';
-                },
-                onRendered: function () {
-                    var parent = this.block.parent();
-                    if (parent && parent.data('lm-root')) {
-                        this.removeDropzone();
-                    }
-                }
-            });
-        module.exports = Grid;
-    },
-    '2v': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u'), Base = require('2q'), $ = require('v'), zen = require('o'), precision = require('3d');
-        var Block = new prime({
-                inherits: Base,
-                options: {
-                    type: 'block',
-                    attributes: { size: 50 }
-                },
-                constructor: function (options) {
-                    Base.call(this, options);
-                },
-                getSize: function () {
-                    return this.getAttribute('size');
-                },
-                setSize: function (size, store) {
-                    size = typeof size === 'undefined' ? this.getSize() : Math.max(0, Math.min(100, parseFloat(size)));
-                    if (store) {
-                        this.setAttribute('size', size);
-                    }
-                    $(this.block).style({ 'flex': '0 1 ' + size + '%' });
-                    this.emit('resized', size, this);
-                },
-                setAnimatedSize: function (size, store) {
-                    size = typeof size === 'undefined' ? this.getSize() : Math.max(0, Math.min(100, parseFloat(size)));
-                    if (store) {
-                        this.setAttribute('size', size);
-                    }
-                    $(this.block).animate({ flex: '0 1 ' + size + '%' });
-                    this.emit('resized', size, this);
-                },
-                setLabelSize: function (size) {
-                    var label = this.block.find('> .particle-size');
-                    if (!label) {
-                        return false;
-                    }
-                    label.text(precision(size, 1) + '%');
-                },
-                layout: function () {
-                    return '<div class="block" data-lm-id="' + this.getId() + '"' + this.dropzone() + ' data-lm-blocktype="block"></div>';
-                },
-                onRendered: function (element, parent) {
-                    if (element.block.find('> [data-lm-blocktype="section"]')) {
-                        this.removeDropzone();
-                    }
-                    if (!parent) {
-                        return;
-                    }
-                    if (parent.block.parent().data('lm-root')) {
-                        zen('span.particle-size').text(this.getSize() + '%').top(element.block);
-                        element.on('resized', this.bound('onResize'));
-                    }
-                },
-                onResize: function (resize) {
-                    this.setLabelSize(resize);
-                }
-            });
-        module.exports = Block;
-    },
-    '2w': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u'), Atom = require('2r'), bind = require('y'), precision = require('3d');
-        var UID = 0;
-        var Particle = new prime({
-                inherits: Atom,
-                options: { type: 'particle' },
-                constructor: function (options) {
-                    ++UID;
-                    Atom.call(this, options);
-                },
-                layout: function () {
-                    return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><span>' + this.getTitle() + '</span><div class="float-right"><span class="particle-size"></span> <i class="fa fa-cog" data-lm-nodrag></i></div></div>';
-                },
-                setLabelSize: function (size) {
-                    var label = this.block.find('.particle-size');
-                    if (!label) {
-                        return false;
-                    }
-                    label.text(precision(size, 1) + '%');
-                },
-                onRendered: function (element, parent) {
-                    var size = parent.getSize() || 100;
-                    this.setLabelSize(size);
-                    parent.on('resized', this.bound('onParentResize'));
-                },
-                onParentResize: function (resize) {
-                    this.setLabelSize(resize);
-                }
-            });
-        module.exports = Particle;
-    },
-    '2x': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u'), Particle = require('2w');
-        var UID = 0;
-        var Position = new prime({
-                inherits: Particle,
-                options: { type: 'position' },
-                constructor: function (options) {
-                    ++UID;
-                    Particle.call(this, options);
-                    this.setAttribute('name', this.getTitle());
-                    if (this.isNew()) {
-                        --UID;
-                    }
-                },
-                getTitle: function () {
-                    return this.getAttribute('key') || this.getAttribute('name') || 'Position ' + UID;
-                }
-            });
-        module.exports = Position;
-    },
-    '2y': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u'), Particle = require('2w');
-        var Pagecontent = new prime({
-                inherits: Particle,
-                options: {
-                    type: 'pagecontent',
-                    attributes: { name: 'Page Content' }
-                }
-            });
-        module.exports = Pagecontent;
-    },
-    '2z': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('u'), Particle = require('2w');
-        var UID = 0;
-        var Spacer = new prime({
-                inherits: Particle,
-                options: {
-                    type: 'spacer',
-                    attributes: { name: 'Spacer' }
-                }
-            });
-        module.exports = Spacer;
-    },
-    '30': function (require, module, exports, global) {
-        var hasOwn = require('2e');
-        var _hasDontEnumBug, _dontEnums;
-        function checkDontEnum() {
-            _dontEnums = [
-                'toString',
-                'toLocaleString',
-                'valueOf',
-                'hasOwnProperty',
-                'isPrototypeOf',
-                'propertyIsEnumerable',
-                'constructor'
-            ];
-            _hasDontEnumBug = true;
-            for (var key in { 'toString': null }) {
-                _hasDontEnumBug = false;
-            }
-        }
-        function forIn(obj, fn, thisObj) {
-            var key, i = 0;
-            if (_hasDontEnumBug == null)
-                checkDontEnum();
-            for (key in obj) {
-                if (exec(fn, obj, key, thisObj) === false) {
-                    break;
-                }
-            }
-            if (_hasDontEnumBug) {
-                var ctor = obj.constructor, isProto = !!ctor && obj === ctor.prototype;
-                while (key = _dontEnums[i++]) {
-                    if ((key !== 'constructor' || !isProto && hasOwn(obj, key)) && obj[key] !== Object.prototype[key]) {
-                        if (exec(fn, obj, key, thisObj) === false) {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        function exec(fn, obj, key, thisObj) {
-            return fn.call(thisObj, obj[key], key, obj);
-        }
-        module.exports = forIn;
-    },
-    '31': function (require, module, exports, global) {
-        var slice = require('20');
-        function makeCollectionMethod(arrMethod, objMethod, defaultReturn) {
-            return function () {
-                var args = slice(arguments);
-                if (args[0] == null) {
-                    return defaultReturn;
-                }
-                return typeof args[0].length === 'number' ? arrMethod.apply(null, args) : objMethod.apply(null, args);
-            };
-        }
-        module.exports = makeCollectionMethod;
-    },
-    '32': function (require, module, exports, global) {
-        var forEach = require('10');
-        function namespace(obj, path) {
-            if (!path)
-                return obj;
-            forEach(path.split('.'), function (key) {
-                if (!obj[key]) {
-                    obj[key] = {};
-                }
-                obj = obj[key];
-            });
-            return obj;
-        }
-        module.exports = namespace;
-    },
-    '33': function (require, module, exports, global) {
-        function append(arr1, arr2) {
-            if (arr2 == null) {
-                return arr1;
-            }
-            var pad = arr1.length, i = -1, len = arr2.length;
-            while (++i < len) {
-                arr1[pad + i] = arr2[i];
-            }
-            return arr1;
-        }
-        module.exports = append;
-    },
-    '34': function (require, module, exports, global) {
-        var get = require('1w');
-        var UNDEF;
-        function has(obj, prop) {
-            return get(obj, prop) !== UNDEF;
-        }
-        module.exports = has;
-    },
-    '35': function (require, module, exports, global) {
-        function isPrimitive(value) {
-            switch (typeof value) {
-            case 'string':
-            case 'number':
-            case 'boolean':
-                return true;
-            }
-            return value == null;
-        }
-        module.exports = isPrimitive;
-    },
-    '36': function (require, module, exports, global) {
-        function toString(val) {
-            return val == null ? '' : val.toString();
-        }
-        module.exports = toString;
-    },
-    '37': function (require, module, exports, global) {
-        function toInt(val) {
-            return ~~val;
-        }
-        module.exports = toInt;
-    },
-    '38': function (require, module, exports, global) {
-        var indexOf = require('3v');
-        function contains(arr, val) {
-            return indexOf(arr, val) !== -1;
-        }
-        module.exports = contains;
-    },
-    '39': function (require, module, exports, global) {
-        'use strict';
-        var getSupportedEvent = function (events) {
-            events = events.split(' ');
-            var element = document.createElement('div'), event;
-            var isSupported = false;
-            for (var i = events.length - 1; i >= 0; i--) {
-                event = 'on' + events[i];
-                isSupported = event in element;
-                if (!isSupported) {
-                    element.setAttribute(event, 'return;');
-                    isSupported = typeof element[event] === 'function';
-                }
-                if (isSupported) {
-                    isSupported = events[i];
-                    break;
-                }
-            }
-            element = null;
-            return isSupported;
-        };
-        var EVENT = {
-                START: getSupportedEvent('mousedown touchstart MSPointerDown pointerdown'),
-                MOVE: getSupportedEvent('mousemove touchmove MSPointerMove pointermove'),
-                STOP: getSupportedEvent('mouseup touchend MSPointerUp pointerup')
-            };
-        module.exports = EVENT;
-    },
-    '3a': function (require, module, exports, global) {
-        var isKind = require('2g');
-        function isString(val) {
-            return isKind(val, 'String');
-        }
-        module.exports = isString;
-    },
-    '3b': function (require, module, exports, global) {
-        var lerp = require('3w');
-        var norm = require('3x');
-        function map(val, min1, max1, min2, max2) {
-            return lerp(norm(val, min1, max1), min2, max2);
-        }
-        module.exports = map;
-    },
-    '3c': function (require, module, exports, global) {
-        function clamp(val, min, max) {
-            return val < min ? min : val > max ? max : val;
-        }
-        module.exports = clamp;
-    },
-    '3d': function (require, module, exports, global) {
-        var toNumber = require('3y');
-        function enforcePrecision(val, nDecimalDigits) {
-            val = toNumber(val);
-            var pow = Math.pow(10, nDecimalDigits);
-            return +(Math.round(val * pow) / pow).toFixed(nDecimalDigits);
-        }
-        module.exports = enforcePrecision;
-    },
-    '3e': function (require, module, exports, global) {
-        var forOwn = require('1q');
-        var makeIterator = require('2d');
-        function every(obj, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var result = true;
-            forOwn(obj, function (val, key) {
-                if (!callback(val, key, obj)) {
-                    result = false;
-                    return false;
-                }
-            });
-            return result;
-        }
-        module.exports = every;
-    },
-    '3f': function (require, module, exports, global) {
-        function is(x, y) {
-            if (x === y) {
-                return x !== 0 || 1 / x === 1 / y;
-            }
-            return x !== x && y !== y;
-        }
-        module.exports = is;
-    },
-    '3g': function (require, module, exports, global) {
         'use strict';
         var colors = {
                 maroon: '#800000',
@@ -7399,9 +6856,9 @@ var G5;
         ].join('|'), 'gi');
         module.exports = color;
     },
-    '3h': function (require, module, exports, global) {
+    '2p': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('3z');
+        var indexOf = require('3v');
         var requestFrame = global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame || global.oRequestAnimationFrame || global.msRequestAnimationFrame || function (callback) {
                 return setTimeout(function () {
                     callback();
@@ -7429,15 +6886,15 @@ var G5;
         exports.request = request;
         exports.cancel = cancel;
     },
-    '3i': function (require, module, exports, global) {
+    '2q': function (require, module, exports, global) {
         'use strict';
-        var color = require('3g'), frame = require('3h');
+        var color = require('2o'), frame = require('2p');
         var cancelFrame = frame.cancel, requestFrame = frame.request;
-        var prime = require('40');
-        var camelize = require('41'), clean = require('42'), capitalize = require('43'), hyphenateString = require('44');
-        var map = require('45'), forEach = require('46'), indexOf = require('3z');
-        var elements = require('47');
-        var fx = require('3j');
+        var prime = require('3w');
+        var camelize = require('3x'), clean = require('3y'), capitalize = require('3z'), hyphenateString = require('40');
+        var map = require('41'), forEach = require('42'), indexOf = require('3v');
+        var elements = require('43');
+        var fx = require('2r');
         var matchString = function (s, r) {
             return String.prototype.match.call(s, r);
         };
@@ -7736,7 +7193,7 @@ var G5;
         var parseTransform2d, Transform2d;
         if (!transitionName && transformName)
             (function () {
-                var unmatrix = require('48');
+                var unmatrix = require('44');
                 var v = '\\s*([-\\d\\w.]+)\\s*';
                 var rMatrix = RegExp('matrix\\(' + [
                         v,
@@ -8123,10 +7580,10 @@ var G5;
         };
         module.exports = moofx;
     },
-    '3j': function (require, module, exports, global) {
+    '2r': function (require, module, exports, global) {
         'use strict';
-        var prime = require('40'), requestFrame = require('3h').request, bezier = require('49');
-        var map = require('45');
+        var prime = require('3w'), requestFrame = require('2p').request, bezier = require('46');
+        var map = require('41');
         var sDuration = '([\\d.]+)(s|ms)?', sCubicBezier = 'cubic-bezier\\(([-.\\d]+),([-.\\d]+),([-.\\d]+),([-.\\d]+)\\)';
         var rDuration = RegExp(sDuration), rCubicBezier = RegExp(sCubicBezier), rgCubicBezier = RegExp(sCubicBezier, 'g');
         var equations = {
@@ -8291,17 +7748,106 @@ var G5;
         fx.prototype = Fx.prototype;
         module.exports = fx;
     },
-    '3k': function (require, module, exports, global) {
+    '2s': function (require, module, exports, global) {
+        var hasOwn = require('1f');
+        var forIn = require('1x');
+        function forOwn(obj, fn, thisObj) {
+            forIn(obj, function (val, key) {
+                if (hasOwn(obj, key)) {
+                    return fn.call(thisObj, obj[key], key, obj);
+                }
+            });
+        }
+        module.exports = forOwn;
+    },
+    '2t': function (require, module, exports, global) {
+        var kindOf = require('2u');
+        var isPlainObject = require('2v');
+        var mixIn = require('45');
+        function clone(val) {
+            switch (kindOf(val)) {
+            case 'Object':
+                return cloneObject(val);
+            case 'Array':
+                return cloneArray(val);
+            case 'RegExp':
+                return cloneRegExp(val);
+            case 'Date':
+                return cloneDate(val);
+            default:
+                return val;
+            }
+        }
+        function cloneObject(source) {
+            if (isPlainObject(source)) {
+                return mixIn({}, source);
+            } else {
+                return source;
+            }
+        }
+        function cloneRegExp(r) {
+            var flags = '';
+            flags += r.multiline ? 'm' : '';
+            flags += r.global ? 'g' : '';
+            flags += r.ignoreCase ? 'i' : '';
+            return new RegExp(r.source, flags);
+        }
+        function cloneDate(date) {
+            return new Date(+date);
+        }
+        function cloneArray(arr) {
+            return arr.slice();
+        }
+        module.exports = clone;
+    },
+    '2u': function (require, module, exports, global) {
+        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
+        function kindOf(val) {
+            if (val === null) {
+                return 'Null';
+            } else if (val === UNDEF) {
+                return 'Undefined';
+            } else {
+                return _rKind.exec(_toString.call(val))[1];
+            }
+        }
+        module.exports = kindOf;
+    },
+    '2v': function (require, module, exports, global) {
+        function isPlainObject(value) {
+            return !!value && typeof value === 'object' && value.constructor === Object;
+        }
+        module.exports = isPlainObject;
+    },
+    '2w': function (require, module, exports, global) {
+        var MIN_INT = require('47');
+        var MAX_INT = require('48');
+        var rand = require('49');
+        function randInt(min, max) {
+            min = min == null ? MIN_INT : ~~min;
+            max = max == null ? MAX_INT : ~~max;
+            return Math.round(rand(min - 0.5, max + 0.499999999999));
+        }
+        module.exports = randInt;
+    },
+    '2x': function (require, module, exports, global) {
+        var kindOf = require('1i');
+        function isKind(val, kind) {
+            return kindOf(val) === kind;
+        }
+        module.exports = isKind;
+    },
+    '2y': function (require, module, exports, global) {
         function hasOwn(obj, prop) {
             return Object.prototype.hasOwnProperty.call(obj, prop);
         }
         module.exports = hasOwn;
     },
-    '3l': function (require, module, exports, global) {
-        var clone = require('4a');
-        var forOwn = require('4b');
-        var kindOf = require('4c');
-        var isPlainObject = require('4d');
+    '2z': function (require, module, exports, global) {
+        var clone = require('4b');
+        var forOwn = require('4c');
+        var kindOf = require('4d');
+        var isPlainObject = require('4e');
         function deepClone(val, instanceClone) {
             switch (kindOf(val)) {
             case 'Object':
@@ -8334,45 +7880,20 @@ var G5;
         }
         module.exports = deepClone;
     },
-    '3m': function (require, module, exports, global) {
-        var isKind = require('4e');
+    '30': function (require, module, exports, global) {
+        var isKind = require('4a');
         function isObject(val) {
             return isKind(val, 'Object');
         }
         module.exports = isObject;
     },
-    '3n': function (require, module, exports, global) {
-        function slice(arr, start, end) {
-            var len = arr.length;
-            if (start == null) {
-                start = 0;
-            } else if (start < 0) {
-                start = Math.max(len + start, 0);
-            } else {
-                start = Math.min(start, len);
-            }
-            if (end == null) {
-                end = len;
-            } else if (end < 0) {
-                end = Math.max(len + end, 0);
-            } else {
-                end = Math.min(end, len);
-            }
-            var result = [];
-            while (start < end) {
-                result.push(arr[start++]);
-            }
-            return result;
-        }
-        module.exports = slice;
-    },
-    '3o': function (require, module, exports, global) {
+    '31': function (require, module, exports, global) {
         function identity(val) {
             return val;
         }
         module.exports = identity;
     },
-    '3p': function (require, module, exports, global) {
+    '32': function (require, module, exports, global) {
         function prop(name) {
             return function (obj) {
                 return obj[name];
@@ -8380,9 +7901,9 @@ var G5;
         }
         module.exports = prop;
     },
-    '3q': function (require, module, exports, global) {
-        var forOwn = require('1q');
-        var isArray = require('1s');
+    '33': function (require, module, exports, global) {
+        var forOwn = require('27');
+        var isArray = require('1k');
         function containsMatch(array, pattern) {
             var i = -1, length = array.length;
             while (++i < length) {
@@ -8423,124 +7944,556 @@ var G5;
         }
         module.exports = deepMatches;
     },
-    '3r': function (require, module, exports, global) {
-        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
-        function kindOf(val) {
-            if (val === null) {
-                return 'Null';
-            } else if (val === UNDEF) {
-                return 'Undefined';
+    '34': function (require, module, exports, global) {
+        function slice(arr, start, end) {
+            var len = arr.length;
+            if (start == null) {
+                start = 0;
+            } else if (start < 0) {
+                start = Math.max(len + start, 0);
             } else {
-                return _rKind.exec(_toString.call(val))[1];
+                start = Math.min(start, len);
+            }
+            if (end == null) {
+                end = len;
+            } else if (end < 0) {
+                end = Math.max(len + end, 0);
+            } else {
+                end = Math.min(end, len);
+            }
+            var result = [];
+            while (start < end) {
+                result.push(arr[start++]);
+            }
+            return result;
+        }
+        module.exports = slice;
+    },
+    '35': function (require, module, exports, global) {
+        var hasOwn = require('1n');
+        var _hasDontEnumBug, _dontEnums;
+        function checkDontEnum() {
+            _dontEnums = [
+                'toString',
+                'toLocaleString',
+                'valueOf',
+                'hasOwnProperty',
+                'isPrototypeOf',
+                'propertyIsEnumerable',
+                'constructor'
+            ];
+            _hasDontEnumBug = true;
+            for (var key in { 'toString': null }) {
+                _hasDontEnumBug = false;
             }
         }
-        module.exports = kindOf;
+        function forIn(obj, fn, thisObj) {
+            var key, i = 0;
+            if (_hasDontEnumBug == null)
+                checkDontEnum();
+            for (key in obj) {
+                if (exec(fn, obj, key, thisObj) === false) {
+                    break;
+                }
+            }
+            if (_hasDontEnumBug) {
+                var ctor = obj.constructor, isProto = !!ctor && obj === ctor.prototype;
+                while (key = _dontEnums[i++]) {
+                    if ((key !== 'constructor' || !isProto && hasOwn(obj, key)) && obj[key] !== Object.prototype[key]) {
+                        if (exec(fn, obj, key, thisObj) === false) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        function exec(fn, obj, key, thisObj) {
+            return fn.call(thisObj, obj[key], key, obj);
+        }
+        module.exports = forIn;
+    },
+    '36': function (require, module, exports, global) {
+        var slice = require('23');
+        function makeCollectionMethod(arrMethod, objMethod, defaultReturn) {
+            return function () {
+                var args = slice(arguments);
+                if (args[0] == null) {
+                    return defaultReturn;
+                }
+                return typeof args[0].length === 'number' ? arrMethod.apply(null, args) : objMethod.apply(null, args);
+            };
+        }
+        module.exports = makeCollectionMethod;
+    },
+    '37': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('i'), Options = require('t'), Bound = require('s'), Emitter = require('h'), guid = require('o'), zen = require('k'), $ = require('1'), get = require('2c'), has = require('3j'), set = require('2a');
+        require('6');
+        var Base = new prime({
+                mixin: [
+                    Bound,
+                    Options
+                ],
+                inherits: Emitter,
+                options: { attributes: {} },
+                constructor: function (options) {
+                    this.setOptions(options);
+                    this.fresh = !this.options.id;
+                    this.id = this.options.id || this.guid();
+                    this.attributes = this.options.attributes || {};
+                    this.block = zen('div').html(this.layout()).firstChild();
+                    this.on('rendered', this.bound('onRendered'));
+                    return this;
+                },
+                guid: function () {
+                    return guid();
+                },
+                getId: function () {
+                    return this.id || (this.id = this.guid());
+                },
+                getType: function () {
+                    return this.options.type || '';
+                },
+                getTitle: function () {
+                    return '';
+                },
+                getAttribute: function (key) {
+                    return get(this.attributes, key);
+                },
+                getAttributes: function () {
+                    return this.attributes || {};
+                },
+                setAttribute: function (key, value) {
+                    set(this.attributes, key, value);
+                    return this;
+                },
+                hasAttribute: function (key) {
+                    return has(this.attributes, key);
+                },
+                insert: function (target, location) {
+                    this.block[location || 'after'](target);
+                    return this;
+                },
+                adopt: function (element) {
+                    element.insert(this.block);
+                    return this;
+                },
+                isNew: function (fresh) {
+                    if (typeof fresh !== 'undefined') {
+                        this.fresh = !!fresh;
+                    }
+                    return this.fresh;
+                },
+                dropzone: function () {
+                    var type = this.getType();
+                    return 'data-lm-dropzone';
+                },
+                addDropzone: function () {
+                    this.block.data('lm-dropzone', true);
+                },
+                removeDropzone: function () {
+                    this.block.data('lm-dropzone', null);
+                },
+                layout: function () {
+                },
+                onRendered: function () {
+                },
+                setLayout: function (layout) {
+                    this.block = layout;
+                    return this;
+                }
+            });
+        module.exports = Base;
+    },
+    '38': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('i'), Base = require('37');
+        var Atom = new prime({
+                inherits: Base,
+                options: { type: 'atom' },
+                constructor: function (options) {
+                    Base.call(this, options);
+                },
+                getTitle: function () {
+                    return this.getAttribute('name');
+                },
+                layout: function () {
+                    return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '">' + this.getTitle() + '<div class="float-right"><i class="fa fa-cog" data-lm-nodrag></i></div></div>';
+                }
+            });
+        module.exports = Atom;
+    },
+    '39': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('i'), Base = require('37'), Bound = require('s'), Grid = require('3b'), $ = require('1'), zen = require('k'), bind = require('u');
+        require('5');
+        var UID = 0;
+        var Section = new prime({
+                inherits: Base,
+                options: { type: 'section' },
+                constructor: function (options) {
+                    ++UID;
+                    this.grid = new Grid();
+                    Base.call(this, options);
+                    this.on('done', this.bound('onDone'));
+                },
+                layout: function () {
+                    return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + this.getAttribute('name') + '</h4><div class="section-actions float-right"><i class="fa fa-plus"></i> <i class="fa fa-cog"></i></div></div></div>';
+                },
+                adopt: function (child) {
+                    $(child).insert(this.block.find('.grid'));
+                },
+                onDone: function (event) {
+                    if (!this.block.search('[data-lm-id]')) {
+                        this.grid.insert(this.block, 'bottom');
+                        this.options.builder.add(this.grid);
+                    }
+                    var plus = this.block.find('.fa-plus');
+                    if (plus) {
+                        plus.on('click', bind(function (e) {
+                            e.preventDefault();
+                            if (this.block.find('.grid:last-child:empty')) {
+                                return false;
+                            }
+                            this.grid = new Grid();
+                            this.grid.insert(this.block, 'bottom');
+                            this.options.builder.add(this.grid);
+                        }, this));
+                    }
+                }
+            });
+        module.exports = Section;
+    },
+    '3a': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('i'), Section = require('39');
+        var NonVisible = new prime({
+                inherits: Section,
+                options: {
+                    type: 'non-visible',
+                    attributes: { name: 'Non-Visible Section' }
+                },
+                layout: function () {
+                    return '<div class="non-visible-section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + this.getAttribute('name') + '</h4></div></div>';
+                },
+                onDone: function (event) {
+                    if (!this.block.search('[data-lm-id]')) {
+                        this.grid.insert(this.block, 'bottom');
+                        this.options.builder.add(this.grid);
+                    }
+                }
+            });
+        module.exports = NonVisible;
+    },
+    '3b': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('i'), Base = require('37');
+        var Grid = new prime({
+                inherits: Base,
+                options: { type: 'grid' },
+                constructor: function (options) {
+                    Base.call(this, options);
+                },
+                layout: function () {
+                    return '<div class="grid" data-lm-id="' + this.getId() + '" ' + this.dropzone() + ' data-lm-blocktype="grid"></div>';
+                },
+                onRendered: function () {
+                    var parent = this.block.parent();
+                    if (parent && parent.data('lm-root')) {
+                        this.removeDropzone();
+                    }
+                }
+            });
+        module.exports = Grid;
+    },
+    '3c': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('i'), Base = require('37'), $ = require('j'), zen = require('k'), precision = require('3u');
+        var Block = new prime({
+                inherits: Base,
+                options: {
+                    type: 'block',
+                    attributes: { size: 50 }
+                },
+                constructor: function (options) {
+                    Base.call(this, options);
+                },
+                getSize: function () {
+                    return this.getAttribute('size');
+                },
+                setSize: function (size, store) {
+                    size = typeof size === 'undefined' ? this.getSize() : Math.max(0, Math.min(100, parseFloat(size)));
+                    if (store) {
+                        this.setAttribute('size', size);
+                    }
+                    $(this.block).style({ 'flex': '0 1 ' + size + '%' });
+                    this.emit('resized', size, this);
+                },
+                setAnimatedSize: function (size, store) {
+                    size = typeof size === 'undefined' ? this.getSize() : Math.max(0, Math.min(100, parseFloat(size)));
+                    if (store) {
+                        this.setAttribute('size', size);
+                    }
+                    $(this.block).animate({ flex: '0 1 ' + size + '%' });
+                    this.emit('resized', size, this);
+                },
+                setLabelSize: function (size) {
+                    var label = this.block.find('> .particle-size');
+                    if (!label) {
+                        return false;
+                    }
+                    label.text(precision(size, 1) + '%');
+                },
+                layout: function () {
+                    return '<div class="block" data-lm-id="' + this.getId() + '"' + this.dropzone() + ' data-lm-blocktype="block"></div>';
+                },
+                onRendered: function (element, parent) {
+                    if (element.block.find('> [data-lm-blocktype="section"]')) {
+                        this.removeDropzone();
+                    }
+                    if (!parent) {
+                        return;
+                    }
+                    if (parent.block.parent().data('lm-root')) {
+                        zen('span.particle-size').text(this.getSize() + '%').top(element.block);
+                        element.on('resized', this.bound('onResize'));
+                    }
+                },
+                onResize: function (resize) {
+                    this.setLabelSize(resize);
+                }
+            });
+        module.exports = Block;
+    },
+    '3d': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('i'), Atom = require('38'), bind = require('u'), precision = require('3u');
+        var UID = 0;
+        var Particle = new prime({
+                inherits: Atom,
+                options: { type: 'particle' },
+                constructor: function (options) {
+                    ++UID;
+                    Atom.call(this, options);
+                },
+                layout: function () {
+                    return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><span>' + this.getTitle() + '</span><div class="float-right"><span class="particle-size"></span> <i class="fa fa-cog" data-lm-nodrag></i></div></div>';
+                },
+                setLabelSize: function (size) {
+                    var label = this.block.find('.particle-size');
+                    if (!label) {
+                        return false;
+                    }
+                    label.text(precision(size, 1) + '%');
+                },
+                onRendered: function (element, parent) {
+                    var size = parent.getSize() || 100;
+                    this.setLabelSize(size);
+                    parent.on('resized', this.bound('onParentResize'));
+                },
+                onParentResize: function (resize) {
+                    this.setLabelSize(resize);
+                }
+            });
+        module.exports = Particle;
+    },
+    '3e': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('i'), Particle = require('3d');
+        var UID = 0;
+        var Position = new prime({
+                inherits: Particle,
+                options: { type: 'position' },
+                constructor: function (options) {
+                    ++UID;
+                    Particle.call(this, options);
+                    this.setAttribute('name', this.getTitle());
+                    if (this.isNew()) {
+                        --UID;
+                    }
+                },
+                getTitle: function () {
+                    return this.getAttribute('key') || this.getAttribute('name') || 'Position ' + UID;
+                }
+            });
+        module.exports = Position;
+    },
+    '3f': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('i'), Particle = require('3d');
+        var Pagecontent = new prime({
+                inherits: Particle,
+                options: {
+                    type: 'pagecontent',
+                    attributes: { name: 'Page Content' }
+                }
+            });
+        module.exports = Pagecontent;
+    },
+    '3g': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('i'), Particle = require('3d');
+        var UID = 0;
+        var Spacer = new prime({
+                inherits: Particle,
+                options: {
+                    type: 'spacer',
+                    attributes: { name: 'Spacer' }
+                }
+            });
+        module.exports = Spacer;
+    },
+    '3h': function (require, module, exports, global) {
+        function append(arr1, arr2) {
+            if (arr2 == null) {
+                return arr1;
+            }
+            var pad = arr1.length, i = -1, len = arr2.length;
+            while (++i < len) {
+                arr1[pad + i] = arr2[i];
+            }
+            return arr1;
+        }
+        module.exports = append;
+    },
+    '3i': function (require, module, exports, global) {
+        var forEach = require('w');
+        function namespace(obj, path) {
+            if (!path)
+                return obj;
+            forEach(path.split('.'), function (key) {
+                if (!obj[key]) {
+                    obj[key] = {};
+                }
+                obj = obj[key];
+            });
+            return obj;
+        }
+        module.exports = namespace;
+    },
+    '3j': function (require, module, exports, global) {
+        var get = require('2c');
+        var UNDEF;
+        function has(obj, prop) {
+            return get(obj, prop) !== UNDEF;
+        }
+        module.exports = has;
+    },
+    '3k': function (require, module, exports, global) {
+        function toString(val) {
+            return val == null ? '' : val.toString();
+        }
+        module.exports = toString;
+    },
+    '3l': function (require, module, exports, global) {
+        function isPrimitive(value) {
+            switch (typeof value) {
+            case 'string':
+            case 'number':
+            case 'boolean':
+                return true;
+            }
+            return value == null;
+        }
+        module.exports = isPrimitive;
+    },
+    '3m': function (require, module, exports, global) {
+        var indexOf = require('4f');
+        function contains(arr, val) {
+            return indexOf(arr, val) !== -1;
+        }
+        module.exports = contains;
+    },
+    '3n': function (require, module, exports, global) {
+        'use strict';
+        var getSupportedEvent = function (events) {
+            events = events.split(' ');
+            var element = document.createElement('div'), event;
+            var isSupported = false;
+            for (var i = events.length - 1; i >= 0; i--) {
+                event = 'on' + events[i];
+                isSupported = event in element;
+                if (!isSupported) {
+                    element.setAttribute(event, 'return;');
+                    isSupported = typeof element[event] === 'function';
+                }
+                if (isSupported) {
+                    isSupported = events[i];
+                    break;
+                }
+            }
+            element = null;
+            return isSupported;
+        };
+        var EVENT = {
+                START: getSupportedEvent('mousedown touchstart MSPointerDown pointerdown'),
+                MOVE: getSupportedEvent('mousemove touchmove MSPointerMove pointermove'),
+                STOP: getSupportedEvent('mouseup touchend MSPointerUp pointerup')
+            };
+        module.exports = EVENT;
+    },
+    '3o': function (require, module, exports, global) {
+        function toInt(val) {
+            return ~~val;
+        }
+        module.exports = toInt;
+    },
+    '3p': function (require, module, exports, global) {
+        var forOwn = require('27');
+        var makeIterator = require('22');
+        function every(obj, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var result = true;
+            forOwn(obj, function (val, key) {
+                if (!callback(val, key, obj)) {
+                    result = false;
+                    return false;
+                }
+            });
+            return result;
+        }
+        module.exports = every;
+    },
+    '3q': function (require, module, exports, global) {
+        function is(x, y) {
+            if (x === y) {
+                return x !== 0 || 1 / x === 1 / y;
+            }
+            return x !== x && y !== y;
+        }
+        module.exports = is;
+    },
+    '3r': function (require, module, exports, global) {
+        var isKind = require('24');
+        function isString(val) {
+            return isKind(val, 'String');
+        }
+        module.exports = isString;
     },
     '3s': function (require, module, exports, global) {
-        var kindOf = require('3r');
-        var isPlainObject = require('3t');
-        var mixIn = require('4f');
-        function clone(val) {
-            switch (kindOf(val)) {
-            case 'Object':
-                return cloneObject(val);
-            case 'Array':
-                return cloneArray(val);
-            case 'RegExp':
-                return cloneRegExp(val);
-            case 'Date':
-                return cloneDate(val);
-            default:
-                return val;
-            }
+        var lerp = require('4g');
+        var norm = require('4h');
+        function map(val, min1, max1, min2, max2) {
+            return lerp(norm(val, min1, max1), min2, max2);
         }
-        function cloneObject(source) {
-            if (isPlainObject(source)) {
-                return mixIn({}, source);
-            } else {
-                return source;
-            }
-        }
-        function cloneRegExp(r) {
-            var flags = '';
-            flags += r.multiline ? 'm' : '';
-            flags += r.global ? 'g' : '';
-            flags += r.ignoreCase ? 'i' : '';
-            return new RegExp(r.source, flags);
-        }
-        function cloneDate(date) {
-            return new Date(+date);
-        }
-        function cloneArray(arr) {
-            return arr.slice();
-        }
-        module.exports = clone;
+        module.exports = map;
     },
     '3t': function (require, module, exports, global) {
-        function isPlainObject(value) {
-            return !!value && typeof value === 'object' && value.constructor === Object;
+        function clamp(val, min, max) {
+            return val < min ? min : val > max ? max : val;
         }
-        module.exports = isPlainObject;
+        module.exports = clamp;
     },
     '3u': function (require, module, exports, global) {
-        var MIN_INT = require('4g');
-        var MAX_INT = require('4h');
-        var rand = require('4i');
-        function randInt(min, max) {
-            min = min == null ? MIN_INT : ~~min;
-            max = max == null ? MAX_INT : ~~max;
-            return Math.round(rand(min - 0.5, max + 0.499999999999));
+        var toNumber = require('4i');
+        function enforcePrecision(val, nDecimalDigits) {
+            val = toNumber(val);
+            var pow = Math.pow(10, nDecimalDigits);
+            return +(Math.round(val * pow) / pow).toFixed(nDecimalDigits);
         }
-        module.exports = randInt;
+        module.exports = enforcePrecision;
     },
     '3v': function (require, module, exports, global) {
-        function indexOf(arr, item, fromIndex) {
-            fromIndex = fromIndex || 0;
-            if (arr == null) {
-                return -1;
-            }
-            var len = arr.length, i = fromIndex < 0 ? len + fromIndex : fromIndex;
-            while (i < len) {
-                if (arr[i] === item) {
-                    return i;
-                }
-                i++;
-            }
-            return -1;
-        }
-        module.exports = indexOf;
-    },
-    '3w': function (require, module, exports, global) {
-        function lerp(ratio, start, end) {
-            return start + (end - start) * ratio;
-        }
-        module.exports = lerp;
-    },
-    '3x': function (require, module, exports, global) {
-        function norm(val, min, max) {
-            if (val < min || val > max) {
-                throw new RangeError('value (' + val + ') must be between ' + min + ' and ' + max);
-            }
-            return val === max ? 1 : (val - min) / (max - min);
-        }
-        module.exports = norm;
-    },
-    '3y': function (require, module, exports, global) {
-        var isArray = require('1s');
-        function toNumber(val) {
-            if (typeof val === 'number')
-                return val;
-            if (!val)
-                return 0;
-            if (typeof val === 'string')
-                return parseFloat(val);
-            if (isArray(val))
-                return NaN;
-            return Number(val);
-        }
-        module.exports = toNumber;
-    },
-    '3z': function (require, module, exports, global) {
         'use strict';
         var indexOf = function (self, item, from) {
             for (var l = self.length >>> 0, i = from < 0 ? Math.max(0, l + from) : from || 0; i < l; i++) {
@@ -8551,7 +8504,7 @@ var G5;
         };
         module.exports = indexOf;
     },
-    '40': function (require, module, exports, global) {
+    '3w': function (require, module, exports, global) {
         'use strict';
         var hasOwn = require('4j'), forIn = require('4k'), mixIn = require('4l'), filter = require('4m'), create = require('4n'), type = require('4o');
         var defineProperty = Object.defineProperty, getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
@@ -8608,7 +8561,7 @@ var G5;
         };
         module.exports = prime;
     },
-    '41': function (require, module, exports, global) {
+    '3x': function (require, module, exports, global) {
         'use strict';
         var camelize = function (self) {
             return (self + '').replace(/-\D/g, function (match) {
@@ -8617,7 +8570,7 @@ var G5;
         };
         module.exports = camelize;
     },
-    '42': function (require, module, exports, global) {
+    '3y': function (require, module, exports, global) {
         'use strict';
         var trim = require('4p');
         var clean = function (self) {
@@ -8625,7 +8578,7 @@ var G5;
         };
         module.exports = clean;
     },
-    '43': function (require, module, exports, global) {
+    '3z': function (require, module, exports, global) {
         'use strict';
         var capitalize = function (self) {
             return (self + '').replace(/\b[a-z]/g, function (match) {
@@ -8634,7 +8587,7 @@ var G5;
         };
         module.exports = capitalize;
     },
-    '44': function (require, module, exports, global) {
+    '40': function (require, module, exports, global) {
         'use strict';
         var hyphenate = function (self) {
             return (self + '').replace(/[A-Z]/g, function (match) {
@@ -8643,7 +8596,7 @@ var G5;
         };
         module.exports = hyphenate;
     },
-    '45': function (require, module, exports, global) {
+    '41': function (require, module, exports, global) {
         'use strict';
         var map = function (self, method, context) {
             var length = self.length >>> 0, results = Array(length);
@@ -8654,7 +8607,7 @@ var G5;
         };
         module.exports = map;
     },
-    '46': function (require, module, exports, global) {
+    '42': function (require, module, exports, global) {
         'use strict';
         var forEach = function (self, method, context) {
             for (var i = 0, l = self.length >>> 0; i < l; i++) {
@@ -8665,9 +8618,9 @@ var G5;
         };
         module.exports = forEach;
     },
-    '47': function (require, module, exports, global) {
+    '43': function (require, module, exports, global) {
         'use strict';
-        var prime = require('40'), forEach = require('46'), map = require('45'), filter = require('4q'), every = require('4r'), some = require('4s');
+        var prime = require('3w'), forEach = require('42'), map = require('41'), filter = require('4q'), every = require('4r'), some = require('4s');
         var uniqueIndex = 0;
         var uniqueID = function (n) {
             return n === global ? 'global' : n.uniqueNumber || (n.uniqueNumber = 'n:' + (uniqueIndex++).toString(36));
@@ -8743,7 +8696,7 @@ var G5;
             });
         module.exports = $;
     },
-    '48': function (require, module, exports, global) {
+    '44': function (require, module, exports, global) {
         'use strict';
         var length = function (a) {
             return Math.sqrt(a[0] * a[0] + a[1] * a[1]);
@@ -8800,7 +8753,24 @@ var G5;
             ];
         };
     },
-    '49': function (require, module, exports, global) {
+    '45': function (require, module, exports, global) {
+        var forOwn = require('27');
+        function mixIn(target, objects) {
+            var i = 0, n = arguments.length, obj;
+            while (++i < n) {
+                obj = arguments[i];
+                if (obj != null) {
+                    forOwn(obj, copyProp, target);
+                }
+            }
+            return target;
+        }
+        function copyProp(val, key) {
+            this[key] = val;
+        }
+        module.exports = mixIn;
+    },
+    '46': function (require, module, exports, global) {
         module.exports = function (x1, y1, x2, y2, epsilon) {
             var curveX = function (t) {
                 var v = 1 - t;
@@ -8844,10 +8814,34 @@ var G5;
             };
         };
     },
+    '47': function (require, module, exports, global) {
+        module.exports = -2147483648;
+    },
+    '48': function (require, module, exports, global) {
+        module.exports = 2147483647;
+    },
+    '49': function (require, module, exports, global) {
+        var random = require('4t');
+        var MIN_INT = require('47');
+        var MAX_INT = require('48');
+        function rand(min, max) {
+            min = min == null ? MIN_INT : min;
+            max = max == null ? MAX_INT : max;
+            return min + (max - min) * random();
+        }
+        module.exports = rand;
+    },
     '4a': function (require, module, exports, global) {
-        var kindOf = require('4c');
-        var isPlainObject = require('4d');
-        var mixIn = require('4t');
+        var kindOf = require('4d');
+        function isKind(val, kind) {
+            return kindOf(val) === kind;
+        }
+        module.exports = isKind;
+    },
+    '4b': function (require, module, exports, global) {
+        var kindOf = require('4d');
+        var isPlainObject = require('4e');
+        var mixIn = require('4u');
         function clone(val) {
             switch (kindOf(val)) {
             case 'Object':
@@ -8884,9 +8878,9 @@ var G5;
         }
         module.exports = clone;
     },
-    '4b': function (require, module, exports, global) {
-        var hasOwn = require('3k');
-        var forIn = require('4u');
+    '4c': function (require, module, exports, global) {
+        var hasOwn = require('2y');
+        var forIn = require('4v');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
                 if (hasOwn(obj, key)) {
@@ -8896,7 +8890,7 @@ var G5;
         }
         module.exports = forOwn;
     },
-    '4c': function (require, module, exports, global) {
+    '4d': function (require, module, exports, global) {
         var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
         function kindOf(val) {
             if (val === null) {
@@ -8909,52 +8903,58 @@ var G5;
         }
         module.exports = kindOf;
     },
-    '4d': function (require, module, exports, global) {
+    '4e': function (require, module, exports, global) {
         function isPlainObject(value) {
             return !!value && typeof value === 'object' && value.constructor === Object;
         }
         module.exports = isPlainObject;
     },
-    '4e': function (require, module, exports, global) {
-        var kindOf = require('4c');
-        function isKind(val, kind) {
-            return kindOf(val) === kind;
-        }
-        module.exports = isKind;
-    },
     '4f': function (require, module, exports, global) {
-        var forOwn = require('1q');
-        function mixIn(target, objects) {
-            var i = 0, n = arguments.length, obj;
-            while (++i < n) {
-                obj = arguments[i];
-                if (obj != null) {
-                    forOwn(obj, copyProp, target);
-                }
+        function indexOf(arr, item, fromIndex) {
+            fromIndex = fromIndex || 0;
+            if (arr == null) {
+                return -1;
             }
-            return target;
+            var len = arr.length, i = fromIndex < 0 ? len + fromIndex : fromIndex;
+            while (i < len) {
+                if (arr[i] === item) {
+                    return i;
+                }
+                i++;
+            }
+            return -1;
         }
-        function copyProp(val, key) {
-            this[key] = val;
-        }
-        module.exports = mixIn;
+        module.exports = indexOf;
     },
     '4g': function (require, module, exports, global) {
-        module.exports = -2147483648;
+        function lerp(ratio, start, end) {
+            return start + (end - start) * ratio;
+        }
+        module.exports = lerp;
     },
     '4h': function (require, module, exports, global) {
-        module.exports = 2147483647;
+        function norm(val, min, max) {
+            if (val < min || val > max) {
+                throw new RangeError('value (' + val + ') must be between ' + min + ' and ' + max);
+            }
+            return val === max ? 1 : (val - min) / (max - min);
+        }
+        module.exports = norm;
     },
     '4i': function (require, module, exports, global) {
-        var random = require('4v');
-        var MIN_INT = require('4g');
-        var MAX_INT = require('4h');
-        function rand(min, max) {
-            min = min == null ? MIN_INT : min;
-            max = max == null ? MAX_INT : max;
-            return min + (max - min) * random();
+        var isArray = require('1k');
+        function toNumber(val) {
+            if (typeof val === 'number')
+                return val;
+            if (!val)
+                return 0;
+            if (typeof val === 'string')
+                return parseFloat(val);
+            if (isArray(val))
+                return NaN;
+            return Number(val);
         }
-        module.exports = rand;
+        module.exports = toNumber;
     },
     '4j': function (require, module, exports, global) {
         'use strict';
@@ -9084,7 +9084,14 @@ var G5;
         module.exports = some;
     },
     '4t': function (require, module, exports, global) {
-        var forOwn = require('4b');
+        function random() {
+            return random.get();
+        }
+        random.get = Math.random;
+        module.exports = random;
+    },
+    '4u': function (require, module, exports, global) {
+        var forOwn = require('4c');
         function mixIn(target, objects) {
             var i = 0, n = arguments.length, obj;
             while (++i < n) {
@@ -9100,8 +9107,8 @@ var G5;
         }
         module.exports = mixIn;
     },
-    '4u': function (require, module, exports, global) {
-        var hasOwn = require('3k');
+    '4v': function (require, module, exports, global) {
+        var hasOwn = require('2y');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -9142,13 +9149,6 @@ var G5;
             return fn.call(thisObj, obj[key], key, obj);
         }
         module.exports = forIn;
-    },
-    '4v': function (require, module, exports, global) {
-        function random() {
-            return random.get();
-        }
-        random.get = Math.random;
-        module.exports = random;
     },
     '4w': function (require, module, exports, global) {
         'use strict';
