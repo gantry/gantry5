@@ -103,7 +103,7 @@ var DragDrop = new prime({
         // resizing and only if it's not a non-visible section
         if ((offset < 6 && this.element.parent().find(':last-child') !== this.element) || (columns && offset > 3 && offset < 10)) {
             if (this.element.parent('[data-lm-blocktype="non-visible"]')) { return false; }
-            
+
             this.emit('dragdrop:resize', event, this.element, this.element.siblings(':not(.placeholder)'), this.origin.offset.x);
             return false;
         }
@@ -178,13 +178,19 @@ var DragDrop = new prime({
     move: function (event) {
         var clientX = event.clientX || (event.touches && event.touches[0].clientX) || 0,
             clientY = event.clientY || (event.touches && event.touches[0].clientY) || 0,
-            overing = document.elementFromPoint(clientX, clientY);
+            overing = document.elementFromPoint(clientX, clientY),
+            isGrid = this.element.data('lm-blocktype') === 'grid';
+
+        // we tweak the overing to take into account the negative offset for the handle
+        if (isGrid) {
+            // more accurate is: clientX + (this.element[0].getBoundingClientRect().left - clientX)
+            overing = document.elementFromPoint(clientX + 30, clientY);
+        }
 
         if (!overing) { return false; }
 
         this.matched = $(overing).matches(this.options.droppables) ? overing : ($(overing).parent(this.options.droppables) || [false])[0];
         this.isPlaceHolder = $(overing).matches('[data-lm-placeholder]') ? true : ($(overing).parent('[data-lm-placeholder]') ? true : false);
-
         // we only allow new particles to go anywhere and particles to reposition within the grid boundaries
         // and we only allow grids sorting within the same section only
         if (this.matched && this.element.data('lm-id')) {
@@ -225,7 +231,7 @@ var DragDrop = new prime({
                 var x = clientX - rect.left,
                     y = clientY - rect.top;
 
-                // divide x axis by 3 rather than 2 for 4 directions
+                // note: you can divide x axis by 3 rather than 2 for 4 directions
                 var location = {
                     x: Math.abs((clientX - rect.left)) < (rect.width / 2) && 'before' ||
                     Math.abs((clientX - rect.left)) >= (rect.width - (rect.width / 2)) && 'after' ||
