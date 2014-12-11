@@ -1,0 +1,28 @@
+
+header:
+  container:
+    - [particle-logo 20, particle-menu 80]
+
+showcase:
+  container:
+    - [position-rshowcase]
+
+feature:
+  container:
+    - [position-rfeature]
+
+utility:
+  container:
+    - [position-rutility]
+
+expandedtop:
+  container:
+    - [position-rexpandedtop]
+
+body:
+  container:
+    - mainbody
+
+footer:
+  container:
+    - [particle-copyright 50, spacer 25, particle-branding 25]
