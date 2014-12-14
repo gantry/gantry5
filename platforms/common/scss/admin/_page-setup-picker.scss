@@ -3,6 +3,12 @@
 #page-picker {
     ul {
         @extend %list-reset;
+        .card {
+            margin: 1%;
+        }
+        .size-1-4 {
+            @include flex(0 23%);
+        }
     }
 
     img {

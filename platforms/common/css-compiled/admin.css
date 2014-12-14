@@ -219,6 +219,16 @@ body {
     width: 1.5625em;
     border-radius: 3px; }
 
+#g5-container #page-picker ul .card {
+  margin: 1%; }
+#g5-container #page-picker ul .size-1-4 {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 23%;
+  -moz-flex: 0 23%;
+  -ms-flex: 0 23%;
+  flex: 0 23%; }
 #g5-container #page-picker img {
   display: block;
   margin: 0 auto; }
