@@ -245,6 +245,10 @@ th {
   list-style: none;
   margin: 0;
   padding: 0; }
+  .grid.nowrap {
+    -webkit-flex-flow: row;
+    -moz-flex-flow: row;
+    flex-flow: row; }
 
 .block {
   -webkit-box-flex: 1;
