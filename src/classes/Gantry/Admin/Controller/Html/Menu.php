@@ -9,18 +9,18 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Menu extends HtmlController
 {
-    public function index(array $params)
+    public function index()
     {
         $files = $this->locateParticles();
 
-        $params['id'] = $key = 'menu';
+        $this->params['id'] = $key = 'menu';
 
         if (!empty($files[$key])) {
             $filename = key($files[$key]);
-            $params['menu'] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+            $this->params['menu'] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/menu.html.twig', $params);
+        return $this->container['admin.theme']->render('@gantry-admin/menu.html.twig', $this->params);
     }
 
     protected function locateParticles() {

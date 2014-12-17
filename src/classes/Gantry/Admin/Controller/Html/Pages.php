@@ -5,18 +5,18 @@ use Gantry\Component\Controller\HtmlController;
 
 class Pages extends HtmlController
 {
-    public function index(array $params)
+    public function index()
     {
-        return $this->container['admin.theme']->render('@gantry-admin/pages_index.html.twig', $params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages_index.html.twig', $this->params);
     }
 
-    public function create(array $params)
+    public function create()
     {
-        return $this->container['admin.theme']->render('@gantry-admin/pages_create.html.twig', $params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages_create.html.twig', $this->params);
     }
 
-    public function edit(array $params)
+    public function edit($id)
     {
-        return $this->container['admin.theme']->render('@gantry-admin/pages_edit.html.twig', $params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages_edit.html.twig', $this->params);
     }
 }

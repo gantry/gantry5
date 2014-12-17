@@ -6,7 +6,7 @@ use Gantry\Component\Response\JsonResponse;
 
 class Particles extends JsonController
 {
-    public function index(array $params)
+    public function index()
     {
         // FIXME: This needs to be dynamic, right now is hardcoded.
         $particles = [

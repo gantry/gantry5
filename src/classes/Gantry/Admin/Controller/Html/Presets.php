@@ -5,8 +5,8 @@ use Gantry\Component\Controller\HtmlController;
 
 class Presets extends HtmlController
 {
-    public function index(array $params)
+    public function index()
     {
-        return $this->container['admin.theme']->render('@gantry-admin/presets.html.twig', $params);
+        return $this->container['admin.theme']->render('@gantry-admin/presets.html.twig', $this->params);
     }
 }

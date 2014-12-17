@@ -10,7 +10,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Layouts extends JsonController
 {
-    public function index(array $params)
+    public function index()
     {
         $options = [
             'compare' => 'Filename',
