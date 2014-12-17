@@ -19,18 +19,18 @@ form:
       type: list
 
       fields:
-        name:
+        .name:
           type: text
           label: Name
 
-        role:
+        .role:
           type: text
           label: Role
 
-        image:
+        .image:
           type: text
           label: Image
 
-        description:
+        .description:
           type: textarea
           label: Name

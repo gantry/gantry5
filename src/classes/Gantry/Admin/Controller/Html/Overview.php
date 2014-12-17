@@ -5,12 +5,12 @@ use Gantry\Component\Controller\HtmlController;
 
 class Overview extends HtmlController
 {
-    public function index(array $params)
+    public function index()
     {
         if (!isset($this->container['theme'])) {
-            return $this->container['admin.theme']->render('@gantry-admin/welcome.html.twig', $params);
+            return $this->container['admin.theme']->render('@gantry-admin/welcome.html.twig', $this->params);
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/overview.html.twig', $params);
+        return $this->container['admin.theme']->render('@gantry-admin/overview.html.twig', $this->params);
     }
 }

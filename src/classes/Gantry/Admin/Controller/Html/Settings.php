@@ -11,7 +11,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Settings extends HtmlController
 {
-    public function index(array $params)
+    public function index()
     {
         $files = $this->locateParticles();
 
@@ -21,24 +21,38 @@ class Settings extends HtmlController
             $particles[$key] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
         }
 
-        $params['particles'] = $particles;
-        return $this->container['admin.theme']->render('@gantry-admin/settings.html.twig', $params);
+        $this->params['particles'] = $particles;
+        return $this->container['admin.theme']->render('@gantry-admin/settings.html.twig', $this->params);
     }
 
-    public function display(array $params)
+    public function display($id)
     {
         $files = $this->locateParticles();
 
-        $key = !empty($params['id']) ? $params['id'] : null;
-
-        $particles = [];
-        if (!empty($files[$key])) {
-            $filename = $files[$key];
-            $particles[$key] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+        if (empty($files[$id])) {
+            throw new \RuntimeException("Settings for '$id' not found.", 404);
         }
 
-        $params['particles'] = $particles;
-        return $this->container['admin.theme']->render('@gantry-admin/settings.html.twig', $params);
+        $filename = key($files[$id]);
+        $this->params['particle'] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+        $this->params['id'] = $id;
+
+        return $this->container['admin.theme']->render('@gantry-admin/settings_item.html.twig', $this->params);
+    }
+
+    public function form($id)
+    {
+        $files = $this->locateParticles();
+
+        if (empty($files[$id])) {
+            throw new \RuntimeException("Settings for '$id' not found.", 404);
+        }
+
+        $filename = key($files[$id]);
+        $this->params['particle'] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+        $this->params['id'] = $id;
+
+        return $this->container['admin.theme']->render('@gantry-admin/settings_item.html.twig', $this->params);
     }
 
     protected function locateParticles() {

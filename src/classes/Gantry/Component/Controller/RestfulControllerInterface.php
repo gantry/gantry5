@@ -6,68 +6,65 @@ interface RestfulControllerInterface
     /**
      * @example GET /resources
      *
-     * @param array $params
+     * @param array $path
      * @return mixed
      */
-    public function index(array $params);
+    public function index();
 
     /**
      * @example GET /resources/:id
      *
-     * @param array $params
      * @return mixed
      */
-    public function display(array $params);
+    public function display($id);
 
     /**
      * Special sub-resource to create a new resource (returns a form).
      *
      * @example GET /resources/create
      *
-     * @param array $params
      * @return mixed
      */
-    public function create(array $params);
+    public function create();
 
     /**
      * Special sub-resource to edit existing resource (returns a form).
      *
      * @example GET /resources/:id/edit
      *
-     * @param array $params
+     * @param string $id
      * @return mixed
      */
-    public function edit(array $params);
+    public function edit($id);
 
     /**
      * @example POST /resources
      *
-     * @param array $params
      * @return mixed
      */
-    public function store(array $params);
+    public function store();
 
     /**
      * @example PUT /resources/:id
      *
-     * @param array $params
+     * @param string $id
      * @return mixed
      */
-    public function replace(array $params);
+    public function replace($id);
 
     /**
      * @example PATCH /resources/:id
      *
-     * @param array $params
+     * @param string $id
      * @return mixed
      */
-    public function update(array $params);
+    public function update($id);
 
     /**
      * @example DELETE /resources/:id
      *
-     * @param array $params
+     * @param string $id
      * @return mixed
      */
-    public function destroy(array $params);
+    public function destroy($id);
 }

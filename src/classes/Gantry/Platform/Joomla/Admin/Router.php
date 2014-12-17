@@ -2,113 +2,84 @@
 namespace Gantry\Admin;
 
 use Gantry\Component\Response\JsonResponse;
-use Gantry\Component\Router\RouterInterface;
-use RocketTheme\Toolbox\DI\Container;
+use Gantry\Component\Response\Response;
+use Gantry\Component\Router\Router as BaseRouter;
+use Joomla\Registry\Registry;
 
-class Router implements RouterInterface
+class Router extends BaseRouter
 {
-    /**
-     * @var Container
-     */
-    protected $container;
-
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
-
-    public function dispatch()
+    public function boot()
     {
         $app = \JFactory::getApplication();
         $input = $app->input;
-        $format = $input->getCmd('format', 'html');
-        $view = $input->getCmd('view', 'themes');
-        $layout = $input->getCmd('layout', 'index');
-        $style = $input->getInt('style', 0);
+
+        $this->method = 'GET';
+        $this->path = explode('.', $input->getString('view'));
+        $this->resource = array_shift($this->path) ?: 'themes';
+        $this->format = $input->getCmd('format', 'html');
 
         \JHtml::_('behavior.keepalive');
 
-        $params = [
+        $this->params = [
             'id'   => $input->getInt('id'),
-            'ajax' => ($format == 'json'),
-            'location' => $view,
+            'ajax' => ($this->format == 'json'),
+            'location' => $this->resource,
             'params' => isset($_POST['params']) && is_string($_POST['params']) ? json_decode($_POST['params']) : []
         ];
 
         // If style is set, resolve the template and load it.
+        $style = $input->getInt('style', 0);
         if ($style) {
             \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
             $table = \JTable::getInstance('Style', 'TemplatesTable');
             $table->load($style);
 
             $this->container['theme.id'] = $table->id;
-            $this->container['theme.path'] = $path = JPATH_SITE . '/templates/' . $table->template;
+            $this->container['theme.path'] = JPATH_SITE . '/templates/' . $table->template;
             $this->container['theme.name'] = $table->template;
             $this->container['theme.title'] = $table->title;
-            $this->container['theme.params'] = (new \JRegistry($table->params))->toArray();
-
-            if (file_exists($path . '/includes/gantry.php')) {
-                include $path . '/includes/gantry.php';
-            }
+            $this->container['theme.params'] = (new Registry($table->params))->toArray();
         }
 
-        $this->container['admin.theme'] = function () {
-            return new \Gantry\Admin\Theme\Theme(GANTRYADMIN_PATH);
-        };
-
-        // Boot the service.
-        $this->container['admin.theme'];
         $this->container['base_url'] = \JUri::base(true) . '/index.php?option=com_gantryadmin';
 
         $this->container['routes'] = [
-            'ajax' => '&view={view}&layout={method}&style=' . $style. '&format=json',
+            'ajax' => '&view={view}.{method}&style=' . $style. '&format=json',
             'themes' => '',
             'overview' => '&view=overview&style=' . $style,
             'presets' => '&view=presets&style=' . $style,
             'settings' => '&view=settings&style=' . $style,
             'menu' => '&view=menu&style=' . $style,
             'pages' => '&view=pages&style=' . $style,
-            'pages/edit' => '&view=pages&layout=edit&style=' . $style,
-            'pages/create' => '&view=pages&layout=create&style=' . $style,
+            'pages/edit' => '&view=pages.edit&style=' . $style,
+            'pages/create' => '&view=pages.create&style=' . $style,
             'assignments' => '&view=assignments&style=' . $style,
         ];
+    }
 
-        $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . ucfirst($view);
+    protected function send(Response $response)
+    {
+        // Output HTTP header.
+        $app = \JFactory::getApplication();
+        $document = \JFactory::getDocument();
+        $document->setCharset($response->charset);
+        $document->setMimeEncoding($response->mimeType);
 
-        // Render the page.
-        $contents = '';
-        try {
-            if (!class_exists($class) || !method_exists($class, $layout)) {
-                throw new \RuntimeException('Not Found', 404);
-            }
-
-            $controller = new $class($this->container);
-            $contents = $controller->{$layout}($params);
-
-        } catch (\Exception $e) {
-            if ($format == 'json') {
-                $contents = new JsonResponse($e);
-
-            } else {
-                if (class_exists('\Tracy\Debugger') && \Tracy\Debugger::isEnabled() && !\Tracy\Debugger::$productionMode )  {
-                    // We have Tracy enabled; will display and/or log error with it.
-                    throw $e;
-                }
-
-                \JError::raiseError($e->getCode() ?: 500, $e->getMessage());
+        header("HTTP/1.1 {$response->getStatus()}", true, $response->getStatusCode());
+        header("Content-Type: {$response->mimeType}; charset={$response->charset}");
+        foreach ($response->getHeaders() as $key => $values) {
+            $replace = true;
+            foreach ($values as $value) {
+                $app->setHeader($key, $value, $replace);
+                $replace = false;
             }
         }
+        echo $response;
 
-        if ($contents instanceof JsonResponse) {
-            // Tell the browser that our response is in JSON.
-            header('Content-Type: application/json', true, $contents->getResponseCode());
-
-            echo $contents;
-
-            // It's much faster and safer to exit now than let Joomla to send the response.
-            \JFactory::getApplication()->close();
+        if ($response instanceof JsonResponse) {
+            // It is much faster and safer to exit now than to let Joomla to send the response.
+            $app->sendHeaders();
+            $app->close();
         }
-
-        echo $contents;
     }
 }

@@ -6,11 +6,11 @@ use Gantry\Component\Controller\HtmlController;
 
 class Themes extends HtmlController
 {
-    public function index(array $params)
+    public function index()
     {
         $params['styles'] = (new ThemeList)->getStyles();
 
         return $this->container['admin.theme']
-            ->render('@gantry-admin/themes.html.twig', $params);
+            ->render('@gantry-admin/themes.html.twig', $this->params);
     }
 }

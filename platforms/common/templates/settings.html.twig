@@ -9,16 +9,12 @@
         {% set prefix = 'particles.' ~ id ~ '.' %}
         <div class="card settings-block">
             <h4>
-                {{ particle.name }}
+                <a href="{{ 'settings/' ~ id }}">{{ particle.name }}</a>
                 <div class="enabler">
                     <input type="hidden" value="{{ config.get(prefix ~ 'enabled', 0)|abs }}" />
                     <div class="toggle"><div class="knob"></div></div>
                 </div>
             </h4>
-            <div class="inner-params">
-                {% include 'forms/fields.html.twig'
-                with {'blueprints': particle.form, 'data': config, 'prefix': prefix, 'skip': ['enabled']} %}
-            </div>
         </div>
         {% endfor %}
     </div>
