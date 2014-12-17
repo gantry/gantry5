@@ -1,22 +1,22 @@
 <section id="sidebar">
     <ul>
         <li {{ (location == 'overview') ? 'class="active"' }}>
-            <a data-g5-ajaxify="{{ '{"view":"page", "method":"overview"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('overview')|e }}"><i class="fa fa-adjust"></i>Overview</a>
+            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('overview')|e }}"><i class="fa fa-adjust"></i>Overview</a>
         </li>
         <li {{ (location == 'presets') ? 'class="active"' }}>
-            <a data-g5-ajaxify="{{ '{"view":"page", "method":"presets"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('presets')|e }}"><i class="fa fa-star"></i>Presets</a>
+            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('presets')|e }}"><i class="fa fa-star"></i>Presets</a>
         </li>
         <li {{ (location == 'settings') ? 'class="active"' }}>
-            <a data-g5-ajaxify="{{ '{"view":"page", "method":"settings"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('settings')|e }}"><i class="fa fa-wrench"></i>Settings</a>
+            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('settings')|e }}"><i class="fa fa-wrench"></i>Settings</a>
         </li>
         <li {{ (location == 'pages') ? 'class="active"' }}>
-            <a data-g5-ajaxify="{{ '{"view":"page", "method":"pages"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('pages')|e }}"><i class="fa fa-columns"></i>Layouts</a>
+            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('pages')|e }}"><i class="fa fa-columns"></i>Layouts</a>
         </li>
         <li {{ (location == 'menu') ? 'class="active"' }}>
-            <a data-g5-ajaxify="{{ '{"view":"page", "method":"menu"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu')|e }}"><i class="fa fa-list"></i>Menu</a>
+            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu')|e }}"><i class="fa fa-list"></i>Menu</a>
         </li>
         <li {{ (location == 'assignments') ? 'class="active"' }}>
-            <a data-g5-ajaxify="{{ '{"view":"page", "method":"assignments"}' | e }}" ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('assignments')|e }}"><i class="fa fa-check"></i>Assignments</a>
+            <a data-g5-ajaxify ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('assignments')|e }}"><i class="fa fa-check"></i>Assignments</a>
         </li>
     </ul>
 </section>
