@@ -6,7 +6,7 @@ var ready         = require('elements/domready'),
     request       = require('agent'),
     zen           = require('elements/zen'),
 
-    AjaxURL       = require('../utils/ajax-uri'),
+    getAjaxSuffix       = require('../utils/get-ajax-suffix'),
 
     Builder       = require('./builder'),
     History       = require('../utils/History'),
@@ -22,12 +22,13 @@ builder = new Builder(json);
 lmhistory = new LMHistory(builder.serialize());
 
 var particlesPopover = function(){
-    $('[data-lm-addparticle]').popover({
+    var particles = $('[data-lm-addparticle]');
+    particles.popover({
         type: 'async',
         placement: 'left-bottom',
         width: '200',
         style: 'particles, inverse, fixed, nooverflow',
-        url: AjaxURL('particles')
+        url: particles.attribute('href') + getAjaxSuffix()
     }).on('shown.popover', function(popover){
         if (popover.$target.particleFilter) { return false; }
 
@@ -81,7 +82,7 @@ ready(function() {
         event.preventDefault();
         modal.open({
             content: 'Loading',
-            remote: AjaxURL('layouts')
+            remote: $(element).attribute('href') + getAjaxSuffix()
         });
     });
 

@@ -1,19 +1,19 @@
 "use strict";
 
-var prime    = require('prime'),
-    $        = require('../utils/elements.moofx'),
-    zen      = require('elements/zen'),
-    domready = require('elements/domready'),
-    storage  = require('prime/map')(),
-    modal    = require('../ui').modal,
+var prime         = require('prime'),
+    $             = require('../utils/elements.moofx'),
+    zen           = require('elements/zen'),
+    domready      = require('elements/domready'),
+    storage       = require('prime/map')(),
+    modal         = require('../ui').modal,
 
-    size     = require('mout/collection/size'),
-    merge    = require('mout/object/merge'),
-    guid     = require('mout/random/guid'),
+    size          = require('mout/collection/size'),
+    merge         = require('mout/object/merge'),
+    guid          = require('mout/random/guid'),
 
-    request  = require('agent')(),
-    History  = require('./history'),
-    AjaxURL  = require('./ajax-uri');
+    request       = require('agent')(),
+    History       = require('./history'),
+    getAjaxSuffix = require('./get-ajax-suffix');
 
 require('../ui/popover');
 
@@ -25,15 +25,15 @@ History.Adapter.bind(window, 'statechange', function() {
         URI = State.url,
         Data = State.data;
 
-    if (size(Data) && storage.get(Data.uuid)) {
+    if (size(Data) && Data.parsed !== false && storage.get(Data.uuid)) {
         Data = storage.get(Data.uuid);
-        URI = AjaxURL(Data.view, Data.method || null);
+        //URI = AjaxURL(Data.view, Data.method || null);
     }
 
     if (Data.element) {
         $('body').emit('statechangeBefore', { target: Data.element });
     }
-    request.url(URI).send(function(error, response) {
+    request.url(URI + getAjaxSuffix()).send(function(error, response) {
         if (!response.body.success) {
             modal.open({ content: response.body.html });
             //History.back();
@@ -71,7 +71,7 @@ domready(function() {
             url = element.attribute('href') || element.data('g5-ajaxify-href'),
             title = element.attribute('title') || '';
 
-        data = data ? JSON.parse(data) : null;
+        data = data ? JSON.parse(data) : { parsed: false };
         if (data) {
             var uuid = guid();
             storage.set(uuid, merge({}, data, {

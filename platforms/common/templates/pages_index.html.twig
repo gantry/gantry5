@@ -1,9 +1,9 @@
-{% extends ajax ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
     <h2>
         Layouts
-        <a data-g5-lm-add href="{{ gantry.route('pages/create')|e }}" class="button button-primary"><i class="fa fa-plus"></i></a>
+        <a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}" class="button button-primary"><i class="fa fa-plus"></i></a>
     </h2>
     <div id="page-picker" class="cards-wrapper">
         <ul class="grid">

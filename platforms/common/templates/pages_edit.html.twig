@@ -1,4 +1,4 @@
-{% extends ajax ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
     <h2>
@@ -13,7 +13,7 @@
     </h2>
 
     <div class="lm-newblocks" data-lm-blocktypes>
-        <a class="button" href="#"  data-lm-addparticle><i class="fa fa-plus"></i> <span>New Particle</span></a>
+        <a class="button" href="{{ gantry.route('picker/particles')|e }}"  data-lm-addparticle><i class="fa fa-plus"></i> <span>New Particle</span></a>
         <span class="float-right">
             <a href="#" class="button"><i class="fa fa-arrow-left"></i></a>
             <a href="#" class="button"><i class="fa fa-history"></i> <span>History</span></a>

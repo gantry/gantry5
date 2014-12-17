@@ -55,6 +55,8 @@ class Router extends BaseRouter
 
         $this->container['base_url'] = rtrim(PRIME_URI, '/') . "/{$style}/admin";
 
+        $this->container['ajax_suffix'] = '.json';
+
         $this->container['routes'] = [
             'ajax' => '/{view}/{method}.json',
             'themes' => '',
@@ -66,6 +68,9 @@ class Router extends BaseRouter
             'pages/edit' => '/pages/edit',
             'pages/create' => '/pages/create',
             'assignments' => '/assignments',
+
+            'picker/layouts' => '/layouts',
+            'picker/particles' => '/particles'
         ];
     }
 }

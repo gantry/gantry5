@@ -10,7 +10,7 @@
             <a data-g5-ajaxify="{{ '{"view":"page", "method":"settings"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('settings')|e }}"><i class="fa fa-wrench"></i>Settings</a>
         </li>
         <li {{ (location == 'pages') ? 'class="active"' }}>
-            <a data-g5-ajaxify="{{ '{"view":"page", "method":"pages_index"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('pages')|e }}"><i class="fa fa-columns"></i>Layouts</a>
+            <a data-g5-ajaxify="{{ '{"view":"page", "method":"pages"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('pages')|e }}"><i class="fa fa-columns"></i>Layouts</a>
         </li>
         <li {{ (location == 'menu') ? 'class="active"' }}>
             <a data-g5-ajaxify="{{ '{"view":"page", "method":"menu"}' | e }}" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu')|e }}"><i class="fa fa-list"></i>Menu</a>

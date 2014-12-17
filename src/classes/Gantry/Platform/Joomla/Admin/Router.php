@@ -43,6 +43,8 @@ class Router extends BaseRouter
 
         $this->container['base_url'] = \JUri::base(true) . '/index.php?option=com_gantryadmin';
 
+        $this->container['ajax_suffix'] = '&format=json';
+
         $this->container['routes'] = [
             'ajax' => '&view={view}.{method}&style=' . $style. '&format=json',
             'themes' => '',
@@ -54,6 +56,9 @@ class Router extends BaseRouter
             'pages/edit' => '&view=pages.edit&style=' . $style,
             'pages/create' => '&view=pages.create&style=' . $style,
             'assignments' => '&view=assignments&style=' . $style,
+
+            'picker/layouts' => '&view=layouts&style=' . $style,
+            'picker/particles' => '&view=particles&style=' . $style
         ];
     }
 
