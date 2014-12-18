@@ -80,9 +80,9 @@ elif [ -f $GIT_TARGET/mage ]; then
         'vendor'
         'themes/gantry/magento/skin'
         'themes/gantry/common'
-        'platforms/Magento/code/local/Gantry'
-        'platforms/Magento/design/adminhtml/default/default/template/gantry'
-        'platforms/Magento/etc/modules/Gantry_Adminblock.xml'
+        'platforms/magento/code/local/Gantry'
+        'platforms/magento/design/adminhtml/default/default/template/gantry'
+        'platforms/magento/etc/modules/Gantry_Adminblock.xml'
         )
     targets=(
         'app/design/frontend/gantry'
@@ -95,6 +95,7 @@ elif [ -f $GIT_TARGET/mage ]; then
         'app/design/adminhtml/default/default/template/gantry'
         'app/etc/modules/Gantry_Adminblock.xml'
         )
+    mkdir "$GIT_TARGET/app/code/local"
 elif [ -f $GIT_TARGET/viewtopic.php ]; then
     PLATFORM=phpBB
     sources=(
