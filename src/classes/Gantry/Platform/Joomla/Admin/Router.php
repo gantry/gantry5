@@ -14,7 +14,7 @@ class Router extends BaseRouter
         $input = $app->input;
 
         $this->method = 'GET';
-        $this->path = explode('.', $input->getString('view'));
+        $this->path = explode('/', $input->getString('view'));
         $this->resource = array_shift($this->path) ?: 'themes';
         $this->format = $input->getCmd('format', 'html');
 
@@ -46,16 +46,7 @@ class Router extends BaseRouter
         $this->container['ajax_suffix'] = '&format=json';
 
         $this->container['routes'] = [
-            'ajax' => '&view={view}.{method}&style=' . $style. '&format=json',
-            'themes' => '',
-            'overview' => '&view=overview&style=' . $style,
-            'presets' => '&view=presets&style=' . $style,
-            'settings' => '&view=settings&style=' . $style,
-            'menu' => '&view=menu&style=' . $style,
-            'pages' => '&view=pages&style=' . $style,
-            'pages/edit' => '&view=pages.edit&style=' . $style,
-            'pages/create' => '&view=pages.create&style=' . $style,
-            'assignments' => '&view=assignments&style=' . $style,
+            '1' => '&view=%s&style=' . $style,
 
             'picker/layouts' => '&view=layouts&style=' . $style,
             'picker/particles' => '&view=particles&style=' . $style
