@@ -1,3 +1,5 @@
 <?php
 
-echo $this->loadGantry();
+$gantry = $this->loadGantry();
+
+$gantry['router']->dispatch();

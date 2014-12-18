@@ -74,26 +74,34 @@ elif [ -f $GIT_TARGET/system/config/system.yaml ]; then
 elif [ -f $GIT_TARGET/mage ]; then
     PLATFORM=Magento
     sources=(
+        'platforms/magento/code/local/Gantry'
+        'platforms/common'
+        'src'
+        'vendor'
+        'platforms/magento/design/adminhtml/default/default/template/gantry'
+        'platforms/magento/etc/modules/Gantry_Adminblock.xml'
+
         'themes/gantry/magento/design'
         'themes/gantry/common'
         'src'
         'vendor'
         'themes/gantry/magento/skin'
         'themes/gantry/common'
-        'platforms/magento/code/local/Gantry'
-        'platforms/magento/design/adminhtml/default/default/template/gantry'
-        'platforms/magento/etc/modules/Gantry_Adminblock.xml'
         )
     targets=(
+        'app/code/local/Gantry'
+        'app/code/local/Gantry/common'
+        'app/code/local/Gantry/src'
+        'app/code/local/Gantry/vendor'
+        'app/design/adminhtml/default/default/template/gantry'
+        'app/etc/modules/Gantry_Adminblock.xml'
+
         'app/design/frontend/gantry'
         'app/design/frontend/gantry/default/gantry/common'
         'app/design/frontend/gantry/default/gantry/src'
         'app/design/frontend/gantry/default/gantry/vendor'
         'skin/frontend/gantry'
         'skin/frontend/gantry/default/common'
-        'app/code/local/Gantry'
-        'app/design/adminhtml/default/default/template/gantry'
-        'app/etc/modules/Gantry_Adminblock.xml'
         )
     mkdir "$GIT_TARGET/app/code/local"
 elif [ -f $GIT_TARGET/viewtopic.php ]; then
