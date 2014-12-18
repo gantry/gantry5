@@ -8,7 +8,7 @@
     <global>
         <blocks>
             <gantry_adminblock>
-                <class>Gantry_AdminBlock_Block</class>
+                <class>Gantry_Adminblock_Block</class>
             </gantry_adminblock>
         </blocks>
         <helpers>
