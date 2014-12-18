@@ -58,16 +58,8 @@ class Router extends BaseRouter
         $this->container['ajax_suffix'] = '.json';
 
         $this->container['routes'] = [
-            'ajax' => '/{view}/{method}.json',
+            '1' => '/%s',
             'themes' => '',
-            'overview' => '/overview',
-            'presets' => '/presets',
-            'settings' => '/settings',
-            'menu' => '/menu',
-            'pages' => '/pages',
-            'pages/edit' => '/pages/edit',
-            'pages/create' => '/pages/create',
-            'assignments' => '/assignments',
 
             'picker/layouts' => '/layouts',
             'picker/particles' => '/particles'

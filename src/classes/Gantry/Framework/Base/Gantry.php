@@ -25,14 +25,12 @@ class Gantry extends Container
         return self::$instance;
     }
 
-    public function route($route)
+    public function route($path)
     {
         $routes = $this->offsetGet('routes');
-        if (!isset($routes[$route])) {
-            throw new \InvalidArgumentException(sprintf('Invalid route: %s', $route));
-        }
+        $route = isset($routes[$path]) ? $routes[$path] : $routes[1];
 
-        return '/' . ltrim($this->offsetGet('base_url') . $routes[$route], '/');
+        return '/' . ltrim($this->offsetGet('base_url') . sprintf($route, $path), '/');
     }
 
     public function wrapper($value = null)
