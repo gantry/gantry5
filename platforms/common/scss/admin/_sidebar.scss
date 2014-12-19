@@ -15,7 +15,7 @@
         
     }
 
-    .content {
+    .g-content {
         padding: 0;
         margin: $content-margin 0;
     }
@@ -76,11 +76,11 @@
     }
 }
 
-.block.sidebar-icons {
+.g-block.sidebar-icons {
     flex: 0 3%;
 }
 
-.block.sidebar-closed {
+.g-block.sidebar-closed {
     flex: 0;
 }
 

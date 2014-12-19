@@ -269,7 +269,7 @@ body {
   font-size: 0.8rem;
   font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   margin-right: -1px; }
-  #g5-container #sidebar .content {
+  #g5-container #sidebar .g-content {
     padding: 0;
     margin: 0.625rem 0; }
   #g5-container #sidebar ul li {
@@ -309,9 +309,9 @@ body {
         font-weight: normal;
         padding-right: 5px;
         color: #ddd; }
-#g5-container .block.sidebar-icons {
+#g5-container .g-block.sidebar-icons {
   flex: 0 3%; }
-#g5-container .block.sidebar-closed {
+#g5-container .g-block.sidebar-closed {
   flex: 0; }
 
 #g5-container [data-mode-indicator="production"] {
