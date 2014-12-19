@@ -22,7 +22,7 @@ class ThemeList
         $list = array();
 
         foreach ($files as $theme) {
-            if (file_exists($locator('gantry-themes://' . $theme . '/gantry/theme.yaml'))) {
+            if (file_exists($locator('gantry-themes://' . $theme . '/default/gantry/theme.yaml'))) {
                 $details = new ThemeDetails($theme);
 
                 if (!$locator->schemeExists('gantry-theme-' . $theme)) {
