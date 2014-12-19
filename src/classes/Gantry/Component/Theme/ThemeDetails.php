@@ -19,7 +19,7 @@ class ThemeDetails implements \ArrayAccess
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $this->items = CompiledYamlFile::instance($locator("gantry-themes://{$theme}/theme.yaml"))->content();
+        $this->items = CompiledYamlFile::instance($locator("gantry-themes://{$theme}/gantry/theme.yaml"))->content();
         $this->offsetSet('name', $theme);
     }
 

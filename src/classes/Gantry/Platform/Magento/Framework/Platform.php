@@ -13,11 +13,17 @@ use Gantry\Framework\Base\Platform as BasePlatform;
 
 class Platform extends BasePlatform
 {
+    /**
+     * @return string
+     */
     public function getCachePath()
     {
         return Folder::getRelativePath(\Mage::getBaseDir('cache')) . '/gantry5';
     }
 
+    /**
+     * @return array
+     */
     public function getThemesPaths()
     {
         return  [
@@ -28,6 +34,10 @@ class Platform extends BasePlatform
         ];
     }
 
+
+    /**
+     * @return array
+     */
     public function getMediaPaths()
     {
         return ['' => ['media']];

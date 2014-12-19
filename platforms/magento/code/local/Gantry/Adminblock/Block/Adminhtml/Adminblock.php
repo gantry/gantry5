@@ -5,13 +5,13 @@ class Gantry_Adminblock_Block_Adminhtml_Adminblock extends Mage_Core_Block_Templ
 
     protected function loadGantry()
     {
+        // Bootstrap Gantry framework or fail gracefully (inside included file).
+        $gantry = include dirname(dirname(dirname(__DIR__))) . '/includes/gantry.php';
+
         if (!defined('GANTRYADMIN_PATH'))
         {
-            define('GANTRYADMIN_PATH', dirname(dirname(dirname(__DIR__))));
+            define('GANTRYADMIN_PATH', GANTRY5_ROOT . '/app/code/local/Gantry');
         }
-
-        // Bootstrap Gantry framework or fail gracefully (inside included file).
-        $gantry = include GANTRYADMIN_PATH . '/includes/gantry.php';
 
         $gantry['router'] = function ($c)
         {
