@@ -51,7 +51,6 @@
 
         .section, .non-visible-section {
             background: $white;
-
             margin: 14px 0;
             padding: 8px;
             // with box shadows: $gap: 11px;
@@ -237,17 +236,11 @@
         }
 
         .g-grid > .g-block {
-            .g-block {
-                //margin: 0;
-            }
 
             &:last-child {
                 margin-right: 0;
             }
 
-            .placeholder:not(:first-child):not(:last-child) {
-                //margin: -6px 0;
-            }
             .in-between-sections:first-child, .in-between-sections:last-child {
                 margin: 6px;
             }

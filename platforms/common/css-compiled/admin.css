@@ -44,8 +44,6 @@ body {
   animation: spin 0.8s infinite linear; }
 #g5-container .g-block {
   position: relative; }
-#g5-container.container, #g5-container .container {
-  width: 100%; }
 #g5-container .inner-container {
   margin: 2.5rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -319,7 +317,7 @@ body {
 #g5-container #main-header {
   font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   color: #fff; }
-  #g5-container #main-header .content {
+  #g5-container #main-header .g-content {
     margin: 0;
     padding: 0.938rem 2.438rem; }
   #g5-container #main-header .theme-title {

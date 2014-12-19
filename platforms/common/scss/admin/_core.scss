@@ -14,30 +14,10 @@ body {
         position: relative;
     }
 
-    &.container, .container {
-        width: 100%;
-    }
-
     .inner-container {
         margin: 2.5rem;
         box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         color: $core-text;
-    }
-
-    [data-mode-indicator]{
-
-
-        #sidebar & {
-
-        }
-    }
-
-    [data-mode-indicator="development"] {
-        
-
-        #sidebar & {
-            
-        }
     }
 
     // cards
