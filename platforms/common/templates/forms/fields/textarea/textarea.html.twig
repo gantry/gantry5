@@ -1,5 +1,24 @@
 {% extends "forms/field.html.twig" %}
 
 {% block input %}
-    <textarea class="input" name="{{ (scope ~ name)|fieldName }}">{{ value|join("\n") }}</textarea>
+    {% extends "forms/field.html.twig" %}
+
+    <textarea
+            {# required attribute structures #}
+            name="{{ (scope ~ name)|fieldName }}"
+            {# global attribute structures #}
+            {{ block('global_attributes') }}
+            {# non-gloval attribute structures #}
+            {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
+            {% if field.cols is defined %}cols="{{ field.cols }}"{% endif %}
+            {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
+            {% if field.maxlength is defined %}maxlength="{{ field.maxlength }}"{% endif %}
+            {% if field.minlength is defined %}minlength="{{ field.minlength }}"{% endif %}
+            {% if field.placeholder is defined %}placeholder="{{ field.placeholder }}"{% endif %}
+            {% if field.readonly in ['on', 'true', 1] %}readonly="readonly"{% endif %}
+            {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
+            {% if field.rows is defined %}rows="{{ field.rows }}"{% endif %}
+            >
+            {{ value|join("\n") }}
+         </textarea>
 {% endblock %}
