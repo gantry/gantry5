@@ -1,0 +1,22 @@
+details:
+  name: Gantry
+  version: 1.0
+  icon: tint
+  platform: grav
+  date: November 27, 2014
+  author:
+    name: RocketTheme, LLC
+    email: support@rockettheme.com
+    url: http://www.rockettheme.com
+  copyright: (C) 2005 - 2014 RocketTheme, LLC. All rights reserved.
+  license: GPLv2
+  description: Gantry Base Template
+  images:
+    thumbnail: admin/images/template_thumbnail.png
+    preview: admin/images/template_preview.png
+
+config:
+  engine: nucleus
+  parent: gantry
+  base: common
+  overrides: custom
