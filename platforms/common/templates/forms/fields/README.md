@@ -23,5 +23,6 @@
         {% if field.src is defined %}src="{{ field.src }}"{% endif %}
         {% if field.step is defined %}step="{{ field.step }}"{% endif %}
         {% if field.width is defined %}width="{{ field.width }}"{% endif %}
+        {% if field.wrap in ['hard', 'soft'] %}wrap="{{ field.wrap }}"{% endif %}
                 
 [http://www.w3.org/TR/html5/forms.html#the-input-element] (http://www.w3.org/TR/html5/forms.html#the-input-element)
