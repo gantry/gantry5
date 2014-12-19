@@ -7,6 +7,7 @@
         {% if field.dirname is defined %}dirname="{{ field.dirname }}"{% endif %}
         {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
         {% if field.height is defined %}height="{{ field.height }}"{% endif %}
+        {% if field.label is defined %}label="{{ field.label }}"{% endif %}
         {% if field.list is defined %}list="{{ field.list }}"{% endif %}
         {% if field.max is defined %}max="{{ field.max }}"{% endif %}
         {% if field.maxlength is defined %}maxlength="{{ field.maxlength }}"{% endif %}
