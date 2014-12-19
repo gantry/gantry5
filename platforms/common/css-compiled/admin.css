@@ -42,7 +42,7 @@ body {
   -webkit-animation: spin 0.8s infinite linear;
   -moz-animation: spin 0.8s infinite linear;
   animation: spin 0.8s infinite linear; }
-#g5-container .block {
+#g5-container .g-block {
   position: relative; }
 #g5-container.container, #g5-container .container {
   width: 100%; }
@@ -158,7 +158,7 @@ body {
     font-size: 60%;
     vertical-align: middle; }
 
-#g5-container .overview-header .block {
+#g5-container .overview-header .g-block {
   padding: 0.938rem 0; }
 #g5-container .overview-header .theme-title {
   display: inline-block;
@@ -489,7 +489,7 @@ body {
   #g5-container .lm-blocks {
     /* THIS IS FOR PAGES */
     /* END THIS IS FOR PAGES */
-        /* .block {
+        /* .g-block {
             padding: 8px;
             //border: 1px solid #dfdfdf;
             box-shadow: inset 0 0 0 1px #dfdfdf;
@@ -521,9 +521,9 @@ body {
     #g5-container .lm-blocks.empty {
       min-height: 150px;
       border: 2px dashed #dfdfdf; }
-    #g5-container .lm-blocks .grid, #g5-container .lm-blocks .block {
+    #g5-container .lm-blocks .g-grid, #g5-container .lm-blocks .g-block {
       position: relative; }
-    #g5-container .lm-blocks .grid > .block:after {
+    #g5-container .lm-blocks .g-grid > .g-block:after {
       content: "";
       display: block;
       position: absolute;
@@ -535,13 +535,13 @@ body {
       z-index: 3;
       cursor: ew-resize;
       display: none; }
-    #g5-container .lm-blocks .grid > .block:last-child:after {
+    #g5-container .lm-blocks .g-grid > .g-block:last-child:after {
       display: none; }
-    #g5-container .lm-blocks.moving .grid > .block:after, #g5-container .lm-blocks.moving .grid > .block > [data-lm-blocktype]:after, #g5-container .lm-blocks.moving .grid:hover > .block [data-lm-blocktype]:after {
+    #g5-container .lm-blocks.moving .g-grid > .g-block:after, #g5-container .lm-blocks.moving .g-grid > .g-block > [data-lm-blocktype]:after, #g5-container .lm-blocks.moving .g-grid:hover > .g-block [data-lm-blocktype]:after {
       display: none; }
-    #g5-container .lm-blocks .grid .block .section:first-child {
+    #g5-container .lm-blocks .g-grid .g-block .section:first-child {
       margin-top: 0; }
-    #g5-container .lm-blocks .grid .block .section:last-child {
+    #g5-container .lm-blocks .g-grid .g-block .section:last-child {
       margin-bottom: 0; }
     #g5-container .lm-blocks .section, #g5-container .lm-blocks .non-visible-section {
       background: #fff;
@@ -575,16 +575,16 @@ body {
         -webkit-transition: opacity 0.2s ease-in;
         -moz-transition: opacity 0.2s ease-in;
         transition: opacity 0.2s ease-in; }
-      #g5-container .lm-blocks .section .grid, #g5-container .lm-blocks .non-visible-section .grid {
+      #g5-container .lm-blocks .section .g-grid, #g5-container .lm-blocks .non-visible-section .g-grid {
         margin: 8px 0;
         padding: 4px;
         border: 0;
         box-shadow: none;
         background-color: #f6f6f6;
         min-height: 58px; }
-        #g5-container .lm-blocks .section .grid:hover, #g5-container .lm-blocks .non-visible-section .grid:hover {
+        #g5-container .lm-blocks .section .g-grid:hover, #g5-container .lm-blocks .non-visible-section .g-grid:hover {
           box-shadow: 0 0 0 1px #ddd; }
-          #g5-container .lm-blocks .section .grid:hover:not(:empty):not(.no-hover):not(.no-move):before, #g5-container .lm-blocks .section .grid:hover:not(:empty):not(.no-hover):not(.no-gear):after, #g5-container .lm-blocks .non-visible-section .grid:hover:not(:empty):not(.no-hover):not(.no-move):before, #g5-container .lm-blocks .non-visible-section .grid:hover:not(:empty):not(.no-hover):not(.no-gear):after {
+          #g5-container .lm-blocks .section .g-grid:hover:not(:empty):not(.no-hover):not(.no-move):before, #g5-container .lm-blocks .section .g-grid:hover:not(:empty):not(.no-hover):not(.no-gear):after, #g5-container .lm-blocks .non-visible-section .g-grid:hover:not(:empty):not(.no-hover):not(.no-move):before, #g5-container .lm-blocks .non-visible-section .g-grid:hover:not(:empty):not(.no-hover):not(.no-gear):after {
             display: block;
             position: absolute;
             background: #f6f6f6;
@@ -597,25 +597,25 @@ body {
             z-index: 5;
             color: #aaa;
             border: 1px solid #ddd; }
-          #g5-container .lm-blocks .section .grid:hover:not(:empty):not(.no-hover):not(.no-move):before, #g5-container .lm-blocks .non-visible-section .grid:hover:not(:empty):not(.no-hover):not(.no-move):before {
+          #g5-container .lm-blocks .section .g-grid:hover:not(:empty):not(.no-hover):not(.no-move):before, #g5-container .lm-blocks .non-visible-section .g-grid:hover:not(:empty):not(.no-hover):not(.no-move):before {
             font-family: FontAwesome, sans-serif;
             content: "\f0c9";
             border-radius: 3px 0 0 3px;
             left: -21px;
             border-right: 0; }
-          #g5-container .lm-blocks .section .grid:hover:not(:empty):not(.no-hover):not(.no-gear):after, #g5-container .lm-blocks .non-visible-section .grid:hover:not(:empty):not(.no-hover):not(.no-gear):after {
+          #g5-container .lm-blocks .section .g-grid:hover:not(:empty):not(.no-hover):not(.no-gear):after, #g5-container .lm-blocks .non-visible-section .g-grid:hover:not(:empty):not(.no-hover):not(.no-gear):after {
             font-family: FontAwesome, sans-serif;
             content: "\f013";
             border-radius: 0 3px 3px 0;
             right: -21px;
             border-left: 0; }
-        #g5-container .lm-blocks .section .grid:first-child, #g5-container .lm-blocks .non-visible-section .grid:first-child {
+        #g5-container .lm-blocks .section .g-grid:first-child, #g5-container .lm-blocks .non-visible-section .g-grid:first-child {
           margin-top: 0; }
-        #g5-container .lm-blocks .section .grid:last-child, #g5-container .lm-blocks .non-visible-section .grid:last-child {
+        #g5-container .lm-blocks .section .g-grid:last-child, #g5-container .lm-blocks .non-visible-section .g-grid:last-child {
           margin-bottom: 0; }
-        #g5-container .lm-blocks .section .grid .block:after, #g5-container .lm-blocks .non-visible-section .grid .block:after {
+        #g5-container .lm-blocks .section .g-grid .g-block:after, #g5-container .lm-blocks .non-visible-section .g-grid .g-block:after {
           display: none; }
-        #g5-container .lm-blocks .section .grid:empty:after, #g5-container .lm-blocks .non-visible-section .grid:empty:after {
+        #g5-container .lm-blocks .section .g-grid:empty:after, #g5-container .lm-blocks .non-visible-section .g-grid:empty:after {
           content: "Drop particles here...";
           display: block;
           text-align: center;
@@ -628,26 +628,26 @@ body {
       background-color: transparent;
       margin-top: 28px;
       border-top: 1px solid #ddd; }
-      #g5-container .lm-blocks .non-visible-section .grid {
+      #g5-container .lm-blocks .non-visible-section .g-grid {
         background: #fff; }
-        #g5-container .lm-blocks .non-visible-section .grid:empty:after {
+        #g5-container .lm-blocks .non-visible-section .g-grid:empty:after {
           content: "Drop non-visible particles here..."; }
-        #g5-container .lm-blocks .non-visible-section .grid:hover:not(:empty):before, #g5-container .lm-blocks .non-visible-section .grid:hover:not(:empty):after {
+        #g5-container .lm-blocks .non-visible-section .g-grid:hover:not(:empty):before, #g5-container .lm-blocks .non-visible-section .g-grid:hover:not(:empty):after {
           display: none !important; }
-    #g5-container .lm-blocks > .grid > .block {
+    #g5-container .lm-blocks > .g-grid > .g-block {
       margin-right: 14px;
       background: #fff;
       padding-bottom: 50px; }
-      #g5-container .lm-blocks > .grid > .block > .section {
+      #g5-container .lm-blocks > .g-grid > .g-block > .section {
         border-bottom: 14px solid #eee; }
-        #g5-container .lm-blocks > .grid > .block > .section:last-child {
+        #g5-container .lm-blocks > .g-grid > .g-block > .section:last-child {
           border-bottom: 0; }
-      #g5-container .lm-blocks > .grid > .block > .particle-size {
+      #g5-container .lm-blocks > .g-grid > .g-block > .particle-size {
         margin-right: 0;
         position: absolute;
         bottom: 12px;
         right: 12px; }
-    #g5-container .lm-blocks .grid:hover > .block > .particle:after, #g5-container .lm-blocks .grid:hover > .block > .position:after, #g5-container .lm-blocks .grid:hover > .block > .spacer:after, #g5-container .lm-blocks .grid:hover > .block > .pagecontent:after {
+    #g5-container .lm-blocks .g-grid:hover > .g-block > .particle:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .position:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .spacer:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .pagecontent:after {
       content: "";
       top: 0;
       bottom: 0;
@@ -657,15 +657,15 @@ body {
       right: -5px;
       cursor: ew-resize;
       z-index: 10; }
-    #g5-container .lm-blocks .section > .grid > .block:last-child .particle, #g5-container .lm-blocks .section > .grid > .block:last-child .position, #g5-container .lm-blocks .section > .grid > .block:last-child .spacer, #g5-container .lm-blocks .section > .grid > .block:last-child .pagecontent, #g5-container .lm-blocks .section > .grid > .block:last-child .atom {
+    #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .atom {
       margin-right: 0; }
-    #g5-container .lm-blocks .section > .grid > .block:last-child > .particle:after, #g5-container .lm-blocks .section > .grid > .block:last-child > .position:after, #g5-container .lm-blocks .section > .grid > .block:last-child > .spacer:after, #g5-container .lm-blocks .section > .grid > .block:last-child > .pagecontent:after {
+    #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .pagecontent:after {
       display: none; }
-    #g5-container .lm-blocks .grid > .block:last-child {
+    #g5-container .lm-blocks .g-grid > .g-block:last-child {
       margin-right: 0; }
-    #g5-container .lm-blocks .grid > .block .in-between-sections:first-child, #g5-container .lm-blocks .grid > .block .in-between-sections:last-child {
+    #g5-container .lm-blocks .g-grid > .g-block .in-between-sections:first-child, #g5-container .lm-blocks .g-grid > .g-block .in-between-sections:last-child {
       margin: 6px; }
-    #g5-container .lm-blocks .grid > .block:after {
+    #g5-container .lm-blocks .g-grid > .g-block:after {
       content: "";
       display: block;
       position: absolute;
@@ -674,7 +674,7 @@ body {
       background: #00baaa;
       z-index: 3;
       cursor: ew-resize; }
-    #g5-container .lm-blocks .grid > .block:last-child:after {
+    #g5-container .lm-blocks .g-grid > .g-block:last-child:after {
       display: none; }
     #g5-container .lm-blocks .particle, #g5-container .lm-blocks .position, #g5-container .lm-blocks .spacer, #g5-container .lm-blocks .pagecontent, #g5-container .lm-blocks .atom {
       padding: 13px;
@@ -771,7 +771,7 @@ body {
     z-index: 5; }
   #g5-container .lm-newblocks {
     padding-bottom: 8px; }
-    #g5-container .lm-newblocks .block {
+    #g5-container .lm-newblocks .g-block {
       display: inline-block;
       text-align: center;
       background: #DADADA;

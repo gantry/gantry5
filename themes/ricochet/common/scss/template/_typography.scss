@@ -44,22 +44,22 @@ hr {
 	font-family: Georgia, Times, "Times New Roman", serif;
 	font-style: italic;
 }
-.rt-text-large {
+.g-text-large {
 	display: block;
 	font-size: $core-font-size * 2.5;
 	line-height: $core-line-height * 2;
 }
-.rt-text-medium {
+.g-text-medium {
 	display: block;
 	font-size: $core-font-size * 1.3;
 	line-height: $core-line-height * 1.3;
 }
-.rt-text-small {
+.g-text-small {
 	display: block;
 	font-size: $core-font-size * 0.8;
 	line-height: $core-line-height 1.0;
 }
-.rt-title-large {
+.g-title-large {
 	.title {
 		font-family: $font-family-alt;
 		font-size: $core-font-size * 1.8;
@@ -67,7 +67,7 @@ hr {
 		text-transform: none;
 	}
 }
-.rt-title-tag {
+.g-title-tag {
 	display: block;
 	font-size: $core-font-size * 1.2;
 	font-weight: normal;
@@ -103,7 +103,7 @@ hr {
 		font-family: Georgia, Times, "Times New Roman", serif;
 		font-style: italic;
 	}
-	.rt-title-tag {
+	.g-title-tag {
 		font-size: $core-font-size * 1.1;
 		line-height: $core-line-height * 1.1;
 	}

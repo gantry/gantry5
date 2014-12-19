@@ -1,5 +1,5 @@
-#rt-comingsoon {
-	#rt-header-surround {
+#g-comingsoon {
+	#g-header-surround {
 		padding-top: 0;
 	}
 }
@@ -7,18 +7,18 @@
     position: relative;
     z-index: 1000;
 }
-.rt-comingsoon-logo {
+.g-comingsoon-logo {
 	width: 240px;
 	margin: 0 auto 50px auto;
-	#rt-logo {
+	#g-logo {
 		margin: 0 auto;
 	}
 }
-.rt-logo-block {
+.g-logo-block {
 	background: rgba(255, 255, 255, 0.45);
 	border-radius: 5px;
 }
-.rt-comingsoon-body {
+.g-comingsoon-body {
 	margin: 150px auto;
 	padding: 50px 0;
 	background: fadeout($core-accent, 50%);
@@ -39,23 +39,23 @@
 		}
 	}
 }
-.rt-comingsoon-title {
+.g-comingsoon-title {
 	margin: 30px 0;
 	letter-spacing: 3px;
 	text-transform: uppercase;
 }
-.rt-comingsoon-message,
-.rt-authorized-login-message {
+.g-comingsoon-message,
+.g-authorized-login-message {
 	text-align: center;
 	width: 80%;
 	margin: auto;
 }
-.rt-counter-block {
+.g-counter-block {
 	display: block;
 	padding: 30px 0 0 0;
 	margin: 0;
 }
-#rt-comingsoon-counter {
+#g-comingsoon-counter {
 	text-align: center;
 	.counter-block {
 		display: inline-block;
@@ -92,17 +92,17 @@
 	}
 }
 
-.rt-subscription-title,
-.rt-authorized-form-title {
+.g-subscription-title,
+.g-authorized-form-title {
 	font-size: 160%;
 	margin-bottom: 25px;
 	text-align: center;
 }
 
-#rt-subscription-form {
+#g-subscription-form {
 	padding: 80px 0;
 	width: 100%;
-	.rt-container {
+	.g-container {
 		background: none;
 	}
 	.inputbox {
@@ -110,12 +110,12 @@
 	}
 }
 
-#rt-authorized-form {
+#g-authorized-form {
 	padding: 50px 0;
 }
 
-.rt-comingsoon-form,
-.rt-authorized-login-form {
+.g-comingsoon-form,
+.g-authorized-login-form {
     margin: auto;
     text-align: center;
     width: 90%;
@@ -124,33 +124,33 @@
 		border: 1px solid darken($white, 15%);
 		@include linear-gradient(fadeout($white, 30%), fadeout($white, 30%));
 		width: 280px;
-		&.rt-secretkey-input {
+		&.g-secretkey-input {
 			width: 100px;
 		}
 	}
 }
 
-.rt-secretkey-help {
+.g-secretkey-help {
 	padding: 0 10px;
 	vertical-align: middle;
 }
 
-#rt-form-login {
+#g-form-login {
 	margin: 25px auto;
 }
 
 // Mobile Modes
 @include breakpoint(mobile-only) {
-	.rt-comingsoon-body {
+	.g-comingsoon-body {
 		padding: 50px 0;
 	}
-	.rt-comingsoon-title {
+	.g-comingsoon-title {
 		letter-spacing: 5px;
 		width: 80%;
 		margin: auto;
 	}
-	.rt-comingsoon-form,
-	.rt-authorized-login-form {
+	.g-comingsoon-form,
+	.g-authorized-login-form {
 		.inputbox, .button {
 			width: 80%;
 		    height: 60px;
@@ -164,20 +164,20 @@
 		    padding: 10px 25px;
 		}
 	}
-	#rt-subscription-form {
+	#g-subscription-form {
 		background-position: 50% 150px;
 	}
 }
 
 // Small Screen Mobile Modes
 @include breakpoint(small-mobile-range) {
-	.rt-comingsoon-title {
+	.g-comingsoon-title {
 		font-size: 1.5em;
 		letter-spacing: 3px;
 		width: 90%;
 		margin: auto;
 	}
-	#rt-comingsoon-counter {
+	#g-comingsoon-counter {
 		.number {
 			width: 50px;
 			height: 40px;
