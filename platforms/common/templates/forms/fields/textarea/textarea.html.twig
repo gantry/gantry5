@@ -18,6 +18,7 @@
             {% if field.readonly in ['on', 'true', 1] %}readonly="readonly"{% endif %}
             {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
             {% if field.rows is defined %}rows="{{ field.rows }}"{% endif %}
+            {% if field.wrap in ['hard', 'soft'] %}wrap="{{ field.wrap }}"{% endif %}
             >
             {{ value|join("\n") }}
          </textarea>
