@@ -88,12 +88,20 @@ ready(function() {
 
     // layoutmanager
     layoutmanager = new LayoutManager('body', {
-        delegate: '[data-lm-root] .grid .block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
+        delegate: '[data-lm-root] .g-grid .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
         droppables: '[data-lm-dropzone]',
         exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
-        resize_handles: '[data-lm-root] .grid > .block:not(:last-child)',
+        resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
         builder: builder,
         history: lmhistory
+    });
+
+    // Particles settings
+    body.delegate('click', '[data-lm-settings]', function(event, element){
+        modal.open({
+            content: 'Loading',
+            remote: $(element).data('lm-settings') + getAjaxSuffix()
+        });
     });
 
 });
