@@ -1,6 +1,7 @@
 "use strict";
 var prime      = require('prime'),
     Base       = require('./base'),
+    $          = require('elements'),
     getAjaxURL = require('../../utils/get-ajax-url');
 
 var Grid = new prime({
@@ -25,11 +26,11 @@ var Grid = new prime({
             this.removeDropzone();
         }
 
-        this.block.on('click', function(e){
+        this.block.on('click', function(e) {
             var clientX = event.clientX || (event.touches && event.touches[0].clientX) || 0,
                 boundings = this[0].getBoundingClientRect();
 
-            if (clientX + 4 - boundings.left >= boundings.width) {
+            if ($(e.target).data('lm-blocktype') === 'grid' && clientX + 4 - boundings.left >= boundings.width) {
                 return true;
             }
 
