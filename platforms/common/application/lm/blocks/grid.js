@@ -24,6 +24,7 @@ var Grid = new prime({
         var parent = this.block.parent();
         if (parent && parent.data('lm-root')) {
             this.removeDropzone();
+            return;
         }
 
         this.block.on('click', function(e) {
