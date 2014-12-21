@@ -26,19 +26,6 @@ var Grid = new prime({
             this.removeDropzone();
             return;
         }
-
-        this.block.on('click', function(e) {
-            var clientX = event.clientX || (event.touches && event.touches[0].clientX) || 0,
-                boundings = this[0].getBoundingClientRect();
-
-            if ($(e.target).data('lm-blocktype') === 'grid' && clientX + 4 - boundings.left >= boundings.width) {
-                return true;
-            }
-
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        });
     }
 });
 
