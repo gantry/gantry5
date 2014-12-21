@@ -87,6 +87,10 @@
             .section-actions {
                 opacity: 0;
                 @include transition(opacity 0.2s ease-out);
+                
+                i {
+                    cursor: pointer;
+                }
             }
 
             &:hover {
@@ -136,6 +140,7 @@
                         border-radius: 0 3px 3px 0;
                         right: -21px;
                         border-left: 0;
+                        cursor: pointer;
                     }
                 }
 
