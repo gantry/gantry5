@@ -38,7 +38,7 @@ History.Adapter.bind(window, 'statechange', function() {
         Data.element = $('[href="' + url + '"]');
     }
 
-    if (sidebar && Data.element) {
+    if (sidebar && Data.element && Data.element.parent('#sidebar')) {
         var lis = sidebar.search('li');
         lis.removeClass('active');
         Data.element.parent('li').addClass('active');
@@ -53,6 +53,7 @@ History.Adapter.bind(window, 'statechange', function() {
         }
 
         var target = $(Data.target);
+        console.log(Data, State);
         $('body').getPopover().hideAll(true).destroy();
         if (response.body && response.body.html) {
             (target || $('[data-g5-content]') || $('body')).html(response.body.html);
