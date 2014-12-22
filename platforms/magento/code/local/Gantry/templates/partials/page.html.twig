@@ -6,6 +6,7 @@
     {% block javascript %}
         <script>
             var GANTRY_AJAX_SUFFIX = '{{ gantry.ajax_suffix }}';
+            var GANTRY_AJAX_URL = '{{ gantry.route('%ajax%')|e }}';
         </script>
     {% endblock %}
 

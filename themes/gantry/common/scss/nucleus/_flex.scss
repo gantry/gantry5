@@ -1,5 +1,5 @@
 // Page Container
-.container {
+.g-container {
 	width: $large-desktop-container;
 	margin: 0 auto;
 	padding: 0;
@@ -18,7 +18,7 @@
 }
 
 // Grid Row and Column Setup
-.grid {
+.g-grid {
 	@include display(flex);
 	@include flex-flow(row wrap);
 	list-style: none;
@@ -29,7 +29,7 @@
 	}
 }
 
-.block {
+.g-block {
 	@include flex(1);
 	min-width: 0;
 	min-height: 0;
@@ -39,7 +39,7 @@
 }
 
 // Content Block Spacing
-.content {
+.g-content {
 	margin: $content-margin;
 	padding: $content-padding;
 }
@@ -95,60 +95,14 @@ body [class*="size-"] {
 	@include flex(0 percentage(1/12));
 }
 
-@include breakpoint(tablet-range) {
-	.size-tablet-1-2 {
-		@include flex(0 percentage(1/2));
-	}
-
-	.size-tablet-1-3 {
-		@include flex(0 percentage(1/3));
-	}
-
-	.size-tablet-1-4 {
-		@include flex(0 percentage(1/4));
-	}
-
-	.size-tablet-1-5 {
-		@include flex(0 percentage(1/5));
-	}
-
-	.size-tablet-1-6 {
-		@include flex(0 percentage(1/6));
-	}
-
-	.size-tablet-1-7 {
-		@include flex(0 percentage(1/7));
-	}
-
-	.size-tablet-1-8 {
-		@include flex(0 percentage(1/8));
-	}
-
-	.size-tablet-1-9 {
-		@include flex(0 percentage(1/9));
-	}
-
-	.size-tablet-1-10 {
-		@include flex(0 percentage(1/10));
-	}
-
-	.size-tablet-1-11 {
-		@include flex(0 percentage(1/11));
-	}
-
-	.size-tablet-1-12 {
-		@include flex(0 percentage(1/12));
-	}
-}
-
 // Fix for Firefox versions 27 and below
 @include breakpoint(mobile-only) {
 	@supports not (flex-wrap: wrap) {
-		.grid {
+		.g-grid {
 			display: block;
 			@include flex-wrap(inherit);
 		}
-		.block {
+		.g-block {
 			display: block;
 			@include flex(inherit);
 		}
@@ -173,7 +127,7 @@ body [class*="size-"] {
 // Fixed Grid Style
 .fixed-blocks {
 	@include flex-flow(row wrap);
-	.block {
+	.g-block {
 		@include flex(inherit);
 		width: $fixed-block-full;
 		@include breakpoint(desktop-range) {

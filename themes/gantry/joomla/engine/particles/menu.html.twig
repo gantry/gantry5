@@ -17,14 +17,14 @@
     {% set title = item.anchor_title ? ' title="' ~ item.anchor_title ~ '"' %}
     {% set class = item.anchor_css ? ' class="' ~ item.anchor_css ~ '"' %}
     {% set active = menu.isActive(item) ? ' active' : '' %}
-    <li id="menu-item-{{ item.id }}" class="menu-item menu-item-type-{{ item.type }} menu-item-{{ item.id }}{{ active }}">
+    <li id="g-menu-item-{{ item.id }}" class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{{ active }}">
         {% if item.link %}
             <a href="{{ item.link }}"{{ class ~ title ~ item.anchor_attributes }}>{{ _self.displayTitle(item) }}</a>
         {% else %}
             {% if item.type == 'heading' %}
-            <span class="nav-header"{{ title }}>{{ item.title }}</span>
+            <span class="g-nav-header"{{ title }}>{{ item.title }}</span>
             {% else %}
-            <span class="separator"{{ title }}>{{ _self.displayTitle(item) }}</span>
+            <span class="g-separator"{{ title }}>{{ _self.displayTitle(item) }}</span>
             {% endif %}
         {% endif %}
         {% if (item.children) -%}
@@ -34,9 +34,9 @@
 {% endmacro %}
 
 {% macro displaySubmenu(children, menu) %}
-    <ul class="dropdown">
-        <li class="dropdown-column">
-            <ul class="sublevel">
+    <ul class="g-dropdown">
+        <li class="g-dropdown-column">
+            <ul class="g-sublevel">
                 {% for item in children %}
                 {{ _self.displayItem(item, menu) }}
                 {% endfor %}
@@ -49,7 +49,7 @@
 <nav
 {%- if particle.css.id %} id="{{ particle.css.id }}"{% endif %}
 {%- if particle.css.class %} class="{{ particle.css.class }}"{% endif %} role="navigation">
-    <ul class="toplevel">
+    <ul class="g-toplevel">
         {% for item in menu %}
             {{ _self.displayItem(item, menu) }}
         {% endfor %}

@@ -1,8 +1,9 @@
 "use strict";
-var prime     = require('prime'),
-    Atom      = require('./atom'),
-    bind      = require('mout/function/bind'),
-    precision = require('mout/number/enforcePrecision');
+var prime      = require('prime'),
+    Atom       = require('./atom'),
+    bind       = require('mout/function/bind'),
+    precision  = require('mout/number/enforcePrecision'),
+    getAjaxURL = require('../../utils/get-ajax-url');
 
 var UID = 0;
 
@@ -18,10 +19,12 @@ var Particle = new prime({
     },
 
     layout: function() {
-        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><span>' + this.getTitle() + '</span><div class="float-right"><span class="particle-size"></span> <i class="fa fa-cog" data-lm-nodrag data-lm-settings></i></div></div>';
+        var settings_uri = getAjaxURL('particles/' + this.getId() + '/edit');
+
+        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><span>' + this.getTitle() + '</span><div class="float-right"><span class="particle-size"></span> <i class="fa fa-cog" data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
     },
 
-    setLabelSize: function(size){
+    setLabelSize: function(size) {
         var label = this.block.find('.particle-size');
         if (!label) { return false; }
 

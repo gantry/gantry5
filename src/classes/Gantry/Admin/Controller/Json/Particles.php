@@ -22,4 +22,12 @@ class Particles extends JsonController
 
         return new JsonResponse($response);
     }
+
+    public function edit($id)
+    {
+        $response = [];
+        $response['html'] = $this->container['admin.theme']->render('@gantry-admin/layouts/particles_edit.html.twig', ['id' => $id]);
+
+        return new JsonResponse($response);
+    }
 }

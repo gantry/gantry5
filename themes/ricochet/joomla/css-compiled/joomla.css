@@ -539,122 +539,122 @@
     left: -10px; }
   .sprocket-strips .sprocket-strips-arrows .arrow.next {
     right: -10px; } }
-#rt-offline #rt-header-surround {
+#g-offline #g-header-surround {
   padding-top: 0; }
 
 #system-message-container {
   position: relative;
   z-index: 1000; }
 
-.rt-offline-logo {
+.g-offline-logo {
   width: 240px;
   margin: 0 auto 50px auto; }
-  .rt-offline-logo #rt-logo {
+  .g-offline-logo #g-logo {
     margin: 0 auto; }
 
-.rt-logo-block {
+.g-logo-block {
   background: rgba(255, 255, 255, 0.45);
   border-radius: 3px; }
 
-.rt-offline-body {
+.g-offline-body {
   margin: 150px auto;
   padding: 80px 0;
   background: fadeout(#66BDBB, 50%);
   width: 80%;
   border-radius: 3px; }
   @media only all and (max-width: 47.938rem) {
-    .rt-offline-body {
+    .g-offline-body {
       width: 100%;
       margin: 50px 0; } }
   @media only all and (max-width: 30rem) {
-    .rt-offline-body {
+    .g-offline-body {
       width: 100%;
       margin: 0; } }
-  .rt-offline-body a {
+  .g-offline-body a {
     color: #132b2a; }
-    .rt-offline-body a:hover {
+    .g-offline-body a:hover {
       color: inherit; }
 
-.rt-offline-title {
+.g-offline-title {
   margin: 30px 0;
   letter-spacing: 3px;
   text-transform: uppercase; }
 
-.rt-offline-message,
-.rt-authorized-login-message {
+.g-offline-message,
+.g-authorized-login-message {
   text-align: center;
   width: 50%;
   margin: auto; }
 
-.rt-subscription-title,
-.rt-authorized-form-title {
+.g-subscription-title,
+.g-authorized-form-title {
   font-size: 160%;
   margin-bottom: 25px;
   text-align: center; }
 
-#rt-subscription-form {
+#g-subscription-form {
   padding: 80px 0;
   width: 100%; }
-  #rt-subscription-form .container {
+  #g-subscription-form .container {
     background: none; }
-  #rt-subscription-form .inputbox {
+  #g-subscription-form .inputbox {
     border: 1px solid #d9d9d9; }
 
-#rt-authorized-form {
+#g-authorized-form {
   padding: 50px 0; }
 
-.rt-offline-form,
-.rt-authorized-login-form {
+.g-offline-form,
+.g-authorized-login-form {
   margin: auto;
   text-align: center;
   width: 90%; }
-  .rt-offline-form .inputbox,
-  .rt-authorized-login-form .inputbox {
+  .g-offline-form .inputbox,
+  .g-authorized-login-form .inputbox {
     color: #555555;
     border: 1px solid #d9d9d9;
     background-color: fadeout(#fff, 30%);
     background-image: -webkit-linear-gradient(fadeout(#fff, 30%), fadeout(#fff, 30%));
     background-image: linear-gradient(to ,fadeout(#fff, 30%));
     width: 280px; }
-    .rt-offline-form .inputbox.rt-secretkey-input,
-    .rt-authorized-login-form .inputbox.rt-secretkey-input {
+    .g-offline-form .inputbox.g-secretkey-input,
+    .g-authorized-login-form .inputbox.g-secretkey-input {
       width: 100px; }
 
-.rt-secretkey-help {
+.g-secretkey-help {
   padding: 0 10px;
   vertical-align: middle; }
 
-#rt-form-login {
+#g-form-login {
   margin: 25px auto; }
 
 @media only all and (max-width: 47.938rem) {
-  .rt-offline-body {
+  .g-offline-body {
     padding: 50px 0; }
 
-  .rt-offline-title {
+  .g-offline-title {
     letter-spacing: 5px;
     width: 80%;
     margin: auto; }
 
-  .rt-offline-form .inputbox, .rt-offline-form .button,
-  .rt-authorized-login-form .inputbox,
-  .rt-authorized-login-form .button {
+  .g-offline-form .inputbox, .g-offline-form .button,
+  .g-authorized-login-form .inputbox,
+  .g-authorized-login-form .button {
     width: 80%;
     height: 40px;
     margin: auto;
     display: block; }
-  .rt-offline-form .inputbox,
-  .rt-authorized-login-form .inputbox {
+  .g-offline-form .inputbox,
+  .g-authorized-login-form .inputbox {
     margin: 15px auto; }
-  .rt-offline-form .readon, .rt-offline-form .button,
-  .rt-authorized-login-form .readon,
-  .rt-authorized-login-form .button {
+  .g-offline-form .readon, .g-offline-form .button,
+  .g-authorized-login-form .readon,
+  .g-authorized-login-form .button {
     padding: 10px 25px; }
 
-  #rt-subscription-form {
+  #g-subscription-form {
     background-position: 50% 150px; } }
 @media only all and (max-width: 30rem) {
-  .rt-offline-title {
+  .g-offline-title {
     font-size: 1.5em;
     letter-spacing: 3px;
     width: 90%;

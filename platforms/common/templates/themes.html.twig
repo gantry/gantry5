@@ -2,21 +2,21 @@
 
 
 {% block content %}
-    <div id="g5-container" class="container">
+    <div id="g5-container" class="g-container">
         <div class="inner-container">
-            <div class="grid">
-                <div class="block inner-header">
+            <div class="g-grid">
+                <div class="g-block inner-header">
                     <span class="gantry-logo"></span>
                 </div>
             </div>
-            <div class="grid">
-                <div class="block main-block">
+            <div class="g-grid">
+                <div class="g-block main-block">
                     <section id="main">
                         <div data-g5-content>
                             {% block gantry %}
-                                <div class="content" data-g5-content>
+                                <div class="g-content" data-g5-content>
                                     <h1><i class="fa fa-fw fa-plug"></i> Available Themes</h1>
-                                    <div class="themes cards-wrapper grid fixed-blocks">
+                                    <div class="themes cards-wrapper g-grid fixed-blocks">
                                         {% for id, theme in styles %}
                                             <div class="theme card">
                                                 <div class="theme-id">

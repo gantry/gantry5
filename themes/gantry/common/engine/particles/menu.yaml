@@ -25,7 +25,7 @@ form:
           type: text
           label: Class
           description: CSS class name for the particle.
-          default: main-nav
+          default: g-main-nav
 
     .config:
       type: container

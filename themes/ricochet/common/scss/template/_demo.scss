@@ -1,5 +1,5 @@
 // General Image
-.rt-image {
+.g-image {
 	position: relative;
 	img {
 		max-width: 100%;
@@ -7,7 +7,7 @@
 	}
 	&.with-attribution, &.with-overlay {
 		display: block;
-		.rt-attribution, .rt-img-overlay {
+		.g-attribution, .g-img-overlay {
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -27,17 +27,17 @@
 			}
 		}
 		&:hover {
-			.rt-attribution, .rt-img-overlay {
+			.g-attribution, .g-img-overlay {
 				opacity: 1;
 				visibility: visible;
 			}
 		}
 	}
 }
-.rt-image-promo {
+.g-image-promo {
 	position: relative;
 }
-.rt-image-overlay:before {
+.g-image-overlay:before {
     background: fade-out($core-accent, 0.15);
     content: "";
     display: block;
@@ -48,14 +48,14 @@
 		background: fade-out(#1B3761, 0.15);
     }
 }
-.rt-image-content-wrapper {
+.g-image-content-wrapper {
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
 }
-.rt-image-content {
+.g-image-content {
 	color: $white;
 	position: absolute;
 	top: 50%;
@@ -64,11 +64,11 @@
 }
 
 /* Demo Typography */
-.rt-icon-large {
+.g-icon-large {
 	font-size: 5.0em;
 	line-height: 1.5em;
 }
-.rt-circle-number {
+.g-circle-number {
 	color: $white;
 	background: $core-accent;
     border-radius: 100%;
@@ -80,58 +80,58 @@
     padding: 10px;
     width: 20px;
 }
-.rt-form-horizontal {
+.g-form-horizontal {
 	@include display(flex);
 }
-.rt-icon-large {
+.g-icon-large {
 	font-size: 3.5em;
 	line-height: 1.2em;
 }
-.rt-icon-left {
+.g-icon-left {
 	float: left;
 	padding: 0 10px 25px 0;
-	&.rt-hero-icon {
+	&.g-hero-icon {
 	    font-size: 10em;
 	    padding: 10px 15px 5px 0;
 	}
 }
-.rt-icon-right {
+.g-icon-right {
 	float: right;
 	padding: 0 0 25px 10px;
 }
-.rt-promo-title {
+.g-promo-title {
 	font-family: $font-family-alt;
    	font-size: 3em;
     line-height: 1.25em;
     margin: 25px 0;
     display: block;
 }
-.rt-label {
+.g-label {
 	display: inline-block;
 	font-size: $core-font-size - 2;
 	padding: 0 15px;
 	color: $white;
 	background: rgba(0, 0, 0, 0.25);
-	&.rt-blue {
+	&.g-blue {
 		background: #66BDBB;
 	}
-	&.rt-green {
+	&.g-green {
 		background: #80C294;
 	}
-	&.rt-red {
+	&.g-red {
 		background: #E7605D;
 	}
-	&.rt-purple {
+	&.g-purple {
 		background: #9D8BA6;
 	}
 }
-.rt-box1, .rt-box2, .rt-box3 {
+.g-box1, .g-box2, .g-box3 {
 	padding: 50px 25px;
 	a:hover {
 		color: inherit;
 	}
 }
-.rt-box1 {
+.g-box1 {
 	border: 1px solid rgba(0, 0, 0, 0.05);
 	border-top: 1px solid transparent;
 	box-shadow: 0 -4px 0 $core-accent;
@@ -139,7 +139,7 @@
 		color: $core-accent;
 	}
 }
-.rt-box2 {
+.g-box2 {
 	border: 1px solid rgba(0, 0, 0, 0.05);
 	border-top: 1px solid transparent;
 	box-shadow: 0 -4px 0 $core-accent2;
@@ -147,7 +147,7 @@
 		color: $core-accent2;
 	}
 }
-.rt-box3 {
+.g-box3 {
 	border: 1px solid rgba(0, 0, 0, 0.05);
 	border-top: 1px solid transparent;
 	box-shadow: 0 -4px 0 $core-accent3;
@@ -172,7 +172,7 @@
 		box-shadow: 0 -4px 0 #DFCB67;
 	}
 }
-.rt-tags {
+.g-tags {
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -197,16 +197,16 @@
 		}
 	}
 }
-.rt-white-box {
+.g-white-box {
 	background: $white;
 	padding: 15px;
 }
-.rt-grey-box {
+.g-grey-box {
 	color: $white;
 	background: $dark-gray;
 	padding: 15px;
 }
-.rt-icon-circle {
+.g-icon-circle {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 100%;
     height: 100px;
@@ -221,7 +221,7 @@
     	line-height: 0;
     }
 }
-.rt-noliststyle {
+.g-noliststyle {
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -231,7 +231,7 @@
 
 // FP RokSprocket Features - Showcase
 .fp-roksprocket-features-showcase {
-	&.rt-block {
+	&.g-block {
 		margin: 0;
 		padding: 35px 0 0 0;
 	}
@@ -294,7 +294,7 @@
 				right: -50px;
 			}
 		}
-		.rt-triangle-set {
+		.g-triangle-set {
 			position: absolute;
 			right: 0;
 			bottom: -10px;
@@ -307,26 +307,26 @@
 				}
 			}
 		}
-		.rt-triangle-1, .rt-triangle-2, .rt-triangle-3 {
+		.g-triangle-1, .g-triangle-2, .g-triangle-3 {
 			display: inline-block;
 			width: 0;
 			height: 0;
 			border-style: solid;
 		}
-		.rt-triangle-1 {
+		.g-triangle-1 {
 			border-width: 0 90px 250px 90px;
 			@media only screen and (max-width: 480px) {
 				border-width: 0 70px 220px 70px;
 			}
 		}
-		.rt-triangle-2 {
+		.g-triangle-2 {
 			border-width: 0 90px 290px 90px;
 			margin-left: -115px;
 			@media only screen and (max-width: 480px) {
 				border-width: 0 70px 260px 70px;
 			}
 		}
-		.rt-triangle-3 {
+		.g-triangle-3 {
 			border-width: 0 90px 330px 90px;
 			margin-left: -115px;
 			@media only screen and (max-width: 480px) {
@@ -334,35 +334,35 @@
 			}
 		}
 		.sprocket-features-index-1 {
-			.rt-triangle-1 {
+			.g-triangle-1 {
 				border-color: transparent transparent $core-accent transparent;
 			}
-			.rt-triangle-2 {
+			.g-triangle-2 {
 				border-color: transparent transparent fade-out($core-accent2, 0.4) transparent;
 			}
-			.rt-triangle-3 {
+			.g-triangle-3 {
 				border-color: transparent transparent fade-out($core-accent3, 0.4) transparent;
 			}
 		}
 		.sprocket-features-index-2 {
-			.rt-triangle-1 {
+			.g-triangle-1 {
 				border-color: transparent transparent $core-accent3 transparent;
 			}
-			.rt-triangle-2 {
+			.g-triangle-2 {
 				border-color: transparent transparent fade-out($core-accent, 0.4) transparent;
 			}
-			.rt-triangle-3 {
+			.g-triangle-3 {
 				border-color: transparent transparent fade-out($core-accent2, 0.4) transparent;
 			}
 		}
 		.sprocket-features-index-3 {
-			.rt-triangle-1 {
+			.g-triangle-1 {
 				border-color: transparent transparent $core-accent2 transparent;
 			}
-			.rt-triangle-2 {
+			.g-triangle-2 {
 				border-color: transparent transparent fade-out($core-accent3, 0.4) transparent;
 			}
-			.rt-triangle-3 {
+			.g-triangle-3 {
 				border-color: transparent transparent fade-out($core-accent, 0.4) transparent;
 			}
 		}
@@ -372,7 +372,7 @@
 				background: $core-accent;
 			}
 		}
-		.rt-sprocket-text {
+		.g-sprocket-text {
 			@media only screen and (max-width: 767px)  {
 				position: relative;
 				z-index: 10;
@@ -409,7 +409,7 @@ only screen and (max-width: 480px) {
 
 // FP Feature
 .fp-feature {
-	.rt-square-set {
+	.g-square-set {
 		position: relative;
 		top: 150px;
 		margin-bottom: -175px;
@@ -418,7 +418,7 @@ only screen and (max-width: 480px) {
 		    margin-bottom: -100px;
 		}
 	}
-	.rt-square-1 {
+	.g-square-1 {
 		color: darken($white, 5%);
 		background: $core-accent;
 		.demostyle-type-preset1 & {
@@ -435,7 +435,7 @@ only screen and (max-width: 480px) {
 			background: #111111;
 		}
 	}
-	.rt-square-2 {
+	.g-square-2 {
 		margin-top: 150px;
 		background: $core-accent2;
 		@media only screen and (max-width: 767px)  {
@@ -462,7 +462,7 @@ only screen and (max-width: 480px) {
 			background: #44CEDD;
 		}
 	}
-	.rt-square-3 {
+	.g-square-3 {
 		margin-top: 75px;
 		background: $core-accent3;
 		.demostyle-type-preset1 & {
@@ -478,21 +478,21 @@ only screen and (max-width: 480px) {
 		.demostyle-type-preset6 & {
 			color: $dark-gray;
 			background: #CFE895;
-			h2, a, .rt-tags li {
+			h2, a, .g-tags li {
 				color: $dark-gray;
 			}
 		}
 		.demostyle-type-preset7 & {
 			color: $dark-gray;
 			background: #7ADCED;
-			h2, a, .rt-tags li {
+			h2, a, .g-tags li {
 				color: $dark-gray;
 			}
 		}
 		.demostyle-type-preset8 & {
 			color: $dark-gray;
 			background: #FCF99E;
-			h2, a, .rt-tags li {
+			h2, a, .g-tags li {
 				color: $dark-gray;
 			}
 		}
@@ -517,7 +517,7 @@ only screen and (max-width: 480px) {
 			color: $white;
 		}
 	}
-	.rt-tags li {
+	.g-tags li {
 		color: darken($dark-gray, 15%);
 		text-transform: uppercase;
 		background: transparent;
@@ -548,7 +548,7 @@ only screen and (max-width: 480px) {
 			color: inherit;
 		}
 	}
-	.rt-image {
+	.g-image {
 		overflow: hidden;
 		img {
 			max-width: 100.5%;
@@ -560,7 +560,7 @@ only screen and (max-width: 480px) {
 
 // FP RokSprocket Grids - Utility
 .fp-roksprocket-grids-utility {
-	&.rt-block {
+	&.g-block {
 		margin-top: 325px;
 		margin-bottom: 75px;
 		@media only screen and (max-width: 767px)  {
@@ -575,7 +575,7 @@ only screen and (max-width: 480px) {
 			}
 		}
 	}
-	.rt-label {
+	.g-label {
 		text-transform: uppercase;
 		font-family: $font-family-alt;
 		margin-bottom: 25px;
@@ -669,7 +669,7 @@ only screen and (max-width: 480px) {
 
 // FP ExpandedTop
 .fp-expandedtop {
-	&.rt-block {
+	&.g-block {
 		margin: 35px 0;
 	}
 	&.title5 {
@@ -677,7 +677,7 @@ only screen and (max-width: 480px) {
 			color: darken($expandedtop-text, 25%);
 		}
 	}
-	.rt-box1, .rt-box2, .rt-box3 {
+	.g-box1, .g-box2, .g-box3 {
 		margin: 35px 0;
 		.title {
 			color: darken($expandedtop-text, 25%);
@@ -696,7 +696,7 @@ only screen and (max-width: 480px) {
 			}
 		}
 	}
-	.rt-tags li {
+	.g-tags li {
 		color: darken($dark-gray, 15%);
 		text-transform: uppercase;
 		background: transparent;
@@ -709,10 +709,10 @@ only screen and (max-width: 480px) {
 
 // FP MainTop, FP ExpandedBottom, FP MainBottom
 .fp-maintop, .fp-expandedbottom, .fp-mainbottom {
-	&.rt-block {
+	&.g-block {
 		margin: 35px 0;
 	}
-	.rt-tags li {
+	.g-tags li {
 		text-transform: uppercase;
 		background: transparent;
 		padding: 0;
@@ -724,7 +724,7 @@ only screen and (max-width: 480px) {
 
 // FP RokSprocket Mosaic - AdditionTop
 .fp-roksprocketmosaic-additiontop {
-	&.rt-block {
+	&.g-block {
 		margin: 50px 0;
 	}
 	&.title5 {
@@ -759,7 +759,7 @@ only screen and (max-width: 480px) {
 
 // FP AdditionBottom
 .fp-additionbottom {
-	&.rt-block {
+	&.g-block {
 		margin: 35px 0 0 0;
 	}
 	&.title5 {
@@ -774,7 +774,7 @@ only screen and (max-width: 480px) {
 
 // FP RokSprocket Strips - Extension
 .fp-roksprocket-strips-extension {
-	&.rt-block {
+	&.g-block {
 		margin: 35px 0;
 	}
 	&.title5 {
@@ -800,7 +800,7 @@ only screen and (max-width: 480px) {
 		.sprocket-strips-content {
 			border-bottom: 4px solid $core-accent;
 		}
-		.rt-label {
+		.g-label {
 			color: $core-accent;
 			border: 2px solid $core-accent;
 		}
@@ -812,7 +812,7 @@ only screen and (max-width: 480px) {
 		.sprocket-strips-content {
 			border-bottom: 4px solid $core-accent2;
 		}
-		.rt-label {
+		.g-label {
 			color: $core-accent2;
 			border: 2px solid $core-accent2;
 		}
@@ -820,7 +820,7 @@ only screen and (max-width: 480px) {
 			background: fade-out($core-accent2, 0.25);
 		}
 	}
-	.rt-label {
+	.g-label {
 		position: absolute;
 		bottom: 2px;
 		left: 25px;
@@ -871,15 +871,15 @@ only screen and (max-width: 480px) {
 }
 
 // FP Blog Featured
-.-rt-menu-home {
-	.rt-component-block {
+.-g-menu-home {
+	.g-component-block {
 		margin: 10px 0;
 	}
 }
 
 // FP RokSprocket Strips - Sidebar
 .fp-roksprocket-strips-sidebar {
-	&.rt-block {
+	&.g-block {
 		margin: 25px 10px;
 	}
 	.sprocket-strips-image-container img {
@@ -931,7 +931,7 @@ only screen and (max-width: 480px) {
 			}
 		}
 	}
-	.rt-tags li {
+	.g-tags li {
 		text-transform: uppercase;
 		background: transparent;
 		padding: 0;
@@ -946,13 +946,13 @@ only screen and (max-width: 480px) {
 
 // FP Sidebar
 .fp-sidebar {
-	&.rt-block {
+	&.g-block {
 		margin-top: 25px;
 	}
 	&.box4 {
 		border: none;
 	}
-	.rt-box-content {
+	.g-box-content {
 		padding: 25px;
 	}
 	.title {
@@ -960,7 +960,7 @@ only screen and (max-width: 480px) {
 	    font-size: 2em;
 	    line-height: 1.35em;
 	}
-	.rt-tags li {
+	.g-tags li {
 		text-transform: uppercase;
 		background: transparent;
 		padding: 0;
@@ -968,8 +968,8 @@ only screen and (max-width: 480px) {
 		font-weight: bold;
 		font-size: 85%;
 	}
-	.rt-image {
-		.rt-corner-triangle {
+	.g-image {
+		.g-corner-triangle {
 			content: "+";
 			position: absolute;
 			font-size: 3.8em;
@@ -992,16 +992,16 @@ only screen and (max-width: 480px) {
 
 // FP Bottom
 .fp-bottom {
-	&.rt-block {
+	&.g-block {
 		margin-bottom: 35px;
 	}
 	.gantry-row {
 	    margin: 0 -10px;
 	}
-	.rt-image-promo {
+	.g-image-promo {
 		margin-bottom: 35px;
 	}
-	.rt-image-content {
+	.g-image-content {
 		width: 80%;
 		text-align: center;
 		.title {
@@ -1010,14 +1010,14 @@ only screen and (max-width: 480px) {
 		    margin-top: 1em;
 		}
 	}
-	.rt-label {
+	.g-label {
 		border: 2px solid $white;
 		background: transparent;
 		font-family: $font-family-alt;
 		text-transform: uppercase;
 		font-weight: bold;
 	}
-	.rt-tags li {
+	.g-tags li {
 		text-transform: uppercase;
 		background: transparent;
 		padding: 0;
@@ -1050,7 +1050,7 @@ only screen and (max-width: 480px) {
 }
 
 // FP HorizMenu
-.fp-horizmenu.rt-block {
+.fp-horizmenu.g-block {
 	@media only screen and (min-width: 960px) and (max-width: 1199px) {
 		padding-left: 70px;
 	}
@@ -1070,7 +1070,7 @@ only screen and (max-width: 480px) {
 
 // FP Search
 .fp-search {
-	&.rt-block {
+	&.g-block {
 		margin: 0;
 		padding: 35px 25px 25px 25px;
 		background: darken($sideslider-bg, 5%);
@@ -1092,7 +1092,7 @@ only screen and (max-width: 480px) {
 
 // FP Menu
 .fp-menu {
-	&.rt-block {
+	&.g-block {
 		margin: 0;
 		padding: 0 25px 50px 25px;
 		background: darken($sideslider-bg, 5%);
@@ -1119,7 +1119,7 @@ only screen and (max-width: 480px) {
 
 // FP RokSprocket Tabs - SideSlider
 .fp-roksprocket-tabs-sideslider {
-	&.rt-block {
+	&.g-block {
 		padding: 45px 15px 0 15px;
 	}
 	.sprocket-tabs {
@@ -1189,19 +1189,19 @@ only screen and (max-width: 480px) {
 		vertical-align: top;
 	}
 }
-.rt-mbsb-table {
-	.rt-sb-table-col {
+.g-mbsb-table {
+	.g-sb-table-col {
 		height: 38px;
 		vertical-align: middle;
 	}
-	.rt-mb-table-col {
+	.g-mb-table-col {
 		height: 83px;
 		vertical-align: middle;
 	}
 }
 
 // Module Variations Page
-.rt-sidebar-layout {
+.g-sidebar-layout {
 	table.table-bordered th {
 		background: rgba(0, 0, 0, 0.05);
 	}
@@ -1262,14 +1262,14 @@ form.gantry-example {
 }
 
 // Pricing Page
-.rt-table {
+.g-table {
 	clear: both;
 	border-width: 1px 0 1px 1px;
 	border-style: solid;
 	border-color: darken($core-accent, 10%);
     margin: 35px 0;
     list-style: none;
-    &.rt-table-last-col {
+    &.g-table-last-col {
     	border-right: 1px solid darken($core-accent, 10%);
     }
     li {
@@ -1279,7 +1279,7 @@ form.gantry-example {
 		border-width: 1px 0;
 	}
 }
-.rt-table-title {
+.g-table-title {
 	font-size: 1.5em;
 	line-height: 2em;
 	color: $white;
@@ -1289,7 +1289,7 @@ form.gantry-example {
 	font-family: $font-family-alt;
 	font-weight: bold;
 }
-.rt-table-price {
+.g-table-price {
 	font-size: 2em;
 	color: $white;
 	background: lighten($core-accent, 5%);
@@ -1300,7 +1300,7 @@ form.gantry-example {
 }
 
 // Blog Page
-.rt-blog-form {
+.g-blog-form {
 	.inputbox, .readon {
 		display: inline-block;
 	}

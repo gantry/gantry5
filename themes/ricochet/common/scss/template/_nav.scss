@@ -1,18 +1,18 @@
-.main-nav {
+.g-main-nav {
 	font-family: $font-family-alt;
 	text-transform: uppercase;
 
 	// Main Level
-	> .toplevel {
+	> .g-toplevel {
 		> li {
-			> a, > .separator {
+			> a, > .g-separator {
 				font-size: $toplevel-font-size;
 				padding: $nav-item-padding;
 				color: $nav-link;
 				font-weight: bold;
 			}
 			&:hover, &:focus, &.active {
-				> a, > .separator {
+				> a, > .g-separator {
 					color: $core-accent;
 				}
 			}
@@ -20,7 +20,7 @@
 	}
 
 	// First Level Dropdown
-	.dropdown {
+	.g-dropdown {
 		background: $core-accent;
 	    color: $white;
 	    border: 1px solid darken($core-accent, 15%);
@@ -28,7 +28,7 @@
 	}
 
 	// Sublevel Items
-	.sublevel {
+	.g-sublevel {
     	> li {
     		padding: 0.3rem;
     		border-bottom: 1px solid darken($core-accent, 15%);
@@ -38,7 +38,7 @@
 				border-bottom: 0;
 			}
 
-    		> a, > .separator, > .nav-header {
+    		> a, > .g-separator, > .g-nav-header {
     			font-size: $dropdown-font-size;
     			padding: $subnav-item-padding;
     			font-weight: normal;
@@ -47,7 +47,7 @@
     			border: 1px solid transparent;
     		}
     		&:hover, &:focus, &.active {
-				> a, > .separator {
+				> a, > .g-separator {
 					background: darken($core-accent, 10%);
 					border: 1px solid darken($core-accent, 15%);
 				}
