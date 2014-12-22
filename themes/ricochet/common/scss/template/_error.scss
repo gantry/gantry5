@@ -1,9 +1,9 @@
-#rt-error {
-	#rt-header-surround {
+#g-error {
+	#g-header-surround {
 		padding-top: 5px;
 	}
 }
-.rt-error-body {
+.g-error-body {
 	margin: 150px auto;
 	padding: 50px 0;
 	background: fadeout($core-accent, 50%);
@@ -24,37 +24,37 @@
 		}
 	}
 }
-.rt-error-header {
+.g-error-header {
 	text-align: center;
 	margin: 25px 0;
 }
 
-.rt-error-code {
+.g-error-code {
 	font-size: 6em;
 	line-height: 1.5em;
 }
 
-.rt-error-code-desc {
+.g-error-code-desc {
 	text-transform: uppercase;
 }
 
-.rt-error-content {
+.g-error-content {
 	text-align: center;
 	margin: 25px 0;
 }
 
-.rt-error-title {
+.g-error-title {
 	font-size: 2em;
 	line-height: 1.5em;
 	text-transform: uppercase;
 }
 
-.rt-error-message {
+.g-error-message {
 	font-size: 1em;
 	margin: 15px 0;
 }
 
-.rt-error-button {
+.g-error-button {
 	margin: 25px 0;
 	.readon {
 		color: $white;

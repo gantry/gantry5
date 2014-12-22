@@ -7,12 +7,12 @@
             border: 2px dashed #dfdfdf;
         }
 
-        .grid, .block {
+        .g-grid, .g-block {
             position: relative;
         }
 
         // resizers
-        .grid > .block {
+        .g-grid > .g-block {
             &:after {
                 content: "";
                 display: block;
@@ -32,14 +32,14 @@
             }
         }
 
-        &.moving .grid > .block:after, &.moving .grid > .block > [data-lm-blocktype]:after,
-        &.moving .grid:hover > .block [data-lm-blocktype]:after {
+        &.moving .g-grid > .g-block:after, &.moving .g-grid > .g-block > [data-lm-blocktype]:after,
+        &.moving .g-grid:hover > .g-block [data-lm-blocktype]:after {
             display: none;
         }
 
         /* THIS IS FOR PAGES */
 
-        .grid .block {
+        .g-grid .g-block {
             .section:first-child {
                 margin-top: 0;
             }
@@ -51,7 +51,6 @@
 
         .section, .non-visible-section {
             background: $white;
-
             margin: 14px 0;
             padding: 8px;
             // with box shadows: $gap: 11px;
@@ -88,6 +87,10 @@
             .section-actions {
                 opacity: 0;
                 @include transition(opacity 0.2s ease-out);
+                
+                i {
+                    cursor: pointer;
+                }
             }
 
             &:hover {
@@ -97,7 +100,7 @@
                 }
             }
 
-            .grid {
+            .g-grid {
                 margin: 8px 0;
                 padding: 4px;
                 border: 0;
@@ -137,6 +140,7 @@
                         border-radius: 0 3px 3px 0;
                         right: -21px;
                         border-left: 0;
+                        cursor: pointer;
                     }
                 }
 
@@ -148,7 +152,7 @@
                     margin-bottom: 0;
                 }
 
-                .block:after {
+                .g-block:after {
                     display: none;
                 }
 
@@ -171,7 +175,7 @@
             margin-top: 28px;
             border-top: 1px solid #ddd;
 
-            .grid {
+            .g-grid {
                 background: $white;
                 &:empty:after {
                     content: "Drop non-visible particles here...";
@@ -184,7 +188,7 @@
             }
         }
 
-        > .grid > .block {
+        > .g-grid > .g-block {
             margin-right: 14px;
             background: $white;
             padding-bottom: 50px;
@@ -205,8 +209,8 @@
             }
         }
 
-        .grid {
-            &:hover > .block {
+        .g-grid {
+            &:hover > .g-block {
                 > .particle, > .position, > .spacer, > .pagecontent {
                     &:after {
                         content: "";
@@ -223,7 +227,7 @@
             }
         }
 
-        .section > .grid > .block:last-child {
+        .section > .g-grid > .g-block:last-child {
             .particle, .position, .spacer, .pagecontent, .atom {
                 margin-right: 0;
             }
@@ -236,18 +240,12 @@
 
         }
 
-        .grid > .block {
-            .block {
-                //margin: 0;
-            }
+        .g-grid > .g-block {
 
             &:last-child {
                 margin-right: 0;
             }
 
-            .placeholder:not(:first-child):not(:last-child) {
-                //margin: -6px 0;
-            }
             .in-between-sections:first-child, .in-between-sections:last-child {
                 margin: 6px;
             }
@@ -336,7 +334,7 @@
 
         /* END THIS IS FOR PAGES */
 
-        /* .block {
+        /* .g-block {
             padding: 8px;
             //border: 1px solid #dfdfdf;
             box-shadow: inset 0 0 0 1px #dfdfdf;
@@ -440,7 +438,7 @@
     .lm-newblocks {
         padding-bottom: 8px;
 
-        .block {
+        .g-block {
             display: inline-block;
             text-align: center;
             background: $sidebar-bg;

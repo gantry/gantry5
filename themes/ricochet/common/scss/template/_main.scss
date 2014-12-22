@@ -1,4 +1,4 @@
-#main {
+#g-main {
 	background: $main-bg;
 	//.content {
 		//@include content-border;
@@ -8,7 +8,7 @@
 	}
 }
 
-#main-top {
+#g-main-top {
 	background: $maintop-bg;
 	color: $maintop-text;
 	a {
@@ -26,7 +26,7 @@
 	}
 }
 
-#main-bottom {
+#g-main-bottom {
 	background: $maintop-bg;
 	color: $maintop-text;
 	a {

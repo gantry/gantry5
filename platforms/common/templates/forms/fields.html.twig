@@ -9,7 +9,7 @@
         {% set field = field + {'name': name} %}
         {% set value = data.get(scope ~ name) %}
 
-        {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
+        {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
     {% endif %}
 {% endfor %}
 

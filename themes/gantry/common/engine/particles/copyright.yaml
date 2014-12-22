@@ -4,21 +4,21 @@ description: Display copyrights.
 form:
   fields:
     enabled:
-      type: checkbox
+      type: input.checkbox
       label: Enabled
       description: Globally enable the particle.
       default: true
 
     date.start:
-      type: text
+      type: input.text
       label: Start Year
       default: now
 
     date.end:
-      type: text
+      type: input.text
       label: End Year
       default: now
 
     owner:
-      type: text
+      type: input.text
       label: Copyright owner

@@ -1,5 +1,5 @@
-#rt-offline {
-	#rt-header-surround {
+#g-offline {
+	#g-header-surround {
 		padding-top: 0;
 	}
 }
@@ -7,18 +7,18 @@
     position: relative;
     z-index: 1000;
 }
-.rt-offline-logo {
+.g-offline-logo {
 	width: 240px;
 	margin: 0 auto 50px auto;
-	#rt-logo {
+	#g-logo {
 		margin: 0 auto;
 	}
 }
-.rt-logo-block {
+.g-logo-block {
 	background: rgba(255, 255, 255, 0.45);
 	border-radius: 3px;
 }
-.rt-offline-body {
+.g-offline-body {
 	margin: 150px auto;
 	padding: 80px 0;
 	background: fadeout($core-accent, 50%);
@@ -39,26 +39,26 @@
 		}
 	}
 }
-.rt-offline-title {
+.g-offline-title {
 	margin: 30px 0;
 	letter-spacing: 3px;
 	text-transform: uppercase;
 }
-.rt-offline-message,
-.rt-authorized-login-message {
+.g-offline-message,
+.g-authorized-login-message {
 	text-align: center;
 	width: 50%;
 	margin: auto;
 }
 
-.rt-subscription-title,
-.rt-authorized-form-title {
+.g-subscription-title,
+.g-authorized-form-title {
 	font-size: 160%;
 	margin-bottom: 25px;
 	text-align: center;
 }
 
-#rt-subscription-form {
+#g-subscription-form {
 	padding: 80px 0;
 	width: 100%;
 	.container {
@@ -69,12 +69,12 @@
 	}
 }
 
-#rt-authorized-form {
+#g-authorized-form {
 	padding: 50px 0;
 }
 
-.rt-offline-form,
-.rt-authorized-login-form {
+.g-offline-form,
+.g-authorized-login-form {
     margin: auto;
     text-align: center;
     width: 90%;
@@ -83,33 +83,33 @@
 		border: 1px solid darken($white, 15%);
 		@include linear-gradient(fadeout($white, 30%), fadeout($white, 30%));
 		width: 280px;
-		&.rt-secretkey-input {
+		&.g-secretkey-input {
 			width: 100px;
 		}
 	}
 }
 
-.rt-secretkey-help {
+.g-secretkey-help {
 	padding: 0 10px;
 	vertical-align: middle;
 }
 
-#rt-form-login {
+#g-form-login {
 	margin: 25px auto;
 }
 
 // Mobile Modes
 @include breakpoint(mobile-only) {
-	.rt-offline-body {
+	.g-offline-body {
 		padding: 50px 0;
 	}
-	.rt-offline-title {
+	.g-offline-title {
 		letter-spacing: 5px;
 		width: 80%;
 		margin: auto;
 	}
-	.rt-offline-form,
-	.rt-authorized-login-form {
+	.g-offline-form,
+	.g-authorized-login-form {
 		.inputbox, .button {
 			width: 80%;
 		    height: 40px;
@@ -123,14 +123,14 @@
 		    padding: 10px 25px;
 		}
 	}
-	#rt-subscription-form {
+	#g-subscription-form {
 		background-position: 50% 150px;
 	}
 }
 
 // Small Screen Mobile Modes
 @include breakpoint(small-mobile-range) {
-	.rt-offline-title {
+	.g-offline-title {
 		font-size: 1.5em;
 		letter-spacing: 3px;
 		width: 90%;

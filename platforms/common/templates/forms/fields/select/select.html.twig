@@ -1,13 +1,29 @@
 {% extends "forms/field.html.twig" %}
 
 {% block input %}
-    <select class="{{ field.classes }}" name="{{ (scope ~ name)|fieldName }}"
-            {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
-            {% if field.novalidate in ['on', 'true', 1] %}novalidate="novalidate"{% endif %}
-            {% if field.validate.required in ['on', 'true', 1] %}required="required"{% endif %}
-            >
-        {% for key, text in field.options %}
-        <option {% if key == value %}selected="selected"{% endif %} value="{{ key }}">{{ text }}</option>
-        {% endfor %}
-    </select>
+        <select
+                {# required attribute structures #}
+                name="{{ (scope ~ name)|fieldName }}"
+                {# global attribute structures #}
+                {{ block('global_attributes') }}
+                {# non-gloval attribute structures #}
+                {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
+                {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
+                {% if field.multiple in ['on', 'true', 1] %}multiple="multiple"{% endif %}
+                {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
+                {% if field.size is defined %}size="{{ field.size }}"{% endif %}
+
+                {% for key, text in field.options %}
+                        <option
+                                {# required attribute structures #}
+                                {% if key == value %}selected="selected"{% endif %}
+                                value="{{ key }}"
+                                {# non-gloval attribute structures #}
+                                {% if field.options.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
+                                {% if field.options.label is defined %}label="{{ field.options.label }}"{% endif %}
+                                >
+                            {{ text }}
+                        </option>
+            {% endfor %}
+        </select>
 {% endblock %}

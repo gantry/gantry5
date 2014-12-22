@@ -1,6 +1,6 @@
 {% set type = segment.attributes.type in ['header', 'footer'] ? segment.attributes.type : 'section' %}
-{% set attr_id = segment.attributes.id ? ' id="' ~ segment.attributes.id|lower ~ '"' %}
-{% set attr_class = segment.classes ? ' class="' ~ segment.classes|join(' ') ~ '"' %}
+{% set attr_id = segment.attributes.id ? ' id="g-' ~ segment.attributes.id|lower ~ '"' %}
+{% set attr_class = segment.classes ? ' class="g-' ~ segment.classes|join(' ') ~ '"' %}
 
 {% set html %}
     {% if  segment.children %}

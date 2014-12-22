@@ -5,13 +5,13 @@
 {% endblock %}
 <body>
     {% block header_section %}
-    <header id="header">
-        <div class="container">
-            <div class="grid pure-g-r">
-                <div class="block size-1-3 pure-u-1-3">
+    <header id="g-header">
+        <div class="g-container">
+            <div class="g-grid pure-g">
+                <div class="g-block size-1-3 pure-u-1-3">
                     <h1><a href="{{ base_url_relative }}">{{ site.title }}</a></h1>
                 </div>
-                <div class="block pure-u-2-3">
+                <div class="g-block pure-u-2-3">
                     {% block header %}
                         {% include 'widgets/menu.html.twig' %}
                     {% endblock %}
@@ -20,23 +20,23 @@
         </div>
     </header>
     {% endblock %}
-    <div class="container">
-        <section id="main">
-            <div class="grid pure-g-r">
+    <div class="g-container">
+        <section id="g-main">
+            <div class="g-grid pure-g">
                 {% if layout == 'sidebar' %}
-                <div class="mainbody block pure-u-2-3">
+                <div class="g-mainbody g-block pure-u-2-3">
                     {% block breadcrumbs %}{% endblock %}
-                    <div class="content">
+                    <div class="g-content">
                         {% block content_sidebar %}{% endblock %}
                         {% block pagination %}{% endblock %}
                     </div>
                 </div>
-                <div class="sidebar block size-1-3 pure-u-1-3">
+                <div class="g-sidebar g-block size-1-3 pure-u-1-3">
                     {% block sidebar %}{% endblock %}
                 </div>
                 {% else %}
-                <div class="mainbody block pure-u-1-1">
-                    <div class="content">
+                <div class="g-mainbody g-block pure-u-1-1">
+                    <div class="g-content">
                         {% block content_full %}{% endblock %}
                     </div>
                 </div>
@@ -46,8 +46,8 @@
     </div>
 
     {% block footer_section %}
-    <footer id="footer">
-        <div class="container">
+    <footer id="g-footer">
+        <div class="g-container">
             <a href="http://getgrav.org">Grav</a> was made with <i class="fa fa-heart"></i> by <a href="http:/www.rockettheme.com">RocketTheme</a>.
         </div>
     </footer>

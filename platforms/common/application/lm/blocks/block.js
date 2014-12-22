@@ -50,7 +50,7 @@ var Block = new prime({
     },
 
     layout: function() {
-        return '<div class="block" data-lm-id="' + this.getId() + '"' + this.dropzone() + ' data-lm-blocktype="block"></div>';
+        return '<div class="g-block" data-lm-id="' + this.getId() + '"' + this.dropzone() + ' data-lm-blocktype="block"></div>';
     },
 
     onRendered: function(element, parent) {

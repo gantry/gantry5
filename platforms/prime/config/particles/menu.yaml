@@ -2,7 +2,7 @@ enabled: true
 
 css:
   id:
-  class: 'main-nav'
+  class: 'g-main-nav'
 
 config:
   base: /

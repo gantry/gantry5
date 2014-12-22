@@ -10,7 +10,7 @@ form:
       default: true
 
     css.class:
-      type: text
+      type: input.text
       label: Class
       description: CSS class name for the particle.
       default: totop

@@ -193,7 +193,7 @@ var Builder = new prime({
 
     cleanupLonely: function() {
         var ghosts = [],
-            parent, children = $('[data-lm-root] > .section > .grid > .block .grid > .block, [data-lm-root] > .section > .grid > .block > .block');
+            parent, children = $('[data-lm-root] > .g-section > .g-grid > .g-block .g-grid > .g-block, [data-lm-root] > .g-section > .g-grid > .g-block > .g-block');
 
         if (!children) {
             return;
@@ -204,7 +204,7 @@ var Builder = new prime({
         children.forEach(function(child) {
             child = $(child);
             parent = null;
-            isGrid = child.parent().hasClass('grid');
+            isGrid = child.parent().hasClass('g-grid');
 
             if (isGrid && child.siblings()) {
                 return false;

@@ -17,20 +17,20 @@
 {% endblock %}
 
 {% block content %}
-    <div id="g5-container" class="container">
-        <div class="grid pure-g">
-            <div class="block sidebar-block size-1-7 pure-u-1-7">
-                <nav id="gantry" class="block sidebar-block">
+    <div id="g5-container" class="g-container">
+        <div class="g-grid">
+            <div class="g-block sidebar-block size-1-7">
+                <nav id="gantry" class="g-block sidebar-block">
                     {% include "gantry/partials/navigation.html.twig" %}
                 </nav>
             </div>
-            <div class="block pure-u-6-7">
+            <div class="g-block pure-u-6-7">
                 <div data-mode-indicator="production"></div>
                 <section id="main">
                     <div id="main-header">
                         {% include "gantry/partials/header.html.twig" %}
                     </div>
-                    <div class="content">
+                    <div class="g-content">
                         {% block gantry %}
                         {% endblock %}
                     </div>
