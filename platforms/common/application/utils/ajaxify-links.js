@@ -23,7 +23,8 @@ History.Adapter.bind(window, 'statechange', function() {
     }
     var State = History.getState(),
         URI = State.url,
-        Data = State.data;
+        Data = State.data,
+        sidebar = $('#sidebar');
 
     if (size(Data) && Data.parsed !== false && storage.get(Data.uuid)) {
         Data = storage.get(Data.uuid);
@@ -32,7 +33,17 @@ History.Adapter.bind(window, 'statechange', function() {
 
     if (Data.element) {
         $('body').emit('statechangeBefore', { target: Data.element });
+    } else {
+        var url = URI.replace(window.location.origin, '');
+        Data.element = $('[href="' + url + '"]');
     }
+
+    if (sidebar && Data.element) {
+        var lis = sidebar.search('li');
+        lis.removeClass('active');
+        Data.element.parent('li').addClass('active');
+    }
+
     request.url(URI + getAjaxSuffix()).send(function(error, response) {
         if (!response.body.success) {
             modal.open({ content: response.body.html });
@@ -44,9 +55,9 @@ History.Adapter.bind(window, 'statechange', function() {
         var target = $(Data.target);
         $('body').getPopover().hideAll(true).destroy();
         if (response.body && response.body.html) {
-            (target || $('body')).html(response.body.html);
+            (target || $('[data-g5-content]') || $('body')).html(response.body.html);
         } else {
-            (target || $('body')).html(response.body);
+            (target || $('[data-g5-content]') || $('body')).html(response.body);
         }
 
         if (Data.element) {
@@ -84,9 +95,10 @@ domready(function() {
 
         History.pushState(data, title, url);
 
-        var sidebar;
+        var sidebar, active;
         if (sidebar = element.parent('#sidebar')) {
-            sidebar.search('.active').removeClass('active');
+            active = sidebar.search('.active');
+            if (active) { active.removeClass('active'); }
             element.parent('li').addClass('active');
         }
     });

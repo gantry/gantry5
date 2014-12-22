@@ -914,12 +914,20 @@ var G5;
             if (request.running()) {
                 return false;
             }
-            var State = History.getState(), URI = State.url, Data = State.data;
+            var State = History.getState(), URI = State.url, Data = State.data, sidebar = $('#sidebar');
             if (size(Data) && Data.parsed !== false && storage.get(Data.uuid)) {
                 Data = storage.get(Data.uuid);
             }
             if (Data.element) {
                 $('body').emit('statechangeBefore', { target: Data.element });
+            } else {
+                var url = URI.replace(window.location.origin, '');
+                Data.element = $('[href="' + url + '"]');
+            }
+            if (sidebar && Data.element) {
+                var lis = sidebar.search('li');
+                lis.removeClass('active');
+                Data.element.parent('li').addClass('active');
             }
             request.url(URI + getAjaxSuffix()).send(function (error, response) {
                 if (!response.body.success) {
@@ -929,9 +937,9 @@ var G5;
                 var target = $(Data.target);
                 $('body').getPopover().hideAll(true).destroy();
                 if (response.body && response.body.html) {
-                    (target || $('body')).html(response.body.html);
+                    (target || $('[data-g5-content]') || $('body')).html(response.body.html);
                 } else {
-                    (target || $('body')).html(response.body);
+                    (target || $('[data-g5-content]') || $('body')).html(response.body);
                 }
                 if (Data.element) {
                     $('body').emit('statechangeAfter', { target: Data.element });
@@ -958,9 +966,12 @@ var G5;
                     data = { uuid: uuid };
                 }
                 History.pushState(data, title, url);
-                var sidebar;
+                var sidebar, active;
                 if (sidebar = element.parent('#sidebar')) {
-                    sidebar.search('.active').removeClass('active');
+                    active = sidebar.search('.active');
+                    if (active) {
+                        active.removeClass('active');
+                    }
                     element.parent('li').addClass('active');
                 }
             });
@@ -1064,7 +1075,7 @@ var G5;
     'b': function (require, module, exports, global) {
         'use strict';
         var prime = require('k');
-        var forEach = require('d'), map = require('i'), filter = require('e'), every = require('1b'), some = require('1c');
+        var forEach = require('d'), map = require('i'), filter = require('e'), every = require('17'), some = require('18');
         var index = 0, __dc = document.__counter, counter = document.__counter = (__dc ? parseInt(__dc, 36) + 1 : 0).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n) {
             if (n === window)
@@ -1149,10 +1160,10 @@ var G5;
         module.exports = $;
     },
     'c': function (require, module, exports, global) {
-        var toString = require('17');
-        var WHITE_SPACES = require('18');
-        var ltrim = require('19');
-        var rtrim = require('1a');
+        var toString = require('19');
+        var WHITE_SPACES = require('1a');
+        var ltrim = require('1b');
+        var rtrim = require('1c');
         function trim(str, chars) {
             str = toString(str);
             chars = chars || WHITE_SPACES;
@@ -4847,12 +4858,50 @@ var G5;
         module.exports = Modal;
     },
     '17': function (require, module, exports, global) {
+        var makeIterator = require('1d');
+        function every(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var result = true;
+            if (arr == null) {
+                return result;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (!callback(arr[i], i, arr)) {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
+        module.exports = every;
+    },
+    '18': function (require, module, exports, global) {
+        var makeIterator = require('1d');
+        function some(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var result = false;
+            if (arr == null) {
+                return result;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (callback(arr[i], i, arr)) {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
+        }
+        module.exports = some;
+    },
+    '19': function (require, module, exports, global) {
         function toString(val) {
             return val == null ? '' : val.toString();
         }
         module.exports = toString;
     },
-    '18': function (require, module, exports, global) {
+    '1a': function (require, module, exports, global) {
         module.exports = [
             ' ',
             '\n',
@@ -4881,9 +4930,9 @@ var G5;
             '\u3000'
         ];
     },
-    '19': function (require, module, exports, global) {
-        var toString = require('17');
-        var WHITE_SPACES = require('18');
+    '1b': function (require, module, exports, global) {
+        var toString = require('19');
+        var WHITE_SPACES = require('1a');
         function ltrim(str, chars) {
             str = toString(str);
             chars = chars || WHITE_SPACES;
@@ -4904,9 +4953,9 @@ var G5;
         }
         module.exports = ltrim;
     },
-    '1a': function (require, module, exports, global) {
-        var toString = require('17');
-        var WHITE_SPACES = require('18');
+    '1c': function (require, module, exports, global) {
+        var toString = require('19');
+        var WHITE_SPACES = require('1a');
         function rtrim(str, chars) {
             str = toString(str);
             chars = chars || WHITE_SPACES;
@@ -4926,44 +4975,6 @@ var G5;
             return end >= 0 ? str.substring(0, end + 1) : '';
         }
         module.exports = rtrim;
-    },
-    '1b': function (require, module, exports, global) {
-        var makeIterator = require('1d');
-        function every(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var result = true;
-            if (arr == null) {
-                return result;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (!callback(arr[i], i, arr)) {
-                    result = false;
-                    break;
-                }
-            }
-            return result;
-        }
-        module.exports = every;
-    },
-    '1c': function (require, module, exports, global) {
-        var makeIterator = require('1d');
-        function some(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var result = false;
-            if (arr == null) {
-                return result;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (callback(arr[i], i, arr)) {
-                    result = true;
-                    break;
-                }
-            }
-            return result;
-        }
-        module.exports = some;
     },
     '1d': function (require, module, exports, global) {
         var identity = require('2k');
@@ -6026,7 +6037,7 @@ var G5;
         module.exports = isFunction;
     },
     '1y': function (require, module, exports, global) {
-        var toString = require('17');
+        var toString = require('19');
         function upperCase(str) {
             str = toString(str);
             return str.toUpperCase();
