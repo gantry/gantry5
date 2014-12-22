@@ -5,59 +5,59 @@ form:
   fields:
 
     enabled:
-      type: checkbox
+      type: input.checkbox
       label: Enabled
       description: Globally enable to top particles.
       default: true
 
     css:
-      type: container
+      type: container.set
       label: Styling
       fields:
 
         .id:
-          type: text
+          type: input.text
           label: Id
           description: CSS Id name for the particle.
           default:
 
         .class:
-          type: text
+          type: input.text
           label: Class
           description: CSS class name for the particle.
           default: g-main-nav
 
     .config:
-      type: container
+      type: container.set
       label: Configuration
       fields:
 
         config.base:
-          type: text
+          type: input.text
           label: Base Path
           default: /
 
         .startLevel:
-          type: text
+          type: input.text
           label: Start Level
           default: 1
 
         .endLevel:
-          type: text
+          type: input.text
           label: End Level
           default: 0
 
         .showAllChildren:
-            type: text
+            type: input.text
             label: Show All Menu Items
             default: false
 
         .window_open:
-          type: text
+          type: input.text
           label: Target Position
 
     items:
-      type: list
+      type: collection.list
       label: Members
       key: path
 
@@ -67,38 +67,38 @@ form:
           label: Path
 
         .id:
-          type: text
+          type: input.text
           label: Menu Item Id
 
         .type:
-          type: text
+          type: input.text
           label: Menu Item Type
           default: link
 
         .link:
-          type: text
+          type: input.text
           label: Link
 
         .title:
-          type: text
+          type: input.text
           label: Menu Title
 
         .browserNav:
-          type: text
+          type: input.text
           label: Target Window
 
         .anchor_css:
-          type: text
+          type: input.text
           label: Link CSS Style
 
         .anchor_title:
-          type: text
+          type: input.text
           label: Link Hover Title
 
         .menu_image:
-          type: text
+          type: input.text
           label: Link Image
 
         .menu_icon:
-          type: text
+          type: input.text
           label: Link Icon

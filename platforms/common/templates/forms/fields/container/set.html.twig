@@ -11,7 +11,7 @@
             {% endif %}
 
             {% if child.type %}
-                {% include ["forms/fields/#{child.type}/#{child.type}.html.twig", 'forms/fields/unknown/unknown.html.twig']
+                {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
                 with {name: childName, field: child, value: childValue} %}
             {% endif %}
         {% endfor %}

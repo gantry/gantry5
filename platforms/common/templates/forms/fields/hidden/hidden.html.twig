@@ -1,5 +1,0 @@
-{% extends "forms/field.html.twig" %}
-
-{% block field %}
-    <input type="hidden" class="input" name="{{ (scope ~ name)|fieldName }}" value="{{ value|join(', ') }}" />
-{% endblock %}
