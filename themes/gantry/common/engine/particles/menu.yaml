@@ -58,8 +58,11 @@ form:
 
     items:
       type: list
-      label: Members
+      array: true
+      label: Items
       key: path
+      value: path
+      ajax: true
 
       fields:
         .path:

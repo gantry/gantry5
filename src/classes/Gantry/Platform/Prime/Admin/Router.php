@@ -10,7 +10,7 @@ class Router extends BaseRouter
     {
         $request = new Request();
 
-        // Split URL path to its parts.
+        // Split normalized request path to its parts.
         $parts = explode('/', PAGE_PATH);
 
         if (isset($parts[0]) && $parts[0] == 'admin') {

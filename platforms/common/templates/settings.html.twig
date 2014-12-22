@@ -9,7 +9,7 @@
         {% set prefix = 'particles.' ~ id ~ '.' %}
         <div class="card settings-block">
             <h4>
-                <a data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('settings/' ~ id) }}">{{ particle.name }}</a>
+                <a data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('settings/particles/' ~ id) }}">{{ particle.name }}</a>
                 <div class="enabler">
                     <input type="hidden" value="{{ config.get(prefix ~ 'enabled', 0)|abs }}" />
                     <div class="toggle"><div class="knob"></div></div>

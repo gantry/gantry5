@@ -11,6 +11,7 @@ class Router extends BaseRouter
     {
         $this->resource = 'themes';
         $this->method = 'GET';
+        // TODO: get path from request object
         $this->path = [];
         $this->format = 'html';
         $ajax = ($this->format == 'json');

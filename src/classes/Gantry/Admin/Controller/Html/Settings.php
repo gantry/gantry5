@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Admin\Controller\Html;
 
+use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
@@ -11,6 +12,27 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Settings extends HtmlController
 {
+    protected $httpVerbs = [
+        'GET' => [
+            '/'                 => 'index',
+            '/particles'        => 'undefined',
+            '/particles/*'      => 'display',
+            '/particles/*/**'   => 'formfield',
+        ],
+        'POST' => [
+            '/particles'  => 'store'
+        ],
+        'PUT' => [
+            '/particles/*' => 'replace'
+        ],
+        'PATCH' => [
+            '/particles/*' => 'update'
+        ],
+        'DELETE' => [
+            '/particles/*' => 'destroy'
+        ]
+    ];
+
     public function index()
     {
         $files = $this->locateParticles();
@@ -30,7 +52,7 @@ class Settings extends HtmlController
         $files = $this->locateParticles();
 
         if (empty($files[$id])) {
-            throw new \RuntimeException("Settings for '$id' not found.", 404);
+            throw new \RuntimeException("Settings for '{$id}' not found.", 404);
         }
 
         $filename = key($files[$id]);
@@ -40,19 +62,53 @@ class Settings extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/settings_item.html.twig', $this->params);
     }
 
-    public function form($id)
+    public function formfield($particle)
     {
+        $path = func_get_args();
+
         $files = $this->locateParticles();
 
-        if (empty($files[$id])) {
-            throw new \RuntimeException("Settings for '$id' not found.", 404);
+        if (empty($files[$particle])) {
+            throw new \RuntimeException("Settings for '$particle' not found", 404);
         }
 
-        $filename = key($files[$id]);
-        $this->params['particle'] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
-        $this->params['id'] = $id;
+        // Load blueprints.
+        $filename = key($files[$particle]);
+        $blueprints = new Blueprints(CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content());
 
-        return $this->container['admin.theme']->render('@gantry-admin/settings_item.html.twig', $this->params);
+        // Get the form field.
+        $i = 1;
+        $id = null;
+        $fields = $blueprints['form.fields.' . implode('.', array_slice($path, 1))];
+        if ($fields) {
+            $key = array_pop($path);
+            $fields = [$key => $fields];
+        } else {
+            $parent = $blueprints['form.fields.' . implode('.', array_slice($path, 1, -1))];
+            if ($parent['fields']) {
+                $fields = $parent['fields'];
+            }
+            $i++;
+        }
+        if (!$fields) {
+            throw new \RuntimeException("Page Not Found", 404);
+        }
+
+        // Get the prefix.
+        $prefix = 'particles.' . implode('.', $path);
+
+        $this->params = [
+                'blueprints' => ['fields' => $fields],
+                'data' =>  Gantry::instance()['config'],
+                'prefix' => $prefix . '.',
+                'route' => 'settings/particles/' . (count($path) > $i ? implode('/', array_slice($path, 0, -$i)) : $particle)
+            ] + $this->params;
+
+        if (!empty($parent['key'])) {
+            $this->params['key'] = $parent['key'];
+        }
+
+        return $this->container['admin.theme']->render('@gantry-admin/settings_field.html.twig', $this->params);
     }
 
     protected function locateParticles() {

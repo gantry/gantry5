@@ -3,8 +3,13 @@
 {% block input %}
     {% if field.fields %}
         {% for key, val in value %}
-        <hr />
-        {% for childName, child in field.fields %}
+
+        {% if (field.ajax == true) %}
+            {% set route = gantry.route('settings/' ~ scope|replace('.', '/') ~ field.name ~ '/' ~ key) %}
+            <div><a href="{{ route }}">{{ field.value == field.key ? key : val[field.value] }}</a></div>
+        {% else %}
+            <hr />
+            {% for childName, child in field.fields %}
             {% if childName starts with '.' %}
                 {% set childValue = val[childName[1:]] %}
                 {% set childName = name ~ '.' ~ key ~ childName %}
@@ -14,13 +19,14 @@
             {% endif %}
 
             {% if child.type  == 'key' %}
-                {% include 'forms/fields/text/text.html.twig'
+                {% include 'forms/fields/key/key.html.twig'
                 with {name: childName, field: child, value: key} %}
             {% elseif child.type %}
                 {% include ["forms/fields/#{child.type}/#{child.type}.html.twig", 'forms/fields/unknown/unknown.html.twig']
                 with {name: childName, field: child, value: childValue} %}
             {% endif %}
         {% endfor %}
+        {% endif %}
         {% endfor %}
     {% endif %}
 {% endblock %}

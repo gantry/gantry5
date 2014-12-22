@@ -17,6 +17,10 @@ form:
 
     members:
       type: list
+      array: true
+      label: Members
+      value: name
+      ajax: true
 
       fields:
         .name:
