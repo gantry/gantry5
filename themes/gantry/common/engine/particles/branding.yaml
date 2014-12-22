@@ -4,13 +4,13 @@ description: Displays powered by link to Gantry Framework
 form:
   fields:
     enabled:
-      type: checkbox
+      type: input.checkbox
       label: Enabled
       description: Globally enable to the particles.
       default: true
 
     css.class:
-      type: text
+      type: input.text
       label: Class
       description: CSS class name for the particle.
       default: branding
