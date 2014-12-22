@@ -4,7 +4,6 @@ container:
 
   body:
     - mainbody
-    - particle-team
 
   footer:
     - [spacer 25, particle-copyright 50, particle-branding 25]

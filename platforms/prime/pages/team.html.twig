@@ -1,6 +1,6 @@
 {% extends "@nucleus/page.html.twig" %}
 
-{% do gantry.theme.setLayout('gantry-layouts://team.yaml') %}
+{% do gantry.theme.setLayout('gantry-layouts://fullwidth.yaml') %}
 
 {% block content %}
 <h1>The Team</h1>
@@ -10,4 +10,8 @@
 <p>
     No more custom HTML: check <a href="admin/settings">administrator</a> for team particle configuration.
 </p>
+
+<div>
+    {% include '@nucleus/particles/team.html.twig' with {'particle': config.particles.team} %}
+</div>
 {% endblock %}
