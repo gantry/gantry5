@@ -2,7 +2,7 @@
 
 .overview-header {
     .g-block {
-        padding: $content-padding 0;
+        padding: $content-padding;
     }
 
     .theme-title {
@@ -26,6 +26,34 @@
     .button {
         float: right;
         margin-left: $content-padding;
+    }
+}
+
+.overview-details {
+    margin-top: $content-padding;
+    margin-bottom: $content-padding;
+    margin-left: -($content-padding + $content-margin);
+    margin-right: -($content-padding + $content-margin);
+    padding: 0 ($content-padding + $content-margin) $content-padding ($content-padding + $content-margin);
+    border-bottom: 1px solid $medium-gray;
+    .g-block {
+        padding: $content-padding;
+    }
+}
+
+.overview-gantry {
+    .g-block {
+        padding: $content-padding;
+    }
+}
+
+.overview-list {
+    list-style: none;
+    margin: 0;
+    font-size: $core-font-size + 0.1;
+    i {
+        margin-right: 1rem;
+        color: $sidebar-border;
     }
 }
 
