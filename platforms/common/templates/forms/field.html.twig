@@ -16,15 +16,20 @@
         </span>
         <div class="settings-param-field">
             {% block input %}
+                <input
+                        {# required attribute structures #}
+                        name="{{ (scope ~ name)|fieldName }}"
+                        value="{{ value|join(', ') }}"
+                        {# global attribute structures #}
+                        {% block global_attributes %}
+                            {% if field.class is defined %} class="{{ field.class }}" {% endif %}
+                            {% if field.id is defined %} id="{{ field.id }}" {% endif %}
+                            {% if field.style is defined %} style="{{ field.style }}" {% endif %}
+                            {% if field.title is defined %} title="{{ field.title }}" {% endif %}
+                        {% endblock %}
+                        />
             {% endblock %}
         </div>
         {% endblock %}
     </div>
-{% endblock %}
-
-{% block global_attributes %}
-    {% if field.class is defined %} class="{{ field.class }}" {% endif %}
-    {% if field.id is defined %} id="{{ field.id }}" {% endif %}
-    {% if field.style is defined %} style="{{ field.style }}" {% endif %}
-    {% if field.title is defined %} title="{{ field.title }}" {% endif %}
 {% endblock %}
