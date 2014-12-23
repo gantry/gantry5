@@ -34,7 +34,7 @@ class Document
                 if (!empty($element['src'])) {
                     $src = $element['src'];
                     $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
-                    self::$scripts[$location][$src] = "<script type=\"{$type}\" src=\"{$src}\" />";
+                    self::$scripts[$location][$src] = "<script type=\"{$type}\" src=\"{$src}\"></script>";
                     return true;
 
                 } elseif (!empty($element['content'])) {
