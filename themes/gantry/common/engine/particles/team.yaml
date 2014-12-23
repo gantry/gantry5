@@ -1,5 +1,6 @@
 name: Team
 description: Displays a single team member (test particle).
+type: particle
 
 form:
   fields:

@@ -6,6 +6,7 @@
     <div id="settings" class="cards-wrapper g-grid">
 
         {% for id, particle in particles %}
+        {% if not particle.hidden %}
         {% set prefix = 'particles.' ~ id ~ '.' %}
         <div class="card settings-block">
             <h4>
@@ -16,6 +17,7 @@
                 </div>
             </h4>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
 

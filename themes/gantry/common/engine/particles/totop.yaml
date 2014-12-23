@@ -1,5 +1,6 @@
 name: To Top
 description: Scroll back to top.
+type: particle
 
 form:
   fields:

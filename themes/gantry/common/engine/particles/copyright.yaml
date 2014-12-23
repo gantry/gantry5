@@ -1,5 +1,6 @@
 name: Copyright
 description: Display copyrights.
+type: particle
 
 form:
   fields:

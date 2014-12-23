@@ -1,5 +1,6 @@
 name: Branding Information
 description: Displays powered by link to Gantry Framework
+type: particle
 
 form:
   fields:

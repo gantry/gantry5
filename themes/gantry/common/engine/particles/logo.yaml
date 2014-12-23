@@ -1,5 +1,6 @@
 name: Logo
 description: Display a logo.
+type: particle
 
 form:
   fields:
