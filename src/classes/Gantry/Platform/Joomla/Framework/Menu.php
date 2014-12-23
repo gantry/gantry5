@@ -123,6 +123,23 @@ class Menu implements \Iterator
         return $base;
     }
 
+    public function getMenuItems()
+    {
+        $items = (array) isset($this->params['items']) ? $this->params['items'] : null;
+
+        /*
+        $menu = $this->app->getMenu();
+        $menuItems = $menu->getItems('menutype', $this->params['menu'] ?: $this->default->menutype);
+
+        print_r($menuItems);die();
+
+        $items += Folder::all($folder, $options);
+*/
+        ksort($items);
+
+        return $items;
+    }
+
     /**
      * Get a list of the menu items.
      *

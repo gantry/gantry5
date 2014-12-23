@@ -100,7 +100,9 @@ class Config
      */
     public function blueprints()
     {
-        if (is_callable($this->blueprints)) {
+        if (!$this->blueprints){
+            $this->blueprints = new Blueprints;
+        } elseif (is_callable($this->blueprints)) {
             // Lazy load blueprints.
             $blueprints = $this->blueprints;
             $this->blueprints = $blueprints();

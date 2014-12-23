@@ -3,12 +3,13 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Config\Config;
 use Gantry\Component\Filesystem\Folder;
-use RocketTheme\Toolbox\ArrayTraits\ArrayAccess;
+use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
+use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
 
 class Menu implements \ArrayAccess, \Iterator
 {
-    use ArrayAccess, Iterator;
+    use ArrayAccessWithGetters, Iterator, Export;
 
     protected $app;
 
@@ -39,9 +40,8 @@ class Menu implements \ArrayAccess, \Iterator
         $this->active  = PAGE_PATH;
     }
 
-    public function instance(array $params = null)
+    public function instance(array $params = [])
     {
-        $params = $params ?: [];
         $params += $this->defaults;
 
         $instance = clone $this;
@@ -112,13 +112,34 @@ class Menu implements \ArrayAccess, \Iterator
         return $path;
     }
 
+    public function getMenuItems()
+    {
+        $items = (array) isset($this->params['items']) ? $this->params['items'] : null;
+
+        $folder = PRIME_ROOT . '/pages';
+        if (!is_dir($folder)) {
+            return $items;
+        }
+
+        $options = [
+            'pattern' => '|\.html\.twig|',
+            'filters' => ['key' => '|\.html\.twig|', 'value' => function () { return []; }],
+            'key' => 'SubPathname'
+        ];
+
+        $items += Folder::all($folder, $options);
+        ksort($items);
+
+        return $items;
+    }
+
     /**
      * Get a list of the menu items.
      *
      * Logic has been mostly copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
      * We should keep the contents of the function similar to Joomla in order to review it against any changes.
      *
-     * @param  array  $params
+     * @param  array  $config
      *
      * @return array
      */

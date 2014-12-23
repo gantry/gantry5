@@ -1,6 +1,6 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
-{% set prefix = 'particles.' ~ id ~ '.' %}
+{% set prefix = 'particles.menu.' %}
 
 {% block gantry %}
     <div id="settings" class="cards-wrapper">
@@ -15,7 +15,7 @@
 
             <div class="inner-params">
                 {% include 'forms/fields.html.twig'
-                with {'blueprints': menu.form, 'data': config, 'prefix': prefix, 'skip': ['enabled']} %}
+                with {'blueprints': menu.form, 'data':  config, 'prefix': prefix, 'skip': ['enabled']} %}
             </div>
         </div>
     </div>
