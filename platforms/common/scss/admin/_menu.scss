@@ -1,0 +1,34 @@
+#g5-container { //wrapper
+
+.menu-header {
+    h2 {
+    	display: inline-block;
+    	margin-right: 1rem;
+    }
+    select {
+    	display: inline-block;
+    }
+}
+
+.menu-selector {
+	margin: $content-margin 0;
+	li {
+		cursor: pointer;
+		border: 3px solid $white;
+		background: $menu-editor-bg;
+		color: $white;
+		padding: $content-padding;
+		i {
+			margin-left: 0.5rem;
+		}
+		&:hover {
+			background: $tertiary-accent;
+		}
+	}
+	span {
+		float: right;
+		line-height: $core-line-height;
+	}
+}
+
+}// end wrapper

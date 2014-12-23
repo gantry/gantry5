@@ -821,6 +821,27 @@ body {
       color: #666;
       text-shadow: 0 0 1px #fff; }
 
+#g5-container .menu-header h2 {
+  display: inline-block;
+  margin-right: 1rem; }
+#g5-container .menu-header select {
+  display: inline-block; }
+#g5-container .menu-selector {
+  margin: 0.625rem 0; }
+  #g5-container .menu-selector li {
+    cursor: pointer;
+    border: 3px solid #fff;
+    background: #b3b3b3;
+    color: #fff;
+    padding: 0.938rem; }
+    #g5-container .menu-selector li i {
+      margin-left: 0.5rem; }
+    #g5-container .menu-selector li:hover {
+      background: #48B0D7; }
+  #g5-container .menu-selector span {
+    float: right;
+    line-height: 1.5; }
+
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0; }
