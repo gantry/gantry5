@@ -1,3 +1,17 @@
+{% set headerContent %}
+{% block stylesheets %}
+{% endblock %}
+{% block javascript %}
+{% endblock %}
+{% endset %}
+{% do parseHtmlHeader(headerContent) %}
+
+{% set footerContent %}
+{% block javascript_footer %}
+{% endblock %}
+{% endset %}
+{% do parseHtmlHeader(footerContent, true) %}
+
 {% set name = (name is null ? field.name : name) %}
 {% set value = (value is null ? field.default : value) %}
 

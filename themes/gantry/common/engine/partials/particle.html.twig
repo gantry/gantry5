@@ -1,3 +1,17 @@
+{% set headerContent %}
+{% block stylesheets %}
+{% endblock %}
+{% block javascript %}
+{% endblock %}
+{% endset %}
+{% do parseHtmlHeader(headerContent) %}
+
+{% set footerContent %}
+{% block javascript_footer %}
+{% endblock %}
+{% endset %}
+{% do parseHtmlHeader(footerContent, true) %}
+
 {% if particle.title %}
 <h4>{{ particle.title }}</h4>
 {% endif %}
