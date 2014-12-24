@@ -21,13 +21,26 @@
 		i {
 			margin-left: 0.5rem;
 		}
-		&:hover {
+		&:hover, &.active {
 			background: $tertiary-accent;
 		}
 	}
 	span {
 		float: right;
 		line-height: $core-line-height;
+	}
+}
+
+.submenu-selector {
+	background: $white;
+	.g-block {
+		background: $menu-editor-bg;
+		border: 3px solid $white;
+		padding: $content-padding;
+	}
+	.submenu-items {
+		list-style: none;
+		margin: 0;
 	}
 }
 
