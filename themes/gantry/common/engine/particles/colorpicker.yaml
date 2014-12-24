@@ -1,0 +1,16 @@
+name: Colorpicker
+description: Colorpicker test.
+type: hidden
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable the particle.
+      default: true
+
+    color:
+      type: input.colorpicker
+      label: Background
+      default: '#fff'
