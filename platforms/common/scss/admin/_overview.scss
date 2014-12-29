@@ -26,6 +26,15 @@
     .button {
         float: right;
         margin-left: $content-padding;
+
+        @include breakpoint(mobile-only) {
+            float: none;
+            margin: 0;
+        }
+    }
+
+    @include breakpoint(mobile-only) {
+        text-align: center;
     }
 }
 
@@ -39,11 +48,19 @@
     .g-block {
         padding: $content-padding;
     }
+
+    @include breakpoint(mobile-only) {
+        text-align: center;
+    }
 }
 
 .overview-gantry {
     .g-block {
         padding: $content-padding;
+    }
+
+    @include breakpoint(mobile-only) {
+        text-align: center;
     }
 }
 
