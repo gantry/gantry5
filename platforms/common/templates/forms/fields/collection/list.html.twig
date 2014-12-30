@@ -6,7 +6,7 @@
 
         {% if (field.ajax == true) %}
             {% set route = gantry.route('settings/' ~ scope|replace('.', '/') ~ field.name ~ '/' ~ key) %}
-            <div><a href="{{ route }}">{{ field.value == field.key ? key : val[field.value] }}</a></div>
+            <div><a data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ route }}">{{ field.value == field.key ? key : val[field.value] }}</a></div>
         {% else %}
             <hr />
             {% for childName, child in field.fields %}
