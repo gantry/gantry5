@@ -8,6 +8,10 @@
         }
         .size-1-4 {
             @include flex(0 23%);
+
+            @include breakpoint(small-mobile-range) {
+                @include flex(0 100%);
+            }
         }
     }
 

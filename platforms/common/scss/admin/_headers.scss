@@ -88,8 +88,12 @@
     // Gantry Header Bar
     .inner-header {
         background-color: $inner-header-bg;
-        padding: $content-padding;
         color: $secondary-accent;
+
+        .sidebar-toggle {
+            padding: $content-padding;
+            float: left;
+        }
 
         .gantry-logo {
             width: 92px;
@@ -115,12 +119,18 @@
 
     .settings-state {
         padding: $content-padding;
-        display: block;
+        float: right;
         text-align: center;
         cursor: pointer;
         background: $tertiary-accent;
         color: $main-header-text;
         font-size: $core-font-size + 0.1;
+        height: 58px;
+
+        @include breakpoint(mobile-only) {
+            font-size: $core-font-size;
+        }
+
         i {
             margin-left: 8px;
         }
