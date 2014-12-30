@@ -44,7 +44,7 @@ History.Adapter.bind(window, 'statechange', function() {
         Data.element.parent('li').addClass('active');
     }
 
-    request.url(URI + getAjaxSuffix()).send(function(error, response) {
+    request.url(URI + getAjaxSuffix()).method('get').send(function(error, response) {
         if (!response.body.success) {
             modal.open({ content: response.body.html });
             //History.back();

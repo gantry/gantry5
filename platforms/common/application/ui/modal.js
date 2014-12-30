@@ -141,7 +141,8 @@ var Modal = new prime({
         if (options.remote && options.remote.length > 1) {
             this.showLoading();
 
-            request(options.remote, bind(function(error, response){
+            options.method = options.method || 'get';
+            request(options.method, options.remote, bind(function(error, response){
                 elements.content.html(response.body.html || response.body);
                 this.hideLoading();
                 if (options.remoteLoaded) {

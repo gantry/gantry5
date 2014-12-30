@@ -278,7 +278,7 @@ var Popover = new prime({
     setContentASync: function(content) {
         var that = this;
 
-        request(this.options.url, bind(function(error, response) {
+        request('get', this.options.url, bind(function(error, response) {
             if (content && isFunct(content)) {
                 this.content = content.apply(this.element[0], [response]);
             } else {
