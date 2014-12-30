@@ -56,8 +56,19 @@ class Settings extends HtmlController
         }
 
         $filename = key($files[$id]);
-        $this->params['particle'] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
-        $this->params['id'] = $id;
+        $prefix = 'particles.' . $id;
+        $particle = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+        $blueprints = new Blueprints($particle);
+
+        $this->params += [
+            'particle' => $particle,
+            'blueprints' => $blueprints['form'],
+            'data' =>  Gantry::instance()['config']->get($prefix),
+            'id' => $id,
+            'parent' => 'settings',
+            'route' => 'settings.' . $prefix,
+            'skip' => ['enabled']
+            ];
 
         return $this->container['admin.theme']->render('@gantry-admin/settings_item.html.twig', $this->params);
     }
@@ -99,9 +110,9 @@ class Settings extends HtmlController
 
         $this->params = [
                 'blueprints' => ['fields' => $fields],
-                'data' =>  Gantry::instance()['config'],
-                'prefix' => $prefix . '.',
-                'route' => 'settings/particles/' . (count($path) > $i ? implode('/', array_slice($path, 0, -$i)) : $particle)
+                'data' =>  Gantry::instance()['config']->get($prefix),
+                'parent' => 'settings/particles/' . (count($path) > $i ? implode('/', array_slice($path, 0, -$i)) : $particle),
+                'route' => 'settings.' . $prefix
             ] + $this->params;
 
         if (!empty($parent['key'])) {

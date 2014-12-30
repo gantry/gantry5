@@ -5,8 +5,8 @@
         {% for key, val in value %}
 
         {% if (field.ajax == true) %}
-            {% set route = gantry.route('settings/' ~ scope|replace('.', '/') ~ field.name ~ '/' ~ key) %}
-            <div><a data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ route }}">{{ field.value == field.key ? key : val[field.value] }}</a></div>
+            {% set field_route = gantry.route((route ~ '.' ~ scope)|replace('.', '/') ~ field.name ~ '/' ~ key|url_encode) %}
+            <div><a data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ field_route }}">{{ field.value == field.key ? key : val[field.value] }}</a></div>
         {% else %}
             <hr />
             {% for childName, child in field.fields %}
