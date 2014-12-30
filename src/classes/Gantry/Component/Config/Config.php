@@ -3,7 +3,7 @@ namespace Gantry\Component\Config;
 
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
-use RocketTheme\Toolbox\Blueprints\Blueprints;
+use RocketTheme\Toolbox\Blueprints\Blueprints as RtBlueprints;
 
 /**
  * The Config class contains configuration information.
@@ -96,12 +96,12 @@ class Config
     /**
      * Return blueprints.
      *
-     * @return Blueprints
+     * @return RtBlueprints
      */
     public function blueprints()
     {
         if (!$this->blueprints){
-            $this->blueprints = new Blueprints;
+            $this->blueprints = new RtBlueprints;
         } elseif (is_callable($this->blueprints)) {
             // Lazy load blueprints.
             $blueprints = $this->blueprints;
