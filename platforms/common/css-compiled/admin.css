@@ -57,6 +57,9 @@ body {
   margin: 2.5rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   color: #666; }
+  @media only all and (max-width: 47.938rem) {
+    #g5-container .inner-container {
+      margin: 1.5rem; } }
 #g5-container .cards-wrapper {
   margin: -10px; }
 #g5-container .card {
@@ -184,6 +187,13 @@ body {
 #g5-container .overview-header .button {
   float: right;
   margin-left: 0.938rem; }
+  @media only all and (max-width: 47.938rem) {
+    #g5-container .overview-header .button {
+      float: none;
+      margin: 0; } }
+@media only all and (max-width: 47.938rem) {
+  #g5-container .overview-header {
+    text-align: center; } }
 #g5-container .overview-details {
   margin-top: 0.938rem;
   margin-bottom: 0.938rem;
@@ -193,8 +203,14 @@ body {
   border-bottom: 1px solid #ddd; }
   #g5-container .overview-details .g-block {
     padding: 0.938rem; }
+  @media only all and (max-width: 47.938rem) {
+    #g5-container .overview-details {
+      text-align: center; } }
 #g5-container .overview-gantry .g-block {
   padding: 0.938rem; }
+@media only all and (max-width: 47.938rem) {
+  #g5-container .overview-gantry {
+    text-align: center; } }
 #g5-container .overview-list {
   list-style: none;
   margin: 0;
@@ -297,6 +313,9 @@ body {
   #g5-container #sidebar .g-content {
     padding: 0;
     margin: 0.625rem 0; }
+  @media only all and (max-width: 47.938rem) {
+    #g5-container #sidebar ul {
+      text-align: center; } }
   #g5-container #sidebar ul li {
     -webkit-transition: background-color 0.2s ease-in-out;
     -moz-transition: background-color 0.2s ease-in-out;
@@ -306,6 +325,9 @@ body {
     #g5-container #sidebar ul li.active {
       background-color: #eeeeee;
       box-shadow: inset 3px 0 0 #e1e1e1; }
+      @media only all and (max-width: 47.938rem) {
+        #g5-container #sidebar ul li.active {
+          box-shadow: none; } }
       #g5-container #sidebar ul li.active a {
         color: #314C59; }
     #g5-container #sidebar ul li a {
@@ -316,8 +338,34 @@ body {
       white-space: nowrap;
       padding: 0.938rem;
       font-size: 1rem; }
+      @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+        #g5-container #sidebar ul li a {
+          text-align: center; } }
+      @media only all and (max-width: 47.938rem) {
+        #g5-container #sidebar ul li a {
+          text-align: center;
+          padding: 0.938rem 1.138rem;
+          border-bottom: 0; } }
       #g5-container #sidebar ul li a i {
         margin-right: 0.6rem; }
+        @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+          #g5-container #sidebar ul li a i {
+            margin: 0;
+            font-size: 1.3rem; } }
+        @media only all and (max-width: 47.938rem) {
+          #g5-container #sidebar ul li a i {
+            margin: 0;
+            font-size: 1.3rem; } }
+      @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+        #g5-container #sidebar ul li a span {
+          display: none; } }
+      @media only all and (max-width: 47.938rem) {
+        #g5-container #sidebar ul li a span {
+          display: none; } }
+    @media only all and (max-width: 47.938rem) {
+      #g5-container #sidebar ul li {
+        display: inline-block;
+        margin-right: -4px; } }
   #g5-container #sidebar ul ul {
     text-transform: none; }
     #g5-container #sidebar ul ul li a {
@@ -424,7 +472,8 @@ body {
     margin-right: 0.938rem;
     cursor: pointer; }
 #g5-container .update-text {
-  vertical-align: middle; }
+  vertical-align: middle;
+  line-height: 2; }
 #g5-container .settings-state {
   padding: 0.938rem;
   display: block;

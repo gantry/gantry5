@@ -18,6 +18,10 @@ body {
         margin: 2.5rem;
         box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         color: $core-text;
+
+        @include breakpoint(mobile-only) {
+            margin: 1.5rem;
+        }
     }
 
     // cards

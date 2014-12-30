@@ -1,7 +1,11 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-    <div class="pull-right"><a class="button" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route(route) }}">Back</a></div>
+<form method="POST">
+    <div class="pull-right">
+        <button class="button">Save</button>
+        <a class="button" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route(parent) }}">Back</a>
+    </div>
     <div id="settings" class="cards-wrapper">
         <div class="card settings-block">
             <h4>
@@ -12,4 +16,5 @@
             </div>
         </div>
     </div>
+</form>
 {% endblock %}

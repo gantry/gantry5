@@ -24,6 +24,8 @@ class Menu extends HtmlController
         $files = $this->locateParticles();
 
         $this->params['id'] = $key = 'menu';
+        $this->params['prefix'] = 'particles.menu.';
+        $this->params['route'] = 'settings';
 
         if (!empty($files[$key])) {
             $filename = key($files[$key]);
