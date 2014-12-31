@@ -1,29 +1,7 @@
 {% extends "forms/field.html.twig" %}
 
-{% block javascript %}
-    <script type="text/javascript" async="async" crossorigin="anonymous" src="{{ url('gantry-admin://assets/templates/forms/fields/input/colorpicker/jsColorPicker.min.js')|e }}"></script>
-
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function(){
-            var colors = jsColorPicker('.colorpicker input', {
-                customBG: '#222',
-                readOnly: true,
-                // patch: false,
-                init: function(elm, colors) { // colors is a different instance (not connected to colorPicker)
-                    elm.style.backgroundColor = elm.value;
-                    elm.style.color = colors.rgbaMixCustom.luminance > 0.22 ? '#222' : '#ddd';
-                    elm.nextElementSibling.style.color = colors.rgbaMixCustom.luminance > 0.22 ? '#666' : '#ddd';
-                },
-                displayCallback: function(colors, mode, options){
-                    options.input.nextElementSibling.style.color = colors.rgbaMixCustom.luminance > 0.22 ? '#666' : '#ddd';
-                }
-            });
-        });
-    </script>
-{% endblock %}
-
 {% block input %}
-        {% set field = field|merge({'style': 'background-color: #fff'}) %}
+        {% set field = field|merge({'style': 'background-color: ' ~ value}) %}
         <div class="colorpicker">
         <input
             {# required attribute structures #}

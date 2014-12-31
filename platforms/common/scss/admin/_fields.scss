@@ -1,8 +1,0 @@
-.colorpicker {
-    display: inline-block;
-    position: relative;
-
-    i {
-        @include position(absolute, 10px 10px null null);
-    }
-}
