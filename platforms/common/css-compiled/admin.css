@@ -130,6 +130,7 @@ body {
     display: block; }
 
 #footer {
+  margin-bottom: 1rem;
   text-align: center;
   font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
   #footer a {
@@ -222,10 +223,6 @@ body {
 #g5-container .settings-block {
   width: 48%;
   min-width: inherit; }
-  @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-    #g5-container .settings-block {
-      margin: 1% 0;
-      width: 100%; } }
   @media only all and (max-width: 47.938rem) {
     #g5-container .settings-block {
       margin: 1% 0;
@@ -266,7 +263,7 @@ body {
     border-radius: 3px; }
 
 #g5-container #page-picker ul .card {
-  margin: 1%; }
+  margin: 10px 1%; }
 #g5-container #page-picker ul .size-1-4 {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
@@ -358,7 +355,7 @@ body {
       @media only all and (max-width: 47.938rem) {
         #g5-container #sidebar ul li a {
           text-align: center;
-          padding: 0.938rem 1.138rem;
+          padding: 0.938rem 1.038rem;
           border-bottom: 0; } }
       #g5-container #sidebar ul li a i {
         margin-right: 0.6rem; }

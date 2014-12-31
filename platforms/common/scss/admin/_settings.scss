@@ -4,10 +4,6 @@
     //@extend .card;
     width: 48%;
     min-width: inherit;
-    @include breakpoint(tablet-range) {
-        margin: 1% 0;
-        width: 100%;
-    }
     @include breakpoint(mobile-only) {
         margin: 1% 0;
         width: 100%;
