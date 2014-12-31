@@ -10,9 +10,12 @@ var prime = require('prime'),
     bind = require('mout/function/bind'),
     clamp = require('mout/math/clamp');
 
+var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+
 var MOUSEDOWN = 'mousedown' || 'touchstart',
-    MOUSEMOVE = 'mousemove' || 'touchmove';
-MOUSEUP = 'mouseup' || 'touchend';
+    MOUSEMOVE = 'mousemove' || 'touchmove',
+    MOUSEUP = 'mouseup' || 'touchend',
+    FOCUSIN = isFirefox ? 'focus' : 'focusin';
 
 var ColorPicker = new prime({
     mixin: [Options, Bound],
@@ -21,12 +24,12 @@ var ColorPicker = new prime({
     constructor: function(options) {
         this.setOptions(options);
         this.built = false;
-
         this.attach();
     },
 
     attach: function() {
-        $('body').delegate('focusin', '.colorpicker input', this.bound('show'));
+
+        $('body').delegate(FOCUSIN, '.colorpicker input', this.bound('show'), true);
         $('body').on(MOUSEDOWN, bind(function(event) {
             var target = $(event.target);
             if (!target.parent('.cp-wrapper') && !target.parent('.colorpicker')) {
@@ -80,7 +83,7 @@ var ColorPicker = new prime({
         if (!this.built) { return; }
         this.wrapper.removeClass('cp-visible');
     },
-    
+
     show: function(event, element) {
         if (!this.built) {
             this.build();
