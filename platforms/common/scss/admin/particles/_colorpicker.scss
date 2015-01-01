@@ -6,7 +6,10 @@
 
     input {
         color: #333;
-        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6), -1px -1px 0 rgba(255, 255, 255, 0.6), 1px -1px 0 rgba(255, 255, 255, 0.6), -1px 1px 0 rgba(255, 255, 255, 0.6), 1px 1px 0 rgba(255, 255, 255, 0.6)
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6), -1px -1px 0 rgba(255, 255, 255, 0.6), 1px -1px 0 rgba(255, 255, 255, 0.6), -1px 1px 0 rgba(255, 255, 255, 0.6), 1px 1px 0 rgba(255, 255, 255, 0.6);
+        font-weight: 400;
+        font-size: 15px;
+        min-width: 205px;
     }
 
     i {
