@@ -35,30 +35,16 @@ class Settings extends HtmlController
 
     public function index()
     {
-        $files = $this->locateParticles();
+        $this->params['particles'] = $this->container['particles']->all();
 
-        $particles = [];
-        foreach ($files as $key => $file) {
-            $filename = key($file);
-            $particles[$key] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
-        }
-
-        $this->params['particles'] = $particles;
         return $this->container['admin.theme']->render('@gantry-admin/settings.html.twig', $this->params);
     }
 
     public function display($id)
     {
-        $files = $this->locateParticles();
-
-        if (empty($files[$id])) {
-            throw new \RuntimeException("Settings for '{$id}' not found.", 404);
-        }
-
-        $filename = key($files[$id]);
-        $prefix = 'particles.' . $id;
-        $particle = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+        $particle = $this->container['particles']->get($id);
         $blueprints = new Blueprints($particle);
+        $prefix = 'particles.' . $id;
 
         $this->params += [
             'particle' => $particle,
@@ -73,60 +59,41 @@ class Settings extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/settings_item.html.twig', $this->params);
     }
 
-    public function formfield($particle)
+    public function formfield($id)
     {
         $path = func_get_args();
 
-        $files = $this->locateParticles();
-
-        if (empty($files[$particle])) {
-            throw new \RuntimeException("Settings for '$particle' not found", 404);
-        }
+        $particle = $this->container['particles']->get($id);
 
         // Load blueprints.
-        $filename = key($files[$particle]);
-        $blueprints = new Blueprints(CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content());
+        $blueprints = new Blueprints($particle);
 
-        // Get the form field.
-        $i = 1;
-        $id = null;
-        $fields = $blueprints['form.fields.' . implode('.', array_slice($path, 1))];
-        if ($fields) {
-            $key = array_pop($path);
-            $fields = [$key => $fields];
-        } else {
-            $parent = $blueprints['form.fields.' . implode('.', array_slice($path, 1, -1))];
-            if ($parent['fields']) {
-                $fields = $parent['fields'];
-            }
-            $i++;
-        }
+        list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
+
         if (!$fields) {
-            throw new \RuntimeException("Page Not Found", 404);
+            throw new \RuntimeException('Page Not Found', 404);
         }
 
         // Get the prefix.
-        $prefix = 'particles.' . implode('.', $path);
+        $prefix = "particles.{$id}." . implode('.', $path);
+        if ($value !== null) {
+            $parent = $fields;
+            $fields = ['fields' => $fields['fields']];
+            $prefix .= '.' . $value;
+        }
+        array_pop($path);
 
         $this->params = [
-                'blueprints' => ['fields' => $fields],
-                'data' =>  Gantry::instance()['config']->get($prefix),
-                'parent' => 'settings/particles/' . (count($path) > $i ? implode('/', array_slice($path, 0, -$i)) : $particle),
+                'blueprints' => $fields,
+                'data' =>  $this->container['config']->get($prefix),
+                'parent' => $path ? "settings/particles/{$id}/" . implode('/', $path) : "settings/particles/{$id}",
                 'route' => 'settings.' . $prefix
             ] + $this->params;
 
-        if (!empty($parent['key'])) {
+        if (isset($parent['key'])) {
             $this->params['key'] = $parent['key'];
         }
 
         return $this->container['admin.theme']->render('@gantry-admin/settings_field.html.twig', $this->params);
-    }
-
-    protected function locateParticles() {
-        /** @var UniformResourceLocator $locator */
-        $locator = Gantry::instance()['locator'];
-        $paths = $locator->findResources('gantry-particles://');
-
-        return (new ConfigFileFinder)->listFiles($paths);
     }
 }

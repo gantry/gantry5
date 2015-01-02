@@ -1,22 +1,31 @@
-{% for name, field in blueprints.fields %}
-    {% if name starts with '.' %}
-        {% set name = name[1:] %}
-    {% endif %}
-
+{% if blueprints.type %}
     {% set scope = prefix %}
+    {% set field = blueprints %}
+    {% set value = data %}
 
-    {% if field.type and name not in skip %}
-        {% set field = field + {'name': name} %}
-        {% set value = attribute(data, scope ~ name) %}
+    {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
 
-        {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
-    {% endif %}
-{% endfor %}
+{% else %}
+    {% for name, field in blueprints.fields %}
+        {% if name starts with '.' %}
+            {% set name = name[1:] %}
+        {% endif %}
+
+        {% set scope = prefix %}
+
+        {% if field.type and name not in skip %}
+            {% set field = field + {'name': name} %}
+            {% set value = attribute(data, scope ~ name) %}
+
+            {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
 
 {% if data.extra %}
-{% for name, value in data.extra %}
-    {% set field = {name: '_json.' ~ name} %}
-    {% set value = value|json_encode|e %}
-    {% include 'forms/fields/hidden/hidden.html.twig' %}
-{% endfor %}
+    {% for name, value in data.extra %}
+        {% set field = {name: '_json.' ~ name} %}
+        {% set value = value|json_encode|e %}
+        {% include 'forms/fields/hidden/hidden.html.twig' %}
+    {% endfor %}
 {% endif %}

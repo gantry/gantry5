@@ -19,6 +19,43 @@ class Blueprints implements \ArrayAccess
      */
     protected $items;
 
+    /**
+     * Get blueprints by using dot notation for nested arrays/objects.
+     *
+     * @example $value = $this->resolve('this.is.my.nested.variable');
+     * returns ['this.is.my', 'nested.variable']
+     *
+     * @param string  $path
+     * @return mixed  Value.
+     */
+    public function resolve(array $path, $separator = '.')
+    {
+        $fields = false;
+        $parts = [];
+        $current = $this['form.fields'];
+
+        while (($field = current($path)) !== null) {
+            if (!$fields && isset($current['fields'])) {
+                if (!empty($current['array'])) {
+                    break;
+                }
+
+                $current = $current['fields'];
+                $fields = true;
+
+            } elseif (isset($current[$field])) {
+                $parts[] = array_shift($path);
+                $current = $current[$field];
+                $fields = false;
+
+            } else {
+                return [null, null];
+            }
+        }
+
+        return [$current, $parts, $path ? implode($separator, $path) : null];
+    }
+
     // Implement getters for Twig templates.
 
     /**

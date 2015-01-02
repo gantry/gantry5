@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Admin\Base;
 
+use Gantry\Admin\Particles\Particles;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Twig\TwigExtension;
@@ -24,6 +25,11 @@ class Theme extends BaseTheme
                 'assets/' => [$relpath, $relpath . '/common']
             ]
         );
+
+
+        $gantry['particles'] = function ($c) {
+            return new Particles($c);
+        };
 
         parent::__construct($path, $name);
 
