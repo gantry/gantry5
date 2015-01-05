@@ -45,6 +45,7 @@ class Pages extends HtmlController
             if (!$layout) {
                 throw new \RuntimeException('Preset not found', 404);
             }
+            $this->params['page_id'] = $id;
             $this->params['layout'] = $layout;
         }
 
@@ -61,6 +62,7 @@ class Pages extends HtmlController
             throw new \RuntimeException('Layout not found', 404);
         }
 
+        $this->params['page_id'] = $id;
         $this->params['layout'] = $layout;
         $this->params['id'] = ucwords($id);
 
