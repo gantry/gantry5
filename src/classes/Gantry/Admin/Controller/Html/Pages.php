@@ -37,8 +37,16 @@ class Pages extends HtmlController
     {
         $locator = $this->container['locator'];
 
-        // TODO: remove hardcoded layout.
-        $this->params['layout'] = JsonFile::instance($locator('gantry-theme://layouts/presets/'.$id.'.json'))->content();
+        if (!$id) {
+            // TODO:
+            throw new \RuntimeException('Not Implemented', 404);
+        } else {
+            $layout = JsonFile::instance($locator('gantry-theme://layouts/presets/'.$id.'.json'))->content();
+            if (!$layout) {
+                throw new \RuntimeException('Preset not found', 404);
+            }
+            $this->params['layout'] = $layout;
+        }
 
         return $this->container['admin.theme']->render('@gantry-admin/pages_create.html.twig', $this->params);
     }
@@ -48,7 +56,13 @@ class Pages extends HtmlController
         $locator = $this->container['locator'];
 
         // TODO: remove hardcoded layout.
-        $this->params['layout'] = JsonFile::instance($locator('gantry-theme://layouts/test.json'))->content();
+        $layout = JsonFile::instance($locator('gantry-theme://layouts/test.json'))->content();
+        if (!$layout) {
+            throw new \RuntimeException('Layout not found', 404);
+        }
+
+        $this->params['layout'] = $layout;
+        $this->params['id'] = ucwords($id);
 
         return $this->container['admin.theme']->render('@gantry-admin/pages_edit.html.twig', $this->params);
     }
