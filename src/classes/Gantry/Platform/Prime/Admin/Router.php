@@ -28,14 +28,10 @@ class Router extends BaseRouter
         }
 
         // Figure out the action we want to make.
-        $httpMethod = $request->getMethod();
-        $this->method = isset($this->httpMethods[$httpMethod]) ? $this->httpMethods[$httpMethod] : null;
+        $this->method = $request->getMethod();
         $this->path = $parts;
         $this->format = PAGE_EXTENSION;
         $ajax = ($this->format == 'json');
-
-        // FIXME:
-        $this->method = 'GET';
 
         $this->params = [
             'id'   => 0,

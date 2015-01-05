@@ -13,6 +13,7 @@ class Request
             $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
             if ('POST' === $method) {
                 $method = isset($_SERVER['X-HTTP-METHOD-OVERRIDE']) ? $_SERVER['X-HTTP-METHOD-OVERRIDE'] : $method;
+                $method = isset($_POST['METHOD']) ? $_POST['METHOD'] : $method;
             }
             $this->method = strtoupper($method);
         }

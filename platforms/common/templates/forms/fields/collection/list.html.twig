@@ -9,18 +9,18 @@
             {% else %}
                 <hr />
                 {% for childName, child in field.fields %}
-                    {% if childName starts with '.' %}
+                     {% if childName starts with '.' %}
                         {% set childValue = val[childName[1:]] %}
                         {% set childName = name ~ '.' ~ key ~ childName %}
-                    {% else %}
+                     {% else %}
                         {% set childName = childName|replace({'*': key}) %}
-                        {% set childValue = data.get(scope ~ childName) %}
-                    {% endif %}
+                        {% set childValue = nested(data, scope ~ childName) %}
+                     {% endif %}
 
-                    {% if child.type  == 'key' %}
+                     {% if child.type  == 'key' %}
                         {% include 'forms/fields/key/key.html.twig'
                         with {name: childName, field: child, value: key} %}
-                    {% elseif child.type %}
+                     {% elseif child.type %}
                         {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
                         with {name: childName, field: child, value: childValue} %}
                     {% endif %}

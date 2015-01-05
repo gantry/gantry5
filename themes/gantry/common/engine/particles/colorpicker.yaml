@@ -1,6 +1,6 @@
 name: Colorpicker
 description: Colorpicker test.
-type: hidden
+type: particle
 
 form:
   fields:

@@ -28,7 +28,7 @@ abstract class BaseController implements RestfulControllerInterface
             '/*' => 'destroy'
         ]
     ];
-    protected $params;
+    protected $params = [];
 
     /**
      * @var Container
@@ -59,6 +59,13 @@ abstract class BaseController implements RestfulControllerInterface
         }
 
         return call_user_func_array([$this, $action], $path);
+    }
+
+    public function setParams(array $params)
+    {
+        $this->params = $params;
+
+        return $this;
     }
 
     public function index()
@@ -104,9 +111,8 @@ abstract class BaseController implements RestfulControllerInterface
     /**
      * Catch all action for all undefined actions.
      *
-     * @param array $path
      * @return mixed
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function undefined()
     {
@@ -115,6 +121,17 @@ abstract class BaseController implements RestfulControllerInterface
         }
 
         throw new RuntimeException('Invalid Action', 405);
+    }
+
+    /**
+     * Catch all action for forbidden actions.
+     *
+     * @return mixed
+     * @throws RuntimeException
+     */
+    public function forbidden()
+    {
+        throw new RuntimeException('Forbidden', 403);
     }
 
     /**

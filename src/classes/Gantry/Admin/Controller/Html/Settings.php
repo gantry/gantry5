@@ -20,15 +20,23 @@ class Settings extends HtmlController
             '/particles/*/**'   => 'formfield',
         ],
         'POST' => [
-            '/particles'  => 'store'
+            '/'            => 'forbidden',
+            '/particles'   => 'forbidden',
+            '/particles/*' => 'replace'
         ],
         'PUT' => [
+            '/'            => 'forbidden',
+            '/particles'   => 'forbidden',
             '/particles/*' => 'replace'
         ],
         'PATCH' => [
+            '/'            => 'forbidden',
+            '/particles'   => 'forbidden',
             '/particles/*' => 'update'
         ],
         'DELETE' => [
+            '/'            => 'forbidden',
+            '/particles'   => 'forbidden',
             '/particles/*' => 'destroy'
         ]
     ];
@@ -95,5 +103,23 @@ class Settings extends HtmlController
         }
 
         return $this->container['admin.theme']->render('@gantry-admin/settings_field.html.twig', $this->params);
+    }
+
+    public function replace($id)
+    {
+        $this->params += [
+            'data' => $_POST,
+            ];
+
+        return $this->display($id);
+    }
+
+    public function destroy($id)
+    {
+        $this->params += [
+            'data' => [],
+        ];
+
+        return $this->display($id);
     }
 }
