@@ -1,5 +1,5 @@
 name: Social
-description: Display social buttons
+description: Display social buttons.
 type: particle
 
 form:
@@ -14,7 +14,7 @@ form:
       type: input.text
       label: Class
       description: CSS class name for the particle.
-      default: branding
+      default: social
 
     target:
       type: select.select
