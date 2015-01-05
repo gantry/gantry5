@@ -40,5 +40,6 @@ var ready = require('elements/domready'),
     Modal = require('./modal');
 
 module.exports = {
-    modal: new Modal()
+    modal: new Modal(),
+    togglers: require('./togglers')
 };
