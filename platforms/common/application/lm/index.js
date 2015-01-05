@@ -50,10 +50,12 @@ var particlesPopover = function() {
 };
 
 ready(function() {
-    var body = $('body');
+    var body = $('body'), root = $('[data-lm-root]');
     // test
-    if ($('[data-lm-root]')) {
-        builder.load();
+    console.log(root);
+    if (root) {
+        var data = root.data('lm-root');
+        builder.load(JSON.parse(data));
         particlesPopover();
     }
 
