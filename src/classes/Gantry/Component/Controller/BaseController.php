@@ -28,7 +28,7 @@ abstract class BaseController implements RestfulControllerInterface
             '/*' => 'destroy'
         ]
     ];
-    protected $params;
+    protected $params = [];
 
     /**
      * @var Container
@@ -59,6 +59,13 @@ abstract class BaseController implements RestfulControllerInterface
         }
 
         return call_user_func_array([$this, $action], $path);
+    }
+
+    public function setParams(array $params)
+    {
+        $this->params = $params;
+
+        return $this;
     }
 
     public function index()

@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Admin\Controller\Json;
 
+use Gantry\Admin\Controller\Html\Settings;
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\Response\JsonResponse;
 
@@ -43,8 +44,13 @@ class Particles extends JsonController
 
     public function edit($id)
     {
-        $response = [];
-        $response['html'] = $this->container['admin.theme']->render('@gantry-admin/layouts/particles_edit.html.twig', ['id' => $id]);
+        // FIXME: hardcoded!
+        $settings = (new Settings($this->container))->setParams($this->params);
+
+        $response = [
+            'html' => $settings->display('menu')
+//            'html' => $this->container['admin.theme']->render('@gantry-admin/layouts/particles_edit.html.twig', ['id' => $id])
+            ];
 
         return new JsonResponse($response);
     }
