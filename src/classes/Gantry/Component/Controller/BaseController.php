@@ -111,9 +111,8 @@ abstract class BaseController implements RestfulControllerInterface
     /**
      * Catch all action for all undefined actions.
      *
-     * @param array $path
      * @return mixed
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function undefined()
     {
@@ -122,6 +121,17 @@ abstract class BaseController implements RestfulControllerInterface
         }
 
         throw new RuntimeException('Invalid Action', 405);
+    }
+
+    /**
+     * Catch all action for forbidden actions.
+     *
+     * @return mixed
+     * @throws RuntimeException
+     */
+    public function forbidden()
+    {
+        throw new RuntimeException('Forbidden', 403);
     }
 
     /**
