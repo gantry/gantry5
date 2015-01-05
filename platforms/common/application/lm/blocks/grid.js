@@ -15,7 +15,7 @@ var Grid = new prime({
     },
 
     layout: function() {
-        var settings_uri = getAjaxURL('particles/' + this.getId() + '/edit');
+        var settings_uri = getAjaxURL('pages/' + this.getPageId() +  '/' + this.getType() + '/' + this.getId());
 
         return '<div class="g-grid nowrap" data-lm-id="' + this.getId() + '" ' + this.dropzone() + '  data-lm-settings="' + settings_uri + '" data-lm-blocktype="grid"></div>';
     },

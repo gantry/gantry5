@@ -21,7 +21,7 @@
         </span>
     </div>
     <div id="page">
-        <div class="lm-blocks" data-lm-root="{{ layout|json_encode|e('html_attr') }}"></div>
+        <div class="lm-blocks" data-lm-page="{{ page_id }}" data-lm-root="{{ layout|json_encode|e('html_attr') }}"></div>
     </div>
 
     <div id="trash" data-lm-eraseblock><div class="trash-zone">&times;</div><span>Drop here to delete</span></div>

@@ -48,6 +48,13 @@ var Base = new prime({
         return '';
     },
 
+    getPageId: function() {
+        var root = $('[data-lm-root]');
+        if (!root) return 'data-root-not-found';
+
+        return root.data('lm-page');
+    },
+
     getAttribute: function(key) {
         return get(this.attributes, key);
     },

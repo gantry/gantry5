@@ -38,6 +38,7 @@ class Pages extends HtmlController
         $locator = $this->container['locator'];
 
         // TODO: remove hardcoded layout.
+        $this->params['page_id'] = $id;
         $this->params['layout'] = JsonFile::instance($locator('gantry-theme://layouts/presets/'.$id.'.json'))->content();
 
         return $this->container['admin.theme']->render('@gantry-admin/pages_create.html.twig', $this->params);
@@ -48,6 +49,7 @@ class Pages extends HtmlController
         $locator = $this->container['locator'];
 
         // TODO: remove hardcoded layout.
+        $this->params['page_id'] = $id;
         $this->params['layout'] = JsonFile::instance($locator('gantry-theme://layouts/test.json'))->content();
 
         return $this->container['admin.theme']->render('@gantry-admin/pages_edit.html.twig', $this->params);
