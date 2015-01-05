@@ -50,15 +50,16 @@ var particlesPopover = function() {
 };
 
 ready(function() {
-    var body = $('body'), root = $('[data-lm-root]');
+    var body = $('body'), root = $('[data-lm-root]'), data;
     // test
     if (root) {
-        var data = JSON.parse(root.data('lm-root'));
+        data = JSON.parse(root.data('lm-root'));
         if (data.name) {
-            $('[data-g5-content]').find('.title').text(data.name);
+            //$('[data-g5-content]').find('.title').text(data.name);
             data = data.layout;
         }
-        builder.load(data);
+        builder.setStructure(data);
+        builder.load();
         particlesPopover();
     }
 
@@ -69,8 +70,7 @@ ready(function() {
     });
 
     body.delegate('statechangeAfter', '[data-g5-lm-picker]', function(event, element) {
-        var data = JSON.parse(element.data('g5-lm-picker'));
-        $('[data-g5-content]').find('.title').text(data.name);
+        data = JSON.parse($('[data-lm-root]').data('lm-root'));
         builder.setStructure(data.layout);
         builder.load();
 
