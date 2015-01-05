@@ -1,0 +1,31 @@
+name: Date
+description: Display a date.
+type: particle
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable date particles.
+      default: false
+
+    css.class:
+      type: input.text
+      label: Class
+      description: CSS class name for the particle.
+      default: date
+
+    date_formats:
+      type: select.select
+      label: Target
+      description: Target browser window when item is clicked.
+      options:
+          '%A, %B %d, %Y': Date1
+          '%B %d, %Y': Date2
+          '%d %h, %Y': Date3
+          '%d %h, %y': Date4
+          '%a, %h %d, %Y': Date5
+          '%a, %h %d, %y': Date6
+          '%A, %d %m %Y': Date7
+          '%A %e %B %Y': Date8
