@@ -1,6 +1,6 @@
 "use strict";
 var ready         = require('elements/domready'),
-    json          = require('./json_test'),
+    //json          = require('./json_test'),
     $             = require('elements/attributes'),
     modal         = require('../ui').modal,
     request       = require('agent'),
@@ -18,7 +18,7 @@ require('../ui/popover');
 var builder, layoutmanager, lmhistory;
 
 
-builder = new Builder(json);
+builder = new Builder();
 lmhistory = new LMHistory(builder.serialize());
 
 var particlesPopover = function() {
