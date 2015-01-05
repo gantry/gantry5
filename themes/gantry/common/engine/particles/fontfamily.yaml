@@ -1,0 +1,16 @@
+name: Font Family
+description: fonfamily test.
+type: particle
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable the particle.
+      default: true
+
+    font-family:
+      type: input.fonts
+      label: Color 1
+      default: 'Verdana'

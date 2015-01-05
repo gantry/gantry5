@@ -2377,4 +2377,29 @@ body.g5-dialog-open {
   border-bottom-left-radius: 0;
 }
 
+/* line 2, ../scss/admin/particles/_fonts.scss */
+.g-fonts > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+/* line 7, ../scss/admin/particles/_fonts.scss */
+.g-fonts i {
+  cursor: pointer;
+}
+
+/* line 12, ../scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content {
+  width: 650px;
+}
+/* line 15, ../scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  line-height: 1.5rem;
+  max-height: 400px;
+  overflow: auto;
+}
+
 /*# sourceMappingURL=admin.css.map */

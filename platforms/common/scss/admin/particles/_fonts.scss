@@ -1,0 +1,24 @@
+.g-fonts {
+    > * {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    
+    i {
+        cursor: pointer;
+    }
+}
+
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content {
+    width: 650px;
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 13px;
+        line-height: 1.5rem;
+        max-height: 400px;
+        overflow: auto;
+    }
+}

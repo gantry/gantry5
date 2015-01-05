@@ -1,3 +1,4 @@
 module.exports = {
-    colorpicker: require('./colorpicker/cp.js')
+    colorpicker: require('./colorpicker'),
+    fonts: require('./fonts')
 };
