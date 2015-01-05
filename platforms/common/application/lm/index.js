@@ -52,10 +52,13 @@ var particlesPopover = function() {
 ready(function() {
     var body = $('body'), root = $('[data-lm-root]');
     // test
-    console.log(root);
     if (root) {
-        var data = root.data('lm-root');
-        builder.load(JSON.parse(data));
+        var data = JSON.parse(root.data('lm-root'));
+        if (data.name) {
+            $('[data-g5-content]').find('.title').text(data.name);
+            data = data.layout;
+        }
+        builder.load(data);
         particlesPopover();
     }
 
