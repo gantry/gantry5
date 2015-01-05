@@ -1,0 +1,45 @@
+name: Social
+description: Display social buttons.
+type: particle
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable social particles.
+      default: true
+
+    css.class:
+      type: input.text
+      label: Class
+      description: CSS class name for the particle.
+      default: social
+
+    target:
+      type: select.select
+      label: Target
+      description: Target browser window when item is clicked.
+      options:
+          _parent: Self
+          _blank: New Window
+
+    items:
+      type: collection.list
+      array: true
+      label: Social Items
+      value: text
+      ajax: true
+
+      fields:
+        .icon:
+          type: input.text
+          label: Icon
+
+        .text:
+          type: input.text
+          label: Text
+
+        .link:
+          type: input.text
+          label: Link

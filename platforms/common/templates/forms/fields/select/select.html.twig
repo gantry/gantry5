@@ -12,7 +12,7 @@
                 {% if field.multiple in ['on', 'true', 1] %}multiple="multiple"{% endif %}
                 {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
                 {% if field.size is defined %}size="{{ field.size }}"{% endif %}
-
+        >
                 {% for key, text in field.options %}
                         <option
                                 {# required attribute structures #}
@@ -21,9 +21,7 @@
                                 {# non-gloval attribute structures #}
                                 {% if field.options.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
                                 {% if field.options.label is defined %}label="{{ field.options.label }}"{% endif %}
-                                >
-                            {{ text }}
-                        </option>
+                                >{{ text }}</option>
             {% endfor %}
         </select>
 {% endblock %}
