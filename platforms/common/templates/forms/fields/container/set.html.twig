@@ -7,7 +7,7 @@
                 {% set childValue = value[childName[1:]] %}
                 {% set childName = name ~ childName %}
             {% else %}
-                {% set childValue = data.get(scope ~ childName) %}
+                {% set childValue = nested(data, scope ~ childName) %}
             {% endif %}
 
             {% if child.type %}

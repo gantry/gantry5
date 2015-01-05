@@ -15,7 +15,7 @@
 
         {% if field.type and name not in skip %}
             {% set field = field + {'name': name} %}
-            {% set value = attribute(data, scope ~ name) %}
+            {% set value = nested(data, scope ~ name) %}
 
             {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
         {% endif %}

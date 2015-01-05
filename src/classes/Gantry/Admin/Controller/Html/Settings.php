@@ -20,7 +20,8 @@ class Settings extends HtmlController
             '/particles/*/**'   => 'formfield',
         ],
         'POST' => [
-            '/particles'  => 'store'
+            '/particles'  => 'store',
+            '/particles/*' => 'replace'
         ],
         'PUT' => [
             '/particles/*' => 'replace'
@@ -95,5 +96,14 @@ class Settings extends HtmlController
         }
 
         return $this->container['admin.theme']->render('@gantry-admin/settings_field.html.twig', $this->params);
+    }
+
+    public function replace($id)
+    {
+        $this->params += [
+            'data' => $_POST,
+            ];
+
+        return $this->display($id);
     }
 }

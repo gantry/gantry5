@@ -15,7 +15,7 @@
                 {% set childName = name ~ '.' ~ key ~ childName %}
             {% else %}
                 {% set childName = childName|replace({'*': key}) %}
-                {% set childValue = data.get(scope ~ childName) %}
+                {% set childValue = nested(data, scope ~ childName) %}
             {% endif %}
 
             {% if child.type  == 'key' %}

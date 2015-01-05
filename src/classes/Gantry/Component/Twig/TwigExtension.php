@@ -3,6 +3,7 @@ namespace Gantry\Component\Twig;
 
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
+use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class TwigExtension extends \Twig_Extension
@@ -38,6 +39,7 @@ class TwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
+            new \Twig_SimpleFunction('nested', [$this, 'nestedFunc']),
             new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
             new \Twig_SimpleFunction('parseHtmlHeader', [$this, 'parseHtmlHeaderFunc'])
         );
@@ -54,6 +56,37 @@ class TwigExtension extends \Twig_Extension
         $path = explode('.', $str);
 
         return array_shift($path) . ($path ? '[' . implode('][', $path) . ']' : '');
+    }
+
+    /**
+     * Get value by using dot notation for nested arrays/objects.
+     *
+     * @example {{ nested(array, 'this.is.my.nested.variable')|json_encode }}
+     *
+     * @param array   $items      Array of items.
+     * @param string  $name       Dot separated path to the requested value.
+     * @param mixed   $default    Default value (or null).
+     * @param string  $separator  Separator, defaults to '.'
+     * @return mixed  Value.
+     */
+    public function nestedFunc($items, $name, $default = null, $separator = '.')
+    {
+        if ($items instanceof NestedArrayAccess) {
+            return $items->get($name, $default, $separator);
+        }
+        $path = explode($separator, $name);
+        $current = $items;
+        foreach ($path as $field) {
+            if (is_object($current) && isset($current->{$field})) {
+                $current = $current->{$field};
+            } elseif (is_array($current) && isset($current[$field])) {
+                $current = $current[$field];
+            } else {
+                return $default;
+            }
+        }
+
+        return $current;
     }
 
     /**
