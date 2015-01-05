@@ -54,7 +54,7 @@ var Modal = new prime({
         showCloseButton: true,
         escapeToClose: true,
         overlayClickToClose: true,
-        appendNode: 'body',
+        appendNode: '#g5-container',
         className: 'g5-dialog-theme-default',
         css: {},
         overlayClassName: '',
