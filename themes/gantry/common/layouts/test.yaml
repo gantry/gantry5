@@ -11,7 +11,7 @@ container:
       main:
         - position-breadcrumbs
         - position-global_messages
-        - mainbody
+        - pagecontent
       bottom:
         - position-bottom
 
