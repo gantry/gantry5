@@ -33,7 +33,7 @@ class Particles extends JsonController
 
         $particles = array_merge_recursive($particles, $this->getParticles());
         foreach ($particles as &$group) {
-            sort($group);
+            asort($group);
         }
 
         $response = ['particles' => $particles];
