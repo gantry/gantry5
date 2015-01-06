@@ -22,22 +22,22 @@ class Settings extends HtmlController
         'POST' => [
             '/'            => 'forbidden',
             '/particles'   => 'forbidden',
-            '/particles/*' => 'replace'
+            '/particles/*' => 'save'
         ],
         'PUT' => [
             '/'            => 'forbidden',
             '/particles'   => 'forbidden',
-            '/particles/*' => 'replace'
+            '/particles/*' => 'save'
         ],
         'PATCH' => [
             '/'            => 'forbidden',
             '/particles'   => 'forbidden',
-            '/particles/*' => 'update'
+            '/particles/*' => 'save'
         ],
         'DELETE' => [
             '/'            => 'forbidden',
             '/particles'   => 'forbidden',
-            '/particles/*' => 'destroy'
+            '/particles/*' => 'reset'
         ]
     ];
 
@@ -55,8 +55,7 @@ class Settings extends HtmlController
         $prefix = 'particles.' . $id;
 
         $this->params += [
-            'particle' => $particle,
-            'blueprints' => $blueprints['form'],
+            'particle' => $blueprints,
             'data' =>  Gantry::instance()['config']->get($prefix),
             'id' => $id,
             'parent' => 'settings',
@@ -105,7 +104,7 @@ class Settings extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/settings_field.html.twig', $this->params);
     }
 
-    public function replace($id)
+    public function save($id)
     {
         $this->params += [
             'data' => $_POST,
@@ -114,7 +113,7 @@ class Settings extends HtmlController
         return $this->display($id);
     }
 
-    public function destroy($id)
+    public function reset($id)
     {
         $this->params += [
             'data' => [],

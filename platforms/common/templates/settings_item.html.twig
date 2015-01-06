@@ -17,7 +17,7 @@
                 </div>
             </h4>
             <div class="inner-params">
-                {% include 'forms/fields.html.twig' %}
+                {% include 'forms/fields.html.twig' with {'blueprints': particle.form} %}
             </div>
         </div>
     </div>

@@ -12,7 +12,9 @@ class Pages extends HtmlController
             '/create'   => 'create',
             '/create/*' => 'create',
             '/*'        => 'display',
-            '/*/edit'   => 'edit'
+            '/*/edit'   => 'edit',
+            '/*/particle' => 'undefined',
+            '/*/particle/*' => 'particle'
         ],
         'POST' => [
             '/'  => 'store'
@@ -67,5 +69,46 @@ class Pages extends HtmlController
         $this->params['id'] = ucwords($id);
 
         return $this->container['admin.theme']->render('@gantry-admin/pages_edit.html.twig', $this->params);
+    }
+
+    public function particle($id, $particle)
+    {
+        $locator = $this->container['locator'];
+
+        // TODO: remove hardcoded layout.
+        $layout = JsonFile::instance($locator('gantry-theme://layouts/test.json'))->content();
+        if (!$layout) {
+            throw new \RuntimeException('Layout not found', 404);
+        }
+
+        $item = $this->find($layout, $particle);
+
+        if (is_object($item) && $item->type == 'particle') {
+
+            // FIXME: hardcoded!
+            $settings = (new Settings($this->container))->setParams($this->params);
+
+            return $settings->display($item->attributes->name);
+        }
+        throw new \RuntimeException('No configuration exists yet', 404);
+    }
+
+    protected function find($layout, $id)
+    {
+        if (!is_array($layout)) {
+            return null;
+        }
+        foreach ($layout as $item) {
+            if (is_object($item)) {
+                if ($item->id == $id) {
+                    return $item;
+                }
+                $result = $this->find($item->children, $id);
+                if ($result) {
+                    return $result;
+                }
+            }
+        }
+        return null;
     }
 }
