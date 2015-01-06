@@ -142,7 +142,11 @@ var Modal = new prime({
             this.showLoading();
 
             options.method = options.method || 'get';
-            request(options.method, options.remote, bind(function(error, response){
+            var agent = request();
+            agent.method(options.method);
+            agent.url(options.remote);
+            if (options.data) { agent.data(options.data); }
+            agent.send(bind(function(error, response){
                 elements.content.html(response.body.html || response.body);
                 this.hideLoading();
                 if (options.remoteLoaded) {

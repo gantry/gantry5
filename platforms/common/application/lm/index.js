@@ -5,6 +5,7 @@ var ready         = require('elements/domready'),
     modal         = require('../ui').modal,
     request       = require('agent'),
     zen           = require('elements/zen'),
+    contains      = require('mout/array/contains'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
 
@@ -105,9 +106,13 @@ ready(function() {
     body.delegate('click', '[data-lm-settings]', function(event, element) {
         element = $(element);
 
+        var blocktype = element.data('lm-blocktype'),
+            settingsURL = $(element).data('lm-settings'),
+            data = null, parent;
+
         // grid is a special case, since relies on pseudo elements for sorting and settings
         // we need to check where the user clicked.
-        if (element.data('lm-blocktype') === 'grid') {
+        if (blocktype === 'grid') {
             var clientX = event.clientX || (event.touches && event.touches[0].clientX) || 0,
                 boundings = element[0].getBoundingClientRect();
 
@@ -116,10 +121,22 @@ ready(function() {
             }
         }
 
+        element = element.parent('[data-lm-blocktype]');
+        parent = element.parent('[data-lm-blocktype]');
+        blocktype = element.data('lm-blocktype');
+        if (!contains(['block', 'grid', 'section', 'atom'], blocktype)) {
+            data = {};
+            data.options = builder.get(element.data('lm-id')).getAttributes() || {};
+            data.block = builder.get(parent.data('lm-id')).getAttributes() || {};
+        }
+
         modal.open({
             content: 'Loading',
-            remote: $(element).data('lm-settings') + getAjaxSuffix()
+            method: 'post',
+            data: data,
+            remote: settingsURL + getAjaxSuffix()
         });
+
     });
 
 });
