@@ -17,7 +17,10 @@ class Pages extends HtmlController
             '/*/particle/*' => 'particle'
         ],
         'POST' => [
-            '/'  => 'store'
+            '/'  => 'store',
+            '/*'        => 'undefined',
+            '/*/particle' => 'undefined',
+            '/*/particle/*' => 'particle'
         ],
         'PUT' => [
             '/*' => 'replace'
