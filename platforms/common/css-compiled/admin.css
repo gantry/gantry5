@@ -45,7 +45,7 @@
   vertical-align: middle;
   font-size: 1rem;
   font-weight: 300;
-  font-family: "lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: "g-lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
 /* line 9, ../scss/admin/modules/_buttons.scss */
 #g5-container .button:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
@@ -182,7 +182,7 @@ body {
 #g5-container .card .theme-id {
   text-align: center;
   margin-bottom: 10px;
-  font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
 /* line 72, ../scss/admin/_core.scss */
 #g5-container .card .theme-name {
@@ -202,7 +202,7 @@ body {
 #footer {
   margin-bottom: 1rem;
   text-align: center;
-  font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
 /* line 95, ../scss/admin/_core.scss */
 #footer a {
@@ -211,32 +211,32 @@ body {
 }
 
 @font-face {
-  font-family: "lato";
+  font-family: "g-lato";
   font-weight: 100;
   font-style: normal;
   src: url("../fonts/lato_hairline/Lato-Hairline.eot");
-  src: url("../fonts/lato_hairline/Lato-Hairline.eot?#iefix") format("embedded-opentype"), url("../fonts/lato_hairline/Lato-Hairline.woff") format("woff"), url("../fonts/lato_hairline/Lato-Hairline.ttf") format("truetype"), url("../fonts/lato_hairline/Lato-Hairline.svg#lato") format("svg");
+  src: url("../fonts/lato_hairline/Lato-Hairline.eot?#iefix") format("embedded-opentype"), url("../fonts/lato_hairline/Lato-Hairline.woff") format("woff"), url("../fonts/lato_hairline/Lato-Hairline.ttf") format("truetype"), url("../fonts/lato_hairline/Lato-Hairline.svg#g-lato") format("svg");
 }
 @font-face {
-  font-family: "lato";
+  font-family: "g-lato";
   font-weight: 300;
   font-style: normal;
   src: url("../fonts/lato_light/Lato-Light.eot");
-  src: url("../fonts/lato_light/Lato-Light.eot?#iefix") format("embedded-opentype"), url("../fonts/lato_light/Lato-Light.woff") format("woff"), url("../fonts/lato_light/Lato-Light.ttf") format("truetype"), url("../fonts/lato_light/Lato-Light.svg#lato") format("svg");
+  src: url("../fonts/lato_light/Lato-Light.eot?#iefix") format("embedded-opentype"), url("../fonts/lato_light/Lato-Light.woff") format("woff"), url("../fonts/lato_light/Lato-Light.ttf") format("truetype"), url("../fonts/lato_light/Lato-Light.svg#g-lato") format("svg");
 }
 @font-face {
-  font-family: "lato";
+  font-family: "g-lato";
   font-weight: normal;
   font-style: normal;
   src: url("../fonts/lato_regular/lato-regular-webfont.eot");
-  src: url("../fonts/lato_regular/lato-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato_regular/lato-regular-webfont.woff") format("woff"), url("../fonts/lato_regular/lato-regular-webfont.ttf") format("truetype"), url("../fonts/lato_regular/lato-regular-webfont.svg#lato") format("svg");
+  src: url("../fonts/lato_regular/lato-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato_regular/lato-regular-webfont.woff") format("woff"), url("../fonts/lato_regular/lato-regular-webfont.ttf") format("truetype"), url("../fonts/lato_regular/lato-regular-webfont.svg#g-lato") format("svg");
 }
 @font-face {
-  font-family: "montserrat";
+  font-family: "g-montserrat";
   font-weight: normal;
   font-style: normal;
   src: url("../fonts/montserrat_light/montserrat-light-webfont.eot");
-  src: url("../fonts/montserrat_light/montserrat-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/montserrat_light/montserrat-light-webfont.woff") format("woff"), url("../fonts/montserrat_light/montserrat-light-webfont.ttf") format("truetype"), url("../fonts/montserrat_light/montserrat-light-webfont.svg#montserrat") format("svg");
+  src: url("../fonts/montserrat_light/montserrat-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/montserrat_light/montserrat-light-webfont.woff") format("woff"), url("../fonts/montserrat_light/montserrat-light-webfont.ttf") format("truetype"), url("../fonts/montserrat_light/montserrat-light-webfont.svg#g-montserrat") format("svg");
 }
 /* line 3, ../scss/admin/_main.scss */
 #g5-container .main-block {
@@ -270,7 +270,7 @@ body {
   margin-left: 0.938rem;
   padding: 0 6px;
   border-radius: 0.1875rem;
-  font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   letter-spacing: 1px;
   vertical-align: middle;
 }
@@ -481,7 +481,7 @@ body {
 /* line 9, ../scss/admin/_sidebar.scss */
 #g5-container #sidebar {
   font-size: 0.8rem;
-  font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   margin-right: -1px;
 }
 /* line 18, ../scss/admin/_sidebar.scss */
@@ -618,7 +618,7 @@ body {
 }
 /* line 7, ../scss/admin/_headers.scss */
 #g5-container #main-header {
-  font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   color: #fff;
 }
 /* line 11, ../scss/admin/_headers.scss */
@@ -676,7 +676,7 @@ body {
   vertical-align: middle;
   cursor: pointer;
   font-size: 1rem;
-  font-family: "lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: "g-lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   font-weight: 300;
   opacity: 0.5;
   line-height: 1.2;
@@ -795,12 +795,12 @@ body {
 /* line 1, ../scss/admin/_typography.scss */
 #g5-container {
   font-weight: 300;
-  font-family: "lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: "g-lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
 /* line 6, ../scss/admin/_typography.scss */
 #g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
   font-weight: normal;
-  font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
 /* line 11, ../scss/admin/_typography.scss */
 #g5-container h6 {
@@ -972,7 +972,7 @@ body {
   margin: 0;
   padding: 0;
   font-weight: 100;
-  font-family: "lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: "g-lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   font-size: 24px;
 }
 /* line 80, ../scss/admin/_layout-manager.scss */
@@ -1615,30 +1615,31 @@ body {
   right: 0px;
   bottom: 0px;
   left: 0px;
+  pointer-events: none;
   background: rgba(0, 0, 0, 0.4);
 }
-/* line 16, ../scss/admin/_modal.scss */
+/* line 17, ../scss/admin/_modal.scss */
 .g5-dialog.g5-closing .g5-overlay {
   -webkit-animation: fadeOut 0.5s;
   -moz-animation: fadeOut 0.5s;
   animation: fadeOut 0.5s;
 }
 
-/* line 21, ../scss/admin/_modal.scss */
+/* line 22, ../scss/admin/_modal.scss */
 .g5-content {
   -webkit-animation: fadeIn 0.5s;
   -moz-animation: fadeIn 0.5s;
   animation: fadeIn 0.5s;
   background: #fff;
 }
-/* line 24, ../scss/admin/_modal.scss */
+/* line 25, ../scss/admin/_modal.scss */
 .g5-dialog.g5-closing .g5-content {
   -webkit-animation: fadeOut 0.5s;
   -moz-animation: fadeOut 0.5s;
   animation: fadeOut 0.5s;
 }
 
-/* line 29, ../scss/admin/_modal.scss */
+/* line 30, ../scss/admin/_modal.scss */
 .g5-close:before {
   font-family: Arial, sans-serif;
   content: "\00D7";
@@ -1655,7 +1656,7 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 */
-/* line 46, ../scss/admin/_modal.scss */
+/* line 47, ../scss/admin/_modal.scss */
 .g5-dialog-loading-spinner {
   -webkit-animation: rotate 0.7s linear infinite;
   -moz-animation: rotate 0.7s linear infinite;
@@ -1673,12 +1674,12 @@ body {
   background: white;
 }
 
-/* line 61, ../scss/admin/_modal.scss */
+/* line 62, ../scss/admin/_modal.scss */
 body.g5-dialog-open {
   overflow: hidden;
 }
 
-/* line 68, ../scss/admin/_modal.scss */
+/* line 69, ../scss/admin/_modal.scss */
 .g5-dialog.g5-dialog-theme-default {
   padding-top: 160px;
   padding-bottom: 160px;
@@ -1742,19 +1743,19 @@ body.g5-dialog-open {
       }
   }*/
 }
-/* line 71, ../scss/admin/_modal.scss */
+/* line 72, ../scss/admin/_modal.scss */
 .g5-dialog.g5-dialog-theme-default.g5-closing .g5-content {
   -webkit-animation: flyOut 0.5s;
   -moz-animation: flyOut 0.5s;
   animation: flyOut 0.5s;
 }
-/* line 74, ../scss/admin/_modal.scss */
+/* line 75, ../scss/admin/_modal.scss */
 .g5-dialog.g5-dialog-theme-default .g5-content {
   -webkit-animation: flyIn 0.5s;
   -moz-animation: flyIn 0.5s;
   animation: flyIn 0.5s;
 }
-/* line 77, ../scss/admin/_modal.scss */
+/* line 78, ../scss/admin/_modal.scss */
 .g5-dialog.g5-dialog-theme-default .g5-content {
   border-radius: 5px;
   font-family: "Helvetica Neue", sans-serif;
@@ -1768,11 +1769,11 @@ body.g5-dialog-open {
   font-size: 1.1em;
   line-height: 1.5em;
 }
-/* line 89, ../scss/admin/_modal.scss */
+/* line 90, ../scss/admin/_modal.scss */
 .g5-dialog.g5-dialog-theme-default .g5-content h1, .g5-dialog.g5-dialog-theme-default .g5-content h2, .g5-dialog.g5-dialog-theme-default .g5-content h3, .g5-dialog.g5-dialog-theme-default .g5-content h4, .g5-dialog.g5-dialog-theme-default .g5-content h5, .g5-dialog.g5-dialog-theme-default .g5-content h6, .g5-dialog.g5-dialog-theme-default .g5-content p, .g5-dialog.g5-dialog-theme-default .g5-content ul, .g5-dialog.g5-dialog-theme-default .g5-content li {
   color: inherit;
 }
-/* line 93, ../scss/admin/_modal.scss */
+/* line 94, ../scss/admin/_modal.scss */
 .g5-dialog.g5-dialog-theme-default .g5-close {
   border-radius: 5px;
   position: absolute;
@@ -1780,7 +1781,7 @@ body.g5-dialog-open {
   right: 0;
   cursor: pointer;
 }
-/* line 99, ../scss/admin/_modal.scss */
+/* line 100, ../scss/admin/_modal.scss */
 .g5-dialog.g5-dialog-theme-default .g5-close:before {
   border-radius: 3px;
   position: absolute;
@@ -1796,13 +1797,13 @@ body.g5-dialog-open {
   color: #bbbbbb;
   background: transparent;
 }
-/* line 114, ../scss/admin/_modal.scss */
+/* line 115, ../scss/admin/_modal.scss */
 .g5-dialog.g5-dialog-theme-default .g5-close:hover:before, .g5-dialog.g5-dialog-theme-default .g5-close:active:before {
   color: #777777;
   background: #e0e0e0;
 }
 
-/* line 180, ../scss/admin/_modal.scss */
+/* line 181, ../scss/admin/_modal.scss */
 .g5-dialog-loading-spinner.g5-dialog-theme-default {
   box-shadow: 0 0 0 0.5em #f0f0f0, 0 0 1px 0.5em rgba(0, 0, 0, 0.3);
   border-radius: 100%;
@@ -1855,7 +1856,7 @@ body.g5-dialog-open {
 }
 /* line 78, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-particles {
-  font-family: "montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   font-size: 16px;
 }
 /* line 86, ../scss/admin/_popover.scss */
@@ -2400,6 +2401,7 @@ body.g5-dialog-open {
   line-height: 1.5rem;
   max-height: 400px;
   overflow: auto;
+  position: relative;
 }
 
 /*# sourceMappingURL=admin.css.map */
