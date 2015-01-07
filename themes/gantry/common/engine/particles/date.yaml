@@ -16,11 +16,12 @@ form:
       description: CSS class name for the particle.
       default: date
 
-    date_formats:
+    date.formats:
       type: select.select
       label: Target
       description: Target browser window when item is clicked.
       options:
+          '': '- Select -'
           '%A, %B %d, %Y': Date1
           '%B %d, %Y': Date2
           '%d %h, %Y': Date3
