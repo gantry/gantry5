@@ -11,14 +11,15 @@ container:
       main:
         - position-breadcrumbs
         - position-global_messages
-        - pagecontent
+        - mainbody
       bottom:
         - position-bottom
 
     - sidebar 25:
+      - particle-social
       - position-sidebar
       - position-right
 
   footer:
     - position-footer
-    - [spacer 25, particle-copyright 50, particle-branding 25]
+    - [particle-date 25, particle-copyright 50, particle-branding 25]

@@ -1,9 +1,9 @@
 container:
   header:
-    - [particle-logo 20, particle-menu 80]
+    - [particle-logo 20, particle-menu 60, particle-social 20]
 
   body:
     - mainbody
 
   footer:
-    - [particle-social 20, particle-date 20, particle-copyright 35, particle-branding 25]
+    - [particle-date 25, particle-copyright 50, particle-branding 25]
