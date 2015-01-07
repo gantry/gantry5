@@ -19,10 +19,10 @@ var prime    = require('prime'),
 
 var animationEndSupport = false;
 
-domready(function () {
+domready(function() {
     var style = (document.body || document.documentElement).style;
 
-    forEach(['animation', 'WebkitAnimation', 'MozAnimation', 'MsAnimation', 'OAnimation'], function (animation, index) {
+    forEach(['animation', 'WebkitAnimation', 'MozAnimation', 'MsAnimation', 'OAnimation'], function(animation, index) {
         if (animationEndSupport) {
             return;
         }
@@ -68,13 +68,13 @@ var Modal = new prime({
         afterClose: null
     },
 
-    constructor: function (options) {
+    constructor: function(options) {
         this.setOptions(options);
         this.defaults = this.options;
 
         var self = this;
-        domready(function () {
-            $(window).on('keyup', function (event) {
+        domready(function() {
+            $(window).on('keyup', function(event) {
                 if (event.keyCode === 27) {
                     return self.closeByEscape();
                 }
@@ -84,10 +84,10 @@ var Modal = new prime({
         });
 
         this
-            .on('dialogOpen', function (options) {
+            .on('dialogOpen', function(options) {
                 $('body').addClass(options.baseClassNames.open);
             })
-            .on('dialogAfterClose', bind(function (options) {
+            .on('dialogAfterClose', bind(function(options) {
                 var all = this.getAll();
                 if (!all || !all.length) {
                     $('body').removeClass(options.baseClassNames.open);
@@ -95,11 +95,11 @@ var Modal = new prime({
             }, this));
     },
 
-    storage: function () {
+    storage: function() {
         return storage;
     },
 
-    open: function (options) {
+    open: function(options) {
         options = merge(this.options, options);
         options.id = this.globalID++;
 
@@ -122,6 +122,7 @@ var Modal = new prime({
         storage.set(elements.overlay, { dialog: options });
 
         if (options.overlayClickToClose) {
+            elements.container.on('click', bind(this._overlayClick, this, elements.container[0]));
             elements.overlay.on('click', bind(this._overlayClick, this, elements.overlay[0]));
         }
 
@@ -137,6 +138,12 @@ var Modal = new prime({
         storage.set(elements.content, { dialog: options });
         elements.container.appendChild(elements.content);
 
+        if (options.overlayClickToClose) {
+            elements.content.on('click', function(e){
+                e.preventDefault();
+            });
+        }
+
         // remote
         if (options.remote && options.remote.length > 1) {
             this.showLoading();
@@ -146,7 +153,7 @@ var Modal = new prime({
             agent.method(options.method);
             agent.url(options.remote);
             if (options.data) { agent.data(options.data); }
-            agent.send(bind(function(error, response){
+            agent.send(bind(function(error, response) {
                 elements.content.html(response.body.html || response.body);
                 this.hideLoading();
                 if (options.remoteLoaded) {
@@ -176,26 +183,26 @@ var Modal = new prime({
             options.afterOpen(elements.content, options);
         }
 
-        setTimeout(bind(function () {
+        setTimeout(bind(function() {
             return this.emit('dialogOpen', options);
         }, this), 0);
 
         return elements.content;
     },
 
-    getAll: function () {
+    getAll: function() {
         var options = this.options;
         return $("." + options.baseClassNames.container + ":not(." + options.baseClassNames.closing + ") ." + options.baseClassNames.content);
     },
 
-    getByID: function (id) {
-        return $(this.getAll().filter(function (element) {
+    getByID: function(id) {
+        return $(this.getAll().filter(function(element) {
             element = $(element);
             return storage.get(element).dialog.id === id;
         }));
     },
 
-    close: function (id) {
+    close: function(id) {
         if (!id) {
             var element = $(last(this.getAll()));
             if (!element) {
@@ -208,10 +215,10 @@ var Modal = new prime({
         return this.closeByID(id);
     },
 
-    closeAll: function () {
+    closeAll: function() {
         var ids;
 
-        ids = map(this.getAll(), function (element) {
+        ids = map(this.getAll(), function(element) {
             element = $(element);
 
             return storage.get(element).dialog.id;
@@ -221,14 +228,14 @@ var Modal = new prime({
             return false;
         }
 
-        forEach(ids.reverse(), function (value, id) {
+        forEach(ids.reverse(), function(value, id) {
             return this.closeByID(id);
         }, this);
 
         return true;
     },
 
-    closeByID: function (id) {
+    closeByID: function(id) {
         var content = this.getByID(id);
         if (!content || !content.length) {
             return false;
@@ -239,12 +246,12 @@ var Modal = new prime({
         container = storage.get(content).dialog.elements.container;
         options = merge({}, storage.get(content).dialog);
 
-        var beforeClose = function () {
+        var beforeClose = function() {
                 if (options.beforeClose) {
                     return options.beforeClose(content, options);
                 }
             },
-            close = bind(function () {
+            close = bind(function() {
                 content.emit('dialogClose', options);
                 container.remove();
                 this.emit('dialogAfterClose', options);
@@ -255,7 +262,7 @@ var Modal = new prime({
 
         if (animationEndSupport) {
             beforeClose();
-            container.off(this.animationEndEvent).on(this.animationEndEvent, function () {
+            container.off(this.animationEndEvent).on(this.animationEndEvent, function() {
                 return close();
             }).addClass(options.baseClassNames.closing);
         } else {
@@ -266,10 +273,10 @@ var Modal = new prime({
         return true;
     },
 
-    closeByEscape: function () {
+    closeByEscape: function() {
         var ids, id;
 
-        ids = map(this.getAll(), function (element) {
+        ids = map(this.getAll(), function(element) {
             element = $(element);
 
             return storage.get(element).dialog.id;
@@ -291,18 +298,18 @@ var Modal = new prime({
 
     },
 
-    showLoading: function () {
+    showLoading: function() {
         this.hideLoading();
         return $('body').appendChild(zen('div.g5-dialog-loading-spinner.' + this.options.className));
     },
 
-    hideLoading: function () {
+    hideLoading: function() {
         var spinner = $('.g5-dialog-loading-spinner');
         return spinner ? spinner.remove() : false;
     },
 
     // private
-    _overlayClick: function (element, event) {
+    _overlayClick: function(element, event) {
         if (event.target !== element) {
             return;
         }
@@ -310,7 +317,7 @@ var Modal = new prime({
         return this.close(storage.get($(element)).dialog.id);
     },
 
-    _closeButtonClick: function (element) {
+    _closeButtonClick: function(element) {
         return this.close(storage.get($(element)).dialog.id);
     }
 });
