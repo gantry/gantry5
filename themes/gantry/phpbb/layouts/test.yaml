@@ -8,7 +8,7 @@ header:
     feature:
       - phpbb-pathway
     main:
-      - mainbody
+      - pagecontent
     bottom:
       - [phpbb-online, phpbb-statistics]
       - phpbb-birthday

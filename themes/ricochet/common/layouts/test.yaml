@@ -16,7 +16,7 @@ container:
     - main:
       - position-breadcrumbs
       - position-global_messages
-      - mainbody
+      - pagecontent
     - sidebar 25:
       - position-sidebar
       - position-right

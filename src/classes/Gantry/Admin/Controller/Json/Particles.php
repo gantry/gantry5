@@ -18,7 +18,7 @@ class Particles extends JsonController
                 'spacer' => 'Spacer'
             ],
             'pagecontent' => [
-                'mainbody' => 'Page Content'
+                'pagecontent' => 'Page Content'
             ],
             'particle' => [
                 'social-buttons' => 'Social Buttons',

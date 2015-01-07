@@ -3,7 +3,7 @@ container:
     - [particle-logo 20, particle-menu 60, particle-social 20]
 
   body:
-    - mainbody
+    - pagecontent
 
   footer:
     - [particle-date 25, particle-copyright 50, particle-branding 25]

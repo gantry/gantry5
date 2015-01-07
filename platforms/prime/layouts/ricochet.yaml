@@ -21,7 +21,7 @@ expandedtop:
 
 body:
   container:
-    - mainbody
+    - pagecontent
 
 footer:
   container:
