@@ -1,0 +1,15 @@
+name: Google Analytics
+description: Configure Google Analytics.
+type: particle
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable analytic particles.
+      default: false
+
+    ua.code:
+      type: input.text
+      label: UA Code
