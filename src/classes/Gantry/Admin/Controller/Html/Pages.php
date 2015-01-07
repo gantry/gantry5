@@ -110,6 +110,7 @@ class Pages extends HtmlController
                 'id' => $id,
                 'parent' => 'settings',
                 'route' => 'settings.' . $prefix,
+                'action' => str_replace('.', '/', 'pages.' . $prefix . '.validate'),
                 'skip' => ['enabled']
             ];
 
