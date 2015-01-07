@@ -1,25 +1,27 @@
 <?php
 namespace Gantry\Admin\Controller\Html;
 
+use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Controller\HtmlController;
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\JsonFile;
 
 class Pages extends HtmlController
 {
     protected $httpVerbs = [
         'GET' => [
-            '/'         => 'index',
-            '/create'   => 'create',
-            '/create/*' => 'create',
-            '/*'        => 'display',
-            '/*/edit'   => 'edit',
-            '/*/particle' => 'undefined',
+            '/'             => 'index',
+            '/create'       => 'create',
+            '/create/*'     => 'create',
+            '/*'            => 'display',
+            '/*/edit'       => 'edit',
+            '/*/particle'   => 'undefined',
             '/*/particle/*' => 'particle'
         ],
         'POST' => [
-            '/'  => 'store',
-            '/*'        => 'undefined',
-            '/*/particle' => 'undefined',
+            '/'             => 'store',
+            '/*'            => 'undefined',
+            '/*/particle'   => 'undefined',
             '/*/particle/*' => 'particle'
         ],
         'PUT' => [
@@ -74,7 +76,7 @@ class Pages extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/pages_edit.html.twig', $this->params);
     }
 
-    public function particle($id, $particle)
+    public function particle($page, $particle)
     {
         $locator = $this->container['locator'];
 
@@ -84,14 +86,34 @@ class Pages extends HtmlController
             throw new \RuntimeException('Layout not found', 404);
         }
 
-        $item = $this->find($layout, $particle);
+        if (isset($_POST['options'])) {
+            $item = (object) [
+                'id' => $particle,
+                'type' => 'particle',
+                'attributes' => (object) $_POST['options']
+            ];
+            //var_dump($item);die();
+        } else {
+            $item = $this->find($layout, $particle);
+        }
 
-        if (is_object($item) && $item->type == 'particle') {
+        if (is_object($item) && $item->type == 'particle' && isset($item->attributes->name)) {
+            $id = $item->attributes->name;
+            $prefix = 'particles.' . $id;
+            // TODO: Use blueprints to merge configuration.
+            $data = (array) $item->attributes + (array) $this->container['config']->get($prefix);
+            $blueprints = new Blueprints($this->container['particles']->get($id));
 
-            // FIXME: hardcoded!
-            $settings = (new Settings($this->container))->setParams($this->params);
+            $this->params += [
+                'particle' => $blueprints,
+                'data' =>  $data,
+                'id' => $id,
+                'parent' => 'settings',
+                'route' => 'settings.' . $prefix,
+                'skip' => ['enabled']
+            ];
 
-            return $settings->display($item->attributes->name);
+            return $this->container['admin.theme']->render('@gantry-admin/settings_item.html.twig', $this->params);
         }
         throw new \RuntimeException('No configuration exists yet', 404);
     }

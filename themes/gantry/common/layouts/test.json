@@ -398,7 +398,12 @@
                                 "id": "0f7653c0-909b-4430-afdd-75bc5df8105a",
                                 "type": "particle",
                                 "attributes": {
-                                    "name": "copyright"
+                                    "name": "copyright",
+                                    "date": {
+                                        "start": "1999",
+                                        "end": "now"
+                                    },
+                                    "owner": "RollerTheme"
                                 },
                                 "children": []
                             }
