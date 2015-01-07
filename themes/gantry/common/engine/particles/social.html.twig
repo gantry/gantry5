@@ -1,0 +1,11 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+    <div class="g-block social">
+        {% for item in particle.items %}
+            <a target="{{ particle.target }}" href="{{ item.link }}">
+                <span class="{{ item.icon }}"></span>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
