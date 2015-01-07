@@ -18,6 +18,9 @@
 
 {%- set page_bottom %}
     {% block page_bottom %}
+        {% for script in gantry.scripts(true) %}
+            {{ script }}
+        {% endfor %}
     {% endblock %}
 {% endset %}
 
