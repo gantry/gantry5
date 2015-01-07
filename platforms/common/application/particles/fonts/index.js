@@ -12,14 +12,19 @@ var prime    = require('prime'),
     bind     = require('mout/function/bind'),
     map      = require('mout/array/map'),
     forEach  = require('mout/array/forEach'),
-    contains  = require('mout/array/contains'),
+    contains = require('mout/array/contains'),
     last     = require('mout/array/last'),
+    split    = require('mout/array/split'),
     merge    = require('mout/object/merge'),
 
     modal    = require('../../ui').modal,
     async    = require('async'),
 
-    request  = require('agent');
+    request  = require('agent'),
+
+    wf = require('./webfont');
+
+require('../../utils/elements.viewport');
 
 var Fonts = new prime({
 
@@ -31,6 +36,7 @@ var Fonts = new prime({
         this.data = null;
         this.field = null;
         this.element = null;
+        this.throttle = false;
     },
 
     open: function(event, element, container) {
@@ -43,6 +49,7 @@ var Fonts = new prime({
 
         if (container) {
             container.empty().appendChild(this.buildLayout());
+            this.scroll(container.find('.g-sidebar ul'));
             return;
         }
 
@@ -50,9 +57,9 @@ var Fonts = new prime({
             content: 'Loading...',
             className: 'g5-dialog-theme-default g5-modal-fonts',
             afterOpen: bind(function(container) {
-                console.log(container);
-                setTimeout(bind(function(){
+                setTimeout(bind(function() {
                     container.empty().appendChild(this.buildLayout());
+                    this.scroll(container.find('.g-sidebar ul'));
                 }, this), 1);
             }, this)
         });
@@ -84,23 +91,74 @@ var Fonts = new prime({
         });
     },
 
+    scroll: function(container) {
+        clearTimeout(this.throttle);
+        this.throttle = setTimeout(bind(function(){
+            var elements = (container.find('ul') || container).inviewport('li'),
+                list = [];
+
+            $(elements).forEach(function(element) {
+                element = $(element);
+                list.push(element.data('font'));
+            });
+
+            wf.load({
+                google: {
+                    families: list
+                },
+                fontactive: function(family, fvd) {
+                    container.find('li[data-font="' + family + '"]').style({ fontFamily: family });
+                }
+            });
+        }, this), 250);
+    },
+
     buildLayout: function() {
         var html = zen('div#g-fonts.g-grid'),
             sidebar = zen('div.g-sidebar.g-block.size-1-4').bottom(html),
             main = zen('div.g-main.g-block').bottom(html),
             ul = zen('ul').bottom(sidebar),
-            search = zen('div.settings-block').appendChild(zen('input[type="text"][placeholder="Search..."]')).top(sidebar);
+            families = [], list;
 
-        async.eachSeries(this.data, function(font, callback) {
-            var variant = contains(font.variants, 'regular') ? '' : ':' + font.variants[0];
-            zen('li').html(font.family).bottom(ul).style({ fontFamily: font.family });
-            var style = zen('link[href="http://fonts.googleapis.com/css?family=' + font.family + variant + '"][type="text/css"][rel="stylesheet"]');
-            //style.on('load', function(){ callback(); });
-            //style.on('error', function(){ callback('Unable to load "'+font.family+'"'); });
-            $('head').appendChild(style);
+        zen('div.settings-block').appendChild(zen('input[type="text"][placeholder="Search..."]')).top(sidebar);
 
+        ul.on('scroll', bind(this.scroll, this, ul));
+
+        async.eachLimit(this.data, 100, function(font, callback) {
+            var variant = contains(font.variants, 'regular') ? '' : ':' + font.variants[0],
+                li = zen('li[data-font="' + font.family+ '"]').html(font.family).bottom(ul),
+                style;
+
+            li.on('click', function(){
+                wf.load({
+                    google: {
+                        families: [font.family]
+                    }
+                });
+            });
+            //style = zen('link[href="http://fonts.googleapis.com/css?family=' + font.family + variant + '"][type="text/css"][rel="stylesheet"]');
+            //style.on('load', function() { li.style({ fontFamily: font.family }) });
+            ////style.on('error', function(){ callback('Unable to load "'+font.family+'"'); });
+            //$('head').appendChild(style);
+
+            families.push(font.family + variant);
             callback();
         });
+
+/*
+        forEach(split(families, 2), function(family){
+            var counter = 0;
+            wf.load({
+                google: {
+                    families: family
+                },
+                fontactive: function(family, fvd){
+                    ul.find('li[data-font="' + family + '"]').style({fontFamily: family});
+                }
+            });
+        });
+*/
+
 
         return html;
     }
