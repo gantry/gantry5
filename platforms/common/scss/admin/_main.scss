@@ -2,10 +2,13 @@
 
 .main-block {
     background-color: $main-bg;
+
+    @include breakpoint(no-mobile) {
+    	min-height: 75vh;
+    }
 }
 
-#main {
-    min-height: 400px;
+#g-main {
 
     h2 {
         .fa-edit {

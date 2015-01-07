@@ -10,7 +10,7 @@
 
         .g-content {
             margin: 0;
-            padding: $content-padding $content-padding + 1.5;
+            padding: $content-padding - 0.2 $content-padding + 1.5;
         }
 
         .theme-title {
@@ -91,7 +91,7 @@
         color: $secondary-accent;
 
         .sidebar-toggle {
-            padding: $content-padding;
+            padding: $content-padding - 0.1 $content-padding;
             float: left;
         }
 
@@ -118,14 +118,14 @@
     }
 
     .settings-state {
-        padding: $content-padding;
+        padding: $content-padding - 0.1 $content-padding;
         float: right;
         text-align: center;
         cursor: pointer;
         background: $tertiary-accent;
         color: $main-header-text;
         font-size: $core-font-size + 0.1;
-        height: 58px;
+        height: 55px;
 
         @include breakpoint(mobile-only) {
             font-size: $core-font-size;
