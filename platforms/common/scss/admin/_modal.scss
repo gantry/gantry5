@@ -12,6 +12,7 @@
 .g5-overlay {
     @include animation(fadeIn 0.5s);
     @include position(fixed, 0px 0px 0px 0px);
+    @include transform(translate3d(0, 0, 0));
     pointer-events: none;
     background: rgba(0, 0, 0, 0.4);
     .g5-dialog.g5-closing & {
@@ -67,8 +68,8 @@ body.g5-dialog-open {
 $blue: #3288e6;
 
 .g5-dialog.g5-dialog-theme-default {
-    padding-top: 160px;
-    padding-bottom: 160px;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
     &.g5-closing .g5-content {
         @include animation(flyOut 0.5s);
     }
