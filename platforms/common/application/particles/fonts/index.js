@@ -1,5 +1,5 @@
 "use strict";
-
+// fonts list: https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB2yJM8DBwt66u2MVRgb6M4t9CqkW7_IRY
 var prime    = require('prime'),
     $        = require('../../utils/elements.moofx'),
     zen      = require('elements/zen'),
@@ -103,6 +103,7 @@ var Fonts = new prime({
             });
 
             wf.load({
+                classes: false,
                 google: {
                     families: list
                 },
@@ -129,13 +130,6 @@ var Fonts = new prime({
                 li = zen('li[data-font="' + font.family+ '"]').html(font.family).bottom(ul),
                 style;
 
-            li.on('click', function(){
-                wf.load({
-                    google: {
-                        families: [font.family]
-                    }
-                });
-            });
             //style = zen('link[href="http://fonts.googleapis.com/css?family=' + font.family + variant + '"][type="text/css"][rel="stylesheet"]');
             //style.on('load', function() { li.style({ fontFamily: font.family }) });
             ////style.on('error', function(){ callback('Unable to load "'+font.family+'"'); });
@@ -157,6 +151,7 @@ var Fonts = new prime({
                 }
             });
         });
+
 */
 
 
