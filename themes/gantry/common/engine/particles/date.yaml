@@ -17,7 +17,7 @@ form:
       default: date
 
     date.formats:
-      type: select.select
+      type: select.date
       label: Target
       description: Target browser window when item is clicked.
       default: l, F d, Y
