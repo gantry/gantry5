@@ -6,4 +6,4 @@ container:
     - mainbody
 
   footer:
-    - [spacer 25, particle-copyright 50, particle-branding 25]
+    - [particle-social 20, particle-date 20, particle-copyright 35, particle-branding 25]

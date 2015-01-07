@@ -20,6 +20,7 @@ form:
       type: select.select
       label: Target
       description: Target browser window when item is clicked.
+      default: _blank
       options:
           _parent: Self
           _blank: New Window
