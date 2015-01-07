@@ -113,7 +113,7 @@ class Pages extends HtmlController
                 'skip' => ['enabled']
             ];
 
-            return $this->container['admin.theme']->render('@gantry-admin/settings_item.html.twig', $this->params);
+            return $this->container['admin.theme']->render('@gantry-admin/pages_particle.html.twig', $this->params);
         }
         throw new \RuntimeException('No configuration exists yet', 404);
     }
