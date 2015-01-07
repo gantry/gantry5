@@ -12,6 +12,7 @@
 .g5-overlay {
     @include animation(fadeIn 0.5s);
     @include position(fixed, 0px 0px 0px 0px);
+    pointer-events: none;
     background: rgba(0, 0, 0, 0.4);
     .g5-dialog.g5-closing & {
         @include animation(fadeOut 0.5s);
