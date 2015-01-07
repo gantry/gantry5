@@ -2,12 +2,6 @@
 
 {% block gantry %}
 <form method="post" action="{{ gantry.route(action) }}">
-    <div class="pull-right">
-        <button class="button">Save</button>
-        <button class="button" name="METHOD" value="DELETE">Reset</button>
-        <a class="button">Cancel</a>
-    </div>
-    <div class="clearfix"></div>
     <div class="card settings-block">
         <h4>
             {{ particle.name }}
@@ -15,6 +9,11 @@
         <div class="inner-params">
             {% include 'forms/fields.html.twig' with {'blueprints': particle.form} %}
         </div>
+    </div>
+    <div class="g-modal-actions">
+        <button class="button float-left" name="METHOD" value="DELETE">Defaults</button>
+        <button class="button button-primary" type="submit">Apply</button>
+        <a class="button">Cancel</a>
     </div>
 </form>
 {% endblock %}

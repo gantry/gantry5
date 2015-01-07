@@ -391,10 +391,15 @@ body {
   display: block;
 }
 /* line 59, ../scss/admin/_settings.scss */
+#g5-container .g5-dialog .settings-block {
+  width: 100%;
+  margin: 0 0 15px;
+}
+/* line 65, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker {
   position: relative;
 }
-/* line 62, ../scss/admin/_settings.scss */
+/* line 68, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker .settings-param-field-colorpicker-preview {
   position: absolute;
   top: 2px;
@@ -1683,65 +1688,6 @@ body.g5-dialog-open {
 .g5-dialog.g5-dialog-theme-default {
   padding-top: 160px;
   padding-bottom: 160px;
-  /*.vex-dialog-form {
-      .vex-dialog-message {
-          margin-bottom: 0.5em;
-      }
-      .vex-dialog-input {
-          margin-bottom: 1em;
-          textarea, input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"] {
-              border-radius: 3px;
-              background: white;
-              width: 100%;
-              padding: 0.25em 0.67em;
-              border: 0;
-              font-family: inherit;
-              font-weight: inherit;
-              font-size: inherit;
-              min-height: 2.5em;
-              margin: 0 0 0.25em;
-              &:focus {
-                  @include box-shadow(inset 0 0 0 2px lighten($blue, 20%));
-                  outline: none;
-              }
-          }
-      }
-      .vex-dialog-buttons {
-          @include pie-clearfix;
-      }
-  }
-  .vex-dialog-button {
-      border-radius: 3px;
-      border: 0;
-      float: right;
-      margin: 0 0 0 0.5em;
-      font-family: inherit;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-size: 0.8em;
-      line-height: 1em;
-      padding: 0.75em 2em;
-      &.vex-last {
-          margin-left: 0;
-      }
-      &:focus {
-          @include vex-animation(vex-pulse 1.1s infinite);
-          outline: none;
-          // vex-pulse uses -webkit-filter which
-          // doesn't play so nice in mobile webkit
-          @media (max-width: 568px) {
-              @include vex-animation(none);
-          }
-      }
-      &.vex-dialog-button-primary {
-          background: $blue;
-          color: white;
-      }
-      &.vex-dialog-button-secondary {
-          background: #e0e0e0;
-          color: #777777;
-      }
-  }*/
 }
 /* line 72, ../scss/admin/_modal.scss */
 .g5-dialog.g5-dialog-theme-default.g5-closing .g5-content {
@@ -1802,8 +1748,21 @@ body.g5-dialog-open {
   color: #777777;
   background: #e0e0e0;
 }
+/* line 121, ../scss/admin/_modal.scss */
+.g5-dialog.g5-dialog-theme-default .g-modal-actions {
+  background: #eaeaea;
+  padding: 0.5em;
+  margin: 0 -1em -1em;
+  border-top: 1px solid #e0e0e0;
+  border-radius: 0 0 5px 5px;
+  text-align: right;
+}
+/* line 130, ../scss/admin/_modal.scss */
+.g5-dialog.g5-dialog-theme-default form {
+  margin: 0;
+}
 
-/* line 181, ../scss/admin/_modal.scss */
+/* line 135, ../scss/admin/_modal.scss */
 .g5-dialog-loading-spinner.g5-dialog-theme-default {
   box-shadow: 0 0 0 0.5em #f0f0f0, 0 0 1px 0.5em rgba(0, 0, 0, 0.3);
   border-radius: 100%;
