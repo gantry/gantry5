@@ -94,8 +94,10 @@ var Fonts = new prime({
     scroll: function(container) {
         clearTimeout(this.throttle);
         this.throttle = setTimeout(bind(function(){
-            var elements = (container.find('ul') || container).inviewport('li'),
+            var elements = (container.find('ul') || container).inviewport('li', 800),
                 list = [];
+
+            if (!elements) { return; }
 
             $(elements).forEach(function(element) {
                 element = $(element);

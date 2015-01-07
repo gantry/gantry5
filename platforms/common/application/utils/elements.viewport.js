@@ -53,8 +53,8 @@ $.implement({
         var position = this.position();
         return elements.filter(function(element) {
             element = $(element);
-            return element[0].offsetTop - treshold >= this[0].scrollTop &&
-                element[0].offsetTop + treshold <= this[0].scrollTop + position.height;
+            return element[0].offsetTop + treshold >= this[0].scrollTop &&
+                element[0].offsetTop - treshold <= this[0].scrollTop + position.height;
         }, this);
     }
 });
