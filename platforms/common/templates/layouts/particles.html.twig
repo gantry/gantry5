@@ -5,8 +5,8 @@
     </div>
     <ul>
         {% for key,list in particles %}
-            {% for particle in list %}
-            <li class="g5-lm-particle-{{ key | e }}" data-lm-blocktype="{{ key | e }}">{{ particle | e }}</li>
+            {% for type,particle in list %}
+            <li class="g5-lm-particle-{{ key | e }}" data-lm-blocktype="{{ key | e }}" data-lm-subtype="{{ type }}">{{ particle | e }}</li>
             {% endfor %}
         {% endfor %}
     </ul>

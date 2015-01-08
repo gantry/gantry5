@@ -128,7 +128,7 @@ var LayoutManager = new prime({
         }).addClass('original-placeholder').data('lm-dropzone', null);
         if (type === 'grid') { this.original.style({ display: 'flex' }); }
         this.originalType = type;
-        this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({ builder: this.builder });
+        this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({ builder: this.builder, attributes: { name: element.data('lm-subtype') } });
 
         if (!this.block.isNew()) {
             var margins = $(element).find('[data-lm-blocktype]').compute('margin');
