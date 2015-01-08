@@ -145,9 +145,8 @@ class Menu implements \ArrayAccess, \Iterator
      */
     protected function getList(array $config)
     {
-        $items = (array) isset($config['items']) ? $config['items'] : null;
-        $params = (array) isset($config['config']) ? $config['config'] : null;
-        $ordering = new Config((array) isset($config['ordering']) ? $config['ordering'] : []);
+        $items = (array) (isset($config['items']) ? $config['items'] : null);
+        $params = (array) (isset($config['config']) ? $config['config'] : null);
 
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
@@ -168,14 +167,16 @@ class Menu implements \ArrayAccess, \Iterator
             return [];
         }
         $menuItems = array_unique(array_merge(Folder::all($folder, $options), array_keys($items)));
+        sort($menuItems);
 
-        $all = $tree = [];
+        $all = ['' => (object) ['path' => '', 'children' => []]];
         foreach ($menuItems as $name) {
+            $parent = dirname($name) != '.' ? dirname($name) : '';
             $level = substr_count($name, '/') + 1;
             if (($start && $start > $level)
                 || ($end && $level > $end)
-                || (!$showAll && $level > 1 && strpos(dirname($name), $path) !== 0)
-                || ($start > 1 && strpos(dirname(dirname($name)), $path) !== 0)
+                || (!$showAll && $level > 1 && !($parent && strpos($parent, $path) === 0))
+                || ($start > 1 && !($parent && strpos(dirname($parent), $path) === 0))
                 || ($name[0] == '_' || strpos($name, '_'))) {
                 continue;
             }
@@ -187,10 +188,12 @@ class Menu implements \ArrayAccess, \Iterator
                 'path' => $name,
                 'title' => ucfirst(basename($name)),
                 'link' => $name != 'home' ? $name : '',
-                'parent' => dirname($name) != '.' ? dirname($name) : '',
+                'parent' => $parent,
                 'children' => [],
+                'layout' => 'default',
                 'browserNav' => 0,
-                'menu_text' => true
+                'menu_text' => true,
+                'visible' => true,
             ];
 
             $item = (object) $item;
@@ -201,6 +204,7 @@ class Menu implements \ArrayAccess, \Iterator
             }
 
             switch ($item->type) {
+                case 'hidden':
                 case 'separator':
                 case 'heading':
                     // Separator and heading has no link.
@@ -236,21 +240,18 @@ class Menu implements \ArrayAccess, \Iterator
             if (isset($all[$item->parent])) {
                 $all[$item->parent]->children[$item->path] = $item;
             } else {
-                $tree[$item->path] = $item;
+                $all['']->children[$item->path] = $item;
             }
             $all[$item->path] = $item;
         }
 
-        foreach ($all as $item) {
-            $item->children = $this->sort($item->children, $ordering->get($item->path, null, '/'), $item->path . '/');
+        $ordering = (array) (isset($config['ordering']) ? $config['ordering'] : null);
+        $this->sortAll($all, $ordering);
 
-        }
-        $tree = $this->sort($tree, $ordering->toArray());
-
-        return $tree;
+        return $all['']->children;
     }
 
-    protected function sort(array $items, $ordering, $path = '')
+    protected function sort(array &$items, $ordering, $path = '')
     {
         if (!$ordering) {
             return $items;
@@ -261,6 +262,55 @@ class Menu implements \ArrayAccess, \Iterator
                 $list[$path . $key] = $items[$path . $key];
             }
         }
-        return $list + $items;
+        return $list;
+    }
+
+    protected function sortAll(array &$items, array &$ordering, $path = '')
+    {
+        if (empty($items[$path]->children)) {
+            return;
+        }
+
+        $item = $items[$path];
+        $item->container = $this->sortContainer($items, $ordering, $path);
+
+        if ($item->container) {
+            $item->children = [];
+            foreach ($item->container as &$children) {
+                $item->children += $children;
+            }
+        } else {
+            $children = $item->children;
+            $item->children = $this->sort($children, $ordering, $path ? $path . '/' : '') + $children;
+            foreach ($ordering as $key => &$value) {
+                if (is_array($value)) {
+                    $newPath = $path ? $path . '/' . $key : $key;
+                    $this->sortAll($items, $value, $newPath);
+                }
+            }
+        }
+    }
+
+    protected function sortContainer(array &$items, array &$ordering, $path)
+    {
+        $k = 0;
+        $result = [];
+        $item = $items[$path];
+        foreach ($ordering as $n => &$order) {
+            if ($k++ !== $n || !$order) {
+                return null;
+            }
+
+            $result[] = $this->sort($item->children, $order, $path ? $path . '/' : '');
+
+            foreach ($order as $key => &$value) {
+                if (is_array($value)) {
+                    $newPath = $path ? $path . '/' . $key : $key;
+                    $this->sortAll($items, $value, $newPath);
+                }
+            }
+        }
+
+        return $result;
     }
 }

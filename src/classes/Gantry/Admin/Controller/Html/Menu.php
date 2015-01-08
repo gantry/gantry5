@@ -27,6 +27,7 @@ class Menu extends HtmlController
         $this->params['prefix'] = 'particles.menu.';
         $this->params['route'] = 'settings';
         $this->params['menu'] = $gantry['particles']->get($key);
+        $this->params['particle'] = $config->get('particles.instances.menu.main-menu');
 
         $config->joinDefaults('particles.menu.items', $menu->instance($config->get('particles.menu'))->getMenuItems());
 

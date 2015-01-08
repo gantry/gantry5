@@ -1,0 +1,213 @@
+name: mainmenu
+title: Main Menu
+
+css:
+  id:
+  class: 'g-main-nav'
+
+config:
+  base: /
+  startLevel: 1
+  endLevel: 0
+  showAllChildren: true
+  window_open: 'width=200,height=300'
+
+ordering:
+  home:
+
+  features:
+    - overview:
+      positions:
+      variations:
+      typography:
+      menu:
+      documentation:
+    - another:
+        item-3:
+        item-1:
+        item-2:
+      yet-another:
+      yet-yet-another:
+    - module:
+
+  sample-pages:
+    overview:
+    about-us:
+      layout-1:
+      layout-2:
+      layout-3:
+    the-team:
+      layout-1:
+      layout-2:
+      layout-3:
+    pricing:
+      layout-1:
+      layout-2:
+      layout-3:
+    faq:
+      layout-1:
+      layout-2:
+      layout-3:
+    services:
+      layout-1:
+      layout-2:
+      layout-3:
+    blog:
+      layout-1:
+      layout-2:
+      layout-3:
+
+  special:
+    error:
+    unsupported:
+    offline:
+    comingsoon:
+    component:
+    raw:
+
+  styles:
+    preset-1:
+    preset-2:
+    preset-3:
+    preset-4:
+    preset-5:
+    preset-6:
+
+  download:
+  contact:
+
+items:
+  home:
+    menu_icon: home
+
+  features:
+    type: alias
+    link: features/typography
+    title: Features
+    browserNav: 0
+    params:
+    anchor_css:
+    anchor_title:
+    menu_image:
+    menu_icon: bolt
+    layout: columns
+
+  features/overview:
+    index: 0
+
+  features/positions:
+    index: 0
+
+  features/variations:
+    index: 0
+
+  features/typography:
+    index: 0
+
+  features/menu:
+    index: 0
+
+  features/documentation:
+    index: 0
+
+  features/another:
+    index: 1
+
+  features/another/item-1:
+    index: 1
+
+  features/another/item-2:
+    index: 1
+
+  features/another/item-3:
+    index: 1
+
+  features/yet-another:
+    index: 1
+
+  features/yet-yet-another:
+    index: 1
+
+  features/module:
+    index: 2
+
+  sample-pages:
+    type: separator
+    title: Sample Pages
+    menu_icon: fire
+
+  sample-pages/about-us:
+    type: separator
+    title: About Us
+    menu_icon: ra
+
+  sample-pages/our-team:
+    type: separator
+    title: Our Team
+    menu_icon: users
+
+  sample-pages/pricing:
+    type: separator
+    title: Pricing
+    menu_icon: usd
+
+  sample-pages/faq:
+    type: separator
+    title: FAQ
+    menu_icon: book
+
+  sample-pages/services:
+    type: separator
+    title: Services
+    menu_icon: taxi
+
+  sample-pages/blog:
+    type: separator
+    title: Blog
+    menu_icon: calendar-o
+
+  special:
+    type: alias
+    link: special/error
+    title: Special Pages
+    browserNav: 0
+    anchor_css:
+    anchor_title:
+    menu_image:
+    menu_icon: shield
+
+  special/error:
+    menu_icon: warning
+
+  special/unsupported:
+    menu_icon: wheelchair
+
+  special/offline:
+    menu_icon: power-off
+
+  special/comingsoon:
+    menu_icon: paint-brush
+
+  special/component:
+    menu_icon: file-text-o
+
+  special/raw:
+    menu_icon: file-code-o
+
+  styles:
+  styles/preset-1:
+  styles/preset-2:
+  styles/preset-3:
+  styles/preset-4:
+  styles/preset-5:
+  styles/preset-6:
+
+  download:
+
+  contact:
+
+  about:
+    visible: false
+
+  team:
+    visible: false
