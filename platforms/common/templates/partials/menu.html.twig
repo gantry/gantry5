@@ -32,19 +32,37 @@
             {% endif %}
         {% endif %}
         {% if (item.children) -%}
-            {{ _self.displaySubmenu(item.children, menu) }}
+            {{ _self.displaySubmenu(item, menu) }}
         {%- endif %}
         </li>
     {% endif %}
 {% endmacro %}
 
-{% macro displaySubmenu(children, menu) %}
+{% macro displayContainers(containers, menu) %}
+    <div class="g-grid">
+        {% for items in containers %}
+        <div class="g-block">
+            {{ _self.displayItems(items, menu) }}
+        </div>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro displayItems(items, menu) %}
+    {% for item in items %}
+        {{ _self.displayItem(item, menu) }}
+    {% endfor %}
+{% endmacro %}
+
+{% macro displaySubmenu(item, menu) %}
     <ul class="g-dropdown">
         <li class="g-dropdown-column">
             <ul class="g-sublevel">
-                {% for item in children %}
-                {{ _self.displayItem(item, menu) }}
-                {% endfor %}
+                {% if item.containers %}
+                    {{ _self.displayContainers(item.containers, menu) }}
+                {% else %}
+                    {{ _self.displayItems(item.children, menu) }}
+                {% endif %}
             </ul>
         </li>
     </ul>

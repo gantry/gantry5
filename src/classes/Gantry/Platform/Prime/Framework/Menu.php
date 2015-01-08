@@ -272,11 +272,11 @@ class Menu implements \ArrayAccess, \Iterator
         }
 
         $item = $items[$path];
-        $item->container = $this->sortContainer($items, $ordering, $path);
+        $item->containers = $this->sortContainer($items, $ordering, $path);
 
-        if ($item->container) {
+        if ($item->containers) {
             $item->children = [];
-            foreach ($item->container as &$children) {
+            foreach ($item->containers as &$children) {
                 $item->children += $children;
             }
         } else {
