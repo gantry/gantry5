@@ -61,7 +61,7 @@ var Modal = new prime({
         overlayCSS: '',
         contentClassName: '',
         contentCSS: '',
-        closeClassName: '',
+        closeClassName: 'g5-dialog-close',
         closeCSS: '',
 
         afterOpen: null,
@@ -140,7 +140,7 @@ var Modal = new prime({
 
         if (options.overlayClickToClose) {
             elements.content.on('click', function(e){
-                e.preventDefault();
+                return true;
             });
         }
 
@@ -170,9 +170,12 @@ var Modal = new prime({
                 .style(options.closeCSS);
 
             storage.set(elements.closeButton, { dialog: options });
-            elements.closeButton.on('click', bind(this._closeButtonClick, this, elements.closeButton[0]));
+            //elements.closeButton.on('click', bind(this._closeButtonClick, this, elements.closeButton[0]));
             elements.content.appendChild(elements.closeButton);
         }
+
+        // delegate container to pick g5-close clicks
+        elements.container.delegate('click', '.g5-dialog-close', bind(this._closeButtonClick, this, elements.container));
 
         // inject the dialog in the DOM
         $(options.appendNode).appendChild(elements.container);

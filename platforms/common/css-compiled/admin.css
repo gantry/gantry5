@@ -46,12 +46,13 @@
   font-size: 1rem;
   font-weight: 300;
   font-family: "g-lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  cursor: pointer;
 }
-/* line 9, ../scss/admin/modules/_buttons.scss */
+/* line 10, ../scss/admin/modules/_buttons.scss */
 #g5-container .button:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
   margin: 1px 0 -1px 0;
 }
-/* line 12, ../scss/admin/modules/_buttons.scss */
+/* line 13, ../scss/admin/modules/_buttons.scss */
 #g5-container .button i + span, #g5-container .button-primary i + span, #g5-container .button-secondary i + span, #g5-container .button.red i + span, #g5-container .button.yellow i + span {
   margin-left: 8px;
 }
@@ -650,7 +651,7 @@ body {
   background: #6bbfab;
   color: rgba(255, 255, 255, 0.9);
 }
-/* line 22, ../scss/admin/modules/_buttons.scss */
+/* line 23, ../scss/admin/modules/_buttons.scss */
 #g5-container #main-header .button-save:hover {
   background: #56b59f;
   color: #fff;
@@ -781,7 +782,7 @@ body {
   background: #633679;
   color: rgba(255, 255, 255, 0.9);
 }
-/* line 22, ../scss/admin/modules/_buttons.scss */
+/* line 23, ../scss/admin/modules/_buttons.scss */
 #g5-container .button.button-update:hover {
   background: #522c64;
   color: #fff;
@@ -834,7 +835,7 @@ body {
   background: #999999;
   color: rgba(255, 255, 255, 0.9);
 }
-/* line 22, ../scss/admin/modules/_buttons.scss */
+/* line 23, ../scss/admin/modules/_buttons.scss */
 #g5-container .button:hover {
   background: #8a8a8a;
   color: #fff;
@@ -844,7 +845,7 @@ body {
   background: #439A86;
   color: rgba(255, 255, 255, 0.9);
 }
-/* line 22, ../scss/admin/modules/_buttons.scss */
+/* line 23, ../scss/admin/modules/_buttons.scss */
 #g5-container .button-primary:hover {
   background: #3a8573;
   color: #fff;
@@ -854,7 +855,7 @@ body {
   background: #314C59;
   color: rgba(255, 255, 255, 0.9);
 }
-/* line 22, ../scss/admin/modules/_buttons.scss */
+/* line 23, ../scss/admin/modules/_buttons.scss */
 #g5-container .button-secondary:hover {
   background: #263b45;
   color: #fff;
@@ -864,7 +865,7 @@ body {
   background: #ed5565;
   color: rgba(255, 255, 255, 0.9);
 }
-/* line 22, ../scss/admin/modules/_buttons.scss */
+/* line 23, ../scss/admin/modules/_buttons.scss */
 #g5-container .button.red:hover {
   background: #ea394c;
   color: #fff;
@@ -874,7 +875,7 @@ body {
   background: #ffce54;
   color: rgba(135, 96, 0, 0.9);
 }
-/* line 22, ../scss/admin/modules/_buttons.scss */
+/* line 23, ../scss/admin/modules/_buttons.scss */
 #g5-container .button.yellow:hover {
   background: #ffc535;
   color: #876000;

@@ -134,7 +134,37 @@ ready(function() {
             content: 'Loading',
             method: 'post',
             data: data,
-            remote: settingsURL + getAjaxSuffix()
+            remote: settingsURL + getAjaxSuffix(),
+            remoteLoaded: function(response, content){
+                var form = content.elements.content.find('form'),
+                    submit = content.elements.content.find('input[type="submit"], button[type="submit"]'),
+                    dataString = [];
+
+                if (!form || !submit) { return true; }
+
+                submit.on('click', function(e){
+                    e.preventDefault();
+
+                    $(form[0].elements).forEach(function(input){
+                        input = $(input);
+                        var name = input.attribute('name'),
+                            value = input.value();
+
+                        if (!name) { return; }
+                        dataString.push(name + '=' + value);
+                        console.log(dataString);
+                    });
+
+                    request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response){
+                        if (!response.body.success) {
+                            modal.open({ content: response.body.html });
+                            return false;
+                        } else {
+                            modal.open({ content: 'Well done! Everything is good and validation passed. Now I just need to implement the rest of it, where I take the json data you are passing me and update the LM particle :)' });
+                        }
+                    });
+                });
+            }
         });
 
     });

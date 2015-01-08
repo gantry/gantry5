@@ -6,6 +6,7 @@
     font-size: $core-font-size;
     font-weight: 300;
     font-family: $font-family-default;
+    cursor: pointer;
     &:active {
         margin: 1px 0 -1px 0;
     }
