@@ -12,14 +12,109 @@
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content {
     width: 650px;
 
-    ul {
+    .g-font-hide, .g-variant-hide {
+        display: none;
+    }
+
+    input {
+        font-size: 0.8em;
+    }
+
+    .g-fonts-main {
+        width: 100%;
+    }
+
+    .g-fonts-footer, .g-fonts-header {
+        margin: 0 !important;
+        input, select {
+            margin: 0 !important;
+        }
+    }
+
+    .g-fonts-footer select {
+        margin-top: 10px !important;
+    }
+
+    .g-fonts-header {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 6px;
+
+        .font-preview {
+            width: 400px;
+        }
+    }
+
+    .g-fonts-footer {
+        padding-top: 6px;
+        border-top: 1px solid #ccc;
+
+        .font-selected {
+            font-size: 0.8em;
+            margin-right: 10px;
+        }
+    }
+
+    ul.g-fonts-list {
         margin: 0;
         padding: 0;
         list-style: none;
         font-size: 13px;
         line-height: 1.5rem;
-        max-height: 400px;
+        max-height: 550px;
         overflow: auto;
         position: relative;
+
+        ul, li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        > li {
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            border: 1px solid #dfdfdf;
+            border-radius: 5px;
+            cursor: pointer;
+
+            background-color: #eaeaea;
+
+            &:nth-child(odd) {
+                background-color: #f7f7f7;
+            }
+
+            &.selected {
+                border-color: $tertiary-accent;
+            }
+
+            strong {
+                font-weight: bold !important;
+            }
+            
+            input[type="checkbox"], .variant {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .variant, .family {
+                color: #999;
+            }
+
+            .preview {
+                font-size: 24px;
+                line-height: 1.3em;
+            }
+
+            ul {
+                margin-top: 0.5em;
+            }
+
+            li {
+                padding: 0.5em 0;
+                border: 0;
+                border-top: 1px solid #ddd;
+                border-radius: 0;
+            }
+        }
     }
 }
