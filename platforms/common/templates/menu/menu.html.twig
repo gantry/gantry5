@@ -1,5 +1,3 @@
-{% set menu = gantry.menu.instance(particle) %}
-
 {% macro displayTitle(item) %}
     {% if item.menu_image %}
         <img src="{{ item.menu_image }}" alt="{{ item.title }}" />
@@ -20,7 +18,7 @@
     {% set title = item.anchor_title ? ' title="' ~ item.anchor_title ~ '"' %}
     {% set active = menu.isActive(item) ? ' active' : '' %}
     <li id="g-menu-item-{{ item.id }}" class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{{ active }}">
-        <a href="{{ gantry.route('menu', item.path) }}"{{ title }}>{{ _self.displayTitle(item) }}</a>
+        <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu', item.path) }}"{{ title }}>{{ _self.displayTitle(item) }}</a>
         {% if (item.children) -%}
             {{ _self.displaySubmenu(item, menu, gantry) }}
         {%- endif %}

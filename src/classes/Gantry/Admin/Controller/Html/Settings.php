@@ -68,7 +68,7 @@ class Settings extends HtmlController
 
     public function formfield($id)
     {
-        $path = func_get_args();
+        $path = array_filter(func_get_args());
 
         $particle = $this->container['particles']->get($id);
 
