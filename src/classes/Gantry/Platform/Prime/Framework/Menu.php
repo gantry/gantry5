@@ -175,7 +175,7 @@ class Menu implements \ArrayAccess, \Iterator
         $menuItems = array_unique(array_merge(Folder::all($folder, $options), array_keys($items)));
         sort($menuItems);
 
-        $all = ['' => new Item('')];
+        $all = ['' => new Item('', ['layout' => 'horizontal'])];
         foreach ($menuItems as $name) {
             $parent = dirname($name);
             $level = substr_count($name, '/') + 1;
