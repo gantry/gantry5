@@ -51,11 +51,17 @@ class Menu extends HtmlController
             $resource = $this->loadResource($id);
         }
 
+        $menuItem = implode('/', $path);
+        if (!$resource[$menuItem]) {
+            throw new \RuntimeException('Menu item not found', 404);
+        }
+
         $this->params['id'] = 'menu';
         $this->params['prefix'] = 'particles.menu.';
         $this->params['route'] = 'settings';
         $this->params['blueprints'] = $this->loadBlueprints();
         $this->params['menu'] = $resource;
+        $this->params['item'] = $resource[$menuItem];
 
         /** @var MenuObject $menu */
         $menu = $this->container['menu'];

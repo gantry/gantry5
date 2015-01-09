@@ -59,6 +59,6 @@
 {%- if particle.css.id %} id="{{ particle.css.id }}"{% endif %}
 {%- if particle.css.class %} class="{{ particle.css.class }}"{% endif %} role="navigation">
     <ul class="g-toplevel">
-        {{ _self.displayItems(menu.root, menu, gantry) }}
+        {{ _self.displayItems(item, menu, gantry) }}
     </ul>
 </nav>
