@@ -3,6 +3,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Config\Config;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Menu\Item;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
@@ -169,34 +170,24 @@ class Menu implements \ArrayAccess, \Iterator
         $menuItems = array_unique(array_merge(Folder::all($folder, $options), array_keys($items)));
         sort($menuItems);
 
-        $all = ['' => (object) ['path' => '', 'children' => []]];
+        $all = ['' => new Item('')];
         foreach ($menuItems as $name) {
-            $parent = dirname($name) != '.' ? dirname($name) : '';
+            $parent = dirname($name);
             $level = substr_count($name, '/') + 1;
             if (($start && $start > $level)
                 || ($end && $level > $end)
-                || (!$showAll && $level > 1 && !($parent && strpos($parent, $path) === 0))
-                || ($start > 1 && !($parent && strpos(dirname($parent), $path) === 0))
+                || (!$showAll && $level > 1 && strpos($parent, $path) !== 0)
+                || ($start > 1 && strpos(dirname($parent), $path) !== 0)
                 || ($name[0] == '_' || strpos($name, '_'))) {
                 continue;
             }
 
-            $item = isset($items[$name]) ? $items[$name] : [];
-            $item += [
-                'id' => preg_replace('|[^a-z0-9]|i', '-', $name),
-                'type' => 'link',
-                'path' => $name,
-                'title' => ucfirst(basename($name)),
-                'link' => $name != 'home' ? $name : '',
-                'parent' => $parent,
-                'children' => [],
-                'layout' => 'default',
-                'browserNav' => 0,
-                'menu_text' => true,
-                'visible' => true,
-            ];
+            $item = new Item($name, isset($items[$name]) ? $items[$name] : []);
 
-            $item = (object) $item;
+            // Deal with home page.
+            if ($item->link == 'home') {
+                $item->link = '';
+            }
 
             // Placeholder page.
             if ($item->type == 'link' && !is_file(PRIME_ROOT . "/pages/{$item->path}.html.twig")) {
@@ -207,7 +198,7 @@ class Menu implements \ArrayAccess, \Iterator
                 case 'hidden':
                 case 'separator':
                 case 'heading':
-                    // Separator and heading has no link.
+                    // Separator and heading have no link.
                     $item->link = null;
                     break;
 
@@ -238,9 +229,9 @@ class Menu implements \ArrayAccess, \Iterator
 
             // Build nested tree structure.
             if (isset($all[$item->parent])) {
-                $all[$item->parent]->children[$item->path] = $item;
+                $all[$item->parent]->addChild($item);
             } else {
-                $all['']->children[$item->path] = $item;
+                $all['']->addChild($item);
             }
             $all[$item->path] = $item;
         }
@@ -251,66 +242,33 @@ class Menu implements \ArrayAccess, \Iterator
         return $all['']->children;
     }
 
-    protected function sort(array &$items, $ordering, $path = '')
-    {
-        if (!$ordering) {
-            return $items;
-        }
-        $list = [];
-        foreach ($ordering as $key => $value) {
-            if (isset($items[$path . $key])) {
-                $list[$path . $key] = $items[$path . $key];
-            }
-        }
-        return $list;
-    }
-
     protected function sortAll(array &$items, array &$ordering, $path = '')
     {
         if (empty($items[$path]->children)) {
             return;
         }
 
+        /** @var Item $item */
         $item = $items[$path];
-        $item->containers = $this->sortContainer($items, $ordering, $path);
-
-        if ($item->containers) {
-            $item->children = [];
-            foreach ($item->containers as &$children) {
-                $item->children += $children;
-            }
+        if ($this->isAssoc($ordering)) {
+            $item->sortChildren($ordering);
         } else {
-            $children = $item->children;
-            $item->children = $this->sort($children, $ordering, $path ? $path . '/' : '') + $children;
-            foreach ($ordering as $key => &$value) {
-                if (is_array($value)) {
-                    $newPath = $path ? $path . '/' . $key : $key;
-                    $this->sortAll($items, $value, $newPath);
-                }
+            $item->groupChildren($ordering);
+        }
+
+        foreach ($ordering as $key => &$value) {
+            if (is_array($value)) {
+                $newPath = $path ? $path . '/' . $key : $key;
+                $this->sortAll($items, $value, $newPath);
             }
         }
     }
 
-    protected function sortContainer(array &$items, array &$ordering, $path)
+
+    protected function isAssoc(array $array)
     {
-        $k = 0;
-        $result = [];
-        $item = $items[$path];
-        foreach ($ordering as $n => &$order) {
-            if ($k++ !== $n || !$order) {
-                return null;
-            }
-
-            $result[] = $this->sort($item->children, $order, $path ? $path . '/' : '');
-
-            foreach ($order as $key => &$value) {
-                if (is_array($value)) {
-                    $newPath = $path ? $path . '/' . $key : $key;
-                    $this->sortAll($items, $value, $newPath);
-                }
-            }
-        }
-
-        return $result;
+        return (array_values($array) !== $array);
     }
+
+
 }
