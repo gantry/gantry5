@@ -30,7 +30,7 @@ class Gantry extends Container
         $routes = $this->offsetGet('routes');
         $route = isset($routes[$path]) ? $routes[$path] : $routes[1];
 
-        $path = implode('/', func_get_args());
+        $path = implode('/', array_filter(func_get_args()));
 
         return '/' . ltrim($this->offsetGet('base_url') . sprintf($route, $path), '/');
     }

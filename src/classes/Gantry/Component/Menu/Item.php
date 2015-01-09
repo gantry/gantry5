@@ -3,7 +3,7 @@ namespace Gantry\Component\Menu;
 
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
 
-class Item implements \ArrayAccess
+class Item implements \ArrayAccess, \Iterator
 {
     use ArrayAccessWithGetters;
 
@@ -118,5 +118,57 @@ class Item implements \ArrayAccess
         }
 
         return $this;
+    }
+
+    // Implements \Iterator
+
+    /**
+     * Returns the current child.
+     *
+     * @return mixed  Can return any type.
+     */
+    public function current()
+    {
+        return current($this->items['children']);
+    }
+
+    /**
+     * Returns the key of the current child.
+     *
+     * @return mixed  Returns scalar on success, or NULL on failure.
+     */
+    public function key()
+    {
+        return key($this->items['children']);
+    }
+
+    /**
+     * Moves the current position to the next child.
+     *
+     * @return void
+     */
+    public function next()
+    {
+        next($this->items['children']);
+    }
+
+    /**
+     * Rewinds back to the first child.
+     *
+     * @return void
+     */
+    public function rewind()
+    {
+        reset($this->items['children']);
+    }
+
+    /**
+     * This method is called after Iterator::rewind() and Iterator::next() to check if the current position is valid.
+     *
+     * @return bool  Returns TRUE on success or FALSE on failure.
+     */
+    public function valid()
+    {
+        return key($this->items['children']) !== null;
     }
 }

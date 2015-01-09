@@ -16,52 +16,41 @@
     {% endif %}
 {% endmacro %}
 
-{% macro displayItem(item, menu) %}
-    {% if item.visible %}
+{% macro displayItem(item, menu, gantry) %}
     {% set title = item.anchor_title ? ' title="' ~ item.anchor_title ~ '"' %}
-    {% set class = item.anchor_css ? ' class="' ~ item.anchor_css ~ '"' %}
     {% set active = menu.isActive(item) ? ' active' : '' %}
     <li id="g-menu-item-{{ item.id }}" class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{{ active }}">
-        {% if item.link %}
-            <a href="{{ item.link }}"{{ class ~ title ~ item.anchor_attributes }}>{{ _self.displayTitle(item) }}</a>
-        {% else %}
-            {% if item.type == 'heading' %}
-            <span class="g-nav-header"{{ title }}>{{ item.title }}</span>
-            {% else %}
-            <span class="g-separator"{{ title }}>{{ _self.displayTitle(item) }}</span>
-            {% endif %}
-        {% endif %}
+        <a href="{{ gantry.route('menu', item.path) }}"{{ title }}>{{ _self.displayTitle(item) }}</a>
         {% if (item.children) -%}
-            {{ _self.displaySubmenu(item, menu) }}
+            {{ _self.displaySubmenu(item, menu, gantry) }}
         {%- endif %}
-        </li>
-    {% endif %}
+    </li>
 {% endmacro %}
 
-{% macro displayContainers(containers, menu) %}
+{% macro displayContainers(containers, menu, gantry) %}
     <div class="g-grid">
         {% for items in containers %}
         <div class="g-block">
-            {{ _self.displayItems(items, menu) }}
+            {{ _self.displayItems(items, menu, gantry) }}
         </div>
         {% endfor %}
     </div>
 {% endmacro %}
 
-{% macro displayItems(items, menu) %}
+{% macro displayItems(items, menu, gantry) %}
     {% for item in items %}
-        {{ _self.displayItem(item, menu) }}
+        {{ _self.displayItem(item, menu, gantry) }}
     {% endfor %}
 {% endmacro %}
 
-{% macro displaySubmenu(item, menu) %}
+{% macro displaySubmenu(item, menu, gantry) %}
     <ul class="g-dropdown">
         <li class="g-dropdown-column">
             <ul class="g-sublevel">
                 {% if item.groups %}
-                    {{ _self.displayContainers(item.groups, menu) }}
+                    {{ _self.displayContainers(item.groups, menu, gantry) }}
                 {% else %}
-                    {{ _self.displayItems(item.children, menu) }}
+                    {{ _self.displayItems(item.children, menu, gantry) }}
                 {% endif %}
             </ul>
         </li>
@@ -72,8 +61,6 @@
 {%- if particle.css.id %} id="{{ particle.css.id }}"{% endif %}
 {%- if particle.css.class %} class="{{ particle.css.class }}"{% endif %} role="navigation">
     <ul class="g-toplevel">
-        {% for item in menu %}
-            {{ _self.displayItem(item, menu) }}
-        {% endfor %}
+        {{ _self.displayItems(menu.root, menu, gantry) }}
     </ul>
 </nav>

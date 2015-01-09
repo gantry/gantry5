@@ -53,6 +53,11 @@ class Menu implements \ArrayAccess, \Iterator
         return $instance;
     }
 
+    public function root()
+    {
+        return $this->offsetGet('');
+    }
+
     /**
      * @return object
      */
@@ -79,7 +84,7 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function isActive($item)
     {
-        if (strpos($this->base, $item->path) === 0) {
+        if ($item->path && strpos($this->base, $item->path) === 0) {
             return true;
         }
 
@@ -182,7 +187,7 @@ class Menu implements \ArrayAccess, \Iterator
                 continue;
             }
 
-            $item = new Item($name, isset($items[$name]) ? $items[$name] : []);
+            $item = new Item($name, isset($items[$name]) && is_array($items[$name]) ? $items[$name] : []);
 
             // Deal with home page.
             if ($item->link == 'home') {
@@ -239,7 +244,7 @@ class Menu implements \ArrayAccess, \Iterator
         $ordering = (array) (isset($config['ordering']) ? $config['ordering'] : null);
         $this->sortAll($all, $ordering);
 
-        return $all['']->children;
+        return $all;
     }
 
     protected function sortAll(array &$items, array &$ordering, $path = '')
