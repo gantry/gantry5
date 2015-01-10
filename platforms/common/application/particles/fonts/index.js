@@ -22,6 +22,7 @@ var prime       = require('prime'),
 
     unhyphenate = require('mout/string/unhyphenate'),
     properCase  = require('mout/string/properCase'),
+    trim        = require('mout/string/trim'),
 
     modal       = require('../../ui').modal,
     async       = require('async'),
@@ -340,12 +341,13 @@ var Fonts = new prime({
 
     buildHeader: function(html) {
         var container = zen('div.settings-block.g-fonts-header').bottom(html),
-            preview = zen('input.float-left.font-preview[type="text"][data-font-search][value="' + this.previewSentence + '"]').bottom(container),
+            preview = zen('input.float-left.font-preview[type="text"][data-font-preview][placeholder="Font Preview..."][value="' + this.previewSentence + '"]').bottom(container),
             searchWrapper = zen('span.font-search-wrapper.float-right').bottom(container),
             search = zen('input.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(searchWrapper),
             totals = zen('span.font-search-total').bottom(searchWrapper);
 
         search.on('keyup', bind(this.search, this, search));
+        preview.on('keyup', bind(this.updatePreview, this, preview));
 
         return container;
     },
@@ -391,6 +393,21 @@ var Fonts = new prime({
         input.refreshTimer = setTimeout(bind(function(){
             this.scroll($('ul.g-fonts-list'));
         }, this), 400);
+
+        input.previousValue = value;
+    },
+
+    updatePreview: function(input){
+        clearTimeout(input.refreshTimer);
+        var value = input.value(),
+            list = $('.g-fonts-list');
+        value = trim(value) ? trim(value) : this.previewSentence;
+
+        if (input.previousValue == value) { return true; }
+
+        //input.refreshTimer = setTimeout(bind(function(){
+            list.search('[data-font] .preview').text(value);
+        //}, this), 50);
 
         input.previousValue = value;
     },
