@@ -61,6 +61,7 @@ var Fonts = new prime({
         if (container) {
             container.empty().appendChild(this.buildLayout());
             this.scroll(container.find('ul.g-fonts-list'));
+            this.updateTotal();
             return;
         }
 
@@ -71,6 +72,7 @@ var Fonts = new prime({
                 setTimeout(bind(function() {
                     container.empty().appendChild(this.buildLayout());
                     this.scroll(container.find('ul.g-fonts-list'));
+                    this.updateTotal();
                 }, this), 1);
             }, this)
         });
@@ -105,7 +107,7 @@ var Fonts = new prime({
     scroll: function(container) {
         clearTimeout(this.throttle);
         this.throttle = setTimeout(bind(function() {
-            var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li', 5000),
+            var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li:not(.g-font-hide)', 5000),
                 list = [];
 
             if (!elements) { return; }
@@ -269,6 +271,13 @@ var Fonts = new prime({
         preview.html('<strong>' + this.selected.font + '</strong> (<small>' + selected.join(', ').replace('regular', 'normal') + '</small>)');
     },
 
+    updateTotal: function(){
+        var totals = $('.g-fonts-header .font-search-total'),
+            count = $('.g-fonts-list > [data-font]:not(.g-font-hide)');
+
+        totals.text(count ? count.length : 0);
+    },
+
     buildLayout: function() {
         var previewSentence = this.previewSentence,
             html = zen('div#g-fonts.g-grid'),
@@ -332,7 +341,9 @@ var Fonts = new prime({
     buildHeader: function(html) {
         var container = zen('div.settings-block.g-fonts-header').bottom(html),
             preview = zen('input.float-left.font-preview[type="text"][data-font-search][value="' + this.previewSentence + '"]').bottom(container),
-            search = zen('input.float-right.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(container);
+            searchWrapper = zen('span.font-search-wrapper.float-right').bottom(container),
+            search = zen('input.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(searchWrapper),
+            totals = zen('span.font-search-total').bottom(searchWrapper);
 
         search.on('keyup', bind(this.search, this, search));
 
@@ -373,6 +384,13 @@ var Fonts = new prime({
                 font.removeClass('g-font-hide');
             }
         }, this);
+
+        this.updateTotal();
+
+        clearTimeout(input.refreshTimer);
+        input.refreshTimer = setTimeout(bind(function(){
+            this.scroll($('ul.g-fonts-list'));
+        }, this), 400);
 
         input.previousValue = value;
     },

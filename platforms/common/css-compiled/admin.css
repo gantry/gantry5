@@ -2390,20 +2390,33 @@ body.g5-dialog-open {
   padding-bottom: 6px;
 }
 /* line 42, ../scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-header .font-search-wrapper {
+  display: inline-block;
+  position: relative;
+}
+/* line 46, ../scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-header .font-search-wrapper span {
+  position: absolute;
+  right: 5px;
+  top: 2px;
+  font-size: 0.6em;
+  color: #439A86;
+}
+/* line 55, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-header .font-preview {
   width: 400px;
 }
-/* line 47, ../scss/admin/particles/_fonts.scss */
+/* line 60, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer {
   padding-top: 6px;
   border-top: 1px solid #ccc;
 }
-/* line 51, ../scss/admin/particles/_fonts.scss */
+/* line 64, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer .font-selected {
   font-size: 0.8em;
   margin-right: 10px;
 }
-/* line 57, ../scss/admin/particles/_fonts.scss */
+/* line 70, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list {
   margin: 0;
   padding: 0;
@@ -2414,13 +2427,13 @@ body.g5-dialog-open {
   overflow: auto;
   position: relative;
 }
-/* line 67, ../scss/admin/particles/_fonts.scss */
+/* line 80, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list ul, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list li {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-/* line 73, ../scss/admin/particles/_fonts.scss */
+/* line 86, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li {
   padding: 0.5em 1em;
   margin: 0.5em 0;
@@ -2429,37 +2442,37 @@ body.g5-dialog-open {
   cursor: pointer;
   background-color: #eaeaea;
 }
-/* line 82, ../scss/admin/particles/_fonts.scss */
+/* line 95, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li:nth-child(odd) {
   background-color: #f7f7f7;
 }
-/* line 86, ../scss/admin/particles/_fonts.scss */
+/* line 99, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li.selected {
   border-color: #48B0D7;
 }
-/* line 90, ../scss/admin/particles/_fonts.scss */
+/* line 103, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li strong {
   font-weight: bold !important;
 }
-/* line 94, ../scss/admin/particles/_fonts.scss */
+/* line 107, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li input[type="checkbox"], .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li .variant {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 99, ../scss/admin/particles/_fonts.scss */
+/* line 112, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li .variant, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li .family {
   color: #999;
 }
-/* line 103, ../scss/admin/particles/_fonts.scss */
+/* line 116, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li .preview {
   font-size: 24px;
   line-height: 1.3em;
 }
-/* line 108, ../scss/admin/particles/_fonts.scss */
+/* line 121, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li ul {
   margin-top: 0.5em;
 }
-/* line 112, ../scss/admin/particles/_fonts.scss */
+/* line 125, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li li {
   padding: 0.5em 0;
   border: 0;
