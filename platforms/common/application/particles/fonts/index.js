@@ -334,9 +334,7 @@ var Fonts = new prime({
             preview = zen('input.float-left.font-preview[type="text"][data-font-search][value="' + this.previewSentence + '"]').bottom(container),
             search = zen('input.float-right.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(container);
 
-        search.on('keyup', function(event) {
-
-        });
+        search.on('keyup', bind(this.search, this, search));
 
         return container;
     },
@@ -351,6 +349,32 @@ var Fonts = new prime({
             select = zen('button.button.button-primary').text('Select').bottom(rightContainer);
 
         return container;
+    },
+
+    search: function(input, event){
+        var list = $('.g-fonts-list'),
+            value = input.value(),
+            name, re;
+
+        if (input.previousValue == value) { return true; }
+
+        list.search('> [data-font]').forEach(function(font){
+            font = $(font);
+            name = font.data('font');
+
+            // we dont want to hide selected fonts
+            if (this.selected && this.selected.font == name && this.selected.selected.length) { return; }
+
+            // checks for other criterias such as subset and category goes here TODO
+
+            if (!name.match(new RegExp("^" + value + '|\\s' + value, 'gi'))){
+                font.addClass('g-font-hide');
+            } else {
+                font.removeClass('g-font-hide');
+            }
+        }, this);
+
+        input.previousValue = value;
     },
 
     fvdToStyle: function(family, fvd) {
