@@ -5,6 +5,7 @@ use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\JsonFile;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Pages extends HtmlController
 {
@@ -42,6 +43,7 @@ class Pages extends HtmlController
 
     public function create($id = null)
     {
+        /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
         if (!$id) {
@@ -61,6 +63,7 @@ class Pages extends HtmlController
 
     public function edit($id)
     {
+        /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
         // TODO: remove hardcoded layout.
@@ -78,6 +81,7 @@ class Pages extends HtmlController
 
     public function particle($page, $particle)
     {
+        /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
         // TODO: remove hardcoded layout.

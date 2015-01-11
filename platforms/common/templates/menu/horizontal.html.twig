@@ -1,30 +1,48 @@
-{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+<!--<ul class="g-grid menu-selector">
+    <li class="g-block">
+        Home<i class="fa fa-cog"></i>
+        <span class="fa fa-chevron-down"></span>
+    </li>
+    <li class="g-block active">
+        Features<i class="fa fa-cog"></i>
+        <span class="fa fa-chevron-down"></span>
+    </li>
+    <li class="g-block">
+        Pages<i class="fa fa-cog"></i>
+        <span class="fa fa-chevron-down"></span>
+    </li>
+    <li class="g-block">
+        Styles<i class="fa fa-cog"></i>
+        <span class="fa fa-chevron-down"></span>
+    </li>
+    <li class="g-block">
+        Download<i class="fa fa-cog"></i>
+        <span class="fa fa-chevron-down"></span>
+    </li>
+    <li class="g-block">
+        Contact<i class="fa fa-cog"></i>
+        <span class="fa fa-chevron-down"></span>
+    </li>
+</ul>-->
 
-{% block gantry %}
-    <ul class="g-grid menu-selector">
-        <li class="g-block">
-            Home<i class="fa fa-cog"></i>
-            <span class="fa fa-chevron-down"></span>
-        </li>
-        <li class="g-block active">
-            Features<i class="fa fa-cog"></i>
-            <span class="fa fa-chevron-down"></span>
-        </li>
-        <li class="g-block">
-            Pages<i class="fa fa-cog"></i>
-            <span class="fa fa-chevron-down"></span>
-        </li>
-        <li class="g-block">
-            Styles<i class="fa fa-cog"></i>
-            <span class="fa fa-chevron-down"></span>
-        </li>
-        <li class="g-block">
-            Download<i class="fa fa-cog"></i>
-            <span class="fa fa-chevron-down"></span>
-        </li>
-        <li class="g-block">
-            Contact<i class="fa fa-cog"></i>
-            <span class="fa fa-chevron-down"></span>
-        </li>
+
+
+<div class="configuration">
+    Configuration section for menu.root
+</div>
+<section
+    {%- if particle.css.id %} id="{{ particle.css.id }}"{% endif %}
+    {%- if particle.css.class %} class="{{ particle.css.class }}"{% endif %} role="navigation">
+    <ul class="g-grid g-toplevel menu-selector">
+        {% for child in item %}
+            <li class="g-block">
+                {% include 'menu/item.html.twig' with {'item': child, 'target': item.id } %}
+            </li>
+        {% endfor %}
     </ul>
-{% endblock %}
+</section>
+<div class="column-container" data-g5-menu-{{ item.id }}="" >
+    Section for where new column layots will render, for example:<br>
+    Column Section 1<br>
+    Column Section 2 (child of item in Column Section 1)
+</div>

@@ -24,7 +24,7 @@ class Item implements \ArrayAccess, \Iterator
             'parent' => $parent != '.' ? $parent : '',
             'children' => [],
             'groups' => [],
-            'layout' => 'default',
+            'layout' => 'list',
             'browserNav' => 0,
             'menu_text' => true,
             'visible' => true,

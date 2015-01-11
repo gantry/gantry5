@@ -1,14 +1,23 @@
-{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+<!--<ul class="submenu-items">
+    <li>Features Overview</li>
+    <li>Particle Positions</li>
+    <li>Module Variations</li>
+    <li>Typography</li>
+    <li>Menu Options</li>
+    <li>Documentation</li>
+</ul>-->
 
-{% block gantry %}
-    <li class="g-block">
-        <ul class="submenu-items">
-            <li>Features Overview</li>
-            <li>Particle Positions</li>
-            <li>Module Variations</li>
-            <li>Typography</li>
-            <li>Menu Options</li>
-            <li>Documentation</li>
-        </ul>
-    </li>
-{% endblock %}
+
+<ul class="submenu-items">
+    {% for child in item %}
+        <li>
+            {% include 'menu/item.html.twig' with {'item': child, 'target': item.id} %}
+        </li>
+    {% endfor %}
+</ul>
+<div class="column-container" data-g5-menu-{{ item.id }}="" >
+    Section for where new column layouts will render, for example:<br>
+    Column Section 1<br>
+    Column Section 2 (child of item in Column Section 1)
+</div>
+

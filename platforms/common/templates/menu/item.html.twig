@@ -1,24 +1,20 @@
-{% set title = item.anchor_title ? ' title="' ~ item.anchor_title ~ '"' %}
-{% set active = menu.isActive(item) ? ' active' : '' %}
-
-<li id="g-menu-item-{{ item.id }}" class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{{ active }}">
-    {{ gantry.route('menu', item.path) }}
-    <a href="{{ gantry.route('menu', item.path) }}"{{ title }}>
-        {% if item.menu_image %}
-            <img src="{{ item.menu_image }}" alt="{{ item.title }}" />
-            {% if item.menu_text %}
-                <span class="g-image-title">{{ item.title }}</span>
-            {% endif %}
-        {% elseif item.menu_icon %}
-            <i class="fa fa-fw fa-{{ item.menu_icon|e }}"></i>
-            {% if item.menu_text %}
-                {{ item.title }}
-            {% endif %}
-        {% else %}
-            {{ item.title }}
+<a
+    data-g5-ajaxify data-g5-ajaxify-target="[data-g5-menu-{{ target }}]"
+    href="{{ gantry.route('menu', item.path) }}">
+    {% if item.menu_image %}
+        <img src="{{ item.menu_image|e }}" alt="{{ item.title|e }}" />
+        {% if item.menu_text %}
+            <span class="g-image-title">{{ item.title|e }}</span>
         {% endif %}
-    </a>
-    {% if (item.children) -%}
-        {{ _self.displaySubmenu(item, menu) }}
-    {%- endif %}
-</li>
+    {% elseif item.menu_icon %}
+        <i class="fa fa-fw fa-{{ item.menu_icon|e }}"></i>
+        {% if item.menu_text %}
+            {{ item.title|e }}
+        {% endif %}
+    {% else %}
+        {{ item.title|e }}
+    {% endif %}
+</a>
+{% if (item.children) -%}
+    <span class="fa fa-chevron-down"></span>
+{%- endif %}

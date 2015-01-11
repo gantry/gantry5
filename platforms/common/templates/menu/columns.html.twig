@@ -1,53 +1,65 @@
-{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+<!--<ul class="g-grid submenu-selector">
+    <li class="g-block">
+        <ul class="submenu-items">
+            <li>Features Overview</li>
+            <li>Particle Positions</li>
+            <li>Module Variations</li>
+            <li>Typography</li>
+            <li>Menu Options</li>
+            <li>Documentation</li>
+        </ul>
+    </li>
+    <li class="g-block">
+        <ul class="submenu-items">
+            <li class="nav-header">
+                Another Menu
+                <ul class="grouped-submenu">
+                    <li>A Grouped Item</li>
+                    <li>Another Grouped Item</li>
+                    <li>One More Item</li>
+                </ul>
+            </li>
+            <li>Another Menu Item</li>
+            <li>Yet Another Item</li>
+        </ul>
+    </li>
+    <li class="g-block">
+        <ul class="submenu-items">
+            <li class="nav-header">
+                Module Item
+                <ul class="module-item">
+                    <li class="module-block"></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
 
-{% block gantry %}
-    <ul class="g-grid submenu-selector">
-        <li class="g-block">
-            <ul class="submenu-items">
-                <li>Features Overview</li>
-                <li>Particle Positions</li>
-                <li>Module Variations</li>
-                <li>Typography</li>
-                <li>Menu Options</li>
-                <li>Documentation</li>
-            </ul>
-        </li>
-        <li class="g-block">
-            <ul class="submenu-items">
-                <li class="nav-header">
-                    Another Menu
-                    <ul class="grouped-submenu">
-                        <li>A Grouped Item</li>
-                        <li>Another Grouped Item</li>
-                        <li>One More Item</li>
-                    </ul>
-                </li>
-                <li>Another Menu Item</li>
-                <li>Yet Another Item</li>
-            </ul>
-        </li>
-        <li class="g-block">
-            <ul class="submenu-items">
-                <li class="nav-header">
-                    Module Item
-                    <ul class="module-item">
-                        <li class="module-block"></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
-
-    <div class="g-grid submenu-ratio">
-        <div class="g-block">
-            33%
-        </div>
-        <div class="g-block">
-            33%
-        </div>
-        <div class="g-block">
-            33%
-        <i class="fa fa-cog"></i>
-        </div>
+<div class="g-grid submenu-ratio">
+    <div class="g-block">
+        33%
     </div>
-{% endblock %}
+    <div class="g-block">
+        33%
+    </div>
+    <div class="g-block">
+        33%
+    <i class="fa fa-cog"></i>
+    </div>
+</div>-->
+
+<div class="configuration">
+    Configuration section for {{ item.id}}
+</div>
+<section class="g-grid submenu-selector">
+    {% for child in item.groups %}
+        <div class="g-block">
+            {% include 'menu/list.html.twig' with {'item': child, 'target': item.id} %}
+        </div>
+    {% endfor %}
+</section>
+<div class="column-container" data-g5-menu-{{ item.id }}="" >
+    Section for where new column layouts will render, for example:<br>
+    Column Section 1<br>
+    Column Section 2 (child of item in Column Section 1)
+</div>

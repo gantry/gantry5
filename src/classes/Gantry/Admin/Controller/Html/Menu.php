@@ -73,7 +73,11 @@ class Menu extends HtmlController
 
         $config->joinDefaults('particles.menu.items', $menu->instance($config->get('particles.menu'))->getMenuItems());
 
-        return $this->container['admin.theme']->render('@gantry-admin/menu.html.twig', $this->params);
+        if (empty($this->params['ajax']) && !$path) {
+            return $this->container['admin.theme']->render('@gantry-admin/menu.html.twig', $this->params);
+        } else {
+            return $this->container['admin.theme']->render('@gantry-admin/menu/' . $this->params['item']->layout. '.html.twig', $this->params);
+        }
     }
 
     /**
