@@ -14,7 +14,7 @@
     {% else %}
         {{ item.title|e }}
     {% endif %}
+    {% if (item.children) -%}
+        <span class="fa fa-chevron-down"></span>
+    {%- endif %}
 </a>
-{% if (item.children) -%}
-    <span class="fa fa-chevron-down"></span>
-{%- endif %}
