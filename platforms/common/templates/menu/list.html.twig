@@ -8,7 +8,7 @@
 </ul>-->
 
 <!-- specialized render for root list based items -->
-{% if (item.parent is empty) and (item.groups is defined) %}
+{% if (item.parent_id is empty) and (item.groups is defined) %}
     <div class="configuration">
         Configuration section for {{ item.id}}
     </div>
