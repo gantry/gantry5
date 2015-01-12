@@ -49,16 +49,18 @@
 </div>-->
 
 <div class="configuration">
-    Configuration section for {{ item.id}}
+    Configuration section for {{ item.id }}
 </div>
 <section class="g-grid submenu-selector">
-    {% for child in item.groups %}
-        <div class="g-block">
-            {% include 'menu/list.html.twig' with {'item': child, 'target': item.id} %}
+    {% for group, child in item.groups %}
+        {% set target = item.id ~ '-' ~ group %}
+        <div class="g-block" data-g5-menu-{{ target|e }}="" >
+            {% include 'menu/list.html.twig' with {'item': child, 'target': target } %}
         </div>
     {% endfor %}
 </section>
-<div class="column-container" data-g5-menu-{{ item.id }}="" >
+<div class="column-container" data-g5-menu-{{ item.id|e }}="" >
+    {{ item.id }}<br>
     Section for where new column layouts will render, for example:<br>
     Column Section 1<br>
     Column Section 2 (child of item in Column Section 1)

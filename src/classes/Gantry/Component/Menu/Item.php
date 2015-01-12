@@ -2,13 +2,15 @@
 namespace Gantry\Component\Menu;
 
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
+use RocketTheme\Toolbox\ArrayTraits\Export;
 
 class Item implements \ArrayAccess, \Iterator
 {
-    use ArrayAccessWithGetters;
+    use ArrayAccessWithGetters, Export;
 
     protected $items;
     protected $menu;
+    protected $groups;
 
     public function __construct($menu, $name, array $item = [])
     {
@@ -18,7 +20,7 @@ class Item implements \ArrayAccess, \Iterator
         $alias = basename($name);
 
         $this->items = $item + [
-            'id' => preg_replace('|[^a-z0-9]|i', '-', $name),
+            'id' => preg_replace('|[^a-z0-9]|i', '-', $name) ?: 'root',
             'type' => 'link',
             'path' => $name,
             'alias' => $alias,
@@ -26,7 +28,6 @@ class Item implements \ArrayAccess, \Iterator
             'link' => $name,
             'parent_id' => $parent != '.' ? $parent : '',
             'children' => [],
-            'groups' => [],
             'layout' => 'list',
             'browserNav' => 0,
             'menu_text' => true,
@@ -37,6 +38,11 @@ class Item implements \ArrayAccess, \Iterator
     public function parent()
     {
         return $this->menu[$this->items['parent_id']];
+    }
+
+    public function groups()
+    {
+        return $this->groups ?: [$this->items['children']];
     }
 
     public function addChild(Item $child)
@@ -112,13 +118,13 @@ class Item implements \ArrayAccess, \Iterator
                 $ordered += $group;
 
                 // Add items to the current group.
-                $this->items['groups'][] = $group;
+                $this->groups[] = $group;
             }
 
             if ($children) {
                 // Add leftover children to the ordered list and to the first group.
                 $ordered += $children;
-                $this->items['groups'][0] += $children;
+                $this->groups[0] += $children;
             }
 
             // Reorder children by their groups.

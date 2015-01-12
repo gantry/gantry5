@@ -31,47 +31,48 @@ ordering:
     - module:
 
   sample-pages:
-    overview:
-    about-us:
-      layout-1:
-      layout-2:
-      layout-3:
-    the-team:
-      layout-1:
-      layout-2:
-      layout-3:
-    pricing:
-      layout-1:
-      layout-2:
-      layout-3:
-    faq:
-      layout-1:
-      layout-2:
-      layout-3:
-    services:
-      layout-1:
-      layout-2:
-      layout-3:
-    blog:
-      layout-1:
-      layout-2:
-      layout-3:
+    - overview:
+      about-us:
+        - layout-1:
+        - layout-2:
+        - layout-3:
+      the-team:
+        - layout-1:
+        - layout-2:
+        - layout-3:
+      pricing:
+        - layout-1:
+        - layout-2:
+        - layout-3:
+    - faq:
+        - layout-1:
+        - layout-2:
+        - layout-3:
+      services:
+        - layout-1:
+        - layout-2:
+        - layout-3:
+      blog:
+        - layout-1:
+        - layout-2:
+        - layout-3:
+    - ricochet:
 
   special:
-    error:
-    unsupported:
-    offline:
-    comingsoon:
-    component:
-    raw:
+    - error:
+      offline:
+      comingsoon:
+    - unsupported:
+      component:
+      raw:
 
   styles:
-    preset-1:
-    preset-2:
-    preset-3:
-    preset-4:
-    preset-5:
-    preset-6:
+    - preset-1:
+      preset-2:
+      preset-3:
+    - preset-4:
+      preset-5:
+      preset-6:
 
   download:
   contact:

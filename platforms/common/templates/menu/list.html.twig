@@ -8,31 +8,20 @@
 </ul>-->
 
 <!-- specialized render for root list based items -->
-{% if (item.parent_id is empty) and (item.groups is defined) %}
-    <div class="configuration">
-        Configuration section for {{ item.id}}
-    </div>
-    <section class="g-grid submenu-selector">
-        <div class="g-block">
-            <ul class="submenu-items" data-g5-menu-{{ item.id|e }}="" >
-                {% for child in item %}
-                    <li>
-                        {% include 'menu/item.html.twig' with {'item': child, 'target': item.id} %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </section>
-    <div class="column-container" data-g5-menu-{{ item.id }}="" >
-        Section for where new column layouts will render, for example:<br>
-        Column Section 1<br>
-        Column Section 2 (child of item in Column Section 1)
-    </div>
+{% if item.parent.layout == 'horizontal' or item.groups|length > 1 %}
+    {% include 'menu/columns.html.twig' with {'target': target ?: item.id } %}
 {% else %}
     <ul class="submenu-items" data-g5-menu-{{ item.id|e }}="" >
+        {% if item.parent.layout == 'horizontal' or item.groups|length == 1 %}
+            <li>
+                <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-menu-{{ (item.parent.parent.id)|e }}]" href="{{ gantry.route('menu', item.parent.path) }}">
+                    &lt;
+                </a>
+            </li>
+        {% endif %}
         {% for child in item %}
             <li>
-                {% include 'menu/item.html.twig' with {'item': child, 'target': item.id} %}
+                {% include 'menu/item.html.twig' with {'item': child, 'target': target ?: item.id } %}
             </li>
         {% endfor %}
     </ul>
