@@ -1,5 +1,5 @@
 /* line 2, ../scss/nucleus/mixins/_utilities.scss */
-#g5-container #page-picker ul, #g5-container #sidebar ul, .g5-popover.g5-popover-particles ul, .g5-popover.g5-popover-particles li {
+#g5-container #page-picker ul, #g5-container #sidebar ul, .g5-popover.g5-popover-particles ul, .g5-popover.g5-popover-particles li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1818,63 +1818,67 @@ body.g5-dialog-open {
 .g5-popover.left, .g5-popover.left-top, .g5-popover.left-bottom {
   margin-left: -10px;
 }
-/* line 72, ../scss/admin/_popover.scss */
+/* line 71, ../scss/admin/_popover.scss */
+.g5-popover.g5-popover-above-modal {
+  z-index: 1500;
+}
+/* line 76, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-nooverflow .g5-popover-content {
   overflow: visible;
 }
-/* line 78, ../scss/admin/_popover.scss */
+/* line 82, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-particles {
   font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   font-size: 16px;
 }
-/* line 86, ../scss/admin/_popover.scss */
+/* line 90, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-particles ul {
   padding: 1px;
   background-color: #ddd;
   max-height: 250px;
   overflow: auto;
 }
-/* line 93, ../scss/admin/_popover.scss */
+/* line 97, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-particles li {
   line-height: 42px;
   margin: 1px 0;
   text-align: center;
 }
-/* line 98, ../scss/admin/_popover.scss */
+/* line 102, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-particles li:first-child, .g5-popover.g5-popover-particles li:last-child {
   margin: 0;
 }
-/* line 102, ../scss/admin/_popover.scss */
+/* line 106, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-particles li[data-lm-blocktype="spacer"] {
   color: #aaa;
   background-color: #eee;
 }
-/* line 107, ../scss/admin/_popover.scss */
+/* line 111, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-particles li[data-lm-blocktype="position"] {
   color: #fff;
   background-color: #aaa;
 }
-/* line 112, ../scss/admin/_popover.scss */
+/* line 116, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-particles li[data-lm-blocktype="particle"] {
   color: #fff;
   background-color: #13B0DA;
 }
-/* line 117, ../scss/admin/_popover.scss */
+/* line 121, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-particles li[data-lm-blocktype="pagecontent"] {
   color: #fff;
   background-color: #218fda;
 }
-/* line 122, ../scss/admin/_popover.scss */
+/* line 126, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-particles li[data-lm-blocktype="atom"] {
   color: #fff;
   background-color: #9055AF;
 }
-/* line 128, ../scss/admin/_popover.scss */
+/* line 132, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-particles .search {
   position: relative;
   margin-bottom: 10px;
 }
-/* line 132, ../scss/admin/_popover.scss */
+/* line 136, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-particles .search input {
   font-size: 16px;
   border: 0;
@@ -1886,14 +1890,25 @@ body.g5-dialog-open {
   box-shadow: none;
   margin: 0;
 }
-/* line 144, ../scss/admin/_popover.scss */
+/* line 148, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-particles .search i {
   position: absolute;
   right: 10px;
   top: 10px;
 }
+/* line 156, ../scss/admin/_popover.scss */
+.g5-popover.g5-popover-font-preview {
+  color: #333;
+}
+/* line 162, ../scss/admin/_popover.scss */
+.g5-popover.g5-popover-font-preview li {
+  padding: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: pre;
+}
 
-/* line 155, ../scss/admin/_popover.scss */
+/* line 173, ../scss/admin/_popover.scss */
 .g5-popover-inner .close {
   font-family: arial;
   margin: 5px 10px 0 0;
@@ -1906,12 +1921,12 @@ body.g5-dialog-open {
   opacity: 0.2;
   text-decoration: none;
 }
-/* line 166, ../scss/admin/_popover.scss */
+/* line 184, ../scss/admin/_popover.scss */
 .g5-popover-inner .close:hover, .g5-popover-inner .close:focus {
   opacity: 0.5;
 }
 
-/* line 171, ../scss/admin/_popover.scss */
+/* line 189, ../scss/admin/_popover.scss */
 .g5-popover-title {
   padding: 8px 14px;
   margin: 0;
@@ -1923,43 +1938,43 @@ body.g5-dialog-open {
   border-radius: 5px 5px 0 0;
 }
 
-/* line 182, ../scss/admin/_popover.scss */
+/* line 200, ../scss/admin/_popover.scss */
 .g5-popover-content {
   padding: 9px 14px;
   overflow: auto;
 }
 
-/* line 188, ../scss/admin/_popover.scss */
+/* line 206, ../scss/admin/_popover.scss */
 .g5-popover-inverse {
   background-color: #777;
   color: #eee;
 }
-/* line 192, ../scss/admin/_popover.scss */
+/* line 210, ../scss/admin/_popover.scss */
 .g5-popover-inverse .g5-popover-title {
   background: #7f7f7f;
   border-bottom: none;
   color: #eee;
 }
 
-/* line 200, ../scss/admin/_popover.scss */
+/* line 218, ../scss/admin/_popover.scss */
 .g5-popover-no-padding .g5-popover-content {
   padding: 0;
 }
-/* line 203, ../scss/admin/_popover.scss */
+/* line 221, ../scss/admin/_popover.scss */
 .g5-popover-no-padding .list-group-item {
   border-right: none;
   border-left: none;
 }
-/* line 206, ../scss/admin/_popover.scss */
+/* line 224, ../scss/admin/_popover.scss */
 .g5-popover-no-padding .list-group-item:first-child {
   border-top: 0;
 }
-/* line 209, ../scss/admin/_popover.scss */
+/* line 227, ../scss/admin/_popover.scss */
 .g5-popover-no-padding .list-group-item:last-child {
   border-bottom: 0;
 }
 
-/* line 217, ../scss/admin/_popover.scss */
+/* line 235, ../scss/admin/_popover.scss */
 .g5-popover > .arrow, .g5-popover > .arrow:after {
   position: absolute;
   display: block;
@@ -1969,18 +1984,18 @@ body.g5-dialog-open {
   border-style: solid;
 }
 
-/* line 227, ../scss/admin/_popover.scss */
+/* line 245, ../scss/admin/_popover.scss */
 .g5-popover > .arrow {
   border-width: 11px;
 }
 
-/* line 230, ../scss/admin/_popover.scss */
+/* line 248, ../scss/admin/_popover.scss */
 .g5-popover > .arrow:after {
   border-width: 10px;
   content: "";
 }
 
-/* line 236, ../scss/admin/_popover.scss */
+/* line 254, ../scss/admin/_popover.scss */
 .g5-popover.top > .arrow, .g5-popover.top-right > .arrow, .g5-popover.top-left > .arrow {
   bottom: -11px;
   left: 50%;
@@ -1989,7 +2004,7 @@ body.g5-dialog-open {
   border-top-color: fadein(rgba(0, 0, 0, 0.2), 5%);
   border-bottom-width: 0;
 }
-/* line 246, ../scss/admin/_popover.scss */
+/* line 264, ../scss/admin/_popover.scss */
 .g5-popover.top > .arrow:after, .g5-popover.top-right > .arrow:after, .g5-popover.top-left > .arrow:after {
   content: " ";
   bottom: 1px;
@@ -1997,7 +2012,7 @@ body.g5-dialog-open {
   border-top-color: #fff;
   border-bottom-width: 0;
 }
-/* line 254, ../scss/admin/_popover.scss */
+/* line 272, ../scss/admin/_popover.scss */
 .g5-popover.right > .arrow, .g5-popover.right-top > .arrow, .g5-popover.right-bottom > .arrow {
   top: 50%;
   left: -11px;
@@ -2006,7 +2021,7 @@ body.g5-dialog-open {
   border-right-color: #999999;
   border-right-color: fadein(rgba(0, 0, 0, 0.2), 5%);
 }
-/* line 263, ../scss/admin/_popover.scss */
+/* line 281, ../scss/admin/_popover.scss */
 .g5-popover.right > .arrow:after, .g5-popover.right-top > .arrow:after, .g5-popover.right-bottom > .arrow:after {
   content: " ";
   left: 1px;
@@ -2014,7 +2029,7 @@ body.g5-dialog-open {
   border-left-width: 0;
   border-right-color: #fff;
 }
-/* line 271, ../scss/admin/_popover.scss */
+/* line 289, ../scss/admin/_popover.scss */
 .g5-popover.bottom > .arrow, .g5-popover.bottom-right > .arrow, .g5-popover.bottom-left > .arrow {
   top: -11px;
   left: 50%;
@@ -2023,7 +2038,7 @@ body.g5-dialog-open {
   border-bottom-color: fadein(rgba(0, 0, 0, 0.2), 5%);
   border-top-width: 0;
 }
-/* line 281, ../scss/admin/_popover.scss */
+/* line 299, ../scss/admin/_popover.scss */
 .g5-popover.bottom > .arrow:after, .g5-popover.bottom-right > .arrow:after, .g5-popover.bottom-left > .arrow:after {
   content: " ";
   top: 1px;
@@ -2031,7 +2046,7 @@ body.g5-dialog-open {
   border-bottom-color: #fff;
   border-top-width: 0;
 }
-/* line 289, ../scss/admin/_popover.scss */
+/* line 307, ../scss/admin/_popover.scss */
 .g5-popover.left > .arrow, .g5-popover.left-top > .arrow, .g5-popover.left-bottom > .arrow {
   top: 50%;
   right: -11px;
@@ -2040,7 +2055,7 @@ body.g5-dialog-open {
   border-left-color: #999999;
   border-left-color: fadein(rgba(0, 0, 0, 0.2), 5%);
 }
-/* line 298, ../scss/admin/_popover.scss */
+/* line 316, ../scss/admin/_popover.scss */
 .g5-popover.left > .arrow:after, .g5-popover.left-top > .arrow:after, .g5-popover.left-bottom > .arrow:after {
   content: " ";
   right: 1px;
@@ -2049,29 +2064,29 @@ body.g5-dialog-open {
   bottom: -10px;
 }
 
-/* line 312, ../scss/admin/_popover.scss */
+/* line 330, ../scss/admin/_popover.scss */
 .g5-popover-inverse.top > .arrow, .g5-popover-inverse.top > .arrow:after, .g5-popover-inverse.top-left > .arrow, .g5-popover-inverse.top-left > .arrow:after, .g5-popover-inverse.top-right > .arrow, .g5-popover-inverse.top-right > .arrow:after {
   border-top-color: #777;
 }
-/* line 319, ../scss/admin/_popover.scss */
+/* line 337, ../scss/admin/_popover.scss */
 .g5-popover-inverse.right > .arrow, .g5-popover-inverse.right > .arrow:after, .g5-popover-inverse.right-top > .arrow, .g5-popover-inverse.right-top > .arrow:after, .g5-popover-inverse.right-bottom > .arrow, .g5-popover-inverse.right-bottom > .arrow:after {
   border-right-color: #777;
 }
-/* line 326, ../scss/admin/_popover.scss */
+/* line 344, ../scss/admin/_popover.scss */
 .g5-popover-inverse.bottom > .arrow, .g5-popover-inverse.bottom > .arrow:after, .g5-popover-inverse.bottom-left > .arrow, .g5-popover-inverse.bottom-left > .arrow:after, .g5-popover-inverse.bottom-right > .arrow, .g5-popover-inverse.bottom-right > .arrow:after {
   border-bottom-color: #777;
 }
-/* line 333, ../scss/admin/_popover.scss */
+/* line 351, ../scss/admin/_popover.scss */
 .g5-popover-inverse.left > .arrow, .g5-popover-inverse.left > .arrow:after, .g5-popover-inverse.left-top > .arrow, .g5-popover-inverse.left-top > .arrow:after, .g5-popover-inverse.left-bottom > .arrow, .g5-popover-inverse.left-bottom > .arrow:after {
   border-left-color: #777;
 }
 
-/* line 339, ../scss/admin/_popover.scss */
+/* line 357, ../scss/admin/_popover.scss */
 .g5-popover i.icon-refresh:before {
   content: "";
 }
 
-/* line 343, ../scss/admin/_popover.scss */
+/* line 361, ../scss/admin/_popover.scss */
 .g5-popover i.icon-refresh {
   display: block;
   width: 30px;

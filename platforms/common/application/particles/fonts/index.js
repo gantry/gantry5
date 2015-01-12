@@ -349,6 +349,17 @@ var Fonts = new prime({
         search.on('keyup', bind(this.search, this, search));
         preview.on('keyup', bind(this.updatePreview, this, preview));
 
+        /*preview.popover({
+            arrow: false,
+            width: 400,
+            trigger: 'mouse',
+            placement: 'bottom-right',
+            style: 'font-preview, above-modal',
+            content: '<ul><li>Font Name</li><li>Wizard boy Jack loves the grumpy Queen\'s fox.</li><li>AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz 0123456789</li></ul>'
+        }).on('shown.popover', function(popover) {
+            console.log('a', popover);
+        });*/
+
         return container;
     },
 
