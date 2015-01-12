@@ -902,6 +902,10 @@ body {
       color: #666;
       text-shadow: 0 0 1px #fff; }
 
+#g5-container #menu-editor .parent-indicator:before {
+  font-family: FontAwesome;
+  vertical-align: middle;
+  display: inline-block; }
 #g5-container .menu-header h2 {
   display: inline-block;
   margin-right: 1rem; }
@@ -914,6 +918,8 @@ body {
     border: 3px solid #fff;
     background: #b3b3b3;
     color: #fff; }
+    #g5-container .menu-selector li .parent-indicator:before {
+      content: "\f078"; }
     #g5-container .menu-selector li a {
       display: inline-block;
       color: #fff;
@@ -938,6 +944,9 @@ body {
       display: block;
       color: #fff;
       padding: 0.469rem 0.938rem; }
+    #g5-container .submenu-selector .submenu-items li .parent-indicator:before {
+      content: "\f054";
+      float: right; }
     #g5-container .submenu-selector .submenu-items li:hover, #g5-container .submenu-selector .submenu-items li .active {
       background: #48B0D7; }
 #g5-container .submenu-ratio {
