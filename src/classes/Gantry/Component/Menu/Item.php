@@ -8,9 +8,12 @@ class Item implements \ArrayAccess, \Iterator
     use ArrayAccessWithGetters;
 
     protected $items;
+    protected $menu;
 
-    public function __construct($name, array $item = [])
+    public function __construct($menu, $name, array $item = [])
     {
+        $this->menu = $menu;
+
         $parent = dirname($name);
         $alias = basename($name);
 
@@ -21,7 +24,7 @@ class Item implements \ArrayAccess, \Iterator
             'alias' => $alias,
             'title' => ucfirst($alias),
             'link' => $name,
-            'parent' => $parent != '.' ? $parent : '',
+            'parent_id' => $parent != '.' ? $parent : '',
             'children' => [],
             'groups' => [],
             'layout' => 'list',
@@ -29,6 +32,11 @@ class Item implements \ArrayAccess, \Iterator
             'menu_text' => true,
             'visible' => true,
         ];
+    }
+
+    public function parent()
+    {
+        return $this->menu[$this->items['parent_id']];
     }
 
     public function addChild(Item $child)

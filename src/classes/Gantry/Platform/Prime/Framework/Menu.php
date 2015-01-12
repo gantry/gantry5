@@ -175,7 +175,7 @@ class Menu implements \ArrayAccess, \Iterator
         $menuItems = array_unique(array_merge(Folder::all($folder, $options), array_keys($items)));
         sort($menuItems);
 
-        $all = ['' => new Item('', ['layout' => 'horizontal'])];
+        $all = ['' => new Item($this, '', ['layout' => 'horizontal'])];
         foreach ($menuItems as $name) {
             $parent = dirname($name);
             $level = substr_count($name, '/') + 1;
@@ -187,7 +187,7 @@ class Menu implements \ArrayAccess, \Iterator
                 continue;
             }
 
-            $item = new Item($name, isset($items[$name]) && is_array($items[$name]) ? $items[$name] : []);
+            $item = new Item($this, $name, isset($items[$name]) && is_array($items[$name]) ? $items[$name] : []);
 
             // Deal with home page.
             if ($item->link == 'home') {
@@ -233,8 +233,8 @@ class Menu implements \ArrayAccess, \Iterator
             }
 
             // Build nested tree structure.
-            if (isset($all[$item->parent])) {
-                $all[$item->parent]->addChild($item);
+            if (isset($all[$item->parent_id])) {
+                $all[$item->parent_id]->addChild($item);
             } else {
                 $all['']->addChild($item);
             }
