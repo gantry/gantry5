@@ -15,7 +15,7 @@
         {% if item.parent.layout == 'horizontal' or item.groups|length == 1 %}
             <li>
                 <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-menu-{{ (item.parent.parent.id)|e }}]" href="{{ gantry.route('menu', item.parent.path) }}">
-                    &lt;
+                    <i class="fa fa-chevron-left"></i>
                 </a>
             </li>
         {% endif %}

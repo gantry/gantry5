@@ -27,6 +27,7 @@
 		border: 3px solid $white;
 		background: $menu-editor-bg;
 		color: $white;
+		@include flex(auto);
 		.parent-indicator {
 			&:before {
 				content: "\f078";

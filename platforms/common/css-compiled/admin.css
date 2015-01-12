@@ -917,7 +917,14 @@ body {
     cursor: pointer;
     border: 3px solid #fff;
     background: #b3b3b3;
-    color: #fff; }
+    color: #fff;
+    -webkit-box-flex: auto;
+    -moz-box-flex: auto;
+    box-flex: auto;
+    -webkit-flex: auto;
+    -moz-flex: auto;
+    -ms-flex: auto;
+    flex: auto; }
     #g5-container .menu-selector li .parent-indicator:before {
       content: "\f078"; }
     #g5-container .menu-selector li a {
