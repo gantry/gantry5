@@ -1,5 +1,15 @@
 #g5-container { //wrapper
 
+#menu-editor {
+	.parent-indicator {
+		&:before {
+        	font-family: FontAwesome;
+       		vertical-align: middle;
+       		display: inline-block;
+       	}
+	}
+}
+
 .menu-header {
     h2 {
     	display: inline-block;
@@ -17,8 +27,10 @@
 		border: 3px solid $white;
 		background: $menu-editor-bg;
 		color: $white;
-		i {
-			
+		.parent-indicator {
+			&:before {
+				content: "\f078";
+	       	}
 		}
 
 		a {
@@ -53,6 +65,12 @@
 				display: block;
 				color: $white;
 				padding: $content-padding / 2 $content-padding;
+			}
+			.parent-indicator {
+				&:before {
+					content: "\f054";
+					float: right;
+		       	}
 			}
 			&:hover, .active {
 				background: $tertiary-accent;
