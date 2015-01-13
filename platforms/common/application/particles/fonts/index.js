@@ -44,6 +44,7 @@ var Fonts = new prime({
         'latin': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
         'latin-ext': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
         'cyrillic': 'В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!',
+        'cyrillic-ext': 'В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!',
         'devanagari': 'एक पल का क्रोध आपका भविष्य बिगाड सकता है',
         'greek': 'Τάχιστη αλώπηξ βαφής ψημένη γη, δρασκελίζει υπέρ νωθρού κυνός',
         'greek-ext': 'Τάχιστη αλώπηξ βαφής ψημένη γη, δρασκελίζει υπέρ νωθρού κυνός',
@@ -178,12 +179,17 @@ var Fonts = new prime({
         var baseVariant = element.data('variant');
 
         if (!this.selected || this.selected.element != element) {
+            if (variant && this.selected) {
+                var charsetSelected = this.selected.element.find('.font-charsets-selected');
+                if (charsetSelected) { charsetSelected.text('(1 selected)'); }
+            }
             this.selected = {
                 font: element.data('font'),
                 baseVariant: baseVariant,
                 element: element,
                 variants: [baseVariant],
                 selected: [],
+                charsets: ['latin'],
                 availableVariants: element.data('variants').split(','),
                 expanded: false,
                 loaded: false
@@ -197,7 +203,10 @@ var Fonts = new prime({
 
         if (variant) {
             var selected = ($('ul.g-fonts-list > [data-font]:not([data-font="' + this.selected.font + '"]) input[type="checkbox"]:checked'));
-            if (selected) { selected.checked(false); }
+            if (selected) {
+                selected.checked(false);
+                selected.parent('[data-variants]').removeClass('font-selected');
+            }
             var checkbox = this.selected.element.find('input[type="checkbox"][value="' + variant + '"]'),
                 checked = checkbox.checked();
             if (checkbox) {
@@ -283,10 +292,12 @@ var Fonts = new prime({
 
         if (!this.selected.selected.length) {
             preview.empty();
+            this.selected.element.removeClass('font-selected');
             return;
         }
 
         selected = this.selected.selected.sort();
+        this.selected.element.addClass('font-selected');
         //console.log(selected.map(this.mapVariant));
         preview.html('<strong>' + this.selected.font + '</strong> (<small>' + selected.join(', ').replace('regular', 'normal') + '</small>)');
     },
@@ -299,6 +310,7 @@ var Fonts = new prime({
     },
 
     buildLayout: function() {
+        this.filters.script = 'latin';
         var previewSentence = this.previewSentence[this.filters.script],
             html = zen('div#g-fonts.g-grid'),
             //sidebar = zen('div.g-sidebar.g-block.size-1-4').bottom(html),
@@ -323,9 +335,44 @@ var Fonts = new prime({
             var variants = font.variants.join(',').replace('regular', 'normal'),
                 variant = contains(font.variants, 'regular') ? '' : ':' + font.variants[0],
                 li = zen('li[data-font="' + font.family + '"][data-variant="' + (variant.replace(':', '') || 'regular') + '"][data-variants="' + variants + '"]').bottom(ul),
-                total = font.variants.length + ' style' + (font.variants.length > 1 ? 's' : '');
+                total = font.variants.length + ' style' + (font.variants.length > 1 ? 's' : ''),
+                charsets = font.subsets.length > 1 ? ', <span class="font-charsets">' + font.subsets.length + ' charsets <span class="font-charsets-selected">(1 selected)</span></span>' : '';
 
-            zen('div.family').html('<strong>' + font.family + '</strong>, ' + total).bottom(li);
+            var family = zen('div.family').html('<strong>' + font.family + '</strong>, ' + total + charsets).bottom(li),
+                charset = family.find('.font-charsets-selected');
+
+            if (charset) {
+                charset.popover({
+                    placement: 'auto',
+                    width: '200',
+                    trigger: 'mouse',
+                    style: 'font-categories, above-modal'
+                }).on('beforeshow.popover', bind(function(popover) {
+                    var subs = font.subsets.sort();
+
+                    var subsets = font.subsets,
+                        content = popover.$target.find('.g5-popover-content'),
+                        checked;
+
+                    content.empty();
+
+                    var div, current;
+                    subsets.forEach(function(cs){
+                        current = contains(this.selected.charsets, cs) ? (cs == 'latin' ? 'checked disabled' : 'checked') : '';
+                        zen('div').html('<label><input type="checkbox" '+current+' value="'+cs+'"/> ' + properCase(unhyphenate(cs.replace('ext', 'extended'))) + '</label>').bottom(content);
+                    }, this);
+
+                    content.delegate('click', 'input[type="checkbox"]', bind(function(event, input){
+                        input = $(input);
+                        checked = content.search('input[type="checkbox"]:checked');
+                        this.selected.charsets = checked ? checked.map('value') : [];
+                        charset.text('(' + this.selected.charsets.length + ' selected)');
+                        //this.search();
+                    }, this));
+
+                    popover.displayContent();
+                }, this));
+            }
 
             var variantContainer = zen('ul').bottom(li), variantFont, label;
             async.each(font.variants, bind(function(current) {
@@ -387,6 +434,26 @@ var Fonts = new prime({
             select = zen('button.button.button-primary').text('Select').bottom(rightContainer),
             current;
 
+        select.on('click', bind(function(){
+            if (!$('ul.g-fonts-list > [data-font] input[type="checkbox"]:checked')) {
+                this.field.value('');
+                modal.close();
+                return;
+            }
+
+            var name = this.selected.font.replace(/\s/g, '+'),
+                variation = this.selected.selected,
+                charset = this.selected.charsets;
+
+            if (variation.length == 1 && variation[0] == 'regular') { variation = []; }
+            if (charset.length == 1 && charset[0] == 'latin') { charset = []; }
+
+            if (contains(variation, 'regular')) { removeAll(variation, 'regular'); insert(variation, '400'); }
+            if (contains(variation, 'italic')) { removeAll(variation, 'italic'); insert(variation, '400italic'); }
+
+            this.field.value('family=' + name + (variation.length ? ':' + variation.join(',') : '') + (charset.length ? '&subset=' + charset.join(',') : ''));
+            modal.close();
+        }, this));
 
         category.popover({
             placement: 'auto',
