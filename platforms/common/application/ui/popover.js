@@ -122,6 +122,7 @@ var Popover = new prime({
 
         // use cache by default, if not cache setted  , reInit the contents
 
+        this.element.emit('beforeshow.popover', this);
         if (!this.options.cache || !this._poped) {
             this.setTitle(this.getTitle());
 

@@ -17,6 +17,7 @@ var prime       = require('prime'),
     split       = require('mout/array/split'),
     removeAll   = require('mout/array/removeAll'),
     insert      = require('mout/array/insert'),
+    find        = require('mout/array/find'),
     combine     = require('mout/array/combine'),
     merge       = require('mout/object/merge'),
 
@@ -39,7 +40,17 @@ var Fonts = new prime({
 
     inherits: Emitter,
 
-    previewSentence: 'Wizard boy Jack loves the grumpy Queen\'s fox.',
+    previewSentence: {
+        'latin': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
+        'latin-ext': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
+        'cyrillic': 'В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!',
+        'devanagari': 'एक पल का क्रोध आपका भविष्य बिगाड सकता है',
+        'greek': 'Τάχιστη αλώπηξ βαφής ψημένη γη, δρασκελίζει υπέρ νωθρού κυνός',
+        'greek-ext': 'Τάχιστη αλώπηξ βαφής ψημένη γη, δρασκελίζει υπέρ νωθρού κυνός',
+        'khmer': 'ខ្ញុំអាចញ៉ាំកញ្ចក់បាន ដោយគ្មានបញ្ហា',
+        'telugu': 'దేశ భాషలందు తెలుగు లెస్స',
+        'vietnamese': 'Tôi có thể ăn thủy tinh mà không hại gì.'
+    },
 
     constructor: function() {
         this.wf = wf;
@@ -49,6 +60,11 @@ var Fonts = new prime({
         this.throttle = false;
         this.selected = null;
         this.loadedFonts = [];
+        this.filters = {
+            search: '',
+            script: 'latin',
+            categories: []
+        };
     },
 
     open: function(event, element, container) {
@@ -261,18 +277,21 @@ var Fonts = new prime({
         return false;
     },
 
-    updateSelection: function(){
+    updateSelection: function() {
         var preview = $('.g-fonts-footer .font-selected'), selected;
         if (!preview) { return; }
 
-        if (!this.selected.selected.length) { preview.empty(); return; }
+        if (!this.selected.selected.length) {
+            preview.empty();
+            return;
+        }
 
         selected = this.selected.selected.sort();
         //console.log(selected.map(this.mapVariant));
         preview.html('<strong>' + this.selected.font + '</strong> (<small>' + selected.join(', ').replace('regular', 'normal') + '</small>)');
     },
 
-    updateTotal: function(){
+    updateTotal: function() {
         var totals = $('.g-fonts-header .font-search-total'),
             count = $('.g-fonts-list > [data-font]:not(.g-font-hide)');
 
@@ -280,7 +299,7 @@ var Fonts = new prime({
     },
 
     buildLayout: function() {
-        var previewSentence = this.previewSentence,
+        var previewSentence = this.previewSentence[this.filters.script],
             html = zen('div#g-fonts.g-grid'),
             //sidebar = zen('div.g-sidebar.g-block.size-1-4').bottom(html),
             main = zen('div.g-fonts-main').bottom(html),
@@ -299,7 +318,8 @@ var Fonts = new prime({
 
         async.eachSeries(this.data, bind(function(font, callback) {
             combine(subsets, font.subsets);
-            insert(categories, font.category)
+            insert(categories, font.category);
+            this.filters.categories.push(font.category);
             var variants = font.variants.join(',').replace('regular', 'normal'),
                 variant = contains(font.variants, 'regular') ? '' : ':' + font.variants[0],
                 li = zen('li[data-font="' + font.family + '"][data-variant="' + (variant.replace(':', '') || 'regular') + '"][data-variants="' + variants + '"]').bottom(ul),
@@ -317,31 +337,25 @@ var Fonts = new prime({
                 if (':' + current !== variant && current !== (variant || 'regular')) { variantFont.addClass('g-variant-hide'); }
             }, this));
 
-            /*if (!contains(font.subsets, 'latin')) {
-             li.style({display: 'none'});
-             }*/
+            if (!contains(font.subsets, 'latin')) {
+                li.addClass('g-font-hide');
+            }
 
             families.push(font.family + variant);
             callback();
         }, this));
 
-        var catContainer = html.find('select.font-category'), subContainer = html.find('select.font-subsets');
+        var catContainer = html.find('a.font-category'), subContainer = html.find('a.font-subsets');
 
-        categories.forEach(function(category) {
-            zen('option[value="' + category + '"]').text(properCase(unhyphenate(category))).bottom(catContainer);
-        }, this);
-
-        subsets.forEach(function(subset) {
-            subset = subset.replace('ext', 'extended');
-            zen('option[value="' + subset + '"]').text(properCase(unhyphenate(subset))).bottom(subContainer);
-        }, this);
+        catContainer.data('font-categories', categories.join(',')).html('Categories (<small>' + categories.length + '</small>) <i class="fa fa-caret-down"></i>');
+        subContainer.data('font-subsets', subsets.join(',')).html('Subsets (<small>' + properCase(unhyphenate(this.filters.script.replace('ext', 'extended'))) + '</small>) <i class="fa fa-caret-down"></i>');
 
         return html;
     },
 
     buildHeader: function(html) {
         var container = zen('div.settings-block.g-fonts-header').bottom(html),
-            preview = zen('input.float-left.font-preview[type="text"][data-font-preview][placeholder="Font Preview..."][value="' + this.previewSentence + '"]').bottom(container),
+            preview = zen('input.float-left.font-preview[type="text"][data-font-preview][placeholder="Font Preview..."][value="' + this.previewSentence[this.filters.script] + '"]').bottom(container),
             searchWrapper = zen('span.font-search-wrapper.float-right').bottom(container),
             search = zen('input.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(searchWrapper),
             totals = zen('span.font-search-total').bottom(searchWrapper);
@@ -367,31 +381,103 @@ var Fonts = new prime({
         var container = zen('div.settings-block.g-fonts-footer').bottom(html),
             leftContainer = zen('div.float-left.font-left-container').bottom(container),
             rightContainer = zen('div.float-right.font-right-container').bottom(container),
-            category = zen('select.font-category').bottom(leftContainer),
-            subsets = zen('select.font-subsets').bottom(leftContainer),
+            category = zen('a.font-category.button').bottom(leftContainer),
+            subsets = zen('a.font-subsets.button').bottom(leftContainer),
             selected = zen('span.font-selected').bottom(rightContainer),
-            select = zen('button.button.button-primary').text('Select').bottom(rightContainer);
+            select = zen('button.button.button-primary').text('Select').bottom(rightContainer),
+            current;
+
+
+        category.popover({
+            placement: 'auto',
+            width: '200',
+            trigger: 'mouse',
+            style: 'font-categories, above-modal'
+        }).on('beforeshow.popover', bind(function(popover) {
+            var categories = category.data('font-categories').split(','),
+                content = popover.$target.find('.g5-popover-content'),
+                checked;
+
+            content.empty();
+
+            var div;
+            categories.forEach(function(category){
+                current = contains(this.filters.categories, category) ? 'checked' : '';
+                zen('div').html('<label><input type="checkbox" '+current+' value="'+category+'"/> ' + properCase(unhyphenate(category)) + '</label>').bottom(content);
+            }, this);
+
+            content.delegate('click', 'input[type="checkbox"]', bind(function(event, input){
+                input = $(input);
+                checked = content.search('input[type="checkbox"]:checked');
+                this.filters.categories = checked ? checked.map('value') : [];
+                category.find('small').text(this.filters.categories.length);
+                this.search();
+            }, this));
+
+            popover.displayContent();
+        }, this));
+
+        subsets.popover({
+            placement: 'auto',
+            width: '200',
+            trigger: 'mouse',
+            style: 'font-subsets, above-modal'
+        }).on('beforeshow.popover', bind(function(popover) {
+            var subs = subsets.data('font-subsets').split(','),
+                content = popover.$target.find('.g5-popover-content');
+
+            content.empty();
+
+            var div;
+            subs.forEach(function(sub){
+                current = sub == this.filters.script ? 'checked' : '';
+                zen('div').html('<label><input name="font-subset[]" type="radio" '+current+' value="'+sub+'"/> ' + properCase(unhyphenate(sub.replace('ext', 'extended'))) + '</label>').bottom(content);
+            }, this);
+
+            content.delegate('change', 'input[type="radio"]', bind(function(event, input){
+                input = $(input);
+                this.filters.script = input.value();
+                $('.g-fonts-header input.font-preview').value(this.previewSentence[this.filters.script]);
+                subsets.find('small').text(properCase(unhyphenate(input.value().replace('ext', 'extended'))));
+                this.search();
+                this.updatePreview();
+            }, this));
+
+            popover.displayContent();
+        }, this));
 
         return container;
     },
 
-    search: function(input, event){
+    search: function(input) {
+        input = input || $('.g-fonts-header input.font-search');
         var list = $('.g-fonts-list'),
             value = input.value(),
-            name, re;
+            name, data;
 
-        if (input.previousValue == value) { return true; }
+        //if (input.previousValue == value) { return true; }
 
-        list.search('> [data-font]').forEach(function(font){
+        list.search('> [data-font]').forEach(function(font) {
             font = $(font);
             name = font.data('font');
+            data = find(this.data, {family: name});
+            font.removeClass('g-font-hide');
 
             // we dont want to hide selected fonts
             if (this.selected && this.selected.font == name && this.selected.selected.length) { return; }
 
             // checks for other criterias such as subset and category goes here TODO
+            if (!contains(data.subsets, this.filters.script)){
+                font.addClass('g-font-hide');
+                return;
+            }
 
-            if (!name.match(new RegExp("^" + value + '|\\s' + value, 'gi'))){
+            if (!contains(this.filters.categories, data.category)){
+                font.addClass('g-font-hide');
+                return;
+            }
+
+            if (!name.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
                 font.addClass('g-font-hide');
             } else {
                 font.removeClass('g-font-hide');
@@ -401,23 +487,24 @@ var Fonts = new prime({
         this.updateTotal();
 
         clearTimeout(input.refreshTimer);
-        input.refreshTimer = setTimeout(bind(function(){
+        input.refreshTimer = setTimeout(bind(function() {
             this.scroll($('ul.g-fonts-list'));
         }, this), 400);
 
         input.previousValue = value;
     },
 
-    updatePreview: function(input){
+    updatePreview: function(input) {
+        input = input || $('.g-fonts-header input.font-preview');
         clearTimeout(input.refreshTimer);
         var value = input.value(),
             list = $('.g-fonts-list');
-        value = trim(value) ? trim(value) : this.previewSentence;
+        value = trim(value) ? trim(value) : this.previewSentence[this.filters.script];
 
         if (input.previousValue == value) { return true; }
 
         //input.refreshTimer = setTimeout(bind(function(){
-            list.search('[data-font] .preview').text(value);
+        list.search('[data-font] .preview').text(value);
         //}, this), 50);
 
         input.previousValue = value;

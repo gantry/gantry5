@@ -1801,28 +1801,29 @@ body.g5-dialog-open {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  color: #444;
 }
-/* line 65, ../scss/admin/_popover.scss */
+/* line 66, ../scss/admin/_popover.scss */
 .g5-popover.top, .g5-popover.top-left, .g5-popover.top-right {
   margin-top: -10px;
 }
-/* line 66, ../scss/admin/_popover.scss */
+/* line 67, ../scss/admin/_popover.scss */
 .g5-popover.right, .g5-popover.right-top, .g5-popover.right-bottom {
   margin-left: 10px;
 }
-/* line 67, ../scss/admin/_popover.scss */
+/* line 68, ../scss/admin/_popover.scss */
 .g5-popover.bottom, .g5-popover.bottom-left, .g5-popover.bottom-right {
   margin-top: 10px;
 }
-/* line 68, ../scss/admin/_popover.scss */
+/* line 69, ../scss/admin/_popover.scss */
 .g5-popover.left, .g5-popover.left-top, .g5-popover.left-bottom {
   margin-left: -10px;
 }
-/* line 71, ../scss/admin/_popover.scss */
+/* line 72, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-above-modal {
   z-index: 1500;
 }
-/* line 76, ../scss/admin/_popover.scss */
+/* line 77, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-nooverflow .g5-popover-content {
   overflow: visible;
 }
@@ -2431,7 +2432,19 @@ body.g5-dialog-open {
   font-size: 0.8em;
   margin-right: 10px;
 }
-/* line 70, ../scss/admin/particles/_fonts.scss */
+/* line 69, ../scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer .font-category {
+  font-size: 0.85em;
+}
+/* line 73, ../scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer .font-subsets {
+  margin-left: 0.85em !important;
+}
+/* line 77, ../scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer small {
+  text-decoration: underline;
+}
+/* line 82, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list {
   margin: 0;
   padding: 0;
@@ -2442,13 +2455,13 @@ body.g5-dialog-open {
   overflow: auto;
   position: relative;
 }
-/* line 80, ../scss/admin/particles/_fonts.scss */
+/* line 92, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list ul, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list li {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-/* line 86, ../scss/admin/particles/_fonts.scss */
+/* line 98, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li {
   padding: 0.5em 1em;
   margin: 0.5em 0;
@@ -2457,37 +2470,37 @@ body.g5-dialog-open {
   cursor: pointer;
   background-color: #eaeaea;
 }
-/* line 95, ../scss/admin/particles/_fonts.scss */
+/* line 107, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li:nth-child(odd) {
   background-color: #f7f7f7;
 }
-/* line 99, ../scss/admin/particles/_fonts.scss */
+/* line 111, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li.selected {
   border-color: #48B0D7;
 }
-/* line 103, ../scss/admin/particles/_fonts.scss */
+/* line 115, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li strong {
   font-weight: bold !important;
 }
-/* line 107, ../scss/admin/particles/_fonts.scss */
+/* line 119, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li input[type="checkbox"], .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li .variant {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 112, ../scss/admin/particles/_fonts.scss */
+/* line 124, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li .variant, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li .family {
   color: #999;
 }
-/* line 116, ../scss/admin/particles/_fonts.scss */
+/* line 128, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li .preview {
   font-size: 24px;
   line-height: 1.3em;
 }
-/* line 121, ../scss/admin/particles/_fonts.scss */
+/* line 133, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li ul {
   margin-top: 0.5em;
 }
-/* line 125, ../scss/admin/particles/_fonts.scss */
+/* line 137, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li li {
   padding: 0.5em 0;
   border: 0;

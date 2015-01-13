@@ -61,6 +61,7 @@ $close-color:               #000;
     border: 1px solid $popover-border-color;
     border-radius: $border-radius-large;
     box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    color: #444;
 
     &.top,&.top-left,&.top-right     { margin-top: -$popover-arrow-width; }
     &.right,&.right-top,&.right-bottom   { margin-left: $popover-arrow-width; }
@@ -75,7 +76,6 @@ $close-color:               #000;
     &.g5-popover-nooverflow {
         .g5-popover-content {
             overflow: visible;
-
         }
     }
 
