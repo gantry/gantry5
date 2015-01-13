@@ -80,6 +80,7 @@ var Fonts = new prime({
             container.empty().appendChild(this.buildLayout());
             this.scroll(container.find('ul.g-fonts-list'));
             this.updateTotal();
+            this.selectFromValue();
             return;
         }
 
@@ -91,6 +92,7 @@ var Fonts = new prime({
                     container.empty().appendChild(this.buildLayout());
                     this.scroll(container.find('ul.g-fonts-list'));
                     this.updateTotal();
+                    this.selectFromValue();
                 }, this), 1);
             }, this)
         });
@@ -173,6 +175,46 @@ var Fonts = new prime({
         selected.element.find('[data-variant="' + baseVariant + '"]').removeClass('g-variant-hide');
         selected.variants = [selected.baseVariant];
         selected.selected = [];
+    },
+
+    selectFromValue: function(){
+        var value = this.field.value();
+
+        if (!value.match('family=')) { return false; }
+
+        var split = value.split('&'),
+            family = split[0],
+            split2 = family.split(':'),
+            name = split2[0].replace('family=', '').replace(/\+/g, ' '),
+            variants = split2[1] ? split2[1].split(',') : ['regular'],
+            subset = split[1] ? split[1].replace('subset=', '').split(',') : ['latin'];
+
+        if (contains(variants, '400')) { removeAll(variants, '400'); insert(variants, 'regular'); }
+        if (contains(variants, '400italic')) { removeAll(variants, '400italic'); insert(variants, 'italic'); }
+
+        var element = $('ul.g-fonts-list > [data-font="'+name+'"]');
+
+        this.selected = {
+            font: name,
+            baseVariant: element.data('variant'),
+            element: element,
+            variants: variants,
+            selected: [],
+            charsets: subset,
+            availableVariants: element.data('variants').split(','),
+            expanded: false,
+            loaded: false
+        };
+
+        variants.forEach(function(variant){
+            this.select(element, variant);
+            element.find('> ul > [data-variant="' + variant + '"]').removeClass('g-variant-hide');
+        }, this);
+
+        var charsetSelected = element.find('.font-charsets-selected');
+        if (charsetSelected) { charsetSelected.text('(' + subset.length + ' selected)'); }
+
+        $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop;
     },
 
     select: function(element, variant, target) {
