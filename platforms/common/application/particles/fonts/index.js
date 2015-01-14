@@ -8,7 +8,6 @@ var prime       = require('prime'),
     Bound       = require('prime-util/prime/bound'),
     Options     = require('prime-util/prime/options'),
     domready    = require('elements/domready'),
-    storage     = require('prime/map')(),
 
     bind        = require('mout/function/bind'),
     map         = require('mout/array/map'),
