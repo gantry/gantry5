@@ -10,7 +10,12 @@ form:
       description: Globally enable the particle.
       default: true
 
-    font-family:
+    font-family-1:
       type: input.fonts
-      label: Color 1
-      default: 'Verdana'
+      label: Font 1
+      default: 'family=Inconsolata:700,400&subset=latin,latin-ext'
+
+    font-family-2:
+      type: input.fonts
+      label: Font 2
+      default: 'family=Kalam:300&subset=latin,latin-ext'

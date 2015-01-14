@@ -49,6 +49,7 @@ $.implement({
     inviewport: function(expression, treshold) {
         var elements = this.search(expression);
         treshold = treshold || 0;
+        if (!elements) { return false; }
 
         var position = this.position();
         return elements.filter(function(element) {

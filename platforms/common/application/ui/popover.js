@@ -43,6 +43,7 @@ var Popover = new prime({
         padding: true,
         url: '',
         type: 'html',
+        where: '#g5-container',
         template: '<div class="g5-popover">' +
         '<div class="arrow"></div>' +
         '<div class="g5-popover-inner">' +
@@ -121,6 +122,7 @@ var Popover = new prime({
 
         // use cache by default, if not cache setted  , reInit the contents
 
+        this.element.emit('beforeshow.popover', this);
         if (!this.options.cache || !this._poped) {
             this.setTitle(this.getTitle());
 
@@ -161,14 +163,14 @@ var Popover = new prime({
         }
 
         //init the popover and insert into the document body
-        if (!this.options.arrow) {
+        if (!this.options.arrow && target.find('.arrow')) {
             target.find('.arrow').remove();
         }
         target.remove().style({
             top: -1000,
             left: -1000,
             display: 'block'
-        }).bottom(document.body);
+        }).bottom(this.options.where);
         targetWidth = target[0].offsetWidth;
         targetHeight = target[0].offsetHeight;
         placement = this.getPlacement(elementPos, targetHeight);

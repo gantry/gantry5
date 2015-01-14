@@ -1,0 +1,34 @@
+{
+    "name": "Whatever",
+    "layout": {
+        "header": {
+            "type": "section",
+            "attributes": {
+                "name": "Header",
+                "key": "header",
+                "type": "header",
+                "id": "header"
+            }
+        },
+        "main": {
+            "type": "section",
+            "attributes": {
+                "name": "Main",
+                "key": "main"
+            }
+        },
+        "footer": {
+            "type": "section",
+            "attributes": {
+                "name": "Bottom",
+                "key": "bottom"
+            }
+        },
+        "non-visible": {
+            "id": "189a3808-57a7-4b05-b4a5-5175ad27dbde",
+            "type": "non-visible",
+            "attributes": {},
+            "children": []
+        }
+    }
+}

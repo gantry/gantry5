@@ -8,6 +8,7 @@ var prime       = require('prime'),
     Bound       = require('prime-util/prime/bound'),
     Options     = require('prime-util/prime/options'),
     domready    = require('elements/domready'),
+    storage     = require('prime/map')(),
 
     bind        = require('mout/function/bind'),
     map         = require('mout/array/map'),
@@ -17,6 +18,7 @@ var prime       = require('prime'),
     split       = require('mout/array/split'),
     removeAll   = require('mout/array/removeAll'),
     insert      = require('mout/array/insert'),
+    find        = require('mout/array/find'),
     combine     = require('mout/array/combine'),
     merge       = require('mout/object/merge'),
 
@@ -39,7 +41,18 @@ var Fonts = new prime({
 
     inherits: Emitter,
 
-    previewSentence: 'Wizard boy Jack loves the grumpy Queen\'s fox.',
+    previewSentence: {
+        'latin': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
+        'latin-ext': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
+        'cyrillic': 'В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!',
+        'cyrillic-ext': 'В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!',
+        'devanagari': 'एक पल का क्रोध आपका भविष्य बिगाड सकता है',
+        'greek': 'Τάχιστη αλώπηξ βαφής ψημένη γη, δρασκελίζει υπέρ νωθρού κυνός',
+        'greek-ext': 'Τάχιστη αλώπηξ βαφής ψημένη γη, δρασκελίζει υπέρ νωθρού κυνός',
+        'khmer': 'ខ្ញុំអាចញ៉ាំកញ្ចក់បាន ដោយគ្មានបញ្ហា',
+        'telugu': 'దేశ భాషలందు తెలుగు లెస్స',
+        'vietnamese': 'Tôi có thể ăn thủy tinh mà không hại gì.'
+    },
 
     constructor: function() {
         this.wf = wf;
@@ -49,6 +62,11 @@ var Fonts = new prime({
         this.throttle = false;
         this.selected = null;
         this.loadedFonts = [];
+        this.filters = {
+            search: '',
+            script: 'latin',
+            categories: []
+        };
     },
 
     open: function(event, element, container) {
@@ -63,6 +81,7 @@ var Fonts = new prime({
             container.empty().appendChild(this.buildLayout());
             this.scroll(container.find('ul.g-fonts-list'));
             this.updateTotal();
+            this.selectFromValue();
             return;
         }
 
@@ -74,6 +93,7 @@ var Fonts = new prime({
                     container.empty().appendChild(this.buildLayout());
                     this.scroll(container.find('ul.g-fonts-list'));
                     this.updateTotal();
+                    this.selectFromValue();
                 }, this), 1);
             }, this)
         });
@@ -117,7 +137,8 @@ var Fonts = new prime({
                 element = $(element);
                 var dataFont = element.data('font'),
                     variant = element.data('variant');
-                if (!contains(this.loadedFonts, dataFont)) { list.push(dataFont); }
+
+                if (!contains(this.loadedFonts, dataFont)) { list.push(dataFont + (variant != 'regular' ? ':' + variant : '')); }
                 else {
                     element.find('[data-variant="' + variant + '"] .preview').style({
                         fontFamily: dataFont,
@@ -158,16 +179,69 @@ var Fonts = new prime({
         selected.selected = [];
     },
 
+    selectFromValue: function() {
+        var value = this.field.value();
+
+        if (!value.match('family=')) { return false; }
+
+        var split = value.split('&'),
+            family = split[0],
+            split2 = family.split(':'),
+            name = split2[0].replace('family=', '').replace(/\+/g, ' '),
+            variants = split2[1] ? split2[1].split(',') : ['regular'],
+            subset = split[1] ? split[1].replace('subset=', '').split(',') : ['latin'];
+
+        if (contains(variants, '400')) {
+            removeAll(variants, '400');
+            insert(variants, 'regular');
+        }
+        if (contains(variants, '400italic')) {
+            removeAll(variants, '400italic');
+            insert(variants, 'italic');
+        }
+
+        var element = $('ul.g-fonts-list > [data-font="' + name + '"]');
+
+        this.selected = {
+            font: name,
+            baseVariant: element.data('variant'),
+            element: element,
+            variants: variants,
+            selected: [],
+            charsets: subset,
+            availableVariants: element.data('variants').split(','),
+            expanded: false,
+            loaded: false
+        };
+
+        variants.forEach(function(variant) {
+            this.select(element, variant);
+            element.find('> ul > [data-variant="' + variant + '"]').removeClass('g-variant-hide');
+        }, this);
+
+        var charsetSelected = element.find('.font-charsets-selected');
+        if (charsetSelected) { charsetSelected.text('(' + subset.length + ' selected)'); }
+
+        $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop;
+        this.toggleExpansion();
+        setTimeout(bind(function() { this.toggleExpansion(); }, this), 50);
+    },
+
     select: function(element, variant, target) {
         var baseVariant = element.data('variant');
 
         if (!this.selected || this.selected.element != element) {
+            if (variant && this.selected) {
+                var charsetSelected = this.selected.element.find('.font-charsets-selected');
+                if (charsetSelected) { charsetSelected.text('(1 selected)'); }
+            }
             this.selected = {
                 font: element.data('font'),
                 baseVariant: baseVariant,
                 element: element,
                 variants: [baseVariant],
                 selected: [],
+                charsets: ['latin'],
                 availableVariants: element.data('variants').split(','),
                 expanded: false,
                 loaded: false
@@ -181,7 +255,10 @@ var Fonts = new prime({
 
         if (variant) {
             var selected = ($('ul.g-fonts-list > [data-font]:not([data-font="' + this.selected.font + '"]) input[type="checkbox"]:checked'));
-            if (selected) { selected.checked(false); }
+            if (selected) {
+                selected.checked(false);
+                selected.parent('[data-variants]').removeClass('font-selected');
+            }
             var checkbox = this.selected.element.find('input[type="checkbox"][value="' + variant + '"]'),
                 checked = checkbox.checked();
             if (checkbox) {
@@ -261,18 +338,23 @@ var Fonts = new prime({
         return false;
     },
 
-    updateSelection: function(){
+    updateSelection: function() {
         var preview = $('.g-fonts-footer .font-selected'), selected;
         if (!preview) { return; }
 
-        if (!this.selected.selected.length) { preview.empty(); return; }
+        if (!this.selected.selected.length) {
+            preview.empty();
+            this.selected.element.removeClass('font-selected');
+            return;
+        }
 
         selected = this.selected.selected.sort();
+        this.selected.element.addClass('font-selected');
         //console.log(selected.map(this.mapVariant));
         preview.html('<strong>' + this.selected.font + '</strong> (<small>' + selected.join(', ').replace('regular', 'normal') + '</small>)');
     },
 
-    updateTotal: function(){
+    updateTotal: function() {
         var totals = $('.g-fonts-header .font-search-total'),
             count = $('.g-fonts-list > [data-font]:not(.g-font-hide)');
 
@@ -280,7 +362,8 @@ var Fonts = new prime({
     },
 
     buildLayout: function() {
-        var previewSentence = this.previewSentence,
+        this.filters.script = 'latin';
+        var previewSentence = this.previewSentence[this.filters.script],
             html = zen('div#g-fonts.g-grid'),
             //sidebar = zen('div.g-sidebar.g-block.size-1-4').bottom(html),
             main = zen('div.g-fonts-main').bottom(html),
@@ -299,13 +382,49 @@ var Fonts = new prime({
 
         async.eachSeries(this.data, bind(function(font, callback) {
             combine(subsets, font.subsets);
-            insert(categories, font.category)
+            insert(categories, font.category);
+            this.filters.categories.push(font.category);
             var variants = font.variants.join(',').replace('regular', 'normal'),
                 variant = contains(font.variants, 'regular') ? '' : ':' + font.variants[0],
                 li = zen('li[data-font="' + font.family + '"][data-variant="' + (variant.replace(':', '') || 'regular') + '"][data-variants="' + variants + '"]').bottom(ul),
-                total = font.variants.length + ' style' + (font.variants.length > 1 ? 's' : '');
+                total = font.variants.length + ' style' + (font.variants.length > 1 ? 's' : ''),
+                charsets = font.subsets.length > 1 ? ', <span class="font-charsets">' + font.subsets.length + ' charsets <span class="font-charsets-selected">(1 selected)</span></span>' : '';
 
-            zen('div.family').html('<strong>' + font.family + '</strong>, ' + total).bottom(li);
+            var family = zen('div.family').html('<strong>' + font.family + '</strong>, ' + total + charsets).bottom(li),
+                charset = family.find('.font-charsets-selected');
+
+            if (charset) {
+                charset.popover({
+                    placement: 'auto',
+                    width: '200',
+                    trigger: 'mouse',
+                    style: 'font-categories, above-modal'
+                }).on('beforeshow.popover', bind(function(popover) {
+                    var subs = font.subsets.sort();
+
+                    var subsets = font.subsets,
+                        content = popover.$target.find('.g5-popover-content'),
+                        checked;
+
+                    content.empty();
+
+                    var div, current;
+                    subsets.forEach(function(cs) {
+                        current = contains(this.selected.charsets, cs) ? (cs == 'latin' ? 'checked disabled' : 'checked') : '';
+                        zen('div').html('<label><input type="checkbox" ' + current + ' value="' + cs + '"/> ' + properCase(unhyphenate(cs.replace('ext', 'extended'))) + '</label>').bottom(content);
+                    }, this);
+
+                    content.delegate('click', 'input[type="checkbox"]', bind(function(event, input) {
+                        input = $(input);
+                        checked = content.search('input[type="checkbox"]:checked');
+                        this.selected.charsets = checked ? checked.map('value') : [];
+                        charset.text('(' + this.selected.charsets.length + ' selected)');
+                        //this.search();
+                    }, this));
+
+                    popover.displayContent();
+                }, this));
+            }
 
             var variantContainer = zen('ul').bottom(li), variantFont, label;
             async.each(font.variants, bind(function(current) {
@@ -317,37 +436,42 @@ var Fonts = new prime({
                 if (':' + current !== variant && current !== (variant || 'regular')) { variantFont.addClass('g-variant-hide'); }
             }, this));
 
-            /*if (!contains(font.subsets, 'latin')) {
-             li.style({display: 'none'});
-             }*/
+            if (!contains(font.subsets, 'latin')) {
+                li.addClass('g-font-hide');
+            }
 
             families.push(font.family + variant);
             callback();
         }, this));
 
-        var catContainer = html.find('select.font-category'), subContainer = html.find('select.font-subsets');
+        var catContainer = html.find('a.font-category'), subContainer = html.find('a.font-subsets');
 
-        categories.forEach(function(category) {
-            zen('option[value="' + category + '"]').text(properCase(unhyphenate(category))).bottom(catContainer);
-        }, this);
-
-        subsets.forEach(function(subset) {
-            subset = subset.replace('ext', 'extended');
-            zen('option[value="' + subset + '"]').text(properCase(unhyphenate(subset))).bottom(subContainer);
-        }, this);
+        catContainer.data('font-categories', categories.join(',')).html('Categories (<small>' + categories.length + '</small>) <i class="fa fa-caret-down"></i>');
+        subContainer.data('font-subsets', subsets.join(',')).html('Subsets (<small>' + properCase(unhyphenate(this.filters.script.replace('ext', 'extended'))) + '</small>) <i class="fa fa-caret-down"></i>');
 
         return html;
     },
 
     buildHeader: function(html) {
         var container = zen('div.settings-block.g-fonts-header').bottom(html),
-            preview = zen('input.float-left.font-preview[type="text"][data-font-preview][placeholder="Font Preview..."][value="' + this.previewSentence + '"]').bottom(container),
+            preview = zen('input.float-left.font-preview[type="text"][data-font-preview][placeholder="Font Preview..."][value="' + this.previewSentence[this.filters.script] + '"]').bottom(container),
             searchWrapper = zen('span.font-search-wrapper.float-right').bottom(container),
             search = zen('input.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(searchWrapper),
             totals = zen('span.font-search-total').bottom(searchWrapper);
 
         search.on('keyup', bind(this.search, this, search));
         preview.on('keyup', bind(this.updatePreview, this, preview));
+
+        /*preview.popover({
+         arrow: false,
+         width: 400,
+         trigger: 'mouse',
+         placement: 'bottom-right',
+         style: 'font-preview, above-modal',
+         content: '<ul><li>Font Name</li><li>Wizard boy Jack loves the grumpy Queen\'s fox.</li><li>AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz 0123456789</li></ul>'
+         }).on('shown.popover', function(popover) {
+         console.log('a', popover);
+         });*/
 
         return container;
     },
@@ -356,31 +480,129 @@ var Fonts = new prime({
         var container = zen('div.settings-block.g-fonts-footer').bottom(html),
             leftContainer = zen('div.float-left.font-left-container').bottom(container),
             rightContainer = zen('div.float-right.font-right-container').bottom(container),
-            category = zen('select.font-category').bottom(leftContainer),
-            subsets = zen('select.font-subsets').bottom(leftContainer),
+            category = zen('a.font-category.button').bottom(leftContainer),
+            subsets = zen('a.font-subsets.button').bottom(leftContainer),
             selected = zen('span.font-selected').bottom(rightContainer),
-            select = zen('button.button.button-primary').text('Select').bottom(rightContainer);
+            select = zen('button.button.button-primary').text('Select').bottom(rightContainer),
+            current;
+
+        select.on('click', bind(function() {
+            if (!$('ul.g-fonts-list > [data-font] input[type="checkbox"]:checked')) {
+                this.field.value('');
+                modal.close();
+                return;
+            }
+
+            var name = this.selected.font.replace(/\s/g, '+'),
+                variation = this.selected.selected,
+                charset = this.selected.charsets;
+
+            if (variation.length == 1 && variation[0] == 'regular') { variation = []; }
+            if (charset.length == 1 && charset[0] == 'latin') { charset = []; }
+
+            if (contains(variation, 'regular')) {
+                removeAll(variation, 'regular');
+                insert(variation, '400');
+            }
+            if (contains(variation, 'italic')) {
+                removeAll(variation, 'italic');
+                insert(variation, '400italic');
+            }
+
+            this.field.value('family=' + name + (variation.length ? ':' + variation.join(',') : '') + (charset.length ? '&subset=' + charset.join(',') : ''));
+            modal.close();
+        }, this));
+
+        category.popover({
+            placement: 'auto',
+            width: '200',
+            trigger: 'mouse',
+            style: 'font-categories, above-modal'
+        }).on('beforeshow.popover', bind(function(popover) {
+            var categories = category.data('font-categories').split(','),
+                content = popover.$target.find('.g5-popover-content'),
+                checked;
+
+            content.empty();
+
+            var div;
+            categories.forEach(function(category) {
+                current = contains(this.filters.categories, category) ? 'checked' : '';
+                zen('div').html('<label><input type="checkbox" ' + current + ' value="' + category + '"/> ' + properCase(unhyphenate(category)) + '</label>').bottom(content);
+            }, this);
+
+            content.delegate('click', 'input[type="checkbox"]', bind(function(event, input) {
+                input = $(input);
+                checked = content.search('input[type="checkbox"]:checked');
+                this.filters.categories = checked ? checked.map('value') : [];
+                category.find('small').text(this.filters.categories.length);
+                this.search();
+            }, this));
+
+            popover.displayContent();
+        }, this));
+
+        subsets.popover({
+            placement: 'auto',
+            width: '200',
+            trigger: 'mouse',
+            style: 'font-subsets, above-modal'
+        }).on('beforeshow.popover', bind(function(popover) {
+            var subs = subsets.data('font-subsets').split(','),
+                content = popover.$target.find('.g5-popover-content');
+
+            content.empty();
+
+            var div;
+            subs.forEach(function(sub) {
+                current = sub == this.filters.script ? 'checked' : '';
+                zen('div').html('<label><input name="font-subset[]" type="radio" ' + current + ' value="' + sub + '"/> ' + properCase(unhyphenate(sub.replace('ext', 'extended'))) + '</label>').bottom(content);
+            }, this);
+
+            content.delegate('change', 'input[type="radio"]', bind(function(event, input) {
+                input = $(input);
+                this.filters.script = input.value();
+                $('.g-fonts-header input.font-preview').value(this.previewSentence[this.filters.script]);
+                subsets.find('small').text(properCase(unhyphenate(input.value().replace('ext', 'extended'))));
+                this.search();
+                this.updatePreview();
+            }, this));
+
+            popover.displayContent();
+        }, this));
 
         return container;
     },
 
-    search: function(input, event){
+    search: function(input) {
+        input = input || $('.g-fonts-header input.font-search');
         var list = $('.g-fonts-list'),
             value = input.value(),
-            name, re;
+            name, data;
 
-        if (input.previousValue == value) { return true; }
+        //if (input.previousValue == value) { return true; }
 
-        list.search('> [data-font]').forEach(function(font){
+        list.search('> [data-font]').forEach(function(font) {
             font = $(font);
             name = font.data('font');
+            data = find(this.data, { family: name });
+            font.removeClass('g-font-hide');
 
             // we dont want to hide selected fonts
             if (this.selected && this.selected.font == name && this.selected.selected.length) { return; }
 
             // checks for other criterias such as subset and category goes here TODO
+            if (!contains(data.subsets, this.filters.script)) {
+                font.addClass('g-font-hide');
+                return;
+            }
 
-            if (!name.match(new RegExp("^" + value + '|\\s' + value, 'gi'))){
+            if (!contains(this.filters.categories, data.category)) {
+                font.addClass('g-font-hide');
+                return;
+            }
+
+            if (!name.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
                 font.addClass('g-font-hide');
             } else {
                 font.removeClass('g-font-hide');
@@ -390,23 +612,24 @@ var Fonts = new prime({
         this.updateTotal();
 
         clearTimeout(input.refreshTimer);
-        input.refreshTimer = setTimeout(bind(function(){
+        input.refreshTimer = setTimeout(bind(function() {
             this.scroll($('ul.g-fonts-list'));
         }, this), 400);
 
         input.previousValue = value;
     },
 
-    updatePreview: function(input){
+    updatePreview: function(input) {
+        input = input || $('.g-fonts-header input.font-preview');
         clearTimeout(input.refreshTimer);
         var value = input.value(),
             list = $('.g-fonts-list');
-        value = trim(value) ? trim(value) : this.previewSentence;
+        value = trim(value) ? trim(value) : this.previewSentence[this.filters.script];
 
         if (input.previousValue == value) { return true; }
 
         //input.refreshTimer = setTimeout(bind(function(){
-            list.search('[data-font] .preview').text(value);
+        list.search('[data-font] .preview').text(value);
         //}, this), 50);
 
         input.previousValue = value;
@@ -492,10 +715,16 @@ var Fonts = new prime({
     }
 });
 
-var FontsPicker = new Fonts();
-
 domready(function() {
-    $('body').delegate('click', '[data-g5-fontpicker]', bind(FontsPicker.open, FontsPicker));
+    $('body').delegate('click', '[data-g5-fontpicker]', function(event, element) {
+        var FontPicker = storage.get(element);
+        if (!FontPicker) {
+            FontPicker = new Fonts();
+            storage.set(element, FontPicker);
+        }
+
+        FontPicker.open(event, element);
+    });
 });
 
-module.exports = FontsPicker;
+module.exports = Fonts;

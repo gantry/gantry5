@@ -61,6 +61,7 @@ $close-color:               #000;
     border: 1px solid $popover-border-color;
     border-radius: $border-radius-large;
     box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    color: #444;
 
     &.top,&.top-left,&.top-right     { margin-top: -$popover-arrow-width; }
     &.right,&.right-top,&.right-bottom   { margin-left: $popover-arrow-width; }
@@ -68,10 +69,13 @@ $close-color:               #000;
     &.left,&.left-top,&.left-bottom    { margin-left: -$popover-arrow-width; }
 
     // addons
+    &.g5-popover-above-modal {
+        z-index: 1500;
+    }
+
     &.g5-popover-nooverflow {
         .g5-popover-content {
             overflow: visible;
-
         }
     }
 
@@ -146,6 +150,20 @@ $close-color:               #000;
                 right: 10px;
                 top: 10px;
             }
+        }
+    }
+
+    &.g5-popover-font-preview {
+        color: #333;
+        ul, li {
+            @extend %list-reset;
+        }
+        
+        li {
+            padding: 4px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: pre;
         }
     }
 }
