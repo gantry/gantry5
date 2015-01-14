@@ -51,10 +51,11 @@
 {% if item.children %}
 <hr />
 <section class="g-grid submenu-selector">
-    {% for group, child in item.groups %}
+    {% for group, children in item.groups %}
+        {% set special = column is defined and group == column %}
         {% set target = 'list-' ~ group %}
         <div class="g-block" data-g5-menu-{{ target|e }}="" >
-            {% include 'menu/list.html.twig' with {'group': group } %}
+            {% include 'menu/list.html.twig' with {'item': special ? override : item, 'group': group} %}
         </div>
     {% endfor %}
 </section>

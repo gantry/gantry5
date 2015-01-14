@@ -64,7 +64,6 @@ class Menu extends HtmlController
         $this->params['blueprints'] = $this->loadBlueprints();
         $this->params['menu'] = $resource;
         $this->params['item'] = $item;
-        $this->params['path'] = $path;
 
         /** @var MenuObject $menu */
         $menu = $this->container['menu'];
@@ -77,12 +76,18 @@ class Menu extends HtmlController
         $config->joinDefaults('particles.menu.items', $menu->instance($config->get('particles.menu'))->getMenuItems());
 
         if (empty($this->params['ajax']) || !$path) {
+            if (count($path) > 0) {
+                $this->params['columns'] = $resource[$path[0]];
+            }
+            if (count($path) > 1) {
+                $this->params['column'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
+                $this->params['override'] = $item;
+            }
+
             return $this->container['admin.theme']->render('@gantry-admin/menu.html.twig', $this->params);
         } else {
             // Get layout name.
             $layout = $this->layoutName(count($path) + (int) isset($group));
-
-            // Get current group.
             $this->params['group'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
 
             return $this->container['admin.theme']->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params);

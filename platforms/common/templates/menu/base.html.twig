@@ -36,4 +36,8 @@
         {% endfor %}
     </ul>
 </section>
-<div class="column-container" data-g5-menu-columns=""></div>
+<div class="column-container" data-g5-menu-columns="">
+    {% if columns %}
+        {% include 'menu/columns.html.twig' with {'item': columns } %}
+    {% endif %}
+</div>

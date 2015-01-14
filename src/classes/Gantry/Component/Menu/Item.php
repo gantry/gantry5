@@ -32,10 +32,14 @@ class Item implements \ArrayAccess, \Iterator
             'browserNav' => 0,
             'menu_text' => true,
             'visible' => true,
-            'group' => 0
+            'group' => 0,
+            'level' => 0,
         ];
     }
 
+    /**
+     * @return Item
+     */
     public function parent()
     {
         return $this->menu[$this->items['parent_id']];
@@ -56,6 +60,7 @@ class Item implements \ArrayAccess, \Iterator
 
     public function addChild(Item $child)
     {
+        $child->level = $this->level + 1;
         $this->items['children'][$child->alias] = $child;
 
         return $this;
