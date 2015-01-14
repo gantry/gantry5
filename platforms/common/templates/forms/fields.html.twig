@@ -13,7 +13,7 @@
 
         {% set scope = prefix %}
 
-        {% if field.type and name not in skip %}
+        {% if field.type and name not in skip and not field.skip %}
             {% set field = field + {'name': name} %}
             {% set value = nested(data, scope ~ name) %}
 

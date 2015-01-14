@@ -7,22 +7,21 @@
     <li>Documentation</li>
 </ul>-->
 
-<!-- specialized render for root list based items -->
-{% if item.parent.layout == 'horizontal' or item.groups|length > 1 %}
-    {% include 'menu/columns.html.twig' with {'target': target ?: item.id } %}
-{% else %}
-    <ul class="submenu-items" data-g5-menu-{{ item.id|e }}="" >
-        {% if item.parent.layout == 'horizontal' or item.groups|length == 1 %}
-            <li>
-                <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-menu-{{ (item.parent.parent.id)|e }}]" href="{{ gantry.route('menu', item.parent.path) }}">
-                    <i class="fa fa-chevron-left"></i>
-                </a>
-            </li>
-        {% endif %}
-        {% for child in item %}
-            <li>
-                {% include 'menu/item.html.twig' with {'item': child, 'target': target ?: item.id } %}
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
+{% set children = path|length == 1 ? item.group(group) : item %}
+
+<ul class="submenu-items">
+    {% if path|length > 1 %}
+        <li>
+            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-menu-{{ 'list-' ~ group|e }}]" href="{{ gantry.route('menu', item.parent.path, group) }}">
+                {% for i in 1..path|length-1 %}
+                <i class="fa fa-chevron-left"></i>
+                {% endfor %}
+            </a>
+        </li>
+    {% endif %}
+    {% for child in children %}
+        <li>
+            {% include 'menu/item.html.twig' with {'item': child, 'target': 'list-' ~ group } %}
+        </li>
+    {% endfor %}
+</ul>

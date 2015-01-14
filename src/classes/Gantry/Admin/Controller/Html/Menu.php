@@ -19,8 +19,6 @@ class Menu extends HtmlController
         ],
         'POST' => [
             '/'             => 'store',
-            '/*'            => 'item',
-            '/*/**'         => 'item',
         ],
         'PUT' => [
             '/*' => 'replace'
@@ -40,7 +38,10 @@ class Menu extends HtmlController
 
     public function item($id)
     {
-        $path = array_filter(func_get_args());
+        $path = func_get_args();
+
+        $last = end($path);
+        $group = (string) intval($last) === (string) $last ? array_pop($path) : null;
 
         try {
             $resource = $this->loadResource($id);
@@ -52,6 +53,7 @@ class Menu extends HtmlController
         }
 
         $menuItem = implode('/', $path);
+        $item = $resource[$menuItem];
         if (!$resource[$menuItem]) {
             throw new \RuntimeException('Menu item not found', 404);
         }
@@ -61,7 +63,8 @@ class Menu extends HtmlController
         $this->params['route'] = 'settings';
         $this->params['blueprints'] = $this->loadBlueprints();
         $this->params['menu'] = $resource;
-        $this->params['item'] = $resource[$menuItem];
+        $this->params['item'] = $item;
+        $this->params['path'] = $path;
 
         /** @var MenuObject $menu */
         $menu = $this->container['menu'];
@@ -76,7 +79,25 @@ class Menu extends HtmlController
         if (empty($this->params['ajax']) || !$path) {
             return $this->container['admin.theme']->render('@gantry-admin/menu.html.twig', $this->params);
         } else {
-            return $this->container['admin.theme']->render('@gantry-admin/menu/' . $this->params['item']->layout. '.html.twig', $this->params);
+            // Get layout name.
+            $layout = $this->layoutName(count($path) + (int) isset($group));
+
+            // Get current group.
+            $this->params['group'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
+
+            return $this->container['admin.theme']->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params);
+        }
+    }
+
+    protected function layoutName($level)
+    {
+        switch ($level) {
+            case 0:
+                return 'base';
+            case 1:
+                return 'columns';
+            default:
+                return 'list';
         }
     }
 

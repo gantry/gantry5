@@ -1,7 +1,6 @@
 name: Menu
 description: Gantry menu.
 type: particle
-hidden: true
 
 form:
   fields:
@@ -65,6 +64,7 @@ form:
       key: path
       value: path
       ajax: true
+      skip: true
 
       fields:
         .path:

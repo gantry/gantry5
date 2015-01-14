@@ -1,6 +1,8 @@
 {% extends "forms/field.html.twig" %}
 
-{% block input %}
+{% block contents %}
+    <h5>{{ field.label }}</h5>
+    <div>
     {% if field.fields %}
         {% for childName, child in field.fields %}
             {% if childName starts with '.' %}
@@ -16,4 +18,5 @@
             {% endif %}
         {% endfor %}
     {% endif %}
+    </div>
 {% endblock %}

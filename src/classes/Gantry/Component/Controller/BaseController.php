@@ -170,7 +170,7 @@ abstract class BaseController implements RestfulControllerInterface
         $actions = $this->httpVerbs[$method];
 
         // Build path for the verb and fetch all the variables.
-        while ($current = array_shift($remaining)) {
+        while (($current = array_shift($remaining)) !== null) {
             $test = "{$path}/{$current}";
 
             if (!isset($actions[$test])) {
