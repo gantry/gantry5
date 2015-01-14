@@ -75,7 +75,7 @@ class Menu extends HtmlController
 
         $config->joinDefaults('particles.menu.items', $menu->instance($config->get('particles.menu'))->getMenuItems());
 
-        if (empty($this->params['ajax']) || !$path) {
+        if (empty($this->params['ajax']) || empty($_GET['inline'])) {
             if (count($path) > 0) {
                 $this->params['columns'] = $resource[$path[0]];
             }

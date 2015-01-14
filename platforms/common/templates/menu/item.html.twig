@@ -1,7 +1,7 @@
 <a class="pull-right" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('settings/particles/menu/items', item.path) }}">
     <i class="fa fa-fw fa-cog"></i>
 </a>
-<a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-menu-{{ target|e }}]" href="{{ gantry.route('menu', item.path) }}">
+<a data-g5-ajaxify data-g5-ajaxify-params="{{ '{"inline":1}'|escape('html_attr') }}" data-g5-ajaxify-target="[data-g5-menu-{{ target|e }}]" href="{{ gantry.route('menu', item.path) }}">
     {% if item.menu_image %}
         <img src="{{ item.menu_image|e }}" alt="{{ item.title|e }}" />
         {% if item.menu_text %}

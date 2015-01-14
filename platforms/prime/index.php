@@ -9,6 +9,8 @@ $gantry = include_once PRIME_ROOT . '/includes/gantry.php';
 
 // Get current theme and path.
 $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : Folder::getRelativePath($_SERVER['REQUEST_URI'], PRIME_URI);
+$path = explode('?', $path, 2);
+$path = reset($path);
 $extension = strrchr(basename($path), '.');
 if ($extension) {
     $path = substr($path, 0, -strlen($extension));
