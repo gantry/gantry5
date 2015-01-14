@@ -25,22 +25,19 @@
     </li>
 </ul>-->
 
-<div class="configuration">
-    Configuration section for {{ item.id }}
-</div>
 <section
     {%- if particle.css.id %} id="{{ particle.css.id|e }}"{% endif %}
     {%- if particle.css.class %} class="{{ particle.css.class|e }}"{% endif %} role="navigation">
     <ul class="g-grid g-toplevel menu-selector">
         {% for child in item %}
             <li>
-                {% include 'menu/item.html.twig' with {'item': child, 'target': item.id } %}
+                {% include 'menu/item.html.twig' with {'item': child, 'target': 'columns' } %}
             </li>
         {% endfor %}
     </ul>
 </section>
-<div class="column-container" data-g5-menu-{{ item.id|e }}="" >
-    Section for where new column layots will render, for example:<br>
-    Column Section 1<br>
-    Column Section 2 (child of item in Column Section 1)
+<div class="column-container" data-g5-menu-columns="">
+    {% if columns %}
+        {% include 'menu/columns.html.twig' with {'item': columns } %}
+    {% endif %}
 </div>

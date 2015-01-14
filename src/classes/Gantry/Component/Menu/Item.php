@@ -32,9 +32,14 @@ class Item implements \ArrayAccess, \Iterator
             'browserNav' => 0,
             'menu_text' => true,
             'visible' => true,
+            'group' => 0,
+            'level' => 0,
         ];
     }
 
+    /**
+     * @return Item
+     */
     public function parent()
     {
         return $this->menu[$this->items['parent_id']];
@@ -45,8 +50,17 @@ class Item implements \ArrayAccess, \Iterator
         return $this->groups ?: [$this->items['children']];
     }
 
+    public function group($i)
+    {
+        $groups = $this->groups();
+        $i = (int) $i;
+
+        return isset($groups[$i]) ? $groups[$i] : [];
+    }
+
     public function addChild(Item $child)
     {
+        $child->level = $this->level + 1;
         $this->items['children'][$child->alias] = $child;
 
         return $this;
@@ -101,7 +115,7 @@ class Item implements \ArrayAccess, \Iterator
 
         if ($children) {
             $ordered = [];
-            foreach ($groups as $ordering) {
+            foreach ($groups as $i => $ordering) {
                 if (!$ordering || !is_array($ordering)) {
                     continue;
                 }
@@ -111,6 +125,15 @@ class Item implements \ArrayAccess, \Iterator
                     array_intersect_key($ordering, $children), array_intersect_key($children, $ordering)
                 );
 
+                // Assign each menu items to the group.
+                $group = array_map(
+                    function($value) use ($i) {
+                        $value->group = $i;
+                        return $value;
+                    },
+                    $group
+                );
+
                 // Update remaining children.
                 $children = array_diff_key($children, $ordering);
 
@@ -118,7 +141,7 @@ class Item implements \ArrayAccess, \Iterator
                 $ordered += $group;
 
                 // Add items to the current group.
-                $this->groups[] = $group;
+                $this->groups[$i] = $group;
             }
 
             if ($children) {

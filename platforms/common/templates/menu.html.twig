@@ -9,23 +9,10 @@
         </select>
     </div>
     <div id="menu-editor">
-        {% include 'menu/' ~ item.layout ~ '.html.twig' %}
+        {% include 'menu/base.html.twig' with {'item': menu.root} %}
     </div>
 
-    <br/><br/><br/>
-    <br/><br/><br/>
-    <br/><br/><br/>
-    <br/><br/><br/>
-    <br/><br/><br/>
-
-
-    {% include 'menu/menu.html.twig' %}
-
-    <br/><br/><br/>
-    <br/><br/><br/>
-    <br/><br/><br/>
-    <br/><br/><br/>
-    <br/><br/><br/>
+    <hr />
     <!--<ul class="g-grid menu-selector">
         <li class="g-block">
             Home<i class="fa fa-cog"></i>
