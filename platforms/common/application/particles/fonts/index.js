@@ -136,7 +136,8 @@ var Fonts = new prime({
                 element = $(element);
                 var dataFont = element.data('font'),
                     variant = element.data('variant');
-                if (!contains(this.loadedFonts, dataFont)) { list.push(dataFont); }
+
+                if (!contains(this.loadedFonts, dataFont)) { list.push(dataFont + (variant != 'regular' ? ':' + variant : '')); }
                 else {
                     element.find('[data-variant="' + variant + '"] .preview').style({
                         fontFamily: dataFont,
@@ -215,6 +216,8 @@ var Fonts = new prime({
         if (charsetSelected) { charsetSelected.text('(' + subset.length + ' selected)'); }
 
         $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop;
+        this.toggleExpansion();
+        setTimeout(bind(function(){ this.toggleExpansion(); }, this), 50);
     },
 
     select: function(element, variant, target) {
