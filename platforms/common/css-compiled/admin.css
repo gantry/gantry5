@@ -1,4 +1,4 @@
-#g5-container #page-picker ul, #g5-container #sidebar ul, .g5-popover.g5-popover-particles ul, .g5-popover.g5-popover-particles li {
+#g5-container #page-picker ul, #g5-container #sidebar ul, .g5-popover.g5-popover-particles ul, .g5-popover.g5-popover-particles li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li {
   margin: 0;
   padding: 0;
   list-style: none; }
@@ -1264,7 +1264,8 @@ body.g5-dialog-open {
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  color: #444; }
   .g5-popover.top, .g5-popover.top-left, .g5-popover.top-right {
     margin-top: -10px; }
   .g5-popover.right, .g5-popover.right-top, .g5-popover.right-bottom {
@@ -1273,6 +1274,8 @@ body.g5-dialog-open {
     margin-top: 10px; }
   .g5-popover.left, .g5-popover.left-top, .g5-popover.left-bottom {
     margin-left: -10px; }
+  .g5-popover.g5-popover-above-modal {
+    z-index: 1500; }
   .g5-popover.g5-popover-nooverflow .g5-popover-content {
     overflow: visible; }
   .g5-popover.g5-popover-particles {
@@ -1321,6 +1324,13 @@ body.g5-dialog-open {
         position: absolute;
         right: 10px;
         top: 10px; }
+  .g5-popover.g5-popover-font-preview {
+    color: #333; }
+    .g5-popover.g5-popover-font-preview li {
+      padding: 4px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: pre; }
 
 .g5-popover-inner .close {
   font-family: arial;
@@ -1659,8 +1669,10 @@ body.g5-dialog-open {
 
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content {
   width: 650px; }
-  .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-font-hide, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-variant-hide {
+  .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-font-hide, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-variant-hide, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-charsets-selected {
     display: none; }
+  .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-selected .font-charsets-selected {
+    display: inline-block; }
   .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content input {
     font-size: 0.8em; }
   .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-main {
@@ -1691,6 +1703,12 @@ body.g5-dialog-open {
     .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer .font-selected {
       font-size: 0.8em;
       margin-right: 10px; }
+    .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer .font-category {
+      font-size: 0.85em; }
+    .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer .font-subsets {
+      margin-left: 0.85em !important; }
+    .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer small {
+      text-decoration: underline; }
   .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list {
     margin: 0;
     padding: 0;
