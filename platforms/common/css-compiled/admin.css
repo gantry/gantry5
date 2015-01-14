@@ -906,62 +906,91 @@ body {
   font-family: FontAwesome;
   vertical-align: middle;
   display: inline-block; }
+#g5-container #menu-editor .config-cog {
+  opacity: 0;
+  position: absolute;
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  transition: opacity 0.2s; }
+#g5-container #menu-editor li:hover .config-cog, #g5-container #menu-editor li.active .config-cog {
+  opacity: 1; }
 #g5-container .menu-header h2 {
   display: inline-block;
   margin-right: 1rem; }
 #g5-container .menu-header select {
   display: inline-block; }
 #g5-container .menu-selector {
-  margin: 0.625rem 0 0 0; }
+  margin: 0.625rem 0;
+  padding: 3px;
+  background: #fff;
+  border: 1px solid #ddd; }
   #g5-container .menu-selector li {
-    cursor: pointer;
-    border: 3px solid #fff;
+    position: relative;
+    border: 1px solid #fff;
     background: #b3b3b3;
-    color: #fff;
-    -webkit-box-flex: auto;
-    -moz-box-flex: auto;
-    box-flex: auto;
-    -webkit-flex: auto;
-    -moz-flex: auto;
-    -ms-flex: auto;
-    flex: auto; }
+    color: #fff; }
     #g5-container .menu-selector li .parent-indicator:before {
       content: "\f078"; }
     #g5-container .menu-selector li a {
       display: inline-block;
-      color: #fff;
+      color: #fff; }
+    #g5-container .menu-selector li .menu-item {
       padding: 0.938rem 0.738rem; }
+    #g5-container .menu-selector li .config-cog {
+      top: 4px;
+      right: 4px; }
     #g5-container .menu-selector li:hover, #g5-container .menu-selector li.active {
       background: #48B0D7; }
   #g5-container .menu-selector span {
-    line-height: 1.5;
-    margin-left: 0.4rem; }
-#g5-container .submenu-selector .g-block {
-  background: #b3b3b3;
-  border: 3px solid #fff;
+    line-height: 2;
+    font-size: 0.6rem;
+    margin-left: 0.2rem;
+    display: inline-block;
+    vertical-align: middle; }
+#g5-container .submenu-selector {
+  border: 1px solid #ddd;
   border-bottom: 0;
-  padding: 0.469rem 0; }
-#g5-container .submenu-selector .submenu-items {
-  list-style: none;
-  margin: 0; }
-  #g5-container .submenu-selector .submenu-items li {
-    color: #fff;
-    cursor: pointer; }
-    #g5-container .submenu-selector .submenu-items li a {
-      display: block;
+  background: #fff;
+  padding: 2px; }
+  #g5-container .submenu-selector .g-block {
+    background: #b3b3b3;
+    border: 2px solid #fff;
+    border-bottom: 0;
+    padding: 0.469rem 0; }
+  #g5-container .submenu-selector .submenu-items {
+    list-style: none;
+    margin: 0; }
+    #g5-container .submenu-selector .submenu-items li {
       color: #fff;
-      padding: 0.469rem 0.938rem; }
-    #g5-container .submenu-selector .submenu-items li .parent-indicator:before {
-      content: "\f054";
-      float: right; }
-    #g5-container .submenu-selector .submenu-items li:hover, #g5-container .submenu-selector .submenu-items li .active {
-      background: #48B0D7; }
+      cursor: pointer;
+      position: relative; }
+      #g5-container .submenu-selector .submenu-items li a {
+        display: block;
+        color: #fff; }
+      #g5-container .submenu-selector .submenu-items li .menu-item {
+        padding: 0.469rem 0.938rem; }
+        #g5-container .submenu-selector .submenu-items li .menu-item .fa-chevron-left {
+          font-size: 0.8rem;
+          line-height: 1.9; }
+      #g5-container .submenu-selector .submenu-items li .config-cog {
+        right: 4px;
+        top: 0.8rem; }
+      #g5-container .submenu-selector .submenu-items li .parent-indicator:before {
+        content: "\f054";
+        float: right;
+        font-size: 0.8rem;
+        line-height: 2;
+        margin-right: 10px; }
+      #g5-container .submenu-selector .submenu-items li:hover, #g5-container .submenu-selector .submenu-items li .active {
+        background: #48B0D7; }
 #g5-container .submenu-ratio {
   background: #fff;
   text-align: center;
   font-size: 2rem;
   font-weight: 100;
-  position: relative; }
+  position: relative;
+  border: 1px solid #ddd;
+  border-top: 0; }
   #g5-container .submenu-ratio i {
     position: absolute;
     right: 1rem;

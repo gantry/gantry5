@@ -8,6 +8,18 @@
        		display: inline-block;
        	}
 	}
+	.config-cog {
+		opacity: 0;
+		position: absolute;
+		@include transition(opacity 0.2s);
+	}
+	li {
+		&:hover, &.active {
+			.config-cog {
+				opacity: 1;
+			}
+		}
+	}
 }
 
 .menu-header {
@@ -21,13 +33,16 @@
 }
 
 .menu-selector {
-	margin: $content-margin 0 0 0;
+	margin: $content-margin 0;
+	padding: 3px;
+	background: $white;
+	border: 1px solid #ddd;
+
 	li {
-		cursor: pointer;
-		border: 3px solid $white;
+		position: relative;
+		border: 1px solid $white;
 		background: $menu-editor-bg;
 		color: $white;
-		@include flex(auto);
 		.parent-indicator {
 			&:before {
 				content: "\f078";
@@ -37,22 +52,38 @@
 		a {
 			display: inline-block;
 			color: $white;
+		}
+
+		.menu-item {
 			padding: $content-padding $content-padding - 0.2;
 		}
+
+		.config-cog {
+			top: 4px;
+			right: 4px;
+		}
+
 		&:hover, &.active {
 			background: $tertiary-accent;
 		}
 	}
 	span {
-		line-height: $core-line-height;
-		margin-left: 0.4rem;
+		line-height: $core-line-height + 0.5;
+		font-size: $core-font-size - 0.4;
+		margin-left: 0.2rem;
+		display: inline-block;
+		vertical-align: middle;
 	}
 }
 
 .submenu-selector {
+	border: 1px solid #ddd;
+	border-bottom: 0;
+	background: $white;
+	padding: 2px;
 	.g-block {
 		background: $menu-editor-bg;
-		border: 3px solid $white;
+		border: 2px solid $white;
 		border-bottom: 0;
 		padding: $content-padding / 2 0;
 	}
@@ -62,15 +93,29 @@
 		li {
 			color: $white;
 			cursor: pointer;
+			position: relative;
 			a {
 				display: block;
 				color: $white;
+			}
+			.menu-item {
 				padding: $content-padding / 2 $content-padding;
+				.fa-chevron-left {
+					font-size: $core-font-size - 0.2;
+					line-height: $core-line-height + 0.4;
+				}
+			}
+			.config-cog {
+				right: 4px;
+				top: 0.8rem;
 			}
 			.parent-indicator {
 				&:before {
 					content: "\f054";
 					float: right;
+					font-size: $core-font-size - 0.2;
+					line-height: $core-line-height + 0.5;
+					margin-right: 10px;
 		       	}
 			}
 			&:hover, .active {
@@ -86,6 +131,8 @@
 	font-size: $core-font-size + 1;
 	font-weight: 100;
 	position: relative;
+	border: 1px solid #ddd;
+	border-top: 0;
 	i {
 		position: absolute;
 		@extend %vertical-align;
