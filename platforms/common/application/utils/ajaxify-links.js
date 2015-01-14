@@ -10,6 +10,7 @@ var prime         = require('prime'),
     size          = require('mout/collection/size'),
     merge         = require('mout/object/merge'),
     guid          = require('mout/random/guid'),
+    toQueryString = require('mout/queryString/encode'),
 
     request       = require('agent')(),
     History       = require('./history'),
@@ -24,7 +25,8 @@ History.Adapter.bind(window, 'statechange', function() {
     var State = History.getState(),
         URI = State.url,
         Data = State.data,
-        sidebar = $('#sidebar');
+        sidebar = $('#sidebar'),
+        params = '';
 
     if (size(Data) && Data.parsed !== false && storage.get(Data.uuid)) {
         Data = storage.get(Data.uuid);
@@ -44,7 +46,11 @@ History.Adapter.bind(window, 'statechange', function() {
         Data.element.parent('li').addClass('active');
     }
 
-    request.url(URI + getAjaxSuffix()).method('get').send(function(error, response) {
+    if (Data.params) {
+        params = toQueryString(JSON.parse(Data.params));
+    }
+
+    request.url(URI + getAjaxSuffix() + params).method('get').send(function(error, response) {
         if (!response.body.success) {
             modal.open({ content: response.body.html });
             //History.back();
@@ -53,7 +59,7 @@ History.Adapter.bind(window, 'statechange', function() {
         }
 
         var target = $(Data.target);
-        console.log(Data, State);
+        //console.log(Data, State);
         $('body').getPopover().hideAll(true).destroy();
         if (response.body && response.body.html) {
             (target || $('[data-g5-content]') || $('body')).html(response.body.html);
@@ -81,6 +87,7 @@ domready(function() {
         var data = element.data('g5-ajaxify'),
             target = element.data('g5-ajaxify-target'),
             url = element.attribute('href') || element.data('g5-ajaxify-href'),
+            params = element.data('g5-ajaxify-params') || false,
             title = element.attribute('title') || '';
 
         data = data ? JSON.parse(data) : { parsed: false };
@@ -89,6 +96,7 @@ domready(function() {
             storage.set(uuid, merge({}, data, {
                 target: target,
                 element: element,
+                params: params,
                 event: event
             }));
             data = { uuid: uuid };
