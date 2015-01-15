@@ -13,8 +13,8 @@
                 <div class="page">
                     <h4>
                         {{ layout|capitalize }}
-                        <label class="enabler" for="page-picker0">
-                            <input type="radio" name="page-picker" id="page-picker0" checked />
+                        <label class="enabler" for="page-picker-{{ layout }}">
+                            <input type="radio" name="page-picker[]" id="page-picker-{{ layout }}" checked />
                             <div class="toggle">
                                 <div class="knob"></div>
                             </div>
