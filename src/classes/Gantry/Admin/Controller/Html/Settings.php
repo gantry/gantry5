@@ -43,7 +43,7 @@ class Settings extends HtmlController
 
     public function index()
     {
-        $this->params['particles'] = $this->container['particles']->all();
+        $this->params['particles'] = $this->container['particles']->group();
 
         return $this->container['admin.theme']->render('@gantry-admin/settings.html.twig', $this->params);
     }

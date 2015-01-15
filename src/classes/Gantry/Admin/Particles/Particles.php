@@ -36,6 +36,19 @@ class Particles
         return $this->particles;
     }
 
+    public function group()
+    {
+        $particles = $this->all();
+
+        $list = [];
+        foreach ($particles as $name => $particle) {
+            $type = isset($particle['type']) ? $particle['type'] : 'particle';
+            $list[$type][$name] = $particle;
+        }
+
+        return $list;
+    }
+
     public function get($id)
     {
         if ($this->particles[$id]) {
