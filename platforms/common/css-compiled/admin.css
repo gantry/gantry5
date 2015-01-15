@@ -912,7 +912,7 @@ body {
   -webkit-transition: opacity 0.2s;
   -moz-transition: opacity 0.2s;
   transition: opacity 0.2s; }
-#g5-container #menu-editor li:hover .config-cog, #g5-container #menu-editor li.active .config-cog {
+#g5-container #menu-editor li:hover .config-cog {
   opacity: 1; }
 #g5-container .menu-header h2 {
   display: inline-block;
@@ -923,7 +923,8 @@ body {
   margin: 0.625rem 0;
   padding: 3px;
   background: #fff;
-  border: 1px solid #ddd; }
+  border: 1px solid #ddd;
+  border-radius: 0.1875rem; }
   #g5-container .menu-selector li {
     position: relative;
     border: 1px solid #fff;
@@ -951,7 +952,8 @@ body {
   border: 1px solid #ddd;
   border-bottom: 0;
   background: #fff;
-  padding: 2px; }
+  padding: 2px;
+  border-radius: 0.1875rem 0.1875rem 0 0; }
   #g5-container .submenu-selector .g-block {
     background: #b3b3b3;
     border: 2px solid #fff;
@@ -990,7 +992,8 @@ body {
   font-weight: 100;
   position: relative;
   border: 1px solid #ddd;
-  border-top: 0; }
+  border-top: 0;
+  border-radius: 0 0 0.1875rem 0.1875rem; }
   #g5-container .submenu-ratio i {
     position: absolute;
     right: 1rem;

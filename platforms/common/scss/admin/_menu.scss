@@ -14,7 +14,7 @@
 		@include transition(opacity 0.2s);
 	}
 	li {
-		&:hover, &.active {
+		&:hover {
 			.config-cog {
 				opacity: 1;
 			}
@@ -37,6 +37,7 @@
 	padding: 3px;
 	background: $white;
 	border: 1px solid #ddd;
+	border-radius: $core-border-radius;
 
 	li {
 		position: relative;
@@ -81,6 +82,7 @@
 	border-bottom: 0;
 	background: $white;
 	padding: 2px;
+	border-radius: $core-border-radius $core-border-radius 0 0;
 	.g-block {
 		background: $menu-editor-bg;
 		border: 2px solid $white;
@@ -133,6 +135,7 @@
 	position: relative;
 	border: 1px solid #ddd;
 	border-top: 0;
+	border-radius: 0 0 $core-border-radius $core-border-radius;
 	i {
 		position: absolute;
 		@extend %vertical-align;
