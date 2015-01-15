@@ -3,6 +3,7 @@ namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -16,14 +17,14 @@ class Pages extends HtmlController
             '/create/*'     => 'create',
             '/*'            => 'display',
             '/*/edit'       => 'edit',
-            '/*/particle'   => 'undefined',
-            '/*/particle/*' => 'particle'
+            '/*/*'          => 'undefined',
+            '/*/*/*'        => 'particle'
         ],
         'POST' => [
             '/'             => 'store',
             '/*'            => 'undefined',
-            '/*/particle'   => 'undefined',
-            '/*/particle/*' => 'particle'
+            '/*/*'          => 'undefined',
+            '/*/*/*'        => 'particle'
         ],
         'PUT' => [
             '/*' => 'replace'
@@ -79,7 +80,7 @@ class Pages extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/pages_edit.html.twig', $this->params);
     }
 
-    public function particle($page, $particle)
+    public function particle($page, $type, $id)
     {
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
@@ -92,26 +93,34 @@ class Pages extends HtmlController
 
         if (isset($_POST['options'])) {
             $item = (object) [
-                'id' => $particle,
-                'type' => 'particle',
+                'id' => $id,
+                'type' => $type,
                 'attributes' => (object) $_POST['options']
             ];
-            //var_dump($item);die();
         } else {
-            $item = $this->find($layout, $particle);
+            $item = $this->find($layout, $id);
         }
 
-        if (is_object($item) && $item->type == 'particle' && isset($item->attributes->name)) {
-            $id = $item->attributes->name;
-            $prefix = 'particles.' . $id;
+        if ($type == 'particle') {
+            $name = isset($item->attributes->name) ? $item->attributes->name : null;
+        } else {
+            $name = $type;
+        }
+
+        if (is_object($item) && $name) {
+            $prefix = 'particles.' . $name;
             // TODO: Use blueprints to merge configuration.
             $data = (array) $item->attributes + (array) $this->container['config']->get($prefix);
-            $blueprints = new Blueprints($this->container['particles']->get($id));
+            if ($type == 'section') {
+                $blueprints = new Blueprints(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml")->content());
+            } else {
+                $blueprints = new Blueprints($this->container['particles']->get($name));
+            }
 
             $this->params += [
                 'particle' => $blueprints,
                 'data' =>  $data,
-                'id' => $id,
+                'id' => $name,
                 'parent' => 'settings',
                 'route' => 'settings.' . $prefix,
                 'action' => str_replace('.', '/', 'pages.' . $prefix . '.validate'),

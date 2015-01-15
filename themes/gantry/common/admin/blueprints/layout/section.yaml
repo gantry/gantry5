@@ -1,0 +1,6 @@
+name: Section
+description: Layout section.
+type: section
+
+form:
+  fields:

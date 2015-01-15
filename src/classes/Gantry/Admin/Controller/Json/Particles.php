@@ -9,40 +9,22 @@ class Particles extends JsonController
 {
     public function index()
     {
-        // FIXME: This needs to be fully dynamic, right now some parts are hardcoded.
+        // Set ordering of the types.
         $particles = [
-            'position' => [
-            ],
-            'spacer' => [
-            ],
-            'pagecontent' => [
-            ],
-            'particle' => [
-            ],
-            'atom' => [
-            ]
+            'position' => [],
+            'spacer' => [],
+            'pagecontent' => [],
+            'particle' => [],
+            'atom' => []
         ];
 
-        $particles = array_merge_recursive($particles, $this->getParticles());
+        $particles = array_replace($particles, $this->getParticles());
         foreach ($particles as &$group) {
             asort($group);
         }
 
         $response = ['particles' => $particles];
         $response['html'] = $this->container['admin.theme']->render('@gantry-admin/layouts/particles.html.twig', ['particles' => $particles]);
-
-        return new JsonResponse($response);
-    }
-
-    public function edit($id)
-    {
-        // FIXME: hardcoded!
-        $settings = (new Settings($this->container))->setParams($this->params);
-
-        $response = [
-            'html' => $settings->display('menu')
-//            'html' => $this->container['admin.theme']->render('@gantry-admin/layouts/particles_edit.html.twig', ['id' => $id])
-            ];
 
         return new JsonResponse($response);
     }
