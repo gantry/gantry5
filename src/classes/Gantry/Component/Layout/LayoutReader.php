@@ -22,12 +22,12 @@ class LayoutReader
         }
 
         $file = YamlFile::instance($file);
-        $content = $file->content();
+        $content = (array) $file->content();
 
         $result = [];
         foreach ($content as $field => $params) {
             $child = self::parse($field, $params, 0);
-            unset($child['size']);
+            unset($child->size);
 
             $result[] = $child;
         }
@@ -44,24 +44,26 @@ class LayoutReader
     protected static function parse($field, $content, $scope)
     {
         if (is_numeric($field))  {
-            $result = ['type' => self::$scopes[$scope]];
+            $result = (object) ['id' => static::id(), 'type' => self::$scopes[$scope], 'attributes' => (object) []];
             $scope = ($scope + 1) % 2;
         } elseif ($field == 'container') {
-            $result = ['type' => $field];
+            $result = (object) ['id' => static::id(), 'type' => $field, 'attributes' => (object) []];
         } else {
             $list = explode(' ', $field, 2);
             $field = array_shift($list);
             $size = array_shift($list);
 
-            $result = [
+            $result = (object) [
+                'id' => static::id(),
                 'type' => 'section',
                 'size' => (int) $size,
-                'attributes' => [
+                'attributes' => (object) [
                     'name' => 'Section ' . ucfirst($field),
                     'key' => "section-{$field}",
                     'type' => $field,
                     'id' => $field
-                ]
+                ],
+                'children' => []
             ];
         }
 
@@ -71,14 +73,14 @@ class LayoutReader
             } else {
                 $child = self::resolve($params, $scope);
             }
-            if (!empty($child['size'])) {
-                $result['attributes']['size'] = $child['size'];
+            if (!empty($child->size)) {
+                $result->attributes->size = $child->size;
             }
-            unset($child['size']);
-            $result['children'][] = $child;
+            unset($child->size);
+            $result->children[] = $child;
         }
 
-        return $result;
+        return (object) $result;
     }
 
     /**
@@ -94,27 +96,38 @@ class LayoutReader
         $type = array_shift($list2);
         $name = array_shift($list2);
 
-        $attributes = [];
+        $attributes = new \stdClass;
         if ($name) {
-            $attributes['name'] = $name;
-            $attributes['key'] = $name;
+            $attributes->name = $name;
+            $attributes->key = $name;
         }
 
-        $result = ['type' => $type, 'attributes' => $attributes];
+        $result = (object) ['id' => static::id(), 'type' => $type, 'attributes' => $attributes];
 
         if ($scope > 1) {
             return $result;
         }
         if ($scope <= 1) {
-            $result = ['type' => 'block', 'children' => [$result]];
+            $result = (object) ['id' => static::id(), 'type' => 'block', 'children' => [$result], 'attributes' => new \stdClass];
             if ($size) {
-                $result['attributes']['size'] = (int) $size;
+                $result->attributes->size = (int) $size;
             }
         }
         if ($scope == 0) {
-            $result = ['type' => 'grid', 'children' => [$result]];
+            $result = (object) ['id' => static::id(), 'type' => 'grid', 'children' => [$result]];
         }
 
         return $result;
+    }
+
+    protected static function id()
+    {
+        // TODO: improve
+        $key = md5(rand());
+
+        $args = str_split($key, 4);
+        array_unshift($args, '%s%s-%s-%s-%s-%s%s%s');
+
+        return call_user_func_array('sprintf', $args);
     }
 }
