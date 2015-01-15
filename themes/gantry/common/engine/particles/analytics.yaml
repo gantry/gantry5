@@ -1,6 +1,6 @@
 name: Google Analytics
 description: Configure Google Analytics.
-type: particle
+type: atom
 
 form:
   fields:

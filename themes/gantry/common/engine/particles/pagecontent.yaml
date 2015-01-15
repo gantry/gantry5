@@ -1,0 +1,12 @@
+name: Page Content
+description: Display main content from the page.
+type: pagecontent
+hidden: false
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable page content.
+      default: true

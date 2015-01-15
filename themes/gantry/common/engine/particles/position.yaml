@@ -1,0 +1,22 @@
+name: Module Position
+description: Display a module position.
+type: position
+hidden: false
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable module positions.
+      default: true
+
+    name:
+      type: input.text
+      label: Name
+      description: Position name
+
+    title:
+      type: input.text
+      label: Title
+      description: Position title

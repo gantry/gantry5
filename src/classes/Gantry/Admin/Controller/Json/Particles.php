@@ -12,22 +12,14 @@ class Particles extends JsonController
         // FIXME: This needs to be fully dynamic, right now some parts are hardcoded.
         $particles = [
             'position' => [
-                'position' => 'Position'
             ],
             'spacer' => [
-                'spacer' => 'Spacer'
             ],
             'pagecontent' => [
-                'pagecontent' => 'Page Content'
             ],
             'particle' => [
-                'social-buttons' => 'Social Buttons',
-                'feed-buttons' => 'Feed Buttons'
             ],
             'atom' => [
-                'accent-colors' => 'Accent Colors',
-                'secondary-colors' => 'Secondary Colors',
-                'google-analytics' => 'Google Analytics'
             ]
         ];
 
