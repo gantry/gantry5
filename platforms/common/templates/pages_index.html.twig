@@ -5,12 +5,14 @@
         Layouts
         <a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}" class="button button-primary"><i class="fa fa-plus"></i></a>
     </h2>
+
     <div id="page-picker" class="cards-wrapper">
         <ul class="g-grid">
+            {% for layout in layouts %}
             <li class="card g-block size-1-4">
                 <div class="page">
                     <h4>
-                        Blog
+                        {{ layout|capitalize }}
                         <label class="enabler" for="page-picker0">
                             <input type="radio" name="page-picker" id="page-picker0" checked />
                             <div class="toggle">
@@ -23,7 +25,7 @@
                     </div>
                     <div class="inner-params">
                     <span class="float-left">
-                        <a href="{{ gantry.route('pages/blog/edit')|e }}" class="button">
+                        <a href="{{ gantry.route('pages/' ~ layout ~ '/edit')|e }}" class="button">
                             <i class="fa fa-pencil-square-o"></i>
                             <span>Edit</span>
                         </a>
@@ -32,31 +34,7 @@
                     </div>
                 </div>
             </li>
-            <li class="card g-block size-1-4">
-                <div class="page">
-                    <h4>
-                        News
-                        <label class="enabler" for="page-picker1">
-                            <input type="radio" name="page-picker" id="page-picker1" />
-                            <div class="toggle">
-                                <div class="knob"></div>
-                            </div>
-                        </label>
-                    </h4>
-                    <div class="inner-params">
-                        <img src="http://www.placehold.it/200x250/f4f4f4" />
-                    </div>
-                    <div class="inner-params">
-                    <span class="float-left">
-                        <a href="{{ gantry.route('pages/news/edit')|e }}" class="button">
-                            <i class="fa fa-pencil-square-o"></i>
-                            <span>Edit</span>
-                        </a>
-                    </span>
-                        <span class="float-right">58 positions</span>
-                    </div>
-                </div>
-            </li>
+            {% endfor %}
             <li class="card g-block size-1-4 add-new" data-g5-lm-add>
                 <div class="page">
                     <a href="{{ gantry.route('pages/create')|e }}"><i class="fa fa-plus"></i></a>

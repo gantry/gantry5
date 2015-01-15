@@ -4,8 +4,10 @@ namespace Gantry\Admin\Controller\Html;
 use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Component\Layout\LayoutReader;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\JsonFile;
+use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Pages extends HtmlController
@@ -39,36 +41,41 @@ class Pages extends HtmlController
 
     public function index()
     {
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        $finder = new \Gantry\Component\Config\ConfigFileFinder();
+        $files = $finder->getFiles($locator->findResources('gantry-layouts://', false), '|\.json$|');
+        $files += $finder->getFiles($locator->findResources('gantry-layouts://', false));
+        $layouts = array_keys($files);
+        sort($layouts);
+
+        $layouts = array_filter($layouts, function($val) { return strpos($val, 'presets/') !== 0; });
+        $this->params['layouts'] = $layouts;
+
         return $this->container['admin.theme']->render('@gantry-admin/pages_index.html.twig', $this->params);
     }
 
     public function create($id = null)
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
         if (!$id) {
             // TODO:
             throw new \RuntimeException('Not Implemented', 404);
-        } else {
-            $layout = JsonFile::instance($locator('gantry-theme://layouts/presets/'.$id.'.json'))->content();
-            if (!$layout) {
-                throw new \RuntimeException('Preset not found', 404);
-            }
-            $this->params['page_id'] = $id;
-            $this->params['layout'] = $layout;
         }
+
+        $layout = $this->getLayout("presets/{$id}");
+        if (!$layout) {
+            throw new \RuntimeException('Preset not found', 404);
+        }
+        $this->params['page_id'] = $id;
+        $this->params['layout'] = $layout;
 
         return $this->container['admin.theme']->render('@gantry-admin/pages_create.html.twig', $this->params);
     }
 
     public function edit($id)
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        // TODO: remove hardcoded layout.
-        $layout = JsonFile::instance($locator('gantry-theme://layouts/test.json'))->content();
+        $layout = $this->getLayout($id);
         if (!$layout) {
             throw new \RuntimeException('Layout not found', 404);
         }
@@ -82,11 +89,7 @@ class Pages extends HtmlController
 
     public function particle($page, $type, $id)
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        // TODO: remove hardcoded layout.
-        $layout = JsonFile::instance($locator('gantry-theme://layouts/test.json'))->content();
+        $layout = $this->getLayout($page);
         if (!$layout) {
             throw new \RuntimeException('Layout not found', 404);
         }
@@ -130,6 +133,25 @@ class Pages extends HtmlController
             return $this->container['admin.theme']->render('@gantry-admin/pages_particle.html.twig', $this->params);
         }
         throw new \RuntimeException('No configuration exists yet', 404);
+    }
+
+    protected function getLayout($name)
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        $layout = null;
+        $filename = $locator('gantry-layouts://' . $name . '.json');
+        if ($filename) {
+            $layout = JsonFile::instance($filename)->content();
+        } else {
+            $filename = $locator('gantry-layouts://' . $name . '.yaml');
+            if ($filename) {
+                $layout = LayoutReader::read($filename);
+            }
+        }
+
+        return $layout;
     }
 
     protected function find($layout, $id)

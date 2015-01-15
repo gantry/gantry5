@@ -25,6 +25,24 @@ class ConfigFileFinder
     }
 
     /**
+     * Return all locations for all the files with a timestamp.
+     *
+     * @param  array  $paths    List of folders to look from.
+     * @param  string $pattern  Pattern to match the file. Pattern will also be removed from the key.
+     * @return array
+     */
+    public function getFiles(array $paths, $pattern = '|\.yaml$|')
+    {
+        $list = [];
+        foreach ($paths as $folder) {
+            $files = $this->detectRecursive($folder, $pattern);
+
+            $list += $files[trim($folder, '/')];
+        }
+        return $list;
+    }
+
+    /**
      * Return all paths for all the files with a timestamp.
      *
      * @param  array  $paths    List of folders to look from.
