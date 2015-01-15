@@ -34,7 +34,7 @@ var Section = new prime({
     },
 
     adopt: function(child) {
-        $(child).insert(this.block.find('.grid'));
+        $(child).insert(this.block.find('.g-grid'));
     },
 
     onDone: function(event) {
@@ -48,10 +48,10 @@ var Section = new prime({
             plus.on('click', bind(function(e) {
                 e.preventDefault();
 
-                if (this.block.find('.grid:last-child:empty')) { return false; }
+                if (this.block.find('.g-grid:last-child:empty')) { return false; }
 
                 this.grid = new Grid();
-                this.grid.insert(this.block, 'bottom');
+                this.grid.insert(this.block.find('[data-lm-blocktype="container"]') ? this.block.find('[data-lm-blocktype="container"]') : this.block, 'bottom');
                 this.options.builder.add(this.grid);
             }, this));
         }
