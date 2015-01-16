@@ -9,7 +9,7 @@ var Spacer = new prime({
     options: {
         type: 'spacer',
         attributes: {
-            name: "Spacer"
+            title: "Spacer"
         }
     }
 });

@@ -126,8 +126,11 @@ ready(function() {
         blocktype = element.data('lm-blocktype');
         if (!contains(['block', 'grid', 'section', 'atom'], blocktype)) {
             data = {};
+            data.type = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
             data.block = builder.get(parent.data('lm-id')).getAttributes() || {};
+
+            if (!data.type) { delete data.type; }
         }
 
         modal.open({
@@ -152,7 +155,6 @@ ready(function() {
 
                         if (!name) { return; }
                         dataString.push(name + '=' + value);
-                        console.log(dataString);
                     });
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response){

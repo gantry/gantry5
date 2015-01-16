@@ -227,7 +227,7 @@
             }
         }
 
-        .section > .g-grid > .g-block:last-child {
+        .section > .g-grid > .g-block:last-child, .section > .g-lm-container > .g-grid > .g-block:last-child {
             .particle, .position, .spacer, .pagecontent, .atom {
                 margin-right: 0;
             }
@@ -267,7 +267,7 @@
         }
 
         .particle, .position, .spacer, .pagecontent, .atom {
-            padding: 13px;
+            padding: 6px 13px;
             color: $white;
             background: #aaaaaa;
             text-shadow: 1px 1px 0 #8F8F8F, -1px -1px 0 #8F8F8F, 1px -1px 0 #8F8F8F, -1px 1px 0 #8F8F8F, 1px 1px 0 #8F8F8F;
@@ -282,6 +282,16 @@
             > span {
                 position: relative;
                 z-index: 2;
+
+                span {
+                    display: block;
+
+                    &:last-child {
+                        opacity: 0.5;
+                        font-size: 0.8em;
+                        margin-top: -3px;
+                    }
+                }
             }
 
             .float-right {

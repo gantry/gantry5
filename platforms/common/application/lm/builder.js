@@ -91,12 +91,13 @@ var Builder = new prime({
         }
 
         var blocks = root.search('> [data-lm-id]'),
-            id, type, serial, hasChildren, children;
+            id, type, subtype, serial, hasChildren, children;
 
         forEach(blocks, function(element) {
             element = $(element);
             id = element.data('lm-id');
             type = element.data('lm-blocktype');
+            subtype = element.data('lm-blocksubtype') || false;
             hasChildren = element.search('> [data-lm-id]');
 
             children = hasChildren ? this.serialize(element) : [];
@@ -104,6 +105,7 @@ var Builder = new prime({
             serial = {
                 id: id,
                 type: type,
+                subtype: subtype,
                 attributes: get(this.map, id) ? get(this.map, id).getAttributes() : {},
                 children: children
             };
@@ -117,49 +119,16 @@ var Builder = new prime({
         return serieChildren;// size(serieChildren) ? serieChildren : serie;
     },
 
-    __serialize: function(root) {
-        var serie = {},
-            serieChildren = {};
-        root = root || $('[data-lm-root]');
-
-        var blocks = root.search('> [data-lm-id]'),
-            id, type, serial, hasChildren, children, keysSort;
-
-        forEach(blocks, function(element) {
-            element = $(element);
-            id = element.data('lm-id');
-            type = element.data('lm-blocktype');
-            hasChildren = element.search('> [data-lm-id]');
-
-            children = hasChildren ? this.serialize(element) : false;
-            keysSort = [];
-
-            serial = {
-                type: type,
-                attributes: get(this.map, id).getAttributes(),
-                children: children
-            };
-
-            if (blocks.length <= 1) {
-                set(serie, id, serial);
-            }
-            else {
-                keysSort.push(id);
-                set(serieChildren, id, serial);
-            }
-        }, this);
-
-        return size(serieChildren) ? serieChildren : serie;
-    },
-
     insert: function(key, value, parent/*, object*/) {
         var root = $('[data-lm-root]');
         if (!root) {
             return;
         }
+
         var Element = new Blocks[value.type]({
             id: key,
             attributes: value.attributes || {},
+            subtype: value.subtype || false,
             builder: this
         });
 
@@ -245,26 +214,6 @@ var Builder = new prime({
             }
 
             this.get(value.id).emit('done', this.get(value.id));
-
-            depth--;
-        }, this);
-    },
-
-    __recursiveLoad: function(data, callback, depth, parent) {
-        data = data || this.structure;
-        depth = depth || 0;
-        parent = parent || false;
-        callback = callback || this.insert;
-
-        forEach(data, function(value, key, object) {
-            //console.log(rpad(repeat('    ', depth) + '' + value.type, 35) + ' ('+key+') parent: ' + parent);
-            this.emit('loading', callback.call(this, key, value, parent, depth, object));
-            if (value.children && size(value.children)) {
-                this.recursiveLoad(value.children, callback, ++depth, key);
-                /*forEach(value.children, function(childValue, childKey, array){
-                 this._recursiveLoad([childValue], callback, depth, key);
-                 }, this);*/
-            }
 
             depth--;
         }, this);
