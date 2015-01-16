@@ -36,6 +36,25 @@ domready(function() {
                     container.find('.icon-preview').html('<i class="fa ' + data + '"></i>');
                 };
 
+                container.delegate('click', '[data-icon]', function(event, element){
+                    element = $(element);
+                    iconData = [element.data('icon')];
+
+                    var active = container.find('[data-icon].active'),
+                        options = container.search('.g-particles-header .float-right input:checked, .g-particles-header .float-right select');
+                    if (active) { active.removeClass('active'); }
+                    if (options) {
+                        options.forEach(function(option){
+                            var v = $(option).value();
+                            if (v && v !== 'fa-') { iconData.push(v); }
+                        });
+                    }
+
+                    element.addClass('active');
+
+                    updatePreview(iconData.join(' '));
+                });
+
                 icons.forEach(function(icon) {
                     icon = $(icon);
                     html = '';
