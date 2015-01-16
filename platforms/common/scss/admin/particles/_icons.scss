@@ -19,6 +19,15 @@
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content {
     width: 650px;
 
+    .icon-preview {
+        padding: 0 2px;
+        @include transform(translateZ(0));
+
+        span {
+            color: lighten(#000, 70);
+        }
+    }
+
     .g-particles-header {
         color: lighten(#000, 50);
 
@@ -34,7 +43,7 @@
     }
 
     .icons-wrapper {
-        max-height: 650px;
+        max-height: 500px;
         overflow: auto;
         ul {
             @extend %list-reset;
@@ -46,7 +55,7 @@
                 display: inline-block;
                 min-width: 190px;
                 font-size: 0.85em;
-                color: lighten(#000, 50);
+                color: lighten(#000, 70);
                 cursor: pointer;
                 padding: 4px;
                 margin: 2px 0;
@@ -67,6 +76,10 @@
                     i {
                         color: $white;
                     }
+                }
+
+                &.hide-icon {
+                    display: none;
                 }
             }
         }

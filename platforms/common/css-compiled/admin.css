@@ -2602,57 +2602,74 @@ body.g5-dialog-open {
   width: 650px;
 }
 /* line 22, ../scss/admin/particles/_icons.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icon-preview {
+  padding: 0 2px;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+}
+/* line 26, ../scss/admin/particles/_icons.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icon-preview span {
+  color: #b3b3b3;
+}
+/* line 31, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header {
   color: gray;
 }
-/* line 25, ../scss/admin/particles/_icons.scss */
+/* line 34, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header label, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header select, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header input {
   margin: 0 !important;
   display: inline-block !important;
   font-size: 0.8em;
 }
-/* line 31, ../scss/admin/particles/_icons.scss */
+/* line 40, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header label {
   font-size: 0.75em;
 }
-/* line 36, ../scss/admin/particles/_icons.scss */
+/* line 45, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper {
-  max-height: 650px;
+  max-height: 500px;
   overflow: auto;
 }
-/* line 39, ../scss/admin/particles/_icons.scss */
+/* line 48, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul {
   background-color: #fff;
   border-radius: 3px;
   padding: 10px;
 }
-/* line 45, ../scss/admin/particles/_icons.scss */
+/* line 54, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li {
   display: inline-block;
   min-width: 190px;
   font-size: 0.85em;
-  color: gray;
+  color: #b3b3b3;
   cursor: pointer;
   padding: 4px;
   margin: 2px 0;
   border-radius: 3px;
 }
-/* line 55, ../scss/admin/particles/_icons.scss */
+/* line 64, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li i {
   color: #333;
 }
-/* line 59, ../scss/admin/particles/_icons.scss */
+/* line 68, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li:hover {
   background-color: whitesmoke;
 }
-/* line 63, ../scss/admin/particles/_icons.scss */
+/* line 72, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li.active {
   background-color: #439A86;
   color: #e7f5f2;
 }
-/* line 67, ../scss/admin/particles/_icons.scss */
+/* line 76, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li.active i {
   color: #fff;
+}
+/* line 81, ../scss/admin/particles/_icons.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li.hide-icon {
+  display: none;
 }
 
 /* line 5, ../scss/admin/_particles.scss */
@@ -2683,8 +2700,13 @@ body.g5-dialog-open {
 .g-particles-header .particle-search-wrapper {
   display: inline-block;
   position: relative;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
 }
-/* line 28, ../scss/admin/_particles.scss */
+/* line 29, ../scss/admin/_particles.scss */
 .g-particles-header .particle-search-wrapper span {
   position: absolute;
   right: 5px;
@@ -2693,7 +2715,7 @@ body.g5-dialog-open {
   color: #439A86;
 }
 
-/* line 39, ../scss/admin/_particles.scss */
+/* line 40, ../scss/admin/_particles.scss */
 .g-particles-footer {
   padding-top: 15px;
   border-top: 1px solid #ccc;

@@ -15,7 +15,6 @@ class Icons extends JsonController
         $options = [
             'fw' => 'Fixed Width',
             'spin' => 'Spinning',
-            'border' => 'Bordered',
             'larger' => ['' => '- Size - ', 'lg' => 'Large', '2x' => '2x', '3x' => '3x', '4x' => '4x', '5x' => '5x'],
             'rotation' => ['' => '- Rotation -', 'flip-horizontal' => 'Horizontal Flip', 'flip-vertical' => 'Vertical Flip', 'rotate-90' => 'Rotate 90°', 'rotate-180' => 'Rotate 180°', 'rotate-270' => 'Rotate 270°']
         ];

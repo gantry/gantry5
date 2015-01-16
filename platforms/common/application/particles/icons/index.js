@@ -12,13 +12,14 @@ domready(function() {
     $('body').delegate('click', '[data-g5-iconpicker]', function(event, element) {
         element = $(element);
         var field = $(element.data('g5-iconpicker')),
+            realPreview = element,
             value = trim(field.value()).replace(/\s{2,}/g, ' ').split(' ');
 
         modal.open({
             content: 'Loading',
             className: 'g5-dialog-theme-default g5-modal-icons',
             remote: getAjaxURL('icons') + getAjaxSuffix(),
-            afterClose: function(){
+            afterClose: function() {
                 var popovers = $('.g5-popover');
                 if (popovers) { popovers.remove(); }
             },
@@ -32,27 +33,70 @@ domready(function() {
                     return false;
                 }
 
-                var updatePreview = function(data){
-                    container.find('.icon-preview').html('<i class="fa ' + data + '"></i>');
-                };
-
-                container.delegate('click', '[data-icon]', function(event, element){
-                    element = $(element);
-                    iconData = [element.data('icon')];
-
-                    var active = container.find('[data-icon].active'),
+                var updatePreview = function() {
+                    var data = [],
+                        active = container.find('[data-icon].active'),
                         options = container.search('.g-particles-header .float-right input:checked, .g-particles-header .float-right select');
-                    if (active) { active.removeClass('active'); }
+
+                    if (active) { data.push(active.data('icon')); }
                     if (options) {
-                        options.forEach(function(option){
+                        options.forEach(function(option) {
                             var v = $(option).value();
-                            if (v && v !== 'fa-') { iconData.push(v); }
+                            if (v && v !== 'fa-') { data.push(v); }
                         });
                     }
 
+                    container.find('.icon-preview').html('<i class="fa ' + data.join(' ') + '"></i> <span>' + data[0] + '</span>');
+                };
+
+                var updateTotal = function() {
+                    var total = container.search('[data-icon]:not(.hide-icon)');
+                    container.find('.particle-search-total').text(total ? total.length : 0);
+                };
+
+                container.delegate('click', '[data-icon]', function(event, element) {
+                    element = $(element);
+
+                    var active = container.find('[data-icon].active');
+                    if (active) { active.removeClass('active'); }
+
                     element.addClass('active');
 
-                    updatePreview(iconData.join(' '));
+                    updatePreview();
+                });
+
+                container.delegate('click', '[data-select]', function(event){
+                    event.preventDefault();
+
+                    var output = container.find('.icon-preview i');
+                    field.value(output.attribute('class'));
+                    realPreview.attribute('class', output.attribute('class'));
+                    modal.close();
+                });
+
+                container.delegate('change', '.g-particles-header .float-right input[type="checkbox"], .g-particles-header .float-right select', function(e, input) {
+                    updatePreview();
+                });
+
+                container.delegate('keyup', '.particle-search-wrapper input[type="text"]', function(e, input) {
+                    input = $(input);
+                    var value = input.value(),
+                        hidden = container.search('[data-icon].hide-icon');
+
+                    if (!value && hidden) {
+                        hidden.removeClass('hide-icon');
+                        updateTotal();
+                        return true;
+                    }
+
+                    var found = container.search('[data-icon*="' + value + '"]');
+                    container.search('[data-icon]').addClass('hide-icon');
+                    if (found) {
+                        found.removeClass('hide-icon');
+                    }
+
+                    updateTotal();
+
                 });
 
                 icons.forEach(function(icon) {
@@ -78,21 +122,14 @@ domready(function() {
                     if (contains(value, icon.data('icon'))) {
                         // set active icon
                         icon.addClass('active');
-                        iconData.push(icon.data('icon'));
 
                         // toggle options
-                        value.forEach(function(name){
+                        value.forEach(function(name) {
                             var field = container.find('[name="' + name + '"]');
-                            if (field) {
-                                iconData.push(name);
-                                field.checked(true);
-                            }
+                            if (field) { field.checked(true); }
                             else {
                                 field = container.find('option[value="' + name + '"]');
-                               if (field) {
-                                   iconData.push(name);
-                                   field.parent().value(name);
-                               }
+                                if (field) { field.parent().value(name); }
                             }
                         });
 
@@ -102,7 +139,7 @@ domready(function() {
                         wrap[0].scrollTop = icon[0].offsetTop - (wrapHeight / 2);
 
                         // update preview
-                        updatePreview(iconData.join(' '));
+                        updatePreview();
                     }
                 });
             }
