@@ -13,7 +13,7 @@ form:
     icon-1:
       type: input.icon
       label: Icon 1
-      default: 'fa-rocket fa-fw fa-spin fa-3x fa-flip-vertical'
+      default: 'fa fa-rocket fa-fw fa-spin fa-lg fa-rotate-180'
 
     icon-2:
       type: input.icon

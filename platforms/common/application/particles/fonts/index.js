@@ -483,6 +483,8 @@ var Fonts = new prime({
             subsets = zen('a.font-subsets.button').bottom(leftContainer),
             selected = zen('span.font-selected').bottom(rightContainer),
             select = zen('button.button.button-primary').text('Select').bottom(rightContainer),
+            space = zen('span').html('&nbsp;').bottom(rightContainer),
+            cancel = zen('button.button.g5-dialog-close').text('Cancel').bottom(rightContainer),
             current;
 
         select.on('click', bind(function() {
