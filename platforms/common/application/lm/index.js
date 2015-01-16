@@ -126,11 +126,13 @@ ready(function() {
         blocktype = element.data('lm-blocktype');
         if (!contains(['block', 'grid', 'section', 'atom'], blocktype)) {
             data = {};
-            data.type = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
+            data.type = builder.get(element.data('lm-id')).getType() || element.data('lm-blocktype') || false;
+            data.subtype = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
             data.block = builder.get(parent.data('lm-id')).getAttributes() || {};
 
             if (!data.type) { delete data.type; }
+            if (!data.subtype) { delete data.subtype; }
         }
 
         modal.open({
