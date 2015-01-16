@@ -3,7 +3,7 @@
         "id": "2330cbf9-25f2-4416-a0de-446fdce1ad0c",
         "type": "section",
         "attributes": {
-            "name": "Section Header",
+            "title": "Section Header",
             "key": "section-header",
             "type": "header",
             "id": "header"
@@ -24,8 +24,9 @@
                             {
                                 "id": "fb585b76-4db5-4611-a96c-08c09bd8d90f",
                                 "type": "particle",
+                                "subtype": "logo",
                                 "attributes": {
-                                    "name": "logo"
+                                    "title": "Logo"
                                 },
                                 "children": []
                             }
@@ -42,8 +43,9 @@
                             {
                                 "id": "6e85d292-e08b-448c-a46a-f5b2693db83e",
                                 "type": "particle",
+                                "subtype": "menu",
                                 "attributes": {
-                                    "name": "menu"
+                                    "title": "Main Menu"
                                 },
                                 "children": []
                             }
@@ -69,7 +71,7 @@
                         "id": "f29bf0b7-7348-48de-b979-e10008de799e",
                         "type": "section",
                         "attributes": {
-                            "name": "Section Showcase",
+                            "title": "Section Showcase",
                             "key": "section-showcase",
                             "type": "section",
                             "id": "showcase"
@@ -90,8 +92,9 @@
                                             {
                                                 "id": "8462e204-f196-498f-a71b-c1c8799e2e80",
                                                 "type": "particle",
+                                                "subtype": "social",
                                                 "attributes": {
-                                                    "name": "popup"
+                                                    "title": "Facebook / Twitter"
                                                 },
                                                 "children": []
                                             }
@@ -108,7 +111,7 @@
                                                 "id": "f568d0bb-0964-4091-9971-b49cb8fd01e3",
                                                 "type": "position",
                                                 "attributes": {
-                                                    "name": "Position Showcase 2",
+                                                    "title": "Showcase 2",
                                                     "key": "showcase-2"
                                                 },
                                                 "children": []
@@ -124,7 +127,7 @@
                         "id": "5672f5b7-01c3-4f6a-a826-f2537e881b6d",
                         "type": "section",
                         "attributes": {
-                            "name": "Section Feature",
+                            "title": "Section Feature",
                             "key": "section-feature",
                             "type": "section",
                             "id": "feature"
@@ -146,7 +149,7 @@
                                                 "id": "1875d46e-639f-4a36-b553-ef6b561bccdc",
                                                 "type": "position",
                                                 "attributes": {
-                                                    "name": "Position Feature 1",
+                                                    "title": "Feature 1",
                                                     "key": "feature"
                                                 },
                                                 "children": []
@@ -164,7 +167,7 @@
                                                 "id": "51d44206-6a78-45b6-9da0-ffee380a1d16",
                                                 "type": "position",
                                                 "attributes": {
-                                                    "name": "Position Feature 2",
+                                                    "title": "Feature 2",
                                                     "key": "feature-2"
                                                 },
                                                 "children": []
@@ -180,7 +183,7 @@
                         "id": "b40f50f7-1950-461e-8307-d277d30fc54f",
                         "type": "section",
                         "attributes": {
-                            "name": "Section Main",
+                            "title": "Section Main",
                             "key": "section-main",
                             "type": "main",
                             "id": "main"
@@ -202,8 +205,7 @@
                                                 "id": "f03448da-fb1b-49ec-8d33-b58152ac8b0d",
                                                 "type": "pagecontent",
                                                 "attributes": {
-                                                    "name": "Page Content",
-                                                    "key": "pagecontent"
+                                                    "title": "Page Content"
                                                 },
                                                 "children": []
                                             }
@@ -219,7 +221,7 @@
                         "id": "c8315bcd-37c2-4691-8c14-32d44980a173",
                         "type": "section",
                         "attributes": {
-                            "name": "Section Bottom",
+                            "title": "Section Bottom",
                             "key": "section-bottom",
                             "type": "section",
                             "id": "bottom"
@@ -241,7 +243,7 @@
                                                 "id": "ec9e89e5-5043-4e3e-a853-fe470247a875",
                                                 "type": "position",
                                                 "attributes": {
-                                                    "name": "Position Bottom",
+                                                    "title": "Bottom",
                                                     "key": "bottom"
                                                 },
                                                 "children": []
@@ -266,8 +268,9 @@
                                             {
                                                 "id": "ec9e89e5-ffff-4e3e-a853-fe470247a875",
                                                 "type": "particle",
+                                                "subtype": "totop",
                                                 "attributes": {
-                                                    "name": "totop"
+                                                    "title": "To Top"
                                                 },
                                                 "children": []
                                             }
@@ -292,7 +295,7 @@
                         "id": "303ea0a4-5279-436f-b808-b37d99c5de90",
                         "type": "section",
                         "attributes": {
-                            "name": "Section Sidebar",
+                            "title": "Section Sidebar",
                             "key": "section-sidebar",
                             "type": "section",
                             "id": "sidebar,"
@@ -314,7 +317,7 @@
                                                 "id": "fb585b76-4db5-4611-a96c-08c09bd8d90d",
                                                 "type": "position",
                                                 "attributes": {
-                                                    "name": "Position Sidebar",
+                                                    "title": "Sidebar",
                                                     "key": "sidebar"
                                                 },
                                                 "children": []
@@ -338,8 +341,9 @@
                                             {
                                                 "id": "fb585b76-ffff-4611-a96c-08c09bd8d90f",
                                                 "type": "particle",
+                                                "subtype": "login",
                                                 "attributes": {
-                                                    "name": "login"
+                                                    "title": "Login Popup"
                                                 },
                                                 "children": []
                                             }
@@ -358,7 +362,7 @@
         "id": "ddeb26e3-caeb-4a5c-82c4-9f72a556f107",
         "type": "section",
         "attributes": {
-            "name": "Section Footer",
+            "title": "Section Footer",
             "key": "section-footer",
             "type": "footer",
             "id": "footer"
@@ -380,7 +384,7 @@
                                 "id": "825a6498-c19b-42df-bffc-86dae90b64d8",
                                 "type": "spacer",
                                 "attributes": {
-                                    "name": "Position Footer",
+                                    "title": "Footer",
                                     "key": "position-footer"
                                 },
                                 "children": []
@@ -397,8 +401,9 @@
                             {
                                 "id": "0f7653c0-909b-4430-afdd-75bc5df8105a",
                                 "type": "particle",
+                                "subtype": "copyright",
                                 "attributes": {
-                                    "name": "copyright",
+                                    "title": "Copyrights",
                                     "date": {
                                         "start": "1999",
                                         "end": "now"
@@ -419,8 +424,9 @@
                             {
                                 "id": "491e8d6c-c762-401f-9ebf-018d83d4a0fe",
                                 "type": "particle",
+                                "subtype": "branding",
                                 "attributes": {
-                                    "name": "branding"
+                                    "title": "Company Branding"
                                 },
                                 "children": []
                             }
