@@ -1,5 +1,5 @@
 <?php
-namespace Gantry\Admin\Particles;
+namespace Gantry\Admin\Styles;
 
 use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Config\CompiledBlueprints;
