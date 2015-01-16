@@ -10,10 +10,6 @@ a {
 
 #g5-container { // wrapper
 
-    .fa-spin {
-        @include animation(spin 0.8s infinite linear);
-    }
-
     .g-block {
         position: relative;
     }
