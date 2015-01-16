@@ -98,6 +98,7 @@ class Pages extends HtmlController
             $item = (object) [
                 'id' => $id,
                 'type' => isset($_POST['type']) ? $_POST['type'] : $type,
+                'subtype' => isset($_POST['subtype']) ? $_POST['subtype'] : null,
                 'attributes' => (object) isset($_POST['options']) ? $_POST['options'] : [],
             ];
             if (isset($_POST['block'])) {
@@ -107,11 +108,7 @@ class Pages extends HtmlController
             $item = $this->find($layout, $id);
         }
 
-        if ($type == 'particle') {
-            $name = isset($item->type) ? $item->type : null;
-        } else {
-            $name = $type;
-        }
+        $name = isset($item->subtype) ? $item->subtype : $type;
 
         if (is_object($item) && $name) {
             $prefix = 'particles.' . $name;
