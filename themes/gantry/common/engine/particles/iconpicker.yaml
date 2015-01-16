@@ -1,0 +1,21 @@
+name: Icon Picker
+description: icon picker test.
+type: particle
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable the particle.
+      default: true
+
+    icon-1:
+      type: input.icon
+      label: Icon 1
+      default: 'fa-rocket'
+
+    icon-2:
+      type: input.icon
+      label: Icon 2
+      default: 'fa-shield'

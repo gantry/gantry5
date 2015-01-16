@@ -1,0 +1,28 @@
+<div class="g-particles-header icons-header settings-block clearfix">
+    <div class="float-left"><input type="text" placeholder="Search..."/></div>
+    <div class="float-right">
+        <label><input type="checkbox"/> Fixed</label>
+        <label><input type="checkbox"/> Spinner</label>
+        <label><input type="checkbox"/> Bordered</label>
+        <select>
+            <option value="">- Larger -</option>
+        </select>
+        <select>
+            <option value="">- Rotation -</option>
+        </select>
+    </div>
+</div>
+{{ params }}
+<div class="g-particles-main icons-wrapper">
+    <ul>
+        {% for icon in icons %}
+            <li data-icon="{{ icon }}"><i class="fa fa-fw {{ icon }}"></i> {{ icon }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="g-particles-footer settings-block clearfix">
+
+    <div class="float-right">
+        <button class="button button-primary">Select</button>
+    </div>
+</div>

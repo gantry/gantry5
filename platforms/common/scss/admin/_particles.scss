@@ -1,2 +1,28 @@
 @import "particles/colorpicker";
 @import "particles/fonts";
+@import "particles/icons";
+
+.g-particles-footer, .g-particles-header {
+    margin: 0 !important;
+    input, select {
+        margin: 0 !important;
+    }
+}
+
+.g-particles-footer select {
+    margin-top: 10px !important;
+}
+
+.g-particles-main {
+    width: 100%;
+}
+
+.g-particles-header {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+}
+
+.g-particles-footer {
+    padding-top: 15px;
+    border-top: 1px solid #ccc;
+}

@@ -2499,66 +2499,36 @@ body.g5-dialog-open {
   font-size: 0.8em;
 }
 /* line 27, ../scss/admin/particles/_fonts.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-main {
-  width: 100%;
-}
-/* line 31, ../scss/admin/particles/_fonts.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-header {
-  margin: 0 !important;
-}
-/* line 33, ../scss/admin/particles/_fonts.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer input, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer select, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-header input, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-header select {
-  margin: 0 !important;
-}
-/* line 38, ../scss/admin/particles/_fonts.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer select {
-  margin-top: 10px !important;
-}
-/* line 42, ../scss/admin/particles/_fonts.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-header {
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 6px;
-}
-/* line 46, ../scss/admin/particles/_fonts.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-header .font-search-wrapper {
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-search-wrapper {
   display: inline-block;
   position: relative;
 }
-/* line 50, ../scss/admin/particles/_fonts.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-header .font-search-wrapper span {
+/* line 31, ../scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-search-wrapper span {
   position: absolute;
   right: 5px;
   top: 2px;
   font-size: 0.6em;
   color: #439A86;
 }
-/* line 59, ../scss/admin/particles/_fonts.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-header .font-preview {
+/* line 40, ../scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-preview {
   width: 400px;
 }
-/* line 64, ../scss/admin/particles/_fonts.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer {
-  padding-top: 6px;
-  border-top: 1px solid #ccc;
-}
-/* line 68, ../scss/admin/particles/_fonts.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer .font-selected {
+/* line 45, ../scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-particles-footer .font-selected {
   font-size: 0.8em;
   margin-right: 10px;
 }
-/* line 73, ../scss/admin/particles/_fonts.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer .font-category {
+/* line 50, ../scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-particles-footer .font-category {
   font-size: 0.85em;
 }
-/* line 77, ../scss/admin/particles/_fonts.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer .font-subsets {
+/* line 54, ../scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-particles-footer .font-subsets {
   margin-left: 0.85em !important;
 }
-/* line 81, ../scss/admin/particles/_fonts.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-fonts-footer small {
-  text-decoration: underline;
-}
-/* line 86, ../scss/admin/particles/_fonts.scss */
+/* line 59, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list {
   margin: 0;
   padding: 0;
@@ -2569,13 +2539,13 @@ body.g5-dialog-open {
   overflow: auto;
   position: relative;
 }
-/* line 96, ../scss/admin/particles/_fonts.scss */
+/* line 69, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list ul, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list li {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-/* line 102, ../scss/admin/particles/_fonts.scss */
+/* line 75, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li {
   padding: 0.5em 1em;
   margin: 0.5em 0;
@@ -2584,37 +2554,37 @@ body.g5-dialog-open {
   cursor: pointer;
   background-color: #eaeaea;
 }
-/* line 111, ../scss/admin/particles/_fonts.scss */
+/* line 84, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li:nth-child(odd) {
   background-color: #f7f7f7;
 }
-/* line 115, ../scss/admin/particles/_fonts.scss */
+/* line 88, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li.selected {
   border-color: #48B0D7;
 }
-/* line 119, ../scss/admin/particles/_fonts.scss */
+/* line 92, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li strong {
   font-weight: bold !important;
 }
-/* line 123, ../scss/admin/particles/_fonts.scss */
+/* line 96, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li input[type="checkbox"], .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li .variant {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 128, ../scss/admin/particles/_fonts.scss */
+/* line 101, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li .variant, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li .family {
   color: #999;
 }
-/* line 132, ../scss/admin/particles/_fonts.scss */
+/* line 105, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li .preview {
   font-size: 24px;
   line-height: 1.3em;
 }
-/* line 137, ../scss/admin/particles/_fonts.scss */
+/* line 110, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li ul {
   margin-top: 0.5em;
 }
-/* line 141, ../scss/admin/particles/_fonts.scss */
+/* line 114, ../scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li li {
   padding: 0.5em 0;
   border: 0;
@@ -2645,30 +2615,27 @@ body.g5-dialog-open {
   width: 650px;
 }
 /* line 22, ../scss/admin/particles/_icons.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-header {
+.g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header {
   color: gray;
-  margin-bottom: 0 !important;
-  padding-bottom: 0.5em;
-  border-bottom: 1px solid #ddd;
 }
-/* line 28, ../scss/admin/particles/_icons.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-header label, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-header select, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-header input {
+/* line 25, ../scss/admin/particles/_icons.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header label, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header select, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header input {
   margin: 0 !important;
   display: inline-block !important;
-  font-size: 0.85em;
+  font-size: 0.8em;
 }
-/* line 35, ../scss/admin/particles/_icons.scss */
+/* line 32, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper {
   max-height: 650px;
   overflow: auto;
 }
-/* line 38, ../scss/admin/particles/_icons.scss */
+/* line 35, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul {
   background-color: #fff;
   border-radius: 3px;
   padding: 10px;
 }
-/* line 44, ../scss/admin/particles/_icons.scss */
+/* line 41, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li {
   display: inline-block;
   min-width: 190px;
@@ -2677,11 +2644,11 @@ body.g5-dialog-open {
   cursor: pointer;
   padding: 4px;
 }
-/* line 52, ../scss/admin/particles/_icons.scss */
+/* line 49, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li i {
   color: #333;
 }
-/* line 56, ../scss/admin/particles/_icons.scss */
+/* line 53, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li:hover {
   border-radius: 3px;
   background-color: whitesmoke;
@@ -2689,6 +2656,37 @@ body.g5-dialog-open {
       font-size: 1.5em;
       vertical-align: middle;
   }*/
+}
+
+/* line 5, ../scss/admin/_particles.scss */
+.g-particles-footer, .g-particles-header {
+  margin: 0 !important;
+}
+/* line 7, ../scss/admin/_particles.scss */
+.g-particles-footer input, .g-particles-footer select, .g-particles-header input, .g-particles-header select {
+  margin: 0 !important;
+}
+
+/* line 12, ../scss/admin/_particles.scss */
+.g-particles-footer select {
+  margin-top: 10px !important;
+}
+
+/* line 16, ../scss/admin/_particles.scss */
+.g-particles-main {
+  width: 100%;
+}
+
+/* line 20, ../scss/admin/_particles.scss */
+.g-particles-header {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+}
+
+/* line 25, ../scss/admin/_particles.scss */
+.g-particles-footer {
+  padding-top: 15px;
+  border-top: 1px solid #ccc;
 }
 
 /*# sourceMappingURL=admin.css.map */
