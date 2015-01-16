@@ -304,6 +304,8 @@
                 i {
                     line-height: 52px;
                     cursor: pointer;
+                    position: relative;
+                    z-index: 2;
                 }
             }
         }

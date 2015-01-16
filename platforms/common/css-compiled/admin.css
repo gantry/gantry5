@@ -1224,8 +1224,10 @@ a {
 #g5-container .lm-blocks .particle .float-right i, #g5-container .lm-blocks .position .float-right i, #g5-container .lm-blocks .spacer .float-right i, #g5-container .lm-blocks .pagecontent .float-right i, #g5-container .lm-blocks .atom .float-right i {
   line-height: 52px;
   cursor: pointer;
+  position: relative;
+  z-index: 2;
 }
-/* line 311, ../scss/admin/_layout-manager.scss */
+/* line 313, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle-size {
   font-weight: 100;
   font-size: 30px;
@@ -1237,28 +1239,28 @@ a {
   text-shadow: none;
   opacity: 0.8;
 }
-/* line 323, ../scss/admin/_layout-manager.scss */
+/* line 325, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle {
   background-color: #00B1D9;
   text-shadow: 1px 1px 0 #008DAD, -1px -1px 0 #008DAD, 1px -1px 0 #008DAD, -1px 1px 0 #008DAD, 1px 1px 0 #008DAD;
 }
-/* line 328, ../scss/admin/_layout-manager.scss */
+/* line 330, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .spacer {
   background-color: #eee;
   color: #666;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 }
-/* line 334, ../scss/admin/_layout-manager.scss */
+/* line 336, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .atom {
   background-color: #9055AF;
   text-shadow: 1px 1px 0 #633979, -1px -1px 0 #633979, 1px -1px 0 #633979, -1px 1px 0 #633979, 1px 1px 0 #633979;
 }
-/* line 339, ../scss/admin/_layout-manager.scss */
+/* line 341, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .pagecontent {
   background-color: #218fda;
   text-shadow: 1px 1px 0 #116AA6, -1px -1px 0 #116AA6, 1px -1px 0 #116AA6, -1px 1px 0 #116AA6, 1px 1px 0 #116AA6;
 }
-/* line 376, ../scss/admin/_layout-manager.scss */
+/* line 378, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder {
   text-align: center;
   color: #5987a0;
@@ -1268,7 +1270,7 @@ a {
   padding: 1px;
   flex: 0 1 100%;
 }
-/* line 387, ../scss/admin/_layout-manager.scss */
+/* line 389, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between {
   display: block;
   flex: 0 0 0px;
@@ -1280,29 +1282,29 @@ a {
   flex: 0 1 0%;
   background-color: #555;
 }
-/* line 399, ../scss/admin/_layout-manager.scss */
+/* line 401, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between-grids {
   background-color: #555;
   margin: -5px 0;
 }
-/* line 403, ../scss/admin/_layout-manager.scss */
+/* line 405, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between-grids.in-between-grids-first {
   margin: 0 0 -2px;
 }
-/* line 407, ../scss/admin/_layout-manager.scss */
+/* line 409, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between-grids.in-between-grids-last {
   margin: -2px 0 0;
 }
-/* line 412, ../scss/admin/_layout-manager.scss */
+/* line 414, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between.in-between-sections {
   width: auto;
 }
-/* line 419, ../scss/admin/_layout-manager.scss */
+/* line 421, ../scss/admin/_layout-manager.scss */
 #g5-container #history {
   display: inline-block;
   float: right;
 }
-/* line 422, ../scss/admin/_layout-manager.scss */
+/* line 424, ../scss/admin/_layout-manager.scss */
 #g5-container #history span {
   display: inline-block;
   background: #eee;
@@ -1316,20 +1318,20 @@ a {
   color: #777;
   text-shadow: 0 1px #fff;
 }
-/* line 435, ../scss/admin/_layout-manager.scss */
+/* line 437, ../scss/admin/_layout-manager.scss */
 #g5-container #history span.disabled {
   color: #ccc;
 }
-/* line 441, ../scss/admin/_layout-manager.scss */
+/* line 443, ../scss/admin/_layout-manager.scss */
 #g5-container .sidebar [data-lm-blocktype] {
   position: relative;
   z-index: 5;
 }
-/* line 447, ../scss/admin/_layout-manager.scss */
+/* line 449, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-newblocks {
   padding-bottom: 8px;
 }
-/* line 450, ../scss/admin/_layout-manager.scss */
+/* line 452, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-newblocks .g-block {
   display: inline-block;
   text-align: center;
@@ -1338,7 +1340,7 @@ a {
   border-radius: 3px;
   margin-right: 8px;
 }
-/* line 462, ../scss/admin/_layout-manager.scss */
+/* line 464, ../scss/admin/_layout-manager.scss */
 #g5-container #trash {
   position: fixed;
   top: -100px;
@@ -1350,7 +1352,7 @@ a {
   color: #fff;
   padding: 0.938rem;
 }
-/* line 470, ../scss/admin/_layout-manager.scss */
+/* line 472, ../scss/admin/_layout-manager.scss */
 #g5-container #trash .trash-zone {
   background-color: #ed5565;
   font-size: 2rem;
@@ -1361,7 +1363,7 @@ a {
   margin: 0 auto;
   font-weight: 300;
 }
-/* line 480, ../scss/admin/_layout-manager.scss */
+/* line 482, ../scss/admin/_layout-manager.scss */
 #g5-container #trash span {
   font-size: 0.8rem;
   color: #666;
