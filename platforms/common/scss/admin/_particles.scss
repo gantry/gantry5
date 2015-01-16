@@ -20,6 +20,20 @@
 .g-particles-header {
     border-bottom: 1px solid #ccc;
     padding-bottom: 15px;
+
+    .particle-search-wrapper {
+        display: inline-block;
+        position: relative;
+
+        span {
+            position: absolute;
+            right: 5px;
+            top: 2px;
+            font-size: 0.6em;
+            color: $core-accent;
+        }
+    }
+
 }
 
 .g-particles-footer {

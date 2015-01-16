@@ -354,7 +354,7 @@ var Fonts = new prime({
     },
 
     updateTotal: function() {
-        var totals = $('.g-particles-header .font-search-total'),
+        var totals = $('.g-particles-header .particle-search-total'),
             count = $('.g-fonts-list > [data-font]:not(.g-font-hide)');
 
         totals.text(count ? count.length : 0);
@@ -454,9 +454,9 @@ var Fonts = new prime({
     buildHeader: function(html) {
         var container = zen('div.settings-block.g-particles-header').bottom(html),
             preview = zen('input.float-left.font-preview[type="text"][data-font-preview][placeholder="Font Preview..."][value="' + this.previewSentence[this.filters.script] + '"]').bottom(container),
-            searchWrapper = zen('span.font-search-wrapper.float-right').bottom(container),
+            searchWrapper = zen('span.particle-search-wrapper.float-right').bottom(container),
             search = zen('input.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(searchWrapper),
-            totals = zen('span.font-search-total').bottom(searchWrapper);
+            totals = zen('span.particle-search-total').bottom(searchWrapper);
 
         search.on('keyup', bind(this.search, this, search));
         preview.on('keyup', bind(this.updatePreview, this, preview));

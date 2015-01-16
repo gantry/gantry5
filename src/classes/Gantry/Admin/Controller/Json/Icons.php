@@ -6,7 +6,7 @@ use Gantry\Component\Response\JsonResponse;
 
 class Icons extends JsonController
 {
-    public function index($params)
+    public function index()
     {
         $response = [];
 
@@ -16,11 +16,14 @@ class Icons extends JsonController
             'fw' => 'Fixed Width',
             'spin' => 'Spinning',
             'border' => 'Bordered',
-            'larger' => ['' => 'Normal', 'lg' => 'Larger', '2x' => '2x', '3x' => '3x', '4x' => '4x', '5x' => '5x'],
-            'rotation' => ['' => 'Normal', 'flip-horizontal' => 'Horizontal Flip', 'flip-vertical' => 'Vertical Flip', 'rotate-90' => 'Rotate 90°', 'rotate-180' => 'Rotate 180°', 'rotate-270' => 'Rotate 270°']
+            'larger' => ['' => 'Size', 'lg' => 'Large', '2x' => '2x', '3x' => '3x', '4x' => '4x', '5x' => '5x'],
+            'rotation' => ['' => 'Rotation', 'flip-horizontal' => 'Horizontal Flip', 'flip-vertical' => 'Vertical Flip', 'rotate-90' => 'Rotate 90°', 'rotate-180' => 'Rotate 180°', 'rotate-270' => 'Rotate 270°']
         ];
 
-        $response['html'] = $this->container['admin.theme']->render('@gantry-admin/ajax/icons.html.twig', ['icons' => $list, 'options' => $options, 'params' => $params]);
+        $list = array_unique($list);
+        //sort($list);
+
+        $response['html'] = $this->container['admin.theme']->render('@gantry-admin/ajax/icons.html.twig', ['icons' => $list, 'options' => $options, 'total' => count($list)]);
 
         return new JsonResponse($response);
     }

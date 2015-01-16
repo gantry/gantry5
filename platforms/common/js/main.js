@@ -30,7 +30,7 @@ var G5;
     },
     '1': function (require, module, exports, global) {
         'use strict';
-        var $ = require('e');
+        var $ = require('d');
         require('2');
         require('3');
         require('5');
@@ -40,8 +40,8 @@ var G5;
     },
     '2': function (require, module, exports, global) {
         'use strict';
-        var $ = require('e');
-        var trim = require('f'), forEach = require('g'), filter = require('h'), indexOf = require('i');
+        var $ = require('d');
+        var trim = require('e'), forEach = require('f'), filter = require('g'), indexOf = require('h');
         $.implement({
             setAttribute: function (name, value) {
                 return this.forEach(function (node) {
@@ -213,8 +213,8 @@ var G5;
     },
     '3': function (require, module, exports, global) {
         'use strict';
-        var Emitter = require('d');
-        var $ = require('e');
+        var Emitter = require('i');
+        var $ = require('d');
         var html = document.documentElement;
         var addEventListener = html.addEventListener ? function (node, event, handle, useCapture) {
                 node.addEventListener(event, handle, useCapture || false);
@@ -322,7 +322,7 @@ var G5;
     },
     '5': function (require, module, exports, global) {
         'use strict';
-        var $ = require('e');
+        var $ = require('d');
         $.implement({
             appendChild: function (child) {
                 this[0].appendChild($(child)[0]);
@@ -394,7 +394,7 @@ var G5;
         'use strict';
         var map = require('k');
         var slick = require('l');
-        var $ = require('e');
+        var $ = require('d');
         var gen = function (combinator, expression) {
             return map(slick.parse(expression || '*'), function (part) {
                 return combinator + ' ' + part;
@@ -478,7 +478,7 @@ var G5;
     },
     '7': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), $ = require('n'), zen = require('o'), storage = require('j')(), Emitter = require('d'), Bound = require('w'), Options = require('x'), domready = require('b'), bind = require('y'), map = require('z'), forEach = require('10'), last = require('11'), merge = require('q'), isFunct = require('12'), request = require('t');
+        var prime = require('m'), $ = require('n'), zen = require('o'), storage = require('j')(), Emitter = require('i'), Bound = require('w'), Options = require('x'), domready = require('b'), bind = require('y'), map = require('z'), forEach = require('10'), last = require('11'), merge = require('q'), isFunct = require('12'), request = require('t');
         var animationEndSupport = false, popovers = {};
         var Popover = new prime({
                 mixin: [
@@ -991,7 +991,7 @@ var G5;
     },
     '9': function (require, module, exports, global) {
         'use strict';
-        var ready = require('b'), $ = require('2'), modal = require('a').modal, request = require('t'), zen = require('o'), contains = require('19'), getAjaxSuffix = require('v'), Builder = require('1a'), History = require('1b'), LMHistory = require('1c'), LayoutManager = require('1d');
+        var ready = require('b'), $ = require('2'), modal = require('a').modal, request = require('t'), zen = require('o'), contains = require('13'), getAjaxSuffix = require('v'), Builder = require('14'), History = require('15'), LMHistory = require('16'), LayoutManager = require('17');
         require('7');
         var builder, layoutmanager, lmhistory;
         builder = new Builder();
@@ -1129,10 +1129,10 @@ var G5;
     },
     'a': function (require, module, exports, global) {
         'use strict';
-        var ready = require('b'), Modal = require('13');
+        var ready = require('b'), Modal = require('18');
         module.exports = {
             modal: new Modal(),
-            togglers: require('14')
+            togglers: require('19')
         };
     },
     'b': function (require, module, exports, global) {
@@ -1203,64 +1203,16 @@ var G5;
     },
     'c': function (require, module, exports, global) {
         module.exports = {
-            colorpicker: require('15'),
-            fonts: require('16'),
-            menu: require('17'),
-            icons: require('18')
+            colorpicker: require('1a'),
+            fonts: require('1b'),
+            menu: require('1c'),
+            icons: require('1d')
         };
     },
     'd': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('i'), forEach = require('g');
-        var prime = require('m'), defer = require('1e');
-        var slice = Array.prototype.slice;
-        var Emitter = prime({
-                on: function (event, fn) {
-                    var listeners = this._listeners || (this._listeners = {}), events = listeners[event] || (listeners[event] = []);
-                    if (indexOf(events, fn) === -1)
-                        events.push(fn);
-                    return this;
-                },
-                off: function (event, fn) {
-                    var listeners = this._listeners, events, key, length = 0;
-                    if (listeners && (events = listeners[event])) {
-                        var io = indexOf(events, fn);
-                        if (io > -1)
-                            events.splice(io, 1);
-                        if (!events.length)
-                            delete listeners[event];
-                        for (var l in listeners)
-                            return this;
-                        delete this._listeners;
-                    }
-                    return this;
-                },
-                emit: function (event) {
-                    var self = this, args = slice.call(arguments, 1);
-                    var emit = function () {
-                        var listeners = self._listeners, events;
-                        if (listeners && (events = listeners[event])) {
-                            forEach(events.slice(0), function (event) {
-                                return event.apply(self, args);
-                            });
-                        }
-                    };
-                    if (args[args.length - 1] === Emitter.EMIT_SYNC) {
-                        args.pop();
-                        emit();
-                    } else {
-                        defer(emit);
-                    }
-                    return this;
-                }
-            });
-        Emitter.EMIT_SYNC = {};
-        module.exports = Emitter;
-    },
-    'e': function (require, module, exports, global) {
-        'use strict';
         var prime = require('m');
-        var forEach = require('g'), map = require('k'), filter = require('h'), every = require('1j'), some = require('1k');
+        var forEach = require('f'), map = require('k'), filter = require('g'), every = require('1i'), some = require('1j');
         var index = 0, __dc = document.__counter, counter = document.__counter = (__dc ? parseInt(__dc, 36) + 1 : 0).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n) {
             if (n === window)
@@ -1344,11 +1296,11 @@ var G5;
             });
         module.exports = $;
     },
-    'f': function (require, module, exports, global) {
-        var toString = require('1f');
-        var WHITE_SPACES = require('1g');
-        var ltrim = require('1h');
-        var rtrim = require('1i');
+    'e': function (require, module, exports, global) {
+        var toString = require('1e');
+        var WHITE_SPACES = require('1f');
+        var ltrim = require('1g');
+        var rtrim = require('1h');
         function trim(str, chars) {
             str = toString(str);
             chars = chars || WHITE_SPACES;
@@ -1356,7 +1308,7 @@ var G5;
         }
         module.exports = trim;
     },
-    'g': function (require, module, exports, global) {
+    'f': function (require, module, exports, global) {
         function forEach(arr, callback, thisObj) {
             if (arr == null) {
                 return;
@@ -1370,8 +1322,8 @@ var G5;
         }
         module.exports = forEach;
     },
-    'h': function (require, module, exports, global) {
-        var makeIterator = require('1l');
+    'g': function (require, module, exports, global) {
+        var makeIterator = require('1k');
         function filter(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var results = [];
@@ -1389,7 +1341,7 @@ var G5;
         }
         module.exports = filter;
     },
-    'i': function (require, module, exports, global) {
+    'h': function (require, module, exports, global) {
         function indexOf(arr, item, fromIndex) {
             fromIndex = fromIndex || 0;
             if (arr == null) {
@@ -1406,9 +1358,57 @@ var G5;
         }
         module.exports = indexOf;
     },
+    'i': function (require, module, exports, global) {
+        'use strict';
+        var indexOf = require('h'), forEach = require('f');
+        var prime = require('m'), defer = require('1l');
+        var slice = Array.prototype.slice;
+        var Emitter = prime({
+                on: function (event, fn) {
+                    var listeners = this._listeners || (this._listeners = {}), events = listeners[event] || (listeners[event] = []);
+                    if (indexOf(events, fn) === -1)
+                        events.push(fn);
+                    return this;
+                },
+                off: function (event, fn) {
+                    var listeners = this._listeners, events, key, length = 0;
+                    if (listeners && (events = listeners[event])) {
+                        var io = indexOf(events, fn);
+                        if (io > -1)
+                            events.splice(io, 1);
+                        if (!events.length)
+                            delete listeners[event];
+                        for (var l in listeners)
+                            return this;
+                        delete this._listeners;
+                    }
+                    return this;
+                },
+                emit: function (event) {
+                    var self = this, args = slice.call(arguments, 1);
+                    var emit = function () {
+                        var listeners = self._listeners, events;
+                        if (listeners && (events = listeners[event])) {
+                            forEach(events.slice(0), function (event) {
+                                return event.apply(self, args);
+                            });
+                        }
+                    };
+                    if (args[args.length - 1] === Emitter.EMIT_SYNC) {
+                        args.pop();
+                        emit();
+                    } else {
+                        defer(emit);
+                    }
+                    return this;
+                }
+            });
+        Emitter.EMIT_SYNC = {};
+        module.exports = Emitter;
+    },
     'j': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('i');
+        var indexOf = require('h');
         var prime = require('m');
         var Map = prime({
                 constructor: function Map() {
@@ -1508,7 +1508,7 @@ var G5;
         module.exports = map;
     },
     'k': function (require, module, exports, global) {
-        var makeIterator = require('1l');
+        var makeIterator = require('1k');
         function map(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var results = [];
@@ -1525,11 +1525,11 @@ var G5;
     },
     'l': function (require, module, exports, global) {
         'use strict';
-        module.exports = 'document' in global ? require('1r') : { parse: require('1s') };
+        module.exports = 'document' in global ? require('1m') : { parse: require('1n') };
     },
     'm': function (require, module, exports, global) {
         'use strict';
-        var hasOwn = require('1m'), mixIn = require('1n'), create = require('1o'), kindOf = require('1p');
+        var hasOwn = require('1o'), mixIn = require('1p'), create = require('1q'), kindOf = require('1r');
         var hasDescriptors = true;
         try {
             Object.defineProperty({}, '~', {});
@@ -1594,7 +1594,7 @@ var G5;
     },
     'n': function (require, module, exports, global) {
         'use strict';
-        var $ = require('1'), moofx = require('1q'), map = require('z'), slick = require('l');
+        var $ = require('1'), moofx = require('1s'), map = require('z'), slick = require('l');
         var walk = function (combinator, method) {
             return function (expression) {
                 var parts = slick.parse(expression || '*');
@@ -1626,9 +1626,9 @@ var G5;
     },
     'o': function (require, module, exports, global) {
         'use strict';
-        var forEach = require('g'), map = require('k');
-        var parse = require('1s');
-        var $ = require('e');
+        var forEach = require('f'), map = require('k');
+        var parse = require('1n');
+        var $ = require('d');
         module.exports = function (expression, doc) {
             return $(map(parse(expression), function (expression) {
                 var previous, result;
@@ -1664,8 +1664,8 @@ var G5;
         };
     },
     'p': function (require, module, exports, global) {
-        var isArray = require('1t');
-        var objSize = require('1u');
+        var isArray = require('25');
+        var objSize = require('26');
         function size(list) {
             if (!list) {
                 return 0;
@@ -1678,9 +1678,9 @@ var G5;
         module.exports = size;
     },
     'q': function (require, module, exports, global) {
-        var hasOwn = require('1x');
-        var deepClone = require('1y');
-        var isObject = require('1z');
+        var hasOwn = require('1t');
+        var deepClone = require('1u');
+        var isObject = require('1v');
         function merge() {
             var i = 1, key, val, obj, target;
             target = deepClone(arguments[0]);
@@ -1702,16 +1702,16 @@ var G5;
         module.exports = merge;
     },
     'r': function (require, module, exports, global) {
-        var randHex = require('1v');
-        var choice = require('1w');
+        var randHex = require('23');
+        var choice = require('24');
         function guid() {
             return randHex(8) + '-' + randHex(4) + '-' + '4' + randHex(3) + '-' + choice(8, 9, 'a', 'b') + randHex(3) + '-' + randHex(12);
         }
         module.exports = guid;
     },
     's': function (require, module, exports, global) {
-        var forOwn = require('20');
-        var isArray = require('1t');
+        var forOwn = require('27');
+        var isArray = require('25');
         var forEach = require('10');
         function encode(obj) {
             var query = [], arrValues, reg;
@@ -1733,8 +1733,8 @@ var G5;
     },
     't': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Emitter = require('d');
-        var isObject = require('21'), isString = require('22'), isArray = require('23'), isFunction = require('24'), trim = require('f'), upperCase = require('25'), forIn = require('26'), mixIn = require('1n'), remove = require('27'), forEach = require('g');
+        var prime = require('m'), Emitter = require('i');
+        var isObject = require('1w'), isString = require('1x'), isArray = require('1y'), isFunction = require('1z'), trim = require('e'), upperCase = require('20'), forIn = require('21'), mixIn = require('1p'), remove = require('22'), forEach = require('f');
         var capitalize = function (str) {
             return str.replace(/\b[a-z]/g, upperCase);
         };
@@ -2039,7 +2039,7 @@ var G5;
     },
     'u': function (require, module, exports, global) {
         'use strict';
-        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('29') || {}, history = window.history;
+        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('28') || {}, history = window.history;
         try {
             sessionStorage = window.sessionStorage;
             sessionStorage.setItem('TEST', '1');
@@ -2878,7 +2878,7 @@ var G5;
     'w': function (require, module, exports, global) {
         'use strict';
         var prime = require('m');
-        var bind = require('2a');
+        var bind = require('29');
         var bound = prime({
                 bound: function (name) {
                     var bound = this._bound || (this._bound = {});
@@ -2890,7 +2890,7 @@ var G5;
     'x': function (require, module, exports, global) {
         'use strict';
         var prime = require('m');
-        var merge = require('28');
+        var merge = require('2a');
         var Options = prime({
                 setOptions: function (options) {
                     var args = [
@@ -2905,7 +2905,7 @@ var G5;
         module.exports = Options;
     },
     'y': function (require, module, exports, global) {
-        var slice = require('2b');
+        var slice = require('2c');
         function bind(fn, context, args) {
             var argsArr = slice(arguments, 2);
             return function () {
@@ -2915,7 +2915,7 @@ var G5;
         module.exports = bind;
     },
     'z': function (require, module, exports, global) {
-        var makeIterator = require('2c');
+        var makeIterator = require('2b');
         function map(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var results = [];
@@ -2961,1383 +2961,20 @@ var G5;
         module.exports = isFunction;
     },
     '13': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('m'), $ = require('n'), zen = require('o'), storage = require('j')(), Emitter = require('d'), Bound = require('w'), Options = require('x'), domready = require('b'), bind = require('y'), map = require('z'), forEach = require('10'), last = require('11'), merge = require('q'), request = require('t');
-        var animationEndSupport = false;
-        domready(function () {
-            var style = (document.body || document.documentElement).style;
-            forEach([
-                'animation',
-                'WebkitAnimation',
-                'MozAnimation',
-                'MsAnimation',
-                'OAnimation'
-            ], function (animation, index) {
-                if (animationEndSupport) {
-                    return;
-                }
-                animationEndSupport = style[animation] !== undefined ? Modal.prototype.animationEndEvent[index] : false;
-            });
-        });
-        var Modal = new prime({
-                mixin: [
-                    Bound,
-                    Options
-                ],
-                inherits: Emitter,
-                animationEndEvent: [
-                    'animationend',
-                    'webkitAnimationEnd',
-                    'mozAnimationEnd',
-                    'MSAnimationEnd',
-                    'oanimationend'
-                ],
-                globalID: 1,
-                options: {
-                    baseClassNames: {
-                        container: 'g5-dialog',
-                        content: 'g5-content',
-                        overlay: 'g5-overlay',
-                        close: 'g5-close',
-                        closing: 'g5-closing',
-                        open: 'g5-dialog-open'
-                    },
-                    content: '',
-                    remote: '',
-                    showCloseButton: true,
-                    escapeToClose: true,
-                    overlayClickToClose: true,
-                    appendNode: '#g5-container',
-                    className: 'g5-dialog-theme-default',
-                    css: {},
-                    overlayClassName: '',
-                    overlayCSS: '',
-                    contentClassName: '',
-                    contentCSS: '',
-                    closeClassName: 'g5-dialog-close',
-                    closeCSS: '',
-                    afterOpen: null,
-                    afterClose: null
-                },
-                constructor: function (options) {
-                    this.setOptions(options);
-                    this.defaults = this.options;
-                    var self = this;
-                    domready(function () {
-                        $(window).on('keyup', function (event) {
-                            if (event.keyCode === 27) {
-                                return self.closeByEscape();
-                            }
-                        });
-                        self.animationEndEvent = animationEndSupport;
-                    });
-                    this.on('dialogOpen', function (options) {
-                        $('body').addClass(options.baseClassNames.open);
-                    }).on('dialogAfterClose', bind(function (options) {
-                        var all = this.getAll();
-                        if (!all || !all.length) {
-                            $('body').removeClass(options.baseClassNames.open);
-                        }
-                    }, this));
-                },
-                storage: function () {
-                    return storage;
-                },
-                open: function (options) {
-                    options = merge(this.options, options);
-                    options.id = this.globalID++;
-                    var elements = {};
-                    elements.container = zen('div').addClass(options.baseClassNames.container).addClass(options.className).style(options.css);
-                    storage.set(elements.container, { dialog: options });
-                    elements.overlay = zen('div').addClass(options.baseClassNames.overlay).addClass(options.overlayClassName).style(options.overlayCSS);
-                    storage.set(elements.overlay, { dialog: options });
-                    if (options.overlayClickToClose) {
-                        elements.container.on('click', bind(this._overlayClick, this, elements.container[0]));
-                        elements.overlay.on('click', bind(this._overlayClick, this, elements.overlay[0]));
-                    }
-                    elements.container.appendChild(elements.overlay);
-                    elements.content = zen('div').addClass(options.baseClassNames.content).addClass(options.contentClassName).style(options.contentCSS).html(options.content);
-                    storage.set(elements.content, { dialog: options });
-                    elements.container.appendChild(elements.content);
-                    if (options.overlayClickToClose) {
-                        elements.content.on('click', function (e) {
-                            return true;
-                        });
-                    }
-                    if (options.remote && options.remote.length > 1) {
-                        this.showLoading();
-                        options.method = options.method || 'get';
-                        var agent = request();
-                        agent.method(options.method);
-                        agent.url(options.remote);
-                        if (options.data) {
-                            agent.data(options.data);
-                        }
-                        agent.send(bind(function (error, response) {
-                            elements.content.html(response.body.html || response.body);
-                            this.hideLoading();
-                            if (options.remoteLoaded) {
-                                options.remoteLoaded(response, options);
-                            }
-                        }, this));
-                    }
-                    if (options.showCloseButton) {
-                        elements.closeButton = zen('div').addClass(options.baseClassNames.close).addClass(options.closeClassName).style(options.closeCSS);
-                        storage.set(elements.closeButton, { dialog: options });
-                        elements.content.appendChild(elements.closeButton);
-                    }
-                    elements.container.delegate('click', '.g5-dialog-close', bind(this._closeButtonClick, this, elements.container));
-                    $(options.appendNode).appendChild(elements.container);
-                    options.elements = elements;
-                    if (options.afterOpen) {
-                        options.afterOpen(elements.content, options);
-                    }
-                    setTimeout(bind(function () {
-                        return this.emit('dialogOpen', options);
-                    }, this), 0);
-                    return elements.content;
-                },
-                getAll: function () {
-                    var options = this.options;
-                    return $('.' + options.baseClassNames.container + ':not(.' + options.baseClassNames.closing + ') .' + options.baseClassNames.content);
-                },
-                getByID: function (id) {
-                    return $(this.getAll().filter(function (element) {
-                        element = $(element);
-                        return storage.get(element).dialog.id === id;
-                    }));
-                },
-                close: function (id) {
-                    if (!id) {
-                        var element = $(last(this.getAll()));
-                        if (!element) {
-                            return false;
-                        }
-                        id = storage.get(element).dialog.id;
-                    }
-                    return this.closeByID(id);
-                },
-                closeAll: function () {
-                    var ids;
-                    ids = map(this.getAll(), function (element) {
-                        element = $(element);
-                        return storage.get(element).dialog.id;
-                    });
-                    if (!ids.length) {
-                        return false;
-                    }
-                    forEach(ids.reverse(), function (value, id) {
-                        return this.closeByID(id);
-                    }, this);
-                    return true;
-                },
-                closeByID: function (id) {
-                    var content = this.getByID(id);
-                    if (!content || !content.length) {
-                        return false;
-                    }
-                    var container, options;
-                    container = storage.get(content).dialog.elements.container;
-                    options = merge({}, storage.get(content).dialog);
-                    var beforeClose = function () {
-                            if (options.beforeClose) {
-                                return options.beforeClose(content, options);
-                            }
-                        }, close = bind(function () {
-                            content.emit('dialogClose', options);
-                            container.remove();
-                            this.emit('dialogAfterClose', options);
-                            if (options.afterClose) {
-                                return options.afterClose(content, options);
-                            }
-                        }, this);
-                    if (animationEndSupport) {
-                        beforeClose();
-                        container.off(this.animationEndEvent).on(this.animationEndEvent, function () {
-                            return close();
-                        }).addClass(options.baseClassNames.closing);
-                    } else {
-                        beforeClose();
-                        close();
-                    }
-                    return true;
-                },
-                closeByEscape: function () {
-                    var ids, id;
-                    ids = map(this.getAll(), function (element) {
-                        element = $(element);
-                        return storage.get(element).dialog.id;
-                    });
-                    if (!ids.length) {
-                        return false;
-                    }
-                    id = Math.max.apply(Math, ids);
-                    var element = this.getByID(id);
-                    if (!storage.get(element).dialog.escapeToClose) {
-                        return false;
-                    }
-                    return this.closeByID(id);
-                },
-                showLoading: function () {
-                    this.hideLoading();
-                    return $('body').appendChild(zen('div.g5-dialog-loading-spinner.' + this.options.className));
-                },
-                hideLoading: function () {
-                    var spinner = $('.g5-dialog-loading-spinner');
-                    return spinner ? spinner.remove() : false;
-                },
-                _overlayClick: function (element, event) {
-                    if (event.target !== element) {
-                        return;
-                    }
-                    return this.close(storage.get($(element)).dialog.id);
-                },
-                _closeButtonClick: function (element) {
-                    return this.close(storage.get($(element)).dialog.id);
-                }
-            });
-        module.exports = Modal;
-    },
-    '14': function (require, module, exports, global) {
-        'use strict';
-        var ready = require('b'), $ = require('1');
-        ready(function () {
-            var input, hiddens, radios;
-            $(document).delegate('click', '.enabler .toggle', function (e, element) {
-                element = $(element);
-                hiddens = element.find('~~ [type=hidden]');
-                if (!hiddens)
-                    return true;
-                if (hiddens)
-                    hiddens.value(hiddens.value() == '0' ? '1' : '0');
-            });
-        });
-        module.exports = {};
-    },
-    '15': function (require, module, exports, global) {
-        var prime = require('m'), Emitter = require('d'), Bound = require('w'), Options = require('x'), $ = require('1'), ready = require('b'), zen = require('o'), forEach = require('2p'), bind = require('y'), clamp = require('2q');
-        var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-        var MOUSEDOWN = 'mousedown' || 'touchstart', MOUSEMOVE = 'mousemove' || 'touchmove', MOUSEUP = 'mouseup' || 'touchend', FOCUSIN = isFirefox ? 'focus' : 'focusin';
-        var ColorPicker = new prime({
-                mixin: [
-                    Options,
-                    Bound
-                ],
-                inherits: Emitter,
-                options: {},
-                constructor: function (options) {
-                    this.setOptions(options);
-                    this.built = false;
-                    this.attach();
-                },
-                attach: function () {
-                    $('body').delegate(FOCUSIN, '.colorpicker input', this.bound('show'), true);
-                    $('body').on(MOUSEDOWN, bind(function (event) {
-                        var target = $(event.target);
-                        if (!target.parent('.cp-wrapper') && !target.parent('.colorpicker')) {
-                            this.hide();
-                        }
-                    }, this));
-                    $('body').delegate(MOUSEDOWN, '.cp-grid, .cp-slider, .cp-opacity-slider', bind(function (event, element) {
-                        event.preventDefault();
-                        this.target = element;
-                        this.move(this.target, event, true);
-                    }, this));
-                    $('body').on(MOUSEMOVE, bind(function (event) {
-                        if (this.target) {
-                            this.move(this.target, event);
-                        }
-                    }, this));
-                    $('body').on(MOUSEUP, bind(function () {
-                        this.target = null;
-                    }, this));
-                    $('body').delegate('keydown', '.colorpicker input', bind(function (event, element) {
-                        switch (event.keyCode) {
-                        case 9:
-                            this.hide();
-                            break;
-                        case 13:
-                        case 27:
-                            this.hide();
-                            element[0].blur();
-                            break;
-                        }
-                        return true;
-                    }, this));
-                    $('body').delegate('keyup', '.colorpicker input', bind(function () {
-                        this.updateFromInput(true);
-                        return true;
-                    }, this));
-                    $('body').delegate('paste', '.colorpicker input', bind(function () {
-                        setTimeout(bind(function () {
-                            this.updateFromInput(true);
-                        }, this), 1);
-                    }, this));
-                },
-                hide: function () {
-                    if (!this.built) {
-                        return;
-                    }
-                    this.wrapper.removeClass('cp-visible');
-                },
-                show: function (event, element) {
-                    if (!this.built) {
-                        this.build();
-                    }
-                    this.element = element;
-                    this.reposition();
-                    this.wrapper.addClass('cp-visible');
-                    this.updateFromInput();
-                },
-                move: function (target, event) {
-                    var input = this.element, picker = target.find('.cp-picker'), clientRect = target[0].getBoundingClientRect(), offsetX = clientRect.left + window.scrollX, offsetY = clientRect.top + window.scrollY, x = Math.round(event.pageX - offsetX), y = Math.round(event.pageY - offsetY), duration = 0, wx, wy, r, phi;
-                    if (event.changedTouches) {
-                        x = event.changedTouches[0].pageX - offsetX;
-                        y = event.changedTouches[0].pageY - offsetY;
-                    }
-                    if (x < 0)
-                        x = 0;
-                    if (y < 0)
-                        y = 0;
-                    if (x > clientRect.width)
-                        x = clientRect.width;
-                    if (y > clientRect.height)
-                        y = clientRect.height;
-                    if (target.parent('.cp-mode-wheel') && picker.parent('.cp-grid')) {
-                        wx = 75 - x;
-                        wy = 75 - y;
-                        r = Math.sqrt(wx * wx + wy * wy);
-                        phi = Math.atan2(wy, wx);
-                        if (phi < 0)
-                            phi += Math.PI * 2;
-                        if (r > 75) {
-                            r = 75;
-                            x = 75 - 75 * Math.cos(phi);
-                            y = 75 - 75 * Math.sin(phi);
-                        }
-                        x = Math.round(x);
-                        y = Math.round(y);
-                    }
-                    if (target.hasClass('cp-grid')) {
-                        picker.style({
-                            top: y,
-                            left: x
-                        });
-                        this.updateFromPicker(input, target);
-                    } else {
-                        picker.style({ top: y });
-                        this.updateFromPicker(input, target);
-                    }
-                },
-                build: function () {
-                    this.wrapper = zen('div.cp-wrapper.cp-with-opacity.cp-mode-hue');
-                    this.slider = zen('div.cp-slider.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-picker'));
-                    this.opacitySlider = zen('div.cp-opacity-slider.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-picker'));
-                    this.grid = zen('div.cp-grid.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-grid-inner')).appendChild(zen('div.cp-picker'));
-                    zen('div').bottom(this.grid.find('.cp-picker'));
-                    var tabs = zen('div.cp-tabs').bottom(this.wrapper);
-                    this.tabs = {
-                        hue: zen('div.cp-tab-hue.active').text('HUE').bottom(tabs),
-                        brightness: zen('div.cp-tab-brightness').text('BRI').bottom(tabs),
-                        saturation: zen('div.cp-tab-saturation').text('SAT').bottom(tabs),
-                        wheel: zen('div.cp-tab-wheel').text('WHEEL').bottom(tabs)
-                    };
-                    tabs.delegate('click', '> div', bind(function (event, element) {
-                        var active = tabs.find('.active'), mode = active.attribute('class').replace(/\s|active|cp-tab-/g, ''), newMode = element.attribute('class').replace(/\s|active|cp-tab-/g, '');
-                        this.wrapper.removeClass('cp-mode-' + mode).addClass('cp-mode-' + newMode);
-                        active.removeClass('active');
-                        element.addClass('active');
-                        this.mode = newMode;
-                        this.updateFromInput();
-                    }, this));
-                    this.wrapper.bottom('body');
-                    this.built = true;
-                    this.mode = 'hue';
-                },
-                updateFromInput: function (dontFireEvent) {
-                    var value = this.element.value(), opacity = value.replace(/\s/g, '').match(/^rgba?\([0-9]{1,3}\,[0-9]{1,3}\,[0-9]{1,3}\,(.+)\)/), hex, hsb;
-                    value = rgbstr2hex(value) || value;
-                    if (!(hex = parseHex(value))) {
-                        hex = '#ffff00';
-                    }
-                    hsb = hex2hsb(hex);
-                    this.opacity = opacity ? clamp(opacity[1], 0, 1) : 1;
-                    var sliderHeight = this.opacitySlider.position().height;
-                    this.opacitySlider.find('.cp-picker').style({ 'top': clamp(sliderHeight - sliderHeight * this.opacity, 0, sliderHeight) });
-                    var gridHeight = this.grid.position().height, gridWidth = this.grid.position().width, sliderHeight = this.slider.position().height, r, phi, x, y;
-                    switch (this.mode) {
-                    case 'wheel':
-                        r = clamp(Math.ceil(hsb.s * 0.75), 0, gridHeight / 2);
-                        phi = hsb.h * Math.PI / 180;
-                        x = clamp(75 - Math.cos(phi) * r, 0, gridWidth);
-                        y = clamp(75 - Math.sin(phi) * r, 0, gridHeight);
-                        this.grid.style({ backgroundColor: 'transparent' }).find('.cp-picker').style({
-                            top: y,
-                            left: x
-                        });
-                        y = 150 - hsb.b / (100 / gridHeight);
-                        if (hex === '')
-                            y = 0;
-                        this.slider.find('.cp-picker').style({ top: y });
-                        this.slider.style({
-                            backgroundColor: hsb2hex({
-                                h: hsb.h,
-                                s: hsb.s,
-                                b: 100
-                            })
-                        });
-                        break;
-                    case 'saturation':
-                        x = clamp(5 * hsb.h / 12, 0, 150);
-                        y = clamp(gridHeight - Math.ceil(hsb.b / (100 / gridHeight)), 0, gridHeight);
-                        this.grid.find('.cp-picker').style({
-                            top: y,
-                            left: x
-                        });
-                        y = clamp(sliderHeight - hsb.s * (sliderHeight / 100), 0, sliderHeight);
-                        this.slider.find('.cp-picker').style({ top: y });
-                        this.slider.style({
-                            backgroundColor: hsb2hex({
-                                h: hsb.h,
-                                s: 100,
-                                b: hsb.b
-                            })
-                        });
-                        this.grid.find('.cp-grid-inner').style({ opacity: hsb.s / 100 });
-                        break;
-                    case 'brightness':
-                        x = clamp(5 * hsb.h / 12, 0, 150);
-                        y = clamp(gridHeight - Math.ceil(hsb.s / (100 / gridHeight)), 0, gridHeight);
-                        this.grid.find('.cp-picker').style({
-                            top: y,
-                            left: x
-                        });
-                        y = clamp(sliderHeight - hsb.b * (sliderHeight / 100), 0, sliderHeight);
-                        this.slider.find('.cp-picker').style({ top: y });
-                        this.slider.style({
-                            backgroundColor: hsb2hex({
-                                h: hsb.h,
-                                s: hsb.s,
-                                b: 100
-                            })
-                        });
-                        this.grid.find('.cp-grid-inner').style({ opacity: 1 - hsb.b / 100 });
-                        break;
-                    case 'hue':
-                    default:
-                        x = clamp(Math.ceil(hsb.s / (100 / gridWidth)), 0, gridWidth);
-                        y = clamp(gridHeight - Math.ceil(hsb.b / (100 / gridHeight)), 0, gridHeight);
-                        this.grid.find('.cp-picker').style({
-                            top: y,
-                            left: x
-                        });
-                        y = clamp(sliderHeight - hsb.h / (360 / sliderHeight), 0, sliderHeight);
-                        this.slider.find('.cp-picker').style({ top: y });
-                        this.grid.style({
-                            backgroundColor: hsb2hex({
-                                h: hsb.h,
-                                s: 100,
-                                b: 100
-                            })
-                        });
-                        break;
-                    }
-                    if (!dontFireEvent) {
-                        this.element.value(this.getValue(hex));
-                    }
-                    this.emit('change', this.element, hex, this.opacity);
-                },
-                updateFromPicker: function (input, target) {
-                    var getCoords = function (picker, container) {
-                        var left, top;
-                        if (!picker.length || !container)
-                            return null;
-                        left = picker[0].getBoundingClientRect().left;
-                        top = picker[0].getBoundingClientRect().top;
-                        return {
-                            x: left - container[0].getBoundingClientRect().left + picker[0].offsetWidth / 2,
-                            y: top - container[0].getBoundingClientRect().top + picker[0].offsetHeight / 2
-                        };
-                    };
-                    var hex, hue, saturation, brightness, x, y, r, phi, grid = this.wrapper.find('.cp-grid'), slider = this.wrapper.find('.cp-slider'), opacitySlider = this.wrapper.find('.cp-opacity-slider'), gridPicker = grid.find('.cp-picker'), sliderPicker = slider.find('.cp-picker'), opacityPicker = opacitySlider.find('.cp-picker'), gridPos = getCoords(gridPicker, grid), sliderPos = getCoords(sliderPicker, slider), opacityPos = getCoords(opacityPicker, opacitySlider), gridWidth = grid[0].getBoundingClientRect().width, gridHeight = grid[0].getBoundingClientRect().height, sliderHeight = slider[0].getBoundingClientRect().height, opacitySliderHeight = opacitySlider[0].getBoundingClientRect().height;
-                    var value = this.element.value();
-                    value = rgbstr2hex(value) || value;
-                    if (!(hex = parseHex(value))) {
-                        hex = '#ffff00';
-                    }
-                    if (target.hasClass('cp-grid') || target.hasClass('cp-slider')) {
-                        switch (this.mode) {
-                        case 'wheel':
-                            x = gridWidth / 2 - gridPos.x;
-                            y = gridHeight / 2 - gridPos.y;
-                            r = Math.sqrt(x * x + y * y);
-                            phi = Math.atan2(y, x);
-                            if (phi < 0)
-                                phi += Math.PI * 2;
-                            if (r > 75) {
-                                r = 75;
-                                gridPos.x = 69 - 75 * Math.cos(phi);
-                                gridPos.y = 69 - 75 * Math.sin(phi);
-                            }
-                            saturation = clamp(r / 0.75, 0, 100);
-                            hue = clamp(phi * 180 / Math.PI, 0, 360);
-                            brightness = clamp(100 - Math.floor(sliderPos.y * (100 / sliderHeight)), 0, 100);
-                            hex = hsb2hex({
-                                h: hue,
-                                s: saturation,
-                                b: brightness
-                            });
-                            slider.style({
-                                backgroundColor: hsb2hex({
-                                    h: hue,
-                                    s: saturation,
-                                    b: 100
-                                })
-                            });
-                            break;
-                        case 'saturation':
-                            hue = clamp(parseInt(gridPos.x * (360 / gridWidth), 10), 0, 360);
-                            saturation = clamp(100 - Math.floor(sliderPos.y * (100 / sliderHeight)), 0, 100);
-                            brightness = clamp(100 - Math.floor(gridPos.y * (100 / gridHeight)), 0, 100);
-                            hex = hsb2hex({
-                                h: hue,
-                                s: saturation,
-                                b: brightness
-                            });
-                            slider.style({
-                                backgroundColor: hsb2hex({
-                                    h: hue,
-                                    s: 100,
-                                    b: brightness
-                                })
-                            });
-                            grid.find('.cp-grid-inner').style({ opacity: saturation / 100 });
-                            break;
-                        case 'brightness':
-                            hue = clamp(parseInt(gridPos.x * (360 / gridWidth), 10), 0, 360);
-                            saturation = clamp(100 - Math.floor(gridPos.y * (100 / gridHeight)), 0, 100);
-                            brightness = clamp(100 - Math.floor(sliderPos.y * (100 / sliderHeight)), 0, 100);
-                            hex = hsb2hex({
-                                h: hue,
-                                s: saturation,
-                                b: brightness
-                            });
-                            slider.style({
-                                backgroundColor: hsb2hex({
-                                    h: hue,
-                                    s: saturation,
-                                    b: 100
-                                })
-                            });
-                            grid.find('.cp-grid-inner').style({ opacity: 1 - brightness / 100 });
-                            break;
-                        default:
-                            hue = clamp(360 - parseInt(sliderPos.y * (360 / sliderHeight), 10), 0, 360);
-                            saturation = clamp(Math.floor(gridPos.x * (100 / gridWidth)), 0, 100);
-                            brightness = clamp(100 - Math.floor(gridPos.y * (100 / gridHeight)), 0, 100);
-                            hex = hsb2hex({
-                                h: hue,
-                                s: saturation,
-                                b: brightness
-                            });
-                            grid.style({
-                                backgroundColor: hsb2hex({
-                                    h: hue,
-                                    s: 100,
-                                    b: 100
-                                })
-                            });
-                            break;
-                        }
-                    }
-                    if (target.hasClass('cp-opacity-slider')) {
-                        this.opacity = parseFloat(1 - opacityPos.y / opacitySliderHeight).toFixed(2);
-                    }
-                    input.value(this.getValue(hex));
-                    this.emit('change', this.element, hex, this.opacity);
-                },
-                reposition: function () {
-                    var offset = this.element[0].getBoundingClientRect();
-                    this.wrapper.style({
-                        top: offset.top + offset.height + window.scrollY,
-                        left: offset.left + window.scrollX
-                    });
-                },
-                getValue: function (hex) {
-                    if (this.opacity == 1) {
-                        return hex;
-                    }
-                    var rgb = hex2rgb(hex);
-                    return 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + this.opacity + ')';
-                }
-            });
-        var parseHex = function (string) {
-            string = string.replace(/[^A-F0-9]/gi, '');
-            if (string.length !== 3 && string.length !== 6)
-                return '';
-            if (string.length === 3) {
-                string = string[0] + string[0] + string[1] + string[1] + string[2] + string[2];
-            }
-            return '#' + string.toLowerCase();
-        };
-        var hsb2rgb = function (hsb) {
-            var rgb = {};
-            var h = Math.round(hsb.h);
-            var s = Math.round(hsb.s * 255 / 100);
-            var v = Math.round(hsb.b * 255 / 100);
-            if (s === 0) {
-                rgb.r = rgb.g = rgb.b = v;
-            } else {
-                var t1 = v;
-                var t2 = (255 - s) * v / 255;
-                var t3 = (t1 - t2) * (h % 60) / 60;
-                if (h === 360)
-                    h = 0;
-                if (h < 60) {
-                    rgb.r = t1;
-                    rgb.b = t2;
-                    rgb.g = t2 + t3;
-                } else if (h < 120) {
-                    rgb.g = t1;
-                    rgb.b = t2;
-                    rgb.r = t1 - t3;
-                } else if (h < 180) {
-                    rgb.g = t1;
-                    rgb.r = t2;
-                    rgb.b = t2 + t3;
-                } else if (h < 240) {
-                    rgb.b = t1;
-                    rgb.r = t2;
-                    rgb.g = t1 - t3;
-                } else if (h < 300) {
-                    rgb.b = t1;
-                    rgb.g = t2;
-                    rgb.r = t2 + t3;
-                } else if (h < 360) {
-                    rgb.r = t1;
-                    rgb.g = t2;
-                    rgb.b = t1 - t3;
-                } else {
-                    rgb.r = 0;
-                    rgb.g = 0;
-                    rgb.b = 0;
-                }
-            }
-            return {
-                r: Math.round(rgb.r),
-                g: Math.round(rgb.g),
-                b: Math.round(rgb.b)
-            };
-        };
-        var rgb2hex = function (rgb) {
-            var hex = [
-                    rgb.r.toString(16),
-                    rgb.g.toString(16),
-                    rgb.b.toString(16)
-                ];
-            forEach(hex, function (val, nr) {
-                if (val.length === 1)
-                    hex[nr] = '0' + val;
-            });
-            return '#' + hex.join('');
-        };
-        var rgbstr2hex = function (rgb) {
-            rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-            return rgb && rgb.length === 4 ? '#' + ('0' + parseInt(rgb[1], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[2], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[3], 10).toString(16)).slice(-2) : '';
-        };
-        var hsb2hex = function (hsb) {
-            return rgb2hex(hsb2rgb(hsb));
-        };
-        var hex2hsb = function (hex) {
-            var hsb = rgb2hsb(hex2rgb(hex));
-            if (hsb.s === 0)
-                hsb.h = 360;
-            return hsb;
-        };
-        var rgb2hsb = function (rgb) {
-            var hsb = {
-                    h: 0,
-                    s: 0,
-                    b: 0
-                };
-            var min = Math.min(rgb.r, rgb.g, rgb.b);
-            var max = Math.max(rgb.r, rgb.g, rgb.b);
-            var delta = max - min;
-            hsb.b = max;
-            hsb.s = max !== 0 ? 255 * delta / max : 0;
-            if (hsb.s !== 0) {
-                if (rgb.r === max) {
-                    hsb.h = (rgb.g - rgb.b) / delta;
-                } else if (rgb.g === max) {
-                    hsb.h = 2 + (rgb.b - rgb.r) / delta;
-                } else {
-                    hsb.h = 4 + (rgb.r - rgb.g) / delta;
-                }
-            } else {
-                hsb.h = -1;
-            }
-            hsb.h *= 60;
-            if (hsb.h < 0) {
-                hsb.h += 360;
-            }
-            hsb.s *= 100 / 255;
-            hsb.b *= 100 / 255;
-            return hsb;
-        };
-        var hex2rgb = function (hex) {
-            hex = parseInt(hex.indexOf('#') > -1 ? hex.substring(1) : hex, 16);
-            return {
-                r: hex >> 16,
-                g: (hex & 65280) >> 8,
-                b: hex & 255
-            };
-        };
-        ready(function () {
-            var x = new ColorPicker();
-            x.on('change', function (element, hex, opacity) {
-                if (opacity < 1) {
-                    var rgb = hex2rgb(hex), str = 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + opacity + ')';
-                    element.style({ backgroundColor: str });
-                } else {
-                    element.style({ backgroundColor: hex });
-                }
-            });
-        });
-        module.exports = ColorPicker;
-    },
-    '16': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('m'), $ = require('n'), zen = require('o'), storage = require('j')(), Emitter = require('d'), Bound = require('w'), Options = require('x'), domready = require('b'), bind = require('y'), map = require('z'), forEach = require('10'), contains = require('19'), last = require('11'), split = require('2e'), removeAll = require('2f'), insert = require('2g'), find = require('2h'), combine = require('2i'), merge = require('q'), unhyphenate = require('2j'), properCase = require('2k'), trim = require('2l'), modal = require('a').modal, async = require('2m'), request = require('t'), wf = require('2n');
-        require('2o');
-        var Fonts = new prime({
-                mixin: Bound,
-                inherits: Emitter,
-                previewSentence: {
-                    'latin': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
-                    'latin-ext': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
-                    'cyrillic': '\u0412 \u0447\u0430\u0449\u0430\u0445 \u044e\u0433\u0430 \u0436\u0438\u043b \u0431\u044b \u0446\u0438\u0442\u0440\u0443\u0441? \u0414\u0430, \u043d\u043e \u0444\u0430\u043b\u044c\u0448\u0438\u0432\u044b\u0439 \u044d\u043a\u0437\u0435\u043c\u043f\u043b\u044f\u0440!',
-                    'cyrillic-ext': '\u0412 \u0447\u0430\u0449\u0430\u0445 \u044e\u0433\u0430 \u0436\u0438\u043b \u0431\u044b \u0446\u0438\u0442\u0440\u0443\u0441? \u0414\u0430, \u043d\u043e \u0444\u0430\u043b\u044c\u0448\u0438\u0432\u044b\u0439 \u044d\u043a\u0437\u0435\u043c\u043f\u043b\u044f\u0440!',
-                    'devanagari': '\u090f\u0915 \u092a\u0932 \u0915\u093e \u0915\u094d\u0930\u094b\u0927 \u0906\u092a\u0915\u093e \u092d\u0935\u093f\u0937\u094d\u092f \u092c\u093f\u0917\u093e\u0921 \u0938\u0915\u0924\u093e \u0939\u0948',
-                    'greek': '\u03a4\u03ac\u03c7\u03b9\u03c3\u03c4\u03b7 \u03b1\u03bb\u03ce\u03c0\u03b7\u03be \u03b2\u03b1\u03c6\u03ae\u03c2 \u03c8\u03b7\u03bc\u03ad\u03bd\u03b7 \u03b3\u03b7, \u03b4\u03c1\u03b1\u03c3\u03ba\u03b5\u03bb\u03af\u03b6\u03b5\u03b9 \u03c5\u03c0\u03ad\u03c1 \u03bd\u03c9\u03b8\u03c1\u03bf\u03cd \u03ba\u03c5\u03bd\u03cc\u03c2',
-                    'greek-ext': '\u03a4\u03ac\u03c7\u03b9\u03c3\u03c4\u03b7 \u03b1\u03bb\u03ce\u03c0\u03b7\u03be \u03b2\u03b1\u03c6\u03ae\u03c2 \u03c8\u03b7\u03bc\u03ad\u03bd\u03b7 \u03b3\u03b7, \u03b4\u03c1\u03b1\u03c3\u03ba\u03b5\u03bb\u03af\u03b6\u03b5\u03b9 \u03c5\u03c0\u03ad\u03c1 \u03bd\u03c9\u03b8\u03c1\u03bf\u03cd \u03ba\u03c5\u03bd\u03cc\u03c2',
-                    'khmer': '\u1781\u17d2\u1789\u17bb\u17c6\u17a2\u17b6\u1785\u1789\u17c9\u17b6\u17c6\u1780\u1789\u17d2\u1785\u1780\u17cb\u1794\u17b6\u1793 \u178a\u17c4\u1799\u1782\u17d2\u1798\u17b6\u1793\u1794\u1789\u17d2\u17a0\u17b6',
-                    'telugu': '\u0c26\u0c47\u0c36 \u0c2d\u0c3e\u0c37\u0c32\u0c02\u0c26\u0c41 \u0c24\u0c46\u0c32\u0c41\u0c17\u0c41 \u0c32\u0c46\u0c38\u0c4d\u0c38',
-                    'vietnamese': 'T\xf4i c\xf3 th\u1ec3 \u0103n th\u1ee7y tinh m\xe0 kh\xf4ng h\u1ea1i g\xec.'
-                },
-                constructor: function () {
-                    this.wf = wf;
-                    this.data = null;
-                    this.field = null;
-                    this.element = null;
-                    this.throttle = false;
-                    this.selected = null;
-                    this.loadedFonts = [];
-                    this.filters = {
-                        search: '',
-                        script: 'latin',
-                        categories: []
-                    };
-                },
-                open: function (event, element, container) {
-                    if (!this.data || !this.field) {
-                        return this.getData(element);
-                    }
-                    var list = [];
-                    forEach(this.data, function (value) {
-                        list.push(value.family);
-                    });
-                    if (container) {
-                        container.empty().appendChild(this.buildLayout());
-                        this.scroll(container.find('ul.g-fonts-list'));
-                        this.updateTotal();
-                        this.selectFromValue();
-                        return;
-                    }
-                    modal.open({
-                        content: 'Loading...',
-                        className: 'g5-dialog-theme-default g5-modal-fonts',
-                        afterOpen: bind(function (container) {
-                            setTimeout(bind(function () {
-                                container.empty().appendChild(this.buildLayout());
-                                this.scroll(container.find('ul.g-fonts-list'));
-                                this.updateTotal();
-                                this.selectFromValue();
-                            }, this), 1);
-                        }, this)
-                    });
-                },
-                getData: function (element) {
-                    var data = element.data('g5-fontpicker');
-                    if (!data) {
-                        throw new Error('No fontpicker data found');
-                    }
-                    data = JSON.parse(data);
-                    this.field = $(data.field);
-                    modal.open({
-                        content: 'Loading...',
-                        className: 'g5-dialog-theme-default g5-modal-fonts',
-                        remote: data.data,
-                        remoteLoaded: bind(function (response, instance) {
-                            if (response.error) {
-                                instance.elements.content.html(response.body.html + '[' + data.data + ']');
-                                return false;
-                            }
-                            this.data = response.body.items;
-                            this.open(null, element, instance.elements.content);
-                        }, this)
-                    });
-                },
-                scroll: function (container) {
-                    clearTimeout(this.throttle);
-                    this.throttle = setTimeout(bind(function () {
-                        var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li:not(.g-font-hide)', 5000), list = [];
-                        if (!elements) {
-                            return;
-                        }
-                        $(elements).forEach(function (element) {
-                            element = $(element);
-                            var dataFont = element.data('font'), variant = element.data('variant');
-                            if (!contains(this.loadedFonts, dataFont)) {
-                                list.push(dataFont + (variant != 'regular' ? ':' + variant : ''));
-                            } else {
-                                element.find('[data-variant="' + variant + '"] .preview').style({
-                                    fontFamily: dataFont,
-                                    fontWeight: variant == 'regular' ? 'normal' : variant
-                                });
-                            }
-                        }, this);
-                        if (!list || !list.length) {
-                            return;
-                        }
-                        wf.load({
-                            classes: false,
-                            google: { families: list },
-                            fontactive: bind(function (family, fvd) {
-                                var v = container.find('li[data-font="' + family + '"]').data('variant');
-                                container.find('li[data-font="' + family + '"]:not(.g-variant-hide) > .preview').style({
-                                    fontFamily: family,
-                                    fontWeight: fvd
-                                });
-                                this.loadedFonts.push(family);
-                            }, this)
-                        });
-                    }, this), 250);
-                },
-                unselect: function (selected) {
-                    selected = selected || this.selected;
-                    if (!selected) {
-                        return false;
-                    }
-                    var baseVariant = selected.element.data('variant');
-                    selected.element.removeClass('selected');
-                    selected.element.search('input[type=checkbox]').checked(false);
-                    selected.element.search('[data-font]').addClass('g-variant-hide');
-                    selected.element.find('[data-variant="' + baseVariant + '"]').removeClass('g-variant-hide');
-                    selected.variants = [selected.baseVariant];
-                    selected.selected = [];
-                },
-                selectFromValue: function () {
-                    var value = this.field.value();
-                    if (!value.match('family=')) {
-                        return false;
-                    }
-                    var split = value.split('&'), family = split[0], split2 = family.split(':'), name = split2[0].replace('family=', '').replace(/\+/g, ' '), variants = split2[1] ? split2[1].split(',') : ['regular'], subset = split[1] ? split[1].replace('subset=', '').split(',') : ['latin'];
-                    if (contains(variants, '400')) {
-                        removeAll(variants, '400');
-                        insert(variants, 'regular');
-                    }
-                    if (contains(variants, '400italic')) {
-                        removeAll(variants, '400italic');
-                        insert(variants, 'italic');
-                    }
-                    var element = $('ul.g-fonts-list > [data-font="' + name + '"]');
-                    this.selected = {
-                        font: name,
-                        baseVariant: element.data('variant'),
-                        element: element,
-                        variants: variants,
-                        selected: [],
-                        charsets: subset,
-                        availableVariants: element.data('variants').split(','),
-                        expanded: false,
-                        loaded: false
-                    };
-                    variants.forEach(function (variant) {
-                        this.select(element, variant);
-                        element.find('> ul > [data-variant="' + variant + '"]').removeClass('g-variant-hide');
-                    }, this);
-                    var charsetSelected = element.find('.font-charsets-selected');
-                    if (charsetSelected) {
-                        charsetSelected.text('(' + subset.length + ' selected)');
-                    }
-                    $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop;
-                    this.toggleExpansion();
-                    setTimeout(bind(function () {
-                        this.toggleExpansion();
-                    }, this), 50);
-                },
-                select: function (element, variant, target) {
-                    var baseVariant = element.data('variant');
-                    if (!this.selected || this.selected.element != element) {
-                        if (variant && this.selected) {
-                            var charsetSelected = this.selected.element.find('.font-charsets-selected');
-                            if (charsetSelected) {
-                                charsetSelected.text('(1 selected)');
-                            }
-                        }
-                        this.selected = {
-                            font: element.data('font'),
-                            baseVariant: baseVariant,
-                            element: element,
-                            variants: [baseVariant],
-                            selected: [],
-                            charsets: ['latin'],
-                            availableVariants: element.data('variants').split(','),
-                            expanded: false,
-                            loaded: false
-                        };
-                    }
-                    if (!variant) {
-                        this.toggleExpansion();
-                    }
-                    if (variant) {
-                        var selected = $('ul.g-fonts-list > [data-font]:not([data-font="' + this.selected.font + '"]) input[type="checkbox"]:checked');
-                        if (selected) {
-                            selected.checked(false);
-                            selected.parent('[data-variants]').removeClass('font-selected');
-                        }
-                        var checkbox = this.selected.element.find('input[type="checkbox"][value="' + variant + '"]'), checked = checkbox.checked();
-                        if (checkbox) {
-                            checkbox.checked(!checked);
-                        }
-                        if (!checked) {
-                            insert(this.selected.variants, variant);
-                            insert(this.selected.selected, variant);
-                        } else {
-                            if (variant != this.selected.baseVariant) {
-                                removeAll(this.selected.variants, variant);
-                            }
-                            removeAll(this.selected.selected, variant);
-                        }
-                        this.updateSelection();
-                    }
-                },
-                toggleExpansion: function () {
-                    if (this.selected.availableVariants.length <= 1) {
-                        return;
-                    }
-                    if (!this.selected.expanded) {
-                        var variants = this.selected.element.data('variants'), list = [], variant;
-                        if (variants.split(',').length > 1) {
-                            this.manipulateLink(this.selected.font);
-                            this.selected.element.search('[data-font]').removeClass('g-variant-hide');
-                            if (!this.selected.loaded) {
-                                wf.load({
-                                    classes: false,
-                                    google: { families: [this.selected.font.replace(/\s/g, '+') + ':' + variants] },
-                                    fontactive: bind(function (family, fvd) {
-                                        var style = this.fvdToStyle(family, fvd), search = style.fontWeight;
-                                        if (search == '400') {
-                                            search = style.fontStyle == 'normal' ? 'regular' : 'italic';
-                                        } else if (style.fontStyle == 'italic') {
-                                            search += 'italic';
-                                        }
-                                        this.selected.element.find('li[data-variant="' + search + '"] .preview').style(style);
-                                        this.selected.loaded = true;
-                                    }, this)
-                                });
-                            }
-                        }
-                    } else {
-                        var exclude = ':not([data-variant="' + this.selected.variants.join('"]):not([data-variant="') + '"])';
-                        exclude = this.selected.element.search('[data-font]' + exclude);
-                        if (exclude) {
-                            exclude.addClass('g-variant-hide');
-                        }
-                    }
-                    this.selected.expanded = !this.selected.expanded;
-                },
-                manipulateLink: function (family) {
-                    family = family.replace(/\s/g, '+');
-                    var link = $('head link[href*="' + family + '"]');
-                    if (!link) {
-                        return;
-                    }
-                    var parts = decodeURIComponent(link.href()).split('|');
-                    if (!parts || parts.length <= 1) {
-                        return;
-                    }
-                    removeAll(parts, family);
-                    link.attribute('href', encodeURI(parts.join('|')));
-                },
-                toggle: function (event, element) {
-                    element = $(element);
-                    this.select(element.parent('[data-font]') || element, element.parent('[data-font]') ? element.data('variant') : false, element);
-                    return false;
-                },
-                updateSelection: function () {
-                    var preview = $('.g-particles-footer .font-selected'), selected;
-                    if (!preview) {
-                        return;
-                    }
-                    if (!this.selected.selected.length) {
-                        preview.empty();
-                        this.selected.element.removeClass('font-selected');
-                        return;
-                    }
-                    selected = this.selected.selected.sort();
-                    this.selected.element.addClass('font-selected');
-                    preview.html('<strong>' + this.selected.font + '</strong> (<small>' + selected.join(', ').replace('regular', 'normal') + '</small>)');
-                },
-                updateTotal: function () {
-                    var totals = $('.g-particles-header .font-search-total'), count = $('.g-fonts-list > [data-font]:not(.g-font-hide)');
-                    totals.text(count ? count.length : 0);
-                },
-                buildLayout: function () {
-                    this.filters.script = 'latin';
-                    var previewSentence = this.previewSentence[this.filters.script], html = zen('div#g-fonts.g-grid'), main = zen('div.g-particles-main').bottom(html), ul = zen('ul.g-fonts-list').bottom(main), families = [], list, categories = [], subsets = [];
-                    this.buildHeader(html).top(html);
-                    this.buildFooter(html).bottom(html);
-                    ul.on('scroll', bind(this.scroll, this, ul));
-                    html.delegate('click', '.g-fonts-list li[data-font]', bind(this.toggle, this));
-                    async.eachSeries(this.data, bind(function (font, callback) {
-                        combine(subsets, font.subsets);
-                        insert(categories, font.category);
-                        this.filters.categories.push(font.category);
-                        var variants = font.variants.join(',').replace('regular', 'normal'), variant = contains(font.variants, 'regular') ? '' : ':' + font.variants[0], li = zen('li[data-font="' + font.family + '"][data-variant="' + (variant.replace(':', '') || 'regular') + '"][data-variants="' + variants + '"]').bottom(ul), total = font.variants.length + ' style' + (font.variants.length > 1 ? 's' : ''), charsets = font.subsets.length > 1 ? ', <span class="font-charsets">' + font.subsets.length + ' charsets <span class="font-charsets-selected">(1 selected)</span></span>' : '';
-                        var family = zen('div.family').html('<strong>' + font.family + '</strong>, ' + total + charsets).bottom(li), charset = family.find('.font-charsets-selected');
-                        if (charset) {
-                            charset.popover({
-                                placement: 'auto',
-                                width: '200',
-                                trigger: 'mouse',
-                                style: 'font-categories, above-modal'
-                            }).on('beforeshow.popover', bind(function (popover) {
-                                var subs = font.subsets.sort();
-                                var subsets = font.subsets, content = popover.$target.find('.g5-popover-content'), checked;
-                                content.empty();
-                                var div, current;
-                                subsets.forEach(function (cs) {
-                                    current = contains(this.selected.charsets, cs) ? cs == 'latin' ? 'checked disabled' : 'checked' : '';
-                                    zen('div').html('<label><input type="checkbox" ' + current + ' value="' + cs + '"/> ' + properCase(unhyphenate(cs.replace('ext', 'extended'))) + '</label>').bottom(content);
-                                }, this);
-                                content.delegate('click', 'input[type="checkbox"]', bind(function (event, input) {
-                                    input = $(input);
-                                    checked = content.search('input[type="checkbox"]:checked');
-                                    this.selected.charsets = checked ? checked.map('value') : [];
-                                    charset.text('(' + this.selected.charsets.length + ' selected)');
-                                }, this));
-                                popover.displayContent();
-                            }, this));
-                        }
-                        var variantContainer = zen('ul').bottom(li), variantFont, label;
-                        async.each(font.variants, bind(function (current) {
-                            variantFont = zen('li[data-font="' + font.family + '"][data-variant="' + current + '"]').bottom(variantContainer);
-                            zen('input[type="checkbox"][value="' + current + '"]').bottom(variantFont);
-                            zen('div.variant').html('<small>' + this.mapVariant(current) + '</small>').bottom(variantFont);
-                            zen('div.preview').text(previewSentence).bottom(variantFont);
-                            if (':' + current !== variant && current !== (variant || 'regular')) {
-                                variantFont.addClass('g-variant-hide');
-                            }
-                        }, this));
-                        if (!contains(font.subsets, 'latin')) {
-                            li.addClass('g-font-hide');
-                        }
-                        families.push(font.family + variant);
-                        callback();
-                    }, this));
-                    var catContainer = html.find('a.font-category'), subContainer = html.find('a.font-subsets');
-                    catContainer.data('font-categories', categories.join(',')).html('Categories (<small>' + categories.length + '</small>) <i class="fa fa-caret-down"></i>');
-                    subContainer.data('font-subsets', subsets.join(',')).html('Subsets (<small>' + properCase(unhyphenate(this.filters.script.replace('ext', 'extended'))) + '</small>) <i class="fa fa-caret-down"></i>');
-                    return html;
-                },
-                buildHeader: function (html) {
-                    var container = zen('div.settings-block.g-particles-header').bottom(html), preview = zen('input.float-left.font-preview[type="text"][data-font-preview][placeholder="Font Preview..."][value="' + this.previewSentence[this.filters.script] + '"]').bottom(container), searchWrapper = zen('span.font-search-wrapper.float-right').bottom(container), search = zen('input.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(searchWrapper), totals = zen('span.font-search-total').bottom(searchWrapper);
-                    search.on('keyup', bind(this.search, this, search));
-                    preview.on('keyup', bind(this.updatePreview, this, preview));
-                    return container;
-                },
-                buildFooter: function (html) {
-                    var container = zen('div.settings-block.g-particles-footer').bottom(html), leftContainer = zen('div.float-left.font-left-container').bottom(container), rightContainer = zen('div.float-right.font-right-container').bottom(container), category = zen('a.font-category.button').bottom(leftContainer), subsets = zen('a.font-subsets.button').bottom(leftContainer), selected = zen('span.font-selected').bottom(rightContainer), select = zen('button.button.button-primary').text('Select').bottom(rightContainer), current;
-                    select.on('click', bind(function () {
-                        if (!$('ul.g-fonts-list > [data-font] input[type="checkbox"]:checked')) {
-                            this.field.value('');
-                            modal.close();
-                            return;
-                        }
-                        var name = this.selected.font.replace(/\s/g, '+'), variation = this.selected.selected, charset = this.selected.charsets;
-                        if (variation.length == 1 && variation[0] == 'regular') {
-                            variation = [];
-                        }
-                        if (charset.length == 1 && charset[0] == 'latin') {
-                            charset = [];
-                        }
-                        if (contains(variation, 'regular')) {
-                            removeAll(variation, 'regular');
-                            insert(variation, '400');
-                        }
-                        if (contains(variation, 'italic')) {
-                            removeAll(variation, 'italic');
-                            insert(variation, '400italic');
-                        }
-                        this.field.value('family=' + name + (variation.length ? ':' + variation.join(',') : '') + (charset.length ? '&subset=' + charset.join(',') : ''));
-                        modal.close();
-                    }, this));
-                    category.popover({
-                        placement: 'auto',
-                        width: '200',
-                        trigger: 'mouse',
-                        style: 'font-categories, above-modal'
-                    }).on('beforeshow.popover', bind(function (popover) {
-                        var categories = category.data('font-categories').split(','), content = popover.$target.find('.g5-popover-content'), checked;
-                        content.empty();
-                        var div;
-                        categories.forEach(function (category) {
-                            current = contains(this.filters.categories, category) ? 'checked' : '';
-                            zen('div').html('<label><input type="checkbox" ' + current + ' value="' + category + '"/> ' + properCase(unhyphenate(category)) + '</label>').bottom(content);
-                        }, this);
-                        content.delegate('click', 'input[type="checkbox"]', bind(function (event, input) {
-                            input = $(input);
-                            checked = content.search('input[type="checkbox"]:checked');
-                            this.filters.categories = checked ? checked.map('value') : [];
-                            category.find('small').text(this.filters.categories.length);
-                            this.search();
-                        }, this));
-                        popover.displayContent();
-                    }, this));
-                    subsets.popover({
-                        placement: 'auto',
-                        width: '200',
-                        trigger: 'mouse',
-                        style: 'font-subsets, above-modal'
-                    }).on('beforeshow.popover', bind(function (popover) {
-                        var subs = subsets.data('font-subsets').split(','), content = popover.$target.find('.g5-popover-content');
-                        content.empty();
-                        var div;
-                        subs.forEach(function (sub) {
-                            current = sub == this.filters.script ? 'checked' : '';
-                            zen('div').html('<label><input name="font-subset[]" type="radio" ' + current + ' value="' + sub + '"/> ' + properCase(unhyphenate(sub.replace('ext', 'extended'))) + '</label>').bottom(content);
-                        }, this);
-                        content.delegate('change', 'input[type="radio"]', bind(function (event, input) {
-                            input = $(input);
-                            this.filters.script = input.value();
-                            $('.g-particles-header input.font-preview').value(this.previewSentence[this.filters.script]);
-                            subsets.find('small').text(properCase(unhyphenate(input.value().replace('ext', 'extended'))));
-                            this.search();
-                            this.updatePreview();
-                        }, this));
-                        popover.displayContent();
-                    }, this));
-                    return container;
-                },
-                search: function (input) {
-                    input = input || $('.g-particles-header input.font-search');
-                    var list = $('.g-fonts-list'), value = input.value(), name, data;
-                    list.search('> [data-font]').forEach(function (font) {
-                        font = $(font);
-                        name = font.data('font');
-                        data = find(this.data, { family: name });
-                        font.removeClass('g-font-hide');
-                        if (this.selected && this.selected.font == name && this.selected.selected.length) {
-                            return;
-                        }
-                        if (!contains(data.subsets, this.filters.script)) {
-                            font.addClass('g-font-hide');
-                            return;
-                        }
-                        if (!contains(this.filters.categories, data.category)) {
-                            font.addClass('g-font-hide');
-                            return;
-                        }
-                        if (!name.match(new RegExp('^' + value + '|\\s' + value, 'gi'))) {
-                            font.addClass('g-font-hide');
-                        } else {
-                            font.removeClass('g-font-hide');
-                        }
-                    }, this);
-                    this.updateTotal();
-                    clearTimeout(input.refreshTimer);
-                    input.refreshTimer = setTimeout(bind(function () {
-                        this.scroll($('ul.g-fonts-list'));
-                    }, this), 400);
-                    input.previousValue = value;
-                },
-                updatePreview: function (input) {
-                    input = input || $('.g-particles-header input.font-preview');
-                    clearTimeout(input.refreshTimer);
-                    var value = input.value(), list = $('.g-fonts-list');
-                    value = trim(value) ? trim(value) : this.previewSentence[this.filters.script];
-                    if (input.previousValue == value) {
-                        return true;
-                    }
-                    list.search('[data-font] .preview').text(value);
-                    input.previousValue = value;
-                },
-                fvdToStyle: function (family, fvd) {
-                    var match = fvd.match(/([a-z])([0-9])/);
-                    if (!match)
-                        return '';
-                    var styleMap = {
-                            n: 'normal',
-                            i: 'italic',
-                            o: 'oblique'
-                        };
-                    return {
-                        fontFamily: family,
-                        fontStyle: styleMap[match[1]],
-                        fontWeight: (match[2] * 100).toString()
-                    };
-                },
-                mapVariant: function (variant) {
-                    switch (variant) {
-                    case '100':
-                        return 'Thin 100';
-                        break;
-                    case '100italic':
-                        return 'Thin 100 Italic';
-                        break;
-                    case '200':
-                        return 'Extra-Light 200';
-                        break;
-                    case '200italic':
-                        return 'Extra-Light 200 Italic';
-                        break;
-                    case '300':
-                        return 'Light 300';
-                        break;
-                    case '300italic':
-                        return 'Light 300 Italic';
-                        break;
-                    case '400':
-                    case 'regular':
-                        return 'Normal 400';
-                        break;
-                    case '400italic':
-                    case 'italic':
-                        return 'Normal 400 Italic';
-                        break;
-                    case '500':
-                        return 'Medium 500';
-                        break;
-                    case '500italic':
-                        return 'Medium 500 Italic';
-                        break;
-                    case '600':
-                        return 'Semi-Bold 600';
-                        break;
-                    case '600italic':
-                        return 'Semi-Bold 600 Italic';
-                        break;
-                    case '700':
-                        return 'Bold 700';
-                        break;
-                    case '700italic':
-                        return 'Bold 700 Italic';
-                        break;
-                    case '800':
-                        return 'Extra-Bold 800';
-                        break;
-                    case '800italic':
-                        return 'Extra-Bold 800 Italic';
-                        break;
-                    case '900':
-                        return 'Ultra-Bold 900';
-                        break;
-                    case '900italic':
-                        return 'Ultra-Bold 900 Italic';
-                        break;
-                    default:
-                        return 'Unknown Variant';
-                    }
-                }
-            });
-        domready(function () {
-            $('body').delegate('click', '[data-g5-fontpicker]', function (event, element) {
-                var FontPicker = storage.get(element);
-                if (!FontPicker) {
-                    FontPicker = new Fonts();
-                    storage.set(element, FontPicker);
-                }
-                FontPicker.open(event, element);
-            });
-        });
-        module.exports = Fonts;
-    },
-    '17': function (require, module, exports, global) {
-        'use strict';
-        var $ = require('n'), domready = require('b'), modal = require('a').modal, getAjaxSuffix = require('v');
-        domready(function () {
-            $('body').delegate('click', '.g-main-nav .g-toplevel [data-g5-ajaxify]', function (event, element) {
-                var items = $('.g-main-nav .g-toplevel [data-g5-ajaxify] !> li');
-                if (items) {
-                    items.removeClass('active');
-                }
-                element.parent('li').addClass('active');
-            });
-            $('body').delegate('click', '#menu-editor .config-cog', function (event, element) {
-                event.preventDefault();
-                modal.open({
-                    content: 'Loading',
-                    remote: $(element).attribute('href') + getAjaxSuffix()
-                });
-            });
-        });
-        module.exports = {};
-    },
-    '18': function (require, module, exports, global) {
-        'use strict';
-        var $ = require('n'), domready = require('b'), modal = require('a').modal, getAjaxSuffix = require('v'), getAjaxURL = require('2r');
-        domready(function () {
-            $('body').delegate('click', '[data-g5-iconpicker]', function (event, element) {
-                modal.open({
-                    content: 'Loading',
-                    className: 'g5-dialog-theme-default g5-modal-icons',
-                    remote: getAjaxURL('icons') + getAjaxSuffix(),
-                    remoteLoaded: function (response, content) {
-                        var html, large;
-                        content.elements.content.search('[data-icon]').forEach(function (icon) {
-                            icon = $(icon);
-                            html = '';
-                            for (var i = 5, l = 0; i > l; i--) {
-                                large = !i ? 'lg' : i + 'x';
-                                html += '<i class="fa ' + icon.data('icon') + ' fa-' + large + '"></i> ';
-                            }
-                            icon.popover({
-                                content: html,
-                                placement: 'auto',
-                                trigger: 'mouse',
-                                style: 'above-modal, icons-preview',
-                                width: 'auto',
-                                targetEvents: false,
-                                delay: 0
-                            }).on('hidden.popover', function (instance) {
-                                if (instance.$target) {
-                                    instance.$target.remove();
-                                }
-                            });
-                        });
-                    }
-                });
-                console.log(getAjaxURL('icons'));
-            });
-        });
-        module.exports = {};
-    },
-    '19': function (require, module, exports, global) {
-        var indexOf = require('2s');
+        var indexOf = require('2e');
         function contains(arr, val) {
             return indexOf(arr, val) !== -1;
         }
         module.exports = contains;
     },
-    '1a': function (require, module, exports, global) {
+    '14': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), $ = require('1'), Emitter = require('d');
-        var Blocks = require('2t');
-        var forOwn = require('20'), forEach = require('2p'), size = require('p'), isArray = require('1t'), flatten = require('2u'), guid = require('r'), set = require('2v'), unset = require('2w'), get = require('2x');
+        var prime = require('m'), $ = require('1'), Emitter = require('i');
+        var Blocks = require('2f');
+        var forOwn = require('27'), forEach = require('2g'), size = require('p'), isArray = require('25'), flatten = require('2h'), guid = require('r'), set = require('2i'), unset = require('2j'), get = require('2k');
         require('2');
         require('6');
-        var rpad = require('2y'), repeat = require('2z');
+        var rpad = require('2l'), repeat = require('2m');
         $.implement({
             empty: function () {
                 return this.forEach(function (node) {
@@ -4483,9 +3120,9 @@ var G5;
             });
         module.exports = Builder;
     },
-    '1b': function (require, module, exports, global) {
+    '15': function (require, module, exports, global) {
         'use strict';
-        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('29') || {}, history = window.history;
+        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('28') || {}, history = window.history;
         try {
             sessionStorage = window.sessionStorage;
             sessionStorage.setItem('TEST', '1');
@@ -5314,8 +3951,8 @@ var G5;
         }
         module.exports = History;
     },
-    '1c': function (require, module, exports, global) {
-        var prime = require('m'), Emitter = require('d'), slice = require('2b'), merge = require('q');
+    '16': function (require, module, exports, global) {
+        var prime = require('m'), Emitter = require('i'), slice = require('2c'), merge = require('q');
         var History = new prime({
                 inherits: Emitter,
                 constructor: function (session) {
@@ -5378,9 +4015,9 @@ var G5;
             });
         module.exports = History;
     },
-    '1d': function (require, module, exports, global) {
+    '17': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), $ = require('n'), zen = require('o'), Emitter = require('d'), Bound = require('w'), Options = require('x'), Blocks = require('2t'), DragDrop = require('30'), Resizer = require('31'), Eraser = require('32'), get = require('2x'), every = require('33'), isArray = require('1t'), isObject = require('1z'), equals = require('34');
+        var prime = require('m'), $ = require('n'), zen = require('o'), Emitter = require('i'), Bound = require('w'), Options = require('x'), Blocks = require('2f'), DragDrop = require('2n'), Resizer = require('2o'), Eraser = require('2p'), get = require('2k'), every = require('2q'), isArray = require('25'), isObject = require('1v'), equals = require('2r');
         var deepEquals = function (a, b, callback) {
             function compare(a, b) {
                 return deepEquals(a, b, callback);
@@ -5742,9 +4379,1549 @@ var G5;
             });
         module.exports = LayoutManager;
     },
-    '1e': function (require, module, exports, global) {
+    '18': function (require, module, exports, global) {
         'use strict';
-        var kindOf = require('1p'), now = require('35'), forEach = require('g'), indexOf = require('i');
+        var prime = require('m'), $ = require('n'), zen = require('o'), storage = require('j')(), Emitter = require('i'), Bound = require('w'), Options = require('x'), domready = require('b'), bind = require('y'), map = require('z'), forEach = require('10'), last = require('11'), merge = require('q'), request = require('t');
+        var animationEndSupport = false;
+        domready(function () {
+            var style = (document.body || document.documentElement).style;
+            forEach([
+                'animation',
+                'WebkitAnimation',
+                'MozAnimation',
+                'MsAnimation',
+                'OAnimation'
+            ], function (animation, index) {
+                if (animationEndSupport) {
+                    return;
+                }
+                animationEndSupport = style[animation] !== undefined ? Modal.prototype.animationEndEvent[index] : false;
+            });
+        });
+        var Modal = new prime({
+                mixin: [
+                    Bound,
+                    Options
+                ],
+                inherits: Emitter,
+                animationEndEvent: [
+                    'animationend',
+                    'webkitAnimationEnd',
+                    'mozAnimationEnd',
+                    'MSAnimationEnd',
+                    'oanimationend'
+                ],
+                globalID: 1,
+                options: {
+                    baseClassNames: {
+                        container: 'g5-dialog',
+                        content: 'g5-content',
+                        overlay: 'g5-overlay',
+                        close: 'g5-close',
+                        closing: 'g5-closing',
+                        open: 'g5-dialog-open'
+                    },
+                    content: '',
+                    remote: '',
+                    showCloseButton: true,
+                    escapeToClose: true,
+                    overlayClickToClose: true,
+                    appendNode: '#g5-container',
+                    className: 'g5-dialog-theme-default',
+                    css: {},
+                    overlayClassName: '',
+                    overlayCSS: '',
+                    contentClassName: '',
+                    contentCSS: '',
+                    closeClassName: 'g5-dialog-close',
+                    closeCSS: '',
+                    afterOpen: null,
+                    afterClose: null
+                },
+                constructor: function (options) {
+                    this.setOptions(options);
+                    this.defaults = this.options;
+                    var self = this;
+                    domready(function () {
+                        $(window).on('keyup', function (event) {
+                            if (event.keyCode === 27) {
+                                return self.closeByEscape();
+                            }
+                        });
+                        self.animationEndEvent = animationEndSupport;
+                    });
+                    this.on('dialogOpen', function (options) {
+                        $('body').addClass(options.baseClassNames.open);
+                    }).on('dialogAfterClose', bind(function (options) {
+                        var all = this.getAll();
+                        if (!all || !all.length) {
+                            $('body').removeClass(options.baseClassNames.open);
+                        }
+                    }, this));
+                },
+                storage: function () {
+                    return storage;
+                },
+                open: function (options) {
+                    options = merge(this.options, options);
+                    options.id = this.globalID++;
+                    var elements = {};
+                    elements.container = zen('div').addClass(options.baseClassNames.container).addClass(options.className).style(options.css);
+                    storage.set(elements.container, { dialog: options });
+                    elements.overlay = zen('div').addClass(options.baseClassNames.overlay).addClass(options.overlayClassName).style(options.overlayCSS);
+                    storage.set(elements.overlay, { dialog: options });
+                    if (options.overlayClickToClose) {
+                        elements.container.on('click', bind(this._overlayClick, this, elements.container[0]));
+                        elements.overlay.on('click', bind(this._overlayClick, this, elements.overlay[0]));
+                    }
+                    elements.container.appendChild(elements.overlay);
+                    elements.content = zen('div').addClass(options.baseClassNames.content).addClass(options.contentClassName).style(options.contentCSS).html(options.content);
+                    storage.set(elements.content, { dialog: options });
+                    elements.container.appendChild(elements.content);
+                    if (options.overlayClickToClose) {
+                        elements.content.on('click', function (e) {
+                            return true;
+                        });
+                    }
+                    if (options.remote && options.remote.length > 1) {
+                        this.showLoading();
+                        options.method = options.method || 'get';
+                        var agent = request();
+                        agent.method(options.method);
+                        agent.url(options.remote);
+                        if (options.data) {
+                            agent.data(options.data);
+                        }
+                        agent.send(bind(function (error, response) {
+                            elements.content.html(response.body.html || response.body);
+                            this.hideLoading();
+                            if (options.remoteLoaded) {
+                                options.remoteLoaded(response, options);
+                            }
+                        }, this));
+                    }
+                    if (options.showCloseButton) {
+                        elements.closeButton = zen('div').addClass(options.baseClassNames.close).addClass(options.closeClassName).style(options.closeCSS);
+                        storage.set(elements.closeButton, { dialog: options });
+                        elements.content.appendChild(elements.closeButton);
+                    }
+                    elements.container.delegate('click', '.g5-dialog-close', bind(this._closeButtonClick, this, elements.container));
+                    $(options.appendNode).appendChild(elements.container);
+                    options.elements = elements;
+                    if (options.afterOpen) {
+                        options.afterOpen(elements.content, options);
+                    }
+                    setTimeout(bind(function () {
+                        return this.emit('dialogOpen', options);
+                    }, this), 0);
+                    return elements.content;
+                },
+                getAll: function () {
+                    var options = this.options;
+                    return $('.' + options.baseClassNames.container + ':not(.' + options.baseClassNames.closing + ') .' + options.baseClassNames.content);
+                },
+                getByID: function (id) {
+                    return $(this.getAll().filter(function (element) {
+                        element = $(element);
+                        return storage.get(element).dialog.id === id;
+                    }));
+                },
+                close: function (id) {
+                    if (!id) {
+                        var element = $(last(this.getAll()));
+                        if (!element) {
+                            return false;
+                        }
+                        id = storage.get(element).dialog.id;
+                    }
+                    return this.closeByID(id);
+                },
+                closeAll: function () {
+                    var ids;
+                    ids = map(this.getAll(), function (element) {
+                        element = $(element);
+                        return storage.get(element).dialog.id;
+                    });
+                    if (!ids.length) {
+                        return false;
+                    }
+                    forEach(ids.reverse(), function (value, id) {
+                        return this.closeByID(id);
+                    }, this);
+                    return true;
+                },
+                closeByID: function (id) {
+                    var content = this.getByID(id);
+                    if (!content || !content.length) {
+                        return false;
+                    }
+                    var container, options;
+                    container = storage.get(content).dialog.elements.container;
+                    options = merge({}, storage.get(content).dialog);
+                    var beforeClose = function () {
+                            if (options.beforeClose) {
+                                return options.beforeClose(content, options);
+                            }
+                        }, close = bind(function () {
+                            content.emit('dialogClose', options);
+                            container.remove();
+                            this.emit('dialogAfterClose', options);
+                            if (options.afterClose) {
+                                return options.afterClose(content, options);
+                            }
+                        }, this);
+                    if (animationEndSupport) {
+                        beforeClose();
+                        container.off(this.animationEndEvent).on(this.animationEndEvent, function () {
+                            return close();
+                        }).addClass(options.baseClassNames.closing);
+                    } else {
+                        beforeClose();
+                        close();
+                    }
+                    return true;
+                },
+                closeByEscape: function () {
+                    var ids, id;
+                    ids = map(this.getAll(), function (element) {
+                        element = $(element);
+                        return storage.get(element).dialog.id;
+                    });
+                    if (!ids.length) {
+                        return false;
+                    }
+                    id = Math.max.apply(Math, ids);
+                    var element = this.getByID(id);
+                    if (!storage.get(element).dialog.escapeToClose) {
+                        return false;
+                    }
+                    return this.closeByID(id);
+                },
+                showLoading: function () {
+                    this.hideLoading();
+                    return $('body').appendChild(zen('div.g5-dialog-loading-spinner.' + this.options.className));
+                },
+                hideLoading: function () {
+                    var spinner = $('.g5-dialog-loading-spinner');
+                    return spinner ? spinner.remove() : false;
+                },
+                _overlayClick: function (element, event) {
+                    if (event.target !== element) {
+                        return;
+                    }
+                    return this.close(storage.get($(element)).dialog.id);
+                },
+                _closeButtonClick: function (element) {
+                    return this.close(storage.get($(element)).dialog.id);
+                }
+            });
+        module.exports = Modal;
+    },
+    '19': function (require, module, exports, global) {
+        'use strict';
+        var ready = require('b'), $ = require('1');
+        ready(function () {
+            var input, hiddens, radios;
+            $(document).delegate('click', '.enabler .toggle', function (e, element) {
+                element = $(element);
+                hiddens = element.find('~~ [type=hidden]');
+                if (!hiddens)
+                    return true;
+                if (hiddens)
+                    hiddens.value(hiddens.value() == '0' ? '1' : '0');
+            });
+        });
+        module.exports = {};
+    },
+    '1a': function (require, module, exports, global) {
+        var prime = require('m'), Emitter = require('i'), Bound = require('w'), Options = require('x'), $ = require('1'), ready = require('b'), zen = require('o'), forEach = require('2g'), bind = require('y'), clamp = require('2s');
+        var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+        var MOUSEDOWN = 'mousedown' || 'touchstart', MOUSEMOVE = 'mousemove' || 'touchmove', MOUSEUP = 'mouseup' || 'touchend', FOCUSIN = isFirefox ? 'focus' : 'focusin';
+        var ColorPicker = new prime({
+                mixin: [
+                    Options,
+                    Bound
+                ],
+                inherits: Emitter,
+                options: {},
+                constructor: function (options) {
+                    this.setOptions(options);
+                    this.built = false;
+                    this.attach();
+                },
+                attach: function () {
+                    $('body').delegate(FOCUSIN, '.colorpicker input', this.bound('show'), true);
+                    $('body').on(MOUSEDOWN, bind(function (event) {
+                        var target = $(event.target);
+                        if (!target.parent('.cp-wrapper') && !target.parent('.colorpicker')) {
+                            this.hide();
+                        }
+                    }, this));
+                    $('body').delegate(MOUSEDOWN, '.cp-grid, .cp-slider, .cp-opacity-slider', bind(function (event, element) {
+                        event.preventDefault();
+                        this.target = element;
+                        this.move(this.target, event, true);
+                    }, this));
+                    $('body').on(MOUSEMOVE, bind(function (event) {
+                        if (this.target) {
+                            this.move(this.target, event);
+                        }
+                    }, this));
+                    $('body').on(MOUSEUP, bind(function () {
+                        this.target = null;
+                    }, this));
+                    $('body').delegate('keydown', '.colorpicker input', bind(function (event, element) {
+                        switch (event.keyCode) {
+                        case 9:
+                            this.hide();
+                            break;
+                        case 13:
+                        case 27:
+                            this.hide();
+                            element[0].blur();
+                            break;
+                        }
+                        return true;
+                    }, this));
+                    $('body').delegate('keyup', '.colorpicker input', bind(function () {
+                        this.updateFromInput(true);
+                        return true;
+                    }, this));
+                    $('body').delegate('paste', '.colorpicker input', bind(function () {
+                        setTimeout(bind(function () {
+                            this.updateFromInput(true);
+                        }, this), 1);
+                    }, this));
+                },
+                hide: function () {
+                    if (!this.built) {
+                        return;
+                    }
+                    this.wrapper.removeClass('cp-visible');
+                },
+                show: function (event, element) {
+                    if (!this.built) {
+                        this.build();
+                    }
+                    this.element = element;
+                    this.reposition();
+                    this.wrapper.addClass('cp-visible');
+                    this.updateFromInput();
+                },
+                move: function (target, event) {
+                    var input = this.element, picker = target.find('.cp-picker'), clientRect = target[0].getBoundingClientRect(), offsetX = clientRect.left + window.scrollX, offsetY = clientRect.top + window.scrollY, x = Math.round(event.pageX - offsetX), y = Math.round(event.pageY - offsetY), duration = 0, wx, wy, r, phi;
+                    if (event.changedTouches) {
+                        x = event.changedTouches[0].pageX - offsetX;
+                        y = event.changedTouches[0].pageY - offsetY;
+                    }
+                    if (x < 0)
+                        x = 0;
+                    if (y < 0)
+                        y = 0;
+                    if (x > clientRect.width)
+                        x = clientRect.width;
+                    if (y > clientRect.height)
+                        y = clientRect.height;
+                    if (target.parent('.cp-mode-wheel') && picker.parent('.cp-grid')) {
+                        wx = 75 - x;
+                        wy = 75 - y;
+                        r = Math.sqrt(wx * wx + wy * wy);
+                        phi = Math.atan2(wy, wx);
+                        if (phi < 0)
+                            phi += Math.PI * 2;
+                        if (r > 75) {
+                            r = 75;
+                            x = 75 - 75 * Math.cos(phi);
+                            y = 75 - 75 * Math.sin(phi);
+                        }
+                        x = Math.round(x);
+                        y = Math.round(y);
+                    }
+                    if (target.hasClass('cp-grid')) {
+                        picker.style({
+                            top: y,
+                            left: x
+                        });
+                        this.updateFromPicker(input, target);
+                    } else {
+                        picker.style({ top: y });
+                        this.updateFromPicker(input, target);
+                    }
+                },
+                build: function () {
+                    this.wrapper = zen('div.cp-wrapper.cp-with-opacity.cp-mode-hue');
+                    this.slider = zen('div.cp-slider.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-picker'));
+                    this.opacitySlider = zen('div.cp-opacity-slider.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-picker'));
+                    this.grid = zen('div.cp-grid.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-grid-inner')).appendChild(zen('div.cp-picker'));
+                    zen('div').bottom(this.grid.find('.cp-picker'));
+                    var tabs = zen('div.cp-tabs').bottom(this.wrapper);
+                    this.tabs = {
+                        hue: zen('div.cp-tab-hue.active').text('HUE').bottom(tabs),
+                        brightness: zen('div.cp-tab-brightness').text('BRI').bottom(tabs),
+                        saturation: zen('div.cp-tab-saturation').text('SAT').bottom(tabs),
+                        wheel: zen('div.cp-tab-wheel').text('WHEEL').bottom(tabs)
+                    };
+                    tabs.delegate('click', '> div', bind(function (event, element) {
+                        var active = tabs.find('.active'), mode = active.attribute('class').replace(/\s|active|cp-tab-/g, ''), newMode = element.attribute('class').replace(/\s|active|cp-tab-/g, '');
+                        this.wrapper.removeClass('cp-mode-' + mode).addClass('cp-mode-' + newMode);
+                        active.removeClass('active');
+                        element.addClass('active');
+                        this.mode = newMode;
+                        this.updateFromInput();
+                    }, this));
+                    this.wrapper.bottom('body');
+                    this.built = true;
+                    this.mode = 'hue';
+                },
+                updateFromInput: function (dontFireEvent) {
+                    var value = this.element.value(), opacity = value.replace(/\s/g, '').match(/^rgba?\([0-9]{1,3}\,[0-9]{1,3}\,[0-9]{1,3}\,(.+)\)/), hex, hsb;
+                    value = rgbstr2hex(value) || value;
+                    if (!(hex = parseHex(value))) {
+                        hex = '#ffff00';
+                    }
+                    hsb = hex2hsb(hex);
+                    this.opacity = opacity ? clamp(opacity[1], 0, 1) : 1;
+                    var sliderHeight = this.opacitySlider.position().height;
+                    this.opacitySlider.find('.cp-picker').style({ 'top': clamp(sliderHeight - sliderHeight * this.opacity, 0, sliderHeight) });
+                    var gridHeight = this.grid.position().height, gridWidth = this.grid.position().width, sliderHeight = this.slider.position().height, r, phi, x, y;
+                    switch (this.mode) {
+                    case 'wheel':
+                        r = clamp(Math.ceil(hsb.s * 0.75), 0, gridHeight / 2);
+                        phi = hsb.h * Math.PI / 180;
+                        x = clamp(75 - Math.cos(phi) * r, 0, gridWidth);
+                        y = clamp(75 - Math.sin(phi) * r, 0, gridHeight);
+                        this.grid.style({ backgroundColor: 'transparent' }).find('.cp-picker').style({
+                            top: y,
+                            left: x
+                        });
+                        y = 150 - hsb.b / (100 / gridHeight);
+                        if (hex === '')
+                            y = 0;
+                        this.slider.find('.cp-picker').style({ top: y });
+                        this.slider.style({
+                            backgroundColor: hsb2hex({
+                                h: hsb.h,
+                                s: hsb.s,
+                                b: 100
+                            })
+                        });
+                        break;
+                    case 'saturation':
+                        x = clamp(5 * hsb.h / 12, 0, 150);
+                        y = clamp(gridHeight - Math.ceil(hsb.b / (100 / gridHeight)), 0, gridHeight);
+                        this.grid.find('.cp-picker').style({
+                            top: y,
+                            left: x
+                        });
+                        y = clamp(sliderHeight - hsb.s * (sliderHeight / 100), 0, sliderHeight);
+                        this.slider.find('.cp-picker').style({ top: y });
+                        this.slider.style({
+                            backgroundColor: hsb2hex({
+                                h: hsb.h,
+                                s: 100,
+                                b: hsb.b
+                            })
+                        });
+                        this.grid.find('.cp-grid-inner').style({ opacity: hsb.s / 100 });
+                        break;
+                    case 'brightness':
+                        x = clamp(5 * hsb.h / 12, 0, 150);
+                        y = clamp(gridHeight - Math.ceil(hsb.s / (100 / gridHeight)), 0, gridHeight);
+                        this.grid.find('.cp-picker').style({
+                            top: y,
+                            left: x
+                        });
+                        y = clamp(sliderHeight - hsb.b * (sliderHeight / 100), 0, sliderHeight);
+                        this.slider.find('.cp-picker').style({ top: y });
+                        this.slider.style({
+                            backgroundColor: hsb2hex({
+                                h: hsb.h,
+                                s: hsb.s,
+                                b: 100
+                            })
+                        });
+                        this.grid.find('.cp-grid-inner').style({ opacity: 1 - hsb.b / 100 });
+                        break;
+                    case 'hue':
+                    default:
+                        x = clamp(Math.ceil(hsb.s / (100 / gridWidth)), 0, gridWidth);
+                        y = clamp(gridHeight - Math.ceil(hsb.b / (100 / gridHeight)), 0, gridHeight);
+                        this.grid.find('.cp-picker').style({
+                            top: y,
+                            left: x
+                        });
+                        y = clamp(sliderHeight - hsb.h / (360 / sliderHeight), 0, sliderHeight);
+                        this.slider.find('.cp-picker').style({ top: y });
+                        this.grid.style({
+                            backgroundColor: hsb2hex({
+                                h: hsb.h,
+                                s: 100,
+                                b: 100
+                            })
+                        });
+                        break;
+                    }
+                    if (!dontFireEvent) {
+                        this.element.value(this.getValue(hex));
+                    }
+                    this.emit('change', this.element, hex, this.opacity);
+                },
+                updateFromPicker: function (input, target) {
+                    var getCoords = function (picker, container) {
+                        var left, top;
+                        if (!picker.length || !container)
+                            return null;
+                        left = picker[0].getBoundingClientRect().left;
+                        top = picker[0].getBoundingClientRect().top;
+                        return {
+                            x: left - container[0].getBoundingClientRect().left + picker[0].offsetWidth / 2,
+                            y: top - container[0].getBoundingClientRect().top + picker[0].offsetHeight / 2
+                        };
+                    };
+                    var hex, hue, saturation, brightness, x, y, r, phi, grid = this.wrapper.find('.cp-grid'), slider = this.wrapper.find('.cp-slider'), opacitySlider = this.wrapper.find('.cp-opacity-slider'), gridPicker = grid.find('.cp-picker'), sliderPicker = slider.find('.cp-picker'), opacityPicker = opacitySlider.find('.cp-picker'), gridPos = getCoords(gridPicker, grid), sliderPos = getCoords(sliderPicker, slider), opacityPos = getCoords(opacityPicker, opacitySlider), gridWidth = grid[0].getBoundingClientRect().width, gridHeight = grid[0].getBoundingClientRect().height, sliderHeight = slider[0].getBoundingClientRect().height, opacitySliderHeight = opacitySlider[0].getBoundingClientRect().height;
+                    var value = this.element.value();
+                    value = rgbstr2hex(value) || value;
+                    if (!(hex = parseHex(value))) {
+                        hex = '#ffff00';
+                    }
+                    if (target.hasClass('cp-grid') || target.hasClass('cp-slider')) {
+                        switch (this.mode) {
+                        case 'wheel':
+                            x = gridWidth / 2 - gridPos.x;
+                            y = gridHeight / 2 - gridPos.y;
+                            r = Math.sqrt(x * x + y * y);
+                            phi = Math.atan2(y, x);
+                            if (phi < 0)
+                                phi += Math.PI * 2;
+                            if (r > 75) {
+                                r = 75;
+                                gridPos.x = 69 - 75 * Math.cos(phi);
+                                gridPos.y = 69 - 75 * Math.sin(phi);
+                            }
+                            saturation = clamp(r / 0.75, 0, 100);
+                            hue = clamp(phi * 180 / Math.PI, 0, 360);
+                            brightness = clamp(100 - Math.floor(sliderPos.y * (100 / sliderHeight)), 0, 100);
+                            hex = hsb2hex({
+                                h: hue,
+                                s: saturation,
+                                b: brightness
+                            });
+                            slider.style({
+                                backgroundColor: hsb2hex({
+                                    h: hue,
+                                    s: saturation,
+                                    b: 100
+                                })
+                            });
+                            break;
+                        case 'saturation':
+                            hue = clamp(parseInt(gridPos.x * (360 / gridWidth), 10), 0, 360);
+                            saturation = clamp(100 - Math.floor(sliderPos.y * (100 / sliderHeight)), 0, 100);
+                            brightness = clamp(100 - Math.floor(gridPos.y * (100 / gridHeight)), 0, 100);
+                            hex = hsb2hex({
+                                h: hue,
+                                s: saturation,
+                                b: brightness
+                            });
+                            slider.style({
+                                backgroundColor: hsb2hex({
+                                    h: hue,
+                                    s: 100,
+                                    b: brightness
+                                })
+                            });
+                            grid.find('.cp-grid-inner').style({ opacity: saturation / 100 });
+                            break;
+                        case 'brightness':
+                            hue = clamp(parseInt(gridPos.x * (360 / gridWidth), 10), 0, 360);
+                            saturation = clamp(100 - Math.floor(gridPos.y * (100 / gridHeight)), 0, 100);
+                            brightness = clamp(100 - Math.floor(sliderPos.y * (100 / sliderHeight)), 0, 100);
+                            hex = hsb2hex({
+                                h: hue,
+                                s: saturation,
+                                b: brightness
+                            });
+                            slider.style({
+                                backgroundColor: hsb2hex({
+                                    h: hue,
+                                    s: saturation,
+                                    b: 100
+                                })
+                            });
+                            grid.find('.cp-grid-inner').style({ opacity: 1 - brightness / 100 });
+                            break;
+                        default:
+                            hue = clamp(360 - parseInt(sliderPos.y * (360 / sliderHeight), 10), 0, 360);
+                            saturation = clamp(Math.floor(gridPos.x * (100 / gridWidth)), 0, 100);
+                            brightness = clamp(100 - Math.floor(gridPos.y * (100 / gridHeight)), 0, 100);
+                            hex = hsb2hex({
+                                h: hue,
+                                s: saturation,
+                                b: brightness
+                            });
+                            grid.style({
+                                backgroundColor: hsb2hex({
+                                    h: hue,
+                                    s: 100,
+                                    b: 100
+                                })
+                            });
+                            break;
+                        }
+                    }
+                    if (target.hasClass('cp-opacity-slider')) {
+                        this.opacity = parseFloat(1 - opacityPos.y / opacitySliderHeight).toFixed(2);
+                    }
+                    input.value(this.getValue(hex));
+                    this.emit('change', this.element, hex, this.opacity);
+                },
+                reposition: function () {
+                    var offset = this.element[0].getBoundingClientRect();
+                    this.wrapper.style({
+                        top: offset.top + offset.height + window.scrollY,
+                        left: offset.left + window.scrollX
+                    });
+                },
+                getValue: function (hex) {
+                    if (this.opacity == 1) {
+                        return hex;
+                    }
+                    var rgb = hex2rgb(hex);
+                    return 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + this.opacity + ')';
+                }
+            });
+        var parseHex = function (string) {
+            string = string.replace(/[^A-F0-9]/gi, '');
+            if (string.length !== 3 && string.length !== 6)
+                return '';
+            if (string.length === 3) {
+                string = string[0] + string[0] + string[1] + string[1] + string[2] + string[2];
+            }
+            return '#' + string.toLowerCase();
+        };
+        var hsb2rgb = function (hsb) {
+            var rgb = {};
+            var h = Math.round(hsb.h);
+            var s = Math.round(hsb.s * 255 / 100);
+            var v = Math.round(hsb.b * 255 / 100);
+            if (s === 0) {
+                rgb.r = rgb.g = rgb.b = v;
+            } else {
+                var t1 = v;
+                var t2 = (255 - s) * v / 255;
+                var t3 = (t1 - t2) * (h % 60) / 60;
+                if (h === 360)
+                    h = 0;
+                if (h < 60) {
+                    rgb.r = t1;
+                    rgb.b = t2;
+                    rgb.g = t2 + t3;
+                } else if (h < 120) {
+                    rgb.g = t1;
+                    rgb.b = t2;
+                    rgb.r = t1 - t3;
+                } else if (h < 180) {
+                    rgb.g = t1;
+                    rgb.r = t2;
+                    rgb.b = t2 + t3;
+                } else if (h < 240) {
+                    rgb.b = t1;
+                    rgb.r = t2;
+                    rgb.g = t1 - t3;
+                } else if (h < 300) {
+                    rgb.b = t1;
+                    rgb.g = t2;
+                    rgb.r = t2 + t3;
+                } else if (h < 360) {
+                    rgb.r = t1;
+                    rgb.g = t2;
+                    rgb.b = t1 - t3;
+                } else {
+                    rgb.r = 0;
+                    rgb.g = 0;
+                    rgb.b = 0;
+                }
+            }
+            return {
+                r: Math.round(rgb.r),
+                g: Math.round(rgb.g),
+                b: Math.round(rgb.b)
+            };
+        };
+        var rgb2hex = function (rgb) {
+            var hex = [
+                    rgb.r.toString(16),
+                    rgb.g.toString(16),
+                    rgb.b.toString(16)
+                ];
+            forEach(hex, function (val, nr) {
+                if (val.length === 1)
+                    hex[nr] = '0' + val;
+            });
+            return '#' + hex.join('');
+        };
+        var rgbstr2hex = function (rgb) {
+            rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+            return rgb && rgb.length === 4 ? '#' + ('0' + parseInt(rgb[1], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[2], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[3], 10).toString(16)).slice(-2) : '';
+        };
+        var hsb2hex = function (hsb) {
+            return rgb2hex(hsb2rgb(hsb));
+        };
+        var hex2hsb = function (hex) {
+            var hsb = rgb2hsb(hex2rgb(hex));
+            if (hsb.s === 0)
+                hsb.h = 360;
+            return hsb;
+        };
+        var rgb2hsb = function (rgb) {
+            var hsb = {
+                    h: 0,
+                    s: 0,
+                    b: 0
+                };
+            var min = Math.min(rgb.r, rgb.g, rgb.b);
+            var max = Math.max(rgb.r, rgb.g, rgb.b);
+            var delta = max - min;
+            hsb.b = max;
+            hsb.s = max !== 0 ? 255 * delta / max : 0;
+            if (hsb.s !== 0) {
+                if (rgb.r === max) {
+                    hsb.h = (rgb.g - rgb.b) / delta;
+                } else if (rgb.g === max) {
+                    hsb.h = 2 + (rgb.b - rgb.r) / delta;
+                } else {
+                    hsb.h = 4 + (rgb.r - rgb.g) / delta;
+                }
+            } else {
+                hsb.h = -1;
+            }
+            hsb.h *= 60;
+            if (hsb.h < 0) {
+                hsb.h += 360;
+            }
+            hsb.s *= 100 / 255;
+            hsb.b *= 100 / 255;
+            return hsb;
+        };
+        var hex2rgb = function (hex) {
+            hex = parseInt(hex.indexOf('#') > -1 ? hex.substring(1) : hex, 16);
+            return {
+                r: hex >> 16,
+                g: (hex & 65280) >> 8,
+                b: hex & 255
+            };
+        };
+        ready(function () {
+            var x = new ColorPicker();
+            x.on('change', function (element, hex, opacity) {
+                if (opacity < 1) {
+                    var rgb = hex2rgb(hex), str = 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + opacity + ')';
+                    element.style({ backgroundColor: str });
+                } else {
+                    element.style({ backgroundColor: hex });
+                }
+            });
+        });
+        module.exports = ColorPicker;
+    },
+    '1b': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('m'), $ = require('n'), zen = require('o'), storage = require('j')(), Emitter = require('i'), Bound = require('w'), Options = require('x'), domready = require('b'), bind = require('y'), map = require('z'), forEach = require('10'), contains = require('13'), last = require('11'), split = require('2t'), removeAll = require('2u'), insert = require('2v'), find = require('2w'), combine = require('2x'), merge = require('q'), unhyphenate = require('2y'), properCase = require('2z'), trim = require('30'), modal = require('a').modal, async = require('31'), request = require('t'), wf = require('32');
+        require('33');
+        var Fonts = new prime({
+                mixin: Bound,
+                inherits: Emitter,
+                previewSentence: {
+                    'latin': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
+                    'latin-ext': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
+                    'cyrillic': '\u0412 \u0447\u0430\u0449\u0430\u0445 \u044e\u0433\u0430 \u0436\u0438\u043b \u0431\u044b \u0446\u0438\u0442\u0440\u0443\u0441? \u0414\u0430, \u043d\u043e \u0444\u0430\u043b\u044c\u0448\u0438\u0432\u044b\u0439 \u044d\u043a\u0437\u0435\u043c\u043f\u043b\u044f\u0440!',
+                    'cyrillic-ext': '\u0412 \u0447\u0430\u0449\u0430\u0445 \u044e\u0433\u0430 \u0436\u0438\u043b \u0431\u044b \u0446\u0438\u0442\u0440\u0443\u0441? \u0414\u0430, \u043d\u043e \u0444\u0430\u043b\u044c\u0448\u0438\u0432\u044b\u0439 \u044d\u043a\u0437\u0435\u043c\u043f\u043b\u044f\u0440!',
+                    'devanagari': '\u090f\u0915 \u092a\u0932 \u0915\u093e \u0915\u094d\u0930\u094b\u0927 \u0906\u092a\u0915\u093e \u092d\u0935\u093f\u0937\u094d\u092f \u092c\u093f\u0917\u093e\u0921 \u0938\u0915\u0924\u093e \u0939\u0948',
+                    'greek': '\u03a4\u03ac\u03c7\u03b9\u03c3\u03c4\u03b7 \u03b1\u03bb\u03ce\u03c0\u03b7\u03be \u03b2\u03b1\u03c6\u03ae\u03c2 \u03c8\u03b7\u03bc\u03ad\u03bd\u03b7 \u03b3\u03b7, \u03b4\u03c1\u03b1\u03c3\u03ba\u03b5\u03bb\u03af\u03b6\u03b5\u03b9 \u03c5\u03c0\u03ad\u03c1 \u03bd\u03c9\u03b8\u03c1\u03bf\u03cd \u03ba\u03c5\u03bd\u03cc\u03c2',
+                    'greek-ext': '\u03a4\u03ac\u03c7\u03b9\u03c3\u03c4\u03b7 \u03b1\u03bb\u03ce\u03c0\u03b7\u03be \u03b2\u03b1\u03c6\u03ae\u03c2 \u03c8\u03b7\u03bc\u03ad\u03bd\u03b7 \u03b3\u03b7, \u03b4\u03c1\u03b1\u03c3\u03ba\u03b5\u03bb\u03af\u03b6\u03b5\u03b9 \u03c5\u03c0\u03ad\u03c1 \u03bd\u03c9\u03b8\u03c1\u03bf\u03cd \u03ba\u03c5\u03bd\u03cc\u03c2',
+                    'khmer': '\u1781\u17d2\u1789\u17bb\u17c6\u17a2\u17b6\u1785\u1789\u17c9\u17b6\u17c6\u1780\u1789\u17d2\u1785\u1780\u17cb\u1794\u17b6\u1793 \u178a\u17c4\u1799\u1782\u17d2\u1798\u17b6\u1793\u1794\u1789\u17d2\u17a0\u17b6',
+                    'telugu': '\u0c26\u0c47\u0c36 \u0c2d\u0c3e\u0c37\u0c32\u0c02\u0c26\u0c41 \u0c24\u0c46\u0c32\u0c41\u0c17\u0c41 \u0c32\u0c46\u0c38\u0c4d\u0c38',
+                    'vietnamese': 'T\xf4i c\xf3 th\u1ec3 \u0103n th\u1ee7y tinh m\xe0 kh\xf4ng h\u1ea1i g\xec.'
+                },
+                constructor: function () {
+                    this.wf = wf;
+                    this.data = null;
+                    this.field = null;
+                    this.element = null;
+                    this.throttle = false;
+                    this.selected = null;
+                    this.loadedFonts = [];
+                    this.filters = {
+                        search: '',
+                        script: 'latin',
+                        categories: []
+                    };
+                },
+                open: function (event, element, container) {
+                    if (!this.data || !this.field) {
+                        return this.getData(element);
+                    }
+                    var list = [];
+                    forEach(this.data, function (value) {
+                        list.push(value.family);
+                    });
+                    if (container) {
+                        container.empty().appendChild(this.buildLayout());
+                        this.scroll(container.find('ul.g-fonts-list'));
+                        this.updateTotal();
+                        this.selectFromValue();
+                        return;
+                    }
+                    modal.open({
+                        content: 'Loading...',
+                        className: 'g5-dialog-theme-default g5-modal-fonts',
+                        afterOpen: bind(function (container) {
+                            setTimeout(bind(function () {
+                                container.empty().appendChild(this.buildLayout());
+                                this.scroll(container.find('ul.g-fonts-list'));
+                                this.updateTotal();
+                                this.selectFromValue();
+                            }, this), 1);
+                        }, this)
+                    });
+                },
+                getData: function (element) {
+                    var data = element.data('g5-fontpicker');
+                    if (!data) {
+                        throw new Error('No fontpicker data found');
+                    }
+                    data = JSON.parse(data);
+                    this.field = $(data.field);
+                    modal.open({
+                        content: 'Loading...',
+                        className: 'g5-dialog-theme-default g5-modal-fonts',
+                        remote: data.data,
+                        remoteLoaded: bind(function (response, instance) {
+                            if (response.error) {
+                                instance.elements.content.html(response.body.html + '[' + data.data + ']');
+                                return false;
+                            }
+                            this.data = response.body.items;
+                            this.open(null, element, instance.elements.content);
+                        }, this)
+                    });
+                },
+                scroll: function (container) {
+                    clearTimeout(this.throttle);
+                    this.throttle = setTimeout(bind(function () {
+                        var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li:not(.g-font-hide)', 5000), list = [];
+                        if (!elements) {
+                            return;
+                        }
+                        $(elements).forEach(function (element) {
+                            element = $(element);
+                            var dataFont = element.data('font'), variant = element.data('variant');
+                            if (!contains(this.loadedFonts, dataFont)) {
+                                list.push(dataFont + (variant != 'regular' ? ':' + variant : ''));
+                            } else {
+                                element.find('[data-variant="' + variant + '"] .preview').style({
+                                    fontFamily: dataFont,
+                                    fontWeight: variant == 'regular' ? 'normal' : variant
+                                });
+                            }
+                        }, this);
+                        if (!list || !list.length) {
+                            return;
+                        }
+                        wf.load({
+                            classes: false,
+                            google: { families: list },
+                            fontactive: bind(function (family, fvd) {
+                                var v = container.find('li[data-font="' + family + '"]').data('variant');
+                                container.find('li[data-font="' + family + '"]:not(.g-variant-hide) > .preview').style({
+                                    fontFamily: family,
+                                    fontWeight: fvd
+                                });
+                                this.loadedFonts.push(family);
+                            }, this)
+                        });
+                    }, this), 250);
+                },
+                unselect: function (selected) {
+                    selected = selected || this.selected;
+                    if (!selected) {
+                        return false;
+                    }
+                    var baseVariant = selected.element.data('variant');
+                    selected.element.removeClass('selected');
+                    selected.element.search('input[type=checkbox]').checked(false);
+                    selected.element.search('[data-font]').addClass('g-variant-hide');
+                    selected.element.find('[data-variant="' + baseVariant + '"]').removeClass('g-variant-hide');
+                    selected.variants = [selected.baseVariant];
+                    selected.selected = [];
+                },
+                selectFromValue: function () {
+                    var value = this.field.value();
+                    if (!value.match('family=')) {
+                        return false;
+                    }
+                    var split = value.split('&'), family = split[0], split2 = family.split(':'), name = split2[0].replace('family=', '').replace(/\+/g, ' '), variants = split2[1] ? split2[1].split(',') : ['regular'], subset = split[1] ? split[1].replace('subset=', '').split(',') : ['latin'];
+                    if (contains(variants, '400')) {
+                        removeAll(variants, '400');
+                        insert(variants, 'regular');
+                    }
+                    if (contains(variants, '400italic')) {
+                        removeAll(variants, '400italic');
+                        insert(variants, 'italic');
+                    }
+                    var element = $('ul.g-fonts-list > [data-font="' + name + '"]');
+                    this.selected = {
+                        font: name,
+                        baseVariant: element.data('variant'),
+                        element: element,
+                        variants: variants,
+                        selected: [],
+                        charsets: subset,
+                        availableVariants: element.data('variants').split(','),
+                        expanded: false,
+                        loaded: false
+                    };
+                    variants.forEach(function (variant) {
+                        this.select(element, variant);
+                        element.find('> ul > [data-variant="' + variant + '"]').removeClass('g-variant-hide');
+                    }, this);
+                    var charsetSelected = element.find('.font-charsets-selected');
+                    if (charsetSelected) {
+                        charsetSelected.text('(' + subset.length + ' selected)');
+                    }
+                    $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop;
+                    this.toggleExpansion();
+                    setTimeout(bind(function () {
+                        this.toggleExpansion();
+                    }, this), 50);
+                },
+                select: function (element, variant, target) {
+                    var baseVariant = element.data('variant');
+                    if (!this.selected || this.selected.element != element) {
+                        if (variant && this.selected) {
+                            var charsetSelected = this.selected.element.find('.font-charsets-selected');
+                            if (charsetSelected) {
+                                charsetSelected.text('(1 selected)');
+                            }
+                        }
+                        this.selected = {
+                            font: element.data('font'),
+                            baseVariant: baseVariant,
+                            element: element,
+                            variants: [baseVariant],
+                            selected: [],
+                            charsets: ['latin'],
+                            availableVariants: element.data('variants').split(','),
+                            expanded: false,
+                            loaded: false
+                        };
+                    }
+                    if (!variant) {
+                        this.toggleExpansion();
+                    }
+                    if (variant) {
+                        var selected = $('ul.g-fonts-list > [data-font]:not([data-font="' + this.selected.font + '"]) input[type="checkbox"]:checked');
+                        if (selected) {
+                            selected.checked(false);
+                            selected.parent('[data-variants]').removeClass('font-selected');
+                        }
+                        var checkbox = this.selected.element.find('input[type="checkbox"][value="' + variant + '"]'), checked = checkbox.checked();
+                        if (checkbox) {
+                            checkbox.checked(!checked);
+                        }
+                        if (!checked) {
+                            insert(this.selected.variants, variant);
+                            insert(this.selected.selected, variant);
+                        } else {
+                            if (variant != this.selected.baseVariant) {
+                                removeAll(this.selected.variants, variant);
+                            }
+                            removeAll(this.selected.selected, variant);
+                        }
+                        this.updateSelection();
+                    }
+                },
+                toggleExpansion: function () {
+                    if (this.selected.availableVariants.length <= 1) {
+                        return;
+                    }
+                    if (!this.selected.expanded) {
+                        var variants = this.selected.element.data('variants'), list = [], variant;
+                        if (variants.split(',').length > 1) {
+                            this.manipulateLink(this.selected.font);
+                            this.selected.element.search('[data-font]').removeClass('g-variant-hide');
+                            if (!this.selected.loaded) {
+                                wf.load({
+                                    classes: false,
+                                    google: { families: [this.selected.font.replace(/\s/g, '+') + ':' + variants] },
+                                    fontactive: bind(function (family, fvd) {
+                                        var style = this.fvdToStyle(family, fvd), search = style.fontWeight;
+                                        if (search == '400') {
+                                            search = style.fontStyle == 'normal' ? 'regular' : 'italic';
+                                        } else if (style.fontStyle == 'italic') {
+                                            search += 'italic';
+                                        }
+                                        this.selected.element.find('li[data-variant="' + search + '"] .preview').style(style);
+                                        this.selected.loaded = true;
+                                    }, this)
+                                });
+                            }
+                        }
+                    } else {
+                        var exclude = ':not([data-variant="' + this.selected.variants.join('"]):not([data-variant="') + '"])';
+                        exclude = this.selected.element.search('[data-font]' + exclude);
+                        if (exclude) {
+                            exclude.addClass('g-variant-hide');
+                        }
+                    }
+                    this.selected.expanded = !this.selected.expanded;
+                },
+                manipulateLink: function (family) {
+                    family = family.replace(/\s/g, '+');
+                    var link = $('head link[href*="' + family + '"]');
+                    if (!link) {
+                        return;
+                    }
+                    var parts = decodeURIComponent(link.href()).split('|');
+                    if (!parts || parts.length <= 1) {
+                        return;
+                    }
+                    removeAll(parts, family);
+                    link.attribute('href', encodeURI(parts.join('|')));
+                },
+                toggle: function (event, element) {
+                    element = $(element);
+                    this.select(element.parent('[data-font]') || element, element.parent('[data-font]') ? element.data('variant') : false, element);
+                    return false;
+                },
+                updateSelection: function () {
+                    var preview = $('.g-particles-footer .font-selected'), selected;
+                    if (!preview) {
+                        return;
+                    }
+                    if (!this.selected.selected.length) {
+                        preview.empty();
+                        this.selected.element.removeClass('font-selected');
+                        return;
+                    }
+                    selected = this.selected.selected.sort();
+                    this.selected.element.addClass('font-selected');
+                    preview.html('<strong>' + this.selected.font + '</strong> (<small>' + selected.join(', ').replace('regular', 'normal') + '</small>)');
+                },
+                updateTotal: function () {
+                    var totals = $('.g-particles-header .particle-search-total'), count = $('.g-fonts-list > [data-font]:not(.g-font-hide)');
+                    totals.text(count ? count.length : 0);
+                },
+                buildLayout: function () {
+                    this.filters.script = 'latin';
+                    var previewSentence = this.previewSentence[this.filters.script], html = zen('div#g-fonts.g-grid'), main = zen('div.g-particles-main').bottom(html), ul = zen('ul.g-fonts-list').bottom(main), families = [], list, categories = [], subsets = [];
+                    this.buildHeader(html).top(html);
+                    this.buildFooter(html).bottom(html);
+                    ul.on('scroll', bind(this.scroll, this, ul));
+                    html.delegate('click', '.g-fonts-list li[data-font]', bind(this.toggle, this));
+                    async.eachSeries(this.data, bind(function (font, callback) {
+                        combine(subsets, font.subsets);
+                        insert(categories, font.category);
+                        this.filters.categories.push(font.category);
+                        var variants = font.variants.join(',').replace('regular', 'normal'), variant = contains(font.variants, 'regular') ? '' : ':' + font.variants[0], li = zen('li[data-font="' + font.family + '"][data-variant="' + (variant.replace(':', '') || 'regular') + '"][data-variants="' + variants + '"]').bottom(ul), total = font.variants.length + ' style' + (font.variants.length > 1 ? 's' : ''), charsets = font.subsets.length > 1 ? ', <span class="font-charsets">' + font.subsets.length + ' charsets <span class="font-charsets-selected">(1 selected)</span></span>' : '';
+                        var family = zen('div.family').html('<strong>' + font.family + '</strong>, ' + total + charsets).bottom(li), charset = family.find('.font-charsets-selected');
+                        if (charset) {
+                            charset.popover({
+                                placement: 'auto',
+                                width: '200',
+                                trigger: 'mouse',
+                                style: 'font-categories, above-modal'
+                            }).on('beforeshow.popover', bind(function (popover) {
+                                var subs = font.subsets.sort();
+                                var subsets = font.subsets, content = popover.$target.find('.g5-popover-content'), checked;
+                                content.empty();
+                                var div, current;
+                                subsets.forEach(function (cs) {
+                                    current = contains(this.selected.charsets, cs) ? cs == 'latin' ? 'checked disabled' : 'checked' : '';
+                                    zen('div').html('<label><input type="checkbox" ' + current + ' value="' + cs + '"/> ' + properCase(unhyphenate(cs.replace('ext', 'extended'))) + '</label>').bottom(content);
+                                }, this);
+                                content.delegate('click', 'input[type="checkbox"]', bind(function (event, input) {
+                                    input = $(input);
+                                    checked = content.search('input[type="checkbox"]:checked');
+                                    this.selected.charsets = checked ? checked.map('value') : [];
+                                    charset.text('(' + this.selected.charsets.length + ' selected)');
+                                }, this));
+                                popover.displayContent();
+                            }, this));
+                        }
+                        var variantContainer = zen('ul').bottom(li), variantFont, label;
+                        async.each(font.variants, bind(function (current) {
+                            variantFont = zen('li[data-font="' + font.family + '"][data-variant="' + current + '"]').bottom(variantContainer);
+                            zen('input[type="checkbox"][value="' + current + '"]').bottom(variantFont);
+                            zen('div.variant').html('<small>' + this.mapVariant(current) + '</small>').bottom(variantFont);
+                            zen('div.preview').text(previewSentence).bottom(variantFont);
+                            if (':' + current !== variant && current !== (variant || 'regular')) {
+                                variantFont.addClass('g-variant-hide');
+                            }
+                        }, this));
+                        if (!contains(font.subsets, 'latin')) {
+                            li.addClass('g-font-hide');
+                        }
+                        families.push(font.family + variant);
+                        callback();
+                    }, this));
+                    var catContainer = html.find('a.font-category'), subContainer = html.find('a.font-subsets');
+                    catContainer.data('font-categories', categories.join(',')).html('Categories (<small>' + categories.length + '</small>) <i class="fa fa-caret-down"></i>');
+                    subContainer.data('font-subsets', subsets.join(',')).html('Subsets (<small>' + properCase(unhyphenate(this.filters.script.replace('ext', 'extended'))) + '</small>) <i class="fa fa-caret-down"></i>');
+                    return html;
+                },
+                buildHeader: function (html) {
+                    var container = zen('div.settings-block.g-particles-header').bottom(html), preview = zen('input.float-left.font-preview[type="text"][data-font-preview][placeholder="Font Preview..."][value="' + this.previewSentence[this.filters.script] + '"]').bottom(container), searchWrapper = zen('span.particle-search-wrapper.float-right').bottom(container), search = zen('input.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(searchWrapper), totals = zen('span.particle-search-total').bottom(searchWrapper);
+                    search.on('keyup', bind(this.search, this, search));
+                    preview.on('keyup', bind(this.updatePreview, this, preview));
+                    return container;
+                },
+                buildFooter: function (html) {
+                    var container = zen('div.settings-block.g-particles-footer').bottom(html), leftContainer = zen('div.float-left.font-left-container').bottom(container), rightContainer = zen('div.float-right.font-right-container').bottom(container), category = zen('a.font-category.button').bottom(leftContainer), subsets = zen('a.font-subsets.button').bottom(leftContainer), selected = zen('span.font-selected').bottom(rightContainer), select = zen('button.button.button-primary').text('Select').bottom(rightContainer), current;
+                    select.on('click', bind(function () {
+                        if (!$('ul.g-fonts-list > [data-font] input[type="checkbox"]:checked')) {
+                            this.field.value('');
+                            modal.close();
+                            return;
+                        }
+                        var name = this.selected.font.replace(/\s/g, '+'), variation = this.selected.selected, charset = this.selected.charsets;
+                        if (variation.length == 1 && variation[0] == 'regular') {
+                            variation = [];
+                        }
+                        if (charset.length == 1 && charset[0] == 'latin') {
+                            charset = [];
+                        }
+                        if (contains(variation, 'regular')) {
+                            removeAll(variation, 'regular');
+                            insert(variation, '400');
+                        }
+                        if (contains(variation, 'italic')) {
+                            removeAll(variation, 'italic');
+                            insert(variation, '400italic');
+                        }
+                        this.field.value('family=' + name + (variation.length ? ':' + variation.join(',') : '') + (charset.length ? '&subset=' + charset.join(',') : ''));
+                        modal.close();
+                    }, this));
+                    category.popover({
+                        placement: 'auto',
+                        width: '200',
+                        trigger: 'mouse',
+                        style: 'font-categories, above-modal'
+                    }).on('beforeshow.popover', bind(function (popover) {
+                        var categories = category.data('font-categories').split(','), content = popover.$target.find('.g5-popover-content'), checked;
+                        content.empty();
+                        var div;
+                        categories.forEach(function (category) {
+                            current = contains(this.filters.categories, category) ? 'checked' : '';
+                            zen('div').html('<label><input type="checkbox" ' + current + ' value="' + category + '"/> ' + properCase(unhyphenate(category)) + '</label>').bottom(content);
+                        }, this);
+                        content.delegate('click', 'input[type="checkbox"]', bind(function (event, input) {
+                            input = $(input);
+                            checked = content.search('input[type="checkbox"]:checked');
+                            this.filters.categories = checked ? checked.map('value') : [];
+                            category.find('small').text(this.filters.categories.length);
+                            this.search();
+                        }, this));
+                        popover.displayContent();
+                    }, this));
+                    subsets.popover({
+                        placement: 'auto',
+                        width: '200',
+                        trigger: 'mouse',
+                        style: 'font-subsets, above-modal'
+                    }).on('beforeshow.popover', bind(function (popover) {
+                        var subs = subsets.data('font-subsets').split(','), content = popover.$target.find('.g5-popover-content');
+                        content.empty();
+                        var div;
+                        subs.forEach(function (sub) {
+                            current = sub == this.filters.script ? 'checked' : '';
+                            zen('div').html('<label><input name="font-subset[]" type="radio" ' + current + ' value="' + sub + '"/> ' + properCase(unhyphenate(sub.replace('ext', 'extended'))) + '</label>').bottom(content);
+                        }, this);
+                        content.delegate('change', 'input[type="radio"]', bind(function (event, input) {
+                            input = $(input);
+                            this.filters.script = input.value();
+                            $('.g-particles-header input.font-preview').value(this.previewSentence[this.filters.script]);
+                            subsets.find('small').text(properCase(unhyphenate(input.value().replace('ext', 'extended'))));
+                            this.search();
+                            this.updatePreview();
+                        }, this));
+                        popover.displayContent();
+                    }, this));
+                    return container;
+                },
+                search: function (input) {
+                    input = input || $('.g-particles-header input.font-search');
+                    var list = $('.g-fonts-list'), value = input.value(), name, data;
+                    list.search('> [data-font]').forEach(function (font) {
+                        font = $(font);
+                        name = font.data('font');
+                        data = find(this.data, { family: name });
+                        font.removeClass('g-font-hide');
+                        if (this.selected && this.selected.font == name && this.selected.selected.length) {
+                            return;
+                        }
+                        if (!contains(data.subsets, this.filters.script)) {
+                            font.addClass('g-font-hide');
+                            return;
+                        }
+                        if (!contains(this.filters.categories, data.category)) {
+                            font.addClass('g-font-hide');
+                            return;
+                        }
+                        if (!name.match(new RegExp('^' + value + '|\\s' + value, 'gi'))) {
+                            font.addClass('g-font-hide');
+                        } else {
+                            font.removeClass('g-font-hide');
+                        }
+                    }, this);
+                    this.updateTotal();
+                    clearTimeout(input.refreshTimer);
+                    input.refreshTimer = setTimeout(bind(function () {
+                        this.scroll($('ul.g-fonts-list'));
+                    }, this), 400);
+                    input.previousValue = value;
+                },
+                updatePreview: function (input) {
+                    input = input || $('.g-particles-header input.font-preview');
+                    clearTimeout(input.refreshTimer);
+                    var value = input.value(), list = $('.g-fonts-list');
+                    value = trim(value) ? trim(value) : this.previewSentence[this.filters.script];
+                    if (input.previousValue == value) {
+                        return true;
+                    }
+                    list.search('[data-font] .preview').text(value);
+                    input.previousValue = value;
+                },
+                fvdToStyle: function (family, fvd) {
+                    var match = fvd.match(/([a-z])([0-9])/);
+                    if (!match)
+                        return '';
+                    var styleMap = {
+                            n: 'normal',
+                            i: 'italic',
+                            o: 'oblique'
+                        };
+                    return {
+                        fontFamily: family,
+                        fontStyle: styleMap[match[1]],
+                        fontWeight: (match[2] * 100).toString()
+                    };
+                },
+                mapVariant: function (variant) {
+                    switch (variant) {
+                    case '100':
+                        return 'Thin 100';
+                        break;
+                    case '100italic':
+                        return 'Thin 100 Italic';
+                        break;
+                    case '200':
+                        return 'Extra-Light 200';
+                        break;
+                    case '200italic':
+                        return 'Extra-Light 200 Italic';
+                        break;
+                    case '300':
+                        return 'Light 300';
+                        break;
+                    case '300italic':
+                        return 'Light 300 Italic';
+                        break;
+                    case '400':
+                    case 'regular':
+                        return 'Normal 400';
+                        break;
+                    case '400italic':
+                    case 'italic':
+                        return 'Normal 400 Italic';
+                        break;
+                    case '500':
+                        return 'Medium 500';
+                        break;
+                    case '500italic':
+                        return 'Medium 500 Italic';
+                        break;
+                    case '600':
+                        return 'Semi-Bold 600';
+                        break;
+                    case '600italic':
+                        return 'Semi-Bold 600 Italic';
+                        break;
+                    case '700':
+                        return 'Bold 700';
+                        break;
+                    case '700italic':
+                        return 'Bold 700 Italic';
+                        break;
+                    case '800':
+                        return 'Extra-Bold 800';
+                        break;
+                    case '800italic':
+                        return 'Extra-Bold 800 Italic';
+                        break;
+                    case '900':
+                        return 'Ultra-Bold 900';
+                        break;
+                    case '900italic':
+                        return 'Ultra-Bold 900 Italic';
+                        break;
+                    default:
+                        return 'Unknown Variant';
+                    }
+                }
+            });
+        domready(function () {
+            $('body').delegate('click', '[data-g5-fontpicker]', function (event, element) {
+                var FontPicker = storage.get(element);
+                if (!FontPicker) {
+                    FontPicker = new Fonts();
+                    storage.set(element, FontPicker);
+                }
+                FontPicker.open(event, element);
+            });
+        });
+        module.exports = Fonts;
+    },
+    '1c': function (require, module, exports, global) {
+        'use strict';
+        var $ = require('n'), domready = require('b'), modal = require('a').modal, getAjaxSuffix = require('v');
+        domready(function () {
+            $('body').delegate('click', '.g-main-nav .g-toplevel [data-g5-ajaxify]', function (event, element) {
+                var items = $('.g-main-nav .g-toplevel [data-g5-ajaxify] !> li');
+                if (items) {
+                    items.removeClass('active');
+                }
+                element.parent('li').addClass('active');
+            });
+            $('body').delegate('click', '#menu-editor .config-cog', function (event, element) {
+                event.preventDefault();
+                modal.open({
+                    content: 'Loading',
+                    remote: $(element).attribute('href') + getAjaxSuffix()
+                });
+            });
+        });
+        module.exports = {};
+    },
+    '1d': function (require, module, exports, global) {
+        'use strict';
+        var $ = require('n'), domready = require('b'), modal = require('a').modal, getAjaxSuffix = require('v'), getAjaxURL = require('34'), trim = require('30'), contains = require('13');
+        domready(function () {
+            $('body').delegate('click', '[data-g5-iconpicker]', function (event, element) {
+                element = $(element);
+                var field = $(element.data('g5-iconpicker')), value = trim(field.value()).replace(/\s{2,}/g, ' ').split(' ');
+                modal.open({
+                    content: 'Loading',
+                    className: 'g5-dialog-theme-default g5-modal-icons',
+                    remote: getAjaxURL('icons') + getAjaxSuffix(),
+                    afterClose: function () {
+                        var popovers = $('.g5-popover');
+                        if (popovers) {
+                            popovers.remove();
+                        }
+                    },
+                    remoteLoaded: function (response, content) {
+                        var html, large, iconData = [], container = content.elements.content, icons = container.search('[data-icon]');
+                        if (!icons || !response.body.success) {
+                            container.html(response.body.html || response.body);
+                            return false;
+                        }
+                        var updatePreview = function (data) {
+                            container.find('.icon-preview').html('<i class="fa ' + data + '"></i>');
+                        };
+                        icons.forEach(function (icon) {
+                            icon = $(icon);
+                            html = '';
+                            for (var i = 5, l = 0; i > l; i--) {
+                                large = !i ? 'lg' : i + 'x';
+                                html += '<i class="fa ' + icon.data('icon') + ' fa-' + large + '"></i> ';
+                            }
+                            icon.popover({
+                                content: html,
+                                placement: 'auto',
+                                trigger: 'mouse',
+                                style: 'above-modal, icons-preview',
+                                width: 'auto',
+                                targetEvents: false,
+                                delay: 1
+                            }).on('hidden.popover', function (instance) {
+                                if (instance.$target) {
+                                    instance.$target.remove();
+                                }
+                            });
+                            if (contains(value, icon.data('icon'))) {
+                                icon.addClass('active');
+                                iconData.push(icon.data('icon'));
+                                value.forEach(function (name) {
+                                    var field = container.find('[name="' + name + '"]');
+                                    if (field) {
+                                        iconData.push(name);
+                                        field.checked(true);
+                                    } else {
+                                        field = container.find('option[value="' + name + '"]');
+                                        if (field) {
+                                            iconData.push(name);
+                                            field.parent().value(name);
+                                        }
+                                    }
+                                });
+                                var wrap = icon.parent('.icons-wrapper'), wrapHeight = wrap[0].offsetHeight;
+                                wrap[0].scrollTop = icon[0].offsetTop - wrapHeight / 2;
+                                updatePreview(iconData.join(' '));
+                            }
+                        });
+                    }
+                });
+            });
+        });
+        module.exports = {};
+    },
+    '1e': function (require, module, exports, global) {
+        function toString(val) {
+            return val == null ? '' : val.toString();
+        }
+        module.exports = toString;
+    },
+    '1f': function (require, module, exports, global) {
+        module.exports = [
+            ' ',
+            '\n',
+            '\r',
+            '\t',
+            '\f',
+            '\x0B',
+            '\xa0',
+            '\u1680',
+            '\u180e',
+            '\u2000',
+            '\u2001',
+            '\u2002',
+            '\u2003',
+            '\u2004',
+            '\u2005',
+            '\u2006',
+            '\u2007',
+            '\u2008',
+            '\u2009',
+            '\u200a',
+            '\u2028',
+            '\u2029',
+            '\u202f',
+            '\u205f',
+            '\u3000'
+        ];
+    },
+    '1g': function (require, module, exports, global) {
+        var toString = require('1e');
+        var WHITE_SPACES = require('1f');
+        function ltrim(str, chars) {
+            str = toString(str);
+            chars = chars || WHITE_SPACES;
+            var start = 0, len = str.length, charLen = chars.length, found = true, i, c;
+            while (found && start < len) {
+                found = false;
+                i = -1;
+                c = str.charAt(start);
+                while (++i < charLen) {
+                    if (c === chars[i]) {
+                        found = true;
+                        start++;
+                        break;
+                    }
+                }
+            }
+            return start >= len ? '' : str.substr(start, len);
+        }
+        module.exports = ltrim;
+    },
+    '1h': function (require, module, exports, global) {
+        var toString = require('1e');
+        var WHITE_SPACES = require('1f');
+        function rtrim(str, chars) {
+            str = toString(str);
+            chars = chars || WHITE_SPACES;
+            var end = str.length - 1, charLen = chars.length, found = true, i, c;
+            while (found && end >= 0) {
+                found = false;
+                i = -1;
+                c = str.charAt(end);
+                while (++i < charLen) {
+                    if (c === chars[i]) {
+                        found = true;
+                        end--;
+                        break;
+                    }
+                }
+            }
+            return end >= 0 ? str.substring(0, end + 1) : '';
+        }
+        module.exports = rtrim;
+    },
+    '1i': function (require, module, exports, global) {
+        var makeIterator = require('1k');
+        function every(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var result = true;
+            if (arr == null) {
+                return result;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (!callback(arr[i], i, arr)) {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
+        module.exports = every;
+    },
+    '1j': function (require, module, exports, global) {
+        var makeIterator = require('1k');
+        function some(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var result = false;
+            if (arr == null) {
+                return result;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (callback(arr[i], i, arr)) {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
+        }
+        module.exports = some;
+    },
+    '1k': function (require, module, exports, global) {
+        var identity = require('35');
+        var prop = require('36');
+        var deepMatches = require('37');
+        function makeIterator(src, thisObj) {
+            if (src == null) {
+                return identity;
+            }
+            switch (typeof src) {
+            case 'function':
+                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
+                    return src.call(thisObj, val, i, arr);
+                } : src;
+            case 'object':
+                return function (val) {
+                    return deepMatches(val, src);
+                };
+            case 'string':
+            case 'number':
+                return prop(src);
+            }
+        }
+        module.exports = makeIterator;
+    },
+    '1l': function (require, module, exports, global) {
+        'use strict';
+        var kindOf = require('1r'), now = require('38'), forEach = require('f'), indexOf = require('h');
         var callbacks = {
                 timeout: {},
                 frame: [],
@@ -5823,213 +6000,9 @@ var G5;
         };
         module.exports = defer;
     },
-    '1f': function (require, module, exports, global) {
-        function toString(val) {
-            return val == null ? '' : val.toString();
-        }
-        module.exports = toString;
-    },
-    '1g': function (require, module, exports, global) {
-        module.exports = [
-            ' ',
-            '\n',
-            '\r',
-            '\t',
-            '\f',
-            '\x0B',
-            '\xa0',
-            '\u1680',
-            '\u180e',
-            '\u2000',
-            '\u2001',
-            '\u2002',
-            '\u2003',
-            '\u2004',
-            '\u2005',
-            '\u2006',
-            '\u2007',
-            '\u2008',
-            '\u2009',
-            '\u200a',
-            '\u2028',
-            '\u2029',
-            '\u202f',
-            '\u205f',
-            '\u3000'
-        ];
-    },
-    '1h': function (require, module, exports, global) {
-        var toString = require('1f');
-        var WHITE_SPACES = require('1g');
-        function ltrim(str, chars) {
-            str = toString(str);
-            chars = chars || WHITE_SPACES;
-            var start = 0, len = str.length, charLen = chars.length, found = true, i, c;
-            while (found && start < len) {
-                found = false;
-                i = -1;
-                c = str.charAt(start);
-                while (++i < charLen) {
-                    if (c === chars[i]) {
-                        found = true;
-                        start++;
-                        break;
-                    }
-                }
-            }
-            return start >= len ? '' : str.substr(start, len);
-        }
-        module.exports = ltrim;
-    },
-    '1i': function (require, module, exports, global) {
-        var toString = require('1f');
-        var WHITE_SPACES = require('1g');
-        function rtrim(str, chars) {
-            str = toString(str);
-            chars = chars || WHITE_SPACES;
-            var end = str.length - 1, charLen = chars.length, found = true, i, c;
-            while (found && end >= 0) {
-                found = false;
-                i = -1;
-                c = str.charAt(end);
-                while (++i < charLen) {
-                    if (c === chars[i]) {
-                        found = true;
-                        end--;
-                        break;
-                    }
-                }
-            }
-            return end >= 0 ? str.substring(0, end + 1) : '';
-        }
-        module.exports = rtrim;
-    },
-    '1j': function (require, module, exports, global) {
-        var makeIterator = require('1l');
-        function every(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var result = true;
-            if (arr == null) {
-                return result;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (!callback(arr[i], i, arr)) {
-                    result = false;
-                    break;
-                }
-            }
-            return result;
-        }
-        module.exports = every;
-    },
-    '1k': function (require, module, exports, global) {
-        var makeIterator = require('1l');
-        function some(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var result = false;
-            if (arr == null) {
-                return result;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (callback(arr[i], i, arr)) {
-                    result = true;
-                    break;
-                }
-            }
-            return result;
-        }
-        module.exports = some;
-    },
-    '1l': function (require, module, exports, global) {
-        var identity = require('36');
-        var prop = require('37');
-        var deepMatches = require('38');
-        function makeIterator(src, thisObj) {
-            if (src == null) {
-                return identity;
-            }
-            switch (typeof src) {
-            case 'function':
-                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
-                    return src.call(thisObj, val, i, arr);
-                } : src;
-            case 'object':
-                return function (val) {
-                    return deepMatches(val, src);
-                };
-            case 'string':
-            case 'number':
-                return prop(src);
-            }
-        }
-        module.exports = makeIterator;
-    },
     '1m': function (require, module, exports, global) {
-        function hasOwn(obj, prop) {
-            return Object.prototype.hasOwnProperty.call(obj, prop);
-        }
-        module.exports = hasOwn;
-    },
-    '1n': function (require, module, exports, global) {
-        var forOwn = require('39');
-        function mixIn(target, objects) {
-            var i = 0, n = arguments.length, obj;
-            while (++i < n) {
-                obj = arguments[i];
-                if (obj != null) {
-                    forOwn(obj, copyProp, target);
-                }
-            }
-            return target;
-        }
-        function copyProp(val, key) {
-            this[key] = val;
-        }
-        module.exports = mixIn;
-    },
-    '1o': function (require, module, exports, global) {
-        var mixIn = require('1n');
-        function createObject(parent, props) {
-            function F() {
-            }
-            F.prototype = parent;
-            return mixIn(new F(), props);
-        }
-        module.exports = createObject;
-    },
-    '1p': function (require, module, exports, global) {
-        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
-        function kindOf(val) {
-            if (val === null) {
-                return 'Null';
-            } else if (val === UNDEF) {
-                return 'Undefined';
-            } else {
-                return _rKind.exec(_toString.call(val))[1];
-            }
-        }
-        module.exports = kindOf;
-    },
-    '1q': function (require, module, exports, global) {
         'use strict';
-        var color = require('3a'), frame = require('3b');
-        var moofx = typeof document !== 'undefined' ? require('3c') : require('3d');
-        moofx.requestFrame = function (callback) {
-            frame.request(callback);
-            return this;
-        };
-        moofx.cancelFrame = function (callback) {
-            frame.cancel(callback);
-            return this;
-        };
-        moofx.color = color;
-        module.exports = moofx;
-    },
-    '1r': function (require, module, exports, global) {
-        'use strict';
-        var parse = require('1s');
+        var parse = require('1n');
         var index = 0, counter = document.__counter = (parseInt(document.__counter || -1, 36) + 1).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n, xml) {
             if (n === window)
@@ -6619,7 +6592,7 @@ var G5;
         slick.parse = parse;
         module.exports = slick;
     },
-    '1s': function (require, module, exports, global) {
+    '1n': function (require, module, exports, global) {
         'use strict';
         var escapeRe = /([-.*+?^${}()|[\]\/\\])/g, unescapeRe = /\\/g;
         var escape = function (string) {
@@ -6753,57 +6726,78 @@ var G5;
         };
         module.exports = parse;
     },
-    '1t': function (require, module, exports, global) {
-        var isKind = require('2d');
-        var isArray = Array.isArray || function (val) {
-                return isKind(val, 'Array');
-            };
-        module.exports = isArray;
-    },
-    '1u': function (require, module, exports, global) {
-        var forOwn = require('20');
-        function size(obj) {
-            var count = 0;
-            forOwn(obj, function () {
-                count++;
-            });
-            return count;
-        }
-        module.exports = size;
-    },
-    '1v': function (require, module, exports, global) {
-        var choice = require('1w');
-        var _chars = '0123456789abcdef'.split('');
-        function randHex(size) {
-            size = size && size > 0 ? size : 6;
-            var str = '';
-            while (size--) {
-                str += choice(_chars);
-            }
-            return str;
-        }
-        module.exports = randHex;
-    },
-    '1w': function (require, module, exports, global) {
-        var randInt = require('3e');
-        var isArray = require('1t');
-        function choice(items) {
-            var target = arguments.length === 1 && isArray(items) ? items : arguments;
-            return target[randInt(0, target.length - 1)];
-        }
-        module.exports = choice;
-    },
-    '1x': function (require, module, exports, global) {
+    '1o': function (require, module, exports, global) {
         function hasOwn(obj, prop) {
             return Object.prototype.hasOwnProperty.call(obj, prop);
         }
         module.exports = hasOwn;
     },
-    '1y': function (require, module, exports, global) {
-        var clone = require('3f');
-        var forOwn = require('20');
-        var kindOf = require('3g');
-        var isPlainObject = require('3h');
+    '1p': function (require, module, exports, global) {
+        var forOwn = require('39');
+        function mixIn(target, objects) {
+            var i = 0, n = arguments.length, obj;
+            while (++i < n) {
+                obj = arguments[i];
+                if (obj != null) {
+                    forOwn(obj, copyProp, target);
+                }
+            }
+            return target;
+        }
+        function copyProp(val, key) {
+            this[key] = val;
+        }
+        module.exports = mixIn;
+    },
+    '1q': function (require, module, exports, global) {
+        var mixIn = require('1p');
+        function createObject(parent, props) {
+            function F() {
+            }
+            F.prototype = parent;
+            return mixIn(new F(), props);
+        }
+        module.exports = createObject;
+    },
+    '1r': function (require, module, exports, global) {
+        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
+        function kindOf(val) {
+            if (val === null) {
+                return 'Null';
+            } else if (val === UNDEF) {
+                return 'Undefined';
+            } else {
+                return _rKind.exec(_toString.call(val))[1];
+            }
+        }
+        module.exports = kindOf;
+    },
+    '1s': function (require, module, exports, global) {
+        'use strict';
+        var color = require('3a'), frame = require('3b');
+        var moofx = typeof document !== 'undefined' ? require('3c') : require('3d');
+        moofx.requestFrame = function (callback) {
+            frame.request(callback);
+            return this;
+        };
+        moofx.cancelFrame = function (callback) {
+            frame.cancel(callback);
+            return this;
+        };
+        moofx.color = color;
+        module.exports = moofx;
+    },
+    '1t': function (require, module, exports, global) {
+        function hasOwn(obj, prop) {
+            return Object.prototype.hasOwnProperty.call(obj, prop);
+        }
+        module.exports = hasOwn;
+    },
+    '1u': function (require, module, exports, global) {
+        var clone = require('3e');
+        var forOwn = require('27');
+        var kindOf = require('3f');
+        var isPlainObject = require('3g');
         function deepClone(val, instanceClone) {
             switch (kindOf(val)) {
             case 'Object':
@@ -6836,63 +6830,51 @@ var G5;
         }
         module.exports = deepClone;
     },
-    '1z': function (require, module, exports, global) {
+    '1v': function (require, module, exports, global) {
         var isKind = require('2d');
         function isObject(val) {
             return isKind(val, 'Object');
         }
         module.exports = isObject;
     },
-    '20': function (require, module, exports, global) {
-        var hasOwn = require('1x');
-        var forIn = require('3i');
-        function forOwn(obj, fn, thisObj) {
-            forIn(obj, function (val, key) {
-                if (hasOwn(obj, key)) {
-                    return fn.call(thisObj, obj[key], key, obj);
-                }
-            });
-        }
-        module.exports = forOwn;
-    },
-    '21': function (require, module, exports, global) {
-        var isKind = require('3j');
+    '1w': function (require, module, exports, global) {
+        var isKind = require('3h');
         function isObject(val) {
             return isKind(val, 'Object');
         }
         module.exports = isObject;
     },
-    '22': function (require, module, exports, global) {
-        var isKind = require('3j');
+    '1x': function (require, module, exports, global) {
+        var isKind = require('3h');
         function isString(val) {
             return isKind(val, 'String');
         }
         module.exports = isString;
     },
-    '23': function (require, module, exports, global) {
-        var isKind = require('3j');
+    '1y': function (require, module, exports, global) {
+        var isKind = require('3h');
         var isArray = Array.isArray || function (val) {
                 return isKind(val, 'Array');
             };
         module.exports = isArray;
     },
-    '24': function (require, module, exports, global) {
-        var isKind = require('3j');
+    '1z': function (require, module, exports, global) {
+        var isKind = require('3h');
         function isFunction(val) {
             return isKind(val, 'Function');
         }
         module.exports = isFunction;
     },
-    '25': function (require, module, exports, global) {
-        var toString = require('1f');
+    '20': function (require, module, exports, global) {
+        var toString = require('1e');
         function upperCase(str) {
             str = toString(str);
             return str.toUpperCase();
         }
         module.exports = upperCase;
     },
-    '26': function (require, module, exports, global) {
-        var hasOwn = require('1m');
+    '21': function (require, module, exports, global) {
+        var hasOwn = require('1o');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -6934,8 +6916,8 @@ var G5;
         }
         module.exports = forIn;
     },
-    '27': function (require, module, exports, global) {
-        var indexOf = require('i');
+    '22': function (require, module, exports, global) {
+        var indexOf = require('h');
         function remove(arr, item) {
             var idx = indexOf(arr, item);
             if (idx !== -1)
@@ -6943,31 +6925,59 @@ var G5;
         }
         module.exports = remove;
     },
-    '28': function (require, module, exports, global) {
-        var hasOwn = require('3k');
-        var deepClone = require('3l');
-        var isObject = require('3m');
-        function merge() {
-            var i = 1, key, val, obj, target;
-            target = deepClone(arguments[0]);
-            while (obj = arguments[i++]) {
-                for (key in obj) {
-                    if (!hasOwn(obj, key)) {
-                        continue;
-                    }
-                    val = obj[key];
-                    if (isObject(val) && isObject(target[key])) {
-                        target[key] = merge(target[key], val);
-                    } else {
-                        target[key] = deepClone(val);
-                    }
-                }
+    '23': function (require, module, exports, global) {
+        var choice = require('24');
+        var _chars = '0123456789abcdef'.split('');
+        function randHex(size) {
+            size = size && size > 0 ? size : 6;
+            var str = '';
+            while (size--) {
+                str += choice(_chars);
             }
-            return target;
+            return str;
         }
-        module.exports = merge;
+        module.exports = randHex;
     },
-    '29': function (require, module, exports, global) {
+    '24': function (require, module, exports, global) {
+        var randInt = require('3i');
+        var isArray = require('25');
+        function choice(items) {
+            var target = arguments.length === 1 && isArray(items) ? items : arguments;
+            return target[randInt(0, target.length - 1)];
+        }
+        module.exports = choice;
+    },
+    '25': function (require, module, exports, global) {
+        var isKind = require('2d');
+        var isArray = Array.isArray || function (val) {
+                return isKind(val, 'Array');
+            };
+        module.exports = isArray;
+    },
+    '26': function (require, module, exports, global) {
+        var forOwn = require('27');
+        function size(obj) {
+            var count = 0;
+            forOwn(obj, function () {
+                count++;
+            });
+            return count;
+        }
+        module.exports = size;
+    },
+    '27': function (require, module, exports, global) {
+        var hasOwn = require('1t');
+        var forIn = require('3j');
+        function forOwn(obj, fn, thisObj) {
+            forIn(obj, function (val, key) {
+                if (hasOwn(obj, key)) {
+                    return fn.call(thisObj, obj[key], key, obj);
+                }
+            });
+        }
+        module.exports = forOwn;
+    },
+    '28': function (require, module, exports, global) {
         'use strict';
         var $ = require('1'), domready = require('b');
         var History = {};
@@ -6993,8 +7003,8 @@ var G5;
         }
         module.exports = History;
     },
-    '2a': function (require, module, exports, global) {
-        var slice = require('3n');
+    '29': function (require, module, exports, global) {
+        var slice = require('3k');
         function bind(fn, context, args) {
             var argsArr = slice(arguments, 2);
             return function () {
@@ -7003,7 +7013,55 @@ var G5;
         }
         module.exports = bind;
     },
+    '2a': function (require, module, exports, global) {
+        var hasOwn = require('3l');
+        var deepClone = require('3m');
+        var isObject = require('3n');
+        function merge() {
+            var i = 1, key, val, obj, target;
+            target = deepClone(arguments[0]);
+            while (obj = arguments[i++]) {
+                for (key in obj) {
+                    if (!hasOwn(obj, key)) {
+                        continue;
+                    }
+                    val = obj[key];
+                    if (isObject(val) && isObject(target[key])) {
+                        target[key] = merge(target[key], val);
+                    } else {
+                        target[key] = deepClone(val);
+                    }
+                }
+            }
+            return target;
+        }
+        module.exports = merge;
+    },
     '2b': function (require, module, exports, global) {
+        var identity = require('3o');
+        var prop = require('3p');
+        var deepMatches = require('3q');
+        function makeIterator(src, thisObj) {
+            if (src == null) {
+                return identity;
+            }
+            switch (typeof src) {
+            case 'function':
+                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
+                    return src.call(thisObj, val, i, arr);
+                } : src;
+            case 'object':
+                return function (val) {
+                    return deepMatches(val, src);
+                };
+            case 'string':
+            case 'number':
+                return prop(src);
+            }
+        }
+        module.exports = makeIterator;
+    },
+    '2c': function (require, module, exports, global) {
         function slice(arr, start, end) {
             var len = arr.length;
             if (start == null) {
@@ -7028,38 +7086,546 @@ var G5;
         }
         module.exports = slice;
     },
-    '2c': function (require, module, exports, global) {
-        var identity = require('3o');
-        var prop = require('3p');
-        var deepMatches = require('3q');
-        function makeIterator(src, thisObj) {
-            if (src == null) {
-                return identity;
-            }
-            switch (typeof src) {
-            case 'function':
-                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
-                    return src.call(thisObj, val, i, arr);
-                } : src;
-            case 'object':
-                return function (val) {
-                    return deepMatches(val, src);
-                };
-            case 'string':
-            case 'number':
-                return prop(src);
-            }
-        }
-        module.exports = makeIterator;
-    },
     '2d': function (require, module, exports, global) {
-        var kindOf = require('3g');
+        var kindOf = require('3f');
         function isKind(val, kind) {
             return kindOf(val) === kind;
         }
         module.exports = isKind;
     },
     '2e': function (require, module, exports, global) {
+        function indexOf(arr, item, fromIndex) {
+            fromIndex = fromIndex || 0;
+            if (arr == null) {
+                return -1;
+            }
+            var len = arr.length, i = fromIndex < 0 ? len + fromIndex : fromIndex;
+            while (i < len) {
+                if (arr[i] === item) {
+                    return i;
+                }
+                i++;
+            }
+            return -1;
+        }
+        module.exports = indexOf;
+    },
+    '2f': function (require, module, exports, global) {
+        module.exports = {
+            base: require('3r'),
+            atom: require('3s'),
+            section: require('3t'),
+            'non-visible': require('3u'),
+            grid: require('3v'),
+            container: require('3w'),
+            block: require('3x'),
+            particle: require('3y'),
+            position: require('3z'),
+            pagecontent: require('40'),
+            spacer: require('41')
+        };
+    },
+    '2g': function (require, module, exports, global) {
+        var make = require('42');
+        var arrForEach = require('10');
+        var objForEach = require('27');
+        module.exports = make(arrForEach, objForEach);
+    },
+    '2h': function (require, module, exports, global) {
+        var isArray = require('25');
+        var append = require('43');
+        function flattenTo(arr, result, level) {
+            if (arr == null) {
+                return result;
+            } else if (level === 0) {
+                append(result, arr);
+                return result;
+            }
+            var value, i = -1, len = arr.length;
+            while (++i < len) {
+                value = arr[i];
+                if (isArray(value)) {
+                    flattenTo(value, result, level - 1);
+                } else {
+                    result.push(value);
+                }
+            }
+            return result;
+        }
+        function flatten(arr, level) {
+            level = level == null ? -1 : level;
+            return flattenTo(arr, [], level);
+        }
+        module.exports = flatten;
+    },
+    '2i': function (require, module, exports, global) {
+        var namespace = require('44');
+        function set(obj, prop, val) {
+            var parts = /^(.+)\.(.+)$/.exec(prop);
+            if (parts) {
+                namespace(obj, parts[1])[parts[2]] = val;
+            } else {
+                obj[prop] = val;
+            }
+        }
+        module.exports = set;
+    },
+    '2j': function (require, module, exports, global) {
+        var has = require('46');
+        function unset(obj, prop) {
+            if (has(obj, prop)) {
+                var parts = prop.split('.'), last = parts.pop();
+                while (prop = parts.shift()) {
+                    obj = obj[prop];
+                }
+                return delete obj[last];
+            } else {
+                return true;
+            }
+        }
+        module.exports = unset;
+    },
+    '2k': function (require, module, exports, global) {
+        var isPrimitive = require('45');
+        function get(obj, prop) {
+            var parts = prop.split('.'), last = parts.pop();
+            while (prop = parts.shift()) {
+                obj = obj[prop];
+                if (obj == null)
+                    return;
+            }
+            return obj[last];
+        }
+        module.exports = get;
+    },
+    '2l': function (require, module, exports, global) {
+        var toString = require('47');
+        var repeat = require('2m');
+        function rpad(str, minLen, ch) {
+            str = toString(str);
+            ch = ch || ' ';
+            return str.length < minLen ? str + repeat(ch, minLen - str.length) : str;
+        }
+        module.exports = rpad;
+    },
+    '2m': function (require, module, exports, global) {
+        var toString = require('47');
+        var toInt = require('48');
+        function repeat(str, n) {
+            var result = '';
+            str = toString(str);
+            n = toInt(n);
+            if (n < 1) {
+                return '';
+            }
+            while (n > 0) {
+                if (n % 2) {
+                    result += str;
+                }
+                n = Math.floor(n / 2);
+                str += str;
+            }
+            return result;
+        }
+        module.exports = repeat;
+    },
+    '2n': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('m'), Emitter = require('i'), Bound = require('w'), Options = require('x'), bind = require('y'), contains = require('13'), DragEvents = require('49'), $ = require('n');
+        require('3');
+        require('4');
+        var isIE = navigator.appName === 'Microsoft Internet Explorer';
+        var DragDrop = new prime({
+                mixin: [
+                    Bound,
+                    Options
+                ],
+                inherits: Emitter,
+                options: {
+                    delegate: null,
+                    droppables: false
+                },
+                EVENTS: DragEvents,
+                constructor: function (container, options) {
+                    this.container = $(container);
+                    if (!this.container) {
+                        return;
+                    }
+                    this.setOptions(options);
+                    this.element = null;
+                    this.origin = {
+                        x: 0,
+                        y: 0,
+                        transform: null,
+                        offset: {
+                            x: 0,
+                            y: 0
+                        }
+                    };
+                    this.matched = false;
+                    this.lastMatched = false;
+                    this.lastOvered = null;
+                    this.attach();
+                },
+                attach: function () {
+                    this.container.delegate(this.EVENTS.START, this.options.delegate, this.bound('start'));
+                },
+                detach: function () {
+                    this.container.undelegate(this.EVENTS.START, this.options.delegate, this.bound('start'));
+                },
+                start: function (event, element) {
+                    if (event.which && event.which !== 1 || $(event.target).matches(this.options.exclude)) {
+                        return true;
+                    }
+                    this.element = $(element);
+                    this.matched = false;
+                    this.emit('dragdrop:beforestart', event, this.element);
+                    if (isIE) {
+                        this.element.style({
+                            '-ms-touch-action': 'none',
+                            'touch-action': 'none'
+                        });
+                    }
+                    event.preventDefault();
+                    this.origin = {
+                        x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX,
+                        y: event.changedTouches ? event.changedTouches[0].pageY : event.pageY,
+                        transform: this.element.compute('transform')
+                    };
+                    var clientRect = this.element[0].getBoundingClientRect();
+                    this.origin.offset = {
+                        clientRect: clientRect,
+                        x: this.origin.x - clientRect.right,
+                        y: clientRect.top - this.origin.y
+                    };
+                    if (this.element.data('lm-blocktype') === 'grid' && Math.abs(this.origin.offset.x) < clientRect.width) {
+                        return false;
+                    }
+                    var offset = Math.abs(this.origin.offset.x), columns = this.element.parent().data('lm-blocktype') === 'grid' && this.element.parent().parent().data('lm-root');
+                    if (offset < 6 && this.element.parent().find(':last-child') !== this.element || columns && offset > 3 && offset < 10) {
+                        if (this.element.parent('[data-lm-blocktype="non-visible"]')) {
+                            return false;
+                        }
+                        this.emit('dragdrop:resize', event, this.element, this.element.siblings(':not(.placeholder)'), this.origin.offset.x);
+                        return false;
+                    }
+                    if (columns) {
+                        return false;
+                    }
+                    this.element.style({
+                        'pointer-events': 'none',
+                        opacity: 0.5,
+                        zIndex: 100
+                    });
+                    $(document).on(this.EVENTS.MOVE, this.bound('move'));
+                    $(document).on(this.EVENTS.STOP, this.bound('stop'));
+                    this.emit('dragdrop:start', event, this.element);
+                    return this.element;
+                },
+                stop: function (event) {
+                    var settings = { duration: '250ms' };
+                    if (this.removeElement) {
+                        return this.emit('dragdrop:stop:erase', event, this.element);
+                    }
+                    if (this.element) {
+                        this.emit('dragdrop:stop', event, this.matched, this.element);
+                        if (this.matched) {
+                            this.element.style({
+                                opacity: 0,
+                                transform: 'translate(0, 0)'
+                            });
+                        }
+                        if (!this.matched) {
+                            settings.callback = bind(function (element) {
+                                this._removeStyleAttribute(element);
+                                setTimeout(bind(function () {
+                                    this.emit('dragdrop:stop:animation', element);
+                                }, this), 1);
+                            }, this, this.element);
+                            this.element.animate({
+                                transform: this.origin.transform || 'translate(0, 0)',
+                                opacity: 1
+                            }, settings);
+                        } else {
+                            this.element.style({
+                                transform: this.origin.transform || 'translate(0, 0)',
+                                opacity: 1
+                            });
+                            this._removeStyleAttribute(this.element);
+                            this.emit('dragdrop:stop:animation', this.element);
+                        }
+                    }
+                    $(document).off(this.EVENTS.MOVE, this.bound('move'));
+                    $(document).off(this.EVENTS.STOP, this.bound('stop'));
+                    this.element = null;
+                },
+                move: function (event) {
+                    var clientX = event.clientX || event.touches && event.touches[0].clientX || 0, clientY = event.clientY || event.touches && event.touches[0].clientY || 0, overing = document.elementFromPoint(clientX, clientY), isGrid = this.element.data('lm-blocktype') === 'grid';
+                    if (isGrid) {
+                        overing = document.elementFromPoint(clientX + 30, clientY);
+                    }
+                    if (!overing) {
+                        return false;
+                    }
+                    this.matched = $(overing).matches(this.options.droppables) ? overing : ($(overing).parent(this.options.droppables) || [false])[0];
+                    this.isPlaceHolder = $(overing).matches('[data-lm-placeholder]') ? true : $(overing).parent('[data-lm-placeholder]') ? true : false;
+                    if (this.matched && this.element.data('lm-id')) {
+                        if ($(this.matched).parent('.grid') !== this.element.parent('.grid') || $(this.matched).parent('.section') !== this.element.parent('.section')) {
+                            this.matched = false;
+                        }
+                    }
+                    var deltaX = this.lastX - clientX, deltaY = this.lastY - clientY, direction = Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0 && 'left' || Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0 && 'right' || Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0 && 'up' || 'down';
+                    deltaX = (event.changedTouches ? event.changedTouches[0].pageX : event.pageX) - this.origin.x;
+                    deltaY = (event.changedTouches ? event.changedTouches[0].pageY : event.pageY) - this.origin.y;
+                    this.direction = direction;
+                    this.element.style({ transform: 'translate(' + deltaX + 'px, ' + deltaY + 'px)' });
+                    if (!this.isPlaceHolder) {
+                        if (this.lastMatched && this.matched !== this.lastMatched) {
+                            this.emit('dragdrop:leave', event, this.lastMatched, this.element);
+                            this.lastMatched = false;
+                        }
+                        if (this.matched && this.matched !== this.lastMatched && overing !== this.lastOvered) {
+                            this.emit('dragdrop:enter', event, this.matched, this.element);
+                            this.lastMatched = this.matched;
+                        }
+                        if (this.matched && this.lastMatched) {
+                            var rect = this.matched.getBoundingClientRect();
+                            var x = clientX - rect.left, y = clientY - rect.top;
+                            var location = {
+                                    x: Math.abs(clientX - rect.left) < rect.width / 2 && 'before' || Math.abs(clientX - rect.left) >= rect.width - rect.width / 2 && 'after' || 'other',
+                                    y: Math.abs(clientY - rect.top) < rect.height / 2 && 'above' || Math.abs(clientY - rect.top) >= rect.height / 2 && 'below' || 'other'
+                                };
+                            this.emit('dragdrop:location', event, location, this.matched, this.element);
+                            this.lastLocation = location;
+                        } else {
+                            this.emit('dragdrop:nolocation', event);
+                        }
+                    }
+                    this.lastOvered = overing;
+                    this.lastDirection = direction;
+                    this.lastX = clientX;
+                    this.lastY = clientY;
+                    this.emit('dragdrop:move', event, this.element);
+                },
+                _removeStyleAttribute: function (element) {
+                    $(element || this.element).attribute('style', null);
+                }
+            });
+        module.exports = DragDrop;
+    },
+    '2o': function (require, module, exports, global) {
+        'use strict';
+        var DragEvents = require('49'), prime = require('m'), Emitter = require('i'), Bound = require('w'), Options = require('x'), bind = require('y'), isString = require('4a'), nMap = require('4b'), clamp = require('2s'), precision = require('4c'), get = require('2k'), $ = require('n');
+        require('3');
+        require('4');
+        var Resizer = new prime({
+                mixin: [
+                    Bound,
+                    Options
+                ],
+                EVENTS: DragEvents,
+                options: { minSize: 5 },
+                constructor: function (container, options) {
+                    this.setOptions(options);
+                    this.history = this.options.history;
+                    this.builder = this.options.builder;
+                    this.map = this.builder.map;
+                    this.origin = {
+                        x: 0,
+                        y: 0,
+                        transform: null,
+                        offset: {
+                            x: 0,
+                            y: 0
+                        }
+                    };
+                },
+                getBlock: function (element) {
+                    return get(this.map, isString(element) ? element : $(element).data('lm-id') || '');
+                },
+                getAttribute: function (element, prop) {
+                    return this.getBlock(element).getAttribute(prop);
+                },
+                getSize: function (element) {
+                    return this.getAttribute($(element), 'size');
+                },
+                start: function (event, element, siblings, offset) {
+                    this.map = this.builder.map;
+                    if (event.which && event.which !== 1) {
+                        return true;
+                    }
+                    event.preventDefault();
+                    this.element = $(element);
+                    this.siblings = {
+                        occupied: 0,
+                        elements: siblings,
+                        next: this.element.nextSibling(),
+                        prevs: this.element.previousSiblings(),
+                        sizeBefore: 0
+                    };
+                    if (this.siblings.elements.length > 1) {
+                        this.siblings.occupied -= this.getSize(this.siblings.next);
+                        this.siblings.elements.forEach(function (sibling) {
+                            this.siblings.occupied += this.getSize(sibling);
+                        }, this);
+                    }
+                    if (this.siblings.prevs) {
+                        this.siblings.prevs.forEach(function (sibling) {
+                            this.siblings.sizeBefore += this.getSize(sibling);
+                        }, this);
+                    }
+                    this.origin = {
+                        size: this.getSize(this.element),
+                        maxSize: this.getSize(this.element) + this.getSize(this.siblings.next),
+                        x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX + 6,
+                        y: event.changedTouches ? event.changedTouches[0].pageY : event.pageY
+                    };
+                    var clientRect = this.element[0].getBoundingClientRect(), parentRect = this.element.parent()[0].getBoundingClientRect();
+                    this.origin.offset = {
+                        clientRect: clientRect,
+                        parentRect: {
+                            left: parentRect.left,
+                            right: parentRect.right
+                        },
+                        x: this.origin.x - clientRect.right,
+                        y: clientRect.top - this.origin.y,
+                        down: offset
+                    };
+                    this.origin.offset.parentRect.left = this.element.parent().find('> [data-lm-id]:first-child')[0].getBoundingClientRect().left;
+                    this.origin.offset.parentRect.right = this.element.parent().find('> [data-lm-id]:last-child')[0].getBoundingClientRect().right;
+                    $(document).on(this.EVENTS.MOVE, this.bound('move'));
+                    $(document).on(this.EVENTS.STOP, this.bound('stop'));
+                },
+                move: function (event) {
+                    var clientX = event.clientX || event.touches[0].clientX || 0, clientY = event.clientY || event.touches[0].clientY || 0, parentRect = this.origin.offset.parentRect;
+                    var deltaX = (this.lastX || clientX) - clientX, deltaY = (this.lastY || clientY) - clientY;
+                    this.direction = Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0 && 'left' || Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0 && 'right' || Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0 && 'up' || 'down';
+                    var size, diff = 100 - this.siblings.occupied, value = clientX + (!this.siblings.prevs ? this.origin.offset.x - this.origin.offset.down : this.siblings.prevs.length), normalized = clamp(value, parentRect.left, parentRect.right);
+                    size = nMap(normalized, parentRect.left, parentRect.right, 0, 100);
+                    size = size - this.siblings.sizeBefore;
+                    size = precision(clamp(size, this.options.minSize, this.origin.maxSize - this.options.minSize), 4);
+                    diff = precision(diff - size, 4);
+                    this.getBlock(this.element).setSize(size, true);
+                    this.getBlock(this.siblings.next).setSize(diff, true);
+                    this.lastX = clientX;
+                    this.lastY = clientY;
+                },
+                stop: function () {
+                    $(document).off(this.EVENTS.MOVE, this.bound('move'));
+                    $(document).off(this.EVENTS.STOP, this.bound('stop'));
+                    if (this.origin.size !== this.getSize(this.element)) {
+                        this.history.push(this.builder.serialize());
+                    }
+                },
+                evenResize: function (elements, animated) {
+                    var total = elements.length, size = precision(100 / total, 4), block;
+                    if (typeof animated === 'undefined') {
+                        animated = true;
+                    }
+                    elements.forEach(function (element) {
+                        element = $(element);
+                        block = this.getBlock(element);
+                        if (block && block.hasAttribute('size')) {
+                            block[animated ? 'setAnimatedSize' : 'setSize'](size, size !== block.getSize());
+                        } else {
+                            if (element) {
+                                element[animated ? 'animate' : 'style']({ flex: '0 1 ' + size + '%' });
+                            }
+                        }
+                    }, this);
+                }
+            });
+        module.exports = Resizer;
+    },
+    '2p': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('m'), $ = require('n'), Emitter = require('i'), Bound = require('w'), Options = require('x');
+        var Eraser = new prime({
+                mixin: [
+                    Options,
+                    Bound
+                ],
+                inherits: Emitter,
+                constructor: function (element, options) {
+                    this.setOptions(options);
+                    this.element = $(element);
+                    if (!this.element) {
+                        return;
+                    }
+                    this.hide(true);
+                },
+                show: function (fast) {
+                    this.out();
+                    this.element[fast ? 'style' : 'animate']({ top: 20 }, { duration: '150ms' });
+                },
+                hide: function (fast) {
+                    var top = { top: -this.element[0].offsetHeight };
+                    this.out();
+                    this.element[fast ? 'style' : 'animate'](top, { duration: '150ms' });
+                },
+                over: function () {
+                    this.element.find('.trash-zone').animate({ transform: 'scale(1.2)' }, {
+                        duration: '150ms',
+                        equation: 'cubic-bezier(0.5,0,0.5,1)'
+                    });
+                },
+                out: function () {
+                    this.element.find('.trash-zone').animate({ transform: 'scale(1)' }, {
+                        duration: '150ms',
+                        equation: 'cubic-bezier(0.5,0,0.5,1)'
+                    });
+                }
+            });
+        module.exports = Eraser;
+    },
+    '2q': function (require, module, exports, global) {
+        var makeIterator = require('2b');
+        function every(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var result = true;
+            if (arr == null) {
+                return result;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (!callback(arr[i], i, arr)) {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
+        module.exports = every;
+    },
+    '2r': function (require, module, exports, global) {
+        var hasOwn = require('1t');
+        var every = require('4d');
+        var isObject = require('1v');
+        var is = require('4e');
+        function makeCompare(callback) {
+            return function (value, key) {
+                return hasOwn(this, key) && callback(value, this[key]);
+            };
+        }
+        function checkProperties(value, key) {
+            return hasOwn(this, key);
+        }
+        function equals(a, b, callback) {
+            callback = callback || is;
+            if (!isObject(a) || !isObject(b)) {
+                return callback(a, b);
+            }
+            return every(a, makeCompare(callback), b) && every(b, checkProperties, a);
+        }
+        module.exports = equals;
+    },
+    '2s': function (require, module, exports, global) {
+        function clamp(val, min, max) {
+            return val < min ? min : val > max ? max : val;
+        }
+        module.exports = clamp;
+    },
+    '2t': function (require, module, exports, global) {
         function split(array, segments) {
             segments = segments || 2;
             var results = [];
@@ -7080,8 +7646,8 @@ var G5;
         }
         module.exports = split;
     },
-    '2f': function (require, module, exports, global) {
-        var indexOf = require('2s');
+    '2u': function (require, module, exports, global) {
+        var indexOf = require('2e');
         function removeAll(arr, item) {
             var idx = indexOf(arr, item);
             while (idx !== -1) {
@@ -7091,9 +7657,9 @@ var G5;
         }
         module.exports = removeAll;
     },
-    '2g': function (require, module, exports, global) {
-        var difference = require('3r');
-        var slice = require('2b');
+    '2v': function (require, module, exports, global) {
+        var difference = require('4f');
+        var slice = require('2c');
         function insert(arr, rest_items) {
             var diff = difference(slice(arguments, 1), arr);
             if (diff.length) {
@@ -7103,16 +7669,16 @@ var G5;
         }
         module.exports = insert;
     },
-    '2h': function (require, module, exports, global) {
-        var findIndex = require('3s');
+    '2w': function (require, module, exports, global) {
+        var findIndex = require('4g');
         function find(arr, iterator, thisObj) {
             var idx = findIndex(arr, iterator, thisObj);
             return idx >= 0 ? arr[idx] : void 0;
         }
         module.exports = find;
     },
-    '2i': function (require, module, exports, global) {
-        var indexOf = require('2s');
+    '2x': function (require, module, exports, global) {
+        var indexOf = require('2e');
         function combine(arr1, arr2) {
             if (arr2 == null) {
                 return arr1;
@@ -7127,29 +7693,29 @@ var G5;
         }
         module.exports = combine;
     },
-    '2j': function (require, module, exports, global) {
-        var toString = require('3t');
+    '2y': function (require, module, exports, global) {
+        var toString = require('47');
         function unhyphenate(str) {
             str = toString(str);
             return str.replace(/(\w)(-)(\w)/g, '$1 $3');
         }
         module.exports = unhyphenate;
     },
-    '2k': function (require, module, exports, global) {
-        var toString = require('3t');
-        var lowerCase = require('3y');
-        var upperCase = require('3z');
+    '2z': function (require, module, exports, global) {
+        var toString = require('47');
+        var lowerCase = require('4h');
+        var upperCase = require('4i');
         function properCase(str) {
             str = toString(str);
             return lowerCase(str).replace(/^\w|\s\w/g, upperCase);
         }
         module.exports = properCase;
     },
-    '2l': function (require, module, exports, global) {
-        var toString = require('3t');
-        var WHITE_SPACES = require('3u');
-        var ltrim = require('3v');
-        var rtrim = require('3w');
+    '30': function (require, module, exports, global) {
+        var toString = require('47');
+        var WHITE_SPACES = require('4j');
+        var ltrim = require('4k');
+        var rtrim = require('4l');
         function trim(str, chars) {
             str = toString(str);
             chars = chars || WHITE_SPACES;
@@ -7157,7 +7723,7 @@ var G5;
         }
         module.exports = trim;
     },
-    '2m': function (require, module, exports, global) {
+    '31': function (require, module, exports, global) {
         (function () {
             var async = {};
             var root, previous_async;
@@ -8173,7 +8739,7 @@ var G5;
             }
         }());
     },
-    '2n': function (require, module, exports, global) {
+    '32': function (require, module, exports, global) {
         ;
         (function (window, document, undefined) {
             var k = this;
@@ -8923,7 +9489,7 @@ var G5;
         }(this, document));
         module.exports = window.WebFont;
     },
-    '2o': function (require, module, exports, global) {
+    '33': function (require, module, exports, global) {
         'use strict';
         var $ = require('1');
         $.implement({
@@ -8986,19 +9552,7 @@ var G5;
         });
         module.exports = $;
     },
-    '2p': function (require, module, exports, global) {
-        var make = require('3x');
-        var arrForEach = require('10');
-        var objForEach = require('20');
-        module.exports = make(arrForEach, objForEach);
-    },
-    '2q': function (require, module, exports, global) {
-        function clamp(val, min, max) {
-            return val < min ? min : val > max ? max : val;
-        }
-        module.exports = clamp;
-    },
-    '2r': function (require, module, exports, global) {
+    '34': function (require, module, exports, global) {
         'use strict';
         var getAjaxURL = function (view, search) {
             if (!search) {
@@ -9009,542 +9563,13 @@ var G5;
         };
         module.exports = getAjaxURL;
     },
-    '2s': function (require, module, exports, global) {
-        function indexOf(arr, item, fromIndex) {
-            fromIndex = fromIndex || 0;
-            if (arr == null) {
-                return -1;
-            }
-            var len = arr.length, i = fromIndex < 0 ? len + fromIndex : fromIndex;
-            while (i < len) {
-                if (arr[i] === item) {
-                    return i;
-                }
-                i++;
-            }
-            return -1;
-        }
-        module.exports = indexOf;
-    },
-    '2t': function (require, module, exports, global) {
-        module.exports = {
-            base: require('40'),
-            atom: require('41'),
-            section: require('42'),
-            'non-visible': require('43'),
-            grid: require('44'),
-            container: require('45'),
-            block: require('46'),
-            particle: require('47'),
-            position: require('48'),
-            pagecontent: require('49'),
-            spacer: require('4a')
-        };
-    },
-    '2u': function (require, module, exports, global) {
-        var isArray = require('1t');
-        var append = require('4d');
-        function flattenTo(arr, result, level) {
-            if (arr == null) {
-                return result;
-            } else if (level === 0) {
-                append(result, arr);
-                return result;
-            }
-            var value, i = -1, len = arr.length;
-            while (++i < len) {
-                value = arr[i];
-                if (isArray(value)) {
-                    flattenTo(value, result, level - 1);
-                } else {
-                    result.push(value);
-                }
-            }
-            return result;
-        }
-        function flatten(arr, level) {
-            level = level == null ? -1 : level;
-            return flattenTo(arr, [], level);
-        }
-        module.exports = flatten;
-    },
-    '2v': function (require, module, exports, global) {
-        var namespace = require('4b');
-        function set(obj, prop, val) {
-            var parts = /^(.+)\.(.+)$/.exec(prop);
-            if (parts) {
-                namespace(obj, parts[1])[parts[2]] = val;
-            } else {
-                obj[prop] = val;
-            }
-        }
-        module.exports = set;
-    },
-    '2w': function (require, module, exports, global) {
-        var has = require('4c');
-        function unset(obj, prop) {
-            if (has(obj, prop)) {
-                var parts = prop.split('.'), last = parts.pop();
-                while (prop = parts.shift()) {
-                    obj = obj[prop];
-                }
-                return delete obj[last];
-            } else {
-                return true;
-            }
-        }
-        module.exports = unset;
-    },
-    '2x': function (require, module, exports, global) {
-        var isPrimitive = require('4e');
-        function get(obj, prop) {
-            var parts = prop.split('.'), last = parts.pop();
-            while (prop = parts.shift()) {
-                obj = obj[prop];
-                if (obj == null)
-                    return;
-            }
-            return obj[last];
-        }
-        module.exports = get;
-    },
-    '2y': function (require, module, exports, global) {
-        var toString = require('3t');
-        var repeat = require('2z');
-        function rpad(str, minLen, ch) {
-            str = toString(str);
-            ch = ch || ' ';
-            return str.length < minLen ? str + repeat(ch, minLen - str.length) : str;
-        }
-        module.exports = rpad;
-    },
-    '2z': function (require, module, exports, global) {
-        var toString = require('3t');
-        var toInt = require('4f');
-        function repeat(str, n) {
-            var result = '';
-            str = toString(str);
-            n = toInt(n);
-            if (n < 1) {
-                return '';
-            }
-            while (n > 0) {
-                if (n % 2) {
-                    result += str;
-                }
-                n = Math.floor(n / 2);
-                str += str;
-            }
-            return result;
-        }
-        module.exports = repeat;
-    },
-    '30': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('m'), Emitter = require('d'), Bound = require('w'), Options = require('x'), bind = require('y'), contains = require('19'), DragEvents = require('4g'), $ = require('n');
-        require('3');
-        require('4');
-        var isIE = navigator.appName === 'Microsoft Internet Explorer';
-        var DragDrop = new prime({
-                mixin: [
-                    Bound,
-                    Options
-                ],
-                inherits: Emitter,
-                options: {
-                    delegate: null,
-                    droppables: false
-                },
-                EVENTS: DragEvents,
-                constructor: function (container, options) {
-                    this.container = $(container);
-                    if (!this.container) {
-                        return;
-                    }
-                    this.setOptions(options);
-                    this.element = null;
-                    this.origin = {
-                        x: 0,
-                        y: 0,
-                        transform: null,
-                        offset: {
-                            x: 0,
-                            y: 0
-                        }
-                    };
-                    this.matched = false;
-                    this.lastMatched = false;
-                    this.lastOvered = null;
-                    this.attach();
-                },
-                attach: function () {
-                    this.container.delegate(this.EVENTS.START, this.options.delegate, this.bound('start'));
-                },
-                detach: function () {
-                    this.container.undelegate(this.EVENTS.START, this.options.delegate, this.bound('start'));
-                },
-                start: function (event, element) {
-                    if (event.which && event.which !== 1 || $(event.target).matches(this.options.exclude)) {
-                        return true;
-                    }
-                    this.element = $(element);
-                    this.matched = false;
-                    this.emit('dragdrop:beforestart', event, this.element);
-                    if (isIE) {
-                        this.element.style({
-                            '-ms-touch-action': 'none',
-                            'touch-action': 'none'
-                        });
-                    }
-                    event.preventDefault();
-                    this.origin = {
-                        x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX,
-                        y: event.changedTouches ? event.changedTouches[0].pageY : event.pageY,
-                        transform: this.element.compute('transform')
-                    };
-                    var clientRect = this.element[0].getBoundingClientRect();
-                    this.origin.offset = {
-                        clientRect: clientRect,
-                        x: this.origin.x - clientRect.right,
-                        y: clientRect.top - this.origin.y
-                    };
-                    if (this.element.data('lm-blocktype') === 'grid' && Math.abs(this.origin.offset.x) < clientRect.width) {
-                        return false;
-                    }
-                    var offset = Math.abs(this.origin.offset.x), columns = this.element.parent().data('lm-blocktype') === 'grid' && this.element.parent().parent().data('lm-root');
-                    if (offset < 6 && this.element.parent().find(':last-child') !== this.element || columns && offset > 3 && offset < 10) {
-                        if (this.element.parent('[data-lm-blocktype="non-visible"]')) {
-                            return false;
-                        }
-                        this.emit('dragdrop:resize', event, this.element, this.element.siblings(':not(.placeholder)'), this.origin.offset.x);
-                        return false;
-                    }
-                    if (columns) {
-                        return false;
-                    }
-                    this.element.style({
-                        'pointer-events': 'none',
-                        opacity: 0.5,
-                        zIndex: 100
-                    });
-                    $(document).on(this.EVENTS.MOVE, this.bound('move'));
-                    $(document).on(this.EVENTS.STOP, this.bound('stop'));
-                    this.emit('dragdrop:start', event, this.element);
-                    return this.element;
-                },
-                stop: function (event) {
-                    var settings = { duration: '250ms' };
-                    if (this.removeElement) {
-                        return this.emit('dragdrop:stop:erase', event, this.element);
-                    }
-                    if (this.element) {
-                        this.emit('dragdrop:stop', event, this.matched, this.element);
-                        if (this.matched) {
-                            this.element.style({
-                                opacity: 0,
-                                transform: 'translate(0, 0)'
-                            });
-                        }
-                        if (!this.matched) {
-                            settings.callback = bind(function (element) {
-                                this._removeStyleAttribute(element);
-                                setTimeout(bind(function () {
-                                    this.emit('dragdrop:stop:animation', element);
-                                }, this), 1);
-                            }, this, this.element);
-                            this.element.animate({
-                                transform: this.origin.transform || 'translate(0, 0)',
-                                opacity: 1
-                            }, settings);
-                        } else {
-                            this.element.style({
-                                transform: this.origin.transform || 'translate(0, 0)',
-                                opacity: 1
-                            });
-                            this._removeStyleAttribute(this.element);
-                            this.emit('dragdrop:stop:animation', this.element);
-                        }
-                    }
-                    $(document).off(this.EVENTS.MOVE, this.bound('move'));
-                    $(document).off(this.EVENTS.STOP, this.bound('stop'));
-                    this.element = null;
-                },
-                move: function (event) {
-                    var clientX = event.clientX || event.touches && event.touches[0].clientX || 0, clientY = event.clientY || event.touches && event.touches[0].clientY || 0, overing = document.elementFromPoint(clientX, clientY), isGrid = this.element.data('lm-blocktype') === 'grid';
-                    if (isGrid) {
-                        overing = document.elementFromPoint(clientX + 30, clientY);
-                    }
-                    if (!overing) {
-                        return false;
-                    }
-                    this.matched = $(overing).matches(this.options.droppables) ? overing : ($(overing).parent(this.options.droppables) || [false])[0];
-                    this.isPlaceHolder = $(overing).matches('[data-lm-placeholder]') ? true : $(overing).parent('[data-lm-placeholder]') ? true : false;
-                    if (this.matched && this.element.data('lm-id')) {
-                        if ($(this.matched).parent('.grid') !== this.element.parent('.grid') || $(this.matched).parent('.section') !== this.element.parent('.section')) {
-                            this.matched = false;
-                        }
-                    }
-                    var deltaX = this.lastX - clientX, deltaY = this.lastY - clientY, direction = Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0 && 'left' || Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0 && 'right' || Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0 && 'up' || 'down';
-                    deltaX = (event.changedTouches ? event.changedTouches[0].pageX : event.pageX) - this.origin.x;
-                    deltaY = (event.changedTouches ? event.changedTouches[0].pageY : event.pageY) - this.origin.y;
-                    this.direction = direction;
-                    this.element.style({ transform: 'translate(' + deltaX + 'px, ' + deltaY + 'px)' });
-                    if (!this.isPlaceHolder) {
-                        if (this.lastMatched && this.matched !== this.lastMatched) {
-                            this.emit('dragdrop:leave', event, this.lastMatched, this.element);
-                            this.lastMatched = false;
-                        }
-                        if (this.matched && this.matched !== this.lastMatched && overing !== this.lastOvered) {
-                            this.emit('dragdrop:enter', event, this.matched, this.element);
-                            this.lastMatched = this.matched;
-                        }
-                        if (this.matched && this.lastMatched) {
-                            var rect = this.matched.getBoundingClientRect();
-                            var x = clientX - rect.left, y = clientY - rect.top;
-                            var location = {
-                                    x: Math.abs(clientX - rect.left) < rect.width / 2 && 'before' || Math.abs(clientX - rect.left) >= rect.width - rect.width / 2 && 'after' || 'other',
-                                    y: Math.abs(clientY - rect.top) < rect.height / 2 && 'above' || Math.abs(clientY - rect.top) >= rect.height / 2 && 'below' || 'other'
-                                };
-                            this.emit('dragdrop:location', event, location, this.matched, this.element);
-                            this.lastLocation = location;
-                        } else {
-                            this.emit('dragdrop:nolocation', event);
-                        }
-                    }
-                    this.lastOvered = overing;
-                    this.lastDirection = direction;
-                    this.lastX = clientX;
-                    this.lastY = clientY;
-                    this.emit('dragdrop:move', event, this.element);
-                },
-                _removeStyleAttribute: function (element) {
-                    $(element || this.element).attribute('style', null);
-                }
-            });
-        module.exports = DragDrop;
-    },
-    '31': function (require, module, exports, global) {
-        'use strict';
-        var DragEvents = require('4g'), prime = require('m'), Emitter = require('d'), Bound = require('w'), Options = require('x'), bind = require('y'), isString = require('4h'), nMap = require('4i'), clamp = require('2q'), precision = require('4j'), get = require('2x'), $ = require('n');
-        require('3');
-        require('4');
-        var Resizer = new prime({
-                mixin: [
-                    Bound,
-                    Options
-                ],
-                EVENTS: DragEvents,
-                options: { minSize: 5 },
-                constructor: function (container, options) {
-                    this.setOptions(options);
-                    this.history = this.options.history;
-                    this.builder = this.options.builder;
-                    this.map = this.builder.map;
-                    this.origin = {
-                        x: 0,
-                        y: 0,
-                        transform: null,
-                        offset: {
-                            x: 0,
-                            y: 0
-                        }
-                    };
-                },
-                getBlock: function (element) {
-                    return get(this.map, isString(element) ? element : $(element).data('lm-id') || '');
-                },
-                getAttribute: function (element, prop) {
-                    return this.getBlock(element).getAttribute(prop);
-                },
-                getSize: function (element) {
-                    return this.getAttribute($(element), 'size');
-                },
-                start: function (event, element, siblings, offset) {
-                    this.map = this.builder.map;
-                    if (event.which && event.which !== 1) {
-                        return true;
-                    }
-                    event.preventDefault();
-                    this.element = $(element);
-                    this.siblings = {
-                        occupied: 0,
-                        elements: siblings,
-                        next: this.element.nextSibling(),
-                        prevs: this.element.previousSiblings(),
-                        sizeBefore: 0
-                    };
-                    if (this.siblings.elements.length > 1) {
-                        this.siblings.occupied -= this.getSize(this.siblings.next);
-                        this.siblings.elements.forEach(function (sibling) {
-                            this.siblings.occupied += this.getSize(sibling);
-                        }, this);
-                    }
-                    if (this.siblings.prevs) {
-                        this.siblings.prevs.forEach(function (sibling) {
-                            this.siblings.sizeBefore += this.getSize(sibling);
-                        }, this);
-                    }
-                    this.origin = {
-                        size: this.getSize(this.element),
-                        maxSize: this.getSize(this.element) + this.getSize(this.siblings.next),
-                        x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX + 6,
-                        y: event.changedTouches ? event.changedTouches[0].pageY : event.pageY
-                    };
-                    var clientRect = this.element[0].getBoundingClientRect(), parentRect = this.element.parent()[0].getBoundingClientRect();
-                    this.origin.offset = {
-                        clientRect: clientRect,
-                        parentRect: {
-                            left: parentRect.left,
-                            right: parentRect.right
-                        },
-                        x: this.origin.x - clientRect.right,
-                        y: clientRect.top - this.origin.y,
-                        down: offset
-                    };
-                    this.origin.offset.parentRect.left = this.element.parent().find('> [data-lm-id]:first-child')[0].getBoundingClientRect().left;
-                    this.origin.offset.parentRect.right = this.element.parent().find('> [data-lm-id]:last-child')[0].getBoundingClientRect().right;
-                    $(document).on(this.EVENTS.MOVE, this.bound('move'));
-                    $(document).on(this.EVENTS.STOP, this.bound('stop'));
-                },
-                move: function (event) {
-                    var clientX = event.clientX || event.touches[0].clientX || 0, clientY = event.clientY || event.touches[0].clientY || 0, parentRect = this.origin.offset.parentRect;
-                    var deltaX = (this.lastX || clientX) - clientX, deltaY = (this.lastY || clientY) - clientY;
-                    this.direction = Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0 && 'left' || Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0 && 'right' || Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0 && 'up' || 'down';
-                    var size, diff = 100 - this.siblings.occupied, value = clientX + (!this.siblings.prevs ? this.origin.offset.x - this.origin.offset.down : this.siblings.prevs.length), normalized = clamp(value, parentRect.left, parentRect.right);
-                    size = nMap(normalized, parentRect.left, parentRect.right, 0, 100);
-                    size = size - this.siblings.sizeBefore;
-                    size = precision(clamp(size, this.options.minSize, this.origin.maxSize - this.options.minSize), 4);
-                    diff = precision(diff - size, 4);
-                    this.getBlock(this.element).setSize(size, true);
-                    this.getBlock(this.siblings.next).setSize(diff, true);
-                    this.lastX = clientX;
-                    this.lastY = clientY;
-                },
-                stop: function () {
-                    $(document).off(this.EVENTS.MOVE, this.bound('move'));
-                    $(document).off(this.EVENTS.STOP, this.bound('stop'));
-                    if (this.origin.size !== this.getSize(this.element)) {
-                        this.history.push(this.builder.serialize());
-                    }
-                },
-                evenResize: function (elements, animated) {
-                    var total = elements.length, size = precision(100 / total, 4), block;
-                    if (typeof animated === 'undefined') {
-                        animated = true;
-                    }
-                    elements.forEach(function (element) {
-                        element = $(element);
-                        block = this.getBlock(element);
-                        if (block && block.hasAttribute('size')) {
-                            block[animated ? 'setAnimatedSize' : 'setSize'](size, size !== block.getSize());
-                        } else {
-                            if (element) {
-                                element[animated ? 'animate' : 'style']({ flex: '0 1 ' + size + '%' });
-                            }
-                        }
-                    }, this);
-                }
-            });
-        module.exports = Resizer;
-    },
-    '32': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('m'), $ = require('n'), Emitter = require('d'), Bound = require('w'), Options = require('x');
-        var Eraser = new prime({
-                mixin: [
-                    Options,
-                    Bound
-                ],
-                inherits: Emitter,
-                constructor: function (element, options) {
-                    this.setOptions(options);
-                    this.element = $(element);
-                    if (!this.element) {
-                        return;
-                    }
-                    this.hide(true);
-                },
-                show: function (fast) {
-                    this.out();
-                    this.element[fast ? 'style' : 'animate']({ top: 20 }, { duration: '150ms' });
-                },
-                hide: function (fast) {
-                    var top = { top: -this.element[0].offsetHeight };
-                    this.out();
-                    this.element[fast ? 'style' : 'animate'](top, { duration: '150ms' });
-                },
-                over: function () {
-                    this.element.find('.trash-zone').animate({ transform: 'scale(1.2)' }, {
-                        duration: '150ms',
-                        equation: 'cubic-bezier(0.5,0,0.5,1)'
-                    });
-                },
-                out: function () {
-                    this.element.find('.trash-zone').animate({ transform: 'scale(1)' }, {
-                        duration: '150ms',
-                        equation: 'cubic-bezier(0.5,0,0.5,1)'
-                    });
-                }
-            });
-        module.exports = Eraser;
-    },
-    '33': function (require, module, exports, global) {
-        var makeIterator = require('2c');
-        function every(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var result = true;
-            if (arr == null) {
-                return result;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (!callback(arr[i], i, arr)) {
-                    result = false;
-                    break;
-                }
-            }
-            return result;
-        }
-        module.exports = every;
-    },
-    '34': function (require, module, exports, global) {
-        var hasOwn = require('1x');
-        var every = require('4k');
-        var isObject = require('1z');
-        var is = require('4l');
-        function makeCompare(callback) {
-            return function (value, key) {
-                return hasOwn(this, key) && callback(value, this[key]);
-            };
-        }
-        function checkProperties(value, key) {
-            return hasOwn(this, key);
-        }
-        function equals(a, b, callback) {
-            callback = callback || is;
-            if (!isObject(a) || !isObject(b)) {
-                return callback(a, b);
-            }
-            return every(a, makeCompare(callback), b) && every(b, checkProperties, a);
-        }
-        module.exports = equals;
-    },
     '35': function (require, module, exports, global) {
-        function now() {
-            return now.get();
-        }
-        now.get = typeof Date.now === 'function' ? Date.now : function () {
-            return +new Date();
-        };
-        module.exports = now;
-    },
-    '36': function (require, module, exports, global) {
         function identity(val) {
             return val;
         }
         module.exports = identity;
     },
-    '37': function (require, module, exports, global) {
+    '36': function (require, module, exports, global) {
         function prop(name) {
             return function (obj) {
                 return obj[name];
@@ -9552,9 +9577,9 @@ var G5;
         }
         module.exports = prop;
     },
-    '38': function (require, module, exports, global) {
+    '37': function (require, module, exports, global) {
         var forOwn = require('39');
-        var isArray = require('23');
+        var isArray = require('1y');
         function containsMatch(array, pattern) {
             var i = -1, length = array.length;
             while (++i < length) {
@@ -9595,9 +9620,18 @@ var G5;
         }
         module.exports = deepMatches;
     },
+    '38': function (require, module, exports, global) {
+        function now() {
+            return now.get();
+        }
+        now.get = typeof Date.now === 'function' ? Date.now : function () {
+            return +new Date();
+        };
+        module.exports = now;
+    },
     '39': function (require, module, exports, global) {
-        var hasOwn = require('1m');
-        var forIn = require('26');
+        var hasOwn = require('1o');
+        var forIn = require('21');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
                 if (hasOwn(obj, key)) {
@@ -9773,9 +9807,9 @@ var G5;
         var color = require('3a'), frame = require('3b');
         var cancelFrame = frame.cancel, requestFrame = frame.request;
         var prime = require('4n');
-        var camelize = require('4t'), clean = require('4u'), capitalize = require('4v'), hyphenateString = require('4w');
-        var map = require('4p'), forEach = require('4x'), indexOf = require('4m');
-        var elements = require('4y');
+        var camelize = require('4o'), clean = require('4p'), capitalize = require('4q'), hyphenateString = require('4r');
+        var map = require('4s'), forEach = require('4t'), indexOf = require('4m');
+        var elements = require('4u');
         var fx = require('3d');
         var matchString = function (s, r) {
             return String.prototype.match.call(s, r);
@@ -10075,7 +10109,7 @@ var G5;
         var parseTransform2d, Transform2d;
         if (!transitionName && transformName)
             (function () {
-                var unmatrix = require('4z');
+                var unmatrix = require('4v');
                 var v = '\\s*([-\\d\\w.]+)\\s*';
                 var rMatrix = RegExp('matrix\\(' + [
                         v,
@@ -10464,8 +10498,8 @@ var G5;
     },
     '3d': function (require, module, exports, global) {
         'use strict';
-        var prime = require('4n'), requestFrame = require('3b').request, bezier = require('4o');
-        var map = require('4p');
+        var prime = require('4n'), requestFrame = require('3b').request, bezier = require('4w');
+        var map = require('4s');
         var sDuration = '([\\d.]+)(s|ms)?', sCubicBezier = 'cubic-bezier\\(([-.\\d]+),([-.\\d]+),([-.\\d]+),([-.\\d]+)\\)';
         var rDuration = RegExp(sDuration), rCubicBezier = RegExp(sCubicBezier), rgCubicBezier = RegExp(sCubicBezier, 'g');
         var equations = {
@@ -10631,20 +10665,9 @@ var G5;
         module.exports = fx;
     },
     '3e': function (require, module, exports, global) {
-        var MIN_INT = require('4q');
-        var MAX_INT = require('4r');
-        var rand = require('4s');
-        function randInt(min, max) {
-            min = min == null ? MIN_INT : ~~min;
-            max = max == null ? MAX_INT : ~~max;
-            return Math.round(rand(min - 0.5, max + 0.499999999999));
-        }
-        module.exports = randInt;
-    },
-    '3f': function (require, module, exports, global) {
-        var kindOf = require('3g');
-        var isPlainObject = require('3h');
-        var mixIn = require('50');
+        var kindOf = require('3f');
+        var isPlainObject = require('3g');
+        var mixIn = require('4x');
         function clone(val) {
             switch (kindOf(val)) {
             case 'Object':
@@ -10681,7 +10704,7 @@ var G5;
         }
         module.exports = clone;
     },
-    '3g': function (require, module, exports, global) {
+    '3f': function (require, module, exports, global) {
         var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
         function kindOf(val) {
             if (val === null) {
@@ -10694,14 +10717,32 @@ var G5;
         }
         module.exports = kindOf;
     },
-    '3h': function (require, module, exports, global) {
+    '3g': function (require, module, exports, global) {
         function isPlainObject(value) {
             return !!value && typeof value === 'object' && value.constructor === Object;
         }
         module.exports = isPlainObject;
     },
+    '3h': function (require, module, exports, global) {
+        var kindOf = require('1r');
+        function isKind(val, kind) {
+            return kindOf(val) === kind;
+        }
+        module.exports = isKind;
+    },
     '3i': function (require, module, exports, global) {
-        var hasOwn = require('1x');
+        var MIN_INT = require('4y');
+        var MAX_INT = require('4z');
+        var rand = require('50');
+        function randInt(min, max) {
+            min = min == null ? MIN_INT : ~~min;
+            max = max == null ? MAX_INT : ~~max;
+            return Math.round(rand(min - 0.5, max + 0.499999999999));
+        }
+        module.exports = randInt;
+    },
+    '3j': function (require, module, exports, global) {
+        var hasOwn = require('1t');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -10743,20 +10784,38 @@ var G5;
         }
         module.exports = forIn;
     },
-    '3j': function (require, module, exports, global) {
-        var kindOf = require('1p');
-        function isKind(val, kind) {
-            return kindOf(val) === kind;
-        }
-        module.exports = isKind;
-    },
     '3k': function (require, module, exports, global) {
+        function slice(arr, start, end) {
+            var len = arr.length;
+            if (start == null) {
+                start = 0;
+            } else if (start < 0) {
+                start = Math.max(len + start, 0);
+            } else {
+                start = Math.min(start, len);
+            }
+            if (end == null) {
+                end = len;
+            } else if (end < 0) {
+                end = Math.max(len + end, 0);
+            } else {
+                end = Math.min(end, len);
+            }
+            var result = [];
+            while (start < end) {
+                result.push(arr[start++]);
+            }
+            return result;
+        }
+        module.exports = slice;
+    },
+    '3l': function (require, module, exports, global) {
         function hasOwn(obj, prop) {
             return Object.prototype.hasOwnProperty.call(obj, prop);
         }
         module.exports = hasOwn;
     },
-    '3l': function (require, module, exports, global) {
+    '3m': function (require, module, exports, global) {
         var clone = require('51');
         var forOwn = require('52');
         var kindOf = require('53');
@@ -10793,37 +10852,12 @@ var G5;
         }
         module.exports = deepClone;
     },
-    '3m': function (require, module, exports, global) {
+    '3n': function (require, module, exports, global) {
         var isKind = require('55');
         function isObject(val) {
             return isKind(val, 'Object');
         }
         module.exports = isObject;
-    },
-    '3n': function (require, module, exports, global) {
-        function slice(arr, start, end) {
-            var len = arr.length;
-            if (start == null) {
-                start = 0;
-            } else if (start < 0) {
-                start = Math.max(len + start, 0);
-            } else {
-                start = Math.min(start, len);
-            }
-            if (end == null) {
-                end = len;
-            } else if (end < 0) {
-                end = Math.max(len + end, 0);
-            } else {
-                end = Math.min(end, len);
-            }
-            var result = [];
-            while (start < end) {
-                result.push(arr[start++]);
-            }
-            return result;
-        }
-        module.exports = slice;
     },
     '3o': function (require, module, exports, global) {
         function identity(val) {
@@ -10840,8 +10874,8 @@ var G5;
         module.exports = prop;
     },
     '3q': function (require, module, exports, global) {
-        var forOwn = require('20');
-        var isArray = require('1t');
+        var forOwn = require('27');
+        var isArray = require('25');
         function containsMatch(array, pattern) {
             var i = -1, length = array.length;
             while (++i < length) {
@@ -10883,151 +10917,8 @@ var G5;
         module.exports = deepMatches;
     },
     '3r': function (require, module, exports, global) {
-        var unique = require('56');
-        var filter = require('57');
-        var some = require('58');
-        var contains = require('19');
-        var slice = require('2b');
-        function difference(arr) {
-            var arrs = slice(arguments, 1), result = filter(unique(arr), function (needle) {
-                    return !some(arrs, function (haystack) {
-                        return contains(haystack, needle);
-                    });
-                });
-            return result;
-        }
-        module.exports = difference;
-    },
-    '3s': function (require, module, exports, global) {
-        var makeIterator = require('2c');
-        function findIndex(arr, iterator, thisObj) {
-            iterator = makeIterator(iterator, thisObj);
-            if (arr == null) {
-                return -1;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (iterator(arr[i], i, arr)) {
-                    return i;
-                }
-            }
-            return -1;
-        }
-        module.exports = findIndex;
-    },
-    '3t': function (require, module, exports, global) {
-        function toString(val) {
-            return val == null ? '' : val.toString();
-        }
-        module.exports = toString;
-    },
-    '3u': function (require, module, exports, global) {
-        module.exports = [
-            ' ',
-            '\n',
-            '\r',
-            '\t',
-            '\f',
-            '\x0B',
-            '\xa0',
-            '\u1680',
-            '\u180e',
-            '\u2000',
-            '\u2001',
-            '\u2002',
-            '\u2003',
-            '\u2004',
-            '\u2005',
-            '\u2006',
-            '\u2007',
-            '\u2008',
-            '\u2009',
-            '\u200a',
-            '\u2028',
-            '\u2029',
-            '\u202f',
-            '\u205f',
-            '\u3000'
-        ];
-    },
-    '3v': function (require, module, exports, global) {
-        var toString = require('3t');
-        var WHITE_SPACES = require('3u');
-        function ltrim(str, chars) {
-            str = toString(str);
-            chars = chars || WHITE_SPACES;
-            var start = 0, len = str.length, charLen = chars.length, found = true, i, c;
-            while (found && start < len) {
-                found = false;
-                i = -1;
-                c = str.charAt(start);
-                while (++i < charLen) {
-                    if (c === chars[i]) {
-                        found = true;
-                        start++;
-                        break;
-                    }
-                }
-            }
-            return start >= len ? '' : str.substr(start, len);
-        }
-        module.exports = ltrim;
-    },
-    '3w': function (require, module, exports, global) {
-        var toString = require('3t');
-        var WHITE_SPACES = require('3u');
-        function rtrim(str, chars) {
-            str = toString(str);
-            chars = chars || WHITE_SPACES;
-            var end = str.length - 1, charLen = chars.length, found = true, i, c;
-            while (found && end >= 0) {
-                found = false;
-                i = -1;
-                c = str.charAt(end);
-                while (++i < charLen) {
-                    if (c === chars[i]) {
-                        found = true;
-                        end--;
-                        break;
-                    }
-                }
-            }
-            return end >= 0 ? str.substring(0, end + 1) : '';
-        }
-        module.exports = rtrim;
-    },
-    '3x': function (require, module, exports, global) {
-        var slice = require('2b');
-        function makeCollectionMethod(arrMethod, objMethod, defaultReturn) {
-            return function () {
-                var args = slice(arguments);
-                if (args[0] == null) {
-                    return defaultReturn;
-                }
-                return typeof args[0].length === 'number' ? arrMethod.apply(null, args) : objMethod.apply(null, args);
-            };
-        }
-        module.exports = makeCollectionMethod;
-    },
-    '3y': function (require, module, exports, global) {
-        var toString = require('3t');
-        function lowerCase(str) {
-            str = toString(str);
-            return str.toLowerCase();
-        }
-        module.exports = lowerCase;
-    },
-    '3z': function (require, module, exports, global) {
-        var toString = require('3t');
-        function upperCase(str) {
-            str = toString(str);
-            return str.toUpperCase();
-        }
-        module.exports = upperCase;
-    },
-    '40': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Options = require('x'), Bound = require('w'), Emitter = require('d'), guid = require('r'), zen = require('o'), $ = require('1'), get = require('2x'), has = require('4c'), set = require('2v');
+        var prime = require('m'), Options = require('x'), Bound = require('w'), Emitter = require('i'), guid = require('r'), zen = require('o'), $ = require('1'), get = require('2k'), has = require('46'), set = require('2i');
         require('6');
         var Base = new prime({
                 mixin: [
@@ -11119,9 +11010,9 @@ var G5;
             });
         module.exports = Base;
     },
-    '41': function (require, module, exports, global) {
+    '3s': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Base = require('40'), getAjaxURL = require('2r');
+        var prime = require('m'), Base = require('3r'), getAjaxURL = require('34');
         var Atom = new prime({
                 inherits: Base,
                 options: { type: 'atom' },
@@ -11138,9 +11029,9 @@ var G5;
             });
         module.exports = Atom;
     },
-    '42': function (require, module, exports, global) {
+    '3t': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Base = require('40'), Bound = require('w'), Grid = require('44'), $ = require('1'), zen = require('o'), bind = require('y'), getAjaxURL = require('2r');
+        var prime = require('m'), Base = require('3r'), Bound = require('w'), Grid = require('3v'), $ = require('1'), zen = require('o'), bind = require('y'), getAjaxURL = require('34');
         require('5');
         var UID = 0;
         var Section = new prime({
@@ -11180,9 +11071,9 @@ var G5;
             });
         module.exports = Section;
     },
-    '43': function (require, module, exports, global) {
+    '3u': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Section = require('42');
+        var prime = require('m'), Section = require('3t');
         var NonVisible = new prime({
                 inherits: Section,
                 options: {
@@ -11201,9 +11092,9 @@ var G5;
             });
         module.exports = NonVisible;
     },
-    '44': function (require, module, exports, global) {
+    '3v': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Base = require('40'), $ = require('1'), getAjaxURL = require('2r');
+        var prime = require('m'), Base = require('3r'), $ = require('1'), getAjaxURL = require('34');
         var Grid = new prime({
                 inherits: Base,
                 options: { type: 'grid' },
@@ -11224,9 +11115,9 @@ var G5;
             });
         module.exports = Grid;
     },
-    '45': function (require, module, exports, global) {
+    '3w': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Base = require('40'), $ = require('1');
+        var prime = require('m'), Base = require('3r'), $ = require('1');
         var Container = new prime({
                 inherits: Base,
                 options: { type: 'container' },
@@ -11239,9 +11130,9 @@ var G5;
             });
         module.exports = Container;
     },
-    '46': function (require, module, exports, global) {
+    '3x': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Base = require('40'), $ = require('n'), zen = require('o'), precision = require('4j');
+        var prime = require('m'), Base = require('3r'), $ = require('n'), zen = require('o'), precision = require('4c');
         var Block = new prime({
                 inherits: Base,
                 options: {
@@ -11298,9 +11189,9 @@ var G5;
             });
         module.exports = Block;
     },
-    '47': function (require, module, exports, global) {
+    '3y': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Atom = require('41'), bind = require('y'), precision = require('4j'), getAjaxURL = require('2r');
+        var prime = require('m'), Atom = require('3s'), bind = require('y'), precision = require('4c'), getAjaxURL = require('34');
         var UID = 0;
         var Particle = new prime({
                 inherits: Atom,
@@ -11331,9 +11222,9 @@ var G5;
             });
         module.exports = Particle;
     },
-    '48': function (require, module, exports, global) {
+    '3z': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Particle = require('47');
+        var prime = require('m'), Particle = require('3y');
         var UID = 0;
         var Position = new prime({
                 inherits: Particle,
@@ -11356,9 +11247,9 @@ var G5;
             });
         module.exports = Position;
     },
-    '49': function (require, module, exports, global) {
+    '40': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Particle = require('47');
+        var prime = require('m'), Particle = require('3y');
         var Pagecontent = new prime({
                 inherits: Particle,
                 options: {
@@ -11368,9 +11259,9 @@ var G5;
             });
         module.exports = Pagecontent;
     },
-    '4a': function (require, module, exports, global) {
+    '41': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Particle = require('47');
+        var prime = require('m'), Particle = require('3y');
         var UID = 0;
         var Spacer = new prime({
                 inherits: Particle,
@@ -11381,7 +11272,33 @@ var G5;
             });
         module.exports = Spacer;
     },
-    '4b': function (require, module, exports, global) {
+    '42': function (require, module, exports, global) {
+        var slice = require('2c');
+        function makeCollectionMethod(arrMethod, objMethod, defaultReturn) {
+            return function () {
+                var args = slice(arguments);
+                if (args[0] == null) {
+                    return defaultReturn;
+                }
+                return typeof args[0].length === 'number' ? arrMethod.apply(null, args) : objMethod.apply(null, args);
+            };
+        }
+        module.exports = makeCollectionMethod;
+    },
+    '43': function (require, module, exports, global) {
+        function append(arr1, arr2) {
+            if (arr2 == null) {
+                return arr1;
+            }
+            var pad = arr1.length, i = -1, len = arr2.length;
+            while (++i < len) {
+                arr1[pad + i] = arr2[i];
+            }
+            return arr1;
+        }
+        module.exports = append;
+    },
+    '44': function (require, module, exports, global) {
         var forEach = require('10');
         function namespace(obj, path) {
             if (!path)
@@ -11396,28 +11313,7 @@ var G5;
         }
         module.exports = namespace;
     },
-    '4c': function (require, module, exports, global) {
-        var get = require('2x');
-        var UNDEF;
-        function has(obj, prop) {
-            return get(obj, prop) !== UNDEF;
-        }
-        module.exports = has;
-    },
-    '4d': function (require, module, exports, global) {
-        function append(arr1, arr2) {
-            if (arr2 == null) {
-                return arr1;
-            }
-            var pad = arr1.length, i = -1, len = arr2.length;
-            while (++i < len) {
-                arr1[pad + i] = arr2[i];
-            }
-            return arr1;
-        }
-        module.exports = append;
-    },
-    '4e': function (require, module, exports, global) {
+    '45': function (require, module, exports, global) {
         function isPrimitive(value) {
             switch (typeof value) {
             case 'string':
@@ -11429,13 +11325,27 @@ var G5;
         }
         module.exports = isPrimitive;
     },
-    '4f': function (require, module, exports, global) {
+    '46': function (require, module, exports, global) {
+        var get = require('2k');
+        var UNDEF;
+        function has(obj, prop) {
+            return get(obj, prop) !== UNDEF;
+        }
+        module.exports = has;
+    },
+    '47': function (require, module, exports, global) {
+        function toString(val) {
+            return val == null ? '' : val.toString();
+        }
+        module.exports = toString;
+    },
+    '48': function (require, module, exports, global) {
         function toInt(val) {
             return ~~val;
         }
         module.exports = toInt;
     },
-    '4g': function (require, module, exports, global) {
+    '49': function (require, module, exports, global) {
         'use strict';
         var getSupportedEvent = function (events) {
             events = events.split(' ');
@@ -11463,23 +11373,23 @@ var G5;
             };
         module.exports = EVENT;
     },
-    '4h': function (require, module, exports, global) {
+    '4a': function (require, module, exports, global) {
         var isKind = require('2d');
         function isString(val) {
             return isKind(val, 'String');
         }
         module.exports = isString;
     },
-    '4i': function (require, module, exports, global) {
-        var lerp = require('59');
-        var norm = require('5a');
+    '4b': function (require, module, exports, global) {
+        var lerp = require('56');
+        var norm = require('57');
         function map(val, min1, max1, min2, max2) {
             return lerp(norm(val, min1, max1), min2, max2);
         }
         module.exports = map;
     },
-    '4j': function (require, module, exports, global) {
-        var toNumber = require('5b');
+    '4c': function (require, module, exports, global) {
+        var toNumber = require('58');
         function enforcePrecision(val, nDecimalDigits) {
             val = toNumber(val);
             var pow = Math.pow(10, nDecimalDigits);
@@ -11487,9 +11397,9 @@ var G5;
         }
         module.exports = enforcePrecision;
     },
-    '4k': function (require, module, exports, global) {
-        var forOwn = require('20');
-        var makeIterator = require('2c');
+    '4d': function (require, module, exports, global) {
+        var forOwn = require('27');
+        var makeIterator = require('2b');
         function every(obj, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = true;
@@ -11503,7 +11413,7 @@ var G5;
         }
         module.exports = every;
     },
-    '4l': function (require, module, exports, global) {
+    '4e': function (require, module, exports, global) {
         function is(x, y) {
             if (x === y) {
                 return x !== 0 || 1 / x === 1 / y;
@@ -11511,6 +11421,130 @@ var G5;
             return x !== x && y !== y;
         }
         module.exports = is;
+    },
+    '4f': function (require, module, exports, global) {
+        var unique = require('59');
+        var filter = require('5a');
+        var some = require('5b');
+        var contains = require('13');
+        var slice = require('2c');
+        function difference(arr) {
+            var arrs = slice(arguments, 1), result = filter(unique(arr), function (needle) {
+                    return !some(arrs, function (haystack) {
+                        return contains(haystack, needle);
+                    });
+                });
+            return result;
+        }
+        module.exports = difference;
+    },
+    '4g': function (require, module, exports, global) {
+        var makeIterator = require('2b');
+        function findIndex(arr, iterator, thisObj) {
+            iterator = makeIterator(iterator, thisObj);
+            if (arr == null) {
+                return -1;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (iterator(arr[i], i, arr)) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        module.exports = findIndex;
+    },
+    '4h': function (require, module, exports, global) {
+        var toString = require('47');
+        function lowerCase(str) {
+            str = toString(str);
+            return str.toLowerCase();
+        }
+        module.exports = lowerCase;
+    },
+    '4i': function (require, module, exports, global) {
+        var toString = require('47');
+        function upperCase(str) {
+            str = toString(str);
+            return str.toUpperCase();
+        }
+        module.exports = upperCase;
+    },
+    '4j': function (require, module, exports, global) {
+        module.exports = [
+            ' ',
+            '\n',
+            '\r',
+            '\t',
+            '\f',
+            '\x0B',
+            '\xa0',
+            '\u1680',
+            '\u180e',
+            '\u2000',
+            '\u2001',
+            '\u2002',
+            '\u2003',
+            '\u2004',
+            '\u2005',
+            '\u2006',
+            '\u2007',
+            '\u2008',
+            '\u2009',
+            '\u200a',
+            '\u2028',
+            '\u2029',
+            '\u202f',
+            '\u205f',
+            '\u3000'
+        ];
+    },
+    '4k': function (require, module, exports, global) {
+        var toString = require('47');
+        var WHITE_SPACES = require('4j');
+        function ltrim(str, chars) {
+            str = toString(str);
+            chars = chars || WHITE_SPACES;
+            var start = 0, len = str.length, charLen = chars.length, found = true, i, c;
+            while (found && start < len) {
+                found = false;
+                i = -1;
+                c = str.charAt(start);
+                while (++i < charLen) {
+                    if (c === chars[i]) {
+                        found = true;
+                        start++;
+                        break;
+                    }
+                }
+            }
+            return start >= len ? '' : str.substr(start, len);
+        }
+        module.exports = ltrim;
+    },
+    '4l': function (require, module, exports, global) {
+        var toString = require('47');
+        var WHITE_SPACES = require('4j');
+        function rtrim(str, chars) {
+            str = toString(str);
+            chars = chars || WHITE_SPACES;
+            var end = str.length - 1, charLen = chars.length, found = true, i, c;
+            while (found && end >= 0) {
+                found = false;
+                i = -1;
+                c = str.charAt(end);
+                while (++i < charLen) {
+                    if (c === chars[i]) {
+                        found = true;
+                        end--;
+                        break;
+                    }
+                }
+            }
+            return end >= 0 ? str.substring(0, end + 1) : '';
+        }
+        module.exports = rtrim;
     },
     '4m': function (require, module, exports, global) {
         'use strict';
@@ -11581,50 +11615,41 @@ var G5;
         module.exports = prime;
     },
     '4o': function (require, module, exports, global) {
-        module.exports = function (x1, y1, x2, y2, epsilon) {
-            var curveX = function (t) {
-                var v = 1 - t;
-                return 3 * v * v * t * x1 + 3 * v * t * t * x2 + t * t * t;
-            };
-            var curveY = function (t) {
-                var v = 1 - t;
-                return 3 * v * v * t * y1 + 3 * v * t * t * y2 + t * t * t;
-            };
-            var derivativeCurveX = function (t) {
-                var v = 1 - t;
-                return 3 * (2 * (t - 1) * t + v * v) * x1 + 3 * (-t * t * t + 2 * v * t) * x2;
-            };
-            return function (t) {
-                var x = t, t0, t1, t2, x2, d2, i;
-                for (t2 = x, i = 0; i < 8; i++) {
-                    x2 = curveX(t2) - x;
-                    if (Math.abs(x2) < epsilon)
-                        return curveY(t2);
-                    d2 = derivativeCurveX(t2);
-                    if (Math.abs(d2) < 0.000001)
-                        break;
-                    t2 = t2 - x2 / d2;
-                }
-                t0 = 0, t1 = 1, t2 = x;
-                if (t2 < t0)
-                    return curveY(t0);
-                if (t2 > t1)
-                    return curveY(t1);
-                while (t0 < t1) {
-                    x2 = curveX(t2);
-                    if (Math.abs(x2 - x) < epsilon)
-                        return curveY(t2);
-                    if (x > x2)
-                        t0 = t2;
-                    else
-                        t1 = t2;
-                    t2 = (t1 - t0) * 0.5 + t0;
-                }
-                return curveY(t2);
-            };
+        'use strict';
+        var camelize = function (self) {
+            return (self + '').replace(/-\D/g, function (match) {
+                return match.charAt(1).toUpperCase();
+            });
         };
+        module.exports = camelize;
     },
     '4p': function (require, module, exports, global) {
+        'use strict';
+        var trim = require('5i');
+        var clean = function (self) {
+            return trim((self + '').replace(/\s+/g, ' '));
+        };
+        module.exports = clean;
+    },
+    '4q': function (require, module, exports, global) {
+        'use strict';
+        var capitalize = function (self) {
+            return (self + '').replace(/\b[a-z]/g, function (match) {
+                return match.toUpperCase();
+            });
+        };
+        module.exports = capitalize;
+    },
+    '4r': function (require, module, exports, global) {
+        'use strict';
+        var hyphenate = function (self) {
+            return (self + '').replace(/[A-Z]/g, function (match) {
+                return '-' + match.toLowerCase();
+            });
+        };
+        module.exports = hyphenate;
+    },
+    '4s': function (require, module, exports, global) {
         'use strict';
         var map = function (self, method, context) {
             var length = self.length >>> 0, results = Array(length);
@@ -11635,59 +11660,7 @@ var G5;
         };
         module.exports = map;
     },
-    '4q': function (require, module, exports, global) {
-        module.exports = -2147483648;
-    },
-    '4r': function (require, module, exports, global) {
-        module.exports = 2147483647;
-    },
-    '4s': function (require, module, exports, global) {
-        var random = require('5i');
-        var MIN_INT = require('4q');
-        var MAX_INT = require('4r');
-        function rand(min, max) {
-            min = min == null ? MIN_INT : min;
-            max = max == null ? MAX_INT : max;
-            return min + (max - min) * random();
-        }
-        module.exports = rand;
-    },
     '4t': function (require, module, exports, global) {
-        'use strict';
-        var camelize = function (self) {
-            return (self + '').replace(/-\D/g, function (match) {
-                return match.charAt(1).toUpperCase();
-            });
-        };
-        module.exports = camelize;
-    },
-    '4u': function (require, module, exports, global) {
-        'use strict';
-        var trim = require('5j');
-        var clean = function (self) {
-            return trim((self + '').replace(/\s+/g, ' '));
-        };
-        module.exports = clean;
-    },
-    '4v': function (require, module, exports, global) {
-        'use strict';
-        var capitalize = function (self) {
-            return (self + '').replace(/\b[a-z]/g, function (match) {
-                return match.toUpperCase();
-            });
-        };
-        module.exports = capitalize;
-    },
-    '4w': function (require, module, exports, global) {
-        'use strict';
-        var hyphenate = function (self) {
-            return (self + '').replace(/[A-Z]/g, function (match) {
-                return '-' + match.toLowerCase();
-            });
-        };
-        module.exports = hyphenate;
-    },
-    '4x': function (require, module, exports, global) {
         'use strict';
         var forEach = function (self, method, context) {
             for (var i = 0, l = self.length >>> 0; i < l; i++) {
@@ -11698,9 +11671,9 @@ var G5;
         };
         module.exports = forEach;
     },
-    '4y': function (require, module, exports, global) {
+    '4u': function (require, module, exports, global) {
         'use strict';
-        var prime = require('4n'), forEach = require('4x'), map = require('4p'), filter = require('5k'), every = require('5l'), some = require('5m');
+        var prime = require('4n'), forEach = require('4t'), map = require('4s'), filter = require('5j'), every = require('5k'), some = require('5l');
         var uniqueIndex = 0;
         var uniqueID = function (n) {
             return n === global ? 'global' : n.uniqueNumber || (n.uniqueNumber = 'n:' + (uniqueIndex++).toString(36));
@@ -11776,7 +11749,7 @@ var G5;
             });
         module.exports = $;
     },
-    '4z': function (require, module, exports, global) {
+    '4v': function (require, module, exports, global) {
         'use strict';
         var length = function (a) {
             return Math.sqrt(a[0] * a[0] + a[1] * a[1]);
@@ -11833,8 +11806,52 @@ var G5;
             ];
         };
     },
-    '50': function (require, module, exports, global) {
-        var forOwn = require('20');
+    '4w': function (require, module, exports, global) {
+        module.exports = function (x1, y1, x2, y2, epsilon) {
+            var curveX = function (t) {
+                var v = 1 - t;
+                return 3 * v * v * t * x1 + 3 * v * t * t * x2 + t * t * t;
+            };
+            var curveY = function (t) {
+                var v = 1 - t;
+                return 3 * v * v * t * y1 + 3 * v * t * t * y2 + t * t * t;
+            };
+            var derivativeCurveX = function (t) {
+                var v = 1 - t;
+                return 3 * (2 * (t - 1) * t + v * v) * x1 + 3 * (-t * t * t + 2 * v * t) * x2;
+            };
+            return function (t) {
+                var x = t, t0, t1, t2, x2, d2, i;
+                for (t2 = x, i = 0; i < 8; i++) {
+                    x2 = curveX(t2) - x;
+                    if (Math.abs(x2) < epsilon)
+                        return curveY(t2);
+                    d2 = derivativeCurveX(t2);
+                    if (Math.abs(d2) < 0.000001)
+                        break;
+                    t2 = t2 - x2 / d2;
+                }
+                t0 = 0, t1 = 1, t2 = x;
+                if (t2 < t0)
+                    return curveY(t0);
+                if (t2 > t1)
+                    return curveY(t1);
+                while (t0 < t1) {
+                    x2 = curveX(t2);
+                    if (Math.abs(x2 - x) < epsilon)
+                        return curveY(t2);
+                    if (x > x2)
+                        t0 = t2;
+                    else
+                        t1 = t2;
+                    t2 = (t1 - t0) * 0.5 + t0;
+                }
+                return curveY(t2);
+            };
+        };
+    },
+    '4x': function (require, module, exports, global) {
+        var forOwn = require('27');
         function mixIn(target, objects) {
             var i = 0, n = arguments.length, obj;
             while (++i < n) {
@@ -11849,6 +11866,23 @@ var G5;
             this[key] = val;
         }
         module.exports = mixIn;
+    },
+    '4y': function (require, module, exports, global) {
+        module.exports = -2147483648;
+    },
+    '4z': function (require, module, exports, global) {
+        module.exports = 2147483647;
+    },
+    '50': function (require, module, exports, global) {
+        var random = require('5m');
+        var MIN_INT = require('4y');
+        var MAX_INT = require('4z');
+        function rand(min, max) {
+            min = min == null ? MIN_INT : min;
+            max = max == null ? MAX_INT : max;
+            return min + (max - min) * random();
+        }
+        module.exports = rand;
     },
     '51': function (require, module, exports, global) {
         var kindOf = require('53');
@@ -11891,7 +11925,7 @@ var G5;
         module.exports = clone;
     },
     '52': function (require, module, exports, global) {
-        var hasOwn = require('3k');
+        var hasOwn = require('3l');
         var forIn = require('5o');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
@@ -11929,7 +11963,37 @@ var G5;
         module.exports = isKind;
     },
     '56': function (require, module, exports, global) {
-        var filter = require('57');
+        function lerp(ratio, start, end) {
+            return start + (end - start) * ratio;
+        }
+        module.exports = lerp;
+    },
+    '57': function (require, module, exports, global) {
+        function norm(val, min, max) {
+            if (val < min || val > max) {
+                throw new RangeError('value (' + val + ') must be between ' + min + ' and ' + max);
+            }
+            return val === max ? 1 : (val - min) / (max - min);
+        }
+        module.exports = norm;
+    },
+    '58': function (require, module, exports, global) {
+        var isArray = require('25');
+        function toNumber(val) {
+            if (typeof val === 'number')
+                return val;
+            if (!val)
+                return 0;
+            if (typeof val === 'string')
+                return parseFloat(val);
+            if (isArray(val))
+                return NaN;
+            return Number(val);
+        }
+        module.exports = toNumber;
+    },
+    '59': function (require, module, exports, global) {
+        var filter = require('5a');
         function unique(arr, compare) {
             compare = compare || isEqual;
             return filter(arr, function (item, i, arr) {
@@ -11947,8 +12011,8 @@ var G5;
         }
         module.exports = unique;
     },
-    '57': function (require, module, exports, global) {
-        var makeIterator = require('2c');
+    '5a': function (require, module, exports, global) {
+        var makeIterator = require('2b');
         function filter(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var results = [];
@@ -11966,8 +12030,8 @@ var G5;
         }
         module.exports = filter;
     },
-    '58': function (require, module, exports, global) {
-        var makeIterator = require('2c');
+    '5b': function (require, module, exports, global) {
+        var makeIterator = require('2b');
         function some(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = false;
@@ -11984,36 +12048,6 @@ var G5;
             return result;
         }
         module.exports = some;
-    },
-    '59': function (require, module, exports, global) {
-        function lerp(ratio, start, end) {
-            return start + (end - start) * ratio;
-        }
-        module.exports = lerp;
-    },
-    '5a': function (require, module, exports, global) {
-        function norm(val, min, max) {
-            if (val < min || val > max) {
-                throw new RangeError('value (' + val + ') must be between ' + min + ' and ' + max);
-            }
-            return val === max ? 1 : (val - min) / (max - min);
-        }
-        module.exports = norm;
-    },
-    '5b': function (require, module, exports, global) {
-        var isArray = require('1t');
-        function toNumber(val) {
-            if (typeof val === 'number')
-                return val;
-            if (!val)
-                return 0;
-            if (typeof val === 'string')
-                return parseFloat(val);
-            if (isArray(val))
-                return NaN;
-            return Number(val);
-        }
-        module.exports = toNumber;
     },
     '5c': function (require, module, exports, global) {
         'use strict';
@@ -12101,20 +12135,13 @@ var G5;
         module.exports = type;
     },
     '5i': function (require, module, exports, global) {
-        function random() {
-            return random.get();
-        }
-        random.get = Math.random;
-        module.exports = random;
-    },
-    '5j': function (require, module, exports, global) {
         'use strict';
         var trim = function (self) {
             return (self + '').replace(/^\s+|\s+$/g, '');
         };
         module.exports = trim;
     },
-    '5k': function (require, module, exports, global) {
+    '5j': function (require, module, exports, global) {
         'use strict';
         var filter = function (self, method, context) {
             var results = [];
@@ -12127,7 +12154,7 @@ var G5;
         };
         module.exports = filter;
     },
-    '5l': function (require, module, exports, global) {
+    '5k': function (require, module, exports, global) {
         'use strict';
         var every = function (self, method, context) {
             for (var i = 0, l = self.length >>> 0; i < l; i++) {
@@ -12138,7 +12165,7 @@ var G5;
         };
         module.exports = every;
     },
-    '5m': function (require, module, exports, global) {
+    '5l': function (require, module, exports, global) {
         'use strict';
         var some = function (self, method, context) {
             for (var i = 0, l = self.length >>> 0; i < l; i++) {
@@ -12148,6 +12175,13 @@ var G5;
             return false;
         };
         module.exports = some;
+    },
+    '5m': function (require, module, exports, global) {
+        function random() {
+            return random.get();
+        }
+        random.get = Math.random;
+        module.exports = random;
     },
     '5n': function (require, module, exports, global) {
         var forOwn = require('52');
@@ -12167,7 +12201,7 @@ var G5;
         module.exports = mixIn;
     },
     '5o': function (require, module, exports, global) {
-        var hasOwn = require('3k');
+        var hasOwn = require('3l');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [

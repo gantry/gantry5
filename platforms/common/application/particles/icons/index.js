@@ -3,21 +3,44 @@ var $             = require('../../utils/elements.moofx'),
     domready      = require('elements/domready'),
     modal         = require('../../ui').modal,
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
-    getAjaxURL    = require('../../utils/get-ajax-url');
+    getAjaxURL    = require('../../utils/get-ajax-url'),
+
+    trim          = require('mout/string/trim'),
+    contains      = require('mout/array/contains');
 
 domready(function() {
     $('body').delegate('click', '[data-g5-iconpicker]', function(event, element) {
+        element = $(element);
+        var field = $(element.data('g5-iconpicker')),
+            value = trim(field.value()).replace(/\s{2,}/g, ' ').split(' ');
+
         modal.open({
             content: 'Loading',
             className: 'g5-dialog-theme-default g5-modal-icons',
             remote: getAjaxURL('icons') + getAjaxSuffix(),
+            afterClose: function(){
+                var popovers = $('.g5-popover');
+                if (popovers) { popovers.remove(); }
+            },
             remoteLoaded: function(response, content) {
-                var html, large;
-                content.elements.content.search('[data-icon]').forEach(function(icon){
+                var html, large, iconData = [],
+                    container = content.elements.content,
+                    icons = container.search('[data-icon]');
+
+                if (!icons || !response.body.success) {
+                    container.html(response.body.html || response.body);
+                    return false;
+                }
+
+                var updatePreview = function(data){
+                    container.find('.icon-preview').html('<i class="fa ' + data + '"></i>');
+                };
+
+                icons.forEach(function(icon) {
                     icon = $(icon);
                     html = '';
-                    for(var i = 5, l = 0; i > l; i--){
-                        large = (!i) ? 'lg' :  i + 'x';
+                    for (var i = 5, l = 0; i > l; i--) {
+                        large = (!i) ? 'lg' : i + 'x';
                         html += '<i class="fa ' + icon.data('icon') + ' fa-' + large + '"></i> ';
                     }
 
@@ -28,51 +51,43 @@ domready(function() {
                         style: 'above-modal, icons-preview',
                         width: 'auto',
                         targetEvents: false,
-                        delay: 0
-                    }).on('hidden.popover', function(instance){
+                        delay: 1
+                    }).on('hidden.popover', function(instance) {
                         if (instance.$target) { instance.$target.remove(); }
                     });
+
+                    if (contains(value, icon.data('icon'))) {
+                        // set active icon
+                        icon.addClass('active');
+                        iconData.push(icon.data('icon'));
+
+                        // toggle options
+                        value.forEach(function(name){
+                            var field = container.find('[name="' + name + '"]');
+                            if (field) {
+                                iconData.push(name);
+                                field.checked(true);
+                            }
+                            else {
+                                field = container.find('option[value="' + name + '"]');
+                               if (field) {
+                                   iconData.push(name);
+                                   field.parent().value(name);
+                               }
+                            }
+                        });
+
+                        // scroll into place of active icon
+                        var wrap = icon.parent('.icons-wrapper'),
+                            wrapHeight = wrap[0].offsetHeight;
+                        wrap[0].scrollTop = icon[0].offsetTop - (wrapHeight / 2);
+
+                        // update preview
+                        updatePreview(iconData.join(' '));
+                    }
                 });
             }
         });
-        /*var popover = $(element).getPopover({
-            type: 'async',
-            placement: 'right',
-            width: 700,
-            trigger: 'click',
-            style: 'icons',
-            url: getAjaxURL('icons') + getAjaxSuffix()
-        }).on('shown.popover', function(p) {
-            p.displayContent();
-        });*/
-
-        //popover.show();
-
-        console.log(getAjaxURL('icons'));
-        /*particles.popover({
-            type: 'async',
-            placement: 'left-bottom',
-            width: '200',
-            style: 'particles, inverse, fixed, nooverflow',
-            url: particles.attribute('href') + getAjaxSuffix()
-        }).on('shown.popover', function(popover) {
-            if (popover.$target.particleFilter) { return false; }
-
-            var search = popover.$target.find('input[type=text]'),
-                list = popover.$target.search('[data-lm-blocktype]');
-            if (!search) { return false; }
-
-            popover.$target.particleFilter = true;
-            search.on('input', function(e) {
-                list.style({ display: 'none' }).forEach(function(blocktype) {
-                    var value = this.value().toLowerCase();
-                    blocktype = $(blocktype);
-                    if (blocktype.data('lm-blocktype').toLowerCase().match(value) || blocktype.text().toLowerCase().match(value)) {
-                        blocktype.style({ display: 'block' });
-                    }
-                }, this);
-            });
-        });*/
     });
 });
 

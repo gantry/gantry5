@@ -23,20 +23,6 @@
     input {
         font-size: 0.8em;
     }
-
-    .font-search-wrapper {
-        display: inline-block;
-        position: relative;
-
-        span {
-            position: absolute;
-            right: 5px;
-            top: 2px;
-            font-size: 0.6em;
-            color: $core-accent;
-        }
-    }
-
     .font-preview {
         width: 400px;
     }
