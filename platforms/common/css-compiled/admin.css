@@ -48,6 +48,9 @@ body {
   background-color: #354D59 !important;
   margin: 0; }
 
+a {
+  color: #729DAE; }
+
 #g5-container .fa-spin {
   -webkit-animation: spin 0.8s infinite linear;
   -moz-animation: spin 0.8s infinite linear;
@@ -60,7 +63,7 @@ body {
   color: #666; }
   @media only all and (max-width: 47.938rem) {
     #g5-container .inner-container {
-      margin: 1.5rem; } }
+      margin: 0; } }
 #g5-container .cards-wrapper {
   margin: -10px; }
 #g5-container .card {
@@ -511,8 +514,21 @@ body {
   padding: 0.538rem 0.938rem;
   background: #8F4DAE;
   color: #fff; }
+  #g5-container .update-header .update-tools {
+    float: right; }
+  #g5-container .update-header a {
+    color: #fff; }
+  #g5-container .update-header .fa-close {
+    display: inline-block;
+    border-radius: 100%;
+    background-color: #633679;
+    margin-left: 0.938rem;
+    width: 26px;
+    height: 26px;
+    text-align: center;
+    line-height: 26px; }
 #g5-container .button.button-update {
-  float: right;
+  display: inline-block;
   box-shadow: none;
   background: #633679;
   color: rgba(255, 255, 255, 0.9); }

@@ -14,33 +14,14 @@
 
 {% block content %}
 <div id="g5-container">
-    <div class="g-grid">
-        <div class="g-block">
-            <div id="main-header" data-mode-indicator="production">
-                {% include "@gantry-admin/partials/header.html.twig" %}
-            </div>
-        </div>
+    <div id="main-header" data-mode-indicator="production">
+        {% include "@gantry-admin/partials/header.html.twig" %}
     </div>
     <div class="inner-container">
-        <div class="g-grid">
-            <div class="g-block">
-                <div class="update-header clearfix">
-                    <!--FIX ME--><span class="update-text">Updates Available: Awesome Theme v1.0, Gantry Framework v5.0.1</span>
-                    <a href="#" class="button button-update"><i class="fa fa-refresh"></i> <span>Update</span></a>
-                </div>
-            </div>
-        </div>
-        <div class="g-grid">
-            <div class="g-block inner-header">
-                <div class="sidebar-toggle">
-                    <span data-sidebar-toggle><i class="fa fa-bars"></i></span>
-                    <span class="gantry-logo"></span>
-                </div>
-                <div class="settings-state">
-                    <!--FIX ME--><span class="master-toggle">Default Settings <i class="fa fa-chevron-down"></i></span>
-                </div>
-            </div>
-        </div>
+        <!-- Update Bar -->
+        {% include "@gantry-admin/partials/updates.html.twig" %}
+        <!-- Gantry Header -->
+        {% include "@gantry-admin/partials/gantry-header.html.twig" %}
         <div class="g-grid">
             <div class="g-block sidebar-block size-1-7">
                 <nav id="gantry">
