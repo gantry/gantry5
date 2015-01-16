@@ -94,13 +94,15 @@ class Pages extends HtmlController
             throw new \RuntimeException('Layout not found', 404);
         }
 
-        if (!empty($_POST)) {
+        if (isset($_POST)) {
             $item = (object) [
                 'id' => $id,
                 'type' => isset($_POST['type']) ? $_POST['type'] : $type,
                 'attributes' => (object) isset($_POST['options']) ? $_POST['options'] : [],
-                'block' => (object) isset($_POST['block']) ? $_POST['block'] : []
             ];
+            if (isset($_POST['block'])) {
+                $item->block = $_POST['block'];
+            }
         } else {
             $item = $this->find($layout, $id);
         }
@@ -115,7 +117,7 @@ class Pages extends HtmlController
             $prefix = 'particles.' . $name;
             // TODO: Use blueprints to merge configuration.
             $data = (array) $item->attributes + (array) $this->container['config']->get($prefix);
-            if ($type == 'section') {
+            if ($type == 'section' || $type == 'grid') {
                 $blueprints = new Blueprints(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml")->content());
             } else {
                 $blueprints = new Blueprints($this->container['particles']->get($name));
