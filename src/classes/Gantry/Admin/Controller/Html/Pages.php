@@ -94,18 +94,19 @@ class Pages extends HtmlController
             throw new \RuntimeException('Layout not found', 404);
         }
 
-        if (isset($_POST['options'])) {
+        if (!empty($_POST)) {
             $item = (object) [
                 'id' => $id,
-                'type' => $type,
-                'attributes' => (object) $_POST['options']
+                'type' => isset($_POST['type']) ? $_POST['type'] : $type,
+                'attributes' => (object) isset($_POST['options']) ? $_POST['options'] : [],
+                'block' => (object) isset($_POST['block']) ? $_POST['block'] : []
             ];
         } else {
             $item = $this->find($layout, $id);
         }
 
         if ($type == 'particle') {
-            $name = isset($item->attributes->name) ? $item->attributes->name : null;
+            $name = isset($item->type) ? $item->type : null;
         } else {
             $name = $type;
         }
