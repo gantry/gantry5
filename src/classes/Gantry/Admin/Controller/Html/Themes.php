@@ -11,6 +11,6 @@ class Themes extends HtmlController
         $this->params['styles'] = (new ThemeList)->getStyles();
 
         return $this->container['admin.theme']
-            ->render('@gantry-admin/pages/thems/themes.html.twig', $this->params);
+            ->render('@gantry-admin/pages/themes/themes.html.twig', $this->params);
     }
 }
