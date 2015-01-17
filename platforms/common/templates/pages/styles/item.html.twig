@@ -10,10 +10,10 @@
     <div id="settings" class="cards-wrapper">
         <div class="card settings-block">
             <h4>
-                {{ style.name }}
+                {{ block.name }}
             </h4>
             <div class="inner-params">
-                {% include 'forms/fields.html.twig' with {'blueprints': style.form} %}
+                {% include 'forms/fields.html.twig' with {'blueprints': block.form} %}
             </div>
         </div>
     </div>

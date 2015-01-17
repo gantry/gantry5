@@ -1,0 +1,19 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+{% for group, list in blocks %}
+    <h2>{{ group|capitalize }} Styles</h2>
+
+    <div id="styles" class="cards-wrapper g-grid">
+
+        {% for id, block in list %}
+            {% set prefix = 'blocks.' ~ id ~ '.' %}
+            <div class="card settings-block">
+                <h4>
+                    <a class="config-cog" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('styles/blocks/' ~ id) }}">{{ block.name }}</a>
+                </h4>
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}
+{% endblock %}

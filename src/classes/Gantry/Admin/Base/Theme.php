@@ -2,7 +2,7 @@
 namespace Gantry\Admin\Base;
 
 use Gantry\Admin\Particles\Particles;
-use Gantry\Admin\Styles\Styles;
+use Gantry\Admin\Blocks\Blocks;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Twig\TwigExtension;
@@ -32,8 +32,8 @@ class Theme extends BaseTheme
             return new Particles($c);
         };
 
-        $gantry['styles'] = function ($c) {
-            return new Styles($c);
+        $gantry['blocks'] = function ($c) {
+            return new Blocks($c);
         };
 
         parent::__construct($path, $name);

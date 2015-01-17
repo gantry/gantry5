@@ -1,5 +1,5 @@
 <?php
-namespace Gantry\Admin\Styles;
+namespace Gantry\Admin\Blocks;
 
 use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Config\CompiledBlueprints;
@@ -9,11 +9,11 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Styles
+class Blocks
 {
     protected $container;
     protected $files;
-    protected $styles;
+    protected $blocks;
 
     public function __construct($container)
     {
@@ -22,27 +22,27 @@ class Styles
 
     public function all()
     {
-        if (!$this->styles)
+        if (!$this->blocks)
         {
-            $files = $this->locateStyles();
+            $files = $this->locateBlocks();
 
-            $this->styles = [];
+            $this->blocks = [];
             foreach ($files as $key => $file) {
                 $filename = key($file);
-                $this->styles[$key] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+                $this->blocks[$key] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
             }
         }
 
-        return $this->styles;
+        return $this->blocks;
     }
 
     public function group()
     {
-        $styles = $this->all();
+        $blocks = $this->all();
 
         $list = [];
-        foreach ($styles as $name => $style) {
-            $type = isset($style['type']) ? $style['type'] : 'style';
+        foreach ($blocks as $name => $style) {
+            $type = isset($style['type']) ? $style['type'] : 'block';
             $list[$type][$name] = $style;
         }
 
@@ -51,11 +51,11 @@ class Styles
 
     public function get($id)
     {
-        if ($this->styles[$id]) {
-            return $this->styles[$id];
+        if ($this->blocks[$id]) {
+            return $this->blocks[$id];
         }
 
-        $files = $this->locateStyles();
+        $files = $this->locateBlocks();
 
         if (empty($files[$id])) {
             throw new \RuntimeException("Settings for '{$id}' not found.", 404);
@@ -67,12 +67,12 @@ class Styles
         return $particle;
     }
 
-    protected function locateStyles()
+    protected function locateBlocks()
     {
         if (!$this->files) {
             /** @var UniformResourceLocator $locator */
             $locator = $this->container['locator'];
-            $paths = $locator->findResources('gantry-styles://');
+            $paths = $locator->findResources('gantry-blocks://');
 
             $this->files = (new ConfigFileFinder)->listFiles($paths);
         }

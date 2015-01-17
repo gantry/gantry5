@@ -45,7 +45,7 @@ class Settings extends HtmlController
     {
         $this->params['particles'] = $this->container['particles']->group();
 
-        return $this->container['admin.theme']->render('@gantry-admin/settings.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/settings/settings.html.twig', $this->params);
     }
 
     public function display($id)
@@ -63,7 +63,7 @@ class Settings extends HtmlController
             'skip' => ['enabled']
             ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/settings_item.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/settings/item.html.twig', $this->params);
     }
 
     public function formfield($id)
@@ -101,7 +101,7 @@ class Settings extends HtmlController
             $this->params['key'] = $parent['key'];
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/settings_field.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/settings/field.html.twig', $this->params);
     }
 
     public function save($id)

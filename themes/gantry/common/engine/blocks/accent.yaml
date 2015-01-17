@@ -1,19 +1,19 @@
 name: Accent Color
 description: Accent colors used for website
-type: style
+type: block
 
 form:
   fields:
 
-    color1:
+    accent1:
       type: input.colorpicker
       label: Accent 1
-      default: '#fff'
-    color2:
+      default: "#DF392E"
+    accent2:
       type: input.colorpicker
       label: Accent 2
-      default: 'rgba(63, 146, 237, 0.7)'
-    color3:
+      default: "#FEB948"
+    accent3:
       type: input.colorpicker
       label: Accent 3
-      default: 'rgba(222, 94, 26, 0.1)'
+      default: "#3CA5DA"

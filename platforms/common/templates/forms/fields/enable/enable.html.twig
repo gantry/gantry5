@@ -1,0 +1,16 @@
+{% extends "forms/field.html.twig" %}
+
+{% block input %}
+<div class="enabler">
+    <input
+            {# required attribute structures #}
+            type="hidden"
+            name="{{ (scope ~ name)|fieldName }}"
+            value="{{ key }}"
+            id="{{ id }}"
+            {# global attribute structures #}
+            {{ block('global_attributes') }}
+            />
+    <div class="toggle"><div class="knob"></div></div>
+</div>
+{% endblock %}

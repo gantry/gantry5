@@ -16,62 +16,62 @@ class Styles extends HtmlController
     protected $httpVerbs = [
         'GET' => [
             '/'              => 'index',
-            '/styles'        => 'undefined',
-            '/styles/*'      => 'display',
-            '/styles/*/**'   => 'formfield',
+            '/blocks'        => 'undefined',
+            '/blocks/*'      => 'display',
+            '/blocks/*/**'   => 'formfield',
         ],
         'POST' => [
             '/'         => 'forbidden',
-            '/styles'   => 'forbidden',
-            '/styles/*' => 'save'
+            '/blocks'   => 'forbidden',
+            '/blocks/*' => 'save'
         ],
         'PUT' => [
             '/'         => 'forbidden',
-            '/styles'   => 'forbidden',
-            '/styles/*' => 'save'
+            '/blocks'   => 'forbidden',
+            '/blocks/*' => 'save'
         ],
         'PATCH' => [
             '/'         => 'forbidden',
-            '/styles'   => 'forbidden',
-            '/styles/*' => 'save'
+            '/blocks'   => 'forbidden',
+            '/blocks/*' => 'save'
         ],
         'DELETE' => [
-            '/'            => 'forbidden',
-            '/styles'   => 'forbidden',
-            '/styles/*' => 'reset'
+            '/'         => 'forbidden',
+            '/blocks'   => 'forbidden',
+            '/blocks/*' => 'reset'
         ]
     ];
 
     public function index()
     {
-        $this->params['styles'] = $this->container['styles']->group();
+        $this->params['blocks'] = $this->container['blocks']->group();
 
-        return $this->container['admin.theme']->render('@gantry-admin/styles.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/styles/styles.html.twig', $this->params);
     }
 
     public function display($id)
     {
-        $style = $this->container['styles']->get($id);
+        $style = $this->container['blocks']->get($id);
         $blueprints = new Blueprints($style);
-        $prefix = 'styles.' . $id;
+        $prefix = 'blocks.' . $id;
 
         $this->params += [
-            'style' => $blueprints,
+            'block' => $blueprints,
             'data' =>  Gantry::instance()['config']->get($prefix),
             'id' => $id,
-            'parent' => 'settings',
-            'route' => 'settings.' . $prefix,
+            'parent' => 'styles',
+            'route' => 'styles.' . $prefix,
             'skip' => ['enabled']
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/styles/item.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/styles/item.html.twig', $this->params);
     }
 
     public function formfield($id)
     {
         $path = func_get_args();
 
-        $style = $this->container['styles']->get($id);
+        $style = $this->container['blocks']->get($id);
 
         // Load blueprints.
         $blueprints = new Blueprints($style);
@@ -83,7 +83,7 @@ class Styles extends HtmlController
         }
 
         // Get the prefix.
-        $prefix = "styles.{$id}." . implode('.', $path);
+        $prefix = "blocks.{$id}." . implode('.', $path);
         if ($value !== null) {
             $parent = $fields;
             $fields = ['fields' => $fields['fields']];
@@ -94,15 +94,15 @@ class Styles extends HtmlController
         $this->params = [
                 'blueprints' => $fields,
                 'data' =>  $this->container['config']->get($prefix),
-                'parent' => $path ? "settings/styles/{$id}/" . implode('/', $path) : "settings/styles/{$id}",
-                'route' => 'settings.' . $prefix
+                'parent' => $path ? "styles/blocks/{$id}/" . implode('/', $path) : "styles/blocks/{$id}",
+                'route' => 'styles.' . $prefix
             ] + $this->params;
 
         if (isset($parent['key'])) {
             $this->params['key'] = $parent['key'];
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/settings/field.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/styles/field.html.twig', $this->params);
     }
 
     public function save($id)
