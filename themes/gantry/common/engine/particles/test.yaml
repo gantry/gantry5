@@ -1,0 +1,62 @@
+name: Pickers Tests
+description: Colorpicker test.
+type: particle
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable the particle.
+      default: true
+
+    color1:
+      type: input.colorpicker
+      label: Color 1
+      default: '#fff'
+    color2:
+      type: input.colorpicker
+      label: Color 2
+      default: 'rgba(63, 146, 237, 0.7)'
+    color3:
+      type: input.colorpicker
+      label: Color 3
+      default: 'rgba(222, 94, 26, 0.1)'
+
+    sep1:
+      type: separator.separator
+      label: Fonts
+
+    font-family-1:
+      type: input.fonts
+      label: Font 1
+      default: 'family=Inconsolata:700,400&subset=latin,latin-ext'
+    font-family-2:
+      type: input.fonts
+      label: Font 2
+      default: 'family=Kalam:300&subset=latin,latin-ext'
+
+    sep2:
+      type: separator.separator
+      label: Icons
+
+    icon-1:
+      type: input.icon
+      label: Icon 1
+      default: 'fa fa-rocket fa-fw fa-spin fa-lg fa-rotate-180'
+    icon-2:
+      type: input.icon
+      label: Icon 2
+      default: 'fa fa-shield'
+    icon-3:
+      type: input.icon
+      label: First Icon
+      default: 'fa fa-adjust'
+    icon-4:
+      type: input.icon
+      label: Last Icon
+      default: 'fa fa-youtube-square'
+    icon-5:
+      type: input.icon
+      label: Blank
+      default: ''
