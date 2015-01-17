@@ -9,6 +9,11 @@
 
     > .fa {
         cursor: pointer;
+
+        &.picker {
+            color: $tertiary-accent;
+            opacity: 0.5;
+        }
     }
 }
 

@@ -9,6 +9,19 @@ var $             = require('../../utils/elements.moofx'),
     contains      = require('mout/array/contains');
 
 domready(function() {
+    $('body').delegate('keyup', '.g-icons input[type="text"]', function(event, element){
+        element = $(element);
+        var preview = element.sibling('[data-g5-iconpicker]'),
+            value = element.value(),
+            size;
+
+        preview.attribute('class', value || 'fa fa-table');
+
+        size = preview[0].offsetWidth;
+
+        if (!size) { preview.attribute('class', 'fa fa-hand-o-up picker'); }
+    });
+
     $('body').delegate('click', '[data-g5-iconpicker]', function(event, element) {
         element = $(element);
         var field = $(element.data('g5-iconpicker')),

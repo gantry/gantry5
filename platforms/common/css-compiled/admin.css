@@ -2587,17 +2587,22 @@ body.g5-dialog-open {
 .g-icons > .fa {
   cursor: pointer;
 }
+/* line 13, ../scss/admin/particles/_icons.scss */
+.g-icons > .fa.picker {
+  color: #48B0D7;
+  opacity: 0.5;
+}
 
-/* line 15, ../scss/admin/particles/_icons.scss */
+/* line 20, ../scss/admin/particles/_icons.scss */
 .g5-popover-icons-preview {
   width: auto !important;
 }
 
-/* line 19, ../scss/admin/particles/_icons.scss */
+/* line 24, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content {
   width: 650px;
 }
-/* line 22, ../scss/admin/particles/_icons.scss */
+/* line 27, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icon-preview {
   padding: 0 2px;
   -webkit-transform: translateZ(0);
@@ -2606,36 +2611,36 @@ body.g5-dialog-open {
   -o-transform: translateZ(0);
   transform: translateZ(0);
 }
-/* line 26, ../scss/admin/particles/_icons.scss */
+/* line 31, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icon-preview span {
   color: #b3b3b3;
 }
-/* line 31, ../scss/admin/particles/_icons.scss */
+/* line 36, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header {
   color: gray;
 }
-/* line 34, ../scss/admin/particles/_icons.scss */
+/* line 39, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header label, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header select, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header input {
   margin: 0 !important;
   display: inline-block !important;
   font-size: 0.8em;
 }
-/* line 40, ../scss/admin/particles/_icons.scss */
+/* line 45, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header label {
   font-size: 0.75em;
 }
-/* line 45, ../scss/admin/particles/_icons.scss */
+/* line 50, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper {
   max-height: 500px;
   overflow: auto;
 }
-/* line 48, ../scss/admin/particles/_icons.scss */
+/* line 53, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul {
   background-color: #fff;
   border-radius: 3px;
   padding: 10px;
 }
-/* line 54, ../scss/admin/particles/_icons.scss */
+/* line 59, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li {
   display: inline-block;
   min-width: 190px;
@@ -2646,24 +2651,24 @@ body.g5-dialog-open {
   margin: 2px 0;
   border-radius: 3px;
 }
-/* line 64, ../scss/admin/particles/_icons.scss */
+/* line 69, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li i {
   color: #333;
 }
-/* line 68, ../scss/admin/particles/_icons.scss */
+/* line 73, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li:hover {
   background-color: whitesmoke;
 }
-/* line 72, ../scss/admin/particles/_icons.scss */
+/* line 77, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li.active {
   background-color: #439A86;
   color: #e7f5f2;
 }
-/* line 76, ../scss/admin/particles/_icons.scss */
+/* line 81, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li.active i {
   color: #fff;
 }
-/* line 81, ../scss/admin/particles/_icons.scss */
+/* line 86, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li.hide-icon {
   display: none;
 }

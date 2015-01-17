@@ -17,8 +17,6 @@
                 {% if field.list is defined %}list="{{ field.list }}"{% endif %}
                 />
         {% set picker = 'input[name="' ~ (scope ~ name | fieldName) ~ '"]' %}
-        {% if value %}
-        <i class="fa {{ value|e('html_attr') }}" data-g5-iconpicker="{{ picker|e('html_attr') }}"></i>
-        {% endif %}
+        <i class="{{ value|e('html_attr')|default('fa fa-hand-o-up picker') }}" data-g5-iconpicker="{{ picker|e('html_attr') }}"></i>
     </div>
 {% endblock %}
