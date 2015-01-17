@@ -1,6 +1,7 @@
 .g-icons {
     > *:not(div), label {
         display: inline-block;
+        vertical-align: middle;
     }
 
     label, input, select {

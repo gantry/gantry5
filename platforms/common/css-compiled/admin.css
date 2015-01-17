@@ -2578,31 +2578,32 @@ body.g5-dialog-open {
 /* line 2, ../scss/admin/particles/_icons.scss */
 .g-icons > *:not(div), .g-icons label {
   display: inline-block;
+  vertical-align: middle;
 }
-/* line 6, ../scss/admin/particles/_icons.scss */
+/* line 7, ../scss/admin/particles/_icons.scss */
 .g-icons label, .g-icons input, .g-icons select {
   font-size: 0.85em;
 }
-/* line 10, ../scss/admin/particles/_icons.scss */
+/* line 11, ../scss/admin/particles/_icons.scss */
 .g-icons > .fa {
   cursor: pointer;
 }
-/* line 13, ../scss/admin/particles/_icons.scss */
+/* line 14, ../scss/admin/particles/_icons.scss */
 .g-icons > .fa.picker {
   color: #48B0D7;
   opacity: 0.5;
 }
 
-/* line 20, ../scss/admin/particles/_icons.scss */
+/* line 21, ../scss/admin/particles/_icons.scss */
 .g5-popover-icons-preview {
   width: auto !important;
 }
 
-/* line 24, ../scss/admin/particles/_icons.scss */
+/* line 25, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content {
   width: 650px;
 }
-/* line 27, ../scss/admin/particles/_icons.scss */
+/* line 28, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icon-preview {
   padding: 0 2px;
   -webkit-transform: translateZ(0);
@@ -2611,36 +2612,36 @@ body.g5-dialog-open {
   -o-transform: translateZ(0);
   transform: translateZ(0);
 }
-/* line 31, ../scss/admin/particles/_icons.scss */
+/* line 32, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icon-preview span {
   color: #b3b3b3;
 }
-/* line 36, ../scss/admin/particles/_icons.scss */
+/* line 37, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header {
   color: gray;
 }
-/* line 39, ../scss/admin/particles/_icons.scss */
+/* line 40, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header label, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header select, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header input {
   margin: 0 !important;
   display: inline-block !important;
   font-size: 0.8em;
 }
-/* line 45, ../scss/admin/particles/_icons.scss */
+/* line 46, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header label {
   font-size: 0.75em;
 }
-/* line 50, ../scss/admin/particles/_icons.scss */
+/* line 51, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper {
   max-height: 500px;
   overflow: auto;
 }
-/* line 53, ../scss/admin/particles/_icons.scss */
+/* line 54, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul {
   background-color: #fff;
   border-radius: 3px;
   padding: 10px;
 }
-/* line 59, ../scss/admin/particles/_icons.scss */
+/* line 60, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li {
   display: inline-block;
   min-width: 190px;
@@ -2651,53 +2652,63 @@ body.g5-dialog-open {
   margin: 2px 0;
   border-radius: 3px;
 }
-/* line 69, ../scss/admin/particles/_icons.scss */
+/* line 70, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li i {
   color: #333;
 }
-/* line 73, ../scss/admin/particles/_icons.scss */
+/* line 74, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li:hover {
   background-color: whitesmoke;
 }
-/* line 77, ../scss/admin/particles/_icons.scss */
+/* line 78, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li.active {
   background-color: #439A86;
   color: #e7f5f2;
 }
-/* line 81, ../scss/admin/particles/_icons.scss */
+/* line 82, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li.active i {
   color: #fff;
 }
-/* line 86, ../scss/admin/particles/_icons.scss */
+/* line 87, ../scss/admin/particles/_icons.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li.hide-icon {
   display: none;
 }
 
-/* line 5, ../scss/admin/_particles.scss */
+/* line 2, ../scss/admin/particles/_filemanager.scss */
+.g-filemanager > *:not(div), .g-filemanager label {
+  display: inline-block;
+  vertical-align: middle;
+}
+/* line 7, ../scss/admin/particles/_filemanager.scss */
+.g-filemanager > .fa {
+  cursor: pointer;
+}
+
+/* line 6, ../scss/admin/_particles.scss */
 .g-particles-footer, .g-particles-header {
   margin: 0 !important;
 }
-/* line 7, ../scss/admin/_particles.scss */
+/* line 8, ../scss/admin/_particles.scss */
 .g-particles-footer input, .g-particles-footer select, .g-particles-header input, .g-particles-header select {
   margin: 0 !important;
 }
 
-/* line 12, ../scss/admin/_particles.scss */
+/* line 13, ../scss/admin/_particles.scss */
 .g-particles-footer select {
   margin-top: 10px !important;
 }
 
-/* line 16, ../scss/admin/_particles.scss */
+/* line 17, ../scss/admin/_particles.scss */
 .g-particles-main {
   width: 100%;
 }
 
-/* line 20, ../scss/admin/_particles.scss */
+/* line 21, ../scss/admin/_particles.scss */
 .g-particles-header {
   border-bottom: 1px solid #ccc;
   padding-bottom: 15px;
 }
-/* line 24, ../scss/admin/_particles.scss */
+/* line 25, ../scss/admin/_particles.scss */
 .g-particles-header .particle-search-wrapper {
   display: inline-block;
   position: relative;
@@ -2707,7 +2718,7 @@ body.g5-dialog-open {
   -o-transform: translateZ(0);
   transform: translateZ(0);
 }
-/* line 29, ../scss/admin/_particles.scss */
+/* line 30, ../scss/admin/_particles.scss */
 .g-particles-header .particle-search-wrapper span {
   position: absolute;
   right: 5px;
@@ -2716,7 +2727,7 @@ body.g5-dialog-open {
   color: #439A86;
 }
 
-/* line 40, ../scss/admin/_particles.scss */
+/* line 41, ../scss/admin/_particles.scss */
 .g-particles-footer {
   padding-top: 15px;
   border-top: 1px solid #ccc;
