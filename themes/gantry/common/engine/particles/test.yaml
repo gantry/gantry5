@@ -25,7 +25,6 @@ form:
 
     sep1:
       type: separator.separator
-      label: Fonts
 
     font-family-1:
       type: input.fonts
@@ -38,7 +37,6 @@ form:
 
     sep2:
       type: separator.separator
-      label: Icons
 
     icon-1:
       type: input.icon

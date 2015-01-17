@@ -1,8 +1,7 @@
 {% extends "forms/field.html.twig" %}
 
 {% block input %}
-    {% set field = field|merge({'style': 'background-color: ' ~ value}) %}
-    <div class="g-icons" data-icons="{{ list|json_encode }}">
+    <div class="g-icons">
         <input
                 {# required attribute structures #}
                 type="text"
