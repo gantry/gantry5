@@ -94,7 +94,7 @@ ready(function() {
 
     // layoutmanager
     layoutmanager = new LayoutManager('body', {
-        delegate: '[data-lm-root] .g-grid .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
+        delegate: '[data-lm-root] .g-grid .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
         droppables: '[data-lm-dropzone]',
         exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
         resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
@@ -126,8 +126,13 @@ ready(function() {
         blocktype = element.data('lm-blocktype');
         if (!contains(['block', 'grid', 'section', 'atom'], blocktype)) {
             data = {};
+            data.type = builder.get(element.data('lm-id')).getType() || element.data('lm-blocktype') || false;
+            data.subtype = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
             data.block = builder.get(parent.data('lm-id')).getAttributes() || {};
+
+            if (!data.type) { delete data.type; }
+            if (!data.subtype) { delete data.subtype; }
         }
 
         modal.open({
@@ -152,7 +157,6 @@ ready(function() {
 
                         if (!name) { return; }
                         dataString.push(name + '=' + value);
-                        console.log(dataString);
                     });
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response){

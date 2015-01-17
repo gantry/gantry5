@@ -30,11 +30,11 @@ var Section = new prime({
     layout: function() {
         var settings_uri = getAjaxURL('pages/' + this.getPageId() +  '/' + this.getType() + '/' + this.getId());
 
-        return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4><div class="section-actions float-right"><i class="fa fa-plus"></i> <i class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></div></div></div>';
+        return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('title')) + '</h4><div class="section-actions float-right"><i class="fa fa-plus"></i> <i class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></div></div></div>';
     },
 
     adopt: function(child) {
-        $(child).insert(this.block.find('.grid'));
+        $(child).insert(this.block.find('.g-grid'));
     },
 
     onDone: function(event) {
@@ -48,10 +48,10 @@ var Section = new prime({
             plus.on('click', bind(function(e) {
                 e.preventDefault();
 
-                if (this.block.find('.grid:last-child:empty')) { return false; }
+                if (this.block.find('.g-grid:last-child:empty')) { return false; }
 
                 this.grid = new Grid();
-                this.grid.insert(this.block, 'bottom');
+                this.grid.insert(this.block.find('[data-lm-blocktype="container"]') ? this.block.find('[data-lm-blocktype="container"]') : this.block, 'bottom');
                 this.options.builder.add(this.grid);
             }, this));
         }

@@ -338,7 +338,7 @@ var Fonts = new prime({
     },
 
     updateSelection: function() {
-        var preview = $('.g-fonts-footer .font-selected'), selected;
+        var preview = $('.g-particles-footer .font-selected'), selected;
         if (!preview) { return; }
 
         if (!this.selected.selected.length) {
@@ -354,7 +354,7 @@ var Fonts = new prime({
     },
 
     updateTotal: function() {
-        var totals = $('.g-fonts-header .font-search-total'),
+        var totals = $('.g-particles-header .particle-search-total'),
             count = $('.g-fonts-list > [data-font]:not(.g-font-hide)');
 
         totals.text(count ? count.length : 0);
@@ -365,7 +365,7 @@ var Fonts = new prime({
         var previewSentence = this.previewSentence[this.filters.script],
             html = zen('div#g-fonts.g-grid'),
             //sidebar = zen('div.g-sidebar.g-block.size-1-4').bottom(html),
-            main = zen('div.g-fonts-main').bottom(html),
+            main = zen('div.g-particles-main').bottom(html),
             ul = zen('ul.g-fonts-list').bottom(main),
             families = [], list, categories = [], subsets = [];
 
@@ -452,11 +452,11 @@ var Fonts = new prime({
     },
 
     buildHeader: function(html) {
-        var container = zen('div.settings-block.g-fonts-header').bottom(html),
+        var container = zen('div.settings-block.g-particles-header').bottom(html),
             preview = zen('input.float-left.font-preview[type="text"][data-font-preview][placeholder="Font Preview..."][value="' + this.previewSentence[this.filters.script] + '"]').bottom(container),
-            searchWrapper = zen('span.font-search-wrapper.float-right').bottom(container),
+            searchWrapper = zen('span.particle-search-wrapper.float-right').bottom(container),
             search = zen('input.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(searchWrapper),
-            totals = zen('span.font-search-total').bottom(searchWrapper);
+            totals = zen('span.particle-search-total').bottom(searchWrapper);
 
         search.on('keyup', bind(this.search, this, search));
         preview.on('keyup', bind(this.updatePreview, this, preview));
@@ -476,13 +476,15 @@ var Fonts = new prime({
     },
 
     buildFooter: function(html) {
-        var container = zen('div.settings-block.g-fonts-footer').bottom(html),
+        var container = zen('div.settings-block.g-particles-footer').bottom(html),
             leftContainer = zen('div.float-left.font-left-container').bottom(container),
             rightContainer = zen('div.float-right.font-right-container').bottom(container),
             category = zen('a.font-category.button').bottom(leftContainer),
             subsets = zen('a.font-subsets.button').bottom(leftContainer),
             selected = zen('span.font-selected').bottom(rightContainer),
             select = zen('button.button.button-primary').text('Select').bottom(rightContainer),
+            space = zen('span').html('&nbsp;').bottom(rightContainer),
+            cancel = zen('button.button.g5-dialog-close').text('Cancel').bottom(rightContainer),
             current;
 
         select.on('click', bind(function() {
@@ -561,7 +563,7 @@ var Fonts = new prime({
             content.delegate('change', 'input[type="radio"]', bind(function(event, input) {
                 input = $(input);
                 this.filters.script = input.value();
-                $('.g-fonts-header input.font-preview').value(this.previewSentence[this.filters.script]);
+                $('.g-particles-header input.font-preview').value(this.previewSentence[this.filters.script]);
                 subsets.find('small').text(properCase(unhyphenate(input.value().replace('ext', 'extended'))));
                 this.search();
                 this.updatePreview();
@@ -574,7 +576,7 @@ var Fonts = new prime({
     },
 
     search: function(input) {
-        input = input || $('.g-fonts-header input.font-search');
+        input = input || $('.g-particles-header input.font-search');
         var list = $('.g-fonts-list'),
             value = input.value(),
             name, data;
@@ -619,7 +621,7 @@ var Fonts = new prime({
     },
 
     updatePreview: function(input) {
-        input = input || $('.g-fonts-header input.font-preview');
+        input = input || $('.g-particles-header input.font-preview');
         clearTimeout(input.refreshTimer);
         var value = input.value(),
             list = $('.g-fonts-list');

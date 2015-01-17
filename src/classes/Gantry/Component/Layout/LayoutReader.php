@@ -58,7 +58,7 @@ class LayoutReader
                 'type' => 'section',
                 'size' => (int) $size,
                 'attributes' => (object) [
-                    'name' => 'Section ' . ucfirst($field),
+                    'title' => 'Section ' . ucfirst($field),
                     'key' => "section-{$field}",
                     'type' => $field,
                     'id' => $field
@@ -94,15 +94,22 @@ class LayoutReader
         $list2 = explode('-', array_shift($list), 2);
         $size = array_shift($list);
         $type = array_shift($list2);
-        $name = array_shift($list2);
+        $subtype = array_shift($list2);
 
         $attributes = new \stdClass;
-        if ($name) {
-            $attributes->name = $name;
-            $attributes->key = $name;
+        $attributes->title = ucfirst($subtype ?: $type);
+
+        if ($subtype) {
+            $attributes->key = $subtype;
         }
 
-        $result = (object) ['id' => static::id(), 'type' => $type, 'attributes' => $attributes];
+        if ($type == 'particle') {
+            $result = ['id' => static::id(), 'type' => $type, 'subtype' => $subtype, 'attributes' => $attributes];
+        } else {
+            $result = ['id' => static::id(), 'type' => $type, 'attributes' => $attributes];
+        }
+
+        $result = (object) $result;
 
         if ($scope > 1) {
             return $result;

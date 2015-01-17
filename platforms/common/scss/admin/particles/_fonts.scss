@@ -3,7 +3,7 @@
         display: inline-block;
         vertical-align: middle;
     }
-    
+
     i {
         cursor: pointer;
     }
@@ -23,48 +23,11 @@
     input {
         font-size: 0.8em;
     }
-
-    .g-fonts-main {
-        width: 100%;
+    .font-preview {
+        width: 400px;
     }
 
-    .g-fonts-footer, .g-fonts-header {
-        margin: 0 !important;
-        input, select {
-            margin: 0 !important;
-        }
-    }
-
-    .g-fonts-footer select {
-        margin-top: 10px !important;
-    }
-
-    .g-fonts-header {
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 6px;
-
-        .font-search-wrapper {
-            display: inline-block;
-            position: relative;
-
-            span {
-                position: absolute;
-                right: 5px;
-                top: 2px;
-                font-size: 0.6em;
-                color: $core-accent;
-            }
-        }
-
-        .font-preview {
-            width: 400px;
-        }
-    }
-
-    .g-fonts-footer {
-        padding-top: 6px;
-        border-top: 1px solid #ccc;
-
+    .g-particles-footer {
         .font-selected {
             font-size: 0.8em;
             margin-right: 10px;
@@ -76,10 +39,6 @@
 
         .font-subsets {
             margin-left: 0.85em !important;
-        }
-
-        small {
-            text-decoration: underline;
         }
     }
 
@@ -119,7 +78,7 @@
             strong {
                 font-weight: bold !important;
             }
-            
+
             input[type="checkbox"], .variant {
                 display: inline-block;
                 vertical-align: middle;

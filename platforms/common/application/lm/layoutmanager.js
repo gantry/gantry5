@@ -46,7 +46,7 @@ var singles = {
         if (grids) { grids.removeClass('no-hover'); }
         if (sections) {
             sections.forEach(function(section) {
-                var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty)');
+                var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty), > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty)');
                 if (subGrids) {
                     if (subGrids.length === 1) { subGrids.addClass('no-move').data('lm-nodrag', 'true'); }
                     else { subGrids.removeClass('no-move').data('lm-nodrag', null); }
@@ -61,7 +61,7 @@ var singles = {
         if (grids) { grids.addClass('no-hover'); }
         if (sections) {
             sections.forEach(function(section) {
-                var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty)');
+                var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty), > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty)');
                 if (subGrids) {
                     if (subGrids.length === 1) { subGrids.addClass('no-move').data('lm-nodrag', 'true'); }
                     else { subGrids.removeClass('no-move').data('lm-nodrag', null); }
@@ -128,10 +128,10 @@ var LayoutManager = new prime({
         }).addClass('original-placeholder').data('lm-dropzone', null);
         if (type === 'grid') { this.original.style({ display: 'flex' }); }
         this.originalType = type;
-        this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({ builder: this.builder, attributes: { name: element.data('lm-subtype') } });
+        this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({ builder: this.builder, subtype: element.data('lm-subtype'), attributes: { title: element.text() } });
 
         if (!this.block.isNew()) {
-            var margins = $(element).find('[data-lm-blocktype]').compute('margin');
+            //var margins = $(element).find('[data-lm-blocktype]').compute('margin');
             element.style({
                 position: 'absolute',
                 zIndex: 1000,
@@ -380,7 +380,9 @@ var LayoutManager = new prime({
         if (this.originalType === 'block' && this.block.getType() === 'block') {
             //console.log('3. im a block and ive been moved, resize my new siblings and the ones where i come from');
             resizeCase = { case: 3 };
-            var previous = this.block.block.parent().siblings(':not(.original-placeholder)');
+            var previous = this.block.block.parent('[data-lm-blocktype="grid"]');
+            if (previous.find('!> [data-lm-blocktype="container"]')) { previous = previous.parent(); }
+            previous = previous.siblings(':not(.original-placeholder)');
             if (!this.block.isNew() && previous.length) { this.resizer.evenResize(previous); }
 
             this.block.block.attribute('style', null);

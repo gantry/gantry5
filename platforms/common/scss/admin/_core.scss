@@ -4,11 +4,11 @@ body {
     margin: 0;
 }
 
-#g5-container { // wrapper
+a {
+    color: $secondary-accent;
+}
 
-    .fa-spin {
-        @include animation(spin 0.8s infinite linear);
-    }
+#g5-container { // wrapper
 
     .g-block {
         position: relative;
@@ -20,7 +20,7 @@ body {
         color: $core-text;
 
         @include breakpoint(mobile-only) {
-            margin: 1.5rem;
+            margin: 0;
         }
     }
 

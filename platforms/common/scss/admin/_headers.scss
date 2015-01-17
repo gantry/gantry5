@@ -141,10 +141,26 @@
         padding: $content-padding - 0.4 $content-padding;
         background: $update-header-bg;
         color: $main-header-text;
+        .update-tools {
+            float: right;
+        }
+        a {
+            color: $main-header-text;
+        }
+        .fa-close {
+            display: inline-block;
+            border-radius: 100%;
+            background-color: darken($update-header-bg, 15%);
+            margin-left: $content-padding;
+            width: 26px;
+            height: 26px;
+            text-align: center;
+            line-height: 26px;
+        }
     }
 
     .button.button-update {
-        float: right;
+        display: inline-block;
         box-shadow: none;
         @include button-color(darken($update-header-bg, 15%), $white);
     }

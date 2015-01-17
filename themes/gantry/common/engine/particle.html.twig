@@ -1,7 +1,7 @@
 {% set html %}
-   {% include ['particles/' ~ segment.attributes.name ~ '.html.twig',
-   '@nucleus/particles/' ~ segment.attributes.name ~ '.html.twig']
-   ignore missing with {gantry: gantry, particle: config.particles[segment.attributes.name] } %}
+   {% include ['particles/' ~ segment.subtype ~ '.html.twig',
+   '@nucleus/particles/' ~ segment.subtype ~ '.html.twig']
+   ignore missing with {gantry: gantry, particle: config.particles[segment.subtype] } %}
 {% endset %}
 
 {% if html|trim %}

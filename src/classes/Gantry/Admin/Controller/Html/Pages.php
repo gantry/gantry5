@@ -94,27 +94,27 @@ class Pages extends HtmlController
             throw new \RuntimeException('Layout not found', 404);
         }
 
-        if (isset($_POST['options'])) {
+        if (isset($_POST)) {
             $item = (object) [
                 'id' => $id,
-                'type' => $type,
-                'attributes' => (object) $_POST['options']
+                'type' => isset($_POST['type']) ? $_POST['type'] : $type,
+                'subtype' => isset($_POST['subtype']) ? $_POST['subtype'] : null,
+                'attributes' => (object) isset($_POST['options']) ? $_POST['options'] : [],
             ];
+            if (isset($_POST['block'])) {
+                $item->block = $_POST['block'];
+            }
         } else {
             $item = $this->find($layout, $id);
         }
 
-        if ($type == 'particle') {
-            $name = isset($item->attributes->name) ? $item->attributes->name : null;
-        } else {
-            $name = $type;
-        }
+        $name = isset($item->subtype) ? $item->subtype : $type;
 
         if (is_object($item) && $name) {
             $prefix = 'particles.' . $name;
             // TODO: Use blueprints to merge configuration.
             $data = (array) $item->attributes + (array) $this->container['config']->get($prefix);
-            if ($type == 'section') {
+            if ($type == 'section' || $type == 'grid') {
                 $blueprints = new Blueprints(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml")->content());
             } else {
                 $blueprints = new Blueprints($this->container['particles']->get($name));

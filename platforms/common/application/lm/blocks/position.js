@@ -13,13 +13,18 @@ var Position = new prime({
     constructor: function(options) {
         ++UID;
         Particle.call(this, options);
-        this.setAttribute('name', this.getTitle());
+        this.setAttribute('title', this.getTitle());
+        this.setAttribute('key', this.getKey());
 
         if (this.isNew()) { --UID; }
     },
 
     getTitle: function() {
-        return (this.getAttribute('key') || this.getAttribute('name') || 'Position ' + UID);
+        return (this.getAttribute('title') || 'Position ' + UID);
+    },
+
+    getKey: function() {
+        return (this.getAttribute('key') || this.getTitle().replace(/\s/g, '-').toLowerCase());
     }
 });
 

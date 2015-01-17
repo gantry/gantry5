@@ -41,6 +41,7 @@ var Popover = new prime({
         content: '',
         closeable: false,
         padding: true,
+        targetEvents: true,
         url: '',
         type: 'html',
         where: '#g5-container',
@@ -174,7 +175,7 @@ var Popover = new prime({
         targetWidth = target[0].offsetWidth;
         targetHeight = target[0].offsetHeight;
         placement = this.getPlacement(elementPos, targetHeight);
-        this.initTargetEvents();
+        if (this.options.targetEvents) { this.initTargetEvents(); }
         var positionInfo = this.getTargetPositin(elementPos, placement, targetWidth, targetHeight);
         this.$target.style(positionInfo.position).addClass(placement).addClass('in');
 

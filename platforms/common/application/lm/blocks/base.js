@@ -17,6 +17,7 @@ var Base = new prime({
     mixin: [Bound, Options],
     inherits: Emitter,
     options: {
+        subtype: false,
         attributes: {}
     },
     constructor: function(options) {
@@ -44,7 +45,15 @@ var Base = new prime({
         return this.options.type || '';
     },
 
+    getSubType: function() {
+        return this.options.subtype || '';
+    },
+
     getTitle: function() {
+        return '';
+    },
+
+    getKey: function() {
         return '';
     },
 
@@ -90,8 +99,6 @@ var Base = new prime({
     },
 
     dropzone: function() {
-        var type = this.getType();
-
         return 'data-lm-dropzone';
     },
 

@@ -4,6 +4,7 @@ module.exports = {
     section: require('./section'),
     "non-visible": require('./non-visible'),
     grid: require('./grid'),
+    container: require('./container'),
     block: require('./block'),
     particle: require('./particle'),
     position: require('./position'),

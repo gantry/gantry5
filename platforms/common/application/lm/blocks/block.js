@@ -10,7 +10,7 @@ var Block = new prime({
     options: {
         type: 'block',
         attributes: {
-            size: 50
+            size: 100
         }
     },
 
