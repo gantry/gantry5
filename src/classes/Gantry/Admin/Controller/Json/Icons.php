@@ -20,7 +20,7 @@ class Icons extends JsonController
         ];
 
         $list = array_unique($list);
-        //sort($list);
+        sort($list);
 
         $response['html'] = $this->container['admin.theme']->render('@gantry-admin/ajax/icons.html.twig', ['icons' => $list, 'options' => $options, 'total' => count($list)]);
 
