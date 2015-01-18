@@ -88,7 +88,7 @@ domready(function() {
             target = element.data('g5-ajaxify-target'),
             url = element.attribute('href') || element.data('g5-ajaxify-href'),
             params = element.data('g5-ajaxify-params') || false,
-            title = element.attribute('title') || '';
+            title = element.attribute('title') || window.document.title;
 
         data = data ? JSON.parse(data) : { parsed: false };
         if (data) {
