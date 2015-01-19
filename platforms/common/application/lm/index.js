@@ -149,6 +149,7 @@ ready(function() {
 
                 submit.on('click', function(e){
                     e.preventDefault();
+                    dataString = [];
 
                     $(form[0].elements).forEach(function(input){
                         input = $(input);
