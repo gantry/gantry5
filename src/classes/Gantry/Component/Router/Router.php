@@ -51,7 +51,8 @@ abstract class Router implements RouterInterface
         if (!class_exists($class)) {
             if ($format == 'json') {
                 // Special case: All HTML requests can be returned also as JSON.
-                return new JsonResponse($this->execute($resource, $method, $path, $params, 'html'));
+                $response = $this->execute($resource, $method, $path, $params, 'html');
+                return $response instanceof JsonResponse ? $response : new JsonResponse($response);
             }
 
             throw new \RuntimeException('Page Not Found', 404);

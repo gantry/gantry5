@@ -25,8 +25,9 @@ class Blueprints implements \ArrayAccess
      * @example $value = $this->resolve('this.is.my.nested.variable');
      * returns ['this.is.my', 'nested.variable']
      *
-     * @param string  $path
-     * @return mixed  Value.
+     * @param array  $path
+     * @param string  $separator
+     * @return array
      */
     public function resolve(array $path, $separator = '.')
     {
