@@ -4,7 +4,7 @@
         "header": {
             "type": "section",
             "attributes": {
-                "name": "Header",
+                "title": "Header",
                 "key": "header",
                 "type": "header",
                 "id": "header"
@@ -23,28 +23,28 @@
                         {
                             "type": "section",
                             "attributes": {
-                                "name": "Showcase",
+                                "title": "Showcase",
                                 "key": "showcase"
                             }
                         },
                         {
                             "type": "section",
                             "attributes": {
-                                "name": "Feature",
+                                "title": "Feature",
                                 "key": "feature"
                             }
                         },
                         {
                             "type": "section",
                             "attributes": {
-                                "name": "Main",
+                                "title": "Main",
                                 "key": "main"
                             }
                         },
                         {
                             "type": "section",
                             "attributes": {
-                                "name": "Bottom",
+                                "title": "Bottom",
                                 "key": "bottom"
                             }
                         }
@@ -59,7 +59,7 @@
                         {
                             "type": "section",
                             "attributes": {
-                                "name": "Sidebar",
+                                "title": "Sidebar",
                                 "key": "sidebar"
                             }
                         }
