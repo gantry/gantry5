@@ -175,7 +175,10 @@ var Modal = new prime({
         }
 
         // delegate container to pick g5-close clicks
-        elements.container.delegate('click', '.g5-dialog-close', bind(this._closeButtonClick, this, elements.container));
+        elements.container.delegate('click', '.g5-dialog-close', bind(function(event){
+            event.preventDefault();
+            this._closeButtonClick(elements.container);
+        }, this));
 
         // inject the dialog in the DOM
         $(options.appendNode).appendChild(elements.container);

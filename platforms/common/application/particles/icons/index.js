@@ -16,7 +16,7 @@ domready(function() {
             value = element.value(),
             size;
 
-        preview.attribute('class', value || 'fa fa-table');
+        preview.attribute('class', value || 'fa fa-hand-o-up picker');
 
         size = preview[0].offsetWidth;
 
@@ -97,9 +97,11 @@ domready(function() {
                     var value = input.value(),
                         hidden = container.search('[data-icon].hide-icon');
 
-                    if (!value && hidden) {
-                        hidden.removeClass('hide-icon');
-                        updateTotal();
+                    if (!value) {
+                        if (hidden) {
+                            hidden.removeClass('hide-icon');
+                            updateTotal();
+                        }
                         return true;
                     }
 
