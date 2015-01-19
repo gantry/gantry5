@@ -80,13 +80,6 @@ ready(function() {
                 modal.open({ content: response.body.html });
                 return false;
             } else {
-                // particle attributes
-                builder.get(ID).setAttributes(response.body.data.options);
-                // parent block attributes
-                if (response.body.data.block && size(response.body.data.block)) {
-                    builder.get(parentID).setAttributes(response.body.data.block);
-                }
-
                 modal.close();
             }
         });
