@@ -39,7 +39,7 @@
             }
         },
         "non-visible": {
-            "id": "189a3808-57a7-4b05-b4a5-5175ad27dbde",
+            "id": "non-visible",
             "type": "non-visible",
             "attributes": {},
             "children": []
