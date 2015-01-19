@@ -6,6 +6,7 @@ var ready         = require('elements/domready'),
     request       = require('agent'),
     zen           = require('elements/zen'),
     contains      = require('mout/array/contains'),
+    size          = require('mout/collection/size'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
 
@@ -107,7 +108,7 @@ ready(function() {
         element = $(element);
 
         var blocktype = element.data('lm-blocktype'),
-            settingsURL = $(element).data('lm-settings'),
+            settingsURL = element.data('lm-settings'),
             data = null, parent;
 
         // grid is a special case, since relies on pseudo elements for sorting and settings
@@ -124,6 +125,10 @@ ready(function() {
         element = element.parent('[data-lm-blocktype]');
         parent = element.parent('[data-lm-blocktype]');
         blocktype = element.data('lm-blocktype');
+
+        var ID = element.data('lm-id'),
+            parentID = parent.data('lm-id');
+
         if (!contains(['block', 'grid', 'section', 'atom'], blocktype)) {
             data = {};
             data.type = builder.get(element.data('lm-id')).getType() || element.data('lm-blocktype') || false;
@@ -140,18 +145,18 @@ ready(function() {
             method: 'post',
             data: data,
             remote: settingsURL + getAjaxSuffix(),
-            remoteLoaded: function(response, content){
+            remoteLoaded: function(response, content) {
                 var form = content.elements.content.find('form'),
                     submit = content.elements.content.find('input[type="submit"], button[type="submit"]'),
                     dataString = [];
 
                 if (!form || !submit) { return true; }
 
-                submit.on('click', function(e){
+                submit.on('click', function(e) {
                     e.preventDefault();
                     dataString = [];
 
-                    $(form[0].elements).forEach(function(input){
+                    $(form[0].elements).forEach(function(input) {
                         input = $(input);
                         var name = input.attribute('name'),
                             value = input.value();
@@ -160,12 +165,19 @@ ready(function() {
                         dataString.push(name + '=' + value);
                     });
 
-                    request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response){
+                    request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response) {
                         if (!response.body.success) {
                             modal.open({ content: response.body.html });
                             return false;
                         } else {
-                            modal.open({ content: 'Well done! Everything is good and validation passed. Now I just need to implement the rest of it, where I take the json data you are passing me and update the LM particle :)' });
+                            // particle attributes
+                            builder.get(ID).setAttributes(response.body.data.options);
+                            // parent block attributes
+                            if (response.body.data.block && size(response.body.data.block)) {
+                                builder.get(parentID).setAttributes(response.body.data.block);
+                            }
+
+                            modal.close();
                         }
                     });
                 });
