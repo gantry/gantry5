@@ -1,9 +1,14 @@
 name: Pickers Tests
 description: Colorpicker test.
-type: tests
+type: particle
 
 form:
   fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable the particle.
+      default: true
 
     color1:
       type: input.colorpicker
