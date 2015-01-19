@@ -2,10 +2,13 @@
 namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Config\Blueprints;
+use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Layout\LayoutReader;
+use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
+use \RocketTheme\Toolbox\Blueprints\Blueprints as Validator;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -26,7 +29,10 @@ class Pages extends HtmlController
             '/'             => 'store',
             '/*'            => 'undefined',
             '/*/*'          => 'undefined',
-            '/*/*/*'        => 'particle'
+            '/*/*/*'        => 'particle',
+            '/particles'    => 'undefined',
+            '/particles/*'  => 'undefined',
+            '/particles/*/validate' => 'validate'
         ],
         'PUT' => [
             '/*' => 'replace'
@@ -133,6 +139,32 @@ class Pages extends HtmlController
             return $this->container['admin.theme']->render('@gantry-admin/pages_particle.html.twig', $this->params);
         }
         throw new \RuntimeException('No configuration exists yet', 404);
+    }
+
+    public function validate($particle)
+    {
+        // Load particle blueprints and default settings.
+        $validator = new Validator();
+        $validator->embed('options', $this->container['particles']->get($particle));
+        $callable = function () use ($validator) { return $validator; };
+        $defaults = (array) $this->container['config']->get("particles.{$particle}");
+
+        // Create configuration from the defaults.
+        $data = new Config(
+            [
+                'type' => 'particle',
+                'subtype' => $particle,
+                'options' => $defaults,
+                'block' => [],
+            ],
+            $callable);
+
+        // Join POST data.
+        $data->join('options', $_POST);
+
+        // TODO: validate
+
+        return new JsonResponse(['data' => $data->toArray()]);
     }
 
     protected function getLayout($name)
