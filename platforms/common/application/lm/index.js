@@ -53,7 +53,8 @@ var particlesPopover = function() {
 
 ready(function() {
     var body = $('body'), root = $('[data-lm-root]'), data;
-    // test
+
+    // load builder data
     if (root) {
         data = JSON.parse(root.data('lm-root'));
         if (data.name) {
@@ -66,6 +67,31 @@ ready(function() {
     }
 
     // attach events
+    // Save
+    body.delegate('click', '.button-save', function(e, element){
+        if (!$('[data-lm-root]')) { return true; }
+
+        e.preventDefault();
+
+        var lm = JSON.stringify(builder.serialize());
+
+        request('post', window.location.href + getAjaxSuffix(), {title: $('[data-g5-content] h2 .title').text().toLowerCase(), layout: lm}, function(error, response) {
+            if (!response.body.success) {
+                modal.open({ content: response.body.html });
+                return false;
+            } else {
+                // particle attributes
+                builder.get(ID).setAttributes(response.body.data.options);
+                // parent block attributes
+                if (response.body.data.block && size(response.body.data.block)) {
+                    builder.get(parentID).setAttributes(response.body.data.block);
+                }
+
+                modal.close();
+            }
+        });
+    });
+
     // Picker
     body.delegate('statechangeBefore', '[data-g5-lm-picker]', function() {
         modal.close();
