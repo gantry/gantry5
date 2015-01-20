@@ -1,7 +1,7 @@
 .g-main-nav {
 
 	// Main Level
-	> .g-toplevel {
+	.g-toplevel {
 		> li {
 			> a, >.g-separator {
 				font-size: $toplevel-font-size;
@@ -36,9 +36,11 @@
     			font-size: $dropdown-font-size;
     			padding: $nav-item-padding;
     		}
-    		&:hover > a, &.active > a {
-    			background: darken($core-accent, 8%);
-    		}
+    		&:hover, &.active {
+				> a, > .g-separator {
+					background: darken($core-accent, 8%);
+				}
+			}
     	}
     }
 }

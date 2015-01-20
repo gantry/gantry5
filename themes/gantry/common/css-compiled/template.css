@@ -34,11 +34,11 @@ a {
   #g-header a:hover {
     color: #fff; }
 
-.g-main-nav > .g-toplevel > li > a, .g-main-nav > .g-toplevel > li > .g-separator {
+.g-main-nav .g-toplevel > li > a, .g-main-nav .g-toplevel > li > .g-separator {
   font-size: 1.1rem;
   padding: 0.75rem 0.938rem;
   color: #aaa; }
-.g-main-nav > .g-toplevel > li:hover a, .g-main-nav > .g-toplevel > li:hover .g-separator, .g-main-nav > .g-toplevel > li.active a, .g-main-nav > .g-toplevel > li.active .g-separator {
+.g-main-nav .g-toplevel > li:hover a, .g-main-nav .g-toplevel > li:hover .g-separator, .g-main-nav .g-toplevel > li.active a, .g-main-nav .g-toplevel > li.active .g-separator {
   color: #fff; }
 .g-main-nav .g-dropdown {
   background: #4184B6;
@@ -50,7 +50,7 @@ a {
 .g-main-nav .g-sublevel li > a, .g-main-nav .g-sublevel li > .g-separator, .g-main-nav .g-sublevel li > .g-nav-header {
   font-size: 1rem;
   padding: 0.75rem 0.938rem; }
-.g-main-nav .g-sublevel li:hover > a, .g-main-nav .g-sublevel li.active > a {
+.g-main-nav .g-sublevel li:hover > a, .g-main-nav .g-sublevel li:hover > .g-separator, .g-main-nav .g-sublevel li.active > a, .g-main-nav .g-sublevel li.active > .g-separator {
   background: #366e98; }
 
 #g-showcase {

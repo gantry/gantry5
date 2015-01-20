@@ -4,7 +4,7 @@
 	}
 
 	// Main Level
-	> .g-toplevel {
+	.g-toplevel {
 		position: relative;
 		> li {
 			display: inline-block;
@@ -48,8 +48,19 @@
     	}
     }
 
-    // Megamenu Options
     .g-dropdown-column {
     	@extend %dropdown-column;
     }
+}
+
+// Megamenu Settings
+.megamenu {
+	.g-toplevel {
+		position: static;
+	}
+	.g-dropdown {
+		position: absolute;
+		left: 0;
+		right: 0;
+	}
 }
