@@ -106,12 +106,14 @@ class Pages extends HtmlController
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
         $save_dir = $locator->findResource('gantry-layouts://');
+        $filename = "{$save_dir}/{$new_page}.json";
 
-        if ($page != $new_page && is_file("{$save_dir}/{$new_page}.json")) {
+        if ($page != $new_page && is_file($filename)) {
             throw new \RuntimeException("Error while saving layout: Layout '{$new_page}' already exists", 403);
         }
 
-
+        $file = JsonFile::instance($filename);
+        $file->save($layout);
     }
 
     public function particle($page, $type, $id)
