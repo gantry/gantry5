@@ -9,6 +9,8 @@ a {
 }
 
 #g5-container { // wrapper
+    font-size: $core-font-size;
+    line-height: $core-line-height;
 
     .g-block {
         position: relative;

@@ -69,27 +69,32 @@ a {
   color: #729DAE;
 }
 
-/* line 13, ../scss/admin/_core.scss */
+/* line 11, ../scss/admin/_core.scss */
+#g5-container {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+/* line 15, ../scss/admin/_core.scss */
 #g5-container .g-block {
   position: relative;
 }
-/* line 17, ../scss/admin/_core.scss */
+/* line 19, ../scss/admin/_core.scss */
 #g5-container .inner-container {
   margin: 1.5rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   color: #666;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 17, ../scss/admin/_core.scss */
+  /* line 19, ../scss/admin/_core.scss */
   #g5-container .inner-container {
     margin: 0;
   }
 }
-/* line 28, ../scss/admin/_core.scss */
+/* line 30, ../scss/admin/_core.scss */
 #g5-container .cards-wrapper {
   margin: -10px;
 }
-/* line 32, ../scss/admin/_core.scss */
+/* line 34, ../scss/admin/_core.scss */
 #g5-container .card {
   display: inline-block;
   background: #fff;
@@ -100,16 +105,16 @@ a {
   vertical-align: top;
   margin: 10px;
 }
-/* line 42, ../scss/admin/_core.scss */
+/* line 44, ../scss/admin/_core.scss */
 #g5-container .card.full-width {
   margin: 0;
   display: block;
 }
-/* line 48, ../scss/admin/_core.scss */
+/* line 50, ../scss/admin/_core.scss */
 #g5-container .card h4 {
   margin: 0;
 }
-/* line 51, ../scss/admin/_core.scss */
+/* line 53, ../scss/admin/_core.scss */
 #g5-container .card h4 .enabler {
   float: right;
 }
@@ -172,45 +177,45 @@ a {
 #g5-container .card .enabler [type="radio"]:checked + .toggle .knob {
   opacity: 1;
 }
-/* line 60, ../scss/admin/_core.scss */
+/* line 62, ../scss/admin/_core.scss */
 #g5-container .card .inner-params {
   margin: 0.625rem 0 0;
   padding-top: 0.625rem;
   border-top: 1px solid #eee;
 }
-/* line 66, ../scss/admin/_core.scss */
+/* line 68, ../scss/admin/_core.scss */
 #g5-container .card .theme-id {
   text-align: center;
   margin-bottom: 10px;
   font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
-/* line 72, ../scss/admin/_core.scss */
+/* line 74, ../scss/admin/_core.scss */
 #g5-container .card .theme-name {
   text-align: center;
 }
-/* line 77, ../scss/admin/_core.scss */
+/* line 79, ../scss/admin/_core.scss */
 #g5-container .card .theme-screenshot img {
   margin: 0 auto 10px auto;
   display: block;
 }
-/* line 82, ../scss/admin/_core.scss */
+/* line 84, ../scss/admin/_core.scss */
 #g5-container .card .theme-screenshot a {
   display: block;
 }
 
-/* line 91, ../scss/admin/_core.scss */
+/* line 93, ../scss/admin/_core.scss */
 #footer {
   margin-bottom: 1rem;
   text-align: center;
   font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
-/* line 95, ../scss/admin/_core.scss */
+/* line 97, ../scss/admin/_core.scss */
 #footer a {
   color: #439A86;
   text-decoration: none;
 }
 
-/* line 102, ../scss/admin/_core.scss */
+/* line 104, ../scss/admin/_core.scss */
 .Whoops.container {
   position: inherit;
 }
