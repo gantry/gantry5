@@ -58,7 +58,7 @@ class Pages extends HtmlController
         $layouts = array_filter($layouts, function($val) { return strpos($val, 'presets/') !== 0; });
         $this->params['layouts'] = $layouts;
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages_index.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/layouts.html.twig', $this->params);
     }
 
     public function create($id = null)
@@ -75,7 +75,7 @@ class Pages extends HtmlController
         $this->params['page_id'] = $id;
         $this->params['layout'] = $layout;
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages_create.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/create.html.twig', $this->params);
     }
 
     public function edit($id)
@@ -89,7 +89,7 @@ class Pages extends HtmlController
         $this->params['layout'] = $layout;
         $this->params['id'] = ucwords($id);
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages_edit.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/edit.html.twig', $this->params);
     }
 
     public function save($page)
@@ -157,7 +157,7 @@ class Pages extends HtmlController
                 'skip' => ['enabled']
             ];
 
-            return $this->container['admin.theme']->render('@gantry-admin/pages_particle.html.twig', $this->params);
+            return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/particle.html.twig', $this->params);
         }
         throw new \RuntimeException('No configuration exists yet', 404);
     }

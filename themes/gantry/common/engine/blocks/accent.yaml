@@ -1,0 +1,19 @@
+name: Accent Color
+description: Accent colors used for website
+type: block
+
+form:
+  fields:
+
+    accent1:
+      type: input.colorpicker
+      label: Accent 1
+      default: "#DF392E"
+    accent2:
+      type: input.colorpicker
+      label: Accent 2
+      default: "#FEB948"
+    accent3:
+      type: input.colorpicker
+      label: Accent 3
+      default: "#3CA5DA"
