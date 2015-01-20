@@ -20,14 +20,13 @@ class Pages extends HtmlController
             '/'             => 'index',
             '/create'       => 'create',
             '/create/*'     => 'create',
-            '/*'            => 'display',
-            '/*/edit'       => 'edit',
+            '/*'            => 'edit',
             '/*/*'          => 'undefined',
             '/*/*/*'        => 'particle'
         ],
         'POST' => [
-            '/'             => 'store',
-            '/*'            => 'undefined',
+            '/'             => 'undefined',
+            '/*'            => 'save',
             '/*/*'          => 'undefined',
             '/*/*/*'        => 'particle',
             '/particles'    => 'undefined',
@@ -91,6 +90,28 @@ class Pages extends HtmlController
         $this->params['id'] = ucwords($id);
 
         return $this->container['admin.theme']->render('@gantry-admin/pages_edit.html.twig', $this->params);
+    }
+
+    public function save($page)
+    {
+        $title = isset($_POST['title']) ? $_POST['title'] : ucfirst($page);
+        $layout = isset($_POST['layout']) ? json_decode($_POST['layout']) : null;
+
+        if (!$layout) {
+            throw new \RuntimeException('Error while saving layout: Structure missing', 400);
+        }
+
+        $new_page = preg_replace('|[^a-z0-9_-]|', '', strtolower($title));
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+        $save_dir = $locator->findResource('gantry-layouts://');
+
+        if ($page != $new_page && is_file("{$save_dir}/{$new_page}.json")) {
+            throw new \RuntimeException("Error while saving layout: Layout '{$new_page}' already exists", 403);
+        }
+
+
     }
 
     public function particle($page, $type, $id)
