@@ -437,5 +437,11 @@
             }
         ]
 
+    },
+    {
+        "id": "non-visible",
+        "type": "non-visible",
+        "attributes": {},
+        "children": []
     }
 ]

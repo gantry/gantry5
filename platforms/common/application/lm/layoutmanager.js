@@ -258,11 +258,11 @@ var LayoutManager = new prime({
             duration: '150ms'
         });
 
-        var siblings = this.block.block.siblings(':not(.original-placeholder)'),
-            size = this.block.getSize();
+        var siblings = this.block.block.siblings(':not(.original-placeholder)');
 
-        if (siblings) {
-            var diff = size / siblings.length, block;
+        if (siblings && this.block.getType() == 'block') {
+            var size = this.block.getSize(),
+                diff = size / siblings.length, block;
             siblings.forEach(function(sibling) {
                 sibling = $(sibling);
                 block = get(this.builder.map, sibling.data('lm-id'));

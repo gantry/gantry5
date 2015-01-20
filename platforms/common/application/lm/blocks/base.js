@@ -77,6 +77,12 @@ var Base = new prime({
         return this;
     },
 
+    setAttributes: function(attributes) {
+        this.attributes = attributes;
+
+        return this;
+    },
+
     hasAttribute: function(key) {
         return has(this.attributes, key);
     },

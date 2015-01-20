@@ -4,7 +4,7 @@
         "header": {
             "type": "section",
             "attributes": {
-                "name": "Header",
+                "title": "Header",
                 "key": "header",
                 "type": "header",
                 "id": "header"
@@ -13,33 +13,33 @@
         "showcase": {
             "type": "section",
             "attributes": {
-                "name": "Showcase",
+                "title": "Showcase",
                 "key": "showcase"
             }
         },
         "feature": {
             "type": "section",
             "attributes": {
-                "name": "Feature",
+                "title": "Feature",
                 "key": "feature"
             }
         },
         "main": {
             "type": "section",
             "attributes": {
-                "name": "Main",
+                "title": "Main",
                 "key": "main"
             }
         },
         "footer": {
             "type": "section",
             "attributes": {
-                "name": "Bottom",
+                "title": "Bottom",
                 "key": "bottom"
             }
         },
         "non-visible": {
-            "id": "189a3808-57a7-4b05-b4a5-5175ad27dbde",
+            "id": "non-visible",
             "type": "non-visible",
             "attributes": {},
             "children": []
