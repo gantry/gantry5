@@ -11,6 +11,6 @@ class Overview extends HtmlController
             return $this->container['admin.theme']->render('@gantry-admin/welcome.html.twig', $this->params);
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/overview.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/overview/overview.html.twig', $this->params);
     }
 }

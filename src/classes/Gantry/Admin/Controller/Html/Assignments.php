@@ -7,6 +7,6 @@ class Assignments extends HtmlController
 {
     public function index()
     {
-        return $this->container['admin.theme']->render('@gantry-admin/assignments.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/assignments/assignments.html.twig', $this->params);
     }
 }

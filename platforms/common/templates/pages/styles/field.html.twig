@@ -1,0 +1,21 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+<form method="POST">
+    <div class="pull-right">
+        <button class="button">Save</button>
+        <button class="button" name="METHOD" value="DELETE">Reset</button>
+        <a class="button" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route(parent) }}">Back</a>
+    </div>
+    <div id="settings" class="cards-wrapper">
+        <div class="card settings-block">
+            <h4>
+                Edit {{ key }}
+            </h4>
+            <div class="inner-params">
+                {% include 'forms/fields.html.twig' %}
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

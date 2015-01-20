@@ -1,0 +1,22 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+{% for group, list in particles %}
+    <h2>{{ group|capitalize }} Settings</h2>
+
+    <div id="settings" class="cards-wrapper g-grid">
+
+        {% for id, particle in list %}
+            {% if not particle.hidden %}
+            {% set prefix = 'particles.' ~ id ~ '.' %}
+            <div class="card settings-block">
+                <h4>
+                    <a class="config-cog" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('settings/particles/' ~ id) }}">{{ particle.name }}</a>
+                    {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'value': config.get(prefix ~ 'enabled', 0)|abs} %}
+                </h4>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endfor %}
+{% endblock %}

@@ -210,6 +210,11 @@ a {
   text-decoration: none;
 }
 
+/* line 102, ../scss/admin/_core.scss */
+.Whoops.container {
+  position: inherit;
+}
+
 @font-face {
   font-family: "g-lato";
   font-weight: 100;
@@ -2682,6 +2687,15 @@ body.g5-dialog-open {
 /* line 7, ../scss/admin/particles/_filemanager.scss */
 .g-filemanager > .fa {
   cursor: pointer;
+}
+
+/* line 14, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content {
+  width: 650px;
+}
+/* line 18, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-particles-header input, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-particles-header label, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-particles-header select {
+  font-size: 0.8em;
 }
 
 /* line 6, ../scss/admin/_particles.scss */

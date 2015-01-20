@@ -1,0 +1,19 @@
+name: Heading Color
+description: Accent colors used for website
+type: block
+
+form:
+  fields:
+
+    text.color:
+      type: input.colorpicker
+      label: Text Color
+      default: "#6f849b"
+    background.color:
+      type: input.colorpicker
+      label: Background Color
+      default: "#2d3945"
+    back:
+      type: input.text
+      label: Gap
+      default: 50
