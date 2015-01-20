@@ -1,4 +1,4 @@
-{% extends "forms/field.html.twig" %}
+{% extends default ? "partials/field.html.twig" : "forms/field.html.twig" %}
 
 {% block input %}
 <div class="enabler">
@@ -6,7 +6,7 @@
             {# required attribute structures #}
             type="hidden"
             name="{{ (scope ~ name)|fieldName }}"
-            value="{{ key }}"
+            value="{{ value|join(', ') }}"
             id="{{ id }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}
