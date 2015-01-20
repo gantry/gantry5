@@ -102,7 +102,7 @@ class Response
     {
         $code = $this->getStatusCode();
 
-        return $code . ' ' . isset($this->responseCodes[$code]) ? $this->responseCodes[$code] : 'Unknown error';
+        return $code . ' ' . (isset($this->responseCodes[$code]) ? $this->responseCodes[$code] : 'Unknown error');
     }
 
     /**
