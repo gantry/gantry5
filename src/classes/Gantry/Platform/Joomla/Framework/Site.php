@@ -7,9 +7,11 @@ class Site
     {
         $document = \JFactory::getDocument();
 
-        $this->theme = $document->template;
-        $this->url = $document->baseurl;
-        $this->title = $document->title;
-        $this->description = $document->description;
+        if ($document instanceof \JDocumentHTML) {
+            $this->theme = $document->template;
+            $this->url = $document->baseurl;
+            $this->title = $document->title;
+            $this->description = $document->description;
+        }
     }
 }
