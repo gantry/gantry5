@@ -64,6 +64,7 @@ class GantryAdminPlugin extends Plugin
         $gantry = \Gantry\Framework\Gantry::instance();
         $gantry['base_url'] = $this->base;
         $gantry['routes'] = [
+            '1' => '/%s',
             'overview' => '',
             'settings' => '/settings',
             'pages' => '/pages_index',
