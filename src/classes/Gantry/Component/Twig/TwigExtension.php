@@ -92,18 +92,22 @@ class TwigExtension extends \Twig_Extension
     /**
      * Return URL to the resource.
      *
-     * @param  string $input
-     * @param  bool $domain
-     * @return string
+     * @example {{ url('theme://images/logo.png')|default('http://www.placehold.it/150x100/f4f4f4') }}
+     *
+     * @param  string $input    Resource to be located.
+     * @param  bool $domain     True to include domain name.
+     * @return string|null      Returns url to the resource or null if resource was not found.
      */
     public function urlFunc($input, $domain = false)
     {
+        // TODO: add support to include domain..
         if (!trim((string) $input)) {
             return false;
         }
 
         if (strpos((string) $input, '://')) {
             $gantry = Gantry::instance();
+
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
 
@@ -112,7 +116,7 @@ class TwigExtension extends \Twig_Extension
             $resource = (string) $input;
         }
 
-        return $resource ? rtrim(Document::rootUri(), '/') .'/'. $resource : false;
+        return $resource ? rtrim(Document::rootUri(), '/') .'/'. $resource : null;
     }
 
     /**
