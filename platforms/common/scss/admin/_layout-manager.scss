@@ -488,4 +488,41 @@
 
 }
 
-//end wrapper
+.g5-dialog .g-tabs {
+    @extend %list-reset;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 1em 1em 0;
+    margin: -1em -1em 1em;
+    background: #eaeaea;
+    border-radius: 3px 3px 0 0;
+
+    li {
+        display: inline-block;
+        border: 1px solid #ddd;
+        border-bottom: 0;
+        border-radius: 3px 3px 0 0;
+        margin: 0;
+
+        a {
+            color: #aaa;
+            display: block;
+            padding: 0.5em 1em;
+        }
+
+        &.active {
+            background-color: #f0f0f0;
+
+            a {
+                color: #333;
+            }
+        }
+    }
+}
+
+.g5-dialog .g-pane {
+    display: none;
+    
+    &.active {
+        display: block;
+    }
+}

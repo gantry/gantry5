@@ -91,6 +91,25 @@ ready(function() {
         });
     });
 
+    // Tabs
+    body.delegate('click', '.g-tabs a', function(event, element){
+        element = $(element);
+        event.preventDefault();
+        var index = 0,
+            parent = element.parent('.g-tabs'),
+            panes = parent.siblings('.g-panes'),
+            links = parent.search('a');
+
+        links.forEach(function(link, i){
+            if (link == element[0]) { index = i + 1; }
+        });
+
+        panes.find('.active').removeClass('active');
+        parent.find('.active').removeClass('active');
+        panes.find('.g-pane:nth-child(' + index + ')').addClass('active');
+        parent.find('li:nth-child(' + index + ')').addClass('active');
+    });
+
     // Picker
     body.delegate('statechangeBefore', '[data-g5-lm-picker]', function() {
         modal.close();

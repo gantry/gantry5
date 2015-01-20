@@ -1,5 +1,5 @@
 /* line 2, ../scss/nucleus/mixins/_utilities.scss */
-#g5-container #page-picker ul, #g5-container #sidebar ul, .g5-popover.g5-popover-particles ul, .g5-popover.g5-popover-particles li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul {
+#g5-container #page-picker ul, #g5-container #sidebar ul, .g5-dialog .g-tabs, .g5-popover.g5-popover-particles ul, .g5-popover.g5-popover-particles li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1372,6 +1372,46 @@ a {
   font-size: 0.8rem;
   color: #666;
   text-shadow: 0 0 1px #fff;
+}
+
+/* line 491, ../scss/admin/_layout-manager.scss */
+.g5-dialog .g-tabs {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1em 1em 0;
+  margin: -1em -1em 1em;
+  background: #eaeaea;
+  border-radius: 3px 3px 0 0;
+}
+/* line 499, ../scss/admin/_layout-manager.scss */
+.g5-dialog .g-tabs li {
+  display: inline-block;
+  border: 1px solid #ddd;
+  border-bottom: 0;
+  border-radius: 3px 3px 0 0;
+  margin: 0;
+}
+/* line 506, ../scss/admin/_layout-manager.scss */
+.g5-dialog .g-tabs li a {
+  color: #aaa;
+  display: block;
+  padding: 0.5em 1em;
+}
+/* line 512, ../scss/admin/_layout-manager.scss */
+.g5-dialog .g-tabs li.active {
+  background-color: #f0f0f0;
+}
+/* line 515, ../scss/admin/_layout-manager.scss */
+.g5-dialog .g-tabs li.active a {
+  color: #333;
+}
+
+/* line 522, ../scss/admin/_layout-manager.scss */
+.g5-dialog .g-pane {
+  display: none;
+}
+/* line 525, ../scss/admin/_layout-manager.scss */
+.g5-dialog .g-pane.active {
+  display: block;
 }
 
 /* line 5, ../scss/admin/_menu.scss */

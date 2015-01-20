@@ -2,14 +2,35 @@
 
 {% block gantry %}
 <form method="post" action="{{ gantry.route(action) }}">
-    <div class="card settings-block">
-        <h4>
-            {{ particle.name }}
-        </h4>
-        <div class="inner-params">
-            {% include 'forms/fields.html.twig' with {'blueprints': particle.form} %}
+    <ul class="g-tabs">
+        <li class="active"><a href="#">Particle</a></li>
+        <li><a href="#">Block</a></li>
+    </ul>
+
+    <div class="g-panes">
+        <div class="g-pane active">
+            <div class="card settings-block">
+                <h4>
+                    {{ particle.name }}
+                </h4>
+                <div class="inner-params">
+                    {% include 'forms/fields.html.twig' with {'blueprints': particle.form} %}
+                </div>
+            </div>
+        </div>
+
+        <div class="g-pane">
+            <div class="card settings-block">
+                <h4>
+                    Im a block
+                </h4>
+                <div class="inner-params">
+                    {% include 'forms/fields.html.twig' with {'blueprints': particle.form} %}
+                </div>
+            </div>
         </div>
     </div>
+
     <div class="g-modal-actions">
         <a class="button float-left">Defaults</a>
         <button class="button button-primary" type="submit">Apply</button>
