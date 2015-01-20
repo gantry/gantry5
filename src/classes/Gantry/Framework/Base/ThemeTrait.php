@@ -4,6 +4,7 @@ namespace Gantry\Framework\Base;
 use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Component\Twig\TwigExtension;
+use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -19,6 +20,7 @@ trait ThemeTrait
     {
         $gantry = \Gantry\Framework\Gantry::instance();
         $gantry['streams'];
+        $gantry->register(new ErrorServiceProvider);
     }
 
     public function setLayout($file)
