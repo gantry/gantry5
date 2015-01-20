@@ -31,7 +31,7 @@
 
 	// Sublevel Items
 	.g-sublevel {
-    	> li {
+    	li {
     		> a, > .g-separator, > .g-nav-header {
     			font-size: $dropdown-font-size;
     			padding: $nav-item-padding;

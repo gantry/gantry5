@@ -47,10 +47,10 @@ a {
   .g-main-nav .g-dropdown .g-dropdown {
     background: #3c79a7;
     box-shadow: 0 3px 0 #366e98; }
-.g-main-nav .g-sublevel > li > a, .g-main-nav .g-sublevel > li > .g-separator, .g-main-nav .g-sublevel > li > .g-nav-header {
+.g-main-nav .g-sublevel li > a, .g-main-nav .g-sublevel li > .g-separator, .g-main-nav .g-sublevel li > .g-nav-header {
   font-size: 1rem;
   padding: 0.75rem 0.938rem; }
-.g-main-nav .g-sublevel > li:hover > a, .g-main-nav .g-sublevel > li.active > a {
+.g-main-nav .g-sublevel li:hover > a, .g-main-nav .g-sublevel li.active > a {
   background: #366e98; }
 
 #g-showcase {
