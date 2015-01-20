@@ -80,7 +80,7 @@ ready(function() {
                 modal.open({
                     content: response.body.html || response.body,
                     afterOpen: function(container){
-                        container.style({width: '90%'});
+                        if (!response.body.html) { container.style({width: '90%'}); }
                     }
                 });
 
