@@ -77,7 +77,7 @@ ready(function() {
 
         request('post', window.location.href + getAjaxSuffix(), {title: $('[data-g5-content] h2 .title').text().toLowerCase(), layout: lm}, function(error, response) {
             if (!response.body.success) {
-                modal.open({ content: response.body.html });
+                modal.open({ content: response.body.html || response.body });
                 return false;
             } else {
                 modal.close();
