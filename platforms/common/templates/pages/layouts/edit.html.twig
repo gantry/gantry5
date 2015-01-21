@@ -3,7 +3,7 @@
 {% block gantry %}
     <h2>
         <span class="title">{{ id }}</span>
-        <i class="fa fa-edit"></i>
+        {% if page_id|first|lower != '_' %}<i class="fa fa-edit"></i>{% endif %}
         <span class="float-right">
             <a href="#" class="button button-primary button-save" data-save="pages"><i class="fa fa-check"></i> <span>Save</span></a>
             <a href="#" class="button"><i class="fa fa-sign-in"></i> <span>Import</span></a>
