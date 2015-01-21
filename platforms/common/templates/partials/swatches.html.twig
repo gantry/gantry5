@@ -5,18 +5,15 @@
     {% for key, swatch in swatches %}
         {% set counter = 0 %}
         <li class="g-block">
-            <a href="#" style="margin: 0 5px; border-radius: 5px; display:block;" data-styles="{{ key }}">
-                <span>
-                    <img src="{{ base ~ swatch.image }}" />
-                    <span
-                            {# required attribute structures #}
-                            style="height: 25px; display: block; background: linear-gradient(to right
-                                {%- for color in swatch.colors|slice(0, stop) -%}
-                                    ,{{- color }} {{ counter -}}%, {{- color }} {{ counter + stop -}}%
-                                    {% set counter = counter + stop %}
-                                {%- endfor -%})"
-                            >
-                    </spam>
+            <a href="#" class="swatch" data-styles="{{ key }}">
+                <img src="{{ base ~ swatch.image }}" class="swatch-image" />
+                <span class="swatch-colors"
+                        {# required attribute structures #}
+                        style="background: linear-gradient(to right
+                            {% for color in swatch.colors|slice(0, stop) -%}
+                                ,{{- color }} {{ counter -}}%, {{- color }} {{ counter + stop -}}%
+                                {% set counter = counter + stop %}
+                            {%- endfor %})">
                 </span>
             </a>
         </li>

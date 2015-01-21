@@ -1,0 +1,17 @@
+#g5-container {//wrapper
+  .swatches-block {
+    .swatch {
+      display: block;
+      margin: 0 5px;
+    }
+
+    .swatch-image {
+      display: block;
+    }
+
+    .swatch-colors {
+      display: block;
+      height: 25px;
+    }
+  }
+}

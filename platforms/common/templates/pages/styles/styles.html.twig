@@ -1,8 +1,10 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-
-    {% include 'partials/swatches.html.twig' with {'swatches': config.styles.swatches} %}
+<div id="styles">
+    <div class="swatches-block">
+        {% include 'partials/swatches.html.twig' with {'swatches': config.styles.swatches} %}
+    </div>
 
     {% for group, list in blocks %}
         <h2>{{ group|capitalize }} Styles</h2>
@@ -19,4 +21,5 @@
             {% endfor %}
         </div>
     {% endfor %}
+</div>
 {% endblock %}
