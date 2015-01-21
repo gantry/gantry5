@@ -12,13 +12,13 @@
         <div id="styles" class="cards-wrapper g-grid">
 
             {% for id, block in list %}
-                {% set prefix = 'blocks.' ~ id ~ '.' %}
+                {% set prefix = 'styles.' ~ id ~ '.' %}
                 <div class="card settings-block">
                     <h4>
                         <a class="config-cog" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('styles/blocks/' ~ id) }}">{{ block.name }}</a>
                     </h4>
                     <div class="inner-params">
-                        {% include 'forms/fields.html.twig' with {'blueprints': block.form} %}
+                        {% include 'forms/fields.html.twig' with {'blueprints': block.form, 'data': config} %}
                     </div>
                 </div>
             {% endfor %}
