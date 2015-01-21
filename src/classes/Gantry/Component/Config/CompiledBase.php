@@ -121,7 +121,7 @@ abstract class CompiledBase
     {
         $this->createObject();
 
-        foreach ($this->files as $files) {
+        foreach (array_reverse($this->files) as $files) {
             foreach ($files as $name => $item) {
                 $this->loadFile($name, GANTRY5_ROOT . '/' . $item['file']);
             }

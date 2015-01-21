@@ -55,7 +55,7 @@ class Styles extends HtmlController
     {
         $style = $this->container['styles']->get($id);
         $blueprints = new Blueprints($style);
-        $prefix = 'blocks.' . $id;
+        $prefix = 'styles.' . $id;
 
         $this->params += [
             'block' => $blueprints,
@@ -85,7 +85,7 @@ class Styles extends HtmlController
         }
 
         // Get the prefix.
-        $prefix = "blocks.{$id}." . implode('.', $path);
+        $prefix = "styles.{$id}." . implode('.', $path);
         if ($value !== null) {
             $parent = $fields;
             $fields = ['fields' => $fields['fields']];
@@ -110,7 +110,7 @@ class Styles extends HtmlController
 
     public function save($id)
     {
-        $blueprints = new Blueprints($this->container['blocks']->get($id));
+        $blueprints = new Blueprints($this->container['styles']->get($id));
         $data = new Config($_POST, function() use ($blueprints) { return $blueprints; });
 
         /** @var UniformResourceLocator $locator */
