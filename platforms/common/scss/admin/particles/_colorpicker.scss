@@ -10,7 +10,8 @@
         text-shadow: $contrast-shadow;
         font-weight: 400;
         font-size: 15px;
-        min-width: 205px;
+        //min-width: 205px;
+        width: 100%;
     }
 
     i {
