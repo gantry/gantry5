@@ -258,6 +258,7 @@ a {
 /* line 6, ../scss/admin/_fonts.scss */
 .font-small, .fa.font-small {
   font-size: 0.8rem;
+  vertical-align: middle;
 }
 
 /* line 3, ../scss/admin/_main.scss */
@@ -269,11 +270,6 @@ a {
   #g5-container .main-block {
     min-height: 75vh;
   }
-}
-/* line 15, ../scss/admin/_main.scss */
-#g5-container #g-main h2 .fa-edit {
-  font-size: 60%;
-  vertical-align: middle;
 }
 
 /* line 4, ../scss/admin/_overview.scss */

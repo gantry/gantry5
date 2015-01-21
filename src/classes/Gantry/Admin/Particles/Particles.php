@@ -63,6 +63,7 @@ class Particles
 
         $filename = key($files[$id]);
         $particle = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+        $particle['subtype'] = $id; // TODO: can this be done better or is it fine like that?
 
         return $particle;
     }
