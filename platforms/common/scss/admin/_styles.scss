@@ -1,13 +1,20 @@
 #g5-container {//wrapper
 	.swatches-block {
+		margin: 0 -1px;
+		padding-bottom: $content-padding;
 		@include breakpoint(mobile-only) {
 			.g-block {
 				@include flex(0 25%);
+				margin-bottom: 2px;
 			}
 		}
 		.swatch {
 			display: block;
-			margin: 0 5px;
+			padding: 3px;
+			background: $white;
+			margin: 0 1px;
+			border-radius: $core-border-radius;
+			border: 1px solid $medium-gray;
 		}
 
 		.swatch-image {

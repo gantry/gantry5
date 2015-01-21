@@ -273,24 +273,32 @@ a {
     width: 1.5625em;
     border-radius: 3px; }
 
-@media only all and (max-width: 47.938rem) {
-  #g5-container .swatches-block .g-block {
-    -webkit-box-flex: 0;
-    -moz-box-flex: 0;
-    box-flex: 0;
-    -webkit-flex: 0 25%;
-    -moz-flex: 0 25%;
-    -ms-flex: 0 25%;
-    flex: 0 25%; } }
-#g5-container .swatches-block .swatch {
-  display: block;
-  margin: 0 5px; }
-#g5-container .swatches-block .swatch-image {
-  display: block; }
-#g5-container .swatches-block .swatch-colors {
-  display: block;
-  height: 15px;
-  margin-top: 2px; }
+#g5-container .swatches-block {
+  margin: 0 -1px;
+  padding-bottom: 0.938rem; }
+  @media only all and (max-width: 47.938rem) {
+    #g5-container .swatches-block .g-block {
+      -webkit-box-flex: 0;
+      -moz-box-flex: 0;
+      box-flex: 0;
+      -webkit-flex: 0 25%;
+      -moz-flex: 0 25%;
+      -ms-flex: 0 25%;
+      flex: 0 25%;
+      margin-bottom: 2px; } }
+  #g5-container .swatches-block .swatch {
+    display: block;
+    padding: 3px;
+    background: #fff;
+    margin: 0 1px;
+    border-radius: 0.1875rem;
+    border: 1px solid #ddd; }
+  #g5-container .swatches-block .swatch-image {
+    display: block; }
+  #g5-container .swatches-block .swatch-colors {
+    display: block;
+    height: 15px;
+    margin-top: 2px; }
 
 #g5-container #page-picker ul .card {
   margin: 10px 1%; }
