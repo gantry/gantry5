@@ -27,7 +27,11 @@ $gantry['theme.params'] = [];
 // Initialize theme stream.
 $gantry['platform']->set(
     'streams.gantry-theme.prefixes',
-    ['' => ["gantry-themes://{$gantry['theme.name']}", "gantry-themes://{$gantry['theme.name']}/common"]]
+    ['' => [
+        "gantry-themes://{$gantry['theme.name']}/custom",
+        "gantry-themes://{$gantry['theme.name']}",
+        "gantry-themes://{$gantry['theme.name']}/common"
+    ]]
 );
 
 $gantry['streams'];
