@@ -39,9 +39,15 @@
 {% endmacro %}
 
 {% macro displayContainers(containers, menu) %}
+    <div class="g-grid">
         {% for items in containers %}
+        <div class="g-block">
+            <ul class="g-sublevel">
                 {{ _self.displayItems(items, menu) }}
+            </ul>
+        </div>
         {% endfor %}
+    </div>
 {% endmacro %}
 
 {% macro displayItems(items, menu) %}
@@ -53,17 +59,7 @@
 {% macro displaySubmenu(item, menu) %}
     <ul class="g-dropdown">
         <li class="g-dropdown-column">
-            <div class="g-grid">
-                <div class="g-block">
-                    <ul class="g-sublevel">
-                        {% if item.groups %}
-                            {{ _self.displayContainers(item.groups, menu) }}
-                        {% else %}
-                            {{ _self.displayItems(item.children, menu) }}
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
+            {{ _self.displayContainers(item.groups, menu) }}
         </li>
     </ul>
 {% endmacro %}

@@ -18,39 +18,39 @@ ordering:
   features:
     typography:
   sample-pages:
-    about-us:
-      layout-1:
-      layout-2:
-      layout-3:
-    our-team:
-      layout-1:
-      layout-2:
-      layout-3:
-    pricing:
-      layout-1:
-      layout-2:
-      layout-3:
-    faq:
-      layout-1:
-      layout-2:
-      layout-3:
-    services:
-      layout-1:
-      layout-2:
-      layout-3:
-    blog:
-      layout-1:
-      layout-2:
-      layout-3:
+    - about-us:
+        layout-1:
+        layout-2:
+        layout-3:
+      our-team:
+        layout-1:
+        layout-2:
+        layout-3:
+      pricing:
+        layout-1:
+        layout-2:
+        layout-3:
+    - faq:
+        layout-1:
+        layout-2:
+        layout-3:
+      services:
+        layout-1:
+        layout-2:
+        layout-3:
+      blog:
+        layout-1:
+        layout-2:
+        layout-3:
   special:
-    title:
-    error:
-    unsupported:
-    offline:
-    comingsoon:
-    separator:
-    component:
-    raw:
+    - title:
+      error:
+      unsupported:
+      offline:
+    - comingsoon:
+      separator:
+      component:
+      raw:
   admin:
 
 items:
@@ -78,6 +78,7 @@ items:
     type: separator
     title: Sample Pages
     menu_icon: fire
+    layout: columns
 
   sample-pages/about-us:
     type: separator
@@ -118,6 +119,7 @@ items:
     anchor_title:
     menu_image:
     menu_icon: shield
+    layout: columns
 
   special/title:
     type: heading
