@@ -9,13 +9,13 @@
 		> li {
 			display: inline-block;
 			@include transition(all .1s ease-out);
-			> a, > .g-separator {
-				display: block;
-			}
 			&:hover {
 				> .g-dropdown {
 					@extend %active-dropdown;
 				}
+			}
+			> a, > .g-separator {
+				display: block;
 			}
 		}
 	}
@@ -24,43 +24,52 @@
 	.g-dropdown {
 		@extend %inactive-dropdown;
 	    @include transition(all .1s ease-out);
-	    // Additional Level Dropdowns
+	}
+
+	// Sublevel Items
+	.g-sublevel {
+    	> li {
+    		@include transition(all .1s ease-out);
+    		a, .g-separator, .g-nav-header {
+    			display: block;
+    		}
+    	}
+    }
+}
+
+// Standard Dropdown Settings
+.g-standard {
+	.g-sublevel {
+    	> li {
+    		position: relative;
+    		&:hover {
+    			> .g-dropdown {
+    				@extend %active-dropdown;
+    			}
+    		}
+    	}
+    }
+    .g-dropdown {
 	    .g-dropdown {
 	    	left: 100%;
     		top: 0;
 	    	@extend %inactive-dropdown;
 	    }
 	}
-
-	// Sublevel Items
-	.g-sublevel {
-    	> li {
-    		position: relative;
-    		@include transition(all .1s ease-out);
-    		&:hover {
-    			> .g-dropdown {
-    				@extend %active-dropdown;
-    			}
-    		}
-    		a, .g-separator, .g-nav-header {
-    			display: block;
-    		}
-    	}
-    }
-
-    .g-dropdown-column {
+	.g-dropdown-column {
     	@extend %dropdown-column;
     }
 }
 
 // Megamenu Settings
-.megamenu {
-	.g-toplevel {
-		position: static;
-	}
+.g-fullwidth {
+	position: static;
 	.g-dropdown {
 		position: absolute;
 		left: 0;
 		right: 0;
+		.g-block {
+			width: 50%;
+		}
 	}
 }
