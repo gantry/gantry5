@@ -1,7 +1,7 @@
 <ul class="g-grid">
     {% set base = config.styles.base %}
     {% set stopValue = config.styles.stop %}
-    {% set stop = (100 / config.styles.stop)|number_format(3, '.') %}
+    {% set stop = (100 / config.styles.stop|default(1))|number_format(3, '.') %}
     {% for key, swatch in swatches %}
         {% set counter = 0 %}
         <li class="g-block">
