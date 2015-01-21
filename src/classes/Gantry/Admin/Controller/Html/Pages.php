@@ -88,7 +88,7 @@ class Pages extends HtmlController
 
         $this->params['page_id'] = $id;
         $this->params['layout'] = $layout;
-        $this->params['id'] = ucwords($id);
+        $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($id, '_')));
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/edit.html.twig', $this->params);
     }
