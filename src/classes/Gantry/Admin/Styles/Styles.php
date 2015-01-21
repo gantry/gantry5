@@ -1,5 +1,5 @@
 <?php
-namespace Gantry\Admin\Blocks;
+namespace Gantry\Admin\Styles;
 
 use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Config\CompiledBlueprints;
@@ -9,7 +9,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Blocks
+class Styles
 {
     protected $container;
     protected $files;
@@ -72,7 +72,7 @@ class Blocks
         if (!$this->files) {
             /** @var UniformResourceLocator $locator */
             $locator = $this->container['locator'];
-            $paths = $locator->findResources('gantry-blocks://');
+            $paths = $locator->findResources('gantry-styles://');
 
             $this->files = (new ConfigFileFinder)->listFiles($paths);
         }

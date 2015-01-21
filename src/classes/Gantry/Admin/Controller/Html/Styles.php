@@ -46,14 +46,14 @@ class Styles extends HtmlController
 
     public function index()
     {
-        $this->params['blocks'] = $this->container['blocks']->group();
+        $this->params['blocks'] = $this->container['styles']->group();
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/styles/styles.html.twig', $this->params);
     }
 
     public function display($id)
     {
-        $style = $this->container['blocks']->get($id);
+        $style = $this->container['styles']->get($id);
         $blueprints = new Blueprints($style);
         $prefix = 'blocks.' . $id;
 
@@ -73,7 +73,7 @@ class Styles extends HtmlController
     {
         $path = func_get_args();
 
-        $style = $this->container['blocks']->get($id);
+        $style = $this->container['styles']->get($id);
 
         // Load blueprints.
         $blueprints = new Blueprints($style);

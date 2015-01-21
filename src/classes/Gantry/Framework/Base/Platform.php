@@ -63,10 +63,10 @@ abstract class Platform
                         '' => ['gantry-engine://particles']
                     ]
                 ],
-                'gantry-blocks' => [
+                'gantry-styles' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [
-                        '' => ['gantry-engine://blocks']
+                        '' => ['gantry-engine://styles']
                     ]
                 ],
                 'gantry-admin' => [
