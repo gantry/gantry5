@@ -2,41 +2,57 @@ css:
   id:
   class: 'styles'
 
-config:
-  colorStop: 3
-  window_open: 'width=200,height=300'
+base: 'http://placehold.it/400x400/'
+stop: 3
+window_open: 'width=200,height=300'
 
 swatches:
   style1:
-    - '#7CBD90'
-    - '#FEFCD0'
-    - '#64B9B7'
+    image: 'D4D4D4.jpg'
+    colors:
+      - '#7CBD90'
+      - '#FEFCD0'
+      - '#64B9B7'
   style2:
-    - '#6EB2C8'
-    - '#FCE884'
-    - '#E96785'
+    image: 'D4D4D4.jpg'
+    colors:
+      - '#6EB2C8'
+      - '#FCE884'
+      - '#E96785'
   style3:
-    - '#61C0BA'
-    - '#4A96BA'
-    - '#A3517D'
+    image: 'D4D4D4.jpg'
+    colors:
+      - '#61C0BA'
+      - '#4A96BA'
+      - '#A3517D'
   style4:
-    - '#F2A817'
-    - '#F88316'
-    - '#E15E26'
+    image: 'D4D4D4.jpg'
+    colors:
+      - '#F2A817'
+      - '#F88316'
+      - '#E15E26'
   style5:
-    - '#39A9B5'
-    - '#38BC75'
-    - '#3071B5'
+    image: 'D4D4D4.jpg'
+    colors:
+      - '#39A9B5'
+      - '#38BC75'
+      - '#3071B5'
   style6:
-    - '#C9E291'
-    - '#555555'
-    - '#2EAA9F'
+    image: 'D4D4D4.jpg'
+    colors:
+      - '#C9E291'
+      - '#555555'
+      - '#2EAA9F'
   style7:
-    - '#78D9E9'
-    - '#555555'
-    - '#ED5B57'
+    image: 'D4D4D4.jpg'
+    colors:
+      - '#78D9E9'
+      - '#555555'
+      - '#ED5B57'
   style8:
-    - '#F8F59C'
-    - '#555555'
-    - '#42C8D7'
+    image: 'D4D4D4.jpg'
+    colors:
+      - '#F8F59C'
+      - '#555555'
+      - '#42C8D7'
 

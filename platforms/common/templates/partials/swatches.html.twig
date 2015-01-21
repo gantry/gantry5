@@ -1,20 +1,23 @@
-<ul style="list-style: none">
-    {% set colorStopValue = config.styles.config.colorStop %}
-    {% set colorStop = (100 / config.styles.config.colorStop)|number_format(3, '.') %}
+<ul class="g-grid">
+    {% set base = config.styles.base %}
+    {% set stopValue = config.styles.stop %}
+    {% set stop = (100 / config.styles.stop)|number_format(3, '.') %}
     {% for key, swatch in swatches %}
         {% set counter = 0 %}
-        <li style="display: inline-block">
-            <a
-                    {# required attribute structures #}
-                    href="#"
-                    data-styles="{{ key }}"
-                    style="border-radius: 50px; margin: 0 5px; display: block; height: 50px; width: 50px; background: linear-gradient(to right
-                        {%- for color in swatch|slice(0, colorStopValue) -%}
-                            ,{{-color }} {{ counter -}}%, {{- color }} {{ counter + colorStop -}}%
-                            {% set counter = counter + colorStop %}
-                        {%- endfor -%}
-                    )"
-                    >
+        <li class="g-block">
+            <a href="#" style="margin: 0 5px; border-radius: 5px; display:block;" data-styles="{{ key }}">
+                <span>
+                    <img src="{{ base ~ swatch.image }}" />
+                    <span
+                            {# required attribute structures #}
+                            style="height: 25px; display: block; background: linear-gradient(to right
+                                {%- for color in swatch.colors|slice(0, stop) -%}
+                                    ,{{- color }} {{ counter -}}%, {{- color }} {{ counter + stop -}}%
+                                    {% set counter = counter + stop %}
+                                {%- endfor -%})"
+                            >
+                    </spam>
+                </span>
             </a>
         </li>
     {% endfor %}
