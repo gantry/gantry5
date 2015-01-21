@@ -11,10 +11,9 @@
         <div class="card settings-block">
             <h4>
                 {{ particle.name }}
-                <div class="enabler">
-                    <input name="enabled" type="hidden" value="{{ data.enabled|default(0)|abs }}" />
-                    <div class="toggle"><div class="knob"></div></div>
-                </div>
+                {% if particle.form.fields.enabled %}
+                {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': 'particle.', 'field': particle.form.fields.enabled, 'value': data.enabled} %}
+                {% endif %}
             </h4>
             <div class="inner-params">
                 {% include 'forms/fields.html.twig' with {'blueprints': particle.form} %}

@@ -6,7 +6,7 @@
             {# required attribute structures #}
             type="hidden"
             name="{{ (scope ~ name)|fieldName }}"
-            value="{{ value|join(', ') }}"
+            value="{{ value ? 1 : 0 }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}
             />
