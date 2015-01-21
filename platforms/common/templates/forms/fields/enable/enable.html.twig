@@ -1,7 +1,7 @@
 {% extends default ? "partials/field.html.twig" : "forms/field.html.twig" %}
 
 {% block input %}
-<div class="enabler">
+<span class="enabler">
     <input
             {# required attribute structures #}
             type="hidden"
@@ -10,6 +10,6 @@
             {# global attribute structures #}
             {{ block('global_attributes') }}
             />
-    <div class="toggle"><div class="knob"></div></div>
-</div>
+    <span class="toggle"><span class="knob"></span></span>
+</span>
 {% endblock %}
