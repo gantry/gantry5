@@ -64,7 +64,7 @@ class Pages extends HtmlController
     public function create($id = null)
     {
         if (!$id) {
-            // TODO:
+            // TODO: we might want to display list of options here
             throw new \RuntimeException('Not Implemented', 404);
         }
 

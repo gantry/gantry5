@@ -3,11 +3,13 @@ namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Config\CompiledBlueprints;
+use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Gantry;
+use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Settings extends HtmlController
@@ -106,9 +108,18 @@ class Settings extends HtmlController
 
     public function save($id)
     {
-        $this->params += [
-            'data' => $_POST,
-            ];
+        $blueprints = new Blueprints($this->container['particles']->get($id));
+        $data = new Config($_POST, function() use ($blueprints) { return $blueprints; });
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        // Save layout into custom directory for the current theme.
+        $save_dir = $locator->findResource('gantry-config://particles', true, true);
+        $filename = "{$save_dir}/{$id}.yaml";
+
+        $file = YamlFile::instance($filename);
+        $file->save($data->toArray());
 
         return $this->display($id);
     }
