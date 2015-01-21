@@ -32,5 +32,5 @@ $theme = $gantry['theme'];
 
 // Render the page.
 echo $theme
-    ->setLayout('gantry-theme://layouts/test.yaml')
+    ->setLayout('test')
     ->render('index.html.twig');

@@ -35,7 +35,7 @@ if (!isset($gantry['theme']) || strpos($path, 'admin') === 0) {
 
 // Boot the service.
 /** @var Gantry\Framework\Theme $theme */
-$theme = $gantry['theme']->setLayout('gantry-layouts://test.yaml');
+$theme = $gantry['theme']->setLayout('test');
 
 try {
     // Render the page.

@@ -5,6 +5,7 @@ use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Services\ErrorServiceProvider;
+use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -23,11 +24,36 @@ trait ThemeTrait
         $gantry->register(new ErrorServiceProvider);
     }
 
-    public function setLayout($file)
+    public function setLayout($name)
     {
-        $this->layout = $file;
+        $this->layout = $name;
 
         return $this;
+    }
+
+    public function loadLayout($name = null)
+    {
+        if (!$name) {
+            $name = $this->layout;
+        }
+
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $layout = null;
+        $filename = $locator('gantry-layouts://' . $name . '.json');
+        if ($filename) {
+            $layout = JsonFile::instance($filename)->content();
+        } else {
+            $filename = $locator('gantry-layouts://' . $name . '.yaml');
+            if ($filename) {
+                $layout = LayoutReader::read($filename);
+            }
+        }
+
+        return $layout;
     }
 
     public function add_to_context(array $context)
@@ -42,12 +68,7 @@ trait ThemeTrait
     }
 
     public function segments() {
-        $gantry = \Gantry\Framework\Gantry::instance();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        return $this->layout ? LayoutReader::read($locator($this->layout)) : [];
+        return $this->loadLayout($this->layout);
     }
 
     public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)

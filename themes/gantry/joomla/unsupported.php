@@ -9,5 +9,5 @@ $theme = $gantry['theme'];
 
 // Render the page.
 echo $theme
-    ->setLayout('gantry-theme://layouts/unsupported.yaml')
+    ->setLayout('unsupported')
     ->render('unsupported.html.twig');

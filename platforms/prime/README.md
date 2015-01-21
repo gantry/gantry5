@@ -45,7 +45,7 @@ Gantry prime uses very simple routing where it just looks if there is a file whi
 Basic structure of the file is:
 
     {% extends "@nucleus/page.html.twig" %}
-    {% do gantry.theme.setLayout('gantry-theme://layouts/test.yaml') %}
+    {% do gantry.theme.setLayout('test') %}
     {% block content %}
         Here comes your content.
     {% endblock %}

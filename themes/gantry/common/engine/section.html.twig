@@ -3,7 +3,7 @@
 {% set attr_class = segment.classes ? ' class="g-' ~ segment.classes|join(' ') ~ '"' %}
 
 {% set html %}
-    {% if  segment.children %}
+    {% if segment.children %}
         {% for segment in segments %}
             {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
         {% endfor %}
