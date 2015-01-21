@@ -55,8 +55,9 @@ class Pages extends HtmlController
         $layouts = array_keys($files);
         sort($layouts);
 
-        $layouts = array_filter($layouts, function($val) { return strpos($val, 'presets/') !== 0; });
-        $this->params['layouts'] = $layouts;
+        $layouts_user = array_filter($layouts, function($val) { return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) !== '_'; });
+        $layouts_core = array_filter($layouts, function($val) { return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) === '_'; });
+        $this->params['layouts'] = ['user' => $layouts_user, 'core' => $layouts_core];
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/layouts.html.twig', $this->params);
     }
