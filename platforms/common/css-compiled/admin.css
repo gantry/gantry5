@@ -274,10 +274,8 @@ a {
     border-radius: 3px; }
 
 #g5-container .swatches-block {
-  padding: 1px;
-  background: #fff;
-  border-radius: 0.1875rem;
-  border: 1px solid #ddd; }
+  margin: 0 -1px;
+  padding-bottom: 0.938rem; }
   @media only all and (max-width: 47.938rem) {
     #g5-container .swatches-block .g-block {
       -webkit-box-flex: 0;
@@ -289,7 +287,11 @@ a {
       flex: 0 25%; } }
   #g5-container .swatches-block .swatch {
     display: block;
-    margin: 2px; }
+    padding: 3px;
+    background: #fff;
+    margin: 0 1px;
+    border-radius: 0.1875rem;
+    border: 1px solid #ddd; }
   #g5-container .swatches-block .swatch-image {
     display: block; }
   #g5-container .swatches-block .swatch-colors {
