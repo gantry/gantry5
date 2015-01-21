@@ -51,6 +51,12 @@ abstract class Platform
                         '' => ['gantry-theme://engine']
                     ]
                 ],
+                'gantry-layouts' => [
+                    'type' => 'ReadOnlyStream',
+                    'prefixes' => [
+                        '' => ['gantry-theme://layouts']
+                    ]
+                ],
                 'gantry-particles' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [

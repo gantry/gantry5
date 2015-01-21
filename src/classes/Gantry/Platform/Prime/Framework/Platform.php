@@ -25,12 +25,6 @@ class Platform extends BasePlatform
                     '' => ['']
                 ]
             ],
-            'gantry-layouts' => [
-                'type' => 'ReadOnlyStream',
-                'prefixes' => [
-                    '' => ['gantry-theme://layouts', 'layouts']
-                ]
-            ],
             'gantry-pages' => [
                 'type' => 'ReadOnlyStream',
                 'prefixes' => [
@@ -45,6 +39,7 @@ class Platform extends BasePlatform
             ]
         ];
 
+        $this->items['streams']['gantry-layouts']['prefixes'][''][] = 'layouts';
         array_unshift($this->items['streams']['gantry-config']['prefixes'], 'gantry-prime://config');
     }
 
