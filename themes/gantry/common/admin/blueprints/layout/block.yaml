@@ -1,0 +1,9 @@
+name: Block
+description: Layout block.
+type: block
+
+form:
+  fields:
+    size:
+      type: text
+      label: Size

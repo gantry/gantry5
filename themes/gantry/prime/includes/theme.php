@@ -7,7 +7,11 @@ class GantryTheme extends \Gantry\Framework\Theme {}
 // Initialize theme stream.
 $gantry['platform']->set(
     'streams.gantry-theme.prefixes',
-    ['' => ["gantry-themes://{$gantry['theme.name']}/custom", "gantry-themes://{$gantry['theme.name']}", "gantry-themes://{$gantry['theme.name']}/common"]]
+    ['' => [
+        "gantry-prime://custom/{$gantry['theme.name']}",
+        "gantry-themes://{$gantry['theme.name']}",
+        "gantry-themes://{$gantry['theme.name']}/common"
+    ]]
 );
 
 // Define Gantry services.

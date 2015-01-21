@@ -105,8 +105,10 @@ class Pages extends HtmlController
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
-        $save_dir = $locator->findResource('gantry-layouts://');
-        $filename = "{$save_dir}/{$new_page}.json";
+
+        // Save layout into custom directory for the current theme.
+        $save_dir = $locator->findResource('gantry-layouts://', true, true);
+        $filename = $save_dir . "{$new_page}.json";
 
         if ($page != $new_page && is_file($filename)) {
             throw new \RuntimeException("Error while saving layout: Layout '{$new_page}' already exists", 403);
@@ -129,6 +131,7 @@ class Pages extends HtmlController
                 'type' => isset($_POST['type']) ? $_POST['type'] : $type,
                 'subtype' => isset($_POST['subtype']) ? $_POST['subtype'] : null,
                 'attributes' => (object) isset($_POST['options']) ? $_POST['options'] : [],
+                'block' => []
             ];
             if (isset($_POST['block'])) {
                 $item->block = $_POST['block'];
@@ -144,12 +147,16 @@ class Pages extends HtmlController
             // TODO: Use blueprints to merge configuration.
             $data = (array) $item->attributes + (array) $this->container['config']->get($prefix);
             if ($type == 'section' || $type == 'grid') {
+                $extra = null;
                 $blueprints = new Blueprints(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml")->content());
             } else {
+                $extra = new Blueprints(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
                 $blueprints = new Blueprints($this->container['particles']->get($name));
             }
 
             $this->params += [
+                'extra' => $extra,
+                'block' => $item->block,
                 'particle' => $blueprints,
                 'data' =>  $data,
                 'id' => $name,
@@ -183,7 +190,8 @@ class Pages extends HtmlController
             $callable);
 
         // Join POST data.
-        $data->join('options', $_POST);
+        $data->join('options', $_POST['particle']);
+        $data->join('block', $_POST['block']);
 
         // TODO: validate
 

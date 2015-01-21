@@ -14,7 +14,7 @@
                     {{ particle.name }}
                 </h4>
                 <div class="inner-params">
-                    {% include 'forms/fields.html.twig' with {'blueprints': particle.form} %}
+                    {% include 'forms/fields.html.twig' with {'blueprints': particle.form, 'data': {'particle': data}, 'prefix': 'particle.'} %}
                 </div>
             </div>
         </div>
@@ -22,10 +22,10 @@
         <div class="g-pane">
             <div class="card settings-block">
                 <h4>
-                    Im a block
+                    Block
                 </h4>
                 <div class="inner-params">
-                    {% include 'forms/fields.html.twig' with {'blueprints': particle.form} %}
+                    {% include 'forms/fields.html.twig' with {'blueprints': extra.form, 'data': {'block': block}, 'prefix': 'block.'} %}
                 </div>
             </div>
         </div>
