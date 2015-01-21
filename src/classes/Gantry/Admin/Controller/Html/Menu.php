@@ -119,7 +119,12 @@ class Menu extends HtmlController
 
         /** @var Config $config */
         $config = $this->container['config'];
-        $params = $config->get('particles.instances.menu.' . $id);
+
+        if ($id) {
+            $params = $config->get('particles.instances.menu.' . $id);
+        } else {
+            $params = $config->get('particles.menu');
+        }
 
         if (!$params) {
             throw new \RuntimeException('Resource not found', 404);
