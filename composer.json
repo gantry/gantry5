@@ -12,7 +12,8 @@
         "tracy/tracy": "dev-master",
         "pimple/pimple": "~3.0",
         "filp/whoops": "1.2.*@dev",
-        "rockettheme/toolbox": "dev-develop"
+        "rockettheme/toolbox": "dev-develop",
+        "leafo/scssphp": "0.0.12"
     },
     "repositories": [
         {
