@@ -283,9 +283,10 @@ ready(function() {
                                 diffSize = currentSize - block.getSize();
 
                                 block.setAnimatedSize(block.getAttribute('size'));
+
                                 if (sibling) {
                                     sibling = builder.get(sibling.data('lm-id'));
-                                    sibling.setAnimatedSize(sibling.getSize() + diffSize, true);
+                                    sibling.setSize(sibling.getSize() + diffSize, true);
                                 }
                             }
 
