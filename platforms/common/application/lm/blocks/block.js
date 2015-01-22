@@ -60,7 +60,8 @@ var Block = new prime({
 
         if (!parent) { return; }
 
-        if (parent.block.parent().data('lm-root')) {
+        var grandpa = parent.block.parent();
+        if (grandpa.data('lm-root') || (grandpa.data('lm-blocktype') == 'container' && grandpa.parent().data('lm-root'))) {
             zen('span.particle-size').text(this.getSize() + '%').top(element.block);
             element.on('resized', this.bound('onResize'));
         }
