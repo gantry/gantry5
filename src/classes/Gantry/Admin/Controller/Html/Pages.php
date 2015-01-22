@@ -131,11 +131,11 @@ class Pages extends HtmlController
                 'id' => $id,
                 'type' => isset($_POST['type']) ? $_POST['type'] : $type,
                 'subtype' => isset($_POST['subtype']) ? $_POST['subtype'] : null,
-                'attributes' => (object) isset($_POST['options']) ? $_POST['options'] : [],
-                'block' => []
+                'attributes' => (object) (isset($_POST['options']) ? $_POST['options'] : []),
+                'block' => new \stdClass
             ];
             if (isset($_POST['block'])) {
-                $item->block = $_POST['block'];
+                $item->block = (object) $_POST['block'];
             }
         } else {
             $item = $this->find($layout, $id);
@@ -167,7 +167,11 @@ class Pages extends HtmlController
                 'skip' => ['enabled']
             ];
 
-            return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/particle.html.twig', $this->params);
+            if ($extra) {
+                return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/particle.html.twig', $this->params);
+            } else {
+                return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/section.html.twig', $this->params);
+            }
         }
         throw new \RuntimeException('No configuration exists yet', 404);
     }

@@ -1,6 +1,0 @@
-name: Grid
-description: Layout grid.
-type: grid
-
-form:
-  fields:
