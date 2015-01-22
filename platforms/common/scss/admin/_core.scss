@@ -26,6 +26,14 @@ a {
         }
     }
 
+    // badges
+    .badge {
+        border-radius: 100px;
+        background-color: $light-gray;
+        color: darken($medium-gray, 25);
+        padding: 3px 6px;
+    }
+
     // cards
     .cards-wrapper {
         margin: -10px;

@@ -1,6 +1,10 @@
 #g5-container {
     // wrapper
 
+    .title ~ .fa-pencil {
+        cursor: pointer;
+    }
+
     .lm-blocks {
         &.empty {
             min-height: 150px;
@@ -287,7 +291,6 @@
 
                     &:last-child {
                         opacity: 0.5;
-                        font-size: 0.8em;
                         margin-top: -3px;
                     }
                 }

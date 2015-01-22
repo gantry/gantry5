@@ -4,6 +4,23 @@
     background: $sidebar-bg;
     border-right: 1px solid;
     border-color: $sidebar-border;
+    position: relative;
+    .gantry-logo {
+        width: 91px;
+        height: 28px;
+        display: block;
+        background-image: url(../images/gantrylogo.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        bottom: $content-padding;
+        position: absolute;
+        left: 50%;
+        margin-left: -45px;
+        opacity: 0.5;
+        @include breakpoint(mobile-only) {
+            display: none;
+        }
+    }
 }
 
 #sidebar {
