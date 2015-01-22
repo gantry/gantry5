@@ -526,8 +526,8 @@ a {
 #g5-container .swatches-block .swatch-image {
   display: block;
 }
-/* line 23, ../scss/admin/_styles.scss */
-#g5-container .swatches-block .swatch-colors {
+/* line 24, ../scss/admin/_styles.scss */
+#g5-container .swatch-colors {
   display: block;
   height: 15px;
   margin-top: 2px;
