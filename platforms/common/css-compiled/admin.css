@@ -1,5 +1,5 @@
 /* line 2, ../scss/nucleus/mixins/_utilities.scss */
-#g5-container #page-picker ul, #g5-container #sidebar ul, .g5-dialog .g-tabs, .g5-popover.g5-popover-particles ul, .g5-popover.g5-popover-particles li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul {
+#g5-container #page-picker ul, #g5-container #sidebar ul, .g5-dialog .g-tabs, .g5-popover.g5-popover-particles ul, .g5-popover.g5-popover-particles li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content [data-file] {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1176,21 +1176,21 @@ a {
   display: none !important;
 }
 /* line 199, ../scss/admin/_layout-manager.scss */
-#g5-container .lm-blocks > .g-grid > .g-block {
+#g5-container .lm-blocks > .g-grid > .g-block, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block {
   margin-right: 14px;
   background: #fff;
   padding-bottom: 50px;
 }
 /* line 204, ../scss/admin/_layout-manager.scss */
-#g5-container .lm-blocks > .g-grid > .g-block > .section {
+#g5-container .lm-blocks > .g-grid > .g-block > .section, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .section {
   border-bottom: 14px solid #eee;
 }
 /* line 207, ../scss/admin/_layout-manager.scss */
-#g5-container .lm-blocks > .g-grid > .g-block > .section:last-child {
+#g5-container .lm-blocks > .g-grid > .g-block > .section:last-child, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .section:last-child {
   border-bottom: 0;
 }
 /* line 212, ../scss/admin/_layout-manager.scss */
-#g5-container .lm-blocks > .g-grid > .g-block > .particle-size {
+#g5-container .lm-blocks > .g-grid > .g-block > .particle-size, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .particle-size {
   margin-right: 0;
   position: absolute;
   bottom: 12px;
@@ -2770,31 +2770,90 @@ body.g5-dialog-open {
   display: none;
 }
 
-/* line 5, ../scss/admin/_particles.scss */
+/* line 2, ../scss/admin/particles/_filemanager.scss */
+.g-filemanager > *:not(div), .g-filemanager label {
+  display: inline-block;
+  vertical-align: middle;
+}
+/* line 7, ../scss/admin/particles/_filemanager.scss */
+.g-filemanager > .fa {
+  cursor: pointer;
+}
+
+/* line 14, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content {
+  width: 650px;
+}
+/* line 18, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-particles-header input, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-particles-header label, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-particles-header select {
+  font-size: 0.8em;
+}
+/* line 28, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark {
+  font-family: "Monaco", "Courier New", Courier, monospace;
+  font-size: 0.8em;
+}
+/* line 34, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files [data-file] {
+  display: inline-block;
+  max-width: 100px;
+  vertical-align: middle;
+  text-align: center;
+  margin: 6px 2px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* line 44, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files [data-file] .g-image {
+  position: relative;
+  float: left;
+  width: 100px;
+  height: 100px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+/* line 54, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files [data-file] div {
+  background-color: #fff;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  border-radius: 0.1875rem;
+}
+/* line 64, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files [data-file] span {
+  font-size: 0.7em;
+}
+
+/* line 6, ../scss/admin/_particles.scss */
 .g-particles-footer, .g-particles-header {
   margin: 0 !important;
 }
-/* line 7, ../scss/admin/_particles.scss */
+/* line 8, ../scss/admin/_particles.scss */
 .g-particles-footer input, .g-particles-footer select, .g-particles-header input, .g-particles-header select {
   margin: 0 !important;
 }
 
-/* line 12, ../scss/admin/_particles.scss */
+/* line 13, ../scss/admin/_particles.scss */
 .g-particles-footer select {
   margin-top: 10px !important;
 }
 
-/* line 16, ../scss/admin/_particles.scss */
+/* line 17, ../scss/admin/_particles.scss */
 .g-particles-main {
   width: 100%;
 }
 
-/* line 20, ../scss/admin/_particles.scss */
+/* line 21, ../scss/admin/_particles.scss */
 .g-particles-header {
   border-bottom: 1px solid #ccc;
   padding-bottom: 15px;
 }
-/* line 24, ../scss/admin/_particles.scss */
+/* line 25, ../scss/admin/_particles.scss */
 .g-particles-header .particle-search-wrapper {
   display: inline-block;
   position: relative;
@@ -2804,7 +2863,7 @@ body.g5-dialog-open {
   -o-transform: translateZ(0);
   transform: translateZ(0);
 }
-/* line 29, ../scss/admin/_particles.scss */
+/* line 30, ../scss/admin/_particles.scss */
 .g-particles-header .particle-search-wrapper span {
   position: absolute;
   right: 5px;
@@ -2813,7 +2872,7 @@ body.g5-dialog-open {
   color: #439A86;
 }
 
-/* line 40, ../scss/admin/_particles.scss */
+/* line 41, ../scss/admin/_particles.scss */
 .g-particles-footer {
   padding-top: 15px;
   border-top: 1px solid #ccc;
