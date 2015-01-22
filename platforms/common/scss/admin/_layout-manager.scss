@@ -1,6 +1,10 @@
 #g5-container {
     // wrapper
 
+    .title ~ .fa-pencil {
+        cursor: pointer;
+    }
+
     .lm-blocks {
         &.empty {
             min-height: 150px;
