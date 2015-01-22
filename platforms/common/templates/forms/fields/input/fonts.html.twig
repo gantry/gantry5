@@ -15,7 +15,7 @@
                 {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
                 {% if field.list is defined %}list="{{ field.list }}"{% endif %}
                 />
-        {% set picker = {'field':'input[name="' ~ (scope ~ name | fieldName) ~ '"]', 'data': url('gantry-admin://js/google-fonts.json')} %}
+        {% set picker = {'field':'input[name="' ~ ((scope ~ name)|fieldName) ~ '"]', 'data': url('gantry-admin://js/google-fonts.json')} %}
         <i class="fa fa-font" data-g5-fontpicker="{{ picker|json_encode()|e('html_attr') }}"></i>
     </div>
 {% endblock %}
