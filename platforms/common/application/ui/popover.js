@@ -90,6 +90,7 @@ var Popover = new prime({
         this.element.emit('hide.popover', this);
         if (this.$target) {
             this.$target.removeClass('in').style({ display: 'none' });
+            this.$target.remove();
         }
         this.element.emit('hidden.popover', this);
     },
