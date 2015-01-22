@@ -74,7 +74,7 @@ var Modal = new prime({
 
         var self = this;
         domready(function() {
-            $(window).on('keyup', function(event) {
+            $(window).on('keydown', function(event) {
                 if (event.keyCode === 27) {
                     return self.closeByEscape();
                 }

@@ -6,7 +6,6 @@ interface RestfulControllerInterface
     /**
      * @example GET /resources
      *
-     * @param array $path
      * @return mixed
      */
     public function index();
@@ -14,6 +13,7 @@ interface RestfulControllerInterface
     /**
      * @example GET /resources/:id
      *
+     * @param string $id
      * @return mixed
      */
     public function display($id);

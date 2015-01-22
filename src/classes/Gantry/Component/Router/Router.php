@@ -36,6 +36,9 @@ abstract class Router implements RouterInterface
         try {
             $response = static::execute($this->resource, $this->method, $this->path, $this->params, $this->format);
 
+        } catch (\Whoops\Exception\ErrorException $e) {
+            throw $e;
+
         } catch (\Exception $e) {
             // Handle errors.
             $response = $this->getErrorResponse($e, $this->format == 'json');

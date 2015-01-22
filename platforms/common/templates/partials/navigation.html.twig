@@ -1,8 +1,5 @@
 <section id="sidebar">
     <ul>
-        <li {{ (location == 'overview') ? 'class="active"' }}>
-            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('overview')|e }}"><i class="fa fa-adjust"></i><span>Overview</span></a>
-        </li>
         <li {{ (location == 'styles') ? 'class="active"' }}>
             <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('styles')|e }}"><i class="fa fa-star"></i><span>Styles</span></a>
         </li>
@@ -10,13 +7,16 @@
             <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('settings')|e }}"><i class="fa fa-wrench"></i><span>Settings</span></a>
         </li>
         <li {{ (location == 'pages') ? 'class="active"' }}>
-            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('pages')|e }}"><i class="fa fa-columns"></i><span>Layouts</span></a>
-        </li>
-        <li {{ (location == 'menu') ? 'class="active"' }}>
-            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu')|e }}"><i class="fa fa-list"></i><span>Menu</span></a>
+            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('pages')|e }}"><i class="fa fa-columns"></i><span>Layout</span></a>
         </li>
         <li {{ (location == 'assignments') ? 'class="active"' }}>
             <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('assignments')|e }}"><i class="fa fa-check"></i><span>Assignments</span></a>
         </li>
+        {#<li {{ (location == 'menu') ? 'class="active"' }}>
+            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu')|e }}"><i class="fa fa-list"></i><span>Menu Manager</span></a>
+        </li>#}
+        {#<li {{ (location == 'overview') ? 'class="active"' }}>
+            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('overview')|e }}"><i class="fa fa-adjust"></i><span>About</span></a>
+        </li>#}
     </ul>
 </section>

@@ -131,11 +131,11 @@ class Pages extends HtmlController
                 'id' => $id,
                 'type' => isset($_POST['type']) ? $_POST['type'] : $type,
                 'subtype' => isset($_POST['subtype']) ? $_POST['subtype'] : null,
-                'attributes' => (object) isset($_POST['options']) ? $_POST['options'] : [],
-                'block' => []
+                'attributes' => (object) (isset($_POST['options']) ? $_POST['options'] : []),
+                'block' => new \stdClass
             ];
             if (isset($_POST['block'])) {
-                $item->block = $_POST['block'];
+                $item->block = (object) $_POST['block'];
             }
         } else {
             $item = $this->find($layout, $id);
@@ -145,8 +145,9 @@ class Pages extends HtmlController
 
         if (is_object($item) && $name) {
             $prefix = 'particles.' . $name;
+            $defaults = (array) $this->container['config']->get($prefix);
             // TODO: Use blueprints to merge configuration.
-            $data = (array) $item->attributes + (array) $this->container['config']->get($prefix);
+            $data = (array) $item->attributes + $defaults;
             if ($type == 'section' || $type == 'grid') {
                 $extra = null;
                 $blueprints = new Blueprints(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml")->content());
@@ -167,13 +168,27 @@ class Pages extends HtmlController
                 'skip' => ['enabled']
             ];
 
-            return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/particle.html.twig', $this->params);
+            if ($extra) {
+                $result = $this->container['admin.theme']->render('@gantry-admin/pages/layouts/particle.html.twig', $this->params);
+            } else {
+                $result = $this->container['admin.theme']->render('@gantry-admin/pages/layouts/section.html.twig', $this->params);
+            }
+
+            if (!empty($this->params['ajax'])) {
+                return new JsonResponse(['html' => $result, 'defaults' => ['particle' => $defaults]]);
+            }
+            return $result;
         }
         throw new \RuntimeException('No configuration exists yet', 404);
     }
 
     public function validate($particle)
     {
+        // Validate only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
         // Load particle blueprints and default settings.
         $validator = new Validator();
         $validator->embed('options', $this->container['particles']->get($particle));

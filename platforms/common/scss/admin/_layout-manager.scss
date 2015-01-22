@@ -5,6 +5,10 @@
         cursor: pointer;
     }
 
+    .title[contenteditable] {
+        padding: 4px;
+    }
+
     .lm-blocks {
         &.empty {
             min-height: 150px;

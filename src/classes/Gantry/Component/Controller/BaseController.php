@@ -7,7 +7,14 @@ use RuntimeException;
 
 abstract class BaseController implements RestfulControllerInterface
 {
+    /**
+     * @var string Default HTTP method.
+     */
     protected $method = 'GET';
+
+    /**
+     * @var array List of HTTP verbs and their actions.
+     */
     protected $httpVerbs = [
         'GET' => [
             '/'         => 'index',
@@ -28,6 +35,10 @@ abstract class BaseController implements RestfulControllerInterface
             '/*' => 'destroy'
         ]
     ];
+
+    /**
+     * @var array Parameters from router.
+     */
     protected $params = [];
 
     /**
@@ -51,7 +62,7 @@ abstract class BaseController implements RestfulControllerInterface
      */
     public function execute($method, array $path, array $params)
     {
-        $this->params = $params;
+        $this->setParams($params);
         list($action, $path) = $this->resolveHttpVerb($method, $path);
 
         if (!method_exists($this, $action)) {
@@ -61,6 +72,12 @@ abstract class BaseController implements RestfulControllerInterface
         return call_user_func_array([$this, $action], $path);
     }
 
+    /**
+     * Set router parameters. Replaces the old parameters.
+     *
+     * @param array $params
+     * @return $this
+     */
     public function setParams(array $params)
     {
         $this->params = $params;
@@ -68,41 +85,90 @@ abstract class BaseController implements RestfulControllerInterface
         return $this;
     }
 
+    /**
+     * @example GET /resources
+     *
+     * @return mixed
+     */
     public function index()
     {
         return $this->undefined();
     }
 
+    /**
+     * @example GET /resources/:id
+     *
+     * @param string $id
+     * @return mixed
+     */
     public function display($id)
     {
         return $this->undefined();
     }
 
+    /**
+     * Special sub-resource to create a new resource (returns a form).
+     *
+     * @example GET /resources/create
+     *
+     * @return mixed
+     */
     public function create()
     {
         return $this->undefined();
     }
 
+    /**
+     * Special sub-resource to edit existing resource (returns a form).
+     *
+     * @example GET /resources/:id/edit
+     *
+     * @param string $id
+     * @return mixed
+     */
     public function edit($id)
     {
         return $this->undefined();
     }
 
+    /**
+     * @example POST /resources
+     *
+     * @return mixed
+     */
     public function store()
     {
         return $this->undefined();
     }
 
+    /**
+     * @example PUT /resources/:id
+     *
+     * @param string $id
+     * @return mixed
+     */
     public function replace($id)
     {
         return $this->undefined();
     }
 
+    /**
+     * @example PATCH /resources/:id
+     *
+     * @param string $id
+     * @return mixed
+     */
     public function update($id)
     {
         return $this->undefined();
     }
 
+    /**
+     * @example DELETE /resources/:id
+     *
+     * @param string $id
+     * @return mixed
+     */
     public function destroy($id)
     {
         return $this->undefined();

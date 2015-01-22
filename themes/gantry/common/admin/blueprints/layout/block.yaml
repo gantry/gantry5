@@ -4,6 +4,25 @@ type: block
 
 form:
   fields:
+    id:
+      type: input.text
+      label: Id
+      description: CSS id.
+      default:
+
+    class:
+      type: input.text
+      label: Class
+      description: CSS class name.
+      default:
+
+    extra:
+      type: input.text
+      label: Attributes
+      description: Extra attributes.
+      default:
+
     size:
-      type: text
+      type: input.text
       label: Size
+      description: Block size in percentages (0-100).

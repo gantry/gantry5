@@ -2,8 +2,16 @@
     <div class="g-block">
         <div class="g-content clearfix">
             <span class="theme-title"><i class="fa fa-tint"></i> Theme: {{ gantry.theme.title }}</span>
-            
-            <a href="#" class="button button-save"><i class="fa fa-check"></i> <span>Save</span></a>
+
+            <div class="float-right">
+                <select class="float-left">
+                    <option>Master</option>
+                    <option>Front Page</option>
+                </select>
+                <button class="button float-left">Configurations</button>
+                <a class="float-left" data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu')|e }}"><i class="fa fa-adjust"></i><span>Menu</span></a>
+                <a class="float-left" data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('overview')|e }}"><i class="fa fa-adjust"></i><span>About</span></a>
+            </div>
         </div>
     </div>
 </div>
