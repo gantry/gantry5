@@ -15,15 +15,19 @@ ready(function() {
 
     var body = $('body');
 
-    body.delegate('mouseenter', 'a.swatch', function(event, element) {
+    body.delegate('mouseover', 'a.swatch', function(event, element) {
         element = $(element);
         event.preventDefault();
-        element.popover({
+
+        element.getPopover({
             trigger: 'mouse',
-            placement: 'top-left',
-            style: 'styles, inverse, fixed, nooverflow',
-            content: element.('.swatch-image')
-        });
+            placement: 'auto',
+            targetEvents: false,
+            delay: 1,
+            content: element.html()
+        }).show();
     });
 
 });
+
+module.exports = {};

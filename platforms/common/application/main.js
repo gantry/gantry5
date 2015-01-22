@@ -40,6 +40,7 @@ module.exports = {
      agent   : require('agent'),*/
     lm: require('./lm'),
     ui: require('./ui'),
+    styles: require('./styles'),
     "$": elements,
     domready: require('elements/domready'),
     particles: require('./particles')
