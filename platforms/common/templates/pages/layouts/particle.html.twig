@@ -11,7 +11,7 @@
         <div class="g-pane active">
             <div class="card settings-block">
                 <h4>
-                    <span data-particle-title="{{ particle.name }}" class="title">{{ particle.name }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
+                    <span data-particle-title="{{ particle.name }}" data-particle-title-name="{{ 'particle.title'|fieldName|e('html_attr') }}" class="title">{{ particle.name }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
                     <span class="badge font-small">{{ particle.subtype }}</span>
                     {% if particle.form.fields.enabled %}
                     {% include 'forms/fields/enable/enable.html.twig' with {'name': 'particle.enabled', 'field': particle.form.fields.enabled, 'value': data.enabled, 'default': 1} %}

@@ -7,6 +7,7 @@ var ready         = require('elements/domready'),
     zen           = require('elements/zen'),
     contains      = require('mout/array/contains'),
     size          = require('mout/collection/size'),
+    trim          = require('mout/string/trim'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
 
@@ -68,19 +69,22 @@ ready(function() {
 
     // attach events
     // Save
-    body.delegate('click', '.button-save', function(e, element){
+    body.delegate('click', '.button-save', function(e, element) {
         if (!$('[data-lm-root]')) { return true; }
 
         e.preventDefault();
 
         var lm = JSON.stringify(builder.serialize());
 
-        request('post', window.location.href + getAjaxSuffix(), {title: $('[data-g5-content] h2 .title').text().toLowerCase(), layout: lm}, function(error, response) {
+        request('post', window.location.href + getAjaxSuffix(), {
+            title: $('[data-g5-content] h2 .title').text().toLowerCase(),
+            layout: lm
+        }, function(error, response) {
             if (!response.body.success) {
                 modal.open({
                     content: response.body.html || response.body,
-                    afterOpen: function(container){
-                        if (!response.body.html) { container.style({width: '90%'}); }
+                    afterOpen: function(container) {
+                        if (!response.body.html) { container.style({ width: '90%' }); }
                     }
                 });
 
@@ -92,7 +96,7 @@ ready(function() {
     });
 
     // Tabs
-    body.delegate('click', '.g-tabs a', function(event, element){
+    body.delegate('click', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
         var index = 0,
@@ -100,7 +104,7 @@ ready(function() {
             panes = parent.siblings('.g-panes'),
             links = parent.search('a');
 
-        links.forEach(function(link, i){
+        links.forEach(function(link, i) {
             if (link == element[0]) { index = i + 1; }
         });
 
@@ -196,6 +200,49 @@ ready(function() {
 
                 if (!form || !submit) { return true; }
 
+                var title = content.elements.content.find('[data-particle-title]'),
+                    titleEdit = content.elements.content.find('[data-title-edit]'),
+                    titleValue;
+
+                if (title && titleEdit) {
+                    titleEdit.on('click', function() {
+                        title.attribute('contenteditable', 'true');
+                        title[0].focus();
+
+                        var range = document.createRange(), selection;
+                        range.selectNodeContents(title[0]);
+                        selection = window.getSelection();
+                        selection.removeAllRanges();
+                        selection.addRange(range);
+
+                        titleValue = trim(title.text());
+                    });
+
+                    title.on('keydown', function(event) {
+
+                        switch (event.keyCode) {
+                            case 13: // return
+                            case 27: // esc
+                                event.stopPropagation();
+                                if (event.keyCode == 27) {
+                                    title.text(titleValue);
+                                }
+
+                                title.attribute('contenteditable', null);
+                                window.getSelection().removeAllRanges();
+                                title[0].blur();
+
+                                return false;
+                            default:
+                                return true;
+                        }
+                    }).on('blur', function(){
+                        title.attribute('contenteditable', null);
+                        title.data('particle-title', trim(title.text()));
+                        window.getSelection().removeAllRanges();
+                    });
+                }
+
                 submit.on('click', function(e) {
                     e.preventDefault();
                     dataString = [];
@@ -209,16 +256,37 @@ ready(function() {
                         dataString.push(name + '=' + value);
                     });
 
+                    if (title) {
+                        dataString.push(title.data('particle-title-name') + '=' + title.data('particle-title'));
+                    }
+
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response) {
                         if (!response.body.success) {
                             modal.open({ content: response.body.html });
                             return false;
                         } else {
+                            var particle = builder.get(ID),
+                                block = builder.get(parentID);
+
                             // particle attributes
-                            builder.get(ID).setAttributes(response.body.data.options);
+                            particle.setAttributes(response.body.data.options);
+                            particle.updateTitle(particle.getAttribute('title'));
+
                             // parent block attributes
                             if (response.body.data.block && size(response.body.data.block)) {
-                                builder.get(parentID).setAttributes(response.body.data.block);
+                                var sibling = block.block.nextSibling(),
+                                    currentSize = block.getSize(),
+                                    diffSize;
+
+                                block.setAttributes(response.body.data.block);
+
+                                diffSize = currentSize - block.getSize();
+
+                                block.setAnimatedSize(block.getAttribute('size'));
+                                if (sibling) {
+                                    sibling = builder.get(sibling.data('lm-id'));
+                                    sibling.setAnimatedSize(sibling.getSize() + diffSize, true);
+                                }
                             }
 
                             modal.close();

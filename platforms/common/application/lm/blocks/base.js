@@ -72,6 +72,10 @@ var Base = new prime({
         return this.attributes || {};
     },
 
+    updateTitle: function() {
+        return this;
+    },
+
     setAttribute: function(key, value) {
         set(this.attributes, key, value);
         return this;
