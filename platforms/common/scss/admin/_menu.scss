@@ -27,23 +27,59 @@
     	display: inline-block;
     	margin-right: 1rem;
     }
-    select {
-    	display: inline-block;
+
+    .menu-select-wrap {
+        width: auto;
+        border-radius: 3px;
+        overflow: hidden;
+        background: $white;
+        position: relative;
+        margin-left: 1rem;
+        display: inline-block;
+        border: 1px solid #ddd;
+        vertical-align: middle;
+        margin-bottom: 1rem;
+        .fa-chevron-down {
+            position: absolute;
+            right: $content-padding / 2;
+            z-index: 1;
+            @extend %vertical-align;
+        }
     }
+
+    .menu-select-wrap select {
+        padding: 6px 2rem 6px 12px;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        background-image: none;
+        -webkit-appearance: none;
+        position: relative;
+        z-index: 2;
+        -moz-appearance: none;
+        margin-bottom: 0;
+        font-weight: 500;
+    }
+
+    .menu-select-wrap select:focus {
+        outline: none;
+    }
+
 }
 
 .menu-selector {
 	margin: $content-margin 0;
-	padding: 3px;
+	padding: 2px;
 	background: $white;
 	border: 1px solid #ddd;
 	border-radius: $core-border-radius;
 
 	li {
 		position: relative;
-		border: 1px solid $white;
-		background: $menu-editor-bg;
-		color: $white;
+		margin: 2px;
+		background: $navbar-bg;
+		color: $navbar-color;
+		display: inline-block;
 		.parent-indicator {
 			&:before {
 				content: "\f078";
@@ -52,11 +88,16 @@
 
 		a {
 			display: inline-block;
-			color: $white;
+			color: $navbar-color;
 		}
 
 		.menu-item {
-			padding: $content-padding $content-padding - 0.2;
+			padding: $content-padding;
+			font-size: $core-font-size + 0.1;
+			@include breakpoint(mobile-only) {
+				font-size: $core-font-size;
+				padding: $content-padding $content-padding - 0.2;
+			}
 		}
 
 		.config-cog {
@@ -66,6 +107,9 @@
 
 		&:hover, &.active {
 			background: $tertiary-accent;
+			a {
+				color: $white;
+			}
 		}
 	}
 	span {
@@ -84,7 +128,7 @@
 	padding: 2px;
 	border-radius: $core-border-radius $core-border-radius 0 0;
 	.g-block {
-		background: $menu-editor-bg;
+		background: $navbar-bg;
 		border: 2px solid $white;
 		border-bottom: 0;
 		padding: $content-padding / 2 0;
@@ -93,12 +137,12 @@
 		list-style: none;
 		margin: 0;
 		li {
-			color: $white;
+			color: $navbar-color;
 			cursor: pointer;
 			position: relative;
 			a {
 				display: block;
-				color: $white;
+				color: $navbar-color;
 			}
 			.menu-item {
 				padding: $content-padding / 2 $content-padding;
@@ -122,6 +166,9 @@
 			}
 			&:hover, .active {
 				background: $tertiary-accent;
+				a {
+					color: $white;
+				}
 			}
 		}
 	}
