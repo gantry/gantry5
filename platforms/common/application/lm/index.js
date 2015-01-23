@@ -122,7 +122,7 @@ ready(function() {
     body.delegate('statechangeAfter', '#navbar [data-g5-ajaxify]', function(event, element) {
         if (!$('[data-lm-root]')) { return true; }
         data = JSON.parse($('[data-lm-root]').data('lm-root'));
-        builder.setStructure(data.layout);
+        builder.setStructure(data);
         builder.load();
 
         // -!- Popovers
