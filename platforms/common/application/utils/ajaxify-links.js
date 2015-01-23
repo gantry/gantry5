@@ -25,7 +25,7 @@ History.Adapter.bind(window, 'statechange', function() {
     var State = History.getState(),
         URI = State.url,
         Data = State.data,
-        sidebar = $('#sidebar'),
+        sidebar = $('#navbar'),
         params = '';
 
     if (size(Data) && Data.parsed !== false && storage.get(Data.uuid)) {
@@ -40,7 +40,7 @@ History.Adapter.bind(window, 'statechange', function() {
         Data.element = $('[href="' + url + '"]');
     }
 
-    if (sidebar && Data.element && Data.element.parent('#sidebar')) {
+    if (sidebar && Data.element && Data.element.parent('#navbar')) {
         var lis = sidebar.search('li');
         lis.removeClass('active');
         Data.element.parent('li').addClass('active');
@@ -105,7 +105,7 @@ domready(function() {
         History.pushState(data, title, url);
 
         var sidebar, active;
-        if (sidebar = element.parent('#sidebar')) {
+        if (sidebar = element.parent('#navbar')) {
             active = sidebar.search('.active');
             if (active) { active.removeClass('active'); }
             element.parent('li').addClass('active');

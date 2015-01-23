@@ -459,7 +459,7 @@
         .g-block {
             display: inline-block;
             text-align: center;
-            background: $sidebar-bg;
+            background: $navbar-bg;
             padding: 4px 8px;
             border-radius: 3px;
             margin-right: 8px;
@@ -487,7 +487,7 @@
         }
 
         span {
-            font-size: $sidebar-font-size;
+            font-size: $navbar-font-size;
             color: $dark-gray;
             text-shadow: 0 0 1px $white;
         }
