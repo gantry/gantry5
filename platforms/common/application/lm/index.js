@@ -77,7 +77,7 @@ ready(function() {
         var lm = JSON.stringify(builder.serialize());
 
         request('post', window.location.href + getAjaxSuffix(), {
-            title: $('[data-g5-content] h2 .title').text().toLowerCase(),
+            //title: $('[data-g5-content] h2 .title').text().toLowerCase(), // we dont need the title anymore
             layout: lm
         }, function(error, response) {
             if (!response.body.success) {
