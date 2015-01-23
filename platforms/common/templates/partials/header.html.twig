@@ -13,11 +13,12 @@
                 <li {{ (location == 'overview') ? 'class="active"' }}>
                     <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('overview')|e }}"><i class="fa fa-question-circle"></i> <span>About</span></a>
                 </li>
-                <li>
+                <li class="config-select-wrap">
                     <select class="config-select">
                         <option>Master</option>
                         <option>Front Page</option>
                     </select>
+                    <i class="fa fa-chevron-down"></i>
                 </li>
             </ul>
         </div>
