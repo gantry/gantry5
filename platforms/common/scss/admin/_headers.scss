@@ -10,16 +10,45 @@
 
         .g-content {
             margin: 0;
-            padding: $content-padding - 0.2 $content-padding + 1.5;
+            padding: 0 $content-padding + 1.5;
         }
 
         .theme-title {
-            float: left;
-            margin-right: 2rem;
+            display: inline-block;
+            line-height: 3rem;
             font-size: $core-font-size + 0.3;
             i {
                 margin-right: 8px;
             }
+        }
+
+        ul {
+            @extend %list-reset;
+            li {
+                display: inline-block;
+                margin-right: -4px;
+                a {
+                    display: block;
+                    padding: $content-padding;
+                    color: $main-header-text;
+                    @include transition(background 0.2s);
+                }
+                &:hover {
+                    a {
+                        background: darken($production, 5%);
+                    }
+                }
+                &.active {
+                    a {
+                        background: $body-bg;
+                    }
+                }
+            }
+        }
+
+        .config-select {
+            margin-bottom: $content-padding;
+            margin-left: 1rem;
         }
 
         .button-save {
