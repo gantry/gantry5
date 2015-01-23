@@ -14,7 +14,9 @@ var forOwn  = require('mout/object/forOwn'),
 
     set     = require('mout/object/set'),
     unset   = require('mout/object/unset'),
-    get     = require('mout/object/get');
+    get     = require('mout/object/get'),
+    fillIn  = require('mout/object/fillIn'),
+    omit    = require('mout/object/omit');
 
 require('elements/attributes');
 require('elements/traversal');
@@ -125,12 +127,7 @@ var Builder = new prime({
             return;
         }
 
-        var Element = new Blocks[value.type]({
-            id: key,
-            attributes: value.attributes || {},
-            subtype: value.subtype || false,
-            builder: this
-        });
+        var Element = new Blocks[value.type](fillIn({id: key, attributes: {}, subtype: false, builder: this}, omit(value, 'children')));
 
         if (!parent) {
             Element.block.insert(root);
@@ -140,8 +137,8 @@ var Builder = new prime({
         }
 
         /*if (value.type === 'grid') {
-            Element.block.data('lm-dropzone', null);
-        }*/
+         Element.block.data('lm-dropzone', null);
+         }*/
 
         if (Element.getType() === 'block') {
             Element.setSize();

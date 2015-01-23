@@ -6,9 +6,8 @@ var Pagecontent = new prime({
     inherits: Particle,
     options: {
         type: 'pagecontent',
-        attributes: {
-            name: "Page Content"
-        }
+        title: 'Page Content',
+        attributes: {}
     }
 });
 

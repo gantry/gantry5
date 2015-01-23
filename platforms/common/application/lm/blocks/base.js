@@ -50,7 +50,8 @@ var Base = new prime({
     },
 
     getTitle: function() {
-        return '';
+        console.log(this.options);
+        return this.options.title || 'Untitled';
     },
 
     getKey: function() {

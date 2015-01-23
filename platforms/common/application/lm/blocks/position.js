@@ -20,7 +20,7 @@ var Position = new prime({
     },
 
     getTitle: function() {
-        return (this.getAttribute('title') || 'Position ' + UID);
+        return (this.options.title || 'Position ' + UID);
     },
 
     getKey: function() {
