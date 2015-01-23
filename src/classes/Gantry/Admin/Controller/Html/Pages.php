@@ -8,35 +8,34 @@ use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
-use \RocketTheme\Toolbox\Blueprints\Blueprints as Validator;
+use RocketTheme\Toolbox\Blueprints\Blueprints as Validator;
 use RocketTheme\Toolbox\File\JsonFile;
-use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Pages extends HtmlController
 {
     protected $httpVerbs = [
-        'GET' => [
-            '/'             => 'index',
-            '/create'       => 'create',
-            '/create/*'     => 'create',
-            '/*'            => 'edit',
-            '/*/*'          => 'undefined',
-            '/*/*/*'        => 'particle'
+        'GET'    => [
+            '/'         => 'index',
+            '/create'   => 'create',
+            '/create/*' => 'create',
+            '/*'        => 'edit',
+            '/*/*'      => 'undefined',
+            '/*/*/*'    => 'particle'
         ],
-        'POST' => [
-            '/'             => 'undefined',
-            '/*'            => 'save',
-            '/*/*'          => 'undefined',
-            '/*/*/*'        => 'particle',
-            '/particles'    => 'undefined',
-            '/particles/*'  => 'undefined',
+        'POST'   => [
+            '/'                     => 'undefined',
+            '/*'                    => 'save',
+            '/*/*'                  => 'undefined',
+            '/*/*/*'                => 'particle',
+            '/particles'            => 'undefined',
+            '/particles/*'          => 'undefined',
             '/particles/*/validate' => 'validate'
         ],
-        'PUT' => [
+        'PUT'    => [
             '/*' => 'replace'
         ],
-        'PATCH' => [
+        'PATCH'  => [
             '/*' => 'update'
         ],
         'DELETE' => [
@@ -55,8 +54,12 @@ class Pages extends HtmlController
         $layouts = array_keys($files);
         sort($layouts);
 
-        $layouts_user = array_filter($layouts, function($val) { return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) !== '_'; });
-        $layouts_core = array_filter($layouts, function($val) { return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) === '_'; });
+        $layouts_user = array_filter($layouts, function ($val) {
+            return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) !== '_';
+        });
+        $layouts_core = array_filter($layouts, function ($val) {
+            return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) === '_';
+        });
         $this->params['layouts'] = ['user' => $layouts_user, 'core' => $layouts_core];
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/layouts.html.twig', $this->params);
@@ -86,9 +89,36 @@ class Pages extends HtmlController
             throw new \RuntimeException('Layout not found', 404);
         }
 
+        $groups = [
+            'Positions' => ['position' => [], 'spacer' => [], 'pagecontent' => []],
+            'Particles' => ['particle' => []],
+            'Atoms' => ['atom' => []]
+        ];
+
+        $particles = [
+            'position'    => [],
+            'spacer'      => [],
+            'pagecontent' => [],
+            'particle' => [],
+            'atom' => []
+        ];
+
+        $particles = array_replace($particles, $this->getParticles());
+        foreach ($particles as &$group) {
+            asort($group);
+        }
+
+        foreach ($groups as $section => $children) {
+            foreach ($children as $key => $child) {
+                $groups[$section][$key] = $particles[$key];
+            }
+        }
+
+
         $this->params['page_id'] = $id;
         $this->params['layout'] = $layout;
         $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($id, '_')));
+        $this->params['particles'] = $groups;
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/edit.html.twig', $this->params);
     }
@@ -127,15 +157,15 @@ class Pages extends HtmlController
         }
 
         if (isset($_POST)) {
-            $item = (object) [
-                'id' => $id,
-                'type' => isset($_POST['type']) ? $_POST['type'] : $type,
-                'subtype' => isset($_POST['subtype']) ? $_POST['subtype'] : null,
-                'attributes' => (object) (isset($_POST['options']) ? $_POST['options'] : []),
-                'block' => new \stdClass
+            $item = (object)[
+                'id'         => $id,
+                'type'       => isset($_POST['type']) ? $_POST['type'] : $type,
+                'subtype'    => isset($_POST['subtype']) ? $_POST['subtype'] : null,
+                'attributes' => (object)(isset($_POST['options']) ? $_POST['options'] : []),
+                'block'      => new \stdClass
             ];
             if (isset($_POST['block'])) {
-                $item->block = (object) $_POST['block'];
+                $item->block = (object)$_POST['block'];
             }
         } else {
             $item = $this->find($layout, $id);
@@ -145,9 +175,9 @@ class Pages extends HtmlController
 
         if (is_object($item) && $name) {
             $prefix = 'particles.' . $name;
-            $defaults = (array) $this->container['config']->get($prefix);
+            $defaults = (array)$this->container['config']->get($prefix);
             // TODO: Use blueprints to merge configuration.
-            $data = (array) $item->attributes + $defaults;
+            $data = (array)$item->attributes + $defaults;
             if ($type == 'section' || $type == 'grid') {
                 $extra = null;
                 $blueprints = new Blueprints(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml")->content());
@@ -157,21 +187,23 @@ class Pages extends HtmlController
             }
 
             $this->params += [
-                'extra' => $extra,
-                'block' => $item->block,
+                'extra'    => $extra,
+                'block'    => $item->block,
                 'particle' => $blueprints,
-                'data' =>  $data,
-                'id' => $name,
-                'parent' => 'settings',
-                'route' => 'settings.' . $prefix,
-                'action' => str_replace('.', '/', 'pages.' . $prefix . '.validate'),
-                'skip' => ['enabled']
+                'data'     => $data,
+                'id'       => $name,
+                'parent'   => 'settings',
+                'route'    => 'settings.' . $prefix,
+                'action'   => str_replace('.', '/', 'pages.' . $prefix . '.validate'),
+                'skip'     => ['enabled']
             ];
 
             if ($extra) {
-                $result = $this->container['admin.theme']->render('@gantry-admin/pages/layouts/particle.html.twig', $this->params);
+                $result = $this->container['admin.theme']->render('@gantry-admin/pages/layouts/particle.html.twig',
+                    $this->params);
             } else {
-                $result = $this->container['admin.theme']->render('@gantry-admin/pages/layouts/section.html.twig', $this->params);
+                $result = $this->container['admin.theme']->render('@gantry-admin/pages/layouts/section.html.twig',
+                    $this->params);
             }
 
             if (!empty($this->params['ajax'])) {
@@ -192,16 +224,19 @@ class Pages extends HtmlController
         // Load particle blueprints and default settings.
         $validator = new Validator();
         $validator->embed('options', $this->container['particles']->get($particle));
-        $callable = function () use ($validator) { return $validator; };
-        $defaults = (array) $this->container['config']->get("particles.{$particle}");
+        $callable = function () use ($validator) {
+            return $validator;
+        };
+        $defaults = (array)$this->container['config']->get("particles.{$particle}");
 
         // Create configuration from the defaults.
         $data = new Config(
             [
-                'type' => 'particle',
+                'title'   => isset($_POST['block']) ? $_POST['title'] : 'Untitled',
+                'type'    => 'particle',
                 'subtype' => $particle,
                 'options' => $defaults,
-                'block' => [],
+                'block'   => []
             ],
             $callable);
 
@@ -250,5 +285,18 @@ class Pages extends HtmlController
             }
         }
         return null;
+    }
+
+    protected function getParticles()
+    {
+        $particles = $this->container['particles']->all();
+
+        $list = [];
+        foreach ($particles as $name => $particle) {
+            $type = isset($particle['type']) ? $particle['type'] : 'particle';
+            $list[$type][$name] = $particle['name'];
+        }
+
+        return $list;
     }
 }

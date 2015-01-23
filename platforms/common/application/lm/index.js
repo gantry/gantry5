@@ -24,7 +24,7 @@ var builder, layoutmanager, lmhistory;
 builder = new Builder();
 lmhistory = new LMHistory(builder.serialize());
 
-var particlesPopover = function() {
+/*var particlesPopover = function() {
     var particles = $('[data-lm-addparticle]');
     particles.popover({
         type: 'async',
@@ -50,7 +50,7 @@ var particlesPopover = function() {
             }, this);
         });
     });
-};
+};*/
 
 ready(function() {
     var body = $('body'), root = $('[data-lm-root]'), data;
@@ -64,7 +64,7 @@ ready(function() {
         }
         builder.setStructure(data);
         builder.load();
-        particlesPopover();
+        //particlesPopover();
     }
 
     // attach events
@@ -122,16 +122,29 @@ ready(function() {
     body.delegate('statechangeAfter', '#navbar [data-g5-ajaxify]', function(event, element) {
         if (!$('[data-lm-root]')) { return true; }
         data = JSON.parse($('[data-lm-root]').data('lm-root'));
-        builder.setStructure(data.layout);
+        builder.setStructure(data);
         builder.load();
 
         // -!- Popovers
         // particles picker
-        particlesPopover();
+        //particlesPopover();
 
         // refresh LM eraser
         layoutmanager.eraser.element = $('[data-lm-eraseblock]');
         layoutmanager.eraser.hide();
+    });
+
+    body.delegate('input', '.sidebar-block .search input', function(event, element){
+        var value = $(element).value().toLowerCase(),
+            list = $('.sidebar-block [data-lm-blocktype]');
+        if (!list) { return false; }
+
+        list.style({ display: 'none' }).forEach(function(blocktype) {
+            blocktype = $(blocktype);
+            if (blocktype.data('lm-blocktype').toLowerCase().match(value) || blocktype.text().toLowerCase().match(value)) {
+                blocktype.style({ display: 'block' });
+            }
+        }, this);
     });
 
     body.delegate('click', '[data-g5-lm-add]', function(event, element) {
@@ -176,7 +189,7 @@ ready(function() {
         blocktype = element.data('lm-blocktype');
 
         var ID = element.data('lm-id'),
-            parentID = parent.data('lm-id');
+            parentID = parent ? parent.data('lm-id') : false;
 
         if (!contains(['block', 'grid', 'section', 'atom'], blocktype)) {
             data = {};
@@ -258,12 +271,17 @@ ready(function() {
                     });
 
                     if (title) {
-                        dataString.push(title.data('particle-title-name') + '=' + title.data('particle-title'));
+                        dataString.push('title=' + title.data('particle-title'));
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response) {
                         if (!response.body.success) {
-                            modal.open({ content: response.body.html });
+                            modal.open({
+                                content: response.body.html || response.body,
+                                afterOpen: function(container) {
+                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                }
+                            });
                             return false;
                         } else {
                             var particle = builder.get(ID),
@@ -271,7 +289,8 @@ ready(function() {
 
                             // particle attributes
                             particle.setAttributes(response.body.data.options);
-                            particle.updateTitle(particle.getAttribute('title'));
+                            particle.setTitle(response.body.data.title || 'Untitled');
+                            particle.updateTitle(particle.getTitle());
 
                             // parent block attributes
                             if (response.body.data.block && size(response.body.data.block)) {

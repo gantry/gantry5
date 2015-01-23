@@ -57,9 +57,8 @@ class LayoutReader
                 'id' => static::id(),
                 'type' => 'section',
                 'size' => (int) $size,
+                'title' => ucfirst($field),
                 'attributes' => (object) [
-                    'title' => 'Section ' . ucfirst($field),
-                    'key' => "section-{$field}",
                     'type' => $field,
                     'id' => $field
                 ],
@@ -95,18 +94,18 @@ class LayoutReader
         $size = array_shift($list);
         $type = array_shift($list2);
         $subtype = array_shift($list2);
+        $title = ucfirst($subtype ?: $type);
 
         $attributes = new \stdClass;
-        $attributes->title = ucfirst($subtype ?: $type);
 
         if ($subtype) {
             $attributes->key = $subtype;
         }
 
         if ($type == 'particle') {
-            $result = ['id' => static::id(), 'type' => $type, 'subtype' => $subtype, 'attributes' => $attributes];
+            $result = ['id' => static::id(), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => $attributes];
         } else {
-            $result = ['id' => static::id(), 'type' => $type, 'attributes' => $attributes];
+            $result = ['id' => static::id(), 'title' => $title, 'type' => $type, 'attributes' => $attributes];
         }
 
         $result = (object) $result;
