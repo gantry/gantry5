@@ -119,7 +119,8 @@ ready(function() {
         modal.close();
     });
 
-    body.delegate('statechangeAfter', '[data-g5-lm-picker]', function(event, element) {
+    body.delegate('statechangeAfter', '#navbar [data-g5-ajaxify]', function(event, element) {
+        if (!$('[data-lm-root]')) { return true; }
         data = JSON.parse($('[data-lm-root]').data('lm-root'));
         builder.setStructure(data.layout);
         builder.load();
