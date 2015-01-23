@@ -1,5 +1,5 @@
 /* line 2, ../scss/nucleus/mixins/_utilities.scss */
-#g5-container #page-picker ul, #g5-container #main-header ul, #g5-container #navbar ul, .g5-dialog .g-tabs, .g5-popover.g5-popover-particles ul, .g5-popover.g5-popover-particles li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content [data-file] {
+#g5-container #page-picker ul, #g5-container #main-header ul, #g5-container #navbar ul, .g5-dialog .g-tabs, .g5-lm-particles-picker ul, .g5-lm-particles-picker li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content [data-file] {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1447,6 +1447,86 @@ a {
   display: block;
 }
 
+/* line 538, ../scss/admin/_layout-manager.scss */
+.sidebar-block {
+  margin: -1.463rem 1.563rem -1.563rem -1.563rem;
+  padding: 1.563rem 0.938rem;
+  background-color: #e9e9e9;
+  border-right: 1px solid #e1e1e1;
+}
+
+/* line 548, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker {
+  font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-size: 16px;
+}
+/* line 556, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker ul {
+  padding: 1px;
+  margin-bottom: 1em;
+}
+/* line 562, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker li {
+  padding: 0.469rem;
+  margin: 1px 0;
+  text-align: center;
+  border-radius: 0.1875rem;
+  padding: 3px 6px;
+  cursor: move;
+}
+/* line 572, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker li:first-child, .g5-lm-particles-picker li:last-child {
+  margin: 0;
+}
+/* line 576, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker li[data-lm-blocktype="spacer"] {
+  color: #aaa;
+  background-color: #eee;
+}
+/* line 581, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker li[data-lm-blocktype="position"] {
+  color: #fff;
+  background-color: #aaa;
+}
+/* line 586, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker li[data-lm-blocktype="particle"] {
+  color: #fff;
+  background-color: #13B0DA;
+}
+/* line 591, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker li[data-lm-blocktype="pagecontent"] {
+  color: #fff;
+  background-color: #218fda;
+}
+/* line 596, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker li[data-lm-blocktype="atom"] {
+  color: #fff;
+  background-color: #9055AF;
+}
+/* line 602, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker .search {
+  position: relative;
+  margin-bottom: 10px;
+}
+/* line 606, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker .search input {
+  font-size: 16px;
+  border: 0;
+  border-radius: 0;
+  line-height: 26px;
+  height: auto;
+  background: rgba(0, 0, 0, 0.1);
+  color: white;
+  box-shadow: none;
+  margin: 0;
+}
+/* line 618, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker .search i {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
 /* line 5, ../scss/admin/_menu.scss */
 #g5-container #menu-editor .parent-indicator:before {
   font-family: FontAwesome;
@@ -1991,6 +2071,79 @@ body.g5-dialog-open {
   border-radius: 6px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   color: #444;
+  /*    &.g5-popover-particles {
+          font-family: $font-family-headers;
+          font-size: 16px;
+  
+          ul, li {
+              @extend %list-reset;
+          }
+  
+          ul {
+              padding: 1px;
+              background-color: #ddd;
+              max-height: 250px;
+              overflow: auto;
+          }
+  
+          li {
+              line-height: 42px;
+              margin: 1px 0;
+              text-align: center;
+  
+              &:first-child, &:last-child {
+                  margin: 0;
+              }
+  
+              &[data-lm-blocktype="spacer"] {
+                  color: #aaa;
+                  background-color: #eee;
+              }
+  
+              &[data-lm-blocktype="position"] {
+                  color: #fff;
+                  background-color: #aaa;
+              }
+  
+              &[data-lm-blocktype="particle"] {
+                  color: #fff;
+                  background-color: #13B0DA;
+              }
+  
+              &[data-lm-blocktype="pagecontent"] {
+                  color: #fff;
+                  background-color: #218fda;
+              }
+  
+              &[data-lm-blocktype="atom"] {
+                  color: #fff;
+                  background-color: #9055AF;
+              }
+          }
+  
+          .search {
+              position: relative;
+              margin-bottom: 10px;
+  
+              input {
+                  font-size: 16px;
+                  border: 0;
+                  border-radius: 0;
+                  line-height: 26px;
+                  height: auto;
+                  background: rgba(0, 0, 0, 0.1);
+                  color: white;
+                  box-shadow: none;
+                  margin: 0;
+              }
+  
+              i {
+                  position: absolute;
+                  right: 10px;
+                  top: 10px;
+              }
+          }
+      }*/
 }
 /* line 66, ../scss/admin/_popover.scss */
 .g5-popover.top, .g5-popover.top-left, .g5-popover.top-right {
@@ -2015,76 +2168,6 @@ body.g5-dialog-open {
 /* line 77, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-nooverflow .g5-popover-content {
   overflow: visible;
-}
-/* line 82, ../scss/admin/_popover.scss */
-.g5-popover.g5-popover-particles {
-  font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-  font-size: 16px;
-}
-/* line 90, ../scss/admin/_popover.scss */
-.g5-popover.g5-popover-particles ul {
-  padding: 1px;
-  background-color: #ddd;
-  max-height: 250px;
-  overflow: auto;
-}
-/* line 97, ../scss/admin/_popover.scss */
-.g5-popover.g5-popover-particles li {
-  line-height: 42px;
-  margin: 1px 0;
-  text-align: center;
-}
-/* line 102, ../scss/admin/_popover.scss */
-.g5-popover.g5-popover-particles li:first-child, .g5-popover.g5-popover-particles li:last-child {
-  margin: 0;
-}
-/* line 106, ../scss/admin/_popover.scss */
-.g5-popover.g5-popover-particles li[data-lm-blocktype="spacer"] {
-  color: #aaa;
-  background-color: #eee;
-}
-/* line 111, ../scss/admin/_popover.scss */
-.g5-popover.g5-popover-particles li[data-lm-blocktype="position"] {
-  color: #fff;
-  background-color: #aaa;
-}
-/* line 116, ../scss/admin/_popover.scss */
-.g5-popover.g5-popover-particles li[data-lm-blocktype="particle"] {
-  color: #fff;
-  background-color: #13B0DA;
-}
-/* line 121, ../scss/admin/_popover.scss */
-.g5-popover.g5-popover-particles li[data-lm-blocktype="pagecontent"] {
-  color: #fff;
-  background-color: #218fda;
-}
-/* line 126, ../scss/admin/_popover.scss */
-.g5-popover.g5-popover-particles li[data-lm-blocktype="atom"] {
-  color: #fff;
-  background-color: #9055AF;
-}
-/* line 132, ../scss/admin/_popover.scss */
-.g5-popover.g5-popover-particles .search {
-  position: relative;
-  margin-bottom: 10px;
-}
-/* line 136, ../scss/admin/_popover.scss */
-.g5-popover.g5-popover-particles .search input {
-  font-size: 16px;
-  border: 0;
-  border-radius: 0;
-  line-height: 26px;
-  height: auto;
-  background: rgba(0, 0, 0, 0.1);
-  color: white;
-  box-shadow: none;
-  margin: 0;
-}
-/* line 148, ../scss/admin/_popover.scss */
-.g5-popover.g5-popover-particles .search i {
-  position: absolute;
-  right: 10px;
-  top: 10px;
 }
 /* line 156, ../scss/admin/_popover.scss */
 .g5-popover.g5-popover-font-preview {

@@ -24,7 +24,7 @@ var builder, layoutmanager, lmhistory;
 builder = new Builder();
 lmhistory = new LMHistory(builder.serialize());
 
-var particlesPopover = function() {
+/*var particlesPopover = function() {
     var particles = $('[data-lm-addparticle]');
     particles.popover({
         type: 'async',
@@ -50,7 +50,7 @@ var particlesPopover = function() {
             }, this);
         });
     });
-};
+};*/
 
 ready(function() {
     var body = $('body'), root = $('[data-lm-root]'), data;
@@ -64,7 +64,7 @@ ready(function() {
         }
         builder.setStructure(data);
         builder.load();
-        particlesPopover();
+        //particlesPopover();
     }
 
     // attach events
@@ -127,7 +127,7 @@ ready(function() {
 
         // -!- Popovers
         // particles picker
-        particlesPopover();
+        //particlesPopover();
 
         // refresh LM eraser
         layoutmanager.eraser.element = $('[data-lm-eraseblock]');

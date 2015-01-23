@@ -533,3 +533,92 @@
         display: block;
     }
 }
+
+
+.sidebar-block {
+    $negate: -($content-padding + $content-margin);
+    $compensate: $content-padding + $content-margin;
+    margin: ($negate + 0.10rem) $compensate $negate $negate;
+    padding: $compensate $content-padding;
+
+    background-color: darken($main-bg, 2);
+    border-right: 1px solid darken($main-bg, 5);
+}
+
+.g5-lm-particles-picker {
+    font-family: $font-family-headers;
+    font-size: 16px;
+
+    ul, li {
+        @extend %list-reset;
+    }
+
+    ul {
+        padding: 1px;
+        margin-bottom: 1em;
+        //background-color: #ddd;
+    }
+
+    li {
+        padding: $content-padding / 2;
+        margin: 1px 0;
+        text-align: center;
+        //display: inline-block;
+        //font-size: 0.8em;
+        border-radius: $core-border-radius;
+        padding: 3px 6px;
+        cursor: move;
+
+        &:first-child, &:last-child {
+            margin: 0;
+        }
+
+        &[data-lm-blocktype="spacer"] {
+            color: #aaa;
+            background-color: #eee;
+        }
+
+        &[data-lm-blocktype="position"] {
+            color: #fff;
+            background-color: #aaa;
+        }
+
+        &[data-lm-blocktype="particle"] {
+            color: #fff;
+            background-color: #13B0DA;
+        }
+
+        &[data-lm-blocktype="pagecontent"] {
+            color: #fff;
+            background-color: #218fda;
+        }
+
+        &[data-lm-blocktype="atom"] {
+            color: #fff;
+            background-color: #9055AF;
+        }
+    }
+
+    .search {
+        position: relative;
+        margin-bottom: 10px;
+
+        input {
+            font-size: 16px;
+            border: 0;
+            border-radius: 0;
+            line-height: 26px;
+            height: auto;
+            background: rgba(0, 0, 0, 0.1);
+            color: white;
+            box-shadow: none;
+            margin: 0;
+        }
+
+        i {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+    }
+}
