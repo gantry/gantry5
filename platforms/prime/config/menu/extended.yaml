@@ -1,16 +1,5 @@
-name: mainmenu
-title: Main Menu
-
-css:
-  id:
-  class: 'g-main-nav'
-
-config:
-  base: /
-  startLevel: 1
-  endLevel: 0
-  showAllChildren: true
-  window_open: 'width=200,height=300'
+title: Extended Menu
+base: /
 
 ordering:
   home:

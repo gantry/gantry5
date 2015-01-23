@@ -51,7 +51,7 @@ class Blueprints implements \ArrayAccess, ExportInterface
                 $fields = false;
 
             } else {
-                return [null, null];
+                return [null, null, null];
             }
         }
 

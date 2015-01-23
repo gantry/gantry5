@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Admin\Controller\Html;
 
+use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
@@ -16,6 +17,9 @@ class Menu extends HtmlController
             '/'             => 'index',
             '/*'            => 'item',
             '/*/**'         => 'item',
+            '/edit'         => 'undefined',
+            '/edit/*'       => 'undefined',
+            '/edit/*/**'    => 'form',
         ],
         'POST' => [
             '/'             => 'store',
@@ -33,49 +37,43 @@ class Menu extends HtmlController
 
     public function index()
     {
-        return $this->item('main-menu');
+        // Index points to default menu.
+        return $this->item('mainmenu');
     }
 
     public function item($id)
     {
-        $path = func_get_args();
+        // All extra arguments become the path.
+        $path = array_slice(func_get_args(), 1);
 
+        // Detect special case to fetch only one column group (last part of the path was index number).
         $last = end($path);
         $group = (string) intval($last) === (string) $last ? array_pop($path) : null;
 
-        try {
-            $resource = $this->loadResource($id);
-            array_shift($path);
-        } catch (\Exception $e) {
-            // Continue for now...
-            $id = 'main-menu';
-            $resource = $this->loadResource($id);
-        }
+        // Load the menu.
+        $resource = $this->loadResource($id);
 
-        $menuItem = implode('/', $path);
-        $item = $resource[$menuItem];
-        if (!$resource[$menuItem]) {
+        // Get menu item and make sure it exists.
+        $item = $resource[implode('/', $path)];
+        if (!$item) {
             throw new \RuntimeException('Menu item not found', 404);
         }
 
+        // Fill parameters to be passed to the template file.
         $this->params['id'] = 'menu';
-        $this->params['prefix'] = 'particles.menu.';
-        $this->params['route'] = 'settings';
+        $this->params['prefix'] = 'particles.menu.' . $id;
+        $this->params['route'] = 'particles.menu';
         $this->params['blueprints'] = $this->loadBlueprints();
         $this->params['menu'] = $resource;
         $this->params['item'] = $item;
 
-        /** @var MenuObject $menu */
-        $menu = $this->container['menu'];
-
         /** @var Config $config */
         $config = $this->container['config'];
 
-        $this->params['particle'] = $config->get('particles.instances.menu.' . $id);
-
-        $config->joinDefaults('particles.menu.items', $menu->instance($config->get('particles.menu'))->getMenuItems());
+        $this->params['particle'] = $config->get('menu.' . $id);
 
         if (empty($this->params['ajax']) || empty($_GET['inline'])) {
+            // Handle special case to fetch only one column group.
             if (count($path) > 0) {
                 $this->params['columns'] = $resource[$path[0]];
             }
@@ -85,6 +83,7 @@ class Menu extends HtmlController
             }
 
             return $this->container['admin.theme']->render('@gantry-admin//pages/menu/menu.html.twig', $this->params);
+
         } else {
             // Get layout name.
             $layout = $this->layoutName(count($path) + (int) isset($group));
@@ -92,6 +91,35 @@ class Menu extends HtmlController
 
             return $this->container['admin.theme']->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params);
         }
+    }
+
+    public function form($id)
+    {
+        // All extra arguments become the path.
+        $path = array_slice(func_get_args(), 1);
+
+        // Load the menu.
+        $resource = $this->loadResource($id);
+
+        // Get menu item and make sure it exists.
+        $item = $resource[implode('/', $path)];
+        if (!$item) {
+            throw new \RuntimeException('Menu item not found', 404);
+        }
+        // Load blueprints for the menu item.
+        $blueprints = $this->loadBlueprints('menuitem');
+
+        // Get the prefix.
+        $prefix = "menu.{$id}." . implode('.', $path);
+
+        $this->params = [
+                'path' => implode('/', $path),
+                'prefix' => $prefix,
+                'blueprints' => ['fields' => $blueprints['form.fields.items.fields']],
+                'data' =>  $this->container['config']->get($prefix),
+            ] + $this->params;
+
+        return $this->container['admin.theme']->render('@gantry-admin/pages/menu/settings.html.twig', $this->params);
     }
 
     protected function layoutName($level)
@@ -110,25 +138,22 @@ class Menu extends HtmlController
      * Load resource.
      *
      * @param string $id
-     * @return Config
+     * @return MenuObject
+     * @throws \RuntimeException
      */
     protected function loadResource($id)
     {
-        /** @var MenuObject $menus */
-        $menus = $this->container['menu'];
-
         /** @var Config $config */
         $config = $this->container['config'];
 
-        if ($id) {
-            $params = $config->get('particles.instances.menu.' . $id);
-        } else {
-            $params = $config->get('particles.menu');
-        }
+        $params = $config->get('menu.' . $id);
 
         if (!$params) {
             throw new \RuntimeException('Resource not found', 404);
         }
+
+        /** @var MenuObject $menus */
+        $menus = $this->container['menu'];
 
         return $menus->instance($params);
     }
@@ -136,10 +161,14 @@ class Menu extends HtmlController
     /**
      * Load blueprints.
      *
-     * @return object
+     * @param string $name
+     * @return Blueprints
      */
-    protected function loadBlueprints()
+    protected function loadBlueprints($name = 'menu')
     {
-        return $this->container['particles']->get('menu');
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+        $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
+        return new Blueprints(CompiledYamlFile::instance($filename)->content());
     }
 }

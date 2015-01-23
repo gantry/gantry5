@@ -25,11 +25,11 @@ class Menu implements \ArrayAccess, \Iterator
     protected $items;
 
     protected $defaults = [
-        'menu' => null,
-        'base' => 0,
+        'menu' => 'mainmenu',
+        'base' => '/',
         'startLevel' => 1,
         'endLevel' => 0,
-        'showAllChildren' => false,
+        'showAllChildren' => true,
         'highlightAlias' => true,
         'highlightParentAlias' => true,
         'window_open' => null
@@ -43,7 +43,11 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function instance(array $params = [])
     {
-        $params += $this->defaults;
+        if (!isset($params['config'])) {
+            $params = $this->defaults;
+        }   else {
+            $params = $params['config'] + $this->defaults;
+        }
 
         $instance = clone $this;
         $instance->params = $params;
@@ -51,6 +55,11 @@ class Menu implements \ArrayAccess, \Iterator
         $instance->items = $instance->getList($params);
 
         return $instance;
+    }
+
+    public function name()
+    {
+        return $this->params['menu'];
     }
 
     public function root()
@@ -120,7 +129,7 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function getMenuItems()
     {
-        $items = (array) isset($this->params['items']) ? $this->params['items'] : null;
+        $items = (array) Gantry::instance()['config']->get("menu.{$this->params['menu']}");
 
         $folder = PRIME_ROOT . '/pages';
         if (!is_dir($folder)) {
@@ -145,19 +154,17 @@ class Menu implements \ArrayAccess, \Iterator
      * Logic has been mostly copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
      * We should keep the contents of the function similar to Joomla in order to review it against any changes.
      *
-     * @param  array  $config
+     * @param  array  $params
      *
      * @return array
      */
-    protected function getList(array $config)
+    protected function getList(array $params)
     {
-        $items = (array) (isset($config['items']) ? $config['items'] : null);
-        $params = (array) (isset($config['config']) ? $config['config'] : null);
-
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
 
         $path    = $this->base;
+        $menu    = $params['menu'];
         $start   = $params['startLevel'];
         $end     = $params['endLevel'];
         $showAll = $params['showAllChildren'];
@@ -172,6 +179,7 @@ class Menu implements \ArrayAccess, \Iterator
         if (!is_dir($folder)) {
             return [];
         }
+        $items = (array) Gantry::instance()['config']->get("menu.{$menu}.items");
         $menuItems = array_unique(array_merge(Folder::all($folder, $options), array_keys($items)));
         sort($menuItems);
 
@@ -241,7 +249,7 @@ class Menu implements \ArrayAccess, \Iterator
             $all[$item->path] = $item;
         }
 
-        $ordering = (array) (isset($config['ordering']) ? $config['ordering'] : null);
+        $ordering = (array) Gantry::instance()['config']->get("menu.{$menu}.ordering");
         $this->sortAll($all, $ordering);
 
         return $all;
