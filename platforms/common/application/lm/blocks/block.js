@@ -54,8 +54,6 @@ var Block = new prime({
     },
 
     onRendered: function(element, parent) {
-        console.log(element, element.block.find('> [data-lm-blocktype="section"]'));
-        console.log('-');
         if (element.block.find('> [data-lm-blocktype="section"]')) {
             this.removeDropzone();
         }
