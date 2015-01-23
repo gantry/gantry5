@@ -196,7 +196,7 @@
             }
         }
 
-        > .g-grid > .g-block {
+        > .g-grid > .g-block, > .g-lm-container > .g-grid > .g-block {
             margin-right: 14px;
             background: $white;
             padding-bottom: 50px;
