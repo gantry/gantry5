@@ -599,11 +599,15 @@
         }
     }
 
+    .settings-block {
+        width: 100% !important;
+    }
+
     .search {
         position: relative;
         margin-bottom: 10px;
 
-        input {
+        /*input {
             font-size: 16px;
             border: 0;
             border-radius: 0;
@@ -613,7 +617,7 @@
             color: white;
             box-shadow: none;
             margin: 0;
-        }
+        }*/
 
         i {
             position: absolute;

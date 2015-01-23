@@ -1504,23 +1504,26 @@ a {
   background-color: #9055AF;
 }
 /* line 602, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker .settings-block {
+  width: 100% !important;
+}
+/* line 606, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search {
   position: relative;
   margin-bottom: 10px;
+  /*input {
+      font-size: 16px;
+      border: 0;
+      border-radius: 0;
+      line-height: 26px;
+      height: auto;
+      background: rgba(0, 0, 0, 0.1);
+      color: white;
+      box-shadow: none;
+      margin: 0;
+  }*/
 }
-/* line 606, ../scss/admin/_layout-manager.scss */
-.g5-lm-particles-picker .search input {
-  font-size: 16px;
-  border: 0;
-  border-radius: 0;
-  line-height: 26px;
-  height: auto;
-  background: rgba(0, 0, 0, 0.1);
-  color: white;
-  box-shadow: none;
-  margin: 0;
-}
-/* line 618, ../scss/admin/_layout-manager.scss */
+/* line 622, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search i {
   position: absolute;
   right: 10px;

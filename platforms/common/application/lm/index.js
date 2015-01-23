@@ -134,6 +134,19 @@ ready(function() {
         layoutmanager.eraser.hide();
     });
 
+    body.delegate('input', '.sidebar-block .search input', function(event, element){
+        var value = $(element).value().toLowerCase(),
+            list = $('.sidebar-block [data-lm-blocktype]');
+        if (!list) { return false; }
+
+        list.style({ display: 'none' }).forEach(function(blocktype) {
+            blocktype = $(blocktype);
+            if (blocktype.data('lm-blocktype').toLowerCase().match(value) || blocktype.text().toLowerCase().match(value)) {
+                blocktype.style({ display: 'block' });
+            }
+        }, this);
+    });
+
     body.delegate('click', '[data-g5-lm-add]', function(event, element) {
         event.preventDefault();
         modal.open({
