@@ -105,9 +105,10 @@ domready(function() {
         History.pushState(data, title, url);
 
         var navbar, active, actives = $('#navbar .active, #main-header .active');
-        if (actives) { actives.removeClass('active'); }
 
         if (navbar = element.parent('#navbar, #main-header')) {
+            if (actives) { actives.removeClass('active'); }
+            
             active = navbar.search('.active');
             if (active) { active.removeClass('active'); }
             element.parent('li').addClass('active');
