@@ -98,7 +98,8 @@ var DragDrop = new prime({
 
 
         var offset = Math.abs(this.origin.offset.x),
-            columns = this.element.parent().data('lm-blocktype') === 'grid' && this.element.parent().parent().data('lm-root');
+            columns = (this.element.parent().data('lm-blocktype') === 'grid' && this.element.parent().parent().data('lm-root')) ||
+                      (this.element.parent().parent().data('lm-blocktype') == 'container' && this.element.parent().parent().parent().data('lm-root'));
 
         // resizing and only if it's not a non-visible section
         if ((offset < 6 && this.element.parent().find(':last-child') !== this.element) || (columns && offset > 3 && offset < 10)) {

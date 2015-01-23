@@ -3,15 +3,23 @@
         <div class="g-content clearfix">
             <span class="theme-title"><i class="fa fa-tint"></i> Theme: {{ gantry.theme.title }}</span>
 
-            <div class="float-right">
-                <select class="float-left">
-                    <option>Master</option>
-                    <option>Front Page</option>
-                </select>
-                <button class="button float-left">Configurations</button>
-                <a class="float-left" data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu')|e }}"><i class="fa fa-adjust"></i><span>Menu</span></a>
-                <a class="float-left" data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('overview')|e }}"><i class="fa fa-adjust"></i><span>About</span></a>
-            </div>
+            <ul class="float-right">
+                <li {{ (location == 'configurations') ? 'class="active"' }}>
+                    <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('configurations')|e }}"><i class="fa fa-gears"></i> Configurations</a>
+                </li>
+                <li {{ (location == 'menu') ? 'class="active"' }}>
+                    <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu')|e }}"><i class="fa fa-list"></i> <span>Menu</span></a>
+                </li>
+                <li {{ (location == 'overview') ? 'class="active"' }}>
+                    <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('overview')|e }}"><i class="fa fa-question-circle"></i> <span>About</span></a>
+                </li>
+                <li>
+                    <select class="config-select">
+                        <option>Master</option>
+                        <option>Front Page</option>
+                    </select>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

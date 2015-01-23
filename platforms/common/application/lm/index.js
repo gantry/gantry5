@@ -119,7 +119,8 @@ ready(function() {
         modal.close();
     });
 
-    body.delegate('statechangeAfter', '[data-g5-lm-picker]', function(event, element) {
+    body.delegate('statechangeAfter', '#navbar [data-g5-ajaxify]', function(event, element) {
+        if (!$('[data-lm-root]')) { return true; }
         data = JSON.parse($('[data-lm-root]').data('lm-root'));
         builder.setStructure(data.layout);
         builder.load();
@@ -143,7 +144,7 @@ ready(function() {
 
     // layoutmanager
     layoutmanager = new LayoutManager('body', {
-        delegate: '[data-lm-root] .section .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
+        delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
         droppables: '[data-lm-dropzone]',
         exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
         resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
