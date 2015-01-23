@@ -108,6 +108,7 @@ var Builder = new prime({
                 id: id,
                 type: type,
                 subtype: subtype,
+                title: get(this.map, id) ? get(this.map, id).getTitle() : 'Untitled',
                 attributes: get(this.map, id) ? get(this.map, id).getAttributes() : {},
                 children: children
             };
@@ -127,7 +128,7 @@ var Builder = new prime({
             return;
         }
 
-        var Element = new Blocks[value.type](fillIn({id: key, attributes: {}, subtype: false, builder: this}, omit(value, 'children')));
+        var Element = new Blocks[value.type](fillIn({id: key, attributes: {}, subtype: value.subtype || false, builder: this}, omit(value, 'children')));
 
         if (!parent) {
             Element.block.insert(root);

@@ -232,10 +232,11 @@ class Pages extends HtmlController
         // Create configuration from the defaults.
         $data = new Config(
             [
+                'title'   => isset($_POST['block']) ? $_POST['title'] : 'Untitled',
                 'type'    => 'particle',
                 'subtype' => $particle,
                 'options' => $defaults,
-                'block'   => [],
+                'block'   => []
             ],
             $callable);
 

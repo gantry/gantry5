@@ -15,6 +15,7 @@ var Atom = new prime({
 
     updateTitle: function(title) {
         this.block.find('.title').text(title);
+        this.setTitle(title);
         return this;
     },
 

@@ -189,7 +189,7 @@ ready(function() {
         blocktype = element.data('lm-blocktype');
 
         var ID = element.data('lm-id'),
-            parentID = parent.data('lm-id');
+            parentID = parent ? parent.data('lm-id') : false;
 
         if (!contains(['block', 'grid', 'section', 'atom'], blocktype)) {
             data = {};
@@ -271,12 +271,17 @@ ready(function() {
                     });
 
                     if (title) {
-                        dataString.push(title.data('particle-title-name') + '=' + title.data('particle-title'));
+                        dataString.push('title=' + title.data('particle-title'));
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response) {
                         if (!response.body.success) {
-                            modal.open({ content: response.body.html });
+                            modal.open({
+                                content: response.body.html || response.body,
+                                afterOpen: function(container) {
+                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                }
+                            });
                             return false;
                         } else {
                             var particle = builder.get(ID),
@@ -284,7 +289,8 @@ ready(function() {
 
                             // particle attributes
                             particle.setAttributes(response.body.data.options);
-                            particle.updateTitle(particle.getAttribute('title'));
+                            particle.setTitle(response.body.data.title || 'Untitled');
+                            particle.updateTitle(particle.getTitle());
 
                             // parent block attributes
                             if (response.body.data.block && size(response.body.data.block)) {
