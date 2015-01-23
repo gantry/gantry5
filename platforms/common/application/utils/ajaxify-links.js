@@ -104,9 +104,11 @@ domready(function() {
 
         History.pushState(data, title, url);
 
-        var sidebar, active;
-        if (sidebar = element.parent('#navbar')) {
-            active = sidebar.search('.active');
+        var navbar, active, actives = $('#navbar .active, #main-header .active');
+        if (actives) { actives.removeClass('active'); }
+
+        if (navbar = element.parent('#navbar, #main-header')) {
+            active = navbar.search('.active');
             if (active) { active.removeClass('active'); }
             element.parent('li').addClass('active');
         }
