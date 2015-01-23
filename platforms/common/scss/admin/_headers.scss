@@ -46,9 +46,42 @@
             }
         }
 
-        .config-select {
-            margin-bottom: $content-padding;
+        .config-select-wrap {
+            width: auto;
+            border-radius: 3px;
+            overflow: hidden;
+            background: darken($production, 10%);
+            color: #fff;
+            position: relative;
             margin-left: 1rem;
+            margin-top: 0.5rem;
+            float: right;
+            .fa-chevron-down {
+                position: absolute;
+                right: $content-padding;
+                z-index: 1;
+                @extend %vertical-align;
+            }
+        }
+
+        .config-select-wrap select {
+            padding: 6px 2.5rem 6px 12px;
+            border: none;
+            box-shadow: none;
+            background: transparent;
+            background-image: none;
+            -webkit-appearance: none;
+            position: relative;
+            z-index: 2;
+            -moz-appearance: none;
+        }
+
+        .config-select-wrap select:focus {
+            outline: none;
+        }
+
+        .config-select {
+            margin-bottom: 0;
         }
 
         .button-save {
