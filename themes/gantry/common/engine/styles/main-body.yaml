@@ -1,0 +1,11 @@
+name: Main Body Color
+description: Accent colors used for website
+type: colors
+
+form:
+  fields:
+
+    main-bg:
+      type: input.colorpicker
+      label: Core Text
+      default: "#f7f7f7"
