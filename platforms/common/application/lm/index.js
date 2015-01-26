@@ -136,12 +136,15 @@ ready(function() {
 
     body.delegate('input', '.sidebar-block .search input', function(event, element){
         var value = $(element).value().toLowerCase(),
-            list = $('.sidebar-block [data-lm-blocktype]');
+            list = $('.sidebar-block [data-lm-blocktype]'),
+            text, type;
         if (!list) { return false; }
 
         list.style({ display: 'none' }).forEach(function(blocktype) {
             blocktype = $(blocktype);
-            if (blocktype.data('lm-blocktype').toLowerCase().match(value) || blocktype.text().toLowerCase().match(value)) {
+            type = blocktype.data('lm-blocktype').toLowerCase();
+            text = trim(blocktype.text()).toLowerCase();
+            if (type.substr(0, value.length) == value || text.match(value)) {
                 blocktype.style({ display: 'block' });
             }
         }, this);
