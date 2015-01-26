@@ -1,0 +1,8 @@
+{% extends default ? "partials/field.html.twig" : "forms/field.html.twig" %}
+
+{% block global_attributes %}
+    type="text"
+    data-selectize="{{ (field.selectize is defined ? field.selectize|json_encode()|e('html_attr') : '') }}"
+
+    {{ parent() }}
+{% endblock %}
