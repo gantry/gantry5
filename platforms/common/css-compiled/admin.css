@@ -6,7 +6,7 @@
 }
 
 /* line 9, ../scss/nucleus/mixins/_utilities.scss */
-#g5-container #main-header .config-select-wrap .fa-chevron-down, #g5-container .menu-header .menu-select-wrap .fa-chevron-down, #g5-container .submenu-ratio i {
+#g5-container #main-header .config-select-wrap .fa-chevron-down, #g5-container .submenu-ratio i {
   position: relative;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -1876,23 +1876,11 @@ a {
 /* line 31, ../scss/admin/_menu.scss */
 #g5-container .menu-header .menu-select-wrap {
   width: auto;
-  border-radius: 3px;
-  overflow: hidden;
-  background: #fff;
-  position: relative;
-  margin-left: 1rem;
   display: inline-block;
-  border: 1px solid #ddd;
   vertical-align: middle;
   margin-bottom: 1rem;
 }
-/* line 42, ../scss/admin/_menu.scss */
-#g5-container .menu-header .menu-select-wrap .fa-chevron-down {
-  position: absolute;
-  right: 0.469rem;
-  z-index: 1;
-}
-/* line 50, ../scss/admin/_menu.scss */
+/* line 38, ../scss/admin/_menu.scss */
 #g5-container .menu-header .menu-select-wrap select {
   padding: 6px 2rem 6px 12px;
   border: none;
@@ -1906,11 +1894,11 @@ a {
   margin-bottom: 0;
   font-weight: 500;
 }
-/* line 64, ../scss/admin/_menu.scss */
+/* line 52, ../scss/admin/_menu.scss */
 #g5-container .menu-header .menu-select-wrap select:focus {
   outline: none;
 }
-/* line 70, ../scss/admin/_menu.scss */
+/* line 58, ../scss/admin/_menu.scss */
 #g5-container .menu-selector {
   margin: 0.625rem 0;
   padding: 2px;
@@ -1918,7 +1906,7 @@ a {
   border: 1px solid #ddd;
   border-radius: 0.1875rem;
 }
-/* line 77, ../scss/admin/_menu.scss */
+/* line 65, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li {
   position: relative;
   margin: 2px;
@@ -1926,41 +1914,41 @@ a {
   color: #808080;
   display: inline-block;
 }
-/* line 84, ../scss/admin/_menu.scss */
+/* line 72, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li .parent-indicator:before {
   content: "\f078";
 }
-/* line 89, ../scss/admin/_menu.scss */
+/* line 77, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li a {
   display: inline-block;
   color: #808080;
 }
-/* line 94, ../scss/admin/_menu.scss */
+/* line 82, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li .menu-item {
   padding: 0.938rem;
   font-size: 1.1rem;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 94, ../scss/admin/_menu.scss */
+  /* line 82, ../scss/admin/_menu.scss */
   #g5-container .menu-selector li .menu-item {
     font-size: 1rem;
     padding: 0.938rem 0.738rem;
   }
 }
-/* line 103, ../scss/admin/_menu.scss */
+/* line 91, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li .config-cog {
   top: 4px;
   right: 4px;
 }
-/* line 108, ../scss/admin/_menu.scss */
+/* line 96, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li:hover, #g5-container .menu-selector li.active {
   background: #48B0D7;
 }
-/* line 110, ../scss/admin/_menu.scss */
+/* line 98, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li:hover a, #g5-container .menu-selector li.active a {
   color: #fff;
 }
-/* line 115, ../scss/admin/_menu.scss */
+/* line 103, ../scss/admin/_menu.scss */
 #g5-container .menu-selector span {
   line-height: 2;
   font-size: 0.6rem;
@@ -1968,7 +1956,7 @@ a {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 124, ../scss/admin/_menu.scss */
+/* line 112, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector {
   border: 1px solid #ddd;
   border-bottom: 0;
@@ -1976,44 +1964,44 @@ a {
   padding: 2px;
   border-radius: 0.1875rem 0.1875rem 0 0;
 }
-/* line 130, ../scss/admin/_menu.scss */
+/* line 118, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .g-block {
   background: #DADADA;
   border: 2px solid #fff;
   border-bottom: 0;
   padding: 0.469rem 0;
 }
-/* line 136, ../scss/admin/_menu.scss */
+/* line 124, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items {
   list-style: none;
   margin: 0;
 }
-/* line 139, ../scss/admin/_menu.scss */
+/* line 127, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li {
   color: #808080;
   cursor: pointer;
   position: relative;
 }
-/* line 143, ../scss/admin/_menu.scss */
+/* line 131, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li a {
   display: block;
   color: #808080;
 }
-/* line 147, ../scss/admin/_menu.scss */
+/* line 135, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .menu-item {
   padding: 0.469rem 0.938rem;
 }
-/* line 149, ../scss/admin/_menu.scss */
+/* line 137, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .menu-item .fa-chevron-left {
   font-size: 0.8rem;
   line-height: 1.9;
 }
-/* line 154, ../scss/admin/_menu.scss */
+/* line 142, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .config-cog {
   right: 4px;
   top: 0.8rem;
 }
-/* line 159, ../scss/admin/_menu.scss */
+/* line 147, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .parent-indicator:before {
   content: "\f054";
   float: right;
@@ -2021,15 +2009,15 @@ a {
   line-height: 2;
   margin-right: 10px;
 }
-/* line 167, ../scss/admin/_menu.scss */
+/* line 155, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li:hover, #g5-container .submenu-selector .submenu-items li .active {
   background: #48B0D7;
 }
-/* line 169, ../scss/admin/_menu.scss */
+/* line 157, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li:hover a, #g5-container .submenu-selector .submenu-items li .active a {
   color: #fff;
 }
-/* line 177, ../scss/admin/_menu.scss */
+/* line 165, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio {
   background: #fff;
   text-align: center;
@@ -2040,7 +2028,7 @@ a {
   border-top: 0;
   border-radius: 0 0 0.1875rem 0.1875rem;
 }
-/* line 186, ../scss/admin/_menu.scss */
+/* line 174, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio i {
   position: absolute;
   right: 1rem;

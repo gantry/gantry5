@@ -22,7 +22,8 @@ History.Adapter.bind(window, 'statechange', function() {
     if (request.running()) {
         return false;
     }
-    var State = History.getState(),
+    var body = $('body'),
+        State = History.getState(),
         URI = State.url,
         Data = State.data,
         sidebar = $('#navbar'),
@@ -34,7 +35,7 @@ History.Adapter.bind(window, 'statechange', function() {
     }
 
     if (Data.element) {
-        $('body').emit('statechangeBefore', { target: Data.element });
+        body.emit('statechangeBefore', { target: Data.element });
     } else {
         var url = URI.replace(window.location.origin, '');
         Data.element = $('[href="' + url + '"]');
@@ -60,16 +61,21 @@ History.Adapter.bind(window, 'statechange', function() {
 
         var target = $(Data.target);
         //console.log(Data, State);
-        $('body').getPopover().hideAll(true).destroy();
+        body.getPopover().hideAll(true).destroy();
         if (response.body && response.body.html) {
-            (target || $('[data-g5-content]') || $('body')).html(response.body.html);
+            (target || $('[data-g5-content]') || body).html(response.body.html);
         } else {
-            (target || $('[data-g5-content]') || $('body')).html(response.body);
+            (target || $('[data-g5-content]') || body).html(response.body);
         }
 
         if (Data.element) {
-            $('body').emit('statechangeAfter', { target: Data.element });
+            body.emit('statechangeAfter', { target: Data.element });
         }
+
+        var selects = $('[data-selectize]');
+        if (selects) { selects.selectize(); }
+
+        body.emit('statechangeEnd');
     });
 });
 

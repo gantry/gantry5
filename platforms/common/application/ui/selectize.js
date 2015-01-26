@@ -1948,10 +1948,6 @@ ready(function() {
 
     selects.selectize();
 
-    $('body').on('statechangeAfter', function(){
-        selects = $('[data-selectize]');
-        if (selects) { selects.selectize(); }
-    });
 });
 
 
