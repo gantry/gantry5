@@ -464,6 +464,12 @@
             border-radius: 3px;
             margin-right: 8px;
         }
+
+        .button {
+            i {
+                line-height: $core-line-height + 0.1;
+            }
+        }
     }
 
     /* deletion */
