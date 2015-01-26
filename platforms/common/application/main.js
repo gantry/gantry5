@@ -43,7 +43,9 @@ module.exports = {
     styles: require('./styles'),
     "$": elements,
     domready: require('elements/domready'),
-    particles: require('./particles')
+    particles: require('./particles'),
+    zen: require('elements/zen'),
+    moofx: require('moofx')
 };
 
 

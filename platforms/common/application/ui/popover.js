@@ -295,6 +295,9 @@ var Popover = new prime({
             target.attribute('style', null);
             this.displayContent();
             this.bindBodyEvents();
+
+            var selects = $('[data-selectize]');
+            if (selects) { selects.selectize(); }
         }, this));
     },
 
