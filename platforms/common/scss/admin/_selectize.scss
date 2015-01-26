@@ -5,7 +5,7 @@ $selectize-line-height: normal;
 
 $selectize-color-text: #666;
 $selectize-color-border: $medium-gray;
-$selectize-color-highlight: rgba(125,168,208,0.2);
+$selectize-color-highlight: rgba($tertiary-accent, 0.5);
 $selectize-color-input: #fff;
 $selectize-color-input-full: $selectize-color-input;
 $selectize-color-disabled: #fafafa;
@@ -18,7 +18,7 @@ $selectize-color-item-active-border: transparent;
 $selectize-color-dropdown: #fff;
 $selectize-color-dropdown-border: $selectize-color-border;
 $selectize-color-dropdown-border-top: #f0f0f0;
-$selectize-color-dropdown-item-active: #f5fafd;
+$selectize-color-dropdown-item-active: rgba($tertiary-accent, 0.3);//#f5fafd;
 $selectize-color-dropdown-item-active-text: #495c68;
 $selectize-color-dropdown-item-create-text: rgba(red($selectize-color-text), green($selectize-color-text), blue($selectize-color-text), 0.6);
 $selectize-color-dropdown-item-create-active-text: $selectize-color-dropdown-item-active-text;

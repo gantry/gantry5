@@ -507,7 +507,7 @@ a {
 }
 /* line 189, ../scss/admin/_selectize.scss */
 .selectize-dropdown [data-selectable] .highlight {
-  background: rgba(125, 168, 208, 0.2);
+  background: rgba(72, 176, 215, 0.5);
   border-radius: 1px;
 }
 /* line 194, ../scss/admin/_selectize.scss */
@@ -526,7 +526,7 @@ a {
 }
 /* line 205, ../scss/admin/_selectize.scss */
 .selectize-dropdown .active {
-  background-color: #f5fafd;
+  background-color: rgba(72, 176, 215, 0.3);
   color: #495c68;
 }
 /* line 208, ../scss/admin/_selectize.scss */
