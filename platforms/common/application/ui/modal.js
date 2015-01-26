@@ -205,7 +205,10 @@ var Modal = new prime({
     },
 
     getByID: function(id) {
-        return $(this.getAll().filter(function(element) {
+        var all = this.getAll();
+        if (!all) { return []; }
+
+        return $(all.filter(function(element) {
             element = $(element);
             return storage.get(element).dialog.id === id;
         }));
