@@ -19,7 +19,7 @@ class ScssPhp extends CssCompiler implements CssCompilerInterface {
      */
     public function __construct($options)
     {
-        $options['compiler'] = new scssc();;
+        $options['compiler'] = new \scssc();
 
         parent::__construct($options);
     }
@@ -58,5 +58,5 @@ class ScssPhp extends CssCompiler implements CssCompilerInterface {
         $file->save();
         $file->unlock();
     }
-    
+
 }
