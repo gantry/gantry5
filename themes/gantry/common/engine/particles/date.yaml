@@ -21,8 +21,12 @@ form:
       label: Target
       description: Target browser window when item is clicked.
       default: l, F d, Y
+      placeholder: 'Select...'
+      selectize:
+          allowEmptyOption: true
+          create: true
       options:
-          '': - Select -
+          '': None
           'l, F d, Y': Date1
           'F d': Date2
           'd M': Date3

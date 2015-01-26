@@ -159,6 +159,9 @@ var Modal = new prime({
                 if (options.remoteLoaded) {
                     options.remoteLoaded(response, options);
                 }
+
+                var selects = $('[data-selectize]');
+                if (selects) { selects.selectize(); }
             }, this));
         }
 

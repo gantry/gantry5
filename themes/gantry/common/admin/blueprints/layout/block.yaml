@@ -11,7 +11,7 @@ form:
       default:
 
     class:
-      type: input.text
+      type: input.selectize
       label: Class
       description: CSS class name.
       default:

@@ -6,7 +6,7 @@
 }
 
 /* line 9, ../scss/nucleus/mixins/_utilities.scss */
-#g5-container #main-header .config-select-wrap .fa-chevron-down, #g5-container .menu-header .menu-select-wrap .fa-chevron-down, #g5-container .submenu-ratio i {
+#g5-container #main-header .config-select-wrap .fa-chevron-down, #g5-container .submenu-ratio i {
   position: relative;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -353,7 +353,297 @@ a {
   color: #C6C6C6;
 }
 
-/* line 4, ../scss/admin/_settings.scss */
+/* line 56, ../scss/admin/_selectize.scss */
+[data-selectize] {
+  visibility: hidden;
+}
+
+/* line 60, ../scss/admin/_selectize.scss */
+.selectize-control {
+  position: relative;
+}
+
+/* line 64, ../scss/admin/_selectize.scss */
+.selectize-dropdown, .selectize-input, .selectize-input input {
+  color: #303030;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 18px;
+  -webkit-font-smoothing: inherit;
+}
+
+/* line 72, ../scss/admin/_selectize.scss */
+.selectize-input, .selectize-control.single .selectize-input.input-active {
+  background: #fff;
+  cursor: text;
+  display: inline-block;
+}
+
+/* line 78, ../scss/admin/_selectize.scss */
+.selectize-input {
+  border: 1px solid #d0d0d0;
+  padding: 8px 8px;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+/* line 90, ../scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input.has-items {
+  padding: 5px 8px 2px;
+}
+/* line 97, ../scss/admin/_selectize.scss */
+.selectize-input.full {
+  background-color: #fff;
+}
+/* line 100, ../scss/admin/_selectize.scss */
+.selectize-input.disabled, .selectize-input.disabled * {
+  cursor: default !important;
+}
+/* line 103, ../scss/admin/_selectize.scss */
+.selectize-input.focus {
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+/* line 106, ../scss/admin/_selectize.scss */
+.selectize-input.dropdown-active {
+  border-radius: 3px 3px 0 0;
+}
+/* line 110, ../scss/admin/_selectize.scss */
+.selectize-input > * {
+  vertical-align: baseline;
+  display: -moz-inline-stack;
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+}
+/* line 117, ../scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input > div {
+  cursor: pointer;
+  margin: 0 3px 3px 0;
+  padding: 2px 6px;
+  background: #1da7ee;
+  color: #fff;
+  border: 1px solid #0073bb;
+}
+/* line 125, ../scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input > div.active {
+  background: #92c836;
+  color: #fff;
+  border: 1px solid #00578d;
+}
+/* line 132, ../scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input.disabled > div, .selectize-control.multi .selectize-input.disabled > div.active {
+  color: white;
+  background: #d2d2d2;
+  border: 1px solid #aaaaaa;
+}
+/* line 138, ../scss/admin/_selectize.scss */
+.selectize-input > input {
+  display: inline-block !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  max-width: 100% !important;
+  margin: 0 1px !important;
+  text-indent: 0 !important;
+  border: 0 none !important;
+  background: none !important;
+  line-height: inherit !important;
+  -webkit-user-select: auto !important;
+  box-shadow: none !important;
+}
+/* line 139, ../scss/admin/_selectize.scss */
+.selectize-input > input::-ms-clear {
+  display: none;
+}
+/* line 154, ../scss/admin/_selectize.scss */
+.selectize-input > input:focus {
+  outline: none !important;
+}
+
+/* line 158, ../scss/admin/_selectize.scss */
+.selectize-input::after {
+  content: ' ';
+  display: block;
+  clear: left;
+}
+
+/* line 164, ../scss/admin/_selectize.scss */
+.selectize-input.dropdown-active::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  background: #f0f0f0;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* line 175, ../scss/admin/_selectize.scss */
+.selectize-dropdown {
+  position: absolute;
+  z-index: 10;
+  border: 1px solid #d0d0d0;
+  background: #fff;
+  margin: -1px 0 0 0;
+  border-top: 0 none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 3px 3px;
+}
+/* line 186, ../scss/admin/_selectize.scss */
+.selectize-dropdown [data-selectable] {
+  cursor: pointer;
+  overflow: hidden;
+}
+/* line 189, ../scss/admin/_selectize.scss */
+.selectize-dropdown [data-selectable] .highlight {
+  background: rgba(125, 168, 208, 0.2);
+  border-radius: 1px;
+}
+/* line 194, ../scss/admin/_selectize.scss */
+.selectize-dropdown [data-selectable], .selectize-dropdown .optgroup-header {
+  padding: 5px 8px;
+}
+/* line 197, ../scss/admin/_selectize.scss */
+.selectize-dropdown .optgroup:first-child .optgroup-header {
+  border-top: 0 none;
+}
+/* line 200, ../scss/admin/_selectize.scss */
+.selectize-dropdown .optgroup-header {
+  color: #303030;
+  background: #fff;
+  cursor: default;
+}
+/* line 205, ../scss/admin/_selectize.scss */
+.selectize-dropdown .active {
+  background-color: #f5fafd;
+  color: #495c68;
+}
+/* line 208, ../scss/admin/_selectize.scss */
+.selectize-dropdown .active.create {
+  color: #495c68;
+}
+/* line 212, ../scss/admin/_selectize.scss */
+.selectize-dropdown .create {
+  color: rgba(48, 48, 48, 0.5);
+}
+
+/* line 217, ../scss/admin/_selectize.scss */
+.selectize-dropdown-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 200px;
+}
+
+/* line 224, ../scss/admin/_selectize.scss */
+.selectize-control.single .selectize-input, .selectize-control.single .selectize-input input {
+  cursor: pointer;
+}
+/* line 225, ../scss/admin/_selectize.scss */
+.selectize-control.single .selectize-input.input-active, .selectize-control.single .selectize-input.input-active input {
+  cursor: text;
+}
+/* line 227, ../scss/admin/_selectize.scss */
+.selectize-control.single .selectize-input:after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  margin-top: -3px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 5px 0 5px;
+  border-color: #808080 transparent transparent transparent;
+}
+/* line 240, ../scss/admin/_selectize.scss */
+.selectize-control.single .selectize-input.dropdown-active:after {
+  margin-top: -4px;
+  border-width: 0 5px 5px 5px;
+  border-color: transparent transparent #808080 transparent;
+}
+
+/* line 248, ../scss/admin/_selectize.scss */
+.selectize-control .selectize-input.disabled {
+  opacity: 0.5;
+  background-color: #fafafa;
+}
+
+/* line 256, ../scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input.has-items {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+/* line 261, ../scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input.disabled [data-value] {
+  color: #999;
+  text-shadow: none;
+  background: none;
+  box-shadow: none;
+}
+/* line 267, ../scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input.disabled [data-value], .selectize-control.multi .selectize-input.disabled [data-value] .remove {
+  border-color: #e6e6e6;
+}
+/* line 270, ../scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input.disabled [data-value] .remove {
+  background: none;
+}
+/* line 274, ../scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input [data-value] {
+  text-shadow: 0 1px 0 rgba(0, 51, 83, 0.3);
+  border-radius: 3px;
+  background-color: #1da7ee;
+  background-image: -webkit-linear-gradient(#1da7ee, #178ee9);
+  background-image: linear-gradient(#1da7ee, #178ee9);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), inset 0 1px rgba(255, 255, 255, 0.03);
+}
+/* line 279, ../scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input [data-value].active {
+  background-color: #008fd8;
+  background-image: -webkit-linear-gradient(#008fd8, #0075cf);
+  background-image: linear-gradient(#008fd8, #0075cf);
+}
+/* line 286, ../scss/admin/_selectize.scss */
+.selectize-control.single .selectize-input {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  background-color: #fefefe;
+  background-image: -webkit-linear-gradient(#fefefe, #f2f2f2);
+  background-image: linear-gradient(#fefefe, #f2f2f2);
+}
+
+/* line 293, ../scss/admin/_selectize.scss */
+.selectize-control.single .selectize-input, .selectize-dropdown.single {
+  border-color: #b8b8b8;
+}
+
+/* line 298, ../scss/admin/_selectize.scss */
+.selectize-dropdown .optgroup-header {
+  padding-top: 7px;
+  font-weight: bold;
+  font-size: 0.85em;
+}
+/* line 303, ../scss/admin/_selectize.scss */
+.selectize-dropdown .optgroup {
+  border-top: 1px solid #f0f0f0;
+}
+/* line 305, ../scss/admin/_selectize.scss */
+.selectize-dropdown .optgroup:first-child {
+  border-top: 0 none;
+}
+
+/* line 6, ../scss/admin/_settings.scss */
 #g5-container #settings .dev-mode-toggle {
   position: relative;
   height: 36px;
@@ -362,12 +652,12 @@ a {
   border-radius: 0.1875rem;
   color: #fff;
 }
-/* line 12, ../scss/admin/_settings.scss */
+/* line 14, ../scss/admin/_settings.scss */
 #g5-container #settings .dev-mode-toggle input {
   position: absolute;
   opacity: 0;
 }
-/* line 17, ../scss/admin/_settings.scss */
+/* line 19, ../scss/admin/_settings.scss */
 #g5-container #settings .dev-mode-toggle input + label {
   position: relative;
   z-index: 2;
@@ -377,7 +667,7 @@ a {
   margin: 0;
   text-align: center;
 }
-/* line 27, ../scss/admin/_settings.scss */
+/* line 29, ../scss/admin/_settings.scss */
 #g5-container #settings .dev-mode-toggle label {
   padding: 8px 20px;
   vertical-align: middle;
@@ -391,11 +681,11 @@ a {
   -moz-transition: opacity 0.1s ease-out;
   transition: opacity 0.1s ease-out;
 }
-/* line 39, ../scss/admin/_settings.scss */
+/* line 41, ../scss/admin/_settings.scss */
 #g5-container #settings .dev-mode-toggle input:checked + label {
   opacity: 1;
 }
-/* line 43, ../scss/admin/_settings.scss */
+/* line 45, ../scss/admin/_settings.scss */
 #g5-container #settings .dev-mode-toggle a {
   display: block;
   position: absolute;
@@ -411,56 +701,56 @@ a {
   -moz-transition: all 0.1s ease-out;
   transition: all 0.1s ease-out;
 }
-/* line 57, ../scss/admin/_settings.scss */
+/* line 59, ../scss/admin/_settings.scss */
 #g5-container #settings .dev-mode-toggle input:last-of-type:checked ~ a {
   left: 50%;
 }
-/* line 63, ../scss/admin/_settings.scss */
+/* line 65, ../scss/admin/_settings.scss */
 #g5-container .settings-block {
   width: 48%;
   min-width: inherit;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 63, ../scss/admin/_settings.scss */
+  /* line 65, ../scss/admin/_settings.scss */
   #g5-container .settings-block {
     margin: 1% 0;
     width: 100%;
   }
 }
-/* line 72, ../scss/admin/_settings.scss */
+/* line 74, ../scss/admin/_settings.scss */
 #g5-container .settings-block.card {
   margin: 10px 1%;
 }
-/* line 75, ../scss/admin/_settings.scss */
+/* line 77, ../scss/admin/_settings.scss */
 #g5-container .settings-block.card .badge {
   margin-left: 4px;
 }
-/* line 80, ../scss/admin/_settings.scss */
+/* line 82, ../scss/admin/_settings.scss */
 #g5-container .settings-block .advanced {
   color: #fc6e51;
 }
-/* line 84, ../scss/admin/_settings.scss */
+/* line 86, ../scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param {
   padding: 5px;
 }
-/* line 87, ../scss/admin/_settings.scss */
+/* line 89, ../scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param:nth-child(even) {
   background-color: #fafafa;
   border-radius: 3px;
 }
-/* line 93, ../scss/admin/_settings.scss */
+/* line 95, ../scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-title {
   max-width: 150px;
 }
-/* line 97, ../scss/admin/_settings.scss */
+/* line 99, ../scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-field {
   margin-left: 150px;
 }
-/* line 101, ../scss/admin/_settings.scss */
+/* line 103, ../scss/admin/_settings.scss */
 #g5-container .settings-block i {
   vertical-align: middle;
 }
-/* line 105, ../scss/admin/_settings.scss */
+/* line 107, ../scss/admin/_settings.scss */
 #g5-container .settings-block input {
   padding: 6px 12px;
   border: 1px solid #ddd;
@@ -468,25 +758,25 @@ a {
   height: auto;
   max-width: 100%;
 }
-/* line 113, ../scss/admin/_settings.scss */
+/* line 115, ../scss/admin/_settings.scss */
 #g5-container .settings-block select {
   margin: 0 0 10px;
   display: inline-block;
 }
-/* line 118, ../scss/admin/_settings.scss */
+/* line 120, ../scss/admin/_settings.scss */
 #g5-container .settings-block img {
   display: block;
 }
-/* line 124, ../scss/admin/_settings.scss */
+/* line 126, ../scss/admin/_settings.scss */
 #g5-container .g5-dialog .settings-block {
   width: 100%;
   margin: 0 0 15px;
 }
-/* line 130, ../scss/admin/_settings.scss */
+/* line 132, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker {
   position: relative;
 }
-/* line 133, ../scss/admin/_settings.scss */
+/* line 135, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker .settings-param-field-colorpicker-preview {
   position: absolute;
   top: 2px;
@@ -1586,23 +1876,11 @@ a {
 /* line 31, ../scss/admin/_menu.scss */
 #g5-container .menu-header .menu-select-wrap {
   width: auto;
-  border-radius: 3px;
-  overflow: hidden;
-  background: #fff;
-  position: relative;
-  margin-left: 1rem;
   display: inline-block;
-  border: 1px solid #ddd;
   vertical-align: middle;
   margin-bottom: 1rem;
 }
-/* line 42, ../scss/admin/_menu.scss */
-#g5-container .menu-header .menu-select-wrap .fa-chevron-down {
-  position: absolute;
-  right: 0.469rem;
-  z-index: 1;
-}
-/* line 50, ../scss/admin/_menu.scss */
+/* line 38, ../scss/admin/_menu.scss */
 #g5-container .menu-header .menu-select-wrap select {
   padding: 6px 2rem 6px 12px;
   border: none;
@@ -1616,11 +1894,11 @@ a {
   margin-bottom: 0;
   font-weight: 500;
 }
-/* line 64, ../scss/admin/_menu.scss */
+/* line 52, ../scss/admin/_menu.scss */
 #g5-container .menu-header .menu-select-wrap select:focus {
   outline: none;
 }
-/* line 70, ../scss/admin/_menu.scss */
+/* line 58, ../scss/admin/_menu.scss */
 #g5-container .menu-selector {
   margin: 0.625rem 0;
   padding: 2px;
@@ -1628,7 +1906,7 @@ a {
   border: 1px solid #ddd;
   border-radius: 0.1875rem;
 }
-/* line 77, ../scss/admin/_menu.scss */
+/* line 65, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li {
   position: relative;
   margin: 2px;
@@ -1636,41 +1914,41 @@ a {
   color: #808080;
   display: inline-block;
 }
-/* line 84, ../scss/admin/_menu.scss */
+/* line 72, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li .parent-indicator:before {
   content: "\f078";
 }
-/* line 89, ../scss/admin/_menu.scss */
+/* line 77, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li a {
   display: inline-block;
   color: #808080;
 }
-/* line 94, ../scss/admin/_menu.scss */
+/* line 82, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li .menu-item {
   padding: 0.938rem;
   font-size: 1.1rem;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 94, ../scss/admin/_menu.scss */
+  /* line 82, ../scss/admin/_menu.scss */
   #g5-container .menu-selector li .menu-item {
     font-size: 1rem;
     padding: 0.938rem 0.738rem;
   }
 }
-/* line 103, ../scss/admin/_menu.scss */
+/* line 91, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li .config-cog {
   top: 4px;
   right: 4px;
 }
-/* line 108, ../scss/admin/_menu.scss */
+/* line 96, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li:hover, #g5-container .menu-selector li.active {
   background: #48B0D7;
 }
-/* line 110, ../scss/admin/_menu.scss */
+/* line 98, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li:hover a, #g5-container .menu-selector li.active a {
   color: #fff;
 }
-/* line 115, ../scss/admin/_menu.scss */
+/* line 103, ../scss/admin/_menu.scss */
 #g5-container .menu-selector span {
   line-height: 2;
   font-size: 0.6rem;
@@ -1678,7 +1956,7 @@ a {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 124, ../scss/admin/_menu.scss */
+/* line 112, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector {
   border: 1px solid #ddd;
   border-bottom: 0;
@@ -1686,44 +1964,44 @@ a {
   padding: 2px;
   border-radius: 0.1875rem 0.1875rem 0 0;
 }
-/* line 130, ../scss/admin/_menu.scss */
+/* line 118, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .g-block {
   background: #DADADA;
   border: 2px solid #fff;
   border-bottom: 0;
   padding: 0.469rem 0;
 }
-/* line 136, ../scss/admin/_menu.scss */
+/* line 124, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items {
   list-style: none;
   margin: 0;
 }
-/* line 139, ../scss/admin/_menu.scss */
+/* line 127, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li {
   color: #808080;
   cursor: pointer;
   position: relative;
 }
-/* line 143, ../scss/admin/_menu.scss */
+/* line 131, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li a {
   display: block;
   color: #808080;
 }
-/* line 147, ../scss/admin/_menu.scss */
+/* line 135, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .menu-item {
   padding: 0.469rem 0.938rem;
 }
-/* line 149, ../scss/admin/_menu.scss */
+/* line 137, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .menu-item .fa-chevron-left {
   font-size: 0.8rem;
   line-height: 1.9;
 }
-/* line 154, ../scss/admin/_menu.scss */
+/* line 142, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .config-cog {
   right: 4px;
   top: 0.8rem;
 }
-/* line 159, ../scss/admin/_menu.scss */
+/* line 147, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .parent-indicator:before {
   content: "\f054";
   float: right;
@@ -1731,15 +2009,15 @@ a {
   line-height: 2;
   margin-right: 10px;
 }
-/* line 167, ../scss/admin/_menu.scss */
+/* line 155, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li:hover, #g5-container .submenu-selector .submenu-items li .active {
   background: #48B0D7;
 }
-/* line 169, ../scss/admin/_menu.scss */
+/* line 157, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li:hover a, #g5-container .submenu-selector .submenu-items li .active a {
   color: #fff;
 }
-/* line 177, ../scss/admin/_menu.scss */
+/* line 165, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio {
   background: #fff;
   text-align: center;
@@ -1750,7 +2028,7 @@ a {
   border-top: 0;
   border-radius: 0 0 0.1875rem 0.1875rem;
 }
-/* line 186, ../scss/admin/_menu.scss */
+/* line 174, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio i {
   position: absolute;
   right: 1rem;

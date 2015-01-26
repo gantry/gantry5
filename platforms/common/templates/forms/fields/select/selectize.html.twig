@@ -1,0 +1,6 @@
+{% extends "forms/fields/select/select.html.twig" %}
+
+{% block global_attributes %}
+    data-selectize="{{ (field.selectize is defined ? field.selectize|json_encode()|e('html_attr') : '') }}"
+    {{ parent() }}
+{% endblock %}

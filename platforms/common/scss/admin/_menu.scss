@@ -30,21 +30,9 @@
 
     .menu-select-wrap {
         width: auto;
-        border-radius: 3px;
-        overflow: hidden;
-        background: $white;
-        position: relative;
-        margin-left: 1rem;
         display: inline-block;
-        border: 1px solid #ddd;
         vertical-align: middle;
         margin-bottom: 1rem;
-        .fa-chevron-down {
-            position: absolute;
-            right: $content-padding / 2;
-            z-index: 1;
-            @extend %vertical-align;
-        }
     }
 
     .menu-select-wrap select {
