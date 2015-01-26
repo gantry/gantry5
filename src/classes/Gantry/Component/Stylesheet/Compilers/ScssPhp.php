@@ -1,15 +1,20 @@
 <?php
-
 namespace Gantry\Component\Stylesheet;
 
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class ScssPhp extends CssCompiler implements CssCompilerInterface {
-
+class ScssPhp extends CssCompiler implements CssCompilerInterface
+{
+    /**
+     * @var string
+     */
     public $type = "scss";
 
+    /**
+     * @var string
+     */
     public $name = "scss";
 
     /**
@@ -29,8 +34,8 @@ class ScssPhp extends CssCompiler implements CssCompilerInterface {
         return class_exists($this->name);
     }
 
-    public function compile($in, $out) {
-
+    public function compile($in, $out)
+    {
         $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */

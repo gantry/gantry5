@@ -1,11 +1,11 @@
 <?php
-
 namespace Gantry\Component\Stylesheet;
 
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-abstract class CssCompiler {
+abstract class CssCompiler
+{
 
     private $_compiler;
 
@@ -32,7 +32,8 @@ abstract class CssCompiler {
      * Comes from Joomla, will need to be updated, more for proof of concept
      */
     // TODO: Fix so we can load compilers from different locations if possible, such as a custom compiler that is distributed with the template.
-    public function getCompilers() {
+    public function getCompilers()
+    {
         $compilers = array();
 
         // Get an iterator and loop trough the driver classes.
@@ -72,8 +73,8 @@ abstract class CssCompiler {
         return $compilers;
     }
 
-    public function getVariables() {
-
+    public function getVariables()
+    {
         $gantry = Gantry::instance();
 
         $config = $gantry['config']->get('styles');
@@ -81,11 +82,13 @@ abstract class CssCompiler {
         return $config;
     }
 
-    public function resetCache() {
+    public function resetCache()
+    {
 
     }
 
-    protected function getCompiler() {
+    protected function getCompiler()
+    {
         return $this->_compiler;
     }
 

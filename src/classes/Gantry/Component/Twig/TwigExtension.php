@@ -100,8 +100,6 @@ class TwigExtension extends \Twig_Extension
      */
     public function urlFunc($input, $domain = false)
     {
-        // TODO: add support to include domain..
-
         $resource = trim((string) $input);
         if (!$resource) {
             return null;
@@ -109,6 +107,7 @@ class TwigExtension extends \Twig_Extension
 
         if ($resource[0] == '/') {
             // Absolute path in our server, nothing to do.
+            // TODO: add support to include domain..
             return $resource;
 
         } elseif (strpos($resource, '://') !== false) {
@@ -127,6 +126,7 @@ class TwigExtension extends \Twig_Extension
             }
         }
 
+        // TODO: add support to include domain..
         return $resource ? rtrim(Document::rootUri(), '/') .'/'. $resource : null;
     }
 
