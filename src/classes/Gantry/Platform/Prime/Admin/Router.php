@@ -13,18 +13,20 @@ class Router extends BaseRouter
         // Split normalized request path to its parts.
         $parts = array_filter(explode('/', PAGE_PATH), function($var) { return $var !== ''; });
 
-        if (isset($parts[0]) && $parts[0] == 'admin') {
+        $style = isset($this->container['theme.name']) ? $this->container['theme.name'] : '';
+
+        if ($style && isset($parts[0]) && $parts[0] == 'admin') {
             // We are inside admin; we can skip the first part.
             array_shift($parts);
 
             // Second parameter is the resource.
             $this->resource = array_shift($parts) ?: 'overview';
-            $style = isset($this->container['theme.name']) ? $this->container['theme.name'] : '';
 
         } else {
-            // We are not inside admin; first parameter is the resource.
-            $this->resource = array_shift($parts) ?: 'themes';
+            // We are not inside admin or style doesn't exist; fall back to theme listing.
             $style = '';
+            $parts = [];
+            $this->resource = 'themes';
         }
 
         // Figure out the action we want to make.
