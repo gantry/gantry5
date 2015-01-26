@@ -531,6 +531,7 @@ var Selectize = new prime({
         this.refreshItems();
         this.refreshState();
         this.updatePlaceholder();
+        this.hideInput();
         this.isSetup = true;
 
         if (this.input.matches(':disabled')) {
@@ -870,7 +871,7 @@ var Selectize = new prime({
             this.lastQuery = null;
             this.setTextboxValue('');
             this.addItem(this.Options[Object.keys(this.Options)[0]][this.options.valueField]);
-            this.blur();
+            //this.blur();
         }
 
         if (trigger) this.emit('dropdown_close', this.$dropdown);
