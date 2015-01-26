@@ -531,7 +531,6 @@ var Selectize = new prime({
         this.refreshItems();
         this.refreshState();
         this.updatePlaceholder();
-        this.hideInput();
         this.isSetup = true;
 
         if (this.input.matches(':disabled')) {
