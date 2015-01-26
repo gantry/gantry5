@@ -625,12 +625,14 @@ a {
   padding-top: 7px;
   font-weight: bold;
   font-size: 0.85em;
+  color: #ddd;
+  text-transform: uppercase;
 }
-/* line 300, ../scss/admin/_selectize.scss */
+/* line 302, ../scss/admin/_selectize.scss */
 .selectize-dropdown .optgroup {
   border-top: 1px solid #f0f0f0;
 }
-/* line 302, ../scss/admin/_selectize.scss */
+/* line 304, ../scss/admin/_selectize.scss */
 .selectize-dropdown .optgroup:first-child {
   border-top: 0 none;
 }

@@ -1879,16 +1879,16 @@ $.implement({
                 var i, n, id, optgrp, options;
 
                 optgroup = $(optgroup);
-                id = optgroup.attr('label');
+                id = optgroup.attribute('label');
 
                 if (id) {
                     optgrp = readData(optgroup) || {};
                     optgrp[field_optgroup_label] = id;
                     optgrp[field_optgroup_value] = id;
-                    settings_element.optgroups[id] = optgrp;
+                    settings_element.Optgroups[id] = optgrp;
                 }
 
-                options = $('option', optgroup);
+                options = optgroup.search('option');
                 for (i = 0, n = options.length; i < n; i++) {
                     addOption(options[i], id);
                 }

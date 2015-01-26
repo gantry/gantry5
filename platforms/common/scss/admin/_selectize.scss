@@ -296,6 +296,8 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
         padding-top: $selectize-padding-dropdown-item-y + 2px;
         font-weight: bold;
         font-size: 0.85em;
+        color: $medium-gray;
+        text-transform: uppercase;
     }
     .optgroup {
         border-top: 1px solid $selectize-color-dropdown-border-top;
