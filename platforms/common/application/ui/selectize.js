@@ -74,17 +74,6 @@ var once = function(fn) {
     };
 };
 
-var watchChildEvent = function($parent, event, selector, fn) {
-    $parent.delegate(event, selector, function(e) {
-        var child = e.target;
-        while (child && child.parentNode !== $parent[0]) {
-            child = child.parentNode;
-        }
-        e.currentTarget = child;
-        return fn.apply(this, [e]);
-    });
-};
-
 var debounce_events = function(self, types, fn) {
     var type;
     var trigger = self.emit;
@@ -426,7 +415,7 @@ var Selectize = new prime({
         }
 
         $wrapper.style({
-            width: $input.compute('width')
+            width: parseInt($input.compute('width')) + 4
         });
 
         if ((this.options.maxItems === null || this.options.maxItems > 1) && this.tagType === TAG_SELECT) {
