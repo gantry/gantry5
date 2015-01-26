@@ -204,7 +204,7 @@ var autoGrow = function(input) {
     input = $(input);
     var currentWidth = null;
 
-    var update = function(e, options) {
+    var update = function(options, e) {
         var value, keyCode, printable, placeholder, width;
         var shift, character, selection;
         e = e || window.event || {};
@@ -415,7 +415,7 @@ var Selectize = new prime({
         }
 
         $wrapper.style({
-            width: parseInt($input.compute('width')) + 4
+            width: parseInt($input.compute('width')) + 12 + (24) // padding compensation
         });
 
         if ((this.options.maxItems === null || this.options.maxItems > 1) && this.tagType === TAG_SELECT) {

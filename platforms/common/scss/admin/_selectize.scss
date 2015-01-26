@@ -1,26 +1,26 @@
 $selectize-font-family: inherit;
 $selectize-font-smoothing: inherit;
-$selectize-font-size: 13px;
-$selectize-line-height: 18px;
+$selectize-font-size: inherit;
+$selectize-line-height: normal;
 
-$selectize-color-text: #303030;
-$selectize-color-border: #d0d0d0;
+$selectize-color-text: #666;
+$selectize-color-border: $medium-gray;
 $selectize-color-highlight: rgba(125,168,208,0.2);
 $selectize-color-input: #fff;
 $selectize-color-input-full: $selectize-color-input;
 $selectize-color-disabled: #fafafa;
-$selectize-color-item: #1da7ee;
+$selectize-color-item: $tertiary-accent;
 $selectize-color-item-text: #fff;
 $selectize-color-item-active-text: #fff;
-$selectize-color-item-border: #0073bb;
+$selectize-color-item-border: transparent;
 $selectize-color-item-active: #92c836;
-$selectize-color-item-active-border: #00578d;
+$selectize-color-item-active-border: transparent;
 $selectize-color-dropdown: #fff;
 $selectize-color-dropdown-border: $selectize-color-border;
 $selectize-color-dropdown-border-top: #f0f0f0;
 $selectize-color-dropdown-item-active: #f5fafd;
 $selectize-color-dropdown-item-active-text: #495c68;
-$selectize-color-dropdown-item-create-text: rgba(red($selectize-color-text), green($selectize-color-text), blue($selectize-color-text), 0.5);
+$selectize-color-dropdown-item-create-text: rgba(red($selectize-color-text), green($selectize-color-text), blue($selectize-color-text), 0.6);
 $selectize-color-dropdown-item-create-active-text: $selectize-color-dropdown-item-active-text;
 $selectize-color-optgroup: $selectize-color-dropdown;
 $selectize-color-optgroup-text: $selectize-color-text;
@@ -29,16 +29,16 @@ $selectize-lighten-disabled-item-text: 30%;
 $selectize-lighten-disabled-item-border: 30%;
 $selectize-opacity-disabled: 0.5;
 
-$selectize-shadow-input: inset 0 1px 1px rgba(0,0,0,0.1);
-$selectize-shadow-input-focus: inset 0 1px 2px rgba(0,0,0,0.15);
+$selectize-shadow-input: none;
+$selectize-shadow-input-focus: none;
 $selectize-border: 1px solid $selectize-color-border;
 $selectize-border-radius: 3px;
 
 $selectize-width-item-border: 1px;
 $selectize-max-height-dropdown: 200px;
 
-$selectize-padding-x: 8px;
-$selectize-padding-y: 8px;
+$selectize-padding-x: 12px;
+$selectize-padding-y: 6px;
 $selectize-padding-item-x: 6px;
 $selectize-padding-item-y: 2px;
 $selectize-padding-dropdown-item-x: $selectize-padding-x;
@@ -180,7 +180,6 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     margin: -1px 0 0 0;
     border-top: 0 none;
     @include box-sizing(border-box);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     border-radius: 0 0 $selectize-border-radius $selectize-border-radius;
 
     [data-selectable] {
@@ -231,17 +230,16 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
         position: absolute;
         top: 50%;
         right: 23px;
-        margin-top: -9px;
+        margin-top: -8px;
         width: 0;
         height: 0;
         color: #808080;
         font-size: 0.8em;
     }
-    
+
     &.dropdown-active:after {
-        margin-top: $selectize-arrow-size * -0.8;
-        border-width: 0 $selectize-arrow-size $selectize-arrow-size $selectize-arrow-size;
-        border-color: transparent transparent $selectize-arrow-color transparent;
+        content: "\f077";
+        font-family: FontAwesome;
     }
 }
 
@@ -273,12 +271,10 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
                 }
             }
             [data-value] {
-                text-shadow: 0 1px 0 rgba(0,51,83,0.3);
+                text-shadow: 0 1px 0 opacify(darken($selectize-color-item, 10) ,0.3);
                 border-radius: 3px;
-                @include linear-gradient(#1da7ee, #178ee9);
-                box-shadow: 0 1px 0 rgba(0,0,0,0.2),inset 0 1px rgba(255,255,255,0.03);
                 &.active {
-                    @include linear-gradient(#008fd8, #0075cf);
+                    background-color: darken($selectize-color-item, 10);
                 }
             }
         }
@@ -292,7 +288,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
 }
 
 .selectize-control.single .selectize-input, .selectize-dropdown.single {
-    border-color: #b8b8b8;
+    border-color: $selectize-color-border;
 }
 
 .selectize-dropdown {
