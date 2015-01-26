@@ -39,7 +39,7 @@
     ul {
         @extend %list-reset;
 
-        li {
+        li:not(.config-select-wrap) {
             @include transition (background-color 0.2s ease-in-out);
             &:hover {
                 background-color: darken($navbar-bg, 3%);
@@ -85,6 +85,17 @@
             display: inline-block;
             margin-right: -4px;
         }
+
+
+
+        .config-select-wrap {
+            font-size: 1rem;
+            position: relative;
+            top: $content-padding / 2;
+            padding: 0 $content-padding;
+            display: inline-block;
+        }
+
     }
 
     ul ul {

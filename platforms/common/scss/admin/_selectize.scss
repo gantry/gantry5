@@ -179,6 +179,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     background: $selectize-color-dropdown;
     margin: -1px 0 0 0;
     border-top: 0 none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     @include box-sizing(border-box);
     border-radius: 0 0 $selectize-border-radius $selectize-border-radius;
 

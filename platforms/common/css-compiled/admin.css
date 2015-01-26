@@ -6,7 +6,7 @@
 }
 
 /* line 9, ../scss/nucleus/mixins/_utilities.scss */
-#g5-container #main-header .config-select-wrap .fa-chevron-down, #g5-container .submenu-ratio i {
+#g5-container .submenu-ratio i {
   position: relative;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -494,65 +494,66 @@ a {
   background: #fff;
   margin: -1px 0 0 0;
   border-top: 0 none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   border-radius: 0 0 3px 3px;
 }
-/* line 185, ../scss/admin/_selectize.scss */
+/* line 186, ../scss/admin/_selectize.scss */
 .selectize-dropdown [data-selectable] {
   cursor: pointer;
   overflow: hidden;
 }
-/* line 188, ../scss/admin/_selectize.scss */
+/* line 189, ../scss/admin/_selectize.scss */
 .selectize-dropdown [data-selectable] .highlight {
   background: rgba(125, 168, 208, 0.2);
   border-radius: 1px;
 }
-/* line 193, ../scss/admin/_selectize.scss */
+/* line 194, ../scss/admin/_selectize.scss */
 .selectize-dropdown [data-selectable], .selectize-dropdown .optgroup-header {
   padding: 5px 12px;
 }
-/* line 196, ../scss/admin/_selectize.scss */
+/* line 197, ../scss/admin/_selectize.scss */
 .selectize-dropdown .optgroup:first-child .optgroup-header {
   border-top: 0 none;
 }
-/* line 199, ../scss/admin/_selectize.scss */
+/* line 200, ../scss/admin/_selectize.scss */
 .selectize-dropdown .optgroup-header {
   color: #666;
   background: #fff;
   cursor: default;
 }
-/* line 204, ../scss/admin/_selectize.scss */
+/* line 205, ../scss/admin/_selectize.scss */
 .selectize-dropdown .active {
   background-color: #f5fafd;
   color: #495c68;
 }
-/* line 207, ../scss/admin/_selectize.scss */
+/* line 208, ../scss/admin/_selectize.scss */
 .selectize-dropdown .active.create {
   color: #495c68;
 }
-/* line 211, ../scss/admin/_selectize.scss */
+/* line 212, ../scss/admin/_selectize.scss */
 .selectize-dropdown .create {
   color: rgba(102, 102, 102, 0.6);
 }
 
-/* line 216, ../scss/admin/_selectize.scss */
+/* line 217, ../scss/admin/_selectize.scss */
 .selectize-dropdown-content {
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 200px;
 }
 
-/* line 223, ../scss/admin/_selectize.scss */
+/* line 224, ../scss/admin/_selectize.scss */
 .selectize-control.single .selectize-input, .selectize-control.single .selectize-input input {
   cursor: pointer;
 }
-/* line 224, ../scss/admin/_selectize.scss */
+/* line 225, ../scss/admin/_selectize.scss */
 .selectize-control.single .selectize-input.input-active, .selectize-control.single .selectize-input.input-active input {
   cursor: text;
 }
-/* line 226, ../scss/admin/_selectize.scss */
+/* line 227, ../scss/admin/_selectize.scss */
 .selectize-control.single .selectize-input:after {
   content: "\f078";
   font-family: FontAwesome;
@@ -566,48 +567,48 @@ a {
   color: #808080;
   font-size: 0.8em;
 }
-/* line 240, ../scss/admin/_selectize.scss */
+/* line 241, ../scss/admin/_selectize.scss */
 .selectize-control.single .selectize-input.dropdown-active:after {
   content: "\f077";
   font-family: FontAwesome;
 }
 
-/* line 247, ../scss/admin/_selectize.scss */
+/* line 248, ../scss/admin/_selectize.scss */
 .selectize-control .selectize-input.disabled {
   opacity: 0.5;
   background-color: #fafafa;
 }
 
-/* line 255, ../scss/admin/_selectize.scss */
+/* line 256, ../scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input.has-items {
   padding-left: 9px;
   padding-right: 9px;
 }
-/* line 260, ../scss/admin/_selectize.scss */
+/* line 261, ../scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input.disabled [data-value] {
   color: #999;
   text-shadow: none;
   background: none;
   box-shadow: none;
 }
-/* line 266, ../scss/admin/_selectize.scss */
+/* line 267, ../scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input.disabled [data-value], .selectize-control.multi .selectize-input.disabled [data-value] .remove {
   border-color: #e6e6e6;
 }
-/* line 269, ../scss/admin/_selectize.scss */
+/* line 270, ../scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input.disabled [data-value] .remove {
   background: none;
 }
-/* line 273, ../scss/admin/_selectize.scss */
+/* line 274, ../scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input [data-value] {
   text-shadow: 0 1px 0 #2a98c2;
   border-radius: 3px;
 }
-/* line 276, ../scss/admin/_selectize.scss */
+/* line 277, ../scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input [data-value].active {
   background-color: #2a98c2;
 }
-/* line 283, ../scss/admin/_selectize.scss */
+/* line 284, ../scss/admin/_selectize.scss */
 .selectize-control.single .selectize-input {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   background-color: #fefefe;
@@ -615,12 +616,12 @@ a {
   background-image: linear-gradient(#fefefe, #f2f2f2);
 }
 
-/* line 290, ../scss/admin/_selectize.scss */
+/* line 291, ../scss/admin/_selectize.scss */
 .selectize-control.single .selectize-input, .selectize-dropdown.single {
   border-color: #ddd;
 }
 
-/* line 295, ../scss/admin/_selectize.scss */
+/* line 296, ../scss/admin/_selectize.scss */
 .selectize-dropdown .optgroup-header {
   padding-top: 7px;
   font-weight: bold;
@@ -628,11 +629,11 @@ a {
   color: #ddd;
   text-transform: uppercase;
 }
-/* line 302, ../scss/admin/_selectize.scss */
+/* line 303, ../scss/admin/_selectize.scss */
 .selectize-dropdown .optgroup {
   border-top: 1px solid #f0f0f0;
 }
-/* line 304, ../scss/admin/_selectize.scss */
+/* line 305, ../scss/admin/_selectize.scss */
 .selectize-dropdown .optgroup:first-child {
   border-top: 0 none;
 }
@@ -924,41 +925,6 @@ a {
   background: #354D59;
 }
 /* line 49, ../scss/admin/_headers.scss */
-#g5-container #main-header .config-select-wrap {
-  width: auto;
-  border-radius: 3px;
-  overflow: hidden;
-  background: #347667;
-  color: #fff;
-  position: relative;
-  margin-left: 1rem;
-  margin-top: 0.5rem;
-  float: right;
-}
-/* line 59, ../scss/admin/_headers.scss */
-#g5-container #main-header .config-select-wrap .fa-chevron-down {
-  position: absolute;
-  right: 0.469rem;
-  z-index: 1;
-}
-/* line 67, ../scss/admin/_headers.scss */
-#g5-container #main-header .config-select-wrap select {
-  padding: 6px 2rem 6px 12px;
-  border: none;
-  box-shadow: none;
-  background: transparent;
-  background-image: none;
-  -webkit-appearance: none;
-  position: relative;
-  z-index: 2;
-  -moz-appearance: none;
-  margin-bottom: 0;
-}
-/* line 80, ../scss/admin/_headers.scss */
-#g5-container #main-header .config-select-wrap select:focus {
-  outline: none;
-}
-/* line 84, ../scss/admin/_headers.scss */
 #g5-container #main-header .button-save {
   float: right;
   background: #6bbfab;
@@ -969,12 +935,12 @@ a {
   background: #56b59f;
   color: #fff;
 }
-/* line 90, ../scss/admin/_headers.scss */
+/* line 55, ../scss/admin/_headers.scss */
 #g5-container .update-text {
   vertical-align: middle;
   line-height: 2;
 }
-/* line 95, ../scss/admin/_headers.scss */
+/* line 60, ../scss/admin/_headers.scss */
 #g5-container .settings-state {
   padding: 0.838rem 0.938rem;
   float: right;
@@ -986,30 +952,30 @@ a {
   height: 55px;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 95, ../scss/admin/_headers.scss */
+  /* line 60, ../scss/admin/_headers.scss */
   #g5-container .settings-state {
     font-size: 1rem;
   }
 }
-/* line 109, ../scss/admin/_headers.scss */
+/* line 74, ../scss/admin/_headers.scss */
 #g5-container .settings-state i {
   margin-left: 8px;
 }
-/* line 115, ../scss/admin/_headers.scss */
+/* line 80, ../scss/admin/_headers.scss */
 #g5-container .update-header {
   padding: 0.538rem 0.938rem;
   background: #8F4DAE;
   color: #fff;
 }
-/* line 119, ../scss/admin/_headers.scss */
+/* line 84, ../scss/admin/_headers.scss */
 #g5-container .update-header .update-tools {
   float: right;
 }
-/* line 122, ../scss/admin/_headers.scss */
+/* line 87, ../scss/admin/_headers.scss */
 #g5-container .update-header a {
   color: #fff;
 }
-/* line 125, ../scss/admin/_headers.scss */
+/* line 90, ../scss/admin/_headers.scss */
 #g5-container .update-header .fa-close {
   display: inline-block;
   border-radius: 100%;
@@ -1020,7 +986,7 @@ a {
   text-align: center;
   line-height: 26px;
 }
-/* line 137, ../scss/admin/_headers.scss */
+/* line 102, ../scss/admin/_headers.scss */
 #g5-container .button.button-update {
   display: inline-block;
   box-shadow: none;
@@ -1032,14 +998,14 @@ a {
   background: #522c64;
   color: #fff;
 }
-/* line 143, ../scss/admin/_headers.scss */
+/* line 108, ../scss/admin/_headers.scss */
 #g5-container .ribbon {
   padding: 0.469rem 0.938rem;
   background-color: #eee;
   color: #a2a2a2;
   border-left: 1px solid #e1e1e1;
 }
-/* line 149, ../scss/admin/_headers.scss */
+/* line 114, ../scss/admin/_headers.scss */
 #g5-container .ribbon.master {
   background-color: #ffce54;
   color: #ba8500;
@@ -1078,7 +1044,7 @@ a {
   margin: 0.625rem 0;
 }
 /* line 42, ../scss/admin/_navbar.scss */
-#g5-container #navbar ul li, #g5-container .g5-dialog .g-tabs ul li, .g5-dialog #g5-container .g-tabs ul li {
+#g5-container #navbar ul li:not(.config-select-wrap), #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap), .g5-dialog #g5-container .g-tabs ul li:not(.config-select-wrap) {
   -webkit-transition: background-color 0.2s ease-in-out;
   -moz-transition: background-color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out;
@@ -1086,19 +1052,19 @@ a {
   margin-right: -4px;
 }
 /* line 44, ../scss/admin/_navbar.scss */
-#g5-container #navbar ul li:hover, #g5-container .g5-dialog .g-tabs ul li:hover, .g5-dialog #g5-container .g-tabs ul li:hover {
+#g5-container #navbar ul li:not(.config-select-wrap):hover, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap):hover, .g5-dialog #g5-container .g-tabs ul li:not(.config-select-wrap):hover {
   background-color: #d2d2d2;
 }
 /* line 48, ../scss/admin/_navbar.scss */
-#g5-container #navbar ul li.active, #g5-container .g5-dialog .g-tabs ul li.active, .g5-dialog #g5-container .g-tabs ul li.active {
+#g5-container #navbar ul li:not(.config-select-wrap).active, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap).active, .g5-dialog #g5-container .g-tabs ul li:not(.config-select-wrap).active {
   background-color: #eeeeee;
 }
 /* line 51, ../scss/admin/_navbar.scss */
-#g5-container #navbar ul li.active a, #g5-container .g5-dialog .g-tabs ul li.active a, .g5-dialog #g5-container .g-tabs ul li.active a {
+#g5-container #navbar ul li:not(.config-select-wrap).active a, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap).active a, .g5-dialog #g5-container .g-tabs ul li:not(.config-select-wrap).active a {
   color: #314C59;
 }
 /* line 56, ../scss/admin/_navbar.scss */
-#g5-container #navbar ul li a, #g5-container .g5-dialog .g-tabs ul li a, .g5-dialog #g5-container .g-tabs ul li a {
+#g5-container #navbar ul li:not(.config-select-wrap) a, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a, .g5-dialog #g5-container .g-tabs ul li:not(.config-select-wrap) a {
   color: #808080;
   border-color: #C6C6C6;
   display: block;
@@ -1108,40 +1074,48 @@ a {
 }
 @media only all and (max-width: 47.938rem) {
   /* line 56, ../scss/admin/_navbar.scss */
-  #g5-container #navbar ul li a, #g5-container .g5-dialog .g-tabs ul li a, .g5-dialog #g5-container .g-tabs ul li a {
+  #g5-container #navbar ul li:not(.config-select-wrap) a, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a, .g5-dialog #g5-container .g-tabs ul li:not(.config-select-wrap) a {
     text-align: center;
     padding: 0.938rem 1.038rem;
   }
 }
 /* line 68, ../scss/admin/_navbar.scss */
-#g5-container #navbar ul li a i, #g5-container .g5-dialog .g-tabs ul li a i, .g5-dialog #g5-container .g-tabs ul li a i {
+#g5-container #navbar ul li:not(.config-select-wrap) a i, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a i, .g5-dialog #g5-container .g-tabs ul li:not(.config-select-wrap) a i {
   margin-right: 0.6rem;
 }
 @media only all and (max-width: 47.938rem) {
   /* line 68, ../scss/admin/_navbar.scss */
-  #g5-container #navbar ul li a i, #g5-container .g5-dialog .g-tabs ul li a i, .g5-dialog #g5-container .g-tabs ul li a i {
+  #g5-container #navbar ul li:not(.config-select-wrap) a i, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a i, .g5-dialog #g5-container .g-tabs ul li:not(.config-select-wrap) a i {
     margin: 0;
     font-size: 1.3rem;
   }
 }
 @media only all and (max-width: 47.938rem) {
   /* line 77, ../scss/admin/_navbar.scss */
-  #g5-container #navbar ul li a span, #g5-container .g5-dialog .g-tabs ul li a span, .g5-dialog #g5-container .g-tabs ul li a span {
+  #g5-container #navbar ul li:not(.config-select-wrap) a span, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a span, .g5-dialog #g5-container .g-tabs ul li:not(.config-select-wrap) a span {
     display: none;
   }
 }
-/* line 90, ../scss/admin/_navbar.scss */
+/* line 91, ../scss/admin/_navbar.scss */
+#g5-container #navbar ul .config-select-wrap, #g5-container .g5-dialog .g-tabs ul .config-select-wrap, .g5-dialog #g5-container .g-tabs ul .config-select-wrap {
+  font-size: 1rem;
+  position: relative;
+  top: 0.469rem;
+  padding: 0 0.938rem;
+  display: inline-block;
+}
+/* line 101, ../scss/admin/_navbar.scss */
 #g5-container #navbar ul ul, #g5-container .g5-dialog .g-tabs ul ul, .g5-dialog #g5-container .g-tabs ul ul {
   text-transform: none;
 }
-/* line 92, ../scss/admin/_navbar.scss */
+/* line 103, ../scss/admin/_navbar.scss */
 #g5-container #navbar ul ul li a, #g5-container .g5-dialog .g-tabs ul ul li a, .g5-dialog #g5-container .g-tabs ul ul li a {
   color: #999;
   padding-top: 0.2345rem;
   padding-bottom: 0.2345rem;
   padding-left: 42px;
 }
-/* line 98, ../scss/admin/_navbar.scss */
+/* line 109, ../scss/admin/_navbar.scss */
 #g5-container #navbar ul ul li a:before, #g5-container .g5-dialog .g-tabs ul ul li a:before, .g5-dialog #g5-container .g-tabs ul ul li a:before {
   content: "\f054";
   font-family: FontAwesome;
@@ -1152,11 +1126,11 @@ a {
   padding-right: 5px;
   color: #ddd;
 }
-/* line 112, ../scss/admin/_navbar.scss */
+/* line 123, ../scss/admin/_navbar.scss */
 #g5-container .g-block.navbar-icons {
   flex: 0 3%;
 }
-/* line 116, ../scss/admin/_navbar.scss */
+/* line 127, ../scss/admin/_navbar.scss */
 #g5-container .g-block.navbar-closed {
   flex: 0;
 }

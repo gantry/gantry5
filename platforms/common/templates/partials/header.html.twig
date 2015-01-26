@@ -13,9 +13,6 @@
                 <li {{ (location == 'overview') ? 'class="active"' }}>
                     <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('overview')|e }}"><i class="fa fa-question-circle"></i> <span>About</span></a>
                 </li>
-                <li class="config-select-wrap">
-                    {% include 'partials/configuration-selector.html.twig' %}
-                </li>
             </ul>
         </div>
     </div>

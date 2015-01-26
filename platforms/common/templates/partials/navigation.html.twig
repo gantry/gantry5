@@ -1,5 +1,6 @@
 <section id="navbar">
     <ul>
+        {% include 'partials/configuration-selector.html.twig' %}
         <li {{ (location == 'styles') ? 'class="active"' }}>
             <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('styles')|e }}"><i class="fa fa-adjust"></i><span>Styles</span></a>
         </li>
