@@ -3,13 +3,10 @@
 {% block gantry %}
     <div class="menu-header">
         <h2>Menu Editor</h2>
-        <div class="menu-select-wrap">
-            <select>
-                <option selected>Main Menu</option>
-                <option>Alternate Menu</option>
-            </select>
-            <i class="fa fa-chevron-down"></i>
-        </div>
+        <select data-selectize class="menu-select-wrap">
+            <option selected>Main Menu</option>
+            <option>Alternate Menu</option>
+        </select>
     </div>
     <div id="menu-editor">
         {% include 'menu/base.html.twig' with {'item': menu.root} %}
