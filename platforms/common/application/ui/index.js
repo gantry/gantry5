@@ -44,5 +44,5 @@ module.exports = {
     modal: new Modal(),
     togglers: require('./togglers'),
     selectize: Selectize,
-    toaster: require('./toastr')
+    toastr: require('./toastr')
 };

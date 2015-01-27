@@ -3,6 +3,7 @@ var ready         = require('elements/domready'),
     //json          = require('./json_test'),
     $             = require('elements/attributes'),
     modal         = require('../ui').modal,
+    toastr        = require('../ui').toastr,
     request       = require('agent'),
     zen           = require('elements/zen'),
     contains      = require('mout/array/contains'),
@@ -91,6 +92,7 @@ ready(function() {
                 return false;
             } else {
                 modal.close();
+                toastr.success('The Layout has been successfully saved!', 'Layout Saved');
             }
         });
     });
@@ -314,6 +316,7 @@ ready(function() {
                             }
 
                             modal.close();
+                            toastr.success('The particle "'+particle.getTitle()+'" settings have been applied to the Layout. <br />Remember to click the Save button to store them.', 'Settings Applied');
                         }
                     });
                 });
