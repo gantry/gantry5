@@ -18,9 +18,6 @@ var prime    = require('prime'),
 
     request  = require('agent');
 
-var animationEndSupport = false,
-    popovers            = {};
-
 var Popover = new prime({
     mixin: [Bound, Options],
 
@@ -68,7 +65,7 @@ var Popover = new prime({
         }
 
         this._poped = false;
-        this._inited = true;
+        //this._inited = true;
     },
 
     destroy: function() {
@@ -151,9 +148,7 @@ var Popover = new prime({
         var elementPos = this.element.position(),
             target = this.getTarget().attribute('class', null).addClass(this.options.mainClass),
             targetContent = this.getContentElement(),
-            targetWidth = target[0].offsetWidth,
-            targetHeight = target[0].offsetHeight,
-            placement = 'bottom';
+            targetWidth, targetHeight, placement;
 
         this.element.emit('show.popover', this);
 
@@ -280,8 +275,6 @@ var Popover = new prime({
     },
 
     setContentASync: function(content) {
-        var that = this;
-
         request('get', this.options.url, bind(function(error, response) {
             if (content && isFunct(content)) {
                 this.content = content.apply(this.element[0], [response]);
@@ -302,8 +295,9 @@ var Popover = new prime({
     },
 
     bindBodyEvents: function() {
-        $('body').off('keyup', this.bound('escapeHandler')).on('keyup', this.bound('escapeHandler'));
-        $('body').off('click', this.bound('bodyClickHandler')).on('click', this.bound('bodyClickHandler'));
+        var body = $('body');
+        body.off('keyup', this.bound('escapeHandler')).on('keyup', this.bound('escapeHandler'));
+        body.off('click', this.bound('bodyClickHandler')).on('click', this.bound('bodyClickHandler'));
     },
 
 
