@@ -2178,21 +2178,6 @@ a {
   line-height: 1.5;
   position: fixed;
   z-index: 999999;
-    /*.toast-success {
-        background-color: @green;
-    }
-
-    .toast-error {
-        background-color: @red;
-    }
-
-    .toast-info {
-        background-color: @blue;
-    }
-
-    .toast-warning {
-        background-color: @orange;
-    }*/
 }
 /* line 9, ../scss/admin/_toastr.scss */
 #g-notifications-container * {
@@ -2202,31 +2187,46 @@ a {
 }
 /* line 13, ../scss/admin/_toastr.scss */
 #g-notifications-container > div {
-  margin: 0 0 6px;
-  padding: 15px 15px 15px 50px;
+  margin: 0 0 0.625rem;
+  padding: 0.938rem;
   width: 300px;
-  border-radius: 3px;
-  border: 1px solid #ddd;
-  color: #666;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 0.1875rem;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   opacity: 0.8;
+  position: relative;
 }
-/* line 24, ../scss/admin/_toastr.scss */
-#g-notifications-container > :hover {
+/* line 23, ../scss/admin/_toastr.scss */
+#g-notifications-container > div:hover {
   opacity: 1;
   cursor: pointer;
 }
 /* line 29, ../scss/admin/_toastr.scss */
 #g-notifications-container .g-notifications-title {
   font-weight: bold;
+  text-transform: uppercase;
 }
 /* line 33, ../scss/admin/_toastr.scss */
+#g-notifications-container .g-notifications-title .fa {
+  margin-right: 10px;
+}
+/* line 38, ../scss/admin/_toastr.scss */
 #g-notifications-container .g-notifications-message {
   word-wrap: break-word;
   overflow-wrap: break-word;
   word-break: break-all;
 }
-/* line 37, ../scss/admin/_toastr.scss */
+/* line 42, ../scss/admin/_toastr.scss */
+#g-notifications-container .g-notifications-progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 4px;
+  background-color: #000;
+  opacity: 0.4;
+  border-radius: 0 0 0 3px;
+}
+/* line 52, ../scss/admin/_toastr.scss */
 #g-notifications-container .fa-close {
   position: relative;
   right: -0.3em;
@@ -2234,48 +2234,50 @@ a {
   float: right;
   font-weight: bold;
   cursor: pointer;
+  color: #fff;
 }
-/* line 46, ../scss/admin/_toastr.scss */
+/* line 62, ../scss/admin/_toastr.scss */
 #g-notifications-container.top-full-width {
   top: 0;
   right: 0;
   width: 100%;
 }
-/* line 52, ../scss/admin/_toastr.scss */
+/* line 68, ../scss/admin/_toastr.scss */
 #g-notifications-container.bottom-full-width {
   bottom: 0;
   right: 0;
   width: 100%;
 }
-/* line 58, ../scss/admin/_toastr.scss */
+/* line 74, ../scss/admin/_toastr.scss */
 #g-notifications-container.top-left {
   top: 12px;
   left: 12px;
 }
-/* line 63, ../scss/admin/_toastr.scss */
+/* line 79, ../scss/admin/_toastr.scss */
 #g-notifications-container.top-right {
   top: 12px;
   right: 12px;
 }
-/* line 68, ../scss/admin/_toastr.scss */
+/* line 84, ../scss/admin/_toastr.scss */
 #g-notifications-container.bottom-right {
   right: 12px;
   bottom: 12px;
 }
-/* line 73, ../scss/admin/_toastr.scss */
+/* line 89, ../scss/admin/_toastr.scss */
 #g-notifications-container.bottom-left {
   bottom: 12px;
   left: 12px;
 }
-/* line 78, ../scss/admin/_toastr.scss */
+/* line 94, ../scss/admin/_toastr.scss */
 #g-notifications-container.top-full-width > div, #g-notifications-container.bottom-full-width > div {
   width: 96%;
   margin: auto;
 }
-/* line 84, ../scss/admin/_toastr.scss */
+/* line 100, ../scss/admin/_toastr.scss */
 #g-notifications-container > div {
-  background: #eee;
-  color: #666;
+  background: #8F4DAE;
+  color: #fff;
+  border: 1px solid #723d8b;
 }
 
 /* line 3, ../scss/admin/_modal.scss */

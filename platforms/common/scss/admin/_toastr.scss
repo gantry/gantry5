@@ -11,27 +11,42 @@
     }
 
     > div {
-        margin: 0 0 6px;
-        padding: 15px 15px 15px 50px;
+        margin: 0 0 $content-margin;
+        padding: $content-padding;
         width: 300px;
-        border-radius: 3px;
-        border: 1px solid $medium-gray;
-        color: $dark-gray;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border-radius: $core-border-radius;
+        color: $white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         opacity: 0.8;
-    }
+        position: relative;
 
-    > :hover {
-        opacity: 1;
-        cursor: pointer;
+        &:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
     }
 
     .g-notifications-title {
         font-weight: bold;
+        text-transform: uppercase;
+
+        .fa {
+            margin-right: 10px;
+        }
     }
 
     .g-notifications-message {
         @include word-wrap(break-word);
+    }
+
+    .g-notifications-progress {
+        position: absolute;
+        left: 0;
+        bottom: -1px;
+        height: 4px;
+        background-color: $black;
+        opacity: 0.4;
+        border-radius: 0 0 0 3px;
     }
 
     .fa-close {
@@ -41,6 +56,7 @@
         float: right;
         font-weight: bold;
         cursor: pointer;
+        color: $white;
     }
 
     &.top-full-width {
@@ -82,24 +98,9 @@
     }
 
     > div { // base
-        background: $light-gray;
-        color: $dark-gray;
+        background: $update-header-bg;
+        color: $white;
+        border: 1px solid darken($update-header-bg, 10);
     }
-
-    /*.toast-success {
-        background-color: @green;
-    }
-
-    .toast-error {
-        background-color: @red;
-    }
-
-    .toast-info {
-        background-color: @blue;
-    }
-
-    .toast-warning {
-        background-color: @orange;
-    }*/
 
 }
