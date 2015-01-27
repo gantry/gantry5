@@ -62,11 +62,14 @@ class Configurations extends HtmlController
         $configurations = $this->container['configurations']->toArray();
         $configurations[] = 'default';
 
-        $this->params['configuration'] = in_array($path[0], $configurations) ? array_shift($path) : 'default';
+        $configuration = in_array($path[0], $configurations) ? array_shift($path) : 'default';
+
+        $this->container['configuration'] = $configuration;
 
         $method = $this->params['method'];
         $resource = $this->params['location'] . '/'. (array_shift($path) ?: 'styles');
 
+        $this->params['configuration'] = $configuration;
         $this->params['location'] = $resource;
 
         return $this->executeForward($resource, $method, $path, $this->params);

@@ -26,7 +26,13 @@ class ConfigServiceProvider implements ServiceProviderInterface
             $locator = $c['locator'];
 
             $cache = $locator->findResource('gantry-cache://compiled/config', true, true);
-            $paths = $locator->findResources('gantry-config://');
+
+            $configuration = isset($c['configuration']) ? $c['configuration'] : 'default';
+
+            // TODO: we really need to mix these arrays together instead of appending.
+            $paths = $locator->findResources('gantry-config://' . $configuration);
+            $paths += $locator->findResources('gantry-config://default');
+
             $files = (new ConfigFileFinder)->locateFiles($paths);
 
             $config = new CompiledConfig($cache, $files, function() use ($c) {
