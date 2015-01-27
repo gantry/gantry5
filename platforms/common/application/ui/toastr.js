@@ -22,11 +22,11 @@ var Toaster = new prime({
         containerID: 'g-notifications-container',
 
         types: {
-            base: 'default',
-            error: 'error',
-            info: 'info',
-            success: 'success',
-            warning: 'warning'
+            base: '',
+            error: 'fa-minus-circle',
+            info: 'fa-info-circle',
+            success: 'fa-check-circle',
+            warning: 'fa-exclamation-triangle'
         },
 
         showDuration: 300,
@@ -43,7 +43,7 @@ var Toaster = new prime({
         messageClass: 'g-notifications-message',
         closeButton: true,
 
-        target: 'body',
+        target: '#g5-container',
         targetLocation: 'bottom',
 
         newestOnTop: true,
@@ -74,7 +74,47 @@ var Toaster = new prime({
         options = this.mergeOptions(options);
 
         return this.notify(merge(options, {
-            title: title,
+            title: title || '',
+            type: options.type || 'base',
+            message: message
+        }));
+    },
+
+    success: function(message, title, options) {
+        options = this.mergeOptions(options);
+
+        return this.notify(merge(options, {
+            title: title || 'Success!',
+            type: 'success',
+            message: message
+        }));
+    },
+
+    info: function(message, title, options) {
+        options = this.mergeOptions(options);
+
+        return this.notify(merge(options, {
+            title: title || 'Info',
+            type: 'info',
+            message: message
+        }));
+    },
+    warning: function(message, title, options) {
+        options = this.mergeOptions(options);
+
+        return this.notify(merge(options, {
+            title: title || 'Warning!',
+            type: 'warning',
+            message: message
+        }));
+    },
+
+    error: function(message, title, options) {
+        options = this.mergeOptions(options);
+
+        return this.notify(merge(options, {
+            title: title || 'Error!',
+            type: 'error',
             message: message
         }));
     },
@@ -89,7 +129,8 @@ var Toaster = new prime({
 
         var container = this.getContainer(options, true),
             element = zen('div'), title = zen('div'), message = zen('div'),
-            progress = zen('div.g-notification-progress'), close = zen('a.fa.fa-close[href="#"]');
+            icon = zen('i.fa'),
+            progress = zen('div.g-notifications-progress'), close = zen('a.fa.fa-close[href="#"]');
 
         this.map.set(element, {
             container: container,
@@ -124,6 +165,12 @@ var Toaster = new prime({
             progress.top(element);
         }
 
+        if (options.type && options.title) {
+            if (options.types[options.type]) {
+                icon.top(title).addClass(options.types[options.type]);
+            }
+        }
+
         element.style({ opacity: 0 });
         element[options.newestOnTop ? 'top' : 'bottom'](container);
         element.animate({ opacity: 1 }, {
@@ -155,7 +202,12 @@ var Toaster = new prime({
         element.on('mouseout', delay);
 
         if (!options.onClick && options.tapToDismiss) {
-            element.on('click', bind(function(){ this.hide(element); }, this));
+            element.on('click', bind(function(){
+                element.off('mouseover', stick);
+                element.off('mouseout', delay);
+
+                this.hide(element);
+            }, this));
         }
 
         if (options.closeButton && close) {
@@ -256,7 +308,7 @@ var Toaster = new prime({
         }*/
 
         element.remove();
-        if (map.container.children()) {
+        if (!map.container.children()) {
             map.container.remove();
             this.previousNotice = null;
         }
