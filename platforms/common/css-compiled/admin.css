@@ -2457,7 +2457,7 @@ body.g5-dialog-open {
   background: #f0f0f0;
   border: 0.2em solid transparent;
   border-top-color: #bbbbbb;
-  top: -1.1em;
+  top: 1em;
   bottom: auto;
 }
 
