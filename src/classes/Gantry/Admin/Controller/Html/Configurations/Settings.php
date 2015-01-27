@@ -46,6 +46,7 @@ class Settings extends HtmlController
     public function index()
     {
         $this->params['particles'] = $this->container['particles']->group();
+        $this->params['route']  = "configurations.{$this->params['configuration']}.settings";
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
     }
@@ -60,8 +61,8 @@ class Settings extends HtmlController
             'particle' => $blueprints,
             'data' =>  Gantry::instance()['config']->get($prefix),
             'id' => $id,
-            'parent' => 'settings',
-            'route' => 'settings.' . $prefix,
+            'parent' => "configurations/{$this->params['configuration']}/settings",
+            'route'  => "configurations.{$this->params['configuration']}.settings.{$prefix}",
             'skip' => ['enabled']
             ];
 
@@ -95,7 +96,9 @@ class Settings extends HtmlController
         $this->params = [
                 'blueprints' => $fields,
                 'data' =>  $this->container['config']->get($prefix),
-                'parent' => $path ? "settings/particles/{$id}/" . implode('/', $path) : "settings/particles/{$id}",
+                'parent' => $path
+                    ? "configurations/{$this->params['configuration']}/settings/particles/{$id}/" . implode('/', $path)
+                    : "configurations/{$this->params['configuration']}/settings/particles/{$id}",
                 'route' => 'settings.' . $prefix
             ] + $this->params;
 

@@ -47,6 +47,7 @@ class Styles extends HtmlController
     public function index()
     {
         $this->params['blocks'] = $this->container['styles']->group();
+        $this->params['route']  = "configurations.{$this->params['configuration']}.styles";
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/styles/styles.html.twig', $this->params);
     }
@@ -61,8 +62,8 @@ class Styles extends HtmlController
             'block' => $blueprints,
             'data' =>  Gantry::instance()['config']->get($prefix),
             'id' => $id,
-            'parent' => 'styles',
-            'route' => 'styles.' . $prefix,
+            'parent' => "configurations/{$this->params['configuration']}/styles",
+            'route'  => "configurations.{$this->params['configuration']}.styles.{$prefix}",
             'skip' => ['enabled']
         ];
 
@@ -96,7 +97,9 @@ class Styles extends HtmlController
         $this->params = [
                 'blueprints' => $fields,
                 'data' =>  $this->container['config']->get($prefix),
-                'parent' => $path ? "styles/blocks/{$id}/" . implode('/', $path) : "styles/blocks/{$id}",
+                'parent' => $path
+                    ? "configurations/{$this->params['configuration']}/styles/blocks/{$id}/" . implode('/', $path)
+                    : "configurations/{$this->params['configuration']}/styles/blocks/{$id}",
                 'route' => 'styles.' . $prefix
             ] + $this->params;
 
