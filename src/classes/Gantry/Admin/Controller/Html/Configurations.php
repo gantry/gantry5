@@ -20,8 +20,20 @@ class Configurations extends HtmlController
 {
     protected $httpVerbs = [
         'GET' => [
-            '/'             => 'index',
-            '/**'           => 'forward',
+            '/'   => 'index',
+            '/**' => 'forward',
+        ],
+        'POST' => [
+            '/**' => 'forward',
+        ],
+        'PUT'    => [
+            '/**' => 'forward'
+        ],
+        'PATCH'  => [
+            '/**' => 'forward'
+        ],
+        'DELETE' => [
+            '/**' => 'forward'
         ]
     ];
 
@@ -48,6 +60,7 @@ class Configurations extends HtmlController
         $path = func_get_args();
 
         $configurations = $this->container['configurations']->toArray();
+        $configurations[] = 'default';
 
         $this->params['configuration'] = in_array($path[0], $configurations) ? array_shift($path) : 'default';
 

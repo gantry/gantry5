@@ -12,7 +12,7 @@
                 {% set prefix = 'particles.' ~ id ~ '.' %}
                 <div class="card settings-block">
                     <h4>
-                        <a class="config-cog" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('configuration', configuration, 'settings/particles', id) }}">{{ particle.name }}</a>
+                        <a class="config-cog" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('configurations', configuration, 'settings/particles', id) }}">{{ particle.name }}</a>
                         {% if particle.form.fields.enabled %}
                         {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled',
 'field': particle.form.fields.enabled, 'value': config.get(prefix ~ 'enabled')} %}
