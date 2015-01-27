@@ -1,6 +1,6 @@
 <li class="config-select-wrap">
-    <select class="config-select" data-selectize="{{ {allowEmptyOption: true}|json_encode()|e('html_attr') }}">
-        <option value="default" selected="selected">Master</option>
+    <select id="configuration-selector" class="config-select" data-selectize="{{ {allowEmptyOption: true}|json_encode()|e('html_attr') }}">
+        <option value="default" selected="selected">Default</option>
         <option value="frontpage">Front Page</option>
         <optgroup label="System Pages">
             <option value="error">Error Page</option>
