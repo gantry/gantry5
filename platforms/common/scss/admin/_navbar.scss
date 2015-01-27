@@ -16,8 +16,11 @@
         top: $content-padding;
         position: absolute;
         opacity: 0.5;
+        @include breakpoint(tablet-range) {
+            display: none;
+        }
         @include breakpoint(mobile-only) {
-            
+            display: none;
         }
     }
 }
@@ -26,10 +29,6 @@
     font-size: $navbar-font-size;
     font-family: $font-family-headers;
     margin-right: -1px;
-
-    &, li:hover, li.active {
-        
-    }
 
     .g-content {
         padding: 0;
@@ -60,6 +59,9 @@
                 white-space: nowrap;
                 padding: $content-padding;
                 font-size: $core-font-size;
+                @include breakpoint(tablet-range) {
+                    padding: $content-padding $content-padding - 0.2;
+                }
                 @include breakpoint(mobile-only) {
                     text-align: center;
                     padding: $content-padding $content-padding + 0.1;
@@ -94,6 +96,9 @@
             top: $content-padding / 2;
             padding: 0 $content-padding;
             display: inline-block;
+            @include breakpoint(tablet-range) {
+                padding: 0 $content-padding - 0.2;
+            }
         }
 
     }

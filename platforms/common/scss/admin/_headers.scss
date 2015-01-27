@@ -32,6 +32,9 @@
                     padding: $content-padding;
                     color: $main-header-text;
                     @include transition(background 0.2s);
+                    @include breakpoint(tablet-range) {
+                        padding: $content-padding $content-padding - 0.3;
+                    }
                 }
                 &:hover {
                     a {
@@ -52,11 +55,14 @@
         position: relative;
         height: 36px;
         float: right;
-        margin-left: 1rem;
+        margin-left: $content-padding;
         margin-top: 0.5rem;
         background: darken($production, 10%);
         border-radius: $core-border-radius;
         color: $white;
+        @include breakpoint(tablet-range) {
+            margin-left: $content-padding - 0.3;
+        }
 
         input {
             position: absolute;
