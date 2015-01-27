@@ -18,6 +18,8 @@ var prime         = require('prime'),
 
 require('../ui/popover');
 
+var ERROR = false;
+
 History.Adapter.bind(window, 'statechange', function() {
     if (request.running()) {
         return false;
@@ -51,10 +53,19 @@ History.Adapter.bind(window, 'statechange', function() {
         params = toQueryString(JSON.parse(Data.params));
     }
 
+    if (!ERROR) { modal.closeAll(); }
+
     request.url(URI + getAjaxSuffix() + params).method('get').send(function(error, response) {
         if (!response.body.success) {
-            modal.open({ content: response.body.html });
-            //History.back();
+            ERROR = true;
+            modal.open({
+                content: response.body.html || response.body,
+                afterOpen: function(container) {
+                    if (!response.body.html) { container.style({ width: '90%' }); }
+                }
+            });
+
+            History.back();
 
             return false;
         }
