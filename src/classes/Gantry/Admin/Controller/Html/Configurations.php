@@ -71,6 +71,7 @@ class Configurations extends HtmlController
 
         $this->params['configuration'] = $configuration;
         $this->params['location'] = $resource;
+        $this->params['navbar'] = !empty($_GET['navbar']);
 
         return $this->executeForward($resource, $method, $path, $this->params);
     }
