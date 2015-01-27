@@ -45,11 +45,6 @@
                 }
             }
         }
-
-        .button-save {
-            float: right;
-            @include button-color(lighten($production, 15%), $white);
-        }
     }
 
     // Dev / Prod Toggle
@@ -57,6 +52,8 @@
         position: relative;
         height: 36px;
         float: right;
+        margin-left: 1rem;
+        margin-top: 0.5rem;
         background: darken($production, 10%);
         border-radius: $core-border-radius;
         color: $white;
@@ -111,11 +108,6 @@
         }
     }
 
-    .update-text {
-        vertical-align: middle;
-        line-height: $core-line-height + 0.5;
-    }
-
     // Update Header Bar
     .update-header {
         padding: $content-padding - 0.4 $content-padding;
@@ -139,23 +131,15 @@
         }
     }
 
+    .update-text {
+        vertical-align: middle;
+        line-height: $core-line-height + 0.5;
+    }
+
     .button.button-update {
         display: inline-block;
         box-shadow: none;
         @include button-color(darken($update-header-bg, 15%), $white);
-    }
-
-    .ribbon {
-        padding: $content-padding-short;
-        background-color: $light-gray;
-        color: darken($light-gray, 30%);
-        border-left: 1px solid darken($light-gray, 5%);
-
-        &.master {
-            background-color: $yellow;
-            color: darken($yellow, 30%);
-            border-left: 1px solid darken($yellow, 15%);
-        }
     }
 
 }// endwrapper

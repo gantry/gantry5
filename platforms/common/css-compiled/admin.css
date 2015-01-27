@@ -577,17 +577,12 @@ a {
       background: #3b8877; }
     #g5-container #main-header ul li.active a {
       background: #354D59; }
-  #g5-container #main-header .button-save {
-    float: right;
-    background: #6bbfab;
-    color: rgba(255, 255, 255, 0.9); }
-    #g5-container #main-header .button-save:hover {
-      background: #56b59f;
-      color: #fff; }
 #g5-container .dev-mode-toggle {
   position: relative;
   height: 36px;
   float: right;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
   background: #347667;
   border-radius: 0.1875rem;
   color: #fff; }
@@ -632,9 +627,6 @@ a {
     transition: all 0.1s ease-out; }
   #g5-container .dev-mode-toggle input:last-of-type:checked ~ a {
     left: 50%; }
-#g5-container .update-text {
-  vertical-align: middle;
-  line-height: 2; }
 #g5-container .update-header {
   padding: 0.538rem 0.938rem;
   background: #8F4DAE;
@@ -652,6 +644,9 @@ a {
     height: 26px;
     text-align: center;
     line-height: 26px; }
+#g5-container .update-text {
+  vertical-align: middle;
+  line-height: 2; }
 #g5-container .button.button-update {
   display: inline-block;
   box-shadow: none;
@@ -660,15 +655,6 @@ a {
   #g5-container .button.button-update:hover {
     background: #522c64;
     color: #fff; }
-#g5-container .ribbon {
-  padding: 0.469rem 0.938rem;
-  background-color: #eee;
-  color: #a2a2a2;
-  border-left: 1px solid #e1e1e1; }
-  #g5-container .ribbon.master {
-    background-color: #ffce54;
-    color: #ba8500;
-    border-left: 1px solid #ffb807; }
 
 #g5-container .navbar-block {
   background: #DADADA;
@@ -756,6 +742,7 @@ a {
   font-weight: 300;
   font-family: "g-lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
   #g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
+    margin: 1.5rem 0;
     font-weight: normal;
     font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
   #g5-container h6 {
