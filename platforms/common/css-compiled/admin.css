@@ -440,7 +440,8 @@ a {
   #g5-container .settings-block .advanced {
     color: #fc6e51; }
   #g5-container .settings-block .settings-param {
-    padding: 5px; }
+    padding: 5px;
+    clear: both; }
     #g5-container .settings-block .settings-param:nth-child(even) {
       background-color: #fafafa;
       border-radius: 3px; }
@@ -760,9 +761,10 @@ a {
   font-weight: 300;
   font-family: "g-lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
   #g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
-    margin: 1.5rem 0;
     font-weight: normal;
     font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
+  #g5-container h1, #g5-container h2 {
+    margin: 1.5rem 0; }
   #g5-container h6 {
     text-transform: uppercase; }
   #g5-container b, #g5-container strong {
@@ -1873,7 +1875,8 @@ body.g5-dialog-open {
   .colorpicker input {
     color: #333;
     text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6), -1px -1px 0 rgba(255, 255, 255, 0.6), 1px -1px 0 rgba(255, 255, 255, 0.6), -1px 1px 0 rgba(255, 255, 255, 0.6), 1px 1px 0 rgba(255, 255, 255, 0.6);
-    font-weight: 400; }
+    font-weight: 400;
+    width: 100%; }
   .colorpicker i {
     position: absolute;
     top: 10px;
