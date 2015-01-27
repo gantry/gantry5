@@ -173,7 +173,7 @@ class Layout extends HtmlController
                 'id'       => $name,
                 'parent'   => 'settings',
                 'route'    => 'settings.' . $prefix,
-                'action'   => str_replace('.', '/', 'pages.' . $prefix . '.validate'),
+                'action'   => str_replace('.', '/', 'configurations.' . $page . '.layout.' . $prefix . '.validate'),
                 'skip'     => ['enabled']
             ];
 
