@@ -10,8 +10,8 @@
                 <li {{ (location == 'menu') ? 'class="active"' }}>
                     <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu')|e }}"><i class="fa fa-list"></i> <span>Menu</span></a>
                 </li>
-                <li {{ (location == 'overview') ? 'class="active"' }}>
-                    <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('overview')|e }}"><i class="fa fa-question-circle"></i> <span>About</span></a>
+                <li {{ (location == 'about') ? 'class="active"' }}>
+                    <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('about')|e }}"><i class="fa fa-question-circle"></i> <span>About</span></a>
                 </li>
                 <li class="config-select-wrap">
                     {% include 'partials/configuration-selector.html.twig' %}

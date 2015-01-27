@@ -1,16 +1,16 @@
 <section id="navbar">
     <ul>
-        <li {{ (location == 'styles') ? 'class="active"' }}>
-            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('styles')|e }}"><i class="fa fa-adjust"></i><span>Styles</span></a>
+        <li {{ (location == 'configurations/styles') ? 'class="active"' }}>
+            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('configurations', configuration, 'styles')|e }}"><i class="fa fa-adjust"></i><span>Styles</span></a>
         </li>
-        <li {{ (location == 'settings') ? 'class="active"' }}>
-            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('settings')|e }}"><i class="fa fa-wrench"></i><span>Settings</span></a>
+        <li {{ (location == 'configurations/settings') ? 'class="active"' }}>
+            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('configurations', configuration, 'settings')|e }}"><i class="fa fa-wrench"></i><span>Settings</span></a>
         </li>
-        <li {{ (location == 'pages') ? 'class="active"' }}>
-            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('pages/ricochet')|e }}"><i class="fa fa-columns"></i><span>Layout</span></a>
+        <li {{ (location == 'configurations/pages') ? 'class="active"' }}>
+            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('configurations', configuration, 'layout')|e }}"><i class="fa fa-columns"></i><span>Layout</span></a>
         </li>
-        <li {{ (location == 'assignments') ? 'class="active"' }}>
-            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('assignments')|e }}"><i class="fa fa-check-square-o"></i><span>Assignments</span></a>
+        <li {{ (location == 'configurations/assignments') ? 'class="active"' }}>
+            <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('configurations', configuration, 'assignments')|e }}"><i class="fa fa-check-square-o"></i><span>Assignments</span></a>
         </li>
     </ul>
 </section>

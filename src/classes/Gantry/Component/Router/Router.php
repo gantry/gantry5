@@ -49,7 +49,7 @@ abstract class Router implements RouterInterface
 
     public function execute($resource, $method = 'GET', $path, $params = [], $format = 'html')
     {
-        $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . ucfirst($resource);
+        $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . strtr(ucwords(strtr($resource, '/', ' ')), ' ', '\\');
 
         if (!class_exists($class)) {
             if ($format == 'json') {
@@ -78,6 +78,14 @@ abstract class Router implements RouterInterface
 
     protected function load()
     {
+        static $loaded = false;
+
+        if ($loaded) {
+            return;
+        }
+
+        $loaded = true;
+
         if (isset($this->container['theme.path']) && file_exists($this->container['theme.path'] . '/includes/gantry.php')) {
             include $this->container['theme.path'] . '/includes/gantry.php';
         }

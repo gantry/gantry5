@@ -1,5 +1,5 @@
 <?php
-namespace Gantry\Admin\Controller\Html;
+namespace Gantry\Admin\Controller\Html\Configurations;
 
 use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Config\CompiledBlueprints;
@@ -12,71 +12,70 @@ use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Styles extends HtmlController
+class Settings extends HtmlController
 {
-
     protected $httpVerbs = [
         'GET' => [
-            '/'              => 'index',
-            '/blocks'        => 'undefined',
-            '/blocks/*'      => 'display',
-            '/blocks/*/**'   => 'formfield',
+            '/'                 => 'index',
+            '/particles'        => 'undefined',
+            '/particles/*'      => 'display',
+            '/particles/*/**'   => 'formfield',
         ],
         'POST' => [
-            '/'         => 'forbidden',
-            '/blocks'   => 'forbidden',
-            '/blocks/*' => 'save'
+            '/'            => 'forbidden',
+            '/particles'   => 'forbidden',
+            '/particles/*' => 'save'
         ],
         'PUT' => [
-            '/'         => 'forbidden',
-            '/blocks'   => 'forbidden',
-            '/blocks/*' => 'save'
+            '/'            => 'forbidden',
+            '/particles'   => 'forbidden',
+            '/particles/*' => 'save'
         ],
         'PATCH' => [
-            '/'         => 'forbidden',
-            '/blocks'   => 'forbidden',
-            '/blocks/*' => 'save'
+            '/'            => 'forbidden',
+            '/particles'   => 'forbidden',
+            '/particles/*' => 'save'
         ],
         'DELETE' => [
-            '/'         => 'forbidden',
-            '/blocks'   => 'forbidden',
-            '/blocks/*' => 'reset'
+            '/'            => 'forbidden',
+            '/particles'   => 'forbidden',
+            '/particles/*' => 'reset'
         ]
     ];
 
     public function index()
     {
-        $this->params['blocks'] = $this->container['styles']->group();
+        $this->params['particles'] = $this->container['particles']->group();
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/styles/styles.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
     }
 
     public function display($id)
     {
-        $style = $this->container['styles']->get($id);
-        $blueprints = new Blueprints($style);
-        $prefix = 'styles.' . $id;
+        $particle = $this->container['particles']->get($id);
+        $blueprints = new Blueprints($particle);
+        $prefix = 'particles.' . $id;
 
         $this->params += [
-            'block' => $blueprints,
+            'particle' => $blueprints,
             'data' =>  Gantry::instance()['config']->get($prefix),
             'id' => $id,
-            'parent' => 'styles',
-            'route' => 'styles.' . $prefix,
+            'parent' => 'settings',
+            'route' => 'settings.' . $prefix,
             'skip' => ['enabled']
-        ];
+            ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/styles/item.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/item.html.twig', $this->params);
     }
 
     public function formfield($id)
     {
         $path = func_get_args();
 
-        $style = $this->container['styles']->get($id);
+        $particle = $this->container['particles']->get($id);
 
         // Load blueprints.
-        $blueprints = new Blueprints($style);
+        $blueprints = new Blueprints($particle);
 
         list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
 
@@ -85,7 +84,7 @@ class Styles extends HtmlController
         }
 
         // Get the prefix.
-        $prefix = "styles.{$id}." . implode('.', $path);
+        $prefix = "particles.{$id}." . implode('.', $path);
         if ($value !== null) {
             $parent = $fields;
             $fields = ['fields' => $fields['fields']];
@@ -96,28 +95,27 @@ class Styles extends HtmlController
         $this->params = [
                 'blueprints' => $fields,
                 'data' =>  $this->container['config']->get($prefix),
-                'parent' => $path ? "styles/blocks/{$id}/" . implode('/', $path) : "styles/blocks/{$id}",
-                'route' => 'styles.' . $prefix
+                'parent' => $path ? "settings/particles/{$id}/" . implode('/', $path) : "settings/particles/{$id}",
+                'route' => 'settings.' . $prefix
             ] + $this->params;
 
         if (isset($parent['key'])) {
             $this->params['key'] = $parent['key'];
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/styles/field.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
     }
-
 
     public function save($id)
     {
-        $blueprints = new Blueprints($this->container['styles']->get($id));
+        $blueprints = new Blueprints($this->container['particles']->get($id));
         $data = new Config($_POST, function() use ($blueprints) { return $blueprints; });
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $save_dir = $locator->findResource('gantry-config://styles', true, true);
+        $save_dir = $locator->findResource('gantry-config://particles', true, true);
         $filename = "{$save_dir}/{$id}.yaml";
 
         $file = YamlFile::instance($filename);

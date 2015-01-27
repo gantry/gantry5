@@ -2,6 +2,7 @@
 namespace Gantry\Framework\Base;
 
 use Gantry\Component\Config\ConfigServiceProvider;
+use Gantry\Component\Layout\LayoutCollection;
 use Gantry\Component\Layout\LayoutReader;
 use Gantry\Framework\Platform;
 use RocketTheme\Toolbox\DI\Container;
@@ -46,6 +47,7 @@ class Gantry extends Container
 
     protected static function load()
     {
+        /** @var Gantry $instance */
         $instance = new static();
 
         $instance->register(new ConfigServiceProvider);
@@ -53,6 +55,10 @@ class Gantry extends Container
 
         $instance['platform'] = function ($c) {
             return new Platform($c);
+        };
+
+        $instance['configurations'] = function ($c) {
+            return (new LayoutCollection($c))->load();
         };
 
         return $instance;

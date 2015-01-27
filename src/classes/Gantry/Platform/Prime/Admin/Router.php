@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Admin;
 
+use Gantry\Component\Layout\LayoutCollection;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Router\Router as BaseRouter;
 
@@ -13,9 +14,19 @@ class Router extends BaseRouter
         // Split normalized request path to its parts.
         $parts = array_filter(explode('/', PAGE_PATH), function($var) { return $var !== ''; });
 
-        $style = isset($this->container['theme.name']) ? $this->container['theme.name'] : '';
+        $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : '';
 
-        if ($style && isset($parts[0]) && $parts[0] == 'admin') {
+        if ($theme) {
+            $this->container['theme.id'] = 0;
+            $this->container['theme.path'] = PRIME_ROOT . '/themes/' . $theme;
+            $this->container['theme.name'] = $theme;
+            $this->container['theme.title'] = ucfirst($theme);
+            $this->container['theme.params'] = [];
+        }
+
+        $this->load();
+
+        if ($theme && isset($parts[0]) && $parts[0] == 'admin') {
             // We are inside admin; we can skip the first part.
             array_shift($parts);
 
@@ -24,7 +35,7 @@ class Router extends BaseRouter
 
         } else {
             // We are not inside admin or style doesn't exist; fall back to theme listing.
-            $style = '';
+            $theme = '';
             $parts = [];
             $this->resource = 'themes';
         }
@@ -40,18 +51,11 @@ class Router extends BaseRouter
             'ajax' => $ajax,
             'location' => $this->resource,
             'method' => $this->method,
+            'format' => $this->format,
             'params' => isset($_POST['params']) && is_string($_POST['params']) ? json_decode($_POST['params'], true) : []
         ];
 
-        if ($style) {
-            $this->container['theme.id'] = 0;
-            $this->container['theme.path'] = PRIME_ROOT . '/themes/' . $style;
-            $this->container['theme.name'] = $style;
-            $this->container['theme.title'] = ucfirst($style);
-            $this->container['theme.params'] = [];
-        }
-
-        $this->container['base_url'] = rtrim(PRIME_URI, '/') . "/{$style}/admin";
+        $this->container['base_url'] = rtrim(PRIME_URI, '/') . "/{$theme}/admin";
 
         $this->container['ajax_suffix'] = '.json';
 
