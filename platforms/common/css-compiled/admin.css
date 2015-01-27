@@ -2210,12 +2210,6 @@ a {
 #g-notifications-container .g-notifications-title .fa {
   margin-right: 10px;
 }
-/* line 38, ../scss/admin/_toastr.scss */
-#g-notifications-container .g-notifications-message {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  word-break: break-all;
-}
 /* line 42, ../scss/admin/_toastr.scss */
 #g-notifications-container .g-notifications-progress {
   position: absolute;
