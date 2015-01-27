@@ -1,0 +1,105 @@
+#g-notifications-container {
+    font-family: $font-family-default;
+    font-size: $core-font-size;
+    line-height: $core-line-height;
+
+    position: fixed;
+    z-index: 999999;
+
+    * {
+        @include box-sizing(border-box);
+    }
+
+    > div {
+        margin: 0 0 6px;
+        padding: 15px 15px 15px 50px;
+        width: 300px;
+        border-radius: 3px;
+        border: 1px solid $medium-gray;
+        color: $dark-gray;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        opacity: 0.8;
+    }
+
+    > :hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    .g-notifications-title {
+        font-weight: bold;
+    }
+
+    .g-notifications-message {
+        @include word-wrap(break-word);
+    }
+
+    .fa-close {
+        position: relative;
+        right: -0.3em;
+        top: -0.3em;
+        float: right;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    &.top-full-width {
+        top: 0;
+        right: 0;
+        width: 100%;
+    }
+
+    &.bottom-full-width {
+        bottom: 0;
+        right: 0;
+        width: 100%;
+    }
+
+    &.top-left {
+        top: 12px;
+        left: 12px;
+    }
+
+    &.top-right {
+        top: 12px;
+        right: 12px;
+    }
+
+    &.bottom-right {
+        right: 12px;
+        bottom: 12px;
+    }
+
+    &.bottom-left {
+        bottom: 12px;
+        left: 12px;
+    }
+
+    &.top-full-width > div,
+    &.bottom-full-width > div {
+        width: 96%;
+        margin: auto;
+    }
+
+    > div { // base
+        background: $light-gray;
+        color: $dark-gray;
+    }
+
+    /*.toast-success {
+        background-color: @green;
+    }
+
+    .toast-error {
+        background-color: @red;
+    }
+
+    .toast-info {
+        background-color: @blue;
+    }
+
+    .toast-warning {
+        background-color: @orange;
+    }*/
+
+}
