@@ -22,7 +22,7 @@ class ScssPhp extends CssCompiler implements CssCompilerInterface
      *
      * @param   array  $options  List of options used to configure the compiler
      */
-    public function __construct($options)
+    public function __construct(array $options = null)
     {
         $options['compiler'] = new \scssc();
 
@@ -45,7 +45,7 @@ class ScssPhp extends CssCompiler implements CssCompilerInterface
         return $out;
     }
 
-    public function compileFile($in, $out) {
+    public function compileFile($in = 'base', $out) {
         $inName = $in;
         $outName = null;
 

@@ -6,6 +6,7 @@ use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Stylesheet;;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Gantry;
@@ -110,6 +111,21 @@ class Styles extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/styles/field.html.twig', $this->params);
     }
 
+    public function reset($id)
+    {
+        $this->params += [
+            'data' => [],
+        ];
+
+        return $this->display($id);
+    }
+
+
+    public function resetCache($type, $in, $out) {
+        $compiler = new Stylesheet\ScssPhp();
+        $compiler->getCompilers();
+        $compiler->compileFile($in,$out);
+    }
 
     public function save($id)
     {
@@ -126,15 +142,6 @@ class Styles extends HtmlController
 
         $file = YamlFile::instance($filename);
         $file->save($data->toArray());
-
-        return $this->display($id);
-    }
-
-    public function reset($id)
-    {
-        $this->params += [
-            'data' => [],
-        ];
 
         return $this->display($id);
     }

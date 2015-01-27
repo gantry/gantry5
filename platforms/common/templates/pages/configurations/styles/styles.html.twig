@@ -2,6 +2,13 @@
 
 {% block gantry %}
 <div id="styles">
+    <h2>
+        <span class="title">Styles</span>
+            <span class="float-right">
+                <a href="#" class="button button-primary button-save" data-g5-resetcache=""><i class="fa fa-check"></i> <span>Reset Cache</span></a>
+            </span>
+    </h2>
+
     <div class="swatches-block">
         {% include 'partials/swatches.html.twig' with {'swatches': config.styles.swatches} %}
     </div>
