@@ -464,6 +464,12 @@
             border-radius: 3px;
             margin-right: 8px;
         }
+
+        .button {
+            i {
+                line-height: $core-line-height + 0.1;
+            }
+        }
     }
 
     /* deletion */
@@ -496,32 +502,17 @@
 }
 
 .g5-dialog .g-tabs {
-    @extend %list-reset;
-    border-bottom: 1px solid #e0e0e0;
-    padding: 1em 1em 0;
-    margin: -1em -1em 1em;
-    background: #eaeaea;
-    border-radius: 3px 3px 0 0;
+    @extend #navbar;
 
-    li {
-        display: inline-block;
-        border: 1px solid #ddd;
-        border-bottom: 0;
-        border-radius: 3px 3px 0 0;
-        margin: 0;
+    margin-right: 0 !important;
 
-        a {
-            color: #aaa;
-            display: block;
-            padding: 0.5em 1em;
-        }
+    ul {
+        background-color: $navbar-bg;
+        margin: -1rem -1rem 1rem !important;
+        border-radius: $core-border-radius $core-border-radius 0 0;
 
-        &.active {
-            background-color: #f0f0f0;
-
-            a {
-                color: #333;
-            }
+        li:first-child {
+            border-radius: $core-border-radius 0 0 0;
         }
     }
 }

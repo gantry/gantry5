@@ -28,7 +28,11 @@ var ColorPicker = new prime({
     },
 
     attach: function() {
-
+        $('body').delegate(MOUSEDOWN, '.colorpicker i', bind(function(event, element){
+            var input = $(element).sibling('input');
+            input[0].focus();
+            this.show(event, input);
+        }, this));
         $('body').delegate(FOCUSIN, '.colorpicker input', this.bound('show'), true);
         $('body').on(MOUSEDOWN, bind(function(event) {
             var target = $(event.target);

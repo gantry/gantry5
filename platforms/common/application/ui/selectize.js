@@ -204,7 +204,7 @@ var autoGrow = function(input) {
     input = $(input);
     var currentWidth = null;
 
-    var update = function(e, options) {
+    var update = function(options, e) {
         var value, keyCode, printable, placeholder, width;
         var shift, character, selection;
         e = e || window.event || {};
@@ -415,7 +415,7 @@ var Selectize = new prime({
         }
 
         $wrapper.style({
-            width: parseInt($input.compute('width')) + 4
+            width: parseInt($input.compute('width')) + 12 + (24) // padding compensation
         });
 
         if ((this.options.maxItems === null || this.options.maxItems > 1) && this.tagType === TAG_SELECT) {
@@ -870,7 +870,7 @@ var Selectize = new prime({
             this.lastQuery = null;
             this.setTextboxValue('');
             this.addItem(this.Options[Object.keys(this.Options)[0]][this.options.valueField]);
-            this.blur();
+            //this.blur();
         }
 
         if (trigger) this.emit('dropdown_close', this.$dropdown);
@@ -1879,16 +1879,16 @@ $.implement({
                 var i, n, id, optgrp, options;
 
                 optgroup = $(optgroup);
-                id = optgroup.attr('label');
+                id = optgroup.attribute('label');
 
                 if (id) {
                     optgrp = readData(optgroup) || {};
                     optgrp[field_optgroup_label] = id;
                     optgrp[field_optgroup_value] = id;
-                    settings_element.optgroups[id] = optgrp;
+                    settings_element.Optgroups[id] = optgrp;
                 }
 
-                options = $('option', optgroup);
+                options = optgroup.search('option');
                 for (i = 0, n = options.length; i < n; i++) {
                     addOption(options[i], id);
                 }

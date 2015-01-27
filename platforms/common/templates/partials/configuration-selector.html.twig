@@ -1,6 +1,6 @@
 <li class="config-select-wrap">
-    <select class="config-select">
-        <option value="" selected="selected">Default</option>
+    <select class="config-select" data-selectize="{{ {allowEmptyOption: true}|json_encode()|e('html_attr') }}">
+        <option value="" selected="selected">Master</option>
         <option value="frontpage">Front Page</option>
         <optgroup label="System Pages">
             <option value="error">Error Page</option>
@@ -9,5 +9,4 @@
             <option value="comingsoon">Coming Soon</option>
         </optgroup>
     </select>
-    <i class="fa fa-chevron-down"></i>
 </li>

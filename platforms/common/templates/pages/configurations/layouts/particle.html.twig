@@ -2,10 +2,12 @@
 
 {% block gantry %}
 <form method="post" action="{{ gantry.route(action) }}">
-    <ul class="g-tabs">
-        <li class="active"><a href="#">Particle</a></li>
-        <li><a href="#">Block</a></li>
-    </ul>
+    <div class="g-tabs">
+        <ul>
+            <li class="active"><a href="#">Particle</a></li>
+            <li><a href="#">Block</a></li>
+        </ul>
+    </div>
 
     <div class="g-panes">
         <div class="g-pane active">

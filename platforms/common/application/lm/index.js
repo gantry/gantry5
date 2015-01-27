@@ -3,6 +3,7 @@ var ready         = require('elements/domready'),
     //json          = require('./json_test'),
     $             = require('elements/attributes'),
     modal         = require('../ui').modal,
+    toastr        = require('../ui').toastr,
     request       = require('agent'),
     zen           = require('elements/zen'),
     contains      = require('mout/array/contains'),
@@ -91,6 +92,7 @@ ready(function() {
                 return false;
             } else {
                 modal.close();
+                toastr.success('The Layout has been successfully saved!', 'Layout Saved');
             }
         });
     });
@@ -136,12 +138,15 @@ ready(function() {
 
     body.delegate('input', '.sidebar-block .search input', function(event, element){
         var value = $(element).value().toLowerCase(),
-            list = $('.sidebar-block [data-lm-blocktype]');
+            list = $('.sidebar-block [data-lm-blocktype]'),
+            text, type;
         if (!list) { return false; }
 
         list.style({ display: 'none' }).forEach(function(blocktype) {
             blocktype = $(blocktype);
-            if (blocktype.data('lm-blocktype').toLowerCase().match(value) || blocktype.text().toLowerCase().match(value)) {
+            type = blocktype.data('lm-blocktype').toLowerCase();
+            text = trim(blocktype.text()).toLowerCase();
+            if (type.substr(0, value.length) == value || text.match(value)) {
                 blocktype.style({ display: 'block' });
             }
         }, this);
@@ -311,6 +316,7 @@ ready(function() {
                             }
 
                             modal.close();
+                            toastr.success('The particle "'+particle.getTitle()+'" settings have been applied to the Layout. <br />Remember to click the Save button to store them.', 'Settings Applied');
                         }
                     });
                 });

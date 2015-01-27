@@ -16,8 +16,11 @@
         top: $content-padding;
         position: absolute;
         opacity: 0.5;
+        @include breakpoint(tablet-range) {
+            display: none;
+        }
         @include breakpoint(mobile-only) {
-            
+            display: none;
         }
     }
 }
@@ -27,10 +30,6 @@
     font-family: $font-family-headers;
     margin-right: -1px;
 
-    &, li:hover, li.active {
-        
-    }
-
     .g-content {
         padding: 0;
         margin: $content-margin 0;
@@ -39,7 +38,7 @@
     ul {
         @extend %list-reset;
 
-        li {
+        li:not(.config-select-wrap) {
             @include transition (background-color 0.2s ease-in-out);
             &:hover {
                 background-color: darken($navbar-bg, 3%);
@@ -60,6 +59,9 @@
                 white-space: nowrap;
                 padding: $content-padding;
                 font-size: $core-font-size;
+                @include breakpoint(tablet-range) {
+                    padding: $content-padding $content-padding - 0.2;
+                }
                 @include breakpoint(mobile-only) {
                     text-align: center;
                     padding: $content-padding $content-padding + 0.1;
@@ -85,6 +87,20 @@
             display: inline-block;
             margin-right: -4px;
         }
+
+
+
+        .config-select-wrap {
+            font-size: 1rem;
+            position: relative;
+            top: $content-padding / 2;
+            padding: 0 $content-padding;
+            display: inline-block;
+            @include breakpoint(tablet-range) {
+                padding: 0 $content-padding - 0.2;
+            }
+        }
+
     }
 
     ul ul {

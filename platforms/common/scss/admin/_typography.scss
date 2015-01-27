@@ -8,6 +8,10 @@ h1, h2, h3, h4, h5, h6 {
     font-family: $font-family-headers;
 }
 
+h1, h2 {
+    margin: $leading-margin 0;
+}
+
 h6 {
     text-transform: uppercase;
 }

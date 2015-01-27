@@ -43,5 +43,6 @@ var ready = require('elements/domready'),
 module.exports = {
     modal: new Modal(),
     togglers: require('./togglers'),
-    selectize: Selectize
+    selectize: Selectize,
+    toastr: require('./toastr')
 };
