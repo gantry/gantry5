@@ -7,7 +7,7 @@ var prime = require('prime'),
     zen   = require('elements/zen'),
 
     bind  = require('mout/function/bind'),
-    getAjaxURL = require('../../utils/get-ajax-url');
+    getAjaxURL = require('../../utils/get-ajax-url').config;
 
 require('elements/insertion');
 
@@ -28,7 +28,7 @@ var Section = new prime({
     },
 
     layout: function() {
-        var settings_uri = getAjaxURL('layout/' + this.getPageId() +  '/' + this.getType() + '/' + this.getId());
+        var settings_uri = getAjaxURL(this.getPageId() + '/layout/' +  '/' + this.getType() + '/' + this.getId());
 
         return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><i class="fa fa-plus"></i> <i class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></div></div></div>';
     },

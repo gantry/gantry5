@@ -3,7 +3,7 @@ var $             = require('../../utils/elements.moofx'),
     domready      = require('elements/domready'),
     modal         = require('../../ui').modal,
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
-    getAjaxURL    = require('../../utils/get-ajax-url'),
+    getAjaxURL    = require('../../utils/get-ajax-url').global,
 
     trim          = require('mout/string/trim'),
     contains      = require('mout/array/contains');
