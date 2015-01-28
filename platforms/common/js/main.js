@@ -33,7 +33,7 @@ var G5;
     },
     '1': function (require, module, exports, global) {
         'use strict';
-        var $ = require('h');
+        var $ = require('g');
         require('2');
         require('3');
         require('5');
@@ -43,8 +43,8 @@ var G5;
     },
     '2': function (require, module, exports, global) {
         'use strict';
-        var $ = require('h');
-        var trim = require('i'), forEach = require('j'), filter = require('k'), indexOf = require('l');
+        var $ = require('g');
+        var trim = require('h'), forEach = require('i'), filter = require('j'), indexOf = require('k');
         $.implement({
             setAttribute: function (name, value) {
                 return this.forEach(function (node) {
@@ -216,8 +216,8 @@ var G5;
     },
     '3': function (require, module, exports, global) {
         'use strict';
-        var Emitter = require('o');
-        var $ = require('h');
+        var Emitter = require('l');
+        var $ = require('g');
         var html = document.documentElement;
         var addEventListener = html.addEventListener ? function (node, event, handle, useCapture) {
                 node.addEventListener(event, handle, useCapture || false);
@@ -272,7 +272,7 @@ var G5;
     },
     '4': function (require, module, exports, global) {
         'use strict';
-        var Map = require('g');
+        var Map = require('o');
         var $ = require('3');
         require('6');
         $.implement({
@@ -325,7 +325,7 @@ var G5;
     },
     '5': function (require, module, exports, global) {
         'use strict';
-        var $ = require('h');
+        var $ = require('g');
         $.implement({
             appendChild: function (child) {
                 this[0].appendChild($(child)[0]);
@@ -395,9 +395,9 @@ var G5;
     },
     '6': function (require, module, exports, global) {
         'use strict';
-        var map = require('y');
-        var slick = require('z');
-        var $ = require('h');
+        var map = require('m');
+        var slick = require('n');
+        var $ = require('g');
         var gen = function (combinator, expression) {
             return map(slick.parse(expression || '*'), function (part) {
                 return combinator + ' ' + part;
@@ -481,7 +481,7 @@ var G5;
     },
     '7': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), $ = require('n'), zen = require('e'), storage = require('g')(), Emitter = require('o'), Bound = require('p'), Options = require('q'), domready = require('c'), bind = require('r'), map = require('s'), forEach = require('t'), last = require('u'), merge = require('v'), isFunct = require('w'), request = require('x');
+        var prime = require('p'), $ = require('q'), zen = require('e'), storage = require('o')(), Emitter = require('l'), Bound = require('r'), Options = require('s'), domready = require('c'), bind = require('t'), map = require('u'), forEach = require('v'), last = require('w'), merge = require('x'), isFunct = require('y'), request = require('z');
         var Popover = new prime({
                 mixin: [
                     Bound,
@@ -921,7 +921,7 @@ var G5;
     },
     '8': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), $ = require('n'), zen = require('e'), domready = require('c'), storage = require('g')(), modal = require('a').modal, size = require('10'), merge = require('v'), guid = require('11'), toQueryString = require('12'), request = require('x')(), History = require('13'), getAjaxSuffix = require('14');
+        var prime = require('p'), $ = require('q'), zen = require('e'), domready = require('c'), storage = require('o')(), modal = require('a').modal, size = require('10'), merge = require('x'), guid = require('11'), toQueryString = require('12'), request = require('z')(), History = require('13'), getAjaxSuffix = require('14');
         require('7');
         var ERROR = false;
         History.Adapter.bind(window, 'statechange', function () {
@@ -1047,7 +1047,7 @@ var G5;
     },
     '9': function (require, module, exports, global) {
         'use strict';
-        var ready = require('c'), $ = require('2'), modal = require('a').modal, toastr = require('a').toastr, request = require('x'), zen = require('e'), contains = require('15'), size = require('10'), trim = require('1f'), getAjaxSuffix = require('14'), Builder = require('1g'), History = require('1h'), LMHistory = require('1i'), LayoutManager = require('1j');
+        var ready = require('c'), $ = require('2'), modal = require('a').modal, toastr = require('a').toastr, request = require('z'), zen = require('e'), contains = require('19'), size = require('10'), trim = require('1a'), getAjaxSuffix = require('14'), Builder = require('1b'), History = require('1c'), LMHistory = require('1d'), LayoutManager = require('1e');
         require('7');
         var builder, layoutmanager, lmhistory;
         builder = new Builder();
@@ -1140,6 +1140,17 @@ var G5;
                 resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
                 builder: builder,
                 history: lmhistory
+            });
+            body.delegate('click', '[data-lm-samewidth]', function (event, element) {
+                element = $(element);
+                var blocks = element.search('> [data-lm-blocktype="block"]'), id;
+                if (!blocks || blocks.length == 1) {
+                    return;
+                }
+                blocks.forEach(function (block) {
+                    id = $(block).data('lm-id');
+                    builder.get(id).setSize(100 / blocks.length, true);
+                });
             });
             body.delegate('click', '[data-lm-settings]', function (event, element) {
                 element = $(element);
@@ -1273,17 +1284,17 @@ var G5;
     },
     'a': function (require, module, exports, global) {
         'use strict';
-        var ready = require('c'), Modal = require('1b'), Selectize = require('1c');
+        var ready = require('c'), Modal = require('15'), Selectize = require('16');
         module.exports = {
             modal: new Modal(),
-            togglers: require('1d'),
+            togglers: require('17'),
             selectize: Selectize,
-            toastr: require('1e')
+            toastr: require('18')
         };
     },
     'b': function (require, module, exports, global) {
         'use strict';
-        var ready = require('c'), $ = require('2'), modal = require('a').modal, request = require('x'), zen = require('e'), contains = require('15'), size = require('10'), getAjaxSuffix = require('14');
+        var ready = require('c'), $ = require('2'), modal = require('a').modal, request = require('z'), zen = require('e'), contains = require('19'), size = require('10'), getAjaxSuffix = require('14');
         require('7');
         ready(function () {
             var body = $('body');
@@ -1376,18 +1387,18 @@ var G5;
     },
     'd': function (require, module, exports, global) {
         module.exports = {
-            colorpicker: require('16'),
-            fonts: require('17'),
-            menu: require('18'),
-            icons: require('19'),
-            filemanager: require('1a')
+            colorpicker: require('1f'),
+            fonts: require('1g'),
+            menu: require('1h'),
+            icons: require('1i'),
+            filemanager: require('1j')
         };
     },
     'e': function (require, module, exports, global) {
         'use strict';
-        var forEach = require('j'), map = require('y');
-        var parse = require('1o');
-        var $ = require('h');
+        var forEach = require('i'), map = require('m');
+        var parse = require('1k');
+        var $ = require('g');
         module.exports = function (expression, doc) {
             return $(map(parse(expression), function (expression) {
                 var previous, result;
@@ -1424,8 +1435,8 @@ var G5;
     },
     'f': function (require, module, exports, global) {
         'use strict';
-        var color = require('1k'), frame = require('1l');
-        var moofx = typeof document !== 'undefined' ? require('1m') : require('1n');
+        var color = require('1l'), frame = require('1m');
+        var moofx = typeof document !== 'undefined' ? require('1n') : require('1o');
         moofx.requestFrame = function (callback) {
             frame.request(callback);
             return this;
@@ -1439,8 +1450,225 @@ var G5;
     },
     'g': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('l');
-        var prime = require('m');
+        var prime = require('p');
+        var forEach = require('i'), map = require('m'), filter = require('j'), every = require('1p'), some = require('1q');
+        var index = 0, __dc = document.__counter, counter = document.__counter = (__dc ? parseInt(__dc, 36) + 1 : 0).toString(36), key = 'uid:' + counter;
+        var uniqueID = function (n) {
+            if (n === window)
+                return 'window';
+            if (n === document)
+                return 'document';
+            if (n === document.documentElement)
+                return 'html';
+            return n[key] || (n[key] = (index++).toString(36));
+        };
+        var instances = {};
+        var $ = prime({
+                constructor: function $(n, context) {
+                    if (n == null)
+                        return this && this.constructor === $ ? new Elements() : null;
+                    var self, uid;
+                    if (n.constructor !== Elements) {
+                        self = new Elements();
+                        if (typeof n === 'string') {
+                            if (!self.search)
+                                return null;
+                            self[self.length++] = context || document;
+                            return self.search(n);
+                        }
+                        if (n.nodeType || n === window) {
+                            self[self.length++] = n;
+                        } else if (n.length) {
+                            var uniques = {};
+                            for (var i = 0, l = n.length; i < l; i++) {
+                                var nodes = $(n[i], context);
+                                if (nodes && nodes.length)
+                                    for (var j = 0, k = nodes.length; j < k; j++) {
+                                        var node = nodes[j];
+                                        uid = uniqueID(node);
+                                        if (!uniques[uid]) {
+                                            self[self.length++] = node;
+                                            uniques[uid] = true;
+                                        }
+                                    }
+                            }
+                        }
+                    } else {
+                        self = n;
+                    }
+                    if (!self.length)
+                        return null;
+                    if (self.length === 1) {
+                        uid = uniqueID(self[0]);
+                        return instances[uid] || (instances[uid] = self);
+                    }
+                    return self;
+                }
+            });
+        var Elements = prime({
+                inherits: $,
+                constructor: function Elements() {
+                    this.length = 0;
+                },
+                unlink: function () {
+                    return this.map(function (node) {
+                        delete instances[uniqueID(node)];
+                        return node;
+                    });
+                },
+                forEach: function (method, context) {
+                    forEach(this, method, context);
+                    return this;
+                },
+                map: function (method, context) {
+                    return map(this, method, context);
+                },
+                filter: function (method, context) {
+                    return filter(this, method, context);
+                },
+                every: function (method, context) {
+                    return every(this, method, context);
+                },
+                some: function (method, context) {
+                    return some(this, method, context);
+                }
+            });
+        module.exports = $;
+    },
+    'h': function (require, module, exports, global) {
+        var toString = require('1r');
+        var WHITE_SPACES = require('1s');
+        var ltrim = require('1t');
+        var rtrim = require('1u');
+        function trim(str, chars) {
+            str = toString(str);
+            chars = chars || WHITE_SPACES;
+            return ltrim(rtrim(str, chars), chars);
+        }
+        module.exports = trim;
+    },
+    'i': function (require, module, exports, global) {
+        function forEach(arr, callback, thisObj) {
+            if (arr == null) {
+                return;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (callback.call(thisObj, arr[i], i, arr) === false) {
+                    break;
+                }
+            }
+        }
+        module.exports = forEach;
+    },
+    'j': function (require, module, exports, global) {
+        var makeIterator = require('1v');
+        function filter(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var results = [];
+            if (arr == null) {
+                return results;
+            }
+            var i = -1, len = arr.length, value;
+            while (++i < len) {
+                value = arr[i];
+                if (callback(value, i, arr)) {
+                    results.push(value);
+                }
+            }
+            return results;
+        }
+        module.exports = filter;
+    },
+    'k': function (require, module, exports, global) {
+        function indexOf(arr, item, fromIndex) {
+            fromIndex = fromIndex || 0;
+            if (arr == null) {
+                return -1;
+            }
+            var len = arr.length, i = fromIndex < 0 ? len + fromIndex : fromIndex;
+            while (i < len) {
+                if (arr[i] === item) {
+                    return i;
+                }
+                i++;
+            }
+            return -1;
+        }
+        module.exports = indexOf;
+    },
+    'l': function (require, module, exports, global) {
+        'use strict';
+        var indexOf = require('k'), forEach = require('i');
+        var prime = require('p'), defer = require('1w');
+        var slice = Array.prototype.slice;
+        var Emitter = prime({
+                on: function (event, fn) {
+                    var listeners = this._listeners || (this._listeners = {}), events = listeners[event] || (listeners[event] = []);
+                    if (indexOf(events, fn) === -1)
+                        events.push(fn);
+                    return this;
+                },
+                off: function (event, fn) {
+                    var listeners = this._listeners, events, key, length = 0;
+                    if (listeners && (events = listeners[event])) {
+                        var io = indexOf(events, fn);
+                        if (io > -1)
+                            events.splice(io, 1);
+                        if (!events.length)
+                            delete listeners[event];
+                        for (var l in listeners)
+                            return this;
+                        delete this._listeners;
+                    }
+                    return this;
+                },
+                emit: function (event) {
+                    var self = this, args = slice.call(arguments, 1);
+                    var emit = function () {
+                        var listeners = self._listeners, events;
+                        if (listeners && (events = listeners[event])) {
+                            forEach(events.slice(0), function (event) {
+                                return event.apply(self, args);
+                            });
+                        }
+                    };
+                    if (args[args.length - 1] === Emitter.EMIT_SYNC) {
+                        args.pop();
+                        emit();
+                    } else {
+                        defer(emit);
+                    }
+                    return this;
+                }
+            });
+        Emitter.EMIT_SYNC = {};
+        module.exports = Emitter;
+    },
+    'm': function (require, module, exports, global) {
+        var makeIterator = require('1v');
+        function map(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var results = [];
+            if (arr == null) {
+                return results;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                results[i] = callback(arr[i], i, arr);
+            }
+            return results;
+        }
+        module.exports = map;
+    },
+    'n': function (require, module, exports, global) {
+        'use strict';
+        module.exports = 'document' in global ? require('1x') : { parse: require('1k') };
+    },
+    'o': function (require, module, exports, global) {
+        'use strict';
+        var indexOf = require('k');
+        var prime = require('p');
         var Map = prime({
                 constructor: function Map() {
                     this.length = 0;
@@ -1538,158 +1766,9 @@ var G5;
         map.prototype = Map.prototype;
         module.exports = map;
     },
-    'h': function (require, module, exports, global) {
+    'p': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m');
-        var forEach = require('j'), map = require('y'), filter = require('k'), every = require('1p'), some = require('1q');
-        var index = 0, __dc = document.__counter, counter = document.__counter = (__dc ? parseInt(__dc, 36) + 1 : 0).toString(36), key = 'uid:' + counter;
-        var uniqueID = function (n) {
-            if (n === window)
-                return 'window';
-            if (n === document)
-                return 'document';
-            if (n === document.documentElement)
-                return 'html';
-            return n[key] || (n[key] = (index++).toString(36));
-        };
-        var instances = {};
-        var $ = prime({
-                constructor: function $(n, context) {
-                    if (n == null)
-                        return this && this.constructor === $ ? new Elements() : null;
-                    var self, uid;
-                    if (n.constructor !== Elements) {
-                        self = new Elements();
-                        if (typeof n === 'string') {
-                            if (!self.search)
-                                return null;
-                            self[self.length++] = context || document;
-                            return self.search(n);
-                        }
-                        if (n.nodeType || n === window) {
-                            self[self.length++] = n;
-                        } else if (n.length) {
-                            var uniques = {};
-                            for (var i = 0, l = n.length; i < l; i++) {
-                                var nodes = $(n[i], context);
-                                if (nodes && nodes.length)
-                                    for (var j = 0, k = nodes.length; j < k; j++) {
-                                        var node = nodes[j];
-                                        uid = uniqueID(node);
-                                        if (!uniques[uid]) {
-                                            self[self.length++] = node;
-                                            uniques[uid] = true;
-                                        }
-                                    }
-                            }
-                        }
-                    } else {
-                        self = n;
-                    }
-                    if (!self.length)
-                        return null;
-                    if (self.length === 1) {
-                        uid = uniqueID(self[0]);
-                        return instances[uid] || (instances[uid] = self);
-                    }
-                    return self;
-                }
-            });
-        var Elements = prime({
-                inherits: $,
-                constructor: function Elements() {
-                    this.length = 0;
-                },
-                unlink: function () {
-                    return this.map(function (node) {
-                        delete instances[uniqueID(node)];
-                        return node;
-                    });
-                },
-                forEach: function (method, context) {
-                    forEach(this, method, context);
-                    return this;
-                },
-                map: function (method, context) {
-                    return map(this, method, context);
-                },
-                filter: function (method, context) {
-                    return filter(this, method, context);
-                },
-                every: function (method, context) {
-                    return every(this, method, context);
-                },
-                some: function (method, context) {
-                    return some(this, method, context);
-                }
-            });
-        module.exports = $;
-    },
-    'i': function (require, module, exports, global) {
-        var toString = require('1r');
-        var WHITE_SPACES = require('1s');
-        var ltrim = require('1t');
-        var rtrim = require('1u');
-        function trim(str, chars) {
-            str = toString(str);
-            chars = chars || WHITE_SPACES;
-            return ltrim(rtrim(str, chars), chars);
-        }
-        module.exports = trim;
-    },
-    'j': function (require, module, exports, global) {
-        function forEach(arr, callback, thisObj) {
-            if (arr == null) {
-                return;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (callback.call(thisObj, arr[i], i, arr) === false) {
-                    break;
-                }
-            }
-        }
-        module.exports = forEach;
-    },
-    'k': function (require, module, exports, global) {
-        var makeIterator = require('1v');
-        function filter(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var results = [];
-            if (arr == null) {
-                return results;
-            }
-            var i = -1, len = arr.length, value;
-            while (++i < len) {
-                value = arr[i];
-                if (callback(value, i, arr)) {
-                    results.push(value);
-                }
-            }
-            return results;
-        }
-        module.exports = filter;
-    },
-    'l': function (require, module, exports, global) {
-        function indexOf(arr, item, fromIndex) {
-            fromIndex = fromIndex || 0;
-            if (arr == null) {
-                return -1;
-            }
-            var len = arr.length, i = fromIndex < 0 ? len + fromIndex : fromIndex;
-            while (i < len) {
-                if (arr[i] === item) {
-                    return i;
-                }
-                i++;
-            }
-            return -1;
-        }
-        module.exports = indexOf;
-    },
-    'm': function (require, module, exports, global) {
-        'use strict';
-        var hasOwn = require('1x'), mixIn = require('1y'), create = require('1z'), kindOf = require('20');
+        var hasOwn = require('1y'), mixIn = require('1z'), create = require('20'), kindOf = require('21');
         var hasDescriptors = true;
         try {
             Object.defineProperty({}, '~', {});
@@ -1752,9 +1831,9 @@ var G5;
         };
         module.exports = prime;
     },
-    'n': function (require, module, exports, global) {
+    'q': function (require, module, exports, global) {
         'use strict';
-        var $ = require('1'), moofx = require('f'), map = require('s'), slick = require('z');
+        var $ = require('1'), moofx = require('f'), map = require('u'), slick = require('n');
         var walk = function (combinator, method) {
             return function (expression) {
                 var parts = slick.parse(expression || '*');
@@ -1784,58 +1863,10 @@ var G5;
         });
         module.exports = $;
     },
-    'o': function (require, module, exports, global) {
+    'r': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('l'), forEach = require('j');
-        var prime = require('m'), defer = require('1w');
-        var slice = Array.prototype.slice;
-        var Emitter = prime({
-                on: function (event, fn) {
-                    var listeners = this._listeners || (this._listeners = {}), events = listeners[event] || (listeners[event] = []);
-                    if (indexOf(events, fn) === -1)
-                        events.push(fn);
-                    return this;
-                },
-                off: function (event, fn) {
-                    var listeners = this._listeners, events, key, length = 0;
-                    if (listeners && (events = listeners[event])) {
-                        var io = indexOf(events, fn);
-                        if (io > -1)
-                            events.splice(io, 1);
-                        if (!events.length)
-                            delete listeners[event];
-                        for (var l in listeners)
-                            return this;
-                        delete this._listeners;
-                    }
-                    return this;
-                },
-                emit: function (event) {
-                    var self = this, args = slice.call(arguments, 1);
-                    var emit = function () {
-                        var listeners = self._listeners, events;
-                        if (listeners && (events = listeners[event])) {
-                            forEach(events.slice(0), function (event) {
-                                return event.apply(self, args);
-                            });
-                        }
-                    };
-                    if (args[args.length - 1] === Emitter.EMIT_SYNC) {
-                        args.pop();
-                        emit();
-                    } else {
-                        defer(emit);
-                    }
-                    return this;
-                }
-            });
-        Emitter.EMIT_SYNC = {};
-        module.exports = Emitter;
-    },
-    'p': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('m');
-        var bind = require('21');
+        var prime = require('p');
+        var bind = require('22');
         var bound = prime({
                 bound: function (name) {
                     var bound = this._bound || (this._bound = {});
@@ -1844,10 +1875,10 @@ var G5;
             });
         module.exports = bound;
     },
-    'q': function (require, module, exports, global) {
+    's': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m');
-        var merge = require('22');
+        var prime = require('p');
+        var merge = require('23');
         var Options = prime({
                 setOptions: function (options) {
                     var args = [
@@ -1861,8 +1892,8 @@ var G5;
             });
         module.exports = Options;
     },
-    'r': function (require, module, exports, global) {
-        var slice = require('23');
+    't': function (require, module, exports, global) {
+        var slice = require('24');
         function bind(fn, context, args) {
             var argsArr = slice(arguments, 2);
             return function () {
@@ -1871,8 +1902,8 @@ var G5;
         }
         module.exports = bind;
     },
-    's': function (require, module, exports, global) {
-        var makeIterator = require('24');
+    'u': function (require, module, exports, global) {
+        var makeIterator = require('25');
         function map(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var results = [];
@@ -1887,7 +1918,7 @@ var G5;
         }
         module.exports = map;
     },
-    't': function (require, module, exports, global) {
+    'v': function (require, module, exports, global) {
         function forEach(arr, callback, thisObj) {
             if (arr == null) {
                 return;
@@ -1901,7 +1932,7 @@ var G5;
         }
         module.exports = forEach;
     },
-    'u': function (require, module, exports, global) {
+    'w': function (require, module, exports, global) {
         function last(arr) {
             if (arr == null || arr.length < 1) {
                 return undefined;
@@ -1910,10 +1941,10 @@ var G5;
         }
         module.exports = last;
     },
-    'v': function (require, module, exports, global) {
-        var hasOwn = require('25');
-        var deepClone = require('26');
-        var isObject = require('27');
+    'x': function (require, module, exports, global) {
+        var hasOwn = require('26');
+        var deepClone = require('27');
+        var isObject = require('28');
         function merge() {
             var i = 1, key, val, obj, target;
             target = deepClone(arguments[0]);
@@ -1934,17 +1965,17 @@ var G5;
         }
         module.exports = merge;
     },
-    'w': function (require, module, exports, global) {
-        var isKind = require('28');
+    'y': function (require, module, exports, global) {
+        var isKind = require('29');
         function isFunction(val) {
             return isKind(val, 'Function');
         }
         module.exports = isFunction;
     },
-    'x': function (require, module, exports, global) {
+    'z': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Emitter = require('o');
-        var isObject = require('29'), isString = require('2a'), isArray = require('2b'), isFunction = require('2c'), trim = require('i'), upperCase = require('2d'), forIn = require('2e'), mixIn = require('1y'), remove = require('2f'), forEach = require('j');
+        var prime = require('p'), Emitter = require('l');
+        var isObject = require('2a'), isString = require('2b'), isArray = require('2c'), isFunction = require('2d'), trim = require('h'), upperCase = require('2e'), forIn = require('2f'), mixIn = require('1z'), remove = require('2g'), forEach = require('i');
         var capitalize = function (str) {
             return str.replace(/\b[a-z]/g, upperCase);
         };
@@ -2247,29 +2278,9 @@ var G5;
         agent.Response = Response;
         module.exports = agent;
     },
-    'y': function (require, module, exports, global) {
-        var makeIterator = require('1v');
-        function map(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var results = [];
-            if (arr == null) {
-                return results;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                results[i] = callback(arr[i], i, arr);
-            }
-            return results;
-        }
-        module.exports = map;
-    },
-    'z': function (require, module, exports, global) {
-        'use strict';
-        module.exports = 'document' in global ? require('2i') : { parse: require('1o') };
-    },
     '10': function (require, module, exports, global) {
-        var isArray = require('2g');
-        var objSize = require('2h');
+        var isArray = require('2h');
+        var objSize = require('2i');
         function size(list) {
             if (!list) {
                 return 0;
@@ -2291,8 +2302,8 @@ var G5;
     },
     '12': function (require, module, exports, global) {
         var forOwn = require('2l');
-        var isArray = require('2g');
-        var forEach = require('t');
+        var isArray = require('2h');
+        var forEach = require('v');
         function encode(obj) {
             var query = [], arrValues, reg;
             forOwn(obj, function (val, key) {
@@ -2313,7 +2324,7 @@ var G5;
     },
     '13': function (require, module, exports, global) {
         'use strict';
-        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('2o') || {}, history = window.history;
+        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('2m') || {}, history = window.history;
         try {
             sessionStorage = window.sessionStorage;
             sessionStorage.setItem('TEST', '1');
@@ -3150,1252 +3161,8 @@ var G5;
         module.exports = getAjaxSuffix;
     },
     '15': function (require, module, exports, global) {
-        var indexOf = require('2p');
-        function contains(arr, val) {
-            return indexOf(arr, val) !== -1;
-        }
-        module.exports = contains;
-    },
-    '16': function (require, module, exports, global) {
-        var prime = require('m'), Emitter = require('o'), Bound = require('p'), Options = require('q'), $ = require('1'), ready = require('c'), zen = require('e'), forEach = require('2m'), bind = require('r'), clamp = require('2n');
-        var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-        var MOUSEDOWN = 'mousedown' || 'touchstart', MOUSEMOVE = 'mousemove' || 'touchmove', MOUSEUP = 'mouseup' || 'touchend', FOCUSIN = isFirefox ? 'focus' : 'focusin';
-        var ColorPicker = new prime({
-                mixin: [
-                    Options,
-                    Bound
-                ],
-                inherits: Emitter,
-                options: {},
-                constructor: function (options) {
-                    this.setOptions(options);
-                    this.built = false;
-                    this.attach();
-                },
-                attach: function () {
-                    $('body').delegate(MOUSEDOWN, '.colorpicker i', bind(function (event, element) {
-                        var input = $(element).sibling('input');
-                        input[0].focus();
-                        this.show(event, input);
-                    }, this));
-                    $('body').delegate(FOCUSIN, '.colorpicker input', this.bound('show'), true);
-                    $('body').on(MOUSEDOWN, bind(function (event) {
-                        var target = $(event.target);
-                        if (!target.parent('.cp-wrapper') && !target.parent('.colorpicker')) {
-                            this.hide();
-                        }
-                    }, this));
-                    $('body').delegate(MOUSEDOWN, '.cp-grid, .cp-slider, .cp-opacity-slider', bind(function (event, element) {
-                        event.preventDefault();
-                        this.target = element;
-                        this.move(this.target, event, true);
-                    }, this));
-                    $('body').on(MOUSEMOVE, bind(function (event) {
-                        if (this.target) {
-                            this.move(this.target, event);
-                        }
-                    }, this));
-                    $('body').on(MOUSEUP, bind(function () {
-                        this.target = null;
-                    }, this));
-                    $('body').delegate('keydown', '.colorpicker input', bind(function (event, element) {
-                        switch (event.keyCode) {
-                        case 9:
-                            this.hide();
-                            break;
-                        case 13:
-                        case 27:
-                            this.hide();
-                            element[0].blur();
-                            break;
-                        }
-                        return true;
-                    }, this));
-                    $('body').delegate('keyup', '.colorpicker input', bind(function () {
-                        this.updateFromInput(true);
-                        return true;
-                    }, this));
-                    $('body').delegate('paste', '.colorpicker input', bind(function () {
-                        setTimeout(bind(function () {
-                            this.updateFromInput(true);
-                        }, this), 1);
-                    }, this));
-                },
-                hide: function () {
-                    if (!this.built) {
-                        return;
-                    }
-                    this.wrapper.removeClass('cp-visible');
-                },
-                show: function (event, element) {
-                    if (!this.built) {
-                        this.build();
-                    }
-                    this.element = element;
-                    this.reposition();
-                    this.wrapper.addClass('cp-visible');
-                    this.updateFromInput();
-                },
-                move: function (target, event) {
-                    var input = this.element, picker = target.find('.cp-picker'), clientRect = target[0].getBoundingClientRect(), offsetX = clientRect.left + window.scrollX, offsetY = clientRect.top + window.scrollY, x = Math.round(event.pageX - offsetX), y = Math.round(event.pageY - offsetY), duration = 0, wx, wy, r, phi;
-                    if (event.changedTouches) {
-                        x = event.changedTouches[0].pageX - offsetX;
-                        y = event.changedTouches[0].pageY - offsetY;
-                    }
-                    if (x < 0)
-                        x = 0;
-                    if (y < 0)
-                        y = 0;
-                    if (x > clientRect.width)
-                        x = clientRect.width;
-                    if (y > clientRect.height)
-                        y = clientRect.height;
-                    if (target.parent('.cp-mode-wheel') && picker.parent('.cp-grid')) {
-                        wx = 75 - x;
-                        wy = 75 - y;
-                        r = Math.sqrt(wx * wx + wy * wy);
-                        phi = Math.atan2(wy, wx);
-                        if (phi < 0)
-                            phi += Math.PI * 2;
-                        if (r > 75) {
-                            r = 75;
-                            x = 75 - 75 * Math.cos(phi);
-                            y = 75 - 75 * Math.sin(phi);
-                        }
-                        x = Math.round(x);
-                        y = Math.round(y);
-                    }
-                    if (target.hasClass('cp-grid')) {
-                        picker.style({
-                            top: y,
-                            left: x
-                        });
-                        this.updateFromPicker(input, target);
-                    } else {
-                        picker.style({ top: y });
-                        this.updateFromPicker(input, target);
-                    }
-                },
-                build: function () {
-                    this.wrapper = zen('div.cp-wrapper.cp-with-opacity.cp-mode-hue');
-                    this.slider = zen('div.cp-slider.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-picker'));
-                    this.opacitySlider = zen('div.cp-opacity-slider.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-picker'));
-                    this.grid = zen('div.cp-grid.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-grid-inner')).appendChild(zen('div.cp-picker'));
-                    zen('div').bottom(this.grid.find('.cp-picker'));
-                    var tabs = zen('div.cp-tabs').bottom(this.wrapper);
-                    this.tabs = {
-                        hue: zen('div.cp-tab-hue.active').text('HUE').bottom(tabs),
-                        brightness: zen('div.cp-tab-brightness').text('BRI').bottom(tabs),
-                        saturation: zen('div.cp-tab-saturation').text('SAT').bottom(tabs),
-                        wheel: zen('div.cp-tab-wheel').text('WHEEL').bottom(tabs)
-                    };
-                    tabs.delegate('click', '> div', bind(function (event, element) {
-                        var active = tabs.find('.active'), mode = active.attribute('class').replace(/\s|active|cp-tab-/g, ''), newMode = element.attribute('class').replace(/\s|active|cp-tab-/g, '');
-                        this.wrapper.removeClass('cp-mode-' + mode).addClass('cp-mode-' + newMode);
-                        active.removeClass('active');
-                        element.addClass('active');
-                        this.mode = newMode;
-                        this.updateFromInput();
-                    }, this));
-                    this.wrapper.bottom('body');
-                    this.built = true;
-                    this.mode = 'hue';
-                },
-                updateFromInput: function (dontFireEvent) {
-                    var value = this.element.value(), opacity = value.replace(/\s/g, '').match(/^rgba?\([0-9]{1,3}\,[0-9]{1,3}\,[0-9]{1,3}\,(.+)\)/), hex, hsb;
-                    value = rgbstr2hex(value) || value;
-                    if (!(hex = parseHex(value))) {
-                        hex = '#ffff00';
-                    }
-                    hsb = hex2hsb(hex);
-                    this.opacity = opacity ? clamp(opacity[1], 0, 1) : 1;
-                    var sliderHeight = this.opacitySlider.position().height;
-                    this.opacitySlider.find('.cp-picker').style({ 'top': clamp(sliderHeight - sliderHeight * this.opacity, 0, sliderHeight) });
-                    var gridHeight = this.grid.position().height, gridWidth = this.grid.position().width, sliderHeight = this.slider.position().height, r, phi, x, y;
-                    switch (this.mode) {
-                    case 'wheel':
-                        r = clamp(Math.ceil(hsb.s * 0.75), 0, gridHeight / 2);
-                        phi = hsb.h * Math.PI / 180;
-                        x = clamp(75 - Math.cos(phi) * r, 0, gridWidth);
-                        y = clamp(75 - Math.sin(phi) * r, 0, gridHeight);
-                        this.grid.style({ backgroundColor: 'transparent' }).find('.cp-picker').style({
-                            top: y,
-                            left: x
-                        });
-                        y = 150 - hsb.b / (100 / gridHeight);
-                        if (hex === '')
-                            y = 0;
-                        this.slider.find('.cp-picker').style({ top: y });
-                        this.slider.style({
-                            backgroundColor: hsb2hex({
-                                h: hsb.h,
-                                s: hsb.s,
-                                b: 100
-                            })
-                        });
-                        break;
-                    case 'saturation':
-                        x = clamp(5 * hsb.h / 12, 0, 150);
-                        y = clamp(gridHeight - Math.ceil(hsb.b / (100 / gridHeight)), 0, gridHeight);
-                        this.grid.find('.cp-picker').style({
-                            top: y,
-                            left: x
-                        });
-                        y = clamp(sliderHeight - hsb.s * (sliderHeight / 100), 0, sliderHeight);
-                        this.slider.find('.cp-picker').style({ top: y });
-                        this.slider.style({
-                            backgroundColor: hsb2hex({
-                                h: hsb.h,
-                                s: 100,
-                                b: hsb.b
-                            })
-                        });
-                        this.grid.find('.cp-grid-inner').style({ opacity: hsb.s / 100 });
-                        break;
-                    case 'brightness':
-                        x = clamp(5 * hsb.h / 12, 0, 150);
-                        y = clamp(gridHeight - Math.ceil(hsb.s / (100 / gridHeight)), 0, gridHeight);
-                        this.grid.find('.cp-picker').style({
-                            top: y,
-                            left: x
-                        });
-                        y = clamp(sliderHeight - hsb.b * (sliderHeight / 100), 0, sliderHeight);
-                        this.slider.find('.cp-picker').style({ top: y });
-                        this.slider.style({
-                            backgroundColor: hsb2hex({
-                                h: hsb.h,
-                                s: hsb.s,
-                                b: 100
-                            })
-                        });
-                        this.grid.find('.cp-grid-inner').style({ opacity: 1 - hsb.b / 100 });
-                        break;
-                    case 'hue':
-                    default:
-                        x = clamp(Math.ceil(hsb.s / (100 / gridWidth)), 0, gridWidth);
-                        y = clamp(gridHeight - Math.ceil(hsb.b / (100 / gridHeight)), 0, gridHeight);
-                        this.grid.find('.cp-picker').style({
-                            top: y,
-                            left: x
-                        });
-                        y = clamp(sliderHeight - hsb.h / (360 / sliderHeight), 0, sliderHeight);
-                        this.slider.find('.cp-picker').style({ top: y });
-                        this.grid.style({
-                            backgroundColor: hsb2hex({
-                                h: hsb.h,
-                                s: 100,
-                                b: 100
-                            })
-                        });
-                        break;
-                    }
-                    if (!dontFireEvent) {
-                        this.element.value(this.getValue(hex));
-                    }
-                    this.emit('change', this.element, hex, this.opacity);
-                },
-                updateFromPicker: function (input, target) {
-                    var getCoords = function (picker, container) {
-                        var left, top;
-                        if (!picker.length || !container)
-                            return null;
-                        left = picker[0].getBoundingClientRect().left;
-                        top = picker[0].getBoundingClientRect().top;
-                        return {
-                            x: left - container[0].getBoundingClientRect().left + picker[0].offsetWidth / 2,
-                            y: top - container[0].getBoundingClientRect().top + picker[0].offsetHeight / 2
-                        };
-                    };
-                    var hex, hue, saturation, brightness, x, y, r, phi, grid = this.wrapper.find('.cp-grid'), slider = this.wrapper.find('.cp-slider'), opacitySlider = this.wrapper.find('.cp-opacity-slider'), gridPicker = grid.find('.cp-picker'), sliderPicker = slider.find('.cp-picker'), opacityPicker = opacitySlider.find('.cp-picker'), gridPos = getCoords(gridPicker, grid), sliderPos = getCoords(sliderPicker, slider), opacityPos = getCoords(opacityPicker, opacitySlider), gridWidth = grid[0].getBoundingClientRect().width, gridHeight = grid[0].getBoundingClientRect().height, sliderHeight = slider[0].getBoundingClientRect().height, opacitySliderHeight = opacitySlider[0].getBoundingClientRect().height;
-                    var value = this.element.value();
-                    value = rgbstr2hex(value) || value;
-                    if (!(hex = parseHex(value))) {
-                        hex = '#ffff00';
-                    }
-                    if (target.hasClass('cp-grid') || target.hasClass('cp-slider')) {
-                        switch (this.mode) {
-                        case 'wheel':
-                            x = gridWidth / 2 - gridPos.x;
-                            y = gridHeight / 2 - gridPos.y;
-                            r = Math.sqrt(x * x + y * y);
-                            phi = Math.atan2(y, x);
-                            if (phi < 0)
-                                phi += Math.PI * 2;
-                            if (r > 75) {
-                                r = 75;
-                                gridPos.x = 69 - 75 * Math.cos(phi);
-                                gridPos.y = 69 - 75 * Math.sin(phi);
-                            }
-                            saturation = clamp(r / 0.75, 0, 100);
-                            hue = clamp(phi * 180 / Math.PI, 0, 360);
-                            brightness = clamp(100 - Math.floor(sliderPos.y * (100 / sliderHeight)), 0, 100);
-                            hex = hsb2hex({
-                                h: hue,
-                                s: saturation,
-                                b: brightness
-                            });
-                            slider.style({
-                                backgroundColor: hsb2hex({
-                                    h: hue,
-                                    s: saturation,
-                                    b: 100
-                                })
-                            });
-                            break;
-                        case 'saturation':
-                            hue = clamp(parseInt(gridPos.x * (360 / gridWidth), 10), 0, 360);
-                            saturation = clamp(100 - Math.floor(sliderPos.y * (100 / sliderHeight)), 0, 100);
-                            brightness = clamp(100 - Math.floor(gridPos.y * (100 / gridHeight)), 0, 100);
-                            hex = hsb2hex({
-                                h: hue,
-                                s: saturation,
-                                b: brightness
-                            });
-                            slider.style({
-                                backgroundColor: hsb2hex({
-                                    h: hue,
-                                    s: 100,
-                                    b: brightness
-                                })
-                            });
-                            grid.find('.cp-grid-inner').style({ opacity: saturation / 100 });
-                            break;
-                        case 'brightness':
-                            hue = clamp(parseInt(gridPos.x * (360 / gridWidth), 10), 0, 360);
-                            saturation = clamp(100 - Math.floor(gridPos.y * (100 / gridHeight)), 0, 100);
-                            brightness = clamp(100 - Math.floor(sliderPos.y * (100 / sliderHeight)), 0, 100);
-                            hex = hsb2hex({
-                                h: hue,
-                                s: saturation,
-                                b: brightness
-                            });
-                            slider.style({
-                                backgroundColor: hsb2hex({
-                                    h: hue,
-                                    s: saturation,
-                                    b: 100
-                                })
-                            });
-                            grid.find('.cp-grid-inner').style({ opacity: 1 - brightness / 100 });
-                            break;
-                        default:
-                            hue = clamp(360 - parseInt(sliderPos.y * (360 / sliderHeight), 10), 0, 360);
-                            saturation = clamp(Math.floor(gridPos.x * (100 / gridWidth)), 0, 100);
-                            brightness = clamp(100 - Math.floor(gridPos.y * (100 / gridHeight)), 0, 100);
-                            hex = hsb2hex({
-                                h: hue,
-                                s: saturation,
-                                b: brightness
-                            });
-                            grid.style({
-                                backgroundColor: hsb2hex({
-                                    h: hue,
-                                    s: 100,
-                                    b: 100
-                                })
-                            });
-                            break;
-                        }
-                    }
-                    if (target.hasClass('cp-opacity-slider')) {
-                        this.opacity = parseFloat(1 - opacityPos.y / opacitySliderHeight).toFixed(2);
-                    }
-                    input.value(this.getValue(hex));
-                    this.emit('change', this.element, hex, this.opacity);
-                },
-                reposition: function () {
-                    var offset = this.element[0].getBoundingClientRect();
-                    this.wrapper.style({
-                        top: offset.top + offset.height + window.scrollY,
-                        left: offset.left + window.scrollX
-                    });
-                },
-                getValue: function (hex) {
-                    if (this.opacity == 1) {
-                        return hex;
-                    }
-                    var rgb = hex2rgb(hex);
-                    return 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + this.opacity + ')';
-                }
-            });
-        var parseHex = function (string) {
-            string = string.replace(/[^A-F0-9]/gi, '');
-            if (string.length !== 3 && string.length !== 6)
-                return '';
-            if (string.length === 3) {
-                string = string[0] + string[0] + string[1] + string[1] + string[2] + string[2];
-            }
-            return '#' + string.toLowerCase();
-        };
-        var hsb2rgb = function (hsb) {
-            var rgb = {};
-            var h = Math.round(hsb.h);
-            var s = Math.round(hsb.s * 255 / 100);
-            var v = Math.round(hsb.b * 255 / 100);
-            if (s === 0) {
-                rgb.r = rgb.g = rgb.b = v;
-            } else {
-                var t1 = v;
-                var t2 = (255 - s) * v / 255;
-                var t3 = (t1 - t2) * (h % 60) / 60;
-                if (h === 360)
-                    h = 0;
-                if (h < 60) {
-                    rgb.r = t1;
-                    rgb.b = t2;
-                    rgb.g = t2 + t3;
-                } else if (h < 120) {
-                    rgb.g = t1;
-                    rgb.b = t2;
-                    rgb.r = t1 - t3;
-                } else if (h < 180) {
-                    rgb.g = t1;
-                    rgb.r = t2;
-                    rgb.b = t2 + t3;
-                } else if (h < 240) {
-                    rgb.b = t1;
-                    rgb.r = t2;
-                    rgb.g = t1 - t3;
-                } else if (h < 300) {
-                    rgb.b = t1;
-                    rgb.g = t2;
-                    rgb.r = t2 + t3;
-                } else if (h < 360) {
-                    rgb.r = t1;
-                    rgb.g = t2;
-                    rgb.b = t1 - t3;
-                } else {
-                    rgb.r = 0;
-                    rgb.g = 0;
-                    rgb.b = 0;
-                }
-            }
-            return {
-                r: Math.round(rgb.r),
-                g: Math.round(rgb.g),
-                b: Math.round(rgb.b)
-            };
-        };
-        var rgb2hex = function (rgb) {
-            var hex = [
-                    rgb.r.toString(16),
-                    rgb.g.toString(16),
-                    rgb.b.toString(16)
-                ];
-            forEach(hex, function (val, nr) {
-                if (val.length === 1)
-                    hex[nr] = '0' + val;
-            });
-            return '#' + hex.join('');
-        };
-        var rgbstr2hex = function (rgb) {
-            rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-            return rgb && rgb.length === 4 ? '#' + ('0' + parseInt(rgb[1], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[2], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[3], 10).toString(16)).slice(-2) : '';
-        };
-        var hsb2hex = function (hsb) {
-            return rgb2hex(hsb2rgb(hsb));
-        };
-        var hex2hsb = function (hex) {
-            var hsb = rgb2hsb(hex2rgb(hex));
-            if (hsb.s === 0)
-                hsb.h = 360;
-            return hsb;
-        };
-        var rgb2hsb = function (rgb) {
-            var hsb = {
-                    h: 0,
-                    s: 0,
-                    b: 0
-                };
-            var min = Math.min(rgb.r, rgb.g, rgb.b);
-            var max = Math.max(rgb.r, rgb.g, rgb.b);
-            var delta = max - min;
-            hsb.b = max;
-            hsb.s = max !== 0 ? 255 * delta / max : 0;
-            if (hsb.s !== 0) {
-                if (rgb.r === max) {
-                    hsb.h = (rgb.g - rgb.b) / delta;
-                } else if (rgb.g === max) {
-                    hsb.h = 2 + (rgb.b - rgb.r) / delta;
-                } else {
-                    hsb.h = 4 + (rgb.r - rgb.g) / delta;
-                }
-            } else {
-                hsb.h = -1;
-            }
-            hsb.h *= 60;
-            if (hsb.h < 0) {
-                hsb.h += 360;
-            }
-            hsb.s *= 100 / 255;
-            hsb.b *= 100 / 255;
-            return hsb;
-        };
-        var hex2rgb = function (hex) {
-            hex = parseInt(hex.indexOf('#') > -1 ? hex.substring(1) : hex, 16);
-            return {
-                r: hex >> 16,
-                g: (hex & 65280) >> 8,
-                b: hex & 255
-            };
-        };
-        ready(function () {
-            var x = new ColorPicker();
-            x.on('change', function (element, hex, opacity) {
-                if (opacity < 1) {
-                    var rgb = hex2rgb(hex), str = 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + opacity + ')';
-                    element.style({ backgroundColor: str });
-                } else {
-                    element.style({ backgroundColor: hex });
-                }
-            });
-        });
-        module.exports = ColorPicker;
-    },
-    '17': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), $ = require('n'), zen = require('e'), storage = require('g')(), Emitter = require('o'), Bound = require('p'), Options = require('q'), domready = require('c'), bind = require('r'), map = require('s'), forEach = require('t'), contains = require('15'), last = require('u'), split = require('2r'), removeAll = require('2s'), insert = require('2t'), find = require('2u'), combine = require('2v'), merge = require('v'), unhyphenate = require('2w'), properCase = require('2x'), trim = require('1f'), modal = require('a').modal, async = require('2y'), request = require('x'), wf = require('2z');
-        require('30');
-        var Fonts = new prime({
-                mixin: Bound,
-                inherits: Emitter,
-                previewSentence: {
-                    'latin': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
-                    'latin-ext': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
-                    'cyrillic': '\u0412 \u0447\u0430\u0449\u0430\u0445 \u044e\u0433\u0430 \u0436\u0438\u043b \u0431\u044b \u0446\u0438\u0442\u0440\u0443\u0441? \u0414\u0430, \u043d\u043e \u0444\u0430\u043b\u044c\u0448\u0438\u0432\u044b\u0439 \u044d\u043a\u0437\u0435\u043c\u043f\u043b\u044f\u0440!',
-                    'cyrillic-ext': '\u0412 \u0447\u0430\u0449\u0430\u0445 \u044e\u0433\u0430 \u0436\u0438\u043b \u0431\u044b \u0446\u0438\u0442\u0440\u0443\u0441? \u0414\u0430, \u043d\u043e \u0444\u0430\u043b\u044c\u0448\u0438\u0432\u044b\u0439 \u044d\u043a\u0437\u0435\u043c\u043f\u043b\u044f\u0440!',
-                    'devanagari': '\u090f\u0915 \u092a\u0932 \u0915\u093e \u0915\u094d\u0930\u094b\u0927 \u0906\u092a\u0915\u093e \u092d\u0935\u093f\u0937\u094d\u092f \u092c\u093f\u0917\u093e\u0921 \u0938\u0915\u0924\u093e \u0939\u0948',
-                    'greek': '\u03a4\u03ac\u03c7\u03b9\u03c3\u03c4\u03b7 \u03b1\u03bb\u03ce\u03c0\u03b7\u03be \u03b2\u03b1\u03c6\u03ae\u03c2 \u03c8\u03b7\u03bc\u03ad\u03bd\u03b7 \u03b3\u03b7, \u03b4\u03c1\u03b1\u03c3\u03ba\u03b5\u03bb\u03af\u03b6\u03b5\u03b9 \u03c5\u03c0\u03ad\u03c1 \u03bd\u03c9\u03b8\u03c1\u03bf\u03cd \u03ba\u03c5\u03bd\u03cc\u03c2',
-                    'greek-ext': '\u03a4\u03ac\u03c7\u03b9\u03c3\u03c4\u03b7 \u03b1\u03bb\u03ce\u03c0\u03b7\u03be \u03b2\u03b1\u03c6\u03ae\u03c2 \u03c8\u03b7\u03bc\u03ad\u03bd\u03b7 \u03b3\u03b7, \u03b4\u03c1\u03b1\u03c3\u03ba\u03b5\u03bb\u03af\u03b6\u03b5\u03b9 \u03c5\u03c0\u03ad\u03c1 \u03bd\u03c9\u03b8\u03c1\u03bf\u03cd \u03ba\u03c5\u03bd\u03cc\u03c2',
-                    'khmer': '\u1781\u17d2\u1789\u17bb\u17c6\u17a2\u17b6\u1785\u1789\u17c9\u17b6\u17c6\u1780\u1789\u17d2\u1785\u1780\u17cb\u1794\u17b6\u1793 \u178a\u17c4\u1799\u1782\u17d2\u1798\u17b6\u1793\u1794\u1789\u17d2\u17a0\u17b6',
-                    'telugu': '\u0c26\u0c47\u0c36 \u0c2d\u0c3e\u0c37\u0c32\u0c02\u0c26\u0c41 \u0c24\u0c46\u0c32\u0c41\u0c17\u0c41 \u0c32\u0c46\u0c38\u0c4d\u0c38',
-                    'vietnamese': 'T\xf4i c\xf3 th\u1ec3 \u0103n th\u1ee7y tinh m\xe0 kh\xf4ng h\u1ea1i g\xec.'
-                },
-                constructor: function () {
-                    this.wf = wf;
-                    this.data = null;
-                    this.field = null;
-                    this.element = null;
-                    this.throttle = false;
-                    this.selected = null;
-                    this.loadedFonts = [];
-                    this.filters = {
-                        search: '',
-                        script: 'latin',
-                        categories: []
-                    };
-                },
-                open: function (event, element, container) {
-                    if (!this.data || !this.field) {
-                        return this.getData(element);
-                    }
-                    var list = [];
-                    forEach(this.data, function (value) {
-                        list.push(value.family);
-                    });
-                    if (container) {
-                        container.empty().appendChild(this.buildLayout());
-                        this.scroll(container.find('ul.g-fonts-list'));
-                        this.updateTotal();
-                        this.selectFromValue();
-                        return;
-                    }
-                    modal.open({
-                        content: 'Loading...',
-                        className: 'g5-dialog-theme-default g5-modal-fonts',
-                        afterOpen: bind(function (container) {
-                            setTimeout(bind(function () {
-                                container.empty().appendChild(this.buildLayout());
-                                this.scroll(container.find('ul.g-fonts-list'));
-                                this.updateTotal();
-                                this.selectFromValue();
-                            }, this), 1);
-                        }, this)
-                    });
-                },
-                getData: function (element) {
-                    var data = element.data('g5-fontpicker');
-                    if (!data) {
-                        throw new Error('No fontpicker data found');
-                    }
-                    data = JSON.parse(data);
-                    this.field = $(data.field);
-                    modal.open({
-                        content: 'Loading...',
-                        className: 'g5-dialog-theme-default g5-modal-fonts',
-                        remote: data.data,
-                        remoteLoaded: bind(function (response, instance) {
-                            if (response.error) {
-                                instance.elements.content.html(response.body.html + '[' + data.data + ']');
-                                return false;
-                            }
-                            this.data = response.body.items;
-                            this.open(null, element, instance.elements.content);
-                        }, this)
-                    });
-                },
-                scroll: function (container) {
-                    clearTimeout(this.throttle);
-                    this.throttle = setTimeout(bind(function () {
-                        var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li:not(.g-font-hide)', 5000), list = [];
-                        if (!elements) {
-                            return;
-                        }
-                        $(elements).forEach(function (element) {
-                            element = $(element);
-                            var dataFont = element.data('font'), variant = element.data('variant');
-                            if (!contains(this.loadedFonts, dataFont)) {
-                                list.push(dataFont + (variant != 'regular' ? ':' + variant : ''));
-                            } else {
-                                element.find('[data-variant="' + variant + '"] .preview').style({
-                                    fontFamily: dataFont,
-                                    fontWeight: variant == 'regular' ? 'normal' : variant
-                                });
-                            }
-                        }, this);
-                        if (!list || !list.length) {
-                            return;
-                        }
-                        wf.load({
-                            classes: false,
-                            google: { families: list },
-                            fontactive: bind(function (family, fvd) {
-                                var v = container.find('li[data-font="' + family + '"]').data('variant');
-                                container.find('li[data-font="' + family + '"]:not(.g-variant-hide) > .preview').style({
-                                    fontFamily: family,
-                                    fontWeight: fvd
-                                });
-                                this.loadedFonts.push(family);
-                            }, this)
-                        });
-                    }, this), 250);
-                },
-                unselect: function (selected) {
-                    selected = selected || this.selected;
-                    if (!selected) {
-                        return false;
-                    }
-                    var baseVariant = selected.element.data('variant');
-                    selected.element.removeClass('selected');
-                    selected.element.search('input[type=checkbox]').checked(false);
-                    selected.element.search('[data-font]').addClass('g-variant-hide');
-                    selected.element.find('[data-variant="' + baseVariant + '"]').removeClass('g-variant-hide');
-                    selected.variants = [selected.baseVariant];
-                    selected.selected = [];
-                },
-                selectFromValue: function () {
-                    var value = this.field.value();
-                    if (!value.match('family=')) {
-                        return false;
-                    }
-                    var split = value.split('&'), family = split[0], split2 = family.split(':'), name = split2[0].replace('family=', '').replace(/\+/g, ' '), variants = split2[1] ? split2[1].split(',') : ['regular'], subset = split[1] ? split[1].replace('subset=', '').split(',') : ['latin'];
-                    if (contains(variants, '400')) {
-                        removeAll(variants, '400');
-                        insert(variants, 'regular');
-                    }
-                    if (contains(variants, '400italic')) {
-                        removeAll(variants, '400italic');
-                        insert(variants, 'italic');
-                    }
-                    var element = $('ul.g-fonts-list > [data-font="' + name + '"]');
-                    this.selected = {
-                        font: name,
-                        baseVariant: element.data('variant'),
-                        element: element,
-                        variants: variants,
-                        selected: [],
-                        charsets: subset,
-                        availableVariants: element.data('variants').split(','),
-                        expanded: false,
-                        loaded: false
-                    };
-                    variants.forEach(function (variant) {
-                        this.select(element, variant);
-                        element.find('> ul > [data-variant="' + variant + '"]').removeClass('g-variant-hide');
-                    }, this);
-                    var charsetSelected = element.find('.font-charsets-selected');
-                    if (charsetSelected) {
-                        charsetSelected.text('(' + subset.length + ' selected)');
-                    }
-                    $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop;
-                    this.toggleExpansion();
-                    setTimeout(bind(function () {
-                        this.toggleExpansion();
-                    }, this), 50);
-                },
-                select: function (element, variant, target) {
-                    var baseVariant = element.data('variant');
-                    if (!this.selected || this.selected.element != element) {
-                        if (variant && this.selected) {
-                            var charsetSelected = this.selected.element.find('.font-charsets-selected');
-                            if (charsetSelected) {
-                                charsetSelected.text('(1 selected)');
-                            }
-                        }
-                        this.selected = {
-                            font: element.data('font'),
-                            baseVariant: baseVariant,
-                            element: element,
-                            variants: [baseVariant],
-                            selected: [],
-                            charsets: ['latin'],
-                            availableVariants: element.data('variants').split(','),
-                            expanded: false,
-                            loaded: false
-                        };
-                    }
-                    if (!variant) {
-                        this.toggleExpansion();
-                    }
-                    if (variant) {
-                        var selected = $('ul.g-fonts-list > [data-font]:not([data-font="' + this.selected.font + '"]) input[type="checkbox"]:checked');
-                        if (selected) {
-                            selected.checked(false);
-                            selected.parent('[data-variants]').removeClass('font-selected');
-                        }
-                        var checkbox = this.selected.element.find('input[type="checkbox"][value="' + variant + '"]'), checked = checkbox.checked();
-                        if (checkbox) {
-                            checkbox.checked(!checked);
-                        }
-                        if (!checked) {
-                            insert(this.selected.variants, variant);
-                            insert(this.selected.selected, variant);
-                        } else {
-                            if (variant != this.selected.baseVariant) {
-                                removeAll(this.selected.variants, variant);
-                            }
-                            removeAll(this.selected.selected, variant);
-                        }
-                        this.updateSelection();
-                    }
-                },
-                toggleExpansion: function () {
-                    if (this.selected.availableVariants.length <= 1) {
-                        return;
-                    }
-                    if (!this.selected.expanded) {
-                        var variants = this.selected.element.data('variants'), list = [], variant;
-                        if (variants.split(',').length > 1) {
-                            this.manipulateLink(this.selected.font);
-                            this.selected.element.search('[data-font]').removeClass('g-variant-hide');
-                            if (!this.selected.loaded) {
-                                wf.load({
-                                    classes: false,
-                                    google: { families: [this.selected.font.replace(/\s/g, '+') + ':' + variants] },
-                                    fontactive: bind(function (family, fvd) {
-                                        var style = this.fvdToStyle(family, fvd), search = style.fontWeight;
-                                        if (search == '400') {
-                                            search = style.fontStyle == 'normal' ? 'regular' : 'italic';
-                                        } else if (style.fontStyle == 'italic') {
-                                            search += 'italic';
-                                        }
-                                        this.selected.element.find('li[data-variant="' + search + '"] .preview').style(style);
-                                        this.selected.loaded = true;
-                                    }, this)
-                                });
-                            }
-                        }
-                    } else {
-                        var exclude = ':not([data-variant="' + this.selected.variants.join('"]):not([data-variant="') + '"])';
-                        exclude = this.selected.element.search('[data-font]' + exclude);
-                        if (exclude) {
-                            exclude.addClass('g-variant-hide');
-                        }
-                    }
-                    this.selected.expanded = !this.selected.expanded;
-                },
-                manipulateLink: function (family) {
-                    family = family.replace(/\s/g, '+');
-                    var link = $('head link[href*="' + family + '"]');
-                    if (!link) {
-                        return;
-                    }
-                    var parts = decodeURIComponent(link.href()).split('|');
-                    if (!parts || parts.length <= 1) {
-                        return;
-                    }
-                    removeAll(parts, family);
-                    link.attribute('href', encodeURI(parts.join('|')));
-                },
-                toggle: function (event, element) {
-                    element = $(element);
-                    this.select(element.parent('[data-font]') || element, element.parent('[data-font]') ? element.data('variant') : false, element);
-                    return false;
-                },
-                updateSelection: function () {
-                    var preview = $('.g-particles-footer .font-selected'), selected;
-                    if (!preview) {
-                        return;
-                    }
-                    if (!this.selected.selected.length) {
-                        preview.empty();
-                        this.selected.element.removeClass('font-selected');
-                        return;
-                    }
-                    selected = this.selected.selected.sort();
-                    this.selected.element.addClass('font-selected');
-                    preview.html('<strong>' + this.selected.font + '</strong> (<small>' + selected.join(', ').replace('regular', 'normal') + '</small>)');
-                },
-                updateTotal: function () {
-                    var totals = $('.g-particles-header .particle-search-total'), count = $('.g-fonts-list > [data-font]:not(.g-font-hide)');
-                    totals.text(count ? count.length : 0);
-                },
-                buildLayout: function () {
-                    this.filters.script = 'latin';
-                    var previewSentence = this.previewSentence[this.filters.script], html = zen('div#g-fonts.g-grid'), main = zen('div.g-particles-main').bottom(html), ul = zen('ul.g-fonts-list').bottom(main), families = [], list, categories = [], subsets = [];
-                    this.buildHeader(html).top(html);
-                    this.buildFooter(html).bottom(html);
-                    ul.on('scroll', bind(this.scroll, this, ul));
-                    html.delegate('click', '.g-fonts-list li[data-font]', bind(this.toggle, this));
-                    async.eachSeries(this.data, bind(function (font, callback) {
-                        combine(subsets, font.subsets);
-                        insert(categories, font.category);
-                        this.filters.categories.push(font.category);
-                        var variants = font.variants.join(',').replace('regular', 'normal'), variant = contains(font.variants, 'regular') ? '' : ':' + font.variants[0], li = zen('li[data-font="' + font.family + '"][data-variant="' + (variant.replace(':', '') || 'regular') + '"][data-variants="' + variants + '"]').bottom(ul), total = font.variants.length + ' style' + (font.variants.length > 1 ? 's' : ''), charsets = font.subsets.length > 1 ? ', <span class="font-charsets">' + font.subsets.length + ' charsets <span class="font-charsets-selected">(1 selected)</span></span>' : '';
-                        var family = zen('div.family').html('<strong>' + font.family + '</strong>, ' + total + charsets).bottom(li), charset = family.find('.font-charsets-selected');
-                        if (charset) {
-                            charset.popover({
-                                placement: 'auto',
-                                width: '200',
-                                trigger: 'mouse',
-                                style: 'font-categories, above-modal'
-                            }).on('beforeshow.popover', bind(function (popover) {
-                                var subs = font.subsets.sort();
-                                var subsets = font.subsets, content = popover.$target.find('.g5-popover-content'), checked;
-                                content.empty();
-                                var div, current;
-                                subsets.forEach(function (cs) {
-                                    current = contains(this.selected.charsets, cs) ? cs == 'latin' ? 'checked disabled' : 'checked' : '';
-                                    zen('div').html('<label><input type="checkbox" ' + current + ' value="' + cs + '"/> ' + properCase(unhyphenate(cs.replace('ext', 'extended'))) + '</label>').bottom(content);
-                                }, this);
-                                content.delegate('click', 'input[type="checkbox"]', bind(function (event, input) {
-                                    input = $(input);
-                                    checked = content.search('input[type="checkbox"]:checked');
-                                    this.selected.charsets = checked ? checked.map('value') : [];
-                                    charset.text('(' + this.selected.charsets.length + ' selected)');
-                                }, this));
-                                popover.displayContent();
-                            }, this));
-                        }
-                        var variantContainer = zen('ul').bottom(li), variantFont, label;
-                        async.each(font.variants, bind(function (current) {
-                            variantFont = zen('li[data-font="' + font.family + '"][data-variant="' + current + '"]').bottom(variantContainer);
-                            zen('input[type="checkbox"][value="' + current + '"]').bottom(variantFont);
-                            zen('div.variant').html('<small>' + this.mapVariant(current) + '</small>').bottom(variantFont);
-                            zen('div.preview').text(previewSentence).bottom(variantFont);
-                            if (':' + current !== variant && current !== (variant || 'regular')) {
-                                variantFont.addClass('g-variant-hide');
-                            }
-                        }, this));
-                        if (!contains(font.subsets, 'latin')) {
-                            li.addClass('g-font-hide');
-                        }
-                        families.push(font.family + variant);
-                        callback();
-                    }, this));
-                    var catContainer = html.find('a.font-category'), subContainer = html.find('a.font-subsets');
-                    catContainer.data('font-categories', categories.join(',')).html('Categories (<small>' + categories.length + '</small>) <i class="fa fa-caret-down"></i>');
-                    subContainer.data('font-subsets', subsets.join(',')).html('Subsets (<small>' + properCase(unhyphenate(this.filters.script.replace('ext', 'extended'))) + '</small>) <i class="fa fa-caret-down"></i>');
-                    return html;
-                },
-                buildHeader: function (html) {
-                    var container = zen('div.settings-block.g-particles-header').bottom(html), preview = zen('input.float-left.font-preview[type="text"][data-font-preview][placeholder="Font Preview..."][value="' + this.previewSentence[this.filters.script] + '"]').bottom(container), searchWrapper = zen('span.particle-search-wrapper.float-right').bottom(container), search = zen('input.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(searchWrapper), totals = zen('span.particle-search-total').bottom(searchWrapper);
-                    search.on('keyup', bind(this.search, this, search));
-                    preview.on('keyup', bind(this.updatePreview, this, preview));
-                    return container;
-                },
-                buildFooter: function (html) {
-                    var container = zen('div.settings-block.g-particles-footer').bottom(html), leftContainer = zen('div.float-left.font-left-container').bottom(container), rightContainer = zen('div.float-right.font-right-container').bottom(container), category = zen('a.font-category.button').bottom(leftContainer), subsets = zen('a.font-subsets.button').bottom(leftContainer), selected = zen('span.font-selected').bottom(rightContainer), select = zen('button.button.button-primary').text('Select').bottom(rightContainer), space = zen('span').html('&nbsp;').bottom(rightContainer), cancel = zen('button.button.g5-dialog-close').text('Cancel').bottom(rightContainer), current;
-                    select.on('click', bind(function () {
-                        if (!$('ul.g-fonts-list > [data-font] input[type="checkbox"]:checked')) {
-                            this.field.value('');
-                            modal.close();
-                            return;
-                        }
-                        var name = this.selected.font.replace(/\s/g, '+'), variation = this.selected.selected, charset = this.selected.charsets;
-                        if (variation.length == 1 && variation[0] == 'regular') {
-                            variation = [];
-                        }
-                        if (charset.length == 1 && charset[0] == 'latin') {
-                            charset = [];
-                        }
-                        if (contains(variation, 'regular')) {
-                            removeAll(variation, 'regular');
-                            insert(variation, '400');
-                        }
-                        if (contains(variation, 'italic')) {
-                            removeAll(variation, 'italic');
-                            insert(variation, '400italic');
-                        }
-                        this.field.value('family=' + name + (variation.length ? ':' + variation.join(',') : '') + (charset.length ? '&subset=' + charset.join(',') : ''));
-                        modal.close();
-                    }, this));
-                    category.popover({
-                        placement: 'auto',
-                        width: '200',
-                        trigger: 'mouse',
-                        style: 'font-categories, above-modal'
-                    }).on('beforeshow.popover', bind(function (popover) {
-                        var categories = category.data('font-categories').split(','), content = popover.$target.find('.g5-popover-content'), checked;
-                        content.empty();
-                        var div;
-                        categories.forEach(function (category) {
-                            current = contains(this.filters.categories, category) ? 'checked' : '';
-                            zen('div').html('<label><input type="checkbox" ' + current + ' value="' + category + '"/> ' + properCase(unhyphenate(category)) + '</label>').bottom(content);
-                        }, this);
-                        content.delegate('click', 'input[type="checkbox"]', bind(function (event, input) {
-                            input = $(input);
-                            checked = content.search('input[type="checkbox"]:checked');
-                            this.filters.categories = checked ? checked.map('value') : [];
-                            category.find('small').text(this.filters.categories.length);
-                            this.search();
-                        }, this));
-                        popover.displayContent();
-                    }, this));
-                    subsets.popover({
-                        placement: 'auto',
-                        width: '200',
-                        trigger: 'mouse',
-                        style: 'font-subsets, above-modal'
-                    }).on('beforeshow.popover', bind(function (popover) {
-                        var subs = subsets.data('font-subsets').split(','), content = popover.$target.find('.g5-popover-content');
-                        content.empty();
-                        var div;
-                        subs.forEach(function (sub) {
-                            current = sub == this.filters.script ? 'checked' : '';
-                            zen('div').html('<label><input name="font-subset[]" type="radio" ' + current + ' value="' + sub + '"/> ' + properCase(unhyphenate(sub.replace('ext', 'extended'))) + '</label>').bottom(content);
-                        }, this);
-                        content.delegate('change', 'input[type="radio"]', bind(function (event, input) {
-                            input = $(input);
-                            this.filters.script = input.value();
-                            $('.g-particles-header input.font-preview').value(this.previewSentence[this.filters.script]);
-                            subsets.find('small').text(properCase(unhyphenate(input.value().replace('ext', 'extended'))));
-                            this.search();
-                            this.updatePreview();
-                        }, this));
-                        popover.displayContent();
-                    }, this));
-                    return container;
-                },
-                search: function (input) {
-                    input = input || $('.g-particles-header input.font-search');
-                    var list = $('.g-fonts-list'), value = input.value(), name, data;
-                    list.search('> [data-font]').forEach(function (font) {
-                        font = $(font);
-                        name = font.data('font');
-                        data = find(this.data, { family: name });
-                        font.removeClass('g-font-hide');
-                        if (this.selected && this.selected.font == name && this.selected.selected.length) {
-                            return;
-                        }
-                        if (!contains(data.subsets, this.filters.script)) {
-                            font.addClass('g-font-hide');
-                            return;
-                        }
-                        if (!contains(this.filters.categories, data.category)) {
-                            font.addClass('g-font-hide');
-                            return;
-                        }
-                        if (!name.match(new RegExp('^' + value + '|\\s' + value, 'gi'))) {
-                            font.addClass('g-font-hide');
-                        } else {
-                            font.removeClass('g-font-hide');
-                        }
-                    }, this);
-                    this.updateTotal();
-                    clearTimeout(input.refreshTimer);
-                    input.refreshTimer = setTimeout(bind(function () {
-                        this.scroll($('ul.g-fonts-list'));
-                    }, this), 400);
-                    input.previousValue = value;
-                },
-                updatePreview: function (input) {
-                    input = input || $('.g-particles-header input.font-preview');
-                    clearTimeout(input.refreshTimer);
-                    var value = input.value(), list = $('.g-fonts-list');
-                    value = trim(value) ? trim(value) : this.previewSentence[this.filters.script];
-                    if (input.previousValue == value) {
-                        return true;
-                    }
-                    list.search('[data-font] .preview').text(value);
-                    input.previousValue = value;
-                },
-                fvdToStyle: function (family, fvd) {
-                    var match = fvd.match(/([a-z])([0-9])/);
-                    if (!match)
-                        return '';
-                    var styleMap = {
-                            n: 'normal',
-                            i: 'italic',
-                            o: 'oblique'
-                        };
-                    return {
-                        fontFamily: family,
-                        fontStyle: styleMap[match[1]],
-                        fontWeight: (match[2] * 100).toString()
-                    };
-                },
-                mapVariant: function (variant) {
-                    switch (variant) {
-                    case '100':
-                        return 'Thin 100';
-                        break;
-                    case '100italic':
-                        return 'Thin 100 Italic';
-                        break;
-                    case '200':
-                        return 'Extra-Light 200';
-                        break;
-                    case '200italic':
-                        return 'Extra-Light 200 Italic';
-                        break;
-                    case '300':
-                        return 'Light 300';
-                        break;
-                    case '300italic':
-                        return 'Light 300 Italic';
-                        break;
-                    case '400':
-                    case 'regular':
-                        return 'Normal 400';
-                        break;
-                    case '400italic':
-                    case 'italic':
-                        return 'Normal 400 Italic';
-                        break;
-                    case '500':
-                        return 'Medium 500';
-                        break;
-                    case '500italic':
-                        return 'Medium 500 Italic';
-                        break;
-                    case '600':
-                        return 'Semi-Bold 600';
-                        break;
-                    case '600italic':
-                        return 'Semi-Bold 600 Italic';
-                        break;
-                    case '700':
-                        return 'Bold 700';
-                        break;
-                    case '700italic':
-                        return 'Bold 700 Italic';
-                        break;
-                    case '800':
-                        return 'Extra-Bold 800';
-                        break;
-                    case '800italic':
-                        return 'Extra-Bold 800 Italic';
-                        break;
-                    case '900':
-                        return 'Ultra-Bold 900';
-                        break;
-                    case '900italic':
-                        return 'Ultra-Bold 900 Italic';
-                        break;
-                    default:
-                        return 'Unknown Variant';
-                    }
-                }
-            });
-        domready(function () {
-            $('body').delegate('click', '[data-g5-fontpicker]', function (event, element) {
-                var FontPicker = storage.get(element);
-                if (!FontPicker) {
-                    FontPicker = new Fonts();
-                    storage.set(element, FontPicker);
-                }
-                FontPicker.open(event, element);
-            });
-        });
-        module.exports = Fonts;
-    },
-    '18': function (require, module, exports, global) {
-        'use strict';
-        var $ = require('n'), domready = require('c'), modal = require('a').modal, getAjaxSuffix = require('14');
-        domready(function () {
-            $('body').delegate('click', '[data-g5-content] .g-main-nav .g-toplevel [data-g5-ajaxify]', function (event, element) {
-                var items = $('[data-g5-content] .g-main-nav .g-toplevel [data-g5-ajaxify] !> li');
-                if (items) {
-                    items.removeClass('active');
-                }
-                element.parent('li').addClass('active');
-            });
-            $('body').delegate('click', '#menu-editor .config-cog', function (event, element) {
-                event.preventDefault();
-                modal.open({
-                    content: 'Loading',
-                    remote: $(element).attribute('href') + getAjaxSuffix()
-                });
-            });
-        });
-        module.exports = {};
-    },
-    '19': function (require, module, exports, global) {
-        'use strict';
-        var $ = require('n'), domready = require('c'), modal = require('a').modal, getAjaxSuffix = require('14'), getAjaxURL = require('2q').global, trim = require('1f'), contains = require('15');
-        domready(function () {
-            var body = $('body');
-            body.delegate('keyup', '.g-icons input[type="text"]', function (event, element) {
-                element = $(element);
-                var preview = element.sibling('[data-g5-iconpicker]'), value = element.value(), size;
-                preview.attribute('class', value || 'fa fa-hand-o-up picker');
-                size = preview[0].offsetWidth;
-                if (!size) {
-                    preview.attribute('class', 'fa fa-hand-o-up picker');
-                }
-            });
-            body.delegate('click', '[data-g5-iconpicker]', function (event, element) {
-                element = $(element);
-                var field = $(element.data('g5-iconpicker')), realPreview = element, value = trim(field.value()).replace(/\s{2,}/g, ' ').split(' ');
-                modal.open({
-                    content: 'Loading',
-                    className: 'g5-dialog-theme-default g5-modal-icons',
-                    remote: getAjaxURL('icons') + getAjaxSuffix(),
-                    afterClose: function () {
-                        var popovers = $('.g5-popover');
-                        if (popovers) {
-                            popovers.remove();
-                        }
-                    },
-                    remoteLoaded: function (response, content) {
-                        var html, large, iconData = [], container = content.elements.content, icons = container.search('[data-icon]');
-                        if (!icons || !response.body.success) {
-                            container.html(response.body.html || response.body);
-                            return false;
-                        }
-                        var updatePreview = function () {
-                            var data = [], active = container.find('[data-icon].active'), options = container.search('.g-particles-header .float-right input:checked, .g-particles-header .float-right select');
-                            if (active) {
-                                data.push(active.data('icon'));
-                            }
-                            if (options) {
-                                options.forEach(function (option) {
-                                    var v = $(option).value();
-                                    if (v && v !== 'fa-') {
-                                        data.push(v);
-                                    }
-                                });
-                            }
-                            container.find('.icon-preview').html('<i class="fa ' + data.join(' ') + '"></i> <span>' + data[0] + '</span>');
-                        };
-                        var updateTotal = function () {
-                            var total = container.search('[data-icon]:not(.hide-icon)');
-                            container.find('.particle-search-total').text(total ? total.length : 0);
-                        };
-                        container.delegate('click', '[data-icon]', function (event, element) {
-                            element = $(element);
-                            var active = container.find('[data-icon].active');
-                            if (active) {
-                                active.removeClass('active');
-                            }
-                            element.addClass('active');
-                            updatePreview();
-                        });
-                        container.delegate('click', '[data-select]', function (event) {
-                            event.preventDefault();
-                            var output = container.find('.icon-preview i');
-                            field.value(output.attribute('class'));
-                            realPreview.attribute('class', output.attribute('class'));
-                            modal.close();
-                        });
-                        container.delegate('change', '.g-particles-header .float-right input[type="checkbox"], .g-particles-header .float-right select', function (e, input) {
-                            updatePreview();
-                        });
-                        container.delegate('keyup', '.particle-search-wrapper input[type="text"]', function (e, input) {
-                            input = $(input);
-                            var value = input.value(), hidden = container.search('[data-icon].hide-icon');
-                            if (!value) {
-                                if (hidden) {
-                                    hidden.removeClass('hide-icon');
-                                    updateTotal();
-                                }
-                                return true;
-                            }
-                            var found = container.search('[data-icon*="' + value + '"]');
-                            container.search('[data-icon]').addClass('hide-icon');
-                            if (found) {
-                                found.removeClass('hide-icon');
-                            }
-                            updateTotal();
-                        });
-                        icons.forEach(function (icon) {
-                            icon = $(icon);
-                            html = '';
-                            for (var i = 5, l = 0; i > l; i--) {
-                                large = !i ? 'lg' : i + 'x';
-                                html += '<i class="fa ' + icon.data('icon') + ' fa-' + large + '"></i> ';
-                            }
-                            icon.popover({
-                                content: html,
-                                placement: 'auto',
-                                trigger: 'mouse',
-                                style: 'above-modal, icons-preview',
-                                width: 'auto',
-                                targetEvents: false,
-                                delay: 1
-                            }).on('hidden.popover', function (instance) {
-                                if (instance.$target) {
-                                    instance.$target.remove();
-                                }
-                            });
-                            if (contains(value, icon.data('icon'))) {
-                                icon.addClass('active');
-                                value.forEach(function (name) {
-                                    var field = container.find('[name="' + name + '"]');
-                                    if (field) {
-                                        field.checked(true);
-                                    } else {
-                                        field = container.find('option[value="' + name + '"]');
-                                        if (field) {
-                                            field.parent().value(name);
-                                        }
-                                    }
-                                });
-                                var wrap = icon.parent('.icons-wrapper'), wrapHeight = wrap[0].offsetHeight;
-                                wrap[0].scrollTop = icon[0].offsetTop - wrapHeight / 2;
-                                updatePreview();
-                            }
-                        });
-                    }
-                });
-            });
-        });
-        module.exports = {};
-    },
-    '1a': function (require, module, exports, global) {
-        'use strict';
-        var $ = require('n'), prime = require('m'), domready = require('c'), modal = require('a').modal, getAjaxSuffix = require('14'), getAjaxURL = require('2q').global;
-        var FileManager = new prime({
-                constructor: function (element) {
-                    var data = element.data('g5-filemanager');
-                    this.data = data ? JSON.parse(data) : false;
-                    console.log(this.data);
-                },
-                open: function () {
-                    modal.open({
-                        method: 'post',
-                        data: this.data,
-                        content: 'Loading',
-                        className: 'g5-dialog-theme-default g5-modal-filemanager',
-                        remote: getAjaxURL('filemanager') + getAjaxSuffix()
-                    });
-                }
-            });
-        domready(function () {
-            $('body').delegate('click', '[data-g5-filemanager]', function (event, element) {
-                element = $(element);
-                if (!element.GantryFileManager) {
-                    element.GantryFileManager = new FileManager(element);
-                }
-                element.GantryFileManager.open();
-            });
-        });
-        module.exports = FileManager;
-    },
-    '1b': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('m'), $ = require('n'), zen = require('e'), storage = require('g')(), Emitter = require('o'), Bound = require('p'), Options = require('q'), domready = require('c'), bind = require('r'), map = require('s'), forEach = require('t'), last = require('u'), merge = require('v'), request = require('x');
+        var prime = require('p'), $ = require('q'), zen = require('e'), storage = require('o')(), Emitter = require('l'), Bound = require('r'), Options = require('s'), domready = require('c'), bind = require('t'), map = require('u'), forEach = require('v'), last = require('w'), merge = require('x'), request = require('z');
         var animationEndSupport = false;
         domready(function () {
             var style = (document.body || document.documentElement).style;
@@ -4642,9 +3409,9 @@ var G5;
             });
         module.exports = Modal;
     },
-    '1c': function (require, module, exports, global) {
+    '16': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), ready = require('c'), zen = require('e'), sifter = require('31'), Emitter = require('o'), Bound = require('p'), Options = require('q'), $ = require('n'), moofx = require('f'), bind = require('r'), forEach = require('2m'), indexOf = require('2p'), last = require('u'), debounce = require('32'), isArray = require('2g'), isBoolean = require('33'), merge = require('v'), unset = require('34'), size = require('2h'), values = require('35'), escapeHTML = require('36'), trim = require('1f');
+        var prime = require('p'), ready = require('c'), zen = require('e'), sifter = require('2n'), Emitter = require('l'), Bound = require('r'), Options = require('s'), $ = require('q'), moofx = require('f'), bind = require('t'), forEach = require('2o'), indexOf = require('2p'), last = require('w'), debounce = require('2q'), isArray = require('2h'), isBoolean = require('2r'), merge = require('x'), unset = require('2s'), size = require('2i'), values = require('2t'), escapeHTML = require('2u'), trim = require('1a');
         var IS_MAC = /Mac/.test(navigator.userAgent), COUNT = 0, KEY_A = 65, KEY_COMMA = 188, KEY_RETURN = 13, KEY_ESC = 27, KEY_LEFT = 37, KEY_UP = 38, KEY_P = 80, KEY_RIGHT = 39, KEY_DOWN = 40, KEY_N = 78, KEY_BACKSPACE = 8, KEY_DELETE = 46, KEY_SHIFT = 16, KEY_CMD = IS_MAC ? 91 : 17, KEY_CTRL = IS_MAC ? 18 : 17, KEY_TAB = 9, TAG_SELECT = 1, TAG_INPUT = 2;
         var hash_key = function (value) {
             if (typeof value === 'undefined' || value === null)
@@ -6243,7 +5010,7 @@ var G5;
         });
         module.exports = Selectize;
     },
-    '1d': function (require, module, exports, global) {
+    '17': function (require, module, exports, global) {
         'use strict';
         var ready = require('c'), $ = require('1');
         ready(function () {
@@ -6259,9 +5026,9 @@ var G5;
         });
         module.exports = {};
     },
-    '1e': function (require, module, exports, global) {
+    '18': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Emitter = require('o'), Bound = require('p'), Options = require('q'), zen = require('e'), $ = require('n'), storage = require('g')(), bind = require('r'), merge = require('v');
+        var prime = require('p'), Emitter = require('l'), Bound = require('r'), Options = require('s'), zen = require('e'), $ = require('q'), storage = require('o')(), bind = require('t'), merge = require('x');
         var Toaster = new prime({
                 mixin: [
                     Bound,
@@ -6512,11 +5279,18 @@ var G5;
         var toaster = new Toaster();
         module.exports = toaster;
     },
-    '1f': function (require, module, exports, global) {
-        var toString = require('37');
-        var WHITE_SPACES = require('38');
-        var ltrim = require('39');
-        var rtrim = require('3a');
+    '19': function (require, module, exports, global) {
+        var indexOf = require('2p');
+        function contains(arr, val) {
+            return indexOf(arr, val) !== -1;
+        }
+        module.exports = contains;
+    },
+    '1a': function (require, module, exports, global) {
+        var toString = require('2v');
+        var WHITE_SPACES = require('2w');
+        var ltrim = require('2x');
+        var rtrim = require('2y');
         function trim(str, chars) {
             str = toString(str);
             chars = chars || WHITE_SPACES;
@@ -6524,14 +5298,14 @@ var G5;
         }
         module.exports = trim;
     },
-    '1g': function (require, module, exports, global) {
+    '1b': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), $ = require('1'), Emitter = require('o');
-        var Blocks = require('3b');
-        var forOwn = require('2l'), forEach = require('2m'), size = require('10'), isArray = require('2g'), flatten = require('3c'), guid = require('11'), set = require('3d'), unset = require('34'), get = require('3e'), deepFillIn = require('3f'), omit = require('3g');
+        var prime = require('p'), $ = require('1'), Emitter = require('l');
+        var Blocks = require('2z');
+        var forOwn = require('2l'), forEach = require('2o'), size = require('10'), isArray = require('2h'), flatten = require('30'), guid = require('11'), set = require('31'), unset = require('2s'), get = require('32'), deepFillIn = require('33'), omit = require('34');
         require('2');
         require('6');
-        var rpad = require('3h'), repeat = require('3i');
+        var rpad = require('35'), repeat = require('36');
         $.implement({
             empty: function () {
                 return this.forEach(function (node) {
@@ -6678,9 +5452,9 @@ var G5;
             });
         module.exports = Builder;
     },
-    '1h': function (require, module, exports, global) {
+    '1c': function (require, module, exports, global) {
         'use strict';
-        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('2o') || {}, history = window.history;
+        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('2m') || {}, history = window.history;
         try {
             sessionStorage = window.sessionStorage;
             sessionStorage.setItem('TEST', '1');
@@ -7509,8 +6283,8 @@ var G5;
         }
         module.exports = History;
     },
-    '1i': function (require, module, exports, global) {
-        var prime = require('m'), Emitter = require('o'), slice = require('23'), merge = require('v');
+    '1d': function (require, module, exports, global) {
+        var prime = require('p'), Emitter = require('l'), slice = require('24'), merge = require('x');
         var History = new prime({
                 inherits: Emitter,
                 constructor: function (session) {
@@ -7573,9 +6347,9 @@ var G5;
             });
         module.exports = History;
     },
-    '1j': function (require, module, exports, global) {
+    '1e': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), $ = require('n'), zen = require('e'), Emitter = require('o'), Bound = require('p'), Options = require('q'), Blocks = require('3b'), DragDrop = require('3j'), Resizer = require('3k'), Eraser = require('3l'), get = require('3e'), every = require('3m'), isArray = require('2g'), isObject = require('27'), equals = require('3n');
+        var prime = require('p'), $ = require('q'), zen = require('e'), Emitter = require('l'), Bound = require('r'), Options = require('s'), Blocks = require('2z'), DragDrop = require('37'), Resizer = require('38'), Eraser = require('39'), get = require('32'), every = require('3a'), isArray = require('2h'), isObject = require('28'), equals = require('3b');
         var deepEquals = function (a, b, callback) {
             function compare(a, b) {
                 return deepEquals(a, b, callback);
@@ -7595,39 +6369,17 @@ var G5;
         };
         var singles = {
                 disable: function () {
-                    var grids = $('[data-lm-root] [data-lm-blocktype="grid"]'), sections = $('[data-lm-root] [data-lm-blocktype="section"]');
+                    var grids = $('[data-lm-root] [data-lm-blocktype="grid"]');
+                    ;
                     if (grids) {
                         grids.removeClass('no-hover');
                     }
-                    if (sections) {
-                        sections.forEach(function (section) {
-                            var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty), > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty)');
-                            if (subGrids) {
-                                if (subGrids.length === 1) {
-                                    subGrids.addClass('no-move').data('lm-nodrag', 'true');
-                                } else {
-                                    subGrids.removeClass('no-move').data('lm-nodrag', null);
-                                }
-                            }
-                        }, this);
-                    }
                 },
                 enable: function () {
-                    var grids = $('[data-lm-root] [data-lm-blocktype="grid"]'), sections = $('[data-lm-root] [data-lm-blocktype="section"]');
+                    var grids = $('[data-lm-root] [data-lm-blocktype="grid"]');
+                    ;
                     if (grids) {
                         grids.addClass('no-hover');
-                    }
-                    if (sections) {
-                        sections.forEach(function (section) {
-                            var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty), > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty)');
-                            if (subGrids) {
-                                if (subGrids.length === 1) {
-                                    subGrids.addClass('no-move').data('lm-nodrag', 'true');
-                                } else {
-                                    subGrids.removeClass('no-move').data('lm-nodrag', null);
-                                }
-                            }
-                        }, this);
                     }
                 },
                 cleanup: function (builder) {
@@ -7937,7 +6689,1378 @@ var G5;
             });
         module.exports = LayoutManager;
     },
+    '1f': function (require, module, exports, global) {
+        var prime = require('p'), Emitter = require('l'), Bound = require('r'), Options = require('s'), $ = require('1'), ready = require('c'), zen = require('e'), forEach = require('2o'), bind = require('t'), clamp = require('3c');
+        var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+        var MOUSEDOWN = 'mousedown' || 'touchstart', MOUSEMOVE = 'mousemove' || 'touchmove', MOUSEUP = 'mouseup' || 'touchend', FOCUSIN = isFirefox ? 'focus' : 'focusin';
+        var ColorPicker = new prime({
+                mixin: [
+                    Options,
+                    Bound
+                ],
+                inherits: Emitter,
+                options: {},
+                constructor: function (options) {
+                    this.setOptions(options);
+                    this.built = false;
+                    this.attach();
+                },
+                attach: function () {
+                    $('body').delegate(MOUSEDOWN, '.colorpicker i', bind(function (event, element) {
+                        var input = $(element).sibling('input');
+                        input[0].focus();
+                        this.show(event, input);
+                    }, this));
+                    $('body').delegate(FOCUSIN, '.colorpicker input', this.bound('show'), true);
+                    $('body').on(MOUSEDOWN, bind(function (event) {
+                        var target = $(event.target);
+                        if (!target.parent('.cp-wrapper') && !target.parent('.colorpicker')) {
+                            this.hide();
+                        }
+                    }, this));
+                    $('body').delegate(MOUSEDOWN, '.cp-grid, .cp-slider, .cp-opacity-slider', bind(function (event, element) {
+                        event.preventDefault();
+                        this.target = element;
+                        this.move(this.target, event, true);
+                    }, this));
+                    $('body').on(MOUSEMOVE, bind(function (event) {
+                        if (this.target) {
+                            this.move(this.target, event);
+                        }
+                    }, this));
+                    $('body').on(MOUSEUP, bind(function () {
+                        this.target = null;
+                    }, this));
+                    $('body').delegate('keydown', '.colorpicker input', bind(function (event, element) {
+                        switch (event.keyCode) {
+                        case 9:
+                            this.hide();
+                            break;
+                        case 13:
+                        case 27:
+                            this.hide();
+                            element[0].blur();
+                            break;
+                        }
+                        return true;
+                    }, this));
+                    $('body').delegate('keyup', '.colorpicker input', bind(function () {
+                        this.updateFromInput(true);
+                        return true;
+                    }, this));
+                    $('body').delegate('paste', '.colorpicker input', bind(function () {
+                        setTimeout(bind(function () {
+                            this.updateFromInput(true);
+                        }, this), 1);
+                    }, this));
+                },
+                hide: function () {
+                    if (!this.built) {
+                        return;
+                    }
+                    this.wrapper.removeClass('cp-visible');
+                },
+                show: function (event, element) {
+                    if (!this.built) {
+                        this.build();
+                    }
+                    this.element = element;
+                    this.reposition();
+                    this.wrapper.addClass('cp-visible');
+                    this.updateFromInput();
+                },
+                move: function (target, event) {
+                    var input = this.element, picker = target.find('.cp-picker'), clientRect = target[0].getBoundingClientRect(), offsetX = clientRect.left + window.scrollX, offsetY = clientRect.top + window.scrollY, x = Math.round(event.pageX - offsetX), y = Math.round(event.pageY - offsetY), duration = 0, wx, wy, r, phi;
+                    if (event.changedTouches) {
+                        x = event.changedTouches[0].pageX - offsetX;
+                        y = event.changedTouches[0].pageY - offsetY;
+                    }
+                    if (x < 0)
+                        x = 0;
+                    if (y < 0)
+                        y = 0;
+                    if (x > clientRect.width)
+                        x = clientRect.width;
+                    if (y > clientRect.height)
+                        y = clientRect.height;
+                    if (target.parent('.cp-mode-wheel') && picker.parent('.cp-grid')) {
+                        wx = 75 - x;
+                        wy = 75 - y;
+                        r = Math.sqrt(wx * wx + wy * wy);
+                        phi = Math.atan2(wy, wx);
+                        if (phi < 0)
+                            phi += Math.PI * 2;
+                        if (r > 75) {
+                            r = 75;
+                            x = 75 - 75 * Math.cos(phi);
+                            y = 75 - 75 * Math.sin(phi);
+                        }
+                        x = Math.round(x);
+                        y = Math.round(y);
+                    }
+                    if (target.hasClass('cp-grid')) {
+                        picker.style({
+                            top: y,
+                            left: x
+                        });
+                        this.updateFromPicker(input, target);
+                    } else {
+                        picker.style({ top: y });
+                        this.updateFromPicker(input, target);
+                    }
+                },
+                build: function () {
+                    this.wrapper = zen('div.cp-wrapper.cp-with-opacity.cp-mode-hue');
+                    this.slider = zen('div.cp-slider.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-picker'));
+                    this.opacitySlider = zen('div.cp-opacity-slider.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-picker'));
+                    this.grid = zen('div.cp-grid.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-grid-inner')).appendChild(zen('div.cp-picker'));
+                    zen('div').bottom(this.grid.find('.cp-picker'));
+                    var tabs = zen('div.cp-tabs').bottom(this.wrapper);
+                    this.tabs = {
+                        hue: zen('div.cp-tab-hue.active').text('HUE').bottom(tabs),
+                        brightness: zen('div.cp-tab-brightness').text('BRI').bottom(tabs),
+                        saturation: zen('div.cp-tab-saturation').text('SAT').bottom(tabs),
+                        wheel: zen('div.cp-tab-wheel').text('WHEEL').bottom(tabs)
+                    };
+                    tabs.delegate('click', '> div', bind(function (event, element) {
+                        var active = tabs.find('.active'), mode = active.attribute('class').replace(/\s|active|cp-tab-/g, ''), newMode = element.attribute('class').replace(/\s|active|cp-tab-/g, '');
+                        this.wrapper.removeClass('cp-mode-' + mode).addClass('cp-mode-' + newMode);
+                        active.removeClass('active');
+                        element.addClass('active');
+                        this.mode = newMode;
+                        this.updateFromInput();
+                    }, this));
+                    this.wrapper.bottom('body');
+                    this.built = true;
+                    this.mode = 'hue';
+                },
+                updateFromInput: function (dontFireEvent) {
+                    var value = this.element.value(), opacity = value.replace(/\s/g, '').match(/^rgba?\([0-9]{1,3}\,[0-9]{1,3}\,[0-9]{1,3}\,(.+)\)/), hex, hsb;
+                    value = rgbstr2hex(value) || value;
+                    if (!(hex = parseHex(value))) {
+                        hex = '#ffff00';
+                    }
+                    hsb = hex2hsb(hex);
+                    this.opacity = opacity ? clamp(opacity[1], 0, 1) : 1;
+                    var sliderHeight = this.opacitySlider.position().height;
+                    this.opacitySlider.find('.cp-picker').style({ 'top': clamp(sliderHeight - sliderHeight * this.opacity, 0, sliderHeight) });
+                    var gridHeight = this.grid.position().height, gridWidth = this.grid.position().width, sliderHeight = this.slider.position().height, r, phi, x, y;
+                    switch (this.mode) {
+                    case 'wheel':
+                        r = clamp(Math.ceil(hsb.s * 0.75), 0, gridHeight / 2);
+                        phi = hsb.h * Math.PI / 180;
+                        x = clamp(75 - Math.cos(phi) * r, 0, gridWidth);
+                        y = clamp(75 - Math.sin(phi) * r, 0, gridHeight);
+                        this.grid.style({ backgroundColor: 'transparent' }).find('.cp-picker').style({
+                            top: y,
+                            left: x
+                        });
+                        y = 150 - hsb.b / (100 / gridHeight);
+                        if (hex === '')
+                            y = 0;
+                        this.slider.find('.cp-picker').style({ top: y });
+                        this.slider.style({
+                            backgroundColor: hsb2hex({
+                                h: hsb.h,
+                                s: hsb.s,
+                                b: 100
+                            })
+                        });
+                        break;
+                    case 'saturation':
+                        x = clamp(5 * hsb.h / 12, 0, 150);
+                        y = clamp(gridHeight - Math.ceil(hsb.b / (100 / gridHeight)), 0, gridHeight);
+                        this.grid.find('.cp-picker').style({
+                            top: y,
+                            left: x
+                        });
+                        y = clamp(sliderHeight - hsb.s * (sliderHeight / 100), 0, sliderHeight);
+                        this.slider.find('.cp-picker').style({ top: y });
+                        this.slider.style({
+                            backgroundColor: hsb2hex({
+                                h: hsb.h,
+                                s: 100,
+                                b: hsb.b
+                            })
+                        });
+                        this.grid.find('.cp-grid-inner').style({ opacity: hsb.s / 100 });
+                        break;
+                    case 'brightness':
+                        x = clamp(5 * hsb.h / 12, 0, 150);
+                        y = clamp(gridHeight - Math.ceil(hsb.s / (100 / gridHeight)), 0, gridHeight);
+                        this.grid.find('.cp-picker').style({
+                            top: y,
+                            left: x
+                        });
+                        y = clamp(sliderHeight - hsb.b * (sliderHeight / 100), 0, sliderHeight);
+                        this.slider.find('.cp-picker').style({ top: y });
+                        this.slider.style({
+                            backgroundColor: hsb2hex({
+                                h: hsb.h,
+                                s: hsb.s,
+                                b: 100
+                            })
+                        });
+                        this.grid.find('.cp-grid-inner').style({ opacity: 1 - hsb.b / 100 });
+                        break;
+                    case 'hue':
+                    default:
+                        x = clamp(Math.ceil(hsb.s / (100 / gridWidth)), 0, gridWidth);
+                        y = clamp(gridHeight - Math.ceil(hsb.b / (100 / gridHeight)), 0, gridHeight);
+                        this.grid.find('.cp-picker').style({
+                            top: y,
+                            left: x
+                        });
+                        y = clamp(sliderHeight - hsb.h / (360 / sliderHeight), 0, sliderHeight);
+                        this.slider.find('.cp-picker').style({ top: y });
+                        this.grid.style({
+                            backgroundColor: hsb2hex({
+                                h: hsb.h,
+                                s: 100,
+                                b: 100
+                            })
+                        });
+                        break;
+                    }
+                    if (!dontFireEvent) {
+                        this.element.value(this.getValue(hex));
+                    }
+                    this.emit('change', this.element, hex, this.opacity);
+                },
+                updateFromPicker: function (input, target) {
+                    var getCoords = function (picker, container) {
+                        var left, top;
+                        if (!picker.length || !container)
+                            return null;
+                        left = picker[0].getBoundingClientRect().left;
+                        top = picker[0].getBoundingClientRect().top;
+                        return {
+                            x: left - container[0].getBoundingClientRect().left + picker[0].offsetWidth / 2,
+                            y: top - container[0].getBoundingClientRect().top + picker[0].offsetHeight / 2
+                        };
+                    };
+                    var hex, hue, saturation, brightness, x, y, r, phi, grid = this.wrapper.find('.cp-grid'), slider = this.wrapper.find('.cp-slider'), opacitySlider = this.wrapper.find('.cp-opacity-slider'), gridPicker = grid.find('.cp-picker'), sliderPicker = slider.find('.cp-picker'), opacityPicker = opacitySlider.find('.cp-picker'), gridPos = getCoords(gridPicker, grid), sliderPos = getCoords(sliderPicker, slider), opacityPos = getCoords(opacityPicker, opacitySlider), gridWidth = grid[0].getBoundingClientRect().width, gridHeight = grid[0].getBoundingClientRect().height, sliderHeight = slider[0].getBoundingClientRect().height, opacitySliderHeight = opacitySlider[0].getBoundingClientRect().height;
+                    var value = this.element.value();
+                    value = rgbstr2hex(value) || value;
+                    if (!(hex = parseHex(value))) {
+                        hex = '#ffff00';
+                    }
+                    if (target.hasClass('cp-grid') || target.hasClass('cp-slider')) {
+                        switch (this.mode) {
+                        case 'wheel':
+                            x = gridWidth / 2 - gridPos.x;
+                            y = gridHeight / 2 - gridPos.y;
+                            r = Math.sqrt(x * x + y * y);
+                            phi = Math.atan2(y, x);
+                            if (phi < 0)
+                                phi += Math.PI * 2;
+                            if (r > 75) {
+                                r = 75;
+                                gridPos.x = 69 - 75 * Math.cos(phi);
+                                gridPos.y = 69 - 75 * Math.sin(phi);
+                            }
+                            saturation = clamp(r / 0.75, 0, 100);
+                            hue = clamp(phi * 180 / Math.PI, 0, 360);
+                            brightness = clamp(100 - Math.floor(sliderPos.y * (100 / sliderHeight)), 0, 100);
+                            hex = hsb2hex({
+                                h: hue,
+                                s: saturation,
+                                b: brightness
+                            });
+                            slider.style({
+                                backgroundColor: hsb2hex({
+                                    h: hue,
+                                    s: saturation,
+                                    b: 100
+                                })
+                            });
+                            break;
+                        case 'saturation':
+                            hue = clamp(parseInt(gridPos.x * (360 / gridWidth), 10), 0, 360);
+                            saturation = clamp(100 - Math.floor(sliderPos.y * (100 / sliderHeight)), 0, 100);
+                            brightness = clamp(100 - Math.floor(gridPos.y * (100 / gridHeight)), 0, 100);
+                            hex = hsb2hex({
+                                h: hue,
+                                s: saturation,
+                                b: brightness
+                            });
+                            slider.style({
+                                backgroundColor: hsb2hex({
+                                    h: hue,
+                                    s: 100,
+                                    b: brightness
+                                })
+                            });
+                            grid.find('.cp-grid-inner').style({ opacity: saturation / 100 });
+                            break;
+                        case 'brightness':
+                            hue = clamp(parseInt(gridPos.x * (360 / gridWidth), 10), 0, 360);
+                            saturation = clamp(100 - Math.floor(gridPos.y * (100 / gridHeight)), 0, 100);
+                            brightness = clamp(100 - Math.floor(sliderPos.y * (100 / sliderHeight)), 0, 100);
+                            hex = hsb2hex({
+                                h: hue,
+                                s: saturation,
+                                b: brightness
+                            });
+                            slider.style({
+                                backgroundColor: hsb2hex({
+                                    h: hue,
+                                    s: saturation,
+                                    b: 100
+                                })
+                            });
+                            grid.find('.cp-grid-inner').style({ opacity: 1 - brightness / 100 });
+                            break;
+                        default:
+                            hue = clamp(360 - parseInt(sliderPos.y * (360 / sliderHeight), 10), 0, 360);
+                            saturation = clamp(Math.floor(gridPos.x * (100 / gridWidth)), 0, 100);
+                            brightness = clamp(100 - Math.floor(gridPos.y * (100 / gridHeight)), 0, 100);
+                            hex = hsb2hex({
+                                h: hue,
+                                s: saturation,
+                                b: brightness
+                            });
+                            grid.style({
+                                backgroundColor: hsb2hex({
+                                    h: hue,
+                                    s: 100,
+                                    b: 100
+                                })
+                            });
+                            break;
+                        }
+                    }
+                    if (target.hasClass('cp-opacity-slider')) {
+                        this.opacity = parseFloat(1 - opacityPos.y / opacitySliderHeight).toFixed(2);
+                    }
+                    input.value(this.getValue(hex));
+                    this.emit('change', this.element, hex, this.opacity);
+                },
+                reposition: function () {
+                    var offset = this.element[0].getBoundingClientRect();
+                    this.wrapper.style({
+                        top: offset.top + offset.height + window.scrollY,
+                        left: offset.left + window.scrollX
+                    });
+                },
+                getValue: function (hex) {
+                    if (this.opacity == 1) {
+                        return hex;
+                    }
+                    var rgb = hex2rgb(hex);
+                    return 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + this.opacity + ')';
+                }
+            });
+        var parseHex = function (string) {
+            string = string.replace(/[^A-F0-9]/gi, '');
+            if (string.length !== 3 && string.length !== 6)
+                return '';
+            if (string.length === 3) {
+                string = string[0] + string[0] + string[1] + string[1] + string[2] + string[2];
+            }
+            return '#' + string.toLowerCase();
+        };
+        var hsb2rgb = function (hsb) {
+            var rgb = {};
+            var h = Math.round(hsb.h);
+            var s = Math.round(hsb.s * 255 / 100);
+            var v = Math.round(hsb.b * 255 / 100);
+            if (s === 0) {
+                rgb.r = rgb.g = rgb.b = v;
+            } else {
+                var t1 = v;
+                var t2 = (255 - s) * v / 255;
+                var t3 = (t1 - t2) * (h % 60) / 60;
+                if (h === 360)
+                    h = 0;
+                if (h < 60) {
+                    rgb.r = t1;
+                    rgb.b = t2;
+                    rgb.g = t2 + t3;
+                } else if (h < 120) {
+                    rgb.g = t1;
+                    rgb.b = t2;
+                    rgb.r = t1 - t3;
+                } else if (h < 180) {
+                    rgb.g = t1;
+                    rgb.r = t2;
+                    rgb.b = t2 + t3;
+                } else if (h < 240) {
+                    rgb.b = t1;
+                    rgb.r = t2;
+                    rgb.g = t1 - t3;
+                } else if (h < 300) {
+                    rgb.b = t1;
+                    rgb.g = t2;
+                    rgb.r = t2 + t3;
+                } else if (h < 360) {
+                    rgb.r = t1;
+                    rgb.g = t2;
+                    rgb.b = t1 - t3;
+                } else {
+                    rgb.r = 0;
+                    rgb.g = 0;
+                    rgb.b = 0;
+                }
+            }
+            return {
+                r: Math.round(rgb.r),
+                g: Math.round(rgb.g),
+                b: Math.round(rgb.b)
+            };
+        };
+        var rgb2hex = function (rgb) {
+            var hex = [
+                    rgb.r.toString(16),
+                    rgb.g.toString(16),
+                    rgb.b.toString(16)
+                ];
+            forEach(hex, function (val, nr) {
+                if (val.length === 1)
+                    hex[nr] = '0' + val;
+            });
+            return '#' + hex.join('');
+        };
+        var rgbstr2hex = function (rgb) {
+            rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+            return rgb && rgb.length === 4 ? '#' + ('0' + parseInt(rgb[1], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[2], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[3], 10).toString(16)).slice(-2) : '';
+        };
+        var hsb2hex = function (hsb) {
+            return rgb2hex(hsb2rgb(hsb));
+        };
+        var hex2hsb = function (hex) {
+            var hsb = rgb2hsb(hex2rgb(hex));
+            if (hsb.s === 0)
+                hsb.h = 360;
+            return hsb;
+        };
+        var rgb2hsb = function (rgb) {
+            var hsb = {
+                    h: 0,
+                    s: 0,
+                    b: 0
+                };
+            var min = Math.min(rgb.r, rgb.g, rgb.b);
+            var max = Math.max(rgb.r, rgb.g, rgb.b);
+            var delta = max - min;
+            hsb.b = max;
+            hsb.s = max !== 0 ? 255 * delta / max : 0;
+            if (hsb.s !== 0) {
+                if (rgb.r === max) {
+                    hsb.h = (rgb.g - rgb.b) / delta;
+                } else if (rgb.g === max) {
+                    hsb.h = 2 + (rgb.b - rgb.r) / delta;
+                } else {
+                    hsb.h = 4 + (rgb.r - rgb.g) / delta;
+                }
+            } else {
+                hsb.h = -1;
+            }
+            hsb.h *= 60;
+            if (hsb.h < 0) {
+                hsb.h += 360;
+            }
+            hsb.s *= 100 / 255;
+            hsb.b *= 100 / 255;
+            return hsb;
+        };
+        var hex2rgb = function (hex) {
+            hex = parseInt(hex.indexOf('#') > -1 ? hex.substring(1) : hex, 16);
+            return {
+                r: hex >> 16,
+                g: (hex & 65280) >> 8,
+                b: hex & 255
+            };
+        };
+        ready(function () {
+            var x = new ColorPicker();
+            x.on('change', function (element, hex, opacity) {
+                if (opacity < 1) {
+                    var rgb = hex2rgb(hex), str = 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + opacity + ')';
+                    element.style({ backgroundColor: str });
+                } else {
+                    element.style({ backgroundColor: hex });
+                }
+            });
+        });
+        module.exports = ColorPicker;
+    },
+    '1g': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('p'), $ = require('q'), zen = require('e'), storage = require('o')(), Emitter = require('l'), Bound = require('r'), Options = require('s'), domready = require('c'), bind = require('t'), map = require('u'), forEach = require('v'), contains = require('19'), last = require('w'), split = require('3d'), removeAll = require('3e'), insert = require('3f'), find = require('3g'), combine = require('3h'), merge = require('x'), unhyphenate = require('3i'), properCase = require('3j'), trim = require('1a'), modal = require('a').modal, async = require('3k'), request = require('z'), wf = require('3l');
+        require('3m');
+        var Fonts = new prime({
+                mixin: Bound,
+                inherits: Emitter,
+                previewSentence: {
+                    'latin': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
+                    'latin-ext': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
+                    'cyrillic': '\u0412 \u0447\u0430\u0449\u0430\u0445 \u044e\u0433\u0430 \u0436\u0438\u043b \u0431\u044b \u0446\u0438\u0442\u0440\u0443\u0441? \u0414\u0430, \u043d\u043e \u0444\u0430\u043b\u044c\u0448\u0438\u0432\u044b\u0439 \u044d\u043a\u0437\u0435\u043c\u043f\u043b\u044f\u0440!',
+                    'cyrillic-ext': '\u0412 \u0447\u0430\u0449\u0430\u0445 \u044e\u0433\u0430 \u0436\u0438\u043b \u0431\u044b \u0446\u0438\u0442\u0440\u0443\u0441? \u0414\u0430, \u043d\u043e \u0444\u0430\u043b\u044c\u0448\u0438\u0432\u044b\u0439 \u044d\u043a\u0437\u0435\u043c\u043f\u043b\u044f\u0440!',
+                    'devanagari': '\u090f\u0915 \u092a\u0932 \u0915\u093e \u0915\u094d\u0930\u094b\u0927 \u0906\u092a\u0915\u093e \u092d\u0935\u093f\u0937\u094d\u092f \u092c\u093f\u0917\u093e\u0921 \u0938\u0915\u0924\u093e \u0939\u0948',
+                    'greek': '\u03a4\u03ac\u03c7\u03b9\u03c3\u03c4\u03b7 \u03b1\u03bb\u03ce\u03c0\u03b7\u03be \u03b2\u03b1\u03c6\u03ae\u03c2 \u03c8\u03b7\u03bc\u03ad\u03bd\u03b7 \u03b3\u03b7, \u03b4\u03c1\u03b1\u03c3\u03ba\u03b5\u03bb\u03af\u03b6\u03b5\u03b9 \u03c5\u03c0\u03ad\u03c1 \u03bd\u03c9\u03b8\u03c1\u03bf\u03cd \u03ba\u03c5\u03bd\u03cc\u03c2',
+                    'greek-ext': '\u03a4\u03ac\u03c7\u03b9\u03c3\u03c4\u03b7 \u03b1\u03bb\u03ce\u03c0\u03b7\u03be \u03b2\u03b1\u03c6\u03ae\u03c2 \u03c8\u03b7\u03bc\u03ad\u03bd\u03b7 \u03b3\u03b7, \u03b4\u03c1\u03b1\u03c3\u03ba\u03b5\u03bb\u03af\u03b6\u03b5\u03b9 \u03c5\u03c0\u03ad\u03c1 \u03bd\u03c9\u03b8\u03c1\u03bf\u03cd \u03ba\u03c5\u03bd\u03cc\u03c2',
+                    'khmer': '\u1781\u17d2\u1789\u17bb\u17c6\u17a2\u17b6\u1785\u1789\u17c9\u17b6\u17c6\u1780\u1789\u17d2\u1785\u1780\u17cb\u1794\u17b6\u1793 \u178a\u17c4\u1799\u1782\u17d2\u1798\u17b6\u1793\u1794\u1789\u17d2\u17a0\u17b6',
+                    'telugu': '\u0c26\u0c47\u0c36 \u0c2d\u0c3e\u0c37\u0c32\u0c02\u0c26\u0c41 \u0c24\u0c46\u0c32\u0c41\u0c17\u0c41 \u0c32\u0c46\u0c38\u0c4d\u0c38',
+                    'vietnamese': 'T\xf4i c\xf3 th\u1ec3 \u0103n th\u1ee7y tinh m\xe0 kh\xf4ng h\u1ea1i g\xec.'
+                },
+                constructor: function () {
+                    this.wf = wf;
+                    this.data = null;
+                    this.field = null;
+                    this.element = null;
+                    this.throttle = false;
+                    this.selected = null;
+                    this.loadedFonts = [];
+                    this.filters = {
+                        search: '',
+                        script: 'latin',
+                        categories: []
+                    };
+                },
+                open: function (event, element, container) {
+                    if (!this.data || !this.field) {
+                        return this.getData(element);
+                    }
+                    var list = [];
+                    forEach(this.data, function (value) {
+                        list.push(value.family);
+                    });
+                    if (container) {
+                        container.empty().appendChild(this.buildLayout());
+                        this.scroll(container.find('ul.g-fonts-list'));
+                        this.updateTotal();
+                        this.selectFromValue();
+                        return;
+                    }
+                    modal.open({
+                        content: 'Loading...',
+                        className: 'g5-dialog-theme-default g5-modal-fonts',
+                        afterOpen: bind(function (container) {
+                            setTimeout(bind(function () {
+                                container.empty().appendChild(this.buildLayout());
+                                this.scroll(container.find('ul.g-fonts-list'));
+                                this.updateTotal();
+                                this.selectFromValue();
+                            }, this), 1);
+                        }, this)
+                    });
+                },
+                getData: function (element) {
+                    var data = element.data('g5-fontpicker');
+                    if (!data) {
+                        throw new Error('No fontpicker data found');
+                    }
+                    data = JSON.parse(data);
+                    this.field = $(data.field);
+                    modal.open({
+                        content: 'Loading...',
+                        className: 'g5-dialog-theme-default g5-modal-fonts',
+                        remote: data.data,
+                        remoteLoaded: bind(function (response, instance) {
+                            if (response.error) {
+                                instance.elements.content.html(response.body.html + '[' + data.data + ']');
+                                return false;
+                            }
+                            this.data = response.body.items;
+                            this.open(null, element, instance.elements.content);
+                        }, this)
+                    });
+                },
+                scroll: function (container) {
+                    clearTimeout(this.throttle);
+                    this.throttle = setTimeout(bind(function () {
+                        var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li:not(.g-font-hide)', 5000), list = [];
+                        if (!elements) {
+                            return;
+                        }
+                        $(elements).forEach(function (element) {
+                            element = $(element);
+                            var dataFont = element.data('font'), variant = element.data('variant');
+                            if (!contains(this.loadedFonts, dataFont)) {
+                                list.push(dataFont + (variant != 'regular' ? ':' + variant : ''));
+                            } else {
+                                element.find('[data-variant="' + variant + '"] .preview').style({
+                                    fontFamily: dataFont,
+                                    fontWeight: variant == 'regular' ? 'normal' : variant
+                                });
+                            }
+                        }, this);
+                        if (!list || !list.length) {
+                            return;
+                        }
+                        wf.load({
+                            classes: false,
+                            google: { families: list },
+                            fontactive: bind(function (family, fvd) {
+                                var v = container.find('li[data-font="' + family + '"]').data('variant');
+                                container.find('li[data-font="' + family + '"]:not(.g-variant-hide) > .preview').style({
+                                    fontFamily: family,
+                                    fontWeight: fvd
+                                });
+                                this.loadedFonts.push(family);
+                            }, this)
+                        });
+                    }, this), 250);
+                },
+                unselect: function (selected) {
+                    selected = selected || this.selected;
+                    if (!selected) {
+                        return false;
+                    }
+                    var baseVariant = selected.element.data('variant');
+                    selected.element.removeClass('selected');
+                    selected.element.search('input[type=checkbox]').checked(false);
+                    selected.element.search('[data-font]').addClass('g-variant-hide');
+                    selected.element.find('[data-variant="' + baseVariant + '"]').removeClass('g-variant-hide');
+                    selected.variants = [selected.baseVariant];
+                    selected.selected = [];
+                },
+                selectFromValue: function () {
+                    var value = this.field.value();
+                    if (!value.match('family=')) {
+                        return false;
+                    }
+                    var split = value.split('&'), family = split[0], split2 = family.split(':'), name = split2[0].replace('family=', '').replace(/\+/g, ' '), variants = split2[1] ? split2[1].split(',') : ['regular'], subset = split[1] ? split[1].replace('subset=', '').split(',') : ['latin'];
+                    if (contains(variants, '400')) {
+                        removeAll(variants, '400');
+                        insert(variants, 'regular');
+                    }
+                    if (contains(variants, '400italic')) {
+                        removeAll(variants, '400italic');
+                        insert(variants, 'italic');
+                    }
+                    var element = $('ul.g-fonts-list > [data-font="' + name + '"]');
+                    this.selected = {
+                        font: name,
+                        baseVariant: element.data('variant'),
+                        element: element,
+                        variants: variants,
+                        selected: [],
+                        charsets: subset,
+                        availableVariants: element.data('variants').split(','),
+                        expanded: false,
+                        loaded: false
+                    };
+                    variants.forEach(function (variant) {
+                        this.select(element, variant);
+                        element.find('> ul > [data-variant="' + variant + '"]').removeClass('g-variant-hide');
+                    }, this);
+                    var charsetSelected = element.find('.font-charsets-selected');
+                    if (charsetSelected) {
+                        charsetSelected.text('(' + subset.length + ' selected)');
+                    }
+                    $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop;
+                    this.toggleExpansion();
+                    setTimeout(bind(function () {
+                        this.toggleExpansion();
+                    }, this), 50);
+                },
+                select: function (element, variant, target) {
+                    var baseVariant = element.data('variant');
+                    if (!this.selected || this.selected.element != element) {
+                        if (variant && this.selected) {
+                            var charsetSelected = this.selected.element.find('.font-charsets-selected');
+                            if (charsetSelected) {
+                                charsetSelected.text('(1 selected)');
+                            }
+                        }
+                        this.selected = {
+                            font: element.data('font'),
+                            baseVariant: baseVariant,
+                            element: element,
+                            variants: [baseVariant],
+                            selected: [],
+                            charsets: ['latin'],
+                            availableVariants: element.data('variants').split(','),
+                            expanded: false,
+                            loaded: false
+                        };
+                    }
+                    if (!variant) {
+                        this.toggleExpansion();
+                    }
+                    if (variant) {
+                        var selected = $('ul.g-fonts-list > [data-font]:not([data-font="' + this.selected.font + '"]) input[type="checkbox"]:checked');
+                        if (selected) {
+                            selected.checked(false);
+                            selected.parent('[data-variants]').removeClass('font-selected');
+                        }
+                        var checkbox = this.selected.element.find('input[type="checkbox"][value="' + variant + '"]'), checked = checkbox.checked();
+                        if (checkbox) {
+                            checkbox.checked(!checked);
+                        }
+                        if (!checked) {
+                            insert(this.selected.variants, variant);
+                            insert(this.selected.selected, variant);
+                        } else {
+                            if (variant != this.selected.baseVariant) {
+                                removeAll(this.selected.variants, variant);
+                            }
+                            removeAll(this.selected.selected, variant);
+                        }
+                        this.updateSelection();
+                    }
+                },
+                toggleExpansion: function () {
+                    if (this.selected.availableVariants.length <= 1) {
+                        return;
+                    }
+                    if (!this.selected.expanded) {
+                        var variants = this.selected.element.data('variants'), list = [], variant;
+                        if (variants.split(',').length > 1) {
+                            this.manipulateLink(this.selected.font);
+                            this.selected.element.search('[data-font]').removeClass('g-variant-hide');
+                            if (!this.selected.loaded) {
+                                wf.load({
+                                    classes: false,
+                                    google: { families: [this.selected.font.replace(/\s/g, '+') + ':' + variants] },
+                                    fontactive: bind(function (family, fvd) {
+                                        var style = this.fvdToStyle(family, fvd), search = style.fontWeight;
+                                        if (search == '400') {
+                                            search = style.fontStyle == 'normal' ? 'regular' : 'italic';
+                                        } else if (style.fontStyle == 'italic') {
+                                            search += 'italic';
+                                        }
+                                        this.selected.element.find('li[data-variant="' + search + '"] .preview').style(style);
+                                        this.selected.loaded = true;
+                                    }, this)
+                                });
+                            }
+                        }
+                    } else {
+                        var exclude = ':not([data-variant="' + this.selected.variants.join('"]):not([data-variant="') + '"])';
+                        exclude = this.selected.element.search('[data-font]' + exclude);
+                        if (exclude) {
+                            exclude.addClass('g-variant-hide');
+                        }
+                    }
+                    this.selected.expanded = !this.selected.expanded;
+                },
+                manipulateLink: function (family) {
+                    family = family.replace(/\s/g, '+');
+                    var link = $('head link[href*="' + family + '"]');
+                    if (!link) {
+                        return;
+                    }
+                    var parts = decodeURIComponent(link.href()).split('|');
+                    if (!parts || parts.length <= 1) {
+                        return;
+                    }
+                    removeAll(parts, family);
+                    link.attribute('href', encodeURI(parts.join('|')));
+                },
+                toggle: function (event, element) {
+                    element = $(element);
+                    this.select(element.parent('[data-font]') || element, element.parent('[data-font]') ? element.data('variant') : false, element);
+                    return false;
+                },
+                updateSelection: function () {
+                    var preview = $('.g-particles-footer .font-selected'), selected;
+                    if (!preview) {
+                        return;
+                    }
+                    if (!this.selected.selected.length) {
+                        preview.empty();
+                        this.selected.element.removeClass('font-selected');
+                        return;
+                    }
+                    selected = this.selected.selected.sort();
+                    this.selected.element.addClass('font-selected');
+                    preview.html('<strong>' + this.selected.font + '</strong> (<small>' + selected.join(', ').replace('regular', 'normal') + '</small>)');
+                },
+                updateTotal: function () {
+                    var totals = $('.g-particles-header .particle-search-total'), count = $('.g-fonts-list > [data-font]:not(.g-font-hide)');
+                    totals.text(count ? count.length : 0);
+                },
+                buildLayout: function () {
+                    this.filters.script = 'latin';
+                    var previewSentence = this.previewSentence[this.filters.script], html = zen('div#g-fonts.g-grid'), main = zen('div.g-particles-main').bottom(html), ul = zen('ul.g-fonts-list').bottom(main), families = [], list, categories = [], subsets = [];
+                    this.buildHeader(html).top(html);
+                    this.buildFooter(html).bottom(html);
+                    ul.on('scroll', bind(this.scroll, this, ul));
+                    html.delegate('click', '.g-fonts-list li[data-font]', bind(this.toggle, this));
+                    async.eachSeries(this.data, bind(function (font, callback) {
+                        combine(subsets, font.subsets);
+                        insert(categories, font.category);
+                        this.filters.categories.push(font.category);
+                        var variants = font.variants.join(',').replace('regular', 'normal'), variant = contains(font.variants, 'regular') ? '' : ':' + font.variants[0], li = zen('li[data-font="' + font.family + '"][data-variant="' + (variant.replace(':', '') || 'regular') + '"][data-variants="' + variants + '"]').bottom(ul), total = font.variants.length + ' style' + (font.variants.length > 1 ? 's' : ''), charsets = font.subsets.length > 1 ? ', <span class="font-charsets">' + font.subsets.length + ' charsets <span class="font-charsets-selected">(1 selected)</span></span>' : '';
+                        var family = zen('div.family').html('<strong>' + font.family + '</strong>, ' + total + charsets).bottom(li), charset = family.find('.font-charsets-selected');
+                        if (charset) {
+                            charset.popover({
+                                placement: 'auto',
+                                width: '200',
+                                trigger: 'mouse',
+                                style: 'font-categories, above-modal'
+                            }).on('beforeshow.popover', bind(function (popover) {
+                                var subs = font.subsets.sort();
+                                var subsets = font.subsets, content = popover.$target.find('.g5-popover-content'), checked;
+                                content.empty();
+                                var div, current;
+                                subsets.forEach(function (cs) {
+                                    current = contains(this.selected.charsets, cs) ? cs == 'latin' ? 'checked disabled' : 'checked' : '';
+                                    zen('div').html('<label><input type="checkbox" ' + current + ' value="' + cs + '"/> ' + properCase(unhyphenate(cs.replace('ext', 'extended'))) + '</label>').bottom(content);
+                                }, this);
+                                content.delegate('click', 'input[type="checkbox"]', bind(function (event, input) {
+                                    input = $(input);
+                                    checked = content.search('input[type="checkbox"]:checked');
+                                    this.selected.charsets = checked ? checked.map('value') : [];
+                                    charset.text('(' + this.selected.charsets.length + ' selected)');
+                                }, this));
+                                popover.displayContent();
+                            }, this));
+                        }
+                        var variantContainer = zen('ul').bottom(li), variantFont, label;
+                        async.each(font.variants, bind(function (current) {
+                            variantFont = zen('li[data-font="' + font.family + '"][data-variant="' + current + '"]').bottom(variantContainer);
+                            zen('input[type="checkbox"][value="' + current + '"]').bottom(variantFont);
+                            zen('div.variant').html('<small>' + this.mapVariant(current) + '</small>').bottom(variantFont);
+                            zen('div.preview').text(previewSentence).bottom(variantFont);
+                            if (':' + current !== variant && current !== (variant || 'regular')) {
+                                variantFont.addClass('g-variant-hide');
+                            }
+                        }, this));
+                        if (!contains(font.subsets, 'latin')) {
+                            li.addClass('g-font-hide');
+                        }
+                        families.push(font.family + variant);
+                        callback();
+                    }, this));
+                    var catContainer = html.find('a.font-category'), subContainer = html.find('a.font-subsets');
+                    catContainer.data('font-categories', categories.join(',')).html('Categories (<small>' + categories.length + '</small>) <i class="fa fa-caret-down"></i>');
+                    subContainer.data('font-subsets', subsets.join(',')).html('Subsets (<small>' + properCase(unhyphenate(this.filters.script.replace('ext', 'extended'))) + '</small>) <i class="fa fa-caret-down"></i>');
+                    return html;
+                },
+                buildHeader: function (html) {
+                    var container = zen('div.settings-block.g-particles-header').bottom(html), preview = zen('input.float-left.font-preview[type="text"][data-font-preview][placeholder="Font Preview..."][value="' + this.previewSentence[this.filters.script] + '"]').bottom(container), searchWrapper = zen('span.particle-search-wrapper.float-right').bottom(container), search = zen('input.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(searchWrapper), totals = zen('span.particle-search-total').bottom(searchWrapper);
+                    search.on('keyup', bind(this.search, this, search));
+                    preview.on('keyup', bind(this.updatePreview, this, preview));
+                    return container;
+                },
+                buildFooter: function (html) {
+                    var container = zen('div.settings-block.g-particles-footer').bottom(html), leftContainer = zen('div.float-left.font-left-container').bottom(container), rightContainer = zen('div.float-right.font-right-container').bottom(container), category = zen('a.font-category.button').bottom(leftContainer), subsets = zen('a.font-subsets.button').bottom(leftContainer), selected = zen('span.font-selected').bottom(rightContainer), select = zen('button.button.button-primary').text('Select').bottom(rightContainer), space = zen('span').html('&nbsp;').bottom(rightContainer), cancel = zen('button.button.g5-dialog-close').text('Cancel').bottom(rightContainer), current;
+                    select.on('click', bind(function () {
+                        if (!$('ul.g-fonts-list > [data-font] input[type="checkbox"]:checked')) {
+                            this.field.value('');
+                            modal.close();
+                            return;
+                        }
+                        var name = this.selected.font.replace(/\s/g, '+'), variation = this.selected.selected, charset = this.selected.charsets;
+                        if (variation.length == 1 && variation[0] == 'regular') {
+                            variation = [];
+                        }
+                        if (charset.length == 1 && charset[0] == 'latin') {
+                            charset = [];
+                        }
+                        if (contains(variation, 'regular')) {
+                            removeAll(variation, 'regular');
+                            insert(variation, '400');
+                        }
+                        if (contains(variation, 'italic')) {
+                            removeAll(variation, 'italic');
+                            insert(variation, '400italic');
+                        }
+                        this.field.value('family=' + name + (variation.length ? ':' + variation.join(',') : '') + (charset.length ? '&subset=' + charset.join(',') : ''));
+                        modal.close();
+                    }, this));
+                    category.popover({
+                        placement: 'auto',
+                        width: '200',
+                        trigger: 'mouse',
+                        style: 'font-categories, above-modal'
+                    }).on('beforeshow.popover', bind(function (popover) {
+                        var categories = category.data('font-categories').split(','), content = popover.$target.find('.g5-popover-content'), checked;
+                        content.empty();
+                        var div;
+                        categories.forEach(function (category) {
+                            current = contains(this.filters.categories, category) ? 'checked' : '';
+                            zen('div').html('<label><input type="checkbox" ' + current + ' value="' + category + '"/> ' + properCase(unhyphenate(category)) + '</label>').bottom(content);
+                        }, this);
+                        content.delegate('click', 'input[type="checkbox"]', bind(function (event, input) {
+                            input = $(input);
+                            checked = content.search('input[type="checkbox"]:checked');
+                            this.filters.categories = checked ? checked.map('value') : [];
+                            category.find('small').text(this.filters.categories.length);
+                            this.search();
+                        }, this));
+                        popover.displayContent();
+                    }, this));
+                    subsets.popover({
+                        placement: 'auto',
+                        width: '200',
+                        trigger: 'mouse',
+                        style: 'font-subsets, above-modal'
+                    }).on('beforeshow.popover', bind(function (popover) {
+                        var subs = subsets.data('font-subsets').split(','), content = popover.$target.find('.g5-popover-content');
+                        content.empty();
+                        var div;
+                        subs.forEach(function (sub) {
+                            current = sub == this.filters.script ? 'checked' : '';
+                            zen('div').html('<label><input name="font-subset[]" type="radio" ' + current + ' value="' + sub + '"/> ' + properCase(unhyphenate(sub.replace('ext', 'extended'))) + '</label>').bottom(content);
+                        }, this);
+                        content.delegate('change', 'input[type="radio"]', bind(function (event, input) {
+                            input = $(input);
+                            this.filters.script = input.value();
+                            $('.g-particles-header input.font-preview').value(this.previewSentence[this.filters.script]);
+                            subsets.find('small').text(properCase(unhyphenate(input.value().replace('ext', 'extended'))));
+                            this.search();
+                            this.updatePreview();
+                        }, this));
+                        popover.displayContent();
+                    }, this));
+                    return container;
+                },
+                search: function (input) {
+                    input = input || $('.g-particles-header input.font-search');
+                    var list = $('.g-fonts-list'), value = input.value(), name, data;
+                    list.search('> [data-font]').forEach(function (font) {
+                        font = $(font);
+                        name = font.data('font');
+                        data = find(this.data, { family: name });
+                        font.removeClass('g-font-hide');
+                        if (this.selected && this.selected.font == name && this.selected.selected.length) {
+                            return;
+                        }
+                        if (!contains(data.subsets, this.filters.script)) {
+                            font.addClass('g-font-hide');
+                            return;
+                        }
+                        if (!contains(this.filters.categories, data.category)) {
+                            font.addClass('g-font-hide');
+                            return;
+                        }
+                        if (!name.match(new RegExp('^' + value + '|\\s' + value, 'gi'))) {
+                            font.addClass('g-font-hide');
+                        } else {
+                            font.removeClass('g-font-hide');
+                        }
+                    }, this);
+                    this.updateTotal();
+                    clearTimeout(input.refreshTimer);
+                    input.refreshTimer = setTimeout(bind(function () {
+                        this.scroll($('ul.g-fonts-list'));
+                    }, this), 400);
+                    input.previousValue = value;
+                },
+                updatePreview: function (input) {
+                    input = input || $('.g-particles-header input.font-preview');
+                    clearTimeout(input.refreshTimer);
+                    var value = input.value(), list = $('.g-fonts-list');
+                    value = trim(value) ? trim(value) : this.previewSentence[this.filters.script];
+                    if (input.previousValue == value) {
+                        return true;
+                    }
+                    list.search('[data-font] .preview').text(value);
+                    input.previousValue = value;
+                },
+                fvdToStyle: function (family, fvd) {
+                    var match = fvd.match(/([a-z])([0-9])/);
+                    if (!match)
+                        return '';
+                    var styleMap = {
+                            n: 'normal',
+                            i: 'italic',
+                            o: 'oblique'
+                        };
+                    return {
+                        fontFamily: family,
+                        fontStyle: styleMap[match[1]],
+                        fontWeight: (match[2] * 100).toString()
+                    };
+                },
+                mapVariant: function (variant) {
+                    switch (variant) {
+                    case '100':
+                        return 'Thin 100';
+                        break;
+                    case '100italic':
+                        return 'Thin 100 Italic';
+                        break;
+                    case '200':
+                        return 'Extra-Light 200';
+                        break;
+                    case '200italic':
+                        return 'Extra-Light 200 Italic';
+                        break;
+                    case '300':
+                        return 'Light 300';
+                        break;
+                    case '300italic':
+                        return 'Light 300 Italic';
+                        break;
+                    case '400':
+                    case 'regular':
+                        return 'Normal 400';
+                        break;
+                    case '400italic':
+                    case 'italic':
+                        return 'Normal 400 Italic';
+                        break;
+                    case '500':
+                        return 'Medium 500';
+                        break;
+                    case '500italic':
+                        return 'Medium 500 Italic';
+                        break;
+                    case '600':
+                        return 'Semi-Bold 600';
+                        break;
+                    case '600italic':
+                        return 'Semi-Bold 600 Italic';
+                        break;
+                    case '700':
+                        return 'Bold 700';
+                        break;
+                    case '700italic':
+                        return 'Bold 700 Italic';
+                        break;
+                    case '800':
+                        return 'Extra-Bold 800';
+                        break;
+                    case '800italic':
+                        return 'Extra-Bold 800 Italic';
+                        break;
+                    case '900':
+                        return 'Ultra-Bold 900';
+                        break;
+                    case '900italic':
+                        return 'Ultra-Bold 900 Italic';
+                        break;
+                    default:
+                        return 'Unknown Variant';
+                    }
+                }
+            });
+        domready(function () {
+            $('body').delegate('click', '[data-g5-fontpicker]', function (event, element) {
+                var FontPicker = storage.get(element);
+                if (!FontPicker) {
+                    FontPicker = new Fonts();
+                    storage.set(element, FontPicker);
+                }
+                FontPicker.open(event, element);
+            });
+        });
+        module.exports = Fonts;
+    },
+    '1h': function (require, module, exports, global) {
+        'use strict';
+        var $ = require('q'), domready = require('c'), modal = require('a').modal, getAjaxSuffix = require('14');
+        domready(function () {
+            $('body').delegate('click', '[data-g5-content] .g-main-nav .g-toplevel [data-g5-ajaxify]', function (event, element) {
+                var items = $('[data-g5-content] .g-main-nav .g-toplevel [data-g5-ajaxify] !> li');
+                if (items) {
+                    items.removeClass('active');
+                }
+                element.parent('li').addClass('active');
+            });
+            $('body').delegate('click', '#menu-editor .config-cog', function (event, element) {
+                event.preventDefault();
+                modal.open({
+                    content: 'Loading',
+                    remote: $(element).attribute('href') + getAjaxSuffix()
+                });
+            });
+        });
+        module.exports = {};
+    },
+    '1i': function (require, module, exports, global) {
+        'use strict';
+        var $ = require('q'), domready = require('c'), modal = require('a').modal, getAjaxSuffix = require('14'), getAjaxURL = require('3n').global, trim = require('1a'), contains = require('19');
+        domready(function () {
+            var body = $('body');
+            body.delegate('keyup', '.g-icons input[type="text"]', function (event, element) {
+                element = $(element);
+                var preview = element.sibling('[data-g5-iconpicker]'), value = element.value(), size;
+                preview.attribute('class', value || 'fa fa-hand-o-up picker');
+                size = preview[0].offsetWidth;
+                if (!size) {
+                    preview.attribute('class', 'fa fa-hand-o-up picker');
+                }
+            });
+            body.delegate('click', '[data-g5-iconpicker]', function (event, element) {
+                element = $(element);
+                var field = $(element.data('g5-iconpicker')), realPreview = element, value = trim(field.value()).replace(/\s{2,}/g, ' ').split(' ');
+                modal.open({
+                    content: 'Loading',
+                    className: 'g5-dialog-theme-default g5-modal-icons',
+                    remote: getAjaxURL('icons') + getAjaxSuffix(),
+                    afterClose: function () {
+                        var popovers = $('.g5-popover');
+                        if (popovers) {
+                            popovers.remove();
+                        }
+                    },
+                    remoteLoaded: function (response, content) {
+                        var html, large, iconData = [], container = content.elements.content, icons = container.search('[data-icon]');
+                        if (!icons || !response.body.success) {
+                            container.html(response.body.html || response.body);
+                            return false;
+                        }
+                        var updatePreview = function () {
+                            var data = [], active = container.find('[data-icon].active'), options = container.search('.g-particles-header .float-right input:checked, .g-particles-header .float-right select');
+                            if (active) {
+                                data.push(active.data('icon'));
+                            }
+                            if (options) {
+                                options.forEach(function (option) {
+                                    var v = $(option).value();
+                                    if (v && v !== 'fa-') {
+                                        data.push(v);
+                                    }
+                                });
+                            }
+                            container.find('.icon-preview').html('<i class="fa ' + data.join(' ') + '"></i> <span>' + data[0] + '</span>');
+                        };
+                        var updateTotal = function () {
+                            var total = container.search('[data-icon]:not(.hide-icon)');
+                            container.find('.particle-search-total').text(total ? total.length : 0);
+                        };
+                        container.delegate('click', '[data-icon]', function (event, element) {
+                            element = $(element);
+                            var active = container.find('[data-icon].active');
+                            if (active) {
+                                active.removeClass('active');
+                            }
+                            element.addClass('active');
+                            updatePreview();
+                        });
+                        container.delegate('click', '[data-select]', function (event) {
+                            event.preventDefault();
+                            var output = container.find('.icon-preview i');
+                            field.value(output.attribute('class'));
+                            realPreview.attribute('class', output.attribute('class'));
+                            modal.close();
+                        });
+                        container.delegate('change', '.g-particles-header .float-right input[type="checkbox"], .g-particles-header .float-right select', function (e, input) {
+                            updatePreview();
+                        });
+                        container.delegate('keyup', '.particle-search-wrapper input[type="text"]', function (e, input) {
+                            input = $(input);
+                            var value = input.value(), hidden = container.search('[data-icon].hide-icon');
+                            if (!value) {
+                                if (hidden) {
+                                    hidden.removeClass('hide-icon');
+                                    updateTotal();
+                                }
+                                return true;
+                            }
+                            var found = container.search('[data-icon*="' + value + '"]');
+                            container.search('[data-icon]').addClass('hide-icon');
+                            if (found) {
+                                found.removeClass('hide-icon');
+                            }
+                            updateTotal();
+                        });
+                        icons.forEach(function (icon) {
+                            icon = $(icon);
+                            html = '';
+                            for (var i = 5, l = 0; i > l; i--) {
+                                large = !i ? 'lg' : i + 'x';
+                                html += '<i class="fa ' + icon.data('icon') + ' fa-' + large + '"></i> ';
+                            }
+                            icon.popover({
+                                content: html,
+                                placement: 'auto',
+                                trigger: 'mouse',
+                                style: 'above-modal, icons-preview',
+                                width: 'auto',
+                                targetEvents: false,
+                                delay: 1
+                            }).on('hidden.popover', function (instance) {
+                                if (instance.$target) {
+                                    instance.$target.remove();
+                                }
+                            });
+                            if (contains(value, icon.data('icon'))) {
+                                icon.addClass('active');
+                                value.forEach(function (name) {
+                                    var field = container.find('[name="' + name + '"]');
+                                    if (field) {
+                                        field.checked(true);
+                                    } else {
+                                        field = container.find('option[value="' + name + '"]');
+                                        if (field) {
+                                            field.parent().value(name);
+                                        }
+                                    }
+                                });
+                                var wrap = icon.parent('.icons-wrapper'), wrapHeight = wrap[0].offsetHeight;
+                                wrap[0].scrollTop = icon[0].offsetTop - wrapHeight / 2;
+                                updatePreview();
+                            }
+                        });
+                    }
+                });
+            });
+        });
+        module.exports = {};
+    },
+    '1j': function (require, module, exports, global) {
+        'use strict';
+        var $ = require('q'), prime = require('p'), domready = require('c'), modal = require('a').modal, getAjaxSuffix = require('14'), getAjaxURL = require('3n').global;
+        var FileManager = new prime({
+                constructor: function (element) {
+                    var data = element.data('g5-filemanager');
+                    this.data = data ? JSON.parse(data) : false;
+                    console.log(this.data);
+                },
+                open: function () {
+                    modal.open({
+                        method: 'post',
+                        data: this.data,
+                        content: 'Loading',
+                        className: 'g5-dialog-theme-default g5-modal-filemanager',
+                        remote: getAjaxURL('filemanager') + getAjaxSuffix()
+                    });
+                }
+            });
+        domready(function () {
+            $('body').delegate('click', '[data-g5-filemanager]', function (event, element) {
+                element = $(element);
+                if (!element.GantryFileManager) {
+                    element.GantryFileManager = new FileManager(element);
+                }
+                element.GantryFileManager.open();
+            });
+        });
+        module.exports = FileManager;
+    },
     '1k': function (require, module, exports, global) {
+        'use strict';
+        var escapeRe = /([-.*+?^${}()|[\]\/\\])/g, unescapeRe = /\\/g;
+        var escape = function (string) {
+            return (string + '').replace(escapeRe, '\\$1');
+        };
+        var unescape = function (string) {
+            return (string + '').replace(unescapeRe, '');
+        };
+        var slickRe = RegExp('^(?:\\s*(,)\\s*|\\s*(<combinator>+)\\s*|(\\s+)|(<unicode>+|\\*)|\\#(<unicode>+)|\\.(<unicode>+)|\\[\\s*(<unicode1>+)(?:\\s*([*^$!~|]?=)(?:\\s*(?:(["\']?)(.*?)\\9)))?\\s*\\](?!\\])|(:+)(<unicode>+)(?:\\((?:(?:(["\'])([^\\13]*)\\13)|((?:\\([^)]+\\)|[^()]*)+))\\))?)'.replace(/<combinator>/, '[' + escape('>+~`!@$%^&={}\\;</') + ']').replace(/<unicode>/g, '(?:[\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])').replace(/<unicode1>/g, '(?:[:\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])'));
+        var Part = function Part(combinator) {
+            this.combinator = combinator || ' ';
+            this.tag = '*';
+        };
+        Part.prototype.toString = function () {
+            if (!this.raw) {
+                var xpr = '', k, part;
+                xpr += this.tag || '*';
+                if (this.id)
+                    xpr += '#' + this.id;
+                if (this.classes)
+                    xpr += '.' + this.classList.join('.');
+                if (this.attributes)
+                    for (k = 0; part = this.attributes[k++];) {
+                        xpr += '[' + part.name + (part.operator ? part.operator + '"' + part.value + '"' : '') + ']';
+                    }
+                if (this.pseudos)
+                    for (k = 0; part = this.pseudos[k++];) {
+                        xpr += ':' + part.name;
+                        if (part.value)
+                            xpr += '(' + part.value + ')';
+                    }
+                this.raw = xpr;
+            }
+            return this.raw;
+        };
+        var Expression = function Expression() {
+            this.length = 0;
+        };
+        Expression.prototype.toString = function () {
+            if (!this.raw) {
+                var xpr = '';
+                for (var j = 0, bit; bit = this[j++];) {
+                    if (j !== 1)
+                        xpr += ' ';
+                    if (bit.combinator !== ' ')
+                        xpr += bit.combinator + ' ';
+                    xpr += bit;
+                }
+                this.raw = xpr;
+            }
+            return this.raw;
+        };
+        var replacer = function (rawMatch, separator, combinator, combinatorChildren, tagName, id, className, attributeKey, attributeOperator, attributeQuote, attributeValue, pseudoMarker, pseudoClass, pseudoQuote, pseudoClassQuotedValue, pseudoClassValue) {
+            var expression, current;
+            if (separator || !this.length) {
+                expression = this[this.length++] = new Expression();
+                if (separator)
+                    return '';
+            }
+            if (!expression)
+                expression = this[this.length - 1];
+            if (combinator || combinatorChildren || !expression.length) {
+                current = expression[expression.length++] = new Part(combinator);
+            }
+            if (!current)
+                current = expression[expression.length - 1];
+            if (tagName) {
+                current.tag = unescape(tagName);
+            } else if (id) {
+                current.id = unescape(id);
+            } else if (className) {
+                var unescaped = unescape(className);
+                var classes = current.classes || (current.classes = {});
+                if (!classes[unescaped]) {
+                    classes[unescaped] = escape(className);
+                    var classList = current.classList || (current.classList = []);
+                    classList.push(unescaped);
+                    classList.sort();
+                }
+            } else if (pseudoClass) {
+                pseudoClassValue = pseudoClassValue || pseudoClassQuotedValue;
+                ;
+                (current.pseudos || (current.pseudos = [])).push({
+                    type: pseudoMarker.length == 1 ? 'class' : 'element',
+                    name: unescape(pseudoClass),
+                    escapedName: escape(pseudoClass),
+                    value: pseudoClassValue ? unescape(pseudoClassValue) : null,
+                    escapedValue: pseudoClassValue ? escape(pseudoClassValue) : null
+                });
+            } else if (attributeKey) {
+                attributeValue = attributeValue ? escape(attributeValue) : null;
+                ;
+                (current.attributes || (current.attributes = [])).push({
+                    operator: attributeOperator,
+                    name: unescape(attributeKey),
+                    escapedName: escape(attributeKey),
+                    value: attributeValue ? unescape(attributeValue) : null,
+                    escapedValue: attributeValue ? escape(attributeValue) : null
+                });
+            }
+            return '';
+        };
+        var Expressions = function Expressions(expression) {
+            this.length = 0;
+            var self = this;
+            var original = expression, replaced;
+            while (expression) {
+                replaced = expression.replace(slickRe, function () {
+                    return replacer.apply(self, arguments);
+                });
+                if (replaced === expression)
+                    throw new Error(original + ' is an invalid expression');
+                expression = replaced;
+            }
+        };
+        Expressions.prototype.toString = function () {
+            if (!this.raw) {
+                var expressions = [];
+                for (var i = 0, expression; expression = this[i++];)
+                    expressions.push(expression);
+                this.raw = expressions.join(', ');
+            }
+            return this.raw;
+        };
+        var cache = {};
+        var parse = function (expression) {
+            if (expression == null)
+                return null;
+            expression = ('' + expression).replace(/^\s+|\s+$/g, '');
+            return cache[expression] || (cache[expression] = new Expressions(expression));
+        };
+        module.exports = parse;
+    },
+    '1l': function (require, module, exports, global) {
         'use strict';
         var colors = {
                 maroon: '#800000',
@@ -8068,7 +8191,7 @@ var G5;
         ].join('|'), 'gi');
         module.exports = color;
     },
-    '1l': function (require, module, exports, global) {
+    '1m': function (require, module, exports, global) {
         'use strict';
         var indexOf = require('3o');
         var requestFrame = global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame || global.oRequestAnimationFrame || global.msRequestAnimationFrame || function (callback) {
@@ -8098,15 +8221,15 @@ var G5;
         exports.request = request;
         exports.cancel = cancel;
     },
-    '1m': function (require, module, exports, global) {
+    '1n': function (require, module, exports, global) {
         'use strict';
-        var color = require('1k'), frame = require('1l');
+        var color = require('1l'), frame = require('1m');
         var cancelFrame = frame.cancel, requestFrame = frame.request;
         var prime = require('3p');
         var camelize = require('3q'), clean = require('3r'), capitalize = require('3s'), hyphenateString = require('3t');
         var map = require('3u'), forEach = require('3v'), indexOf = require('3o');
         var elements = require('3w');
-        var fx = require('1n');
+        var fx = require('1o');
         var matchString = function (s, r) {
             return String.prototype.match.call(s, r);
         };
@@ -8792,9 +8915,9 @@ var G5;
         };
         module.exports = moofx;
     },
-    '1n': function (require, module, exports, global) {
+    '1o': function (require, module, exports, global) {
         'use strict';
-        var prime = require('3p'), requestFrame = require('1l').request, bezier = require('3y');
+        var prime = require('3p'), requestFrame = require('1m').request, bezier = require('3y');
         var map = require('3u');
         var sDuration = '([\\d.]+)(s|ms)?', sCubicBezier = 'cubic-bezier\\(([-.\\d]+),([-.\\d]+),([-.\\d]+),([-.\\d]+)\\)';
         var rDuration = RegExp(sDuration), rCubicBezier = RegExp(sCubicBezier), rgCubicBezier = RegExp(sCubicBezier, 'g');
@@ -8960,140 +9083,6 @@ var G5;
         fx.prototype = Fx.prototype;
         module.exports = fx;
     },
-    '1o': function (require, module, exports, global) {
-        'use strict';
-        var escapeRe = /([-.*+?^${}()|[\]\/\\])/g, unescapeRe = /\\/g;
-        var escape = function (string) {
-            return (string + '').replace(escapeRe, '\\$1');
-        };
-        var unescape = function (string) {
-            return (string + '').replace(unescapeRe, '');
-        };
-        var slickRe = RegExp('^(?:\\s*(,)\\s*|\\s*(<combinator>+)\\s*|(\\s+)|(<unicode>+|\\*)|\\#(<unicode>+)|\\.(<unicode>+)|\\[\\s*(<unicode1>+)(?:\\s*([*^$!~|]?=)(?:\\s*(?:(["\']?)(.*?)\\9)))?\\s*\\](?!\\])|(:+)(<unicode>+)(?:\\((?:(?:(["\'])([^\\13]*)\\13)|((?:\\([^)]+\\)|[^()]*)+))\\))?)'.replace(/<combinator>/, '[' + escape('>+~`!@$%^&={}\\;</') + ']').replace(/<unicode>/g, '(?:[\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])').replace(/<unicode1>/g, '(?:[:\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])'));
-        var Part = function Part(combinator) {
-            this.combinator = combinator || ' ';
-            this.tag = '*';
-        };
-        Part.prototype.toString = function () {
-            if (!this.raw) {
-                var xpr = '', k, part;
-                xpr += this.tag || '*';
-                if (this.id)
-                    xpr += '#' + this.id;
-                if (this.classes)
-                    xpr += '.' + this.classList.join('.');
-                if (this.attributes)
-                    for (k = 0; part = this.attributes[k++];) {
-                        xpr += '[' + part.name + (part.operator ? part.operator + '"' + part.value + '"' : '') + ']';
-                    }
-                if (this.pseudos)
-                    for (k = 0; part = this.pseudos[k++];) {
-                        xpr += ':' + part.name;
-                        if (part.value)
-                            xpr += '(' + part.value + ')';
-                    }
-                this.raw = xpr;
-            }
-            return this.raw;
-        };
-        var Expression = function Expression() {
-            this.length = 0;
-        };
-        Expression.prototype.toString = function () {
-            if (!this.raw) {
-                var xpr = '';
-                for (var j = 0, bit; bit = this[j++];) {
-                    if (j !== 1)
-                        xpr += ' ';
-                    if (bit.combinator !== ' ')
-                        xpr += bit.combinator + ' ';
-                    xpr += bit;
-                }
-                this.raw = xpr;
-            }
-            return this.raw;
-        };
-        var replacer = function (rawMatch, separator, combinator, combinatorChildren, tagName, id, className, attributeKey, attributeOperator, attributeQuote, attributeValue, pseudoMarker, pseudoClass, pseudoQuote, pseudoClassQuotedValue, pseudoClassValue) {
-            var expression, current;
-            if (separator || !this.length) {
-                expression = this[this.length++] = new Expression();
-                if (separator)
-                    return '';
-            }
-            if (!expression)
-                expression = this[this.length - 1];
-            if (combinator || combinatorChildren || !expression.length) {
-                current = expression[expression.length++] = new Part(combinator);
-            }
-            if (!current)
-                current = expression[expression.length - 1];
-            if (tagName) {
-                current.tag = unescape(tagName);
-            } else if (id) {
-                current.id = unescape(id);
-            } else if (className) {
-                var unescaped = unescape(className);
-                var classes = current.classes || (current.classes = {});
-                if (!classes[unescaped]) {
-                    classes[unescaped] = escape(className);
-                    var classList = current.classList || (current.classList = []);
-                    classList.push(unescaped);
-                    classList.sort();
-                }
-            } else if (pseudoClass) {
-                pseudoClassValue = pseudoClassValue || pseudoClassQuotedValue;
-                ;
-                (current.pseudos || (current.pseudos = [])).push({
-                    type: pseudoMarker.length == 1 ? 'class' : 'element',
-                    name: unescape(pseudoClass),
-                    escapedName: escape(pseudoClass),
-                    value: pseudoClassValue ? unescape(pseudoClassValue) : null,
-                    escapedValue: pseudoClassValue ? escape(pseudoClassValue) : null
-                });
-            } else if (attributeKey) {
-                attributeValue = attributeValue ? escape(attributeValue) : null;
-                ;
-                (current.attributes || (current.attributes = [])).push({
-                    operator: attributeOperator,
-                    name: unescape(attributeKey),
-                    escapedName: escape(attributeKey),
-                    value: attributeValue ? unescape(attributeValue) : null,
-                    escapedValue: attributeValue ? escape(attributeValue) : null
-                });
-            }
-            return '';
-        };
-        var Expressions = function Expressions(expression) {
-            this.length = 0;
-            var self = this;
-            var original = expression, replaced;
-            while (expression) {
-                replaced = expression.replace(slickRe, function () {
-                    return replacer.apply(self, arguments);
-                });
-                if (replaced === expression)
-                    throw new Error(original + ' is an invalid expression');
-                expression = replaced;
-            }
-        };
-        Expressions.prototype.toString = function () {
-            if (!this.raw) {
-                var expressions = [];
-                for (var i = 0, expression; expression = this[i++];)
-                    expressions.push(expression);
-                this.raw = expressions.join(', ');
-            }
-            return this.raw;
-        };
-        var cache = {};
-        var parse = function (expression) {
-            if (expression == null)
-                return null;
-            expression = ('' + expression).replace(/^\s+|\s+$/g, '');
-            return cache[expression] || (cache[expression] = new Expressions(expression));
-        };
-        module.exports = parse;
-    },
     '1p': function (require, module, exports, global) {
         var makeIterator = require('1v');
         function every(arr, callback, thisObj) {
@@ -9239,7 +9228,7 @@ var G5;
     },
     '1w': function (require, module, exports, global) {
         'use strict';
-        var kindOf = require('20'), now = require('42'), forEach = require('j'), indexOf = require('l');
+        var kindOf = require('21'), now = require('42'), forEach = require('i'), indexOf = require('k');
         var callbacks = {
                 timeout: {},
                 frame: [],
@@ -9319,300 +9308,8 @@ var G5;
         module.exports = defer;
     },
     '1x': function (require, module, exports, global) {
-        function hasOwn(obj, prop) {
-            return Object.prototype.hasOwnProperty.call(obj, prop);
-        }
-        module.exports = hasOwn;
-    },
-    '1y': function (require, module, exports, global) {
-        var forOwn = require('43');
-        function mixIn(target, objects) {
-            var i = 0, n = arguments.length, obj;
-            while (++i < n) {
-                obj = arguments[i];
-                if (obj != null) {
-                    forOwn(obj, copyProp, target);
-                }
-            }
-            return target;
-        }
-        function copyProp(val, key) {
-            this[key] = val;
-        }
-        module.exports = mixIn;
-    },
-    '1z': function (require, module, exports, global) {
-        var mixIn = require('1y');
-        function createObject(parent, props) {
-            function F() {
-            }
-            F.prototype = parent;
-            return mixIn(new F(), props);
-        }
-        module.exports = createObject;
-    },
-    '20': function (require, module, exports, global) {
-        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
-        function kindOf(val) {
-            if (val === null) {
-                return 'Null';
-            } else if (val === UNDEF) {
-                return 'Undefined';
-            } else {
-                return _rKind.exec(_toString.call(val))[1];
-            }
-        }
-        module.exports = kindOf;
-    },
-    '21': function (require, module, exports, global) {
-        var slice = require('47');
-        function bind(fn, context, args) {
-            var argsArr = slice(arguments, 2);
-            return function () {
-                return fn.apply(context, argsArr.concat(slice(arguments)));
-            };
-        }
-        module.exports = bind;
-    },
-    '22': function (require, module, exports, global) {
-        var hasOwn = require('44');
-        var deepClone = require('45');
-        var isObject = require('46');
-        function merge() {
-            var i = 1, key, val, obj, target;
-            target = deepClone(arguments[0]);
-            while (obj = arguments[i++]) {
-                for (key in obj) {
-                    if (!hasOwn(obj, key)) {
-                        continue;
-                    }
-                    val = obj[key];
-                    if (isObject(val) && isObject(target[key])) {
-                        target[key] = merge(target[key], val);
-                    } else {
-                        target[key] = deepClone(val);
-                    }
-                }
-            }
-            return target;
-        }
-        module.exports = merge;
-    },
-    '23': function (require, module, exports, global) {
-        function slice(arr, start, end) {
-            var len = arr.length;
-            if (start == null) {
-                start = 0;
-            } else if (start < 0) {
-                start = Math.max(len + start, 0);
-            } else {
-                start = Math.min(start, len);
-            }
-            if (end == null) {
-                end = len;
-            } else if (end < 0) {
-                end = Math.max(len + end, 0);
-            } else {
-                end = Math.min(end, len);
-            }
-            var result = [];
-            while (start < end) {
-                result.push(arr[start++]);
-            }
-            return result;
-        }
-        module.exports = slice;
-    },
-    '24': function (require, module, exports, global) {
-        var identity = require('48');
-        var prop = require('49');
-        var deepMatches = require('4a');
-        function makeIterator(src, thisObj) {
-            if (src == null) {
-                return identity;
-            }
-            switch (typeof src) {
-            case 'function':
-                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
-                    return src.call(thisObj, val, i, arr);
-                } : src;
-            case 'object':
-                return function (val) {
-                    return deepMatches(val, src);
-                };
-            case 'string':
-            case 'number':
-                return prop(src);
-            }
-        }
-        module.exports = makeIterator;
-    },
-    '25': function (require, module, exports, global) {
-        function hasOwn(obj, prop) {
-            return Object.prototype.hasOwnProperty.call(obj, prop);
-        }
-        module.exports = hasOwn;
-    },
-    '26': function (require, module, exports, global) {
-        var clone = require('4c');
-        var forOwn = require('2l');
-        var kindOf = require('4b');
-        var isPlainObject = require('4d');
-        function deepClone(val, instanceClone) {
-            switch (kindOf(val)) {
-            case 'Object':
-                return cloneObject(val, instanceClone);
-            case 'Array':
-                return cloneArray(val, instanceClone);
-            default:
-                return clone(val);
-            }
-        }
-        function cloneObject(source, instanceClone) {
-            if (isPlainObject(source)) {
-                var out = {};
-                forOwn(source, function (val, key) {
-                    this[key] = deepClone(val, instanceClone);
-                }, out);
-                return out;
-            } else if (instanceClone) {
-                return instanceClone(source);
-            } else {
-                return source;
-            }
-        }
-        function cloneArray(arr, instanceClone) {
-            var out = [], i = -1, n = arr.length, val;
-            while (++i < n) {
-                out[i] = deepClone(arr[i], instanceClone);
-            }
-            return out;
-        }
-        module.exports = deepClone;
-    },
-    '27': function (require, module, exports, global) {
-        var isKind = require('28');
-        function isObject(val) {
-            return isKind(val, 'Object');
-        }
-        module.exports = isObject;
-    },
-    '28': function (require, module, exports, global) {
-        var kindOf = require('4b');
-        function isKind(val, kind) {
-            return kindOf(val) === kind;
-        }
-        module.exports = isKind;
-    },
-    '29': function (require, module, exports, global) {
-        var isKind = require('4e');
-        function isObject(val) {
-            return isKind(val, 'Object');
-        }
-        module.exports = isObject;
-    },
-    '2a': function (require, module, exports, global) {
-        var isKind = require('4e');
-        function isString(val) {
-            return isKind(val, 'String');
-        }
-        module.exports = isString;
-    },
-    '2b': function (require, module, exports, global) {
-        var isKind = require('4e');
-        var isArray = Array.isArray || function (val) {
-                return isKind(val, 'Array');
-            };
-        module.exports = isArray;
-    },
-    '2c': function (require, module, exports, global) {
-        var isKind = require('4e');
-        function isFunction(val) {
-            return isKind(val, 'Function');
-        }
-        module.exports = isFunction;
-    },
-    '2d': function (require, module, exports, global) {
-        var toString = require('1r');
-        function upperCase(str) {
-            str = toString(str);
-            return str.toUpperCase();
-        }
-        module.exports = upperCase;
-    },
-    '2e': function (require, module, exports, global) {
-        var hasOwn = require('1x');
-        var _hasDontEnumBug, _dontEnums;
-        function checkDontEnum() {
-            _dontEnums = [
-                'toString',
-                'toLocaleString',
-                'valueOf',
-                'hasOwnProperty',
-                'isPrototypeOf',
-                'propertyIsEnumerable',
-                'constructor'
-            ];
-            _hasDontEnumBug = true;
-            for (var key in { 'toString': null }) {
-                _hasDontEnumBug = false;
-            }
-        }
-        function forIn(obj, fn, thisObj) {
-            var key, i = 0;
-            if (_hasDontEnumBug == null)
-                checkDontEnum();
-            for (key in obj) {
-                if (exec(fn, obj, key, thisObj) === false) {
-                    break;
-                }
-            }
-            if (_hasDontEnumBug) {
-                var ctor = obj.constructor, isProto = !!ctor && obj === ctor.prototype;
-                while (key = _dontEnums[i++]) {
-                    if ((key !== 'constructor' || !isProto && hasOwn(obj, key)) && obj[key] !== Object.prototype[key]) {
-                        if (exec(fn, obj, key, thisObj) === false) {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        function exec(fn, obj, key, thisObj) {
-            return fn.call(thisObj, obj[key], key, obj);
-        }
-        module.exports = forIn;
-    },
-    '2f': function (require, module, exports, global) {
-        var indexOf = require('l');
-        function remove(arr, item) {
-            var idx = indexOf(arr, item);
-            if (idx !== -1)
-                arr.splice(idx, 1);
-        }
-        module.exports = remove;
-    },
-    '2g': function (require, module, exports, global) {
-        var isKind = require('28');
-        var isArray = Array.isArray || function (val) {
-                return isKind(val, 'Array');
-            };
-        module.exports = isArray;
-    },
-    '2h': function (require, module, exports, global) {
-        var forOwn = require('2l');
-        function size(obj) {
-            var count = 0;
-            forOwn(obj, function () {
-                count++;
-            });
-            return count;
-        }
-        module.exports = size;
-    },
-    '2i': function (require, module, exports, global) {
         'use strict';
-        var parse = require('1o');
+        var parse = require('1k');
         var index = 0, counter = document.__counter = (parseInt(document.__counter || -1, 36) + 1).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n, xml) {
             if (n === window)
@@ -10202,6 +9899,298 @@ var G5;
         slick.parse = parse;
         module.exports = slick;
     },
+    '1y': function (require, module, exports, global) {
+        function hasOwn(obj, prop) {
+            return Object.prototype.hasOwnProperty.call(obj, prop);
+        }
+        module.exports = hasOwn;
+    },
+    '1z': function (require, module, exports, global) {
+        var forOwn = require('43');
+        function mixIn(target, objects) {
+            var i = 0, n = arguments.length, obj;
+            while (++i < n) {
+                obj = arguments[i];
+                if (obj != null) {
+                    forOwn(obj, copyProp, target);
+                }
+            }
+            return target;
+        }
+        function copyProp(val, key) {
+            this[key] = val;
+        }
+        module.exports = mixIn;
+    },
+    '20': function (require, module, exports, global) {
+        var mixIn = require('1z');
+        function createObject(parent, props) {
+            function F() {
+            }
+            F.prototype = parent;
+            return mixIn(new F(), props);
+        }
+        module.exports = createObject;
+    },
+    '21': function (require, module, exports, global) {
+        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
+        function kindOf(val) {
+            if (val === null) {
+                return 'Null';
+            } else if (val === UNDEF) {
+                return 'Undefined';
+            } else {
+                return _rKind.exec(_toString.call(val))[1];
+            }
+        }
+        module.exports = kindOf;
+    },
+    '22': function (require, module, exports, global) {
+        var slice = require('44');
+        function bind(fn, context, args) {
+            var argsArr = slice(arguments, 2);
+            return function () {
+                return fn.apply(context, argsArr.concat(slice(arguments)));
+            };
+        }
+        module.exports = bind;
+    },
+    '23': function (require, module, exports, global) {
+        var hasOwn = require('45');
+        var deepClone = require('46');
+        var isObject = require('47');
+        function merge() {
+            var i = 1, key, val, obj, target;
+            target = deepClone(arguments[0]);
+            while (obj = arguments[i++]) {
+                for (key in obj) {
+                    if (!hasOwn(obj, key)) {
+                        continue;
+                    }
+                    val = obj[key];
+                    if (isObject(val) && isObject(target[key])) {
+                        target[key] = merge(target[key], val);
+                    } else {
+                        target[key] = deepClone(val);
+                    }
+                }
+            }
+            return target;
+        }
+        module.exports = merge;
+    },
+    '24': function (require, module, exports, global) {
+        function slice(arr, start, end) {
+            var len = arr.length;
+            if (start == null) {
+                start = 0;
+            } else if (start < 0) {
+                start = Math.max(len + start, 0);
+            } else {
+                start = Math.min(start, len);
+            }
+            if (end == null) {
+                end = len;
+            } else if (end < 0) {
+                end = Math.max(len + end, 0);
+            } else {
+                end = Math.min(end, len);
+            }
+            var result = [];
+            while (start < end) {
+                result.push(arr[start++]);
+            }
+            return result;
+        }
+        module.exports = slice;
+    },
+    '25': function (require, module, exports, global) {
+        var identity = require('48');
+        var prop = require('49');
+        var deepMatches = require('4a');
+        function makeIterator(src, thisObj) {
+            if (src == null) {
+                return identity;
+            }
+            switch (typeof src) {
+            case 'function':
+                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
+                    return src.call(thisObj, val, i, arr);
+                } : src;
+            case 'object':
+                return function (val) {
+                    return deepMatches(val, src);
+                };
+            case 'string':
+            case 'number':
+                return prop(src);
+            }
+        }
+        module.exports = makeIterator;
+    },
+    '26': function (require, module, exports, global) {
+        function hasOwn(obj, prop) {
+            return Object.prototype.hasOwnProperty.call(obj, prop);
+        }
+        module.exports = hasOwn;
+    },
+    '27': function (require, module, exports, global) {
+        var clone = require('4b');
+        var forOwn = require('2l');
+        var kindOf = require('4c');
+        var isPlainObject = require('4d');
+        function deepClone(val, instanceClone) {
+            switch (kindOf(val)) {
+            case 'Object':
+                return cloneObject(val, instanceClone);
+            case 'Array':
+                return cloneArray(val, instanceClone);
+            default:
+                return clone(val);
+            }
+        }
+        function cloneObject(source, instanceClone) {
+            if (isPlainObject(source)) {
+                var out = {};
+                forOwn(source, function (val, key) {
+                    this[key] = deepClone(val, instanceClone);
+                }, out);
+                return out;
+            } else if (instanceClone) {
+                return instanceClone(source);
+            } else {
+                return source;
+            }
+        }
+        function cloneArray(arr, instanceClone) {
+            var out = [], i = -1, n = arr.length, val;
+            while (++i < n) {
+                out[i] = deepClone(arr[i], instanceClone);
+            }
+            return out;
+        }
+        module.exports = deepClone;
+    },
+    '28': function (require, module, exports, global) {
+        var isKind = require('29');
+        function isObject(val) {
+            return isKind(val, 'Object');
+        }
+        module.exports = isObject;
+    },
+    '29': function (require, module, exports, global) {
+        var kindOf = require('4c');
+        function isKind(val, kind) {
+            return kindOf(val) === kind;
+        }
+        module.exports = isKind;
+    },
+    '2a': function (require, module, exports, global) {
+        var isKind = require('4e');
+        function isObject(val) {
+            return isKind(val, 'Object');
+        }
+        module.exports = isObject;
+    },
+    '2b': function (require, module, exports, global) {
+        var isKind = require('4e');
+        function isString(val) {
+            return isKind(val, 'String');
+        }
+        module.exports = isString;
+    },
+    '2c': function (require, module, exports, global) {
+        var isKind = require('4e');
+        var isArray = Array.isArray || function (val) {
+                return isKind(val, 'Array');
+            };
+        module.exports = isArray;
+    },
+    '2d': function (require, module, exports, global) {
+        var isKind = require('4e');
+        function isFunction(val) {
+            return isKind(val, 'Function');
+        }
+        module.exports = isFunction;
+    },
+    '2e': function (require, module, exports, global) {
+        var toString = require('1r');
+        function upperCase(str) {
+            str = toString(str);
+            return str.toUpperCase();
+        }
+        module.exports = upperCase;
+    },
+    '2f': function (require, module, exports, global) {
+        var hasOwn = require('1y');
+        var _hasDontEnumBug, _dontEnums;
+        function checkDontEnum() {
+            _dontEnums = [
+                'toString',
+                'toLocaleString',
+                'valueOf',
+                'hasOwnProperty',
+                'isPrototypeOf',
+                'propertyIsEnumerable',
+                'constructor'
+            ];
+            _hasDontEnumBug = true;
+            for (var key in { 'toString': null }) {
+                _hasDontEnumBug = false;
+            }
+        }
+        function forIn(obj, fn, thisObj) {
+            var key, i = 0;
+            if (_hasDontEnumBug == null)
+                checkDontEnum();
+            for (key in obj) {
+                if (exec(fn, obj, key, thisObj) === false) {
+                    break;
+                }
+            }
+            if (_hasDontEnumBug) {
+                var ctor = obj.constructor, isProto = !!ctor && obj === ctor.prototype;
+                while (key = _dontEnums[i++]) {
+                    if ((key !== 'constructor' || !isProto && hasOwn(obj, key)) && obj[key] !== Object.prototype[key]) {
+                        if (exec(fn, obj, key, thisObj) === false) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        function exec(fn, obj, key, thisObj) {
+            return fn.call(thisObj, obj[key], key, obj);
+        }
+        module.exports = forIn;
+    },
+    '2g': function (require, module, exports, global) {
+        var indexOf = require('k');
+        function remove(arr, item) {
+            var idx = indexOf(arr, item);
+            if (idx !== -1)
+                arr.splice(idx, 1);
+        }
+        module.exports = remove;
+    },
+    '2h': function (require, module, exports, global) {
+        var isKind = require('29');
+        var isArray = Array.isArray || function (val) {
+                return isKind(val, 'Array');
+            };
+        module.exports = isArray;
+    },
+    '2i': function (require, module, exports, global) {
+        var forOwn = require('2l');
+        function size(obj) {
+            var count = 0;
+            forOwn(obj, function () {
+                count++;
+            });
+            return count;
+        }
+        module.exports = size;
+    },
     '2j': function (require, module, exports, global) {
         var choice = require('2k');
         var _chars = '0123456789abcdef'.split('');
@@ -10217,7 +10206,7 @@ var G5;
     },
     '2k': function (require, module, exports, global) {
         var randInt = require('4f');
-        var isArray = require('2g');
+        var isArray = require('2h');
         function choice(items) {
             var target = arguments.length === 1 && isArray(items) ? items : arguments;
             return target[randInt(0, target.length - 1)];
@@ -10225,8 +10214,8 @@ var G5;
         module.exports = choice;
     },
     '2l': function (require, module, exports, global) {
-        var hasOwn = require('25');
-        var forIn = require('4h');
+        var hasOwn = require('26');
+        var forIn = require('4g');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
                 if (hasOwn(obj, key)) {
@@ -10237,18 +10226,6 @@ var G5;
         module.exports = forOwn;
     },
     '2m': function (require, module, exports, global) {
-        var make = require('4g');
-        var arrForEach = require('t');
-        var objForEach = require('2l');
-        module.exports = make(arrForEach, objForEach);
-    },
-    '2n': function (require, module, exports, global) {
-        function clamp(val, min, max) {
-            return val < min ? min : val > max ? max : val;
-        }
-        module.exports = clamp;
-    },
-    '2o': function (require, module, exports, global) {
         'use strict';
         var $ = require('1'), domready = require('c');
         var History = {};
@@ -10274,6 +10251,312 @@ var G5;
         }
         module.exports = History;
     },
+    '2n': function (require, module, exports, global) {
+        (function (root, factory) {
+            if (typeof define === 'function' && define.amd) {
+                define(factory);
+            } else if (typeof exports === 'object') {
+                module.exports = factory();
+            } else {
+                root.Sifter = factory();
+            }
+        }(this, function () {
+            var Sifter = function (items, settings) {
+                this.items = items;
+                this.settings = settings || { diacritics: true };
+            };
+            Sifter.prototype.tokenize = function (query) {
+                query = trim(String(query || '').toLowerCase());
+                if (!query || !query.length)
+                    return [];
+                var i, n, regex, letter;
+                var tokens = [];
+                var words = query.split(/ +/);
+                for (i = 0, n = words.length; i < n; i++) {
+                    regex = escape_regex(words[i]);
+                    if (this.settings.diacritics) {
+                        for (letter in DIACRITICS) {
+                            if (DIACRITICS.hasOwnProperty(letter)) {
+                                regex = regex.replace(new RegExp(letter, 'g'), DIACRITICS[letter]);
+                            }
+                        }
+                    }
+                    tokens.push({
+                        string: words[i],
+                        regex: new RegExp(regex, 'i')
+                    });
+                }
+                return tokens;
+            };
+            Sifter.prototype.iterator = function (object, callback) {
+                var iterator;
+                if (is_array(object)) {
+                    iterator = Array.prototype.forEach || function (callback) {
+                        for (var i = 0, n = this.length; i < n; i++) {
+                            callback(this[i], i, this);
+                        }
+                    };
+                } else {
+                    iterator = function (callback) {
+                        for (var key in this) {
+                            if (this.hasOwnProperty(key)) {
+                                callback(this[key], key, this);
+                            }
+                        }
+                    };
+                }
+                iterator.apply(object, [callback]);
+            };
+            Sifter.prototype.getScoreFunction = function (search, options) {
+                var self, fields, tokens, token_count;
+                self = this;
+                search = self.prepareSearch(search, options);
+                tokens = search.tokens;
+                fields = search.options.fields;
+                token_count = tokens.length;
+                var scoreValue = function (value, token) {
+                    var score, pos;
+                    if (!value)
+                        return 0;
+                    value = String(value || '');
+                    pos = value.search(token.regex);
+                    if (pos === -1)
+                        return 0;
+                    score = token.string.length / value.length;
+                    if (pos === 0)
+                        score += 0.5;
+                    return score;
+                };
+                var scoreObject = function () {
+                        var field_count = fields.length;
+                        if (!field_count) {
+                            return function () {
+                                return 0;
+                            };
+                        }
+                        if (field_count === 1) {
+                            return function (token, data) {
+                                return scoreValue(data[fields[0]], token);
+                            };
+                        }
+                        return function (token, data) {
+                            for (var i = 0, sum = 0; i < field_count; i++) {
+                                sum += scoreValue(data[fields[i]], token);
+                            }
+                            return sum / field_count;
+                        };
+                    }();
+                if (!token_count) {
+                    return function () {
+                        return 0;
+                    };
+                }
+                if (token_count === 1) {
+                    return function (data) {
+                        return scoreObject(tokens[0], data);
+                    };
+                }
+                if (search.options.conjunction === 'and') {
+                    return function (data) {
+                        var score;
+                        for (var i = 0, sum = 0; i < token_count; i++) {
+                            score = scoreObject(tokens[i], data);
+                            if (score <= 0)
+                                return 0;
+                            sum += score;
+                        }
+                        return sum / token_count;
+                    };
+                } else {
+                    return function (data) {
+                        for (var i = 0, sum = 0; i < token_count; i++) {
+                            sum += scoreObject(tokens[i], data);
+                        }
+                        return sum / token_count;
+                    };
+                }
+            };
+            Sifter.prototype.getSortFunction = function (search, options) {
+                var i, n, self, field, fields, fields_count, multiplier, multipliers, get_field, implicit_score, sort;
+                self = this;
+                search = self.prepareSearch(search, options);
+                sort = !search.query && options.sort_empty || options.sort;
+                get_field = function (name, result) {
+                    if (name === '$score')
+                        return result.score;
+                    return self.items[result.id][name];
+                };
+                fields = [];
+                if (sort) {
+                    for (i = 0, n = sort.length; i < n; i++) {
+                        if (search.query || sort[i].field !== '$score') {
+                            fields.push(sort[i]);
+                        }
+                    }
+                }
+                if (search.query) {
+                    implicit_score = true;
+                    for (i = 0, n = fields.length; i < n; i++) {
+                        if (fields[i].field === '$score') {
+                            implicit_score = false;
+                            break;
+                        }
+                    }
+                    if (implicit_score) {
+                        fields.unshift({
+                            field: '$score',
+                            direction: 'desc'
+                        });
+                    }
+                } else {
+                    for (i = 0, n = fields.length; i < n; i++) {
+                        if (fields[i].field === '$score') {
+                            fields.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+                multipliers = [];
+                for (i = 0, n = fields.length; i < n; i++) {
+                    multipliers.push(fields[i].direction === 'desc' ? -1 : 1);
+                }
+                fields_count = fields.length;
+                if (!fields_count) {
+                    return null;
+                } else if (fields_count === 1) {
+                    field = fields[0].field;
+                    multiplier = multipliers[0];
+                    return function (a, b) {
+                        return multiplier * cmp(get_field(field, a), get_field(field, b));
+                    };
+                } else {
+                    return function (a, b) {
+                        var i, result, a_value, b_value, field;
+                        for (i = 0; i < fields_count; i++) {
+                            field = fields[i].field;
+                            result = multipliers[i] * cmp(get_field(field, a), get_field(field, b));
+                            if (result)
+                                return result;
+                        }
+                        return 0;
+                    };
+                }
+            };
+            Sifter.prototype.prepareSearch = function (query, options) {
+                if (typeof query === 'object')
+                    return query;
+                options = extend({}, options);
+                var option_fields = options.fields;
+                var option_sort = options.sort;
+                var option_sort_empty = options.sort_empty;
+                if (option_fields && !is_array(option_fields))
+                    options.fields = [option_fields];
+                if (option_sort && !is_array(option_sort))
+                    options.sort = [option_sort];
+                if (option_sort_empty && !is_array(option_sort_empty))
+                    options.sort_empty = [option_sort_empty];
+                return {
+                    options: options,
+                    query: String(query || '').toLowerCase(),
+                    tokens: this.tokenize(query),
+                    total: 0,
+                    items: []
+                };
+            };
+            Sifter.prototype.search = function (query, options) {
+                var self = this, value, score, search, calculateScore;
+                var fn_sort;
+                var fn_score;
+                search = this.prepareSearch(query, options);
+                options = search.options;
+                query = search.query;
+                fn_score = options.score || self.getScoreFunction(search);
+                if (query.length) {
+                    self.iterator(self.items, function (item, id) {
+                        score = fn_score(item);
+                        if (options.filter === false || score > 0) {
+                            search.items.push({
+                                'score': score,
+                                'id': id
+                            });
+                        }
+                    });
+                } else {
+                    self.iterator(self.items, function (item, id) {
+                        search.items.push({
+                            'score': 1,
+                            'id': id
+                        });
+                    });
+                }
+                fn_sort = self.getSortFunction(search, options);
+                if (fn_sort)
+                    search.items.sort(fn_sort);
+                search.total = search.items.length;
+                if (typeof options.limit === 'number') {
+                    search.items = search.items.slice(0, options.limit);
+                }
+                return search;
+            };
+            var cmp = function (a, b) {
+                if (typeof a === 'number' && typeof b === 'number') {
+                    return a > b ? 1 : a < b ? -1 : 0;
+                }
+                a = String(a || '').toLowerCase();
+                b = String(b || '').toLowerCase();
+                if (a > b)
+                    return 1;
+                if (b > a)
+                    return -1;
+                return 0;
+            };
+            var extend = function (a, b) {
+                var i, n, k, object;
+                for (i = 1, n = arguments.length; i < n; i++) {
+                    object = arguments[i];
+                    if (!object)
+                        continue;
+                    for (k in object) {
+                        if (object.hasOwnProperty(k)) {
+                            a[k] = object[k];
+                        }
+                    }
+                }
+                return a;
+            };
+            var trim = function (str) {
+                return (str + '').replace(/^\s+|\s+$|/g, '');
+            };
+            var escape_regex = function (str) {
+                return (str + '').replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
+            };
+            var is_array = Array.isArray || $ && $.isArray || function (object) {
+                    return Object.prototype.toString.call(object) === '[object Array]';
+                };
+            var DIACRITICS = {
+                    'a': '[a\xc0\xc1\xc2\xc3\xc4\xc5\xe0\xe1\xe2\xe3\xe4\xe5\u0100\u0101]',
+                    'c': '[c\xc7\xe7\u0107\u0106\u010d\u010c]',
+                    'd': '[d\u0111\u0110\u010f\u010e]',
+                    'e': '[e\xc8\xc9\xca\xcb\xe8\xe9\xea\xeb\u011b\u011a\u0112\u0113]',
+                    'i': '[i\xcc\xcd\xce\xcf\xec\xed\xee\xef\u012a\u012b]',
+                    'n': '[n\xd1\xf1\u0148\u0147]',
+                    'o': '[o\xd2\xd3\xd4\xd5\xd5\xd6\xd8\xf2\xf3\xf4\xf5\xf6\xf8\u014c\u014d]',
+                    'r': '[r\u0159\u0158]',
+                    's': '[s\u0160\u0161]',
+                    't': '[t\u0165\u0164]',
+                    'u': '[u\xd9\xda\xdb\xdc\xf9\xfa\xfb\xfc\u016f\u016e\u016a\u016b]',
+                    'y': '[y\u0178\xff\xfd\xdd]',
+                    'z': '[z\u017d\u017e]'
+                };
+            return Sifter;
+        }));
+    },
+    '2o': function (require, module, exports, global) {
+        var make = require('4h');
+        var arrForEach = require('v');
+        var objForEach = require('2l');
+        module.exports = make(arrForEach, objForEach);
+    },
     '2p': function (require, module, exports, global) {
         function indexOf(arr, item, fromIndex) {
             fromIndex = fromIndex || 0;
@@ -10292,27 +10575,687 @@ var G5;
         module.exports = indexOf;
     },
     '2q': function (require, module, exports, global) {
-        'use strict';
-        var getAjaxURL = function (view, search) {
-            if (!search) {
-                search = '%ajax%';
+        function debounce(fn, threshold, isAsap) {
+            var timeout, result;
+            function debounced() {
+                var args = arguments, context = this;
+                function delayed() {
+                    if (!isAsap) {
+                        result = fn.apply(context, args);
+                    }
+                    timeout = null;
+                }
+                if (timeout) {
+                    clearTimeout(timeout);
+                } else if (isAsap) {
+                    result = fn.apply(context, args);
+                }
+                timeout = setTimeout(delayed, threshold);
+                return result;
             }
-            var re = new RegExp(search, 'g');
-            return GANTRY_AJAX_URL.replace(re, view);
-        };
-        var getConfAjaxURL = function (view, search) {
-            if (!search) {
-                search = '%ajax%';
-            }
-            var re = new RegExp(search, 'g');
-            return GANTRY_AJAX_CONF_URL.replace(re, view);
-        };
-        module.exports = {
-            global: getAjaxURL,
-            config: getConfAjaxURL
-        };
+            debounced.cancel = function () {
+                clearTimeout(timeout);
+            };
+            return debounced;
+        }
+        module.exports = debounce;
     },
     '2r': function (require, module, exports, global) {
+        var isKind = require('29');
+        function isBoolean(val) {
+            return isKind(val, 'Boolean');
+        }
+        module.exports = isBoolean;
+    },
+    '2s': function (require, module, exports, global) {
+        var has = require('4i');
+        function unset(obj, prop) {
+            if (has(obj, prop)) {
+                var parts = prop.split('.'), last = parts.pop();
+                while (prop = parts.shift()) {
+                    obj = obj[prop];
+                }
+                return delete obj[last];
+            } else {
+                return true;
+            }
+        }
+        module.exports = unset;
+    },
+    '2t': function (require, module, exports, global) {
+        var forOwn = require('2l');
+        function values(obj) {
+            var vals = [];
+            forOwn(obj, function (val, key) {
+                vals.push(val);
+            });
+            return vals;
+        }
+        module.exports = values;
+    },
+    '2u': function (require, module, exports, global) {
+        var toString = require('2v');
+        function escapeHtml(str) {
+            str = toString(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+            return str;
+        }
+        module.exports = escapeHtml;
+    },
+    '2v': function (require, module, exports, global) {
+        function toString(val) {
+            return val == null ? '' : val.toString();
+        }
+        module.exports = toString;
+    },
+    '2w': function (require, module, exports, global) {
+        module.exports = [
+            ' ',
+            '\n',
+            '\r',
+            '\t',
+            '\f',
+            '\x0B',
+            '\xa0',
+            '\u1680',
+            '\u180e',
+            '\u2000',
+            '\u2001',
+            '\u2002',
+            '\u2003',
+            '\u2004',
+            '\u2005',
+            '\u2006',
+            '\u2007',
+            '\u2008',
+            '\u2009',
+            '\u200a',
+            '\u2028',
+            '\u2029',
+            '\u202f',
+            '\u205f',
+            '\u3000'
+        ];
+    },
+    '2x': function (require, module, exports, global) {
+        var toString = require('2v');
+        var WHITE_SPACES = require('2w');
+        function ltrim(str, chars) {
+            str = toString(str);
+            chars = chars || WHITE_SPACES;
+            var start = 0, len = str.length, charLen = chars.length, found = true, i, c;
+            while (found && start < len) {
+                found = false;
+                i = -1;
+                c = str.charAt(start);
+                while (++i < charLen) {
+                    if (c === chars[i]) {
+                        found = true;
+                        start++;
+                        break;
+                    }
+                }
+            }
+            return start >= len ? '' : str.substr(start, len);
+        }
+        module.exports = ltrim;
+    },
+    '2y': function (require, module, exports, global) {
+        var toString = require('2v');
+        var WHITE_SPACES = require('2w');
+        function rtrim(str, chars) {
+            str = toString(str);
+            chars = chars || WHITE_SPACES;
+            var end = str.length - 1, charLen = chars.length, found = true, i, c;
+            while (found && end >= 0) {
+                found = false;
+                i = -1;
+                c = str.charAt(end);
+                while (++i < charLen) {
+                    if (c === chars[i]) {
+                        found = true;
+                        end--;
+                        break;
+                    }
+                }
+            }
+            return end >= 0 ? str.substring(0, end + 1) : '';
+        }
+        module.exports = rtrim;
+    },
+    '2z': function (require, module, exports, global) {
+        module.exports = {
+            base: require('4j'),
+            atom: require('4k'),
+            section: require('4l'),
+            'non-visible': require('4m'),
+            grid: require('4n'),
+            container: require('4o'),
+            block: require('4p'),
+            particle: require('4q'),
+            position: require('4r'),
+            pagecontent: require('4s'),
+            spacer: require('4t')
+        };
+    },
+    '30': function (require, module, exports, global) {
+        var isArray = require('2h');
+        var append = require('4u');
+        function flattenTo(arr, result, level) {
+            if (arr == null) {
+                return result;
+            } else if (level === 0) {
+                append(result, arr);
+                return result;
+            }
+            var value, i = -1, len = arr.length;
+            while (++i < len) {
+                value = arr[i];
+                if (isArray(value)) {
+                    flattenTo(value, result, level - 1);
+                } else {
+                    result.push(value);
+                }
+            }
+            return result;
+        }
+        function flatten(arr, level) {
+            level = level == null ? -1 : level;
+            return flattenTo(arr, [], level);
+        }
+        module.exports = flatten;
+    },
+    '31': function (require, module, exports, global) {
+        var namespace = require('4v');
+        function set(obj, prop, val) {
+            var parts = /^(.+)\.(.+)$/.exec(prop);
+            if (parts) {
+                namespace(obj, parts[1])[parts[2]] = val;
+            } else {
+                obj[prop] = val;
+            }
+        }
+        module.exports = set;
+    },
+    '32': function (require, module, exports, global) {
+        var isPrimitive = require('4w');
+        function get(obj, prop) {
+            var parts = prop.split('.'), last = parts.pop();
+            while (prop = parts.shift()) {
+                obj = obj[prop];
+                if (obj == null)
+                    return;
+            }
+            return obj[last];
+        }
+        module.exports = get;
+    },
+    '33': function (require, module, exports, global) {
+        var forOwn = require('2l');
+        var isPlainObject = require('4d');
+        function deepFillIn(target, defaults) {
+            var i = 0, n = arguments.length, obj;
+            while (++i < n) {
+                obj = arguments[i];
+                if (obj) {
+                    forOwn(obj, function (newValue, key) {
+                        var curValue = target[key];
+                        if (curValue == null) {
+                            target[key] = newValue;
+                        } else if (isPlainObject(curValue) && isPlainObject(newValue)) {
+                            deepFillIn(curValue, newValue);
+                        }
+                    });
+                }
+            }
+            return target;
+        }
+        module.exports = deepFillIn;
+    },
+    '34': function (require, module, exports, global) {
+        var slice = require('24');
+        var contains = require('19');
+        function omit(obj, var_keys) {
+            var keys = typeof arguments[1] !== 'string' ? arguments[1] : slice(arguments, 1), out = {};
+            for (var property in obj) {
+                if (obj.hasOwnProperty(property) && !contains(keys, property)) {
+                    out[property] = obj[property];
+                }
+            }
+            return out;
+        }
+        module.exports = omit;
+    },
+    '35': function (require, module, exports, global) {
+        var toString = require('2v');
+        var repeat = require('36');
+        function rpad(str, minLen, ch) {
+            str = toString(str);
+            ch = ch || ' ';
+            return str.length < minLen ? str + repeat(ch, minLen - str.length) : str;
+        }
+        module.exports = rpad;
+    },
+    '36': function (require, module, exports, global) {
+        var toString = require('2v');
+        var toInt = require('4x');
+        function repeat(str, n) {
+            var result = '';
+            str = toString(str);
+            n = toInt(n);
+            if (n < 1) {
+                return '';
+            }
+            while (n > 0) {
+                if (n % 2) {
+                    result += str;
+                }
+                n = Math.floor(n / 2);
+                str += str;
+            }
+            return result;
+        }
+        module.exports = repeat;
+    },
+    '37': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('p'), Emitter = require('l'), Bound = require('r'), Options = require('s'), bind = require('t'), contains = require('19'), DragEvents = require('4y'), $ = require('q');
+        require('3');
+        require('4');
+        var isIE = navigator.appName === 'Microsoft Internet Explorer';
+        var DragDrop = new prime({
+                mixin: [
+                    Bound,
+                    Options
+                ],
+                inherits: Emitter,
+                options: {
+                    delegate: null,
+                    droppables: false
+                },
+                EVENTS: DragEvents,
+                constructor: function (container, options) {
+                    this.container = $(container);
+                    if (!this.container) {
+                        return;
+                    }
+                    this.setOptions(options);
+                    this.element = null;
+                    this.origin = {
+                        x: 0,
+                        y: 0,
+                        transform: null,
+                        offset: {
+                            x: 0,
+                            y: 0
+                        }
+                    };
+                    this.matched = false;
+                    this.lastMatched = false;
+                    this.lastOvered = null;
+                    this.attach();
+                },
+                attach: function () {
+                    this.container.delegate(this.EVENTS.START, this.options.delegate, this.bound('start'));
+                },
+                detach: function () {
+                    this.container.undelegate(this.EVENTS.START, this.options.delegate, this.bound('start'));
+                },
+                start: function (event, element) {
+                    if (event.which && event.which !== 1 || $(event.target).matches(this.options.exclude)) {
+                        return true;
+                    }
+                    this.element = $(element);
+                    this.matched = false;
+                    this.emit('dragdrop:beforestart', event, this.element);
+                    if (isIE) {
+                        this.element.style({
+                            '-ms-touch-action': 'none',
+                            'touch-action': 'none'
+                        });
+                    }
+                    event.preventDefault();
+                    this.origin = {
+                        x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX,
+                        y: event.changedTouches ? event.changedTouches[0].pageY : event.pageY,
+                        transform: this.element.compute('transform')
+                    };
+                    var clientRect = this.element[0].getBoundingClientRect();
+                    this.origin.offset = {
+                        clientRect: clientRect,
+                        x: this.origin.x - clientRect.right,
+                        y: clientRect.top - this.origin.y
+                    };
+                    if (this.element.data('lm-blocktype') === 'grid' && Math.abs(this.origin.offset.x) < clientRect.width) {
+                        return false;
+                    }
+                    var offset = Math.abs(this.origin.offset.x), columns = this.element.parent().data('lm-blocktype') === 'grid' && this.element.parent().parent().data('lm-root') || this.element.parent().parent().data('lm-blocktype') == 'container' && this.element.parent().parent().parent().data('lm-root');
+                    if (this.element.data('lm-blocktype') == 'grid' && (this.element.parent().data('lm-blocktype') === 'container' && this.element.parent().parent().parent().data('lm-root')) || this.element.parent().data('lm-blocktype') === 'section' && this.element.parent().parent().parent().data('lm-root')) {
+                        columns = false;
+                    }
+                    if (offset < 6 && this.element.parent().find(':last-child') !== this.element || columns && offset > 3 && offset < 10) {
+                        if (this.element.parent('[data-lm-blocktype="non-visible"]')) {
+                            return false;
+                        }
+                        this.emit('dragdrop:resize', event, this.element, this.element.siblings(':not(.placeholder)'), this.origin.offset.x);
+                        return false;
+                    }
+                    if (columns) {
+                        return false;
+                    }
+                    this.element.style({
+                        'pointer-events': 'none',
+                        opacity: 0.5,
+                        zIndex: 100
+                    });
+                    $(document).on(this.EVENTS.MOVE, this.bound('move'));
+                    $(document).on(this.EVENTS.STOP, this.bound('stop'));
+                    this.emit('dragdrop:start', event, this.element);
+                    return this.element;
+                },
+                stop: function (event) {
+                    var settings = { duration: '250ms' };
+                    if (this.removeElement) {
+                        return this.emit('dragdrop:stop:erase', event, this.element);
+                    }
+                    if (this.element) {
+                        this.emit('dragdrop:stop', event, this.matched, this.element);
+                        if (this.matched) {
+                            this.element.style({
+                                opacity: 0,
+                                transform: 'translate(0, 0)'
+                            });
+                        }
+                        if (!this.matched) {
+                            settings.callback = bind(function (element) {
+                                this._removeStyleAttribute(element);
+                                setTimeout(bind(function () {
+                                    this.emit('dragdrop:stop:animation', element);
+                                }, this), 1);
+                            }, this, this.element);
+                            this.element.animate({
+                                transform: this.origin.transform || 'translate(0, 0)',
+                                opacity: 1
+                            }, settings);
+                        } else {
+                            this.element.style({
+                                transform: this.origin.transform || 'translate(0, 0)',
+                                opacity: 1
+                            });
+                            this._removeStyleAttribute(this.element);
+                            this.emit('dragdrop:stop:animation', this.element);
+                        }
+                    }
+                    $(document).off(this.EVENTS.MOVE, this.bound('move'));
+                    $(document).off(this.EVENTS.STOP, this.bound('stop'));
+                    this.element = null;
+                },
+                move: function (event) {
+                    var clientX = event.clientX || event.touches && event.touches[0].clientX || 0, clientY = event.clientY || event.touches && event.touches[0].clientY || 0, overing = document.elementFromPoint(clientX, clientY), isGrid = this.element.data('lm-blocktype') === 'grid';
+                    if (isGrid) {
+                        overing = document.elementFromPoint(clientX + 30, clientY);
+                    }
+                    if (!overing) {
+                        return false;
+                    }
+                    this.matched = $(overing).matches(this.options.droppables) ? overing : ($(overing).parent(this.options.droppables) || [false])[0];
+                    this.isPlaceHolder = $(overing).matches('[data-lm-placeholder]') ? true : $(overing).parent('[data-lm-placeholder]') ? true : false;
+                    if (this.matched && this.element.data('lm-id')) {
+                        if ($(this.matched).parent('.grid') !== this.element.parent('.grid') || $(this.matched).parent('.section') !== this.element.parent('.section')) {
+                            this.matched = false;
+                        }
+                    }
+                    var deltaX = this.lastX - clientX, deltaY = this.lastY - clientY, direction = Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0 && 'left' || Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0 && 'right' || Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0 && 'up' || 'down';
+                    deltaX = (event.changedTouches ? event.changedTouches[0].pageX : event.pageX) - this.origin.x;
+                    deltaY = (event.changedTouches ? event.changedTouches[0].pageY : event.pageY) - this.origin.y;
+                    this.direction = direction;
+                    this.element.style({ transform: 'translate(' + deltaX + 'px, ' + deltaY + 'px)' });
+                    if (!this.isPlaceHolder) {
+                        if (this.lastMatched && this.matched !== this.lastMatched) {
+                            this.emit('dragdrop:leave', event, this.lastMatched, this.element);
+                            this.lastMatched = false;
+                        }
+                        if (this.matched && this.matched !== this.lastMatched && overing !== this.lastOvered) {
+                            this.emit('dragdrop:enter', event, this.matched, this.element);
+                            this.lastMatched = this.matched;
+                        }
+                        if (this.matched && this.lastMatched) {
+                            var rect = this.matched.getBoundingClientRect();
+                            var x = clientX - rect.left, y = clientY - rect.top;
+                            var location = {
+                                    x: Math.abs(clientX - rect.left) < rect.width / 2 && 'before' || Math.abs(clientX - rect.left) >= rect.width - rect.width / 2 && 'after' || 'other',
+                                    y: Math.abs(clientY - rect.top) < rect.height / 2 && 'above' || Math.abs(clientY - rect.top) >= rect.height / 2 && 'below' || 'other'
+                                };
+                            this.emit('dragdrop:location', event, location, this.matched, this.element);
+                            this.lastLocation = location;
+                        } else {
+                            this.emit('dragdrop:nolocation', event);
+                        }
+                    }
+                    this.lastOvered = overing;
+                    this.lastDirection = direction;
+                    this.lastX = clientX;
+                    this.lastY = clientY;
+                    this.emit('dragdrop:move', event, this.element);
+                },
+                _removeStyleAttribute: function (element) {
+                    $(element || this.element).attribute('style', null);
+                }
+            });
+        module.exports = DragDrop;
+    },
+    '38': function (require, module, exports, global) {
+        'use strict';
+        var DragEvents = require('4y'), prime = require('p'), Emitter = require('l'), Bound = require('r'), Options = require('s'), bind = require('t'), isString = require('4z'), nMap = require('50'), clamp = require('3c'), precision = require('51'), get = require('32'), $ = require('q');
+        require('3');
+        require('4');
+        var Resizer = new prime({
+                mixin: [
+                    Bound,
+                    Options
+                ],
+                EVENTS: DragEvents,
+                options: { minSize: 5 },
+                constructor: function (container, options) {
+                    this.setOptions(options);
+                    this.history = this.options.history;
+                    this.builder = this.options.builder;
+                    this.map = this.builder.map;
+                    this.origin = {
+                        x: 0,
+                        y: 0,
+                        transform: null,
+                        offset: {
+                            x: 0,
+                            y: 0
+                        }
+                    };
+                },
+                getBlock: function (element) {
+                    return get(this.map, isString(element) ? element : $(element).data('lm-id') || '');
+                },
+                getAttribute: function (element, prop) {
+                    return this.getBlock(element).getAttribute(prop);
+                },
+                getSize: function (element) {
+                    return this.getAttribute($(element), 'size');
+                },
+                start: function (event, element, siblings, offset) {
+                    this.map = this.builder.map;
+                    if (event.which && event.which !== 1) {
+                        return true;
+                    }
+                    event.preventDefault();
+                    this.element = $(element);
+                    this.siblings = {
+                        occupied: 0,
+                        elements: siblings,
+                        next: this.element.nextSibling(),
+                        prevs: this.element.previousSiblings(),
+                        sizeBefore: 0
+                    };
+                    if (this.siblings.elements.length > 1) {
+                        this.siblings.occupied -= this.getSize(this.siblings.next);
+                        this.siblings.elements.forEach(function (sibling) {
+                            this.siblings.occupied += this.getSize(sibling);
+                        }, this);
+                    }
+                    if (this.siblings.prevs) {
+                        this.siblings.prevs.forEach(function (sibling) {
+                            this.siblings.sizeBefore += this.getSize(sibling);
+                        }, this);
+                    }
+                    this.origin = {
+                        size: this.getSize(this.element),
+                        maxSize: this.getSize(this.element) + this.getSize(this.siblings.next),
+                        x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX + 6,
+                        y: event.changedTouches ? event.changedTouches[0].pageY : event.pageY
+                    };
+                    var clientRect = this.element[0].getBoundingClientRect(), parentRect = this.element.parent()[0].getBoundingClientRect();
+                    this.origin.offset = {
+                        clientRect: clientRect,
+                        parentRect: {
+                            left: parentRect.left,
+                            right: parentRect.right
+                        },
+                        x: this.origin.x - clientRect.right,
+                        y: clientRect.top - this.origin.y,
+                        down: offset
+                    };
+                    this.origin.offset.parentRect.left = this.element.parent().find('> [data-lm-id]:first-child')[0].getBoundingClientRect().left;
+                    this.origin.offset.parentRect.right = this.element.parent().find('> [data-lm-id]:last-child')[0].getBoundingClientRect().right;
+                    $(document).on(this.EVENTS.MOVE, this.bound('move'));
+                    $(document).on(this.EVENTS.STOP, this.bound('stop'));
+                },
+                move: function (event) {
+                    var clientX = event.clientX || event.touches[0].clientX || 0, clientY = event.clientY || event.touches[0].clientY || 0, parentRect = this.origin.offset.parentRect;
+                    var deltaX = (this.lastX || clientX) - clientX, deltaY = (this.lastY || clientY) - clientY;
+                    this.direction = Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0 && 'left' || Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0 && 'right' || Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0 && 'up' || 'down';
+                    var size, diff = 100 - this.siblings.occupied, value = clientX + (!this.siblings.prevs ? this.origin.offset.x - this.origin.offset.down : this.siblings.prevs.length), normalized = clamp(value, parentRect.left, parentRect.right);
+                    size = nMap(normalized, parentRect.left, parentRect.right, 0, 100);
+                    size = size - this.siblings.sizeBefore;
+                    size = precision(clamp(size, this.options.minSize, this.origin.maxSize - this.options.minSize), 4);
+                    diff = precision(diff - size, 4);
+                    this.getBlock(this.element).setSize(size, true);
+                    this.getBlock(this.siblings.next).setSize(diff, true);
+                    this.lastX = clientX;
+                    this.lastY = clientY;
+                },
+                stop: function () {
+                    $(document).off(this.EVENTS.MOVE, this.bound('move'));
+                    $(document).off(this.EVENTS.STOP, this.bound('stop'));
+                    if (this.origin.size !== this.getSize(this.element)) {
+                        this.history.push(this.builder.serialize());
+                    }
+                },
+                evenResize: function (elements, animated) {
+                    var total = elements.length, size = precision(100 / total, 4), block;
+                    if (typeof animated === 'undefined') {
+                        animated = true;
+                    }
+                    elements.forEach(function (element) {
+                        element = $(element);
+                        block = this.getBlock(element);
+                        if (block && block.hasAttribute('size')) {
+                            block[animated ? 'setAnimatedSize' : 'setSize'](size, size !== block.getSize());
+                        } else {
+                            if (element) {
+                                element[animated ? 'animate' : 'style']({ flex: '0 1 ' + size + '%' });
+                            }
+                        }
+                    }, this);
+                }
+            });
+        module.exports = Resizer;
+    },
+    '39': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('p'), $ = require('q'), Emitter = require('l'), Bound = require('r'), Options = require('s');
+        var Eraser = new prime({
+                mixin: [
+                    Options,
+                    Bound
+                ],
+                inherits: Emitter,
+                constructor: function (element, options) {
+                    this.setOptions(options);
+                    this.element = $(element);
+                    if (!this.element) {
+                        return;
+                    }
+                    this.hide(true);
+                },
+                show: function (fast) {
+                    this.out();
+                    this.element[fast ? 'style' : 'animate']({ top: 20 }, { duration: '150ms' });
+                },
+                hide: function (fast) {
+                    var top = { top: -this.element[0].offsetHeight };
+                    this.out();
+                    this.element[fast ? 'style' : 'animate'](top, { duration: '150ms' });
+                },
+                over: function () {
+                    this.element.find('.trash-zone').animate({ transform: 'scale(1.2)' }, {
+                        duration: '150ms',
+                        equation: 'cubic-bezier(0.5,0,0.5,1)'
+                    });
+                },
+                out: function () {
+                    this.element.find('.trash-zone').animate({ transform: 'scale(1)' }, {
+                        duration: '150ms',
+                        equation: 'cubic-bezier(0.5,0,0.5,1)'
+                    });
+                }
+            });
+        module.exports = Eraser;
+    },
+    '3a': function (require, module, exports, global) {
+        var makeIterator = require('25');
+        function every(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var result = true;
+            if (arr == null) {
+                return result;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (!callback(arr[i], i, arr)) {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
+        module.exports = every;
+    },
+    '3b': function (require, module, exports, global) {
+        var hasOwn = require('26');
+        var every = require('52');
+        var isObject = require('28');
+        var is = require('53');
+        function makeCompare(callback) {
+            return function (value, key) {
+                return hasOwn(this, key) && callback(value, this[key]);
+            };
+        }
+        function checkProperties(value, key) {
+            return hasOwn(this, key);
+        }
+        function equals(a, b, callback) {
+            callback = callback || is;
+            if (!isObject(a) || !isObject(b)) {
+                return callback(a, b);
+            }
+            return every(a, makeCompare(callback), b) && every(b, checkProperties, a);
+        }
+        module.exports = equals;
+    },
+    '3c': function (require, module, exports, global) {
+        function clamp(val, min, max) {
+            return val < min ? min : val > max ? max : val;
+        }
+        module.exports = clamp;
+    },
+    '3d': function (require, module, exports, global) {
         function split(array, segments) {
             segments = segments || 2;
             var results = [];
@@ -10333,7 +11276,7 @@ var G5;
         }
         module.exports = split;
     },
-    '2s': function (require, module, exports, global) {
+    '3e': function (require, module, exports, global) {
         var indexOf = require('2p');
         function removeAll(arr, item) {
             var idx = indexOf(arr, item);
@@ -10344,9 +11287,9 @@ var G5;
         }
         module.exports = removeAll;
     },
-    '2t': function (require, module, exports, global) {
-        var difference = require('4i');
-        var slice = require('23');
+    '3f': function (require, module, exports, global) {
+        var difference = require('54');
+        var slice = require('24');
         function insert(arr, rest_items) {
             var diff = difference(slice(arguments, 1), arr);
             if (diff.length) {
@@ -10356,15 +11299,15 @@ var G5;
         }
         module.exports = insert;
     },
-    '2u': function (require, module, exports, global) {
-        var findIndex = require('4j');
+    '3g': function (require, module, exports, global) {
+        var findIndex = require('55');
         function find(arr, iterator, thisObj) {
             var idx = findIndex(arr, iterator, thisObj);
             return idx >= 0 ? arr[idx] : void 0;
         }
         module.exports = find;
     },
-    '2v': function (require, module, exports, global) {
+    '3h': function (require, module, exports, global) {
         var indexOf = require('2p');
         function combine(arr1, arr2) {
             if (arr2 == null) {
@@ -10380,25 +11323,25 @@ var G5;
         }
         module.exports = combine;
     },
-    '2w': function (require, module, exports, global) {
-        var toString = require('37');
+    '3i': function (require, module, exports, global) {
+        var toString = require('2v');
         function unhyphenate(str) {
             str = toString(str);
             return str.replace(/(\w)(-)(\w)/g, '$1 $3');
         }
         module.exports = unhyphenate;
     },
-    '2x': function (require, module, exports, global) {
-        var toString = require('37');
-        var lowerCase = require('4k');
-        var upperCase = require('4l');
+    '3j': function (require, module, exports, global) {
+        var toString = require('2v');
+        var lowerCase = require('56');
+        var upperCase = require('57');
         function properCase(str) {
             str = toString(str);
             return lowerCase(str).replace(/^\w|\s\w/g, upperCase);
         }
         module.exports = properCase;
     },
-    '2y': function (require, module, exports, global) {
+    '3k': function (require, module, exports, global) {
         (function () {
             var async = {};
             var root, previous_async;
@@ -11414,7 +12357,7 @@ var G5;
             }
         }());
     },
-    '2z': function (require, module, exports, global) {
+    '3l': function (require, module, exports, global) {
         ;
         (function (window, document, undefined) {
             var k = this;
@@ -12164,7 +13107,7 @@ var G5;
         }(this, document));
         module.exports = window.WebFont;
     },
-    '30': function (require, module, exports, global) {
+    '3m': function (require, module, exports, global) {
         'use strict';
         var $ = require('1');
         $.implement({
@@ -12227,977 +13170,26 @@ var G5;
         });
         module.exports = $;
     },
-    '31': function (require, module, exports, global) {
-        (function (root, factory) {
-            if (typeof define === 'function' && define.amd) {
-                define(factory);
-            } else if (typeof exports === 'object') {
-                module.exports = factory();
-            } else {
-                root.Sifter = factory();
-            }
-        }(this, function () {
-            var Sifter = function (items, settings) {
-                this.items = items;
-                this.settings = settings || { diacritics: true };
-            };
-            Sifter.prototype.tokenize = function (query) {
-                query = trim(String(query || '').toLowerCase());
-                if (!query || !query.length)
-                    return [];
-                var i, n, regex, letter;
-                var tokens = [];
-                var words = query.split(/ +/);
-                for (i = 0, n = words.length; i < n; i++) {
-                    regex = escape_regex(words[i]);
-                    if (this.settings.diacritics) {
-                        for (letter in DIACRITICS) {
-                            if (DIACRITICS.hasOwnProperty(letter)) {
-                                regex = regex.replace(new RegExp(letter, 'g'), DIACRITICS[letter]);
-                            }
-                        }
-                    }
-                    tokens.push({
-                        string: words[i],
-                        regex: new RegExp(regex, 'i')
-                    });
-                }
-                return tokens;
-            };
-            Sifter.prototype.iterator = function (object, callback) {
-                var iterator;
-                if (is_array(object)) {
-                    iterator = Array.prototype.forEach || function (callback) {
-                        for (var i = 0, n = this.length; i < n; i++) {
-                            callback(this[i], i, this);
-                        }
-                    };
-                } else {
-                    iterator = function (callback) {
-                        for (var key in this) {
-                            if (this.hasOwnProperty(key)) {
-                                callback(this[key], key, this);
-                            }
-                        }
-                    };
-                }
-                iterator.apply(object, [callback]);
-            };
-            Sifter.prototype.getScoreFunction = function (search, options) {
-                var self, fields, tokens, token_count;
-                self = this;
-                search = self.prepareSearch(search, options);
-                tokens = search.tokens;
-                fields = search.options.fields;
-                token_count = tokens.length;
-                var scoreValue = function (value, token) {
-                    var score, pos;
-                    if (!value)
-                        return 0;
-                    value = String(value || '');
-                    pos = value.search(token.regex);
-                    if (pos === -1)
-                        return 0;
-                    score = token.string.length / value.length;
-                    if (pos === 0)
-                        score += 0.5;
-                    return score;
-                };
-                var scoreObject = function () {
-                        var field_count = fields.length;
-                        if (!field_count) {
-                            return function () {
-                                return 0;
-                            };
-                        }
-                        if (field_count === 1) {
-                            return function (token, data) {
-                                return scoreValue(data[fields[0]], token);
-                            };
-                        }
-                        return function (token, data) {
-                            for (var i = 0, sum = 0; i < field_count; i++) {
-                                sum += scoreValue(data[fields[i]], token);
-                            }
-                            return sum / field_count;
-                        };
-                    }();
-                if (!token_count) {
-                    return function () {
-                        return 0;
-                    };
-                }
-                if (token_count === 1) {
-                    return function (data) {
-                        return scoreObject(tokens[0], data);
-                    };
-                }
-                if (search.options.conjunction === 'and') {
-                    return function (data) {
-                        var score;
-                        for (var i = 0, sum = 0; i < token_count; i++) {
-                            score = scoreObject(tokens[i], data);
-                            if (score <= 0)
-                                return 0;
-                            sum += score;
-                        }
-                        return sum / token_count;
-                    };
-                } else {
-                    return function (data) {
-                        for (var i = 0, sum = 0; i < token_count; i++) {
-                            sum += scoreObject(tokens[i], data);
-                        }
-                        return sum / token_count;
-                    };
-                }
-            };
-            Sifter.prototype.getSortFunction = function (search, options) {
-                var i, n, self, field, fields, fields_count, multiplier, multipliers, get_field, implicit_score, sort;
-                self = this;
-                search = self.prepareSearch(search, options);
-                sort = !search.query && options.sort_empty || options.sort;
-                get_field = function (name, result) {
-                    if (name === '$score')
-                        return result.score;
-                    return self.items[result.id][name];
-                };
-                fields = [];
-                if (sort) {
-                    for (i = 0, n = sort.length; i < n; i++) {
-                        if (search.query || sort[i].field !== '$score') {
-                            fields.push(sort[i]);
-                        }
-                    }
-                }
-                if (search.query) {
-                    implicit_score = true;
-                    for (i = 0, n = fields.length; i < n; i++) {
-                        if (fields[i].field === '$score') {
-                            implicit_score = false;
-                            break;
-                        }
-                    }
-                    if (implicit_score) {
-                        fields.unshift({
-                            field: '$score',
-                            direction: 'desc'
-                        });
-                    }
-                } else {
-                    for (i = 0, n = fields.length; i < n; i++) {
-                        if (fields[i].field === '$score') {
-                            fields.splice(i, 1);
-                            break;
-                        }
-                    }
-                }
-                multipliers = [];
-                for (i = 0, n = fields.length; i < n; i++) {
-                    multipliers.push(fields[i].direction === 'desc' ? -1 : 1);
-                }
-                fields_count = fields.length;
-                if (!fields_count) {
-                    return null;
-                } else if (fields_count === 1) {
-                    field = fields[0].field;
-                    multiplier = multipliers[0];
-                    return function (a, b) {
-                        return multiplier * cmp(get_field(field, a), get_field(field, b));
-                    };
-                } else {
-                    return function (a, b) {
-                        var i, result, a_value, b_value, field;
-                        for (i = 0; i < fields_count; i++) {
-                            field = fields[i].field;
-                            result = multipliers[i] * cmp(get_field(field, a), get_field(field, b));
-                            if (result)
-                                return result;
-                        }
-                        return 0;
-                    };
-                }
-            };
-            Sifter.prototype.prepareSearch = function (query, options) {
-                if (typeof query === 'object')
-                    return query;
-                options = extend({}, options);
-                var option_fields = options.fields;
-                var option_sort = options.sort;
-                var option_sort_empty = options.sort_empty;
-                if (option_fields && !is_array(option_fields))
-                    options.fields = [option_fields];
-                if (option_sort && !is_array(option_sort))
-                    options.sort = [option_sort];
-                if (option_sort_empty && !is_array(option_sort_empty))
-                    options.sort_empty = [option_sort_empty];
-                return {
-                    options: options,
-                    query: String(query || '').toLowerCase(),
-                    tokens: this.tokenize(query),
-                    total: 0,
-                    items: []
-                };
-            };
-            Sifter.prototype.search = function (query, options) {
-                var self = this, value, score, search, calculateScore;
-                var fn_sort;
-                var fn_score;
-                search = this.prepareSearch(query, options);
-                options = search.options;
-                query = search.query;
-                fn_score = options.score || self.getScoreFunction(search);
-                if (query.length) {
-                    self.iterator(self.items, function (item, id) {
-                        score = fn_score(item);
-                        if (options.filter === false || score > 0) {
-                            search.items.push({
-                                'score': score,
-                                'id': id
-                            });
-                        }
-                    });
-                } else {
-                    self.iterator(self.items, function (item, id) {
-                        search.items.push({
-                            'score': 1,
-                            'id': id
-                        });
-                    });
-                }
-                fn_sort = self.getSortFunction(search, options);
-                if (fn_sort)
-                    search.items.sort(fn_sort);
-                search.total = search.items.length;
-                if (typeof options.limit === 'number') {
-                    search.items = search.items.slice(0, options.limit);
-                }
-                return search;
-            };
-            var cmp = function (a, b) {
-                if (typeof a === 'number' && typeof b === 'number') {
-                    return a > b ? 1 : a < b ? -1 : 0;
-                }
-                a = String(a || '').toLowerCase();
-                b = String(b || '').toLowerCase();
-                if (a > b)
-                    return 1;
-                if (b > a)
-                    return -1;
-                return 0;
-            };
-            var extend = function (a, b) {
-                var i, n, k, object;
-                for (i = 1, n = arguments.length; i < n; i++) {
-                    object = arguments[i];
-                    if (!object)
-                        continue;
-                    for (k in object) {
-                        if (object.hasOwnProperty(k)) {
-                            a[k] = object[k];
-                        }
-                    }
-                }
-                return a;
-            };
-            var trim = function (str) {
-                return (str + '').replace(/^\s+|\s+$|/g, '');
-            };
-            var escape_regex = function (str) {
-                return (str + '').replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
-            };
-            var is_array = Array.isArray || $ && $.isArray || function (object) {
-                    return Object.prototype.toString.call(object) === '[object Array]';
-                };
-            var DIACRITICS = {
-                    'a': '[a\xc0\xc1\xc2\xc3\xc4\xc5\xe0\xe1\xe2\xe3\xe4\xe5\u0100\u0101]',
-                    'c': '[c\xc7\xe7\u0107\u0106\u010d\u010c]',
-                    'd': '[d\u0111\u0110\u010f\u010e]',
-                    'e': '[e\xc8\xc9\xca\xcb\xe8\xe9\xea\xeb\u011b\u011a\u0112\u0113]',
-                    'i': '[i\xcc\xcd\xce\xcf\xec\xed\xee\xef\u012a\u012b]',
-                    'n': '[n\xd1\xf1\u0148\u0147]',
-                    'o': '[o\xd2\xd3\xd4\xd5\xd5\xd6\xd8\xf2\xf3\xf4\xf5\xf6\xf8\u014c\u014d]',
-                    'r': '[r\u0159\u0158]',
-                    's': '[s\u0160\u0161]',
-                    't': '[t\u0165\u0164]',
-                    'u': '[u\xd9\xda\xdb\xdc\xf9\xfa\xfb\xfc\u016f\u016e\u016a\u016b]',
-                    'y': '[y\u0178\xff\xfd\xdd]',
-                    'z': '[z\u017d\u017e]'
-                };
-            return Sifter;
-        }));
-    },
-    '32': function (require, module, exports, global) {
-        function debounce(fn, threshold, isAsap) {
-            var timeout, result;
-            function debounced() {
-                var args = arguments, context = this;
-                function delayed() {
-                    if (!isAsap) {
-                        result = fn.apply(context, args);
-                    }
-                    timeout = null;
-                }
-                if (timeout) {
-                    clearTimeout(timeout);
-                } else if (isAsap) {
-                    result = fn.apply(context, args);
-                }
-                timeout = setTimeout(delayed, threshold);
-                return result;
-            }
-            debounced.cancel = function () {
-                clearTimeout(timeout);
-            };
-            return debounced;
-        }
-        module.exports = debounce;
-    },
-    '33': function (require, module, exports, global) {
-        var isKind = require('28');
-        function isBoolean(val) {
-            return isKind(val, 'Boolean');
-        }
-        module.exports = isBoolean;
-    },
-    '34': function (require, module, exports, global) {
-        var has = require('4m');
-        function unset(obj, prop) {
-            if (has(obj, prop)) {
-                var parts = prop.split('.'), last = parts.pop();
-                while (prop = parts.shift()) {
-                    obj = obj[prop];
-                }
-                return delete obj[last];
-            } else {
-                return true;
-            }
-        }
-        module.exports = unset;
-    },
-    '35': function (require, module, exports, global) {
-        var forOwn = require('2l');
-        function values(obj) {
-            var vals = [];
-            forOwn(obj, function (val, key) {
-                vals.push(val);
-            });
-            return vals;
-        }
-        module.exports = values;
-    },
-    '36': function (require, module, exports, global) {
-        var toString = require('37');
-        function escapeHtml(str) {
-            str = toString(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
-            return str;
-        }
-        module.exports = escapeHtml;
-    },
-    '37': function (require, module, exports, global) {
-        function toString(val) {
-            return val == null ? '' : val.toString();
-        }
-        module.exports = toString;
-    },
-    '38': function (require, module, exports, global) {
-        module.exports = [
-            ' ',
-            '\n',
-            '\r',
-            '\t',
-            '\f',
-            '\x0B',
-            '\xa0',
-            '\u1680',
-            '\u180e',
-            '\u2000',
-            '\u2001',
-            '\u2002',
-            '\u2003',
-            '\u2004',
-            '\u2005',
-            '\u2006',
-            '\u2007',
-            '\u2008',
-            '\u2009',
-            '\u200a',
-            '\u2028',
-            '\u2029',
-            '\u202f',
-            '\u205f',
-            '\u3000'
-        ];
-    },
-    '39': function (require, module, exports, global) {
-        var toString = require('37');
-        var WHITE_SPACES = require('38');
-        function ltrim(str, chars) {
-            str = toString(str);
-            chars = chars || WHITE_SPACES;
-            var start = 0, len = str.length, charLen = chars.length, found = true, i, c;
-            while (found && start < len) {
-                found = false;
-                i = -1;
-                c = str.charAt(start);
-                while (++i < charLen) {
-                    if (c === chars[i]) {
-                        found = true;
-                        start++;
-                        break;
-                    }
-                }
-            }
-            return start >= len ? '' : str.substr(start, len);
-        }
-        module.exports = ltrim;
-    },
-    '3a': function (require, module, exports, global) {
-        var toString = require('37');
-        var WHITE_SPACES = require('38');
-        function rtrim(str, chars) {
-            str = toString(str);
-            chars = chars || WHITE_SPACES;
-            var end = str.length - 1, charLen = chars.length, found = true, i, c;
-            while (found && end >= 0) {
-                found = false;
-                i = -1;
-                c = str.charAt(end);
-                while (++i < charLen) {
-                    if (c === chars[i]) {
-                        found = true;
-                        end--;
-                        break;
-                    }
-                }
-            }
-            return end >= 0 ? str.substring(0, end + 1) : '';
-        }
-        module.exports = rtrim;
-    },
-    '3b': function (require, module, exports, global) {
-        module.exports = {
-            base: require('4o'),
-            atom: require('4p'),
-            section: require('4q'),
-            'non-visible': require('4r'),
-            grid: require('4s'),
-            container: require('4t'),
-            block: require('4u'),
-            particle: require('4v'),
-            position: require('4w'),
-            pagecontent: require('4x'),
-            spacer: require('4y')
-        };
-    },
-    '3c': function (require, module, exports, global) {
-        var isArray = require('2g');
-        var append = require('4n');
-        function flattenTo(arr, result, level) {
-            if (arr == null) {
-                return result;
-            } else if (level === 0) {
-                append(result, arr);
-                return result;
-            }
-            var value, i = -1, len = arr.length;
-            while (++i < len) {
-                value = arr[i];
-                if (isArray(value)) {
-                    flattenTo(value, result, level - 1);
-                } else {
-                    result.push(value);
-                }
-            }
-            return result;
-        }
-        function flatten(arr, level) {
-            level = level == null ? -1 : level;
-            return flattenTo(arr, [], level);
-        }
-        module.exports = flatten;
-    },
-    '3d': function (require, module, exports, global) {
-        var namespace = require('4z');
-        function set(obj, prop, val) {
-            var parts = /^(.+)\.(.+)$/.exec(prop);
-            if (parts) {
-                namespace(obj, parts[1])[parts[2]] = val;
-            } else {
-                obj[prop] = val;
-            }
-        }
-        module.exports = set;
-    },
-    '3e': function (require, module, exports, global) {
-        var isPrimitive = require('50');
-        function get(obj, prop) {
-            var parts = prop.split('.'), last = parts.pop();
-            while (prop = parts.shift()) {
-                obj = obj[prop];
-                if (obj == null)
-                    return;
-            }
-            return obj[last];
-        }
-        module.exports = get;
-    },
-    '3f': function (require, module, exports, global) {
-        var forOwn = require('2l');
-        var isPlainObject = require('4d');
-        function deepFillIn(target, defaults) {
-            var i = 0, n = arguments.length, obj;
-            while (++i < n) {
-                obj = arguments[i];
-                if (obj) {
-                    forOwn(obj, function (newValue, key) {
-                        var curValue = target[key];
-                        if (curValue == null) {
-                            target[key] = newValue;
-                        } else if (isPlainObject(curValue) && isPlainObject(newValue)) {
-                            deepFillIn(curValue, newValue);
-                        }
-                    });
-                }
-            }
-            return target;
-        }
-        module.exports = deepFillIn;
-    },
-    '3g': function (require, module, exports, global) {
-        var slice = require('23');
-        var contains = require('15');
-        function omit(obj, var_keys) {
-            var keys = typeof arguments[1] !== 'string' ? arguments[1] : slice(arguments, 1), out = {};
-            for (var property in obj) {
-                if (obj.hasOwnProperty(property) && !contains(keys, property)) {
-                    out[property] = obj[property];
-                }
-            }
-            return out;
-        }
-        module.exports = omit;
-    },
-    '3h': function (require, module, exports, global) {
-        var toString = require('37');
-        var repeat = require('3i');
-        function rpad(str, minLen, ch) {
-            str = toString(str);
-            ch = ch || ' ';
-            return str.length < minLen ? str + repeat(ch, minLen - str.length) : str;
-        }
-        module.exports = rpad;
-    },
-    '3i': function (require, module, exports, global) {
-        var toString = require('37');
-        var toInt = require('51');
-        function repeat(str, n) {
-            var result = '';
-            str = toString(str);
-            n = toInt(n);
-            if (n < 1) {
-                return '';
-            }
-            while (n > 0) {
-                if (n % 2) {
-                    result += str;
-                }
-                n = Math.floor(n / 2);
-                str += str;
-            }
-            return result;
-        }
-        module.exports = repeat;
-    },
-    '3j': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('m'), Emitter = require('o'), Bound = require('p'), Options = require('q'), bind = require('r'), contains = require('15'), DragEvents = require('52'), $ = require('n');
-        require('3');
-        require('4');
-        var isIE = navigator.appName === 'Microsoft Internet Explorer';
-        var DragDrop = new prime({
-                mixin: [
-                    Bound,
-                    Options
-                ],
-                inherits: Emitter,
-                options: {
-                    delegate: null,
-                    droppables: false
-                },
-                EVENTS: DragEvents,
-                constructor: function (container, options) {
-                    this.container = $(container);
-                    if (!this.container) {
-                        return;
-                    }
-                    this.setOptions(options);
-                    this.element = null;
-                    this.origin = {
-                        x: 0,
-                        y: 0,
-                        transform: null,
-                        offset: {
-                            x: 0,
-                            y: 0
-                        }
-                    };
-                    this.matched = false;
-                    this.lastMatched = false;
-                    this.lastOvered = null;
-                    this.attach();
-                },
-                attach: function () {
-                    this.container.delegate(this.EVENTS.START, this.options.delegate, this.bound('start'));
-                },
-                detach: function () {
-                    this.container.undelegate(this.EVENTS.START, this.options.delegate, this.bound('start'));
-                },
-                start: function (event, element) {
-                    if (event.which && event.which !== 1 || $(event.target).matches(this.options.exclude)) {
-                        return true;
-                    }
-                    this.element = $(element);
-                    this.matched = false;
-                    this.emit('dragdrop:beforestart', event, this.element);
-                    if (isIE) {
-                        this.element.style({
-                            '-ms-touch-action': 'none',
-                            'touch-action': 'none'
-                        });
-                    }
-                    event.preventDefault();
-                    this.origin = {
-                        x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX,
-                        y: event.changedTouches ? event.changedTouches[0].pageY : event.pageY,
-                        transform: this.element.compute('transform')
-                    };
-                    var clientRect = this.element[0].getBoundingClientRect();
-                    this.origin.offset = {
-                        clientRect: clientRect,
-                        x: this.origin.x - clientRect.right,
-                        y: clientRect.top - this.origin.y
-                    };
-                    if (this.element.data('lm-blocktype') === 'grid' && Math.abs(this.origin.offset.x) < clientRect.width) {
-                        return false;
-                    }
-                    var offset = Math.abs(this.origin.offset.x), columns = this.element.parent().data('lm-blocktype') === 'grid' && this.element.parent().parent().data('lm-root') || this.element.parent().parent().data('lm-blocktype') == 'container' && this.element.parent().parent().parent().data('lm-root');
-                    if (offset < 6 && this.element.parent().find(':last-child') !== this.element || columns && offset > 3 && offset < 10) {
-                        if (this.element.parent('[data-lm-blocktype="non-visible"]')) {
-                            return false;
-                        }
-                        this.emit('dragdrop:resize', event, this.element, this.element.siblings(':not(.placeholder)'), this.origin.offset.x);
-                        return false;
-                    }
-                    if (columns) {
-                        return false;
-                    }
-                    this.element.style({
-                        'pointer-events': 'none',
-                        opacity: 0.5,
-                        zIndex: 100
-                    });
-                    $(document).on(this.EVENTS.MOVE, this.bound('move'));
-                    $(document).on(this.EVENTS.STOP, this.bound('stop'));
-                    this.emit('dragdrop:start', event, this.element);
-                    return this.element;
-                },
-                stop: function (event) {
-                    var settings = { duration: '250ms' };
-                    if (this.removeElement) {
-                        return this.emit('dragdrop:stop:erase', event, this.element);
-                    }
-                    if (this.element) {
-                        this.emit('dragdrop:stop', event, this.matched, this.element);
-                        if (this.matched) {
-                            this.element.style({
-                                opacity: 0,
-                                transform: 'translate(0, 0)'
-                            });
-                        }
-                        if (!this.matched) {
-                            settings.callback = bind(function (element) {
-                                this._removeStyleAttribute(element);
-                                setTimeout(bind(function () {
-                                    this.emit('dragdrop:stop:animation', element);
-                                }, this), 1);
-                            }, this, this.element);
-                            this.element.animate({
-                                transform: this.origin.transform || 'translate(0, 0)',
-                                opacity: 1
-                            }, settings);
-                        } else {
-                            this.element.style({
-                                transform: this.origin.transform || 'translate(0, 0)',
-                                opacity: 1
-                            });
-                            this._removeStyleAttribute(this.element);
-                            this.emit('dragdrop:stop:animation', this.element);
-                        }
-                    }
-                    $(document).off(this.EVENTS.MOVE, this.bound('move'));
-                    $(document).off(this.EVENTS.STOP, this.bound('stop'));
-                    this.element = null;
-                },
-                move: function (event) {
-                    var clientX = event.clientX || event.touches && event.touches[0].clientX || 0, clientY = event.clientY || event.touches && event.touches[0].clientY || 0, overing = document.elementFromPoint(clientX, clientY), isGrid = this.element.data('lm-blocktype') === 'grid';
-                    if (isGrid) {
-                        overing = document.elementFromPoint(clientX + 30, clientY);
-                    }
-                    if (!overing) {
-                        return false;
-                    }
-                    this.matched = $(overing).matches(this.options.droppables) ? overing : ($(overing).parent(this.options.droppables) || [false])[0];
-                    this.isPlaceHolder = $(overing).matches('[data-lm-placeholder]') ? true : $(overing).parent('[data-lm-placeholder]') ? true : false;
-                    if (this.matched && this.element.data('lm-id')) {
-                        if ($(this.matched).parent('.grid') !== this.element.parent('.grid') || $(this.matched).parent('.section') !== this.element.parent('.section')) {
-                            this.matched = false;
-                        }
-                    }
-                    var deltaX = this.lastX - clientX, deltaY = this.lastY - clientY, direction = Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0 && 'left' || Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0 && 'right' || Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0 && 'up' || 'down';
-                    deltaX = (event.changedTouches ? event.changedTouches[0].pageX : event.pageX) - this.origin.x;
-                    deltaY = (event.changedTouches ? event.changedTouches[0].pageY : event.pageY) - this.origin.y;
-                    this.direction = direction;
-                    this.element.style({ transform: 'translate(' + deltaX + 'px, ' + deltaY + 'px)' });
-                    if (!this.isPlaceHolder) {
-                        if (this.lastMatched && this.matched !== this.lastMatched) {
-                            this.emit('dragdrop:leave', event, this.lastMatched, this.element);
-                            this.lastMatched = false;
-                        }
-                        if (this.matched && this.matched !== this.lastMatched && overing !== this.lastOvered) {
-                            this.emit('dragdrop:enter', event, this.matched, this.element);
-                            this.lastMatched = this.matched;
-                        }
-                        if (this.matched && this.lastMatched) {
-                            var rect = this.matched.getBoundingClientRect();
-                            var x = clientX - rect.left, y = clientY - rect.top;
-                            var location = {
-                                    x: Math.abs(clientX - rect.left) < rect.width / 2 && 'before' || Math.abs(clientX - rect.left) >= rect.width - rect.width / 2 && 'after' || 'other',
-                                    y: Math.abs(clientY - rect.top) < rect.height / 2 && 'above' || Math.abs(clientY - rect.top) >= rect.height / 2 && 'below' || 'other'
-                                };
-                            this.emit('dragdrop:location', event, location, this.matched, this.element);
-                            this.lastLocation = location;
-                        } else {
-                            this.emit('dragdrop:nolocation', event);
-                        }
-                    }
-                    this.lastOvered = overing;
-                    this.lastDirection = direction;
-                    this.lastX = clientX;
-                    this.lastY = clientY;
-                    this.emit('dragdrop:move', event, this.element);
-                },
-                _removeStyleAttribute: function (element) {
-                    $(element || this.element).attribute('style', null);
-                }
-            });
-        module.exports = DragDrop;
-    },
-    '3k': function (require, module, exports, global) {
-        'use strict';
-        var DragEvents = require('52'), prime = require('m'), Emitter = require('o'), Bound = require('p'), Options = require('q'), bind = require('r'), isString = require('53'), nMap = require('54'), clamp = require('2n'), precision = require('55'), get = require('3e'), $ = require('n');
-        require('3');
-        require('4');
-        var Resizer = new prime({
-                mixin: [
-                    Bound,
-                    Options
-                ],
-                EVENTS: DragEvents,
-                options: { minSize: 5 },
-                constructor: function (container, options) {
-                    this.setOptions(options);
-                    this.history = this.options.history;
-                    this.builder = this.options.builder;
-                    this.map = this.builder.map;
-                    this.origin = {
-                        x: 0,
-                        y: 0,
-                        transform: null,
-                        offset: {
-                            x: 0,
-                            y: 0
-                        }
-                    };
-                },
-                getBlock: function (element) {
-                    return get(this.map, isString(element) ? element : $(element).data('lm-id') || '');
-                },
-                getAttribute: function (element, prop) {
-                    return this.getBlock(element).getAttribute(prop);
-                },
-                getSize: function (element) {
-                    return this.getAttribute($(element), 'size');
-                },
-                start: function (event, element, siblings, offset) {
-                    this.map = this.builder.map;
-                    if (event.which && event.which !== 1) {
-                        return true;
-                    }
-                    event.preventDefault();
-                    this.element = $(element);
-                    this.siblings = {
-                        occupied: 0,
-                        elements: siblings,
-                        next: this.element.nextSibling(),
-                        prevs: this.element.previousSiblings(),
-                        sizeBefore: 0
-                    };
-                    if (this.siblings.elements.length > 1) {
-                        this.siblings.occupied -= this.getSize(this.siblings.next);
-                        this.siblings.elements.forEach(function (sibling) {
-                            this.siblings.occupied += this.getSize(sibling);
-                        }, this);
-                    }
-                    if (this.siblings.prevs) {
-                        this.siblings.prevs.forEach(function (sibling) {
-                            this.siblings.sizeBefore += this.getSize(sibling);
-                        }, this);
-                    }
-                    this.origin = {
-                        size: this.getSize(this.element),
-                        maxSize: this.getSize(this.element) + this.getSize(this.siblings.next),
-                        x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX + 6,
-                        y: event.changedTouches ? event.changedTouches[0].pageY : event.pageY
-                    };
-                    var clientRect = this.element[0].getBoundingClientRect(), parentRect = this.element.parent()[0].getBoundingClientRect();
-                    this.origin.offset = {
-                        clientRect: clientRect,
-                        parentRect: {
-                            left: parentRect.left,
-                            right: parentRect.right
-                        },
-                        x: this.origin.x - clientRect.right,
-                        y: clientRect.top - this.origin.y,
-                        down: offset
-                    };
-                    this.origin.offset.parentRect.left = this.element.parent().find('> [data-lm-id]:first-child')[0].getBoundingClientRect().left;
-                    this.origin.offset.parentRect.right = this.element.parent().find('> [data-lm-id]:last-child')[0].getBoundingClientRect().right;
-                    $(document).on(this.EVENTS.MOVE, this.bound('move'));
-                    $(document).on(this.EVENTS.STOP, this.bound('stop'));
-                },
-                move: function (event) {
-                    var clientX = event.clientX || event.touches[0].clientX || 0, clientY = event.clientY || event.touches[0].clientY || 0, parentRect = this.origin.offset.parentRect;
-                    var deltaX = (this.lastX || clientX) - clientX, deltaY = (this.lastY || clientY) - clientY;
-                    this.direction = Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0 && 'left' || Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0 && 'right' || Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0 && 'up' || 'down';
-                    var size, diff = 100 - this.siblings.occupied, value = clientX + (!this.siblings.prevs ? this.origin.offset.x - this.origin.offset.down : this.siblings.prevs.length), normalized = clamp(value, parentRect.left, parentRect.right);
-                    size = nMap(normalized, parentRect.left, parentRect.right, 0, 100);
-                    size = size - this.siblings.sizeBefore;
-                    size = precision(clamp(size, this.options.minSize, this.origin.maxSize - this.options.minSize), 4);
-                    diff = precision(diff - size, 4);
-                    this.getBlock(this.element).setSize(size, true);
-                    this.getBlock(this.siblings.next).setSize(diff, true);
-                    this.lastX = clientX;
-                    this.lastY = clientY;
-                },
-                stop: function () {
-                    $(document).off(this.EVENTS.MOVE, this.bound('move'));
-                    $(document).off(this.EVENTS.STOP, this.bound('stop'));
-                    if (this.origin.size !== this.getSize(this.element)) {
-                        this.history.push(this.builder.serialize());
-                    }
-                },
-                evenResize: function (elements, animated) {
-                    var total = elements.length, size = precision(100 / total, 4), block;
-                    if (typeof animated === 'undefined') {
-                        animated = true;
-                    }
-                    elements.forEach(function (element) {
-                        element = $(element);
-                        block = this.getBlock(element);
-                        if (block && block.hasAttribute('size')) {
-                            block[animated ? 'setAnimatedSize' : 'setSize'](size, size !== block.getSize());
-                        } else {
-                            if (element) {
-                                element[animated ? 'animate' : 'style']({ flex: '0 1 ' + size + '%' });
-                            }
-                        }
-                    }, this);
-                }
-            });
-        module.exports = Resizer;
-    },
-    '3l': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('m'), $ = require('n'), Emitter = require('o'), Bound = require('p'), Options = require('q');
-        var Eraser = new prime({
-                mixin: [
-                    Options,
-                    Bound
-                ],
-                inherits: Emitter,
-                constructor: function (element, options) {
-                    this.setOptions(options);
-                    this.element = $(element);
-                    if (!this.element) {
-                        return;
-                    }
-                    this.hide(true);
-                },
-                show: function (fast) {
-                    this.out();
-                    this.element[fast ? 'style' : 'animate']({ top: 20 }, { duration: '150ms' });
-                },
-                hide: function (fast) {
-                    var top = { top: -this.element[0].offsetHeight };
-                    this.out();
-                    this.element[fast ? 'style' : 'animate'](top, { duration: '150ms' });
-                },
-                over: function () {
-                    this.element.find('.trash-zone').animate({ transform: 'scale(1.2)' }, {
-                        duration: '150ms',
-                        equation: 'cubic-bezier(0.5,0,0.5,1)'
-                    });
-                },
-                out: function () {
-                    this.element.find('.trash-zone').animate({ transform: 'scale(1)' }, {
-                        duration: '150ms',
-                        equation: 'cubic-bezier(0.5,0,0.5,1)'
-                    });
-                }
-            });
-        module.exports = Eraser;
-    },
-    '3m': function (require, module, exports, global) {
-        var makeIterator = require('24');
-        function every(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var result = true;
-            if (arr == null) {
-                return result;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (!callback(arr[i], i, arr)) {
-                    result = false;
-                    break;
-                }
-            }
-            return result;
-        }
-        module.exports = every;
-    },
     '3n': function (require, module, exports, global) {
-        var hasOwn = require('25');
-        var every = require('56');
-        var isObject = require('27');
-        var is = require('57');
-        function makeCompare(callback) {
-            return function (value, key) {
-                return hasOwn(this, key) && callback(value, this[key]);
-            };
-        }
-        function checkProperties(value, key) {
-            return hasOwn(this, key);
-        }
-        function equals(a, b, callback) {
-            callback = callback || is;
-            if (!isObject(a) || !isObject(b)) {
-                return callback(a, b);
+        'use strict';
+        var getAjaxURL = function (view, search) {
+            if (!search) {
+                search = '%ajax%';
             }
-            return every(a, makeCompare(callback), b) && every(b, checkProperties, a);
-        }
-        module.exports = equals;
+            var re = new RegExp(search, 'g');
+            return GANTRY_AJAX_URL.replace(re, view);
+        };
+        var getConfAjaxURL = function (view, search) {
+            if (!search) {
+                search = '%ajax%';
+            }
+            var re = new RegExp(search, 'g');
+            return GANTRY_AJAX_CONF_URL.replace(re, view);
+        };
+        module.exports = {
+            global: getAjaxURL,
+            config: getConfAjaxURL
+        };
     },
     '3o': function (require, module, exports, global) {
         'use strict';
@@ -13519,7 +13511,7 @@ var G5;
     },
     '41': function (require, module, exports, global) {
         var forOwn = require('43');
-        var isArray = require('2b');
+        var isArray = require('2c');
         function containsMatch(array, pattern) {
             var i = -1, length = array.length;
             while (++i < length) {
@@ -13570,8 +13562,8 @@ var G5;
         module.exports = now;
     },
     '43': function (require, module, exports, global) {
-        var hasOwn = require('1x');
-        var forIn = require('2e');
+        var hasOwn = require('1y');
+        var forIn = require('2f');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
                 if (hasOwn(obj, key)) {
@@ -13582,12 +13574,37 @@ var G5;
         module.exports = forOwn;
     },
     '44': function (require, module, exports, global) {
+        function slice(arr, start, end) {
+            var len = arr.length;
+            if (start == null) {
+                start = 0;
+            } else if (start < 0) {
+                start = Math.max(len + start, 0);
+            } else {
+                start = Math.min(start, len);
+            }
+            if (end == null) {
+                end = len;
+            } else if (end < 0) {
+                end = Math.max(len + end, 0);
+            } else {
+                end = Math.min(end, len);
+            }
+            var result = [];
+            while (start < end) {
+                result.push(arr[start++]);
+            }
+            return result;
+        }
+        module.exports = slice;
+    },
+    '45': function (require, module, exports, global) {
         function hasOwn(obj, prop) {
             return Object.prototype.hasOwnProperty.call(obj, prop);
         }
         module.exports = hasOwn;
     },
-    '45': function (require, module, exports, global) {
+    '46': function (require, module, exports, global) {
         var clone = require('5i');
         var forOwn = require('5j');
         var kindOf = require('5k');
@@ -13624,37 +13641,12 @@ var G5;
         }
         module.exports = deepClone;
     },
-    '46': function (require, module, exports, global) {
+    '47': function (require, module, exports, global) {
         var isKind = require('5m');
         function isObject(val) {
             return isKind(val, 'Object');
         }
         module.exports = isObject;
-    },
-    '47': function (require, module, exports, global) {
-        function slice(arr, start, end) {
-            var len = arr.length;
-            if (start == null) {
-                start = 0;
-            } else if (start < 0) {
-                start = Math.max(len + start, 0);
-            } else {
-                start = Math.min(start, len);
-            }
-            if (end == null) {
-                end = len;
-            } else if (end < 0) {
-                end = Math.max(len + end, 0);
-            } else {
-                end = Math.min(end, len);
-            }
-            var result = [];
-            while (start < end) {
-                result.push(arr[start++]);
-            }
-            return result;
-        }
-        module.exports = slice;
     },
     '48': function (require, module, exports, global) {
         function identity(val) {
@@ -13672,7 +13664,7 @@ var G5;
     },
     '4a': function (require, module, exports, global) {
         var forOwn = require('2l');
-        var isArray = require('2g');
+        var isArray = require('2h');
         function containsMatch(array, pattern) {
             var i = -1, length = array.length;
             while (++i < length) {
@@ -13714,20 +13706,7 @@ var G5;
         module.exports = deepMatches;
     },
     '4b': function (require, module, exports, global) {
-        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
-        function kindOf(val) {
-            if (val === null) {
-                return 'Null';
-            } else if (val === UNDEF) {
-                return 'Undefined';
-            } else {
-                return _rKind.exec(_toString.call(val))[1];
-            }
-        }
-        module.exports = kindOf;
-    },
-    '4c': function (require, module, exports, global) {
-        var kindOf = require('4b');
+        var kindOf = require('4c');
         var isPlainObject = require('4d');
         var mixIn = require('5n');
         function clone(val) {
@@ -13766,6 +13745,19 @@ var G5;
         }
         module.exports = clone;
     },
+    '4c': function (require, module, exports, global) {
+        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
+        function kindOf(val) {
+            if (val === null) {
+                return 'Null';
+            } else if (val === UNDEF) {
+                return 'Undefined';
+            } else {
+                return _rKind.exec(_toString.call(val))[1];
+            }
+        }
+        module.exports = kindOf;
+    },
     '4d': function (require, module, exports, global) {
         function isPlainObject(value) {
             return !!value && typeof value === 'object' && value.constructor === Object;
@@ -13773,7 +13765,7 @@ var G5;
         module.exports = isPlainObject;
     },
     '4e': function (require, module, exports, global) {
-        var kindOf = require('20');
+        var kindOf = require('21');
         function isKind(val, kind) {
             return kindOf(val) === kind;
         }
@@ -13791,20 +13783,7 @@ var G5;
         module.exports = randInt;
     },
     '4g': function (require, module, exports, global) {
-        var slice = require('23');
-        function makeCollectionMethod(arrMethod, objMethod, defaultReturn) {
-            return function () {
-                var args = slice(arguments);
-                if (args[0] == null) {
-                    return defaultReturn;
-                }
-                return typeof args[0].length === 'number' ? arrMethod.apply(null, args) : objMethod.apply(null, args);
-            };
-        }
-        module.exports = makeCollectionMethod;
-    },
-    '4h': function (require, module, exports, global) {
-        var hasOwn = require('25');
+        var hasOwn = require('26');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -13846,79 +13825,30 @@ var G5;
         }
         module.exports = forIn;
     },
-    '4i': function (require, module, exports, global) {
-        var unique = require('5r');
-        var filter = require('5s');
-        var some = require('5t');
-        var contains = require('15');
-        var slice = require('23');
-        function difference(arr) {
-            var arrs = slice(arguments, 1), result = filter(unique(arr), function (needle) {
-                    return !some(arrs, function (haystack) {
-                        return contains(haystack, needle);
-                    });
-                });
-            return result;
-        }
-        module.exports = difference;
-    },
-    '4j': function (require, module, exports, global) {
-        var makeIterator = require('24');
-        function findIndex(arr, iterator, thisObj) {
-            iterator = makeIterator(iterator, thisObj);
-            if (arr == null) {
-                return -1;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (iterator(arr[i], i, arr)) {
-                    return i;
+    '4h': function (require, module, exports, global) {
+        var slice = require('24');
+        function makeCollectionMethod(arrMethod, objMethod, defaultReturn) {
+            return function () {
+                var args = slice(arguments);
+                if (args[0] == null) {
+                    return defaultReturn;
                 }
-            }
-            return -1;
+                return typeof args[0].length === 'number' ? arrMethod.apply(null, args) : objMethod.apply(null, args);
+            };
         }
-        module.exports = findIndex;
+        module.exports = makeCollectionMethod;
     },
-    '4k': function (require, module, exports, global) {
-        var toString = require('37');
-        function lowerCase(str) {
-            str = toString(str);
-            return str.toLowerCase();
-        }
-        module.exports = lowerCase;
-    },
-    '4l': function (require, module, exports, global) {
-        var toString = require('37');
-        function upperCase(str) {
-            str = toString(str);
-            return str.toUpperCase();
-        }
-        module.exports = upperCase;
-    },
-    '4m': function (require, module, exports, global) {
-        var get = require('3e');
+    '4i': function (require, module, exports, global) {
+        var get = require('32');
         var UNDEF;
         function has(obj, prop) {
             return get(obj, prop) !== UNDEF;
         }
         module.exports = has;
     },
-    '4n': function (require, module, exports, global) {
-        function append(arr1, arr2) {
-            if (arr2 == null) {
-                return arr1;
-            }
-            var pad = arr1.length, i = -1, len = arr2.length;
-            while (++i < len) {
-                arr1[pad + i] = arr2[i];
-            }
-            return arr1;
-        }
-        module.exports = append;
-    },
-    '4o': function (require, module, exports, global) {
+    '4j': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Options = require('q'), Bound = require('p'), Emitter = require('o'), guid = require('11'), zen = require('e'), $ = require('1'), get = require('3e'), has = require('4m'), set = require('3d');
+        var prime = require('p'), Options = require('s'), Bound = require('r'), Emitter = require('l'), guid = require('11'), zen = require('e'), $ = require('1'), get = require('32'), has = require('4i'), set = require('31');
         require('6');
         var Base = new prime({
                 mixin: [
@@ -14021,9 +13951,9 @@ var G5;
             });
         module.exports = Base;
     },
-    '4p': function (require, module, exports, global) {
+    '4k': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Base = require('4o'), getAjaxURL = require('2q').config;
+        var prime = require('p'), Base = require('4j'), getAjaxURL = require('3n').config;
         var Atom = new prime({
                 inherits: Base,
                 options: { type: 'atom' },
@@ -14042,9 +13972,9 @@ var G5;
             });
         module.exports = Atom;
     },
-    '4q': function (require, module, exports, global) {
+    '4l': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Base = require('4o'), Bound = require('p'), Grid = require('4s'), $ = require('1'), zen = require('e'), bind = require('r'), getAjaxURL = require('2q').config;
+        var prime = require('p'), Base = require('4j'), Bound = require('r'), Grid = require('4n'), $ = require('1'), zen = require('e'), bind = require('t'), getAjaxURL = require('3n').config;
         require('5');
         var UID = 0;
         var Section = new prime({
@@ -14084,9 +14014,9 @@ var G5;
             });
         module.exports = Section;
     },
-    '4r': function (require, module, exports, global) {
+    '4m': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Section = require('4q');
+        var prime = require('p'), Section = require('4l');
         var NonVisible = new prime({
                 inherits: Section,
                 options: {
@@ -14108,9 +14038,9 @@ var G5;
             });
         module.exports = NonVisible;
     },
-    '4s': function (require, module, exports, global) {
+    '4n': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Base = require('4o'), $ = require('1'), getAjaxURL = require('2q').config;
+        var prime = require('p'), Base = require('4j'), $ = require('1'), getAjaxURL = require('3n').config;
         var Grid = new prime({
                 inherits: Base,
                 options: { type: 'grid' },
@@ -14118,22 +14048,20 @@ var G5;
                     Base.call(this, options);
                 },
                 layout: function () {
-                    var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + '/' + this.getType() + '/' + this.getId());
-                    return '<div class="g-grid nowrap" data-lm-id="' + this.getId() + '" ' + this.dropzone() + '  data-lm-settings="' + settings_uri + '" data-lm-blocktype="grid"></div>';
+                    return '<div class="g-grid nowrap" data-lm-id="' + this.getId() + '" ' + this.dropzone() + '  data-lm-samewidth data-lm-blocktype="grid"></div>';
                 },
                 onRendered: function () {
                     var parent = this.block.parent();
                     if (parent && parent.data('lm-root')) {
                         this.removeDropzone();
-                        return;
                     }
                 }
             });
         module.exports = Grid;
     },
-    '4t': function (require, module, exports, global) {
+    '4o': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Base = require('4o'), $ = require('1');
+        var prime = require('p'), Base = require('4j'), $ = require('1');
         var Container = new prime({
                 inherits: Base,
                 options: { type: 'container' },
@@ -14146,9 +14074,9 @@ var G5;
             });
         module.exports = Container;
     },
-    '4u': function (require, module, exports, global) {
+    '4p': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Base = require('4o'), $ = require('n'), zen = require('e'), precision = require('55');
+        var prime = require('p'), Base = require('4j'), $ = require('q'), zen = require('e'), precision = require('51');
         var Block = new prime({
                 inherits: Base,
                 options: {
@@ -14206,9 +14134,9 @@ var G5;
             });
         module.exports = Block;
     },
-    '4v': function (require, module, exports, global) {
+    '4q': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Atom = require('4p'), bind = require('r'), precision = require('55'), getAjaxURL = require('2q').config;
+        var prime = require('p'), Atom = require('4k'), bind = require('t'), precision = require('51'), getAjaxURL = require('3n').config;
         var UID = 0;
         var Particle = new prime({
                 inherits: Atom,
@@ -14239,9 +14167,9 @@ var G5;
             });
         module.exports = Particle;
     },
-    '4w': function (require, module, exports, global) {
+    '4r': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Particle = require('4v');
+        var prime = require('p'), Particle = require('4q');
         var UID = 0;
         var Position = new prime({
                 inherits: Particle,
@@ -14264,9 +14192,9 @@ var G5;
             });
         module.exports = Position;
     },
-    '4x': function (require, module, exports, global) {
+    '4s': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Particle = require('4v');
+        var prime = require('p'), Particle = require('4q');
         var Pagecontent = new prime({
                 inherits: Particle,
                 options: {
@@ -14277,9 +14205,9 @@ var G5;
             });
         module.exports = Pagecontent;
     },
-    '4y': function (require, module, exports, global) {
+    '4t': function (require, module, exports, global) {
         'use strict';
-        var prime = require('m'), Particle = require('4v');
+        var prime = require('p'), Particle = require('4q');
         var UID = 0;
         var Spacer = new prime({
                 inherits: Particle,
@@ -14291,8 +14219,21 @@ var G5;
             });
         module.exports = Spacer;
     },
-    '4z': function (require, module, exports, global) {
-        var forEach = require('t');
+    '4u': function (require, module, exports, global) {
+        function append(arr1, arr2) {
+            if (arr2 == null) {
+                return arr1;
+            }
+            var pad = arr1.length, i = -1, len = arr2.length;
+            while (++i < len) {
+                arr1[pad + i] = arr2[i];
+            }
+            return arr1;
+        }
+        module.exports = append;
+    },
+    '4v': function (require, module, exports, global) {
+        var forEach = require('v');
         function namespace(obj, path) {
             if (!path)
                 return obj;
@@ -14306,7 +14247,7 @@ var G5;
         }
         module.exports = namespace;
     },
-    '50': function (require, module, exports, global) {
+    '4w': function (require, module, exports, global) {
         function isPrimitive(value) {
             switch (typeof value) {
             case 'string':
@@ -14318,13 +14259,13 @@ var G5;
         }
         module.exports = isPrimitive;
     },
-    '51': function (require, module, exports, global) {
+    '4x': function (require, module, exports, global) {
         function toInt(val) {
             return ~~val;
         }
         module.exports = toInt;
     },
-    '52': function (require, module, exports, global) {
+    '4y': function (require, module, exports, global) {
         'use strict';
         var getSupportedEvent = function (events) {
             events = events.split(' ');
@@ -14352,23 +14293,23 @@ var G5;
             };
         module.exports = EVENT;
     },
-    '53': function (require, module, exports, global) {
-        var isKind = require('28');
+    '4z': function (require, module, exports, global) {
+        var isKind = require('29');
         function isString(val) {
             return isKind(val, 'String');
         }
         module.exports = isString;
     },
-    '54': function (require, module, exports, global) {
-        var lerp = require('5v');
-        var norm = require('5w');
+    '50': function (require, module, exports, global) {
+        var lerp = require('5r');
+        var norm = require('5s');
         function map(val, min1, max1, min2, max2) {
             return lerp(norm(val, min1, max1), min2, max2);
         }
         module.exports = map;
     },
-    '55': function (require, module, exports, global) {
-        var toNumber = require('5u');
+    '51': function (require, module, exports, global) {
+        var toNumber = require('5t');
         function enforcePrecision(val, nDecimalDigits) {
             val = toNumber(val);
             var pow = Math.pow(10, nDecimalDigits);
@@ -14376,9 +14317,9 @@ var G5;
         }
         module.exports = enforcePrecision;
     },
-    '56': function (require, module, exports, global) {
+    '52': function (require, module, exports, global) {
         var forOwn = require('2l');
-        var makeIterator = require('24');
+        var makeIterator = require('25');
         function every(obj, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = true;
@@ -14392,7 +14333,7 @@ var G5;
         }
         module.exports = every;
     },
-    '57': function (require, module, exports, global) {
+    '53': function (require, module, exports, global) {
         function is(x, y) {
             if (x === y) {
                 return x !== 0 || 1 / x === 1 / y;
@@ -14400,6 +14341,55 @@ var G5;
             return x !== x && y !== y;
         }
         module.exports = is;
+    },
+    '54': function (require, module, exports, global) {
+        var unique = require('5u');
+        var filter = require('5v');
+        var some = require('5w');
+        var contains = require('19');
+        var slice = require('24');
+        function difference(arr) {
+            var arrs = slice(arguments, 1), result = filter(unique(arr), function (needle) {
+                    return !some(arrs, function (haystack) {
+                        return contains(haystack, needle);
+                    });
+                });
+            return result;
+        }
+        module.exports = difference;
+    },
+    '55': function (require, module, exports, global) {
+        var makeIterator = require('25');
+        function findIndex(arr, iterator, thisObj) {
+            iterator = makeIterator(iterator, thisObj);
+            if (arr == null) {
+                return -1;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (iterator(arr[i], i, arr)) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        module.exports = findIndex;
+    },
+    '56': function (require, module, exports, global) {
+        var toString = require('2v');
+        function lowerCase(str) {
+            str = toString(str);
+            return str.toLowerCase();
+        }
+        module.exports = lowerCase;
+    },
+    '57': function (require, module, exports, global) {
+        var toString = require('2v');
+        function upperCase(str) {
+            str = toString(str);
+            return str.toUpperCase();
+        }
+        module.exports = upperCase;
     },
     '58': function (require, module, exports, global) {
         'use strict';
@@ -14531,7 +14521,7 @@ var G5;
     '5i': function (require, module, exports, global) {
         var kindOf = require('5k');
         var isPlainObject = require('5l');
-        var mixIn = require('5z');
+        var mixIn = require('5y');
         function clone(val) {
             switch (kindOf(val)) {
             case 'Object':
@@ -14569,8 +14559,8 @@ var G5;
         module.exports = clone;
     },
     '5j': function (require, module, exports, global) {
-        var hasOwn = require('44');
-        var forIn = require('5y');
+        var hasOwn = require('45');
+        var forIn = require('5z');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
                 if (hasOwn(obj, key)) {
@@ -14641,7 +14631,37 @@ var G5;
         module.exports = rand;
     },
     '5r': function (require, module, exports, global) {
-        var filter = require('5s');
+        function lerp(ratio, start, end) {
+            return start + (end - start) * ratio;
+        }
+        module.exports = lerp;
+    },
+    '5s': function (require, module, exports, global) {
+        function norm(val, min, max) {
+            if (val < min || val > max) {
+                throw new RangeError('value (' + val + ') must be between ' + min + ' and ' + max);
+            }
+            return val === max ? 1 : (val - min) / (max - min);
+        }
+        module.exports = norm;
+    },
+    '5t': function (require, module, exports, global) {
+        var isArray = require('2h');
+        function toNumber(val) {
+            if (typeof val === 'number')
+                return val;
+            if (!val)
+                return 0;
+            if (typeof val === 'string')
+                return parseFloat(val);
+            if (isArray(val))
+                return NaN;
+            return Number(val);
+        }
+        module.exports = toNumber;
+    },
+    '5u': function (require, module, exports, global) {
+        var filter = require('5v');
         function unique(arr, compare) {
             compare = compare || isEqual;
             return filter(arr, function (item, i, arr) {
@@ -14659,8 +14679,8 @@ var G5;
         }
         module.exports = unique;
     },
-    '5s': function (require, module, exports, global) {
-        var makeIterator = require('24');
+    '5v': function (require, module, exports, global) {
+        var makeIterator = require('25');
         function filter(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var results = [];
@@ -14678,8 +14698,8 @@ var G5;
         }
         module.exports = filter;
     },
-    '5t': function (require, module, exports, global) {
-        var makeIterator = require('24');
+    '5w': function (require, module, exports, global) {
+        var makeIterator = require('25');
         function some(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = false;
@@ -14697,36 +14717,6 @@ var G5;
         }
         module.exports = some;
     },
-    '5u': function (require, module, exports, global) {
-        var isArray = require('2g');
-        function toNumber(val) {
-            if (typeof val === 'number')
-                return val;
-            if (!val)
-                return 0;
-            if (typeof val === 'string')
-                return parseFloat(val);
-            if (isArray(val))
-                return NaN;
-            return Number(val);
-        }
-        module.exports = toNumber;
-    },
-    '5v': function (require, module, exports, global) {
-        function lerp(ratio, start, end) {
-            return start + (end - start) * ratio;
-        }
-        module.exports = lerp;
-    },
-    '5w': function (require, module, exports, global) {
-        function norm(val, min, max) {
-            if (val < min || val > max) {
-                throw new RangeError('value (' + val + ') must be between ' + min + ' and ' + max);
-            }
-            return val === max ? 1 : (val - min) / (max - min);
-        }
-        module.exports = norm;
-    },
     '5x': function (require, module, exports, global) {
         'use strict';
         var forIn = require('59'), hasOwn = require('58');
@@ -14740,7 +14730,24 @@ var G5;
         module.exports = forOwn;
     },
     '5y': function (require, module, exports, global) {
-        var hasOwn = require('44');
+        var forOwn = require('5j');
+        function mixIn(target, objects) {
+            var i = 0, n = arguments.length, obj;
+            while (++i < n) {
+                obj = arguments[i];
+                if (obj != null) {
+                    forOwn(obj, copyProp, target);
+                }
+            }
+            return target;
+        }
+        function copyProp(val, key) {
+            this[key] = val;
+        }
+        module.exports = mixIn;
+    },
+    '5z': function (require, module, exports, global) {
+        var hasOwn = require('45');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -14781,23 +14788,6 @@ var G5;
             return fn.call(thisObj, obj[key], key, obj);
         }
         module.exports = forIn;
-    },
-    '5z': function (require, module, exports, global) {
-        var forOwn = require('5j');
-        function mixIn(target, objects) {
-            var i = 0, n = arguments.length, obj;
-            while (++i < n) {
-                obj = arguments[i];
-                if (obj != null) {
-                    forOwn(obj, copyProp, target);
-                }
-            }
-            return target;
-        }
-        function copyProp(val, key) {
-            this[key] = val;
-        }
-        module.exports = mixIn;
     },
     '60': function (require, module, exports, global) {
         function random() {

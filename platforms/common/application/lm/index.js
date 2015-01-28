@@ -170,6 +170,19 @@ ready(function() {
         history: lmhistory
     });
 
+    // Grid same widths
+    body.delegate('click', '[data-lm-samewidth]', function(event, element) {
+        element = $(element);
+        var blocks = element.search('> [data-lm-blocktype="block"]'), id;
+
+        if (!blocks || blocks.length == 1) { return; }
+
+        blocks.forEach(function(block){
+            id = $(block).data('lm-id');
+            builder.get(id).setSize(100 / blocks.length, true);
+        });
+    });
+
     // Particles settings
     body.delegate('click', '[data-lm-settings]', function(event, element) {
         element = $(element);

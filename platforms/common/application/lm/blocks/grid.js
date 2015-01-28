@@ -15,16 +15,13 @@ var Grid = new prime({
     },
 
     layout: function() {
-        var settings_uri = getAjaxURL(this.getPageId() + '/layout/' +  '/' + this.getType() + '/' + this.getId());
-
-        return '<div class="g-grid nowrap" data-lm-id="' + this.getId() + '" ' + this.dropzone() + '  data-lm-settings="' + settings_uri + '" data-lm-blocktype="grid"></div>';
+        return '<div class="g-grid nowrap" data-lm-id="' + this.getId() + '" ' + this.dropzone() + '  data-lm-samewidth data-lm-blocktype="grid"></div>';
     },
 
     onRendered: function() {
         var parent = this.block.parent();
         if (parent && parent.data('lm-root')) {
             this.removeDropzone();
-            return;
         }
     }
 });
