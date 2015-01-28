@@ -5,16 +5,18 @@ var prime   = require('prime'),
 
 var Blocks = require('./blocks/');
 
-var forOwn  = require('mout/object/forOwn'),
-    forEach = require('mout/collection/forEach'),
-    size    = require('mout/collection/size'),
-    isArray = require('mout/lang/isArray'),
-    flatten = require('mout/array/flatten'),
-    guid    = require('mout/random/guid'),
+var forOwn     = require('mout/object/forOwn'),
+    forEach    = require('mout/collection/forEach'),
+    size       = require('mout/collection/size'),
+    isArray    = require('mout/lang/isArray'),
+    flatten    = require('mout/array/flatten'),
+    guid       = require('mout/random/guid'),
 
-    set     = require('mout/object/set'),
-    unset   = require('mout/object/unset'),
-    get     = require('mout/object/get');
+    set        = require('mout/object/set'),
+    unset      = require('mout/object/unset'),
+    get        = require('mout/object/get'),
+    deepFillIn = require('mout/object/deepFillIn'),
+    omit       = require('mout/object/omit');
 
 require('elements/attributes');
 require('elements/traversal');
@@ -106,6 +108,7 @@ var Builder = new prime({
                 id: id,
                 type: type,
                 subtype: subtype,
+                title: get(this.map, id) ? get(this.map, id).getTitle() : 'Untitled',
                 attributes: get(this.map, id) ? get(this.map, id).getAttributes() : {},
                 children: children
             };
@@ -125,12 +128,12 @@ var Builder = new prime({
             return;
         }
 
-        var Element = new Blocks[value.type]({
+        var Element = new Blocks[value.type](deepFillIn({
             id: key,
-            attributes: value.attributes || {},
+            attributes: {},
             subtype: value.subtype || false,
             builder: this
-        });
+        }, omit(value, 'children')));
 
         if (!parent) {
             Element.block.insert(root);
@@ -140,8 +143,8 @@ var Builder = new prime({
         }
 
         /*if (value.type === 'grid') {
-            Element.block.data('lm-dropzone', null);
-        }*/
+         Element.block.data('lm-dropzone', null);
+         }*/
 
         if (Element.getType() === 'block') {
             Element.setSize();

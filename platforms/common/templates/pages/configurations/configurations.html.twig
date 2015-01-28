@@ -2,7 +2,7 @@
 
 {% block gantry %}
     <h2>
-        Layouts
+        Configurations
         <a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}" class="button button-primary"><i class="fa fa-plus"></i></a>
     </h2>
 
@@ -25,7 +25,7 @@
                         </div>
                         <div class="inner-params">
                     <span class="float-left">
-                        <a href="{{ gantry.route('pages/' ~ layout)|e }}" class="button">
+                        <a href="{{ gantry.route('configurations', layout)|e }}" class="button">
                             <i class="fa fa-pencil-square-o"></i>
                             <span>Edit</span>
                         </a>
@@ -41,8 +41,8 @@
                 </div>
             </li>
         </ul>
-        
-        <h2>Core Layouts</h2>
+
+        <h2>System Configurations</h2>
         <ul class="g-grid">
             {% for layout in layouts.core %}
                 <li class="card g-block size-1-4">
@@ -55,7 +55,7 @@
                         </div>
                         <div class="inner-params">
                     <span class="float-left">
-                        <a href="{{ gantry.route('pages/' ~ layout)|e }}" class="button">
+                        <a href="{{ gantry.route('configurations', layout)|e }}" class="button">
                             <i class="fa fa-pencil-square-o"></i>
                             <span>Edit</span>
                         </a>

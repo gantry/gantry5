@@ -159,6 +159,9 @@ var Modal = new prime({
                 if (options.remoteLoaded) {
                     options.remoteLoaded(response, options);
                 }
+
+                var selects = $('[data-selectize]');
+                if (selects) { selects.selectize(); }
             }, this));
         }
 
@@ -202,7 +205,10 @@ var Modal = new prime({
     },
 
     getByID: function(id) {
-        return $(this.getAll().filter(function(element) {
+        var all = this.getAll();
+        if (!all) { return []; }
+
+        return $(all.filter(function(element) {
             element = $(element);
             return storage.get(element).dialog.id === id;
         }));
@@ -234,7 +240,7 @@ var Modal = new prime({
             return false;
         }
 
-        forEach(ids.reverse(), function(value, id) {
+        forEach(ids.reverse(), function(id) {
             return this.closeByID(id);
         }, this);
 

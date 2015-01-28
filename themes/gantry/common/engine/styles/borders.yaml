@@ -1,0 +1,11 @@
+name: Border Color
+description: Accent colors used for website
+type: colors
+
+form:
+  fields:
+
+    core-border-color:
+      type: input.colorpicker
+      label: Core Text
+      default: "#dddddd"

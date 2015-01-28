@@ -84,7 +84,7 @@ abstract class Platform
                 'gantry-config' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [
-                        '' => ['gantry-theme://config', 'gantry-engine://config']
+                        '' => ['gantry-theme://config']
                     ]
                 ]
             ]

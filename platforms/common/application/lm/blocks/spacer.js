@@ -8,9 +8,8 @@ var Spacer = new prime({
     inherits: Particle,
     options: {
         type: 'spacer',
-        attributes: {
-            title: "Spacer"
-        }
+        title: 'Spacer',
+        attributes: {}
     }
 });
 

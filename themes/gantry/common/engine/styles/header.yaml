@@ -1,0 +1,11 @@
+name: Header Color
+description: Accent colors used for website
+type: colors
+
+form:
+  fields:
+
+    page-bg:
+      type: input.colorpicker
+      label: Header Text
+      default: "#aaaaaa"

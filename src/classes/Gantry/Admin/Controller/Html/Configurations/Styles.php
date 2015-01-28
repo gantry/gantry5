@@ -1,11 +1,12 @@
 <?php
-namespace Gantry\Admin\Controller\Html;
+namespace Gantry\Admin\Controller\Html\Configurations;
 
 use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Stylesheet;;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Gantry;
@@ -47,8 +48,9 @@ class Styles extends HtmlController
     public function index()
     {
         $this->params['blocks'] = $this->container['styles']->group();
+        $this->params['route']  = "configurations.{$this->params['configuration']}.styles";
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/styles/styles.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/styles/styles.html.twig', $this->params);
     }
 
     public function display($id)
@@ -61,12 +63,12 @@ class Styles extends HtmlController
             'block' => $blueprints,
             'data' =>  Gantry::instance()['config']->get($prefix),
             'id' => $id,
-            'parent' => 'styles',
-            'route' => 'styles.' . $prefix,
+            'parent' => "configurations/{$this->params['configuration']}/styles",
+            'route'  => "configurations.{$this->params['configuration']}.styles.{$prefix}",
             'skip' => ['enabled']
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/styles/item.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/styles/item.html.twig', $this->params);
     }
 
     public function formfield($id)
@@ -96,7 +98,9 @@ class Styles extends HtmlController
         $this->params = [
                 'blueprints' => $fields,
                 'data' =>  $this->container['config']->get($prefix),
-                'parent' => $path ? "styles/blocks/{$id}/" . implode('/', $path) : "styles/blocks/{$id}",
+                'parent' => $path
+                    ? "configurations/{$this->params['configuration']}/styles/blocks/{$id}/" . implode('/', $path)
+                    : "configurations/{$this->params['configuration']}/styles/blocks/{$id}",
                 'route' => 'styles.' . $prefix
             ] + $this->params;
 
@@ -104,9 +108,24 @@ class Styles extends HtmlController
             $this->params['key'] = $parent['key'];
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/styles/field.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/styles/field.html.twig', $this->params);
     }
 
+    public function reset($id)
+    {
+        $this->params += [
+            'data' => [],
+        ];
+
+        return $this->display($id);
+    }
+
+
+    public function resetCache($type, $in, $out) {
+        $compiler = new Stylesheet\ScssPhp();
+        $compiler->getCompilers();
+        $compiler->compileFile($in,$out);
+    }
 
     public function save($id)
     {
@@ -117,20 +136,12 @@ class Styles extends HtmlController
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $save_dir = $locator->findResource('gantry-config://styles', true, true);
+        $configuration = $this->params['configuration'];
+        $save_dir = $locator->findResource("gantry-config://{$configuration}/styles", true, true);
         $filename = "{$save_dir}/{$id}.yaml";
 
         $file = YamlFile::instance($filename);
         $file->save($data->toArray());
-
-        return $this->display($id);
-    }
-
-    public function reset($id)
-    {
-        $this->params += [
-            'data' => [],
-        ];
 
         return $this->display($id);
     }

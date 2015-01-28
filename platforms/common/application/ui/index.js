@@ -37,9 +37,12 @@ ready(function(){
 "use strict";
 
 var ready = require('elements/domready'),
-    Modal = require('./modal');
+    Modal = require('./modal'),
+    Selectize = require('./selectize');
 
 module.exports = {
     modal: new Modal(),
-    togglers: require('./togglers')
+    togglers: require('./togglers'),
+    selectize: Selectize,
+    toastr: require('./toastr')
 };

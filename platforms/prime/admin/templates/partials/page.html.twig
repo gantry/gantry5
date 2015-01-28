@@ -23,6 +23,7 @@
             <script>
                 var GANTRY_AJAX_SUFFIX = '{{ gantry.ajax_suffix }}';
                 var GANTRY_AJAX_URL = '{{ gantry.route('%ajax%')|e }}';
+                var GANTRY_AJAX_CONF_URL = '{{ gantry.route('configurations/%ajax%')|e }}';
             </script>
             {% for script in gantry.scripts %}
                 {{ script }}

@@ -5,9 +5,9 @@ container:
 
   1:
     - showcase 75:
-        - [position-showcase-1, position-showcase-2]
+        - [position-showcase-1 50, position-showcase-2 50]
       feature:
-        - [position-feature-1, position-feature-2]
+        - [position-feature-1 50, position-feature-2 50]
       main:
         - position-breadcrumbs
         - position-global_messages

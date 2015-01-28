@@ -119,7 +119,7 @@
                 // handles
                 &:hover {
                     box-shadow: 0 0 0 1px #ddd;
-                    &:not(:empty):not(.no-hover):not(.no-move):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
+                    &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
                         display: block;
                         position: absolute;
                         background: #f6f6f6;
@@ -134,20 +134,20 @@
                         border: 1px solid #ddd;
                     }
 
-                    &:not(:empty):not(.no-hover):not(.no-move):before {
+                    &:not(:empty):not(.no-hover):before {
                         font-family: FontAwesome, sans-serif;
                         content: "\f0c9";
                         border-radius: 3px 0 0 3px;
                         left: -21px;
-                        border-right: 0;
+                        border-right: 0 !important;
                     }
 
                     &:not(:empty):not(.no-hover):not(.no-gear):after {
                         font-family: FontAwesome, sans-serif;
-                        content: "\f013";
+                        content: "\f0db";
                         border-radius: 0 3px 3px 0;
                         right: -21px;
-                        border-left: 0;
+                        border-left: 0 !important;
                         cursor: pointer;
                     }
                 }
@@ -188,15 +188,15 @@
                 &:empty:after {
                     content: "Drop non-visible particles here...";
                 }
-                &:hover {
+                /*&:hover {
                     &:not(:empty):before, &:not(:empty):after {
                         display: none !important;
                     }
-                }
+                }*/
             }
         }
 
-        > .g-grid > .g-block {
+        > .g-grid > .g-block, > .g-lm-container > .g-grid > .g-block {
             margin-right: 14px;
             background: $white;
             padding-bottom: 50px;
@@ -459,10 +459,16 @@
         .g-block {
             display: inline-block;
             text-align: center;
-            background: $sidebar-bg;
+            background: $navbar-bg;
             padding: 4px 8px;
             border-radius: 3px;
             margin-right: 8px;
+        }
+
+        .button {
+            i {
+                line-height: $core-line-height + 0.1;
+            }
         }
     }
 
@@ -487,7 +493,7 @@
         }
 
         span {
-            font-size: $sidebar-font-size;
+            font-size: $navbar-font-size;
             color: $dark-gray;
             text-shadow: 0 0 1px $white;
         }
@@ -496,32 +502,17 @@
 }
 
 .g5-dialog .g-tabs {
-    @extend %list-reset;
-    border-bottom: 1px solid #e0e0e0;
-    padding: 1em 1em 0;
-    margin: -1em -1em 1em;
-    background: #eaeaea;
-    border-radius: 3px 3px 0 0;
+    @extend #navbar;
 
-    li {
-        display: inline-block;
-        border: 1px solid #ddd;
-        border-bottom: 0;
-        border-radius: 3px 3px 0 0;
-        margin: 0;
+    margin-right: 0 !important;
 
-        a {
-            color: #aaa;
-            display: block;
-            padding: 0.5em 1em;
-        }
+    ul {
+        background-color: $navbar-bg;
+        margin: -1rem -1rem 1rem !important;
+        border-radius: $core-border-radius $core-border-radius 0 0;
 
-        &.active {
-            background-color: #f0f0f0;
-
-            a {
-                color: #333;
-            }
+        li:first-child {
+            border-radius: $core-border-radius 0 0 0;
         }
     }
 }
@@ -531,5 +522,99 @@
     
     &.active {
         display: block;
+    }
+}
+
+
+.sidebar-block {
+    $negate: -($content-padding + $content-margin);
+    $compensate: $content-padding + $content-margin;
+    margin: $negate $compensate $negate $negate;
+    padding: $compensate $content-padding;
+
+    background-color: darken($main-bg, 2);
+    border-right: 1px solid darken($main-bg, 5);
+}
+
+.g5-lm-particles-picker {
+    ul, li {
+        @extend %list-reset;
+    }
+
+    ul {
+        padding: 1px;
+        margin-bottom: 1em;
+        //background-color: #ddd;
+    }
+
+    li {
+        padding: $content-padding / 2;
+        margin: 1px 0;
+        text-align: center;
+        border-radius: $core-border-radius;
+        cursor: move;
+
+        &:first-child, &:last-child {
+            margin: 0;
+        }
+
+        &[data-lm-blocktype="spacer"] {
+            background-color: #eee;
+            color: #666;
+            border: 1px solid darken($medium-gray, 5);
+            text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+        }
+
+        &[data-lm-blocktype="position"] {
+            color: #fff;
+            background-color: #aaa;
+            text-shadow: 1px 1px 0 #8F8F8F, -1px -1px 0 #8F8F8F, 1px -1px 0 #8F8F8F, -1px 1px 0 #8F8F8F, 1px 1px 0 #8F8F8F;
+        }
+
+        &[data-lm-blocktype="particle"] {
+            color: #fff;
+            background-color: #13B0DA;
+            text-shadow: 1px 1px 0 #008DAD, -1px -1px 0 #008DAD, 1px -1px 0 #008DAD, -1px 1px 0 #008DAD, 1px 1px 0 #008DAD;
+        }
+
+        &[data-lm-blocktype="pagecontent"] {
+            color: #fff;
+            background-color: #218fda;
+            text-shadow: 1px 1px 0 #116AA6, -1px -1px 0 #116AA6, 1px -1px 0 #116AA6, -1px 1px 0 #116AA6, 1px 1px 0 #116AA6;
+        }
+
+        &[data-lm-blocktype="atom"] {
+            color: #fff;
+            background-color: #9055AF;
+            text-shadow: 1px 1px 0 #633979, -1px -1px 0 #633979, 1px -1px 0 #633979, -1px 1px 0 #633979, 1px 1px 0 #633979;
+        }
+    }
+
+
+    .settings-block {
+        width: 100% !important;
+    }
+
+    .search {
+        position: relative;
+        margin-bottom: 10px;
+
+        /*input {
+            font-size: 16px;
+            border: 0;
+            border-radius: 0;
+            line-height: 26px;
+            height: auto;
+            background: rgba(0, 0, 0, 0.1);
+            color: white;
+            box-shadow: none;
+            margin: 0;
+        }*/
+
+        i {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
     }
 }

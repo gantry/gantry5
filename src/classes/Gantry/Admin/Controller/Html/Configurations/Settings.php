@@ -1,5 +1,5 @@
 <?php
-namespace Gantry\Admin\Controller\Html;
+namespace Gantry\Admin\Controller\Html\Configurations;
 
 use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Config\CompiledBlueprints;
@@ -46,8 +46,9 @@ class Settings extends HtmlController
     public function index()
     {
         $this->params['particles'] = $this->container['particles']->group();
+        $this->params['route']  = "configurations.{$this->params['configuration']}.settings";
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/settings/settings.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
     }
 
     public function display($id)
@@ -60,12 +61,12 @@ class Settings extends HtmlController
             'particle' => $blueprints,
             'data' =>  Gantry::instance()['config']->get($prefix),
             'id' => $id,
-            'parent' => 'settings',
-            'route' => 'settings.' . $prefix,
+            'parent' => "configurations/{$this->params['configuration']}/settings",
+            'route'  => "configurations.{$this->params['configuration']}.settings.{$prefix}",
             'skip' => ['enabled']
             ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/settings/item.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/item.html.twig', $this->params);
     }
 
     public function formfield($id)
@@ -95,7 +96,9 @@ class Settings extends HtmlController
         $this->params = [
                 'blueprints' => $fields,
                 'data' =>  $this->container['config']->get($prefix),
-                'parent' => $path ? "settings/particles/{$id}/" . implode('/', $path) : "settings/particles/{$id}",
+                'parent' => $path
+                    ? "configurations/{$this->params['configuration']}/settings/particles/{$id}/" . implode('/', $path)
+                    : "configurations/{$this->params['configuration']}/settings/particles/{$id}",
                 'route' => 'settings.' . $prefix
             ] + $this->params;
 
@@ -103,7 +106,7 @@ class Settings extends HtmlController
             $this->params['key'] = $parent['key'];
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/settings/field.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
     }
 
     public function save($id)
@@ -115,7 +118,8 @@ class Settings extends HtmlController
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $save_dir = $locator->findResource('gantry-config://particles', true, true);
+        $configuration = $this->params['configuration'];
+        $save_dir = $locator->findResource("gantry-config://{$configuration}/particles", true, true);
         $filename = "{$save_dir}/{$id}.yaml";
 
         $file = YamlFile::instance($filename);

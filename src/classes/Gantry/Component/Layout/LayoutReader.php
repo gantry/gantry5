@@ -44,27 +44,32 @@ class LayoutReader
     protected static function parse($field, $content, $scope)
     {
         if (is_numeric($field))  {
+            // Row or block
             $result = (object) ['id' => static::id(), 'type' => self::$scopes[$scope], 'attributes' => (object) []];
             $scope = ($scope + 1) % 2;
         } elseif ($field == 'container') {
+            // Container
             $result = (object) ['id' => static::id(), 'type' => $field, 'attributes' => (object) []];
         } else {
+            // Section
             $list = explode(' ', $field, 2);
             $field = array_shift($list);
-            $size = array_shift($list);
+            $size = ((int) array_shift($list)) ?: null;
 
             $result = (object) [
                 'id' => static::id(),
                 'type' => 'section',
-                'size' => (int) $size,
+                'title' => ucfirst($field),
                 'attributes' => (object) [
-                    'title' => 'Section ' . ucfirst($field),
-                    'key' => "section-{$field}",
                     'type' => $field,
                     'id' => $field
                 ],
                 'children' => []
             ];
+
+            if ($size) {
+                $result->size = $size;
+            }
         }
 
         foreach ($content as $child => $params) {
@@ -92,32 +97,35 @@ class LayoutReader
     {
         $list = explode(' ', $field, 2);
         $list2 = explode('-', array_shift($list), 2);
-        $size = array_shift($list);
+        $size = ((int) array_shift($list)) ?: null;
         $type = array_shift($list2);
         $subtype = array_shift($list2);
+        $title = ucfirst($subtype ?: $type);
 
         $attributes = new \stdClass;
-        $attributes->title = ucfirst($subtype ?: $type);
 
         if ($subtype) {
             $attributes->key = $subtype;
         }
 
         if ($type == 'particle') {
-            $result = ['id' => static::id(), 'type' => $type, 'subtype' => $subtype, 'attributes' => $attributes];
+            $result = ['id' => static::id(), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => $attributes];
         } else {
-            $result = ['id' => static::id(), 'type' => $type, 'attributes' => $attributes];
+            $result = ['id' => static::id(), 'title' => $title, 'type' => $type, 'attributes' => $attributes];
         }
 
         $result = (object) $result;
 
         if ($scope > 1) {
+            if ($size) {
+                $result->attributes->size = $size;
+            }
             return $result;
         }
         if ($scope <= 1) {
             $result = (object) ['id' => static::id(), 'type' => 'block', 'children' => [$result], 'attributes' => new \stdClass];
             if ($size) {
-                $result->attributes->size = (int) $size;
+                $result->attributes->size = $size;
             }
         }
         if ($scope == 0) {

@@ -74,6 +74,7 @@ class Theme extends BaseTheme
         }
         $loader->setPaths($locator->findResources('gantry-admin://templates'), 'gantry-admin');
 
+        $twig->addExtension(new \Twig_Extension_Debug());
         $twig->addExtension(new TwigExtension);
         return $twig;
     }

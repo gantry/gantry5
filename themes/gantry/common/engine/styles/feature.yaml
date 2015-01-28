@@ -1,0 +1,11 @@
+name: Feature Color
+description: Accent colors used for website
+type: colors
+
+form:
+  fields:
+
+    feature-bg:
+      type: input.colorpicker
+      label: Core Text
+      default: "#ffffff"

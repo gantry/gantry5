@@ -1,7 +1,7 @@
 "use strict";
 var prime = require('prime'),
     Base  = require('./base'),
-    getAjaxURL = require('../../utils/get-ajax-url');
+    getAjaxURL = require('../../utils/get-ajax-url').config;
 
 var Atom = new prime({
     inherits: Base,
@@ -13,19 +13,16 @@ var Atom = new prime({
         Base.call(this, options);
     },
 
-    getTitle: function() {
-        return this.getAttribute('title');
-    },
-
     updateTitle: function(title) {
         this.block.find('.title').text(title);
+        this.setTitle(title);
         return this;
     },
 
     layout: function() {
-        var settings_uri = getAjaxURL('pages/' + this.getPageId() +  '/' + this.getType() + '/' + this.getId()),
+        var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + '/' + this.getType() + '/' + this.getId()),
             subtype = this.getSubType() ? 'data-lm-blocksubtype="' + this.getSubType() + '"' : '';
-        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="title">' + this.getTitle() + '</span><span>' + (this.getSubType() || this.getKey() || this.getType()) + '</span></span><div class="float-right"><i class="fa fa-cog" data-lm-nodrag data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
+        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getSubType() || this.getKey() || this.getType()) + '</span></span><div class="float-right"><i class="fa fa-cog" data-lm-nodrag data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
     }
 });
 

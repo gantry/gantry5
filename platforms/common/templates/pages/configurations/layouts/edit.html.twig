@@ -1,0 +1,51 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+<div class="g-grid">
+    <div class="g-block sidebar-block size-1-7">
+        <h2>
+            <span class="title">Particles</span>
+        </h2>
+        <div class="g5-lm-particles-picker">
+            <div class="search settings-block">
+                <input type="text" placeholder="Filter..." />
+                <i class="fa fa-search"></i>
+            </div>
+                {% for key,list in particles %}
+                    {{ key|capitalize }}
+                    <ul>
+                    {% for type,particle in list %}
+                        {% for item_key,item in particle %}
+                            <li class="g5-lm-particle-{{ type | e }}" data-lm-blocktype="{{ type | e }}" data-lm-subtype="{{ item_key }}">{{ item | e }}</li>
+                        {%  endfor %}
+                    {% endfor %}
+                    </ul>
+                {% endfor %}
+        </div>
+    </div>
+    <div class="g-block main-block">
+        <h2>
+            <span class="title">Layout</span>
+            <span class="float-right">
+                <a href="#" class="button button-primary button-save" data-save="pages"><i class="fa fa-check"></i> <span>Save</span></a>
+                <a href="#" class="button"><i class="fa fa-sign-in"></i> <span>Import</span></a>
+                <a href="#" class="button"><i class="fa fa-sign-out"></i> <span>Export</span></a>
+                <a href="#" class="button red"><i class="fa fa-times-circle"></i> <span>Cancel</span></a>
+            </span>
+        </h2>
+
+        <div class="lm-newblocks clearfix" data-lm-blocktypes>
+            {#<a class="button" href="{{ gantry.route('picker/particles')|e }}" data-lm-addparticle><i class="fa fa-plus"></i> <span>New Particle</span></a>#}
+            <span class="float-right">
+                <a href="#" class="button"><i class="fa fa-arrow-left"></i></a>
+                <a href="#" class="button"><i class="fa fa-history"></i> <span>History</span></a>
+                <a href="#" class="button"><i class="fa fa-arrow-right"></i></a>
+            </span>
+        </div>
+        <div id="page">
+            <div class="lm-blocks" data-lm-page="{{ page_id }}" data-lm-root="{{ layout|json_encode|e('html_attr') }}"></div>
+        </div>
+    </div>
+
+    <div id="trash" data-lm-eraseblock><div class="trash-zone">&times;</div><span>Drop here to delete</span></div>
+{% endblock %}

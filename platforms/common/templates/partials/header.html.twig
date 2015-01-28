@@ -2,8 +2,24 @@
     <div class="g-block">
         <div class="g-content clearfix">
             <span class="theme-title"><i class="fa fa-tint"></i> Theme: {{ gantry.theme.title }}</span>
-            
-            <a href="#" class="button button-save"><i class="fa fa-check"></i> <span>Save</span></a>
+            <div data-mode-toggle class="dev-mode-toggle">
+                <input type="radio" value="dev" id="dev-mode-toggle" name="mode" checked>
+                <label for="dev-mode-toggle">Dev</label>
+                <input type="radio" value="prod" id="prod-mode-toggle" name="mode">
+                <label for="prod-mode-toggle">Prod</label>
+                <a></a>
+            </div>
+            <ul class="float-right">
+                <li {{ (location == 'configurations') ? 'class="active"' }}>
+                    <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('configurations')|e }}"><i class="fa fa-gears"></i> Configurations</a>
+                </li>
+                <li {{ (location == 'menu') ? 'class="active"' }}>
+                    <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu')|e }}"><i class="fa fa-list"></i> <span>Menu</span></a>
+                </li>
+                <li {{ (location == 'about') ? 'class="active"' }}>
+                    <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('about')|e }}"><i class="fa fa-question-circle"></i> <span>About</span></a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

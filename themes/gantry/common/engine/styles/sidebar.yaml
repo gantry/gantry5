@@ -1,0 +1,11 @@
+name: Sidebar Color
+description: Accent colors used for website
+type: colors
+
+form:
+  fields:
+
+    siebar-etxt:
+      type: input.colorpicker
+      label: Showcase Background
+      default: "#aaaaaa"
