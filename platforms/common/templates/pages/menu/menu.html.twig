@@ -3,15 +3,15 @@
 {% block gantry %}
     <div class="menu-header">
         <h2>Menu Editor</h2>
-        <select id="configuration-selector" data-selectize="" class="menu-select-wrap">
+        <select data-selectize-ajaxify data-selectize data-g5-ajaxify-target="[data-g5-content]" class="menu-select-wrap">
             <option value="mainmenu"
                     {% if 1 %}selected="selected"{% endif %}
-                    data-data-x="{{ {url: gantry.route('menu', 'mainmenu')}|json_encode|e('html_attr') }}">
+                    data-data="{{ {url: gantry.route('menu', 'mainmenu')}|json_encode|e('html_attr') }}">
                 Main Menu
             </option>
             <option value="extended"
                     {% if 0 %}selected="selected"{% endif %}
-                    data-data-x="{{ {url: gantry.route('menu', 'extended')}|json_encode|e('html_attr') }}">
+                    data-data="{{ {url: gantry.route('menu', 'extended')}|json_encode|e('html_attr') }}">
                 Alternate Menu
             </option>
         </select>
