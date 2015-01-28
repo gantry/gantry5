@@ -131,6 +131,7 @@
                         z-index: 5;
                         color: #aaa;
                         border: 1px solid #ddd;
+                        opacity: 0;
                     }
 
                     &:not(:empty):not(.no-hover):before {
@@ -152,17 +153,14 @@
                     }
                 //}
 
-                &:hover {
+                &:hover:not(:empty) {
                     box-shadow: 0 0 0 1px #ddd;
                 }
 
-                &:before, &:after {
-                    opacity: 0;
-                }
-
-                &:hover:before, &:hover:after {
+                &:hover:not(:empty):not(.no-hover):before, &:hover:not(:empty):not(.no-hover):not(.no-gear):after {
                     opacity: 1;
                 }
+
 
                 &:first-child {
                     margin-top: 0;

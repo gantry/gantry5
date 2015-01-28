@@ -140,7 +140,7 @@ var LayoutManager = new prime({
             }).find('[data-lm-blocktype]');//.style({ margin: margins });
 
             if (this.block.getType() === 'grid') {
-                var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header)');
+                var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(:empty)');
                 if (siblings) {
                     siblings.search('[data-lm-id]').style({ 'pointer-events': 'none' });
                 }
@@ -198,6 +198,9 @@ var LayoutManager = new prime({
                 var empty = !target.children(':not(.placeholder)');
                 // new particles cannot be dropped in existing grids, only empty ones
                 if (originalType !== 'grid' && !empty) { return; }
+
+                // grids cannot be dropped inside grids
+                if (dataType === 'grid' && empty) { return; }
 
                 // we are dropping a new particle into an empty grid, placeholder goes inside
                 if (empty) { this.placeholder.bottom(target); }
@@ -307,7 +310,7 @@ var LayoutManager = new prime({
         }
 
         if (this.block.getType() === 'grid') {
-            var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header)');
+            var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(:empty)');
             if (siblings) {
                 siblings.search('[data-lm-id]').style({ 'pointer-events': 'inherit' });
             }
