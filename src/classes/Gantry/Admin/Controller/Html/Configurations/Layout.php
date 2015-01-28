@@ -1,5 +1,5 @@
 <?php
-namespace Gantry\Admin\Controller\Html;
+namespace Gantry\Admin\Controller\Html\Configurations;
 
 use Gantry\Component\Config\Blueprints;
 use Gantry\Component\Config\Config;
@@ -12,22 +12,20 @@ use RocketTheme\Toolbox\Blueprints\Blueprints as Validator;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Pages extends HtmlController
+class Layout extends HtmlController
 {
     protected $httpVerbs = [
         'GET'    => [
             '/'         => 'index',
             '/create'   => 'create',
             '/create/*' => 'create',
-            '/*'        => 'edit',
-            '/*/*'      => 'undefined',
-            '/*/*/*'    => 'particle'
+            '/*'        => 'undefined',
+            '/*/*'      => 'particle'
         ],
         'POST'   => [
-            '/'                     => 'undefined',
-            '/*'                    => 'save',
-            '/*/*'                  => 'undefined',
-            '/*/*/*'                => 'particle',
+            '/'                     => 'save',
+            '/*'                    => 'undefined',
+            '/*/*'                  => 'particle',
             '/particles'            => 'undefined',
             '/particles/*'          => 'undefined',
             '/particles/*/validate' => 'validate'
@@ -43,28 +41,6 @@ class Pages extends HtmlController
         ]
     ];
 
-    public function index()
-    {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        $finder = new \Gantry\Component\Config\ConfigFileFinder();
-        $files = $finder->getFiles($locator->findResources('gantry-layouts://', false), '|\.json$|');
-        $files += $finder->getFiles($locator->findResources('gantry-layouts://', false));
-        $layouts = array_keys($files);
-        sort($layouts);
-
-        $layouts_user = array_filter($layouts, function ($val) {
-            return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) !== '_';
-        });
-        $layouts_core = array_filter($layouts, function ($val) {
-            return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) === '_';
-        });
-        $this->params['layouts'] = ['user' => $layouts_user, 'core' => $layouts_core];
-
-        return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/layouts.html.twig', $this->params);
-    }
-
     public function create($id = null)
     {
         if (!$id) {
@@ -79,11 +55,12 @@ class Pages extends HtmlController
         $this->params['page_id'] = $id;
         $this->params['layout'] = $layout;
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/create.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/create.html.twig', $this->params);
     }
 
-    public function edit($id)
+    public function index()
     {
+        $id = $this->params['configuration'];
         $layout = $this->getLayout($id);
         if (!$layout) {
             throw new \RuntimeException('Layout not found', 404);
@@ -120,11 +97,12 @@ class Pages extends HtmlController
         $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($id, '_')));
         $this->params['particles'] = $groups;
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/layouts/edit.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/edit.html.twig', $this->params);
     }
 
-    public function save($page)
+    public function save()
     {
+        $page = $this->params['configuration'];
         $title = isset($_POST['title']) ? $_POST['title'] : ucfirst($page);
         $layout = isset($_POST['layout']) ? json_decode($_POST['layout']) : null;
 
@@ -139,7 +117,7 @@ class Pages extends HtmlController
 
         // Save layout into custom directory for the current theme.
         $save_dir = $locator->findResource('gantry-layouts://', true, true);
-        $filename = $save_dir . "{$new_page}.json";
+        $filename = $save_dir . "/{$new_page}.json";
 
         if ($page != $new_page && is_file($filename)) {
             throw new \RuntimeException("Error while saving layout: Layout '{$new_page}' already exists", 403);
@@ -149,8 +127,9 @@ class Pages extends HtmlController
         $file->save($layout);
     }
 
-    public function particle($page, $type, $id)
+    public function particle($type, $id)
     {
+        $page = $this->params['configuration'];
         $layout = $this->getLayout($page);
         if (!$layout) {
             throw new \RuntimeException('Layout not found', 404);
@@ -194,15 +173,15 @@ class Pages extends HtmlController
                 'id'       => $name,
                 'parent'   => 'settings',
                 'route'    => 'settings.' . $prefix,
-                'action'   => str_replace('.', '/', 'pages.' . $prefix . '.validate'),
+                'action'   => str_replace('.', '/', 'configurations.' . $page . '.layout.' . $prefix . '.validate'),
                 'skip'     => ['enabled']
             ];
 
             if ($extra) {
-                $result = $this->container['admin.theme']->render('@gantry-admin/pages/layouts/particle.html.twig',
+                $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle.html.twig',
                     $this->params);
             } else {
-                $result = $this->container['admin.theme']->render('@gantry-admin/pages/layouts/section.html.twig',
+                $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section.html.twig',
                     $this->params);
             }
 

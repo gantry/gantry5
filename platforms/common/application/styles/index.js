@@ -28,6 +28,16 @@ ready(function() {
         }).show();
     });
 
+    body.delegate('click', '[data-g5-resetcache]', function(event, element) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        request('url', 'data', function(){
+           // toastr;
+          toastr.success('The CSS Compiled has been successfully reset!', 'CSS Compiled Reset');
+        })
+    });
+
 });
 
 module.exports = {};

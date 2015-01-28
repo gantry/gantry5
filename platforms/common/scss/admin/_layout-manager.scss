@@ -119,7 +119,7 @@
                 // handles
                 &:hover {
                     box-shadow: 0 0 0 1px #ddd;
-                    &:not(:empty):not(.no-hover):not(.no-move):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
+                    &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
                         display: block;
                         position: absolute;
                         background: #f6f6f6;
@@ -134,20 +134,20 @@
                         border: 1px solid #ddd;
                     }
 
-                    &:not(:empty):not(.no-hover):not(.no-move):before {
+                    &:not(:empty):not(.no-hover):before {
                         font-family: FontAwesome, sans-serif;
                         content: "\f0c9";
                         border-radius: 3px 0 0 3px;
                         left: -21px;
-                        border-right: 0;
+                        border-right: 0 !important;
                     }
 
                     &:not(:empty):not(.no-hover):not(.no-gear):after {
                         font-family: FontAwesome, sans-serif;
-                        content: "\f013";
+                        content: "\f0db";
                         border-radius: 0 3px 3px 0;
                         right: -21px;
-                        border-left: 0;
+                        border-left: 0 !important;
                         cursor: pointer;
                     }
                 }
@@ -188,11 +188,11 @@
                 &:empty:after {
                     content: "Drop non-visible particles here...";
                 }
-                &:hover {
+                /*&:hover {
                     &:not(:empty):before, &:not(:empty):after {
                         display: none !important;
                     }
-                }
+                }*/
             }
         }
 
@@ -529,7 +529,7 @@
 .sidebar-block {
     $negate: -($content-padding + $content-margin);
     $compensate: $content-padding + $content-margin;
-    margin: ($negate + 0.10rem) $compensate $negate $negate;
+    margin: $negate $compensate $negate $negate;
     padding: $compensate $content-padding;
 
     background-color: darken($main-bg, 2);
@@ -537,9 +537,6 @@
 }
 
 .g5-lm-particles-picker {
-    font-family: $font-family-headers;
-    font-size: 16px;
-
     ul, li {
         @extend %list-reset;
     }
@@ -554,10 +551,7 @@
         padding: $content-padding / 2;
         margin: 1px 0;
         text-align: center;
-        //display: inline-block;
-        //font-size: 0.8em;
         border-radius: $core-border-radius;
-        padding: 3px 6px;
         cursor: move;
 
         &:first-child, &:last-child {
@@ -565,30 +559,37 @@
         }
 
         &[data-lm-blocktype="spacer"] {
-            color: #aaa;
             background-color: #eee;
+            color: #666;
+            border: 1px solid darken($medium-gray, 5);
+            text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
         }
 
         &[data-lm-blocktype="position"] {
             color: #fff;
             background-color: #aaa;
+            text-shadow: 1px 1px 0 #8F8F8F, -1px -1px 0 #8F8F8F, 1px -1px 0 #8F8F8F, -1px 1px 0 #8F8F8F, 1px 1px 0 #8F8F8F;
         }
 
         &[data-lm-blocktype="particle"] {
             color: #fff;
             background-color: #13B0DA;
+            text-shadow: 1px 1px 0 #008DAD, -1px -1px 0 #008DAD, 1px -1px 0 #008DAD, -1px 1px 0 #008DAD, 1px 1px 0 #008DAD;
         }
 
         &[data-lm-blocktype="pagecontent"] {
             color: #fff;
             background-color: #218fda;
+            text-shadow: 1px 1px 0 #116AA6, -1px -1px 0 #116AA6, 1px -1px 0 #116AA6, -1px 1px 0 #116AA6, 1px 1px 0 #116AA6;
         }
 
         &[data-lm-blocktype="atom"] {
             color: #fff;
             background-color: #9055AF;
+            text-shadow: 1px 1px 0 #633979, -1px -1px 0 #633979, 1px -1px 0 #633979, -1px 1px 0 #633979, 1px 1px 0 #633979;
         }
     }
+
 
     .settings-block {
         width: 100% !important;

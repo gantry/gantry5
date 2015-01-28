@@ -20,24 +20,21 @@
     <div class="inner-container">
         <!-- Update Bar -->
         {% include "@gantry-admin/partials/updates.html.twig" %}
-        <div class="g-grid">
-            <div class="g-block navbar-block">
-                <nav id="gantry">
-                    {% include "@gantry-admin/partials/navigation.html.twig" %}
-                </nav>
-                <span class="gantry-logo"></span>
-            </div>
-        </div>
-        <div class="g-grid">
-            <div class="g-block main-block">
-                <section id="g-main">
-                    <div class="g-content" data-g5-content>
-                        {% block gantry %}
-                        {% endblock %}
+        {% block gantry_content_wrapper %}
+            <div data-g5-content-wrapper>
+                {% include "@gantry-admin/partials/navigation.html.twig" %}
+                <div class="g-grid">
+                    <div class="g-block main-block">
+                        <section id="g-main">
+                            <div class="g-content" data-g5-content>
+                                {% block gantry %}
+                                {% endblock %}
+                            </div>
+                        </section>
                     </div>
-                </section>
+                </div>
             </div>
-        </div>
+        {% endblock %}
     </div>
 </div>
 {% endblock %}
