@@ -68,7 +68,8 @@ $submenu-ratio:                 60px;
 	li {
 		position: relative;
 		margin: 3px;
-		background: $navbar-bg;
+		background: lighten($navbar-bg, 8%);
+		border: 1px solid #ddd;
 		color: $navbar-color;
 		display: inline-block;
 		.parent-indicator {
@@ -98,6 +99,7 @@ $submenu-ratio:                 60px;
 
 		&:hover, &.active {
 			background: $tertiary-accent;
+			border-color: transparent;
 			a {
 				color: $white;
 			}

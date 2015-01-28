@@ -1268,7 +1268,8 @@ a {
   #g5-container .menu-selector li {
     position: relative;
     margin: 3px;
-    background: #DADADA;
+    background: #eeeeee;
+    border: 1px solid #ddd;
     color: #808080;
     display: inline-block; }
     #g5-container .menu-selector li .parent-indicator:before {
@@ -1287,7 +1288,8 @@ a {
       top: 4px;
       right: 4px; }
     #g5-container .menu-selector li:hover, #g5-container .menu-selector li.active {
-      background: #48B0D7; }
+      background: #48B0D7;
+      border-color: transparent; }
       #g5-container .menu-selector li:hover a, #g5-container .menu-selector li.active a {
         color: #fff; }
   #g5-container .menu-selector span {
