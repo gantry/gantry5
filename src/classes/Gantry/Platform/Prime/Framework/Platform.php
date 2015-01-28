@@ -39,7 +39,7 @@ class Platform extends BasePlatform
             ]
         ];
 
-        $this->items['streams']['gantry-layouts']['prefixes'][''][] = 'layouts';
+        $this->items['streams']['gantry-layouts']['prefixes'][''] = 'gantry-prime://layouts';
         array_unshift($this->items['streams']['gantry-config']['prefixes'][''], 'gantry-prime://config');
     }
 

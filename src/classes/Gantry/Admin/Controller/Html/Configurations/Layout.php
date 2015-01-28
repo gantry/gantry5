@@ -117,7 +117,7 @@ class Layout extends HtmlController
 
         // Save layout into custom directory for the current theme.
         $save_dir = $locator->findResource('gantry-layouts://', true, true);
-        $filename = $save_dir . "{$new_page}.json";
+        $filename = $save_dir . "/{$new_page}.json";
 
         if ($page != $new_page && is_file($filename)) {
             throw new \RuntimeException("Error while saving layout: Layout '{$new_page}' already exists", 403);
