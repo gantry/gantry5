@@ -172,7 +172,9 @@ ready(function() {
 
     // Grid same widths
     body.delegate('click', '[data-lm-samewidth]', function(event, element) {
-        element = $(element);
+        var clientRect = element[0].getBoundingClientRect();
+        if (event.clientX < clientRect.width + clientRect.left) { return; }
+        
         var blocks = element.search('> [data-lm-blocktype="block"]'), id;
 
         if (!blocks || blocks.length == 1) { return; }
