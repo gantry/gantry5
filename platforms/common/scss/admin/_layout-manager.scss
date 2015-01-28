@@ -117,8 +117,7 @@
                 min-height: 58px;
 
                 // handles
-                &:hover {
-                    box-shadow: 0 0 0 1px #ddd;
+                //&:hover {
                     &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
                         display: block;
                         position: absolute;
@@ -132,6 +131,7 @@
                         z-index: 5;
                         color: #aaa;
                         border: 1px solid #ddd;
+                        opacity: 0;
                     }
 
                     &:not(:empty):not(.no-hover):before {
@@ -139,6 +139,7 @@
                         content: "\f0c9";
                         border-radius: 3px 0 0 3px;
                         left: -21px;
+                        cursor: move;
                         border-right: 0 !important;
                     }
 
@@ -150,7 +151,16 @@
                         border-left: 0 !important;
                         cursor: pointer;
                     }
+                //}
+
+                &:hover:not(:empty) {
+                    box-shadow: 0 0 0 1px #ddd;
                 }
+
+                &:hover:not(:empty):not(.no-hover):before, &:hover:not(:empty):not(.no-hover):not(.no-gear):after {
+                    opacity: 1;
+                }
+
 
                 &:first-child {
                     margin-top: 0;

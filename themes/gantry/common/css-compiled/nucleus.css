@@ -480,6 +480,19 @@ th {
     .g-fullwidth .g-dropdown .g-block {
       width: 50%; }
 
+@media only all and (max-width: 47.938rem) {
+  .g-main-nav .g-toplevel {
+    position: fixed;
+    top: 0;
+    height: 100%;
+    right: 0;
+    width: 260px;
+    overflow: auto;
+    background: #222; }
+    .g-main-nav .g-toplevel li {
+      display: block; }
+      .g-main-nav .g-toplevel li:hover > .g-dropdown {
+        display: none; } }
 body {
   font-size: 1rem;
   line-height: 1.5; }
