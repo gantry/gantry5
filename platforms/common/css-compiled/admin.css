@@ -1304,15 +1304,14 @@ a {
   border-radius: 0.1875rem; }
   #g5-container .submenu-selector .g-block {
     position: relative;
-    padding-bottom: 45px; }
-    #g5-container .submenu-selector .g-block:before {
-      display: block;
+    padding-bottom: 60px; }
+    #g5-container .submenu-selector .g-block:hover:before {
       position: absolute;
       background: #DADADA;
-      bottom: 25px;
+      bottom: 44px;
       width: 50px;
       vertical-align: middle;
-      line-height: 20px;
+      line-height: 16px;
       text-align: center;
       z-index: 5;
       color: #aaa;
@@ -1324,7 +1323,7 @@ a {
       left: 50%;
       margin-left: -25px;
       cursor: move;
-      font-size: 0.8rem; }
+      font-size: 0.7rem; }
     #g5-container .submenu-selector .g-block:last-child .submenu-column {
       margin-right: 0; }
       #g5-container .submenu-selector .g-block:last-child .submenu-column:after {
@@ -1334,7 +1333,7 @@ a {
     #g5-container .submenu-selector .submenu-column:after {
       content: "";
       top: -1px;
-      bottom: 44px;
+      bottom: 59px;
       width: 4px;
       background: #fff;
       position: absolute;
@@ -1379,13 +1378,15 @@ a {
 #g5-container .submenu-ratio {
   background: #fff;
   text-align: center;
-  font-size: 2rem;
-  font-weight: 100;
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 45px; }
+  height: 60px; }
+  #g5-container .submenu-ratio .percentage {
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 60px; }
   #g5-container .submenu-ratio i {
     position: absolute;
     right: 1rem;

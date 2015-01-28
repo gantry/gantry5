@@ -1,5 +1,5 @@
 // Submenu Ratio Height
-$submenu-ratio:                 45px;
+$submenu-ratio:                 60px;
 
 #g5-container { //wrapper
 
@@ -120,26 +120,30 @@ $submenu-ratio:                 45px;
 	.g-block {
 		position: relative;
 		padding-bottom: $submenu-ratio;
-		&:before {
-			display: block;
-            position: absolute;
-            background: $navbar-bg;
-            bottom: $submenu-ratio - 20;
-            width: 50px;
-            vertical-align: middle;
-            line-height: 20px;
-            text-align: center;
-            z-index: 5;
-            color: #aaa;
-            border: 1px solid #ddd;
-            border-top: 0;
-            font-family: FontAwesome, sans-serif;
-            content: "\f0c9";
-            border-radius: 0 0 $core-border-radius $core-border-radius;
-            left: 50%;
-            margin-left: -25px;
-            cursor: move;
-            font-size: $core-font-size - 0.2;
+		&:hover {
+			&:before {
+	            position: absolute;
+	            background: $navbar-bg;
+	            bottom: $submenu-ratio - 16;
+	            width: 50px;
+	            vertical-align: middle;
+	            line-height: 16px;
+	            text-align: center;
+	            z-index: 5;
+	            color: #aaa;
+	            border: 1px solid #ddd;
+	            border-top: 0;
+	            font-family: FontAwesome, sans-serif;
+	            content: "\f0c9";
+	            border-radius: 0 0 $core-border-radius $core-border-radius;
+	            left: 50%;
+	            margin-left: -25px;
+	            cursor: move;
+	            font-size: $core-font-size - 0.3;
+			}
+			.submenu-column {
+
+			}
 		}
 		&:last-child {
 			.submenu-column {
@@ -217,13 +221,16 @@ $submenu-ratio:                 45px;
 .submenu-ratio {
 	background: $white;
 	text-align: center;
-	font-size: $core-font-size + 1;
-	font-weight: 100;
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	height: $submenu-ratio;
+	.percentage {
+		font-size: $core-font-size + 1;
+		font-weight: 100;
+		line-height: $submenu-ratio;
+	}
 	i {
 		position: absolute;
 		@extend %vertical-align;
