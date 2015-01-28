@@ -79,6 +79,9 @@ class Configurations extends HtmlController
     protected function executeForward($resource, $method = 'GET', $path, $params = [])
     {
         $class = '\\Gantry\\Admin\\Controller\\Html\\' . strtr(ucwords(strtr($resource, '/', ' ')), ' ', '\\');
+        if (!class_exists($class)) {
+            throw new \RuntimeException('Configuration not found', 404);
+        }
 
         /** @var HtmlController $controller */
         $controller = new $class($this->container);
