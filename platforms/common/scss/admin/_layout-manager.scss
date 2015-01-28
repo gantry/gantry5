@@ -117,8 +117,7 @@
                 min-height: 58px;
 
                 // handles
-                &:hover {
-                    box-shadow: 0 0 0 1px #ddd;
+                //&:hover {
                     &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
                         display: block;
                         position: absolute;
@@ -139,6 +138,7 @@
                         content: "\f0c9";
                         border-radius: 3px 0 0 3px;
                         left: -21px;
+                        cursor: move;
                         border-right: 0 !important;
                     }
 
@@ -150,6 +150,18 @@
                         border-left: 0 !important;
                         cursor: pointer;
                     }
+                //}
+
+                &:hover {
+                    box-shadow: 0 0 0 1px #ddd;
+                }
+
+                &:before, &:after {
+                    opacity: 0;
+                }
+
+                &:hover:before, &:hover:after {
+                    opacity: 1;
                 }
 
                 &:first-child {
