@@ -19,6 +19,7 @@ class Menu implements \ArrayAccess, \Iterator
     protected $base;
     protected $active;
     protected $params;
+    protected $config;
 
     /**
      * @var array
@@ -150,11 +151,15 @@ class Menu implements \ArrayAccess, \Iterator
         return $items;
     }
 
-    protected function getConfig()
+    public function getConfig()
     {
-        $menu = $this->params['menu'];
+        if (!$this->config) {
+            $menu = $this->params['menu'];
 
-        return CompiledYamlFile::instance("gantry-config://menu/{$menu}.yaml")->content();
+            $this->config = new Config(CompiledYamlFile::instance("gantry-config://menu/{$menu}.yaml")->content());
+        }
+
+        return $this->config;
     }
 
     /**

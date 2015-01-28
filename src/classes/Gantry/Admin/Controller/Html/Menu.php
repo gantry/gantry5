@@ -97,26 +97,24 @@ class Menu extends HtmlController
     {
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
+        $path = implode('/', $path);
 
         // Load the menu.
         $resource = $this->loadResource($id);
 
         // Get menu item and make sure it exists.
-        $item = $resource[implode('/', $path)];
+        $item = $resource[$path];
         if (!$item) {
             throw new \RuntimeException('Menu item not found', 404);
         }
         // Load blueprints for the menu item.
         $blueprints = $this->loadBlueprints('menuitem');
 
-        // Get the prefix.
-        $prefix = "menu.{$id}." . implode('.', $path);
-
         $this->params = [
-                'path' => implode('/', $path),
-                'prefix' => $prefix,
+                'path' => $path,
+                'prefix' => $path . '.',
                 'blueprints' => ['fields' => $blueprints['form.fields.items.fields']],
-                'data' =>  $this->container['config']->get($prefix),
+                'data' => [$path => $resource->getConfig()->get("items.{$path}")],
             ] + $this->params;
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/menu/settings.html.twig', $this->params);
