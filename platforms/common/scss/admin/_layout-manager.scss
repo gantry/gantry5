@@ -529,7 +529,7 @@
 .sidebar-block {
     $negate: -($content-padding + $content-margin);
     $compensate: $content-padding + $content-margin;
-    margin: ($negate + 0.10rem) $compensate $negate $negate;
+    margin: $negate $compensate $negate $negate;
     padding: $compensate $content-padding;
 
     background-color: darken($main-bg, 2);
