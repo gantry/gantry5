@@ -18,6 +18,8 @@ var prime         = require('prime'),
 
 require('../ui/popover');
 
+var ERROR = false;
+
 History.Adapter.bind(window, 'statechange', function() {
     if (request.running()) {
         return false;
@@ -35,7 +37,7 @@ History.Adapter.bind(window, 'statechange', function() {
     }
 
     if (Data.element) {
-        body.emit('statechangeBefore', { target: Data.element });
+        body.emit('statechangeBefore', { target: Data.element, Data: Data });
     } else {
         var url = URI.replace(window.location.origin, '');
         Data.element = $('[href="' + url + '"]');
@@ -51,10 +53,19 @@ History.Adapter.bind(window, 'statechange', function() {
         params = toQueryString(JSON.parse(Data.params));
     }
 
+    if (!ERROR) { modal.closeAll(); }
+
     request.url(URI + getAjaxSuffix() + params).method('get').send(function(error, response) {
         if (!response.body.success) {
-            modal.open({ content: response.body.html });
-            //History.back();
+            ERROR = true;
+            modal.open({
+                content: response.body.html || response.body,
+                afterOpen: function(container) {
+                    if (!response.body.html) { container.style({ width: '90%' }); }
+                }
+            });
+
+            History.back();
 
             return false;
         }
@@ -69,7 +80,7 @@ History.Adapter.bind(window, 'statechange', function() {
         }
 
         if (Data.element) {
-            body.emit('statechangeAfter', { target: Data.element });
+            body.emit('statechangeAfter', { target: Data.element, Data: Data });
         }
 
         var selects = $('[data-selectize]');
@@ -79,10 +90,29 @@ History.Adapter.bind(window, 'statechange', function() {
     });
 });
 
+var selectorChangeEvent = function(){
+    var selector = $('#configuration-selector'), selectize;
+    if (selector && (selectize = selector.selectize())) {
+        selectize = selectize.selectizeInstance;
+        selectize.on('change', function(value){
+            var options = selectize.Options;
+
+            selectize.input
+                .data('g5-ajaxify', '')
+                .data('g5-ajaxify-target', '[data-g5-content-wrapper]')
+                .data('g5-ajaxify-href', options[value].url)
+                .data('g5-ajaxify-params', options[value].params ? JSON.stringify(options[value].params) : null);
+
+            $('body').emit('click', {target: selectize.input});
+        });
+    }
+};
+
 
 domready(function() {
-    $('body').delegate('click', '[data-g5-ajaxify]', function(event, element) {
-        if (event) {
+    var body = $('body');
+    body.delegate('click', '[data-g5-ajaxify]', function(event, element) {
+        if (event && event.preventDefault) {
             if (event.which === 2 || event.metaKey) {
                 return true;
             }
@@ -120,6 +150,18 @@ domready(function() {
             element.parent('li').addClass('active');
         }
     });
+
+    body.on('statechangeAfter', function(data){
+        if (!data || !data.Data.params) { return true; }
+        var params = JSON.parse(data.Data.params);
+
+        if (!params.navbar) { return true; }
+
+        selectorChangeEvent();
+    });
+
+    // attach change events to configurations selector
+    selectorChangeEvent();
 });
 
 

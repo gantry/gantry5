@@ -240,7 +240,7 @@ var Modal = new prime({
             return false;
         }
 
-        forEach(ids.reverse(), function(value, id) {
+        forEach(ids.reverse(), function(id) {
             return this.closeByID(id);
         }, this);
 

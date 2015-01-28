@@ -944,7 +944,7 @@ var Selectize = new prime({
     },
 
     onChange: function() {
-        this.input.emit('change');
+        this.input.emit('change', this.input.value(), this);
     },
 
     onPaste: function(e) {

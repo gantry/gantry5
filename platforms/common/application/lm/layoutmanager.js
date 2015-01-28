@@ -40,11 +40,11 @@ var deepEquals = function(a, b, callback) {
 
 var singles = {
     disable: function() {
-        var grids = $('[data-lm-root] [data-lm-blocktype="grid"]'),
-            sections = $('[data-lm-root] [data-lm-blocktype="section"]');
+        var grids = $('[data-lm-root] [data-lm-blocktype="grid"]')/*,
+            sections = $('[data-lm-root] [data-lm-blocktype="section"]')*/;
 
         if (grids) { grids.removeClass('no-hover'); }
-        if (sections) {
+        /*if (sections) {
             sections.forEach(function(section) {
                 var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty), > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty)');
                 if (subGrids) {
@@ -52,14 +52,14 @@ var singles = {
                     else { subGrids.removeClass('no-move').data('lm-nodrag', null); }
                 }
             }, this);
-        }
+        }*/
     },
     enable: function() {
-        var grids = $('[data-lm-root] [data-lm-blocktype="grid"]'),
-            sections = $('[data-lm-root] [data-lm-blocktype="section"]');
+        var grids = $('[data-lm-root] [data-lm-blocktype="grid"]')/*,
+            sections = $('[data-lm-root] [data-lm-blocktype="section"]')*/;
 
         if (grids) { grids.addClass('no-hover'); }
-        if (sections) {
+        /*if (sections) {
             sections.forEach(function(section) {
                 var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty), > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty)');
                 if (subGrids) {
@@ -67,7 +67,7 @@ var singles = {
                     else { subGrids.removeClass('no-move').data('lm-nodrag', null); }
                 }
             }, this);
-        }
+        }*/
     },
     cleanup: function(builder) {}
 

@@ -101,6 +101,12 @@ var DragDrop = new prime({
             columns = (this.element.parent().data('lm-blocktype') === 'grid' && this.element.parent().parent().data('lm-root')) ||
                       (this.element.parent().parent().data('lm-blocktype') == 'container' && this.element.parent().parent().parent().data('lm-root'));
 
+        if (
+            this.element.data('lm-blocktype') == 'grid' &&
+            (this.element.parent().data('lm-blocktype') === 'container' && this.element.parent().parent().parent().data('lm-root')) ||
+            (this.element.parent().data('lm-blocktype') === 'section' && this.element.parent().parent().parent().data('lm-root'))
+        ) { columns = false; }
+
         // resizing and only if it's not a non-visible section
         if ((offset < 6 && this.element.parent().find(':last-child') !== this.element) || (columns && offset > 3 && offset < 10)) {
             if (this.element.parent('[data-lm-blocktype="non-visible"]')) { return false; }
