@@ -1,7 +1,6 @@
 <section
     {%- if particle.css.id %} id="{{ particle.css.id|e }}"{% endif %}
-    {%- if particle.css.class %} class="{{ particle.css.class|e }}"{% endif %}
-    role="navigation">
+    {%- if particle.css.class %} class="{{ particle.css.class|e }}"{% endif %} role="navigation">
     <ul class="g-grid g-toplevel menu-selector">
         {% for child in item %}
             <li>

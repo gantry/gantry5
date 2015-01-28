@@ -143,19 +143,10 @@ class Menu extends HtmlController
      */
     protected function loadResource($id)
     {
-        /** @var Config $config */
-        $config = $this->container['config'];
-
-        $params = $config->get('menu.' . $id);
-
-        if (!$params) {
-            throw new \RuntimeException('Resource not found', 404);
-        }
-
         /** @var MenuObject $menus */
         $menus = $this->container['menu'];
 
-        return $menus->instance($params);
+        return $menus->instance(['config' => ['menu' => $id]]);
     }
 
     /**

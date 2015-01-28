@@ -28,6 +28,7 @@ class Item implements \ArrayAccess, \Iterator
             'link' => $name,
             'parent_id' => $parent != '.' ? $parent : '',
             'children' => [],
+            'groups' => [],
             'layout' => 'list',
             'browserNav' => 0,
             'menu_text' => true,
@@ -115,6 +116,7 @@ class Item implements \ArrayAccess, \Iterator
 
         if ($children) {
             $ordered = [];
+            $this->groups[0] = [];
             foreach ($groups as $i => $ordering) {
                 if (!$ordering || !is_array($ordering)) {
                     continue;

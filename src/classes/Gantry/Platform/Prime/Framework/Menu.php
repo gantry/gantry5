@@ -2,6 +2,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Config\Config;
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Menu\Item;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
@@ -129,7 +130,8 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function getMenuItems()
     {
-        $items = (array) Gantry::instance()['config']->get("menu.{$this->params['menu']}");
+        $config = $this->getConfig();
+        $items = isset($config['items']) ? $config['items'] : [];
 
         $folder = PRIME_ROOT . '/pages';
         if (!is_dir($folder)) {
@@ -146,6 +148,13 @@ class Menu implements \ArrayAccess, \Iterator
         ksort($items);
 
         return $items;
+    }
+
+    protected function getConfig()
+    {
+        $menu = $this->params['menu'];
+
+        return CompiledYamlFile::instance("gantry-config://menu/{$menu}.yaml")->content();
     }
 
     /**
@@ -179,7 +188,8 @@ class Menu implements \ArrayAccess, \Iterator
         if (!is_dir($folder)) {
             return [];
         }
-        $items = (array) Gantry::instance()['config']->get("menu.{$menu}.items");
+        $config = $this->getConfig();
+        $items = isset($config['items']) ? $config['items'] : [];
         $menuItems = array_unique(array_merge(Folder::all($folder, $options), array_keys($items)));
         sort($menuItems);
 
@@ -249,7 +259,7 @@ class Menu implements \ArrayAccess, \Iterator
             $all[$item->path] = $item;
         }
 
-        $ordering = (array) Gantry::instance()['config']->get("menu.{$menu}.ordering");
+        $ordering = $config['ordering'] ? $config['ordering'] : [];
         $this->sortAll($all, $ordering);
 
         return $all;
