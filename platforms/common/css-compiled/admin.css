@@ -1721,59 +1721,59 @@ a {
   border-right: 1px solid #e1e1e1;
 }
 
-/* line 539, ../scss/admin/_layout-manager.scss */
-.g5-lm-particles-picker {
-  font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-  font-size: 16px;
-}
-/* line 547, ../scss/admin/_layout-manager.scss */
+/* line 544, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker ul {
   padding: 1px;
   margin-bottom: 1em;
 }
-/* line 553, ../scss/admin/_layout-manager.scss */
+/* line 550, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li {
   padding: 0.469rem;
   margin: 1px 0;
   text-align: center;
   border-radius: 0.1875rem;
-  padding: 3px 6px;
   cursor: move;
 }
-/* line 563, ../scss/admin/_layout-manager.scss */
+/* line 557, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li:first-child, .g5-lm-particles-picker li:last-child {
   margin: 0;
 }
-/* line 567, ../scss/admin/_layout-manager.scss */
+/* line 561, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="spacer"] {
-  color: #aaa;
   background-color: #eee;
+  color: #666;
+  border: 1px solid #d0d0d0;
+  text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 }
-/* line 572, ../scss/admin/_layout-manager.scss */
+/* line 568, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="position"] {
   color: #fff;
   background-color: #aaa;
+  text-shadow: 1px 1px 0 #8F8F8F, -1px -1px 0 #8F8F8F, 1px -1px 0 #8F8F8F, -1px 1px 0 #8F8F8F, 1px 1px 0 #8F8F8F;
 }
-/* line 577, ../scss/admin/_layout-manager.scss */
+/* line 574, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="particle"] {
   color: #fff;
   background-color: #13B0DA;
+  text-shadow: 1px 1px 0 #008DAD, -1px -1px 0 #008DAD, 1px -1px 0 #008DAD, -1px 1px 0 #008DAD, 1px 1px 0 #008DAD;
 }
-/* line 582, ../scss/admin/_layout-manager.scss */
+/* line 580, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="pagecontent"] {
   color: #fff;
   background-color: #218fda;
+  text-shadow: 1px 1px 0 #116AA6, -1px -1px 0 #116AA6, 1px -1px 0 #116AA6, -1px 1px 0 #116AA6, 1px 1px 0 #116AA6;
 }
-/* line 587, ../scss/admin/_layout-manager.scss */
+/* line 586, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="atom"] {
   color: #fff;
   background-color: #9055AF;
+  text-shadow: 1px 1px 0 #633979, -1px -1px 0 #633979, 1px -1px 0 #633979, -1px 1px 0 #633979, 1px 1px 0 #633979;
 }
-/* line 593, ../scss/admin/_layout-manager.scss */
+/* line 594, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .settings-block {
   width: 100% !important;
 }
-/* line 597, ../scss/admin/_layout-manager.scss */
+/* line 598, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search {
   position: relative;
   margin-bottom: 10px;
@@ -1789,7 +1789,7 @@ a {
       margin: 0;
   }*/
 }
-/* line 613, ../scss/admin/_layout-manager.scss */
+/* line 614, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search i {
   position: absolute;
   right: 10px;

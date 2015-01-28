@@ -537,9 +537,6 @@
 }
 
 .g5-lm-particles-picker {
-    font-family: $font-family-headers;
-    font-size: 16px;
-
     ul, li {
         @extend %list-reset;
     }
@@ -554,10 +551,7 @@
         padding: $content-padding / 2;
         margin: 1px 0;
         text-align: center;
-        //display: inline-block;
-        //font-size: 0.8em;
         border-radius: $core-border-radius;
-        padding: 3px 6px;
         cursor: move;
 
         &:first-child, &:last-child {
@@ -565,30 +559,37 @@
         }
 
         &[data-lm-blocktype="spacer"] {
-            color: #aaa;
             background-color: #eee;
+            color: #666;
+            border: 1px solid darken($medium-gray, 5);
+            text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
         }
 
         &[data-lm-blocktype="position"] {
             color: #fff;
             background-color: #aaa;
+            text-shadow: 1px 1px 0 #8F8F8F, -1px -1px 0 #8F8F8F, 1px -1px 0 #8F8F8F, -1px 1px 0 #8F8F8F, 1px 1px 0 #8F8F8F;
         }
 
         &[data-lm-blocktype="particle"] {
             color: #fff;
             background-color: #13B0DA;
+            text-shadow: 1px 1px 0 #008DAD, -1px -1px 0 #008DAD, 1px -1px 0 #008DAD, -1px 1px 0 #008DAD, 1px 1px 0 #008DAD;
         }
 
         &[data-lm-blocktype="pagecontent"] {
             color: #fff;
             background-color: #218fda;
+            text-shadow: 1px 1px 0 #116AA6, -1px -1px 0 #116AA6, 1px -1px 0 #116AA6, -1px 1px 0 #116AA6, 1px 1px 0 #116AA6;
         }
 
         &[data-lm-blocktype="atom"] {
             color: #fff;
             background-color: #9055AF;
+            text-shadow: 1px 1px 0 #633979, -1px -1px 0 #633979, 1px -1px 0 #633979, -1px 1px 0 #633979, 1px 1px 0 #633979;
         }
     }
+
 
     .settings-block {
         width: 100% !important;
