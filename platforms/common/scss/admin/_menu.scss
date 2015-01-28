@@ -1,3 +1,6 @@
+// Submenu Ratio Height
+$submenu-ratio:                 45px;
+
 #g5-container { //wrapper
 
 #menu-editor {
@@ -110,20 +113,69 @@
 }
 
 .submenu-selector {
-	border: 1px solid #ddd;
-	border-bottom: 0;
-	background: $white;
-	padding: 2px;
-	border-radius: $core-border-radius $core-border-radius 0 0;
+	border: 4px solid #fff;
+	background: $navbar-bg;
+	box-shadow: 0 0 0 1px #ddd;
+	border-radius: $core-border-radius;
 	.g-block {
-		background: $navbar-bg;
-		border: 2px solid $white;
-		border-bottom: 0;
-		padding: $content-padding / 2 0;
+		position: relative;
+		padding-bottom: $submenu-ratio;
+		&:before {
+			display: block;
+            position: absolute;
+            background: $navbar-bg;
+            bottom: $submenu-ratio - 20;
+            width: 50px;
+            vertical-align: middle;
+            line-height: 20px;
+            text-align: center;
+            z-index: 5;
+            color: #aaa;
+            border: 1px solid #ddd;
+            border-top: 0;
+            font-family: FontAwesome, sans-serif;
+            content: "\f0c9";
+            border-radius: 0 0 $core-border-radius $core-border-radius;
+            left: 50%;
+            margin-left: -25px;
+            cursor: move;
+            font-size: $core-font-size - 0.2;
+		}
+		&:last-child {
+			.submenu-column {
+				margin-right: 0;
+				&:after {
+					display: none;
+				}
+			}
+		}
+	}
+	.submenu-column {
+		margin-right: 6px;
+		&:after {
+			content: "";
+            top: -1px;
+            bottom: $submenu-ratio - 1;
+            width: 4px;
+            background: $white;
+            position: absolute;
+            right: 1px;
+            cursor: ew-resize;
+            z-index: 10;
+         	border: 1px solid $white;
+		}
+		&:hover:after {
+			background: #00baaa;
+		}
 	}
 	.submenu-items {
 		list-style: none;
 		margin: 0;
+		padding: $content-padding / 2 0;
+		position: relative;
+		&:after {
+			margin-right: 6px;
+		}
 		li {
 			color: $navbar-color;
 			cursor: pointer;
@@ -167,10 +219,11 @@
 	text-align: center;
 	font-size: $core-font-size + 1;
 	font-weight: 100;
-	position: relative;
-	border: 1px solid #ddd;
-	border-top: 0;
-	border-radius: 0 0 $core-border-radius $core-border-radius;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: $submenu-ratio;
 	i {
 		position: absolute;
 		@extend %vertical-align;
