@@ -1261,13 +1261,13 @@ a {
   outline: none; }
 #g5-container .menu-selector {
   margin: 0.625rem 0;
-  padding: 2px;
+  padding: 4px;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 0.1875rem; }
   #g5-container .menu-selector li {
     position: relative;
-    margin: 2px;
+    margin: 3px;
     background: #DADADA;
     color: #808080;
     display: inline-block; }
@@ -1297,7 +1297,7 @@ a {
     display: inline-block;
     vertical-align: middle; }
 #g5-container .submenu-selector {
-  border: 4px solid #fff;
+  border: 6px solid #fff;
   background: #DADADA;
   box-shadow: 0 0 0 1px #ddd;
   border-radius: 0.1875rem;
@@ -1339,7 +1339,7 @@ a {
       content: "";
       top: -1px;
       bottom: 59px;
-      width: 4px;
+      width: 6px;
       background: #fff;
       position: absolute;
       right: 1px;
