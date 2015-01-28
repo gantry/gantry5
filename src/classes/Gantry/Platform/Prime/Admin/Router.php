@@ -1,7 +1,6 @@
 <?php
 namespace Gantry\Admin;
 
-use Gantry\Component\Layout\LayoutCollection;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Router\Router as BaseRouter;
 

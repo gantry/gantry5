@@ -22,11 +22,25 @@ class Collection implements CollectionInterface
     }
 
     /**
+     *
+     * Create a copy of this collection.
+     *
+     * @return static
+     */
+    public function copy()
+    {
+        return clone $this;
+    }
+
+    /**
      * @param $item
+     * @return $this
      */
     public function add($item)
     {
         $this->items[] = $item;
+
+        return $this;
     }
 
     /**

@@ -59,7 +59,7 @@ class Configurations extends HtmlController
     {
         $path = func_get_args();
 
-        $configurations = $this->container['configurations']->toArray();
+        $configurations = $this->container['configurations']->all()->toArray();
         $configurations[] = 'default';
 
         $configuration = in_array($path[0], $configurations) ? array_shift($path) : 'default';
@@ -67,10 +67,12 @@ class Configurations extends HtmlController
         $this->container['configuration'] = $configuration;
 
         $method = $this->params['method'];
-        $resource = $this->params['location'] . '/'. (array_shift($path) ?: 'styles');
+        $page = (array_shift($path) ?: 'styles');
+        $resource = $this->params['location'] . '/'. $page;
 
         $this->params['configuration'] = $configuration;
         $this->params['location'] = $resource;
+        $this->params['configuration_page'] = $page;
         $this->params['navbar'] = !empty($_GET['navbar']);
 
         return $this->executeForward($resource, $method, $path, $this->params);

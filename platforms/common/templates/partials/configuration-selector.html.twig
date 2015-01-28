@@ -1,13 +1,26 @@
 <li class="config-select-wrap">
     {# TODO: we need to switch the selected attribute properly and update the active page based on the selected on, right now it's styles #}
     <select id="configuration-selector" class="config-select" data-selectize="{{ {allowEmptyOption: true}|json_encode|e('html_attr') }}">
-        <option value="default" selected="selected"  data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', 'default', 'styles')}|json_encode|e('html_attr') }}">Default</option>
-        <option value="frontpage" data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', '_frontpage', 'styles')}|json_encode|e('html_attr') }}">Front Page</option>
+        {% set user_conf = gantry.configurations.copy.user %}
+        {% for current in user_conf %}
+            <option value="{{ current|e }}"
+                    {% if current == configuration %}selected="selected"{% endif %}
+                    data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', current|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
+                {{ current|replace('_', ' ')|trim|capitalize|e }}
+            </option>
+        {% endfor %}
+
+        {% set system_conf = gantry.configurations.system %}
+        {% if system_conf.count %}
         <optgroup label="System Pages">
-            <option value="error" data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', '_error', 'styles')}|json_encode|e('html_attr') }}">Error Page</option>
-            <option value="offline" data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', '_offline', 'styles')}|json_encode|e('html_attr') }}">Site Offline</option>
-            <option value="unsupported" data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', '_unsupported', 'styles')}|json_encode|e('html_attr') }}">Unsupported Browser</option>
-            <option value="comingsoon" data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', '_comingsoon', 'styles')}|json_encode|e('html_attr') }}">Coming Soon</option>
+            {% for current in system_conf %}
+                <option value="{{ current|e }}"
+                        {% if current == configuration %}selected="selected"{% endif %}
+                        data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', current|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
+                    {{ current|replace('_', ' ')|trim|capitalize|e }}
+                </option>
+            {% endfor %}
         </optgroup>
+        {% endif %}
     </select>
 </li>

@@ -57,9 +57,15 @@ class Gantry extends Container
             return new Platform($c);
         };
 
-        $instance['configurations'] = function ($c) {
-            return (new LayoutCollection($c))->load();
-        };
+        // Make sure that nobody modifies the original collection by making it a factory.
+        $instance['configurations'] = $instance->factory(function ($c) {
+            static $collection;
+            if (!$collection) {
+                $collection = (new LayoutCollection($c))->load();
+            }
+
+            return $collection->copy();
+        });
 
         return $instance;
     }

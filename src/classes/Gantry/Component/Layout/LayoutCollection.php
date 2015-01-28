@@ -15,10 +15,12 @@ class LayoutCollection extends Collection
      */
     public $container;
 
-    public function __construct(Container $container)
+    public function __construct(Container $container, $items = [])
     {
         $this->container = $container;
+        $this->items = $items;
     }
+
     /**
      * @param string $path
      * @return $this
@@ -32,11 +34,37 @@ class LayoutCollection extends Collection
         $files = $finder->getFiles($locator->findResources($path, false), '|\.json$|');
         $files += $finder->getFiles($locator->findResources($path, false));
         $layouts = array_keys($files);
-
-        $layouts = array_filter($layouts, function($val) { return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) !== '_'; });
         sort($layouts);
 
         $this->items = $layouts;
+
+        return $this;
+    }
+
+    public function presets()
+    {
+        $this->items = array_values(array_filter($this->items, function($val) { return strpos($val, 'presets/') === 0; }));
+
+        return $this;
+    }
+
+    public function all()
+    {
+        $this->items = array_values(array_filter($this->items, function($val) { return strpos($val, 'presets/') !== 0; }));
+
+        return $this;
+    }
+
+    public function system()
+    {
+        $this->items = array_values(array_filter($this->items, function($val) { return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) === '_'; }));
+
+        return $this;
+    }
+
+    public function user()
+    {
+        $this->items = array_values(array_filter($this->items, function($val) { return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) !== '_'; }));
 
         return $this;
     }
