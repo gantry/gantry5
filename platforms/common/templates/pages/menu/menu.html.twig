@@ -3,9 +3,17 @@
 {% block gantry %}
     <div class="menu-header">
         <h2>Menu Editor</h2>
-        <select data-selectize class="menu-select-wrap">
-            <option selected>Main Menu</option>
-            <option>Alternate Menu</option>
+        <select id="configuration-selector" data-selectize="" class="menu-select-wrap">
+            <option value="mainmenu"
+                    {% if 1 %}selected="selected"{% endif %}
+                    data-data="{{ {url: gantry.route('menu', 'mainmenu')}|json_encode|e('html_attr') }}">
+                Main Menu
+            </option>
+            <option value="extended"
+                    {% if 0 %}selected="selected"{% endif %}
+                    data-data="{{ {url: gantry.route('menu', 'extended')}|json_encode|e('html_attr') }}">
+                Alternate Menu
+            </option>
         </select>
     </div>
     <div id="menu-editor">
