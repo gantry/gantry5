@@ -1,18 +1,9 @@
-<!--<ul class="submenu-items">
-    <li>Features Overview</li>
-    <li>Particle Positions</li>
-    <li>Module Variations</li>
-    <li>Typography</li>
-    <li>Menu Options</li>
-    <li>Documentation</li>
-</ul>-->
-
 {% set children = (item.level == 1 ? item.group(group) : item.children) %}
 
 <ul class="submenu-items">
     {% if item.level > 1 %}
         <li>
-            <a class="menu-item" data-g5-ajaxify data-g5-ajaxify-params="{{ '{"inline":1}'|escape('html_attr') }}" data-g5-ajaxify-target="[data-g5-menu-{{ 'list-' ~ group|e }}]" href="{{ gantry.route('menu', item.parent.path, group) }}">
+            <a class="menu-item" data-g5-ajaxify data-g5-ajaxify-params="{{ '{"inline":1}'|escape('html_attr') }}" data-g5-ajaxify-target="[data-g5-menu-{{ 'list-' ~ group|e }}] ul.submenu-items" href="{{ gantry.route('menu', item.parent.path, group) }}">
                 {% for i in range(1, item.level-1) %}
                 <i class="fa fa-chevron-left"></i>
                 {% endfor %}
