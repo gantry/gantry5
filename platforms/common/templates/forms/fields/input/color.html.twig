@@ -5,7 +5,7 @@
             {# required attribute structures #}
             type="color"
             name="{{ (scope ~ name)|fieldName }}"
-            value="{{ value|join(', ') }}"
+            value="{{ value|join(', ')|lower }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}
             {# non-gloval attribute structures #}
