@@ -117,6 +117,7 @@ $submenu-ratio:                 60px;
 	background: $navbar-bg;
 	box-shadow: 0 0 0 1px #ddd;
 	border-radius: $core-border-radius;
+	color: $navbar-color;
 	.g-block {
 		position: relative;
 		padding-bottom: $submenu-ratio;
@@ -124,15 +125,13 @@ $submenu-ratio:                 60px;
 			&:before {
 	            position: absolute;
 	            background: $navbar-bg;
-	            bottom: $submenu-ratio - 16;
+	            bottom: $submenu-ratio - 15;
 	            width: 50px;
 	            vertical-align: middle;
-	            line-height: 16px;
+	            line-height: 22px;
 	            text-align: center;
 	            z-index: 5;
-	            color: #aaa;
-	            border: 1px solid #ddd;
-	            border-top: 0;
+	            color: $navbar-color;
 	            font-family: FontAwesome, sans-serif;
 	            content: "\f0c9";
 	            border-radius: 0 0 $core-border-radius $core-border-radius;
@@ -145,6 +144,15 @@ $submenu-ratio:                 60px;
 
 			}
 		}
+		&:first-child {
+			.submenu-ratio {
+				.first {
+					left: 0;
+					right: auto;
+					display: block;
+				}
+			}
+		}
 		&:last-child {
 			.submenu-column {
 				margin-right: 0;
@@ -152,10 +160,16 @@ $submenu-ratio:                 60px;
 					display: none;
 				}
 			}
+			.submenu-ratio {
+				.add-column {
+					right: 0;
+				}
+			}
 		}
 	}
 	.submenu-column {
 		margin-right: 6px;
+		background: $navbar-bg;
 		&:after {
 			content: "";
             top: -1px;
@@ -227,9 +241,11 @@ $submenu-ratio:                 60px;
 	right: 0;
 	height: $submenu-ratio;
 	.percentage {
-		font-size: $core-font-size + 1;
+		font-size: $core-font-size + 0.8;
 		font-weight: 100;
 		line-height: $submenu-ratio;
+		display: inline-block;
+		margin-top: 5px;
 	}
 	i {
 		position: absolute;
@@ -237,6 +253,23 @@ $submenu-ratio:                 60px;
 		right: 1rem;
 		font-size: $core-font-size + 0.5;
 		cursor: pointer;
+	}
+	.add-column {
+		font-size: $core-font-size + 0.2;
+		cursor: pointer;
+		position: absolute;
+		right: -10px;
+		z-index: 1;
+		padding: 5px;
+		color: lighten($navbar-color, 20%);
+		@include transition(color 0.2s);
+		@extend %vertical-align;
+		&.first {
+			display: none;
+		}
+		&:hover {
+			color: $navbar-color;
+		}
 	}
 }
 
