@@ -7,9 +7,9 @@
             <div class="submenu-column">
                 {% include 'menu/list.html.twig' with {'item': special ? override : item, 'group': group} %}
                 {% set size = item.groups|length %}
-                <div class="submenu-ratio">
-                    <span class="percentage"><span contenteditable="true">{{ (100/size)|number_format(1) }}</span> %</span>
-                </div>
+            </div>
+            <div class="submenu-ratio">
+                <span class="percentage"><span contenteditable="true">{{ (100/size)|number_format(1) }}</span> %</span>
             </div>
         </div>
     {% endfor %}

@@ -1,4 +1,4 @@
-<a class="menu-item" data-g5-ajaxify data-g5-ajaxify-params="{{ '{"inline":1}'|escape('html_attr') }}" data-g5-ajaxify-target="[data-g5-menu-{{ target|e }}]{% if item.level > 1 %} ul.submenu-items{% endif %}" href="{{ gantry.route('menu', item.path) }}">
+<a class="menu-item" data-g5-ajaxify data-g5-ajaxify-params="{{ '{"inline":1}'|escape('html_attr') }}" data-g5-ajaxify-target="[data-g5-menu-{{ target|e }}]{% if item.level > 1 %} .submenu-column{% endif %}" href="{{ gantry.route('menu', item.path) }}">
     {% if item.menu_image %}
         <img src="{{ item.menu_image|e }}" alt="{{ item.title|e }}" />
         {% if item.menu_text %}
