@@ -5,18 +5,18 @@ var prime   = require('prime'),
 
 var Blocks = require('./blocks/');
 
-var forOwn  = require('mout/object/forOwn'),
-    forEach = require('mout/collection/forEach'),
-    size    = require('mout/collection/size'),
-    isArray = require('mout/lang/isArray'),
-    flatten = require('mout/array/flatten'),
-    guid    = require('mout/random/guid'),
+var forOwn     = require('mout/object/forOwn'),
+    forEach    = require('mout/collection/forEach'),
+    size       = require('mout/collection/size'),
+    isArray    = require('mout/lang/isArray'),
+    flatten    = require('mout/array/flatten'),
+    guid       = require('mout/random/guid'),
 
-    set     = require('mout/object/set'),
-    unset   = require('mout/object/unset'),
-    get     = require('mout/object/get'),
-    fillIn  = require('mout/object/fillIn'),
-    omit    = require('mout/object/omit');
+    set        = require('mout/object/set'),
+    unset      = require('mout/object/unset'),
+    get        = require('mout/object/get'),
+    deepFillIn = require('mout/object/deepFillIn'),
+    omit       = require('mout/object/omit');
 
 require('elements/attributes');
 require('elements/traversal');
@@ -128,7 +128,12 @@ var Builder = new prime({
             return;
         }
 
-        var Element = new Blocks[value.type](fillIn({id: key, attributes: {}, subtype: value.subtype || false, builder: this}, omit(value, 'children')));
+        var Element = new Blocks[value.type](deepFillIn({
+            id: key,
+            attributes: {},
+            subtype: value.subtype || false,
+            builder: this
+        }, omit(value, 'children')));
 
         if (!parent) {
             Element.block.insert(root);
