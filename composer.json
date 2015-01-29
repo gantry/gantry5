@@ -9,7 +9,6 @@
         "php": ">=5.4.0",
         "symfony/yaml": "2.5.*",
         "twig/twig": "v1.15.1",
-        "tracy/tracy": "dev-master",
         "pimple/pimple": "~3.0",
         "filp/whoops": "1.2.*@dev",
         "rockettheme/toolbox": "dev-develop",
