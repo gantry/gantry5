@@ -153,12 +153,12 @@ $submenu-ratio:                 60px;
 	            z-index: 5;
 	            color: $navbar-color;
 	            font-family: FontAwesome, sans-serif;
-	            content: "\f0c9";
+	            content: "\f07e";
 	            border-radius: 0 0 $core-border-radius $core-border-radius;
 	            left: 50%;
 	            margin-left: -25px;
-	            cursor: move;
-	            font-size: $core-font-size - 0.3;
+	            cursor: ew-resize;
+	            font-size: $core-font-size - 0.1;
 			}
 			.submenu-column {
 
@@ -187,6 +187,11 @@ $submenu-ratio:                 60px;
 			}
 		}
 		&:only-child {
+			&:hover {
+				&:before {
+					display: none;
+				}
+			}
 			.submenu-ratio {
 				.first {
 					left: 0;
