@@ -199,6 +199,18 @@ var DragDrop = new prime({
     },
 
     move: function (event) {
+        var didItMove = {
+            x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX,
+            y: event.changedTouches ? event.changedTouches[0].pageY : event.pageY
+        };
+
+        if (Math.abs(didItMove.x - this.origin.x) <= 3 && Math.abs(didItMove.y - this.origin.y) <= 3) {
+            //console.log("Boohoo! My mouse is so sensitive! :) => ", 'x', Math.abs(didItMove.x - this.origin.x), 'y', Math.abs(didItMove.y - this.origin.y));
+            return;
+        }
+
+        //console.log("I'm officially dragging now! => ", 'x', Math.abs(didItMove.x - this.origin.x), 'y', Math.abs(didItMove.y - this.origin.y));
+
         if (!this.moved) {
             this.element.style({opacity: 0.5});
             this.emit('dragdrop:move:once', this.element);

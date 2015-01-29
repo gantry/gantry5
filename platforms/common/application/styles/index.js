@@ -8,6 +8,7 @@ var ready         = require('elements/domready'),
     contains      = require('mout/array/contains'),
     size          = require('mout/collection/size'),
 
+    getAjaxURL    = require('../utils/get-ajax-url').config,
     getAjaxSuffix = require('../utils/get-ajax-suffix');
 
 require('../ui/popover');
@@ -33,6 +34,9 @@ ready(function() {
         event.stopPropagation();
         event.preventDefault();
 
+        var currentConfig = $('#configuration-selector').value();
+
+        //request('post', getAjaxURL(currentConfig + '/styles/resetcache'), function() {
         request('post', window.location.href + '/resetcache', function() {
            // toastr;
           toastr.success('The CSS Compiled has been successfully reset!', 'CSS Compiled Reset');
