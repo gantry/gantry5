@@ -3,7 +3,7 @@
     {%- if particle.css.class %} class="{{ particle.css.class|e }}"{% endif %} role="navigation">
     <ul class="g-grid g-toplevel menu-selector">
         {% for child in item %}
-            <li>
+            <li data-mm-id="{{ child.path }}" data-mm-level="{{ child.level }}">
                 {% include 'menu/item.html.twig' with {'item': child, 'target': 'columns' } %}
             </li>
         {% endfor %}

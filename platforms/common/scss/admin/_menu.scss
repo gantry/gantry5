@@ -72,6 +72,7 @@ $submenu-ratio:                 60px;
 		border: 1px solid #ddd;
 		color: $navbar-color;
 		display: inline-block;
+        @include transition(background-color 0.1s ease-out);
 		.parent-indicator {
 			&:before {
 				content: "\f078";
@@ -104,6 +105,11 @@ $submenu-ratio:                 60px;
 				color: $white;
 			}
 		}
+
+        &.placeholder {
+            margin: 3px -1px;
+            border-color: $black;
+        }
 	}
 	span {
 		line-height: $core-line-height + 0.5;
