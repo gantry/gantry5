@@ -73,6 +73,7 @@ $submenu-ratio:                 60px;
 		color: $navbar-color;
 		display: inline-block;
         @include transition(background-color 0.1s ease-out);
+        
 		.parent-indicator {
 			&:before {
 				content: "\f078";

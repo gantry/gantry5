@@ -82,7 +82,6 @@ var MenuManager = new prime({
     location: function(event, location, target/*, element*/) {
         target = $(target);
         if (!this.placeholder) { this.placeholder = zen('li.block.placeholder[data-mm-placeholder]').style({ display: 'none' }); }
-        //this.original.style({display: 'none'});
 
         var position,
             dataType = target.parent('.g-main-nav') || target.matches('.g-main-nav') ? 'main' : 'columns',
