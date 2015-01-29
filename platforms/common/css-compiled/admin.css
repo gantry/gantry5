@@ -3,7 +3,7 @@
   padding: 0;
   list-style: none; }
 
-#g5-container .submenu-ratio i, #g5-container .submenu-ratio .add-column {
+#g5-container .submenu-ratio i {
   position: relative;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -1316,6 +1316,21 @@ a {
   margin-left: 0.2rem;
   display: inline-block;
   vertical-align: middle; }
+#g5-container .column-container {
+  position: relative; }
+  #g5-container .column-container .add-column {
+    position: absolute;
+    right: 5px;
+    bottom: 18px;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.2rem;
+    color: #b3b3b3;
+    -webkit-transition: color 0.2s;
+    -moz-transition: color 0.2s;
+    transition: color 0.2s; }
+    #g5-container .column-container .add-column:hover {
+      color: #808080; }
 #g5-container .submenu-selector {
   border: 6px solid #fff;
   background: #DADADA;
@@ -1342,21 +1357,12 @@ a {
       margin-left: -25px;
       cursor: ew-resize;
       font-size: 0.9rem; }
-    #g5-container .submenu-selector .g-block:first-child .submenu-ratio .first {
-      left: 0;
-      right: auto;
-      display: block; }
     #g5-container .submenu-selector .g-block:last-child .submenu-column {
       margin-right: 0; }
       #g5-container .submenu-selector .g-block:last-child .submenu-column:after {
         display: none; }
-    #g5-container .submenu-selector .g-block:last-child .submenu-ratio .add-column {
-      right: 0; }
     #g5-container .submenu-selector .g-block:only-child:hover:before {
       display: none; }
-    #g5-container .submenu-selector .g-block:only-child .submenu-ratio .first {
-      left: 0;
-      right: auto; }
   #g5-container .submenu-selector .submenu-column {
     margin-right: 6px;
     background: #DADADA; }
@@ -1424,21 +1430,6 @@ a {
     right: 1rem;
     font-size: 1.5rem;
     cursor: pointer; }
-  #g5-container .submenu-ratio .add-column {
-    font-size: 1.2rem;
-    cursor: pointer;
-    position: absolute;
-    right: -10px;
-    z-index: 1;
-    padding: 5px;
-    color: #b3b3b3;
-    -webkit-transition: color 0.2s;
-    -moz-transition: color 0.2s;
-    transition: color 0.2s; }
-    #g5-container .submenu-ratio .add-column.first {
-      display: none; }
-    #g5-container .submenu-ratio .add-column:hover {
-      color: #808080; }
 
 @-webkit-keyframes fadeIn {
   from {

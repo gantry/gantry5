@@ -132,6 +132,23 @@ $submenu-ratio:                 60px;
 	}
 }
 
+.column-container {
+	position: relative;
+	.add-column {
+		position: absolute;
+		right: 5px;
+		bottom: 18px;
+		cursor: pointer;
+		padding: 5px;
+		font-size: $core-font-size + 0.2;
+		color: lighten($navbar-color, 20%);
+		@include transition(color 0.2s);
+		&:hover {
+			color: $navbar-color;
+		}
+	}
+}
+
 .submenu-selector {
 	border: 6px solid #fff;
 	background: $navbar-bg;
@@ -164,15 +181,6 @@ $submenu-ratio:                 60px;
 
 			}
 		}
-		&:first-child {
-			.submenu-ratio {
-				.first {
-					left: 0;
-					right: auto;
-					display: block;
-				}
-			}
-		}
 		&:last-child {
 			.submenu-column {
 				margin-right: 0;
@@ -180,22 +188,11 @@ $submenu-ratio:                 60px;
 					display: none;
 				}
 			}
-			.submenu-ratio {
-				.add-column {
-					right: 0;
-				}
-			}
 		}
 		&:only-child {
 			&:hover {
 				&:before {
 					display: none;
-				}
-			}
-			.submenu-ratio {
-				.first {
-					left: 0;
-					right: auto;
 				}
 			}
 		}
@@ -286,23 +283,6 @@ $submenu-ratio:                 60px;
 		right: 1rem;
 		font-size: $core-font-size + 0.5;
 		cursor: pointer;
-	}
-	.add-column {
-		font-size: $core-font-size + 0.2;
-		cursor: pointer;
-		position: absolute;
-		right: -10px;
-		z-index: 1;
-		padding: 5px;
-		color: lighten($navbar-color, 20%);
-		@include transition(color 0.2s);
-		@extend %vertical-align;
-		&.first {
-			display: none;
-		}
-		&:hover {
-			color: $navbar-color;
-		}
 	}
 }
 
