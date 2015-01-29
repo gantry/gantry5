@@ -284,6 +284,7 @@
         }
 
         .particle, .position, .spacer, .pagecontent, .atom {
+            cursor: move;
             padding: 6px 13px;
             color: $white;
             background: #aaaaaa;
