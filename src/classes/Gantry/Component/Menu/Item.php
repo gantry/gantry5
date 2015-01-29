@@ -50,7 +50,7 @@ class Item implements \ArrayAccess, \Iterator
         return $this->groups ?: [$this->items['children']];
     }
 
-    public function group($i)
+    public function getGroup($i)
     {
         $groups = $this->groups();
         $i = (int) $i;
@@ -115,6 +115,7 @@ class Item implements \ArrayAccess, \Iterator
 
         if ($children) {
             $ordered = [];
+            $this->groups[0] = [];
             foreach ($groups as $i => $ordering) {
                 if (!$ordering || !is_array($ordering)) {
                     continue;

@@ -1,0 +1,22 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+<form method="POST">
+    <div class="pull-right">
+        <button class="button">Save</button>
+    </div>
+    <div id="settings" class="cards-wrapper">
+        <div class="card settings-block">
+            <h4>
+                Menu Item: /{{ path }}
+                {% if blueprints.form.fields.enabled %}
+                {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'name': 'enabled', 'field': blueprints.form.fields.enabled, 'value': data.enabled} %}
+                {% endif %}
+            </h4>
+            <div class="inner-params">
+                {% include 'forms/fields.html.twig' %}
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,6 +1,6 @@
 <li class="config-select-wrap">
     {# TODO: we need to switch the selected attribute properly and update the active page based on the selected on, right now it's styles #}
-    <select id="configuration-selector" class="config-select" data-selectize="{{ {allowEmptyOption: true}|json_encode|e('html_attr') }}">
+    <select id="configuration-selector" class="config-select" data-selectize-ajaxify data-selectize="{{ {allowEmptyOption: true}|json_encode|e('html_attr') }}">
         {% set user_conf = gantry.configurations.copy.user %}
         {% for current in user_conf %}
             <option value="{{ current|e }}"

@@ -3,31 +3,31 @@
 {% block gantry %}
     <div class="menu-header">
         <h2>Menu Editor</h2>
-        <select data-selectize class="menu-select-wrap">
-            <option selected>Main Menu</option>
-            <option>Alternate Menu</option>
+        <select data-selectize-ajaxify data-selectize data-g5-ajaxify-target="[data-g5-content]" class="menu-select-wrap">
+            {% for menu_name in menus %}
+            <option value="{{ menu_name|e }}"
+                    {% if id == menu_name %}selected="selected"{% endif %}
+                    data-data="{{ {url: gantry.route('menu', menu_name)}|json_encode|e('html_attr') }}">
+                {{ menu_name|capitalize|e }}
+            </option>
+            {% endfor %}
         </select>
     </div>
-    <div id="menu-editor">
-        {% include 'menu/base.html.twig' with {'item': menu.root} %}
-    </div>
 
-    <hr />
-    
     <div id="settings" class="cards-wrapper">
         <div class="card settings-block">
             <h4>
                 Menu Settings
-                <span class="enabler">
-                    <input type="hidden" value="{{ config.get(prefix ~ 'enabled', 0)|abs }}" />
-                    <span class="toggle"><span class="knob"></span></span>
-                </span>
             </h4>
 
             <div class="inner-params">
                 {% include 'forms/fields.html.twig'
-                with {'blueprints': blueprints.form, 'data':  config, 'prefix': prefix, 'skip': ['enabled']} %}
+                with {'blueprints': blueprints.form, 'data':  data, 'skip': ['enabled']} %}
             </div>
         </div>
+    </div>
+
+    <div id="menu-editor">
+        {% include 'menu/base.html.twig' with {'item': menu.root} %}
     </div>
 {% endblock %}

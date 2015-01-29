@@ -2,11 +2,15 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Config\Config;
+use Gantry\Component\Config\ConfigFileFinder;
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Menu\Item;
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Menu implements \ArrayAccess, \Iterator
 {
@@ -18,6 +22,7 @@ class Menu implements \ArrayAccess, \Iterator
     protected $base;
     protected $active;
     protected $params;
+    protected $config;
 
     /**
      * @var array
@@ -25,11 +30,11 @@ class Menu implements \ArrayAccess, \Iterator
     protected $items;
 
     protected $defaults = [
-        'menu' => null,
-        'base' => 0,
+        'menu' => 'mainmenu',
+        'base' => '/',
         'startLevel' => 1,
         'endLevel' => 0,
-        'showAllChildren' => false,
+        'showAllChildren' => true,
         'highlightAlias' => true,
         'highlightParentAlias' => true,
         'window_open' => null
@@ -43,7 +48,17 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function instance(array $params = [])
     {
-        $params += $this->defaults;
+        if (!isset($params['config'])) {
+            $params = $this->defaults;
+        }   else {
+            $params = $params['config'] + $this->defaults;
+        }
+
+        $menus = $this->getMenus();
+
+        if (!in_array($params['menu'], $menus)) {
+            throw new \RuntimeException('Menu not found', 404);
+        }
 
         $instance = clone $this;
         $instance->params = $params;
@@ -51,6 +66,35 @@ class Menu implements \ArrayAccess, \Iterator
         $instance->items = $instance->getList($params);
 
         return $instance;
+    }
+
+    public function getMenus()
+    {
+        static $list;
+
+        if ($list === null) {
+            $gantry = Gantry::instance();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+
+            $finder = new ConfigFileFinder();
+
+            $list = $finder->getFiles($locator->findResources('gantry-config://menu', false));
+
+            // Always have main menu.
+            $list += ['mainmenu' => 1];
+
+            $list = array_keys($list);
+            sort($list);
+        }
+
+        return $list;
+    }
+
+    public function name()
+    {
+        return $this->params['menu'];
     }
 
     public function root()
@@ -120,7 +164,8 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function getMenuItems()
     {
-        $items = (array) isset($this->params['items']) ? $this->params['items'] : null;
+        $config = $this->getConfig();
+        $items = isset($config['items']) ? $config['items'] : [];
 
         $folder = PRIME_ROOT . '/pages';
         if (!is_dir($folder)) {
@@ -139,21 +184,29 @@ class Menu implements \ArrayAccess, \Iterator
         return $items;
     }
 
+    public function getConfig()
+    {
+        if (!$this->config) {
+            $menu = $this->params['menu'];
+
+            $this->config = new Config(CompiledYamlFile::instance("gantry-config://menu/{$menu}.yaml")->content());
+        }
+
+        return $this->config;
+    }
+
     /**
      * Get a list of the menu items.
      *
      * Logic has been mostly copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
      * We should keep the contents of the function similar to Joomla in order to review it against any changes.
      *
-     * @param  array  $config
+     * @param  array  $params
      *
      * @return array
      */
-    protected function getList(array $config)
+    protected function getList(array $params)
     {
-        $items = (array) (isset($config['items']) ? $config['items'] : null);
-        $params = (array) (isset($config['config']) ? $config['config'] : null);
-
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
 
@@ -172,6 +225,8 @@ class Menu implements \ArrayAccess, \Iterator
         if (!is_dir($folder)) {
             return [];
         }
+        $config = $this->getConfig();
+        $items = isset($config['items']) ? $config['items'] : [];
         $menuItems = array_unique(array_merge(Folder::all($folder, $options), array_keys($items)));
         sort($menuItems);
 
@@ -241,7 +296,7 @@ class Menu implements \ArrayAccess, \Iterator
             $all[$item->path] = $item;
         }
 
-        $ordering = (array) (isset($config['ordering']) ? $config['ordering'] : null);
+        $ordering = $config['ordering'] ? $config['ordering'] : [];
         $this->sortAll($all, $ordering);
 
         return $all;

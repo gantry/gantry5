@@ -85,27 +85,36 @@ History.Adapter.bind(window, 'statechange', function() {
 
         var selects = $('[data-selectize]');
         if (selects) { selects.selectize(); }
+        selectorChangeEvent();
 
         body.emit('statechangeEnd');
     });
 });
 
 var selectorChangeEvent = function(){
-    var selector = $('#configuration-selector'), selectize;
-    if (selector && (selectize = selector.selectize())) {
-        selectize = selectize.selectizeInstance;
-        selectize.on('change', function(value){
-            var options = selectize.Options;
+    var selectors = $('[data-selectize-ajaxify]');
+    if (!selectors) { return; }
+
+    selectors.forEach(function(selector) {
+        selector = $(selector);
+        var selectize = selector.selectize().selectizeInstance;
+        if (!selectize || selectize.HasChangeEvent) { return; }
+
+        selectize.on('change', function() {
+            var value = selectize.getValue(),
+                options = selectize.Options;
 
             selectize.input
                 .data('g5-ajaxify', '')
-                .data('g5-ajaxify-target', '[data-g5-content-wrapper]')
+                .data('g5-ajaxify-target', selector.data('g5-ajaxify-target') || '[data-g5-content-wrapper]')
                 .data('g5-ajaxify-href', options[value].url)
                 .data('g5-ajaxify-params', options[value].params ? JSON.stringify(options[value].params) : null);
 
-            $('body').emit('click', {target: selectize.input});
+            $('body').emit('click', { target: selectize.input });
         });
-    }
+
+        selectize.HasChangeEvent = true;
+    });
 };
 
 
@@ -151,14 +160,14 @@ domready(function() {
         }
     });
 
-    body.on('statechangeAfter', function(data){
-        if (!data || !data.Data.params) { return true; }
+    /*body.on('statechangeAfter', function(data){
+        if (!data || (!data.Data.params && !data.target.data('selectize'))) { return true; }
         var params = JSON.parse(data.Data.params);
 
-        if (!params.navbar) { return true; }
+        if (!params.navbar && !data.target.data('selectize')) { return true; }
 
         selectorChangeEvent();
-    });
+    });*/
 
     // attach change events to configurations selector
     selectorChangeEvent();
