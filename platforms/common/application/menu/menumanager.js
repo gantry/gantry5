@@ -42,6 +42,8 @@ var MenuManager = new prime({
     },
 
     click: function(event, element) {
+        element.addClass('active').siblings().removeClass('active');
+        element.emit('click');
         var link = element.find('a');
         if (link) { link[0].click(); }
     },
