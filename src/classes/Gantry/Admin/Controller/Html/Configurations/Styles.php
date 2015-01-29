@@ -26,7 +26,8 @@ class Styles extends HtmlController
         'POST' => [
             '/'         => 'forbidden',
             '/blocks'   => 'forbidden',
-            '/blocks/*' => 'save'
+            '/blocks/*' => 'save',
+            '/resetcache' => 'resetcache'
         ],
         'PUT' => [
             '/'         => 'forbidden',
@@ -121,10 +122,10 @@ class Styles extends HtmlController
     }
 
 
-    public function resetCache($type, $in, $out) {
+    public function resetcache() {
         $compiler = new Stylesheet\ScssPhp();
         $compiler->getCompilers();
-        $compiler->compileFile($in,$out);
+        $compiler->compileFile('template','template');
     }
 
     public function save($id)

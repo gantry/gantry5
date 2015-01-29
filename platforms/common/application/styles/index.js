@@ -2,6 +2,7 @@
 var ready         = require('elements/domready'),
     $             = require('elements/attributes'),
     modal         = require('../ui').modal,
+    toastr        = require('../ui').toastr,
     request       = require('agent'),
     zen           = require('elements/zen'),
     contains      = require('mout/array/contains'),
@@ -32,7 +33,7 @@ ready(function() {
         event.stopPropagation();
         event.preventDefault();
 
-        request('url', 'data', function(){
+        request('post', window.location.href + '/resetcache', function() {
            // toastr;
           toastr.success('The CSS Compiled has been successfully reset!', 'CSS Compiled Reset');
         })
