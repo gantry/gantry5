@@ -1,21 +1,21 @@
-var prime = require('prime'),
-    Emitter = require('prime/emitter'),
-    Bound = require('prime-util/prime/bound'),
-    Options = require('prime-util/prime/options'),
-    $ = require('elements'),
-    ready = require('elements/domready'),
-    zen = require('elements/zen'),
+var prime      = require('prime'),
+    Emitter    = require('prime/emitter'),
+    Bound      = require('prime-util/prime/bound'),
+    Options    = require('prime-util/prime/options'),
+    $          = require('elements'),
+    ready      = require('elements/domready'),
+    zen        = require('elements/zen'),
 
-    forEach = require('mout/collection/forEach'),
-    bind = require('mout/function/bind'),
-    clamp = require('mout/math/clamp');
+    forEach    = require('mout/collection/forEach'),
+    bind       = require('mout/function/bind'),
+    clamp      = require('mout/math/clamp');
 
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
 var MOUSEDOWN = 'mousedown' || 'touchstart',
     MOUSEMOVE = 'mousemove' || 'touchmove',
-    MOUSEUP = 'mouseup' || 'touchend',
-    FOCUSIN = isFirefox ? 'focus' : 'focusin';
+    MOUSEUP   = 'mouseup' || 'touchend',
+    FOCUSIN   = isFirefox ? 'focus' : 'focusin';
 
 var ColorPicker = new prime({
     mixin: [Options, Bound],
@@ -29,7 +29,7 @@ var ColorPicker = new prime({
 
     attach: function() {
         var body = $('body');
-        body.delegate(MOUSEDOWN, '.colorpicker i', bind(function(event, element){
+        body.delegate(MOUSEDOWN, '.colorpicker i', bind(function(event, element) {
             var input = $(element).sibling('input');
             input[0].focus();
             this.show(event, input);
@@ -481,7 +481,7 @@ var ColorPicker = new prime({
         });
     },
 
-    getValue: function(hex){
+    getValue: function(hex) {
         if (this.opacity == 1) { return hex; }
         var rgb = hex2rgb(hex);
         return 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + this.opacity + ')';
