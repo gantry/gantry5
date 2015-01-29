@@ -187,9 +187,14 @@ class Menu implements \ArrayAccess, \Iterator
     public function getConfig()
     {
         if (!$this->config) {
+            $gantry = Gantry::instance();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+
             $menu = $this->params['menu'];
 
-            $this->config = new Config(CompiledYamlFile::instance("gantry-config://menu/{$menu}.yaml")->content());
+            $this->config = new Config(CompiledYamlFile::instance($locator("gantry-config://menu/{$menu}.yaml"))->content());
         }
 
         return $this->config;
