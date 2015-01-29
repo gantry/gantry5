@@ -23,8 +23,8 @@ var Resizer = new prime({
     },
     constructor: function(container, options) {
         this.setOptions(options);
-        this.history = this.options.history;
-        this.builder = this.options.builder;
+        this.history = this.options.history || {};
+        this.builder = this.options.builder || {};
         this.map = this.builder.map;
         this.origin = {
             x: 0,

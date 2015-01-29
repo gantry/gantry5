@@ -60,17 +60,19 @@ $submenu-ratio:                 60px;
 
 .menu-selector {
 	margin: $content-margin 0;
-	padding: 2px;
+	padding: 4px;
 	background: $white;
 	border: 1px solid #ddd;
 	border-radius: $core-border-radius;
 
 	li {
 		position: relative;
-		margin: 2px;
-		background: $navbar-bg;
+		margin: 3px;
+		background: lighten($navbar-bg, 8%);
+		border: 1px solid #ddd;
 		color: $navbar-color;
 		display: inline-block;
+        @include transition(background-color 0.1s ease-out);
 		.parent-indicator {
 			&:before {
 				content: "\f078";
@@ -98,10 +100,16 @@ $submenu-ratio:                 60px;
 
 		&:hover, &.active {
 			background: $tertiary-accent;
+			border-color: transparent;
 			a {
 				color: $white;
 			}
 		}
+
+        &.placeholder {
+            margin: 3px -1px;
+            border-color: $black;
+        }
 	}
 	span {
 		line-height: $core-line-height + 0.5;
@@ -113,7 +121,7 @@ $submenu-ratio:                 60px;
 }
 
 .submenu-selector {
-	border: 4px solid #fff;
+	border: 6px solid #fff;
 	background: $navbar-bg;
 	box-shadow: 0 0 0 1px #ddd;
 	border-radius: $core-border-radius;
@@ -174,7 +182,7 @@ $submenu-ratio:                 60px;
 			content: "";
             top: -1px;
             bottom: $submenu-ratio - 1;
-            width: 4px;
+            width: 6px;
             background: $white;
             position: absolute;
             right: 1px;

@@ -41,7 +41,7 @@
         }
 
         &.moving .g-grid > .g-block:after, &.moving .g-grid > .g-block > [data-lm-blocktype]:after,
-        &.moving .g-grid:hover > .g-block [data-lm-blocktype]:after {
+        &.moving .g-grid:hover > .g-block [data-lm-blocktype]:not(:empty):after {
             display: none;
         }
 
@@ -284,6 +284,7 @@
         }
 
         .particle, .position, .spacer, .pagecontent, .atom {
+            cursor: move;
             padding: 6px 13px;
             color: $white;
             background: #aaaaaa;

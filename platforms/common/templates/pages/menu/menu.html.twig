@@ -4,16 +4,13 @@
     <div class="menu-header">
         <h2>Menu Editor</h2>
         <select data-selectize-ajaxify data-selectize data-g5-ajaxify-target="[data-g5-content]" class="menu-select-wrap">
-            <option value="mainmenu"
-                    {% if 1 %}selected="selected"{% endif %}
-                    data-data="{{ {url: gantry.route('menu', 'mainmenu')}|json_encode|e('html_attr') }}">
-                Main Menu
+            {% for item in menus %}
+            <option value="{{ item|e }}"
+                    {% if id == item %}selected="selected"{% endif %}
+                    data-data="{{ {url: gantry.route('menu', item)}|json_encode|e('html_attr') }}">
+                {{ item|capitalize|e }}
             </option>
-            <option value="extended"
-                    {% if 0 %}selected="selected"{% endif %}
-                    data-data="{{ {url: gantry.route('menu', 'extended')}|json_encode|e('html_attr') }}">
-                Alternate Menu
-            </option>
+            {% endfor %}
         </select>
     </div>
     <div id="menu-editor">
