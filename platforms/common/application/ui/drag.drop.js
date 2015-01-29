@@ -64,6 +64,7 @@ var DragDrop = new prime({
         if (event.which && event.which !== 1 || $(event.target).matches(this.options.exclude)) { return true; }
         this.element = $(element);
         this.matched = false;
+        this.moved = false;
 
         this.emit('dragdrop:beforestart', event, this.element);
 
@@ -119,7 +120,6 @@ var DragDrop = new prime({
 
         this.element.style({
             'pointer-events': 'none',
-            opacity: 0.5,
             zIndex: 100
         });
 
@@ -131,6 +131,22 @@ var DragDrop = new prime({
     },
 
     stop: function (event) {
+        if (!this.moved) {
+            // this is just a click
+            this.element.style({transform: this.origin.transform || 'translate(0, 0)'});
+            this.emit('dragdrop:stop', event, this.matched, this.element);
+            this._removeStyleAttribute(this.element);
+            this.emit('dragdrop:stop:animation', this.element);
+            this.emit('dragdrop:click', event, this.element);
+
+            $(document).off(this.EVENTS.MOVE, this.bound('move'));
+            $(document).off(this.EVENTS.STOP, this.bound('stop'));
+            this.element = null;
+
+            return;
+        }
+
+
         var settings = { duration: '250ms' };
 
         if (this.removeElement) { return this.emit('dragdrop:stop:erase', event, this.element); }
@@ -183,6 +199,12 @@ var DragDrop = new prime({
     },
 
     move: function (event) {
+        if (!this.moved) {
+            this.element.style({opacity: 0.5});
+            this.emit('dragdrop:move:once', this.element);
+        }
+        this.moved = true;
+
         var clientX = event.clientX || (event.touches && event.touches[0].clientX) || 0,
             clientY = event.clientY || (event.touches && event.touches[0].clientY) || 0,
             overing = document.elementFromPoint(clientX, clientY),
@@ -266,8 +288,10 @@ var DragDrop = new prime({
     },
 
     _removeStyleAttribute: function (element) {
-        //var flex = $(element).compute('flex');
-        $(element || this.element).attribute('style', null);//.style({flex: flex});
+        element = $(element || this.element);
+        if (element.data('mm-id')) { return; }
+
+        element.attribute('style', null);//.style({flex: flex});
         //$(element || this.element).style({'pointer-events': 'auto', 'position': 'inherit', 'z-index': 'inherit'});
     }
 

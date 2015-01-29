@@ -80,7 +80,6 @@ var LayoutManager = new prime({
     inherits: Emitter,
 
     constructor: function(element, options) {
-        //if (!$('[data-lm-root]')) { return; }
         this.dragdrop = new DragDrop(element, options);
         this.resizer = new Resizer(element, options);
         this.eraser = new Eraser('[data-lm-eraseblock]', options);
@@ -200,7 +199,7 @@ var LayoutManager = new prime({
                 if (originalType !== 'grid' && !empty) { return; }
 
                 // grids cannot be dropped inside grids
-                if (dataType === 'grid' && empty) { return; }
+                if (originalType === 'grid' && empty) { return; }
 
                 // we are dropping a new particle into an empty grid, placeholder goes inside
                 if (empty) { this.placeholder.bottom(target); }

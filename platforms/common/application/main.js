@@ -39,6 +39,7 @@ module.exports = {
      domready: domready,
      agent   : require('agent'),*/
     lm: require('./lm'),
+    menu: require('./menu'),
     ui: require('./ui'),
     styles: require('./styles'),
     "$": elements,
