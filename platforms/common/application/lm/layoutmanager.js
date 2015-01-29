@@ -80,7 +80,6 @@ var LayoutManager = new prime({
     inherits: Emitter,
 
     constructor: function(element, options) {
-        //if (!$('[data-lm-root]')) { return; }
         this.dragdrop = new DragDrop(element, options);
         this.resizer = new Resizer(element, options);
         this.eraser = new Eraser('[data-lm-eraseblock]', options);
