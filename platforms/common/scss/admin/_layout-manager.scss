@@ -286,7 +286,7 @@
         .particle, .position, .spacer, .pagecontent, .atom {
             cursor: move;
             padding: 6px 13px;
-            color: $white;
+            color: rgba($white, 0.8);
             background: #aaaaaa;
             text-shadow: 1px 1px 0 #8F8F8F, -1px -1px 0 #8F8F8F, 1px -1px 0 #8F8F8F, -1px 1px 0 #8F8F8F, 1px 1px 0 #8F8F8F;
             margin-right: 6px;
@@ -337,7 +337,6 @@
             margin-top: -5px;
             margin-right: 5px;
             text-shadow: none;
-            opacity: 0.8;
         }
 
         .particle {
@@ -347,7 +346,7 @@
 
         .spacer {
             background-color: #eee;
-            color: #666;
+            color: rgba(#666, 0.8);
             text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
         }
 
