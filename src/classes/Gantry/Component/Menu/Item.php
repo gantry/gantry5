@@ -28,7 +28,6 @@ class Item implements \ArrayAccess, \Iterator
             'link' => $name,
             'parent_id' => $parent != '.' ? $parent : '',
             'children' => [],
-            'groups' => [],
             'layout' => 'list',
             'browserNav' => 0,
             'menu_text' => true,
@@ -51,7 +50,7 @@ class Item implements \ArrayAccess, \Iterator
         return $this->groups ?: [$this->items['children']];
     }
 
-    public function group($i)
+    public function getGroup($i)
     {
         $groups = $this->groups();
         $i = (int) $i;

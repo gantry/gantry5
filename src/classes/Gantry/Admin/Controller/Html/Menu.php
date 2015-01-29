@@ -46,10 +46,6 @@ class Menu extends HtmlController
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
 
-        // Detect special case to fetch only one column group (last part of the path was index number).
-        $last = end($path);
-        $group = (string) intval($last) === (string) $last ? array_pop($path) : null;
-
         // Load the menu.
         $resource = $this->loadResource($id);
 
@@ -61,11 +57,13 @@ class Menu extends HtmlController
 
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $id;
-        $this->params['blueprints'] = $this->loadBlueprints();
-        $this->params['menu'] = $resource;
-        $this->params['item'] = $item;
         $this->params['menus'] = $resource->getMenus();
+        $this->params['blueprints'] = $this->loadBlueprints();
         $this->params['data'] = $resource->getConfig();
+        $this->params['menu'] = $resource;
+
+        // Detect special case to fetch only single column group.
+        $group = isset($_GET['group']) ? intval($_GET['group']) : null;
 
         if (empty($this->params['ajax']) || empty($_GET['inline'])) {
             // Handle special case to fetch only one column group.
@@ -82,9 +80,11 @@ class Menu extends HtmlController
         } else {
             // Get layout name.
             $layout = $this->layoutName(count($path) + (int) isset($group));
+
+            $this->params['item'] = $item;
             $this->params['group'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
 
-            return $this->container['admin.theme']->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params);
+            return $this->container['admin.theme']->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params) ?: '&nbsp;';
         }
     }
 

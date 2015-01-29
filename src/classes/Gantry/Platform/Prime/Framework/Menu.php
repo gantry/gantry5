@@ -54,6 +54,12 @@ class Menu implements \ArrayAccess, \Iterator
             $params = $params['config'] + $this->defaults;
         }
 
+        $menus = $this->getMenus();
+
+        if (!in_array($params['menu'], $menus)) {
+            throw new \RuntimeException('Menu not found', 404);
+        }
+
         $instance = clone $this;
         $instance->params = $params;
 
@@ -64,20 +70,24 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function getMenus()
     {
-        $gantry = Gantry::instance();
+        static $list;
 
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
+        if ($list === null) {
+            $gantry = Gantry::instance();
 
-        $finder = new ConfigFileFinder();
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
 
-        $list = $finder->getFiles($locator->findResources('gantry-config://menu', false));
+            $finder = new ConfigFileFinder();
 
-        // Always have main menu.
-        $list += ['mainmenu' => 1];
+            $list = $finder->getFiles($locator->findResources('gantry-config://menu', false));
 
-        $list = array_keys($list);
-        sort($list);
+            // Always have main menu.
+            $list += ['mainmenu' => 1];
+
+            $list = array_keys($list);
+            sort($list);
+        }
 
         return $list;
     }
