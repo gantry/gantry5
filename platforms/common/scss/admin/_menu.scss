@@ -58,13 +58,24 @@ $submenu-ratio:                 60px;
 
 }
 
-.menu-selector {
+.menu-selector-bar {
 	margin: $content-margin 0;
-	padding: 4px;
+	padding: 4px 28px 4px 4px;
 	background: $white;
 	border: 1px solid #ddd;
 	border-radius: $core-border-radius;
+	position: relative;
+}
 
+.global-menu-settings {
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	@include transform(translateY(-50%));
+	color: $navbar-color;
+}
+
+.menu-selector {
 	li {
 		position: relative;
 		margin: 3px;
@@ -172,6 +183,14 @@ $submenu-ratio:                 60px;
 			.submenu-ratio {
 				.add-column {
 					right: 0;
+				}
+			}
+		}
+		&:only-child {
+			.submenu-ratio {
+				.first {
+					left: 0;
+					right: auto;
 				}
 			}
 		}
