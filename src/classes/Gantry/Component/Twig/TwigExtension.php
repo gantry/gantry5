@@ -41,7 +41,8 @@ class TwigExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('nested', [$this, 'nestedFunc']),
             new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
-            new \Twig_SimpleFunction('parseHtmlHeader', [$this, 'parseHtmlHeaderFunc'])
+            new \Twig_SimpleFunction('parseHtmlHeader', [$this, 'parseHtmlHeaderFunc']),
+            new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc'])
         );
     }
 
@@ -155,5 +156,37 @@ class TwigExtension extends \Twig_Extension
         }
 
         return implode("\n", $raw);
+    }
+
+    public function colorContrastFunc($value) {
+        $value = str_replace(' ', '', $value);
+        $rgb = new \stdClass;
+        $opacity = 1;
+
+        if (substr($value, 0, 3) != 'rgb') {
+            $value = str_replace('#', '', $value);
+            if (strlen($value) == 3) {
+                $h0 = str_repeat(substr($value, 0, 1), 2);
+                $h1 = str_repeat(substr($value, 1, 1), 2);
+                $h2 = str_repeat(substr($value, 2, 1), 2);
+                $value = $h0 . $h1 . $h2;
+            }
+
+            $rgb->r = hexdec(substr($value, 0, 2));
+            $rgb->g = hexdec(substr($value, 2, 2));
+            $rgb->b = hexdec(substr($value, 4, 2));
+        } else {
+            preg_match("/(\\d+),\\s*(\\d+),\\s*(\\d+)(?:,\\s*(1\\.|0?\\.?[0-9]?+))?/uim", $value, $matches);
+            $rgb->r = $matches[1];
+            $rgb->g = $matches[2];
+            $rgb->b = $matches[3];
+            $opacity = isset($matches[4]) ? $matches[4] : 1;
+            $opacity = substr($opacity, 0, 1) == '.' ? '0' . $opacity : $opacity;
+        }
+
+        $yiq = ((($rgb->r * 299) + ($rgb->g * 587) + ($rgb->b * 114)) / 1000) >= 128;
+        $contrast = $yiq || ($opacity == 0 || (float) $opacity < 0.35);
+
+        return $contrast;
     }
 }
