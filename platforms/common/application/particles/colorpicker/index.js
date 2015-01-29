@@ -6,15 +6,17 @@ var prime      = require('prime'),
     ready      = require('elements/domready'),
     zen        = require('elements/zen'),
 
+    DragEvents = require('../../ui/drag.events'),
+
     forEach    = require('mout/collection/forEach'),
     bind       = require('mout/function/bind'),
     clamp      = require('mout/math/clamp');
 
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-var MOUSEDOWN = 'mousedown' || 'touchstart',
-    MOUSEMOVE = 'mousemove' || 'touchmove',
-    MOUSEUP   = 'mouseup' || 'touchend',
+var MOUSEDOWN = DragEvents.START,
+    MOUSEMOVE = DragEvents.MOVE,
+    MOUSEUP   = DragEvents.STOP,
     FOCUSIN   = isFirefox ? 'focus' : 'focusin';
 
 var ColorPicker = new prime({
