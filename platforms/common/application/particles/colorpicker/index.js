@@ -28,34 +28,35 @@ var ColorPicker = new prime({
     },
 
     attach: function() {
-        $('body').delegate(MOUSEDOWN, '.colorpicker i', bind(function(event, element){
+        var body = $('body');
+        body.delegate(MOUSEDOWN, '.colorpicker i', bind(function(event, element){
             var input = $(element).sibling('input');
             input[0].focus();
             this.show(event, input);
         }, this));
-        $('body').delegate(FOCUSIN, '.colorpicker input', this.bound('show'), true);
-        $('body').on(MOUSEDOWN, bind(function(event) {
+        body.delegate(FOCUSIN, '.colorpicker input', this.bound('show'), true);
+        body.on(MOUSEDOWN, bind(function(event) {
             var target = $(event.target);
             if (!target.parent('.cp-wrapper') && !target.parent('.colorpicker')) {
                 this.hide();
             }
         }, this));
 
-        $('body').delegate(MOUSEDOWN, '.cp-grid, .cp-slider, .cp-opacity-slider', bind(function(event, element) {
+        body.delegate(MOUSEDOWN, '.cp-grid, .cp-slider, .cp-opacity-slider', bind(function(event, element) {
             event.preventDefault();
             this.target = element;
             this.move(this.target, event, true);
         }, this));
 
-        $('body').on(MOUSEMOVE, bind(function(event) {
+        body.on(MOUSEMOVE, bind(function(event) {
             if (this.target) { this.move(this.target, event); }
         }, this));
 
-        $('body').on(MOUSEUP, bind(function() {
+        body.on(MOUSEUP, bind(function() {
             this.target = null;
         }, this));
 
-        $('body').delegate('keydown', '.colorpicker input', bind(function(event, element) {
+        body.delegate('keydown', '.colorpicker input', bind(function(event, element) {
             switch (event.keyCode) {
                 case 9: // tab
                     this.hide();
@@ -70,13 +71,13 @@ var ColorPicker = new prime({
         }, this));
 
         // Update on keyup
-        $('body').delegate('keyup', '.colorpicker input', bind(function() {
+        body.delegate('keyup', '.colorpicker input', bind(function() {
             this.updateFromInput(true);
             return true;
         }, this));
 
         // Update on paste
-        $('body').delegate('paste', '.colorpicker input', bind(function() {
+        body.delegate('paste', '.colorpicker input', bind(function() {
             setTimeout(bind(function() {
                 this.updateFromInput(true);
             }, this), 1);
