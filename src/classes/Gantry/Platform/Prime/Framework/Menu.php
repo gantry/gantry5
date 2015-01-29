@@ -2,12 +2,15 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Config\Config;
+use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Menu\Item;
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Menu implements \ArrayAccess, \Iterator
 {
@@ -57,6 +60,21 @@ class Menu implements \ArrayAccess, \Iterator
         $instance->items = $instance->getList($params);
 
         return $instance;
+    }
+
+    public function getMenus()
+    {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $finder = new ConfigFileFinder();
+
+        $list = array_keys($finder->getFiles($locator->findResources('gantry-config://menu', false)));
+        sort($list);
+
+        return $list;
     }
 
     public function name()

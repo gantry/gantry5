@@ -60,12 +60,13 @@ class Menu extends HtmlController
         }
 
         // Fill parameters to be passed to the template file.
-        $this->params['id'] = 'menu';
+        $this->params['id'] = $id;
         $this->params['prefix'] = 'particles.menu.' . $id;
         $this->params['route'] = 'particles.menu';
         $this->params['blueprints'] = $this->loadBlueprints();
         $this->params['menu'] = $resource;
         $this->params['item'] = $item;
+        $this->params['menus'] = $resource->getMenus();
 
         /** @var Config $config */
         $config = $this->container['config'];
@@ -111,6 +112,7 @@ class Menu extends HtmlController
         $blueprints = $this->loadBlueprints('menuitem');
 
         $this->params = [
+                'id' => $id,
                 'path' => $path,
                 'prefix' => $path . '.',
                 'blueprints' => ['fields' => $blueprints['form.fields.items.fields']],
