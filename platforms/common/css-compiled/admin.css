@@ -1336,12 +1336,12 @@ a {
       z-index: 5;
       color: #808080;
       font-family: FontAwesome, sans-serif;
-      content: "\f0c9";
+      content: "\f07e";
       border-radius: 0 0 0.1875rem 0.1875rem;
       left: 50%;
       margin-left: -25px;
-      cursor: move;
-      font-size: 0.7rem; }
+      cursor: ew-resize;
+      font-size: 0.9rem; }
     #g5-container .submenu-selector .g-block:first-child .submenu-ratio .first {
       left: 0;
       right: auto;
@@ -1352,6 +1352,8 @@ a {
         display: none; }
     #g5-container .submenu-selector .g-block:last-child .submenu-ratio .add-column {
       right: 0; }
+    #g5-container .submenu-selector .g-block:only-child:hover:before {
+      display: none; }
     #g5-container .submenu-selector .g-block:only-child .submenu-ratio .first {
       left: 0;
       right: auto; }
