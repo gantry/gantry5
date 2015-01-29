@@ -71,7 +71,12 @@ class Menu implements \ArrayAccess, \Iterator
 
         $finder = new ConfigFileFinder();
 
-        $list = array_keys($finder->getFiles($locator->findResources('gantry-config://menu', false)));
+        $list = $finder->getFiles($locator->findResources('gantry-config://menu', false));
+
+        // Always have main menu.
+        $list += ['mainmenu' => 1];
+
+        $list = array_keys($list);
         sort($list);
 
         return $list;
@@ -196,7 +201,6 @@ class Menu implements \ArrayAccess, \Iterator
         $this->base = $this->calcBase($params['base']);
 
         $path    = $this->base;
-        $menu    = $params['menu'];
         $start   = $params['startLevel'];
         $end     = $params['endLevel'];
         $showAll = $params['showAllChildren'];

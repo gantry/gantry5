@@ -61,17 +61,11 @@ class Menu extends HtmlController
 
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $id;
-        $this->params['prefix'] = 'particles.menu.' . $id;
-        $this->params['route'] = 'particles.menu';
         $this->params['blueprints'] = $this->loadBlueprints();
         $this->params['menu'] = $resource;
         $this->params['item'] = $item;
         $this->params['menus'] = $resource->getMenus();
-
-        /** @var Config $config */
-        $config = $this->container['config'];
-
-        $this->params['particle'] = $config->get('menu.' . $id);
+        $this->params['data'] = $resource->getConfig();
 
         if (empty($this->params['ajax']) || empty($_GET['inline'])) {
             // Handle special case to fetch only one column group.
