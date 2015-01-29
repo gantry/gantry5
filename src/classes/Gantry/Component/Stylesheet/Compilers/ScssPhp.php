@@ -45,7 +45,7 @@ class ScssPhp extends CssCompiler implements CssCompilerInterface
         return $out;
     }
 
-    public function compileFile($in = 'base', $out) {
+    public function compileFile($in, $out = null) {
         $inName = $in;
         $outName = null;
 
@@ -75,7 +75,7 @@ class ScssPhp extends CssCompiler implements CssCompilerInterface
 
         $pathOut = $locator->findResource('gantry-theme://css-compiled', true, true);
 
-        $file = File::instance($pathOut.'/'.$outName);
+        $file = File::instance($pathOut.'/'.$outName.'.css');
         // Attempt to lock the file for writing.
         $file->lock(false);
         //TODO: Better way to handle double writing files at same time
