@@ -6,9 +6,9 @@ use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\Stylesheet;;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Stylesheet\ScssCompiler;
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -123,9 +123,8 @@ class Styles extends HtmlController
 
 
     public function resetcache() {
-        $compiler = new Stylesheet\ScssPhp();
-        $compiler->getCompilers();
-        $compiler->compileFile('template','template');
+        $compiler = new ScssCompiler();
+        $compiler->compileFile('template');
     }
 
     public function save($id)
