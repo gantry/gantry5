@@ -640,13 +640,19 @@ var hex2rgb = function(hex) {
 ready(function() {
     var x = new ColorPicker();
     x.on('change', function(element, hex, opacity) {
+        var rgb = hex2rgb(hex),
+            yiq = (((rgb.r * 299) + (rgb.g * 587) + (rgb.b * 114)) / 1000) >= 128 ? 'dark' : 'light',
+            check = yiq == 'dark' || (!opacity || opacity < 0.35);
+
         if (opacity < 1) {
-            var rgb = hex2rgb(hex),
-                str = 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + opacity + ')';
+            var str = 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + opacity + ')';
             element.style({ backgroundColor: str });
         } else {
             element.style({ backgroundColor: hex });
         }
+
+        element.parent('.colorpicker')[!check ? 'addClass' : 'removeClass']('light-text');
+
     });
 });
 
