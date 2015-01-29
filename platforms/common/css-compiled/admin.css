@@ -1289,7 +1289,7 @@ a {
   display: none;
 }
 /* line 43, ../scss/admin/_layout-manager.scss */
-#g5-container .lm-blocks.moving .g-grid > .g-block:after, #g5-container .lm-blocks.moving .g-grid > .g-block > [data-lm-blocktype]:after, #g5-container .lm-blocks.moving .g-grid:hover > .g-block [data-lm-blocktype]:not(:empty):after {
+#g5-container .lm-blocks.moving .g-grid > .g-block:after, #g5-container .lm-blocks.moving .g-grid > .g-block > [data-lm-blocktype]:after, #g5-container .lm-blocks.moving .g-grid:hover > .g-block [data-lm-blocktype]:after {
   display: none;
 }
 /* line 51, ../scss/admin/_layout-manager.scss */
@@ -1507,7 +1507,6 @@ a {
 }
 /* line 286, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle, #g5-container .lm-blocks .position, #g5-container .lm-blocks .spacer, #g5-container .lm-blocks .pagecontent, #g5-container .lm-blocks .atom {
-  cursor: move;
   padding: 6px 13px;
   color: #fff;
   background: #aaaaaa;
@@ -1515,26 +1514,26 @@ a {
   margin-right: 6px;
   position: relative;
 }
-/* line 295, ../scss/admin/_layout-manager.scss */
+/* line 294, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle strong, #g5-container .lm-blocks .position strong, #g5-container .lm-blocks .spacer strong, #g5-container .lm-blocks .pagecontent strong, #g5-container .lm-blocks .atom strong {
   font-weight: bold;
   color: #fff;
 }
-/* line 300, ../scss/admin/_layout-manager.scss */
+/* line 299, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle > span, #g5-container .lm-blocks .position > span, #g5-container .lm-blocks .spacer > span, #g5-container .lm-blocks .pagecontent > span, #g5-container .lm-blocks .atom > span {
   position: relative;
   z-index: 2;
 }
-/* line 304, ../scss/admin/_layout-manager.scss */
+/* line 303, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle > span span, #g5-container .lm-blocks .position > span span, #g5-container .lm-blocks .spacer > span span, #g5-container .lm-blocks .pagecontent > span span, #g5-container .lm-blocks .atom > span span {
   display: block;
 }
-/* line 307, ../scss/admin/_layout-manager.scss */
+/* line 306, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle > span span:last-child, #g5-container .lm-blocks .position > span span:last-child, #g5-container .lm-blocks .spacer > span span:last-child, #g5-container .lm-blocks .pagecontent > span span:last-child, #g5-container .lm-blocks .atom > span span:last-child {
   opacity: 0.5;
   margin-top: -3px;
 }
-/* line 314, ../scss/admin/_layout-manager.scss */
+/* line 313, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle .float-right, #g5-container .lm-blocks .position .float-right, #g5-container .lm-blocks .spacer .float-right, #g5-container .lm-blocks .pagecontent .float-right, #g5-container .lm-blocks .atom .float-right {
   position: absolute;
   right: 13px;
@@ -1543,14 +1542,14 @@ a {
   line-height: 50px;
   float: inherit;
 }
-/* line 322, ../scss/admin/_layout-manager.scss */
+/* line 321, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle .float-right i, #g5-container .lm-blocks .position .float-right i, #g5-container .lm-blocks .spacer .float-right i, #g5-container .lm-blocks .pagecontent .float-right i, #g5-container .lm-blocks .atom .float-right i {
   line-height: 52px;
   cursor: pointer;
   position: relative;
   z-index: 2;
 }
-/* line 331, ../scss/admin/_layout-manager.scss */
+/* line 330, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle-size {
   font-weight: 100;
   font-size: 30px;
@@ -1562,28 +1561,28 @@ a {
   text-shadow: none;
   opacity: 0.8;
 }
-/* line 343, ../scss/admin/_layout-manager.scss */
+/* line 342, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle {
   background-color: #00B1D9;
   text-shadow: 1px 1px 0 #008DAD, -1px -1px 0 #008DAD, 1px -1px 0 #008DAD, -1px 1px 0 #008DAD, 1px 1px 0 #008DAD;
 }
-/* line 348, ../scss/admin/_layout-manager.scss */
+/* line 347, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .spacer {
   background-color: #eee;
   color: #666;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 }
-/* line 354, ../scss/admin/_layout-manager.scss */
+/* line 353, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .atom {
   background-color: #9055AF;
   text-shadow: 1px 1px 0 #633979, -1px -1px 0 #633979, 1px -1px 0 #633979, -1px 1px 0 #633979, 1px 1px 0 #633979;
 }
-/* line 359, ../scss/admin/_layout-manager.scss */
+/* line 358, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .pagecontent {
   background-color: #218fda;
   text-shadow: 1px 1px 0 #116AA6, -1px -1px 0 #116AA6, 1px -1px 0 #116AA6, -1px 1px 0 #116AA6, 1px 1px 0 #116AA6;
 }
-/* line 396, ../scss/admin/_layout-manager.scss */
+/* line 395, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder {
   text-align: center;
   color: #5987a0;
@@ -1593,7 +1592,7 @@ a {
   padding: 1px;
   flex: 0 1 100%;
 }
-/* line 407, ../scss/admin/_layout-manager.scss */
+/* line 406, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between {
   display: block;
   flex: 0 0 0px;
@@ -1605,29 +1604,29 @@ a {
   flex: 0 1 0%;
   background-color: #555;
 }
-/* line 419, ../scss/admin/_layout-manager.scss */
+/* line 418, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between-grids {
   background-color: #555;
   margin: -5px 0;
 }
-/* line 423, ../scss/admin/_layout-manager.scss */
+/* line 422, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between-grids.in-between-grids-first {
   margin: 0 0 -2px;
 }
-/* line 427, ../scss/admin/_layout-manager.scss */
+/* line 426, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between-grids.in-between-grids-last {
   margin: -2px 0 0;
 }
-/* line 432, ../scss/admin/_layout-manager.scss */
+/* line 431, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between.in-between-sections {
   width: auto;
 }
-/* line 439, ../scss/admin/_layout-manager.scss */
+/* line 438, ../scss/admin/_layout-manager.scss */
 #g5-container #history {
   display: inline-block;
   float: right;
 }
-/* line 442, ../scss/admin/_layout-manager.scss */
+/* line 441, ../scss/admin/_layout-manager.scss */
 #g5-container #history span {
   display: inline-block;
   background: #eee;
@@ -1641,20 +1640,20 @@ a {
   color: #777;
   text-shadow: 0 1px #fff;
 }
-/* line 455, ../scss/admin/_layout-manager.scss */
+/* line 454, ../scss/admin/_layout-manager.scss */
 #g5-container #history span.disabled {
   color: #ccc;
 }
-/* line 461, ../scss/admin/_layout-manager.scss */
+/* line 460, ../scss/admin/_layout-manager.scss */
 #g5-container .sidebar [data-lm-blocktype] {
   position: relative;
   z-index: 5;
 }
-/* line 467, ../scss/admin/_layout-manager.scss */
+/* line 466, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-newblocks {
   padding-bottom: 8px;
 }
-/* line 470, ../scss/admin/_layout-manager.scss */
+/* line 469, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-newblocks .g-block {
   display: inline-block;
   text-align: center;
@@ -1663,11 +1662,11 @@ a {
   border-radius: 3px;
   margin-right: 8px;
 }
-/* line 480, ../scss/admin/_layout-manager.scss */
+/* line 479, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-newblocks .button i {
   line-height: 1.6;
 }
-/* line 488, ../scss/admin/_layout-manager.scss */
+/* line 487, ../scss/admin/_layout-manager.scss */
 #g5-container #trash {
   position: fixed;
   top: -100px;
@@ -1679,7 +1678,7 @@ a {
   color: #fff;
   padding: 0.938rem;
 }
-/* line 496, ../scss/admin/_layout-manager.scss */
+/* line 495, ../scss/admin/_layout-manager.scss */
 #g5-container #trash .trash-zone {
   background-color: #ed5565;
   font-size: 2rem;
@@ -1690,38 +1689,38 @@ a {
   margin: 0 auto;
   font-weight: 300;
 }
-/* line 506, ../scss/admin/_layout-manager.scss */
+/* line 505, ../scss/admin/_layout-manager.scss */
 #g5-container #trash span {
   font-size: 0.8rem;
   color: #666;
   text-shadow: 0 0 1px #fff;
 }
 
-/* line 515, ../scss/admin/_layout-manager.scss */
+/* line 514, ../scss/admin/_layout-manager.scss */
 .g5-dialog .g-tabs {
   margin-right: 0 !important;
 }
-/* line 520, ../scss/admin/_layout-manager.scss */
+/* line 519, ../scss/admin/_layout-manager.scss */
 .g5-dialog .g-tabs ul {
   background-color: #DADADA;
   margin: -1rem -1rem 1rem !important;
   border-radius: 0.1875rem 0.1875rem 0 0;
 }
-/* line 525, ../scss/admin/_layout-manager.scss */
+/* line 524, ../scss/admin/_layout-manager.scss */
 .g5-dialog .g-tabs ul li:first-child {
   border-radius: 0.1875rem 0 0 0;
 }
 
-/* line 531, ../scss/admin/_layout-manager.scss */
+/* line 530, ../scss/admin/_layout-manager.scss */
 .g5-dialog .g-pane {
   display: none;
 }
-/* line 534, ../scss/admin/_layout-manager.scss */
+/* line 533, ../scss/admin/_layout-manager.scss */
 .g5-dialog .g-pane.active {
   display: block;
 }
 
-/* line 540, ../scss/admin/_layout-manager.scss */
+/* line 539, ../scss/admin/_layout-manager.scss */
 .sidebar-block {
   margin: -1.563rem 1.563rem -1.563rem -1.563rem;
   padding: 1.563rem 0.938rem;
@@ -1729,12 +1728,12 @@ a {
   border-right: 1px solid #e1e1e1;
 }
 
-/* line 555, ../scss/admin/_layout-manager.scss */
+/* line 554, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker ul {
   padding: 1px;
   margin-bottom: 1em;
 }
-/* line 561, ../scss/admin/_layout-manager.scss */
+/* line 560, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li {
   padding: 0.469rem;
   margin: 1px 0;
@@ -1742,46 +1741,46 @@ a {
   border-radius: 0.1875rem;
   cursor: move;
 }
-/* line 568, ../scss/admin/_layout-manager.scss */
+/* line 567, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li:first-child, .g5-lm-particles-picker li:last-child {
   margin: 0;
 }
-/* line 572, ../scss/admin/_layout-manager.scss */
+/* line 571, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="spacer"] {
   background-color: #eee;
   color: #666;
   border: 1px solid #d0d0d0;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 }
-/* line 579, ../scss/admin/_layout-manager.scss */
+/* line 578, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="position"] {
   color: #fff;
   background-color: #aaa;
   text-shadow: 1px 1px 0 #8F8F8F, -1px -1px 0 #8F8F8F, 1px -1px 0 #8F8F8F, -1px 1px 0 #8F8F8F, 1px 1px 0 #8F8F8F;
 }
-/* line 585, ../scss/admin/_layout-manager.scss */
+/* line 584, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="particle"] {
   color: #fff;
   background-color: #13B0DA;
   text-shadow: 1px 1px 0 #008DAD, -1px -1px 0 #008DAD, 1px -1px 0 #008DAD, -1px 1px 0 #008DAD, 1px 1px 0 #008DAD;
 }
-/* line 591, ../scss/admin/_layout-manager.scss */
+/* line 590, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="pagecontent"] {
   color: #fff;
   background-color: #218fda;
   text-shadow: 1px 1px 0 #116AA6, -1px -1px 0 #116AA6, 1px -1px 0 #116AA6, -1px 1px 0 #116AA6, 1px 1px 0 #116AA6;
 }
-/* line 597, ../scss/admin/_layout-manager.scss */
+/* line 596, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="atom"] {
   color: #fff;
   background-color: #9055AF;
   text-shadow: 1px 1px 0 #633979, -1px -1px 0 #633979, 1px -1px 0 #633979, -1px 1px 0 #633979, 1px 1px 0 #633979;
 }
-/* line 605, ../scss/admin/_layout-manager.scss */
+/* line 604, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .settings-block {
   width: 100% !important;
 }
-/* line 609, ../scss/admin/_layout-manager.scss */
+/* line 608, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search {
   position: relative;
   margin-bottom: 10px;
@@ -1797,7 +1796,7 @@ a {
       margin: 0;
   }*/
 }
-/* line 625, ../scss/admin/_layout-manager.scss */
+/* line 624, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search i {
   position: absolute;
   right: 10px;
@@ -1855,7 +1854,7 @@ a {
 /* line 61, ../scss/admin/_menu.scss */
 #g5-container .menu-selector {
   margin: 0.625rem 0;
-  padding: 4px;
+  padding: 2px;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 0.1875rem;
@@ -1863,56 +1862,46 @@ a {
 /* line 68, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li {
   position: relative;
-  margin: 3px;
-  background: #eeeeee;
-  border: 1px solid #ddd;
+  margin: 2px;
+  background: #DADADA;
   color: #808080;
   display: inline-block;
-  -webkit-transition: background-color 0.1s ease-out;
-  -moz-transition: background-color 0.1s ease-out;
-  transition: background-color 0.1s ease-out;
 }
-/* line 77, ../scss/admin/_menu.scss */
+/* line 75, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li .parent-indicator:before {
   content: "\f078";
 }
-/* line 82, ../scss/admin/_menu.scss */
+/* line 80, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li a {
   display: inline-block;
   color: #808080;
 }
-/* line 87, ../scss/admin/_menu.scss */
+/* line 85, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li .menu-item {
   padding: 0.938rem;
   font-size: 1.1rem;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 87, ../scss/admin/_menu.scss */
+  /* line 85, ../scss/admin/_menu.scss */
   #g5-container .menu-selector li .menu-item {
     font-size: 1rem;
     padding: 0.938rem 0.738rem;
   }
 }
-/* line 96, ../scss/admin/_menu.scss */
+/* line 94, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li .config-cog {
   top: 4px;
   right: 4px;
 }
-/* line 101, ../scss/admin/_menu.scss */
+/* line 99, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li:hover, #g5-container .menu-selector li.active {
   background: #48B0D7;
-  border-color: transparent;
 }
-/* line 104, ../scss/admin/_menu.scss */
+/* line 101, ../scss/admin/_menu.scss */
 #g5-container .menu-selector li:hover a, #g5-container .menu-selector li.active a {
   color: #fff;
 }
-/* line 109, ../scss/admin/_menu.scss */
-#g5-container .menu-selector li.placeholder {
-  margin: 3px -1px;
-  border-color: #000;
-}
-/* line 114, ../scss/admin/_menu.scss */
+/* line 106, ../scss/admin/_menu.scss */
 #g5-container .menu-selector span {
   line-height: 2;
   font-size: 0.6rem;
@@ -1920,20 +1909,20 @@ a {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 123, ../scss/admin/_menu.scss */
+/* line 115, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector {
-  border: 6px solid #fff;
+  border: 4px solid #fff;
   background: #DADADA;
   box-shadow: 0 0 0 1px #ddd;
   border-radius: 0.1875rem;
   color: #808080;
 }
-/* line 129, ../scss/admin/_menu.scss */
+/* line 121, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .g-block {
   position: relative;
   padding-bottom: 60px;
 }
-/* line 133, ../scss/admin/_menu.scss */
+/* line 125, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .g-block:hover:before {
   position: absolute;
   background: #DADADA;
@@ -1952,35 +1941,35 @@ a {
   cursor: move;
   font-size: 0.7rem;
 }
-/* line 157, ../scss/admin/_menu.scss */
+/* line 149, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .g-block:first-child .submenu-ratio .first {
   left: 0;
   right: auto;
   display: block;
 }
-/* line 165, ../scss/admin/_menu.scss */
+/* line 157, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .g-block:last-child .submenu-column {
   margin-right: 0;
 }
-/* line 167, ../scss/admin/_menu.scss */
+/* line 159, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .g-block:last-child .submenu-column:after {
   display: none;
 }
-/* line 172, ../scss/admin/_menu.scss */
+/* line 164, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .g-block:last-child .submenu-ratio .add-column {
   right: 0;
 }
-/* line 178, ../scss/admin/_menu.scss */
+/* line 170, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-column {
   margin-right: 6px;
   background: #DADADA;
 }
-/* line 181, ../scss/admin/_menu.scss */
+/* line 173, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-column:after {
   content: "";
   top: -1px;
   bottom: 59px;
-  width: 6px;
+  width: 4px;
   background: #fff;
   position: absolute;
   right: 1px;
@@ -1988,47 +1977,47 @@ a {
   z-index: 10;
   border: 1px solid #fff;
 }
-/* line 193, ../scss/admin/_menu.scss */
+/* line 185, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-column:hover:after {
   background: #00baaa;
 }
-/* line 197, ../scss/admin/_menu.scss */
+/* line 189, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items {
   list-style: none;
   margin: 0;
   padding: 0.469rem 0;
   position: relative;
 }
-/* line 202, ../scss/admin/_menu.scss */
+/* line 194, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items:after {
   margin-right: 6px;
 }
-/* line 205, ../scss/admin/_menu.scss */
+/* line 197, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li {
   color: #808080;
   cursor: pointer;
   position: relative;
 }
-/* line 209, ../scss/admin/_menu.scss */
+/* line 201, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li a {
   display: block;
   color: #808080;
 }
-/* line 213, ../scss/admin/_menu.scss */
+/* line 205, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .menu-item {
   padding: 0.469rem 0.938rem;
 }
-/* line 215, ../scss/admin/_menu.scss */
+/* line 207, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .menu-item .fa-chevron-left {
   font-size: 0.8rem;
   line-height: 1.9;
 }
-/* line 220, ../scss/admin/_menu.scss */
+/* line 212, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .config-cog {
   right: 4px;
   top: 0.8rem;
 }
-/* line 225, ../scss/admin/_menu.scss */
+/* line 217, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .parent-indicator:before {
   content: "\f054";
   float: right;
@@ -2036,15 +2025,15 @@ a {
   line-height: 2;
   margin-right: 10px;
 }
-/* line 233, ../scss/admin/_menu.scss */
+/* line 225, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li:hover, #g5-container .submenu-selector .submenu-items li .active {
   background: #48B0D7;
 }
-/* line 235, ../scss/admin/_menu.scss */
+/* line 227, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li:hover a, #g5-container .submenu-selector .submenu-items li .active a {
   color: #fff;
 }
-/* line 243, ../scss/admin/_menu.scss */
+/* line 235, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio {
   background: #fff;
   text-align: center;
@@ -2054,7 +2043,7 @@ a {
   right: 0;
   height: 60px;
 }
-/* line 251, ../scss/admin/_menu.scss */
+/* line 243, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio .percentage {
   font-size: 1.8rem;
   font-weight: 100;
@@ -2062,14 +2051,14 @@ a {
   display: inline-block;
   margin-top: 5px;
 }
-/* line 258, ../scss/admin/_menu.scss */
+/* line 250, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio i {
   position: absolute;
   right: 1rem;
   font-size: 1.5rem;
   cursor: pointer;
 }
-/* line 265, ../scss/admin/_menu.scss */
+/* line 257, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio .add-column {
   font-size: 1.2rem;
   cursor: pointer;
@@ -2082,11 +2071,11 @@ a {
   -moz-transition: color 0.2s;
   transition: color 0.2s;
 }
-/* line 275, ../scss/admin/_menu.scss */
+/* line 267, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio .add-column.first {
   display: none;
 }
-/* line 278, ../scss/admin/_menu.scss */
+/* line 270, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio .add-column:hover {
   color: #808080;
 }
