@@ -200,7 +200,7 @@ var LayoutManager = new prime({
                 if (originalType !== 'grid' && !empty) { return; }
 
                 // grids cannot be dropped inside grids
-                if (dataType === 'grid' && empty) { return; }
+                if (originalType === 'grid' && empty) { return; }
 
                 // we are dropping a new particle into an empty grid, placeholder goes inside
                 if (empty) { this.placeholder.bottom(target); }
