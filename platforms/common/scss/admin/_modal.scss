@@ -35,18 +35,6 @@
     content: "\00D7";
 }
 
-/*.g5-dialog-form {
-    margin: 0;
-}
-
-.vex-dialog-button {
-    text-rendering: optimizeLegibility;
-    @include appearance(none);
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-}
-*/
-
 .g5-dialog-loading-spinner {
     @include animation(rotate 0.7s linear infinite);
     box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
@@ -65,9 +53,6 @@
 body.g5-dialog-open {
     overflow: hidden;
 }
-
-
-$blue: #3288e6;
 
 .g5-dialog.g5-dialog-theme-default {
     padding-top: 10vh;

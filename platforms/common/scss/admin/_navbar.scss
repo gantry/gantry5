@@ -39,7 +39,10 @@
         @extend %list-reset;
 
         li:not(.config-select-wrap) {
+            display: inline-block;
+            margin-right: -4px;
             @include transition (background-color 0.2s ease-in-out);
+
             &:hover {
                 background-color: darken($navbar-bg, 3%);
             }
@@ -83,24 +86,18 @@
                     }
                 }
             }
-
-            display: inline-block;
-            margin-right: -4px;
         }
-
-
 
         .config-select-wrap {
             font-size: 1rem;
             position: relative;
-            top: $content-padding / 2;
+            top: 0.6rem;
             padding: 0 $content-padding;
-            display: inline-block;
+            float: left;
             @include breakpoint(tablet-range) {
                 padding: 0 $content-padding - 0.2;
             }
         }
-
     }
 
     ul ul {
