@@ -483,7 +483,7 @@ a {
       flex: 0 25%; } }
   #g5-container .swatches-block .swatch {
     display: block;
-    padding: 3px;
+    padding: 4px;
     background: #fff;
     margin: 0 1px;
     border-radius: 0.1875rem;
@@ -1728,9 +1728,10 @@ body.g5-dialog-open {
   white-space: normal;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid #eee;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 6px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   color: #444; }
   .g5-popover.top, .g5-popover.top-left, .g5-popover.top-right {
     margin-top: -10px; }
@@ -1817,7 +1818,8 @@ body.g5-dialog-open {
   bottom: -11px;
   left: 50%;
   margin-left: -11px;
-  border-top-color: fadein(rgba(0, 0, 0, 0.2), 5%);
+  border-top-color: #bbbbbb;
+  border-top-color: fadein(rgba(0, 0, 0, 0.1), 5%);
   border-bottom-width: 0; }
   .g5-popover.top > .arrow:after, .g5-popover.top-right > .arrow:after, .g5-popover.top-left > .arrow:after {
     content: " ";
@@ -1830,7 +1832,8 @@ body.g5-dialog-open {
   left: -11px;
   margin-top: -11px;
   border-left-width: 0;
-  border-right-color: fadein(rgba(0, 0, 0, 0.2), 5%); }
+  border-right-color: #bbbbbb;
+  border-right-color: fadein(rgba(0, 0, 0, 0.1), 5%); }
   .g5-popover.right > .arrow:after, .g5-popover.right-top > .arrow:after, .g5-popover.right-bottom > .arrow:after {
     content: " ";
     left: 1px;
@@ -1841,7 +1844,8 @@ body.g5-dialog-open {
   top: -11px;
   left: 50%;
   margin-left: -11px;
-  border-bottom-color: fadein(rgba(0, 0, 0, 0.2), 5%);
+  border-bottom-color: #bbbbbb;
+  border-bottom-color: fadein(rgba(0, 0, 0, 0.1), 5%);
   border-top-width: 0; }
   .g5-popover.bottom > .arrow:after, .g5-popover.bottom-right > .arrow:after, .g5-popover.bottom-left > .arrow:after {
     content: " ";
@@ -1854,7 +1858,8 @@ body.g5-dialog-open {
   right: -11px;
   margin-top: -11px;
   border-right-width: 0;
-  border-left-color: fadein(rgba(0, 0, 0, 0.2), 5%); }
+  border-left-color: #bbbbbb;
+  border-left-color: fadein(rgba(0, 0, 0, 0.1), 5%); }
   .g5-popover.left > .arrow:after, .g5-popover.left-top > .arrow:after, .g5-popover.left-bottom > .arrow:after {
     content: " ";
     right: 1px;

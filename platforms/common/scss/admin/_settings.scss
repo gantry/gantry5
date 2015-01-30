@@ -3,7 +3,6 @@
 #g5-container {//wrapper
 
 .settings-block {
-    //@extend .card;
     width: 48%;
     min-width: inherit;
     @include breakpoint(mobile-only) {
@@ -12,7 +11,6 @@
     }
 
     &.card {
-
         .badge {
             margin-left: 4px;
         }
