@@ -1,6 +1,10 @@
 #g5-container {
     // wrapper
 
+    .layout-title {
+        margin-bottom: 0.5rem;
+    }
+
     .title ~ .fa-pencil {
         cursor: pointer;
     }
@@ -32,7 +36,7 @@
                 background: red;
                 z-index: 3;
                 cursor: ew-resize;
-                display: none; // temp
+                display: none;
             }
 
             &:last-child:after {
@@ -61,16 +65,6 @@
             background: $white;
             margin: 14px 0;
             padding: 8px;
-            // with box shadows: $gap: 11px;
-            // with box shadows: margin: 0;
-            // with box shadows: box-shadow: inset 0 0 0 $gap $white, inset 0 0 0 ($gap + 1) $light-gray;
-            // with box shadows: border-radius: $gap + 3;
-            // with box shadows: padding: (10px + $gap) (5px + $gap);
-
-            /*&:hover {
-                box-shadow: inset 0 0 0 1px $green;
-                //box-shadow: inset 0 0 0 $gap $white, inset 0 0 0 ($gap + 1) $green; // with box shadows
-            }*/
 
             .section-header {
                 font-size: 22px;
@@ -98,6 +92,10 @@
                 
                 i {
                     cursor: pointer;
+                    @include transition(color 0.2s);
+                    &:hover {
+                        color: darken($core-text, 10%);
+                    }
                 }
             }
 
@@ -117,41 +115,39 @@
                 min-height: 58px;
 
                 // handles
-                //&:hover {
-                    &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
-                        display: block;
-                        position: absolute;
-                        background: #f6f6f6;
-                        top: -1px;
-                        bottom: -1px;
-                        width: 25px;
-                        vertical-align: middle;
-                        line-height: 58px;
-                        text-align: center;
-                        z-index: 5;
-                        color: #aaa;
-                        border: 1px solid #ddd;
-                        opacity: 0;
-                    }
+                &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
+                    display: block;
+                    position: absolute;
+                    background: #f6f6f6;
+                    top: -1px;
+                    bottom: -1px;
+                    width: 25px;
+                    vertical-align: middle;
+                    line-height: 58px;
+                    text-align: center;
+                    z-index: 5;
+                    color: #aaa;
+                    border: 1px solid #ddd;
+                    opacity: 0;
+                }
 
-                    &:not(:empty):not(.no-hover):before {
-                        font-family: FontAwesome, sans-serif;
-                        content: "\f0c9";
-                        border-radius: 3px 0 0 3px;
-                        left: -21px;
-                        cursor: move;
-                        border-right: 0 !important;
-                    }
+                &:not(:empty):not(.no-hover):before {
+                    font-family: FontAwesome, sans-serif;
+                    content: "\f0c9";
+                    border-radius: 3px 0 0 3px;
+                    left: -21px;
+                    cursor: move;
+                    border-right: 0 !important;
+                }
 
-                    &:not(:empty):not(.no-hover):not(.no-gear):after {
-                        font-family: FontAwesome, sans-serif;
-                        content: "\f0db";
-                        border-radius: 0 3px 3px 0;
-                        right: -21px;
-                        border-left: 0 !important;
-                        cursor: pointer;
-                    }
-                //}
+                &:not(:empty):not(.no-hover):not(.no-gear):after {
+                    font-family: FontAwesome, sans-serif;
+                    content: "\f0db";
+                    border-radius: 0 3px 3px 0;
+                    right: -21px;
+                    border-left: 0 !important;
+                    cursor: pointer;
+                }
 
                 &:hover:not(:empty) {
                     box-shadow: 0 0 0 1px #ddd;
@@ -161,13 +157,8 @@
                     opacity: 1;
                 }
 
-
                 &:first-child {
                     margin-top: 0;
-                }
-
-                &:last-child {
-                    margin-bottom: 0;
                 }
 
                 .g-block:after {
@@ -185,7 +176,6 @@
                     color: #bababa;
                 }
             }
-
         }
 
         .non-visible-section {
@@ -198,11 +188,6 @@
                 &:empty:after {
                     content: "Drop non-visible particles here...";
                 }
-                /*&:hover {
-                    &:not(:empty):before, &:not(:empty):after {
-                        display: none !important;
-                    }
-                }*/
             }
         }
 
@@ -364,48 +349,14 @@
             background-color: #218fda;
         }
 
-        /* END THIS IS FOR PAGES */
-
-        /* .g-block {
-            padding: 8px;
-            //border: 1px solid #dfdfdf;
-            box-shadow: inset 0 0 0 1px #dfdfdf;
-            margin: 4px;
-            background: white;
-        }
-
-        .position, .spacer, .placeholder {
-            background-color: #ecf3f6;
-            padding: 12px;
-            box-shadow: 0 0 0 4px white inset, 0 0 0 5px #d3e5f0 inset;
-            color: #888;
-        }
-
-        .section {
-            background: #f9f9f9;
-        }
-
-        .spacer {
-            text-align: center;
-            color: rgb(89, 135, 160);
-            text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
-            //border: 1px solid #97AFC5;
-            background-color: #D8DFE4;
-            text-transform: uppercase;
-            @include background-image(linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent));
-            background-size: 50px 50px;
-        } */
-
         .placeholder {
             text-align: center;
             color: rgb(89, 135, 160);
             text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
-            //border: 1px solid #97AFC5;
             background-color: #ddd;
             border: 0;
             padding: 1px;
             flex: 0 1 100%;
-            //margin: 10px;
 
             &.in-between {
                 display: block;
@@ -487,7 +438,6 @@
     }
 
     /* deletion */
-
     #trash {
         @include position(fixed, -100px 0 inherit 0);
         z-index: 50;
@@ -546,7 +496,6 @@
     $compensate: $content-padding + $content-margin;
     margin: $negate $compensate $negate $negate;
     padding: $compensate $content-padding;
-
     background-color: darken($main-bg, 2);
     border-right: 1px solid darken($main-bg, 5);
 }
@@ -559,7 +508,6 @@
     ul {
         padding: 1px;
         margin-bottom: 1em;
-        //background-color: #ddd;
     }
 
     li {
@@ -604,7 +552,6 @@
         }
     }
 
-
     .settings-block {
         width: 100% !important;
     }
@@ -612,18 +559,6 @@
     .search {
         position: relative;
         margin-bottom: 10px;
-
-        /*input {
-            font-size: 16px;
-            border: 0;
-            border-radius: 0;
-            line-height: 26px;
-            height: auto;
-            background: rgba(0, 0, 0, 0.1);
-            color: white;
-            box-shadow: none;
-            margin: 0;
-        }*/
 
         i {
             position: absolute;

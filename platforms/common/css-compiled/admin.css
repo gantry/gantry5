@@ -802,42 +802,14 @@ a {
   /* history */
   /* new blocks */
   /* deletion */ }
+  #g5-container .layout-title {
+    margin-bottom: 0.5rem; }
   #g5-container .title ~ .fa-pencil {
     cursor: pointer; }
   #g5-container .title[contenteditable] {
     padding: 4px; }
   #g5-container .lm-blocks {
-    /* THIS IS FOR PAGES */
-    /* END THIS IS FOR PAGES */
-        /* .g-block {
-            padding: 8px;
-            //border: 1px solid #dfdfdf;
-            box-shadow: inset 0 0 0 1px #dfdfdf;
-            margin: 4px;
-            background: white;
-        }
-
-        .position, .spacer, .placeholder {
-            background-color: #ecf3f6;
-            padding: 12px;
-            box-shadow: 0 0 0 4px white inset, 0 0 0 5px #d3e5f0 inset;
-            color: #888;
-        }
-
-        .section {
-            background: #f9f9f9;
-        }
-
-        .spacer {
-            text-align: center;
-            color: rgb(89, 135, 160);
-            text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
-            //border: 1px solid #97AFC5;
-            background-color: #D8DFE4;
-            text-transform: uppercase;
-            @include background-image(linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent));
-            background-size: 50px 50px;
-        } */ }
+    /* THIS IS FOR PAGES */ }
     #g5-container .lm-blocks.empty {
       min-height: 150px;
       border: 2px dashed #dfdfdf; }
@@ -866,11 +838,7 @@ a {
     #g5-container .lm-blocks .section, #g5-container .lm-blocks .non-visible-section {
       background: #fff;
       margin: 14px 0;
-      padding: 8px;
-      /*&:hover {
-          box-shadow: inset 0 0 0 1px $green;
-          //box-shadow: inset 0 0 0 $gap $white, inset 0 0 0 ($gap + 1) $green; // with box shadows
-      }*/ }
+      padding: 8px; }
       #g5-container .lm-blocks .section .section-header, #g5-container .lm-blocks .non-visible-section .section-header {
         font-size: 22px;
         line-height: 2em;
@@ -891,7 +859,12 @@ a {
         -moz-transition: opacity 0.2s ease-out;
         transition: opacity 0.2s ease-out; }
         #g5-container .lm-blocks .section .section-actions i, #g5-container .lm-blocks .non-visible-section .section-actions i {
-          cursor: pointer; }
+          cursor: pointer;
+          -webkit-transition: color 0.2s;
+          -moz-transition: color 0.2s;
+          transition: color 0.2s; }
+          #g5-container .lm-blocks .section .section-actions i:hover, #g5-container .lm-blocks .non-visible-section .section-actions i:hover {
+            color: #4d4d4d; }
       #g5-container .lm-blocks .section:hover .section-actions, #g5-container .lm-blocks .non-visible-section:hover .section-actions {
         opacity: 1;
         -webkit-transition: opacity 0.2s ease-in;
@@ -938,8 +911,6 @@ a {
           opacity: 1; }
         #g5-container .lm-blocks .section .g-grid:first-child, #g5-container .lm-blocks .non-visible-section .g-grid:first-child {
           margin-top: 0; }
-        #g5-container .lm-blocks .section .g-grid:last-child, #g5-container .lm-blocks .non-visible-section .g-grid:last-child {
-          margin-bottom: 0; }
         #g5-container .lm-blocks .section .g-grid .g-block:after, #g5-container .lm-blocks .non-visible-section .g-grid .g-block:after {
           display: none; }
         #g5-container .lm-blocks .section .g-grid:empty:after, #g5-container .lm-blocks .non-visible-section .g-grid:empty:after {
@@ -956,12 +927,7 @@ a {
       margin-top: 28px;
       border-top: 1px solid #ddd; }
       #g5-container .lm-blocks .non-visible-section .g-grid {
-        background: #fff;
-        /*&:hover {
-            &:not(:empty):before, &:not(:empty):after {
-                display: none !important;
-            }
-        }*/ }
+        background: #fff; }
         #g5-container .lm-blocks .non-visible-section .g-grid:empty:after {
           content: "Drop non-visible particles here..."; }
     #g5-container .lm-blocks > .g-grid > .g-block, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block {
@@ -1198,18 +1164,7 @@ a {
   width: 100% !important; }
 .g5-lm-particles-picker .search {
   position: relative;
-  margin-bottom: 10px;
-  /*input {
-      font-size: 16px;
-      border: 0;
-      border-radius: 0;
-      line-height: 26px;
-      height: auto;
-      background: rgba(0, 0, 0, 0.1);
-      color: white;
-      box-shadow: none;
-      margin: 0;
-  }*/ }
+  margin-bottom: 10px; }
   .g5-lm-particles-picker .search i {
     position: absolute;
     right: 10px;
