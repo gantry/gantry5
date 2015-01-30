@@ -10,12 +10,6 @@ form:
       description: Globally enable to the particles.
       default: true
 
-    css.class:
-      type: input.text
-      label: Class
-      description: CSS class name for the particle.
-      default: branding
-
     members:
       type: collection.list
       array: true

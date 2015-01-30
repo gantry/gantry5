@@ -95,6 +95,47 @@ class Config implements \ArrayAccess, ExportInterface
     }
 
     /**
+     * Make a flat list from the configuration.
+     *
+     * @param string $name      Dot separated path to the requested value.
+     * @param string $separator Separator, defaults to '.'
+     * @return array
+     */
+    public function flatten($name = null, $separator = '.')
+    {
+        $element = $name ? $this->offsetGet($name) : $this->items;
+
+        if (!is_array($element)) {
+            return [$name, $element];
+        }
+
+
+        return $this->flattenNested('', $element, $separator);
+    }
+
+    /**
+     * @param $name
+     * @param $element
+     * @param $separator
+     * @return array
+     * @internal
+     */
+    protected function flattenNested($name, &$element, $separator)
+    {
+        $list = [];
+        foreach ($element as $key => $value) {
+            $new = $name ? $name . $separator . $key : $key;
+            if (!is_array($value)) {
+                $list[$new] = $value;
+            } else {
+                $list += $this->flattenNested($new, $value, $separator);
+            }
+        }
+
+        return $list;
+    }
+
+    /**
      * Return blueprints.
      *
      * @return RtBlueprints
