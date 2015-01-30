@@ -1054,14 +1054,11 @@ a {
       background-color: #00B1D9; }
     #g5-container .lm-blocks .spacer {
       background-color: #eee;
-      color: rgba(102, 102, 102, 0.8);
-      text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; }
+      color: rgba(102, 102, 102, 0.8); }
     #g5-container .lm-blocks .atom {
-      background-color: #9055AF;
-      text-shadow: 1px 1px 0 #633979, -1px -1px 0 #633979, 1px -1px 0 #633979, -1px 1px 0 #633979, 1px 1px 0 #633979; }
+      background-color: #9055AF; }
     #g5-container .lm-blocks .pagecontent {
-      background-color: #218fda;
-      text-shadow: 1px 1px 0 #116AA6, -1px -1px 0 #116AA6, 1px -1px 0 #116AA6, -1px 1px 0 #116AA6, 1px 1px 0 #116AA6; }
+      background-color: #218fda; }
     #g5-container .lm-blocks .placeholder {
       text-align: center;
       color: #5987a0;
