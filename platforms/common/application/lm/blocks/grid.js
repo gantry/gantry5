@@ -20,7 +20,7 @@ var Grid = new prime({
 
     onRendered: function() {
         var parent = this.block.parent();
-        if (parent && parent.data('lm-root')) {
+        if (parent && parent.data('lm-root') || (parent.data('lm-blocktype') == 'container' && parent.parent().data('lm-root'))) {
             this.removeDropzone();
         }
     }
