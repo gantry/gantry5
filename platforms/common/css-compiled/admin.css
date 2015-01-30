@@ -1018,6 +1018,8 @@ a {
       background: #aaaaaa;
       margin-right: 6px;
       position: relative; }
+      #g5-container .lm-blocks .particle .particle-size, #g5-container .lm-blocks .position .particle-size, #g5-container .lm-blocks .spacer .particle-size, #g5-container .lm-blocks .pagecontent .particle-size, #g5-container .lm-blocks .atom .particle-size {
+        color: rgba(255, 255, 255, 0.7); }
       #g5-container .lm-blocks .particle strong, #g5-container .lm-blocks .position strong, #g5-container .lm-blocks .spacer strong, #g5-container .lm-blocks .pagecontent strong, #g5-container .lm-blocks .atom strong {
         font-weight: bold;
         color: #fff; }
@@ -1043,13 +1045,16 @@ a {
           z-index: 2; }
     #g5-container .lm-blocks .particle-size {
       font-weight: 300;
-      font-size: 20px;
-      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.2rem;
       vertical-align: middle;
+      color: #666;
       display: inline-block;
       margin-top: -5px;
       margin-right: 5px;
       text-shadow: none; }
+      @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+        #g5-container .lm-blocks .particle-size {
+          font-size: 1rem; } }
     #g5-container .lm-blocks .particle {
       background-color: #00B1D9; }
     #g5-container .lm-blocks .spacer {
@@ -1126,7 +1131,8 @@ a {
     text-align: center;
     font-weight: bold;
     color: #fff;
-    padding: 0.938rem; }
+    padding: 0.938rem;
+    background: rgba(255, 255, 255, 0.8); }
     #g5-container #trash .trash-zone {
       background-color: #ed5565;
       font-size: 2rem;
@@ -1170,6 +1176,9 @@ a {
   text-align: center;
   border-radius: 0.1875rem;
   cursor: move; }
+  @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+    .g5-lm-particles-picker li {
+      font-size: 0.8rem; } }
   .g5-lm-particles-picker li:first-child, .g5-lm-particles-picker li:last-child {
     margin: 0; }
   .g5-lm-particles-picker li[data-lm-blocktype="spacer"] {

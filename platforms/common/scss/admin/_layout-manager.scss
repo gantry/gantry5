@@ -288,9 +288,12 @@
             padding: 6px 13px;
             color: $white;
             background: #aaaaaa;
-
             margin-right: 6px;
             position: relative;
+
+            .particle-size {
+                color: rgba($white, 0.7);
+            }
 
             strong {
                 font-weight: bold;
@@ -330,13 +333,16 @@
 
         .particle-size {
             font-weight: 300;
-            font-size: 20px;
-            color: rgba($white, 0.7);
+            font-size: $core-font-size + 0.2;
             vertical-align: middle;
+            color: $core-text;
             display: inline-block;
             margin-top: -5px;
             margin-right: 5px;
             text-shadow: none;
+            @include breakpoint(tablet-range) {
+                font-size: $core-font-size;
+            }
         }
 
         .particle {
@@ -487,6 +493,7 @@
         font-weight: bold;
         color: $white;
         padding: $content-padding;
+        background: rgba(255,255,255,0.8);
 
         .trash-zone {
             background-color: $red;
@@ -559,6 +566,10 @@
         text-align: center;
         border-radius: $core-border-radius;
         cursor: move;
+
+        @include breakpoint(tablet-range) {
+            font-size: $core-font-size - 0.2;
+        }
 
         &:first-child, &:last-child {
             margin: 0;
