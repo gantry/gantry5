@@ -2,7 +2,7 @@
 
 {% block gantry %}
     <div class="menu-header">
-        <h2>Menu Editor</h2>
+        <h2 class="page-title">Menu Editor</h2>
         <select data-selectize-ajaxify data-selectize data-g5-ajaxify-target="[data-g5-content]" class="menu-select-wrap">
             {% for menu_name in menus %}
             <option value="{{ menu_name|e }}"

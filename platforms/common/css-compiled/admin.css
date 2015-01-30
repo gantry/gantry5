@@ -765,12 +765,7 @@ a {
     font-weight: normal;
     color: #262626; }
   #g5-container .page-title {
-    margin-top: -25px;
-    padding: 25px;
-    float: left;
-    clear: both;
-    background: #439A86;
-    color: #fff; }
+    margin-top: 0.5rem; }
 
 #g5-container .button {
   background: #999999;

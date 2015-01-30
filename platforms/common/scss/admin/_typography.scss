@@ -22,14 +22,8 @@ b, strong {
     color: darken($core-text, 25%);
 }
 
-// Page Title
 .page-title {
-    margin-top: -25px;
-    padding: 25px;
-    float: left;
-    clear: both;
-    background: $core-accent;
-    color: $white;
+    margin-top: 0.5rem;
 }
 
 }//endwrapper
