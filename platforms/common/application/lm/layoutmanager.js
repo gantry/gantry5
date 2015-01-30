@@ -40,36 +40,26 @@ var deepEquals = function(a, b, callback) {
 
 var singles = {
     disable: function() {
-        var grids = $('[data-lm-root] [data-lm-blocktype="grid"]')/*,
-            sections = $('[data-lm-root] [data-lm-blocktype="section"]')*/;
-
+        var grids = $('[data-lm-root] [data-lm-blocktype="grid"]');
         if (grids) { grids.removeClass('no-hover'); }
-        /*if (sections) {
-            sections.forEach(function(section) {
-                var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty), > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty)');
-                if (subGrids) {
-                    if (subGrids.length === 1) { subGrids.addClass('no-move').data('lm-nodrag', 'true'); }
-                    else { subGrids.removeClass('no-move').data('lm-nodrag', null); }
-                }
-            }, this);
-        }*/
     },
     enable: function() {
-        var grids = $('[data-lm-root] [data-lm-blocktype="grid"]')/*,
-            sections = $('[data-lm-root] [data-lm-blocktype="section"]')*/;
-
+        var grids = $('[data-lm-root] [data-lm-blocktype="grid"]');
         if (grids) { grids.addClass('no-hover'); }
-        /*if (sections) {
-            sections.forEach(function(section) {
-                var subGrids = $(section).search('> [data-lm-blocktype="grid"]:not(:empty), > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty)');
-                if (subGrids) {
-                    if (subGrids.length === 1) { subGrids.addClass('no-move').data('lm-nodrag', 'true'); }
-                    else { subGrids.removeClass('no-move').data('lm-nodrag', null); }
-                }
-            }, this);
-        }*/
     },
-    cleanup: function(builder) {}
+    cleanup: function(builder) {
+        var emptyGrids = $('[data-lm-blocktype="section"] > .g-grid:empty');
+        if (emptyGrids) {
+            emptyGrids.forEach(function(grid){
+                grid = $(grid);
+                if (grid.nextSibling('[data-lm-id]')) {
+                    // empty grids should go away unless they are last
+                    builder.remove(grid.data('lm-id'));
+                    grid.remove();
+                }
+            });
+        }
+    }
 
 };
 
@@ -127,7 +117,11 @@ var LayoutManager = new prime({
         }).addClass('original-placeholder').data('lm-dropzone', null);
         if (type === 'grid') { this.original.style({ display: 'flex' }); }
         this.originalType = type;
-        this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({ builder: this.builder, subtype: element.data('lm-subtype'), attributes: { title: element.text() } });
+        this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({
+            builder: this.builder,
+            subtype: element.data('lm-subtype'),
+            attributes: { title: element.text() }
+        });
 
         if (!this.block.isNew()) {
             //var margins = $(element).find('[data-lm-blocktype]').compute('margin');
@@ -149,10 +143,23 @@ var LayoutManager = new prime({
             this.eraser.show();
         } else {
             var position = element.position(),
-                parentOffset = {top: element.parent()[0].scrollTop, left: element.parent()[0].scrollLeft};
-            this.original.style({position: 'absolute'}).style({left: element[0].offsetLeft - parentOffset.left, top: element[0].offsetTop - parentOffset.top, width: position.width, height: position.height});
+                parentOffset = {
+                    top: element.parent()[0].scrollTop,
+                    left: element.parent()[0].scrollLeft
+                };
+            this.original.style({ position: 'absolute' }).style({
+                left: element[0].offsetLeft - parentOffset.left,
+                top: element[0].offsetTop - parentOffset.top,
+                width: position.width,
+                height: position.height
+            });
             this.element = this.dragdrop.element;
             this.dragdrop.element = this.original;
+        }
+
+        var blocks;
+        if (type === 'grid' && (blocks = root.search('[data-lm-dropzone]:not([data-lm-blocktype="grid"])'))) {
+            blocks.style({ 'pointer-events': 'none' });
         }
 
         singles.enable();
@@ -169,6 +176,7 @@ var LayoutManager = new prime({
 
         if (!dataType && target.data('lm-root')) { dataType = 'root'; }
         if (this.mode !== 'page' && dataType === 'section') { return; }
+        if (dataType === 'grid' && (target.parent().data('lm-root') || (target.parent().data('lm-blocktype') == 'container' && target.parent().parent().data('lm-root')))) { return; }
 
         // Check for adjacents and avoid inserting any placeholder since it would be the same position
         var exclude = ':not(.placeholder):not([data-lm-id="' + this.original.data('lm-id') + '"])',
@@ -198,12 +206,15 @@ var LayoutManager = new prime({
                 // new particles cannot be dropped in existing grids, only empty ones
                 if (originalType !== 'grid' && !empty) { return; }
 
-                // grids cannot be dropped inside grids
-                if (originalType === 'grid' && empty) { return; }
 
-                // we are dropping a new particle into an empty grid, placeholder goes inside
-                if (empty) { this.placeholder.bottom(target); }
-                else {
+                if (empty) {
+                    if (originalType === 'grid') {
+                        this.placeholder.before(target);
+                    } else {
+                        // we are dropping a new particle into an empty grid, placeholder goes inside
+                        this.placeholder.bottom(target);
+                    }
+                } else {
                     // we are sorting grids ordering, placeholder goes above/below
                     method = (location.y === 'above' ? 'before' : 'after');
                     this.placeholder[method](target);
@@ -290,7 +301,7 @@ var LayoutManager = new prime({
 
         if (this.placeholder) { this.placeholder.remove(); }
         if (this.original) { this.original.remove(); }
-        this.element = this.block =  null;
+        this.element = this.block = null;
 
         singles.disable();
         singles.cleanup(this.builder);
@@ -386,7 +397,10 @@ var LayoutManager = new prime({
             var previous = this.block.block.parent('[data-lm-blocktype="grid"]');
             if (previous.find('!> [data-lm-blocktype="container"]')) { previous = previous.parent(); }
             if (this.placeholder.parent('[data-lm-blocktype="grid"]') !== previous) {
-                multiGridsResize = this.block.block.siblings();
+                multiGridsResize = {
+                    from: this.block.block.siblings(),
+                    to: this.placeholder.siblings()
+                };
             }
 
             previous = previous.siblings(':not(.original-placeholder)');
@@ -396,6 +410,10 @@ var LayoutManager = new prime({
             this.block.setSize();
         }
 
+        if (type === 'grid' && !siblings) {
+            var plus = this.block.block.parent('[data-lm-blocktype="section"]').find('.fa-plus');
+            if (plus) { plus.emit('click'); }
+        }
 
         if (this.block.hasAttribute('size')) { this.block.setSize(this.placeholder.compute('flex')); }
         this.block.insert(this.placeholder);
@@ -409,18 +427,58 @@ var LayoutManager = new prime({
         }
 
 
-        if (multiGridsResize) {
-            if (multiGridsResize.length == 1) { this.resizer.evenResize(multiGridsResize, false); }
-            else {
-                var size = this.block.getSize(),
-                    diff = size / multiGridsResize.length, block;
-                multiGridsResize.forEach(function(sibling) {
+        if (multiGridsResize.from || multiGridsResize.to) {
+            // if !from / !to means it's empty grid, should we remove it?
+            var size = this.block.getSize(), diff;
+
+            // we are moving the particle to an empty grid, resetting the size to 100%
+            if (!multiGridsResize.to) { this.block.setSize(100, true); }
+
+            // we need to compensate the remaining blocks on the FROM with the leaving particle size
+            if (multiGridsResize.from) {
+                diff = size / multiGridsResize.from.length;
+                multiGridsResize.from.forEach(function(sibling) {
                     sibling = $(sibling);
                     block = get(this.builder.map, sibling.data('lm-id'));
                     block.setSize(block.getSize() + diff, true);
                 }, this);
             }
+
+            // the TO is receiving a new block so we are going to evenize
+            if (multiGridsResize.to) {
+                size = 100 / (multiGridsResize.to.length + 1);
+                multiGridsResize.to.forEach(function(sibling) {
+                    sibling = $(sibling);
+                    block = get(this.builder.map, sibling.data('lm-id'));
+                    block.setSize(size, true);
+                }, this);
+                this.block.setSize(size, true);
+            }
         }
+
+        /*var size, diff, block;
+         if (multiGridsResize) {
+         size = this.block.getSize();
+         diff = size / multiGridsResize.length;
+         multiGridsResize.forEach(function(sibling) {
+         sibling = $(sibling);
+         block = get(this.builder.map, sibling.data('lm-id'));
+         block.setSize(block.getSize() + diff, true);
+         }, this);
+         }
+         */
+        /*multiGridsResize = this.block.block.siblings();
+         if (multiGridsResize) {
+         size = this.block.getSize();
+         diff = size / multiGridsResize.length;
+         multiGridsResize.forEach(function(sibling) {
+         sibling = $(sibling);
+         block = get(this.builder.map, sibling.data('lm-id'));
+         block.setSize(block.getSize() - diff, true);
+         }, this);
+         } else {
+         this.block.setSize(100, true);
+         }*/
 
         singles.disable();
         singles.cleanup(this.builder);
@@ -439,6 +497,12 @@ var LayoutManager = new prime({
         if (!this.block) { this.block = get(this.builder.map, element.data('lm-id')); }
         if (this.block && this.block.getType() === 'block') { this.block.setSize(); }
         if (this.block && this.block.isNew()) { this.element.attribute('style', null); }
+        if (this.originalType === 'grid') {
+            var blocks;
+            if (blocks = $('[data-lm-root]').search('[data-lm-dropzone]:not([data-lm-blocktype="grid"])')) {
+                blocks.attribute('style', null);
+            }
+        }
     }
 });
 
