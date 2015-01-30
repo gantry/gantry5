@@ -974,7 +974,9 @@ a {
       background: #fff;
       padding-bottom: 50px; }
       #g5-container .lm-blocks > .g-grid > .g-block > .section, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .section {
-        border-bottom: 14px solid #eee; }
+        border-bottom: 14px solid #eee;
+        margin-top: 0;
+        margin-bottom: 0; }
         #g5-container .lm-blocks > .g-grid > .g-block > .section:last-child, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .section:last-child {
           border-bottom: 0; }
       #g5-container .lm-blocks > .g-grid > .g-block > .particle-size, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .particle-size {
