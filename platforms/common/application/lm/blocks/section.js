@@ -46,7 +46,7 @@ var Section = new prime({
         var plus = this.block.find('.fa-plus');
         if (plus) {
             plus.on('click', bind(function(e) {
-                e.preventDefault();
+                if (e) { e.preventDefault(); }
 
                 if (this.block.find('.g-grid:last-child:empty')) { return false; }
 
