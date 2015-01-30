@@ -235,11 +235,11 @@ var DragDrop = new prime({
         this.isPlaceHolder = $(overing).matches('[data-lm-placeholder]') ? true : ($(overing).parent('[data-lm-placeholder]') ? true : false);
         // we only allow new particles to go anywhere and particles to reposition within the grid boundaries
         // and we only allow grids sorting within the same section only
-        if (this.matched && this.element.data('lm-id')) {
+        /*if (this.matched && this.element.data('lm-id')) {
             if ($(this.matched).parent('.grid') !== this.element.parent('.grid') || $(this.matched).parent('.section') !== this.element.parent('.section')) {
                 this.matched = false;
             }
-        }
+        }*/
 
         var deltaX = this.lastX - clientX,
             deltaY = this.lastY - clientY,
