@@ -326,6 +326,7 @@ var LayoutManager = new prime({
         target = $(target);
 
         var wrapper, insider,
+            multiGridsResize = false,
             blockWasNew = this.block.isNew(),
             type = this.block.getType(),
             targetId = target.data('lm-id'),
@@ -384,6 +385,10 @@ var LayoutManager = new prime({
             resizeCase = { case: 3 };
             var previous = this.block.block.parent('[data-lm-blocktype="grid"]');
             if (previous.find('!> [data-lm-blocktype="container"]')) { previous = previous.parent(); }
+            if (this.placeholder.parent('[data-lm-blocktype="grid"]') !== previous) {
+                multiGridsResize = this.block.block.siblings();
+            }
+
             previous = previous.siblings(':not(.original-placeholder)');
             if (!this.block.isNew() && previous.length) { this.resizer.evenResize(previous); }
 
@@ -401,6 +406,20 @@ var LayoutManager = new prime({
             if (resizeCase && resizeCase.case === 2 || resizeCase.case === 4) { this.resizer.evenResize(resizeCase.siblings); }
 
             this.element.attribute('style', null);
+        }
+
+
+        if (multiGridsResize) {
+            if (multiGridsResize.length == 1) { this.resizer.evenResize(multiGridsResize, false); }
+            else {
+                var size = this.block.getSize(),
+                    diff = size / multiGridsResize.length, block;
+                multiGridsResize.forEach(function(sibling) {
+                    sibling = $(sibling);
+                    block = get(this.builder.map, sibling.data('lm-id'));
+                    block.setSize(block.getSize() + diff, true);
+                }, this);
+            }
         }
 
         singles.disable();
