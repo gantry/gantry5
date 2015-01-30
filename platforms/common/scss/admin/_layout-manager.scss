@@ -80,7 +80,7 @@
                 h4 {
                     margin: 0;
                     padding: 0;
-                    font-weight: 100;
+                    font-weight: 300;
                     font-family: $font-family-default;
                     font-size: 24px;
                 }
@@ -286,9 +286,9 @@
         .particle, .position, .spacer, .pagecontent, .atom {
             cursor: move;
             padding: 6px 13px;
-            color: rgba($white, 0.8);
+            color: $white;
             background: #aaaaaa;
-            text-shadow: 1px 1px 0 #8F8F8F, -1px -1px 0 #8F8F8F, 1px -1px 0 #8F8F8F, -1px 1px 0 #8F8F8F, 1px 1px 0 #8F8F8F;
+
             margin-right: 6px;
             position: relative;
 
@@ -305,7 +305,7 @@
                     display: block;
 
                     &:last-child {
-                        opacity: 0.5;
+                        opacity: 0.7;
                         margin-top: -3px;
                     }
                 }
@@ -329,9 +329,9 @@
         }
 
         .particle-size {
-            font-weight: 100;
-            font-size: 30px;
-            line-height: 30px;
+            font-weight: 300;
+            font-size: 20px;
+            color: rgba($white, 0.7);
             vertical-align: middle;
             display: inline-block;
             margin-top: -5px;
@@ -341,7 +341,6 @@
 
         .particle {
             background-color: #00B1D9;
-            text-shadow: 1px 1px 0 #008DAD, -1px -1px 0 #008DAD, 1px -1px 0 #008DAD, -1px 1px 0 #008DAD, 1px 1px 0 #008DAD;
         }
 
         .spacer {
@@ -572,31 +571,26 @@
             background-color: #eee;
             color: #666;
             border: 1px solid darken($medium-gray, 5);
-            text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
         }
 
         &[data-lm-blocktype="position"] {
             color: #fff;
             background-color: #aaa;
-            text-shadow: 1px 1px 0 #8F8F8F, -1px -1px 0 #8F8F8F, 1px -1px 0 #8F8F8F, -1px 1px 0 #8F8F8F, 1px 1px 0 #8F8F8F;
         }
 
         &[data-lm-blocktype="particle"] {
             color: #fff;
             background-color: #13B0DA;
-            text-shadow: 1px 1px 0 #008DAD, -1px -1px 0 #008DAD, 1px -1px 0 #008DAD, -1px 1px 0 #008DAD, 1px 1px 0 #008DAD;
         }
 
         &[data-lm-blocktype="pagecontent"] {
             color: #fff;
             background-color: #218fda;
-            text-shadow: 1px 1px 0 #116AA6, -1px -1px 0 #116AA6, 1px -1px 0 #116AA6, -1px 1px 0 #116AA6, 1px 1px 0 #116AA6;
         }
 
         &[data-lm-blocktype="atom"] {
             color: #fff;
             background-color: #9055AF;
-            text-shadow: 1px 1px 0 #633979, -1px -1px 0 #633979, 1px -1px 0 #633979, -1px 1px 0 #633979, 1px 1px 0 #633979;
         }
     }
 
