@@ -24,7 +24,8 @@ var DragDrop = new prime({
 
     options: {
         delegate: null,
-        droppables: false
+        droppables: false,
+        catchClick: false
     },
 
     EVENTS: DragEvents,
@@ -64,7 +65,7 @@ var DragDrop = new prime({
         if (event.which && event.which !== 1 || $(event.target).matches(this.options.exclude)) { return true; }
         this.element = $(element);
         this.matched = false;
-        this.moved = false;
+        if (this.options.catchClick) { this.moved = false; }
 
         this.emit('dragdrop:beforestart', event, this.element);
 
@@ -131,7 +132,7 @@ var DragDrop = new prime({
     },
 
     stop: function (event) {
-        if (!this.moved) {
+        if (!this.moved && this.options.catchClick) {
             // this is just a click
             this.element.style({transform: this.origin.transform || 'translate(0, 0)'});
             this.emit('dragdrop:stop', event, this.matched, this.element);
@@ -199,23 +200,23 @@ var DragDrop = new prime({
     },
 
     move: function (event) {
-        var didItMove = {
-            x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX,
-            y: event.changedTouches ? event.changedTouches[0].pageY : event.pageY
-        };
+        if (this.options.catchClick) {
+            var didItMove = {
+                x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX,
+                y: event.changedTouches ? event.changedTouches[0].pageY : event.pageY
+            };
 
-        if (Math.abs(didItMove.x - this.origin.x) <= 3 && Math.abs(didItMove.y - this.origin.y) <= 3) {
-            //console.log("Boohoo! My mouse is so sensitive! :) => ", 'x', Math.abs(didItMove.x - this.origin.x), 'y', Math.abs(didItMove.y - this.origin.y));
-            return;
+            if (Math.abs(didItMove.x - this.origin.x) <= 3 && Math.abs(didItMove.y - this.origin.y) <= 3) {
+                return;
+            }
+
+            if (!this.moved) {
+                this.element.style({ opacity: 0.5 });
+                this.emit('dragdrop:move:once', this.element);
+            }
+
+            this.moved = true;
         }
-
-        //console.log("I'm officially dragging now! => ", 'x', Math.abs(didItMove.x - this.origin.x), 'y', Math.abs(didItMove.y - this.origin.y));
-
-        if (!this.moved) {
-            this.element.style({opacity: 0.5});
-            this.emit('dragdrop:move:once', this.element);
-        }
-        this.moved = true;
 
         var clientX = event.clientX || (event.touches && event.touches[0].clientX) || 0,
             clientY = event.clientY || (event.touches && event.touches[0].clientY) || 0,
