@@ -236,12 +236,12 @@ var DragDrop = new prime({
         clearTimeout(this.scrollInterval);
         if (clientY + 50 >= Height && Scroll + Height < scrollHeight) {
             this.scrollInterval = setInterval(function(){
-                window.scrollTo(document.body.scrollLeft, Math.min(scrollHeight, document.body.scrollTop + 5));
-            }, 10);
+                window.scrollTo(document.body.scrollLeft, Math.min(scrollHeight, document.body.scrollTop + 4));
+            }, 8);
         } else if (clientY - 50 <= 100 && scrollHeight > 0) {
             this.scrollInterval = setInterval(function(){
-                window.scrollTo(document.body.scrollLeft, Math.max(0, document.body.scrollTop - 5));
-            }, 10);
+                window.scrollTo(document.body.scrollLeft, Math.max(0, document.body.scrollTop - 4));
+            }, 8);
         }
 
         // we tweak the overing to take into account the negative offset for the handle
