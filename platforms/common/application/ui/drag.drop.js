@@ -62,6 +62,9 @@ var DragDrop = new prime({
     },
 
     start: function (event, element) {
+        clearTimeout(this.scrollInterval);
+        this.scrollHeight = document.body.scrollHeight;
+
         if (event.which && event.which !== 1 || $(event.target).matches(this.options.exclude)) { return true; }
         this.element = $(element);
         this.matched = false;
@@ -132,6 +135,7 @@ var DragDrop = new prime({
     },
 
     stop: function (event) {
+        clearTimeout(this.scrollInterval);
         if (!this.moved && this.options.catchClick) {
             // this is just a click
             this.element.style({transform: this.origin.transform || 'translate(0, 0)'});
@@ -222,6 +226,23 @@ var DragDrop = new prime({
             clientY = event.clientY || (event.touches && event.touches[0].clientY) || 0,
             overing = document.elementFromPoint(clientX, clientY),
             isGrid = this.element.data('lm-blocktype') === 'grid';
+
+
+        // logic to autoscroll on drag
+        var scrollHeight = this.scrollHeight,
+            Height = document.body.clientHeight,
+            Scroll = document.body.scrollTop;
+
+        clearTimeout(this.scrollInterval);
+        if (clientY + 50 >= Height && Scroll + Height < scrollHeight) {
+            this.scrollInterval = setInterval(function(){
+                window.scrollTo(document.body.scrollLeft, Math.min(scrollHeight, document.body.scrollTop + 5));
+            }, 10);
+        } else if (clientY - 50 <= 100 && scrollHeight > 0) {
+            this.scrollInterval = setInterval(function(){
+                window.scrollTo(document.body.scrollLeft, Math.max(0, document.body.scrollTop - 5));
+            }, 10);
+        }
 
         // we tweak the overing to take into account the negative offset for the handle
         if (isGrid) {
