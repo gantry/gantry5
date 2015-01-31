@@ -314,7 +314,7 @@ ready(function() {
 
                             // parent block attributes
                             if (response.body.data.block && size(response.body.data.block)) {
-                                var sibling = block.block.nextSibling(),
+                                var sibling = block.block.nextSibling() || block.block.previousSibling(),
                                     currentSize = block.getSize(),
                                     diffSize;
 
@@ -322,11 +322,11 @@ ready(function() {
 
                                 diffSize = currentSize - block.getSize();
 
-                                block.setAnimatedSize(block.getAttribute('size'));
+                                block.setAnimatedSize(block.getSize());
 
                                 if (sibling) {
                                     sibling = builder.get(sibling.data('lm-id'));
-                                    sibling.setSize(sibling.getSize() + diffSize, true);
+                                    sibling.setAnimatedSize(parseFloat(sibling.getSize()) + diffSize, true);
                                 }
                             }
 
