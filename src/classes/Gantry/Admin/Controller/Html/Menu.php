@@ -61,6 +61,7 @@ class Menu extends HtmlController
         $this->params['blueprints'] = $this->loadBlueprints();
         $this->params['data'] = $resource->getConfig();
         $this->params['menu'] = $resource;
+        $this->params['path'] = implode('/', $path);
 
         // Detect special case to fetch only single column group.
         $group = isset($_GET['group']) ? intval($_GET['group']) : null;
