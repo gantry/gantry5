@@ -89,7 +89,7 @@ var MenuManager = new prime({
         target = $(target);
         if (!this.placeholder) { this.placeholder = zen('li.block.placeholder[data-mm-placeholder]').style({ display: 'none' }); }
 
-        var targetType = target.parent('.g-main-nav') || target.matches('.g-main-nav') ? 'main' : 'columns',
+        var targetType = target.parent('.g-toplevel') || target.matches('.g-toplevel') ? 'main' : 'columns',
             dataID = target.data('mm-id'),
             dataLevel = target.data('mm-level'),
             originalID = this.block.data('mm-id'),
