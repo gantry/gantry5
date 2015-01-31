@@ -249,7 +249,7 @@ $submenu-ratio:                 60px;
 					margin-right: 10px;
 		       	}
 			}
-			&:hover, .active {
+			&:hover, &.active, .active {
 				background: $tertiary-accent;
 				a {
 					color: $white;

@@ -42,7 +42,9 @@ var MenuManager = new prime({
     },
 
     click: function(event, element) {
-        element.addClass('active').siblings().removeClass('active');
+        var siblings = element.siblings();
+        element.addClass('active');
+        if (siblings) { siblings.removeClass('active'); }
         element.emit('click');
         var link = element.find('a');
         if (link) { link[0].click(); }
@@ -54,6 +56,7 @@ var MenuManager = new prime({
 
         this.block = null;
         this.type = element.parent('.g-main-nav') || element.matches('.g-main-nav') ? 'main' : 'columns';
+        this.wasActive = element.hasClass('active');
 
         root.addClass('moving');
         var type = $(element).data('mm-id'),
@@ -73,7 +76,7 @@ var MenuManager = new prime({
             zIndex: 1000,
             width: Math.ceil(size.width),
             height: Math.ceil(size.height)
-        });
+        }).addClass('active');
 
         this.placeholder.before(element);
     },
@@ -93,7 +96,7 @@ var MenuManager = new prime({
             originalLevel = this.block.data('mm-level');
 
         // we only allow sorting between same level items
-        if (originalLevel !== dataLevel) { return; }
+        if (originalLevel !== dataLevel) { this.dragdrop.matched = false; return; }
 
         // Check for adjacents and avoid inserting any placeholder since it would be the same position
         var exclude = ':not(.placeholder):not([data-mm-id="' + this.original.data('mm-id') + '"])',
@@ -132,6 +135,8 @@ var MenuManager = new prime({
     },
 
     stop: function(event, target, element) {
+        if (target) { element.removeClass('active'); }
+
         if (!this.dragdrop.matched) {
             if (this.placeholder) { this.placeholder.remove(); }
 
@@ -144,6 +149,7 @@ var MenuManager = new prime({
         this.original.remove();
         this.block.after(this.placeholder);
         this.placeholder.remove();
+        if (this.wasActive) { element.addClass('active'); }
     },
 
     stopAnimation: function(element) {

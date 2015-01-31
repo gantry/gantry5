@@ -170,7 +170,7 @@ var DragDrop = new prime({
                 this.element.style({
                     opacity: 0,
                     transform: 'translate(0, 0)'
-                });
+                }).removeClass('active');
             }
 
             if (!this.matched) {

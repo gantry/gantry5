@@ -2018,11 +2018,11 @@ a {
   margin-right: 10px;
 }
 /* line 252, ../scss/admin/_menu.scss */
-#g5-container .submenu-selector .submenu-items li:hover, #g5-container .submenu-selector .submenu-items li .active {
+#g5-container .submenu-selector .submenu-items li:hover, #g5-container .submenu-selector .submenu-items li.active, #g5-container .submenu-selector .submenu-items li .active {
   background: #48B0D7;
 }
 /* line 254, ../scss/admin/_menu.scss */
-#g5-container .submenu-selector .submenu-items li:hover a, #g5-container .submenu-selector .submenu-items li .active a {
+#g5-container .submenu-selector .submenu-items li:hover a, #g5-container .submenu-selector .submenu-items li.active a, #g5-container .submenu-selector .submenu-items li .active a {
   color: #fff;
 }
 /* line 259, ../scss/admin/_menu.scss */
