@@ -84,7 +84,7 @@ $submenu-ratio:                 60px;
 		color: $navbar-color;
 		display: inline-block;
         @include transition(background-color 0.1s ease-out);
-        
+
 		.parent-indicator {
 			&:before {
 				content: "\f078";
@@ -209,10 +209,10 @@ $submenu-ratio:                 60px;
             z-index: 10;
          	border: 1px solid $white;
 		}
-		&:hover:after {
-			background: #00baaa;
-		}
 	}
+    &:hover .submenu-column:after {
+        background: #00baaa;
+    }
 	.submenu-items {
 		list-style: none;
 		margin: 0;
