@@ -11,7 +11,7 @@
         </li>
     {% endif %}
     {% for child in children %}
-        <li>
+        <li data-mm-id="{{ child.path }}" data-mm-level="{{ child.level }}">
             {% include 'menu/item.html.twig' with {'item': child, 'target': 'list-' ~ group } %}
         </li>
     {% endfor %}

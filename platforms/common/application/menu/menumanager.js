@@ -49,7 +49,7 @@ var MenuManager = new prime({
     },
 
     start: function(event, element) {
-        var root = element.parent('.menu-selector'),
+        var root = element.parent('.menu-selector') || element.parent('.submenu-column'),
             size = $(element).position();
 
         this.block = null;
@@ -172,7 +172,7 @@ var MenuManager = new prime({
     },
 
     stopAnimation: function(element) {
-        element.parent('.menu-selector').removeClass('moving');
+        (element.parent('.menu-selector') || element.parent('.submenu-column')).removeClass('moving');
         this.block.attribute('style', null);
         if (this.original) { this.original.remove(); }
     }

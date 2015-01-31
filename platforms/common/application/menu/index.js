@@ -10,7 +10,7 @@ ready(function() {
 
     // menumanager
     menumanager = new MenuManager('body', {
-        delegate: '#menu-editor > section ul li',
+        delegate: '#menu-editor > section ul li, .submenu-column li',
         droppables: '#menu-editor [data-mm-id]',
         exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
         resize_handles: '',
