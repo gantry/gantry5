@@ -271,6 +271,11 @@ var LayoutManager = new prime({
             duration: '150ms'
         });
 
+        var root = $('[data-lm-root]'), blocks;
+        if (this.block.getType() === 'grid' && (blocks = root.search('[data-lm-dropzone]:not([data-lm-blocktype="grid"])'))) {
+            blocks.attribute('style', null);
+        }
+
         var siblings = this.block.block.siblings(':not(.original-placeholder)');
 
         if (siblings && this.block.getType() == 'block') {
@@ -307,7 +312,7 @@ var LayoutManager = new prime({
         singles.cleanup(this.builder);
 
         this.history.push(this.builder.serialize());
-        $('[data-lm-root]').removeClass('moving');
+        root.removeClass('moving');
 
     },
 
