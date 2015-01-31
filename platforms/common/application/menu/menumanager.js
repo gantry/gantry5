@@ -53,6 +53,7 @@ var MenuManager = new prime({
             size = $(element).position();
 
         this.block = null;
+        this.type = element.parent('.g-main-nav') || element.matches('.g-main-nav') ? 'main' : 'columns'
 
         root.addClass('moving');
         var type = $(element).data('mm-id'),
@@ -132,9 +133,8 @@ var MenuManager = new prime({
                 this.placeholder[location.x](target);
                 break;
             case 'columns':
-                method = (location.y === 'above' ? 'top' : 'bottom');
-                position = (location.x === 'other') ? method : location.x;
-                this.placeholder[position](target);
+                method = (location.y === 'above' ? 'before' : 'after');
+                this.placeholder[method](target);
 
                 break;
         }
