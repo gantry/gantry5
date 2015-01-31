@@ -98,6 +98,9 @@ var MenuManager = new prime({
         // we only allow sorting between same level items
         if (originalLevel !== dataLevel) { this.dragdrop.matched = false; return; }
 
+        // for levels > 2 we only allow sorting within the same column
+        if (dataLevel > 2 && target.parent('ul') != this.block.parent('ul')) { this.dragdrop.matched = false; return; }
+
         // Check for adjacents and avoid inserting any placeholder since it would be the same position
         var exclude = ':not(.placeholder):not([data-mm-id="' + this.original.data('mm-id') + '"])',
             adjacents = {
@@ -156,6 +159,7 @@ var MenuManager = new prime({
         (element.parent('.menu-selector') || element.parent('.submenu-column')).removeClass('moving');
         this.block.attribute('style', null);
         if (this.original) { this.original.remove(); }
+        if (!this.wasActive) { this.block.removeClass('active'); }
     }
 });
 
