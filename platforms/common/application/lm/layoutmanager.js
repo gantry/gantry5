@@ -246,7 +246,7 @@ var LayoutManager = new prime({
         if (this.placeholder) { this.placeholder.remove(); }
 
         if (!this.block.isNew()) {
-            if ($(event.target).matches(this.eraser.element.find('.trash-zone'))) {
+            if ($(event.target).matches(this.eraser.element) || this.eraser.element.find($(event.target))) {
                 this.dragdrop.removeElement = true;
                 this.eraser.over();
             } else {
