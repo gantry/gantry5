@@ -273,7 +273,7 @@ var LayoutManager = new prime({
 
         var root = $('[data-lm-root]'), blocks;
         if (this.block.getType() === 'grid' && (blocks = root.search('[data-lm-dropzone]:not([data-lm-blocktype="grid"])'))) {
-            blocks.attribute('style', null);
+            blocks.style({ 'pointer-events': 'inherit' });
         }
 
         var siblings = this.block.block.siblings(':not(.original-placeholder)');
