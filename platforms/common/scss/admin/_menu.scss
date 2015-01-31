@@ -255,6 +255,11 @@ $submenu-ratio:                 60px;
 					color: $white;
 				}
 			}
+
+            &.placeholder {
+                margin: -1px 0;
+                border: 1px solid $black;
+            }
 		}
 	}
 }
