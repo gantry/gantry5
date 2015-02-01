@@ -44,7 +44,7 @@ var MenuManager = new prime({
     },
 
     click: function(event, element) {
-        if (element.hasClass('g-block')) { return true; }
+        if (element.hasClass('g-block')) { this.stopAnimation(); return true; }
 
         var siblings = element.siblings();
         element.addClass('active');
@@ -63,9 +63,6 @@ var MenuManager = new prime({
     },
 
     start: function(event, element) {
-        var target = $(event.target);
-        if (element.hasClass('g-block') && (!target.hasClass('submenu-reorder') && !target.parent('.submenu-reorder'))) { return; }
-
         var root = element.parent('.menu-selector') || element.parent('.submenu-column') || element.parent('.submenu-selector'),
             size = $(element).position();
 

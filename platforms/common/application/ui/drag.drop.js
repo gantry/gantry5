@@ -65,6 +65,11 @@ var DragDrop = new prime({
         clearTimeout(this.scrollInterval);
         this.scrollHeight = document.body.scrollHeight;
 
+        // prevents dragging a column from itself and limiting to its handle
+        var target = $(event.target);
+        if (element.hasClass('g-block') && (!target.hasClass('submenu-reorder') && !target.parent('.submenu-reorder'))) { return true; }
+
+
         if (event.which && event.which !== 1 || $(event.target).matches(this.options.exclude)) { return true; }
         this.element = $(element);
         this.matched = false;
