@@ -67,7 +67,7 @@ var DragDrop = new prime({
 
         // prevents dragging a column from itself and limiting to its handle
         var target = $(event.target);
-        if (element.hasClass('g-block') && (!target.hasClass('submenu-reorder') && !target.parent('.submenu-reorder'))) { return true; }
+        if (!element.parent('[data-lm-root]') && element.hasClass('g-block') && (!target.hasClass('submenu-reorder') && !target.parent('.submenu-reorder'))) { return true; }
 
 
         if (event.which && event.which !== 1 || $(event.target).matches(this.options.exclude)) { return true; }
