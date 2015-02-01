@@ -1930,7 +1930,7 @@ a {
   vertical-align: middle;
   line-height: 22px;
   text-align: center;
-  z-index: 20;
+  z-index: 5;
   color: #808080;
   font-family: FontAwesome, sans-serif;
   border-radius: 0 0 0.1875rem 0.1875rem;
@@ -2053,7 +2053,7 @@ a {
   left: 0;
   right: 0;
   height: 60px;
-  z-index: 15;
+  /*z-index: 15;*/
 }
 /* line 291, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio .percentage {

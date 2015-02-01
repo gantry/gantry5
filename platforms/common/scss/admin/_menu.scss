@@ -167,7 +167,7 @@ $submenu-ratio:                 60px;
             vertical-align: middle;
             line-height: 22px;
             text-align: center;
-            z-index: 20;
+            z-index: 5;
             color: $navbar-color;
             font-family: FontAwesome, sans-serif;
             border-radius: 0 0 $core-border-radius $core-border-radius;
@@ -287,7 +287,7 @@ $submenu-ratio:                 60px;
 	left: 0;
 	right: 0;
 	height: $submenu-ratio;
-    z-index: 15;
+    /*z-index: 15;*/
 	.percentage {
 		font-size: 20px;
 		font-weight: 300;

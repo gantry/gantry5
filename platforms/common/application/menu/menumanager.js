@@ -119,6 +119,9 @@ var MenuManager = new prime({
         // we only allow sorting between same level items
         if (this.type !== 'column' && originalLevel !== dataLevel) { this.dragdrop.matched = false; return; }
 
+        // ensuring columns can only be dragged before/after other columns
+        if (this.type == 'column' && dataLevel) { this.dragdrop.matched = false; return; }
+
         // for levels > 2 we only allow sorting within the same column
         if (dataLevel > 2 && target.parent('ul') != this.block.parent('ul')) { this.dragdrop.matched = false; return; }
 
