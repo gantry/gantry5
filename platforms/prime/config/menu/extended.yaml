@@ -68,7 +68,7 @@ ordering:
 
 items:
   home:
-    menu_icon: home
+    menu_icon: fa fa-fw fa-home
 
   features:
     type: alias
@@ -79,7 +79,7 @@ items:
     anchor_css:
     anchor_title:
     menu_image:
-    menu_icon: bolt
+    menu_icon: fa fa-fw fa-bolt
     layout: columns
 
   features/overview:
@@ -124,37 +124,37 @@ items:
   sample-pages:
     type: separator
     title: Sample Pages
-    menu_icon: fire
+    menu_icon: fa fa-fw fa-fire
 
   sample-pages/about-us:
     type: separator
     title: About Us
-    menu_icon: ra
+    menu_icon: fa fa-fw fa-ra
 
   sample-pages/our-team:
     type: separator
     title: Our Team
-    menu_icon: users
+    menu_icon: fa fa-fw fa-users
 
   sample-pages/pricing:
     type: separator
     title: Pricing
-    menu_icon: usd
+    menu_icon: fa fa-fw fa-usd
 
   sample-pages/faq:
     type: separator
     title: FAQ
-    menu_icon: book
+    menu_icon: fa fa-fw fa-book
 
   sample-pages/services:
     type: separator
     title: Services
-    menu_icon: taxi
+    menu_icon: fa fa-fw fa-taxi
 
   sample-pages/blog:
     type: separator
     title: Blog
-    menu_icon: calendar-o
+    menu_icon: fa fa-fw fa-calendar-o
 
   special:
     type: alias
@@ -164,25 +164,25 @@ items:
     anchor_css:
     anchor_title:
     menu_image:
-    menu_icon: shield
+    menu_icon: fa fa-fw fa-shield
 
   special/error:
-    menu_icon: warning
+    menu_icon: fa fa-fw fa-warning
 
   special/unsupported:
-    menu_icon: wheelchair
+    menu_icon: fa fa-fw fa-wheelchair
 
   special/offline:
-    menu_icon: power-off
+    menu_icon: fa fa-fw fa-power-off
 
   special/comingsoon:
-    menu_icon: paint-brush
+    menu_icon: fa fa-fw fa-paint-brush
 
   special/component:
-    menu_icon: file-text-o
+    menu_icon: fa fa-fw fa-file-text-o
 
   special/raw:
-    menu_icon: file-code-o
+    menu_icon: fa fa-fw fa-file-code-o
 
   styles:
   styles/preset-1:

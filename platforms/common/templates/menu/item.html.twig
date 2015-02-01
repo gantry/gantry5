@@ -5,7 +5,7 @@
             <span class="g-image-title">{{ item.title|e }}</span>
         {% endif %}
     {% elseif item.menu_icon %}
-        <i class="fa fa-fw fa-{{ item.menu_icon|e }}"></i>
+        <i class="{{ item.menu_icon|e }}"></i>
         {% if item.menu_text %}
             {{ item.title|e }}
         {% endif %}

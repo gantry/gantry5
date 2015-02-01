@@ -45,13 +45,13 @@ ordering:
 
 items:
   home:
-    menu_icon: home
+    menu_icon: fa fa-fw fa-home
 
   about:
-    menu_icon: check
+    menu_icon: fa fa-fw fa-check
 
   team:
-    menu_icon: users
+    menu_icon: fa fa-fw fa-users
 
   features:
     type: alias
@@ -62,43 +62,43 @@ items:
     anchor_css:
     anchor_title:
     menu_image:
-    menu_icon: bolt
+    menu_icon: fa fa-fw fa-bolt
 
   sample-pages:
     type: separator
     title: Sample Pages
-    menu_icon: fire
+    menu_icon: fa fa-fw fa-fire
     layout: columns
 
   sample-pages/about-us:
     type: separator
     title: About Us
-    menu_icon: ra
+    menu_icon: fa fa-fw fa-ra
 
   sample-pages/our-team:
     type: separator
     title: Our Team
-    menu_icon: users
+    menu_icon: fa fa-fw fa-users
 
   sample-pages/pricing:
     type: separator
     title: Pricing
-    menu_icon: usd
+    menu_icon: fa fa-fw fa-usd
 
   sample-pages/faq:
     type: separator
     title: FAQ
-    menu_icon: book
+    menu_icon: fa fa-fw fa-book
 
   sample-pages/services:
     type: separator
     title: Services
-    menu_icon: taxi
+    menu_icon: fa fa-fw fa-taxi
 
   sample-pages/blog:
     type: separator
     title: Blog
-    menu_icon: calendar-o
+    menu_icon: fa fa-fw fa-calendar-o
 
   special:
     type: alias
@@ -108,7 +108,7 @@ items:
     anchor_css:
     anchor_title:
     menu_image:
-    menu_icon: shield
+    menu_icon: fa fa-fw fa-shield
     layout: columns
 
   special/title:
@@ -116,77 +116,77 @@ items:
     title: Special Pages
 
   special/error:
-    menu_icon: warning
+    menu_icon: fa fa-fw fa-warning
 
   special/unsupported:
-    menu_icon: wheelchair
+    menu_icon: fa fa-fw fa-wheelchair
 
   special/offline:
-    menu_icon: power-off
+    menu_icon: fa fa-fw fa-power-off
 
   special/comingsoon:
-    menu_icon: paint-brush
+    menu_icon: fa fa-fw fa-paint-brush
 
   special/separator:
     type: separator
     title: Component Stuff
 
   special/component:
-    menu_icon: file-text-o
+    menu_icon: fa fa-fw fa-file-text-o
 
   special/raw:
-    menu_icon: file-code-o
+    menu_icon: fa fa-fw fa-file-code-o
 
   admin:
     type: alias
-    menu_icon: cogs
+    menu_icon: fa fa-fw fa-cogs
     link: admin
     title: Admin
 
   admin/overview:
     type: alias
-    menu_icon: adjust
+    menu_icon: fa fa-fw fa-adjust
     link: admin
     title: Overview
 
   admin/presets:
     type: alias
-    menu_icon: star
+    menu_icon: fa fa-fw fa-star
     link: admin/presets
     title: Presets
 
   admin/settings:
     type: alias
-    menu_icon: wrench
+    menu_icon: fa fa-fw fa-wrench
     link: admin/settings
     title: Settings
 
   admin/pages:
     type: alias
-    menu_icon: columns
+    menu_icon: fa fa-fw fa-columns
     link: admin/pages
     title: Layouts
 
   admin/menu:
     type: alias
-    menu_icon: list
+    menu_icon: fa fa-fw fa-list
     link: admin/menu
     title: Menu
 
   admin/assignments:
     type: alias
-    menu_icon: check
+    menu_icon: fa fa-fw fa-check
     link: admin/assignments
     title: Assignments
 
   admin/themes:
     type: alias
-    menu_icon: tint
+    menu_icon: fa fa-fw fa-tint
     link: ../
     title: Back to Themes
 
   admin/learn:
     type: alias
-    menu_icon: book
+    menu_icon: fa fa-fw fa-book
     link: ../learn
     title: Documentation

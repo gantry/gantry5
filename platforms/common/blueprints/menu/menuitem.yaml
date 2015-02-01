@@ -51,5 +51,5 @@ form:
           label: Link Image
 
         .menu_icon:
-          type: input.text
+          type: input.icon
           label: Link Icon
