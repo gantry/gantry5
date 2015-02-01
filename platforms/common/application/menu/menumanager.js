@@ -26,10 +26,12 @@ var MenuManager = new prime({
         this.resizer = new Resizer(element, options);
         this.dragdrop
             .on('dragdrop:click', this.bound('click'))
+            .on('dragdrop:beforestart', this.bound('beforestart'))
             .on('dragdrop:start', this.bound('start'))
             .on('dragdrop:move:once', this.bound('moveOnce'))
             .on('dragdrop:location', this.bound('location'))
             .on('dragdrop:nolocation', this.bound('nolocation'))
+            .on('dragdrop:resize', this.bound('resize'))
             .on('dragdrop:stop', this.bound('stop'))
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
         /*
@@ -42,6 +44,8 @@ var MenuManager = new prime({
     },
 
     click: function(event, element) {
+        if (element.hasClass('g-block')) { return true; }
+
         var siblings = element.siblings();
         element.addClass('active');
         if (siblings) { siblings.removeClass('active'); }
@@ -50,19 +54,32 @@ var MenuManager = new prime({
         if (link) { link[0].click(); }
     },
 
+    resize: function(event, element, siblings, offset) {
+        this.resizer.start(event, element, siblings, offset);
+    },
+
+    beforestart: function(event, element){
+        //if (element.hasClass('submenu-reorder')) { this.dragdrop.element = element.parent('.g-block'); }
+    },
+
     start: function(event, element) {
-        var root = element.parent('.menu-selector') || element.parent('.submenu-column'),
+        var target = $(event.target);
+        if (element.hasClass('g-block') && (!target.hasClass('submenu-reorder') && !target.parent('.submenu-reorder'))) { return; }
+
+        var root = element.parent('.menu-selector') || element.parent('.submenu-column') || element.parent('.submenu-selector'),
             size = $(element).position();
 
         this.block = null;
-        this.type = element.parent('.g-main-nav') || element.matches('.g-main-nav') ? 'main' : 'columns';
+        this.type = element.parent('.g-main-nav') || element.matches('.g-main-nav') ? 'main' : (element.matches('.g-block') ? 'column' : 'columns_items');
         this.wasActive = element.hasClass('active');
+        this.root = root;
 
         root.addClass('moving');
+
         var type = $(element).data('mm-id'),
             clone = element[0].cloneNode(true);
 
-        if (!this.placeholder) { this.placeholder = zen('li.block.placeholder[data-mm-placeholder]'); }
+        if (!this.placeholder) { this.placeholder = zen((this.type == 'column' ? 'div' : 'li') + '.block.placeholder[data-mm-placeholder]'); }
         this.placeholder.style({ display: 'none' });
         this.original = $(clone).after(element).style({
             display: 'block',
@@ -79,24 +96,28 @@ var MenuManager = new prime({
         }).addClass('active');
 
         this.placeholder.before(element);
+
+        if (this.type == 'column') {
+            root.search('.g-block > *').style({'pointer-events': 'none'});
+        }
     },
 
     moveOnce: function(element) {
-        this.original.style({opacity: 0.5})
+        if (this.original) { this.original.style({opacity: 0.5}); }
     },
 
     location: function(event, location, target/*, element*/) {
         target = $(target);
-        if (!this.placeholder) { this.placeholder = zen('li.block.placeholder[data-mm-placeholder]').style({ display: 'none' }); }
+        if (!this.placeholder) { this.placeholder = zen((this.type == 'column' ? 'div' : 'li') + '.block.placeholder[data-mm-placeholder]').style({ display: 'none' }); }
 
-        var targetType = target.parent('.g-toplevel') || target.matches('.g-toplevel') ? 'main' : 'columns',
+        var targetType = target.parent('.g-toplevel') || target.matches('.g-toplevel') ? 'main' : (target.matches('.g-block') ? 'column' : 'columns_items'),
             dataID = target.data('mm-id'),
             dataLevel = target.data('mm-level'),
             originalID = this.block.data('mm-id'),
             originalLevel = this.block.data('mm-level');
 
         // we only allow sorting between same level items
-        if (originalLevel !== dataLevel) { this.dragdrop.matched = false; return; }
+        if (this.type !== 'column' && originalLevel !== dataLevel) { this.dragdrop.matched = false; return; }
 
         // for levels > 2 we only allow sorting within the same column
         if (dataLevel > 2 && target.parent('ul') != this.block.parent('ul')) { this.dragdrop.matched = false; return; }
@@ -113,16 +134,20 @@ var MenuManager = new prime({
         if (targetType === 'main' && ((adjacents.before === target && location.x === 'after') || (adjacents.after === target && location.x === 'before'))) {
             return;
         }
-        if (targetType === 'columns' && ((adjacents.before === target && location.y === 'below') || (adjacents.after === target && location.y === 'above'))) {
+        if (targetType === 'column' && ((adjacents.before === target && location.x === 'after') || (adjacents.after === target && location.x === 'before'))) {
+            return;
+        }
+        if (targetType === 'columns_items' && ((adjacents.before === target && location.y === 'below') || (adjacents.after === target && location.y === 'above'))) {
             return;
         }
 
         // handles the types cases and normalizes the locations (x and y)
         switch (targetType) {
             case 'main':
+            case 'column':
                 this.placeholder[location.x](target);
                 break;
-            case 'columns':
+            case 'columns_items':
                 this.placeholder[location.y === 'above' ? 'before' : 'after'](target);
 
                 break;
@@ -139,6 +164,9 @@ var MenuManager = new prime({
 
     stop: function(event, target, element) {
         if (target) { element.removeClass('active'); }
+        if (this.type == 'column') {
+            this.root.search('.g-block > *').attribute('style', null);
+        }
 
         if (!this.dragdrop.matched) {
             if (this.placeholder) { this.placeholder.remove(); }
@@ -156,10 +184,16 @@ var MenuManager = new prime({
     },
 
     stopAnimation: function(element) {
-        (element.parent('.menu-selector') || element.parent('.submenu-column')).removeClass('moving');
-        this.block.attribute('style', null);
+        var flex = null;
+        if (this.type == 'column') { flex = this.block.compute('flex'); }
+        if (this.root) { this.root.removeClass('moving'); }
+        if (this.block) {
+            this.block.attribute('style', null);
+            if (flex) { this.block.style('flex', flex); }
+        }
+
         if (this.original) { this.original.remove(); }
-        if (!this.wasActive) { this.block.removeClass('active'); }
+        if (!this.wasActive && this.block) { this.block.removeClass('active'); }
     }
 });
 

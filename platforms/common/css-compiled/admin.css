@@ -1910,18 +1910,19 @@ a {
 /* line 152, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector {
   border: 6px solid #fff;
-  background: #DADADA;
   box-shadow: 0 0 0 1px #ddd;
   border-radius: 0.1875rem;
   color: #808080;
+  background-color: #fff;
 }
 /* line 158, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .g-block {
   position: relative;
   padding-bottom: 60px;
+  background: #DADADA;
 }
 /* line 162, ../scss/admin/_menu.scss */
-#g5-container .submenu-selector .g-block:hover:before {
+#g5-container .submenu-selector .g-block .submenu-reorder {
   position: absolute;
   background: #DADADA;
   bottom: 45px;
@@ -1929,34 +1930,37 @@ a {
   vertical-align: middle;
   line-height: 22px;
   text-align: center;
-  z-index: 5;
+  z-index: 20;
   color: #808080;
   font-family: FontAwesome, sans-serif;
-  content: "\f07e";
   border-radius: 0 0 0.1875rem 0.1875rem;
   left: 50%;
   margin-left: -25px;
   cursor: ew-resize;
-  font-size: 0.9rem;
+  opacity: 0;
 }
-/* line 182, ../scss/admin/_menu.scss */
+/* line 180, ../scss/admin/_menu.scss */
+#g5-container .submenu-selector .g-block:hover .submenu-reorder {
+  opacity: 1;
+}
+/* line 185, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .g-block:last-child .submenu-column {
   margin-right: 0;
 }
-/* line 184, ../scss/admin/_menu.scss */
+/* line 187, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .g-block:last-child .submenu-column:after {
   display: none;
 }
-/* line 191, ../scss/admin/_menu.scss */
+/* line 194, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .g-block:only-child:hover:before {
   display: none;
 }
-/* line 197, ../scss/admin/_menu.scss */
+/* line 200, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-column {
   margin-right: 6px;
   background: #DADADA;
 }
-/* line 200, ../scss/admin/_menu.scss */
+/* line 203, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-column:after {
   content: "";
   top: -1px;
@@ -1969,47 +1973,47 @@ a {
   z-index: 10;
   border: 1px solid #fff;
 }
-/* line 213, ../scss/admin/_menu.scss */
+/* line 216, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector:hover .submenu-column:after {
   background: #00baaa;
 }
-/* line 216, ../scss/admin/_menu.scss */
+/* line 219, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items {
   list-style: none;
   margin: 0;
   padding: 0.469rem 0;
   position: relative;
 }
-/* line 221, ../scss/admin/_menu.scss */
+/* line 224, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items:after {
   margin-right: 6px;
 }
-/* line 224, ../scss/admin/_menu.scss */
+/* line 227, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li {
   color: #808080;
   cursor: pointer;
   position: relative;
 }
-/* line 228, ../scss/admin/_menu.scss */
+/* line 231, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li a {
   display: block;
   color: #808080;
 }
-/* line 232, ../scss/admin/_menu.scss */
+/* line 235, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .menu-item {
   padding: 0.469rem 0.938rem;
 }
-/* line 234, ../scss/admin/_menu.scss */
+/* line 237, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .menu-item .fa-chevron-left {
   font-size: 0.8rem;
   line-height: 1.9;
 }
-/* line 239, ../scss/admin/_menu.scss */
+/* line 242, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .config-cog {
   right: 4px;
   top: 0.8rem;
 }
-/* line 244, ../scss/admin/_menu.scss */
+/* line 247, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .parent-indicator:before {
   content: "\f054";
   float: right;
@@ -2017,20 +2021,30 @@ a {
   line-height: 2;
   margin-right: 10px;
 }
-/* line 252, ../scss/admin/_menu.scss */
+/* line 255, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li:hover, #g5-container .submenu-selector .submenu-items li.active, #g5-container .submenu-selector .submenu-items li .active {
   background: #48B0D7;
 }
-/* line 254, ../scss/admin/_menu.scss */
+/* line 257, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li:hover a, #g5-container .submenu-selector .submenu-items li.active a, #g5-container .submenu-selector .submenu-items li .active a {
   color: #fff;
 }
-/* line 259, ../scss/admin/_menu.scss */
+/* line 262, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li.placeholder {
   margin: -1px 0;
   border: 1px solid #000;
 }
-/* line 267, ../scss/admin/_menu.scss */
+/* line 270, ../scss/admin/_menu.scss */
+#g5-container .submenu-selector.moving .submenu-column:after {
+  background-color: #fff;
+}
+/* line 275, ../scss/admin/_menu.scss */
+#g5-container .submenu-selector > .placeholder {
+  border: 1px solid #000;
+  margin: 0 3px 0 -5px;
+  z-index: 10;
+}
+/* line 282, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio {
   background: #fff;
   text-align: center;
@@ -2039,8 +2053,9 @@ a {
   left: 0;
   right: 0;
   height: 60px;
+  z-index: 15;
 }
-/* line 275, ../scss/admin/_menu.scss */
+/* line 291, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio .percentage {
   font-size: 20px;
   font-weight: 300;
@@ -2048,7 +2063,7 @@ a {
   display: inline-block;
   margin-top: 5px;
 }
-/* line 282, ../scss/admin/_menu.scss */
+/* line 298, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio i {
   position: absolute;
   right: 1rem;

@@ -151,32 +151,35 @@ $submenu-ratio:                 60px;
 
 .submenu-selector {
 	border: 6px solid #fff;
-	background: $navbar-bg;
 	box-shadow: 0 0 0 1px #ddd;
 	border-radius: $core-border-radius;
 	color: $navbar-color;
+    background-color: $white;
 	.g-block {
 		position: relative;
 		padding-bottom: $submenu-ratio;
-		&:hover {
-			&:before {
-	            position: absolute;
-	            background: $navbar-bg;
-	            bottom: $submenu-ratio - 15;
-	            width: 50px;
-	            vertical-align: middle;
-	            line-height: 22px;
-	            text-align: center;
-	            z-index: 5;
-	            color: $navbar-color;
-	            font-family: FontAwesome, sans-serif;
-	            content: "\f07e";
-	            border-radius: 0 0 $core-border-radius $core-border-radius;
-	            left: 50%;
-	            margin-left: -25px;
-	            cursor: ew-resize;
-	            font-size: $core-font-size - 0.1;
-			}
+        background: $navbar-bg;
+		.submenu-reorder {
+            position: absolute;
+            background: $navbar-bg;
+            bottom: $submenu-ratio - 15;
+            width: 50px;
+            vertical-align: middle;
+            line-height: 22px;
+            text-align: center;
+            z-index: 20;
+            color: $navbar-color;
+            font-family: FontAwesome, sans-serif;
+            border-radius: 0 0 $core-border-radius $core-border-radius;
+            left: 50%;
+            margin-left: -25px;
+            cursor: ew-resize;
+            opacity: 0;
+        }
+        &:hover {
+            .submenu-reorder {
+                opacity: 1;
+            }
 		}
 		&:last-child {
 			.submenu-column {
@@ -262,6 +265,18 @@ $submenu-ratio:                 60px;
             }
 		}
 	}
+    
+    &.moving {
+        .submenu-column:after {
+            background-color: $white;
+        }
+    }
+
+    > .placeholder {
+        border: 1px solid $black;
+        margin: 0 3px 0 -5px;
+        z-index: 10;
+    }
 }
 
 .submenu-ratio {
@@ -272,6 +287,7 @@ $submenu-ratio:                 60px;
 	left: 0;
 	right: 0;
 	height: $submenu-ratio;
+    z-index: 15;
 	.percentage {
 		font-size: 20px;
 		font-weight: 300;
