@@ -104,6 +104,8 @@ var selectorChangeEvent = function(){
             var value = selectize.getValue(),
                 options = selectize.Options;
 
+            if (!options[value]) { return; }
+
             selectize.input
                 .data('g5-ajaxify', '')
                 .data('g5-ajaxify-target', selector.data('g5-ajaxify-target') || '[data-g5-content-wrapper]')
