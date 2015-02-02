@@ -1,20 +1,21 @@
 "use strict";
-var prime    = require('prime'),
-    $        = require('../utils/elements.moofx'),
-    zen      = require('elements/zen'),
-    Emitter  = require('prime/emitter'),
-    Bound    = require('prime-util/prime/bound'),
-    Options  = require('prime-util/prime/options'),
-    Blocks   = require('./blocks'),
-    DragDrop = require('../ui/drag.drop'),
-    Resizer  = require('../ui/drag.resizer'),
-    Eraser   = require('./eraser'),
-    get      = require('mout/object/get'),
+var prime     = require('prime'),
+    $         = require('../utils/elements.moofx'),
+    zen       = require('elements/zen'),
+    Emitter   = require('prime/emitter'),
+    Bound     = require('prime-util/prime/bound'),
+    Options   = require('prime-util/prime/options'),
+    Blocks    = require('./blocks'),
+    DragDrop  = require('../ui/drag.drop'),
+    Resizer   = require('../ui/drag.resizer'),
+    Eraser    = require('./eraser'),
+    get       = require('mout/object/get'),
 
-    every    = require('mout/array/every'),
-    isArray  = require('mout/lang/isArray'),
-    isObject = require('mout/lang/isObject'),
-    equals   = require('mout/object/equals');
+    every     = require('mout/array/every'),
+    precision = require('mout/number/enforcePrecision'),
+    isArray   = require('mout/lang/isArray'),
+    isObject  = require('mout/lang/isObject'),
+    equals    = require('mout/object/equals');
 
 var deepEquals = function(a, b, callback) {
     //callback = callback || defaultCompare;
@@ -50,7 +51,7 @@ var singles = {
     cleanup: function(builder) {
         var emptyGrids = $('[data-lm-blocktype="section"] > .g-grid:empty');
         if (emptyGrids) {
-            emptyGrids.forEach(function(grid){
+            emptyGrids.forEach(function(grid) {
                 grid = $(grid);
                 if (grid.nextSibling('[data-lm-id]')) {
                     // empty grids should go away unless they are last
@@ -280,12 +281,23 @@ var LayoutManager = new prime({
 
         if (siblings && this.block.getType() == 'block') {
             var size = this.block.getSize(),
-                diff = size / siblings.length, block;
-            siblings.forEach(function(sibling) {
+                diff = size / siblings.length,
+                newSize, block, total = 0, last;
+            siblings.forEach(function(sibling, index) {
                 sibling = $(sibling);
                 block = get(this.builder.map, sibling.data('lm-id'));
-                block.setSize(block.getSize() + diff, true);
+                if (index + 1 == siblings.length) { last = block; }
+                newSize = precision(block.getSize() + diff, 0);
+                total += newSize;
+                block.setSize(newSize, true);
             }, this);
+
+            // ensuring it's always 100%
+            if (total != 100) {
+                size = last.getSize();
+                diff = 100 - total;
+                last.setSize(size + diff, true);
+            }
         }
 
         this.eraser.hide();

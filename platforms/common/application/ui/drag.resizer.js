@@ -116,7 +116,6 @@ var Resizer = new prime({
             Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0 && 'right' ||
             Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0 && 'up' ||
                                                                  'down';
-
         var size,
             diff = 100 - this.siblings.occupied,
             value = clientX + (!this.siblings.prevs ? this.origin.offset.x - this.origin.offset.down : this.siblings.prevs.length),
@@ -124,11 +123,39 @@ var Resizer = new prime({
 
         size = nMap(normalized, parentRect.left, parentRect.right, 0, 100);
         size = size - this.siblings.sizeBefore;
-        size = precision(clamp(size, this.options.minSize, this.origin.maxSize - this.options.minSize), 4);
-        diff = precision(diff - size, 4);
+        size = precision(clamp(size, this.options.minSize, this.origin.maxSize - this.options.minSize), 0);
+        diff = precision(diff - size, 0);
+
+        //grids?
+        //console.log((size / 12) * (100 / 12));
 
         this.getBlock(this.element).setSize(size, true);
         this.getBlock(this.siblings.next).setSize(diff, true);
+
+        // hack to handle cases where size is not an integer
+        var siblings = this.element.siblings(),
+            amount = siblings ? siblings.length : 0;
+        if (amount == 2 || amount == 5 || amount == 6 || amount == 7 || amount == 8 || amount == 10 || amount == 11) {
+            var last, total = 0, blocks;
+
+            blocks = $([siblings, this.element]);
+            blocks.forEach(function(block, index){
+                block = this.getBlock(block);
+                size = block.getSize();
+                if (size % 1) {
+                    size = precision(100 / (amount + 1), 0);
+                    block.setSize(size, true);
+                }
+
+                total += size;
+
+                if (blocks.length == index + 1 && total != 100) {
+                    diff = 100 - total;
+                    block.setSize(size + diff, true);
+                }
+
+            }, this);
+        }
 
         this.lastX = clientX;
         this.lastY = clientY;
