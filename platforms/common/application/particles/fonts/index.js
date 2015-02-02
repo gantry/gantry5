@@ -515,7 +515,7 @@ var Fonts = new prime({
         }, this));
 
         category.popover({
-            placement: 'auto',
+            placement: 'top',
             width: '200',
             trigger: 'mouse',
             style: 'font-categories, above-modal'
@@ -544,7 +544,7 @@ var Fonts = new prime({
         }, this));
 
         subsets.popover({
-            placement: 'auto',
+            placement: 'top',
             width: '200',
             trigger: 'mouse',
             style: 'font-subsets, above-modal'
