@@ -11,8 +11,9 @@ domready(function() {
         element.parent('li').addClass('active');
     });
 
-    $('body').delegate('click', '#menu-editor .config-cog', function(event, element) {
+    $('body').delegate('click', '#menu-editor .config-cog, #menu-editor .global-menu-settings', function(event, element) {
         event.preventDefault();
+        
         modal.open({
             content: 'Loading',
             remote: $(element).attribute('href') + getAjaxSuffix()
