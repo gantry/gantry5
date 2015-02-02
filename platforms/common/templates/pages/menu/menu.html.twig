@@ -14,7 +14,9 @@
         </select>
     </div>
 
-    <div id="menu-editor">
+    <div id="menu-editor"
+         data-menu-ordering="{{ menu.config['ordering']|json_encode|escape('html_attr') }}"
+         data-menu-items="{{ menu.config['items']|json_encode|escape('html_attr') }}">
         {% include 'menu/base.html.twig' with {'item': menu.root} %}
     </div>
 {% endblock %}

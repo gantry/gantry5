@@ -164,7 +164,7 @@ class Menu implements \ArrayAccess, \Iterator
 
     public function getMenuItems()
     {
-        $config = $this->getConfig();
+        $config = $this->config();
         $items = isset($config['items']) ? $config['items'] : [];
 
         $folder = PRIME_ROOT . '/pages';
@@ -184,7 +184,7 @@ class Menu implements \ArrayAccess, \Iterator
         return $items;
     }
 
-    public function getConfig()
+    public function config()
     {
         if (!$this->config) {
             $gantry = Gantry::instance();
@@ -230,7 +230,7 @@ class Menu implements \ArrayAccess, \Iterator
         if (!is_dir($folder)) {
             return [];
         }
-        $config = $this->getConfig();
+        $config = $this->config();
         $items = isset($config['items']) ? $config['items'] : [];
         $menuItems = array_unique(array_merge(Folder::all($folder, $options), array_keys($items)));
         sort($menuItems);
