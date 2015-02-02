@@ -1082,34 +1082,6 @@ th {
   flex: 0 95%;
   width: 95%; }
 
-.size-96 {
-  -webkit-flex: 0 1 96%;
-  -moz-flex: 0 1 96%;
-  -ms-flex: 0 1 96%;
-  flex: 0 96%;
-  width: 96%; }
-
-.size-97 {
-  -webkit-flex: 0 1 97%;
-  -moz-flex: 0 1 97%;
-  -ms-flex: 0 1 97%;
-  flex: 0 97%;
-  width: 97%; }
-
-.size-98 {
-  -webkit-flex: 0 1 98%;
-  -moz-flex: 0 1 98%;
-  -ms-flex: 0 1 98%;
-  flex: 0 98%;
-  width: 98%; }
-
-.size-99 {
-  -webkit-flex: 0 1 99%;
-  -moz-flex: 0 1 99%;
-  -ms-flex: 0 1 99%;
-  flex: 0 99%;
-  width: 99%; }
-
 .size-33-3 {
   -webkit-flex: 0 1 33.33333%;
   -moz-flex: 0 1 33.33333%;
