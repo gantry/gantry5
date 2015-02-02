@@ -2,6 +2,7 @@
 namespace Gantry\Framework\Base;
 
 use Gantry\Component\Layout\LayoutReader;
+use Gantry\Component\Stylesheet\ScssCompiler;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Services\ErrorServiceProvider;
@@ -31,10 +32,29 @@ trait ThemeTrait
         return $this;
     }
 
+    public function css($name)
+    {
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $out = $name . ($this->layout ? '_'. $this->layout : '');
+
+        $path = $locator->findResource("gantry-theme://css-compiled/{$out}.css", false, true);
+
+        if (!is_file($path)) {
+            $compiler = new ScssCompiler();
+            $compiler->compileFile($name, GANTRY5_ROOT . '/' . $path);
+        }
+
+        return $path;
+    }
+
     public function loadLayout($name = null)
     {
         if (!$name) {
-            $name = $this->layout;
+            $name = $this->layout();
         }
 
         $gantry = \Gantry\Framework\Gantry::instance();
@@ -42,6 +62,7 @@ trait ThemeTrait
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
+        // TODO: convert to use configuration.
         $layout = null;
         $filename = $locator('gantry-layouts://' . $name . '.json');
         if ($filename) {

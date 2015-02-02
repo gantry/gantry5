@@ -30,16 +30,16 @@ ready(function() {
         }).show();
     });
 
-    body.delegate('click', '[data-g5-resetcache]', function(event, element) {
+    body.delegate('click', '[data-g5-compile-css]', function(event, element) {
         event.stopPropagation();
         event.preventDefault();
 
         var currentConfig = $('#configuration-selector').value();
 
-        //request('post', getAjaxURL(currentConfig + '/styles/resetcache'), function() {
-        request('post', window.location.href + '/resetcache', function() {
+        //request('post', getAjaxURL(currentConfig + '/styles/compile'), function() {
+        request('post', window.location.href + '/compile', function() {
            // toastr;
-          toastr.success('The CSS Compiled has been successfully reset!', 'CSS Compiled Reset');
+          toastr.success('The CSS was successfully compiled!', 'CSS Compiled');
         })
     });
 

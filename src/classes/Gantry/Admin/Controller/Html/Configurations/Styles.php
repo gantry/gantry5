@@ -8,6 +8,7 @@ use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Stylesheet\ScssCompiler;
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -21,13 +22,13 @@ class Styles extends HtmlController
             '/'              => 'index',
             '/blocks'        => 'undefined',
             '/blocks/*'      => 'display',
-            '/blocks/*/**'   => 'formfield',
+            '/blocks/*/**'   => 'formfield'
         ],
         'POST' => [
-            '/'         => 'forbidden',
-            '/blocks'   => 'forbidden',
-            '/blocks/*' => 'save',
-            '/resetcache' => 'resetcache'
+            '/'          => 'forbidden',
+            '/blocks'    => 'forbidden',
+            '/blocks/*'  => 'save',
+            '/compile'   => 'compile'
         ],
         'PUT' => [
             '/'         => 'forbidden',
@@ -122,9 +123,26 @@ class Styles extends HtmlController
     }
 
 
-    public function resetcache() {
+    public function compile()
+    {
+        // Validate only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
+        $configuration = $this->params['configuration'];
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        $out = 'template' . ($configuration != 'default' ? '_'. $configuration : '');
+
+        $path = $locator->findResource("gantry-theme://css-compiled/{$out}.css", true, true);
+
         $compiler = new ScssCompiler();
-        $compiler->compileFile('template');
+        $compiler->compileFile('template', $path);
+
+        return new JsonResponse(['html' => '']);
     }
 
     public function save($id)

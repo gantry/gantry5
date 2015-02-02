@@ -39,11 +39,13 @@ class ScssCompiler extends CssCompiler
     {
     }
 
+    /**
+     * @param string $in    Filename without path or extension.
+     * @param string $out   Full path to the file to be written.
+     * @return bool         True if the output file was saved.
+     */
     public function compileFile($in, $out = null)
     {
-        // Use the in name for output file if no output file is specified
-        $out = $out ?: $in;
-
         $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */
@@ -57,8 +59,11 @@ class ScssCompiler extends CssCompiler
         $this->compiler->setVariables($this->getVariables());
         $css = $this->compiler->compile('@import "' . $in . '.scss"');
 
-        $path = $locator->findResource("gantry-theme://css-compiled/{$out}.css", true, true);
-        $file = File::instance($path);
+        if (!$out) {
+            $out = $locator->findResource("gantry-theme://css-compiled/{$in}.css", true, true);
+        }
+
+        $file = File::instance($out);
 
         // Attempt to lock the file for writing.
         $file->lock(false);
