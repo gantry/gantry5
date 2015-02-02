@@ -14,19 +14,6 @@
         </select>
     </div>
 
-    <div id="settings" class="cards-wrapper">
-        <div class="card settings-block">
-            <h4>
-                Menu Settings
-            </h4>
-
-            <div class="inner-params">
-                {% include 'forms/fields.html.twig'
-                with {'blueprints': blueprints.form, 'data':  data, 'skip': ['enabled']} %}
-            </div>
-        </div>
-    </div>
-
     <div id="menu-editor">
         {% include 'menu/base.html.twig' with {'item': menu.root} %}
     </div>

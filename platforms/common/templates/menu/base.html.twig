@@ -8,7 +8,9 @@
             </li>
         {% endfor %}
     </ul>
-    <a href="" class="fa fa-cog global-menu-settings"></a>
+    <a class="global-menu-settings" href="{{ gantry.route('menu/edit', id) }}">
+        <i class="fa fa-cog"></i>
+    </a>
 </section>
 <div class="column-container" data-g5-menu-columns="">
     {% if columns %}

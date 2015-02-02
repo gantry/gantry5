@@ -18,8 +18,8 @@ class Menu extends HtmlController
             '/*'            => 'item',
             '/*/**'         => 'item',
             '/edit'         => 'undefined',
-            '/edit/*'       => 'undefined',
-            '/edit/*/**'    => 'form',
+            '/edit/*'       => 'edit',
+            '/edit/*/**'    => 'menuitem',
         ],
         'POST' => [
             '/'             => 'store',
@@ -58,8 +58,6 @@ class Menu extends HtmlController
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $id;
         $this->params['menus'] = $resource->getMenus();
-        $this->params['blueprints'] = $this->loadBlueprints();
-        $this->params['data'] = $resource->getConfig();
         $this->params['menu'] = $resource;
         $this->params['path'] = implode('/', $path);
 
@@ -89,7 +87,20 @@ class Menu extends HtmlController
         }
     }
 
-    public function form($id)
+    public function edit($id)
+    {
+        // Load the menu.
+        $resource = $this->loadResource($id);
+
+        // Fill parameters to be passed to the template file.
+        $this->params['id'] = $id;
+        $this->params['blueprints'] = $this->loadBlueprints();
+        $this->params['data'] = $resource->getConfig();
+
+        return $this->container['admin.theme']->render('@gantry-admin//pages/menu/edit.html.twig', $this->params);
+    }
+
+    public function menuitem($id)
     {
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
@@ -114,7 +125,7 @@ class Menu extends HtmlController
                 'data' => [$path => $resource->getConfig()->get("items.{$path}")],
             ] + $this->params;
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/menu/settings.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/pages/menu/menuitem.html.twig', $this->params);
     }
 
     protected function layoutName($level)
