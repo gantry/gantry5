@@ -140,6 +140,7 @@ class Styles extends HtmlController
         $path = $locator->findResource("gantry-theme://css-compiled/{$out}.css", true, true);
 
         $compiler = new ScssCompiler();
+        $compiler->setVariables($this->container['config']->flatten('styles', '-'));
         $compiler->compileFile('template', $path);
 
         return new JsonResponse(['html' => '']);

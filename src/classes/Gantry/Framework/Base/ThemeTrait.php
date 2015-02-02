@@ -45,6 +45,7 @@ trait ThemeTrait
 
         if (!is_file($path)) {
             $compiler = new ScssCompiler();
+            $compiler->setVariables($this->container['config']->flatten('styles', '-'));
             $compiler->compileFile($name, GANTRY5_ROOT . '/' . $path);
         }
 

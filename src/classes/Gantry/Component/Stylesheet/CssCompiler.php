@@ -9,8 +9,17 @@ abstract class CssCompiler implements CssCompilerInterface
 
     protected $debug = false;
 
+    protected $variables;
+
+    public function setVariables(array $variables)
+    {
+        $this->variables = array_filter($variables);
+
+        return $this;
+    }
+
     public function getVariables()
     {
-        return [];
+        return $this->variables;
     }
 }
