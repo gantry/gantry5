@@ -113,6 +113,17 @@ var MenuManager = new prime({
             originalID = this.block.data('mm-id'),
             originalLevel = this.block.data('mm-level');
 
+        // workaround for layout and style of columns
+        // TODO: handle the release and change classname of the placeholder to give it
+        // a different style
+        if (dataLevel === null && this.type === 'columns_items') {
+            var submenu_items = target.find('.submenu-items');
+            if (!submenu_items || submenu_items.children()) { this.dragdrop.matched = false; return; }
+
+            this.placeholder.style({ display: 'block' }).bottom(submenu_items);
+            return;
+        }
+
         // we only allow sorting between same level items
         if (this.type !== 'column' && originalLevel !== dataLevel) { this.dragdrop.matched = false; return; }
 
