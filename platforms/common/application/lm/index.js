@@ -23,7 +23,7 @@ var builder, layoutmanager, lmhistory;
 
 
 builder = new Builder();
-lmhistory = new LMHistory(builder.serialize());
+lmhistory = new LMHistory();
 
 /*var particlesPopover = function() {
     var particles = $('[data-lm-addparticle]');
@@ -53,6 +53,44 @@ lmhistory = new LMHistory(builder.serialize());
     });
 };*/
 
+ready(function(){
+    var HM = {
+        back:    $('[data-lm-back]'),
+        forward: $('[data-lm-forward]')
+    };
+
+    if (!HM.back && !HM.forward) return;
+
+    HM.back.on('click', function(){
+        if ($(this).hasClass('disabled')) return false;
+        lmhistory.undo();
+    });
+
+    HM.forward.on('click', function(){
+        if ($(this).hasClass('disabled')) return false;
+        lmhistory.redo();
+    });
+
+    /* lmhistory events */
+    lmhistory.on('push', function(session, index, reset){
+        if (index && HM.back.hasClass('disabled')) HM.back.removeClass('disabled');
+        if (reset && !HM.forward.hasClass('disabled')) HM.forward.addClass('disabled');
+    });
+    lmhistory.on('undo', function(session, index){
+        builder.reset(session.data);
+        HM.forward.removeClass('disabled');
+        if (!index) HM.back.addClass('disabled');
+        layoutmanager.singles('disable');
+    });
+    lmhistory.on('redo', function(session, index){
+        builder.reset(session.data);
+        HM.back.removeClass('disabled');
+        if (index == this.session.length - 1) HM.forward.addClass('disabled');
+        layoutmanager.singles('disable');
+    });
+
+});
+
 ready(function() {
     var body = $('body'), root = $('[data-lm-root]'), data;
 
@@ -65,6 +103,7 @@ ready(function() {
         }
         builder.setStructure(data);
         builder.load();
+        lmhistory.setSession(builder.serialize());
         //particlesPopover();
     }
 
@@ -126,6 +165,7 @@ ready(function() {
         data = JSON.parse($('[data-lm-root]').data('lm-root'));
         builder.setStructure(data);
         builder.load();
+        lmhistory.setSession(builder.serialize());
 
         // -!- Popovers
         // particles picker

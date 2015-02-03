@@ -37,9 +37,9 @@
         <div class="lm-newblocks clearfix" data-lm-blocktypes>
             {#<a class="button" href="{{ gantry.route('picker/particles')|e }}" data-lm-addparticle><i class="fa fa-plus"></i> <span>New Particle</span></a>#}
             <span class="float-right">
-                <a href="#" class="button"><i class="fa fa-arrow-left"></i></a>
+                <a data-lm-back href="#" class="button"><i class="fa fa-arrow-left"></i></a>
                 <a href="#" class="button"><i class="fa fa-history"></i> <span>History</span></a>
-                <a href="#" class="button"><i class="fa fa-arrow-right"></i></a>
+                <a data-lm-forward href="#" class="button"><i class="fa fa-arrow-right"></i></a>
             </span>
         </div>
         <div id="page">
