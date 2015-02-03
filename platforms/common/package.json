@@ -4,7 +4,7 @@
   "dependencies": {
     "agent": "^0.2.1",
     "async": "^0.9.0",
-    "elements": "git://github.com/w00fz/elements.git",
+    "elements": "git+https://git@github.com/w00fz/elements.git",
     "moofx": "^3.2.0",
     "mout": "~0.11.0",
     "prime": "^0.4.2",
