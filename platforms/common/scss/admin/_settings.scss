@@ -2,6 +2,14 @@
 
 #g5-container {//wrapper
 
+#settings {
+    h2 {
+        &:first-child {
+            margin-top: 0.5rem;
+        }
+    }
+}
+
 .settings-block {
     width: 48%;
     min-width: inherit;

@@ -1,156 +1,82 @@
-.button, .button-secondary {
-  display: inline-block;
-  padding: 7px 12px; }
-  .button:active, .button-secondary:active {
-    margin: 2px 0 -2px 0; }
+/*
+Error: Undefined variable: "$background-page-bg".
+        on line 2 of scss/template/_core.scss
+        from line 24 of scss/template.scss
 
-body {
-  background: #333;
-  color: #666; }
+1: // REQUIRED DEPENDENCIES - DO NOT CHANGE
+2: 
+3: // Load Third Party Libraries
+4: @import "vendor/bourbon/bourbon";
+5: 
+6: // Load Nucleus Configuration
+7: @import "configuration/nucleus/base";
 
-a {
-  color: #4184B6; }
-  a:hover {
-    color: black; }
-
-.bg {
-  background: #fff;
-  border: 1px solid #eaeaea; }
-
-@font-face {
-  font-family: "walkwaybold";
-  font-weight: normal;
-  font-style: normal;
-  src: url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.eot");
-  src: url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.woff") format("woff"), url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.ttf") format("truetype"), url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.svg#walkwaybold") format("svg"); }
-@font-face {
-  font-family: "latolight";
-  font-weight: normal;
-  font-style: normal;
-  src: url("../fonts/lato-light/lato-light-webfont.eot");
-  src: url("../fonts/lato-light/lato-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato-light/lato-light-webfont.woff") format("woff"), url("../fonts/lato-light/lato-light-webfont.ttf") format("truetype"), url("../fonts/lato-light/lato-light-webfont.svg#latolight") format("svg"); }
-#g-header {
-  color: #aaa; }
-  #g-header a:hover {
-    color: #fff; }
-
-.g-main-nav .g-toplevel > li > a, .g-main-nav .g-toplevel > li > .g-separator {
-  font-size: 1.1rem;
-  padding: 0.75rem 0.938rem;
-  color: #aaa; }
-.g-main-nav .g-toplevel > li:hover a, .g-main-nav .g-toplevel > li:hover .g-separator, .g-main-nav .g-toplevel > li.active a, .g-main-nav .g-toplevel > li.active .g-separator {
-  color: #fff; }
-.g-main-nav .g-dropdown {
-  background: #4184B6;
-  box-shadow: 0 3px 0 #39749f;
-  color: #fff; }
-  .g-main-nav .g-dropdown .g-dropdown {
-    background: #3c79a7;
-    box-shadow: 0 3px 0 #366e98; }
-.g-main-nav .g-sublevel li > a, .g-main-nav .g-sublevel li > .g-separator, .g-main-nav .g-sublevel li > .g-nav-header {
-  font-size: 1rem;
-  padding: 0.75rem 0.938rem; }
-.g-main-nav .g-sublevel li:hover > a, .g-main-nav .g-sublevel li:hover > .g-separator, .g-main-nav .g-sublevel li.active > a, .g-main-nav .g-sublevel li.active > .g-separator {
-  background: #366e98; }
-
-#g-showcase {
-  background: #5493c2;
-  color: #fff; }
-  #g-showcase .spacer {
-    height: 180px; }
-    @media only all and (max-width: 47.938rem) {
-      #g-showcase .spacer {
-        display: none; } }
-
-#g-feature {
-  background: #fff;
-  border-bottom: 1px solid #eaeaea; }
-
-#g-main {
-  background: #f7f7f7;
-  margin: 0 0 1.563rem 0; }
-
-#g-sidebar {
-  color: #aaa; }
-  #g-sidebar a:hover {
-    color: #fff; }
-
-#g-bottom {
-  background: #f7f7f7;
-  color: #666;
-  margin: 0 0 1.563rem 0; }
-
-#g-footer {
-  background: #404040;
-  color: #ccc;
-  margin: 0 0 1.563rem 0; }
-
-body {
-  font-family: "latolight", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: normal; }
-
-h6 {
-  text-transform: uppercase; }
-
-strong, h1, h2, h3, h4, h5, h6, th {
-  font-family: "walkwaybold", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
-
-blockquote {
-  border-left: 3px solid #ddd; }
-
-pre {
-  background: #fff;
-  border: 1px solid #ddd; }
-
-hr {
-  border-bottom: 1px solid #ddd; }
-
-.page-title {
-  margin-top: -25px;
-  padding: 25px;
-  float: left;
-  clear: both;
-  background: #4184B6;
-  color: #fff; }
-
-fieldset {
-  border: 1px solid #ddd; }
-
-textarea, input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"], select[multiple=multiple] {
-  background-color: white;
-  border: 1px solid #ddd;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06); }
-  textarea:hover, input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="url"]:hover, input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="month"]:hover, input[type="time"]:hover, input[type="week"]:hover, select[multiple=multiple]:hover {
-    border-color: #c4c4c4; }
-  textarea:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, select[multiple=multiple]:focus {
-    border-color: #4184B6;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 5px rgba(58, 118, 163, 0.7); }
-
-th {
-  font-weight: normal; }
-
-.button {
-  background: #4184B6;
-  color: #fff;
-  box-shadow: 0 3px 0 #39749f; }
-  .button:hover {
-    background: #39749f;
-    box-shadow: 0 3px 0 #316389;
-    color: #fff; }
-  .button:active {
-    box-shadow: 0 1px 0 #316389; }
-
-.button-secondary {
-  background: #F8B450;
-  color: #fff;
-  box-shadow: 0 3px 0 #f7a733; }
-  .button-secondary:hover {
-    background: #f7a733;
-    box-shadow: 0 3px 0 #f69b15;
-    color: #fff; }
-  .button-secondary:active {
-    box-shadow: 0 1px 0 #f69b15; }
-
-/*# sourceMappingURL=template.css.map */
+Backtrace:
+scss/template/_core.scss:2
+scss/template.scss:24
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/script/tree/variable.rb:49:in `_perform'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/script/tree/node.rb:50:in `perform'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:384:in `visit_prop'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/stack.rb:115:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:420:in `block (2 levels) in visit_rule'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:420:in `map'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:420:in `block in visit_rule'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:418:in `visit_rule'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/stack.rb:115:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:315:in `block (2 levels) in visit_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:315:in `map'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:315:in `block in visit_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/stack.rb:88:in `block in with_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/stack.rb:115:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/stack.rb:88:in `with_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:312:in `visit_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/stack.rb:115:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:52:in `map'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:157:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:8:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/root_node.rb:36:in `css_tree'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/engine.rb:368:in `_render_with_sourcemap'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/engine.rb:285:in `render_with_sourcemap'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/plugin/compiler.rb:489:in `update_stylesheet'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/plugin/compiler.rb:209:in `each'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/plugin/compiler.rb:469:in `on_file_changed'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.6/lib/sass/plugin/compiler.rb:328:in `block in watch'
+/Library/Ruby/Gems/2.0.0/gems/listen-1.1.6/lib/listen/listener.rb:236:in `call'
+/Library/Ruby/Gems/2.0.0/gems/listen-1.1.6/lib/listen/listener.rb:236:in `on_change'
+/Library/Ruby/Gems/2.0.0/gems/listen-1.1.6/lib/listen/listener.rb:271:in `block in initialize_adapter'
+/Library/Ruby/Gems/2.0.0/gems/listen-1.1.6/lib/listen/adapter.rb:244:in `call'
+/Library/Ruby/Gems/2.0.0/gems/listen-1.1.6/lib/listen/adapter.rb:244:in `report_changes'
+/Library/Ruby/Gems/2.0.0/gems/listen-1.1.6/lib/listen/adapter.rb:313:in `poll_changed_directories'
+/Library/Ruby/Gems/2.0.0/gems/listen-1.1.6/lib/listen/adapter.rb:289:in `block in start_poller'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Undefined variable: \"$background-page-bg\".\A         on line 2 of scss/template/_core.scss\A         from line 24 of scss/template.scss\A \A 1: // REQUIRED DEPENDENCIES - DO NOT CHANGE\A 2: \A 3: // Load Third Party Libraries\A 4: @import \"vendor/bourbon/bourbon\";\A 5: \A 6: // Load Nucleus Configuration\A 7: @import \"configuration/nucleus/base\";"; }

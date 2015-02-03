@@ -70,14 +70,13 @@ History.Adapter.bind(window, 'statechange', function() {
             return false;
         }
 
-        var target = $(Data.target);
-        //console.log(Data, State);
+        var target = Data.parent ? Data.element.parent(Data.parent) : $(Data.target),
+            destination = (target || $('[data-g5-content]') || body);
+
+        if (response.body && response.body.html) { destination.html(response.body.html); }
+        else { destination.html(response.body); }
+
         body.getPopover().hideAll(true).destroy();
-        if (response.body && response.body.html) {
-            (target || $('[data-g5-content]') || body).html(response.body.html);
-        } else {
-            (target || $('[data-g5-content]') || body).html(response.body);
-        }
 
         if (Data.element) {
             body.emit('statechangeAfter', { target: Data.element, Data: Data });
@@ -109,6 +108,7 @@ var selectorChangeEvent = function(){
             selectize.input
                 .data('g5-ajaxify', '')
                 .data('g5-ajaxify-target', selector.data('g5-ajaxify-target') || '[data-g5-content-wrapper]')
+                .data('g5-ajaxify-target-parent', selector.data('g5-ajaxify-target-parent') || null)
                 .data('g5-ajaxify-href', options[value].url)
                 .data('g5-ajaxify-params', options[value].params ? JSON.stringify(options[value].params) : null);
 
@@ -133,6 +133,7 @@ domready(function() {
 
         var data = element.data('g5-ajaxify'),
             target = element.data('g5-ajaxify-target'),
+            parent = element.data('g5-ajaxify-target-parent'),
             url = element.attribute('href') || element.data('g5-ajaxify-href'),
             params = element.data('g5-ajaxify-params') || false,
             title = element.attribute('title') || window.document.title;
@@ -142,6 +143,7 @@ domready(function() {
             var uuid = guid();
             storage.set(uuid, merge({}, data, {
                 target: target,
+                parent: parent,
                 element: element,
                 params: params,
                 event: event

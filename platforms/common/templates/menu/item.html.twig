@@ -1,4 +1,6 @@
-<a class="menu-item" data-g5-ajaxify="" data-g5-ajaxify-params="{{ '{"inline":1}'|escape('html_attr') }}" data-g5-ajaxify-target="[data-g5-menu-columns] {% if item.level > 1 %} [data-mm-id={{ target|e }}] .submenu-column{% endif %}" href="{{ gantry.route('menu', id, item.path) }}">
+{% set ajaxTarget = (item.level > 1) ? 'data-g5-ajaxify-target-parent=".submenu-column"' : 'data-g5-ajaxify-target="[data-g5-menu-columns]"' %}
+
+<a class="menu-item" data-g5-ajaxify="" data-g5-ajaxify-params="{{ '{"inline":1}'|escape('html_attr') }}" {{ ajaxTarget }} href="{{ gantry.route('menu', id, item.path) }}">
     {% if item.menu_image %}
         <img src="{{ item.menu_image|e }}" alt="{{ item.title|e }}" />
         {% if item.menu_text %}
