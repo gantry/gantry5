@@ -13,7 +13,7 @@ var ready         = require('elements/domready'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
 
     Builder       = require('./builder'),
-    History       = require('../utils/History'),
+    History       = require('../utils/history'),
     LMHistory     = require('./history'),
     LayoutManager = require('./layoutmanager');
 
