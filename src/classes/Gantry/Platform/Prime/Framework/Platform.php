@@ -18,6 +18,8 @@ class Platform extends BasePlatform
     {
         parent::__construct($container);
 
+        Folder::create(GANTRY5_ROOT . '/custom');
+
         // Initialize custom streams for Prime.
         $this->items['streams'] += [
             'gantry-prime' => [
