@@ -30,7 +30,7 @@ class Router extends BaseRouter
             array_shift($parts);
 
             // Second parameter is the resource.
-            $this->resource = array_shift($parts) ?: 'overview';
+            $this->resource = array_shift($parts) ?: 'about';
 
         } else {
             // We are not inside admin or style doesn't exist; fall back to theme listing.
