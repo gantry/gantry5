@@ -129,6 +129,7 @@ var LayoutManager = new prime({
             element.style({
                 position: 'absolute',
                 zIndex: 1000,
+                opacity: 0.5,
                 width: Math.ceil(size.width),
                 height: Math.ceil(size.height)
             }).find('[data-lm-blocktype]');//.style({ margin: margins });
@@ -148,7 +149,7 @@ var LayoutManager = new prime({
                     top: element.parent()[0].scrollTop,
                     left: element.parent()[0].scrollLeft
                 };
-            this.original.style({ position: 'absolute' }).style({
+            this.original.style({ position: 'absolute', opacity: 0.5 }).style({
                 left: element[0].offsetLeft - parentOffset.left,
                 top: element[0].offsetTop - parentOffset.top,
                 width: position.width,
