@@ -1,7 +1,7 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-<form method="POST">
+<form method="post" action="{{ gantry.route('menu/edit', id, path) }}">
     <div class="card settings-block">
         <h4>
             Menu Item
