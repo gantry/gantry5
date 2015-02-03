@@ -88,9 +88,7 @@ var Builder = new prime({
         var serieChildren = [];
         root = root || $('[data-lm-root]');
 
-        if (!root) {
-            return;
-        }
+        if (!root) { return; }
 
         var blocks = root.search('> [data-lm-id]'),
             id, type, subtype, serial, hasChildren, children;
