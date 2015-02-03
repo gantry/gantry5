@@ -79,7 +79,10 @@
     position: relative;
 
     .settings-param-field-colorpicker-preview {
-        @include position(absolute, 2px 2px 2px inherit);
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        bottom: 2px;
         width: $core-line-height + em(1px);
         border-radius: 3px;
     }

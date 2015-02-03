@@ -176,11 +176,13 @@ $submenu-ratio:                 60px;
             cursor: ew-resize;
             opacity: 0;
         }
+
         &:hover {
             .submenu-reorder {
                 opacity: 1;
             }
 		}
+
 		&:last-child {
 			.submenu-column {
 				margin-right: 0;
@@ -189,7 +191,8 @@ $submenu-ratio:                 60px;
 				}
 			}
 		}
-		&:only-child {
+
+        &:only-child {
 			&:hover {
 				&:before {
 					display: none;

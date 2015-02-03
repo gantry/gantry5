@@ -11,7 +11,9 @@
     }
 
     i {
-        @include position(absolute, 10px 10px null null);
+        position: absolute;
+        top: 10px;
+        right: 10px;
     }
 
     &.light-text {

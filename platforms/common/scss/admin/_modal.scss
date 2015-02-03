@@ -5,7 +5,11 @@
 }
 
 .g5-dialog {
-    @include position(fixed, 0px 0px 0px 0px);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     z-index: 1111;
@@ -13,8 +17,12 @@
 
 .g5-overlay {
     @include animation(fadeIn 0.5s);
-    @include position(fixed, 0px 0px 0px 0px);
     @include transform(translate3d(0, 0, 0));
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     pointer-events: none;
     background: rgba(0, 0, 0, 0.4);
     .g5-dialog.g5-closing & {

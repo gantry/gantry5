@@ -439,7 +439,10 @@
 
     /* deletion */
     #trash {
-        @include position(fixed, -100px 0 inherit 0);
+        position: fixed;
+        top: -100px;
+        right: 0;
+        left: 0;
         z-index: 50;
         text-align: center;
         font-weight: bold;
