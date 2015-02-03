@@ -42,6 +42,11 @@ ordering:
       component:
       raw:
   admin:
+    about:
+    configurations:
+    menu:
+    themes:
+    learn:
 
 items:
   home:
@@ -143,41 +148,23 @@ items:
     link: admin
     title: Admin
 
-  admin/overview:
+  admin/about:
     type: alias
-    menu_icon: fa fa-fw fa-adjust
+    menu_icon: fa fa-fw fa-question-circle
     link: admin
-    title: Overview
+    title: About Theme
 
-  admin/presets:
+  admin/configurations:
     type: alias
     menu_icon: fa fa-fw fa-star
-    link: admin/presets
-    title: Presets
-
-  admin/settings:
-    type: alias
-    menu_icon: fa fa-fw fa-wrench
-    link: admin/settings
-    title: Settings
-
-  admin/pages:
-    type: alias
-    menu_icon: fa fa-fw fa-columns
-    link: admin/pages
-    title: Layouts
+    link: admin/configurations
+    title: Configurations
 
   admin/menu:
     type: alias
-    menu_icon: fa fa-fw fa-list
+    menu_icon: fa fa-fw fa-wrench
     link: admin/menu
-    title: Menu
-
-  admin/assignments:
-    type: alias
-    menu_icon: fa fa-fw fa-check
-    link: admin/assignments
-    title: Assignments
+    title: Menu Manager
 
   admin/themes:
     type: alias
