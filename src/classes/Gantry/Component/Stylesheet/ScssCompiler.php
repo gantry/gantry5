@@ -50,9 +50,13 @@ class ScssCompiler extends CssCompiler
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
+        $paths = array_merge(
+            $locator->findResources('gantry-theme://scss'),
+            $locator->findResources('gantry-engine://scss')
+        );
 
         // Set the lookup paths.
-        $this->compiler->setImportPaths($locator->findResources('gantry-theme://scss'));
+        $this->compiler->setImportPaths($paths);
         $this->compiler->setFormatter('scss_formatter_nested');
 
         // Run the compiler.

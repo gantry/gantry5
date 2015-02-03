@@ -72,7 +72,7 @@ class Styles
         if (!$this->files) {
             /** @var UniformResourceLocator $locator */
             $locator = $this->container['locator'];
-            $paths = $locator->findResources('gantry-styles://');
+            $paths = $locator->findResources('gantry-blueprints://styles');
 
             $this->files = (new ConfigFileFinder)->listFiles($paths);
         }

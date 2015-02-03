@@ -18,6 +18,7 @@ class Platform extends BasePlatform
     {
         parent::__construct($container);
 
+        // Initialize custom streams for Prime.
         $this->items['streams'] += [
             'gantry-prime' => [
                 'type' => 'ReadOnlyStream',
@@ -51,6 +52,21 @@ class Platform extends BasePlatform
     public function getThemesPaths()
     {
         return  ['' => ['themes']];
+    }
+
+    public function getEnginesPaths()
+    {
+        return ['' => ['engines']];
+    }
+
+    public function getEnginePaths()
+    {
+        return ['' => ['gantry-theme://engine', 'gantry-engines://nucleus']];
+    }
+
+    public function getAssetsPaths()
+    {
+        return ['' => ['gantry-theme://', 'assets']];
     }
 
     public function getMediaPaths()

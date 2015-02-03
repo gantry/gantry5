@@ -27,65 +27,68 @@ abstract class Platform
 
         $this->items = [
             'streams' => [
+                // Cached files.
                 'gantry-cache' => [
                     'type' => 'Stream',
-                    'prefixes' => [
-                        '' => [$cachePath]
-                    ]
+                    'prefixes' => ['' => [$cachePath]]
                 ],
+                // Container for all frontend themes.
                 'gantry-themes' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => $this->getThemesPaths()
                 ],
+                // Selected frontend theme.
                 'gantry-theme' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => $this->getThemePaths()
                 ],
+                // System defined media files.
+                'gantry-assets' => [
+                    'type' => 'ReadOnlyStream',
+                    'prefixes' => $this->getAssetsPaths()
+                ],
+                // User defined media files.
                 'gantry-media' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => $this->getMediaPaths()
                 ],
+                // Container for all Gantry engines.
+                'gantry-engines' => [
+                    'type' => 'ReadOnlyStream',
+                    'prefixes' => $this->getEnginesPaths()
+                ],
+                // Gantry engine used to render the selected theme.
                 'gantry-engine' => [
                     'type' => 'ReadOnlyStream',
-                    'prefixes' => [
-                        '' => ['gantry-theme://engine']
-                    ]
+                    'prefixes' => $this->getEnginePaths()
                 ],
+                // Layout definitions for the blueprints.
                 'gantry-layouts' => [
                     'type' => 'ReadOnlyStream',
-                    'prefixes' => [
-                        '' => ['gantry-theme://layouts']
-                    ]
+                    'prefixes' => ['' => ['gantry-theme://layouts']]
                 ],
+                // Gantry particles.
                 'gantry-particles' => [
                     'type' => 'ReadOnlyStream',
-                    'prefixes' => [
-                        '' => ['gantry-engine://particles']
-                    ]
+                    'prefixes' => ['' => ['gantry-theme://particles', 'gantry-engine://particles']]
                 ],
-                'gantry-styles' => [
-                    'type' => 'ReadOnlyStream',
-                    'prefixes' => [
-                        '' => ['gantry-engine://styles']
-                    ]
-                ],
+                // Gantry administration.
                 'gantry-admin' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => []
                 ],
+                // Blueprints for the configuration.
                 'gantry-blueprints' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [
                         '' => ['gantry-engine://blueprints', 'gantry-theme://blueprints'],
-                        'particles/' => ['gantry-particles://'],
-                        'styles/' => ['gantry-styles://']
+                        'particles' => ['gantry-particles://']
                     ]
                 ],
+                // Configuration from the selected theme.
                 'gantry-config' => [
                     'type' => 'ReadOnlyStream',
-                    'prefixes' => [
-                        '' => ['gantry-theme://config']
-                    ]
+                    'prefixes' => ['' => ['gantry-theme://config']]
                 ]
             ]
         ];
@@ -93,9 +96,20 @@ abstract class Platform
 
     abstract public function getCachePath();
     abstract public function getThemesPaths();
+    abstract public function getAssetsPaths();
     abstract public function getMediaPaths();
 
     public function getThemePaths()
+    {
+        return ['' => []];
+    }
+
+    public function getEnginePaths()
+    {
+        return ['' => []];
+    }
+
+    public function getEnginesPaths()
     {
         return ['' => []];
     }

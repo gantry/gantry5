@@ -17,3 +17,15 @@ Extensions Manager / Discover / Discover and install all Gantry 5 related extens
 ## WordPress
 
 In WordPress you should also install Timber plugin before using the theme.
+
+Directory structure
+===================
+
+- assets        System wide media assets (Font Awesome, Whoops etc).
+- bin           Misc scripts to install and build Gantry.
+- design        Design images for Gantry.
+- engines       Supported engines (Nucleus, Bootstrap etc).
+- platforms     Gantry administration, and platform specific plugins etc.
+- src           Gantry libraries and platform specific overrides.
+- themes        Base themes for Gantry.
+- vendor        External libraries used by Gantry.

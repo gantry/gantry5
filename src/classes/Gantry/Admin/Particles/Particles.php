@@ -73,7 +73,7 @@ class Particles
         if (!$this->files) {
             /** @var UniformResourceLocator $locator */
             $locator = $this->container['locator'];
-            $paths = $locator->findResources('gantry-particles://');
+            $paths = $locator->findResources('gantry-blueprints://particles');
 
             $this->files = (new ConfigFileFinder)->listFiles($paths);
         }

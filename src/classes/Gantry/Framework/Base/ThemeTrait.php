@@ -45,7 +45,7 @@ trait ThemeTrait
 
         if (!is_file($path)) {
             $compiler = new ScssCompiler();
-            $compiler->setVariables($this->container['config']->flatten('styles', '-'));
+            $compiler->setVariables($gantry['config']->flatten('styles', '-'));
             $compiler->compileFile($name, GANTRY5_ROOT . '/' . $path);
         }
 
@@ -103,7 +103,8 @@ trait ThemeTrait
         if (!$loader) {
             $loader = $twig->getLoader();
         }
-        $loader->setPaths($locator->findResources('gantry-theme://engine'), 'nucleus');
+        $loader->setPaths($locator->findResources('gantry-engine://templates'), 'nucleus');
+        $loader->setPaths($locator->findResources('gantry-particles://'), 'particles');
 
         $twig->addExtension(new TwigExtension);
         $twig->addFilter('toGrid', new \Twig_Filter_Function(array($this, 'toGrid')));

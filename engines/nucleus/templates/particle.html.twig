@@ -1,0 +1,11 @@
+{% set html %}
+   {% include ['particles/' ~ segment.subtype ~ '.html.twig',
+   '@particles/' ~ segment.subtype ~ '.html.twig']
+   ignore missing with {gantry: gantry, particle: config.particles[segment.subtype] } %}
+{% endset %}
+
+{% if html|trim %}
+<div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ') }}">
+    {{ html }}
+</div>
+{% endif %}

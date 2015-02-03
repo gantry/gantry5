@@ -23,7 +23,7 @@ class Theme extends BaseTheme
         $gantry['platform']->set(
             'streams.gantry-admin.prefixes', [
                 ''        => [$relpath, $relpath . '/common'],
-                'assets/' => [$relpath, $relpath . '/common']
+                'assets/' => [$relpath, $relpath . '/common', 'gantry-engines://nucleus', 'gantry-assets://']
             ]
         );
 

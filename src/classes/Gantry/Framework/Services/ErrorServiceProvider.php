@@ -22,11 +22,9 @@ class ErrorServiceProvider implements ServiceProviderInterface
         $error_page = new PrettyPageHandler;
         $error_page->setPageTitle('Crikey! There was an error...');
         $error_page->setEditor('sublime');
-        if ($locator->schemeExists('gantry-admin')) {
-            $error_page->addResourcePath($locator('gantry-admin://css'));
-        } else {
-            $error_page->addResourcePath($locator('gantry-theme://css'));
-        }
+        foreach ($locator->findResources('gantry-assets://css/whoops.css') as $path) {
+            $error_page->addResourcePath(dirname($path));
+     }
         $error_page->addCustomCss('whoops.css');
 
         $json_page = new JsonResponseHandler;
