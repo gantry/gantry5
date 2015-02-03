@@ -48,4 +48,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-wrapup');
     grunt.registerTask('default', ['watch']);
+    grunt.registerTask('all', ['sass', 'wrapup']);
 };
