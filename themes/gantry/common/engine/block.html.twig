@@ -1,4 +1,4 @@
-{% set attr_style = segment.attributes.size ? ' style="width:' ~ segment.attributes.size ~ '%"' %}
+{% set attr_style = segment.attributes.size ? ' style="flex: 0 1 ' ~ segment.attributes.size ~ '%; width: ' ~segment.attributes.size ~ '%"' %}
 
 {% set html %}
     {% if segment.children %}
