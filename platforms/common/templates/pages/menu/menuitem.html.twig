@@ -2,21 +2,22 @@
 
 {% block gantry %}
 <form method="POST">
-    <div class="pull-right">
-        <button class="button">Save</button>
-    </div>
-    <div id="settings" class="cards-wrapper">
-        <div class="card settings-block">
-            <h4>
-                Menu Item: /{{ path }}
-                {% if blueprints.form.fields.enabled %}
-                {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'name': 'enabled', 'field': blueprints.form.fields.enabled, 'value': data.enabled} %}
-                {% endif %}
-            </h4>
-            <div class="inner-params">
-                {% include 'forms/fields.html.twig' %}
-            </div>
+    <div class="card settings-block">
+        <h4>
+            Menu Item
+            {% if blueprints.form.fields.enabled %}
+            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'name': 'enabled', 'field': blueprints.form.fields.enabled, 'value': data.enabled} %}
+            {% endif %}
+            <span class="g-menuitem-path font-small">/{{ path }}</span>
+        </h4>
+        <div class="inner-params">
+            {% include 'forms/fields.html.twig' %}
         </div>
+    </div>
+    <div class="g-modal-actions">
+        {#<a class="button float-left">Defaults</a>#}
+        <button class="button button-primary" type="submit">Apply</button>
+        <a class="button g5-dialog-close">Cancel</a>
     </div>
 </form>
 {% endblock %}

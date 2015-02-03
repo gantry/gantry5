@@ -2567,6 +2567,11 @@ body.g5-dialog-open {
   background: #e0e0e0;
 }
 /* line 117, ../scss/admin/_modal.scss */
+.g5-dialog.g5-dialog-theme-default .g-menuitem-path {
+  display: block;
+  color: #666;
+}
+/* line 122, ../scss/admin/_modal.scss */
 .g5-dialog.g5-dialog-theme-default .g-modal-actions {
   background: #eaeaea;
   padding: 0.5em 1em;
@@ -2575,12 +2580,12 @@ body.g5-dialog-open {
   border-radius: 0 0 5px 5px;
   text-align: right;
 }
-/* line 126, ../scss/admin/_modal.scss */
+/* line 131, ../scss/admin/_modal.scss */
 .g5-dialog.g5-dialog-theme-default form {
   margin: 0;
 }
 
-/* line 131, ../scss/admin/_modal.scss */
+/* line 136, ../scss/admin/_modal.scss */
 .g5-dialog-loading-spinner.g5-dialog-theme-default {
   box-shadow: 0 0 0 0.5em #f0f0f0, 0 0 1px 0.5em rgba(0, 0, 0, 0.3);
   border-radius: 100%;
