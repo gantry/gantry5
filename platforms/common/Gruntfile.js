@@ -5,7 +5,8 @@ module.exports = function(grunt) {
                 options: {
                     trace: true,
                     style: 'expanded',
-                    lineNumbers: true
+                    lineNumbers: true,
+                    loadPath: '../../engines/nucleus/scss/'
                 },
                 files: [{
                     expand: true,
@@ -32,7 +33,7 @@ module.exports = function(grunt) {
         },
         watch: {
             css: {
-                files: ['scss/**/*.scss', '../../engines/nucleus/scss/**/*.scss'],
+                files: 'scss/**/*.scss',
                 tasks: ['sass']
             },
 
