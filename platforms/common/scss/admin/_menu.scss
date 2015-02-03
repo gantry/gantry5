@@ -193,11 +193,9 @@ $submenu-ratio:                 60px;
 		}
 
         &:only-child {
-			&:hover {
-				&:before {
-					display: none;
-				}
-			}
+            &:hover &:before, .submenu-ratio .percentage, .submenu-reorder {
+                display: none;
+            }
 		}
 	}
 	.submenu-column {
