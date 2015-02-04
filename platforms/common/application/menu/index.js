@@ -7,6 +7,8 @@ var ready       = require('elements/domready'),
 var menumanager;
 
 ready(function() {
+    var body = $('body');
+
     // Menu Manager
     menumanager = new MenuManager('body', {
         delegate: '#menu-editor > section ul li, .submenu-column li, .column-container .g-block',
@@ -17,7 +19,7 @@ ready(function() {
     });
 
     // New columns
-    $('body').delegate('click', '.add-column', function(evet, element) {
+    body.delegate('click', '.add-column', function(evet, element) {
         event.preventDefault();
         element = $(element);
 
@@ -32,6 +34,20 @@ ready(function() {
         block.after(last);
     });
 
+    // Attach events to pseudo (x) for deleting a column
+    body.delegate('click', '[data-g5-menu-columns] .submenu-items:empty', function(event, element) {
+        var bounding = element[0].getBoundingClientRect(),
+            x = event.pageX, y = event.pageY,
+            deleter = {
+                width: 36,
+                height: 36
+            };
+
+        if (x >= bounding.left + bounding.width - deleter.width && x <= bounding.left + bounding.width &&
+            y - bounding.top < deleter.height) {
+            element.parent('[data-mm-id]').remove();
+        }
+    });
 });
 
 module.exports = {
