@@ -189,6 +189,10 @@ $submenu-ratio:                 60px;
 				&:after {
 					display: none;
 				}
+
+                .submenu-items:after {
+                    right: 0;
+                }
 			}
 		}
 
@@ -294,9 +298,10 @@ $submenu-ratio:                 60px;
                 top: 0;
                 right: 6px;
                 opacity: 0.5;
+                width: 36px;
+                height: 36px;
                 @include transition(opacity 0.2s ease-in-out);
                 margin: 0 !important;
-                width: 2rem;
                 text-align: center;
                 cursor: pointer;
             }
