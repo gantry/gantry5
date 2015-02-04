@@ -427,7 +427,7 @@ var LayoutManager = new prime({
                 console.log(size + ' size');
                 sizeTo = 100 / (multiLocationResize.to.length + 1);
                 console.log(sizeTo + ' sizeTo');
-                sizeFrom = 100 / (multiLocationResize.from.length + 1);
+                sizeFrom = !multiLocationResize.from ? 100 : 100 / (multiLocationResize.from.length + 1);
                 console.log(sizeFrom + ' sizeFrom');
                 multiplier = (size / sizeFrom);
                 console.log(multiplier + ' multiplier');

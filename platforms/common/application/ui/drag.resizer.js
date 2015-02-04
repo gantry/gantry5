@@ -172,7 +172,6 @@ var Resizer = new prime({
     evenResize: function(elements, animated) {
         var total = elements.length,
             size = precision(100 / total, 4),
-            relative = (100 - size) / 100,
             block;
 
         if (typeof animated === 'undefined') { animated = true; }
