@@ -135,8 +135,9 @@ var Resizer = new prime({
 
         // Hack to handle cases where size is not an integer
         var siblings = this.element.siblings(),
+            gridSpecial = [3,6,7,8,9,11,12],
             amount = siblings ? siblings.length + 1 : 1;
-        if (amount == 3 || amount == 6 || amount == 7 || amount == 8 || amount == 9 || amount == 11 || amount == 12) {
+        if (gridSpecial.indexOf(amount)) {
             var total = 0, blocks;
 
             blocks = $([siblings, this.element]);

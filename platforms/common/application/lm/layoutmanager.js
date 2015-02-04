@@ -334,7 +334,8 @@ var LayoutManager = new prime({
             type = this.block.getType(),
             targetId = target.data('lm-id'),
             targetType = !targetId ? false : get(this.builder.map, targetId) ? get(this.builder.map, targetId).getType() : target.data('lm-blocktype'),
-            placeholderParent = this.placeholder.parent();
+            placeholderParent = this.placeholder.parent(),
+            gridSpecial = [3,6,7,8,9,11,12];
 
         if (!placeholderParent) { return; }
 
@@ -406,7 +407,7 @@ var LayoutManager = new prime({
 
         if (multiLocationResize.from || multiLocationResize.to) {
             // if !from / !to means it's empty grid, should we remove it?
-            var size = this.block.getSize(), sizeTo, sizeFrom, newSize, diff, relative, multiplier, block;
+            var size = this.block.getSize(), sizeTo, sizeFrom, newSize, diff, relative, multiplier, block, count = 0;
 
             if (!multiLocationResize.from) { this.block.setSize(100, true); }
             // we are moving the particle to an empty grid, resetting the size to 100%
@@ -439,9 +440,22 @@ var LayoutManager = new prime({
                     sibling = $(sibling);
                     block = get(this.builder.map, sibling.data('lm-id'));
                     console.log(block.getSize() + ' getSize()');
-                    block.setSize(block.getSize() * relative, true);
+                    if (gridSpecial.indexOf(multiLocationResize.to.length)) {
+                        block.setSize(block.getSize() * relative, true);
+                    } else {
+                        if(count != multiLocationResize.to.length - 1) {
+                            block.setSize(Math.floor(block.getSize() * relative), true);
+                        } else {
+                            block.setSize(Math.ceil(block.getSize() * relative), true);
+                        }
+                    }
+                    count++;
                 }, this);
-                this.block.setSize(newSize, true);
+                if (gridSpecial.indexOf(multiLocationResize.to.length)) {
+                    this.block.setSize(newSize, true);
+                } else {
+                    this.block.setSize(Math.floor(newSize), true);
+                }
             }
         }
 
