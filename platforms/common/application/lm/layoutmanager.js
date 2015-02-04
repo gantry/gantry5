@@ -406,8 +406,9 @@ var LayoutManager = new prime({
 
         if (multiLocationResize.from || multiLocationResize.to) {
             // if !from / !to means it's empty grid, should we remove it?
-            var size = this.block.getSize(), diff, block;
+            var size = this.block.getSize(), sizeTo, sizeFrom, newSize, diff, relative, multiplier, block;
 
+            if (!multiLocationResize.from) { this.block.setSize(100, true); }
             // we are moving the particle to an empty grid, resetting the size to 100%
             if (!multiLocationResize.to) { this.block.setSize(100, true); }
 
@@ -423,13 +424,24 @@ var LayoutManager = new prime({
 
             // the TO is receiving a new block so we are going to evenize
             if (multiLocationResize.to) {
-                size = 100 / (multiLocationResize.to.length + 1);
+                console.log(size + ' size');
+                sizeTo = 100 / (multiLocationResize.to.length + 1);
+                console.log(sizeTo + ' sizeTo');
+                sizeFrom = 100 / (multiLocationResize.from.length + 1);
+                console.log(sizeFrom + ' sizeFrom');
+                multiplier = (size / sizeFrom);
+                console.log(multiplier + ' multiplier');
+                newSize = sizeTo * multiplier;
+                console.log(newSize + ' calculatedSize');
+                relative = (100 - newSize) / 100;
+                console.log(relative + ' relative');
                 multiLocationResize.to.forEach(function(sibling) {
                     sibling = $(sibling);
                     block = get(this.builder.map, sibling.data('lm-id'));
-                    block.setSize(size, true);
+                    console.log(block.getSize() + ' getSize()');
+                    block.setSize(block.getSize() * relative, true);
                 }, this);
-                this.block.setSize(size, true);
+                this.block.setSize(newSize, true);
             }
         }
 
