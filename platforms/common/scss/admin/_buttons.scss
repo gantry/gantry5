@@ -15,6 +15,16 @@
     @include button-color($secondary-text);
 }
 
+.button.disabled {
+    @extend %button;
+    background: darken($main-bg, 10%);
+    color: $white;
+    cursor: default;
+    &:active {
+        margin: 0;
+    }
+}
+
 .button.red {
     @extend %button;
     @include button-color($red);
