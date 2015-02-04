@@ -11,7 +11,7 @@ use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccessWithGetters;
  *
  * @author RocketTheme
  */
-class Blueprints implements \ArrayAccess, ExportInterface
+class BlueprintsForm implements \ArrayAccess, ExportInterface
 {
     use Constructor, NestedArrayAccessWithGetters, Export;
 

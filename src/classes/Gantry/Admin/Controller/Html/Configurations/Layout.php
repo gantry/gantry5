@@ -1,14 +1,13 @@
 <?php
 namespace Gantry\Admin\Controller\Html\Configurations;
 
-use Gantry\Component\Config\Blueprints;
+use Gantry\Component\Config\BlueprintsForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Response\JsonResponse;
-use Gantry\Framework\Gantry;
-use RocketTheme\Toolbox\Blueprints\Blueprints as Validator;
+use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -159,10 +158,10 @@ class Layout extends HtmlController
             $data = (array)$item->attributes + $defaults;
             if ($type == 'section' || $type == 'grid') {
                 $extra = null;
-                $blueprints = new Blueprints(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml")->content());
+                $blueprints = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml")->content());
             } else {
-                $extra = new Blueprints(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
-                $blueprints = new Blueprints($this->container['particles']->get($name));
+                $extra = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
+                $blueprints = new BlueprintsForm($this->container['particles']->get($name));
             }
 
             $this->params += [
@@ -201,7 +200,7 @@ class Layout extends HtmlController
         }
 
         // Load particle blueprints and default settings.
-        $validator = new Validator();
+        $validator = new Blueprints();
         $validator->embed('options', $this->container['particles']->get($particle));
         $callable = function () use ($validator) {
             return $validator;

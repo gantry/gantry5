@@ -1,19 +1,9 @@
 <?php
 namespace Gantry\Admin\Controller\Html;
 
-use Gantry\Admin\Router;
-use Gantry\Component\Config\Blueprints;
-use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\File\CompiledYamlFile;
-use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Response\HtmlResponse;
-use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
-use Gantry\Framework\Gantry;
-use \RocketTheme\Toolbox\Blueprints\Blueprints as Validator;
-use RocketTheme\Toolbox\File\JsonFile;
-use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Configurations extends HtmlController

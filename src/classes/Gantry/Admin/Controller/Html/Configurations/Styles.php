@@ -1,7 +1,7 @@
 <?php
 namespace Gantry\Admin\Controller\Html\Configurations;
 
-use Gantry\Component\Config\Blueprints;
+use Gantry\Component\Config\BlueprintsForm;
 use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
@@ -58,7 +58,7 @@ class Styles extends HtmlController
     public function display($id)
     {
         $style = $this->container['styles']->get($id);
-        $blueprints = new Blueprints($style);
+        $blueprints = new BlueprintsForm($style);
         $prefix = 'styles.' . $id;
 
         $this->params += [
@@ -80,7 +80,7 @@ class Styles extends HtmlController
         $style = $this->container['styles']->get($id);
 
         // Load blueprints.
-        $blueprints = new Blueprints($style);
+        $blueprints = new BlueprintsForm($style);
 
         list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
 
@@ -148,7 +148,7 @@ class Styles extends HtmlController
 
     public function save($id)
     {
-        $blueprints = new Blueprints($this->container['styles']->get($id));
+        $blueprints = new BlueprintsForm($this->container['styles']->get($id));
         $data = new Config($_POST, function() use ($blueprints) { return $blueprints; });
 
         /** @var UniformResourceLocator $locator */

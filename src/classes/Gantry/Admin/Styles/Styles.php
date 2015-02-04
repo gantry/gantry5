@@ -1,12 +1,8 @@
 <?php
 namespace Gantry\Admin\Styles;
 
-use Gantry\Component\Config\Blueprints;
-use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
-use Gantry\Component\Filesystem\Folder;
-use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Styles

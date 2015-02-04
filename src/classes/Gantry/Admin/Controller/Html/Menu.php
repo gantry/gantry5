@@ -1,7 +1,7 @@
 <?php
 namespace Gantry\Admin\Controller\Html;
 
-use Gantry\Component\Config\Blueprints;
+use Gantry\Component\Config\BlueprintsForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
@@ -159,13 +159,13 @@ class Menu extends HtmlController
      * Load blueprints.
      *
      * @param string $name
-     * @return Blueprints
+     * @return BlueprintsForm
      */
     protected function loadBlueprints($name = 'menu')
     {
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
         $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
-        return new Blueprints(CompiledYamlFile::instance($filename)->content());
+        return new BlueprintsForm(CompiledYamlFile::instance($filename)->content());
     }
 }

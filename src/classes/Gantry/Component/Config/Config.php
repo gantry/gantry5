@@ -4,7 +4,7 @@ namespace Gantry\Component\Config;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccessWithGetters;
-use RocketTheme\Toolbox\Blueprints\Blueprints as RtBlueprints;
+use RocketTheme\Toolbox\Blueprints\Blueprints;
 
 /**
  * The Config class contains configuration information.
@@ -138,12 +138,12 @@ class Config implements \ArrayAccess, ExportInterface
     /**
      * Return blueprints.
      *
-     * @return RtBlueprints
+     * @return Blueprints
      */
     public function blueprints()
     {
         if (!$this->blueprints){
-            $this->blueprints = new RtBlueprints;
+            $this->blueprints = new Blueprints;
         } elseif (is_callable($this->blueprints)) {
             // Lazy load blueprints.
             $blueprints = $this->blueprints;
