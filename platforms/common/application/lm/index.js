@@ -210,7 +210,7 @@ ready(function() {
         history: lmhistory
     });
 
-    // Grid same widths
+    // Grid same widths (even-ize)
     body.delegate('click', '[data-lm-samewidth]', function(event, element) {
         var clientRect = element[0].getBoundingClientRect();
         if (event.clientX < clientRect.width + clientRect.left) { return; }
@@ -223,6 +223,8 @@ ready(function() {
             id = $(block).data('lm-id');
             builder.get(id).setSize(100 / blocks.length, true);
         });
+
+        lmhistory.push(builder.serialize());
     });
 
     // Particles settings
