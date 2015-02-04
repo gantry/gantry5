@@ -2,4 +2,20 @@
 
 {% block gantry %}
     <h2 class="page-title">Assignments</h2>
+
+    <div id="settings" class="cards-wrapper">
+        <div class="card settings-block">
+            <h4>Pages</h4>
+            <div class="inner-params">
+                {% for page, value in pages %}
+                    <div>
+                        <label>
+                        {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'name': page, 'field': [], 'value': value} %}
+                        {{ page|e }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
