@@ -188,10 +188,15 @@ var MenuManager = new prime({
         var placeholderParent = this.placeholder.parent();
         if (!placeholderParent) { return; }
 
+
+        var parent = this.block.parent();
+
         this.original.remove();
         this.block.after(this.placeholder);
         this.placeholder.remove();
         if (this.wasActive) { element.addClass('active'); }
+
+        if (!parent.children()) { parent.empty(); }
     },
 
     stopAnimation: function(element) {
