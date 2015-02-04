@@ -137,7 +137,7 @@ var Resizer = new prime({
         var siblings = this.element.siblings(),
             gridSpecial = [3,6,7,8,9,11,12],
             amount = siblings ? siblings.length + 1 : 1;
-        if (gridSpecial.indexOf(amount)) {
+        if (gridSpecial.indexOf(amount) != -1) {
             var total = 0, blocks;
 
             blocks = $([siblings, this.element]);

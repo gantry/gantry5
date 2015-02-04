@@ -440,10 +440,10 @@ var LayoutManager = new prime({
                     sibling = $(sibling);
                     block = get(this.builder.map, sibling.data('lm-id'));
                     console.log(block.getSize() + ' getSize()');
-                    if (gridSpecial.indexOf(multiLocationResize.to.length)) {
+                    if (gridSpecial.indexOf(multiLocationResize.to.length) != -1) {
                         block.setSize(block.getSize() * relative, true);
                     } else {
-                        if(count != multiLocationResize.to.length - 1) {
+                        if(count < multiLocationResize.to.length) {
                             block.setSize(Math.floor(block.getSize() * relative), true);
                         } else {
                             block.setSize(Math.ceil(block.getSize() * relative), true);
@@ -451,7 +451,7 @@ var LayoutManager = new prime({
                     }
                     count++;
                 }, this);
-                if (gridSpecial.indexOf(multiLocationResize.to.length)) {
+                if (gridSpecial.indexOf(multiLocationResize.to.length) != -1) {
                     this.block.setSize(newSize, true);
                 } else {
                     this.block.setSize(Math.floor(newSize), true);
