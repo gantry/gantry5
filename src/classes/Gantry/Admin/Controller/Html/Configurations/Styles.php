@@ -25,18 +25,18 @@ class Styles extends HtmlController
             '/blocks/*/**'   => 'formfield'
         ],
         'POST' => [
-            '/'          => 'forbidden',
+            '/'          => 'save',
             '/blocks'    => 'forbidden',
             '/blocks/*'  => 'save',
             '/compile'   => 'compile'
         ],
         'PUT' => [
-            '/'         => 'forbidden',
+            '/'         => 'save',
             '/blocks'   => 'forbidden',
             '/blocks/*' => 'save'
         ],
         'PATCH' => [
-            '/'         => 'forbidden',
+            '/'         => 'save',
             '/blocks'   => 'forbidden',
             '/blocks/*' => 'save'
         ],
@@ -130,6 +130,44 @@ class Styles extends HtmlController
             $this->undefined();
         }
 
+        $this->compileSettings();
+
+        return new JsonResponse(['html' => '']);
+    }
+
+    public function save($id = null)
+    {
+        $data = $id ? [$id => $_POST] : $_POST['styles'];
+
+        foreach ($data as $name => $values) {
+            $this->saveItem($name, $values);
+        }
+
+        $this->compileSettings();
+
+        return $id ? $this->display($id) : $this->index();
+    }
+
+    protected function saveItem($id, $data)
+    {
+        $blueprints = new BlueprintsForm($this->container['styles']->get($id));
+        $config = new Config($data, function() use ($blueprints) { return $blueprints; });
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        // Save layout into custom directory for the current theme.
+        $configuration = $this->params['configuration'];
+        $save_dir = $locator->findResource("gantry-config://{$configuration}/styles", true, true);
+
+        $filename = "{$save_dir}/{$id}.yaml";
+
+        $file = YamlFile::instance($filename);
+        $file->save($config->toArray());
+    }
+
+    protected function compileSettings()
+    {
         $configuration = $this->params['configuration'];
 
         /** @var UniformResourceLocator $locator */
@@ -143,25 +181,5 @@ class Styles extends HtmlController
         $compiler->setVariables($this->container['config']->flatten('styles', '-'));
         $compiler->compileFile('template', $path);
 
-        return new JsonResponse(['html' => '']);
-    }
-
-    public function save($id)
-    {
-        $blueprints = new BlueprintsForm($this->container['styles']->get($id));
-        $data = new Config($_POST, function() use ($blueprints) { return $blueprints; });
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        // Save layout into custom directory for the current theme.
-        $configuration = $this->params['configuration'];
-        $save_dir = $locator->findResource("gantry-config://{$configuration}/styles", true, true);
-        $filename = "{$save_dir}/{$id}.yaml";
-
-        $file = YamlFile::instance($filename);
-        $file->save($data->toArray());
-
-        return $this->display($id);
     }
 }

@@ -2,8 +2,14 @@
 
 {% block gantry %}
 <div id="settings">
-    {% for group, list in particles %}
-        <h2>{{ group|capitalize }} Settings</h2>
+    <form method="post">
+        <span class="float-right">
+            <button type="submit" class="button button-primary button-save"><i class="fa fa-check"></i> <span>Save All</span></button>
+        </span>
+        {% for group, list in particles %}
+        <h2 class="page-title">
+            <span class="title">{{ group|capitalize }} Settings</span>
+        </h2>
 
         <div class="cards-wrapper g-grid">
 
@@ -25,6 +31,7 @@
                 {% endif %}
             {% endfor %}
         </div>
-    {% endfor %}
+        {% endfor %}
+    </form>
 </div>
 {% endblock %}

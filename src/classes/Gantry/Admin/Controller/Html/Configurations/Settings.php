@@ -22,17 +22,17 @@ class Settings extends HtmlController
             '/particles/*/**'   => 'formfield',
         ],
         'POST' => [
-            '/'            => 'forbidden',
+            '/'            => 'save',
             '/particles'   => 'forbidden',
             '/particles/*' => 'save'
         ],
         'PUT' => [
-            '/'            => 'forbidden',
+            '/'            => 'save',
             '/particles'   => 'forbidden',
             '/particles/*' => 'save'
         ],
         'PATCH' => [
-            '/'            => 'forbidden',
+            '/'            => 'save',
             '/particles'   => 'forbidden',
             '/particles/*' => 'save'
         ],
@@ -109,10 +109,21 @@ class Settings extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
     }
 
-    public function save($id)
+    public function save($id = null)
+    {
+        $data = $id ? [$id => $_POST] : $_POST['particles'];
+
+        foreach ($data as $name => $values) {
+            $this->saveItem($name, $values);
+        }
+
+        return $id ? $this->display($id) : $this->index();
+    }
+
+    protected function saveItem($id, $data)
     {
         $blueprints = new BlueprintsForm($this->container['particles']->get($id));
-        $data = new Config($_POST, function() use ($blueprints) { return $blueprints; });
+        $config = new Config($data, function() use ($blueprints) { return $blueprints; });
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
@@ -123,9 +134,7 @@ class Settings extends HtmlController
         $filename = "{$save_dir}/{$id}.yaml";
 
         $file = YamlFile::instance($filename);
-        $file->save($data->toArray());
-
-        return $this->display($id);
+        $file->save($config->toArray());
     }
 
     public function reset($id)
