@@ -53,7 +53,7 @@ var Resizer = new prime({
         this.map = this.builder.map;
         if (event.which && event.which !== 1) { return true; }
 
-        // stops text selection
+        // Stops text selection
         event.preventDefault();
 
         this.element = $(element);
@@ -133,7 +133,7 @@ var Resizer = new prime({
         this.getBlock(this.element).setSize(size, true);
         this.getBlock(this.siblings.next).setSize(diff, true);
 
-        // hack to handle cases where size is not an integer
+        // Hack to handle cases where size is not an integer
         var siblings = this.element.siblings(),
             amount = siblings ? siblings.length + 1 : 1;
         if (amount == 3 || amount == 6 || amount == 7 || amount == 8 || amount == 9 || amount == 11 || amount == 12) {

@@ -1,6 +1,6 @@
 "use strict";
 var ready         = require('elements/domready'),
-    //json          = require('./json_test'),
+    //json          = require('./json_test'), // debug
     $             = require('elements/attributes'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
@@ -24,34 +24,6 @@ var builder, layoutmanager, lmhistory;
 
 builder = new Builder();
 lmhistory = new LMHistory();
-
-/*var particlesPopover = function() {
-    var particles = $('[data-lm-addparticle]');
-    particles.popover({
-        type: 'async',
-        placement: 'left-bottom',
-        width: '200',
-        style: 'particles, inverse, fixed, nooverflow',
-        url: particles.attribute('href') + getAjaxSuffix()
-    }).on('shown.popover', function(popover) {
-        if (popover.$target.particleFilter) { return false; }
-
-        var search = popover.$target.find('input[type=text]'),
-            list = popover.$target.search('[data-lm-blocktype]');
-        if (!search) { return false; }
-
-        popover.$target.particleFilter = true;
-        search.on('input', function(e) {
-            list.style({ display: 'none' }).forEach(function(blocktype) {
-                var value = this.value().toLowerCase();
-                blocktype = $(blocktype);
-                if (blocktype.data('lm-blocktype').toLowerCase().match(value) || blocktype.text().toLowerCase().match(value)) {
-                    blocktype.style({ display: 'block' });
-                }
-            }, this);
-        });
-    });
-};*/
 
 ready(function(){
     var HM = {
@@ -97,27 +69,21 @@ ready(function() {
     // load builder data
     if (root) {
         data = JSON.parse(root.data('lm-root'));
-        if (data.name) {
-            //$('[data-g5-content]').find('.title').text(data.name);
-            data = data.layout;
-        }
+        if (data.name) { data = data.layout; }
         builder.setStructure(data);
         builder.load();
         lmhistory.setSession(builder.serialize());
-        //particlesPopover();
     }
 
     // attach events
     // Save
     body.delegate('click', '.button-save', function(e, element) {
         if (!$('[data-lm-root]')) { return true; }
-
         e.preventDefault();
 
         var lm = JSON.stringify(builder.serialize());
 
         request('post', window.location.href + getAjaxSuffix(), {
-            //title: $('[data-g5-content] h2 .title').text().toLowerCase(), // we dont need the title anymore
             layout: lm
         }, function(error, response) {
             if (!response.body.success) {
@@ -136,7 +102,7 @@ ready(function() {
         });
     });
 
-    // Tabs
+    // Modal Tabs
     body.delegate('click', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
@@ -160,22 +126,21 @@ ready(function() {
         modal.close();
     });
 
+    // Sub-navigation links
     body.delegate('statechangeAfter', '#navbar [data-g5-ajaxify]', function(event, element) {
-        if (!$('[data-lm-root]')) { return true; }
-        data = JSON.parse($('[data-lm-root]').data('lm-root'));
+        var root = $('[data-lm-root]');
+        if (!root) { return true; }
+        data = JSON.parse(root.data('lm-root'));
         builder.setStructure(data);
         builder.load();
         lmhistory.setSession(builder.serialize());
-
-        // -!- Popovers
-        // particles picker
-        //particlesPopover();
 
         // refresh LM eraser
         layoutmanager.eraser.element = $('[data-lm-eraseblock]');
         layoutmanager.eraser.hide();
     });
 
+    // Particles filtering
     body.delegate('input', '.sidebar-block .search input', function(event, element){
         var value = $(element).value().toLowerCase(),
             list = $('.sidebar-block [data-lm-blocktype]'),
@@ -192,6 +157,7 @@ ready(function() {
         }, this);
     });
 
+    // TODO: this was the + handler for new layouts which is now gone in favor of Configurations
     body.delegate('click', '[data-g5-lm-add]', function(event, element) {
         event.preventDefault();
         modal.open({
@@ -200,7 +166,7 @@ ready(function() {
         });
     });
 
-    // layoutmanager
+    // Layout Manager
     layoutmanager = new LayoutManager('body', {
         delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
         droppables: '[data-lm-dropzone]',
@@ -210,13 +176,12 @@ ready(function() {
         history: lmhistory
     });
 
-    // Grid same widths (even-ize)
+    // Grid same widths button (even-ize)
     body.delegate('click', '[data-lm-samewidth]', function(event, element) {
         var clientRect = element[0].getBoundingClientRect();
         if (event.clientX < clientRect.width + clientRect.left) { return; }
         
         var blocks = element.search('> [data-lm-blocktype="block"]'), id;
-
         if (!blocks || blocks.length == 1) { return; }
 
         blocks.forEach(function(block){
@@ -235,7 +200,7 @@ ready(function() {
             settingsURL = element.data('lm-settings'),
             data = null, parent;
 
-        // grid is a special case, since relies on pseudo elements for sorting and settings
+        // grid is a special case, since relies on pseudo elements for sorting and same width (evenize)
         // we need to check where the user clicked.
         if (blocktype === 'grid') {
             var clientX = event.clientX || (event.touches && event.touches[0].clientX) || 0,

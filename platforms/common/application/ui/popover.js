@@ -120,7 +120,6 @@ var Popover = new prime({
         }
 
         // use cache by default, if not cache setted  , reInit the contents
-
         this.element.emit('beforeshow.popover', this);
         if (!this.options.cache || !this._poped) {
             this.setTitle(this.getTitle());
@@ -159,7 +158,7 @@ var Popover = new prime({
             targetContent.style({ height: this.options.height });
         }
 
-        //init the popover and insert into the document body
+        // init the popover and insert into the document body
         if (!this.options.arrow && target.find('.arrow')) {
             target.find('.arrow').remove();
         }
@@ -311,7 +310,7 @@ var Popover = new prime({
         }
     },
     mouseleaveHandler: function() {
-        //key point, set the _timeout  then use clearTimeout when mouse leave
+        // key point, set the _timeout  then use clearTimeout when mouse leave
         this._timeout = setTimeout(bind(function() {
             this.hide();
         }, this), this.options.delay);
@@ -362,7 +361,7 @@ var Popover = new prime({
             pageY = Math.max(0, pos.top - scrollTop),
             arrowSize = 20;
 
-        //if placement equals auto，caculate the placement by element information;
+        // if placement equals auto，caculate the placement by element information;
         if (typeof(this.options.placement) === 'function') {
             placement = this.options.placement.call(this, this.getTarget()[0], this.element[0]);
         } else {

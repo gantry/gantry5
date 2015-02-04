@@ -3,8 +3,8 @@ var ready = require('elements/domready'),
     $ = require('elements');
 
 ready(function(){
-    var input, hiddens, radios;
-    $(document).delegate('click', '.enabler .toggle', function(e, element){
+    var hiddens;
+    $('body').delegate('click', '.enabler .toggle', function(e, element){
         element = $(element);
         hiddens = element.find('~~ [type=hidden]');
 

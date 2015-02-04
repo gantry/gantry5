@@ -27,7 +27,8 @@ var FileManager = new prime({
 });
 
 domready(function(){
-    $('body').delegate('click', '[data-g5-filemanager]', function(event, element){
+    var body = $('body');
+    body.delegate('click', '[data-g5-filemanager]', function(event, element){
         element = $(element);
         if (!element.GantryFileManager){
             element.GantryFileManager = new FileManager(element);

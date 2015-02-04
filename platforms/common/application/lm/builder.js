@@ -78,7 +78,6 @@ var Builder = new prime({
 
     load: function(data) {
         this.recursiveLoad(data);
-        //console.log('---');
         this.emit('loaded', data);
 
         return this;
@@ -111,13 +110,10 @@ var Builder = new prime({
                 children: children
             };
 
-            /*if (blocks.length <= 1) serie = serial;
-             else {*/
             serieChildren.push(serial);
-            //}
         }, this);
 
-        return serieChildren;// size(serieChildren) ? serieChildren : serie;
+        return serieChildren;
     },
 
     insert: function(key, value, parent/*, object*/) {
@@ -139,10 +135,6 @@ var Builder = new prime({
         else {
             Element.block.insert($('[data-lm-id="' + parent + '"]'));
         }
-
-        /*if (value.type === 'grid') {
-         Element.block.data('lm-dropzone', null);
-         }*/
 
         if (Element.getType() === 'block') {
             Element.setSize();
@@ -204,11 +196,16 @@ var Builder = new prime({
             if (!value.id) {
                 value.id = guid();
             }
-            console.log(rpad(repeat('    ', depth) + '' + value.type, 35) + ' (' + rpad(value.id, 36) + ') parent: ' + parent);
+
+            // debug (flat view of the structure)
+            if (console && console.log) {
+                console.log(rpad(repeat('    ', depth) + '' + value.type, 35) + ' (' + rpad(value.id, 36) + ') parent: ' + parent);
+            }
+
             this.emit('loading', callback.call(this, value.id, value, parent, depth));
             if (value.children && size(value.children)) {
-                //this.recursiveLoad(value.children, callback, ++depth, value.id);
                 depth++;
+
                 forEach(value.children, function(childValue/*, childKey, array*/) {
                     this.recursiveLoad([childValue], callback, depth, value.id);
                 }, this);

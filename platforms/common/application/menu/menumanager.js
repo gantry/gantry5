@@ -26,7 +26,6 @@ var MenuManager = new prime({
         this.resizer = new Resizer(element, options);
         this.dragdrop
             .on('dragdrop:click', this.bound('click'))
-            .on('dragdrop:beforestart', this.bound('beforestart'))
             .on('dragdrop:start', this.bound('start'))
             .on('dragdrop:move:once', this.bound('moveOnce'))
             .on('dragdrop:location', this.bound('location'))
@@ -34,13 +33,6 @@ var MenuManager = new prime({
             .on('dragdrop:resize', this.bound('resize'))
             .on('dragdrop:stop', this.bound('stop'))
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
-        /*
-         .on('dragdrop:location', this.bound('location'))
-         .on('dragdrop:nolocation', this.bound('nolocation'))
-         .on('dragdrop:resize', this.bound('resize'))
-         .on('dragdrop:stop:erase', this.bound('removeElement'))
-         .on('dragdrop:stop', this.bound('stop'))
-         .on('dragdrop:stop:animation', this.bound('stopAnimation'));*/
     },
 
     click: function(event, element) {
@@ -50,16 +42,13 @@ var MenuManager = new prime({
         element.addClass('active');
         if (siblings) { siblings.removeClass('active'); }
         element.emit('click');
+
         var link = element.find('a');
         if (link) { link[0].click(); }
     },
 
     resize: function(event, element, siblings, offset) {
         this.resizer.start(event, element, siblings, offset);
-    },
-
-    beforestart: function(event, element){
-        //if (element.hasClass('submenu-reorder')) { this.dragdrop.element = element.parent('.g-block'); }
     },
 
     start: function(event, element) {
@@ -100,7 +89,7 @@ var MenuManager = new prime({
         }
     },
 
-    moveOnce: function(element) {
+    moveOnce: function(/*element*/) {
         if (this.original) { this.original.style({opacity: 0.5}); }
     },
 
@@ -109,12 +98,12 @@ var MenuManager = new prime({
         if (!this.placeholder) { this.placeholder = zen((this.type == 'column' ? 'div' : 'li') + '.block.placeholder[data-mm-placeholder]').style({ display: 'none' }); }
 
         var targetType = target.parent('.g-toplevel') || target.matches('.g-toplevel') ? 'main' : (target.matches('.g-block') ? 'column' : 'columns_items'),
-            dataID = target.data('mm-id'),
             dataLevel = target.data('mm-level'),
-            originalID = this.block.data('mm-id'),
-            originalLevel = this.block.data('mm-level');
+            originalLevel = this.block.data('mm-level');/*,
+            dataID = target.data('mm-id'),
+            originalID = this.block.data('mm-id');*/
 
-        // workaround for layout and style of columns
+        // Workaround for layout and style of columns
         if (dataLevel === null && this.type === 'columns_items') {
             var submenu_items = target.find('.submenu-items');
             if (!submenu_items || submenu_items.children()) { this.dragdrop.matched = false; return; }
@@ -124,13 +113,13 @@ var MenuManager = new prime({
             return;
         }
 
-        // we only allow sorting between same level items
+        // We only allow sorting between same level items
         if (this.type !== 'column' && originalLevel !== dataLevel) { this.dragdrop.matched = false; return; }
 
-        // ensuring columns can only be dragged before/after other columns
+        // Ensuring columns can only be dragged before/after other columns
         if (this.type == 'column' && dataLevel) { this.dragdrop.matched = false; return; }
 
-        // for levels > 2 we only allow sorting within the same column
+        // For levels > 2 we only allow sorting within the same column
         if (dataLevel > 2 && target.parent('ul') != this.block.parent('ul')) { this.dragdrop.matched = false; return; }
 
         // Check for adjacents and avoid inserting any placeholder since it would be the same position
@@ -142,6 +131,7 @@ var MenuManager = new prime({
 
         if (adjacents.before) { adjacents.before = $(adjacents.before[0]); }
         if (adjacents.after) { adjacents.after = $(adjacents.after[0]); }
+
         if (targetType === 'main' && ((adjacents.before === target && location.x === 'after') || (adjacents.after === target && location.x === 'before'))) {
             return;
         }
@@ -152,7 +142,7 @@ var MenuManager = new prime({
             return;
         }
 
-        // handles the types cases and normalizes the locations (x and y)
+        // Handles the types cases and normalizes the locations (x and y)
         switch (targetType) {
             case 'main':
             case 'column':
@@ -169,7 +159,7 @@ var MenuManager = new prime({
 
     },
 
-    nolocation: function(event) {
+    nolocation: function(/*event*/) {
         if (this.placeholder) { this.placeholder.remove(); }
     },
 
@@ -200,7 +190,7 @@ var MenuManager = new prime({
         if (!parent.children()) { parent.empty(); }
     },
 
-    stopAnimation: function(element) {
+    stopAnimation: function(/*element*/) {
         var flex = null;
         if (this.type == 'column') { flex = this.block.compute('flex'); }
         if (this.root) { this.root.removeClass('moving'); }

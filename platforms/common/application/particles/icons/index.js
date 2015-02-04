@@ -38,7 +38,7 @@ domready(function() {
                 if (popovers) { popovers.remove(); }
             },
             remoteLoaded: function(response, content) {
-                var html, large, iconData = [],
+                var html, large,
                     container = content.elements.content,
                     icons = container.search('[data-icon]');
 
@@ -88,7 +88,7 @@ domready(function() {
                     modal.close();
                 });
 
-                container.delegate('change', '.g-particles-header .float-right input[type="checkbox"], .g-particles-header .float-right select', function(e, input) {
+                container.delegate('change', '.g-particles-header .float-right input[type="checkbox"], .g-particles-header .float-right select', function(/*e, input*/) {
                     updatePreview();
                 });
 

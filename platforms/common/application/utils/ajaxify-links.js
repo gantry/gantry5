@@ -33,7 +33,6 @@ History.Adapter.bind(window, 'statechange', function() {
 
     if (size(Data) && Data.parsed !== false && storage.get(Data.uuid)) {
         Data = storage.get(Data.uuid);
-        //URI = AjaxURL(Data.view, Data.method || null);
     }
 
     if (Data.element) {
@@ -163,15 +162,6 @@ domready(function() {
             element.parent('li').addClass('active');
         }
     });
-
-    /*body.on('statechangeAfter', function(data){
-        if (!data || (!data.Data.params && !data.target.data('selectize'))) { return true; }
-        var params = JSON.parse(data.Data.params);
-
-        if (!params.navbar && !data.target.data('selectize')) { return true; }
-
-        selectorChangeEvent();
-    });*/
 
     // attach change events to configurations selector
     selectorChangeEvent();

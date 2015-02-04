@@ -1,3 +1,5 @@
+"use strict";
+
 var prime      = require('prime'),
     Emitter    = require('prime/emitter'),
     Bound      = require('prime-util/prime/bound'),
@@ -36,7 +38,9 @@ var ColorPicker = new prime({
             input[0].focus();
             this.show(event, input);
         }, this));
+
         body.delegate(FOCUSIN, '.colorpicker input', this.bound('show'), true);
+
         body.on(MOUSEDOWN, bind(function(event) {
             var target = $(event.target);
             if (!target.parent('.cp-wrapper') && !target.parent('.colorpicker')) {
@@ -110,7 +114,6 @@ var ColorPicker = new prime({
             offsetY = clientRect.top + window.scrollY,
             x = Math.round(event.pageX - offsetX),
             y = Math.round(event.pageY - offsetY),
-            duration = 0,
             wx, wy, r, phi;
 
         // Touch support
@@ -131,12 +134,13 @@ var ColorPicker = new prime({
             wy = 75 - y;
             r = Math.sqrt(wx * wx + wy * wy);
             phi = Math.atan2(wy, wx);
+
             if (phi < 0) phi += Math.PI * 2;
             if (r > 75) {
-                r = 75;
                 x = 75 - (75 * Math.cos(phi));
                 y = 75 - (75 * Math.sin(phi));
             }
+
             x = Math.round(x);
             y = Math.round(y);
         }
@@ -162,8 +166,11 @@ var ColorPicker = new prime({
         this.slider = zen('div.cp-slider.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-picker'));
         this.opacitySlider = zen('div.cp-opacity-slider.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-picker'));
         this.grid = zen('div.cp-grid.cp-sprite').bottom(this.wrapper).appendChild(zen('div.cp-grid-inner')).appendChild(zen('div.cp-picker'));
+
         zen('div').bottom(this.grid.find('.cp-picker'));
+
         var tabs = zen('div.cp-tabs').bottom(this.wrapper);
+
         this.tabs = {
             hue: zen('div.cp-tab-hue.active').text('HUE').bottom(tabs),
             brightness: zen('div.cp-tab-brightness').text('BRI').bottom(tabs),
@@ -192,7 +199,7 @@ var ColorPicker = new prime({
 
     updateFromInput: function(dontFireEvent) {
         var value = this.element.value(),
-            opacity = value.replace(/\s/g, '').match(/^rgba?\([0-9]{1,3}\,[0-9]{1,3}\,[0-9]{1,3}\,(.+)\)/),
+            opacity = value.replace(/\s/g, '').match(/^rgba?\([0-9]{1,3},[0-9]{1,3},[0-9]{1,3},(.+)\)/),
             hex, hsb;
 
         value = rgbstr2hex(value) || value;
@@ -208,8 +215,9 @@ var ColorPicker = new prime({
         // bg color
         var gridHeight = this.grid.position().height,
             gridWidth = this.grid.position().width,
-            sliderHeight = this.slider.position().height,
             r, phi, x, y;
+
+        sliderHeight = this.slider.position().height;
 
         switch (this.mode) {
             case 'wheel':

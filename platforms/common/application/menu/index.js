@@ -4,13 +4,10 @@ var ready       = require('elements/domready'),
     zen         = require('elements/zen'),
     $           = require('elements');
 
-
 var menumanager;
 
-
 ready(function() {
-
-    // menumanager
+    // Menu Manager
     menumanager = new MenuManager('body', {
         delegate: '#menu-editor > section ul li, .submenu-column li, .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
@@ -19,7 +16,7 @@ ready(function() {
         catchClick: true
     });
 
-    // new columns
+    // New columns
     $('body').delegate('click', '.add-column', function(evet, element) {
         event.preventDefault();
         element = $(element);

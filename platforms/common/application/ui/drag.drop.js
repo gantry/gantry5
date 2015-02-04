@@ -8,18 +8,16 @@ var prime      = require('prime'),
     contains   = require('mout/array/contains'),
     DragEvents = require('./drag.events'),
     $          = require('../utils/elements.moofx');
+
 // $ utils
 require('elements/events');
 require('elements/delegation');
-//require('elements/insertion');
-//require('elements/attributes');
 
 var isIE = (navigator.appName === "Microsoft Internet Explorer");
 
 var DragDrop = new prime({
 
     mixin: [Bound, Options],
-
     inherits: Emitter,
 
     options: {
@@ -65,7 +63,7 @@ var DragDrop = new prime({
         clearTimeout(this.scrollInterval);
         this.scrollHeight = document.body.scrollHeight;
 
-        // prevents dragging a column from itself and limiting to its handle
+        // Prevents dragging a column from itself and limiting to its handle
         var target = $(event.target);
         if (!element.parent('[data-lm-root]') && element.hasClass('g-block') && (!target.hasClass('submenu-reorder') && !target.parent('.submenu-reorder'))) { return true; }
 
@@ -77,7 +75,7 @@ var DragDrop = new prime({
 
         this.emit('dragdrop:beforestart', event, this.element);
 
-        // stops default MS touch actions since preventDefault doesn't work
+        // Stops default MS touch actions since preventDefault doesn't work
         if (isIE) {
             this.element.style({
                 '-ms-touch-action': 'none',
@@ -85,7 +83,7 @@ var DragDrop = new prime({
             });
         }
 
-        // stops text selection
+        // Stops text selection
         event.preventDefault();
 
         this.origin = {
@@ -101,11 +99,10 @@ var DragDrop = new prime({
             y: clientRect.top - this.origin.y
         };
 
-        // only allow to sort grids when targeting the left handle
+        // Only allow to sort grids when targeting the left handle
         if (this.element.data('lm-blocktype') === 'grid' && Math.abs(this.origin.offset.x) < clientRect.width) {
             return false;
         }
-
 
         var offset = Math.abs(this.origin.offset.x),
             columns = (this.element.parent().data('lm-blocktype') === 'grid' && this.element.parent().parent().data('lm-root')) ||
@@ -117,7 +114,7 @@ var DragDrop = new prime({
             (this.element.parent().data('lm-blocktype') === 'section' && this.element.parent().parent().parent().data('lm-root'))
         ) { columns = false; }
 
-        // resizing and only if it's not a non-visible section
+        // Resizing and only if it's not a non-visible section
         if ((offset < 6 && this.element.parent().find(':last-child') !== this.element) || (columns && offset > 3 && offset < 10)) {
             if (this.element.parent('[data-lm-blocktype="non-visible"]')) { return false; }
 
@@ -156,20 +153,12 @@ var DragDrop = new prime({
             return;
         }
 
-
         var settings = { duration: '250ms' };
 
         if (this.removeElement) { return this.emit('dragdrop:stop:erase', event, this.element); }
-
         if (this.element) {
 
             this.emit('dragdrop:stop', event, this.matched, this.element);
-
-            /*this.element.style({
-             position: 'absolute',
-             width: 'auto',
-             height: 'auto'
-             });*/
 
             if (this.matched) {
                 this.element.style({
@@ -233,7 +222,7 @@ var DragDrop = new prime({
             isGrid = this.element.data('lm-blocktype') === 'grid';
 
 
-        // logic to autoscroll on drag
+        // Logic to auto-scroll on drag
         var scrollHeight = this.scrollHeight,
             Height = document.body.clientHeight,
             Scroll = document.body.scrollTop;
@@ -249,9 +238,9 @@ var DragDrop = new prime({
             }, 8);
         }
 
-        // we tweak the overing to take into account the negative offset for the handle
+        // We tweak the overing to take into account the negative offset for the handle
         if (isGrid) {
-            // more accurate is: clientX + (this.element[0].getBoundingClientRect().left - clientX)
+            // More accurate is: clientX + (this.element[0].getBoundingClientRect().left - clientX)
             overing = document.elementFromPoint(clientX + 30, clientY);
         }
 
@@ -259,13 +248,6 @@ var DragDrop = new prime({
 
         this.matched = $(overing).matches(this.options.droppables) ? overing : ($(overing).parent(this.options.droppables) || [false])[0];
         this.isPlaceHolder = $(overing).matches('[data-lm-placeholder]') ? true : ($(overing).parent('[data-lm-placeholder]') ? true : false);
-        // we only allow new particles to go anywhere and particles to reposition within the grid boundaries
-        // and we only allow grids sorting within the same section only
-        /*if (this.matched && this.element.data('lm-id')) {
-            if ($(this.matched).parent('.grid') !== this.element.parent('.grid') || $(this.matched).parent('.section') !== this.element.parent('.section')) {
-                this.matched = false;
-            }
-        }*/
 
         var deltaX = this.lastX - clientX,
             deltaY = this.lastY - clientY,
@@ -277,8 +259,6 @@ var DragDrop = new prime({
 
         deltaX = (event.changedTouches ? event.changedTouches[0].pageX : event.pageX) - this.origin.x;
         deltaY = (event.changedTouches ? event.changedTouches[0].pageY : event.pageY) - this.origin.y;
-
-        //console.log('x', this.origin.x, 'y', this.origin.y, 'ox', this.origin.offset.x, 'oy', this.origin.offset.y, 'dx', deltaX, 'dy', deltaY);
 
         this.direction = direction;
         this.element.style({ transform: 'translate(' + deltaX + 'px, ' + deltaY + 'px)' });
@@ -296,10 +276,7 @@ var DragDrop = new prime({
 
             if (this.matched && this.lastMatched) {
                 var rect = this.matched.getBoundingClientRect();
-                var x = clientX - rect.left,
-                    y = clientY - rect.top;
-
-                // note: you can divide x axis by 3 rather than 2 for 4 directions
+                // Note: you can divide x axis by 3 rather than 2 for 4 directions
                 var location = {
                     x: Math.abs((clientX - rect.left)) < (rect.width / 2) && 'before' ||
                     Math.abs((clientX - rect.left)) >= (rect.width - (rect.width / 2)) && 'after' ||
@@ -309,17 +286,13 @@ var DragDrop = new prime({
                     'other'
                 };
 
-                //if (!equals(location, this.lastLocation)){
                 this.emit('dragdrop:location', event, location, this.matched, this.element);
-                this.lastLocation = location;
-                //}
             } else {
                 this.emit('dragdrop:nolocation', event);
             }
         }
 
         this.lastOvered = overing;
-        this.lastDirection = direction;
         this.lastX = clientX;
         this.lastY = clientY;
 
@@ -331,7 +304,6 @@ var DragDrop = new prime({
         if (element.data('mm-id')) { return; }
 
         element.attribute('style', null);//.style({flex: flex});
-        //$(element || this.element).style({'pointer-events': 'auto', 'position': 'inherit', 'z-index': 'inherit'});
     }
 
 });

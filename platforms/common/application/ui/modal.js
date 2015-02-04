@@ -139,7 +139,7 @@ var Modal = new prime({
         elements.container.appendChild(elements.content);
 
         if (options.overlayClickToClose) {
-            elements.content.on('click', function(e){
+            elements.content.on('click', function(/*e*/){
                 return true;
             });
         }
@@ -173,7 +173,6 @@ var Modal = new prime({
                 .style(options.closeCSS);
 
             storage.set(elements.closeButton, { dialog: options });
-            //elements.closeButton.on('click', bind(this._closeButtonClick, this, elements.closeButton[0]));
             elements.content.appendChild(elements.closeButton);
         }
 

@@ -148,13 +148,12 @@ var Fonts = new prime({
 
             if (!list || !list.length) { return; }
 
-            wf.load({
+            this.wf.load({
                 classes: false,
                 google: {
                     families: list
                 },
                 fontactive: bind(function(family, fvd) {
-                    var v = container.find('li[data-font="' + family + '"]').data('variant');
                     container.find('li[data-font="' + family + '"]:not(.g-variant-hide) > .preview').style({
                         fontFamily: family,
                         fontWeight: fvd
@@ -226,7 +225,7 @@ var Fonts = new prime({
         setTimeout(bind(function() { this.toggleExpansion(); }, this), 50);
     },
 
-    select: function(element, variant, target) {
+    select: function(element, variant/*, target*/) {
         var baseVariant = element.data('variant');
 
         if (!this.selected || this.selected.element != element) {
@@ -279,13 +278,13 @@ var Fonts = new prime({
     toggleExpansion: function() {
         if (this.selected.availableVariants.length <= 1) { return; }
         if (!this.selected.expanded) {
-            var variants = this.selected.element.data('variants'), list = [], variant;
+            var variants = this.selected.element.data('variants'), variant;
             if (variants.split(',').length > 1) {
                 this.manipulateLink(this.selected.font);
                 this.selected.element.search('[data-font]').removeClass('g-variant-hide');
 
                 if (!this.selected.loaded) {
-                    wf.load({
+                    this.wf.load({
                         classes: false,
                         google: {
                             families: [this.selected.font.replace(/\s/g, '+') + ':' + variants]
@@ -333,7 +332,6 @@ var Fonts = new prime({
 
         this.select(element.parent('[data-font]') || element, element.parent('[data-font]') ? element.data('variant') : false, element);
 
-        //console.log(element, this.selected);
         return false;
     },
 
@@ -349,7 +347,6 @@ var Fonts = new prime({
 
         selected = this.selected.selected.sort();
         this.selected.element.addClass('font-selected');
-        //console.log(selected.map(this.mapVariant));
         preview.html('<strong>' + this.selected.font + '</strong> (<small>' + selected.join(', ').replace('regular', 'normal') + '</small>)');
     },
 
@@ -364,12 +361,10 @@ var Fonts = new prime({
         this.filters.script = 'latin';
         var previewSentence = this.previewSentence[this.filters.script],
             html = zen('div#g-fonts.g-grid'),
-            //sidebar = zen('div.g-sidebar.g-block.size-1-4').bottom(html),
             main = zen('div.g-particles-main').bottom(html),
             ul = zen('ul.g-fonts-list').bottom(main),
             families = [], list, categories = [], subsets = [];
 
-        // zen('div.settings-block').appendChild(zen('input[type="text"][placeholder="Search..."]')).top(sidebar);
 
         this.buildHeader(html).top(html);
         this.buildFooter(html).bottom(html);
@@ -377,7 +372,6 @@ var Fonts = new prime({
         ul.on('scroll', bind(this.scroll, this, ul));
 
         html.delegate('click', '.g-fonts-list li[data-font]', bind(this.toggle, this));
-        //html.delegate('click', '.g-fonts-list > li li[data-font]', bind(this.toggle, this));
 
         async.eachSeries(this.data, bind(function(font, callback) {
             combine(subsets, font.subsets);
@@ -399,8 +393,6 @@ var Fonts = new prime({
                     trigger: 'mouse',
                     style: 'font-categories, above-modal'
                 }).on('beforeshow.popover', bind(function(popover) {
-                    var subs = font.subsets.sort();
-
                     var subsets = font.subsets,
                         content = popover.$target.find('.g5-popover-content'),
                         checked;
@@ -418,7 +410,6 @@ var Fonts = new prime({
                         checked = content.search('input[type="checkbox"]:checked');
                         this.selected.charsets = checked ? checked.map('value') : [];
                         charset.text('(' + this.selected.charsets.length + ' selected)');
-                        //this.search();
                     }, this));
 
                     popover.displayContent();
@@ -455,22 +446,11 @@ var Fonts = new prime({
         var container = zen('div.settings-block.g-particles-header').bottom(html),
             preview = zen('input.float-left.font-preview[type="text"][data-font-preview][placeholder="Font Preview..."][value="' + this.previewSentence[this.filters.script] + '"]').bottom(container),
             searchWrapper = zen('span.particle-search-wrapper.float-right').bottom(container),
-            search = zen('input.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(searchWrapper),
-            totals = zen('span.particle-search-total').bottom(searchWrapper);
+            search = zen('input.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(searchWrapper);
+        zen('span.particle-search-total').bottom(searchWrapper);
 
         search.on('keyup', bind(this.search, this, search));
         preview.on('keyup', bind(this.updatePreview, this, preview));
-
-        /*preview.popover({
-         arrow: false,
-         width: 400,
-         trigger: 'mouse',
-         placement: 'bottom-right',
-         style: 'font-preview, above-modal',
-         content: '<ul><li>Font Name</li><li>Wizard boy Jack loves the grumpy Queen\'s fox.</li><li>AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz 0123456789</li></ul>'
-         }).on('shown.popover', function(popover) {
-         console.log('a', popover);
-         });*/
 
         return container;
     },
@@ -483,9 +463,10 @@ var Fonts = new prime({
             subsets = zen('a.font-subsets.button').bottom(leftContainer),
             selected = zen('span.font-selected').bottom(rightContainer),
             select = zen('button.button.button-primary').text('Select').bottom(rightContainer),
-            space = zen('span').html('&nbsp;').bottom(rightContainer),
-            cancel = zen('button.button.g5-dialog-close').text('Cancel').bottom(rightContainer),
             current;
+
+        zen('span').html('&nbsp;').bottom(rightContainer);
+        zen('button.button.g5-dialog-close').text('Cancel').bottom(rightContainer);
 
         select.on('click', bind(function() {
             if (!$('ul.g-fonts-list > [data-font] input[type="checkbox"]:checked')) {
@@ -581,28 +562,28 @@ var Fonts = new prime({
             value = input.value(),
             name, data;
 
-        //if (input.previousValue == value) { return true; }
-
         list.search('> [data-font]').forEach(function(font) {
             font = $(font);
             name = font.data('font');
             data = find(this.data, { family: name });
             font.removeClass('g-font-hide');
 
-            // we dont want to hide selected fonts
+            // We dont want to hide selected fonts
             if (this.selected && this.selected.font == name && this.selected.selected.length) { return; }
 
-            // checks for other criterias such as subset and category goes here TODO
+            // Filter by Subset
             if (!contains(data.subsets, this.filters.script)) {
                 font.addClass('g-font-hide');
                 return;
             }
 
+            // Filter by Category
             if (!contains(this.filters.categories, data.category)) {
                 font.addClass('g-font-hide');
                 return;
             }
 
+            // Filter by Name
             if (!name.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
                 font.addClass('g-font-hide');
             } else {
@@ -613,6 +594,7 @@ var Fonts = new prime({
         this.updateTotal();
 
         clearTimeout(input.refreshTimer);
+
         input.refreshTimer = setTimeout(bind(function() {
             this.scroll($('ul.g-fonts-list'));
         }, this), 400);
@@ -622,16 +604,17 @@ var Fonts = new prime({
 
     updatePreview: function(input) {
         input = input || $('.g-particles-header input.font-preview');
+
         clearTimeout(input.refreshTimer);
+
         var value = input.value(),
             list = $('.g-fonts-list');
+
         value = trim(value) ? trim(value) : this.previewSentence[this.filters.script];
 
         if (input.previousValue == value) { return true; }
 
-        //input.refreshTimer = setTimeout(bind(function(){
         list.search('[data-font] .preview').text(value);
-        //}, this), 50);
 
         input.previousValue = value;
     },
@@ -717,7 +700,8 @@ var Fonts = new prime({
 });
 
 domready(function() {
-    $('body').delegate('click', '[data-g5-fontpicker]', function(event, element) {
+    var body = $('body');
+    body.delegate('click', '[data-g5-fontpicker]', function(event, element) {
         var FontPicker = storage.get(element);
         if (!FontPicker) {
             FontPicker = new Fonts();
