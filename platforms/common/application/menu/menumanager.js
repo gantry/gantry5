@@ -67,7 +67,8 @@ var MenuManager = new prime({
             size = $(element).position();
 
         this.block = null;
-        this.type = element.parent('.g-main-nav') || element.matches('.g-main-nav') ? 'main' : (element.matches('.g-block') ? 'column' : 'columns_items');
+        this.addNewItem = false;
+        this.type = element.parent('.g-toplevel') || element.matches('.g-toplevel') ? 'main' : (element.matches('.g-block') ? 'column' : 'columns_items');
         this.wasActive = element.hasClass('active');
         this.root = root;
 
@@ -114,13 +115,12 @@ var MenuManager = new prime({
             originalLevel = this.block.data('mm-level');
 
         // workaround for layout and style of columns
-        // TODO: handle the release and change classname of the placeholder to give it
-        // a different style
         if (dataLevel === null && this.type === 'columns_items') {
             var submenu_items = target.find('.submenu-items');
             if (!submenu_items || submenu_items.children()) { this.dragdrop.matched = false; return; }
 
             this.placeholder.style({ display: 'block' }).bottom(submenu_items);
+            this.addNewItem = submenu_items;
             return;
         }
 
@@ -179,7 +179,7 @@ var MenuManager = new prime({
             this.root.search('.g-block > *').attribute('style', null);
         }
 
-        if (!this.dragdrop.matched) {
+        if (!this.dragdrop.matched && !this.addNewItem) {
             if (this.placeholder) { this.placeholder.remove(); }
 
             return;
@@ -188,6 +188,7 @@ var MenuManager = new prime({
         var placeholderParent = this.placeholder.parent();
         if (!placeholderParent) { return; }
 
+        if (this.addNewItem) { this.block.attribute('style', null).removeClass('active'); }
 
         var parent = this.block.parent();
 
