@@ -2038,17 +2038,59 @@ a {
   margin: -1px 0;
   border: 1px solid #000;
 }
-/* line 271, ../scss/admin/_menu.scss */
+/* line 269, ../scss/admin/_menu.scss */
+#g5-container .submenu-selector .submenu-items:empty {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  background: #eee;
+}
+/* line 278, ../scss/admin/_menu.scss */
+#g5-container .submenu-selector .submenu-items:empty:before {
+  content: "Drop menu items here";
+  position: absolute;
+  top: 50%;
+  margin-top: -40px;
+  line-height: 1rem;
+  text-align: center;
+  color: #aaa;
+  width: 100%;
+}
+/* line 289, ../scss/admin/_menu.scss */
+#g5-container .submenu-selector .submenu-items:empty:after {
+  content: "\f057";
+  font-family: FontAwesome;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 0;
+  right: 6px;
+  opacity: 0.5;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  -moz-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+  margin: 0 !important;
+  width: 2rem;
+  text-align: center;
+  cursor: pointer;
+}
+/* line 304, ../scss/admin/_menu.scss */
+#g5-container .submenu-selector .submenu-items:empty:hover:after {
+  opacity: 1;
+}
+/* line 311, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector.moving .submenu-column:after {
   background-color: #fff;
 }
-/* line 276, ../scss/admin/_menu.scss */
+/* line 316, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector > .placeholder {
   border: 1px solid #000;
   margin: 0 3px 0 -5px;
   z-index: 10;
 }
-/* line 283, ../scss/admin/_menu.scss */
+/* line 323, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio {
   background: #fff;
   text-align: center;
@@ -2059,7 +2101,7 @@ a {
   height: 60px;
   /*z-index: 15;*/
 }
-/* line 292, ../scss/admin/_menu.scss */
+/* line 332, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio .percentage {
   font-size: 20px;
   font-weight: 300;
@@ -2067,7 +2109,7 @@ a {
   display: inline-block;
   margin-top: 5px;
 }
-/* line 299, ../scss/admin/_menu.scss */
+/* line 339, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio i {
   position: absolute;
   right: 1rem;

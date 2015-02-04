@@ -265,6 +265,46 @@ $submenu-ratio:                 60px;
                 border: 1px solid $black;
             }
 		}
+
+        &:empty {
+            position: absolute !important;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: block;
+            background: $light-gray;
+
+            &:before {
+                content: "Drop menu items here";
+                position: absolute;
+                top: 50%;
+                margin-top: -40px;
+                line-height: 1rem;
+                text-align: center;
+                color: #aaa;
+                width: 100%;
+            }
+
+            &:after {
+                content: "\f057";
+                font-family: FontAwesome;
+                font-size: 1.5rem;
+                position: absolute;
+                top: 0;
+                right: 6px;
+                opacity: 0.5;
+                @include transition(opacity 0.2s ease-in-out);
+                margin: 0 !important;
+                width: 2rem;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            &:hover:after {
+                opacity: 1;
+            }
+        }
 	}
     
     &.moving {
