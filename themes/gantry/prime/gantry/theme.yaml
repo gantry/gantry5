@@ -2,7 +2,6 @@ details:
   name: Gantry
   version: 1.0
   icon: tint
-  platform: prime
   date: November 27, 2014
   author:
     name: RocketTheme, LLC
@@ -15,7 +14,7 @@ details:
   support:
     link: http://www.rockettheme.com/forum
 
-  copyright: (C) 2005 - 2014 RocketTheme, LLC. All rights reserved.
+  copyright: (C) 2005 - 2015 RocketTheme, LLC. All rights reserved.
   license: GPLv2
   description: Gantry Base Template
   images:
@@ -23,7 +22,20 @@ details:
     preview: admin/images/template_preview.png
 
 config:
-  engine: nucleus
-  parent: gantry
-  base: common
-  overrides: custom
+  gantry:
+    platform: prime
+    engine: nucleus
+
+  dependencies:
+    gantry: 5.0.*
+    nucleus: 1.0.*
+    font-awesome: 4.2
+
+  theme:
+    class: \Gantry\Framework\Theme
+    parent: gantry
+
+  overrides:
+    - theme://custom
+    - theme://
+    - theme://common

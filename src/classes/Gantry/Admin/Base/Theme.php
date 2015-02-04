@@ -49,6 +49,7 @@ class Theme extends BaseTheme
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
         $locator->addPath('gantry-admin', '', 'gantry-theme://admin');
+        $locator->addPath('gantry-admin', '', 'gantry-engine://admin');
 
         /** @var Streams $streams */
         $streams = $gantry['streams'];
