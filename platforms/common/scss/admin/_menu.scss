@@ -279,6 +279,10 @@ $submenu-ratio:                 60px;
             display: block;
             background: $light-gray;
 
+            + .submenu-reorder {
+	            background: $light-gray;
+	        }
+
             &:before {
                 content: "Drop menu items here";
                 position: absolute;
