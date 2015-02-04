@@ -7,13 +7,13 @@ var History = new prime({
 
     inherits: Emitter,
 
-    constructor: function(session){
+    constructor: function(session) {
         this.index = 0;
         session = merge({}, session);
         this.setSession(session);
     },
 
-    undo: function(){
+    undo: function() {
         if (!this.index) return;
         this.index--;
 
@@ -22,7 +22,7 @@ var History = new prime({
         return session;
     },
 
-    redo: function(){
+    redo: function() {
         if (this.index == this.session.length - 1) return;
         this.index++;
 
@@ -31,7 +31,7 @@ var History = new prime({
         return session;
     },
 
-    reset: function(){
+    reset: function() {
         this.index = 0;
 
         var session = this.get();
@@ -39,7 +39,7 @@ var History = new prime({
         return session;
     },
 
-    push: function(session){
+    push: function(session) {
         session = merge({}, session);
         var sliced = this.index < this.session.length - 1;
         if (this.index < this.session.length - 1) this.session = slice(this.session, 0, -(this.session.length - 1 - this.index));
@@ -55,24 +55,23 @@ var History = new prime({
         return session;
     },
 
-    get: function(index){
+    get: function(index) {
         return this.session[index || this.index] || false;
     },
 
-    setSession: function(session){
-        session = !session ? []
-                           : [{
-                             time: +(new Date()),
-                             data: merge({}, session)
-                           }];
+    setSession: function(session) {
+        session = !session ? [] : [{
+            time: +(new Date()),
+            data: merge({}, session)
+        }];
 
         this.session = session;
-        this.index   = 0;
+        this.index = 0;
         return this.session;
     },
 
-    import: function(){},
-    export: function(){}
+    import: function() {},
+    export: function() {}
 });
 
-module.exports  = History;
+module.exports = History;
