@@ -1,7 +1,8 @@
-var prime   = require('prime'),
-    Emitter = require('prime/emitter'),
-    slice   = require('mout/array/slice'),
-    merge     = require('mout/object/merge');
+var prime      = require('prime'),
+    Emitter    = require('prime/emitter'),
+    slice      = require('mout/array/slice'),
+    merge      = require('mout/object/merge'),
+    deepEquals = require('mout/lang/deepEquals');
 
 var History = new prime({
 
@@ -48,6 +49,8 @@ var History = new prime({
             data: session
         };
 
+        if (this.equals(session.data)) { return session; }
+
         this.session.push(session);
         this.index = this.session.length - 1;
 
@@ -59,8 +62,15 @@ var History = new prime({
         return this.session[index || this.index] || false;
     },
 
+    equals: function(session, compare) {
+        if (!compare) { compare = this.get().data; }
+
+        return deepEquals(session, compare);
+    },
+
     setSession: function(session) {
-        session = !session ? [] : [{
+        session = !session ? []
+            : [{
             time: +(new Date()),
             data: merge({}, session)
         }];
