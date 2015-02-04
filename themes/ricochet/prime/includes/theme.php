@@ -8,11 +8,18 @@ class GantryTheme extends \Gantry\Framework\Theme {}
 $gantry['platform']->set(
     'streams.gantry-theme.prefixes',
     ['' => [
-        "gantry-prime://{$gantry['theme.name']}",
+        "gantry-custom://",
         "gantry-themes://{$gantry['theme.name']}",
         "gantry-themes://{$gantry['theme.name']}/common",
         "gantry-themes://gantry",
         "gantry-themes://gantry/common"
+        ]
+    ]
+);
+$gantry['platform']->set(
+    'streams.gantry-custom.prefixes',
+    ['' => [
+        "gantry-prime://custom/{$gantry['theme.name']}",
         ]
     ]
 );

@@ -25,7 +25,13 @@ class Platform extends BasePlatform
             'gantry-prime' => [
                 'type' => 'ReadOnlyStream',
                 'prefixes' => [
-                    '' => ['custom', '']
+                    '' => ['']
+                ]
+            ],
+            'gantry-custom' => [
+                'type' => 'ReadOnlyStream',
+                'prefixes' => [
+                    '' => []
                 ]
             ],
             'gantry-pages' => [
@@ -42,8 +48,8 @@ class Platform extends BasePlatform
             ]
         ];
 
-        $this->items['streams']['gantry-layouts']['prefixes'][''] = 'gantry-prime://layouts';
-        array_unshift($this->items['streams']['gantry-config']['prefixes'][''], 'gantry-prime://config');
+        $this->items['streams']['gantry-layouts']['prefixes'][''][] = 'gantry-prime://layouts';
+        $this->items['streams']['gantry-config']['prefixes'][''][] = 'gantry-prime://config';
     }
 
     public function getCachePath()
