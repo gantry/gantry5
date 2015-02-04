@@ -68,7 +68,7 @@ var MenuManager = new prime({
 
         this.block = null;
         this.addNewItem = false;
-        this.type = element.parent('.g-main-nav') || element.matches('.g-main-nav') ? 'main' : (element.matches('.g-block') ? 'column' : 'columns_items');
+        this.type = element.parent('.g-toplevel') || element.matches('.g-toplevel') ? 'main' : (element.matches('.g-block') ? 'column' : 'columns_items');
         this.wasActive = element.hasClass('active');
         this.root = root;
 
