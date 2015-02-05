@@ -27,7 +27,6 @@
         .g-grid > .g-block {
             &:after {
                 content: "";
-                display: block;
                 position: absolute;
                 top: 0;
                 right: -8px;
@@ -35,7 +34,7 @@
                 width: 8px;
                 background: red;
                 z-index: 3;
-                cursor: ew-resize;
+                cursor: col-resize;
                 display: none;
             }
 
@@ -225,7 +224,7 @@
                         background: #00baaa;
                         position: absolute;
                         right: -5px;
-                        cursor: ew-resize;
+                        cursor: col-resize;
                         z-index: 10;
                     }
                 }
@@ -262,7 +261,7 @@
                 width: 6px;
                 background: #00baaa;
                 z-index: 3;
-                cursor: ew-resize;
+                cursor: col-resize;
             }
 
             &:last-child:after {
