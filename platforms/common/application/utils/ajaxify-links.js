@@ -123,7 +123,7 @@ domready(function() {
     var body = $('body');
     body.delegate('click', '[data-g5-ajaxify]', function(event, element) {
         if (event && event.preventDefault) {
-            if (event.which === 2 || event.metaKey) {
+            if (event.which === 2 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) {
                 return true;
             }
 
