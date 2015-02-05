@@ -1,7 +1,7 @@
 .g-main-nav {
-
 	// Main Level
 	.g-toplevel {
+		position: inherit;
 		> li {
 			> a, >.g-separator {
 				font-size: $toplevel-font-size;
