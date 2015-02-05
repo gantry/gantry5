@@ -338,6 +338,18 @@
         .spacer {
             background-color: #eee;
             color: rgba(#666, 0.8);
+
+            .particle-size {
+                color: rgba(#666, 0.8);
+            }
+
+            > span {
+                span {
+                    &:last-child {
+                        color: rgba(#666, 0.8);
+                    }
+                }
+            }
         }
 
         .atom {
