@@ -112,6 +112,10 @@ var selectorChangeEvent = function(){
                 .data('g5-ajaxify-href', options[value].url)
                 .data('g5-ajaxify-params', options[value].params ? JSON.stringify(options[value].params) : null);
 
+
+            var active = $('#navbar li.active') || $('#navbar li:nth-child(2)');
+            if (active) { active.showSpinner(); }
+
             $('body').emit('click', { target: selectize.input });
         });
 
