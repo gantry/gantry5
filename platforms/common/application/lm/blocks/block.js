@@ -28,7 +28,7 @@ var Block = new prime({
             this.setAttribute('size', size);
         }
 
-        $(this.block).style({ 'flex': '0 1 ' + size + '%' });
+        $(this.block).style({ flex: '0 1 ' + size + '%', '-webkit-flex': '0 1 ' + size + '%', '-ms-flex': '0 1 ' + size + '%' });
 
         this.emit('resized', size, this);
     },
@@ -38,7 +38,7 @@ var Block = new prime({
         if (store) {
             this.setAttribute('size', size);
         }
-        $(this.block).animate({ flex: '0 1 ' + size + '%' });
+        $(this.block).animate({ flex: '0 1 ' + size + '%', '-webkit-flex': '0 1 ' + size + '%', '-ms-flex': '0 1 ' + size + '%' });
         this.emit('resized', size, this);
     },
 
