@@ -79,6 +79,7 @@ History.Adapter.bind(window, 'statechange', function() {
 
         if (Data.element) {
             body.emit('statechangeAfter', { target: Data.element, Data: Data });
+            Data.element.hideSpinner();
         }
 
         var selects = $('[data-selectize]');
@@ -129,6 +130,8 @@ domready(function() {
 
             event.preventDefault();
         }
+
+        element.showSpinner();
 
         var data = element.data('g5-ajaxify'),
             target = element.data('g5-ajaxify-target'),

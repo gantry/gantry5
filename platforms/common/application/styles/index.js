@@ -33,6 +33,7 @@ ready(function() {
         event.stopPropagation();
         event.preventDefault();
 
+        element.showSpinner();
         request('post', element.attribute('href') + getAjaxSuffix(), function(error, response) {
             if (!response.body.success) {
                 modal.open({
@@ -46,6 +47,8 @@ ready(function() {
             } else {
                 toastr.success('The CSS was successfully compiled!', 'CSS Compiled');
             }
+
+            element.hideSpinner();
         })
     });
 

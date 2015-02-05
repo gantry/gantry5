@@ -79,6 +79,7 @@ ready(function() {
     // Save
     body.delegate('click', '.button-save', function(e, element) {
         e.preventDefault();
+        element.showSpinner();
 
         var data = {},
             type = element.data('save'),
@@ -112,6 +113,8 @@ ready(function() {
                 modal.close();
                 toastr.success('The ' + sentence + ' been successfully saved!', type + ' Saved');
             }
+
+            element.hideSpinner();
         });
     });
 
@@ -302,6 +305,8 @@ ready(function() {
                     e.preventDefault();
                     dataString = [];
 
+                    submit.showSpinner();
+
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
                         var name = input.attribute('name'),
@@ -355,6 +360,8 @@ ready(function() {
                             modal.close();
                             toastr.success('The particle "'+particle.getTitle()+'" settings have been applied to the Layout. <br />Remember to click the Save button to store them.', 'Settings Applied');
                         }
+
+                        submit.hideSpinner();
                     });
                 });
             }
