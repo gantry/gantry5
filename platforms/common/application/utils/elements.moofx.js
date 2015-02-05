@@ -50,7 +50,7 @@ $.implement({
         }
 
         if (!this.gSpinner) { this.gSpinner = icon.attribute('class'); }
-        icon.attribute('class', klass || 'fa fa-spin-fast fa-spinner');
+        icon.attribute('class', klass || 'fa fa-fw fa-spin-fast fa-spinner');
     },
 
     hideSpinner: function() {
