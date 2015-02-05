@@ -26,6 +26,11 @@ a {
         }
     }
 
+    // fast spin for fontawesome
+    .fa-spin-fast {
+        @include animation(fa-spin 1s infinite linear);
+    }
+
     // badges
     .badge {
         border-radius: 100px;
