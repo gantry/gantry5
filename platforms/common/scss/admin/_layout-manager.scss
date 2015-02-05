@@ -295,7 +295,7 @@
                     display: block;
 
                     &:last-child {
-                        opacity: 0.7;
+                        color: rgba($white, 0.7);
                         margin-top: -3px;
                     }
                 }

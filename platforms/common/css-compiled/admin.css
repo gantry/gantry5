@@ -1004,7 +1004,7 @@ a {
         #g5-container .lm-blocks .particle > span span, #g5-container .lm-blocks .position > span span, #g5-container .lm-blocks .spacer > span span, #g5-container .lm-blocks .pagecontent > span span, #g5-container .lm-blocks .atom > span span {
           display: block; }
           #g5-container .lm-blocks .particle > span span:last-child, #g5-container .lm-blocks .position > span span:last-child, #g5-container .lm-blocks .spacer > span span:last-child, #g5-container .lm-blocks .pagecontent > span span:last-child, #g5-container .lm-blocks .atom > span span:last-child {
-            opacity: 0.7;
+            color: rgba(255, 255, 255, 0.7);
             margin-top: -3px; }
       #g5-container .lm-blocks .particle .float-right, #g5-container .lm-blocks .position .float-right, #g5-container .lm-blocks .spacer .float-right, #g5-container .lm-blocks .pagecontent .float-right, #g5-container .lm-blocks .atom .float-right {
         position: absolute;
