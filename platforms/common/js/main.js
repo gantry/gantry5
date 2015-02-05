@@ -1106,12 +1106,24 @@ var G5;
                 lmhistory.setSession(builder.serialize());
             }
             body.delegate('click', '.button-save', function (e, element) {
-                if (!$('[data-lm-root]')) {
-                    return true;
-                }
                 e.preventDefault();
-                var lm = JSON.stringify(builder.serialize());
-                request('post', window.location.href + getAjaxSuffix(), { layout: lm }, function (error, response) {
+                var data = {}, type = element.data('save'), sentence = type + ' ' + (type.slice(-1) == 's' ? 'have' : 'has');
+                if ($('[data-lm-root]')) {
+                    data.layout = JSON.stringify(builder.serialize());
+                } else {
+                    var form = element.parent('form');
+                    if (form && element.attribute('type') == 'submit') {
+                        $(form[0].elements).forEach(function (input) {
+                            input = $(input);
+                            var name = input.attribute('name'), value = input.value();
+                            if (!name) {
+                                return;
+                            }
+                            data[name] = value;
+                        });
+                    }
+                }
+                request('post', window.location.href + getAjaxSuffix(), data, function (error, response) {
                     if (!response.body.success) {
                         modal.open({
                             content: response.body.html || response.body,
@@ -1124,7 +1136,7 @@ var G5;
                         return false;
                     } else {
                         modal.close();
-                        toastr.success('The Layout has been successfully saved!', 'Layout Saved');
+                        toastr.success('The ' + sentence + ' been successfully saved!', type + ' Saved');
                     }
                 });
             });
@@ -1334,7 +1346,7 @@ var G5;
     },
     'a': function (require, module, exports, global) {
         'use strict';
-        var ready = require('d'), MenuManager = require('1b'), zen = require('f'), $ = require('1');
+        var ready = require('d'), MenuManager = require('1f'), zen = require('f'), $ = require('1');
         var menumanager;
         ready(function () {
             var body = $('body');
@@ -1368,12 +1380,12 @@ var G5;
     },
     'b': function (require, module, exports, global) {
         'use strict';
-        var Modal = require('1c'), Selectize = require('1d');
+        var Modal = require('1b'), Selectize = require('1c');
         module.exports = {
             modal: new Modal(),
-            togglers: require('1e'),
+            togglers: require('1d'),
             selectize: Selectize,
-            toastr: require('1f')
+            toastr: require('1e')
         };
     },
     'c': function (require, module, exports, global) {
@@ -1974,7 +1986,7 @@ var G5;
     't': function (require, module, exports, global) {
         'use strict';
         var prime = require('q');
-        var merge = require('24');
+        var merge = require('25');
         var Options = prime({
                 setOptions: function (options) {
                     var args = [
@@ -1989,7 +2001,7 @@ var G5;
         module.exports = Options;
     },
     'u': function (require, module, exports, global) {
-        var slice = require('25');
+        var slice = require('24');
         function bind(fn, context, args) {
             var argsArr = slice(arguments, 2);
             return function () {
@@ -2062,7 +2074,7 @@ var G5;
         module.exports = merge;
     },
     'z': function (require, module, exports, global) {
-        var isKind = require('2a');
+        var isKind = require('2h');
         function isFunction(val) {
             return isKind(val, 'Function');
         }
@@ -2071,7 +2083,7 @@ var G5;
     '10': function (require, module, exports, global) {
         'use strict';
         var prime = require('q'), Emitter = require('m');
-        var isObject = require('2b'), isString = require('2c'), isArray = require('2d'), isFunction = require('2e'), trim = require('i'), upperCase = require('2f'), forIn = require('2g'), mixIn = require('20'), remove = require('2h'), forEach = require('j');
+        var isObject = require('2a'), isString = require('2b'), isArray = require('2c'), isFunction = require('2d'), trim = require('i'), upperCase = require('2e'), forIn = require('2f'), mixIn = require('20'), remove = require('2g'), forEach = require('j');
         var capitalize = function (str) {
             return str.replace(/\b[a-z]/g, upperCase);
         };
@@ -3432,7 +3444,7 @@ var G5;
         module.exports = Builder;
     },
     '19': function (require, module, exports, global) {
-        var prime = require('q'), Emitter = require('m'), slice = require('25'), merge = require('y'), deepEquals = require('33');
+        var prime = require('q'), Emitter = require('m'), slice = require('24'), merge = require('y'), deepEquals = require('33');
         var History = new prime({
                 inherits: Emitter,
                 constructor: function (session) {
@@ -3890,192 +3902,6 @@ var G5;
     },
     '1b': function (require, module, exports, global) {
         'use strict';
-        var prime = require('q'), $ = require('r'), zen = require('f'), Emitter = require('m'), Bound = require('s'), Options = require('t'), DragDrop = require('34'), Resizer = require('35'), get = require('2y'), every = require('37'), isArray = require('2i'), isObject = require('29'), equals = require('39');
-        var MenuManager = new prime({
-                mixin: [
-                    Bound,
-                    Options
-                ],
-                inherits: Emitter,
-                constructor: function (element, options) {
-                    this.dragdrop = new DragDrop(element, options);
-                    this.resizer = new Resizer(element, options);
-                    this.dragdrop.on('dragdrop:click', this.bound('click')).on('dragdrop:start', this.bound('start')).on('dragdrop:move:once', this.bound('moveOnce')).on('dragdrop:location', this.bound('location')).on('dragdrop:nolocation', this.bound('nolocation')).on('dragdrop:resize', this.bound('resize')).on('dragdrop:stop', this.bound('stop')).on('dragdrop:stop:animation', this.bound('stopAnimation'));
-                },
-                click: function (event, element) {
-                    if (element.hasClass('g-block')) {
-                        this.stopAnimation();
-                        return true;
-                    }
-                    var siblings = element.siblings();
-                    element.addClass('active');
-                    if (siblings) {
-                        siblings.removeClass('active');
-                    }
-                    element.emit('click');
-                    var link = element.find('a');
-                    if (link) {
-                        link[0].click();
-                    }
-                },
-                resize: function (event, element, siblings, offset) {
-                    this.resizer.start(event, element, siblings, offset);
-                },
-                start: function (event, element) {
-                    var root = element.parent('.menu-selector') || element.parent('.submenu-column') || element.parent('.submenu-selector'), size = $(element).position();
-                    this.block = null;
-                    this.addNewItem = false;
-                    this.type = element.parent('.g-toplevel') || element.matches('.g-toplevel') ? 'main' : element.matches('.g-block') ? 'column' : 'columns_items';
-                    this.wasActive = element.hasClass('active');
-                    this.root = root;
-                    root.addClass('moving');
-                    var type = $(element).data('mm-id'), clone = element[0].cloneNode(true);
-                    if (!this.placeholder) {
-                        this.placeholder = zen((this.type == 'column' ? 'div' : 'li') + '.block.placeholder[data-mm-placeholder]');
-                    }
-                    this.placeholder.style({ display: 'none' });
-                    this.original = $(clone).after(element).style({
-                        display: 'block',
-                        opacity: 1
-                    }).addClass('original-placeholder').data('lm-dropzone', null);
-                    this.originalType = type;
-                    this.block = element;
-                    element.style({
-                        position: 'absolute',
-                        zIndex: 1000,
-                        width: Math.ceil(size.width),
-                        height: Math.ceil(size.height)
-                    }).addClass('active');
-                    this.placeholder.before(element);
-                    if (this.type == 'column') {
-                        root.search('.g-block > *').style({ 'pointer-events': 'none' });
-                    }
-                },
-                moveOnce: function () {
-                    if (this.original) {
-                        this.original.style({ opacity: 0.5 });
-                    }
-                },
-                location: function (event, location, target) {
-                    target = $(target);
-                    if (!this.placeholder) {
-                        this.placeholder = zen((this.type == 'column' ? 'div' : 'li') + '.block.placeholder[data-mm-placeholder]').style({ display: 'none' });
-                    }
-                    var targetType = target.parent('.g-toplevel') || target.matches('.g-toplevel') ? 'main' : target.matches('.g-block') ? 'column' : 'columns_items', dataLevel = target.data('mm-level'), originalLevel = this.block.data('mm-level');
-                    if (dataLevel === null && this.type === 'columns_items') {
-                        var submenu_items = target.find('.submenu-items');
-                        if (!submenu_items || submenu_items.children()) {
-                            this.dragdrop.matched = false;
-                            return;
-                        }
-                        this.placeholder.style({ display: 'block' }).bottom(submenu_items);
-                        this.addNewItem = submenu_items;
-                        return;
-                    }
-                    if (this.type !== 'column' && originalLevel !== dataLevel) {
-                        this.dragdrop.matched = false;
-                        return;
-                    }
-                    if (this.type == 'column' && dataLevel) {
-                        this.dragdrop.matched = false;
-                        return;
-                    }
-                    if (dataLevel > 2 && target.parent('ul') != this.block.parent('ul')) {
-                        this.dragdrop.matched = false;
-                        return;
-                    }
-                    var exclude = ':not(.placeholder):not([data-mm-id="' + this.original.data('mm-id') + '"])', adjacents = {
-                            before: this.original.previousSiblings(exclude),
-                            after: this.original.nextSiblings(exclude)
-                        };
-                    if (adjacents.before) {
-                        adjacents.before = $(adjacents.before[0]);
-                    }
-                    if (adjacents.after) {
-                        adjacents.after = $(adjacents.after[0]);
-                    }
-                    if (targetType === 'main' && (adjacents.before === target && location.x === 'after' || adjacents.after === target && location.x === 'before')) {
-                        return;
-                    }
-                    if (targetType === 'column' && (adjacents.before === target && location.x === 'after' || adjacents.after === target && location.x === 'before')) {
-                        return;
-                    }
-                    if (targetType === 'columns_items' && (adjacents.before === target && location.y === 'below' || adjacents.after === target && location.y === 'above')) {
-                        return;
-                    }
-                    switch (targetType) {
-                    case 'main':
-                    case 'column':
-                        this.placeholder[location.x](target);
-                        break;
-                    case 'columns_items':
-                        this.placeholder[location.y === 'above' ? 'before' : 'after'](target);
-                        break;
-                    }
-                    this.placeholder.style({ display: 'block' })[targetType !== 'main' ? 'removeClass' : 'addClass']('in-between');
-                },
-                nolocation: function () {
-                    if (this.placeholder) {
-                        this.placeholder.remove();
-                    }
-                },
-                stop: function (event, target, element) {
-                    if (target) {
-                        element.removeClass('active');
-                    }
-                    if (this.type == 'column') {
-                        this.root.search('.g-block > *').attribute('style', null);
-                    }
-                    if (!this.dragdrop.matched && !this.addNewItem) {
-                        if (this.placeholder) {
-                            this.placeholder.remove();
-                        }
-                        return;
-                    }
-                    var placeholderParent = this.placeholder.parent();
-                    if (!placeholderParent) {
-                        return;
-                    }
-                    if (this.addNewItem) {
-                        this.block.attribute('style', null).removeClass('active');
-                    }
-                    var parent = this.block.parent();
-                    this.original.remove();
-                    this.block.after(this.placeholder);
-                    this.placeholder.remove();
-                    if (this.wasActive) {
-                        element.addClass('active');
-                    }
-                    if (!parent.children()) {
-                        parent.empty();
-                    }
-                },
-                stopAnimation: function () {
-                    var flex = null;
-                    if (this.type == 'column') {
-                        flex = this.block.compute('flex');
-                    }
-                    if (this.root) {
-                        this.root.removeClass('moving');
-                    }
-                    if (this.block) {
-                        this.block.attribute('style', null);
-                        if (flex) {
-                            this.block.style('flex', flex);
-                        }
-                    }
-                    if (this.original) {
-                        this.original.remove();
-                    }
-                    if (!this.wasActive && this.block) {
-                        this.block.removeClass('active');
-                    }
-                }
-            });
-        module.exports = MenuManager;
-    },
-    '1c': function (require, module, exports, global) {
-        'use strict';
         var prime = require('q'), $ = require('r'), zen = require('f'), storage = require('n')(), Emitter = require('m'), Bound = require('s'), Options = require('t'), domready = require('d'), bind = require('u'), map = require('v'), forEach = require('w'), last = require('x'), merge = require('y'), request = require('10');
         var animationEndSupport = false;
         domready(function () {
@@ -4323,9 +4149,9 @@ var G5;
             });
         module.exports = Modal;
     },
-    '1d': function (require, module, exports, global) {
+    '1c': function (require, module, exports, global) {
         'use strict';
-        var prime = require('q'), ready = require('d'), zen = require('f'), sifter = require('3a'), Emitter = require('m'), Bound = require('s'), Options = require('t'), $ = require('r'), moofx = require('g'), bind = require('u'), forEach = require('2u'), indexOf = require('2o'), last = require('x'), debounce = require('3b'), isArray = require('2i'), isBoolean = require('3c'), merge = require('y'), unset = require('2x'), size = require('2j'), values = require('3d'), escapeHTML = require('3e'), trim = require('17');
+        var prime = require('q'), ready = require('d'), zen = require('f'), sifter = require('39'), Emitter = require('m'), Bound = require('s'), Options = require('t'), $ = require('r'), moofx = require('g'), bind = require('u'), forEach = require('2u'), indexOf = require('2o'), last = require('x'), debounce = require('3a'), isArray = require('2i'), isBoolean = require('3b'), merge = require('y'), unset = require('2x'), size = require('2j'), values = require('3c'), escapeHTML = require('3d'), trim = require('17');
         var IS_MAC = /Mac/.test(navigator.userAgent), COUNT = 0, KEY_A = 65, KEY_COMMA = 188, KEY_RETURN = 13, KEY_ESC = 27, KEY_LEFT = 37, KEY_UP = 38, KEY_P = 80, KEY_RIGHT = 39, KEY_DOWN = 40, KEY_N = 78, KEY_BACKSPACE = 8, KEY_DELETE = 46, KEY_SHIFT = 16, KEY_CMD = IS_MAC ? 91 : 17, KEY_CTRL = IS_MAC ? 18 : 17, KEY_TAB = 9, TAG_SELECT = 1, TAG_INPUT = 2;
         var hash_key = function (value) {
             if (typeof value === 'undefined' || value === null)
@@ -5924,7 +5750,7 @@ var G5;
         });
         module.exports = Selectize;
     },
-    '1e': function (require, module, exports, global) {
+    '1d': function (require, module, exports, global) {
         'use strict';
         var ready = require('d'), $ = require('1');
         ready(function () {
@@ -5940,7 +5766,7 @@ var G5;
         });
         module.exports = {};
     },
-    '1f': function (require, module, exports, global) {
+    '1e': function (require, module, exports, global) {
         'use strict';
         var prime = require('q'), Emitter = require('m'), Bound = require('s'), Options = require('t'), zen = require('f'), $ = require('r'), storage = require('n')(), bind = require('u'), merge = require('y');
         var Toaster = new prime({
@@ -6192,6 +6018,192 @@ var G5;
             });
         var toaster = new Toaster();
         module.exports = toaster;
+    },
+    '1f': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('q'), $ = require('r'), zen = require('f'), Emitter = require('m'), Bound = require('s'), Options = require('t'), DragDrop = require('34'), Resizer = require('35'), get = require('2y'), every = require('37'), isArray = require('2i'), isObject = require('29'), equals = require('3e');
+        var MenuManager = new prime({
+                mixin: [
+                    Bound,
+                    Options
+                ],
+                inherits: Emitter,
+                constructor: function (element, options) {
+                    this.dragdrop = new DragDrop(element, options);
+                    this.resizer = new Resizer(element, options);
+                    this.dragdrop.on('dragdrop:click', this.bound('click')).on('dragdrop:start', this.bound('start')).on('dragdrop:move:once', this.bound('moveOnce')).on('dragdrop:location', this.bound('location')).on('dragdrop:nolocation', this.bound('nolocation')).on('dragdrop:resize', this.bound('resize')).on('dragdrop:stop', this.bound('stop')).on('dragdrop:stop:animation', this.bound('stopAnimation'));
+                },
+                click: function (event, element) {
+                    if (element.hasClass('g-block')) {
+                        this.stopAnimation();
+                        return true;
+                    }
+                    var siblings = element.siblings();
+                    element.addClass('active');
+                    if (siblings) {
+                        siblings.removeClass('active');
+                    }
+                    element.emit('click');
+                    var link = element.find('a');
+                    if (link) {
+                        link[0].click();
+                    }
+                },
+                resize: function (event, element, siblings, offset) {
+                    this.resizer.start(event, element, siblings, offset);
+                },
+                start: function (event, element) {
+                    var root = element.parent('.menu-selector') || element.parent('.submenu-column') || element.parent('.submenu-selector'), size = $(element).position();
+                    this.block = null;
+                    this.addNewItem = false;
+                    this.type = element.parent('.g-toplevel') || element.matches('.g-toplevel') ? 'main' : element.matches('.g-block') ? 'column' : 'columns_items';
+                    this.wasActive = element.hasClass('active');
+                    this.root = root;
+                    root.addClass('moving');
+                    var type = $(element).data('mm-id'), clone = element[0].cloneNode(true);
+                    if (!this.placeholder) {
+                        this.placeholder = zen((this.type == 'column' ? 'div' : 'li') + '.block.placeholder[data-mm-placeholder]');
+                    }
+                    this.placeholder.style({ display: 'none' });
+                    this.original = $(clone).after(element).style({
+                        display: 'block',
+                        opacity: 1
+                    }).addClass('original-placeholder').data('lm-dropzone', null);
+                    this.originalType = type;
+                    this.block = element;
+                    element.style({
+                        position: 'absolute',
+                        zIndex: 1000,
+                        width: Math.ceil(size.width),
+                        height: Math.ceil(size.height)
+                    }).addClass('active');
+                    this.placeholder.before(element);
+                    if (this.type == 'column') {
+                        root.search('.g-block > *').style({ 'pointer-events': 'none' });
+                    }
+                },
+                moveOnce: function () {
+                    if (this.original) {
+                        this.original.style({ opacity: 0.5 });
+                    }
+                },
+                location: function (event, location, target) {
+                    target = $(target);
+                    if (!this.placeholder) {
+                        this.placeholder = zen((this.type == 'column' ? 'div' : 'li') + '.block.placeholder[data-mm-placeholder]').style({ display: 'none' });
+                    }
+                    var targetType = target.parent('.g-toplevel') || target.matches('.g-toplevel') ? 'main' : target.matches('.g-block') ? 'column' : 'columns_items', dataLevel = target.data('mm-level'), originalLevel = this.block.data('mm-level');
+                    if (dataLevel === null && this.type === 'columns_items') {
+                        var submenu_items = target.find('.submenu-items');
+                        if (!submenu_items || submenu_items.children()) {
+                            this.dragdrop.matched = false;
+                            return;
+                        }
+                        this.placeholder.style({ display: 'block' }).bottom(submenu_items);
+                        this.addNewItem = submenu_items;
+                        return;
+                    }
+                    if (this.type !== 'column' && originalLevel !== dataLevel) {
+                        this.dragdrop.matched = false;
+                        return;
+                    }
+                    if (this.type == 'column' && dataLevel) {
+                        this.dragdrop.matched = false;
+                        return;
+                    }
+                    if (dataLevel > 2 && target.parent('ul') != this.block.parent('ul')) {
+                        this.dragdrop.matched = false;
+                        return;
+                    }
+                    var exclude = ':not(.placeholder):not([data-mm-id="' + this.original.data('mm-id') + '"])', adjacents = {
+                            before: this.original.previousSiblings(exclude),
+                            after: this.original.nextSiblings(exclude)
+                        };
+                    if (adjacents.before) {
+                        adjacents.before = $(adjacents.before[0]);
+                    }
+                    if (adjacents.after) {
+                        adjacents.after = $(adjacents.after[0]);
+                    }
+                    if (targetType === 'main' && (adjacents.before === target && location.x === 'after' || adjacents.after === target && location.x === 'before')) {
+                        return;
+                    }
+                    if (targetType === 'column' && (adjacents.before === target && location.x === 'after' || adjacents.after === target && location.x === 'before')) {
+                        return;
+                    }
+                    if (targetType === 'columns_items' && (adjacents.before === target && location.y === 'below' || adjacents.after === target && location.y === 'above')) {
+                        return;
+                    }
+                    switch (targetType) {
+                    case 'main':
+                    case 'column':
+                        this.placeholder[location.x](target);
+                        break;
+                    case 'columns_items':
+                        this.placeholder[location.y === 'above' ? 'before' : 'after'](target);
+                        break;
+                    }
+                    this.placeholder.style({ display: 'block' })[targetType !== 'main' ? 'removeClass' : 'addClass']('in-between');
+                },
+                nolocation: function () {
+                    if (this.placeholder) {
+                        this.placeholder.remove();
+                    }
+                },
+                stop: function (event, target, element) {
+                    if (target) {
+                        element.removeClass('active');
+                    }
+                    if (this.type == 'column') {
+                        this.root.search('.g-block > *').attribute('style', null);
+                    }
+                    if (!this.dragdrop.matched && !this.addNewItem) {
+                        if (this.placeholder) {
+                            this.placeholder.remove();
+                        }
+                        return;
+                    }
+                    var placeholderParent = this.placeholder.parent();
+                    if (!placeholderParent) {
+                        return;
+                    }
+                    if (this.addNewItem) {
+                        this.block.attribute('style', null).removeClass('active');
+                    }
+                    var parent = this.block.parent();
+                    this.original.remove();
+                    this.block.after(this.placeholder);
+                    this.placeholder.remove();
+                    if (this.wasActive) {
+                        element.addClass('active');
+                    }
+                    if (!parent.children()) {
+                        parent.empty();
+                    }
+                },
+                stopAnimation: function () {
+                    var flex = null;
+                    if (this.type == 'column') {
+                        flex = this.block.compute('flex');
+                    }
+                    if (this.root) {
+                        this.root.removeClass('moving');
+                    }
+                    if (this.block) {
+                        this.block.attribute('style', null);
+                        if (flex) {
+                            this.block.style('flex', flex);
+                        }
+                    }
+                    if (this.original) {
+                        this.original.remove();
+                    }
+                    if (!this.wasActive && this.block) {
+                        this.block.removeClass('active');
+                    }
+                }
+            });
+        module.exports = MenuManager;
     },
     '1g': function (require, module, exports, global) {
         'use strict';
@@ -9468,30 +9480,6 @@ var G5;
         module.exports = bind;
     },
     '24': function (require, module, exports, global) {
-        var hasOwn = require('49');
-        var deepClone = require('4a');
-        var isObject = require('4b');
-        function merge() {
-            var i = 1, key, val, obj, target;
-            target = deepClone(arguments[0]);
-            while (obj = arguments[i++]) {
-                for (key in obj) {
-                    if (!hasOwn(obj, key)) {
-                        continue;
-                    }
-                    val = obj[key];
-                    if (isObject(val) && isObject(target[key])) {
-                        target[key] = merge(target[key], val);
-                    } else {
-                        target[key] = deepClone(val);
-                    }
-                }
-            }
-            return target;
-        }
-        module.exports = merge;
-    },
-    '25': function (require, module, exports, global) {
         function slice(arr, start, end) {
             var len = arr.length;
             if (start == null) {
@@ -9515,6 +9503,30 @@ var G5;
             return result;
         }
         module.exports = slice;
+    },
+    '25': function (require, module, exports, global) {
+        var hasOwn = require('49');
+        var deepClone = require('4a');
+        var isObject = require('4b');
+        function merge() {
+            var i = 1, key, val, obj, target;
+            target = deepClone(arguments[0]);
+            while (obj = arguments[i++]) {
+                for (key in obj) {
+                    if (!hasOwn(obj, key)) {
+                        continue;
+                    }
+                    val = obj[key];
+                    if (isObject(val) && isObject(target[key])) {
+                        target[key] = merge(target[key], val);
+                    } else {
+                        target[key] = deepClone(val);
+                    }
+                }
+            }
+            return target;
+        }
+        module.exports = merge;
     },
     '26': function (require, module, exports, global) {
         var identity = require('4c');
@@ -9584,48 +9596,41 @@ var G5;
         module.exports = deepClone;
     },
     '29': function (require, module, exports, global) {
-        var isKind = require('2a');
+        var isKind = require('2h');
         function isObject(val) {
             return isKind(val, 'Object');
         }
         module.exports = isObject;
     },
     '2a': function (require, module, exports, global) {
-        var kindOf = require('4g');
-        function isKind(val, kind) {
-            return kindOf(val) === kind;
-        }
-        module.exports = isKind;
-    },
-    '2b': function (require, module, exports, global) {
         var isKind = require('4i');
         function isObject(val) {
             return isKind(val, 'Object');
         }
         module.exports = isObject;
     },
-    '2c': function (require, module, exports, global) {
+    '2b': function (require, module, exports, global) {
         var isKind = require('4i');
         function isString(val) {
             return isKind(val, 'String');
         }
         module.exports = isString;
     },
-    '2d': function (require, module, exports, global) {
+    '2c': function (require, module, exports, global) {
         var isKind = require('4i');
         var isArray = Array.isArray || function (val) {
                 return isKind(val, 'Array');
             };
         module.exports = isArray;
     },
-    '2e': function (require, module, exports, global) {
+    '2d': function (require, module, exports, global) {
         var isKind = require('4i');
         function isFunction(val) {
             return isKind(val, 'Function');
         }
         module.exports = isFunction;
     },
-    '2f': function (require, module, exports, global) {
+    '2e': function (require, module, exports, global) {
         var toString = require('1s');
         function upperCase(str) {
             str = toString(str);
@@ -9633,7 +9638,7 @@ var G5;
         }
         module.exports = upperCase;
     },
-    '2g': function (require, module, exports, global) {
+    '2f': function (require, module, exports, global) {
         var hasOwn = require('1z');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
@@ -9676,7 +9681,7 @@ var G5;
         }
         module.exports = forIn;
     },
-    '2h': function (require, module, exports, global) {
+    '2g': function (require, module, exports, global) {
         var indexOf = require('l');
         function remove(arr, item) {
             var idx = indexOf(arr, item);
@@ -9685,8 +9690,15 @@ var G5;
         }
         module.exports = remove;
     },
+    '2h': function (require, module, exports, global) {
+        var kindOf = require('4g');
+        function isKind(val, kind) {
+            return kindOf(val) === kind;
+        }
+        module.exports = isKind;
+    },
     '2i': function (require, module, exports, global) {
-        var isKind = require('2a');
+        var isKind = require('2h');
         var isArray = Array.isArray || function (val) {
                 return isKind(val, 'Array');
             };
@@ -9972,7 +9984,7 @@ var G5;
         module.exports = deepFillIn;
     },
     '30': function (require, module, exports, global) {
-        var slice = require('25');
+        var slice = require('24');
         var contains = require('16');
         function omit(obj, var_keys) {
             var keys = typeof arguments[1] !== 'string' ? arguments[1] : slice(arguments, 1), out = {};
@@ -10020,7 +10032,7 @@ var G5;
         var is = require('52');
         var isObject = require('29');
         var isArray = require('2i');
-        var objEquals = require('39');
+        var objEquals = require('3e');
         var arrEquals = require('53');
         function deepEquals(a, b, callback) {
             callback = callback || is;
@@ -10481,28 +10493,6 @@ var G5;
         module.exports = enforcePrecision;
     },
     '39': function (require, module, exports, global) {
-        var hasOwn = require('27');
-        var every = require('57');
-        var isObject = require('29');
-        var is = require('52');
-        function makeCompare(callback) {
-            return function (value, key) {
-                return hasOwn(this, key) && callback(value, this[key]);
-            };
-        }
-        function checkProperties(value, key) {
-            return hasOwn(this, key);
-        }
-        function equals(a, b, callback) {
-            callback = callback || is;
-            if (!isObject(a) || !isObject(b)) {
-                return callback(a, b);
-            }
-            return every(a, makeCompare(callback), b) && every(b, checkProperties, a);
-        }
-        module.exports = equals;
-    },
-    '3a': function (require, module, exports, global) {
         (function (root, factory) {
             if (typeof define === 'function' && define.amd) {
                 define(factory);
@@ -10802,7 +10792,7 @@ var G5;
             return Sifter;
         }));
     },
-    '3b': function (require, module, exports, global) {
+    '3a': function (require, module, exports, global) {
         function debounce(fn, threshold, isAsap) {
             var timeout, result;
             function debounced() {
@@ -10828,14 +10818,14 @@ var G5;
         }
         module.exports = debounce;
     },
-    '3c': function (require, module, exports, global) {
-        var isKind = require('2a');
+    '3b': function (require, module, exports, global) {
+        var isKind = require('2h');
         function isBoolean(val) {
             return isKind(val, 'Boolean');
         }
         module.exports = isBoolean;
     },
-    '3d': function (require, module, exports, global) {
+    '3c': function (require, module, exports, global) {
         var forOwn = require('2m');
         function values(obj) {
             var vals = [];
@@ -10846,13 +10836,35 @@ var G5;
         }
         module.exports = values;
     },
-    '3e': function (require, module, exports, global) {
+    '3d': function (require, module, exports, global) {
         var toString = require('2p');
         function escapeHtml(str) {
             str = toString(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
             return str;
         }
         module.exports = escapeHtml;
+    },
+    '3e': function (require, module, exports, global) {
+        var hasOwn = require('27');
+        var every = require('57');
+        var isObject = require('29');
+        var is = require('52');
+        function makeCompare(callback) {
+            return function (value, key) {
+                return hasOwn(this, key) && callback(value, this[key]);
+            };
+        }
+        function checkProperties(value, key) {
+            return hasOwn(this, key);
+        }
+        function equals(a, b, callback) {
+            callback = callback || is;
+            if (!isObject(a) || !isObject(b)) {
+                return callback(a, b);
+            }
+            return every(a, makeCompare(callback), b) && every(b, checkProperties, a);
+        }
+        module.exports = equals;
     },
     '3f': function (require, module, exports, global) {
         'use strict';
@@ -10922,7 +10934,7 @@ var G5;
     },
     '3j': function (require, module, exports, global) {
         var difference = require('58');
-        var slice = require('25');
+        var slice = require('24');
         function insert(arr, rest_items) {
             var diff = difference(slice(arguments, 1), arr);
             if (diff.length) {
@@ -13094,7 +13106,7 @@ var G5;
     },
     '45': function (require, module, exports, global) {
         var forOwn = require('47');
-        var isArray = require('2d');
+        var isArray = require('2c');
         function containsMatch(array, pattern) {
             var i = -1, length = array.length;
             while (++i < length) {
@@ -13146,7 +13158,7 @@ var G5;
     },
     '47': function (require, module, exports, global) {
         var hasOwn = require('1z');
-        var forIn = require('2g');
+        var forIn = require('2f');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
                 if (hasOwn(obj, key)) {
@@ -13784,7 +13796,7 @@ var G5;
         module.exports = Spacer;
     },
     '4w': function (require, module, exports, global) {
-        var slice = require('25');
+        var slice = require('24');
         function makeCollectionMethod(arrMethod, objMethod, defaultReturn) {
             return function () {
                 var args = slice(arguments);
@@ -13881,7 +13893,7 @@ var G5;
         module.exports = equals;
     },
     '54': function (require, module, exports, global) {
-        var isKind = require('2a');
+        var isKind = require('2h');
         function isString(val) {
             return isKind(val, 'String');
         }
@@ -13931,7 +13943,7 @@ var G5;
         var filter = require('5y');
         var some = require('5z');
         var contains = require('16');
-        var slice = require('25');
+        var slice = require('24');
         function difference(arr) {
             var arrs = slice(arguments, 1), result = filter(unique(arr), function (needle) {
                     return !some(arrs, function (haystack) {
@@ -14105,7 +14117,7 @@ var G5;
     '5m': function (require, module, exports, global) {
         var kindOf = require('5o');
         var isPlainObject = require('5p');
-        var mixIn = require('61');
+        var mixIn = require('62');
         function clone(val) {
             switch (kindOf(val)) {
             case 'Object':
@@ -14144,7 +14156,7 @@ var G5;
     },
     '5n': function (require, module, exports, global) {
         var hasOwn = require('49');
-        var forIn = require('62');
+        var forIn = require('61');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
                 if (hasOwn(obj, key)) {
@@ -14299,23 +14311,6 @@ var G5;
         module.exports = forOwn;
     },
     '61': function (require, module, exports, global) {
-        var forOwn = require('5n');
-        function mixIn(target, objects) {
-            var i = 0, n = arguments.length, obj;
-            while (++i < n) {
-                obj = arguments[i];
-                if (obj != null) {
-                    forOwn(obj, copyProp, target);
-                }
-            }
-            return target;
-        }
-        function copyProp(val, key) {
-            this[key] = val;
-        }
-        module.exports = mixIn;
-    },
-    '62': function (require, module, exports, global) {
         var hasOwn = require('49');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
@@ -14357,6 +14352,23 @@ var G5;
             return fn.call(thisObj, obj[key], key, obj);
         }
         module.exports = forIn;
+    },
+    '62': function (require, module, exports, global) {
+        var forOwn = require('5n');
+        function mixIn(target, objects) {
+            var i = 0, n = arguments.length, obj;
+            while (++i < n) {
+                obj = arguments[i];
+                if (obj != null) {
+                    forOwn(obj, copyProp, target);
+                }
+            }
+            return target;
+        }
+        function copyProp(val, key) {
+            this[key] = val;
+        }
+        module.exports = mixIn;
     },
     '63': function (require, module, exports, global) {
         function random() {
