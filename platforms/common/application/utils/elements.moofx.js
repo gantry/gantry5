@@ -2,7 +2,8 @@
 var $     = require('elements'),
     moofx = require('moofx'),
     map   = require('mout/array/map'),
-    slick = require('slick');
+    slick = require('slick'),
+    zen   = require('elements/zen');
 
 var walk = function(combinator, method) {
 
@@ -35,6 +36,30 @@ $.implement({
     compute: function() {
         var moo = moofx(this);
         return moo.compute.apply(moo, arguments);
+    },
+
+    showSpinner: function(klass) {
+        var icon = this.find('i');
+        this.gHadIcon = !!icon;
+
+        if (!icon) {
+            if (!this.find('span')) { zen('span').text(this.text()).top(this.empty()); }
+
+            icon = zen('i');
+            icon.top(this);
+        }
+
+        if (!this.gSpinner) { this.gSpinner = icon.attribute('class'); }
+        icon.attribute('class', klass || 'fa fa-spin-fast fa-spinner');
+    },
+
+    hideSpinner: function() {
+        var icon = this.find('i');
+
+        if (!this.gHadIcon) { icon.remove(); }
+        else { icon.attribute('class', this.gSpinner); }
+
+        this.gSpinner = null;
     },
 
     sibling: walk('++', 'find'),
