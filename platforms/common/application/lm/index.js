@@ -284,6 +284,7 @@ ready(function() {
                     });
                 }
 
+                // Particle Settings apply
                 submit.on('click', function(e) {
                     e.preventDefault();
                     dataString = [];
@@ -337,6 +338,7 @@ ready(function() {
                                 }
                             }
 
+                            lmhistory.push(builder.serialize());
                             modal.close();
                             toastr.success('The particle "'+particle.getTitle()+'" settings have been applied to the Layout. <br />Remember to click the Save button to store them.', 'Settings Applied');
                         }
