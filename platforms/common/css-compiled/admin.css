@@ -1035,6 +1035,8 @@ a {
     #g5-container .lm-blocks .spacer {
       background-color: #eee;
       color: rgba(102, 102, 102, 0.8); }
+      #g5-container .lm-blocks .spacer > span span:last-child {
+        color: rgba(102, 102, 102, 0.8); }
     #g5-container .lm-blocks .atom {
       background-color: #9055AF; }
     #g5-container .lm-blocks .pagecontent {
