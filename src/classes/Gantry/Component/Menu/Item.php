@@ -10,7 +10,8 @@ class Item implements \ArrayAccess, \Iterator
 
     protected $items;
     protected $menu;
-    protected $groups;
+    protected $groups = [];
+    protected $children = [];
 
     public function __construct($menu, $name, array $item = [])
     {
@@ -27,7 +28,6 @@ class Item implements \ArrayAccess, \Iterator
             'title' => ucfirst($alias),
             'link' => $name,
             'parent_id' => $parent != '.' ? $parent : '',
-            'children' => [],
             'layout' => 'list',
             'browserNav' => 0,
             'menu_text' => true,
@@ -47,7 +47,17 @@ class Item implements \ArrayAccess, \Iterator
 
     public function groups()
     {
-        return $this->groups ?: [$this->items['children']];
+        return $this->groups ?: [$this->children];
+    }
+
+    public function children()
+    {
+        return $this->children;
+    }
+
+    public function hasChildren()
+    {
+        return !empty($this->children);
     }
 
     public function getGroup($i)
@@ -61,14 +71,14 @@ class Item implements \ArrayAccess, \Iterator
     public function addChild(Item $child)
     {
         $child->level = $this->level + 1;
-        $this->items['children'][$child->alias] = $child;
+        $this->children[$child->alias] = $child;
 
         return $this;
     }
 
     public function removeChild(Item $child)
     {
-        unset($this->items['children'][$child->alias]);
+        unset($this->children[$child->alias]);
 
         return $this;
     }
@@ -76,7 +86,7 @@ class Item implements \ArrayAccess, \Iterator
     public function sortChildren($ordering)
     {
         // Array with keys that point to the items.
-        $children =& $this->items['children'];
+        $children =& $this->children;
 
         if ($children) {
             if (is_array($ordering)) {
@@ -102,8 +112,8 @@ class Item implements \ArrayAccess, \Iterator
 
     public function reverse()
     {
-        array_reverse($this->items['children'], true);
-        array_reverse($this->items['groups'], true);
+        array_reverse($this->children, true);
+        array_reverse($this->groups, true);
 
         return $this;
     }
@@ -111,7 +121,7 @@ class Item implements \ArrayAccess, \Iterator
     public function groupChildren(array $groups)
     {
         // Array with keys that point to the items.
-        $children =& $this->items['children'];
+        $children =& $this->children;
 
         if ($children) {
             $ordered = [];
@@ -167,7 +177,7 @@ class Item implements \ArrayAccess, \Iterator
      */
     public function current()
     {
-        return current($this->items['children']);
+        return current($this->children);
     }
 
     /**
@@ -177,7 +187,7 @@ class Item implements \ArrayAccess, \Iterator
      */
     public function key()
     {
-        return key($this->items['children']);
+        return key($this->children);
     }
 
     /**
@@ -187,7 +197,7 @@ class Item implements \ArrayAccess, \Iterator
      */
     public function next()
     {
-        next($this->items['children']);
+        next($this->children);
     }
 
     /**
@@ -197,7 +207,7 @@ class Item implements \ArrayAccess, \Iterator
      */
     public function rewind()
     {
-        reset($this->items['children']);
+        reset($this->children);
     }
 
     /**
@@ -207,6 +217,6 @@ class Item implements \ArrayAccess, \Iterator
      */
     public function valid()
     {
-        return key($this->items['children']) !== null;
+        return key($this->children) !== null;
     }
 }

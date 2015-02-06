@@ -25,7 +25,7 @@ class Menu implements \ArrayAccess, \Iterator
     protected $config;
 
     /**
-     * @var array
+     * @var array|Item[]
      */
     protected $items;
 
@@ -102,20 +102,25 @@ class Menu implements \ArrayAccess, \Iterator
         return $this->offsetGet('');
     }
 
-    public function ordering(Item $parent = null)
+    public function ordering()
     {
-        if (!$parent) {
-            $parent = $this->offsetGet('');
-        }
-
         $list = [];
-        foreach ($parent->groups() as $col => $items) {
-            foreach ($items as $item) {
-                $list[$parent->path][$col][] = $item->path;
-                if ($item->children) {
-                    $list = array_merge($list, $this->ordering($item));
+        foreach ($this->items as $name => $item) {
+           foreach ($item->groups() as $col => $children) {
+                foreach ($children as $child) {
+                    $list[$name][$col][] = $child->path;
                 }
             }
+        }
+
+        return $list;
+    }
+
+    public function items()
+    {
+        $list = [];
+        foreach ($this->items as $item) {
+            $list[$item->path] = $item->toArray();
         }
 
         return $list;
@@ -321,6 +326,7 @@ class Menu implements \ArrayAccess, \Iterator
         }
 
         $ordering = $config['ordering'] ? $config['ordering'] : [];
+        //var_dump(array_keys($all));
         $this->sortAll($all, $ordering);
 
         return $all;
@@ -328,7 +334,7 @@ class Menu implements \ArrayAccess, \Iterator
 
     protected function sortAll(array &$items, array &$ordering, $path = '')
     {
-        if (empty($items[$path]->children)) {
+        if (!$items[$path]->hasChildren()) {
             return;
         }
 
@@ -342,7 +348,11 @@ class Menu implements \ArrayAccess, \Iterator
 
         foreach ($ordering as $key => &$value) {
             if (is_array($value)) {
-                $newPath = $path ? $path . '/' . $key : $key;
+                if ((string) $key === (string)(int) $key) {
+                    $newPath = $path;
+                } else {
+                    $newPath = $path ? $path . '/' . $key : $key;
+                }
                 $this->sortAll($items, $value, $newPath);
             }
         }
