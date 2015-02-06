@@ -102,6 +102,25 @@ class Menu implements \ArrayAccess, \Iterator
         return $this->offsetGet('');
     }
 
+    public function ordering(Item $parent = null)
+    {
+        if (!$parent) {
+            $parent = $this->offsetGet('');
+        }
+
+        $list = [];
+        foreach ($parent->groups() as $col => $items) {
+            foreach ($items as $item) {
+                $list[$parent->path][$col][] = $item->path;
+                if ($item->children) {
+                    $list = array_merge($list, $this->ordering($item));
+                }
+            }
+        }
+
+        return $list;
+    }
+
     /**
      * @return object
      */
