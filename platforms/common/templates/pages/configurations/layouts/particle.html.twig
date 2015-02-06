@@ -13,15 +13,15 @@
         <div class="g-pane active">
             <div class="card settings-block">
                 <h4>
-                    <span data-particle-title="{{ particle.name }}" class="title">{{ particle.name }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
+                    <span data-particle-title="{{ item.title }}" class="title">{{ item.title }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
                     <span class="badge font-small">{{ particle.subtype }}</span>
                     {% if particle.form.fields.enabled %}
-                    {% include 'forms/fields/enable/enable.html.twig' with {'name': 'particle.enabled', 'field': particle.form.fields.enabled, 'value': data.enabled, 'default': 1} %}
+                    {% include 'forms/fields/enable/enable.html.twig' with {'name': 'particle.enabled', 'field': particle.form.fields.enabled, 'value': item.attributes.enabled, 'default': 1} %}
                     {% endif %}
                 </h4>
 
                 <div class="inner-params">
-                    {% include 'forms/fields.html.twig' with {'blueprints': particle.form, 'data': {'particle': data}, 'prefix': 'particle.'} %}
+                    {% include 'forms/fields.html.twig' with {'blueprints': particle.form, 'data': {'particle': item.attributes}, 'prefix': 'particle.'} %}
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
                     Block
                 </h4>
                 <div class="inner-params">
-                    {% include 'forms/fields.html.twig' with {'blueprints': extra.form, 'data': {'block': block}, 'prefix': 'block.'} %}
+                    {% include 'forms/fields.html.twig' with {'blueprints': extra.form, 'data': {'block': item.block}, 'prefix': 'block.'} %}
                 </div>
             </div>
         </div>

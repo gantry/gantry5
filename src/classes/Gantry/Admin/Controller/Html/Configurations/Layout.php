@@ -139,11 +139,12 @@ class Layout extends HtmlController
                 'id'         => $id,
                 'type'       => isset($_POST['type']) ? $_POST['type'] : $type,
                 'subtype'    => isset($_POST['subtype']) ? $_POST['subtype'] : null,
-                'attributes' => (object)(isset($_POST['options']) ? $_POST['options'] : []),
+                'title'      => isset($_POST['title']) ? $_POST['title'] : 'Untitled',
+                'attributes' => (object) (isset($_POST['options']) ? $_POST['options'] : []),
                 'block'      => new \stdClass
             ];
             if (isset($_POST['block'])) {
-                $item->block = (object)$_POST['block'];
+                $item->block = (object) $_POST['block'];
             }
         } else {
             $item = $this->find($layout, $id);
@@ -153,9 +154,11 @@ class Layout extends HtmlController
 
         if (is_object($item) && $name) {
             $prefix = 'particles.' . $name;
-            $defaults = (array)$this->container['config']->get($prefix);
+            $defaults = (array) $this->container['config']->get($prefix);
+
             // TODO: Use blueprints to merge configuration.
-            $data = (array)$item->attributes + $defaults;
+            $item->attributes = (object) ((array) $item->attributes + $defaults);
+
             if ($type == 'section' || $type == 'grid') {
                 $extra = null;
                 $blueprints = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml")->content());
@@ -165,15 +168,14 @@ class Layout extends HtmlController
             }
 
             $this->params += [
-                'extra'    => $extra,
-                'block'    => $item->block,
-                'particle' => $blueprints,
-                'data'     => $data,
-                'id'       => $name,
-                'parent'   => 'settings',
-                'route'    => 'settings.' . $prefix,
-                'action'   => str_replace('.', '/', 'configurations.' . $page . '.layout.' . $prefix . '.validate'),
-                'skip'     => ['enabled']
+                'extra'     => $extra,
+                'item'      => $item,
+                'particle'  => $blueprints,
+                'id'        => $name,
+                'parent'    => 'settings',
+                'route'     => 'settings.' . $prefix,
+                'action'    => str_replace('.', '/', 'configurations.' . $page . '.layout.' . $prefix . '.validate'),
+                'skip'      => ['enabled']
             ];
 
             if ($extra) {
