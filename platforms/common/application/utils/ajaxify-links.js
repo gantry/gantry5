@@ -66,6 +66,10 @@ History.Adapter.bind(window, 'statechange', function() {
 
             History.back();
 
+            if (Data.element) {
+                Data.element.hideSpinner();
+            }
+
             return false;
         }
 

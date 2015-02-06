@@ -49,11 +49,13 @@ $.implement({
             icon.top(this);
         }
 
-        if (!this.gSpinner) { this.gSpinner = icon.attribute('class'); }
+        if (!this.gSpinner) { this.gSpinner = icon.attribute('class') || true; }
         icon.attribute('class', klass || 'fa fa-fw fa-spin-fast fa-spinner');
     },
 
     hideSpinner: function() {
+        if (!this.gSpinner) { return; }
+
         var icon = this.find('i');
 
         if (!this.gHadIcon) { icon.remove(); }

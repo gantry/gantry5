@@ -107,8 +107,6 @@ ready(function() {
                         if (!response.body.html) { container.style({ width: '90%' }); }
                     }
                 });
-
-                return false;
             } else {
                 modal.close();
                 toastr.success('The ' + sentence + ' been successfully saved!', type + ' Saved');
@@ -328,7 +326,6 @@ ready(function() {
                                     if (!response.body.html) { container.style({ width: '90%' }); }
                                 }
                             });
-                            return false;
                         } else {
                             var particle = builder.get(ID),
                                 block = builder.get(parentID);
