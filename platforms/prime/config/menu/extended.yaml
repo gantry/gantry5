@@ -131,9 +131,9 @@ items:
     title: About Us
     menu_icon: fa fa-fw fa-ra
 
-  sample-pages/our-team:
+  sample-pages/the-team:
     type: separator
-    title: Our Team
+    title: The Team
     menu_icon: fa fa-fw fa-users
 
   sample-pages/pricing:
