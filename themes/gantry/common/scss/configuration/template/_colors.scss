@@ -16,7 +16,7 @@ $core-box-shadow: 				inset 0 1px 3px hsla(0, 0%, 0%, 0.06);
 $core-box-shadow-focus: 		$core-box-shadow, 0 0 5px rgba(darken($core-border-color-focus, 5), 0.7);
 
 // Background
-$background-page-bg:						#333;
+$background-page-bg:			#333 !default;
 
 // Header
 $header-text:					#aaa;
