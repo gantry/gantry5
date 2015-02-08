@@ -1,6 +1,9 @@
 {% set ajaxTarget = (item.level > 1) ? 'data-g5-ajaxify-target-parent=".submenu-column"' : 'data-g5-ajaxify-target="[data-g5-menu-columns]"' %}
 
-<a class="menu-item" data-g5-ajaxify="" data-g5-ajaxify-params="{{ '{"inline":1}'|escape('html_attr') }}" {{ ajaxTarget }} href="{{ gantry.route('menu', id, item.path) }}">
+{% set tag = (item.children) ? 'a' : 'span' %}
+{% set attributes = (item.children) ? ' data-g5-ajaxify="" data-g5-ajaxify-params="' ~ ('{"inline":1}'|escape('html_attr')) ~ '" ' ~ ajaxTarget ~ 'href="' ~ gantry.route('menu', id, item.path) ~ '"' : '' %}
+
+<{{ tag ~ attributes }} class="menu-item">
     {% if item.menu_image %}
         <img src="{{ item.menu_image|e }}" alt="{{ item.title|e }}" />
         {% if item.menu_text %}
@@ -17,7 +20,7 @@
     {% if (item.children) -%}
         <span class="parent-indicator"></span>
     {%- endif %}
-</a>
+</{{ tag }}>
 <a class="config-cog" href="{{ gantry.route('menu/edit', id, item.path) }}">
     <i class="fa fa-cog"></i>
 </a>

@@ -239,6 +239,7 @@ $submenu-ratio:                 60px;
 			}
 			.menu-item {
 				padding: $content-padding / 2 $content-padding;
+                display: block;
 				.fa-chevron-left {
 					font-size: $core-font-size - 0.2;
 				}
@@ -258,7 +259,8 @@ $submenu-ratio:                 60px;
 			}
 			&:hover, &.active, .active {
 				background: $tertiary-accent;
-				a {
+                cursor: move;
+				a, span {
 					color: $white;
 				}
 			}

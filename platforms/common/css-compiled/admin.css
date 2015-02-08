@@ -2033,17 +2033,18 @@ a {
 /* line 240, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .menu-item {
   padding: 0.469rem 0.938rem;
+  display: block;
 }
-/* line 242, ../scss/admin/_menu.scss */
+/* line 243, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .menu-item .fa-chevron-left {
   font-size: 0.8rem;
 }
-/* line 246, ../scss/admin/_menu.scss */
+/* line 247, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .config-cog {
   right: 4px;
   top: 0.8rem;
 }
-/* line 251, ../scss/admin/_menu.scss */
+/* line 252, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li .parent-indicator:before {
   content: "\f054";
   float: right;
@@ -2051,20 +2052,21 @@ a {
   line-height: 2;
   margin-right: 10px;
 }
-/* line 259, ../scss/admin/_menu.scss */
+/* line 260, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li:hover, #g5-container .submenu-selector .submenu-items li.active, #g5-container .submenu-selector .submenu-items li .active {
   background: #48B0D7;
+  cursor: move;
 }
-/* line 261, ../scss/admin/_menu.scss */
-#g5-container .submenu-selector .submenu-items li:hover a, #g5-container .submenu-selector .submenu-items li.active a, #g5-container .submenu-selector .submenu-items li .active a {
+/* line 263, ../scss/admin/_menu.scss */
+#g5-container .submenu-selector .submenu-items li:hover a, #g5-container .submenu-selector .submenu-items li:hover span, #g5-container .submenu-selector .submenu-items li.active a, #g5-container .submenu-selector .submenu-items li.active span, #g5-container .submenu-selector .submenu-items li .active a, #g5-container .submenu-selector .submenu-items li .active span {
   color: #fff;
 }
-/* line 266, ../scss/admin/_menu.scss */
+/* line 268, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items li.placeholder {
   margin: -1px 0;
   border: 1px solid #000;
 }
-/* line 272, ../scss/admin/_menu.scss */
+/* line 274, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items:empty {
   position: absolute !important;
   top: 0;
@@ -2074,11 +2076,11 @@ a {
   display: block;
   background: #eee;
 }
-/* line 281, ../scss/admin/_menu.scss */
+/* line 283, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items:empty + .submenu-reorder {
   background: #eee;
 }
-/* line 285, ../scss/admin/_menu.scss */
+/* line 287, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items:empty:before {
   content: "Drop menu items here";
   position: absolute;
@@ -2089,7 +2091,7 @@ a {
   color: #aaa;
   width: 100%;
 }
-/* line 296, ../scss/admin/_menu.scss */
+/* line 298, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items:empty:after {
   content: "\f057";
   font-family: FontAwesome;
@@ -2107,21 +2109,21 @@ a {
   text-align: center;
   cursor: pointer;
 }
-/* line 312, ../scss/admin/_menu.scss */
+/* line 314, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector .submenu-items:empty:hover:after {
   opacity: 1;
 }
-/* line 319, ../scss/admin/_menu.scss */
+/* line 321, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector.moving .submenu-column:after {
   background-color: #fff;
 }
-/* line 324, ../scss/admin/_menu.scss */
+/* line 326, ../scss/admin/_menu.scss */
 #g5-container .submenu-selector > .placeholder {
   border: 1px solid #000;
   margin: 0 3px 0 -5px;
   z-index: 10;
 }
-/* line 331, ../scss/admin/_menu.scss */
+/* line 333, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio {
   background: #fff;
   text-align: center;
@@ -2132,7 +2134,7 @@ a {
   height: 60px;
   /*z-index: 15;*/
 }
-/* line 340, ../scss/admin/_menu.scss */
+/* line 342, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio .percentage {
   font-size: 20px;
   font-weight: 300;
@@ -2140,7 +2142,7 @@ a {
   display: inline-block;
   margin-top: 5px;
 }
-/* line 347, ../scss/admin/_menu.scss */
+/* line 349, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio i {
   position: absolute;
   right: 1rem;
@@ -3404,7 +3406,22 @@ body.g5-dialog-open {
   font-family: "Monaco", "Courier New", Courier, monospace;
   font-size: 0.8em;
 }
-/* line 34, ../scss/admin/particles/_filemanager.scss */
+/* line 32, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark span {
+  width: 100%;
+  background: #e9e9e9;
+  display: block;
+  border-radius: 3px;
+  color: #999999;
+  margin-top: 1rem;
+  padding: 4px;
+  white-space: pre;
+}
+/* line 43, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark:first-child span {
+  margin-top: 0;
+}
+/* line 49, ../scss/admin/particles/_filemanager.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files [data-file] {
   display: inline-block;
   max-width: 100px;
@@ -3415,7 +3432,7 @@ body.g5-dialog-open {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* line 44, ../scss/admin/particles/_filemanager.scss */
+/* line 59, ../scss/admin/particles/_filemanager.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files [data-file] .g-image {
   position: relative;
   float: left;
@@ -3425,7 +3442,7 @@ body.g5-dialog-open {
   background-repeat: no-repeat;
   background-size: cover;
 }
-/* line 54, ../scss/admin/particles/_filemanager.scss */
+/* line 69, ../scss/admin/particles/_filemanager.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files [data-file] div {
   background-color: #fff;
   width: 100px;
@@ -3435,7 +3452,7 @@ body.g5-dialog-open {
   font-size: 0.8em;
   border-radius: 0.1875rem;
 }
-/* line 64, ../scss/admin/particles/_filemanager.scss */
+/* line 79, ../scss/admin/particles/_filemanager.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files [data-file] span {
   font-size: 0.7em;
 }
