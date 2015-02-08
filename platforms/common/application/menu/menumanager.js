@@ -22,6 +22,10 @@ var MenuManager = new prime({
     inherits: Emitter,
 
     constructor: function(element, options) {
+        this.root = $('#menu-editor');
+        this.ordering = JSON.parse(this.root.data('menu-ordering'));
+        this.items = JSON.parse(this.root.data('menu-items'));
+
         this.dragdrop = new DragDrop(element, options);
         this.resizer = new Resizer(element, options);
         this.dragdrop
@@ -33,10 +37,19 @@ var MenuManager = new prime({
             .on('dragdrop:resize', this.bound('resize'))
             .on('dragdrop:stop', this.bound('stop'))
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
+
+        console.log(this.ordering, this.items);
     },
 
     click: function(event, element) {
-        if (element.hasClass('g-block')) { this.stopAnimation(); return true; }
+        if (element.hasClass('g-block')) {
+            this.stopAnimation();
+            return true;
+        }
+        if (element.find('> .menu-item').tag() == 'span') {
+            this.stopAnimation();
+            return true;
+        }
 
         var siblings = element.siblings();
         element.addClass('active');
@@ -60,6 +73,11 @@ var MenuManager = new prime({
         this.type = element.parent('.g-toplevel') || element.matches('.g-toplevel') ? 'main' : (element.matches('.g-block') ? 'column' : 'columns_items');
         this.wasActive = element.hasClass('active');
         this.root = root;
+
+        this.itemID = element.data('mm-id');
+        this.itemLevel = element.data('mm-level');
+        this.itemFrom = element.parent('[data-mm-id]');
+        this.itemTo = null;
 
         root.addClass('moving');
 
@@ -85,12 +103,12 @@ var MenuManager = new prime({
         this.placeholder.before(element);
 
         if (this.type == 'column') {
-            root.search('.g-block > *').style({'pointer-events': 'none'});
+            root.search('.g-block > *').style({ 'pointer-events': 'none' });
         }
     },
 
     moveOnce: function(/*element*/) {
-        if (this.original) { this.original.style({opacity: 0.5}); }
+        if (this.original) { this.original.style({ opacity: 0.5 }); }
     },
 
     location: function(event, location, target/*, element*/) {
@@ -99,14 +117,18 @@ var MenuManager = new prime({
 
         var targetType = target.parent('.g-toplevel') || target.matches('.g-toplevel') ? 'main' : (target.matches('.g-block') ? 'column' : 'columns_items'),
             dataLevel = target.data('mm-level'),
-            originalLevel = this.block.data('mm-level');/*,
-            dataID = target.data('mm-id'),
-            originalID = this.block.data('mm-id');*/
+            originalLevel = this.block.data('mm-level');
+        /*,
+         dataID = target.data('mm-id'),
+         originalID = this.block.data('mm-id');*/
 
         // Workaround for layout and style of columns
         if (dataLevel === null && this.type === 'columns_items') {
             var submenu_items = target.find('.submenu-items');
-            if (!submenu_items || submenu_items.children()) { this.dragdrop.matched = false; return; }
+            if (!submenu_items || submenu_items.children()) {
+                this.dragdrop.matched = false;
+                return;
+            }
 
             this.placeholder.style({ display: 'block' }).bottom(submenu_items);
             this.addNewItem = submenu_items;
@@ -114,13 +136,22 @@ var MenuManager = new prime({
         }
 
         // We only allow sorting between same level items
-        if (this.type !== 'column' && originalLevel !== dataLevel) { this.dragdrop.matched = false; return; }
+        if (this.type !== 'column' && originalLevel !== dataLevel) {
+            this.dragdrop.matched = false;
+            return;
+        }
 
         // Ensuring columns can only be dragged before/after other columns
-        if (this.type == 'column' && dataLevel) { this.dragdrop.matched = false; return; }
+        if (this.type == 'column' && dataLevel) {
+            this.dragdrop.matched = false;
+            return;
+        }
 
         // For levels > 2 we only allow sorting within the same column
-        if (dataLevel > 2 && target.parent('ul') != this.block.parent('ul')) { this.dragdrop.matched = false; return; }
+        if (dataLevel > 2 && target.parent('ul') != this.block.parent('ul')) {
+            this.dragdrop.matched = false;
+            return;
+        }
 
         // Check for adjacents and avoid inserting any placeholder since it would be the same position
         var exclude = ':not(.placeholder):not([data-mm-id="' + this.original.data('mm-id') + '"])',
@@ -185,9 +216,52 @@ var MenuManager = new prime({
         this.original.remove();
         this.block.after(this.placeholder);
         this.placeholder.remove();
+        this.itemTo = this.block.parent('[data-mm-id]');
         if (this.wasActive) { element.addClass('active'); }
 
+        var path = this.itemID.split('/'),
+            key = path.splice(this.itemLevel - 1),
+            items, column;
+
+        // Items reorder for root or sublevels with logic to reorder FROM and TO sublevel column if needed
+        if (this.itemFrom || this.itemTo) {
+            var sources = this.itemFrom == this.itemTo ? [this.itemFrom] : [this.itemFrom, this.itemTo];
+            sources.forEach(function(source) {
+                if (!source) { return; }
+
+                items = source.search('[data-mm-id]');
+                column = Number((source.data('mm-id').match(/\d+$/) || [0])[0]);
+
+                if (!items) {
+                    this.ordering[path][column] = [];
+                    return;
+                }
+
+                items = items.map(function(element) {
+                    return $(element).data('mm-id');
+                });
+
+                this.ordering[path][column] = items;
+            }, this);
+        }
+
+        // Column reordering, we just need to swap the array indexes
+        if (!this.itemFrom && !this.itemTo) {
+            var colsOrder = [],
+                active = $('.g-toplevel [data-mm-id].active').data('mm-id');
+            items = parent.search('> [data-mm-id]');
+
+            items.forEach(function(element) {
+                var column = Number(($(element).data('mm-id').match(/\d+$/) || [0])[0]);
+                colsOrder.push(this.ordering[active][column]);
+            }, this);
+
+            this.ordering[active] = colsOrder;
+        }
+
         if (!parent.children()) { parent.empty(); }
+
+        //console.log(this.ordering);
     },
 
     stopAnimation: function(/*element*/) {
