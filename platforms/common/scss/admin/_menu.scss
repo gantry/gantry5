@@ -83,6 +83,7 @@ $submenu-ratio:                 60px;
 		border: 1px solid #ddd;
 		color: $navbar-color;
 		display: inline-block;
+        cursor: move;
         @include transition(background-color 0.1s ease-out);
 
 		.parent-indicator {
@@ -113,7 +114,7 @@ $submenu-ratio:                 60px;
 		&:hover, &.active {
 			background: $tertiary-accent;
 			border-color: transparent;
-			a {
+			a, span {
 				color: $white;
 			}
 		}
