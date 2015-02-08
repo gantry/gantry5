@@ -220,8 +220,10 @@ var MenuManager = new prime({
         if (this.wasActive) { element.addClass('active'); }
 
         var path = this.itemID.split('/'),
-            key = path.splice(this.itemLevel - 1),
             items, column;
+
+        path.splice(this.itemLevel - 1);
+        path = path.join('/');
 
         // Items reorder for root or sublevels with logic to reorder FROM and TO sublevel column if needed
         if (this.itemFrom || this.itemTo) {
@@ -261,7 +263,12 @@ var MenuManager = new prime({
 
         if (!parent.children()) { parent.empty(); }
 
-        //console.log(this.ordering);
+        if (console && console.group && console.info && console.table && console.groupEnd) {
+            console.group();
+            console.info('New Ordering');
+            console.table(this.ordering);
+            console.groupEnd();
+        }
     },
 
     stopAnimation: function(/*element*/) {
