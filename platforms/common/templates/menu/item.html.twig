@@ -1,7 +1,7 @@
 {% set ajaxTarget = (item.level > 1) ? 'data-g5-ajaxify-target-parent=".submenu-column"' : 'data-g5-ajaxify-target="[data-g5-menu-columns]"' %}
 
 {% set tag = (item.children) ? 'a' : 'span' %}
-{% set attributes = (item.children) ? ' data-g5-ajaxify="" data-g5-ajaxify-params="' ~ ('{"inline":1}'|escape('html_attr')) ~ '" ' ~ ajaxTarget ~ 'href="' ~ gantry.route('menu', id, item.path) ~ '"' : '' %}
+{% set attributes = (item.children) ? ' data-g5-ajaxify="" data-g5-ajaxify-params="' ~ ('{"inline":1}'|escape('html_attr')) ~ '" ' ~ ajaxTarget ~ ' href="' ~ gantry.route('menu', id, item.path) ~ '"' : '' %}
 
 <{{ tag ~ attributes }} class="menu-item">
     {% if item.menu_image %}

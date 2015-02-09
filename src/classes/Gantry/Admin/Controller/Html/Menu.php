@@ -28,8 +28,9 @@ class Menu extends HtmlController
             '/*'            => 'save',
             '/*/**'         => 'save',
             '/edit'         => 'undefined',
-            '/edit/*'       => 'validate',
-            '/edit/*/**'    => 'validate',
+            '/edit/*'       => 'undefined',
+            '/edit/*/validate' => 'validate',
+            '/edit/*/**'    => 'validateitem',
         ],
         'PUT' => [
             '/*' => 'replace'
@@ -67,6 +68,7 @@ class Menu extends HtmlController
         $this->params['menus'] = $resource->getMenus();
         $this->params['menu'] = $resource;
         $this->params['path'] = implode('/', $path);
+        $this->params['menu_settings'] = ['settings' => $resource->config()->get('settings')];
 
         // Detect special case to fetch only single column group.
         $group = isset($_GET['group']) ? intval($_GET['group']) : null;
@@ -169,6 +171,27 @@ class Menu extends HtmlController
     }
 
     public function validate($id)
+    {
+        // Validate only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
+        // Load particle blueprints and default settings.
+        $validator = $this->loadBlueprints('menu');
+        $callable = function () use ($validator) {
+            return $validator;
+        };
+
+        // Create configuration from the defaults.
+        $data = new Config($_POST, $callable);
+
+        // TODO: validate
+
+        return new JsonResponse(['data' => $data->toArray()]);
+    }
+
+    public function validateitem($id)
     {
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);

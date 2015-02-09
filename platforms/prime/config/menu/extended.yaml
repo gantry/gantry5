@@ -1,5 +1,6 @@
-title: Extended Menu
-base: /
+settings:
+  title: Extended Menu
+  base: /
 
 ordering:
   home:

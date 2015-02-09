@@ -1,6 +1,6 @@
 <section
     {%- if particle.css.id %} id="{{ particle.css.id|e }}"{% endif %} class="menu-selector-bar{%- if particle.css.class %} {{ particle.css.class|e }}{% endif %}" role="navigation">
-    <ul class="g-grid g-toplevel menu-selector" data-mm-id>
+    <ul class="g-grid g-toplevel menu-selector" data-mm-id="">
         {% for child in item %}
             {% set active = (child.path|split('/')|first) == (path|split('/')|first) ? ' class="active"' : '' %}
             <li data-mm-id="{{ child.path }}" data-mm-level="{{ child.level }}"{{ active }}>

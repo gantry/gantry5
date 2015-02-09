@@ -1,5 +1,6 @@
-title: Main Menu
-base: /
+settings:
+  title: Main Menu
+  base: /
 
 ordering:
   home:
