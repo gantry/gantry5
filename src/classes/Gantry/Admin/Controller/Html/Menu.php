@@ -6,6 +6,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Menu as MenuObject;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -22,7 +23,12 @@ class Menu extends HtmlController
             '/edit/*/**'    => 'menuitem',
         ],
         'POST' => [
-            '/'             => 'store',
+            '/'             => 'undefined',
+            '/*'            => 'store',
+            '/*/**'         => 'store',
+            '/edit'         => 'undefined',
+            '/edit/*'       => 'validate',
+            '/edit/*/**'    => 'validate',
         ],
         'PUT' => [
             '/*' => 'replace'
@@ -114,18 +120,45 @@ class Menu extends HtmlController
         if (!$item) {
             throw new \RuntimeException('Menu item not found', 404);
         }
+
         // Load blueprints for the menu item.
         $blueprints = $this->loadBlueprints('menuitem');
 
         $this->params = [
                 'id' => $id,
                 'path' => $path,
-                'prefix' => $path . '.',
                 'blueprints' => ['fields' => $blueprints['form.fields.items.fields']],
-                'data' => [$path => $resource->config()->get("items.{$path}")],
+                'data' => $item->toArray() + ['path' => $path],
             ] + $this->params;
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/menu/menuitem.html.twig', $this->params);
+    }
+
+    public function validate($id)
+    {
+        // All extra arguments become the path.
+        $path = array_slice(func_get_args(), 1);
+        $keyword = array_pop($path);
+
+        // Validate only exists for JSON.
+        if ($keyword != 'validate' || empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
+        $path = implode('/', $path);
+
+        // Load particle blueprints and default settings.
+        $validator = $this->loadBlueprints('menuitem');
+        $callable = function () use ($validator) {
+            return $validator;
+        };
+
+        // Create configuration from the defaults.
+        $data = new Config($_POST, $callable);
+
+        // TODO: validate
+
+        return new JsonResponse(['path' => $path, 'data' => $data->toArray()]);
     }
 
     protected function layoutName($level)
