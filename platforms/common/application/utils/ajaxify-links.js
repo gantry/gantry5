@@ -83,7 +83,10 @@ History.Adapter.bind(window, 'statechange', function() {
 
         if (Data.element) {
             body.emit('statechangeAfter', { target: Data.element, Data: Data });
-            Data.element.hideSpinner();
+        }
+
+        if (Data.event.activeSpinner || Data.element) {
+            (Data.event.activeSpinner || Data.element)['hideSpinner']();
         }
 
         var selects = $('[data-selectize]');
@@ -117,10 +120,10 @@ var selectorChangeEvent = function(){
                 .data('g5-ajaxify-params', options[value].params ? JSON.stringify(options[value].params) : null);
 
 
-            var active = $('#navbar li.active') || $('#navbar li:nth-child(2)');
+            var active = $('#navbar li.active') || $('#main-header li.active') || $('#navbar li:nth-child(2)');
             if (active) { active.showSpinner(); }
 
-            $('body').emit('click', { target: selectize.input });
+            $('body').emit('click', { target: selectize.input, activeSpinner: active });
         });
 
         selectize.HasChangeEvent = true;
