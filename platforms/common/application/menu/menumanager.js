@@ -22,9 +22,7 @@ var MenuManager = new prime({
     inherits: Emitter,
 
     constructor: function(element, options) {
-        this.root = $('#menu-editor');
-        this.ordering = JSON.parse(this.root.data('menu-ordering'));
-        this.items = JSON.parse(this.root.data('menu-items'));
+        this.setRoot();
 
         this.dragdrop = new DragDrop(element, options);
         this.resizer = new Resizer(element, options);
@@ -39,6 +37,15 @@ var MenuManager = new prime({
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
 
         console.log(this.ordering, this.items);
+    },
+
+    setRoot: function(){
+        this.root = $('#menu-editor');
+
+        if (this.root) {
+            this.ordering = JSON.parse(this.root.data('menu-ordering'));
+            this.items = JSON.parse(this.root.data('menu-items'));
+        }
     },
 
     click: function(event, element) {

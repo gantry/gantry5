@@ -4,18 +4,23 @@ var ready       = require('elements/domready'),
     zen         = require('elements/zen'),
     $           = require('elements');
 
-var menumanager;
+var menumanager = new MenuManager('body', {
+    delegate: '#menu-editor > section ul li, .submenu-column li, .column-container .g-block',
+    droppables: '#menu-editor [data-mm-id]',
+    exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
+    resize_handles: '.submenu-column li:not(:last-child)',
+    catchClick: true
+});
 
 ready(function() {
     var body = $('body');
 
     // Menu Manager
-    menumanager = new MenuManager('body', {
-        delegate: '#menu-editor > section ul li, .submenu-column li, .column-container .g-block',
-        droppables: '#menu-editor [data-mm-id]',
-        exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
-        resize_handles: '.submenu-column li:not(:last-child)',
-        catchClick: true
+    menumanager.setRoot();
+
+    // Sub-navigation links
+    body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify]', function(event, element) {
+        menumanager.setRoot();
     });
 
     // New columns
