@@ -76,46 +76,6 @@ ready(function() {
     }
 
     // attach events
-    // Save
-    body.delegate('click', '.button-save', function(e, element) {
-        e.preventDefault();
-        element.showSpinner();
-
-        var data = {},
-            type = element.data('save'),
-            sentence = type + ' ' + (type.slice(-1) == 's' ? 'have' : 'has');
-
-        if ($('[data-lm-root]')) { data.layout = JSON.stringify(builder.serialize()); }
-        else {
-            var form = element.parent('form');
-
-            if (form && element.attribute('type') == 'submit') {
-                $(form[0].elements).forEach(function(input) {
-                    input = $(input);
-                    var name = input.attribute('name'), value = input.value();
-                    if (!name) { return; }
-                    data[name] = value;
-                });
-            }
-        }
-
-        request('post', window.location.href + getAjaxSuffix(), data, function(error, response) {
-            if (!response.body.success) {
-                modal.open({
-                    content: response.body.html || response.body,
-                    afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
-                    }
-                });
-            } else {
-                modal.close();
-                toastr.success('The ' + sentence + ' been successfully saved!', type + ' Saved');
-            }
-
-            element.hideSpinner();
-        });
-    });
-
     // Modal Tabs
     body.delegate('click', '.g-tabs a', function(event, element) {
         element = $(element);
