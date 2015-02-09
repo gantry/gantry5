@@ -7,3 +7,6 @@ container:
 
   footer:
     - [particle-date 25, particle-copyright 50, particle-branding 25]
+
+hidden:
+ - particle-custom
