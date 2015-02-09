@@ -18,8 +18,8 @@ ready(function() {
     // Menu Manager
     menumanager.setRoot();
 
-    // Sub-navigation links
-    body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify]', function(event, element) {
+    // Refresh ordering/items on menu type change or Menu navigation link
+    body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(event, element) {
         menumanager.setRoot();
     });
 

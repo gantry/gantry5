@@ -75,8 +75,8 @@ module.exports = {
      zen     : zen,
      domready: domready,
      agent   : require('agent'),*/
-    lm: require('./lm'),
-    menu: require('./menu'),
+    lm: lm,
+    menu: mm,
     ui: require('./ui'),
     styles: require('./styles'),
     "$": $,
