@@ -329,7 +329,6 @@ class Menu implements \ArrayAccess, \Iterator
         }
 
         $ordering = $config['ordering'] ? $config['ordering'] : [];
-        //var_dump(array_keys($all));
         $this->sortAll($all, $ordering);
 
         return $all;
@@ -337,7 +336,7 @@ class Menu implements \ArrayAccess, \Iterator
 
     protected function sortAll(array &$items, array &$ordering, $path = '')
     {
-        if (!$items[$path]->hasChildren()) {
+        if (!isset($items[$path]) || !$items[$path]->hasChildren()) {
             return;
         }
 
