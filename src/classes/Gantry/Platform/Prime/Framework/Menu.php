@@ -119,8 +119,10 @@ class Menu implements \ArrayAccess, \Iterator
     public function items()
     {
         $list = [];
-        foreach ($this->items as $item) {
-            $list[$item->path] = $item->toArray();
+        foreach ($this->items as $key => $item) {
+            if ($key !== '') {
+                $list[$item->path] = $item->toArray();
+            }
         }
 
         return $list;
@@ -267,7 +269,8 @@ class Menu implements \ArrayAccess, \Iterator
                 || ($end && $level > $end)
                 || (!$showAll && $level > 1 && strpos($parent, $path) !== 0)
                 || ($start > 1 && strpos(dirname($parent), $path) !== 0)
-                || ($name[0] == '_' || strpos($name, '_'))) {
+                || (!$name || $name[0] == '_' || strpos($name, '_'))
+            ) {
                 continue;
             }
 
@@ -275,7 +278,7 @@ class Menu implements \ArrayAccess, \Iterator
 
             // Deal with home page.
             if ($item->link == 'home') {
-                $item->link = '';
+                $item->url('');
             }
 
             // Placeholder page.
@@ -288,7 +291,7 @@ class Menu implements \ArrayAccess, \Iterator
                 case 'separator':
                 case 'heading':
                     // Separator and heading have no link.
-                    $item->link = null;
+                    $item->url(null);
                     break;
 
                 case 'url':
@@ -296,7 +299,7 @@ class Menu implements \ArrayAccess, \Iterator
 
                 case 'alias':
                 default:
-                    $item->link = '/' . trim(PRIME_URI . '/' . THEME . '/' . $item->link, '/');
+                    $item->url('/' . trim(PRIME_URI . '/' . THEME . '/' . $item->link, '/'));
             }
 
             switch ($item->browserNav)

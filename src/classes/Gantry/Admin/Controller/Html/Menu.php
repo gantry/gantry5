@@ -9,6 +9,7 @@ use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Menu as MenuObject;
+use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Menu extends HtmlController
@@ -24,8 +25,8 @@ class Menu extends HtmlController
         ],
         'POST' => [
             '/'             => 'undefined',
-            '/*'            => 'store',
-            '/*/**'         => 'store',
+            '/*'            => 'save',
+            '/*/**'         => 'save',
             '/edit'         => 'undefined',
             '/edit/*'       => 'validate',
             '/edit/*/**'    => 'validate',
@@ -104,6 +105,29 @@ class Menu extends HtmlController
         $this->params['data'] = $resource->config();
 
         return $this->container['admin.theme']->render('@gantry-admin//pages/menu/edit.html.twig', $this->params);
+    }
+
+    public function save($id)
+    {
+        //$ordering = isset($_POST['ordering']) ? json_decode($_POST['ordering'], true) : null;
+        $items = isset($_POST['items']) ? json_decode($_POST['items'], true) : null;
+
+/*
+        if (!$ordering || !$items) {
+            throw new \RuntimeException('Error while saving menu: Invalid structure', 400);
+        }
+*/
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+        $filename = $locator->findResource("gantry-config://menu/{$id}.yaml", true, true);
+
+        $file = YamlFile::instance($filename);
+        $data = new Config([]); // $file->content());
+        //$data->set('ordering', $ordering);
+        $data->set('items', $items);
+
+        $file->save($data->toArray());
     }
 
     public function menuitem($id)

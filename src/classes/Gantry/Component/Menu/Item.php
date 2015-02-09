@@ -12,6 +12,7 @@ class Item implements \ArrayAccess, \Iterator
     protected $menu;
     protected $groups = [];
     protected $children = [];
+    protected $url;
 
     public function __construct($menu, $name, array $item = [])
     {
@@ -35,6 +36,17 @@ class Item implements \ArrayAccess, \Iterator
             'group' => 0,
             'level' => 0,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function url($url = false)
+    {
+        if ($url !== false) {
+            $this->url = $url;
+        }
+        return $this->url;
     }
 
     /**
