@@ -1,0 +1,45 @@
+name: Custom CSS / JS
+description: Configure custom CSS and Javascript.
+type: atom
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable CSS/JS particles.
+      default: false
+
+    css:
+      type: collection.list
+      array: true
+      label: CSS
+      value: name
+      ajax: true
+
+      fields:
+
+        .name:
+          type: input.text
+          label: Name
+
+        .location:
+          type: input.text
+          label: File Location
+
+    javascript:
+      type: collection.list
+      array: true
+      label: Javascript
+      value: name
+      ajax: true
+
+      fields:
+
+        .name:
+          type: input.text
+          label: Name
+
+        .location:
+          type: input.text
+          label: File Location
