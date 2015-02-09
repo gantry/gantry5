@@ -109,24 +109,34 @@ class Menu extends HtmlController
 
     public function save($id)
     {
-        //$ordering = isset($_POST['ordering']) ? json_decode($_POST['ordering'], true) : null;
+        $order = isset($_POST['ordering']) ? json_decode($_POST['ordering'], true) : null;
         $items = isset($_POST['items']) ? json_decode($_POST['items'], true) : null;
 
-/*
-        if (!$ordering || !$items) {
+        if (!$order || !$items) {
             throw new \RuntimeException('Error while saving menu: Invalid structure', 400);
         }
-*/
+
+        $data = new Config([]);
+
+        foreach ($order as $path => $columns) {
+            $has_columns = count($columns) > 1;
+            foreach ($columns as $column => $colitems) {
+                $column = $has_columns ? $column : '';
+                foreach ($colitems as $item) {
+                    $item = substr($item, strlen($path));
+                    $data->set(preg_replace('|[\./]+|', '.', "ordering.{$path}.{$column}.{$item}"), []);
+                }
+            }
+        }
+
+        $data->set('items', $items);
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
         $filename = $locator->findResource("gantry-config://menu/{$id}.yaml", true, true);
 
         $file = YamlFile::instance($filename);
-        $data = new Config([]); // $file->content());
-        //$data->set('ordering', $ordering);
-        $data->set('items', $items);
-
+        $file->settings(['inline' => 99]);
         $file->save($data->toArray());
     }
 
