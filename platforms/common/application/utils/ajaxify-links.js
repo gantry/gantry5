@@ -76,8 +76,13 @@ History.Adapter.bind(window, 'statechange', function() {
         var target = Data.parent ? Data.element.parent(Data.parent) : $(Data.target),
             destination = (target || $('[data-g5-content]') || body);
 
-        if (response.body && response.body.html) { destination.html(response.body.html); }
-        else { destination.html(response.body); }
+        if (response.body && response.body.html) {
+            var fader;
+            destination.html(response.body.html);
+            if (fader = (destination.data('g5-content') !== null ? destination : destination.find('[data-g5-content]'))) {
+                fader.style({opacity: 0}).animate({opacity: 1});
+            }
+        } else { destination.html(response.body); }
 
         body.getPopover().hideAll(true).destroy();
 
