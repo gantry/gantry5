@@ -5,7 +5,7 @@ type: colors
 form:
   fields:
 
-    siebar-etxt:
+    sidebar-text:
       type: input.colorpicker
       label: Showcase Background
       default: "#aaaaaa"
