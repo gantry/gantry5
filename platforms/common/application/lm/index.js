@@ -196,6 +196,7 @@ ready(function() {
             data = {};
             data.type = builder.get(element.data('lm-id')).getType() || element.data('lm-blocktype') || false;
             data.subtype = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
+            data.title = element.find('.title').text() || data.type || 'Untitled';
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
             data.block = builder.get(parent.data('lm-id')).getAttributes() || {};
 
