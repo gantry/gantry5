@@ -90,7 +90,6 @@ class Layout extends HtmlController
             }
         }
 
-
         $this->params['page_id'] = $id;
         $this->params['layout'] = $layout;
         $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($id, '_')));
@@ -203,26 +202,37 @@ class Layout extends HtmlController
 
         // Load particle blueprints and default settings.
         $validator = new Blueprints();
-        $validator->embed('options', $this->container['particles']->get($particle));
-        $callable = function () use ($validator) {
-            return $validator;
-        };
-        $defaults = (array)$this->container['config']->get("particles.{$particle}");
+
+        if ($particle == 'section' || $particle == 'grid') {
+            $type = $particle;
+            $particle = null;
+            $validator->embed('options', CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
+            $defaults = [];
+        } else {
+            $type = 'particle';
+            $validator->embed('options', $this->container['particles']->get($particle));
+            $defaults = (array) $this->container['config']->get("particles.{$particle}");
+        }
 
         // Create configuration from the defaults.
         $data = new Config(
             [
-                'title'   => isset($_POST['block']) ? $_POST['title'] : 'Untitled',
-                'type'    => 'particle',
+                'type'    => $type,
                 'subtype' => $particle,
                 'options' => $defaults,
-                'block'   => []
             ],
-            $callable);
+            function () use ($validator) {
+                return $validator;
+            }
+        );
 
         // Join POST data.
         $data->join('options', $_POST['particle']);
-        $data->join('block', $_POST['block']);
+
+        if ($type == 'particle') {
+            $data->join('title', isset($_POST['block']) ? $_POST['title'] : 'Untitled');
+            $data->join('block', $_POST['block']);
+        }
 
         // TODO: validate
 
