@@ -36,7 +36,7 @@ var MenuManager = new prime({
             .on('dragdrop:stop', this.bound('stop'))
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
 
-        console.log(this.ordering, this.items);
+        //console.log(this.ordering, this.items);
     },
 
     setRoot: function(){

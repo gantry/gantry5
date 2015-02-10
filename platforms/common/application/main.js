@@ -27,26 +27,36 @@ ready(function() {
 
         var data = {},
             type = element.data('save'),
-            sentence = type + ' ' + (type.slice(-1) == 's' ? 'have' : 'has');
+            sentence = type + ' ' + (type.slice(-1) == 's' ? 'have' : 'has'),
+            page = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other');
 
-        if ($('[data-lm-root]')) {
-            data.layout = JSON.stringify(lm.builder.serialize());
-        } else if ($('[data-mm-id]')) {
-            data.menutype = $('select.menu-select-wrap').value();
-            data.settings = JSON.stringify(mm.settings);
-            data.ordering = JSON.stringify(mm.ordering);
-            data.items = JSON.stringify(mm.items);
-        } else {
-            var form = element.parent('form');
+        switch(page){
+            case 'layout':
+                var serial = lm.builder.serialize();
+                lm.savestate.setSession(serial);
+                data.layout = JSON.stringify(serial);
 
-            if (form && element.attribute('type') == 'submit') {
-                $(form[0].elements).forEach(function(input) {
-                    input = $(input);
-                    var name = input.attribute('name'), value = input.value();
-                    if (!name) { return; }
-                    data[name] = value;
-                });
-            }
+                break;
+            case 'menu':
+                data.menutype = $('select.menu-select-wrap').value();
+                data.settings = JSON.stringify(mm.settings);
+                data.ordering = JSON.stringify(mm.ordering);
+                data.items = JSON.stringify(mm.items);
+
+                break;
+
+            case 'other':
+            default:
+                var form = element.parent('form');
+
+                if (form && element.attribute('type') == 'submit') {
+                    $(form[0].elements).forEach(function(input) {
+                        input = $(input);
+                        var name = input.attribute('name'), value = input.value();
+                        if (!name) { return; }
+                        data[name] = value;
+                    });
+                }
         }
 
         request('post', window.location.href + getAjaxSuffix(), data, function(error, response) {
@@ -63,6 +73,8 @@ ready(function() {
             }
 
             element.hideSpinner();
+
+            if (page == 'layout') { lm.layoutmanager.updatePendingChanges(); }
         });
     });
 
