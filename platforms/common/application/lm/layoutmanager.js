@@ -1,20 +1,21 @@
 "use strict";
-var prime     = require('prime'),
-    $         = require('../utils/elements.moofx'),
-    zen       = require('elements/zen'),
-    Emitter   = require('prime/emitter'),
-    Bound     = require('prime-util/prime/bound'),
-    Options   = require('prime-util/prime/options'),
-    Blocks    = require('./blocks'),
-    DragDrop  = require('../ui/drag.drop'),
-    Resizer   = require('../ui/drag.resizer'),
-    Eraser    = require('./eraser'),
-    get       = require('mout/object/get'),
+var prime      = require('prime'),
+    $          = require('../utils/elements.moofx'),
+    zen        = require('elements/zen'),
+    Emitter    = require('prime/emitter'),
+    Bound      = require('prime-util/prime/bound'),
+    Options    = require('prime-util/prime/options'),
+    Blocks     = require('./blocks'),
+    DragDrop   = require('../ui/drag.drop'),
+    Resizer    = require('../ui/drag.resizer'),
+    Eraser     = require('./eraser'),
+    get        = require('mout/object/get'),
 
-    every     = require('mout/array/every'),
-    precision = require('mout/number/enforcePrecision'),
-    isArray   = require('mout/lang/isArray'),
-    isObject  = require('mout/lang/isObject');
+    every      = require('mout/array/every'),
+    precision  = require('mout/number/enforcePrecision'),
+    isArray    = require('mout/lang/isArray'),
+    deepEquals = require('mout/lang/deepEquals'),
+    isObject   = require('mout/lang/isObject');
 
 var singles = {
     disable: function() {
@@ -50,6 +51,7 @@ var LayoutManager = new prime({
         this.dragdrop = new DragDrop(element, options);
         this.resizer = new Resizer(element, options);
         this.eraser = new Eraser('[data-lm-eraseblock]', options);
+        this.savestate = options.savestate || null;
         this.dragdrop
             .on('dragdrop:start', this.bound('start'))
             .on('dragdrop:location', this.bound('location'))
@@ -67,6 +69,16 @@ var LayoutManager = new prime({
 
     singles: function(mode) {
         singles[mode]();
+    },
+
+    updatePendingChanges: function() {
+        var equals = deepEquals(this.savestate.getData(), this.builder.serialize()),
+            save = $('[data-save="Layout"]'),
+            icon = save.find('i'),
+            indicator = save.find('.changes-indicator');
+
+        if (equals && indicator) { return icon.removeClass('changes-indicator').removeClass('fa-circle-o').addClass('fa-check'); }
+        if (!equals && !indicator) { return icon.removeClass('fa-check').addClass('changes-indicator').addClass('fa-circle-o'); }
     },
 
     start: function(event, element) {
@@ -123,7 +135,10 @@ var LayoutManager = new prime({
                     top: element.parent()[0].scrollTop,
                     left: element.parent()[0].scrollLeft
                 };
-            this.original.style({ position: 'absolute', opacity: 0.5 }).style({
+            this.original.style({
+                position: 'absolute',
+                opacity: 0.5
+            }).style({
                 left: element[0].offsetLeft - parentOffset.left,
                 top: element[0].offsetTop - parentOffset.top,
                 width: position.width,

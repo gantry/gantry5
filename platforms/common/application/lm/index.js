@@ -15,15 +15,30 @@ var ready         = require('elements/domready'),
     Builder       = require('./builder'),
     History       = require('../utils/history'),
     LMHistory     = require('./history'),
-    LayoutManager = require('./layoutmanager');
+    LayoutManager = require('./layoutmanager'),
+    SaveState     = require('../utils/save-state');
 
 require('../ui/popover');
 
-var builder, layoutmanager, lmhistory;
+var builder, layoutmanager, lmhistory, savestate;
 
 
 builder = new Builder();
 lmhistory = new LMHistory();
+savestate = new SaveState();
+
+
+
+// Layout Manager
+layoutmanager = new LayoutManager('body', {
+    delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
+    droppables: '[data-lm-dropzone]',
+    exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
+    resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
+    builder: builder,
+    history: lmhistory,
+    savestate: savestate
+});
 
 ready(function(){
     var HM = {
@@ -47,18 +62,21 @@ ready(function(){
     lmhistory.on('push', function(session, index, reset){
         if (index && HM.back.hasClass('disabled')) HM.back.removeClass('disabled');
         if (reset && !HM.forward.hasClass('disabled')) HM.forward.addClass('disabled');
+        layoutmanager.updatePendingChanges();
     });
     lmhistory.on('undo', function(session, index){
         builder.reset(session.data);
         HM.forward.removeClass('disabled');
         if (!index) HM.back.addClass('disabled');
         layoutmanager.singles('disable');
+        layoutmanager.updatePendingChanges();
     });
     lmhistory.on('redo', function(session, index){
         builder.reset(session.data);
         HM.back.removeClass('disabled');
         if (index == this.session.length - 1) HM.forward.addClass('disabled');
         layoutmanager.singles('disable');
+        layoutmanager.updatePendingChanges();
     });
 
 });
@@ -72,7 +90,10 @@ ready(function() {
         if (data.name) { data = data.layout; }
         builder.setStructure(data);
         builder.load();
-        lmhistory.setSession(builder.serialize());
+
+        var serial = builder.serialize();
+        lmhistory.setSession(serial);
+        savestate.setSession(serial);
     }
 
     // attach events
@@ -107,7 +128,10 @@ ready(function() {
         data = JSON.parse(root.data('lm-root'));
         builder.setStructure(data);
         builder.load();
-        lmhistory.setSession(builder.serialize());
+
+        var serial = builder.serialize();
+        lmhistory.setSession(serial);
+        savestate.setSession(serial);
 
         // refresh LM eraser
         layoutmanager.eraser.element = $('[data-lm-eraseblock]');
@@ -138,16 +162,6 @@ ready(function() {
             content: 'Loading',
             remote: $(element).attribute('href') + getAjaxSuffix()
         });
-    });
-
-    // Layout Manager
-    layoutmanager = new LayoutManager('body', {
-        delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
-        droppables: '[data-lm-dropzone]',
-        exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
-        resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
-        builder: builder,
-        history: lmhistory
     });
 
     // Grid same widths button (even-ize)
@@ -333,5 +347,6 @@ module.exports = {
     $: $,
     builder: builder,
     layoutmanager: layoutmanager,
-    history: lmhistory
+    history: lmhistory,
+    savestate: savestate
 };

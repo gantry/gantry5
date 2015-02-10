@@ -97,17 +97,24 @@ a {
   animation: fa-spin 1s infinite linear;
 }
 /* line 35, ../scss/admin/_core.scss */
+#g5-container .changes-indicator {
+  opacity: 0;
+  -webkit-animation: pulsate 1s ease-out infinite;
+  -moz-animation: pulsate 1s ease-out infinite;
+  animation: pulsate 1s ease-out infinite;
+}
+/* line 41, ../scss/admin/_core.scss */
 #g5-container .badge {
   border-radius: 100px;
   background-color: #eee;
   color: #9d9d9d;
   padding: 3px 6px;
 }
-/* line 43, ../scss/admin/_core.scss */
+/* line 49, ../scss/admin/_core.scss */
 #g5-container .cards-wrapper {
   margin: -10px -1%;
 }
-/* line 47, ../scss/admin/_core.scss */
+/* line 53, ../scss/admin/_core.scss */
 #g5-container .card {
   display: inline-block;
   background: #fff;
@@ -118,16 +125,16 @@ a {
   vertical-align: top;
   margin: 10px 1%;
 }
-/* line 57, ../scss/admin/_core.scss */
+/* line 63, ../scss/admin/_core.scss */
 #g5-container .card.full-width {
   margin: 0;
   display: block;
 }
-/* line 62, ../scss/admin/_core.scss */
+/* line 68, ../scss/admin/_core.scss */
 #g5-container .card h4 {
   margin: 0;
 }
-/* line 65, ../scss/admin/_core.scss */
+/* line 71, ../scss/admin/_core.scss */
 #g5-container .card h4 .enabler {
   float: right;
 }
@@ -190,49 +197,112 @@ a {
 #g5-container .card .enabler [type="radio"]:checked + .toggle .knob {
   opacity: 1;
 }
-/* line 74, ../scss/admin/_core.scss */
+/* line 80, ../scss/admin/_core.scss */
 #g5-container .card .inner-params {
   margin: 0.625rem 0 0;
   padding-top: 0.625rem;
   border-top: 1px solid #eee;
 }
-/* line 80, ../scss/admin/_core.scss */
+/* line 86, ../scss/admin/_core.scss */
 #g5-container .card .theme-id {
   text-align: center;
   margin-bottom: 10px;
   font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
-/* line 86, ../scss/admin/_core.scss */
+/* line 92, ../scss/admin/_core.scss */
 #g5-container .card .theme-name {
   text-align: center;
 }
-/* line 91, ../scss/admin/_core.scss */
+/* line 97, ../scss/admin/_core.scss */
 #g5-container .card .theme-screenshot img {
   margin: 0 auto 10px auto;
   display: block;
 }
-/* line 96, ../scss/admin/_core.scss */
+/* line 102, ../scss/admin/_core.scss */
 #g5-container .card .theme-screenshot a {
   display: block;
 }
 
-/* line 105, ../scss/admin/_core.scss */
+/* line 111, ../scss/admin/_core.scss */
 #footer {
   margin-bottom: 1rem;
   text-align: center;
   font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
-/* line 109, ../scss/admin/_core.scss */
+/* line 115, ../scss/admin/_core.scss */
 #footer a {
   color: #439A86;
   text-decoration: none;
 }
 
-/* line 116, ../scss/admin/_core.scss */
+/* line 122, ../scss/admin/_core.scss */
 .Whoops.container {
   position: inherit;
 }
 
+@-webkit-keyframes pulsate {
+  0% {
+    -webkit-transform: scale(0.1, 0.1);
+    -moz-transform: scale(0.1, 0.1);
+    -ms-transform: scale(0.1, 0.1);
+    -o-transform: scale(0.1, 0.1);
+    transform: scale(0.1, 0.1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1.2, 1.2);
+    -moz-transform: scale(1.2, 1.2);
+    -ms-transform: scale(1.2, 1.2);
+    -o-transform: scale(1.2, 1.2);
+    transform: scale(1.2, 1.2);
+    opacity: 0;
+  }
+}
+@-moz-keyframes pulsate {
+  0% {
+    -webkit-transform: scale(0.1, 0.1);
+    -moz-transform: scale(0.1, 0.1);
+    -ms-transform: scale(0.1, 0.1);
+    -o-transform: scale(0.1, 0.1);
+    transform: scale(0.1, 0.1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1.2, 1.2);
+    -moz-transform: scale(1.2, 1.2);
+    -ms-transform: scale(1.2, 1.2);
+    -o-transform: scale(1.2, 1.2);
+    transform: scale(1.2, 1.2);
+    opacity: 0;
+  }
+}
+@keyframes pulsate {
+  0% {
+    -webkit-transform: scale(0.1, 0.1);
+    -moz-transform: scale(0.1, 0.1);
+    -ms-transform: scale(0.1, 0.1);
+    -o-transform: scale(0.1, 0.1);
+    transform: scale(0.1, 0.1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1.2, 1.2);
+    -moz-transform: scale(1.2, 1.2);
+    -ms-transform: scale(1.2, 1.2);
+    -o-transform: scale(1.2, 1.2);
+    transform: scale(1.2, 1.2);
+    opacity: 0;
+  }
+}
 @font-face {
   font-family: "g-lato";
   font-weight: 300;

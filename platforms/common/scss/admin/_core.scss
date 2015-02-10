@@ -31,6 +31,12 @@ a {
         @include animation(fa-spin 1s infinite linear);
     }
 
+    // save indicator
+    .changes-indicator {
+        opacity: 0;
+        @include animation(pulsate 1s ease-out infinite);
+    }
+
     // badges
     .badge {
         border-radius: 100px;
@@ -115,4 +121,21 @@ a {
 // Whoops Debug
 .Whoops.container {
     position: inherit;
+}
+
+// Keyframes
+@include keyframes(pulsate) {
+    0% {
+        @include transform(scale(0.1, 0.1));
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        @include transform(scale(1.2, 1.2));
+        opacity: 0;
+    }
 }
