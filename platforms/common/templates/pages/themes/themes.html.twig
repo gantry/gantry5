@@ -27,7 +27,7 @@
                                                 </div>
                                                 <div class="theme-screenshot">
                                                     <a href="{{ theme.admin_url|e }}">
-                                                        <img src="{{ url(theme.thumbnail)|default('http://www.placehold.it/206x150/f4f4f4')|e }}" />
+                                                        <img src="{{ url('gantry-themes://' ~ theme.name ~ '/common/' ~ theme.details.images.thumbnail)|default('http://www.placehold.it/206x150/f4f4f4')|e }}" />
                                                     </a>
                                                 </div>
                                                 <div class="theme-name">
