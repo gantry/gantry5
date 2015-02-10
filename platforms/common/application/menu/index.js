@@ -1,8 +1,12 @@
 "use strict";
-var ready       = require('elements/domready'),
-    MenuManager = require('./menumanager'),
-    zen         = require('elements/zen'),
-    $           = require('elements');
+var ready         = require('elements/domready'),
+    MenuManager   = require('./menumanager'),
+    $             = require('elements'),
+    zen           = require('elements/zen'),
+    modal         = require('../ui').modal,
+    toastr        = require('../ui').toastr,
+    request       = require('agent'),
+    getAjaxSuffix = require('../utils/get-ajax-suffix');
 
 var menumanager = new MenuManager('body', {
     delegate: '#menu-editor > section ul li, .submenu-column li, .column-container .g-block',
@@ -52,6 +56,63 @@ ready(function() {
             y - bounding.top < deleter.height) {
             element.parent('[data-mm-id]').remove();
         }
+    });
+
+    body.delegate('click', '#menu-editor .config-cog, #menu-editor .global-menu-settings', function(event, element) {
+        event.preventDefault();
+
+        modal.open({
+            content: 'Loading',
+            //method: 'post',
+            //data: data,
+            remote: $(element).attribute('href') + getAjaxSuffix(),
+            remoteLoaded: function(response, content) {
+                var form = content.elements.content.find('form'),
+                    submit = content.elements.content.find('input[type="submit"], button[type="submit"]'),
+                    dataString = [];
+
+                if (!form || !submit) { return true; }
+
+                // Particle Settings apply
+                submit.on('click', function(e) {
+                    e.preventDefault();
+                    dataString = [];
+
+                    submit.showSpinner();
+
+                    $(form[0].elements).forEach(function(input) {
+                        input = $(input);
+                        var name = input.attribute('name'),
+                            value = input.value();
+
+                        if (!name) { return; }
+                        dataString.push(name + '=' + value);
+                    });
+
+                    request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response) {
+                        if (!response.body.success) {
+                            modal.open({
+                                content: response.body.html || response.body,
+                                afterOpen: function(container) {
+                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                }
+                            });
+                        } else {
+                            if (response.body.path) {
+                                menumanager.items[response.body.path] = response.body.data;
+                            } else {
+                                menumanager.settings = response.body.data.settings;
+                            }
+
+                            modal.close();
+                            toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
+                        }
+
+                        submit.hideSpinner();
+                    });
+                });
+            }
+        });
     });
 });
 
