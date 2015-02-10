@@ -7,55 +7,55 @@
 @import "configuration/nucleus/base";
 
 // Load Template Configuration
-@import "configuration/template/base";
+@import "configuration/gantry/base";
 
 // Load Nucleus Mixins and Functions
 @import "nucleus/functions/base";
 @import "nucleus/mixins/base";
 
 // Load Template Library
-@import "template/modules/base";
+@import "gantry/modules/base";
 
 //-------------------------------------------
 
 // TEMPLATE COMPONENTS
 
 // Core
-@import "template/core";
-@import "template/fonts";
+@import "gantry/core";
+@import "gantry/fonts";
 
 // Header
-@import "template/header";
+@import "gantry/header";
 
 // Nav
-@import "template/nav";
+@import "gantry/nav";
 
 // Showcase
-@import "template/showcase";
+@import "gantry/showcase";
 
 // Feature
-@import "template/feature";
+@import "gantry/feature";
 
 // Main
-@import "template/main";
+@import "gantry/main";
 
 // Sidebar
-@import "template/sidebar";
+@import "gantry/sidebar";
 
 // Bottom
-@import "template/bottom";
+@import "gantry/bottom";
 
 // Footer
-@import "template/footer";
+@import "gantry/footer";
 
 // Typography
-@import "template/typography";
+@import "gantry/typography";
 
 // Forms
-@import "template/forms";
+@import "gantry/forms";
 
 // Tables
-@import "template/tables";
+@import "gantry/tables";
 
 // Buttons
-@import "template/buttons";
+@import "gantry/buttons";
