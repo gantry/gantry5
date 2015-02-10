@@ -7,75 +7,75 @@
 @import "configuration/nucleus/base";
 
 // Load Template Configuration
-@import "configuration/template/base";
+@import "configuration/ricochet/base";
 
 // Load Nucleus Mixins and Functions
 @import "nucleus/functions/base";
 @import "nucleus/mixins/base";
 
 // Load Template Library
-@import "template/modules/base";
+@import "ricochet/modules/base";
 
 //-------------------------------------------
 
 // TEMPLATE PARTICLES
 
-@import "template/particles/base";
+@import "ricochet/particles/base";
 
 
 // TEMPLATE COMPONENTS
 
 // Core
-@import "template/core";
-@import "template/fonts";
+@import "ricochet/core";
+@import "ricochet/fonts";
 
 // Header
-@import "template/header";
+@import "ricochet/header";
 
 // Nav
-@import "template/nav";
+@import "ricochet/nav";
 
 // Showcase
-@import "template/showcase";
+@import "ricochet/showcase";
 
 // Feature
-@import "template/feature";
+@import "ricochet/feature";
 
 // Main
-@import "template/main";
+@import "ricochet/main";
 
 // Sidebar
-@import "template/sidebar";
+@import "ricochet/sidebar";
 
 // Bottom
-@import "template/bottom";
+@import "ricochet/bottom";
 
 // Footer
-@import "template/footer";
+@import "ricochet/footer";
 
 // Variations
-@import "template/variations";
+@import "ricochet/variations";
 
 // Typography
-@import "template/typography";
+@import "ricochet/typography";
 
 // Forms
-@import "template/forms";
+@import "ricochet/forms";
 
 // Tables
-@import "template/tables";
+@import "ricochet/tables";
 
 // Buttons
-@import "template/buttons";
+@import "ricochet/buttons";
 
 // Coming Soon Page
-@import "template/comingsoon";
+@import "ricochet/comingsoon";
 
 // Error Page
-@import "template/error";
+@import "ricochet/error";
 
 // REMOVE AFTER TESTING
-@import "template/extensions";
+@import "ricochet/extensions";
 
 // REMOVE AND CONSOLIDATE INTO OTHER FILES
-@import "template/demo";
+@import "ricochet/demo";
