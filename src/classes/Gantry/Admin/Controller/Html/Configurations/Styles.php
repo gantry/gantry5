@@ -173,13 +173,13 @@ class Styles extends HtmlController
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
-        $out = 'template' . ($configuration != 'default' ? '_'. $configuration : '');
+        $out = $this->container['theme.name'] . ($configuration != 'default' ? '_'. $configuration : '');
 
         $path = $locator->findResource("gantry-theme://css-compiled/{$out}.css", true, true);
 
         $compiler = new ScssCompiler();
         $compiler->setVariables($this->container['config']->flatten('styles', '-'));
-        $compiler->compileFile('template', $path);
+        $compiler->compileFile($this->container['theme.name'], $path);
 
     }
 }
