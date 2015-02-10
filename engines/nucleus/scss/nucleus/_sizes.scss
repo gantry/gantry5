@@ -48,3 +48,9 @@
 	-ms-flex: 0 1 percentage(1/12);
 	flex: 0 1 percentage(1/12);
 }
+
+body [class*="size-"] {
+	@include breakpoint(mobile-only) {
+		@include flex(0 100%);
+	}
+}

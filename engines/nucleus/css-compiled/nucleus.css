@@ -275,115 +275,6 @@ th {
   padding: 0.938rem; }
 
 @media only all and (max-width: 47.938rem) {
-  body [class*="size-"] {
-    -webkit-box-flex: 0;
-    -moz-box-flex: 0;
-    box-flex: 0;
-    -webkit-flex: 0 100%;
-    -moz-flex: 0 100%;
-    -ms-flex: 0 100%;
-    flex: 0 100%; } }
-
-.size-1-2 {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 50%;
-  -moz-flex: 0 50%;
-  -ms-flex: 0 50%;
-  flex: 0 50%; }
-
-.size-1-3 {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 33.33333%;
-  -moz-flex: 0 33.33333%;
-  -ms-flex: 0 33.33333%;
-  flex: 0 33.33333%; }
-
-.size-1-4 {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 25%;
-  -moz-flex: 0 25%;
-  -ms-flex: 0 25%;
-  flex: 0 25%; }
-
-.size-1-5 {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 20%;
-  -moz-flex: 0 20%;
-  -ms-flex: 0 20%;
-  flex: 0 20%; }
-
-.size-1-6 {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 16.66667%;
-  -moz-flex: 0 16.66667%;
-  -ms-flex: 0 16.66667%;
-  flex: 0 16.66667%; }
-
-.size-1-7 {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 14.28571%;
-  -moz-flex: 0 14.28571%;
-  -ms-flex: 0 14.28571%;
-  flex: 0 14.28571%; }
-
-.size-1-8 {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 12.5%;
-  -moz-flex: 0 12.5%;
-  -ms-flex: 0 12.5%;
-  flex: 0 12.5%; }
-
-.size-1-9 {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 11.11111%;
-  -moz-flex: 0 11.11111%;
-  -ms-flex: 0 11.11111%;
-  flex: 0 11.11111%; }
-
-.size-1-10 {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 10%;
-  -moz-flex: 0 10%;
-  -ms-flex: 0 10%;
-  flex: 0 10%; }
-
-.size-1-11 {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 9.09091%;
-  -moz-flex: 0 9.09091%;
-  -ms-flex: 0 9.09091%;
-  flex: 0 9.09091%; }
-
-.size-1-12 {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 8.33333%;
-  -moz-flex: 0 8.33333%;
-  -ms-flex: 0 8.33333%;
-  flex: 0 8.33333%; }
-
-@media only all and (max-width: 47.938rem) {
   @supports not (flex-wrap: wrap) {
     .g-grid {
       display: block;
@@ -1123,6 +1014,16 @@ th {
   -moz-flex: 0 1 8.33333%;
   -ms-flex: 0 1 8.33333%;
   flex: 0 1 8.33333%; }
+
+@media only all and (max-width: 47.938rem) {
+  body [class*="size-"] {
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    box-flex: 0;
+    -webkit-flex: 0 100%;
+    -moz-flex: 0 100%;
+    -ms-flex: 0 100%;
+    flex: 0 100%; } }
 
 .g-main-nav .g-toplevel {
   position: relative; }

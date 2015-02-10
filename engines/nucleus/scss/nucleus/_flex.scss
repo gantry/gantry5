@@ -44,57 +44,6 @@
 	padding: $content-padding;
 }
 
-body [class*="size-"] {
-	@include breakpoint(mobile-only) {
-		@include flex(0 100%);
-	}
-}
-
-// Custom Size Modifiers
-.size-1-2 {
-	@include flex(0 percentage(1/2));
-}
-
-.size-1-3 {
-	@include flex(0 percentage(1/3));
-}
-
-.size-1-4 {
-	@include flex(0 percentage(1/4));
-}
-
-.size-1-5 {
-	@include flex(0 percentage(1/5));
-}
-
-.size-1-6 {
-	@include flex(0 percentage(1/6));
-}
-
-.size-1-7 {
-	@include flex(0 percentage(1/7));
-}
-
-.size-1-8 {
-	@include flex(0 percentage(1/8));
-}
-
-.size-1-9 {
-	@include flex(0 percentage(1/9));
-}
-
-.size-1-10 {
-	@include flex(0 percentage(1/10));
-}
-
-.size-1-11 {
-	@include flex(0 percentage(1/11));
-}
-
-.size-1-12 {
-	@include flex(0 percentage(1/12));
-}
-
 // Fix for Firefox versions 27 and below
 @include breakpoint(mobile-only) {
 	@supports not (flex-wrap: wrap) {
