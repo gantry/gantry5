@@ -162,6 +162,9 @@ a {
   a:hover {
     color: inherit; }
 
+.g-container {
+  position: relative; }
+
 @font-face {
   font-family: "merriweather";
   font-weight: normal;
