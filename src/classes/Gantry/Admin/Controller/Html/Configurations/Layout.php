@@ -269,12 +269,17 @@ class Layout extends HtmlController
 
     protected function getParticles()
     {
+        $config = $this->container['config'];
+
         $particles = $this->container['particles']->all();
 
         $list = [];
         foreach ($particles as $name => $particle) {
             $type = isset($particle['type']) ? $particle['type'] : 'particle';
-            $list[$type][$name] = $particle['name'];
+
+            if ($config->get("particles.{$name}.enabled", true)) {
+                $list[$type][$name] = $particle['name'];
+            }
         }
 
         return $list;
