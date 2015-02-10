@@ -101,34 +101,7 @@ class TwigExtension extends \Twig_Extension
      */
     public function urlFunc($input, $domain = false)
     {
-        $resource = trim((string) $input);
-        if (!$resource) {
-            return null;
-        }
-
-        if ($resource[0] == '/') {
-            // Absolute path in our server, nothing to do.
-            // TODO: add support to include domain..
-            return $resource;
-
-        } elseif (strpos($resource, '://') !== false) {
-            // Resolve stream to a relative path.
-            $gantry = Gantry::instance();
-
-            /** @var UniformResourceLocator $locator */
-            $locator = $gantry['locator'];
-
-            try {
-                // Attempt to find our resource.
-                $resource = $locator->findResource($resource, false);
-            } catch (\Exception $e) {
-                // Scheme did not exist; assume that we had valid scheme (like http) so no modification is needed.
-                return $resource;
-            }
-        }
-
-        // TODO: add support to include domain..
-        return $resource ? rtrim(Document::rootUri(), '/') .'/'. $resource : null;
+        return Document::url(trim((string) $input), $domain);
     }
 
     /**

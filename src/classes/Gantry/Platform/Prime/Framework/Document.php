@@ -1,7 +1,9 @@
 <?php
 namespace Gantry\Framework;
 
-class Document
+use Gantry\Framework\Base\Document as BaseDocument;
+
+class Document extends BaseDocument
 {
     public static $styles = [];
     public static $scripts = ['header' => [], 'footer' => []];

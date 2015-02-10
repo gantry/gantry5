@@ -52,6 +52,43 @@ abstract class Folder
     }
 
     /**
+     * Get relative path between target and base path. If path isn't relative, return full path.
+     *
+     * @param  string  $path
+     * @param  string  $base
+     * @return string
+     */
+    public static function getRelativePathDotDot($path, $base)
+    {
+        $base = preg_replace('![\\|/]+!', '/', $base);
+        $path = preg_replace('![\\|/]+!', '/', $path);
+
+        if ($path === $base) {
+            return '';
+        }
+
+        $baseParts = explode('/', isset($base[0]) && '/' === $base[0] ? substr($base, 1) : $base);
+        $pathParts = explode('/', isset($path[0]) && '/' === $path[0] ? substr($path, 1) : $path);
+
+        array_pop($baseParts);
+        $lastPart = array_pop($pathParts);
+        foreach ($baseParts as $i => $directory) {
+            if (isset($pathParts[$i]) && $pathParts[$i] === $directory) {
+                unset($baseParts[$i], $pathParts[$i]);
+            } else {
+                break;
+            }
+        }
+        $pathParts[] = $lastPart;
+        $path = str_repeat('../', count($baseParts)) . implode('/', $pathParts);
+
+        return '' === $path
+            || '/' === $path[0]
+            || false !== ($colonPos = strpos($path, ':')) && ($colonPos < ($slashPos = strpos($path, '/')) || false === $slashPos)
+            ? "./$path" : $path;
+    }
+
+    /**
      * Shift first directory out of the path.
      *
      * @param string $path
