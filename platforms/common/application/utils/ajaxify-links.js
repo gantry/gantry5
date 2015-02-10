@@ -79,7 +79,7 @@ History.Adapter.bind(window, 'statechange', function() {
         if (response.body && response.body.html) {
             var fader;
             destination.html(response.body.html);
-            if (fader = (destination.data('g5-content') !== null ? destination : destination.find('[data-g5-content]'))) {
+            if (fader = (destination.matches('[data-g5-content]') ? destination : destination.find('[data-g5-content]'))) {
                 fader.style({opacity: 0}).animate({opacity: 1});
             }
         } else { destination.html(response.body); }
