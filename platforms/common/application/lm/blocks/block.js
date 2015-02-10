@@ -3,7 +3,8 @@ var prime     = require('prime'),
     Base      = require('./base'),
     $         = require('../../utils/elements.moofx'),
     zen       = require('elements/zen'),
-    precision = require('mout/number/enforcePrecision');
+    precision = require('mout/number/enforcePrecision'),
+    bind      = require('mout/function/bind');
 
 var Block = new prime({
     inherits: Base,
@@ -28,7 +29,11 @@ var Block = new prime({
             this.setAttribute('size', size);
         }
 
-        $(this.block).style({ flex: '0 1 ' + size + '%', '-webkit-flex': '0 1 ' + size + '%', '-ms-flex': '0 1 ' + size + '%' });
+        $(this.block).style({
+            flex: '0 1 ' + size + '%',
+            '-webkit-flex': '0 1 ' + size + '%',
+            '-ms-flex': '0 1 ' + size + '%'
+        });
 
         this.emit('resized', size, this);
     },
@@ -38,7 +43,15 @@ var Block = new prime({
         if (store) {
             this.setAttribute('size', size);
         }
-        $(this.block).animate({ flex: '0 1 ' + size + '%', '-webkit-flex': '0 1 ' + size + '%', '-ms-flex': '0 1 ' + size + '%' });
+        $(this.block).animate({
+            flex: '0 1 ' + size + '%',
+            '-webkit-flex': '0 1 ' + size + '%',
+            '-ms-flex': '0 1 ' + size + '%'
+        }, bind(function() {
+            this.block.attribute('style', null);
+            this.setSize(size);
+        }, this));
+
         this.emit('resized', size, this);
     },
 
