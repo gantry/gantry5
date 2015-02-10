@@ -1,0 +1,54 @@
+details:
+  name: Hydrogen
+  version: 1.0
+  icon: paper-plane
+  date: February 9, 2015
+  author:
+    name: RocketTheme, LLC
+    email: support@rockettheme.com
+    link: http://www.rockettheme.com
+
+  documentation:
+    link: http://www.rockettheme.com/docs/joomla/templates/hydrogen
+
+  support:
+    link: http://www.rockettheme.com/forum/joomla-template-hydrogen
+
+  copyright: (C) 2005 - 2015 RocketTheme, LLC. All rights reserved.
+  license: GPLv2
+  description: Hydrogen Theme
+  images:
+    thumbnail: admin/images/template_thumbnail.png
+    preview: admin/images/template_preview.png
+
+configuration:
+  gantry:
+    platform: prime
+    engine: nucleus
+
+  theme:
+    file: gantry-theme://include/theme.php
+    class: \Gantry\Framework\Theme
+    parent: gantry
+
+  overrides:
+    - gantry-theme://custom
+    - gantry-theme://
+    - gantry-theme://common
+
+  css:
+    compiler: \Gantry\Component\Stylesheet\ScssCompiler
+    paths:
+      - gantry-theme://scss
+      - gantry-engine://scss
+    files:
+      - template.scss
+
+  dependencies:
+    gantry: 5.0.*
+    engine/nucleus: 1.0.*
+    asset/font-awesome: 4.2
+    particle/menu: 1.0.*
+
+  updates: http://updates.rockettheme.com/themes/hydrogen.yaml
+  news: http://news.rockettheme.com/prime/themes.yaml
