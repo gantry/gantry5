@@ -145,6 +145,8 @@ elif [ -f $GIT_TARGET/.prime ]; then
         'platforms/prime/index.php'
         'themes/gantry/prime'
         'themes/gantry/common'
+        'themes/hydrogen/prime'
+        'themes/hydrogen/common'
         'themes/ricochet/prime'
         'themes/ricochet/common'
         )
@@ -165,6 +167,8 @@ elif [ -f $GIT_TARGET/.prime ]; then
         'index.php'
         'themes/gantry'
         'themes/gantry/common'
+        'themes/hydrogen'
+        'themes/hydrogen/common'
         'themes/ricochet'
         'themes/ricochet/common'
         )
