@@ -1,5 +1,3 @@
-{% set attr_style = segment.attributes.size ? ' style="flex: 0 1 ' ~ segment.attributes.size ~ '%; width: ' ~segment.attributes.size ~ '%"' %}
-
 {% set html %}
     {% if segment.children %}
         {% for segment in segments %}
@@ -9,7 +7,7 @@
 {% endset %}
 
 {% if html|trim %}
-    <div class="g-block{{ segment.classes ? ' ' ~ segment.classes|join(' ') }}{{ segment.attributes.size|toGrid }}"{{ attr_style }}>
+    <div class="g-block{{ segment.classes ? ' ' ~ segment.classes|join(' ') }} {{ segment.attributes.size|toGrid }}">
         {{ html }}
     </div>
 {% endif %}

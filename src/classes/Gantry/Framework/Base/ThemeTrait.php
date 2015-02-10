@@ -121,16 +121,25 @@ trait ThemeTrait
 
     public function toGrid($text)
     {
+        if (!$text) {
+            return '';
+        }
+
+        $number = round($text, 1);
+        $number = max(5, $number);
+        $number = $number == 100 ? 100 : min(95, $number);
+
         static $sizes = array(
-            '10'      => 'size-1-10',
-            '20'      => 'size-1-5',
-            '25'      => 'size-1-4',
-            '33.3334' => 'size-1-3',
-            '50'      => 'size-1-2',
-            '100'     => ''
+            '33.3' => 'size-1-3',
+            '16.7' => 'size-1-6',
+            '14.3' => 'size-1-7',
+            '12.5' => 'size-1-8',
+            '11.1' => 'size-1-9',
+            '9.1'  => 'size-1-11',
+            '8.3'  => 'size-1-12'
         );
 
-        return isset($sizes[$text]) ? ' ' . $sizes[$text] : '';
+        return isset($sizes[$number]) ? ' ' . $sizes[$number] : 'size-' . (int) $number;
     }
 
     /**
