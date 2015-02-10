@@ -43,6 +43,7 @@ var MenuManager = new prime({
         this.root = $('#menu-editor');
 
         if (this.root) {
+            this.settings = JSON.parse(this.root.data('menu-settings'));
             this.ordering = JSON.parse(this.root.data('menu-ordering'));
             this.items = JSON.parse(this.root.data('menu-items'));
         }

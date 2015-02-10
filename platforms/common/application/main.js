@@ -33,6 +33,7 @@ ready(function() {
             data.layout = JSON.stringify(lm.builder.serialize());
         } else if ($('[data-mm-id]')) {
             data.menutype = $('select.menu-select-wrap').value();
+            data.settings = JSON.stringify(mm.settings);
             data.ordering = JSON.stringify(mm.ordering);
             data.items = JSON.stringify(mm.items);
         } else {
