@@ -58,7 +58,7 @@ class LayoutReader
 
             $result = (object) [
                 'id' => static::id(),
-                'type' => 'section',
+                'type' => ($field == 'non-visible' ? $field : 'section'),
                 'title' => ucfirst($field),
                 'attributes' => (object) [
                     'type' => $field,
