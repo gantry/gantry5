@@ -555,8 +555,12 @@
             font-size: $core-font-size - 0.2;
         }
 
-        &:first-child, &:last-child {
-            margin: 0;
+        &:first-child {
+            margin-top: 0;
+        }
+        
+        &:last-child {
+            margin-bottom: 0;
         }
 
         &[data-lm-blocktype="spacer"] {

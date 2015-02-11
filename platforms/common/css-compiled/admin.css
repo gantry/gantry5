@@ -1863,45 +1863,49 @@ a {
   }
 }
 /* line 558, ../scss/admin/_layout-manager.scss */
-.g5-lm-particles-picker li:first-child, .g5-lm-particles-picker li:last-child {
-  margin: 0;
+.g5-lm-particles-picker li:first-child {
+  margin-top: 0;
 }
 /* line 562, ../scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker li:last-child {
+  margin-bottom: 0;
+}
+/* line 566, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="spacer"] {
   background-color: #eee;
   color: #666;
   border: 1px solid #d0d0d0;
 }
-/* line 568, ../scss/admin/_layout-manager.scss */
+/* line 572, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="position"] {
   color: #fff;
   background-color: #aaa;
 }
-/* line 573, ../scss/admin/_layout-manager.scss */
+/* line 577, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="particle"] {
   color: #fff;
   background-color: #13B0DA;
 }
-/* line 578, ../scss/admin/_layout-manager.scss */
+/* line 582, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="pagecontent"] {
   color: #fff;
   background-color: #218fda;
 }
-/* line 583, ../scss/admin/_layout-manager.scss */
+/* line 587, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="atom"] {
   color: #fff;
   background-color: #9055AF;
 }
-/* line 589, ../scss/admin/_layout-manager.scss */
+/* line 593, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .settings-block {
   width: 100% !important;
 }
-/* line 593, ../scss/admin/_layout-manager.scss */
+/* line 597, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search {
   position: relative;
   margin-bottom: 10px;
 }
-/* line 597, ../scss/admin/_layout-manager.scss */
+/* line 601, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search i {
   position: absolute;
   right: 10px;
