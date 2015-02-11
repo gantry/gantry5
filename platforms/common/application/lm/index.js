@@ -91,8 +91,7 @@ ready(function() {
         builder.setStructure(data);
         builder.load();
 
-        var serial = builder.serialize();
-        lmhistory.setSession(serial);
+        lmhistory.setSession(builder.serialize());
         savestate.setSession(builder.serialize(null, true));
     }
 
@@ -129,8 +128,7 @@ ready(function() {
         builder.setStructure(data);
         builder.load();
 
-        var serial = builder.serialize();
-        lmhistory.setSession(serial);
+        lmhistory.setSession(builder.serialize());
         savestate.setSession(builder.serialize(null, true));
 
         // refresh LM eraser
