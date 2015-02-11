@@ -1,3 +1,8 @@
+html {
+    width:100vw;
+    overflow-x:hidden;
+}
+
 body {
     color: $white;
     background-color: $body-bg !important;
