@@ -112,19 +112,31 @@ class Menu extends HtmlController
             throw new \RuntimeException('Error while saving menu: Invalid structure', 400);
         }
 
-        $data = new Config([]);
-
+        krsort($order);
+        $ordering = [];
         foreach ($order as $path => $columns) {
-            $has_columns = count($columns) > 1;
             foreach ($columns as $column => $colitems) {
-                $column = $has_columns ? $column : '';
+                $list = [];
                 foreach ($colitems as $item) {
-                    $item = substr($item, strlen($path));
-                    $data->set(preg_replace('|[\./]+|', '.', "ordering.{$path}.{$column}.{$item}"), []);
+                    $name = trim(substr($item, strlen($path)), '/');
+                    echo "$path/$column $item: $name <br>";
+                    if (isset($ordering[$item])) {
+                        $list[$name] = $ordering[$item];
+                        unset($ordering[$item]);
+                    } else {
+                        $list[$name] = [];
+                    }
+                }
+                if (count($columns) > 1) {
+                    $ordering[$path][$column] = $list;
+                } else {
+                    $ordering[$path] = $list;
                 }
             }
         }
 
+        $data = new Config([]);
+        $data->set('ordering', $ordering['']);
         $data->set('items', $items);
 
         /** @var UniformResourceLocator $locator */
