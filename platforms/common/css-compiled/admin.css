@@ -1509,7 +1509,11 @@ a {
   bottom: 12px;
   right: 12px;
 }
-/* line 219, ../scss/admin/_layout-manager.scss */
+/* line 214, ../scss/admin/_layout-manager.scss */
+#g5-container .lm-blocks > .g-grid > .g-block > .particle-size i, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .particle-size i {
+  margin-right: 5px;
+}
+/* line 223, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .g-grid:hover > .g-block > .particle:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .position:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .spacer:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .pagecontent:after {
   content: "";
   top: 0;
@@ -1521,23 +1525,23 @@ a {
   cursor: col-resize;
   z-index: 10;
 }
-/* line 235, ../scss/admin/_layout-manager.scss */
+/* line 239, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .atom, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .atom {
   margin-right: 0;
 }
-/* line 240, ../scss/admin/_layout-manager.scss */
+/* line 244, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .pagecontent:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .pagecontent:after {
   display: none;
 }
-/* line 248, ../scss/admin/_layout-manager.scss */
+/* line 252, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .g-grid > .g-block:last-child {
   margin-right: 0;
 }
-/* line 252, ../scss/admin/_layout-manager.scss */
+/* line 256, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .g-grid > .g-block .in-between-sections:first-child, #g5-container .lm-blocks .g-grid > .g-block .in-between-sections:last-child {
   margin: 6px;
 }
-/* line 256, ../scss/admin/_layout-manager.scss */
+/* line 260, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .g-grid > .g-block:after {
   content: "";
   display: block;
@@ -1548,11 +1552,11 @@ a {
   z-index: 3;
   cursor: col-resize;
 }
-/* line 267, ../scss/admin/_layout-manager.scss */
+/* line 271, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .g-grid > .g-block:last-child:after {
   display: none;
 }
-/* line 272, ../scss/admin/_layout-manager.scss */
+/* line 276, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle, #g5-container .lm-blocks .position, #g5-container .lm-blocks .spacer, #g5-container .lm-blocks .pagecontent, #g5-container .lm-blocks .atom {
   cursor: move;
   padding: 6px 13px;
@@ -1561,30 +1565,30 @@ a {
   margin-right: 6px;
   position: relative;
 }
-/* line 280, ../scss/admin/_layout-manager.scss */
+/* line 284, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle .particle-size, #g5-container .lm-blocks .position .particle-size, #g5-container .lm-blocks .spacer .particle-size, #g5-container .lm-blocks .pagecontent .particle-size, #g5-container .lm-blocks .atom .particle-size {
   color: rgba(255, 255, 255, 0.7);
 }
-/* line 284, ../scss/admin/_layout-manager.scss */
+/* line 288, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle strong, #g5-container .lm-blocks .position strong, #g5-container .lm-blocks .spacer strong, #g5-container .lm-blocks .pagecontent strong, #g5-container .lm-blocks .atom strong {
   font-weight: bold;
   color: #fff;
 }
-/* line 289, ../scss/admin/_layout-manager.scss */
+/* line 293, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle > span, #g5-container .lm-blocks .position > span, #g5-container .lm-blocks .spacer > span, #g5-container .lm-blocks .pagecontent > span, #g5-container .lm-blocks .atom > span {
   position: relative;
   z-index: 2;
 }
-/* line 293, ../scss/admin/_layout-manager.scss */
+/* line 297, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle > span span, #g5-container .lm-blocks .position > span span, #g5-container .lm-blocks .spacer > span span, #g5-container .lm-blocks .pagecontent > span span, #g5-container .lm-blocks .atom > span span {
   display: block;
 }
-/* line 296, ../scss/admin/_layout-manager.scss */
+/* line 300, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle > span span:last-child, #g5-container .lm-blocks .position > span span:last-child, #g5-container .lm-blocks .spacer > span span:last-child, #g5-container .lm-blocks .pagecontent > span span:last-child, #g5-container .lm-blocks .atom > span span:last-child {
   color: rgba(255, 255, 255, 0.7);
   margin-top: -3px;
 }
-/* line 303, ../scss/admin/_layout-manager.scss */
+/* line 307, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle .float-right, #g5-container .lm-blocks .position .float-right, #g5-container .lm-blocks .spacer .float-right, #g5-container .lm-blocks .pagecontent .float-right, #g5-container .lm-blocks .atom .float-right {
   position: absolute;
   right: 13px;
@@ -1593,14 +1597,14 @@ a {
   line-height: 50px;
   float: inherit;
 }
-/* line 311, ../scss/admin/_layout-manager.scss */
+/* line 315, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle .float-right i, #g5-container .lm-blocks .position .float-right i, #g5-container .lm-blocks .spacer .float-right i, #g5-container .lm-blocks .pagecontent .float-right i, #g5-container .lm-blocks .atom .float-right i {
   line-height: 52px;
   cursor: pointer;
   position: relative;
   z-index: 2;
 }
-/* line 320, ../scss/admin/_layout-manager.scss */
+/* line 324, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle-size {
   font-weight: 300;
   font-size: 1.2rem;
@@ -1612,37 +1616,37 @@ a {
   text-shadow: none;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-  /* line 320, ../scss/admin/_layout-manager.scss */
+  /* line 324, ../scss/admin/_layout-manager.scss */
   #g5-container .lm-blocks .particle-size {
     font-size: 1rem;
   }
 }
-/* line 334, ../scss/admin/_layout-manager.scss */
+/* line 338, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle {
   background-color: #00B1D9;
 }
-/* line 338, ../scss/admin/_layout-manager.scss */
+/* line 342, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .spacer {
   background-color: #eee;
   color: rgba(102, 102, 102, 0.8);
 }
-/* line 342, ../scss/admin/_layout-manager.scss */
+/* line 346, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .spacer .particle-size {
   color: rgba(102, 102, 102, 0.8);
 }
-/* line 348, ../scss/admin/_layout-manager.scss */
+/* line 352, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .spacer > span span:last-child {
   color: rgba(102, 102, 102, 0.8);
 }
-/* line 355, ../scss/admin/_layout-manager.scss */
+/* line 359, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .atom {
   background-color: #9055AF;
 }
-/* line 359, ../scss/admin/_layout-manager.scss */
+/* line 363, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .pagecontent {
   background-color: #218fda;
 }
-/* line 363, ../scss/admin/_layout-manager.scss */
+/* line 367, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder {
   text-align: center;
   color: #5987a0;
@@ -1652,7 +1656,7 @@ a {
   padding: 1px;
   flex: 0 1 100%;
 }
-/* line 372, ../scss/admin/_layout-manager.scss */
+/* line 376, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between {
   display: block;
   flex: 0 0 0px;
@@ -1664,29 +1668,43 @@ a {
   flex: 0 1 0%;
   background-color: #555;
 }
-/* line 384, ../scss/admin/_layout-manager.scss */
+/* line 388, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between-grids {
   background-color: #555;
   margin: -5px 0;
 }
-/* line 388, ../scss/admin/_layout-manager.scss */
+/* line 392, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between-grids.in-between-grids-first {
   margin: 0 0 -2px;
 }
-/* line 392, ../scss/admin/_layout-manager.scss */
+/* line 396, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between-grids.in-between-grids-last {
   margin: -2px 0 0;
 }
-/* line 397, ../scss/admin/_layout-manager.scss */
+/* line 401, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between.in-between-sections {
   width: auto;
 }
-/* line 404, ../scss/admin/_layout-manager.scss */
+/* line 407, ../scss/admin/_layout-manager.scss */
+#g5-container .lm-blocks .block-has-changes:not(.section) {
+  box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
+}
+/* line 411, ../scss/admin/_layout-manager.scss */
+#g5-container .lm-blocks .block-has-changes > span .title i {
+  position: absolute;
+  left: -9px;
+  top: 12px;
+}
+/* line 417, ../scss/admin/_layout-manager.scss */
+#g5-container .lm-blocks .block-has-changes > span .title, #g5-container .lm-blocks .block-has-changes > span .font-small {
+  margin-left: 15px;
+}
+/* line 424, ../scss/admin/_layout-manager.scss */
 #g5-container #history {
   display: inline-block;
   float: right;
 }
-/* line 407, ../scss/admin/_layout-manager.scss */
+/* line 427, ../scss/admin/_layout-manager.scss */
 #g5-container #history span {
   display: inline-block;
   background: #eee;
@@ -1700,20 +1718,20 @@ a {
   color: #777;
   text-shadow: 0 1px #fff;
 }
-/* line 420, ../scss/admin/_layout-manager.scss */
+/* line 440, ../scss/admin/_layout-manager.scss */
 #g5-container #history span.disabled {
   color: #ccc;
 }
-/* line 426, ../scss/admin/_layout-manager.scss */
+/* line 446, ../scss/admin/_layout-manager.scss */
 #g5-container .sidebar [data-lm-blocktype] {
   position: relative;
   z-index: 5;
 }
-/* line 432, ../scss/admin/_layout-manager.scss */
+/* line 452, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-newblocks {
   padding-bottom: 8px;
 }
-/* line 435, ../scss/admin/_layout-manager.scss */
+/* line 455, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-newblocks .g-block {
   display: inline-block;
   text-align: center;
@@ -1722,11 +1740,11 @@ a {
   border-radius: 3px;
   margin-right: 8px;
 }
-/* line 445, ../scss/admin/_layout-manager.scss */
+/* line 465, ../scss/admin/_layout-manager.scss */
 #g5-container .lm-newblocks .button i {
   line-height: 1.6;
 }
-/* line 452, ../scss/admin/_layout-manager.scss */
+/* line 472, ../scss/admin/_layout-manager.scss */
 #g5-container #trash {
   position: fixed;
   top: -100px;
@@ -1739,7 +1757,7 @@ a {
   padding: 0.938rem;
   background: rgba(255, 255, 255, 0.8);
 }
-/* line 464, ../scss/admin/_layout-manager.scss */
+/* line 484, ../scss/admin/_layout-manager.scss */
 #g5-container #trash .trash-zone {
   background-color: #ed5565;
   font-size: 2rem;
@@ -1750,38 +1768,38 @@ a {
   margin: 0 auto;
   font-weight: 300;
 }
-/* line 474, ../scss/admin/_layout-manager.scss */
+/* line 494, ../scss/admin/_layout-manager.scss */
 #g5-container #trash span {
   font-size: 0.8rem;
   color: #666;
   text-shadow: 0 0 1px #fff;
 }
 
-/* line 483, ../scss/admin/_layout-manager.scss */
+/* line 503, ../scss/admin/_layout-manager.scss */
 .g5-dialog .g-tabs {
   margin-right: 0 !important;
 }
-/* line 488, ../scss/admin/_layout-manager.scss */
+/* line 508, ../scss/admin/_layout-manager.scss */
 .g5-dialog .g-tabs ul {
   background-color: #DADADA;
   margin: -1rem -1rem 1rem !important;
   border-radius: 0.1875rem 0.1875rem 0 0;
 }
-/* line 493, ../scss/admin/_layout-manager.scss */
+/* line 513, ../scss/admin/_layout-manager.scss */
 .g5-dialog .g-tabs ul li:first-child {
   border-radius: 0.1875rem 0 0 0;
 }
 
-/* line 499, ../scss/admin/_layout-manager.scss */
+/* line 519, ../scss/admin/_layout-manager.scss */
 .g5-dialog .g-pane {
   display: none;
 }
-/* line 502, ../scss/admin/_layout-manager.scss */
+/* line 522, ../scss/admin/_layout-manager.scss */
 .g5-dialog .g-pane.active {
   display: block;
 }
 
-/* line 508, ../scss/admin/_layout-manager.scss */
+/* line 528, ../scss/admin/_layout-manager.scss */
 .sidebar-block {
   margin: -1.563rem 1.563rem -1.563rem -1.563rem;
   padding: 1.563rem 0.938rem;
@@ -1789,12 +1807,12 @@ a {
   border-right: 1px solid #e1e1e1;
 }
 
-/* line 522, ../scss/admin/_layout-manager.scss */
+/* line 542, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker ul {
   padding: 1px;
   margin-bottom: 1em;
 }
-/* line 527, ../scss/admin/_layout-manager.scss */
+/* line 547, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li {
   padding: 0.469rem;
   margin: 1px 0;
@@ -1803,51 +1821,51 @@ a {
   cursor: move;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-  /* line 527, ../scss/admin/_layout-manager.scss */
+  /* line 547, ../scss/admin/_layout-manager.scss */
   .g5-lm-particles-picker li {
     font-size: 0.8rem;
   }
 }
-/* line 538, ../scss/admin/_layout-manager.scss */
+/* line 558, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li:first-child, .g5-lm-particles-picker li:last-child {
   margin: 0;
 }
-/* line 542, ../scss/admin/_layout-manager.scss */
+/* line 562, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="spacer"] {
   background-color: #eee;
   color: #666;
   border: 1px solid #d0d0d0;
 }
-/* line 548, ../scss/admin/_layout-manager.scss */
+/* line 568, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="position"] {
   color: #fff;
   background-color: #aaa;
 }
-/* line 553, ../scss/admin/_layout-manager.scss */
+/* line 573, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="particle"] {
   color: #fff;
   background-color: #13B0DA;
 }
-/* line 558, ../scss/admin/_layout-manager.scss */
+/* line 578, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="pagecontent"] {
   color: #fff;
   background-color: #218fda;
 }
-/* line 563, ../scss/admin/_layout-manager.scss */
+/* line 583, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="atom"] {
   color: #fff;
   background-color: #9055AF;
 }
-/* line 569, ../scss/admin/_layout-manager.scss */
+/* line 589, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .settings-block {
   width: 100% !important;
 }
-/* line 573, ../scss/admin/_layout-manager.scss */
+/* line 593, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search {
   position: relative;
   margin-bottom: 10px;
 }
-/* line 577, ../scss/admin/_layout-manager.scss */
+/* line 597, ../scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search i {
   position: absolute;
   right: 10px;

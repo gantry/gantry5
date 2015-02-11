@@ -10,11 +10,13 @@ var prime      = require('prime'),
     Resizer    = require('../ui/drag.resizer'),
     Eraser     = require('./eraser'),
     get        = require('mout/object/get'),
+    keys       = require('mout/object/keys'),
 
     every      = require('mout/array/every'),
     precision  = require('mout/number/enforcePrecision'),
     isArray    = require('mout/lang/isArray'),
     deepEquals = require('mout/lang/deepEquals'),
+    find       = require('mout/collection/find'),
     isObject   = require('mout/lang/isObject');
 
 var singles = {
@@ -72,13 +74,31 @@ var LayoutManager = new prime({
     },
 
     updatePendingChanges: function() {
-        var equals = deepEquals(this.savestate.getData(), this.builder.serialize()),
+        var saveData = this.savestate.getData(),
+            serialData = this.builder.serialize(null, true),
+            different = false,
+
+            equals = deepEquals(saveData, serialData),
             save = $('[data-save="Layout"]'),
             icon = save.find('i'),
             indicator = save.find('.changes-indicator');
 
-        if (equals && indicator) { return icon.removeClass('changes-indicator').removeClass('fa-circle-o').addClass('fa-check'); }
-        if (!equals && !indicator) { return icon.removeClass('fa-check').addClass('changes-indicator').addClass('fa-circle-o'); }
+        if (equals && indicator) { icon.removeClass('changes-indicator').removeClass('fa-circle-o').addClass('fa-check'); }
+        if (!equals && !indicator) { icon.removeClass('fa-check').addClass('changes-indicator').addClass('fa-circle-o'); }
+
+        // Emits the changed event for all particles
+        // Used for UI to show particles where there have been differences applied
+        // After a saved state
+        var saved, current, id;
+        serialData.forEach(function(block){
+            id = keys(block)[0];
+            saved = find(saveData, function(data) { return data[id]; });
+            current = find(serialData, function(data) { return data[id]; });
+            different = !deepEquals(saved, current);
+
+            id = this.builder.get(id);
+            if (id) { id.emit('changed', different); }
+        }, this);
     },
 
     start: function(event, element) {

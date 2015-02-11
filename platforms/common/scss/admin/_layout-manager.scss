@@ -210,6 +210,10 @@
                 position: absolute;
                 bottom: 12px;
                 right: 12px;
+
+                i {
+                    margin-right: 5px;
+                }
             }
         }
 
@@ -396,6 +400,22 @@
 
             &.in-between.in-between-sections {
                 width: auto;
+            }
+        }
+
+        .block-has-changes {
+            &:not(.section) {
+                box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
+            }
+
+            > span .title i {
+                position: absolute;
+                left: -9px;
+                top: 12px;
+            }
+
+            > span .title, > span .font-small {
+                margin-left: 15px;
             }
         }
     }
