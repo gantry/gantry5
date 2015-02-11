@@ -26,19 +26,7 @@ var builder, layoutmanager, lmhistory, savestate;
 builder = new Builder();
 lmhistory = new LMHistory();
 savestate = new SaveState();
-
-
-
-// Layout Manager
-layoutmanager = new LayoutManager('body', {
-    delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
-    droppables: '[data-lm-dropzone]',
-    exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
-    resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
-    builder: builder,
-    history: lmhistory,
-    savestate: savestate
-});
+layoutmanager = new LayoutManager();
 
 ready(function(){
     var HM = {
@@ -94,6 +82,17 @@ ready(function() {
         lmhistory.setSession(builder.serialize());
         savestate.setSession(builder.serialize(null, true));
     }
+
+    // Layout Manager
+    layoutmanager = new LayoutManager('body', {
+        delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
+        droppables: '[data-lm-dropzone]',
+        exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
+        resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
+        builder: builder,
+        history: lmhistory,
+        savestate: savestate
+    });
 
     // attach events
     // Modal Tabs
