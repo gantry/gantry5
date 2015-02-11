@@ -23,9 +23,7 @@
             {% for id, block in list %}
                 {% set prefix = 'styles.' ~ id ~ '.' %}
                 <div class="card settings-block">
-                    <h4>
-                        <a class="config-cog" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('configurations', configuration, 'styles/blocks', id) }}">{{ block.name }}</a>
-                    </h4>
+                    <h4>{{ block.name }}</h4>
                     <div class="inner-params">
                         {% include 'forms/fields.html.twig' with {'blueprints': block.form, 'data': config} %}
                     </div>
