@@ -32,9 +32,8 @@ ready(function() {
 
         switch(page){
             case 'layout':
-                var serial = lm.builder.serialize();
-                lm.savestate.setSession(serial);
-                data.layout = JSON.stringify(serial);
+                lm.savestate.setSession(lm.builder.serialize(null, true));
+                data.layout = JSON.stringify(lm.builder.serialize());
 
                 break;
             case 'menu':
