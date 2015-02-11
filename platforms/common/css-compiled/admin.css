@@ -741,25 +741,55 @@ a {
 #g5-container .settings-block .settings-param {
   padding: 5px;
   clear: both;
+  position: relative;
 }
-/* line 35, ../scss/admin/_settings.scss */
+/* line 36, ../scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param:nth-child(even) {
   background-color: #fafafa;
   border-radius: 3px;
 }
-/* line 41, ../scss/admin/_settings.scss */
+/* line 42, ../scss/admin/_settings.scss */
+#g5-container .settings-block input.settings-param-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin: -7px 0 0 0;
+  z-index: 2;
+}
+/* line 50, ../scss/admin/_settings.scss */
+#g5-container .settings-block input.settings-param-toggle:checked + .settings-param-override {
+  opacity: 0;
+  z-index: -1;
+}
+/* line 57, ../scss/admin/_settings.scss */
+#g5-container .settings-block .settings-param-override {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 1;
+  opacity: 1;
+  -webkit-transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
+}
+/* line 71, ../scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-title {
   max-width: 150px;
 }
-/* line 45, ../scss/admin/_settings.scss */
+/* line 75, ../scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-field {
   margin-left: 150px;
 }
-/* line 49, ../scss/admin/_settings.scss */
+/* line 79, ../scss/admin/_settings.scss */
 #g5-container .settings-block i {
   vertical-align: middle;
 }
-/* line 53, ../scss/admin/_settings.scss */
+/* line 83, ../scss/admin/_settings.scss */
 #g5-container .settings-block input {
   padding: 6px 12px;
   border: 1px solid #ddd;
@@ -767,25 +797,25 @@ a {
   height: auto;
   max-width: 100%;
 }
-/* line 61, ../scss/admin/_settings.scss */
+/* line 91, ../scss/admin/_settings.scss */
 #g5-container .settings-block select {
   margin: 0 0 10px;
   display: inline-block;
 }
-/* line 66, ../scss/admin/_settings.scss */
+/* line 96, ../scss/admin/_settings.scss */
 #g5-container .settings-block img {
   display: block;
 }
-/* line 72, ../scss/admin/_settings.scss */
+/* line 102, ../scss/admin/_settings.scss */
 #g5-container .g5-dialog .settings-block {
   width: 100%;
   margin: 0 0 15px;
 }
-/* line 78, ../scss/admin/_settings.scss */
+/* line 108, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker {
   position: relative;
 }
-/* line 81, ../scss/admin/_settings.scss */
+/* line 111, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker .settings-param-field-colorpicker-preview {
   position: absolute;
   top: 2px;
