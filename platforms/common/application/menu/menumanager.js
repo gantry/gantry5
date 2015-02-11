@@ -240,7 +240,7 @@ var MenuManager = new prime({
                 if (!source) { return; }
 
                 items = source.search('[data-mm-id]');
-                column = Number((source.data('mm-id').match(/\d+$/) || [0])[0]);
+                column = Number(this.block.data('mm-level') > 2 ? 0 : (source.data('mm-id').match(/\d+$/) || [0])[0]);
 
                 if (!items) {
                     this.ordering[path][column] = [];
