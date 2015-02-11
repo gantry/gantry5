@@ -54,7 +54,6 @@ var LayoutManager = new prime({
         this.dragdrop = new DragDrop(element, options);
         this.resizer = new Resizer(element, options);
         this.eraser = new Eraser('[data-lm-eraseblock]', options);
-        this.savestate = options.savestate || null;
         this.dragdrop
             .on('dragdrop:start', this.bound('start'))
             .on('dragdrop:location', this.bound('location'))
@@ -66,6 +65,7 @@ var LayoutManager = new prime({
 
         this.builder = options.builder;
         this.history = options.history;
+        this.savestate = options.savestate || null;
 
         singles.disable();
     },
@@ -129,8 +129,7 @@ var LayoutManager = new prime({
         this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({
             builder: this.builder,
             subtype: element.data('lm-subtype'),
-            title: element.text(),
-            attributes: { title: element.text() }
+            title: element.text()
         });
 
         if (!this.block.isNew()) {
@@ -388,8 +387,11 @@ var LayoutManager = new prime({
                 builder: this.builder
             }).adopt(this.block.block);
 
-            insider = new Blocks[this.block.block.data('lm-blocktype')]({
+            insider = new Blocks[type]({
                 id: this.block.block.data('lm-id'),
+                type: type,
+                subtype: this.element.data('lm-blocksubtype'),
+                title: this.element.text(),
                 builder: this.builder
             }).setLayout(this.block.block);
 
