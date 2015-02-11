@@ -754,7 +754,7 @@ a {
   top: 50%;
   right: 0;
   margin: -7px 0 0 0;
-  z-index: 2;
+  z-index: 5;
 }
 /* line 50, ../scss/admin/_settings.scss */
 #g5-container .settings-block input.settings-param-toggle:checked + .settings-param-override {
@@ -771,7 +771,7 @@ a {
   margin: 0;
   padding: 0;
   background-color: rgba(255, 255, 255, 0.8);
-  z-index: 1;
+  z-index: 4;
   opacity: 1;
   -webkit-transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
   -moz-transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
