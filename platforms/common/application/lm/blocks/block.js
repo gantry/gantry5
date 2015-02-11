@@ -17,6 +17,8 @@ var Block = new prime({
 
     constructor: function(options) {
         Base.call(this, options);
+
+        this.on('changed', this.hasChanged);
     },
 
     getSize: function() {
@@ -82,6 +84,23 @@ var Block = new prime({
 
     onResize: function(resize) {
         this.setLabelSize(resize);
+    },
+
+    hasChanged: function(state) {
+        var icon,
+            child = this.block.find('> [data-lm-id]:not([data-lm-blocktype="section"]):not([data-lm-blocktype="container"])');
+
+        if (!child) {
+            child = this.block.find('> .particle-size');
+            icon = child.find('i:first-child');
+
+            if (!state && icon) { icon.remove(); }
+            if (state && !icon) { zen('i.fa.fa-circle-o.changes-indicator').top(child); }
+
+            return;
+        }
+
+        this.options.builder.get(child.data('lm-id')).emit('changed', state);
     }
 });
 

@@ -25,6 +25,7 @@ var Section = new prime({
         Base.call(this, options);
 
         this.on('done', this.bound('onDone'));
+        this.on('changed', this.hasChanged);
     },
 
     layout: function() {
@@ -35,6 +36,15 @@ var Section = new prime({
 
     adopt: function(child) {
         $(child).insert(this.block.find('.g-grid'));
+    },
+
+    hasChanged: function(state) {
+        var icon = this.block.find('h4 > i:first-child');
+
+        this.block[state ? 'addClass' : 'removeClass']('block-has-changes');
+
+        if (!state && icon) { icon.remove(); }
+        if (state && !icon) { zen('i.fa.fa-circle-o.changes-indicator').top(this.block.find('h4')); }
     },
 
     onDone: function(event) {
