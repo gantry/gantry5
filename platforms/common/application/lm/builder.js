@@ -83,13 +83,13 @@ var Builder = new prime({
         return this;
     },
 
-    serialize: function(root) {
+    serialize: function(root, flat) {
         var serieChildren = [];
         root = root || $('[data-lm-root]');
 
         if (!root) { return; }
 
-        var blocks = root.search('> [data-lm-id]'),
+        var blocks = root.search((!flat ? '> ' : '') + '[data-lm-id]'),
             id, type, subtype, serial, hasChildren, children;
 
         forEach(blocks, function(element) {
@@ -99,7 +99,11 @@ var Builder = new prime({
             subtype = element.data('lm-blocksubtype') || false;
             hasChildren = element.search('> [data-lm-id]');
 
-            children = hasChildren ? this.serialize(element) : [];
+            if (flat) {
+                children = hasChildren ? true : false;
+            } else {
+                children = hasChildren ? this.serialize(element) : [];
+            }
 
             serial = {
                 id: id,
@@ -109,6 +113,11 @@ var Builder = new prime({
                 attributes: get(this.map, id) ? get(this.map, id).getAttributes() : {},
                 children: children
             };
+
+            if (flat) {
+                var obj = {}; obj[id] = serial;
+                serial = obj;
+            }
 
             serieChildren.push(serial);
         }, this);
