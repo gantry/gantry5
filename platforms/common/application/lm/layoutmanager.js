@@ -128,6 +128,7 @@ var LayoutManager = new prime({
         this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({
             builder: this.builder,
             subtype: element.data('lm-subtype'),
+            title: element.text(),
             attributes: { title: element.text() }
         });
 
