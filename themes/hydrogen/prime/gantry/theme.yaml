@@ -29,7 +29,6 @@ configuration:
   theme:
     file: gantry-theme://include/theme.php
     class: \Gantry\Framework\Theme
-    parent: gantry
 
   overrides:
     - gantry-theme://custom
@@ -42,7 +41,7 @@ configuration:
       - gantry-theme://scss
       - gantry-engine://scss
     files:
-      - template.scss
+      - hydrogen.scss
 
   dependencies:
     gantry: 5.0.*

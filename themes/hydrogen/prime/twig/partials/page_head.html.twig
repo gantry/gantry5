@@ -1,0 +1,19 @@
+{% extends "@nucleus/page_head.html.twig" %}
+
+{% block head_title %}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{{ site.title }}</title>
+    <meta name="description" content="{{ site.description }}">
+
+    {% block stylesheets %}
+        {% for style in gantry.styles %}
+            {{ style }}
+        {% endfor %}
+    {% endblock %}
+
+    {% block javascript %}
+        {% for script in gantry.scripts %}
+            {{ script }}
+        {% endfor %}
+    {% endblock %}
+{% endblock %}
