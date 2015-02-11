@@ -204,11 +204,11 @@ ready(function() {
         var ID = element.data('lm-id'),
             parentID = parent ? parent.data('lm-id') : false;
 
-        if (!contains(['block', 'grid', 'section', 'atom'], blocktype)) {
+        if (!contains(['block', 'grid'], blocktype)) {
             data = {};
             data.type = builder.get(element.data('lm-id')).getType() || element.data('lm-blocktype') || false;
             data.subtype = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
-            data.title = element.find('.title').text() || data.type || 'Untitled';
+            data.title = (element.find('h4') || element.find('.title')).text() || data.type || 'Untitled';
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
             data.block = builder.get(parent.data('lm-id')).getAttributes() || {};
 
@@ -305,8 +305,10 @@ ready(function() {
 
                             // particle attributes
                             particle.setAttributes(response.body.data.options);
-                            particle.setTitle(response.body.data.title || 'Untitled');
-                            particle.updateTitle(particle.getTitle());
+                            if (particle.getType() != 'section') {
+                                particle.setTitle(response.body.data.title || 'Untitled');
+                                particle.updateTitle(particle.getTitle());
+                            }
 
                             // parent block attributes
                             if (response.body.data.block && size(response.body.data.block)) {
