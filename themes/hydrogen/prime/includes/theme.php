@@ -10,9 +10,7 @@ $gantry['platform']->set(
     ['' => [
         "gantry-custom://",
         "gantry-themes://{$gantry['theme.name']}",
-        "gantry-themes://{$gantry['theme.name']}/common",
-        "gantry-themes://gantry",
-        "gantry-themes://gantry/common"
+        "gantry-themes://{$gantry['theme.name']}/common"
         ]
     ]
 );

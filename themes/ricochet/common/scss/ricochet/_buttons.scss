@@ -1,9 +1,0 @@
-.button {
-	@extend %button;
-	@include button-color;
-}
-
-.button-secondary {
-	@extend %button;
-	@include button-color($core-accent2);
-}
