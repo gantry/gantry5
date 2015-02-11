@@ -93,7 +93,7 @@ ready(function() {
 
         var serial = builder.serialize();
         lmhistory.setSession(serial);
-        savestate.setSession(serial);
+        savestate.setSession(builder.serialize(null, true));
     }
 
     // attach events
@@ -131,7 +131,7 @@ ready(function() {
 
         var serial = builder.serialize();
         lmhistory.setSession(serial);
-        savestate.setSession(serial);
+        savestate.setSession(builder.serialize(null, true));
 
         // refresh LM eraser
         layoutmanager.eraser.element = $('[data-lm-eraseblock]');
@@ -303,7 +303,7 @@ ready(function() {
                             });
                         } else {
                             var particle = builder.get(ID),
-                                block = builder.get(parentID);
+                                block = null;
 
                             // particle attributes
                             particle.setAttributes(response.body.data.options);
@@ -312,6 +312,8 @@ ready(function() {
 
                             // parent block attributes
                             if (response.body.data.block && size(response.body.data.block)) {
+                                block = builder.get(parentID);
+
                                 var sibling = block.block.nextSibling() || block.block.previousSibling(),
                                     currentSize = block.getSize(),
                                     diffSize;
@@ -330,6 +332,7 @@ ready(function() {
 
                             lmhistory.push(builder.serialize());
                             modal.close();
+
                             toastr.success('The particle "'+particle.getTitle()+'" settings have been applied to the Layout. <br />Remember to click the Save button to store them.', 'Settings Applied');
                         }
 
