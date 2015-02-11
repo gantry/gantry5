@@ -16,7 +16,7 @@ class Menu extends HtmlController
 {
     protected $httpVerbs = [
         'GET' => [
-            '/'             => 'index',
+            '/'             => 'item',
             '/*'            => 'item',
             '/*/**'         => 'item',
             '/edit'         => 'undefined',
@@ -24,7 +24,7 @@ class Menu extends HtmlController
             '/edit/*/**'    => 'menuitem',
         ],
         'POST' => [
-            '/'             => 'undefined',
+            '/'             => 'save',
             '/*'            => 'save',
             '/*/**'         => 'save',
             '/edit'         => 'undefined',
@@ -43,13 +43,7 @@ class Menu extends HtmlController
         ]
     ];
 
-    public function index()
-    {
-        // Index points to default menu.
-        return $this->item('mainmenu');
-    }
-
-    public function item($id)
+    public function item($id = 'mainmenu')
     {
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
@@ -109,7 +103,7 @@ class Menu extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin//pages/menu/edit.html.twig', $this->params);
     }
 
-    public function save($id)
+    public function save($id = 'mainmenu')
     {
         $order = isset($_POST['ordering']) ? json_decode($_POST['ordering'], true) : null;
         $items = isset($_POST['items']) ? json_decode($_POST['items'], true) : null;
