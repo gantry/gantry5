@@ -414,9 +414,12 @@ var Selectize = new prime({
             });
         }
 
-        $wrapper.style({
-            width: parseInt($input.compute('width')) + 12 + (24) // padding compensation
-        });
+
+        if (inputMode == 'single') {
+            $wrapper.style({
+                width: parseInt($input.compute('width')) + 12 + (24) // padding compensation
+            });
+        }
 
         if ((this.options.maxItems === null || this.options.maxItems > 1) && this.tagType === TAG_SELECT) {
             $input.attribute('multiple', 'multiple');
