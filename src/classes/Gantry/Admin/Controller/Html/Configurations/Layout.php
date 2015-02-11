@@ -231,8 +231,8 @@ class Layout extends HtmlController
         $data->join('options', $_POST['particle']);
 
         if ($type == 'particle') {
-            $data->join('title', isset($_POST['block']) ? $_POST['title'] : 'Untitled');
-            $data->join('block', $_POST['block']);
+            $data->join('title', isset($_POST['title']) ? $_POST['title'] : 'Untitled');
+            if (isset($_POST['block'])) { $data->join('block', $_POST['block']); }
         }
 
         // TODO: validate
