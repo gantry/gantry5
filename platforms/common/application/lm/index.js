@@ -35,12 +35,14 @@ ready(function(){
 
     if (!HM.back && !HM.forward) return;
 
-    HM.back.on('click', function(){
+    HM.back.on('click', function(e){
+        if (e) { e.preventDefault(); }
         if ($(this).hasClass('disabled')) return false;
         lmhistory.undo();
     });
 
-    HM.forward.on('click', function(){
+    HM.forward.on('click', function(e){
+        if (e) { e.preventDefault(); }
         if ($(this).hasClass('disabled')) return false;
         lmhistory.redo();
     });

@@ -498,12 +498,18 @@ var G5;
                 };
             if (!HM.back && !HM.forward)
                 return;
-            HM.back.on('click', function () {
+            HM.back.on('click', function (e) {
+                if (e) {
+                    e.preventDefault();
+                }
                 if ($(this).hasClass('disabled'))
                     return false;
                 lmhistory.undo();
             });
-            HM.forward.on('click', function () {
+            HM.forward.on('click', function (e) {
+                if (e) {
+                    e.preventDefault();
+                }
                 if ($(this).hasClass('disabled'))
                     return false;
                 lmhistory.redo();
@@ -4618,7 +4624,7 @@ var G5;
     },
     '14': function (require, module, exports, global) {
         'use strict';
-        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('30') || {}, history = window.history;
+        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('2y') || {}, history = window.history;
         try {
             sessionStorage = window.sessionStorage;
             sessionStorage.setItem('TEST', '1');
@@ -5448,7 +5454,7 @@ var G5;
         module.exports = History;
     },
     '15': function (require, module, exports, global) {
-        var prime = require('k'), Emitter = require('l'), slice = require('2y'), merge = require('1l'), deepEquals = require('2z');
+        var prime = require('k'), Emitter = require('l'), slice = require('2z'), merge = require('1l'), deepEquals = require('30');
         var History = new prime({
                 inherits: Emitter,
                 constructor: function (session) {
@@ -5522,7 +5528,7 @@ var G5;
     },
     '16': function (require, module, exports, global) {
         'use strict';
-        var prime = require('k'), $ = require('1e'), zen = require('h'), Emitter = require('l'), Bound = require('1f'), Options = require('1g'), Blocks = require('2p'), DragDrop = require('31'), Resizer = require('32'), Eraser = require('33'), get = require('2t'), keys = require('34'), every = require('35'), precision = require('36'), isArray = require('2f'), deepEquals = require('2z'), find = require('37'), isObject = require('38');
+        var prime = require('k'), $ = require('1e'), zen = require('h'), Emitter = require('l'), Bound = require('1f'), Options = require('1g'), Blocks = require('2p'), DragDrop = require('31'), Resizer = require('32'), Eraser = require('33'), get = require('2t'), keys = require('34'), every = require('35'), precision = require('36'), isArray = require('2f'), deepEquals = require('30'), find = require('37'), isObject = require('38');
         var singles = {
                 disable: function () {
                     var grids = $('[data-lm-root] [data-lm-blocktype="grid"]');
@@ -6458,7 +6464,7 @@ var G5;
         module.exports = Options;
     },
     '1h': function (require, module, exports, global) {
-        var slice = require('2y');
+        var slice = require('2z');
         function bind(fn, context, args) {
             var argsArr = slice(arguments, 2);
             return function () {
@@ -7069,8 +7075,8 @@ var G5;
     },
     '1q': function (require, module, exports, global) {
         'use strict';
-        var prime = require('k'), $ = require('1e'), zen = require('h'), storage = require('1b')(), Emitter = require('l'), Bound = require('1f'), Options = require('1g'), domready = require('2'), bind = require('1h'), map = require('1i'), forEach = require('1j'), contains = require('10'), last = require('1k'), split = require('3o'), removeAll = require('3p'), insert = require('3q'), find = require('3r'), combine = require('3s'), merge = require('1l'), unhyphenate = require('3t'), properCase = require('3u'), trim = require('12'), modal = require('4').modal, async = require('3v'), request = require('3'), wf = require('3w');
-        require('3x');
+        var prime = require('k'), $ = require('1e'), zen = require('h'), storage = require('1b')(), Emitter = require('l'), Bound = require('1f'), Options = require('1g'), domready = require('2'), bind = require('1h'), map = require('1i'), forEach = require('1j'), contains = require('10'), last = require('1k'), split = require('3n'), removeAll = require('3o'), insert = require('3p'), find = require('3q'), combine = require('3r'), merge = require('1l'), unhyphenate = require('3s'), properCase = require('3t'), trim = require('12'), modal = require('4').modal, async = require('3u'), request = require('3'), wf = require('3v');
+        require('3w');
         var Fonts = new prime({
                 mixin: Bound,
                 inherits: Emitter,
@@ -7644,7 +7650,7 @@ var G5;
     },
     '1s': function (require, module, exports, global) {
         'use strict';
-        var $ = require('1e'), domready = require('2'), modal = require('4').modal, getAjaxSuffix = require('5'), getAjaxURL = require('3n').global, trim = require('12'), contains = require('10');
+        var $ = require('1e'), domready = require('2'), modal = require('4').modal, getAjaxSuffix = require('5'), getAjaxURL = require('3x').global, trim = require('12'), contains = require('10');
         domready(function () {
             var body = $('body');
             body.delegate('keyup', '.g-icons input[type="text"]', function (event, element) {
@@ -7776,7 +7782,7 @@ var G5;
     },
     '1t': function (require, module, exports, global) {
         'use strict';
-        var $ = require('1e'), prime = require('k'), domready = require('2'), modal = require('4').modal, getAjaxSuffix = require('5'), getAjaxURL = require('3n').global;
+        var $ = require('1e'), prime = require('k'), domready = require('2'), modal = require('4').modal, getAjaxSuffix = require('5'), getAjaxURL = require('3x').global;
         var FileManager = new prime({
                 constructor: function (element) {
                     var data = element.data('g5-filemanager');
@@ -9801,7 +9807,7 @@ var G5;
         module.exports = deepFillIn;
     },
     '2v': function (require, module, exports, global) {
-        var slice = require('2y');
+        var slice = require('2z');
         var contains = require('10');
         function omit(obj, var_keys) {
             var keys = typeof arguments[1] !== 'string' ? arguments[1] : slice(arguments, 1), out = {};
@@ -9846,52 +9852,6 @@ var G5;
         module.exports = repeat;
     },
     '2y': function (require, module, exports, global) {
-        function slice(arr, start, end) {
-            var len = arr.length;
-            if (start == null) {
-                start = 0;
-            } else if (start < 0) {
-                start = Math.max(len + start, 0);
-            } else {
-                start = Math.min(start, len);
-            }
-            if (end == null) {
-                end = len;
-            } else if (end < 0) {
-                end = Math.max(len + end, 0);
-            } else {
-                end = Math.min(end, len);
-            }
-            var result = [];
-            while (start < end) {
-                result.push(arr[start++]);
-            }
-            return result;
-        }
-        module.exports = slice;
-    },
-    '2z': function (require, module, exports, global) {
-        var is = require('4t');
-        var isObject = require('38');
-        var isArray = require('2f');
-        var objEquals = require('3b');
-        var arrEquals = require('4u');
-        function deepEquals(a, b, callback) {
-            callback = callback || is;
-            var bothObjects = isObject(a) && isObject(b);
-            var bothArrays = !bothObjects && isArray(a) && isArray(b);
-            if (!bothObjects && !bothArrays) {
-                return callback(a, b);
-            }
-            function compare(a, b) {
-                return deepEquals(a, b, callback);
-            }
-            var method = bothObjects ? objEquals : arrEquals;
-            return method(a, b, compare);
-        }
-        module.exports = deepEquals;
-    },
-    '30': function (require, module, exports, global) {
         'use strict';
         var $ = require('1'), domready = require('2');
         var History = {};
@@ -9916,6 +9876,52 @@ var G5;
             History.init();
         }
         module.exports = History;
+    },
+    '2z': function (require, module, exports, global) {
+        function slice(arr, start, end) {
+            var len = arr.length;
+            if (start == null) {
+                start = 0;
+            } else if (start < 0) {
+                start = Math.max(len + start, 0);
+            } else {
+                start = Math.min(start, len);
+            }
+            if (end == null) {
+                end = len;
+            } else if (end < 0) {
+                end = Math.max(len + end, 0);
+            } else {
+                end = Math.min(end, len);
+            }
+            var result = [];
+            while (start < end) {
+                result.push(arr[start++]);
+            }
+            return result;
+        }
+        module.exports = slice;
+    },
+    '30': function (require, module, exports, global) {
+        var is = require('4t');
+        var isObject = require('38');
+        var isArray = require('2f');
+        var objEquals = require('3b');
+        var arrEquals = require('4u');
+        function deepEquals(a, b, callback) {
+            callback = callback || is;
+            var bothObjects = isObject(a) && isObject(b);
+            var bothArrays = !bothObjects && isArray(a) && isArray(b);
+            if (!bothObjects && !bothArrays) {
+                return callback(a, b);
+            }
+            function compare(a, b) {
+                return deepEquals(a, b, callback);
+            }
+            var method = bothObjects ? objEquals : arrEquals;
+            return method(a, b, compare);
+        }
+        module.exports = deepEquals;
     },
     '31': function (require, module, exports, global) {
         'use strict';
@@ -10373,7 +10379,7 @@ var G5;
     },
     '37': function (require, module, exports, global) {
         var make = require('4a');
-        var arrFind = require('3r');
+        var arrFind = require('3q');
         var objFind = require('4y');
         module.exports = make(arrFind, objFind);
     },
@@ -11405,27 +11411,6 @@ var G5;
         module.exports = clamp;
     },
     '3n': function (require, module, exports, global) {
-        'use strict';
-        var getAjaxURL = function (view, search) {
-            if (!search) {
-                search = '%ajax%';
-            }
-            var re = new RegExp(search, 'g');
-            return GANTRY_AJAX_URL.replace(re, view);
-        };
-        var getConfAjaxURL = function (view, search) {
-            if (!search) {
-                search = '%ajax%';
-            }
-            var re = new RegExp(search, 'g');
-            return GANTRY_AJAX_CONF_URL.replace(re, view);
-        };
-        module.exports = {
-            global: getAjaxURL,
-            config: getConfAjaxURL
-        };
-    },
-    '3o': function (require, module, exports, global) {
         function split(array, segments) {
             segments = segments || 2;
             var results = [];
@@ -11446,7 +11431,7 @@ var G5;
         }
         module.exports = split;
     },
-    '3p': function (require, module, exports, global) {
+    '3o': function (require, module, exports, global) {
         var indexOf = require('2d');
         function removeAll(arr, item) {
             var idx = indexOf(arr, item);
@@ -11457,9 +11442,9 @@ var G5;
         }
         module.exports = removeAll;
     },
-    '3q': function (require, module, exports, global) {
+    '3p': function (require, module, exports, global) {
         var difference = require('5d');
-        var slice = require('2y');
+        var slice = require('2z');
         function insert(arr, rest_items) {
             var diff = difference(slice(arguments, 1), arr);
             if (diff.length) {
@@ -11469,7 +11454,7 @@ var G5;
         }
         module.exports = insert;
     },
-    '3r': function (require, module, exports, global) {
+    '3q': function (require, module, exports, global) {
         var findIndex = require('5e');
         function find(arr, iterator, thisObj) {
             var idx = findIndex(arr, iterator, thisObj);
@@ -11477,7 +11462,7 @@ var G5;
         }
         module.exports = find;
     },
-    '3s': function (require, module, exports, global) {
+    '3r': function (require, module, exports, global) {
         var indexOf = require('2d');
         function combine(arr1, arr2) {
             if (arr2 == null) {
@@ -11493,7 +11478,7 @@ var G5;
         }
         module.exports = combine;
     },
-    '3t': function (require, module, exports, global) {
+    '3s': function (require, module, exports, global) {
         var toString = require('2l');
         function unhyphenate(str) {
             str = toString(str);
@@ -11501,7 +11486,7 @@ var G5;
         }
         module.exports = unhyphenate;
     },
-    '3u': function (require, module, exports, global) {
+    '3t': function (require, module, exports, global) {
         var toString = require('2l');
         var lowerCase = require('5f');
         var upperCase = require('5g');
@@ -11511,7 +11496,7 @@ var G5;
         }
         module.exports = properCase;
     },
-    '3v': function (require, module, exports, global) {
+    '3u': function (require, module, exports, global) {
         (function () {
             var async = {};
             var root, previous_async;
@@ -12527,7 +12512,7 @@ var G5;
             }
         }());
     },
-    '3w': function (require, module, exports, global) {
+    '3v': function (require, module, exports, global) {
         ;
         (function (window, document, undefined) {
             function aa(a, b, c) {
@@ -13227,7 +13212,7 @@ var G5;
         }(this, document));
         module.exports = window.WebFont;
     },
-    '3x': function (require, module, exports, global) {
+    '3w': function (require, module, exports, global) {
         'use strict';
         var $ = require('1');
         $.implement({
@@ -13289,6 +13274,27 @@ var G5;
             }
         });
         module.exports = $;
+    },
+    '3x': function (require, module, exports, global) {
+        'use strict';
+        var getAjaxURL = function (view, search) {
+            if (!search) {
+                search = '%ajax%';
+            }
+            var re = new RegExp(search, 'g');
+            return GANTRY_AJAX_URL.replace(re, view);
+        };
+        var getConfAjaxURL = function (view, search) {
+            if (!search) {
+                search = '%ajax%';
+            }
+            var re = new RegExp(search, 'g');
+            return GANTRY_AJAX_CONF_URL.replace(re, view);
+        };
+        module.exports = {
+            global: getAjaxURL,
+            config: getConfAjaxURL
+        };
     },
     '3y': function (require, module, exports, global) {
         'use strict';
@@ -13604,7 +13610,7 @@ var G5;
         module.exports = now;
     },
     '4a': function (require, module, exports, global) {
-        var slice = require('2y');
+        var slice = require('2z');
         function makeCollectionMethod(arrMethod, objMethod, defaultReturn) {
             return function () {
                 var args = slice(arguments);
@@ -13731,7 +13737,7 @@ var G5;
     },
     '4d': function (require, module, exports, global) {
         'use strict';
-        var prime = require('k'), Base = require('4c'), zen = require('h'), getAjaxURL = require('3n').config;
+        var prime = require('k'), Base = require('4c'), zen = require('h'), getAjaxURL = require('3x').config;
         var Atom = new prime({
                 inherits: Base,
                 options: { type: 'atom' },
@@ -13763,7 +13769,7 @@ var G5;
     },
     '4e': function (require, module, exports, global) {
         'use strict';
-        var prime = require('k'), Base = require('4c'), Bound = require('1f'), Grid = require('4g'), $ = require('1'), zen = require('h'), bind = require('1h'), getAjaxURL = require('3n').config;
+        var prime = require('k'), Base = require('4c'), Bound = require('1f'), Grid = require('4g'), $ = require('1'), zen = require('h'), bind = require('1h'), getAjaxURL = require('3x').config;
         require('b');
         var UID = 0;
         var Section = new prime({
@@ -13842,7 +13848,7 @@ var G5;
     },
     '4g': function (require, module, exports, global) {
         'use strict';
-        var prime = require('k'), Base = require('4c'), $ = require('1'), getAjaxURL = require('3n').config;
+        var prime = require('k'), Base = require('4c'), $ = require('1'), getAjaxURL = require('3x').config;
         var Grid = new prime({
                 inherits: Base,
                 options: { type: 'grid' },
@@ -13965,7 +13971,7 @@ var G5;
     },
     '4j': function (require, module, exports, global) {
         'use strict';
-        var prime = require('k'), Atom = require('4d'), bind = require('1h'), precision = require('36'), getAjaxURL = require('3n').config;
+        var prime = require('k'), Atom = require('4d'), bind = require('1h'), precision = require('36'), getAjaxURL = require('3x').config;
         var UID = 0;
         var Particle = new prime({
                 inherits: Atom,
@@ -14493,7 +14499,7 @@ var G5;
         var filter = require('64');
         var some = require('65');
         var contains = require('10');
-        var slice = require('2y');
+        var slice = require('2z');
         function difference(arr) {
             var arrs = slice(arguments, 1), result = filter(unique(arr), function (needle) {
                     return !some(arrs, function (haystack) {
