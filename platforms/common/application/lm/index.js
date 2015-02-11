@@ -27,18 +27,6 @@ builder = new Builder();
 lmhistory = new LMHistory();
 savestate = new SaveState();
 
-var lmSettings = {
-    delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
-    droppables: '[data-lm-dropzone]',
-    exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
-    resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
-    builder: builder,
-    history: lmhistory,
-    savestate: savestate
-};
-
-layoutmanager = new LayoutManager('body', lmSettings);
-
 ready(function(){
     var HM = {
         back:    $('[data-lm-back]'),
@@ -95,7 +83,17 @@ ready(function() {
     }
 
     // Layout Manager
-    if (!layoutmanager.dragdrop) { layoutmanager.constructor('body', lmSettings); }
+    layoutmanager = new LayoutManager('body', {
+        delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
+        droppables: '[data-lm-dropzone]',
+        exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
+        resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
+        builder: builder,
+        history: lmhistory,
+        savestate: savestate
+    });
+
+    module.exports.layoutmanager = layoutmanager;
 
     // attach events
     // Modal Tabs
