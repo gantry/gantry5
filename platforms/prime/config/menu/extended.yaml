@@ -23,29 +23,29 @@ ordering:
   sample-pages:
     - overview:
       about-us:
-        - layout-1:
-        - layout-2:
-        - layout-3:
+        layout-1:
+        layout-2:
+        layout-3:
       the-team:
-        - layout-1:
-        - layout-2:
-        - layout-3:
+        layout-1:
+        layout-2:
+        layout-3:
       pricing:
-        - layout-1:
-        - layout-2:
-        - layout-3:
+        layout-1:
+        layout-2:
+        layout-3:
     - faq:
-        - layout-1:
-        - layout-2:
-        - layout-3:
+        layout-1:
+        layout-2:
+        layout-3:
       services:
-        - layout-1:
-        - layout-2:
-        - layout-3:
+        layout-1:
+        layout-2:
+        layout-3:
       blog:
-        - layout-1:
-        - layout-2:
-        - layout-3:
+        layout-1:
+        layout-2:
+        layout-3:
     - ricochet:
 
   special:

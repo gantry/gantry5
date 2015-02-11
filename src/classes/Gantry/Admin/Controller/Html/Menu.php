@@ -119,12 +119,11 @@ class Menu extends HtmlController
                 $list = [];
                 foreach ($colitems as $item) {
                     $name = trim(substr($item, strlen($path)), '/');
-                    echo "$path/$column $item: $name <br>";
                     if (isset($ordering[$item])) {
                         $list[$name] = $ordering[$item];
                         unset($ordering[$item]);
                     } else {
-                        $list[$name] = [];
+                        $list[$name] = '';
                     }
                 }
                 if (count($columns) > 1) {

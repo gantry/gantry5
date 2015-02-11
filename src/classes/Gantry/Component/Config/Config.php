@@ -125,7 +125,7 @@ class Config implements \ArrayAccess, ExportInterface
         $list = [];
         foreach ($element as $key => $value) {
             $new = $name ? $name . $separator . $key : $key;
-            if (!is_array($value)) {
+            if (!is_array($value) || empty($value)) {
                 $list[$new] = $value;
             } else {
                 $list += $this->flattenNested($new, $value, $separator);
