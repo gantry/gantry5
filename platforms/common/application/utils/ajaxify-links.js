@@ -90,8 +90,9 @@ History.Adapter.bind(window, 'statechange', function() {
             body.emit('statechangeAfter', { target: Data.element, Data: Data });
         }
 
-        if ((Data.event && Data.event.activeSpinner) || Data.element) {
-            (Data.event.activeSpinner || Data.element)['hideSpinner']();
+        var element = (Data.event && Data.event.activeSpinner) || Data.element;
+        if (element) {
+            element.hideSpinner();
         }
 
         var selects = $('[data-selectize]');
