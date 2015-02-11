@@ -79,7 +79,7 @@ class Platform extends BasePlatform
 
     public function getMediaPaths()
     {
-        return ['' => ['media']];
+        return ['' => ['gantry-theme://images', 'media']];
     }
 
     public function getModules($position)

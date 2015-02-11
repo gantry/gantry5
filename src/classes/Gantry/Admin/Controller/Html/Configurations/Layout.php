@@ -178,7 +178,8 @@ class Layout extends HtmlController
             ];
 
             if ($extra) {
-                $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle.html.twig',
+                $typeLayout = $type == 'atom' ? $type : 'particle';
+                $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
                     $this->params);
             } else {
                 $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section.html.twig',
