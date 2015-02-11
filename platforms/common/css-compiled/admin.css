@@ -1696,7 +1696,7 @@ a {
   box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
 }
 /* line 411, ../scss/admin/_layout-manager.scss */
-#g5-container .lm-blocks .block-has-changes > span .title i {
+#g5-container .lm-blocks .block-has-changes > span > .changes-indicator {
   position: absolute;
   left: -10px;
   top: 12px;

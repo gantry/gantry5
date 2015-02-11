@@ -29,12 +29,12 @@ var Atom = new prime({
     },
 
     hasChanged: function(state) {
-        var icon = this.block.find('.title > i:first-child');
+        var icon = this.block.find('span > i.changes-indicator:first-child');
 
         this.block[state ? 'addClass' : 'removeClass']('block-has-changes');
 
         if (!state && icon) { icon.remove(); }
-        if (state && !icon) { zen('i.fa.fa-circle-o.changes-indicator').top(this.block.find('.title')); }
+        if (state && !icon) { zen('i.fa.fa-circle-o.changes-indicator').before(this.block.find('.title')); }
     }
 });
 
