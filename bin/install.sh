@@ -147,8 +147,6 @@ elif [ -f $GIT_TARGET/.prime ]; then
         'themes/gantry/common'
         'themes/hydrogen/prime'
         'themes/hydrogen/common'
-        'themes/ricochet/prime'
-        'themes/ricochet/common'
         )
     targets=(
         'admin'
@@ -169,8 +167,6 @@ elif [ -f $GIT_TARGET/.prime ]; then
         'themes/gantry/common'
         'themes/hydrogen'
         'themes/hydrogen/common'
-        'themes/ricochet'
-        'themes/ricochet/common'
         )
     rm -rf "$GIT_TARGET/cache"
     mkdir "$GIT_TARGET/cache"
