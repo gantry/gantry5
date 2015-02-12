@@ -90,6 +90,8 @@ var Block = new prime({
         var icon,
             child = this.block.find('> [data-lm-id]:not([data-lm-blocktype="section"]):not([data-lm-blocktype="container"])');
 
+        this.changeState = state;
+
         if (!child) {
             child = this.block.find('> .particle-size');
             icon = child.find('i:first-child');
@@ -100,7 +102,7 @@ var Block = new prime({
             return;
         }
 
-        this.options.builder.get(child.data('lm-id')).emit('changed', state);
+        this.options.builder.get(child.data('lm-id')).emit('changed', state, this);
     }
 });
 

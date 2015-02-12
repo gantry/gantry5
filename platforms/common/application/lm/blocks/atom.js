@@ -28,8 +28,11 @@ var Atom = new prime({
         return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getSubType() || this.getKey() || this.getType()) + '</span></span><div class="float-right"><i class="fa fa-cog" data-lm-nodrag data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
     },
 
-    hasChanged: function(state) {
-        var icon = this.block.find('span > i.changes-indicator:first-child');
+    hasChanged: function(state, parent) {
+        var icon = this.block.find('span > i.changes-indicator:first-child'), parent;
+
+        // if the particle has changes but the parent block doesn't, we want to keep the indicator showing
+        if (icon && parent && !parent.changeState) { return; }
 
         this.block[state ? 'addClass' : 'removeClass']('block-has-changes');
 
