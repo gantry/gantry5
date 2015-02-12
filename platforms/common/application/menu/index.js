@@ -8,16 +8,20 @@ var ready         = require('elements/domready'),
     request       = require('agent'),
     getAjaxSuffix = require('../utils/get-ajax-suffix');
 
-var menumanager = new MenuManager('body', {
-    delegate: '#menu-editor > section ul li, .submenu-column li, .column-container .g-block',
-    droppables: '#menu-editor [data-mm-id]',
-    exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
-    resize_handles: '.submenu-column li:not(:last-child)',
-    catchClick: true
-});
+var menumanager;
 
 ready(function() {
     var body = $('body');
+
+    menumanager = new MenuManager('body', {
+        delegate: '#menu-editor > section ul li, .submenu-column li, .column-container .g-block',
+        droppables: '#menu-editor [data-mm-id]',
+        exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
+        resize_handles: '.submenu-column li:not(:last-child)',
+        catchClick: true
+    });
+
+    module.exports.menumanager = menumanager;
 
     // Menu Manager
     menumanager.setRoot();
