@@ -28,32 +28,31 @@ lmhistory = new LMHistory();
 savestate = new SaveState();
 
 ready(function(){
-    var HM = {
-        back:    $('[data-lm-back]'),
-        forward: $('[data-lm-forward]')
-    };
+    var body = $('body');
 
-    if (!HM.back && !HM.forward) return;
-
-    HM.back.on('click', function(e){
+    body.delegate('click', '[data-lm-back]', function(e, element){
         if (e) { e.preventDefault(); }
-        if ($(this).hasClass('disabled')) return false;
+        if ($(element).hasClass('disabled')) return false;
         lmhistory.undo();
     });
 
-    HM.forward.on('click', function(e){
+    body.delegate('click', '[data-lm-forward]', function(e, element){
         if (e) { e.preventDefault(); }
-        if ($(this).hasClass('disabled')) return false;
+        if ($(element).hasClass('disabled')) return false;
         lmhistory.redo();
     });
 
     /* lmhistory events */
     lmhistory.on('push', function(session, index, reset){
+        var HM = { back: $('[data-lm-back]'), forward: $('[data-lm-forward]') };
+
         if (index && HM.back.hasClass('disabled')) HM.back.removeClass('disabled');
         if (reset && !HM.forward.hasClass('disabled')) HM.forward.addClass('disabled');
         layoutmanager.updatePendingChanges();
     });
     lmhistory.on('undo', function(session, index){
+        var HM = { back: $('[data-lm-back]'), forward: $('[data-lm-forward]') };
+
         builder.reset(session.data);
         HM.forward.removeClass('disabled');
         if (!index) HM.back.addClass('disabled');
@@ -61,6 +60,8 @@ ready(function(){
         layoutmanager.updatePendingChanges();
     });
     lmhistory.on('redo', function(session, index){
+        var HM = { back: $('[data-lm-back]'), forward: $('[data-lm-forward]') };
+
         builder.reset(session.data);
         HM.back.removeClass('disabled');
         if (index == this.session.length - 1) HM.forward.addClass('disabled');
@@ -130,8 +131,8 @@ ready(function() {
         builder.setStructure(data);
         builder.load();
 
-        lmhistory.setSession(builder.serialize());
-        savestate.setSession(builder.serialize(null, true));
+        layoutmanager.history.setSession(builder.serialize());
+        layoutmanager.savestate.setSession(builder.serialize(null, true));
 
         // refresh LM eraser
         layoutmanager.eraser.element = $('[data-lm-eraseblock]');
