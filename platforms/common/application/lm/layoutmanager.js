@@ -383,7 +383,6 @@ var LayoutManager = new prime({
         // case 1: it's a new particle dropped in the LM, we need to wrap it inside a block
         if (type !== 'block' && type !== 'grid' && ((targetType === 'section' || targetType === 'grid') || (targetType === 'block' && parentType !== 'block'))) {
             wrapper = new Blocks.block({
-                attributes: { size: 50 },
                 builder: this.builder
             }).adopt(this.block.block);
 
