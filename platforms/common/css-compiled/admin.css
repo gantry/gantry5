@@ -770,26 +770,29 @@ a {
   bottom: 0;
   margin: 0;
   padding: 0;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.3);
+  background-image: -webkit-linear-gradient(-360deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.3) 150px, rgba(255, 255, 255, 0.6) 150px, rgba(255, 255, 255, 0.6) 100%);
+  background-image: linear-gradient(90deg,rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.3) 150px, rgba(255, 255, 255, 0.6) 150px, rgba(255, 255, 255, 0.6) 100%);
   z-index: 4;
   opacity: 1;
   -webkit-transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
   -moz-transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
   transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
 }
-/* line 71, ../scss/admin/_settings.scss */
+/* line 72, ../scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-title {
   max-width: 150px;
 }
-/* line 75, ../scss/admin/_settings.scss */
+/* line 76, ../scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-field {
   margin-left: 150px;
 }
-/* line 79, ../scss/admin/_settings.scss */
+/* line 80, ../scss/admin/_settings.scss */
 #g5-container .settings-block i {
   vertical-align: middle;
 }
-/* line 83, ../scss/admin/_settings.scss */
+/* line 84, ../scss/admin/_settings.scss */
 #g5-container .settings-block input {
   padding: 6px 12px;
   border: 1px solid #ddd;
@@ -797,25 +800,25 @@ a {
   height: auto;
   max-width: 100%;
 }
-/* line 91, ../scss/admin/_settings.scss */
+/* line 92, ../scss/admin/_settings.scss */
 #g5-container .settings-block select {
   margin: 0 0 10px;
   display: inline-block;
 }
-/* line 96, ../scss/admin/_settings.scss */
+/* line 97, ../scss/admin/_settings.scss */
 #g5-container .settings-block img {
   display: block;
 }
-/* line 102, ../scss/admin/_settings.scss */
+/* line 103, ../scss/admin/_settings.scss */
 #g5-container .g5-dialog .settings-block {
   width: 100%;
   margin: 0 0 15px;
 }
-/* line 108, ../scss/admin/_settings.scss */
+/* line 109, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker {
   position: relative;
 }
-/* line 111, ../scss/admin/_settings.scss */
+/* line 112, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker .settings-param-field-colorpicker-preview {
   position: absolute;
   top: 2px;
