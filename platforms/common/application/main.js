@@ -51,8 +51,12 @@ ready(function() {
                 if (form && element.attribute('type') == 'submit') {
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name = input.attribute('name'), value = input.value();
-                        if (!name) { return; }
+                        var name = input.attribute('name'),
+                            value = input.value(),
+                            parent = input.parent('.settings-param'),
+                            override = parent ? parent.find('> input[type="checkbox"]'): null;
+
+                        if (!name || input.disabled() || (override && !override.checked())) { return; }
                         data[name] = value;
                     });
                 }
