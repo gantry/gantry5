@@ -73,17 +73,6 @@ ready(function(){
 ready(function() {
     var body = $('body'), root = $('[data-lm-root]'), data;
 
-    // load builder data
-    if (root) {
-        data = JSON.parse(root.data('lm-root'));
-        if (data.name) { data = data.layout; }
-        builder.setStructure(data);
-        builder.load();
-
-        lmhistory.setSession(builder.serialize());
-        savestate.setSession(builder.serialize(null, true));
-    }
-
     // Layout Manager
     layoutmanager = new LayoutManager('body', {
         delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
@@ -96,6 +85,17 @@ ready(function() {
     });
 
     module.exports.layoutmanager = layoutmanager;
+
+    // load builder data
+    if (root) {
+        data = JSON.parse(root.data('lm-root'));
+        if (data.name) { data = data.layout; }
+        builder.setStructure(data);
+        builder.load();
+
+        layoutmanager.history.setSession(builder.serialize());
+        layoutmanager.savestate.setSession(builder.serialize(null, true));
+    }
 
     // attach events
     // Modal Tabs
