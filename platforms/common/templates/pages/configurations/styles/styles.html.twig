@@ -25,7 +25,7 @@
                 <div class="card settings-block">
                     <h4>{{ block.name }}</h4>
                     <div class="inner-params">
-                        {% include 'forms/fields.html.twig' with {'blueprints': block.form, 'data': config} %}
+                        {% include 'forms/fields.html.twig' with {'overridable': true, 'blueprints': block.form, 'data': config} %}
                     </div>
                 </div>
             {% endfor %}

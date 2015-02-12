@@ -25,7 +25,7 @@
                         {% endif %}
                     </h4>
                     <div class="inner-params">
-                        {% include 'forms/fields.html.twig' with {'blueprints': particle.form, skip: ['enabled'], data: config, "prefix": prefix} %}
+                        {% include 'forms/fields.html.twig' with {'overridable': true, 'blueprints': particle.form, skip: ['enabled'], data: config, "prefix": prefix} %}
                     </div>
                 </div>
                 {% endif %}
