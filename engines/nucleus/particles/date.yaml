@@ -24,7 +24,6 @@ form:
       placeholder: 'Select...'
       selectize:
           allowEmptyOption: true
-          create: true
       options:
           '': None
           'l, F d, Y': Date1
