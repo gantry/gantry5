@@ -1,0 +1,19 @@
+name: Core Color
+description: Main colors for the theme
+type: color
+
+form:
+  fields:
+
+    core-text:
+      type: input.colorpicker
+      label: Core Text
+      default: "#666666"
+    core-accent:
+      type: input.colorpicker
+      label: Core Accent
+      default: "#4184b6"
+    secondary-link:
+      type: input.colorpicker
+      label: Secondary Accent
+      default: "#f8b450"

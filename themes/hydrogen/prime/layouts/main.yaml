@@ -1,0 +1,13 @@
+container:
+  header:
+    - [particle-logo 20, particle-menu 80]
+    - position-header
+
+  main:
+        - position-breadcrumbs
+        - position-global_messages
+        - pagecontent
+
+  footer:
+    - position-footer
+    - [particle-date 25, particle-copyright 50, particle-branding 25]
