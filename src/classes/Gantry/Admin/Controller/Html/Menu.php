@@ -204,9 +204,12 @@ class Menu extends HtmlController
 
         // TODO: validate
 
+        $item = $resource[implode('/', $path)];
+        $item->update($data->toArray());
+
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $id;
-        $this->params['item'] = $resource[implode('/', $path)];
+        $this->params['item'] = $item;
         $this->params['group'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
 
         $html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
