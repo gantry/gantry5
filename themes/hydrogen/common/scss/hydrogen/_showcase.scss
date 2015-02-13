@@ -2,4 +2,9 @@
 	text-align: center;
 	background: $showcase-background;
 	color: $showcase-text-color;
+
+	.button {
+		background: $showcase-text-color;
+		color: $showcase-background;
+	}
 }

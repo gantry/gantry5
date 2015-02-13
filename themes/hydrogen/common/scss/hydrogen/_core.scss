@@ -6,3 +6,12 @@ body {
 a {
 	color: $accent-color-1;
 }
+
+.button {
+	display: inline-block;
+	padding: 8px 12px;
+	border-radius: $border-radius;
+	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+	background: $accent-color-1;
+	color: $base-background;
+}
