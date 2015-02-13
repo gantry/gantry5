@@ -5,67 +5,17 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 use Gantry\Framework\Gantry;
-use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
-use RocketTheme\Toolbox\ArrayTraits\Export;
-use RocketTheme\Toolbox\ArrayTraits\Iterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Menu implements \ArrayAccess, \Iterator
+class Menu extends AbstractMenu
 {
-    use ArrayAccessWithGetters, Iterator, Export;
-
-    protected $app;
-
-    protected $default;
-    protected $base;
-    protected $active;
-    protected $params;
-    protected $config;
-
-    /**
-     * @var array|Item[]
-     */
-    protected $items;
-
-    protected $defaults = [
-        'menu' => 'mainmenu',
-        'base' => '/',
-        'startLevel' => 1,
-        'endLevel' => 0,
-        'showAllChildren' => true,
-        'highlightAlias' => true,
-        'highlightParentAlias' => true,
-        'window_open' => null
-    ];
-
     public function __construct()
     {
         $this->default = 'home';
         $this->active  = PAGE_PATH;
-    }
-
-    public function instance(array $params = [])
-    {
-        if (!isset($params['config'])) {
-            $params = $this->defaults;
-        }   else {
-            $params = $params['config'] + $this->defaults;
-        }
-
-        $menus = $this->getMenus();
-
-        if (!in_array($params['menu'], $menus)) {
-            throw new \RuntimeException('Menu not found', 404);
-        }
-
-        $instance = clone $this;
-        $instance->params = $params;
-
-        $instance->items = $instance->getList($params);
-
-        return $instance;
     }
 
     public function getMenus()
@@ -78,7 +28,7 @@ class Menu implements \ArrayAccess, \Iterator
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
 
-            $finder = new ConfigFileFinder();
+            $finder = new ConfigFileFinder;
 
             $list = $finder->getFiles($locator->findResources('gantry-config://menu', false));
 
@@ -90,80 +40,6 @@ class Menu implements \ArrayAccess, \Iterator
         }
 
         return $list;
-    }
-
-    public function name()
-    {
-        return $this->params['menu'];
-    }
-
-    public function root()
-    {
-        return $this->offsetGet('');
-    }
-
-    public function ordering()
-    {
-        $list = [];
-        foreach ($this->items as $name => $item) {
-           foreach ($item->groups() as $col => $children) {
-                foreach ($children as $child) {
-                    $list[$name][$col][] = $child->path;
-                }
-            }
-        }
-
-        return $list;
-    }
-
-    public function items()
-    {
-        $list = [];
-        foreach ($this->items as $key => $item) {
-            if ($key !== '') {
-                $list[$item->path] = $item->toArray();
-            }
-        }
-
-        return $list;
-    }
-
-    /**
-     * @return object
-     */
-    public function getBase()
-    {
-        return $this->offsetGet($this->base);
-    }
-
-    /**
-     * @return object
-     */
-    public function getDefault()
-    {
-        return $this->offsetGet($this->default);
-    }
-
-    /**
-     * @return object
-     */
-    public function getActive()
-    {
-        return $this->offsetGet($this->active);
-    }
-
-    public function isActive($item)
-    {
-        if ($item->path && strpos($this->base, $item->path) === 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function isCurrent($item)
-    {
-        return $item->path == $this->getActive()->path;
     }
 
     /**
@@ -333,38 +209,4 @@ class Menu implements \ArrayAccess, \Iterator
 
         return $all;
     }
-
-    protected function sortAll(array &$items, array &$ordering, $path = '')
-    {
-        if (!isset($items[$path]) || !$items[$path]->hasChildren()) {
-            return;
-        }
-
-        /** @var Item $item */
-        $item = $items[$path];
-        if ($this->isAssoc($ordering)) {
-            $item->sortChildren($ordering);
-        } else {
-            $item->groupChildren($ordering);
-        }
-
-        foreach ($ordering as $key => &$value) {
-            if (is_array($value)) {
-                if ((string) $key === (string)(int) $key) {
-                    $newPath = $path;
-                } else {
-                    $newPath = $path ? $path . '/' . $key : $key;
-                }
-                $this->sortAll($items, $value, $newPath);
-            }
-        }
-    }
-
-
-    protected function isAssoc(array $array)
-    {
-        return (array_values($array) !== $array);
-    }
-
-
 }

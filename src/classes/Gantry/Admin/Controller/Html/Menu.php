@@ -26,7 +26,7 @@ class Menu extends HtmlController
         'POST' => [
             '/'             => 'save',
             '/*'            => 'save',
-            '/*/**'         => 'save',
+            '/*/**'         => 'item',
             '/edit'         => 'undefined',
             '/edit/*'       => 'undefined',
             '/edit/*/validate' => 'validate',
