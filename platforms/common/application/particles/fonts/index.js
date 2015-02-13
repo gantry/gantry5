@@ -492,6 +492,10 @@ var Fonts = new prime({
             }
 
             this.field.value('family=' + name + (variation.length ? ':' + variation.join(',') : '') + (charset.length ? '&subset=' + charset.join(',') : ''));
+
+            this.field.emit('input');
+            $('body').emit('input', {target: this.field});
+
             modal.close();
         }, this));
 

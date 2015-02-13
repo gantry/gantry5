@@ -646,8 +646,9 @@ var hex2rgb = function(hex) {
 
 
 ready(function() {
-    var x = new ColorPicker();
+    var x = new ColorPicker(), body = $('body');
     x.on('change', function(element, hex, opacity) {
+        clearTimeout(this.timer);
         var rgb = hex2rgb(hex),
             yiq = (((rgb.r * 299) + (rgb.g * 587) + (rgb.b * 114)) / 1000) >= 128 ? 'dark' : 'light',
             check = yiq == 'dark' || (!opacity || opacity < 0.35);
@@ -660,6 +661,11 @@ ready(function() {
         }
 
         element.parent('.colorpicker')[!check ? 'addClass' : 'removeClass']('light-text');
+
+        this.timer = setTimeout(function(){
+            element.emit('input');
+            body.emit('input', {target: element});
+        }, 150);
 
     });
 });

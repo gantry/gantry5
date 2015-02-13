@@ -1949,7 +1949,11 @@ ready(function() {
     var selects = $('[data-selectize]');
     if (!selects) { return; }
 
-    selects.selectize();
+    selects.selectize({
+        onChange: function(value) {
+            $('body').emit('change', {target: this.input});
+        }
+    });
 
 });
 

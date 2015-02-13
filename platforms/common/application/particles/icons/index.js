@@ -85,6 +85,10 @@ domready(function() {
                     var output = container.find('.icon-preview i');
                     field.value(output.attribute('class'));
                     realPreview.attribute('class', output.attribute('class'));
+
+                    field.emit('input');
+                    $('body').emit('input', {target: field});
+
                     modal.close();
                 });
 

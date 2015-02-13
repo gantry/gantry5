@@ -9,7 +9,10 @@ ready(function(){
         hiddens = element.find('~~ [type=hidden]');
 
         if (!hiddens) return true;
-        if (hiddens) hiddens.value(hiddens.value() == '0' ? '1' : '0');
+        hiddens.value(hiddens.value() == '0' ? '1' : '0');
+
+        hiddens.emit('change');
+        $('body').emit('change', {target: hiddens});
     });
 });
 

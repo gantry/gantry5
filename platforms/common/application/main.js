@@ -16,6 +16,7 @@ require('elements/events');
 require('elements/delegation');
 require('elements/insertion');
 require('elements/traversal');
+require('./fields');
 require('./ui/popover');
 require('./utils/ajaxify-links');
 
