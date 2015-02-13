@@ -3,17 +3,17 @@ $white:							#ffffff;
 $black:							#000000;
 
 // Base
-$base-background:				#ffffff;
-$base-text-color:				#333333;
+$base-background:				#ffffff !default;
+$base-text-color:				#333333 !default;
 
 // Header
-$header-background:				#ffffff;
-$header-text-color:				#333333;
+$header-background:				#ffffff !default;
+$header-text-color:				#333333 !default;
 
 // Showcase
-$showcase-background:			#3AA3D4;
-$showcase-text-color:			#ffffff;
+$showcase-background:			#3AA3D4 !default;
+$showcase-text-color:			#ffffff !default;
 
 // Footer
-$footer-background:				#333333;
-$footer-text-color:				#ffffff;
+$footer-background:				#333333 !default;
+$footer-text-color:				#ffffff !default;

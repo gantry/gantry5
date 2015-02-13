@@ -1,0 +1,15 @@
+name: Base Colors
+description: Base colors for the Hydrogen theme
+type: color
+
+form:
+  fields:
+
+    background:
+      type: input.colorpicker
+      label: Base Background
+      default: "#ffffff"
+    text-color:
+      type: input.colorpicker
+      label: Base Text Color
+      default: "#333333"

@@ -1,0 +1,15 @@
+name: Accent Colors
+description: Accent colors for the Hydrogen theme
+type: color
+
+form:
+  fields:
+
+    accent1:
+      type: input.colorpicker
+      label: Accent 1
+      default: "#DF392E"
+    accent2:
+      type: input.colorpicker
+      label: Accent 2
+      default: "#FEB948"
