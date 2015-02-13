@@ -6,17 +6,17 @@ Error: File to import not found or unreadable: hydrogen/buttons.
          /rt/workspace/gantry-playground/themes/hydrogen/common/scss
          /rt/workspace/gantry-playground/themes/hydrogen/common/scss
          /rt/workspace/gantry-playground/engines/nucleus/scss
-        on line 37 of scss/hydrogen.scss
+        on line 43 of scss/hydrogen.scss
 
-32: 
-33: // Footer
-34: @import "hydrogen/footer";
-35: 
-36: // Buttons
-37: @import "hydrogen/buttons";
+38: 
+39: // Footer
+40: @import "hydrogen/footer";
+41: 
+42: // Buttons
+43: @import "hydrogen/buttons";
 
 Backtrace:
-scss/hydrogen.scss:37
+scss/hydrogen.scss:43
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.10/lib/sass/tree/import_node.rb:66:in `rescue in import'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.10/lib/sass/tree/import_node.rb:45:in `import'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.10/lib/sass/tree/import_node.rb:28:in `imported_file'
@@ -60,4 +60,4 @@ scss/hydrogen.scss:37
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: File to import not found or unreadable: hydrogen/buttons.\A        Load paths:\A          /rt/workspace/gantry-playground/themes/hydrogen/common/scss\A          /rt/workspace/gantry-playground/engines/nucleus/scss\A          /rt/workspace/gantry-playground/themes/hydrogen/common/scss\A          /rt/workspace/gantry-playground/themes/hydrogen/common/scss\A          /rt/workspace/gantry-playground/engines/nucleus/scss\A         on line 37 of scss/hydrogen.scss\A \A 32: \A 33: // Footer\A 34: @import \"hydrogen/footer\";\A 35: \A 36: // Buttons\A 37: @import \"hydrogen/buttons\";"; }
+  content: "Error: File to import not found or unreadable: hydrogen/buttons.\A        Load paths:\A          /rt/workspace/gantry-playground/themes/hydrogen/common/scss\A          /rt/workspace/gantry-playground/engines/nucleus/scss\A          /rt/workspace/gantry-playground/themes/hydrogen/common/scss\A          /rt/workspace/gantry-playground/themes/hydrogen/common/scss\A          /rt/workspace/gantry-playground/engines/nucleus/scss\A         on line 43 of scss/hydrogen.scss\A \A 38: \A 39: // Footer\A 40: @import \"hydrogen/footer\";\A 41: \A 42: // Buttons\A 43: @import \"hydrogen/buttons\";"; }
