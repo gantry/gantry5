@@ -948,6 +948,7 @@ var Selectize = new prime({
 
     onChange: function() {
         this.input.emit('change', this.input.value(), this);
+        $('body').emit('change', {target: this.input});
     },
 
     onPaste: function(e) {
@@ -1949,12 +1950,7 @@ ready(function() {
     var selects = $('[data-selectize]');
     if (!selects) { return; }
 
-    selects.selectize({
-        onChange: function(value) {
-            $('body').emit('change', {target: this.input});
-        }
-    });
-
+    selects.selectize();
 });
 
 
