@@ -14,7 +14,8 @@ var prime         = require('prime'),
 
     request       = require('agent')(),
     History       = require('./history'),
-    getAjaxSuffix = require('./get-ajax-suffix');
+    getAjaxSuffix = require('./get-ajax-suffix'),
+    mm            = require('../menu');
 
 require('../ui/popover');
 
@@ -54,7 +55,7 @@ History.Adapter.bind(window, 'statechange', function() {
 
     if (!ERROR) { modal.closeAll(); }
 
-    request.url(URI + getAjaxSuffix() + params).method('get').send(function(error, response) {
+    request.url(URI + getAjaxSuffix() + params).data(Data.extras || {}).method(Data.extras ? 'post' : 'get').send(function(error, response) {
         if (!response.body.success) {
             ERROR = true;
             modal.open({
@@ -159,12 +160,23 @@ domready(function() {
 
         data = data ? JSON.parse(data) : { parsed: false };
         if (data) {
-            var uuid = guid();
+            var uuid = guid(), extras;
+
+            // TODO: The menu needs to be able to receive POST
+            if (false && (element.data('mm-id') || element.parent('[data-mm-id]'))) {
+                extras = {};
+                extras.menutype = $('select.menu-select-wrap').value();
+                extras.settings = JSON.stringify(mm.menumanager.settings);
+                extras.ordering = JSON.stringify(mm.menumanager.ordering);
+                extras.items = JSON.stringify(mm.menumanager.items);
+            }
+
             storage.set(uuid, merge({}, data, {
                 target: target,
                 parent: parent,
                 element: element,
                 params: params,
+                extras: extras,
                 event: event
             }));
             data = { uuid: uuid };
