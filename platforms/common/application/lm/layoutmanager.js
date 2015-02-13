@@ -489,9 +489,14 @@ var LayoutManager = new prime({
         if (this.block && this.block.isNew()) { this.element.attribute('style', null); }
 
         if (this.originalType === 'grid') {
-            var blocks;
+            var blocks, block;
             if (blocks = root.search('[data-lm-dropzone]:not([data-lm-blocktype="grid"])')) {
-                blocks.attribute('style', null);
+                blocks.forEach(function(element){
+                    element = $(element);
+                    block = get(this.builder.map, element.data('lm-id'));
+                    element.attribute('style', null);
+                    block.setSize();
+                }, this);
             }
         }
     }
