@@ -16,7 +16,7 @@
 {% set value = (value is null ? field.default : value) %}
 
 {% block field %}
-    <div class="settings-param {{ field.type|replace('.', ' ') }}">
+    <div class="settings-param {{ field.type|replace('.', '-') }}">
         {% if overridable %}
         <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
         <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
