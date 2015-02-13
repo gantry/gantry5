@@ -30,7 +30,10 @@
                                 {% if (field.ajax == true) %}
                                     {% set field_route = gantry.route((route ~ '.' ~ scope)|replace('.', '/') ~ field.name ~ '/' ~ key) %}
                                     <li>
-                                        <span><a data-collection-title data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ field_route }}">{{ field.value == field.key ? key : val[field.value] }}</a><i class="fa fa-pencil font-small" data-title-edit></i></span>
+                                        <span>
+                                            <a class="title" data-collection-title data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ field_route }}">{{ field.value == field.key ? key : val[field.value] }}</a>
+                                            <i class="fa fa-pencil font-small" data-title-edit></i>
+                                        </span>
                                     </li>
                                 {% else %}
                                     <hr />
