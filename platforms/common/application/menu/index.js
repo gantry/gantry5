@@ -66,10 +66,12 @@ ready(function() {
         event.preventDefault();
 
         var data = {};
-        data.menutype = $('select.menu-select-wrap').value();
-        data.settings = JSON.stringify(menumanager.settings);
-        data.ordering = JSON.stringify(menumanager.ordering);
-        data.items = JSON.stringify(menumanager.items);
+
+        if (element.hasClass('global-menu-settings')) {
+            data.settings = JSON.stringify(menumanager.settings);
+        } else {
+            data.item = JSON.stringify(menumanager.items[element.parent('[data-mm-id]').data('mm-id')]);
+        }
 
         modal.open({
             content: 'Loading',
