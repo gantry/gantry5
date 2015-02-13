@@ -55,6 +55,9 @@
     		top: 0;
 	    	@extend %inactive-dropdown;
 	    }
+	    .g-block {
+	    	@include flex(0 100%);
+	    }
 	}
 	.g-dropdown-column {
     	@extend %dropdown-column;

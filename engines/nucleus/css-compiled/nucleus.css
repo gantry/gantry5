@@ -1050,6 +1050,14 @@ th {
 .g-standard .g-dropdown .g-dropdown {
   left: 100%;
   top: 0; }
+.g-standard .g-dropdown .g-block {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 100%;
+  -moz-flex: 0 100%;
+  -ms-flex: 0 100%;
+  flex: 0 100%; }
 
 .g-fullwidth {
   position: static; }
