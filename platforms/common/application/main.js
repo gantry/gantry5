@@ -1,14 +1,15 @@
-var $       = require('elements'),
-    ready   = require('elements/domready'),
-    request = require('agent'),
-    ui      = require('./ui'),
-    modal   = ui.modal,
-    toastr  = ui.toastr,
+var $             = require('elements'),
+    ready         = require('elements/domready'),
+    request       = require('agent'),
+    ui            = require('./ui'),
+    interpolate   = require('mout/string/interpolate'),
+    modal         = ui.modal,
+    toastr        = ui.toastr,
 
     getAjaxSuffix = require('./utils/get-ajax-suffix'),
 
-    lm      = require('./lm'),
-    mm      = require('./menu').menumanager;
+    lm            = require('./lm'),
+    mm            = require('./menu');
 
 require('elements/attributes');
 require('elements/events');
@@ -19,7 +20,8 @@ require('./ui/popover');
 require('./utils/ajaxify-links');
 
 ready(function() {
-    var body = $('body');
+    var body = $('body'),
+        sentence = 'The {{type}} {{verb}} been successfully saved! {{extras}}';
     // Save
     body.delegate('click', '.button-save', function(e, element) {
         e.preventDefault();
@@ -27,10 +29,10 @@ ready(function() {
 
         var data = {},
             type = element.data('save'),
-            sentence = type + ' ' + (type.slice(-1) == 's' ? 'have' : 'has'),
+            extras = '',
             page = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other');
 
-        switch(page){
+        switch (page) {
             case 'layout':
                 lm.savestate.setSession(lm.builder.serialize(null, true));
                 data.layout = JSON.stringify(lm.builder.serialize());
@@ -54,12 +56,14 @@ ready(function() {
                         var name = input.attribute('name'),
                             value = input.value(),
                             parent = input.parent('.settings-param'),
-                            override = parent ? parent.find('> input[type="checkbox"]'): null;
+                            override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
                         data[name] = value;
                     });
                 }
+
+                if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
         }
 
         request('post', window.location.href + getAjaxSuffix(), data, function(error, response) {
@@ -72,7 +76,11 @@ ready(function() {
                 });
             } else {
                 modal.close();
-                toastr.success('The ' + sentence + ' been successfully saved!', type + ' Saved');
+                toastr.success(interpolate(sentence, {
+                    verb: type.slice(-1) == 's' ? 'have' : 'has',
+                    type: type,
+                    extras: extras
+                }), type + ' Saved');
             }
 
             element.hideSpinner();
@@ -92,7 +100,7 @@ module.exports = {
      domready: domready,
      agent   : require('agent'),*/
     lm: lm,
-    menu: mm,
+    mm: mm,
     ui: require('./ui'),
     styles: require('./styles'),
     "$": $,
