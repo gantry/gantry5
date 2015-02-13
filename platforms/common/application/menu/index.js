@@ -65,10 +65,16 @@ ready(function() {
     body.delegate('click', '#menu-editor .config-cog, #menu-editor .global-menu-settings', function(event, element) {
         event.preventDefault();
 
+        var data = {};
+        data.menutype = $('select.menu-select-wrap').value();
+        data.settings = JSON.stringify(menumanager.settings);
+        data.ordering = JSON.stringify(menumanager.ordering);
+        data.items = JSON.stringify(menumanager.items);
+
         modal.open({
             content: 'Loading',
-            //method: 'post',
-            //data: data,
+            method: 'post',
+            data: data,
             remote: $(element).attribute('href') + getAjaxSuffix(),
             remoteLoaded: function(response, content) {
                 var form = content.elements.content.find('form'),
