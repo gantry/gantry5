@@ -28,7 +28,7 @@ class Menu extends HtmlController
             '/*'            => 'save',
             '/*/**'         => 'item',
             '/edit'         => 'undefined',
-            '/edit/*'       => 'undefined',
+            '/edit/*'       => 'edit',
             '/edit/*/validate' => 'validate',
             '/edit/*/**'    => 'validateitem',
         ],
@@ -93,11 +93,14 @@ class Menu extends HtmlController
     {
         // Load the menu.
         $resource = $this->loadResource($id);
+        if (!empty($_POST)) {
+            $resource->config()->merge(['settings' => $_POST]);
+        }
 
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $id;
         $this->params['blueprints'] = $this->loadBlueprints();
-        $this->params['data'] = $resource->config();
+        $this->params['data'] = ['settings' => $resource->settings()];
 
         return $this->container['admin.theme']->render('@gantry-admin//pages/menu/edit.html.twig', $this->params);
     }
@@ -128,6 +131,9 @@ class Menu extends HtmlController
         $item = $resource[$path];
         if (!$item) {
             throw new \RuntimeException('Menu item not found', 404);
+        }
+        if (!empty($_POST)) {
+            $item->update($_POST);
         }
 
         // Load blueprints for the menu item.
@@ -161,7 +167,7 @@ class Menu extends HtmlController
 
         // TODO: validate
 
-        return new JsonResponse(['data' => $data->toArray()]);
+        return new JsonResponse(['data' => (array) $data->get('settings')]);
     }
 
     public function validateitem($id)

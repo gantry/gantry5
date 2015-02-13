@@ -95,6 +95,13 @@ class Item implements \ArrayAccess, \Iterator
         return isset($groups[$i]) ? $groups[$i] : [];
     }
 
+    public function update(array $data)
+    {
+        array_replace($this->items, $data);
+
+        return $this;
+    }
+
     public function addChild(Item $child)
     {
         $child->level = $this->level + 1;
