@@ -190,8 +190,6 @@ class Menu extends HtmlController
             $this->undefined();
         }
 
-        $path = implode('/', $path);
-
         // Load the menu.
         $resource = $this->loadResource($id);
 
@@ -206,11 +204,16 @@ class Menu extends HtmlController
 
         // TODO: validate
 
+        // Fill parameters to be passed to the template file.
+        $this->params['id'] = $id;
+        $this->params['menu'] = $resource;
+        $this->params['path'] = implode('/', $path);
         $this->params['item'] = new Item($resource, $data->path, $data->toArray());
+        $this->params['group'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
 
         $html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
 
-        return new JsonResponse(['path' => $path, 'item' => $data->toArray(), 'html' => $html]);
+        return new JsonResponse(['path' => implode('/', $path), 'item' => $data->toArray(), 'html' => $html]);
     }
 
     protected function layoutName($level)
