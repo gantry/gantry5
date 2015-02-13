@@ -137,7 +137,7 @@ class Styles extends HtmlController
 
     public function save($id = null)
     {
-        $data = $id ? [$id => $_POST] : $_POST['styles'];
+        $data = $id ? [$id => $_POST] : (isset($_POST['styles']) ? $_POST['styles'] : []);
 
         foreach ($data as $name => $values) {
             $this->saveItem($name, $values);
