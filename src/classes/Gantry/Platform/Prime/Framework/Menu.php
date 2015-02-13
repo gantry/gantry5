@@ -137,6 +137,7 @@ class Menu extends AbstractMenu
         $menuItems = array_unique(array_merge(Folder::all($folder, $options), array_keys($items)));
         sort($menuItems);
 
+        /** @var array|Item[] $all */
         $all = ['' => new Item($this, '', ['layout' => 'horizontal'])];
         foreach ($menuItems as $name) {
             $parent = dirname($name);

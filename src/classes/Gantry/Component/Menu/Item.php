@@ -4,6 +4,21 @@ namespace Gantry\Component\Menu;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 
+/**
+ * @property string $id
+ * @property string $type
+ * @property string $path
+ * @property string $alias
+ * @property string $title
+ * @property string $link
+ * @property string $parent_id
+ * @property string $layout
+ * @property int $browserNav
+ * @property bool $menu_text
+ * @property bool $visible
+ * @property int $group
+ * @property int $level
+ */
 class Item implements \ArrayAccess, \Iterator
 {
     use ArrayAccessWithGetters, Export;
