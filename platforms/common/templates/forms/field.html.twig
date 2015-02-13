@@ -16,38 +16,38 @@
 {% set value = (value is null ? field.default : value) %}
 
 {% block field %}
-    <div class="settings-param">
+    <div class="settings-param {{ field.type|replace('.', ' ') }}">
         {% if overridable %}
         <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
         <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
         {% endif %}
         {% block contents %}
-        <span class="settings-param-title float-left">
-            {% block label %}
-            {% if field.description %}
-                <span class="tooltip" data-asTooltip-position="w" title="{{ field.description|e }}">{{ field.label|e }}</span>
-            {% else %}
-                {{ field.label|e }}
-            {% endif %}
-            {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
-            {% endblock %}
-        </span>
-        <div class="settings-param-field">
-            {% block input %}
-                <input
-                        {# required attribute structures #}
-                        name="{{ (scope ~ name)|fieldName }}"
-                        value="{{ value|join(', ') }}"
-                        {# global attribute structures #}
-                        {% block global_attributes %}
-                            {% if field.class is defined %} class="{{ field.class }}" {% endif %}
-                            {% if field.id is defined %} id="{{ field.id }}" {% endif %}
-                            {% if field.style is defined %} style="{{ field.style }}" {% endif %}
-                            {% if field.title is defined %} title="{{ field.title }}" {% endif %}
-                        {% endblock %}
-                        />
-            {% endblock %}
-        </div>
+            <span class="settings-param-title float-left">
+                {% block label %}
+                {% if field.description %}
+                    <span class="tooltip" data-asTooltip-position="w" title="{{ field.description|e }}">{{ field.label|e }}</span>
+                {% else %}
+                    {{ field.label|e }}
+                {% endif %}
+                {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
+                {% endblock %}
+            </span>
+            <div class="settings-param-field">
+                {% block input %}
+                    <input
+                            {# required attribute structures #}
+                            name="{{ (scope ~ name)|fieldName }}"
+                            value="{{ value|join(', ') }}"
+                            {# global attribute structures #}
+                            {% block global_attributes %}
+                                {% if field.class is defined %} class="{{ field.class }}" {% endif %}
+                                {% if field.id is defined %} id="{{ field.id }}" {% endif %}
+                                {% if field.style is defined %} style="{{ field.style }}" {% endif %}
+                                {% if field.title is defined %} title="{{ field.title }}" {% endif %}
+                            {% endblock %}
+                            />
+                {% endblock %}
+            </div>
         {% endblock %}
     </div>
 {% endblock %}

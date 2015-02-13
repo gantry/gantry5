@@ -231,6 +231,7 @@ ready(function() {
 
                 if (!form || !submit) { return true; }
 
+                //TODO: Possibly make this more generic so we can use this everywhere.
                 var title = content.elements.content.find('[data-particle-title]'),
                     titleEdit = content.elements.content.find('[data-title-edit]'),
                     titleValue;
