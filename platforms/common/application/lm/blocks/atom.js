@@ -29,7 +29,7 @@ var Atom = new prime({
     },
 
     hasChanged: function(state, parent) {
-        var icon = this.block.find('span > i.changes-indicator:first-child'), parent;
+        var icon = this.block.find('span > i.changes-indicator:first-child');
 
         // if the particle has changes but the parent block doesn't, we want to keep the indicator showing
         if (icon && parent && !parent.changeState) { return; }

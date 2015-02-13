@@ -38,8 +38,11 @@ var Section = new prime({
         $(child).insert(this.block.find('.g-grid'));
     },
 
-    hasChanged: function(state) {
+    hasChanged: function(state, child) {
         var icon = this.block.find('h4 > i:first-child');
+
+        // if the the event is triggered from a grid we need to be cautious not to override the proper state
+        if (icon && child && !child.changeState) { return; }
 
         this.block[state ? 'addClass' : 'removeClass']('block-has-changes');
 

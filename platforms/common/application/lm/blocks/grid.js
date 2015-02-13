@@ -12,6 +12,8 @@ var Grid = new prime({
 
     constructor: function(options) {
         Base.call(this, options);
+
+        this.on('changed', this.hasChanged);
     },
 
     layout: function() {
@@ -23,6 +25,18 @@ var Grid = new prime({
         if (parent && parent.data('lm-root') || (parent.data('lm-blocktype') == 'container' && parent.parent().data('lm-root'))) {
             this.removeDropzone();
         }
+    },
+
+    hasChanged: function(state) {
+        // Grids don't have room for an indicator so we forward it to the parent Section
+        var parent = this.block.parent('[data-lm-blocktype="section"]'),
+            id = parent ? parent.data('lm-id') : false;
+
+        this.changeState = state;
+
+        if (!parent || !id) { return; }
+
+        this.options.builder.get(id).emit('changed', state, this);
     }
 });
 

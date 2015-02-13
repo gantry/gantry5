@@ -100,7 +100,7 @@ var Builder = new prime({
             hasChildren = element.search('> [data-lm-id]');
 
             if (flat) {
-                children = hasChildren ? true : false;
+                children = hasChildren ? hasChildren.map(function(element){ return $(element).data('lm-id'); }) : false;
             } else {
                 children = hasChildren ? this.serialize(element) : [];
             }
