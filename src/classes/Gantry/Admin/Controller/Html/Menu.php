@@ -29,8 +29,8 @@ class Menu extends HtmlController
             '/*/**'         => 'item',
             '/edit'         => 'undefined',
             '/edit/*'       => 'edit',
+            '/edit/*/**'    => 'menuitem',
             '/edit/*/validate' => 'validate',
-            '/edit/*/**'    => 'validateitem',
         ],
         'PUT' => [
             '/*' => 'replace'
@@ -93,8 +93,8 @@ class Menu extends HtmlController
     {
         // Load the menu.
         $resource = $this->loadResource($id);
-        if (!empty($_POST)) {
-            $resource->config()->merge(['settings' => $_POST]);
+        if (!empty($_POST['settings'])) {
+            $resource->config()->merge(['settings' => json_decode($_POST['settings'], true)]);
         }
 
         // Fill parameters to be passed to the template file.
@@ -122,6 +122,14 @@ class Menu extends HtmlController
     {
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
+        $keyword = end($path);
+
+        // Special case: validate instead of fetching menu item.
+        if (!empty($_POST) && $keyword == 'validate') {
+            $params = array_slice(func_get_args(), 0, -1);
+            return call_user_func_array([$this, 'validateitem'], $params);
+        }
+
         $path = implode('/', $path);
 
         // Load the menu.
@@ -132,8 +140,8 @@ class Menu extends HtmlController
         if (!$item) {
             throw new \RuntimeException('Menu item not found', 404);
         }
-        if (!empty($_POST)) {
-            $item->update($_POST);
+        if (!empty($_POST['item'])) {
+            $item->update(json_decode($_POST['item'], true));
         }
 
         // Load blueprints for the menu item.
@@ -167,17 +175,16 @@ class Menu extends HtmlController
 
         // TODO: validate
 
-        return new JsonResponse(['data' => (array) $data->get('settings')]);
+        return new JsonResponse(['settings' => (array) $data->get('settings')]);
     }
 
     public function validateitem($id)
     {
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
-        $keyword = array_pop($path);
 
         // Validate only exists for JSON.
-        if ($keyword != 'validate' || empty($this->params['ajax'])) {
+        if (empty($this->params['ajax'])) {
             $this->undefined();
         }
 
@@ -194,7 +201,7 @@ class Menu extends HtmlController
 
         // TODO: validate
 
-        return new JsonResponse(['path' => $path, 'data' => $data->toArray()]);
+        return new JsonResponse(['path' => $path, 'item' => $data->toArray()]);
     }
 
     protected function layoutName($level)
