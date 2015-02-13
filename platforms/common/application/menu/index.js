@@ -111,9 +111,9 @@ ready(function() {
                             });
                         } else {
                             if (response.body.path) {
-                                menumanager.items[response.body.path] = response.body.data;
+                                menumanager.items[response.body.path] = response.body.item;
                             } else {
-                                menumanager.settings = response.body.data.settings;
+                                menumanager.settings = response.body.settings;
                             }
 
                             modal.close();

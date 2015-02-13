@@ -867,9 +867,9 @@ var G5;
                                     });
                                 } else {
                                     if (response.body.path) {
-                                        menumanager.items[response.body.path] = response.body.data;
+                                        menumanager.items[response.body.path] = response.body.item;
                                     } else {
-                                        menumanager.settings = response.body.data.settings;
+                                        menumanager.settings = response.body.settings;
                                     }
                                     modal.close();
                                     toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
@@ -2518,6 +2518,11 @@ var G5;
                         }
                         agent.send(bind(function (error, response) {
                             elements.content.html(response.body.html || response.body);
+                            if (!response.body.success) {
+                                if (!response.body.html) {
+                                    elements.content.style({ width: '90%' });
+                                }
+                            }
                             this.hideLoading();
                             if (options.remoteLoaded) {
                                 options.remoteLoaded(response, options);
@@ -10512,7 +10517,7 @@ var G5;
         module.exports = every;
     },
     '3a': function (require, module, exports, global) {
-        var toNumber = require('50');
+        var toNumber = require('51');
         function enforcePrecision(val, nDecimalDigits) {
             val = toNumber(val);
             var pow = Math.pow(10, nDecimalDigits);
@@ -10523,7 +10528,7 @@ var G5;
     '3b': function (require, module, exports, global) {
         var make = require('4g');
         var arrFind = require('3w');
-        var objFind = require('51');
+        var objFind = require('50');
         module.exports = make(arrFind, objFind);
     },
     '3c': function (require, module, exports, global) {
@@ -14344,21 +14349,6 @@ var G5;
         module.exports = map;
     },
     '50': function (require, module, exports, global) {
-        var isArray = require('2l');
-        function toNumber(val) {
-            if (typeof val === 'number')
-                return val;
-            if (!val)
-                return 0;
-            if (typeof val === 'string')
-                return parseFloat(val);
-            if (isArray(val))
-                return NaN;
-            return Number(val);
-        }
-        module.exports = toNumber;
-    },
-    '51': function (require, module, exports, global) {
         var some = require('5w');
         var makeIterator = require('3m');
         function find(obj, callback, thisObj) {
@@ -14373,6 +14363,21 @@ var G5;
             return result;
         }
         module.exports = find;
+    },
+    '51': function (require, module, exports, global) {
+        var isArray = require('2l');
+        function toNumber(val) {
+            if (typeof val === 'number')
+                return val;
+            if (!val)
+                return 0;
+            if (typeof val === 'string')
+                return parseFloat(val);
+            if (isArray(val))
+                return NaN;
+            return Number(val);
+        }
+        module.exports = toNumber;
     },
     '52': function (require, module, exports, global) {
         var kindOf = require('53');
@@ -14633,9 +14638,9 @@ var G5;
         module.exports = deepMatches;
     },
     '5f': function (require, module, exports, global) {
-        var MIN_INT = require('66');
-        var MAX_INT = require('67');
-        var rand = require('68');
+        var MIN_INT = require('63');
+        var MAX_INT = require('64');
+        var rand = require('65');
         function randInt(min, max) {
             min = min == null ? MIN_INT : ~~min;
             max = max == null ? MAX_INT : ~~max;
@@ -14644,9 +14649,9 @@ var G5;
         module.exports = randInt;
     },
     '5g': function (require, module, exports, global) {
-        var unique = require('63');
-        var filter = require('64');
-        var some = require('65');
+        var unique = require('66');
+        var filter = require('67');
+        var some = require('68');
         var contains = require('14');
         var slice = require('34');
         function difference(arr) {
@@ -14946,7 +14951,24 @@ var G5;
         module.exports = isKind;
     },
     '63': function (require, module, exports, global) {
-        var filter = require('64');
+        module.exports = -2147483648;
+    },
+    '64': function (require, module, exports, global) {
+        module.exports = 2147483647;
+    },
+    '65': function (require, module, exports, global) {
+        var random = require('6c');
+        var MIN_INT = require('63');
+        var MAX_INT = require('64');
+        function rand(min, max) {
+            min = min == null ? MIN_INT : min;
+            max = max == null ? MAX_INT : max;
+            return min + (max - min) * random();
+        }
+        module.exports = rand;
+    },
+    '66': function (require, module, exports, global) {
+        var filter = require('67');
         function unique(arr, compare) {
             compare = compare || isEqual;
             return filter(arr, function (item, i, arr) {
@@ -14964,7 +14986,7 @@ var G5;
         }
         module.exports = unique;
     },
-    '64': function (require, module, exports, global) {
+    '67': function (require, module, exports, global) {
         var makeIterator = require('3m');
         function filter(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
@@ -14983,7 +15005,7 @@ var G5;
         }
         module.exports = filter;
     },
-    '65': function (require, module, exports, global) {
+    '68': function (require, module, exports, global) {
         var makeIterator = require('3m');
         function some(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
@@ -15001,23 +15023,6 @@ var G5;
             return result;
         }
         module.exports = some;
-    },
-    '66': function (require, module, exports, global) {
-        module.exports = -2147483648;
-    },
-    '67': function (require, module, exports, global) {
-        module.exports = 2147483647;
-    },
-    '68': function (require, module, exports, global) {
-        var random = require('6c');
-        var MIN_INT = require('66');
-        var MAX_INT = require('67');
-        function rand(min, max) {
-            min = min == null ? MIN_INT : min;
-            max = max == null ? MAX_INT : max;
-            return min + (max - min) * random();
-        }
-        module.exports = rand;
     },
     '69': function (require, module, exports, global) {
         'use strict';
