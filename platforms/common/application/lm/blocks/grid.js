@@ -36,7 +36,7 @@ var Grid = new prime({
 
         if (!parent || !id) { return; }
 
-        this.options.builder.get(id).emit('changed', state, this);
+        if (this.options.builder) { this.options.builder.get(id).emit('changed', state, this); }
     }
 });
 
