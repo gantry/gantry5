@@ -41,9 +41,9 @@ ready(function() {
                 break;
             case 'menu':
                 data.menutype = $('select.menu-select-wrap').value();
-                data.settings = JSON.stringify(mm.settings);
-                data.ordering = JSON.stringify(mm.ordering);
-                data.items = JSON.stringify(mm.items);
+                data.settings = JSON.stringify(mm.menumanager.settings);
+                data.ordering = JSON.stringify(mm.menumanager.ordering);
+                data.items = JSON.stringify(mm.menumanager.items);
 
                 break;
 
