@@ -1,11 +1,13 @@
 <?php
 namespace Gantry\Framework\Base;
 
-use Grav\Common\Grav;
+use Gantry\Component\Gantry\GantryTrait;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Document
 {
+    use GantryTrait;
+
     public static function addHeaderTag(array $element)
     {
         return false;
@@ -38,7 +40,7 @@ class Document
 
         } elseif (strpos($url, '://') !== false) {
             // Resolve stream to a relative path.
-            $gantry = Gantry::instance();
+            $gantry = static::gantry();
 
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];

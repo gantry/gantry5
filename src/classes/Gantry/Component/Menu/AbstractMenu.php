@@ -32,34 +32,14 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
     ];
 
     abstract public function __construct();
-    abstract public function getMenus();
-    abstract public function getMenuItems();
-    abstract public function config();
 
     /**
-     * Get base menu item.
-     *
-     * If itemid is not specified or does not exist, return active menu item.
-     * If there is no active menu item, fall back to home page for the current language.
-     * If there is no home page, return null.
-     *
-     * @param   string  $path
-     *
-     * @return  string
-     */
-    abstract protected function calcBase($path);
-
-    /**
-     * Get a list of the menu items.
-     *
-     * Logic has been mostly copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
-     * We should keep the contents of the function similar to Joomla in order to review it against any changes.
-     *
-     * @param  array  $params
+     * Return list of menus.
      *
      * @return array
      */
-    abstract protected function getList(array $params);
+    abstract public function getMenus();
+    abstract public function config();
 
     public function instance(array $params = [])
     {
@@ -97,7 +77,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
     {
         $list = [];
         foreach ($this->items as $name => $item) {
-           foreach ($item->groups() as $col => $children) {
+            foreach ($item->groups() as $col => $children) {
                 foreach ($children as $child) {
                     $list[$name][$col][] = $child->path;
                 }
@@ -156,6 +136,31 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
     {
         return $item->path == $this->getActive()->path;
     }
+
+    /**
+     * Get base menu item.
+     *
+     * If itemid is not specified or does not exist, return active menu item.
+     * If there is no active menu item, fall back to home page for the current language.
+     * If there is no home page, return null.
+     *
+     * @param   string  $path
+     *
+     * @return  string
+     */
+    abstract protected function calcBase($path);
+
+    /**
+     * Get a list of the menu items.
+     *
+     * Logic has been mostly copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
+     * We should keep the contents of the function similar to Joomla in order to review it against any changes.
+     *
+     * @param  array  $params
+     *
+     * @return array
+     */
+    abstract protected function getList(array $params);
 
     /**
      * @param array|Item[] $items

@@ -5,25 +5,32 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
-use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Menu extends AbstractMenu
 {
+    use GantryTrait;
+
     public function __construct()
     {
         $this->default = 'home';
         $this->active  = PAGE_PATH;
     }
 
+    /**
+     * Return list of menus.
+     *
+     * @return array
+     */
     public function getMenus()
     {
         static $list;
 
         if ($list === null) {
-            $gantry = Gantry::instance();
+            $gantry = static::gantry();
 
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
@@ -40,6 +47,27 @@ class Menu extends AbstractMenu
         }
 
         return $list;
+    }
+
+    /**
+     * Get menu configuration.
+     *
+     * @return Config
+     */
+    public function config()
+    {
+        if (!$this->config) {
+            $gantry = static::gantry();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+
+            $menu = $this->params['menu'];
+
+            $this->config = new Config(CompiledYamlFile::instance($locator("gantry-config://menu/{$menu}.yaml"))->content());
+        }
+
+        return $this->config;
     }
 
     /**
@@ -62,44 +90,6 @@ class Menu extends AbstractMenu
 
         // Return base menu item.
         return $path;
-    }
-
-    public function getMenuItems()
-    {
-        $config = $this->config();
-        $items = isset($config['items']) ? $config['items'] : [];
-
-        $folder = PRIME_ROOT . '/pages';
-        if (!is_dir($folder)) {
-            return $items;
-        }
-
-        $options = [
-            'pattern' => '|\.html\.twig|',
-            'filters' => ['key' => '|\.html\.twig|', 'value' => function () { return []; }],
-            'key' => 'SubPathname'
-        ];
-
-        $items += Folder::all($folder, $options);
-        ksort($items);
-
-        return $items;
-    }
-
-    public function config()
-    {
-        if (!$this->config) {
-            $gantry = Gantry::instance();
-
-            /** @var UniformResourceLocator $locator */
-            $locator = $gantry['locator'];
-
-            $menu = $this->params['menu'];
-
-            $this->config = new Config(CompiledYamlFile::instance($locator("gantry-config://menu/{$menu}.yaml"))->content());
-        }
-
-        return $this->config;
     }
 
     /**

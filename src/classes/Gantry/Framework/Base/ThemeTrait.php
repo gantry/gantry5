@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Framework\Base;
 
+use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Stylesheet\ScssCompiler;
 use Gantry\Component\Theme\ThemeDetails;
@@ -18,9 +19,11 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 trait ThemeTrait
 {
+    use GantryTrait;
+
     public function init()
     {
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = static::gantry();
         $gantry['streams'];
         $gantry->register(new ErrorServiceProvider);
     }
@@ -34,7 +37,7 @@ trait ThemeTrait
 
     public function css($name)
     {
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = static::gantry();
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
@@ -58,7 +61,7 @@ trait ThemeTrait
             $name = $this->layout();
         }
 
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = static::gantry();
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
@@ -80,7 +83,7 @@ trait ThemeTrait
 
     public function add_to_context(array $context)
     {
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = static::gantry();
         $context['gantry'] = $gantry;
         $context['site'] = $gantry['site'];
         $context['config'] = $gantry['config'];
@@ -95,7 +98,7 @@ trait ThemeTrait
 
     public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
     {
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = static::gantry();
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
