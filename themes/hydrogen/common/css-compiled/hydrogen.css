@@ -2,29 +2,49 @@ body {
   color: #333333;
   background: #ffffff; }
 
+a {
+  color: #439A86; }
+
 @font-face {
-  font-family: "walkwaybold";
+  font-family: "g-lato";
+  font-weight: 300;
+  font-style: normal;
+  src: url("../fonts/lato_light/Lato-Light.eot");
+  src: url("../fonts/lato_light/Lato-Light.eot?#iefix") format("embedded-opentype"), url("../fonts/lato_light/Lato-Light.woff") format("woff"), url("../fonts/lato_light/Lato-Light.ttf") format("truetype"), url("../fonts/lato_light/Lato-Light.svg#g-lato") format("svg"); }
+@font-face {
+  font-family: "g-lato";
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.eot");
-  src: url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.woff") format("woff"), url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.ttf") format("truetype"), url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.svg#walkwaybold") format("svg"); }
+  src: url("../fonts/lato_regular/lato-regular-webfont.eot");
+  src: url("../fonts/lato_regular/lato-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato_regular/lato-regular-webfont.woff") format("woff"), url("../fonts/lato_regular/lato-regular-webfont.ttf") format("truetype"), url("../fonts/lato_regular/lato-regular-webfont.svg#g-lato") format("svg"); }
 @font-face {
-  font-family: "latolight";
+  font-family: "g-montserrat";
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/lato-light/lato-light-webfont.eot");
-  src: url("../fonts/lato-light/lato-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato-light/lato-light-webfont.woff") format("woff"), url("../fonts/lato-light/lato-light-webfont.ttf") format("truetype"), url("../fonts/lato-light/lato-light-webfont.svg#latolight") format("svg"); }
+  src: url("../fonts/montserrat_light/montserrat-light-webfont.eot");
+  src: url("../fonts/montserrat_light/montserrat-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/montserrat_light/montserrat-light-webfont.woff") format("woff"), url("../fonts/montserrat_light/montserrat-light-webfont.ttf") format("truetype"), url("../fonts/montserrat_light/montserrat-light-webfont.svg#g-montserrat") format("svg"); }
+body {
+  font-family: "g-lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
+
+b {
+  font-weight: 300; }
+
+h1, h2, h3, h4, h5 {
+  font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
+
 #g-header {
-  background: #ffffff;
-  color: #333333; }
+  background: #439A86;
+  color: #ffffff; }
+  #g-header a {
+    color: #ffffff; }
 
 #g-showcase {
   text-align: center;
-  background: #3AA3D4;
+  background: #354D59;
   color: #ffffff; }
 
 #g-footer {
-  background: #333333;
-  color: #ffffff; }
+  background: #ffffff;
+  color: #333333; }
 
 /*# sourceMappingURL=hydrogen.css.map */

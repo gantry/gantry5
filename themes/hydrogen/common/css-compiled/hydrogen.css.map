@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "AAAA,IAAK;EACJ,KAAK,ECKe,OAAO;EDJ3B,UAAU,ECGU,OAAO;;ACF1B,UAkBC;EAjBC,WAAW,ECJI,aAAa;EDK5B,WAAW,EAHqC,MAAM;EAItD,UAAU,EAJsD,MAAM;EAapE,GAAG,EAAE,qEAAwB;EAC7B,GAAG,EAAE,0XAAyE;AAblF,UAkBC;EAjBC,WAAW,ECHI,WAAW;EDI1B,WAAW,EAHqC,MAAM;EAItD,UAAU,EAJsD,MAAM;EAapE,GAAG,EAAE,iDAAwB;EAC7B,GAAG,EAAE,wSAAyE;AEhBpF,SAAU;EACT,UAAU,EHQY,OAAO;EGP7B,KAAK,EHQiB,OAAO;;AIV9B,WAAY;EACX,UAAU,EAAE,MAAM;EAClB,UAAU,EJWa,OAAO;EIV9B,KAAK,EJWkB,OAAO;;AKd/B,SAAU;EACT,UAAU,ELgBY,OAAO;EKf7B,KAAK,ELgBiB,OAAO",
-"sources": ["../scss/hydrogen/_core.scss","../scss/configuration/_colors.scss","../../../../engines/nucleus/scss/vendor/bourbon/css3/_font-face.scss","../scss/hydrogen/_typography.scss","../scss/hydrogen/_header.scss","../scss/hydrogen/_showcase.scss","../scss/hydrogen/_footer.scss"],
+"mappings": "AAAA,IAAK;EACJ,KAAK,ECKe,OAAO;EDJ3B,UAAU,ECGU,OAAO;;ADA5B,CAAE;EACD,KAAK,ECGc,OAAO;;ACNzB,UAkBC;EAjBC,WAAW,ECJI,QAAQ;EDKvB,WAAW,ECLgD,GAAG;EDM9D,UAAU,EAJsD,MAAM;EAapE,GAAG,EAAE,yCAAwB;EAC7B,GAAG,EAAE,qQAAyE;AAblF,UAkBC;EAjBC,WAAW,ECHI,QAAQ;EDIvB,WAAW,EAHqC,MAAM;EAItD,UAAU,EAJsD,MAAM;EAapE,GAAG,EAAE,qDAAwB;EAC7B,GAAG,EAAE,qTAAyE;AAblF,UAkBC;EAjBC,WAAW,ECFI,cAAc;EDG7B,WAAW,EAHqC,MAAM;EAItD,UAAU,EAJsD,MAAM;EAapE,GAAG,EAAE,6DAAwB;EAC7B,GAAG,EAAE,2VAAyE;ACZpF,IAAK;EACJ,WAAW,ECJoB,8DAAQ;;ADOxC,CAAE;EACD,WAAW,EAAE,GAAG;;AAGjB,kBAAmB;EAClB,WAAW,ECVY,oEAAc;;ACHtC,SAAU;EACT,UAAU,EJYY,OAAO;EIX7B,KAAK,EJYiB,OAAO;EIV7B,WAAE;IACD,KAAK,EJSgB,OAAO;;AKd9B,WAAY;EACX,UAAU,EAAE,MAAM;EAClB,UAAU,ELea,OAAO;EKd9B,KAAK,ELekB,OAAO;;AMlB/B,SAAU;EACT,UAAU,ENoBY,OAAO;EMnB7B,KAAK,ENoBiB,OAAO",
+"sources": ["../scss/hydrogen/_core.scss","../scss/configuration/_colors.scss","../../../../engines/nucleus/scss/vendor/bourbon/css3/_font-face.scss","../scss/hydrogen/_typography.scss","../scss/configuration/_typography.scss","../scss/hydrogen/_header.scss","../scss/hydrogen/_showcase.scss","../scss/hydrogen/_footer.scss"],
 "names": [],
 "file": "hydrogen.css"
 }

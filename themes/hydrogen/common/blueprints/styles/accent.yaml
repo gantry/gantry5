@@ -5,11 +5,11 @@ type: color
 form:
   fields:
 
-    accent1:
+    color-1:
       type: input.colorpicker
-      label: Accent 1
-      default: "#DF392E"
-    accent2:
+      label: Accent Color 1
+      default: "#439A86"
+    color-2:
       type: input.colorpicker
-      label: Accent 2
-      default: "#FEB948"
+      label: Accent Color 2
+      default: "#EFBC68"

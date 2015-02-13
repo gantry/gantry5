@@ -1,4 +1,8 @@
 #g-header {
 	background: $header-background;
 	color: $header-text-color;
+
+	a {
+		color: $header-text-color;
+	}
 }
