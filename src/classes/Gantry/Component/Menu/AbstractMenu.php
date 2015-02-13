@@ -1,19 +1,23 @@
 <?php
 namespace Gantry\Component\Menu;
 
+use Gantry\Component\Config\Config;
+use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Component\Gantry\GantryTrait;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 abstract class AbstractMenu implements \ArrayAccess, \Iterator
 {
-    use ArrayAccessWithGetters, Iterator, Export;
+    use GantryTrait, ArrayAccessWithGetters, Iterator, Export;
 
     protected $default;
     protected $base;
     protected $active;
     protected $params;
-    protected $config;
+    private $config;
 
     /**
      * @var array|Item[]
@@ -39,9 +43,8 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
      * @return array
      */
     abstract public function getMenus();
-    abstract public function config();
 
-    public function instance(array $params = [])
+    public function instance(array $params = [], Config $menu = null)
     {
         if (!isset($params['config'])) {
             $params = $this->defaults;
@@ -57,10 +60,32 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
 
         $instance = clone $this;
         $instance->params = $params;
+        $instance->config = $menu;
 
         $instance->items = $instance->getList($params);
 
         return $instance;
+    }
+
+    /**
+     * Get menu configuration.
+     *
+     * @return Config
+     */
+    public function config()
+    {
+        if (!$this->config) {
+            $gantry = static::gantry();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+
+            $menu = $this->params['menu'];
+
+            $this->config = new Config(CompiledYamlFile::instance($locator("gantry-config://menu/{$menu}.yaml"))->content());
+        }
+
+        return $this->config;
     }
 
     public function name()
@@ -136,6 +161,14 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
     {
         return $item->path == $this->getActive()->path;
     }
+
+    /**
+     * Get menu items from the platform.
+     *
+     * @param int $levels
+     * @return array
+     */
+    abstract protected function getItemsFromPlatform($levels);
 
     /**
      * Get base menu item.

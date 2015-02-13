@@ -49,7 +49,7 @@ class Menu extends HtmlController
         $path = array_slice(func_get_args(), 1);
 
         // Load the menu.
-        $resource = $this->loadResource($id);
+        $resource = $this->loadResource($id, isset($_POST['ordering']) ? new Config($_POST) : null);
 
         // Get menu item and make sure it exists.
         $item = $resource[implode('/', $path)];
@@ -239,15 +239,16 @@ class Menu extends HtmlController
      * Load resource.
      *
      * @param string $id
+     * @param Config $config
      * @return MenuObject
      * @throws \RuntimeException
      */
-    protected function loadResource($id)
+    protected function loadResource($id, Config $config = null)
     {
         /** @var MenuObject $menus */
         $menus = $this->container['menu'];
 
-        return $menus->instance(['config' => ['menu' => $id]]);
+        return $menus->instance(['config' => ['menu' => $id]], $config);
     }
 
     /**

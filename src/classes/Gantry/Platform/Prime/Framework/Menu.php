@@ -3,7 +3,6 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
@@ -50,30 +49,31 @@ class Menu extends AbstractMenu
     }
 
     /**
-     * Get menu configuration.
+     * Get menu items from the platform.
      *
-     * @return Config
+     * @param int $levels
+     * @return array
      */
-    public function config()
+    protected function getItemsFromPlatform($levels)
     {
-        if (!$this->config) {
-            $gantry = static::gantry();
+        $options = [
+            'levels' => $levels,
+            'pattern' => '|\.html\.twig|',
+            'filters' => ['value' => '|\.html\.twig|']
+        ];
 
-            /** @var UniformResourceLocator $locator */
-            $locator = $gantry['locator'];
-
-            $menu = $this->params['menu'];
-
-            $this->config = new Config(CompiledYamlFile::instance($locator("gantry-config://menu/{$menu}.yaml"))->content());
+        $folder = PRIME_ROOT . '/pages';
+        if (!is_dir($folder)) {
+            return [];
         }
 
-        return $this->config;
+        return Folder::all($folder, $options);
     }
 
     /**
      * Get base menu item.
      *
-     * If itemid is not specified or does not exist, return active menu item.
+     * If menu item is not specified or does not exist, return active menu item.
      * If there is no active menu item, fall back to home page for the current language.
      * If there is no home page, return null.
      *
@@ -112,19 +112,9 @@ class Menu extends AbstractMenu
         $end     = $params['endLevel'];
         $showAll = $params['showAllChildren'];
 
-        $options = [
-            'levels' => $end - $start,
-            'pattern' => '|\.html\.twig|',
-            'filters' => ['value' => '|\.html\.twig|']
-        ];
-
-        $folder = PRIME_ROOT . '/pages';
-        if (!is_dir($folder)) {
-            return [];
-        }
         $config = $this->config();
         $items = isset($config['items']) ? $config['items'] : [];
-        $menuItems = array_unique(array_merge(Folder::all($folder, $options), array_keys($items)));
+        $menuItems = array_unique(array_merge($this->getItemsFromPlatform($end), array_keys($items)));
         sort($menuItems);
 
         /** @var array|Item[] $all */
