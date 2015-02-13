@@ -97,7 +97,7 @@ class Item implements \ArrayAccess, \Iterator
 
     public function update(array $data)
     {
-        array_replace($this->items, $data);
+        $this->items = array_replace($this->items, $data);
 
         return $this;
     }

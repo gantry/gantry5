@@ -6,6 +6,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Component\Menu\Item;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Menu as MenuObject;
@@ -136,6 +137,7 @@ class Menu extends HtmlController
         $resource = $this->loadResource($id);
 
         // Get menu item and make sure it exists.
+        /** @var Item $item */
         $item = $resource[$path];
         if (!$item) {
             throw new \RuntimeException('Menu item not found', 404);
@@ -190,6 +192,9 @@ class Menu extends HtmlController
 
         $path = implode('/', $path);
 
+        // Load the menu.
+        $resource = $this->loadResource($id);
+
         // Load particle blueprints and default settings.
         $validator = $this->loadBlueprints('menuitem');
         $callable = function () use ($validator) {
@@ -201,7 +206,11 @@ class Menu extends HtmlController
 
         // TODO: validate
 
-        return new JsonResponse(['path' => $path, 'item' => $data->toArray()]);
+        $this->params['item'] = new Item($resource, $data->path, $data->toArray());
+
+        $html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
+
+        return new JsonResponse(['path' => $path, 'item' => $data->toArray(), 'html' => $html]);
     }
 
     protected function layoutName($level)

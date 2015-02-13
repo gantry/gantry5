@@ -111,9 +111,14 @@ ready(function() {
                             });
                         } else {
                             if (response.body.path) {
-                                menumanager.items[response.body.path] = response.body.data;
+                                menumanager.items[response.body.path] = response.body.item;
                             } else {
-                                menumanager.settings = response.body.data.settings;
+                                menumanager.settings = response.body.settings;
+                            }
+
+                            if (response.body.html) {
+                                var parent = element.parent('[data-mm-id]');
+                                if (parent) { parent.html(response.body.html); }
                             }
 
                             modal.close();

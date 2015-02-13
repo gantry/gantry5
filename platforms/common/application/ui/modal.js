@@ -155,6 +155,11 @@ var Modal = new prime({
             if (options.data) { agent.data(options.data); }
             agent.send(bind(function(error, response) {
                 elements.content.html(response.body.html || response.body);
+
+                if (!response.body.success) {
+                    if (!response.body.html) { elements.content.style({ width: '90%' }); }
+                }
+
                 this.hideLoading();
                 if (options.remoteLoaded) {
                     options.remoteLoaded(response, options);
