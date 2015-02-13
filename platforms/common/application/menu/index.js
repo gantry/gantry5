@@ -116,6 +116,11 @@ ready(function() {
                                 menumanager.settings = response.body.settings;
                             }
 
+                            if (response.body.html) {
+                                var parent = element.parent('[data-mm-id]');
+                                if (parent) { parent.html(response.body.html); }
+                            }
+
                             modal.close();
                             toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
                         }
