@@ -1,4 +1,30 @@
 body {
-  background: #fff; }
+  color: #333333;
+  background: #ffffff; }
+
+@font-face {
+  font-family: "walkwaybold";
+  font-weight: normal;
+  font-style: normal;
+  src: url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.eot");
+  src: url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.woff") format("woff"), url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.ttf") format("truetype"), url("../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont.svg#walkwaybold") format("svg"); }
+@font-face {
+  font-family: "latolight";
+  font-weight: normal;
+  font-style: normal;
+  src: url("../fonts/lato-light/lato-light-webfont.eot");
+  src: url("../fonts/lato-light/lato-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato-light/lato-light-webfont.woff") format("woff"), url("../fonts/lato-light/lato-light-webfont.ttf") format("truetype"), url("../fonts/lato-light/lato-light-webfont.svg#latolight") format("svg"); }
+#g-header {
+  background: #ffffff;
+  color: #333333; }
+
+#g-showcase {
+  text-align: center;
+  background: #3AA3D4;
+  color: #ffffff; }
+
+#g-footer {
+  background: #333333;
+  color: #ffffff; }
 
 /*# sourceMappingURL=hydrogen.css.map */
