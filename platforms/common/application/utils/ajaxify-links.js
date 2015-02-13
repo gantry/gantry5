@@ -163,7 +163,7 @@ domready(function() {
             var uuid = guid(), extras;
 
             // TODO: The menu needs to be able to receive POST
-            if (false && (element.data('mm-id') || element.parent('[data-mm-id]'))) {
+            if (element.data('mm-id') || element.parent('[data-mm-id]')) {
                 extras = {};
                 extras.menutype = $('select.menu-select-wrap').value();
                 extras.settings = JSON.stringify(mm.menumanager.settings);
