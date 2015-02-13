@@ -1,2 +1,15 @@
-@include font-face('walkwaybold', '../fonts/walkwaybold_regular_macroman/Walkway_Bold-webfont');
-@include font-face('latolight', '../fonts/lato-light/lato-light-webfont');
+@include font-face('g-lato', '../fonts/lato_light/Lato-Light', 300);
+@include font-face('g-lato', '../fonts/lato_regular/lato-regular-webfont');
+@include font-face('g-montserrat', '../fonts/montserrat_light/montserrat-light-webfont');
+
+body {
+	font-family: $font-family-default;
+}
+
+b {
+	font-weight: 300;
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: $font-family-headers;
+}
