@@ -49,7 +49,7 @@ class Menu extends HtmlController
         $path = array_slice(func_get_args(), 1);
 
         // Load the menu.
-        $resource = $this->loadResource($id, isset($_POST['ordering']) ? new Config($_POST) : null);
+        $resource = $this->loadResource($id, !empty($_POST) ? $this->build($_POST) : null);
 
         // Get menu item and make sure it exists.
         $item = $resource[implode('/', $path)];
@@ -105,38 +105,7 @@ class Menu extends HtmlController
 
     public function save($id = 'mainmenu')
     {
-        $order = isset($_POST['ordering']) ? json_decode($_POST['ordering'], true) : null;
-        $items = isset($_POST['items']) ? json_decode($_POST['items'], true) : null;
-
-        if (!$order || !$items) {
-            throw new \RuntimeException('Error while saving menu: Invalid structure', 400);
-        }
-
-        krsort($order);
-        $ordering = [];
-        foreach ($order as $path => $columns) {
-            foreach ($columns as $column => $colitems) {
-                $list = [];
-                foreach ($colitems as $item) {
-                    $name = trim(substr($item, strlen($path)), '/');
-                    if (isset($ordering[$item])) {
-                        $list[$name] = $ordering[$item];
-                        unset($ordering[$item]);
-                    } else {
-                        $list[$name] = '';
-                    }
-                }
-                if (count($columns) > 1) {
-                    $ordering[$path][$column] = $list;
-                } else {
-                    $ordering[$path] = $list;
-                }
-            }
-        }
-
-        $data = new Config([]);
-        $data->set('ordering', $ordering['']);
-        $data->set('items', $items);
+        $data = $this->build($_POST);
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
@@ -263,5 +232,44 @@ class Menu extends HtmlController
         $locator = $this->container['locator'];
         $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
         return new BlueprintsForm(CompiledYamlFile::instance($filename)->content());
+    }
+
+
+    public function build($raw)
+    {
+        $order = isset($raw['ordering']) ? json_decode($raw['ordering'], true) : null;
+        $items = isset($raw['items']) ? json_decode($raw['items'], true) : null;
+
+        if (!$order || !$items) {
+            throw new \RuntimeException('Invalid menu structure', 400);
+        }
+
+        krsort($order);
+        $ordering = [];
+        foreach ($order as $path => $columns) {
+            foreach ($columns as $column => $colitems) {
+                $list = [];
+                foreach ($colitems as $item) {
+                    $name = trim(substr($item, strlen($path)), '/');
+                    if (isset($ordering[$item])) {
+                        $list[$name] = $ordering[$item];
+                        unset($ordering[$item]);
+                    } else {
+                        $list[$name] = '';
+                    }
+                }
+                if (count($columns) > 1) {
+                    $ordering[$path][$column] = $list;
+                } else {
+                    $ordering[$path] = $list;
+                }
+            }
+        }
+
+        $data = new Config([]);
+        $data->set('ordering', $ordering['']);
+        $data->set('items', $items);
+
+        return $data;
     }
 }
