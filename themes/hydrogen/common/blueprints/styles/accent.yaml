@@ -12,4 +12,4 @@ form:
     color-2:
       type: input.colorpicker
       label: Accent Color 2
-      default: "#EFBC68"
+      default: "#8F4DAE"

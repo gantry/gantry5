@@ -3,8 +3,12 @@
 	background: $showcase-background;
 	color: $showcase-text-color;
 
+	h1, h2, h3, h4, h5, h6, strong {
+		color: $showcase-text-color;
+	}
+
 	.button {
-		background: $showcase-text-color;
-		color: $showcase-background;
+		background: $accent-color-2;
+		color: $showcase-text-color;
 	}
 }
