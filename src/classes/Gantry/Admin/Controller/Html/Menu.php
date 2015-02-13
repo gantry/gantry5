@@ -62,7 +62,6 @@ class Menu extends HtmlController
         $this->params['menus'] = $resource->getMenus();
         $this->params['menu'] = $resource;
         $this->params['path'] = implode('/', $path);
-        $this->params['menu_settings'] = ['settings' => $resource->config()->get('settings')];
 
         // Detect special case to fetch only single column group.
         $group = isset($_GET['group']) ? intval($_GET['group']) : null;
@@ -237,10 +236,11 @@ class Menu extends HtmlController
 
     public function build($raw)
     {
+        $settings = isset($raw['settings']) ? json_decode($raw['settings'], true) : [];
         $order = isset($raw['ordering']) ? json_decode($raw['ordering'], true) : null;
         $items = isset($raw['items']) ? json_decode($raw['items'], true) : null;
 
-        if (!$order || !$items) {
+        if (!is_array($order) || !is_array($items)) {
             throw new \RuntimeException('Invalid menu structure', 400);
         }
 
@@ -267,6 +267,7 @@ class Menu extends HtmlController
         }
 
         $data = new Config([]);
+        $data->set('settings', $settings);
         $data->set('ordering', $ordering['']);
         $data->set('items', $items);
 

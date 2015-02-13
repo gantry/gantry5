@@ -124,6 +124,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
         return $list;
     }
 
+    public function settings()
+    {
+        return (array) $this->config()->get('settings');
+    }
+
     /**
      * @return object
      */
