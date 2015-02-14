@@ -88,6 +88,8 @@ class Styles extends HtmlController
             throw new \RuntimeException('Page Not Found', 404);
         }
 
+        $fields['is_current'] = true;
+
         // Get the prefix.
         $prefix = "styles.{$id}." . implode('.', $path);
         if ($value !== null) {

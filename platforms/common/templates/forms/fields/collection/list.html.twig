@@ -1,31 +1,35 @@
 {% extends "forms/field.html.twig" %}
 
 {% block input %}
-    {% if field.fields %}
-        {% for key, val in value %}
-            {% if (field.ajax == true) %}
-                {% set field_route = gantry.route((route ~ '.' ~ scope)|replace('.', '/') ~ field.name ~ '/' ~ key) %}
-                <div><a data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ field_route }}">{{ field.value == field.key ? key : val[field.value] }}</a></div>
-            {% else %}
-                <hr />
-                {% for childName, child in field.fields %}
-                     {% if childName starts with '.' %}
-                         {% set childValue = val[childName[1:]] %}
-                         {% set childName = name ~ '.' ~ key ~ childName %}
-                     {% else %}
-                         {% set childName = childName|replace({'*': key}) %}
-                         {% set childValue = nested(data, scope ~ childName) %}
-                     {% endif %}
+    {% if field.is_current %}
+        CURRENT ITEM LOGIC
+    {% else %}
+        {% if field.fields %}
+            {% for key, val in value %}
+                {% if (field.ajax == true) %}
+                    {% set field_route = gantry.route((route ~ '.' ~ scope)|replace('.', '/') ~ field.name ~ '/' ~ key) %}
+                    <div><a data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ field_route }}">{{ field.value == field.key ? key : val[field.value] }}</a></div>
+                {% else %}
+                    <hr />
+                    {% for childName, child in field.fields %}
+                         {% if childName starts with '.' %}
+                             {% set childValue = val[childName[1:]] %}
+                             {% set childName = name ~ '.' ~ key ~ childName %}
+                         {% else %}
+                             {% set childName = childName|replace({'*': key}) %}
+                             {% set childValue = nested(data, scope ~ childName) %}
+                         {% endif %}
 
-                     {% if child.type == 'key' %}
-                         {% include 'forms/fields/key/key.html.twig'
-                         with {name: childName, field: child, value: key} %}
-                     {% elseif child.type %}
-                         {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                         with {name: childName, field: child, value: childValue} %}
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        {% endfor %}
+                         {% if child.type == 'key' %}
+                             {% include 'forms/fields/key/key.html.twig'
+                             with {name: childName, field: child, value: key} %}
+                         {% elseif child.type %}
+                             {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
+                             with {name: childName, field: child, value: childValue} %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     {% endif %}
 {% endblock %}
