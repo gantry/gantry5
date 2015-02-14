@@ -261,8 +261,13 @@ var MenuManager = new prime({
                 active = $('.g-toplevel [data-mm-id].active').data('mm-id');
             items = parent.search('> [data-mm-id]');
 
-            items.forEach(function(element) {
-                var column = Number(($(element).data('mm-id').match(/\d+$/) || [0])[0]);
+            items.forEach(function(element, index) {
+                element = $(element);
+
+                var id = element.data('mm-id'),
+                    column = Number((id.match(/\d+$/) || [0])[0]);
+
+                element.data('mm-id', id.replace(/\d+$/, index));
                 colsOrder.push(this.ordering[active][column]);
             }, this);
 
@@ -271,12 +276,14 @@ var MenuManager = new prime({
 
         if (!parent.children()) { parent.empty(); }
 
-        if (console && console.group && console.info && console.table && console.groupEnd) {
-            console.group();
-            console.info('New Ordering');
-            console.table(this.ordering);
-            console.groupEnd();
-        }
+        /*if (console && console.group && console.info && console.table && console.groupEnd) {
+         console.group();
+         console.info('New Ordering');
+         console.table(this.ordering);
+         console.groupEnd();
+         }*/
+
+        this.emit('dragEnd', this.map);
     },
 
     stopAnimation: function(/*element*/) {
