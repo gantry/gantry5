@@ -58,7 +58,7 @@ ready(function() {
             count = children ? children.length : 0;
 
         var block = $(last[0].cloneNode(true));
-        block.data('mm-id', 'list-' + (count + 1));
+        block.data('mm-id', 'list-' + count);
         block.find('.submenu-items').empty();
         block.after(last);
     });
