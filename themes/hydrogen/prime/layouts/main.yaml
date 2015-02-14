@@ -1,6 +1,6 @@
 header:
   container:
-    - [particle-logo 20, particle-menu 80]
+    - particle-menu
 
 showcase:
   container:
