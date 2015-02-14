@@ -18,7 +18,7 @@
                 <a class="button" data-save="Settings"><i class="fa fa-fw fa-plus"></i></a>
                 <a class="button" data-save="Settings"><i class="fa fa-fw fa-pencil"></i></a>
                 {% if overridable %}
-                    <input type="checkbox" class="settings-param-toggle float-right" id="of-{{ scope ~ name }}" />
+                    <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
                     <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
                 {% endif %}
             </div>
@@ -30,9 +30,12 @@
                                 {% if (field.ajax == true) %}
                                     {% set field_route = gantry.route((route ~ '.' ~ scope)|replace('.', '/') ~ field.name ~ '/' ~ key) %}
                                     <li>
-                                        <span>
-                                            <a class="title" data-collection-title data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ field_route }}">{{ field.value == field.key ? key : val[field.value] }}</a>
+                                        <span class="title" data-collection-title>
+                                            {{ field.value == field.key ? key : val[field.value] }}
                                             <i class="fa fa-pencil font-small" data-title-edit></i>
+                                            <a class="config-cog" href="{{ field_route }}">
+                                                <i class="fa fa-cog"></i>
+                                            </a>
                                         </span>
                                     </li>
                                 {% else %}

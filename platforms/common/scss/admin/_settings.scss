@@ -75,9 +75,12 @@
 
     .settings-param-title {
         max-width: 150px;
+        margin: 5px;
     }
 
     .collection-list {
+
+        padding: 10px 0;
 
         ul {
             @extend %list-reset;
@@ -87,7 +90,7 @@
             background-color: #ffffff;
             li {
                 border-top: 1px solid #D8D8D8;
-                a {
+                .title {
                     padding: 3px 10px;
                     display: inline-block;
                 }
@@ -108,6 +111,7 @@
 
         .settings-param-title {
             padding: 6px 10px;
+            margin: 0;
             display: inline-block;
         }
 

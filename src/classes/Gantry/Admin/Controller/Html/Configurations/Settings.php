@@ -22,9 +22,10 @@ class Settings extends HtmlController
             '/particles/*/**'   => 'formfield',
         ],
         'POST' => [
-            '/'            => 'save',
-            '/particles'   => 'forbidden',
-            '/particles/*' => 'save'
+            '/'                 => 'save',
+            '/particles'        => 'forbidden',
+            '/particles/*'      => 'save',
+            '/particles/*/**'   => 'formfield'
         ],
         'PUT' => [
             '/'            => 'save',
