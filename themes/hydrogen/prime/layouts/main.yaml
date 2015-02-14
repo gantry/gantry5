@@ -1,10 +1,20 @@
 header:
   container:
-    - [particle-logo 20, particle-menu 80]
+    - particle-menu
 
 showcase:
   container:
-    - position-showcase-1
+    - position-showcase
+
+feature:
+  container:
+    - position-feature-top
+    - [position-feature-1, position-feature-2, position-feature-3]
+
+subfeature:
+  container:
+    - position-subfeature-top
+    - [position-subfeature-1, position-subfeature-2, position-subfeature-3, position-subfeature-4]
 
 main:
   container:
@@ -15,4 +25,4 @@ main:
 footer:
   container:
   - position-footer
-  - [particle-date 25, particle-copyright 50, particle-branding 25]
+  - [particle-copyright 40, spacer 30, particle-branding 30]

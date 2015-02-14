@@ -2,67 +2,71 @@
 
 
 {% block field %}
-    <div class="settings-param {{ field.type|replace('.', '-') }}">
-        {% block contents %}
-            <div class="settings-param-toolbar">
-                <span class="settings-param-title">
-                    {% block label %}
-                        {% if field.description %}
-                            <span class="tooltip" data-asTooltip-position="w" title="{{ field.description|e }}">{{- field.label|e -}}</span>
-                        {% else %}
-                            {{ field.label|e }}
-                        {% endif %}
-                        {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
-                    {% endblock %}
-                </span>
-                <a class="button" data-save="Settings"><i class="fa fa-fw fa-plus"></i></a>
-                <a class="button" data-save="Settings"><i class="fa fa-fw fa-pencil"></i></a>
-                {% if overridable %}
-                    <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
-                    <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
-                {% endif %}
-            </div>
-            <div class="settings-param-field">
-                {% block input %}
-                    {% if field.fields %}
-                        <ul>
-                            {% for key, val in value %}
-                                {% if (field.ajax == true) %}
-                                    {% set field_route = gantry.route((route ~ '.' ~ scope)|replace('.', '/') ~ field.name ~ '/' ~ key) %}
-                                    <li>
-                                        <span class="title" data-collection-title>
-                                            {{ field.value == field.key ? key : val[field.value] }}
-                                            <i class="fa fa-pencil font-small" data-title-edit></i>
-                                            <a class="config-cog" href="{{ field_route }}">
-                                                <i class="fa fa-cog"></i>
-                                            </a>
-                                        </span>
-                                    </li>
-                                {% else %}
-                                    <hr />
-                                    {% for childName, child in field.fields %}
-                                         {% if childName starts with '.' %}
-                                             {% set childValue = val[childName[1:]] %}
-                                             {% set childName = name ~ '.' ~ key ~ childName %}
-                                         {% else %}
-                                             {% set childName = childName|replace({'*': key}) %}
-                                             {% set childValue = nested(data, scope ~ childName) %}
-                                         {% endif %}
-
-                                         {% if child.type == 'key' %}
-                                             {% include 'forms/fields/key/key.html.twig'
-                                             with {name: childName, field: child, value: key} %}
-                                         {% elseif child.type %}
-                                             {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                                             with {name: childName, field: child, value: childValue} %}
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
+    {% if field.is_current %}
+        CURRENT ITEM LOGIC
+    {% else %}
+        <div class="settings-param {{ field.type|replace('.', '-') }}">
+            {% block contents %}
+                <div class="settings-param-toolbar">
+                    <span class="settings-param-title">
+                        {% block label %}
+                            {% if field.description %}
+                                <span class="tooltip" data-asTooltip-position="w" title="{{ field.description|e }}">{{- field.label|e -}}</span>
+                            {% else %}
+                                {{ field.label|e }}
+                            {% endif %}
+                            {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
+                        {% endblock %}
+                    </span>
+                    <a class="button" data-save="Settings"><i class="fa fa-fw fa-plus"></i></a>
+                    <a class="button" data-save="Settings"><i class="fa fa-fw fa-pencil"></i></a>
+                    {% if overridable %}
+                        <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
+                        <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
                     {% endif %}
-                {% endblock %}
-            </div>
-        {% endblock %}
-    </div>
+                </div>
+                <div class="settings-param-field">
+                    {% block input %}
+                        {% if field.fields %}
+                            <ul>
+                                {% for key, val in value %}
+                                    {% if (field.ajax == true) %}
+                                        {% set field_route = gantry.route((route ~ '.' ~ scope)|replace('.', '/') ~ field.name ~ '/' ~ key) %}
+                                        <li>
+                                            <span class="title" data-collection-title>
+                                                {{ field.value == field.key ? key : val[field.value] }}
+                                                <i class="fa fa-pencil font-small" data-title-edit></i>
+                                                <a class="config-cog" href="{{ field_route }}">
+                                                    <i class="fa fa-cog"></i>
+                                                </a>
+                                            </span>
+                                        </li>
+                                    {% else %}
+                                        <hr />
+                                        {% for childName, child in field.fields %}
+                                             {% if childName starts with '.' %}
+                                                 {% set childValue = val[childName[1:]] %}
+                                                 {% set childName = name ~ '.' ~ key ~ childName %}
+                                             {% else %}
+                                                 {% set childName = childName|replace({'*': key}) %}
+                                                 {% set childValue = nested(data, scope ~ childName) %}
+                                             {% endif %}
+
+                                             {% if child.type == 'key' %}
+                                                 {% include 'forms/fields/key/key.html.twig'
+                                                 with {name: childName, field: child, value: key} %}
+                                             {% elseif child.type %}
+                                                 {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
+                                                 with {name: childName, field: child, value: childValue} %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </div>
+    {% endif %}
 {% endblock %}

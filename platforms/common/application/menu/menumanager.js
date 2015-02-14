@@ -1,18 +1,19 @@
 "use strict";
-var prime    = require('prime'),
-    $        = require('../utils/elements.moofx'),
-    zen      = require('elements/zen'),
-    Emitter  = require('prime/emitter'),
-    Bound    = require('prime-util/prime/bound'),
-    Options  = require('prime-util/prime/options'),
-    DragDrop = require('../ui/drag.drop'),
-    Resizer  = require('../ui/drag.resizer'),
-    get      = require('mout/object/get'),
+var prime     = require('prime'),
+    $         = require('../utils/elements.moofx'),
+    zen       = require('elements/zen'),
+    Emitter   = require('prime/emitter'),
+    Bound     = require('prime-util/prime/bound'),
+    Options   = require('prime-util/prime/options'),
+    DragDrop  = require('../ui/drag.drop'),
+    Resizer   = require('../ui/drag.resizer'),
+    get       = require('mout/object/get'),
 
-    every    = require('mout/array/every'),
-    isArray  = require('mout/lang/isArray'),
-    isObject = require('mout/lang/isObject'),
-    equals   = require('mout/object/equals');
+    every     = require('mout/array/every'),
+    isArray   = require('mout/lang/isArray'),
+    isObject  = require('mout/lang/isObject'),
+    deepClone = require('mout/lang/deepClone'),
+    equals    = require('mout/object/equals');
 
 
 var MenuManager = new prime({
@@ -22,6 +23,7 @@ var MenuManager = new prime({
     inherits: Emitter,
 
     constructor: function(element, options) {
+        this.map = {};
         this.setRoot();
 
         this.dragdrop = new DragDrop(element, options);
@@ -39,13 +41,19 @@ var MenuManager = new prime({
         //console.log(this.ordering, this.items);
     },
 
-    setRoot: function(){
+    setRoot: function() {
         this.root = $('#menu-editor');
 
         if (this.root) {
             this.settings = JSON.parse(this.root.data('menu-settings'));
             this.ordering = JSON.parse(this.root.data('menu-ordering'));
             this.items = JSON.parse(this.root.data('menu-items'));
+
+            this.map = {
+                settings: deepClone(this.settings),
+                ordering: deepClone(this.ordering),
+                items: deepClone(this.items)
+            };
         }
     },
 
@@ -261,8 +269,13 @@ var MenuManager = new prime({
                 active = $('.g-toplevel [data-mm-id].active').data('mm-id');
             items = parent.search('> [data-mm-id]');
 
-            items.forEach(function(element) {
-                var column = Number(($(element).data('mm-id').match(/\d+$/) || [0])[0]);
+            items.forEach(function(element, index) {
+                element = $(element);
+
+                var id = element.data('mm-id'),
+                    column = Number((id.match(/\d+$/) || [0])[0]);
+
+                element.data('mm-id', id.replace(/\d+$/, index));
                 colsOrder.push(this.ordering[active][column]);
             }, this);
 
@@ -271,12 +284,14 @@ var MenuManager = new prime({
 
         if (!parent.children()) { parent.empty(); }
 
-        if (console && console.group && console.info && console.table && console.groupEnd) {
-            console.group();
-            console.info('New Ordering');
-            console.table(this.ordering);
-            console.groupEnd();
-        }
+        /*if (console && console.group && console.info && console.table && console.groupEnd) {
+         console.group();
+         console.info('New Ordering');
+         console.table(this.ordering);
+         console.groupEnd();
+         }*/
+
+        this.emit('dragEnd', this.map);
     },
 
     stopAnimation: function(/*element*/) {

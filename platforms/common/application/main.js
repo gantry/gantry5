@@ -26,7 +26,7 @@ ready(function() {
     // Save
     body.delegate('click', '.button-save', function(e, element) {
         e.preventDefault();
-        element.showSpinner();
+        element.showIndicator();
 
         var data = {},
             type = element.data('save'),
@@ -84,7 +84,7 @@ ready(function() {
                 }), type + ' Saved');
             }
 
-            element.hideSpinner();
+            element.hideIndicator();
 
             if (page == 'layout') { lm.layoutmanager.updatePendingChanges(); }
         });

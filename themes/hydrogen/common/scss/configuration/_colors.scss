@@ -3,17 +3,25 @@ $white:							#ffffff;
 $black:							#000000;
 
 // Base
-$base-background:				#ffffff;
-$base-text-color:				#333333;
+$base-background:				#ffffff !default;
+$base-text-color:				#444444 !default;
+
+// Accents
+$accent-color-1:				#439A86 !default;
+$accent-color-2:				#8F4DAE !default;
 
 // Header
-$header-background:				#ffffff;
-$header-text-color:				#333333;
+$header-background:				#439A86 !default;
+$header-text-color:				#ffffff !default;
 
 // Showcase
-$showcase-background:			#3AA3D4;
-$showcase-text-color:			#ffffff;
+$showcase-background:			#354D59 !default;
+$showcase-text-color:			#ffffff !default;
+
+// Subfeature
+$subfeature-background:			#eeeeee !default;
+$subfeature-text-color:			#444444 !default;
 
 // Footer
-$footer-background:				#333333;
-$footer-text-color:				#ffffff;
+$footer-background:				#ffffff !default;
+$footer-text-color:				#444444 !default;

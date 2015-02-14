@@ -35,8 +35,8 @@ ready(function() {
 
         if (!target || !originals) { return; }
 
-        if (originals.get(element.attribute('name')) !== element.value()) { target.showSpinner('changes-indicator font-small fa fa-circle-o fa-fw'); }
-        else { target.hideSpinner(); }
+        if (originals.get(element.attribute('name')) !== element.value()) { target.showIndicator('changes-indicator font-small fa fa-circle-o fa-fw'); }
+        else { target.hideIndicator(); }
 
         compare.whole();
     };
@@ -47,7 +47,7 @@ ready(function() {
 
         if (!save) { return; }
 
-        save[equals ? 'hideSpinner' : 'showSpinner']('changes-indicator fa fa-circle-o fa-fw');
+        save[equals ? 'hideIndicator' : 'showIndicator']('changes-indicator fa fa-circle-o fa-fw');
     };
 
     body.delegate('input', '.settings-block input[name][type="text"], .settings-block textarea[name]', compare.single);

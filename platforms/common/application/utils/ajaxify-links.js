@@ -68,7 +68,7 @@ History.Adapter.bind(window, 'statechange', function() {
             History.back();
 
             if (Data.element) {
-                Data.element.hideSpinner();
+                Data.element.hideIndicator();
             }
 
             return false;
@@ -93,7 +93,7 @@ History.Adapter.bind(window, 'statechange', function() {
 
         var element = (Data.event && Data.event.activeSpinner) || Data.element;
         if (element) {
-            element.hideSpinner();
+            element.hideIndicator();
         }
 
         var selects = $('[data-selectize]');
@@ -128,7 +128,7 @@ var selectorChangeEvent = function(){
 
 
             var active = $('#navbar li.active') || $('#main-header li.active') || $('#navbar li:nth-child(2)');
-            if (active) { active.showSpinner(); }
+            if (active) { active.showIndicator(); }
 
             $('body').emit('click', { target: selectize.input, activeSpinner: active });
         });
@@ -149,7 +149,7 @@ domready(function() {
             event.preventDefault();
         }
 
-        element.showSpinner();
+        element.showIndicator();
 
         var data = element.data('g5-ajaxify'),
             target = element.data('g5-ajaxify-target'),
