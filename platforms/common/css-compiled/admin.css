@@ -2096,7 +2096,7 @@ a {
   border-radius: 0 0 0.1875rem 0.1875rem;
   left: 50%;
   margin-left: -25px;
-  cursor: col-resize;
+  cursor: ew-resize;
   opacity: 0;
 }
 /* line 182, ../scss/admin/_menu.scss */
