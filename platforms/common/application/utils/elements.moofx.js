@@ -38,30 +38,35 @@ $.implement({
         return moo.compute.apply(moo, arguments);
     },
 
-    showSpinner: function(klass) {
-        var icon = this.find('i');
+    showIndicator: function(klass, keepIcon) {
+        if (typeof klass == 'boolean') {
+            keepIcon = klass;
+            klass = null;
+        }
+
+        var icon = keepIcon ? false : this.find('i');
         this.gHadIcon = !!icon;
 
         if (!icon) {
-            if (!this.find('span')) { zen('span').text(this.text()).top(this.empty()); }
+            if (!this.find('span') && !this.children()) { zen('span').text(this.text()).top(this.empty()); }
 
             icon = zen('i');
             icon.top(this);
         }
 
-        if (!this.gSpinner) { this.gSpinner = icon.attribute('class') || true; }
+        if (!this.gIndicator) { this.gIndicator = icon.attribute('class') || true; }
         icon.attribute('class', klass || 'fa fa-fw fa-spin-fast fa-spinner');
     },
 
-    hideSpinner: function() {
-        if (!this.gSpinner) { return; }
+    hideIndicator: function() {
+        if (!this.gIndicator) { return; }
 
         var icon = this.find('i');
 
         if (!this.gHadIcon) { icon.remove(); }
-        else { icon.attribute('class', this.gSpinner); }
+        else { icon.attribute('class', this.gIndicator); }
 
-        this.gSpinner = null;
+        this.gIndicator = null;
     },
 
     sibling: walk('++', 'find'),

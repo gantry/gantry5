@@ -84,8 +84,8 @@ var LayoutManager = new prime({
             icon = save.find('i'),
             indicator = save.find('.changes-indicator');
 
-        if (equals && indicator) { icon.removeClass('changes-indicator').removeClass('fa-circle-o').addClass('fa-check'); }
-        if (!equals && !indicator) { icon.removeClass('fa-check').addClass('changes-indicator').addClass('fa-circle-o'); }
+        if (equals && indicator) { save.hideIndicator(); }
+        if (!equals && !indicator) { save.showIndicator('changes-indicator fa fa-fw fa-circle-o') }
 
         // Emits the changed event for all particles
         // Used for UI to show particles where there have been differences applied

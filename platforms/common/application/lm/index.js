@@ -279,7 +279,7 @@ ready(function() {
                     e.preventDefault();
                     dataString = [];
 
-                    submit.showSpinner();
+                    submit.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
@@ -341,7 +341,7 @@ ready(function() {
                             toastr.success('The particle "'+particle.getTitle()+'" settings have been applied to the Layout. <br />Remember to click the Save button to store them.', 'Settings Applied');
                         }
 
-                        submit.hideSpinner();
+                        submit.hideIndicator();
                     });
                 });
             }
