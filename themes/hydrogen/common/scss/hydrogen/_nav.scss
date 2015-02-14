@@ -1,0 +1,39 @@
+.g-main-nav {
+	margin: -($content-padding + $content-margin) 0;
+	.g-toplevel {
+		font-weight: 500;
+		> li {
+			margin-right: -4px;
+			> a, >.g-separator {
+				padding: ($content-padding + $content-margin) 1rem;
+			}
+			&:hover, &.active {
+				> a, > .g-separator {
+					background: darken($header-background, 5%);
+				}
+			}
+		}
+		i {
+			opacity: 0.5;
+		}
+	}
+
+	.g-dropdown {
+		text-align: left;
+		background: $header-background;
+		box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+	}
+
+	.g-sublevel {
+		> li {
+			> a, > .g-separator, > .g-nav-header {
+				padding: 0.5rem 1rem;
+			}
+			&:hover, &.active {
+				> a, > .g-separator {
+					background: darken($header-background, 5%);
+				}
+			}
+		}
+	}
+}
