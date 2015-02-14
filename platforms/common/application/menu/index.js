@@ -6,9 +6,10 @@ var ready         = require('elements/domready'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
     request       = require('agent'),
+    deepEquals    = require('mout/lang/deepEquals'),
     getAjaxSuffix = require('../utils/get-ajax-suffix');
 
-var menumanager;
+var menumanager, map;
 
 ready(function() {
     var body = $('body');
@@ -19,6 +20,21 @@ ready(function() {
         exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
         resize_handles: '.submenu-column li:not(:last-child)',
         catchClick: true
+    });
+
+    menumanager.on('dragEnd', function(map) {
+        var save = $('[data-save]'),
+            current = {
+                settings: this.settings,
+                ordering: this.ordering,
+                items: this.items
+        };
+
+        if (!deepEquals(map, current)) {
+            save.showIndicator('fa fa-fw changes-indicator fa-circle-o');
+        } else {
+            save.hideIndicator();
+        }
     });
 
     module.exports.menumanager = menumanager;
@@ -90,7 +106,7 @@ ready(function() {
                     e.preventDefault();
                     dataString = [];
 
-                    submit.showSpinner();
+                    submit.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
@@ -121,11 +137,12 @@ ready(function() {
                                 if (parent) { parent.html(response.body.html); }
                             }
 
+                            menumanager.emit('dragEnd', menumanager.map);
                             modal.close();
                             toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
                         }
 
-                        submit.hideSpinner();
+                        submit.hideIndicator();
                     });
                 });
             }

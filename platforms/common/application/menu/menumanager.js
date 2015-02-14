@@ -1,18 +1,19 @@
 "use strict";
-var prime    = require('prime'),
-    $        = require('../utils/elements.moofx'),
-    zen      = require('elements/zen'),
-    Emitter  = require('prime/emitter'),
-    Bound    = require('prime-util/prime/bound'),
-    Options  = require('prime-util/prime/options'),
-    DragDrop = require('../ui/drag.drop'),
-    Resizer  = require('../ui/drag.resizer'),
-    get      = require('mout/object/get'),
+var prime     = require('prime'),
+    $         = require('../utils/elements.moofx'),
+    zen       = require('elements/zen'),
+    Emitter   = require('prime/emitter'),
+    Bound     = require('prime-util/prime/bound'),
+    Options   = require('prime-util/prime/options'),
+    DragDrop  = require('../ui/drag.drop'),
+    Resizer   = require('../ui/drag.resizer'),
+    get       = require('mout/object/get'),
 
-    every    = require('mout/array/every'),
-    isArray  = require('mout/lang/isArray'),
-    isObject = require('mout/lang/isObject'),
-    equals   = require('mout/object/equals');
+    every     = require('mout/array/every'),
+    isArray   = require('mout/lang/isArray'),
+    isObject  = require('mout/lang/isObject'),
+    deepClone = require('mout/lang/deepClone'),
+    equals    = require('mout/object/equals');
 
 
 var MenuManager = new prime({
@@ -22,6 +23,7 @@ var MenuManager = new prime({
     inherits: Emitter,
 
     constructor: function(element, options) {
+        this.map = {};
         this.setRoot();
 
         this.dragdrop = new DragDrop(element, options);
@@ -39,13 +41,19 @@ var MenuManager = new prime({
         //console.log(this.ordering, this.items);
     },
 
-    setRoot: function(){
+    setRoot: function() {
         this.root = $('#menu-editor');
 
         if (this.root) {
             this.settings = JSON.parse(this.root.data('menu-settings'));
             this.ordering = JSON.parse(this.root.data('menu-ordering'));
             this.items = JSON.parse(this.root.data('menu-items'));
+
+            this.map = {
+                settings: deepClone(this.settings),
+                ordering: deepClone(this.ordering),
+                items: deepClone(this.items)
+            };
         }
     },
 
