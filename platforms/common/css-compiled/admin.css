@@ -1,11 +1,11 @@
-/* line 2, /Users/w00fz/Projects/git/gantry/gantry-playground/engines/nucleus/scss/nucleus/mixins/_utilities.scss */
-#g5-container #page-picker ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, .g5-dialog #g5-container .g-tabs ul, .g5-lm-particles-picker ul, .g5-lm-particles-picker li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content [data-file] {
+/* line 2, /Users/joshuamweiss/Repositories/Git/Work/bitbucket/rockettheme/gantry-playground/engines/nucleus/scss/nucleus/mixins/_utilities.scss */
+#g5-container .settings-block .collection-list ul, #g5-container #page-picker ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, .g5-dialog #g5-container .g-tabs ul, .g5-lm-particles-picker ul, .g5-lm-particles-picker li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content [data-file] {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* line 9, /Users/w00fz/Projects/git/gantry/gantry-playground/engines/nucleus/scss/nucleus/mixins/_utilities.scss */
+/* line 9, /Users/joshuamweiss/Repositories/Git/Work/bitbucket/rockettheme/gantry-playground/engines/nucleus/scss/nucleus/mixins/_utilities.scss */
 #g5-container .submenu-ratio i {
   position: relative;
   top: 50%;
@@ -753,7 +753,7 @@ a {
   position: absolute;
   top: 50%;
   right: 0;
-  margin: -7px 0 0 0;
+  margin: -7px 15px 0 0;
   z-index: 5;
 }
 /* line 50, ../scss/admin/_settings.scss */
@@ -781,18 +781,65 @@ a {
   transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
 }
 /* line 72, ../scss/admin/_settings.scss */
-#g5-container .settings-block .settings-param-title {
-  max-width: 150px;
-}
-/* line 76, ../scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-field {
   margin-left: 150px;
 }
-/* line 80, ../scss/admin/_settings.scss */
+/* line 76, ../scss/admin/_settings.scss */
+#g5-container .settings-block .settings-param-title {
+  max-width: 150px;
+  margin: 5px;
+}
+/* line 81, ../scss/admin/_settings.scss */
+#g5-container .settings-block .collection-list {
+  padding: 10px 0;
+}
+/* line 85, ../scss/admin/_settings.scss */
+#g5-container .settings-block .collection-list ul {
+  border: 1px solid #DDD;
+  border-radius: 0 0 3px 3px;
+  width: 100%;
+  background-color: #ffffff;
+}
+/* line 91, ../scss/admin/_settings.scss */
+#g5-container .settings-block .collection-list ul li {
+  border-top: 1px solid #D8D8D8;
+}
+/* line 93, ../scss/admin/_settings.scss */
+#g5-container .settings-block .collection-list ul li .title {
+  padding: 3px 10px;
+  display: inline-block;
+}
+/* line 100, ../scss/admin/_settings.scss */
+#g5-container .settings-block .collection-list .settings-param-toolbar {
+  background-color: #f5f5f5;
+  border-radius: 3px 3px 0px 0px;
+  border-width: 1px 1px 0px;
+  border-style: solid solid none;
+  border-color: #D8D8D8 #D8D8D8;
+}
+/* line 108, ../scss/admin/_settings.scss */
+#g5-container .settings-block .collection-list .settings-param-field {
+  margin-left: 0;
+}
+/* line 112, ../scss/admin/_settings.scss */
+#g5-container .settings-block .collection-list .settings-param-title {
+  padding: 6px 10px;
+  margin: 0;
+  display: inline-block;
+}
+/* line 118, ../scss/admin/_settings.scss */
+#g5-container .settings-block .collection-list .button {
+  padding: 2px 6px;
+}
+/* line 121, ../scss/admin/_settings.scss */
+#g5-container .settings-block .collection-list .button span {
+  margin: 0 1px;
+}
+/* line 128, ../scss/admin/_settings.scss */
 #g5-container .settings-block i {
   vertical-align: middle;
 }
-/* line 84, ../scss/admin/_settings.scss */
+/* line 132, ../scss/admin/_settings.scss */
 #g5-container .settings-block input {
   padding: 6px 12px;
   border: 1px solid #ddd;
@@ -800,25 +847,25 @@ a {
   height: auto;
   max-width: 100%;
 }
-/* line 92, ../scss/admin/_settings.scss */
+/* line 140, ../scss/admin/_settings.scss */
 #g5-container .settings-block select {
   margin: 0 0 10px;
   display: inline-block;
 }
-/* line 97, ../scss/admin/_settings.scss */
+/* line 145, ../scss/admin/_settings.scss */
 #g5-container .settings-block img {
   display: block;
 }
-/* line 103, ../scss/admin/_settings.scss */
+/* line 151, ../scss/admin/_settings.scss */
 #g5-container .g5-dialog .settings-block {
   width: 100%;
   margin: 0 0 15px;
 }
-/* line 109, ../scss/admin/_settings.scss */
+/* line 157, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker {
   position: relative;
 }
-/* line 112, ../scss/admin/_settings.scss */
+/* line 160, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker .settings-param-field-colorpicker-preview {
   position: absolute;
   top: 2px;
