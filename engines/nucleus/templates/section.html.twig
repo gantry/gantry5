@@ -1,5 +1,3 @@
-{% set type = segment.attributes.type in ['header', 'footer'] ? segment.attributes.type : 'section' %}
-{% set attr_id = segment.attributes.id ? ' id="g-' ~ segment.attributes.id|lower ~ '"' %}
 {% set attr_class = segment.classes ? ' class="g-' ~ segment.classes|join(' ') ~ '"' %}
 
 {% set html %}
@@ -11,7 +9,7 @@
 {% endset %}
 
 {% if html|trim %}
-    <{{ type }}{{ attr_id }}{{ attr_class }}>
+    <section id="g-{{ segment.title|lower|replace({' ': '-'}) }}" {{ attr_class }}>
         {{ html }}
-    </{{ type }}>
+    </section>
 {% endif %}
