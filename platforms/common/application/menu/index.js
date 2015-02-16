@@ -7,6 +7,7 @@ var ready         = require('elements/domready'),
     toastr        = require('../ui').toastr,
     request       = require('agent'),
     deepEquals    = require('mout/lang/deepEquals'),
+    clamp         = require('mout/math/clamp'),
     getAjaxSuffix = require('../utils/get-ajax-suffix');
 
 var menumanager, map;
@@ -30,7 +31,7 @@ ready(function() {
                 settings: this.settings,
                 ordering: this.ordering,
                 items: this.items
-        };
+            };
 
         if (!deepEquals(map, current)) {
             save.showIndicator('fa fa-fw changes-indicator fa-circle-o');
@@ -47,6 +48,47 @@ ready(function() {
     // Refresh ordering/items on menu type change or Menu navigation link
     body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(event, element) {
         menumanager.setRoot();
+    });
+
+    // Manually changing size value
+    body.delegate('focusin', '.percentage [contenteditable]', function(event, element) {
+        element.currentSize = parseInt(element.text(), 10);
+    });
+
+    /*body.delegate('focusout', '.percentage [contenteditable]', function(event, element) {
+        var value = parseInt(element.text(), 10),
+            min = menumanager.resizer.options.minSize,
+            valid = !isNaN(value);
+
+        element.currentSize = valid ? clamp(value, min, 100 - min) : min;
+        element.text(element.currentSize);
+
+        if (!valid) {
+            body.emit('keyup', { target: element });
+        }
+    });*/
+
+    body.delegate('keyup', '.percentage [contenteditable]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        var resizer = menumanager.resizer,
+            value = parseInt(element.text(), 10),
+            parent = element.parent('[data-mm-id]'),
+            sibling = parent.nextSibling('[data-mm-id]') || parent.previousSibling('[data-mm-id]');
+        if (!value || value < menumanager.resizer.options.minSize) { return; }
+
+        var sizes = {
+            current: element.currentSize,
+            sibling: resizer.getSize(sibling)
+        };
+
+        element.currentSize = value;
+
+        sizes.total = sizes.current + sizes.sibling;
+        sizes.diff = sizes.total - value;
+
+        resizer.setSize(parent, value);
+        resizer.setSize(sibling, sizes.diff);
     });
 
     // Add new columns
