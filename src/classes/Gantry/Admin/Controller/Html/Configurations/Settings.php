@@ -46,8 +46,16 @@ class Settings extends HtmlController
 
     public function index()
     {
+        $id = $this->params['configuration'];
         $this->params['particles'] = $this->container['particles']->group();
         $this->params['route']  = "configurations.{$this->params['configuration']}.settings";
+        $this->params['page_id'] = $id;
+
+        if($id == 'default') {
+            $this->params['overridable'] = false;
+        } else {
+            $this->params['overridable'] = true;
+        }
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
     }

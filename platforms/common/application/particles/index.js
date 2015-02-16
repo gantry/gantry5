@@ -19,8 +19,8 @@ ready(function () {
 
         var content = $('.collection-list'),
             titleEdit = element,
-            titleKey = element.getData(),
-            title = content.find('[data-collection-title]'),
+            titleKey = element.data('[data-title-edit]'),
+            title = content.find('[data-collection-title-' + titleKey + ']'),
             titleValue;
 
         if (title && titleEdit) {

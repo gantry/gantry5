@@ -18,8 +18,8 @@
 {% block field %}
     <div class="settings-param {{ field.type|replace('.', '-') }}">
         {% if overridable %}
-        <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
-        <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
+            <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
+            <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
         {% endif %}
         {% block contents %}
             <span class="settings-param-title float-left">

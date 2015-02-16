@@ -6,32 +6,34 @@
         <span class="float-right">
             <button type="submit" class="button button-primary button-save" data-save="Settings"><i class="fa fa-fw fa-check"></i> <span>Save Settings</span></button>
         </span>
+        <div data-st-page="{{ page_id }}">
         {% for group, list in particles %}
-        <h2 class="page-title">
-            <span class="title">{{ group|capitalize }} Settings</span>
-        </h2>
+            <h2 class="page-title">
+                <span class="title">{{ group|capitalize }} Settings</span>
+            </h2>
 
-        <div class="cards-wrapper g-grid">
+            <div class="cards-wrapper g-grid">
 
-            {% for id, particle in list %}
-                {% if not particle.hidden %}
-                {% set prefix = 'particles.' ~ id ~ '.' %}
-                <div class="card settings-block">
-                    <h4>
-                        {{ particle.name }}
-                        {% if particle.form.fields.enabled %}
-                        {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled',
-'field': particle.form.fields.enabled, 'value': config.get(prefix ~ 'enabled')} %}
-                        {% endif %}
-                    </h4>
-                    <div class="inner-params">
-                        {% include 'forms/fields.html.twig' with {'overridable': true, 'blueprints': particle.form, skip: ['enabled'], data: config, "prefix": prefix} %}
+                {% for id, particle in list %}
+                    {% if not particle.hidden %}
+                    {% set prefix = 'particles.' ~ id ~ '.' %}
+                    <div class="card settings-block">
+                        <h4>
+                            {{ particle.name }}
+                            {% if particle.form.fields.enabled %}
+                            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled',
+    'field': particle.form.fields.enabled, 'value': config.get(prefix ~ 'enabled')} %}
+                            {% endif %}
+                        </h4>
+                        <div class="inner-params">
+                            {% include 'forms/fields.html.twig' with {'overridable': overridable, 'blueprints': particle.form, skip: ['enabled'], data: config, "prefix": prefix} %}
+                        </div>
                     </div>
-                </div>
-                {% endif %}
-            {% endfor %}
-        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
         {% endfor %}
+        </div>
     </form>
 </div>
 {% endblock %}

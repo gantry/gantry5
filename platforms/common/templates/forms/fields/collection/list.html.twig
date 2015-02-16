@@ -3,7 +3,7 @@
 
 {% block field %}
     {% if field.is_current %}
-        <div id="settings" class="cards-wrapper">
+        <div class="cards-wrapper">
             {% for key, val in value %}
                 <div class="card settings-block">
                     <h4>
@@ -37,7 +37,7 @@
                         <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
                     {% endif %}
                 </div>
-                <div class="settings-param-field">
+                <div class="settings-param-field {{ field.name  }}">
                     {% block input %}
                         {% if field.fields %}
                             <ul>
