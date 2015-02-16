@@ -315,6 +315,10 @@ ready(function() {
                                 particle.updateTitle(particle.getTitle());
                             }
 
+                            if (particle.getType() == 'position') {
+                                particle.updateKey();
+                            }
+
                             // parent block attributes
                             if (response.body.data.block && size(response.body.data.block)) {
                                 block = builder.get(parentID);

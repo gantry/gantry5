@@ -11,12 +11,7 @@ form:
       description: Globally enable module positions.
       default: true
 
-    name:
+    key:
       type: input.text
-      label: Name
+      label: Key
       description: Position name
-
-    title:
-      type: input.text
-      label: Title
-      description: Position title
