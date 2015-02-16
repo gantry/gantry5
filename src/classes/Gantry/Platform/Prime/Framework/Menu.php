@@ -114,7 +114,7 @@ class Menu extends AbstractMenu
 
         $config = $this->config();
         $items = isset($config['items']) ? $config['items'] : [];
-        $menuItems = array_unique(array_merge($this->getItemsFromPlatform($end), array_keys($items)));
+        $menuItems = array_unique(array_merge($this->getItemsFromPlatform($start <= $end ? $end : -1), array_keys($items)));
         sort($menuItems);
 
         /** @var array|Item[] $all */
