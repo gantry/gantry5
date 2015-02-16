@@ -126,6 +126,7 @@ items:
     type: separator
     title: Sample Pages
     menu_icon: fa fa-fw fa-fire
+    columns: [25, 50, 25]
 
   sample-pages/about-us:
     type: separator

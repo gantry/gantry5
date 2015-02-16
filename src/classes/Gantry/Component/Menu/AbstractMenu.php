@@ -236,7 +236,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
         } else {
             $item->groupChildren($ordering);
 
-            foreach ($ordering as $group) {
+            foreach ($ordering as &$group) {
                 foreach ($group as $key => &$value) {
                     if (is_array($value)) {
                         $this->sortAll($items, $value, $path ? $path . '/' . $key : $key);
