@@ -19,6 +19,7 @@
                 <div class="card settings-block">
                     <h4>
                         {{ particle.name }}
+                        <input type="hidden" name="particles[{{ id }}]" />
                         {% if particle.form.fields.enabled %}
                         {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled',
 'field': particle.form.fields.enabled, 'value': config.get(prefix ~ 'enabled')} %}

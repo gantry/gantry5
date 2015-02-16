@@ -24,6 +24,7 @@
                 {% set prefix = 'styles.' ~ id ~ '.' %}
                 <div class="card settings-block">
                     <h4>{{ block.name }}</h4>
+                    <input type="hidden" name="styles[{{ id }}]" />
                     <div class="inner-params">
                         {% include 'forms/fields.html.twig' with {'overridable': true, 'blueprints': block.form, 'data': config} %}
                     </div>
