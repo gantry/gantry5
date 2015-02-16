@@ -65,13 +65,17 @@ var DragDrop = new prime({
 
         // Prevents dragging a column from itself and limiting to its handle
         var target = $(event.target);
-        if (!element.parent('[data-lm-root]') && element.hasClass('g-block') && (!target.hasClass('submenu-reorder') && !target.parent('.submenu-reorder'))) { return true; }
-
+        if (!element.parent('[data-lm-root]') && element.hasClass('g-block') && (!target.matches('.submenu-reorder') && !target.parent('.submenu-reorder'))) { return true; }
 
         if (event.which && event.which !== 1 || $(event.target).matches(this.options.exclude)) { return true; }
         this.element = $(element);
         this.matched = false;
         if (this.options.catchClick) { this.moved = false; }
+
+        // we force the menu column reorder handle to the g-block parent
+        if (target.matches('.submenu-reorder') || target.parent('.submenu-reorder')) {
+            this.element = target.parent('[data-mm-id]');
+        }
 
         this.emit('dragdrop:beforestart', event, this.element);
 
@@ -118,11 +122,11 @@ var DragDrop = new prime({
         if ((offset < 6 && this.element.parent().find(':last-child') !== this.element) || (columns && offset > 3 && offset < 10)) {
             if (this.element.parent('[data-lm-blocktype="non-visible"]')) { return false; }
 
-            this.emit('dragdrop:resize', event, this.element, this.element.siblings(':not(.placeholder)'), this.origin.offset.x);
+            this.emit('dragdrop:resize', event, this.element, (this.element.parent('[data-mm-id]') || this.element).siblings(':not(.placeholder)'), this.origin.offset.x);
             return false;
         }
 
-        if (columns) { return false; }
+        if (columns || (element.hasClass('submenu-column') && (!target.matches('.submenu-reorder') && !target.parent('.submenu-reorder')))) { return true; }
 
         this.element.style({
             'pointer-events': 'none',

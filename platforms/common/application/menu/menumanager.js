@@ -26,8 +26,8 @@ var MenuManager = new prime({
         this.map = {};
         this.setRoot();
 
-        this.dragdrop = new DragDrop(element, options);
-        this.resizer = new Resizer(element, options);
+        this.dragdrop = new DragDrop(element, options, this);
+        this.resizer = new Resizer(element, options, this);
         this.dragdrop
             .on('dragdrop:click', this.bound('click'))
             .on('dragdrop:start', this.bound('start'))
@@ -62,7 +62,9 @@ var MenuManager = new prime({
             this.stopAnimation();
             return true;
         }
-        if (element.find('> .menu-item').tag() == 'span') {
+
+        var menuItem = element.find('> .menu-item');
+        if (menuItem && menuItem.tag() == 'span') {
             this.stopAnimation();
             return true;
         }
@@ -291,16 +293,16 @@ var MenuManager = new prime({
          console.groupEnd();
          }*/
 
-        this.emit('dragEnd', this.map);
+        this.emit('dragEnd', this.map, 'reorder');
     },
 
     stopAnimation: function(/*element*/) {
         var flex = null;
-        if (this.type == 'column') { flex = this.block.compute('flex'); }
+        if (this.type == 'column') { flex = this.resizer.getSize(this.block); }
         if (this.root) { this.root.removeClass('moving'); }
         if (this.block) {
             this.block.attribute('style', null);
-            if (flex) { this.block.style('flex', flex); }
+            if (flex) { this.block.style('flex', '0 1 ' + flex + ' %'); }
         }
 
         if (this.original) { this.original.remove(); }

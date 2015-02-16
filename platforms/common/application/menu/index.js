@@ -15,14 +15,16 @@ ready(function() {
     var body = $('body');
 
     menumanager = new MenuManager('body', {
-        delegate: '#menu-editor > section ul li, .submenu-column li, .column-container .g-block',
+        delegate: '#menu-editor > section ul li, .submenu-column, .submenu-column li, .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
         exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
-        resize_handles: '.submenu-column li:not(:last-child)',
+        resize_handles: '.submenu-column:not(:last-child)',
         catchClick: true
     });
 
-    menumanager.on('dragEnd', function(map) {
+    menumanager.on('dragEnd', function(map, mode) { // mode [reorder, resize, evenResize]
+        this.resizer.updateItemSizes();
+
         var save = $('[data-save]'),
             current = {
                 settings: this.settings,
@@ -47,7 +49,7 @@ ready(function() {
         menumanager.setRoot();
     });
 
-    // New columns
+    // Add new columns
     body.delegate('click', '.add-column', function(evet, element) {
         event.preventDefault();
         element = $(element);
@@ -55,12 +57,17 @@ ready(function() {
         var container = element.parent('[data-g5-menu-columns]').find('.submenu-selector'),
             children = container.children(),
             last = container.find('> :last-child'),
-            count = children ? children.length : 0;
+            count = children ? children.length : 0,
+            active = $('.menu-selector .active'),
+            path = active ? active.data('mm-id') : null;
 
         var block = $(last[0].cloneNode(true));
         block.data('mm-id', 'list-' + count);
         block.find('.submenu-items').empty();
         block.after(last);
+
+        menumanager.ordering[path].push([]);
+        menumanager.resizer.evenResize($('.submenu-selector > [data-mm-id]'));
     });
 
     // Attach events to pseudo (x) for deleting a column
@@ -73,11 +80,19 @@ ready(function() {
             };
 
         if (x >= bounding.left + bounding.width - deleter.width && x <= bounding.left + bounding.width &&
-            y - bounding.top < deleter.height) {
-            element.parent('[data-mm-id]').remove();
+            Math.abs(window.scrollY - y) - bounding.top < deleter.height) {
+            var parent = element.parent('[data-mm-id]'),
+                index = parent.data('mm-id').match(/\d+$/)[0],
+                active = $('.menu-selector .active'),
+                path = active ? active.data('mm-id') : null;
+
+            parent.remove();
+            menumanager.ordering[path].splice(index, 1);
+            menumanager.resizer.evenResize($('.submenu-selector > [data-mm-id]'));
         }
     });
 
+    // Menu Items settings
     body.delegate('click', '#menu-editor .config-cog, #menu-editor .global-menu-settings', function(event, element) {
         event.preventDefault();
 
