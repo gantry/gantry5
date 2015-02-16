@@ -92,8 +92,8 @@ ready(function() {
     });
 
     // Add new columns
-    body.delegate('click', '.add-column', function(evet, element) {
-        event.preventDefault();
+    body.delegate('click', '.add-column', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
         element = $(element);
 
         var container = element.parent('[data-g5-menu-columns]').find('.submenu-selector'),
