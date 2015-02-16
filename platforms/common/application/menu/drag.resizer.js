@@ -49,9 +49,9 @@ var Resizer = new prime({
     getSize: function(element) {
         element = $(element);
         var parent = element.matches('[data-mm-id]') ? element : element.parent('[data-mm-id]'),
-            size = parent.find('.percentage span');
+            size = parent.find('.percentage input');
 
-        return Number(size.text());
+        return Number(size.value());
     },
 
     setSize: function(element, size, animated) {
@@ -59,10 +59,10 @@ var Resizer = new prime({
         animated = typeof animated === 'undefined' ? false : animated;
 
         var parent = element.matches('[data-mm-id]') ? element : element.parent('[data-mm-id]'),
-            pc = parent.find('.percentage span');
+            pc = parent.find('.percentage input');
 
         parent[animated ? 'animate' : 'style']({'flex': '0 1 '+size+'%'});
-        pc.text(precision(size, 1));
+        pc.value(precision(size, 1));
     },
 
     start: function(event, element, siblings, offset) {
@@ -206,7 +206,36 @@ var Resizer = new prime({
         // update active path with new columns sizes
         this.menumanager.items[path].columns = sizes;
 
+        this.updateMaxValues(elements);
+
         return sizes;
+    },
+
+    updateMaxValues: function(elements) {
+        var parent = this.element ? this.element.parent('.submenu-selector') : null;
+        if (!parent && !elements) { return false; }
+
+        var blocks = elements || parent.search('> [data-mm-id]'), sizes, inputs;
+
+        blocks.forEach(function(block){
+            block = $(block);
+            var sibling = block.nextSibling() || block.previousSibling();
+            if (!sibling) { return; }
+
+            inputs = {
+                block: block.find('input[type="number"]'),
+                sibling: sibling.find('input[type="number"]')
+            };
+
+            sizes = {
+                current: this.getSize(block),
+                sibling: this.getSize(sibling)
+            };
+
+            sizes.total = sizes.current + sizes.sibling;
+            inputs.block.attribute('max', sizes.total - Number(inputs.block.attribute('min')));
+            inputs.sibling.attribute('max', sizes.total - Number(inputs.sibling.attribute('min')));
+        }, this);
     },
 
     evenResize: function(elements, animated) {

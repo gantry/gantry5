@@ -7,7 +7,9 @@ var ready         = require('elements/domready'),
     toastr        = require('../ui').toastr,
     request       = require('agent'),
     deepEquals    = require('mout/lang/deepEquals'),
+    trim          = require('mout/string/trim'),
     clamp         = require('mout/math/clamp'),
+    contains      = require('mout/array/contains'),
     getAjaxSuffix = require('../utils/get-ajax-suffix');
 
 var menumanager, map;
@@ -51,9 +53,9 @@ ready(function() {
     });
 
     // Manually changing size value
-    body.delegate('focusin', '.percentage [contenteditable]', function(event, element) {
+    /*body.delegate('focusin', '.percentage [contenteditable]', function(event, element) {
         element.currentSize = parseInt(element.text(), 10);
-    });
+    });*/
 
     /*body.delegate('focusout', '.percentage [contenteditable]', function(event, element) {
         var value = parseInt(element.text(), 10),
@@ -68,7 +70,7 @@ ready(function() {
         }
     });*/
 
-    body.delegate('keyup', '.percentage [contenteditable]', function(event, element) {
+    /*body.delegate('keyup', '.percentage [contenteditable]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
         var resizer = menumanager.resizer,
@@ -89,6 +91,64 @@ ready(function() {
 
         resizer.setSize(parent, value);
         resizer.setSize(sibling, sizes.diff);
+    });*/
+
+    body.delegate('focusin', '.percentage input', function(event, element) {
+        element = $(element);
+        element[0].focus();
+        element[0].select();
+        element.currentSize = element.value();
+    });
+
+    body.delegate('keydown', '.percentage input', function(event, element) {
+        if (contains([46, 8, 9, 27, 13, 110, 190], event.keyCode) ||
+                // Allow: [Ctrl|Cmd]+A | [Ctrl|Cmd]+R
+            (event.keyCode == 65 && (event.ctrlKey === true || event.metaKey === true)) ||
+            (event.keyCode == 82 && (event.ctrlKey === true || event.metaKey === true)) ||
+                // Allow: home, end, left, right, down, up
+            (event.keyCode >= 35 && event.keyCode <= 40)) {
+            // let it happen, don't do anything
+            return true;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((event.shiftKey || (event.keyCode < 48 || event.keyCode > 57)) && (event.keyCode < 96 || event.keyCode > 105)) {
+            event.preventDefault();
+        }
+    });
+
+    var pcChange = function(event, element) {
+        element = $(element);
+        var value = Number(element.value());
+
+        var resizer = menumanager.resizer,
+            parent = element.parent('[data-mm-id]'),
+            sibling = parent.nextSibling('[data-mm-id]') || parent.previousSibling('[data-mm-id]');
+
+        if (!value || value < Number(element.attribute('min')) || value > Number(element.attribute('max'))) { return; }
+
+        var sizes = {
+            current: Number(element.currentSize),
+            sibling: Number(resizer.getSize(sibling))
+        };
+
+        element.currentSize = value;
+
+        sizes.total = sizes.current + sizes.sibling;
+        sizes.diff = sizes.total - value;
+
+        resizer.setSize(parent, value);
+        resizer.setSize(sibling, sizes.diff);
+    };
+
+    body.delegate('keyup', '.percentage input', pcChange);
+    body.delegate('change', '.percentage input', pcChange);
+
+    body.delegate('focusout', '.percentage input', function(event, element) {
+        element = $(element);
+        var value = Number(element.value());
+        if (value < Number(element.attribute('min')) || value > Number(element.attribute('max'))) {
+            element.value(element.currentSize);
+        }
     });
 
     // Add new columns

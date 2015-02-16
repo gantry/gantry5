@@ -2276,6 +2276,15 @@ a {
   margin-top: 5px;
 }
 /* line 350, ../scss/admin/_menu.scss */
+#g5-container .submenu-ratio .percentage input {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-align: right;
+  width: 50px;
+  display: inline-block;
+}
+/* line 359, ../scss/admin/_menu.scss */
 #g5-container .submenu-ratio i {
   position: absolute;
   right: 1rem;

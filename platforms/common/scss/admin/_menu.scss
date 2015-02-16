@@ -346,6 +346,15 @@ $submenu-ratio:                 60px;
 		line-height: $submenu-ratio;
 		display: inline-block;
 		margin-top: 5px;
+
+        input {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            text-align: right;
+            width: 50px;
+            display: inline-block;
+        }
 	}
 	i {
 		position: absolute;

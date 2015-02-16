@@ -54,6 +54,9 @@ var MenuManager = new prime({
                 ordering: deepClone(this.ordering),
                 items: deepClone(this.items)
             };
+
+            var submenus = $('[data-g5-menu-columns] .submenu-selector'), columns;
+            if (this.resizer && submenus && (columns = submenus.search('> [data-mm-id]'))) { this.resizer.updateMaxValues(columns); }
         }
     },
 
