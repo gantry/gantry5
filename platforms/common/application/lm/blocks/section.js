@@ -15,9 +15,7 @@ var UID = 0;
 
 var Section = new prime({
     inherits: Base,
-    options: {
-        type: 'section'
-    },
+    options: {},
 
     constructor: function(options) {
         ++UID;
