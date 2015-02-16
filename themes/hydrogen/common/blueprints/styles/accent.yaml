@@ -1,6 +1,6 @@
 name: Accent Colors
 description: Accent colors for the Hydrogen theme
-type: color
+type: core
 
 form:
   fields:

@@ -1,6 +1,6 @@
 name: Base Colors
 description: Base colors for the Hydrogen theme
-type: color
+type: core
 
 form:
   fields:
