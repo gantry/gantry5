@@ -6,7 +6,7 @@ var prime     = require('prime'),
     Bound     = require('prime-util/prime/bound'),
     Options   = require('prime-util/prime/options'),
     DragDrop  = require('../ui/drag.drop'),
-    Resizer   = require('../ui/drag.resizer'),
+    Resizer   = require('./drag.resizer'),
     get       = require('mout/object/get'),
 
     every     = require('mout/array/every'),
