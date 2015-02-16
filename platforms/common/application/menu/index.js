@@ -52,47 +52,6 @@ ready(function() {
         menumanager.setRoot();
     });
 
-    // Manually changing size value
-    /*body.delegate('focusin', '.percentage [contenteditable]', function(event, element) {
-        element.currentSize = parseInt(element.text(), 10);
-    });*/
-
-    /*body.delegate('focusout', '.percentage [contenteditable]', function(event, element) {
-        var value = parseInt(element.text(), 10),
-            min = menumanager.resizer.options.minSize,
-            valid = !isNaN(value);
-
-        element.currentSize = valid ? clamp(value, min, 100 - min) : min;
-        element.text(element.currentSize);
-
-        if (!valid) {
-            body.emit('keyup', { target: element });
-        }
-    });*/
-
-    /*body.delegate('keyup', '.percentage [contenteditable]', function(event, element) {
-        if (event && event.preventDefault) { event.preventDefault(); }
-
-        var resizer = menumanager.resizer,
-            value = parseInt(element.text(), 10),
-            parent = element.parent('[data-mm-id]'),
-            sibling = parent.nextSibling('[data-mm-id]') || parent.previousSibling('[data-mm-id]');
-        if (!value || value < menumanager.resizer.options.minSize) { return; }
-
-        var sizes = {
-            current: element.currentSize,
-            sibling: resizer.getSize(sibling)
-        };
-
-        element.currentSize = value;
-
-        sizes.total = sizes.current + sizes.sibling;
-        sizes.diff = sizes.total - value;
-
-        resizer.setSize(parent, value);
-        resizer.setSize(sibling, sizes.diff);
-    });*/
-
     body.delegate('focusin', '.percentage input', function(event, element) {
         element = $(element);
         element[0].focus();
@@ -103,12 +62,12 @@ ready(function() {
     body.delegate('keydown', '.percentage input', function(event, element) {
         if (contains([46, 8, 9, 27, 13, 110, 190], event.keyCode) ||
                 // Allow: [Ctrl|Cmd]+A | [Ctrl|Cmd]+R
-            (event.keyCode == 65 && (event.ctrlKey === true || event.metaKey === true)) ||
+            (event.keyCode == 65 && (event.ctrlKey === true || event.ctrlKey === true)) ||
             (event.keyCode == 82 && (event.ctrlKey === true || event.metaKey === true)) ||
                 // Allow: home, end, left, right, down, up
             (event.keyCode >= 35 && event.keyCode <= 40)) {
             // let it happen, don't do anything
-            return true;
+            return;
         }
         // Ensure that it is a number and stop the keypress
         if ((event.shiftKey || (event.keyCode < 48 || event.keyCode > 57)) && (event.keyCode < 96 || event.keyCode > 105)) {
@@ -138,6 +97,9 @@ ready(function() {
 
         resizer.setSize(parent, value);
         resizer.setSize(sibling, sizes.diff);
+
+        menumanager.resizer.updateItemSizes(parent.parent('.submenu-selector').search('> [data-mm-id]'));
+        menumanager.emit('dragEnd', menumanager.map, 'inputChange');
     };
 
     body.delegate('keyup', '.percentage input', pcChange);
