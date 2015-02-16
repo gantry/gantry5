@@ -56,6 +56,10 @@ class Menu extends AbstractMenu
      */
     protected function getItemsFromPlatform($levels)
     {
+        if ($this->override) {
+            return [];
+        }
+
         $options = [
             'levels' => $levels,
             'pattern' => '|\.html\.twig|',

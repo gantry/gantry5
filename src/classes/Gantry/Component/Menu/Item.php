@@ -161,7 +161,7 @@ class Item implements \ArrayAccess, \Iterator
             $ordered = [];
             $this->groups[0] = [];
             foreach ($groups as $i => $ordering) {
-                if (!$ordering || !is_array($ordering)) {
+                if (!is_array($ordering)) {
                     continue;
                 }
 
