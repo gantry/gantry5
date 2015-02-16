@@ -10,7 +10,7 @@
                 {% set size = item.groups|length %}
             </div>
             <div class="submenu-ratio">
-                <span class="percentage"><span contenteditable="true" tabindex="{{ group + 1 }}">{{ width }}</span> %</span>
+                <span class="percentage"><span contenteditable="true" tabindex="{{ group + 1 }}">{{ width|round(1) }}</span> %</span>
             </div>
         </div>
     {% endfor %}
