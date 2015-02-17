@@ -1900,7 +1900,7 @@ $.implement({
 
             settings_element.maxItems = input.attribute('multiple') ? null : 1;
 
-            children = input.children();
+            children = input.children() || 0;
             for (i = 0, n = children.length; i < n; i++) {
                 tagName = children[i].tagName.toLowerCase();
                 if (tagName === 'optgroup') {
