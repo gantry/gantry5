@@ -1,0 +1,22 @@
+details:
+  name: Hydrogen
+  version: 1.0
+  icon: tint
+  platform: joomla
+  date: February 17, 2014
+  author:
+    name: RocketTheme, LLC
+    email: support@rockettheme.com
+    url: http://www.rockettheme.com
+  copyright: (C) 2005 - 2015 RocketTheme, LLC. All rights reserved.
+  license: GPLv2
+  description: Base Gantry Template
+  images:
+    thumbnail: admin/images/template_thumbnail.png
+    preview: admin/images/template_preview.png
+
+config:
+  engine: nucleus
+  parent: gantry
+  base: common
+  overrides: custom
