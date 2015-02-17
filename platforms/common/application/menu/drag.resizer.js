@@ -72,6 +72,8 @@ var Resizer = new prime({
         event.preventDefault();
 
         this.element = $(element);
+        this.element.parent('.submenu-selector').addClass('moving');
+
         this.siblings = {
             occupied: 0,
             elements: siblings,
@@ -140,13 +142,7 @@ var Resizer = new prime({
         size = size - this.siblings.sizeBefore;
         size = precision(clamp(size, this.options.minSize, this.origin.maxSize - this.options.minSize), 0);
 
-        //grids?
-        //console.log((size / 12) * (100 / 12));
-
         diff = precision(diff - size, 0);
-
-        /*this.getBlock(this.element).setSize(size, true);
-        this.getBlock(this.siblings.next).setSize(diff, true);*/
 
         this.setSize(this.element, size);
         this.setSize(this.siblings.next, diff);
@@ -184,7 +180,7 @@ var Resizer = new prime({
         $(document).off(this.EVENTS.MOVE, this.bound('move'));
         $(document).off(this.EVENTS.STOP, this.bound('stop'));
 
-        //this.updateItemSizes();
+        this.element.parent('.submenu-selector').removeClass('moving');
 
         this.menumanager.emit('dragEnd', this.menumanager.map, 'resize');
         //if (this.origin.size !== this.getSize(this.element)) { this.history.push(this.builder.serialize()); }
