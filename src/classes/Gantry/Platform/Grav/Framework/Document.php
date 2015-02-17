@@ -2,8 +2,9 @@
 namespace Gantry\Framework;
 
 use Grav\Common\Grav;
+use Gantry\Framework\Base\Document as BaseDocument;
 
-class Document
+class Document extends BaseDocument
 {
     public static function addHeaderTag(array $element)
     {
