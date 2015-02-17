@@ -156,6 +156,11 @@ $submenu-ratio:                 60px;
 	border-radius: $core-border-radius;
 	color: $navbar-color;
     background-color: $white;
+
+    &.moving .g-block .submenu-reorder {
+        display: none;
+    }
+
 	.g-block {
 		position: relative;
 		padding-bottom: $submenu-ratio;
@@ -352,7 +357,7 @@ $submenu-ratio:                 60px;
             padding: 0;
             border: 0;
             text-align: right;
-            width: 50px;
+            width: 55px;
             display: inline-block;
         }
 	}
