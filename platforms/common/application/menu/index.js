@@ -14,6 +14,11 @@ var ready         = require('elements/domready'),
 
 var menumanager, map;
 
+var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+
+var FOCUSIN   = isFirefox ? 'focus' : 'focusin',
+    FOCUSOUT  = isFirefox ? 'blur' : 'focusout';
+
 ready(function() {
     var body = $('body');
 
@@ -52,12 +57,13 @@ ready(function() {
         menumanager.setRoot();
     });
 
-    body.delegate('focusin', '.percentage input', function(event, element) {
+    body.delegate(FOCUSIN, '.percentage input', function(event, element) {
         element = $(element);
+        element.currentSize = Number(element.value());
+
         element[0].focus();
         element[0].select();
-        element.currentSize = element.value();
-    });
+    }, true);
 
     body.delegate('keydown', '.percentage input', function(event, element) {
         if (contains([46, 8, 9, 27, 13, 110, 190], event.keyCode) ||
@@ -75,15 +81,32 @@ ready(function() {
         }
     });
 
-    var pcChange = function(event, element) {
+    body.delegate('keydown', '.percentage input', function(event, element) {
         element = $(element);
-        var value = Number(element.value());
+        var value = Number(element.value()),
+            min = Number(element.attribute('min')),
+            max = Number(element.attribute('max')),
+            upDown = event.keyCode == 38 || event.keyCode == 40;
+
+        if (upDown) {
+            value += event.keyCode == 38 ? +1 : -1;
+            value = clamp(value, min, max);
+            element.value(value);
+            body.emit('keyup', {target: element});
+        }
+    });
+
+    body.delegate('keyup', '.percentage input', function(event, element) {
+        element = $(element);
+        var value = Number(element.value()),
+            min = Number(element.attribute('min')),
+            max = Number(element.attribute('max'));
 
         var resizer = menumanager.resizer,
             parent = element.parent('[data-mm-id]'),
             sibling = parent.nextSibling('[data-mm-id]') || parent.previousSibling('[data-mm-id]');
 
-        if (!value || value < Number(element.attribute('min')) || value > Number(element.attribute('max'))) { return; }
+        if (!value || value < min || value > max) { return; }
 
         var sizes = {
             current: Number(element.currentSize),
@@ -100,18 +123,15 @@ ready(function() {
 
         menumanager.resizer.updateItemSizes(parent.parent('.submenu-selector').search('> [data-mm-id]'));
         menumanager.emit('dragEnd', menumanager.map, 'inputChange');
-    };
+    });
 
-    body.delegate('keyup', '.percentage input', pcChange);
-    body.delegate('change', '.percentage input', pcChange);
-
-    body.delegate('focusout', '.percentage input', function(event, element) {
+    body.delegate(FOCUSOUT, '.percentage input', function(event, element) {
         element = $(element);
         var value = Number(element.value());
         if (value < Number(element.attribute('min')) || value > Number(element.attribute('max'))) {
             element.value(element.currentSize);
         }
-    });
+    }, true);
 
     // Add new columns
     body.delegate('click', '.add-column', function(event, element) {

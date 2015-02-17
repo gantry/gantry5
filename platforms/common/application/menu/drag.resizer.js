@@ -219,8 +219,8 @@ var Resizer = new prime({
             if (!sibling) { return; }
 
             inputs = {
-                block: block.find('input[type="number"]'),
-                sibling: sibling.find('input[type="number"]')
+                block: block.find('input.column-pc'),
+                sibling: sibling.find('input.column-pc')
             };
 
             sizes = {
