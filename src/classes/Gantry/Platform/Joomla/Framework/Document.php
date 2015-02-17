@@ -5,7 +5,9 @@ use Gantry\Framework\Base\Document as BaseDocument;
 
 class Document extends BaseDocument
 {
-    public static function addHeaderTag(array $element)
+    public static $scripts = ['header' => [], 'footer' => []];
+
+    public static function addHeaderTag(array $element, $in_footer = false)
     {
         $doc = \JFactory::getDocument();
         switch ($element['tag']) {
@@ -33,13 +35,21 @@ class Document extends BaseDocument
                 if (!empty($element['src'])) {
                     $src = $element['src'];
                     $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
-                    $doc->addScript($src, $type);
+                    if ($in_footer) {
+                       self::$scripts['footer'][$src] = "<script type=\"{$type}\" src=\"{$src}\"></script>";
+                    } else {
+                        $doc->addScript($src, $type);
+                    }
                     return true;
 
                 } elseif (!empty($element['content'])) {
                     $content = $element['content'];
                     $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
-                    $doc->addScriptDeclaration($content, $type);
+                    if ($in_footer) {
+                       self::$scripts['footer'][md5($content).sha1($content)] = "<script type=\"{$type}\">{$content}</script>";
+                    } else {
+                        $doc->addScriptDeclaration($content, $type);
+                    }
                     return true;
                 }
                 break;
