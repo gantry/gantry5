@@ -13,18 +13,21 @@ class Router extends BaseRouter
         $app = \JFactory::getApplication();
         $input = $app->input;
 
+        \JHtml::_('behavior.keepalive');
+
         $this->method = 'GET';
         $this->path = explode('/', $input->getString('view'));
         $this->resource = array_shift($this->path) ?: 'themes';
         $this->format = $input->getCmd('format', 'html');
-
-        \JHtml::_('behavior.keepalive');
+        $ajax = ($this->format == 'json');
 
         $this->params = [
             'id'   => $input->getInt('id'),
-            'ajax' => ($this->format == 'json'),
+            'ajax' => $ajax,
             'location' => $this->resource,
-            'params' => isset($_POST['params']) && is_string($_POST['params']) ? json_decode($_POST['params']) : []
+            'method' => $this->method,
+            'format' => $this->format,
+            'params' => isset($_POST['params']) && is_string($_POST['params']) ? json_decode($_POST['params'], true) : []
         ];
 
         // If style is set, resolve the template and load it.
