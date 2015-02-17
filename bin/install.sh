@@ -5,16 +5,19 @@ OPT_DELETE=0
 
 if [ -f $GIT_TARGET/configuration.php ]; then
     PLATFORM=Joomla
+    mkdir "$GIT_TARGET/media/gantry"
     sources=(
         'platforms/joomla/com_gantryadmin'
         'platforms/common'
         'src'
         'vendor'
         'platforms/joomla/plg_system_gantryadmin'
+        'assets'
+        'engines'
+        'themes/hydrogen/joomla'
+        'themes/hydrogen/common'
         'themes/gantry/joomla'
         'themes/gantry/common'
-        'src'
-        'vendor'
     )
     targets=(
         'administrator/components/com_gantryadmin'
@@ -22,10 +25,12 @@ if [ -f $GIT_TARGET/configuration.php ]; then
         'administrator/components/com_gantryadmin/src'
         'administrator/components/com_gantryadmin/vendor'
         'plugins/system/gantryadmin'
+        'media/gantry/assets'
+        'media/gantry/engines'
+        'templates/hydrogen'
+        'templates/hydrogen/common'
         'templates/gantry'
         'templates/gantry/common'
-        'templates/gantry/src'
-        'templates/gantry/vendor'
         )
 elif [ -f $GIT_TARGET/wp-config.php ]; then
     PLATFORM=WordPress
