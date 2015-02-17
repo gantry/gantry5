@@ -25,6 +25,27 @@ class Platform extends BasePlatform
 
     public function getMediaPaths()
     {
-        return ['' => ['media/gantry5']];
+        return ['' => ['gantry-theme://images', 'media/gantry']];
+    }
+
+    public function getEnginesPaths()
+    {
+        return ['' => ['media/gantry/engines']];
+    }
+
+    public function getEnginePaths()
+    {
+        return ['' => ['gantry-theme://engine', 'gantry-engines://nucleus']];
+    }
+
+    public function getAssetsPaths()
+    {
+        return ['' => ['gantry-theme://', 'media/gantry/assets']];
+    }
+
+    public function getModules($position)
+    {
+        // TODO:
+        return [];
     }
 }
