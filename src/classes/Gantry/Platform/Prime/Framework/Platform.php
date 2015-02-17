@@ -1,9 +1,11 @@
 <?php
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use RocketTheme\Toolbox\DI\Container;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
  * The Platform Configuration class contains configuration information.
@@ -37,13 +39,13 @@ class Platform extends BasePlatform
             'gantry-pages' => [
                 'type' => 'ReadOnlyStream',
                 'prefixes' => [
-                    '' => ['pages']
+                    '' => ['gantry-theme://overrides/pages', 'pages']
                 ]
             ],
             'gantry-positions' => [
                 'type' => 'ReadOnlyStream',
                 'prefixes' => [
-                    '' => ['positions']
+                    '' => ['gantry-theme://overrides/positions', 'positions']
                 ]
             ]
         ];
@@ -84,18 +86,11 @@ class Platform extends BasePlatform
 
     public function getModules($position)
     {
-        $path = PRIME_ROOT . '/positions/' . $position;
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+        $finder = new ConfigFileFinder;
+        $files = $finder->listFiles($locator->findResources('gantry-positions://' . $position), '|\.html\.twig|', 0);
 
-        if (!is_dir($path)) {
-            return [];
-        }
-
-        $params = [
-            'levels' => 0,
-            'pattern' => '|\.html\.twig|',
-            'filters' => ['value' => '|\.html\.twig|']
-        ];
-
-        return Folder::all($path, $params);
+        return array_keys($files);
     }
 }

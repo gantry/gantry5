@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Filesystem\Folder;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
 use RocketTheme\Toolbox\ArrayTraits\Export;
@@ -18,18 +19,16 @@ class Pages implements \ArrayAccess, \Iterator
 
     public function __construct()
     {
-        $folder = PRIME_ROOT . '/pages';
-        if (!is_dir($folder)) {
-            throw new \RuntimeException('Prime has been not set up (pages missing)', 500);
-        }
+        $gantry = Gantry::instance();
 
-        $options = [
-            'pattern' => '|\.html\.twig|',
-            'filters' => ['key' => '|\.html\.twig|', 'value' => function () { return []; }],
-            'key' => 'SubPathname'
-        ];
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+        $finder = new ConfigFileFinder;
 
-        $this->items = Folder::all($folder, $options);
+        // Generate a flat list of all existing pages containing a list of file paths with timestamps.
+        $this->items = $finder->listFiles($locator->findResources('gantry-pages://'), '|\.html\.twig|');
+
+        // And list the pages in alphabetical order.
         ksort($this->items);
     }
 }
