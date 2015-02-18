@@ -2144,6 +2144,7 @@ var G5;
             body.delegate('click', '#settings [data-collection-editall]', function (event, element) {
                 event.preventDefault();
                 var root = element.parent('[data-set-root]');
+                root.style('display', 'none');
             });
             body.delegate('click', '#settings [data-collection-edit-title]', function (event, element) {
                 event.preventDefault();

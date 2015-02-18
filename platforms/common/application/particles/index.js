@@ -69,7 +69,7 @@ ready(function () {
 
         var root = element.parent('[data-set-root]');
 
-        //$(root).style('display:none');
+        root.style('display', 'none');
 
 
     });
