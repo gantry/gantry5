@@ -33,8 +33,8 @@ class Configurations extends HtmlController
         $locator = $this->container['locator'];
 
         $finder = new \Gantry\Component\Config\ConfigFileFinder();
-        $files = $finder->getFiles($locator->findResources('gantry-layouts://', false), '|\.json$|');
-        $files += $finder->getFiles($locator->findResources('gantry-layouts://', false));
+        $files = $finder->getFiles($locator->findResources('gantry-layouts://'), '|\.json$|');
+        $files += $finder->getFiles($locator->findResources('gantry-layouts://'));
         $layouts = array_keys($files);
         sort($layouts);
 
