@@ -51,9 +51,9 @@ class Settings extends HtmlController
         $this->params['page_id'] = $id;
 
         if($id == 'default') {
-            $this->params['overridable'] = false;
+            $this->params['overrideable'] = false;
         } else {
-            $this->params['overridable'] = true;
+            $this->params['overrideable'] = true;
         }
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
