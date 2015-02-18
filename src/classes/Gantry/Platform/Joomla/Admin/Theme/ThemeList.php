@@ -50,7 +50,7 @@ class ThemeList
                 $details['title'] = $template->title;
                 $details['thumbnail'] = 'template_thumbnail.png';
                 $details['preview_url'] = \JUri::root(false) . 'index.php?templateStyle=' . $template->id;
-                $details['admin_url'] = \JRoute::_('index.php?option=com_gantryadmin&view=overview&style=' . $template->id, false);
+                $details['admin_url'] = \JRoute::_('index.php?option=com_gantryadmin&view=about&style=' . $template->id, false);
                 $details['params'] = $params->toArray();
 
                 $list[$template->id] = $details;
