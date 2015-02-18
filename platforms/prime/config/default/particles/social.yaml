@@ -8,18 +8,22 @@ target: _blank
 
 items:
 
-  - icon: fa fa-twitter
-    text: Twitter
+  - name: Twitter
+    icon: fa fa-twitter
+    text: Our Twitter
     link: http://twitter.com/rockettheme
 
-  - icon: fa fa-facebook
-    text: Facebook
+  - name: Facebook
+    icon: fa fa-facebook
+    text: Our Facebook
     link: http://facebook.com/rockettheme
 
-  - icon: fa fa-google
-    text: Google
+  - name: Google
+    icon: fa fa-google
+    text: Our Google
     link: http://plus.google.com/+rockettheme
 
-  - icon: fa fa-rss
-    text: RSS
+  - name: RSS
+    icon: fa fa-rss
+    text: Our RSS
     link: http://www.rockettheme.com/product-updates?rss

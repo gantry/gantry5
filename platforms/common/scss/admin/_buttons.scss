@@ -5,6 +5,11 @@
     @include button-color($button-bg, $white);
 }
 
+.button-simple {
+    @extend %button;
+    padding: 0;
+}
+
 .button-primary {
     @extend %button;
     @include button-color($core-accent);

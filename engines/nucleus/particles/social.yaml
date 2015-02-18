@@ -33,6 +33,11 @@ form:
       ajax: true
 
       fields:
+
+        .name:
+          type: input.txt
+          label: Name
+
         .icon:
           type: input.text
           label: Icon

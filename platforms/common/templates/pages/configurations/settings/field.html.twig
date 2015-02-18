@@ -2,20 +2,32 @@
 
 {% block gantry %}
 <form method="POST">
-    <div class="pull-right">
-        <button class="button">Save</button>
-        <button class="button" name="METHOD" value="DELETE">Reset</button>
-        <a class="button" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route(parent) }}">Back</a>
-    </div>
-    <div id="settings" class="cards-wrapper">
-        <div class="card settings-block">
-            <h4>
-                Edit {{ key }}
-            </h4>
-            <div class="inner-params">
-                {% include 'forms/fields.html.twig' %}
+    {% if blueprints.type == 'collection.list' %}
+        <span class="float-right">
+            <a class="button">Reset</a>
+            <button class="button button-primary" type="submit">Apply</button>
+            <a class="button g5-dialog-close">Cancel</a>
+        </span>
+        <h2 class="page-title">
+            <span class="title">{{ key }} Collection</span>
+        </h2>
+        {% include 'forms/fields.html.twig' %}
+    {% else %}
+        <div class="cards-wrapper">
+            <div class="card settings-block">
+                <h4>
+                    Edit {{ key }}
+                </h4>
+                <div class="inner-params">
+                    {% include 'forms/fields.html.twig' %}
+                </div>
             </div>
         </div>
-    </div>
+        <div class="g-modal-actions">
+            <a class="button float-left">Reset</a>
+            <button class="button button-primary" type="submit">Apply</button>
+            <a class="button g5-dialog-close">Cancel</a>
+        </div>
+    {% endif %}
 </form>
 {% endblock %}
