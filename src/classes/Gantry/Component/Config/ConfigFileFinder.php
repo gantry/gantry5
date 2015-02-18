@@ -37,9 +37,11 @@ class ConfigFileFinder
     {
         $list = [];
         foreach ($paths as $folder) {
+            $path = trim(Folder::getRelativePath($folder), '/');
+
             $files = $this->detectRecursive($folder, $pattern, $levels);
 
-            $list += $files[trim($folder, '/')];
+            $list += $files[trim($path, '/')];
         }
         return $list;
     }

@@ -31,8 +31,8 @@ class LayoutCollection extends Collection
         $locator =$this->container['locator'];
 
         $finder = new ConfigFileFinder();
-        $files = $finder->getFiles($locator->findResources($path, false), '|\.json$|');
-        $files += $finder->getFiles($locator->findResources($path, false));
+        $files = $finder->getFiles($locator->findResources($path), '|\.json$|');
+        $files += $finder->getFiles($locator->findResources($path));
         $layouts = array_keys($files);
         sort($layouts);
 

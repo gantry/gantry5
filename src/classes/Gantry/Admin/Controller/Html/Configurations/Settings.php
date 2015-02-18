@@ -4,7 +4,6 @@ namespace Gantry\Admin\Controller\Html\Configurations;
 use Gantry\Component\Config\BlueprintsForm;
 use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
