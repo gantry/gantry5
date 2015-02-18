@@ -180,9 +180,9 @@ ready(function() {
     body.delegate('click', '#menu-editor .config-cog, #menu-editor .global-menu-settings', function(event, element) {
         event.preventDefault();
 
-        var data = {};
+        var data = {}, isRoot = element.hasClass('global-menu-settings');
 
-        if (element.hasClass('global-menu-settings')) {
+        if (isRoot) {
             data.settings = JSON.stringify(menumanager.settings);
         } else {
             data.item = JSON.stringify(menumanager.items[element.parent('[data-mm-id]').data('mm-id')]);
@@ -200,7 +200,7 @@ ready(function() {
 
                 if (!form || !submit) { return true; }
 
-                // Particle Settings apply
+                // Menuitems Settings apply
                 submit.on('click', function(e) {
                     e.preventDefault();
                     dataString = [];
@@ -218,7 +218,7 @@ ready(function() {
 
                     var title = content.elements.content.find('[data-title-editable]');
                     if (title) {
-                        dataString.push('title=' + title.data('title-editable'));
+                        dataString.push((isRoot ? 'settings[title]' : 'title') + '=' + title.data('title-editable'));
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response) {
