@@ -3,6 +3,7 @@ var $             = require('elements'),
     request       = require('agent'),
     ui            = require('./ui'),
     interpolate   = require('mout/string/interpolate'),
+    trim          = require('mout/string/trim'),
     modal         = ui.modal,
     toastr        = ui.toastr,
 
@@ -91,6 +92,55 @@ ready(function() {
             if (page == 'layout') { lm.layoutmanager.updatePendingChanges(); }
         });
     });
+
+    // Editable titles
+    body.delegate('click', '[data-title-edit]', function(event, element){
+        element = $(element);
+        var $title = element.sibling('[data-title-editable]'), title;
+        if (!$title) { return true; }
+
+        title = $title[0];
+
+        $title.attribute('contenteditable', true);
+        title.focus();
+
+        var range = document.createRange(), selection;
+        range.selectNodeContents(title);
+        selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        $title.storedTitle = trim($title.text());
+    });
+
+    body.delegate('keydown', '[data-title-editable]', function(event, element){
+        element = $(element);
+        switch (event.keyCode) {
+            case 13: // return
+            case 27: // esc
+                event.stopPropagation();
+                if (event.keyCode == 27) {
+                    if (typeof element.storedTitle !== 'undefined') {
+                        element.text(element.storedTitle);
+                    }
+                }
+
+                element.attribute('contenteditable', null);
+                window.getSelection().removeAllRanges();
+                element[0].blur();
+
+                return false;
+            default:
+                return true;
+        }
+    });
+
+    body.delegate('blur', '[data-title-editable]', function(event, element){
+        element = $(element);
+        element.attribute('contenteditable', null);
+        element.data('title-editable', trim(element.text()));
+        window.getSelection().removeAllRanges();
+    }, true);
 
 });
 

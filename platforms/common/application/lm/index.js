@@ -231,50 +231,6 @@ ready(function() {
 
                 if (!form || !submit) { return true; }
 
-                //TODO: Possibly make this more generic so we can use this everywhere.
-                var title = content.elements.content.find('[data-particle-title]'),
-                    titleEdit = content.elements.content.find('[data-title-edit]'),
-                    titleValue;
-
-                if (title && titleEdit) {
-                    titleEdit.on('click', function() {
-                        title.attribute('contenteditable', 'true');
-                        title[0].focus();
-
-                        var range = document.createRange(), selection;
-                        range.selectNodeContents(title[0]);
-                        selection = window.getSelection();
-                        selection.removeAllRanges();
-                        selection.addRange(range);
-
-                        titleValue = trim(title.text());
-                    });
-
-                    title.on('keydown', function(event) {
-
-                        switch (event.keyCode) {
-                            case 13: // return
-                            case 27: // esc
-                                event.stopPropagation();
-                                if (event.keyCode == 27) {
-                                    title.text(titleValue);
-                                }
-
-                                title.attribute('contenteditable', null);
-                                window.getSelection().removeAllRanges();
-                                title[0].blur();
-
-                                return false;
-                            default:
-                                return true;
-                        }
-                    }).on('blur', function(){
-                        title.attribute('contenteditable', null);
-                        title.data('particle-title', trim(title.text()));
-                        window.getSelection().removeAllRanges();
-                    });
-                }
-
                 // Particle Settings apply
                 submit.on('click', function(e) {
                     e.preventDefault();
@@ -293,8 +249,9 @@ ready(function() {
                         dataString.push(name + '=' + value);
                     });
 
+                    var title = content.elements.content.find('[data-title-editable]');
                     if (title) {
-                        dataString.push('title=' + title.data('particle-title'));
+                        dataString.push('title=' + title.data('title-editable'));
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
