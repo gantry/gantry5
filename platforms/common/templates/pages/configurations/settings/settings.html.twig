@@ -6,7 +6,7 @@
         <span class="float-right">
             <button type="submit" class="button button-primary button-save" data-save="Settings"><i class="fa fa-fw fa-check"></i> <span>Save Settings</span></button>
         </span>
-        <div data-st-page="{{ page_id }}">
+        <div data-set-page="{{ page_id }}" data-set-root="">
             {% for group, list in particles %}
                 <h2 class="page-title">
                     <span class="title">{{ group|capitalize }} Settings</span>

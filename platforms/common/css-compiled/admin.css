@@ -38,7 +38,7 @@
 }
 
 /* line 1, ../scss/admin/modules/_buttons.scss */
-#g5-container .button, #g5-container .button-primary, #g5-container .button-secondary, #g5-container .button.disabled, #g5-container .button.red, #g5-container .button.yellow {
+#g5-container .button, #g5-container .button-simple, #g5-container .button-primary, #g5-container .button-secondary, #g5-container .button.disabled, #g5-container .button.red, #g5-container .button.yellow {
   display: inline-block;
   border-radius: 0.1875rem;
   padding: 6px 12px;
@@ -49,11 +49,11 @@
   cursor: pointer;
 }
 /* line 10, ../scss/admin/modules/_buttons.scss */
-#g5-container .button:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
+#g5-container .button:active, #g5-container .button-simple:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
   margin: 1px 0 -1px 0;
 }
 /* line 13, ../scss/admin/modules/_buttons.scss */
-#g5-container .button i + span, #g5-container .button-primary i + span, #g5-container .button-secondary i + span, #g5-container .button.disabled i + span, #g5-container .button.red i + span, #g5-container .button.yellow i + span {
+#g5-container .button i + span, #g5-container .button-simple i + span, #g5-container .button-primary i + span, #g5-container .button-secondary i + span, #g5-container .button.disabled i + span, #g5-container .button.red i + span, #g5-container .button.yellow i + span {
   margin-left: 8px;
 }
 
@@ -1328,6 +1328,10 @@ a {
   color: #fff;
 }
 /* line 8, ../scss/admin/_buttons.scss */
+#g5-container .button-simple {
+  padding: 0;
+}
+/* line 13, ../scss/admin/_buttons.scss */
 #g5-container .button-primary {
   background: #439A86;
   color: rgba(255, 255, 255, 0.9);
@@ -1337,7 +1341,7 @@ a {
   background: #3a8573;
   color: #fff;
 }
-/* line 13, ../scss/admin/_buttons.scss */
+/* line 18, ../scss/admin/_buttons.scss */
 #g5-container .button-secondary {
   background: #314C59;
   color: rgba(255, 255, 255, 0.9);
@@ -1347,17 +1351,17 @@ a {
   background: #263b45;
   color: #fff;
 }
-/* line 18, ../scss/admin/_buttons.scss */
+/* line 23, ../scss/admin/_buttons.scss */
 #g5-container .button.disabled {
   background: #d4d4d4;
   color: #fff;
   cursor: default;
 }
-/* line 23, ../scss/admin/_buttons.scss */
+/* line 28, ../scss/admin/_buttons.scss */
 #g5-container .button.disabled:active {
   margin: 0;
 }
-/* line 28, ../scss/admin/_buttons.scss */
+/* line 33, ../scss/admin/_buttons.scss */
 #g5-container .button.red {
   background: #ed5565;
   color: rgba(255, 255, 255, 0.9);
@@ -1367,7 +1371,7 @@ a {
   background: #ea394c;
   color: #fff;
 }
-/* line 33, ../scss/admin/_buttons.scss */
+/* line 38, ../scss/admin/_buttons.scss */
 #g5-container .button.yellow {
   background: #ffce54;
   color: rgba(135, 96, 0, 0.9);

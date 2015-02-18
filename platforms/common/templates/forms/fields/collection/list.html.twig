@@ -30,14 +30,14 @@
                             {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
                         {% endblock %}
                     </span>
-                    <a class="button" data-save="Settings"><i class="fa fa-fw fa-plus"></i></a>
-                    <a class="button" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-collections]" href="{{ field_route }}"><i class="fa fa-fw fa-pencil-square"></i></a>
+                    <span class="button" data-collection-add=""><i class="fa fa-fw fa-plus"></i></span>
+                    <a class="button" data-collection-editall="" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-collections]" href="{{ field_route }}"><i class="fa fa-fw fa-pencil-square"></i></a>
                     {% if overridable %}
                         <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
                         <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
                     {% endif %}
                 </div>
-                <div class="settings-param-field {{ field.name  }}">
+                <div class="settings-param-field" data-field-name="{{ field.name  }}">
                     {% block input %}
                         {% if field.fields %}
                             <ul>
@@ -46,11 +46,13 @@
                                         {% set field_routes = field_route ~ '/' ~ key %}
                                         <li>
                                             <span class="title">
-                                                <span data-collection-title-{{ key }}="">
+                                                <span data-collection-edit-title-{{ key }}="">
                                                     {{ field.value == field.key ? key : val[field.value] }}
                                                 </span>
-                                                <i class="fa fa-pencil font-small" data-title-edit="{{ key }}"></i>
-                                                <a class="config-cog" href="{{ field_routes }}">
+                                                <span class="button-simple" data-collection-edit-title="{{ key }}">
+                                                    <i class="fa fa-pencil font-small"></i>
+                                                </span>
+                                                <a class="button-simple config-cog" data-collection-edit="" href="{{ field_routes }}">
                                                     <i class="fa fa-cog"></i>
                                                 </a>
                                             </span>
