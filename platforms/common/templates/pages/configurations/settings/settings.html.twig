@@ -1,38 +1,44 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-<div id="settings">
-    <form method="post">
-        <span class="float-right">
-            <button type="submit" class="button button-primary button-save" data-save="Settings"><i class="fa fa-fw fa-check"></i> <span>Save Settings</span></button>
-        </span>
-        {% for group, list in particles %}
-        <h2 class="page-title">
-            <span class="title">{{ group|capitalize }} Settings</span>
-        </h2>
+    <div id="settings">
+        <form method="post">
+            <div data-g5-content-instance="">
+            </div>
+            <div data-set-page="{{ page_id }}" data-set-root="">
+                            <span class="float-right">
+                <button type="submit" class="button button-primary button-save" data-save="Settings"><i
+                            class="fa fa-fw fa-check"></i> <span>Save Settings</span></button>
+            </span>
+                {% for group, list in particles %}
+                    <h2 class="page-title">
+                        <span class="title">{{ group|capitalize }} Settings</span>
+                    </h2>
 
-        <div class="cards-wrapper g-grid">
+                    <div class="cards-wrapper g-grid">
 
-            {% for id, particle in list %}
-                {% if not particle.hidden %}
-                {% set prefix = 'particles.' ~ id ~ '.' %}
-                <div class="card settings-block">
-                    <h4>
-                        {{ particle.name }}
-                        <input type="hidden" name="particles[{{ id }}]" />
-                        {% if particle.form.fields.enabled %}
-                        {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled',
-'field': particle.form.fields.enabled, 'value': config.get(prefix ~ 'enabled')} %}
-                        {% endif %}
-                    </h4>
-                    <div class="inner-params">
-                        {% include 'forms/fields.html.twig' with {'overridable': true, 'blueprints': particle.form, skip: ['enabled'], data: config, "prefix": prefix} %}
+                        {% for id, particle in list %}
+                            {% if not particle.hidden %}
+                                {% set prefix = 'particles.' ~ id ~ '.' %}
+                                <div class="card settings-block">
+                                    <h4>
+                                        {{ particle.name }}
+                                        <input type="hidden" name="particles[{{ id }}]"/>
+                                        {% if particle.form.fields.enabled %}
+                                            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': particle.form.fields.enabled, 'value': config.get(prefix ~ 'enabled')} %}
+                                        {% endif %}
+                                    </h4>
+
+                                    <div class="inner-params">
+                                        {% include 'forms/fields.html.twig' with {'overridable': overridable, 'blueprints': particle.form, skip: ['enabled'], data: config, "prefix": prefix} %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
-                </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-        {% endfor %}
-    </form>
-</div>
+                {% endfor %}
+
+            </div>
+        </form>
+    </div>
 {% endblock %}

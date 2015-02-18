@@ -1,35 +1,92 @@
 {% extends "forms/field.html.twig" %}
 
-{% block input %}
-    {% if field.is_current %}
-        CURRENT ITEM LOGIC
-    {% else %}
-        {% if field.fields %}
-            {% for key, val in value %}
-                {% if (field.ajax == true) %}
-                    {% set field_route = gantry.route((route ~ '.' ~ scope)|replace('.', '/') ~ field.name ~ '/' ~ key) %}
-                    <div><a data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ field_route }}">{{ field.value == field.key ? key : val[field.value] }}</a></div>
-                {% else %}
-                    <hr />
-                    {% for childName, child in field.fields %}
-                         {% if childName starts with '.' %}
-                             {% set childValue = val[childName[1:]] %}
-                             {% set childName = name ~ '.' ~ key ~ childName %}
-                         {% else %}
-                             {% set childName = childName|replace({'*': key}) %}
-                             {% set childValue = nested(data, scope ~ childName) %}
-                         {% endif %}
 
-                         {% if child.type == 'key' %}
-                             {% include 'forms/fields/key/key.html.twig'
-                             with {name: childName, field: child, value: key} %}
-                         {% elseif child.type %}
-                             {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                             with {name: childName, field: child, value: childValue} %}
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
+{% block field %}
+    {% if field.is_current %}
+        <div class="cards-wrapper g-grid">
+            {% for key, val in value %}
+                <div class="card settings-block">
+                    <h4>
+                        {{ val.name }}
+                    </h4>
+                    <div class="inner-params">
+                        {{ block('collection_fields') }}
+                    </div>
+                </div>
             {% endfor %}
-        {% endif %}
+        </div>
+    {% else %}
+        <div class="settings-param {{ field.type|replace('.', '-') }}">
+            {% block contents %}
+                {% set field_route = gantry.route((route ~ '.' ~ scope)|replace('.', '/') ~ field.name) %}
+                <div class="settings-param-toolbar">
+                    <span class="settings-param-title">
+                        {% block label %}
+                            {% if field.description %}
+                                <span class="tooltip" data-asTooltip-position="w" title="{{ field.description|e }}">{{- field.label|e -}}</span>
+                            {% else %}
+                                {{ field.label|e }}
+                            {% endif %}
+                            {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
+                        {% endblock %}
+                    </span>
+                    <span class="button" data-collection-add=""><i class="fa fa-fw fa-plus"></i></span>
+                    <a class="button" data-collection-editall="" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content-instance]" href="{{ field_route }}"><i class="fa fa-fw fa-pencil-square"></i></a>
+                    {% if overridable %}
+                        <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
+                        <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
+                    {% endif %}
+                </div>
+                <div class="settings-param-field" data-field-name="{{ field.name  }}">
+                    {% block input %}
+                        {% if field.fields %}
+                            <ul>
+                                {% for key, val in value %}
+                                    {% if (field.ajax == true) %}
+                                        {% set field_routes = field_route ~ '/' ~ key %}
+                                        <li>
+                                            <span class="title">
+                                                <span data-collection-edit-title-{{ key }}="">
+                                                    {{ field.value == field.key ? key : val[field.value] }}
+                                                </span>
+                                                <span class="button-simple" data-collection-edit-title="{{ key }}">
+                                                    <i class="fa fa-pencil font-small"></i>
+                                                </span>
+                                                <a class="button-simple config-cog" data-collection-edit="" href="{{ field_routes }}">
+                                                    <i class="fa fa-cog"></i>
+                                                </a>
+                                            </span>
+                                        </li>
+                                    {% else %}
+                                        <hr />
+                                        {% block collection_fields %}
+                                            <div data-g5-collections="">
+                                                {% for childName, child in field.fields %}
+                                                     {% if childName starts with '.' %}
+                                                         {% set childValue = val[childName[1:]] %}
+                                                         {% set childName = name ~ '.' ~ key ~ childName %}
+                                                     {% else %}
+                                                         {% set childName = childName|replace({'*': key}) %}
+                                                         {% set childValue = nested(data, scope ~ childName) %}
+                                                     {% endif %}
+
+                                                     {% if child.type == 'key' %}
+                                                         {% include 'forms/fields/key/key.html.twig'
+                                                         with {name: childName, field: child, value: key} %}
+                                                     {% elseif child.type %}
+                                                         {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
+                                                         with {name: childName, field: child, value: childValue} %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        {% endblock %}
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </div>
     {% endif %}
 {% endblock %}
