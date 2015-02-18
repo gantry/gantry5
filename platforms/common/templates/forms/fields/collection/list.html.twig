@@ -3,7 +3,7 @@
 
 {% block field %}
     {% if field.is_current %}
-        <div class="cards-wrapper">
+        <div class="cards-wrapper g-grid">
             {% for key, val in value %}
                 <div class="card settings-block">
                     <h4>
@@ -31,7 +31,7 @@
                         {% endblock %}
                     </span>
                     <span class="button" data-collection-add=""><i class="fa fa-fw fa-plus"></i></span>
-                    <a class="button" data-collection-editall="" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-collections]" href="{{ field_route }}"><i class="fa fa-fw fa-pencil-square"></i></a>
+                    <a class="button" data-collection-editall="" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content-instance]" href="{{ field_route }}"><i class="fa fa-fw fa-pencil-square"></i></a>
                     {% if overridable %}
                         <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
                         <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>

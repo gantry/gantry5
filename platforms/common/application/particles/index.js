@@ -6,7 +6,7 @@ var ready = require('elements/domready'),
     toastr = require('../ui').toastr,
     request = require('agent'),
 
-    trim          = require('mout/string/trim'),
+    trim = require('mout/string/trim'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix');
 
@@ -67,9 +67,9 @@ ready(function () {
     body.delegate('click', '#settings [data-collection-editall]', function (event, element) {
         event.preventDefault();
 
-        var collection = element,
-            root = collection.parent();
-            root.hide();
+        var root = element.parent('[data-set-root]');
+
+        //$(root).style('display:none');
 
 
     });

@@ -3,13 +3,15 @@
 {% block gantry %}
 <form method="POST">
     {% if blueprints.type == 'collection.list' %}
-        {% include 'forms/fields.html.twig' %}
-        <div class="g-modal-actions">
-            <a class="button float-left">Reset</a>
+        <span class="float-right">
+            <a class="button">Reset</a>
             <button class="button button-primary" type="submit">Apply</button>
             <a class="button g5-dialog-close">Cancel</a>
-            <button class="button" name="METHOD" value="DELETE">Delete</button>
-        </div>
+        </span>
+        <h2 class="page-title">
+            <span class="title">{{ key }} Collection</span>
+        </h2>
+        {% include 'forms/fields.html.twig' %}
     {% else %}
         <div class="cards-wrapper">
             <div class="card settings-block">
