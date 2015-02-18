@@ -11,6 +11,7 @@ var prime         = require('prime'),
     merge         = require('mout/object/merge'),
     guid          = require('mout/random/guid'),
     toQueryString = require('mout/queryString/encode'),
+    contains      = require('mout/string/contains'),
 
     request       = require('agent')(),
     History       = require('./history'),
@@ -43,6 +44,8 @@ History.Adapter.bind(window, 'statechange', function() {
         Data.element = $('[href="' + url + '"]');
     }
 
+    URI = URI + getAjaxSuffix();
+
     if (sidebar && Data.element && Data.element.parent('#navbar')) {
         var lis = sidebar.search('li');
         lis.removeClass('active');
@@ -51,11 +54,12 @@ History.Adapter.bind(window, 'statechange', function() {
 
     if (Data.params) {
         params = toQueryString(JSON.parse(Data.params));
+        if (contains(URI, '?')) { params = params.replace(/^\?/, '&'); }
     }
 
     if (!ERROR) { modal.closeAll(); }
 
-    request.url(URI + getAjaxSuffix() + params).data(Data.extras || {}).method(Data.extras ? 'post' : 'get').send(function(error, response) {
+    request.url(URI + params).data(Data.extras || {}).method(Data.extras ? 'post' : 'get').send(function(error, response) {
         if (!response.body.success) {
             ERROR = true;
             modal.open({
