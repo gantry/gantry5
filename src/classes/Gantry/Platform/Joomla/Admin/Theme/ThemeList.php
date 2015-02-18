@@ -35,7 +35,7 @@ class ThemeList
 
         foreach ($templates as $template)
         {
-            if (file_exists(JPATH_SITE . '/templates/' . $template->name . '/includes/gantry.php'))
+            if (file_exists(JPATH_SITE . '/templates/' . $template->name . '/gantry/theme.yaml'))
             {
                 $details = new ThemeDetails($template->name);
 

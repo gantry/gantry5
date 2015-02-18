@@ -1,34 +1,22 @@
 <?php
 namespace Gantry\Framework;
 
-use RocketTheme\Toolbox\ArrayTraits\Iterator;
+use Gantry\Component\Gantry\GantryTrait;
+use Gantry\Component\Menu\AbstractMenu;
 
-class Menu implements \Iterator
+class Menu extends AbstractMenu
 {
-    use Iterator;
-
-    protected $app;
-
-    protected $default;
-    protected $base;
-    protected $active;
-    protected $params;
+    use GantryTrait;
 
     /**
-     * @var array
+     * @var \JApplicationCms
      */
-    protected $items;
+    protected $app;
 
-    protected $defaults = [
-        'menu' => null,
-        'base' => 0,
-        'startLevel' => 1,
-        'endLevel' => 0,
-        'showAllChildren' => false,
-        'highlightAlias' => true,
-        'highlightParentAlias' => true,
-        'window_open' => null
-    ];
+    /**
+     * @var \JMenu
+     */
+    protected $menu;
 
     public function __construct()
     {
@@ -37,38 +25,32 @@ class Menu implements \Iterator
         $lang = \JFactory::getLanguage();
         $tag = \JLanguageMultilang::isEnabled() ? $lang->getTag() : '*';
 
-        /** @var \JMenuSite $menu */
-        $menu = $this->app->getMenu();
-        $this->default = $menu->getDefault($tag);
-        $this->active  = $menu->getActive();
+        $this->menu = $this->app->getMenu();
+        $this->default = $this->menu->getDefault($tag);
+        $this->active  = $this->menu->getActive();
     }
 
-    public function instance(array $params = null)
-    {
-        $params = $params ?: [];
-        $params += $this->defaults;
-
-        $instance = clone $this;
-        $instance->params = $params;
-        $instance->items = $instance->getList($params);
-
-        return $instance;
-    }
 
     /**
-     * @return object
+     * Return list of menus.
+     *
+     * @return array
      */
-    public function getBase()
+    public function getMenus()
     {
-        return $this->base;
+        static $list;
+
+        if ($list === null) {
+            // FIXME:
+            $list = ['test'];
+        }
+
+        return $list;
     }
 
-    /**
-     * @return object
-     */
-    public function getActive()
+    public function getDefault()
     {
-        return $this->active;
+        print_r($this->menu->getDefault());
     }
 
     public function isActive($item)
@@ -97,6 +79,17 @@ class Menu implements \Iterator
     }
 
     /**
+     * Get menu items from the platform.
+     *
+     * @param int $levels
+     * @return array    List of routes to the pages.
+     */
+    protected function getItemsFromPlatform($levels)
+    {
+        // TODO:
+    }
+
+    /**
      * Get base menu item.
      *
      * If itemid is not specified or does not exist, return active menu item.
@@ -121,23 +114,6 @@ class Menu implements \Iterator
 
         // Return base menu item.
         return $base;
-    }
-
-    public function getMenuItems()
-    {
-        $items = (array) isset($this->params['items']) ? $this->params['items'] : null;
-
-        /*
-        $menu = $this->app->getMenu();
-        $menuItems = $menu->getItems('menutype', $this->params['menu'] ?: $this->default->menutype);
-
-        print_r($menuItems);die();
-
-        $items += Folder::all($folder, $options);
-*/
-        ksort($items);
-
-        return $items;
     }
 
     /**

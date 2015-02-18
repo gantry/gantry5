@@ -17,6 +17,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
     protected $base;
     protected $active;
     protected $params;
+    protected $override = false;
     private $config;
 
     /**
@@ -60,7 +61,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
 
         $instance = clone $this;
         $instance->params = $params;
-        $instance->config = $menu;
+
+        if ($menu) {
+            $instance->override = true;
+            $instance->config = $menu;
+        }
 
         $instance->items = $instance->getList($params);
 
@@ -102,7 +107,14 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
     {
         $list = [];
         foreach ($this->items as $name => $item) {
-            foreach ($item->groups() as $col => $children) {
+            $groups = $item->groups();
+            if (count($groups) == 1 && empty($groups[0])) {
+                continue;
+            }
+
+            $list[$name] = [];
+            foreach ($groups as $col => $children) {
+                $list[$name][$col] = [];
                 foreach ($children as $child) {
                     $list[$name][$col][] = $child->path;
                 }
@@ -215,20 +227,24 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
         $item = $items[$path];
         if ($this->isAssoc($ordering)) {
             $item->sortChildren($ordering);
+
+            foreach ($ordering as $key => &$value) {
+                if (is_array($value)) {
+                    $this->sortAll($items, $value, $path ? $path . '/' . $key : $key);
+                }
+            }
         } else {
             $item->groupChildren($ordering);
-        }
 
-        foreach ($ordering as $key => &$value) {
-            if (is_array($value)) {
-                if ((string) $key === (string)(int) $key) {
-                    $newPath = $path;
-                } else {
-                    $newPath = $path ? $path . '/' . $key : $key;
+            foreach ($ordering as &$group) {
+                foreach ($group as $key => &$value) {
+                    if (is_array($value)) {
+                        $this->sortAll($items, $value, $path ? $path . '/' . $key : $key);
+                    }
                 }
-                $this->sortAll($items, $value, $newPath);
             }
         }
+
     }
 
     protected function isAssoc(array $array)

@@ -1,0 +1,16 @@
+<!doctype html>
+<html {{site.language_attributes}}>
+    {% block html_head_container %}
+        {% include 'partials/page_head.html.twig' %}
+    {% endblock %}
+
+    <body>
+        {% set content %}
+            {% block content %}
+                Sorry, no content
+            {% endblock %}
+        {% endset %}
+
+        {% include '@nucleus/container.html.twig' with {segments: pageSegments} %}
+    </body>
+</html>

@@ -156,6 +156,11 @@ $submenu-ratio:                 60px;
 	border-radius: $core-border-radius;
 	color: $navbar-color;
     background-color: $white;
+
+    &.moving .g-block .submenu-reorder {
+        display: none;
+    }
+
 	.g-block {
 		position: relative;
 		padding-bottom: $submenu-ratio;
@@ -346,6 +351,15 @@ $submenu-ratio:                 60px;
 		line-height: $submenu-ratio;
 		display: inline-block;
 		margin-top: 5px;
+
+        input {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            text-align: right;
+            width: 40px;
+            display: inline-block;
+        }
 	}
 	i {
 		position: absolute;

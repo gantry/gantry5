@@ -25,7 +25,13 @@ var Position = new prime({
 
     getKey: function() {
         return (this.getAttribute('key') || this.getTitle().replace(/\s/g, '-').toLowerCase());
-    }
+    },
+
+    updateKey: function(key) {
+        this.options.key = key || this.getKey();
+        this.block.find('.font-small').text(this.getKey());
+        return this;
+    },
 });
 
 module.exports = Position;

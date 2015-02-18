@@ -18,8 +18,7 @@ class Layout extends HtmlController
             '/'         => 'index',
             '/create'   => 'create',
             '/create/*' => 'create',
-            '/*'        => 'undefined',
-            '/*/*'      => 'particle'
+            '/*'        => 'undefined'
         ],
         'POST'   => [
             '/'                     => 'save',
@@ -133,65 +132,58 @@ class Layout extends HtmlController
             throw new \RuntimeException('Layout not found', 404);
         }
 
-        if (isset($_POST)) {
-            $item = (object)[
-                'id'         => $id,
-                'type'       => isset($_POST['type']) ? $_POST['type'] : $type,
-                'subtype'    => isset($_POST['subtype']) ? $_POST['subtype'] : null,
-                'title'      => isset($_POST['title']) ? $_POST['title'] : 'Untitled',
-                'attributes' => (object) (isset($_POST['options']) ? $_POST['options'] : []),
-                'block'      => new \stdClass
-            ];
-            if (isset($_POST['block'])) {
-                $item->block = (object) $_POST['block'];
-            }
-        } else {
-            $item = $this->find($layout, $id);
+        $item = $this->find($layout, $id);
+        $item->type    = isset($_POST['type']) ? $_POST['type'] : $type;
+        $item->subtype = isset($_POST['subtype']) ? $_POST['subtype'] : null;
+        $item->title   = isset($_POST['title']) ? $_POST['title'] : 'Untitled';
+        if (!isset($item->attributes)) {
+            $item->attributes = new \stdClass;
+        }
+        if (isset($_POST['block'])) {
+            $item->block = (object) $_POST['block'];
         }
 
         $name = isset($item->subtype) ? $item->subtype : $type;
 
-        if (is_object($item) && $name) {
-            $prefix = 'particles.' . $name;
-            $defaults = (array) $this->container['config']->get($prefix);
+        $prefix = 'particles.' . $name;
+        $defaults = (array) $this->container['config']->get($prefix);
+        $attributes = isset($_POST['options']) && is_array($_POST['options']) ? $_POST['options'] : [];
 
-            // TODO: Use blueprints to merge configuration.
-            $item->attributes = (object) ((array) $item->attributes + $defaults);
+        // TODO: Use blueprints to merge configuration.
+        $item->attributes = (object) ($attributes + (array) $item->attributes + $defaults);
 
-            if ($type == 'section' || $type == 'grid') {
-                $extra = null;
-                $blueprints = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml")->content());
-            } else {
-                $extra = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
-                $blueprints = new BlueprintsForm($this->container['particles']->get($name));
-            }
-
-            $this->params += [
-                'extra'     => $extra,
-                'item'      => $item,
-                'particle'  => $blueprints,
-                'id'        => $name,
-                'parent'    => 'settings',
-                'route'     => 'settings.' . $prefix,
-                'action'    => str_replace('.', '/', 'configurations.' . $page . '.layout.' . $prefix . '.validate'),
-                'skip'      => ['enabled']
-            ];
-
-            if ($extra) {
-                $typeLayout = $type == 'atom' ? $type : 'particle';
-                $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
-                    $this->params);
-            } else {
-                $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section.html.twig',
-                    $this->params);
-            }
-
-            if (!empty($this->params['ajax'])) {
-                return new JsonResponse(['html' => $result, 'defaults' => ['particle' => $defaults]]);
-            }
-            return $result;
+        if ($type == 'section' || $type == 'grid') {
+            $extra = null;
+            $blueprints = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml")->content());
+        } else {
+            $extra = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
+            $blueprints = new BlueprintsForm($this->container['particles']->get($name));
         }
-        throw new \RuntimeException('No configuration exists yet', 404);
+
+        $this->params += [
+            'extra'     => $extra,
+            'item'      => $item,
+            'particle'  => $blueprints,
+            'id'        => $name,
+            'parent'    => 'settings',
+            'route'     => 'settings.' . $prefix,
+            'action'    => str_replace('.', '/', 'configurations.' . $page . '.layout.' . $prefix . '.validate'),
+            'skip'      => ['enabled']
+        ];
+
+        if ($extra) {
+            $typeLayout = $type == 'atom' ? $type : 'particle';
+            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
+                $this->params);
+        } else {
+            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section.html.twig',
+                $this->params);
+        }
+
+        if (!empty($this->params['ajax'])) {
+            return new JsonResponse(['html' => $result, 'defaults' => ['particle' => $defaults]]);
+        }
+        return $result;
     }
 
     public function validate($particle)
@@ -228,7 +220,7 @@ class Layout extends HtmlController
         );
 
         // Join POST data.
-        $data->join('options', $_POST['particle']);
+        $data->join('options', isset($_POST['particle']) && is_array($_POST['particle']) ? $_POST['particle'] : []);
 
         if ($type == 'particle') {
             $data->join('title', isset($_POST['title']) ? $_POST['title'] : 'Untitled');
@@ -261,21 +253,23 @@ class Layout extends HtmlController
 
     protected function find($layout, $id)
     {
-        if (!is_array($layout)) {
-            return null;
+        if (is_array($layout)) {
+            return new \stdClass;
         }
         foreach ($layout as $item) {
             if (is_object($item)) {
                 if ($item->id == $id) {
                     return $item;
                 }
-                $result = $this->find($item->children, $id);
-                if ($result) {
-                    return $result;
+                if (isset($item->children)) {
+                    $result = $this->find($item->children, $id);
+                    if ($result) {
+                        return $result;
+                    }
                 }
             }
         }
-        return null;
+        return new \stdClass;
     }
 
     protected function getParticles()

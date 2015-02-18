@@ -31,7 +31,8 @@ ready(function() {
         var data = {},
             type = element.data('save'),
             extras = '',
-            page = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other');
+            page = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
+            saveURL = window.location.href + getAjaxSuffix();
 
         switch (page) {
             case 'layout':
@@ -45,6 +46,7 @@ ready(function() {
                 data.ordering = JSON.stringify(mm.menumanager.ordering);
                 data.items = JSON.stringify(mm.menumanager.items);
 
+                saveURL = element.parent('form').attribute('action') + getAjaxSuffix();
                 break;
 
             case 'other':
@@ -67,7 +69,7 @@ ready(function() {
                 if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
         }
 
-        request('post', window.location.href + getAjaxSuffix(), data, function(error, response) {
+        request('post', saveURL, data, function(error, response) {
             if (!response.body.success) {
                 modal.open({
                     content: response.body.html || response.body,

@@ -213,7 +213,7 @@ ready(function() {
             data.subtype = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
             data.title = (element.find('h4') || element.find('.title')).text() || data.type || 'Untitled';
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
-            data.block = builder.get(parent.data('lm-id')).getAttributes() || {};
+            data.block = parent ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
 
             if (!data.type) { delete data.type; }
             if (!data.subtype) { delete data.subtype; }
@@ -314,6 +314,10 @@ ready(function() {
                             if (particle.getType() != 'section') {
                                 particle.setTitle(response.body.data.title || 'Untitled');
                                 particle.updateTitle(particle.getTitle());
+                            }
+
+                            if (particle.getType() == 'position') {
+                                particle.updateKey();
                             }
 
                             // parent block attributes

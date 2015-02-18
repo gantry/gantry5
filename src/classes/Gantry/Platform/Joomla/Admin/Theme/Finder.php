@@ -29,7 +29,7 @@ class Finder
 
         foreach ($templates as $template)
         {
-            if (file_exists(JPATH_SITE . '/templates/' . $template->template . '/includes/gantry.php'))
+            if (file_exists(JPATH_SITE . '/templates/' . $template->template . '/gantry/theme.yaml'))
             {
                 $params = new \JRegistry;
                 $params->loadString($template->params);

@@ -18,9 +18,12 @@ abstract class Platform
     use NestedArrayAccess, Export;
 
     protected $items;
+    protected $container;
 
     public function __construct(Container $container)
     {
+        $this->container = $container;
+
         //Make sure that cache folder exists, otherwise it will be removed from the lookup.
         $cachePath = $this->getCachePath();
         Folder::create(GANTRY5_ROOT . '/' . $cachePath);

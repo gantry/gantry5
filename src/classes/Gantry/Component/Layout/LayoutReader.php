@@ -60,10 +60,7 @@ class LayoutReader
                 'id' => static::id(),
                 'type' => ($field == 'non-visible' ? $field : 'section'),
                 'title' => ucfirst($field),
-                'attributes' => (object) [
-                    'type' => $field,
-                    'id' => $field
-                ],
+                'attributes' => (object) [],
                 'children' => []
             ];
 

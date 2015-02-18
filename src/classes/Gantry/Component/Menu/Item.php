@@ -49,6 +49,7 @@ class Item implements \ArrayAccess, \Iterator
             'menu_text' => true,
             'visible' => true,
             'group' => 0,
+            'columns' => [],
             'level' => 0,
         ];
     }
@@ -70,6 +71,15 @@ class Item implements \ArrayAccess, \Iterator
     public function parent()
     {
         return $this->menu[$this->items['parent_id']];
+    }
+
+    public function columnWidth($column)
+    {
+        if (isset($this->items['columns'][$column])) {
+            return $this->items['columns'][$column];
+        }
+
+        return 100 / count($this->groups());
     }
 
     public function groups()
@@ -161,7 +171,7 @@ class Item implements \ArrayAccess, \Iterator
             $ordered = [];
             $this->groups[0] = [];
             foreach ($groups as $i => $ordering) {
-                if (!$ordering || !is_array($ordering)) {
+                if (!is_array($ordering)) {
                     continue;
                 }
 

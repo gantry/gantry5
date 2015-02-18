@@ -1,5 +1,5 @@
 "use strict";
-var DragEvents = require('./drag.events'),
+var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
     Emitter    = require('prime/emitter'),
     Bound      = require('prime-util/prime/bound'),
@@ -21,11 +21,12 @@ var Resizer = new prime({
     options: {
         minSize: 5
     },
-    constructor: function(container, options) {
+    constructor: function(container, options, menumanager) {
         this.setOptions(options);
         this.history = this.options.history || {};
         this.builder = this.options.builder || {};
         this.map = this.builder.map;
+        this.menumanager = menumanager;
         this.origin = {
             x: 0,
             y: 0,
@@ -46,22 +47,38 @@ var Resizer = new prime({
     },
 
     getSize: function(element) {
-        return this.getAttribute($(element), 'size');
+        element = $(element);
+        var parent = element.matches('[data-mm-id]') ? element : element.parent('[data-mm-id]'),
+            size = parent.find('.percentage input');
+
+        return Number(size.value());
+    },
+
+    setSize: function(element, size, animated) {
+        element = $(element);
+        animated = typeof animated === 'undefined' ? false : animated;
+
+        var parent = element.matches('[data-mm-id]') ? element : element.parent('[data-mm-id]'),
+            pc = parent.find('.percentage input');
+
+        parent[animated ? 'animate' : 'style']({'flex': '0 1 '+size+'%'});
+        pc.value(precision(size, 1));
     },
 
     start: function(event, element, siblings, offset) {
-        this.map = this.builder.map;
         if (event.which && event.which !== 1) { return true; }
 
         // Stops text selection
         event.preventDefault();
 
         this.element = $(element);
+        this.element.parent('.submenu-selector').addClass('moving');
+
         this.siblings = {
             occupied: 0,
             elements: siblings,
-            next: this.element.nextSibling(),
-            prevs: this.element.previousSiblings(),
+            next: this.element.parent('[data-mm-id]').nextSibling().find('> .submenu-column'),
+            prevs: this.element.parent('[data-mm-id]').previousSiblings(),
             sizeBefore: 0
         };
 
@@ -96,8 +113,8 @@ var Resizer = new prime({
             down: offset
         };
 
-        this.origin.offset.parentRect.left = this.element.parent().find('> [data-lm-id]:first-child')[0].getBoundingClientRect().left;
-        this.origin.offset.parentRect.right = this.element.parent().find('> [data-lm-id]:last-child')[0].getBoundingClientRect().right;
+        this.origin.offset.parentRect.left = this.element.parent('.submenu-selector').find('> [data-mm-id]:first-child')[0].getBoundingClientRect().left;
+        this.origin.offset.parentRect.right = this.element.parent('.submenu-selector').find('> [data-mm-id]:last-child')[0].getBoundingClientRect().right;
 
         $(document).on(this.EVENTS.MOVE, this.bound('move'));
         $(document).on(this.EVENTS.STOP, this.bound('stop'));
@@ -125,34 +142,31 @@ var Resizer = new prime({
         size = size - this.siblings.sizeBefore;
         size = precision(clamp(size, this.options.minSize, this.origin.maxSize - this.options.minSize), 0);
 
-        //grids?
-        //console.log((size / 12) * (100 / 12));
-
         diff = precision(diff - size, 0);
 
-        this.getBlock(this.element).setSize(size, true);
-        this.getBlock(this.siblings.next).setSize(diff, true);
+        this.setSize(this.element, size);
+        this.setSize(this.siblings.next, diff);
 
         // Hack to handle cases where size is not an integer
-        var siblings = this.element.siblings(),
+        var siblings = this.siblings.elements,
             amount = siblings ? siblings.length + 1 : 1;
         if (amount == 3 || amount == 6 || amount == 7 || amount == 8 || amount == 9 || amount == 11 || amount == 12) {
             var total = 0, blocks;
 
-            blocks = $([siblings, this.element]);
+            blocks = $([siblings, this.element.parent('[data-mm-id]')]);
             blocks.forEach(function(block, index){
-                block = this.getBlock(block);
-                size = block.getSize();
+                block = $(block);
+                size = this.getSize(block);
                 if (size % 1) {
                     size = precision(100 / amount, 0);
-                    block.setSize(size, true);
+                    this.setSize(block, size);
                 }
 
                 total += size;
 
                 if (blocks.length == index + 1 && total != 100) {
                     diff = 100 - total;
-                    block.setSize(size + diff, true);
+                    this.setSize(block, (size + diff));
                 }
 
             }, this);
@@ -166,25 +180,71 @@ var Resizer = new prime({
         $(document).off(this.EVENTS.MOVE, this.bound('move'));
         $(document).off(this.EVENTS.STOP, this.bound('stop'));
 
-        if (this.origin.size !== this.getSize(this.element)) { this.history.push(this.builder.serialize()); }
+        this.element.parent('.submenu-selector').removeClass('moving');
+
+        this.menumanager.emit('dragEnd', this.menumanager.map, 'resize');
+        //if (this.origin.size !== this.getSize(this.element)) { this.history.push(this.builder.serialize()); }
+    },
+
+    updateItemSizes: function(elements) {
+        var parent = this.element ? this.element.parent('.submenu-selector') : null;
+        if (!parent && !elements) { return false; }
+
+        var blocks = elements || parent.search('> [data-mm-id]'),
+            sizes = [],
+            active = $('.menu-selector .active'),
+            path = active ? active.data('mm-id') : null;
+
+        blocks.forEach(function(block){
+            sizes.push(this.getSize(block));
+        }, this);
+
+        // update active path with new columns sizes
+        this.menumanager.items[path].columns = sizes;
+
+        this.updateMaxValues(elements);
+
+        return sizes;
+    },
+
+    updateMaxValues: function(elements) {
+        var parent = this.element ? this.element.parent('.submenu-selector') : null;
+        if (!parent && !elements) { return false; }
+
+        var blocks = elements || parent.search('> [data-mm-id]'), sizes, inputs;
+
+        blocks.forEach(function(block){
+            block = $(block);
+            var sibling = block.nextSibling() || block.previousSibling();
+            if (!sibling) { return; }
+
+            inputs = {
+                block: block.find('input.column-pc'),
+                sibling: sibling.find('input.column-pc')
+            };
+
+            sizes = {
+                current: this.getSize(block),
+                sibling: this.getSize(sibling)
+            };
+
+            sizes.total = sizes.current + sizes.sibling;
+            inputs.block.attribute('max', sizes.total - Number(inputs.block.attribute('min')));
+            inputs.sibling.attribute('max', sizes.total - Number(inputs.sibling.attribute('min')));
+        }, this);
     },
 
     evenResize: function(elements, animated) {
         var total = elements.length,
-            size = precision(100 / total, 4),
-            block;
-
-        if (typeof animated === 'undefined') { animated = true; }
+            size = precision(100 / total, 4);
 
         elements.forEach(function(element) {
             element = $(element);
-            block = this.getBlock(element);
-            if (block && block.hasAttribute('size')) {
-                block[animated ? 'setAnimatedSize' : 'setSize'](size, size !== block.getSize());
-            } else {
-                if (element) { element[animated ? 'animate' : 'style']({ flex: '0 1 ' + size + '%' }); }
-            }
+            this.setSize(element, size, (typeof animated == 'undefined' ? false : animated));
         }, this);
+
+        this.updateItemSizes(elements);
+        this.menumanager.emit('dragEnd', this.menumanager.map, 'evenResize');
     }
 });
 

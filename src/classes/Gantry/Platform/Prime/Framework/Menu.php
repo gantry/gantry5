@@ -13,6 +13,11 @@ class Menu extends AbstractMenu
 {
     use GantryTrait;
 
+    /**
+     * @var Pages
+     */
+    protected $pages;
+
     public function __construct()
     {
         $this->default = 'home';
@@ -52,22 +57,19 @@ class Menu extends AbstractMenu
      * Get menu items from the platform.
      *
      * @param int $levels
-     * @return array
+     * @return array    List of routes to the pages.
      */
     protected function getItemsFromPlatform($levels)
     {
-        $options = [
-            'levels' => $levels,
-            'pattern' => '|\.html\.twig|',
-            'filters' => ['value' => '|\.html\.twig|']
-        ];
-
-        $folder = PRIME_ROOT . '/pages';
-        if (!is_dir($folder)) {
+        if ($this->override) {
             return [];
         }
 
-        return Folder::all($folder, $options);
+        // Initialize pages.
+        $this->pages = new Pages();
+
+        // Return flat list of routes.
+        return array_keys($this->pages->toArray());
     }
 
     /**
@@ -83,7 +85,7 @@ class Menu extends AbstractMenu
      */
     protected function calcBase($path)
     {
-        if (!$path || !is_file(PRIME_ROOT . "/pages/{$path}.html.twig")) {
+        if (!$path || !isset($this->pages[$path])) {
             // Use active menu item or fall back to default menu item.
             $path = $this->active ?: $this->default;
         }
@@ -104,18 +106,18 @@ class Menu extends AbstractMenu
      */
     protected function getList(array $params)
     {
-        // Get base menu item for this menu (defaults to active menu item).
-        $this->base = $this->calcBase($params['base']);
+        $config = $this->config();
 
-        $path    = $this->base;
         $start   = $params['startLevel'];
         $end     = $params['endLevel'];
-        $showAll = $params['showAllChildren'];
+        $items   = isset($config['items']) ? $config['items'] : [];
 
-        $config = $this->config();
-        $items = isset($config['items']) ? $config['items'] : [];
-        $menuItems = array_unique(array_merge($this->getItemsFromPlatform($end), array_keys($items)));
+        $menuItems = array_unique(array_merge($this->getItemsFromPlatform($start <= $end ? $end : -1), array_keys($items)));
         sort($menuItems);
+
+        // Get base menu item for this menu (defaults to active menu item).
+        $this->base = $this->calcBase($params['base']);
+        $showAll = $params['showAllChildren'];
 
         /** @var array|Item[] $all */
         $all = ['' => new Item($this, '', ['layout' => 'horizontal'])];
@@ -124,8 +126,8 @@ class Menu extends AbstractMenu
             $level = substr_count($name, '/') + 1;
             if (($start && $start > $level)
                 || ($end && $level > $end)
-                || (!$showAll && $level > 1 && strpos($parent, $path) !== 0)
-                || ($start > 1 && strpos(dirname($parent), $path) !== 0)
+                || (!$showAll && $level > 1 && strpos($parent, $this->base) !== 0)
+                || ($start > 1 && strpos(dirname($parent), $this->base) !== 0)
                 || (!$name || $name[0] == '_' || strpos($name, '_'))
             ) {
                 continue;
@@ -133,13 +135,9 @@ class Menu extends AbstractMenu
 
             $item = new Item($this, $name, isset($items[$name]) && is_array($items[$name]) ? $items[$name] : []);
 
-            // Deal with home page.
-            if ($item->link == 'home') {
-                $item->url('');
-            }
 
             // Placeholder page.
-            if ($item->type == 'link' && !is_file(PRIME_ROOT . "/pages/{$item->path}.html.twig")) {
+            if ($item->type == 'link' && !isset($this->pages[$item->path])) {
                 $item->type = 'separator';
             }
 
@@ -156,7 +154,12 @@ class Menu extends AbstractMenu
 
                 case 'alias':
                 default:
-                    $item->url('/' . trim(PRIME_URI . '/' . THEME . '/' . $item->link, '/'));
+                    if ($item->link == 'home') {
+                        // Deal with home page.
+                        $item->url('/' . trim(PRIME_URI . '/' . THEME, '/'));
+                    } else {
+                        $item->url('/' . trim(PRIME_URI . '/' . THEME . '/' . $item->link, '/'));
+                    }
             }
 
             switch ($item->browserNav)

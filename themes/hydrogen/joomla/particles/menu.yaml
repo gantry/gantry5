@@ -1,0 +1,16 @@
+name: Menu
+description: Display Joomla menu
+
+form:
+  fields:
+    enabled:
+      type: checkbox
+      label: Enabled
+      description: Globally enable particle.
+      default: true
+
+    css.class:
+      type: text
+      label: Class
+      description: CSS class name for the particle.
+      default: main-nav

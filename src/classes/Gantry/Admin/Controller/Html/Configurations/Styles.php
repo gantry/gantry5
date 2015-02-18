@@ -152,9 +152,6 @@ class Styles extends HtmlController
 
     protected function saveItem($id, $data)
     {
-        $blueprints = new BlueprintsForm($this->container['styles']->get($id));
-        $config = new Config($data, function() use ($blueprints) { return $blueprints; });
-
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
@@ -165,7 +162,15 @@ class Styles extends HtmlController
         $filename = "{$save_dir}/{$id}.yaml";
 
         $file = YamlFile::instance($filename);
-        $file->save($config->toArray());
+        if (!is_array($data)) {
+            if ($file->exists()) {
+                $file->delete();
+            }
+        } else {
+            $blueprints = new BlueprintsForm($this->container['styles']->get($id));
+            $config = new Config($data, function() use ($blueprints) { return $blueprints; });
+            $file->save($config->toArray());
+        }
     }
 
     protected function compileSettings()

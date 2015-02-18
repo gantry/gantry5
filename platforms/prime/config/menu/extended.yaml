@@ -26,7 +26,7 @@ ordering:
         layout-1:
         layout-2:
         layout-3:
-      the-team:
+      our-team:
         layout-1:
         layout-2:
         layout-3:
@@ -126,15 +126,16 @@ items:
     type: separator
     title: Sample Pages
     menu_icon: fa fa-fw fa-fire
+    columns: [25, 50, 25]
 
   sample-pages/about-us:
     type: separator
     title: About Us
     menu_icon: fa fa-fw fa-ra
 
-  sample-pages/the-team:
+  sample-pages/our-team:
     type: separator
-    title: The Team
+    title: Our Team
     menu_icon: fa fa-fw fa-users
 
   sample-pages/pricing:

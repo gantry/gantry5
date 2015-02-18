@@ -13,13 +13,14 @@ class ConfigFileFinder
      *
      * @param  array  $paths    List of folders to look from.
      * @param  string $pattern  Pattern to match the file. Pattern will also be removed from the key.
+     * @param  int    $levels   Maximum number of recursive directories.
      * @return array
      */
-    public function locateFiles(array $paths, $pattern = '|\.yaml$|')
+    public function locateFiles(array $paths, $pattern = '|\.yaml$|', $levels = -1)
     {
         $list = [];
         foreach ($paths as $folder) {
-            $list += $this->detectRecursive($folder, $pattern);
+            $list += $this->detectRecursive($folder, $pattern, $levels);
         }
         return $list;
     }
@@ -29,13 +30,14 @@ class ConfigFileFinder
      *
      * @param  array  $paths    List of folders to look from.
      * @param  string $pattern  Pattern to match the file. Pattern will also be removed from the key.
+     * @param  int    $levels   Maximum number of recursive directories.
      * @return array
      */
-    public function getFiles(array $paths, $pattern = '|\.yaml$|')
+    public function getFiles(array $paths, $pattern = '|\.yaml$|', $levels = -1)
     {
         $list = [];
         foreach ($paths as $folder) {
-            $files = $this->detectRecursive($folder, $pattern);
+            $files = $this->detectRecursive($folder, $pattern, $levels);
 
             $list += $files[trim($folder, '/')];
         }
@@ -47,13 +49,14 @@ class ConfigFileFinder
      *
      * @param  array  $paths    List of folders to look from.
      * @param  string $pattern  Pattern to match the file. Pattern will also be removed from the key.
+     * @param  int    $levels   Maximum number of recursive directories.
      * @return array
      */
-    public function listFiles(array $paths, $pattern = '|\.yaml$|')
+    public function listFiles(array $paths, $pattern = '|\.yaml$|', $levels = -1)
     {
         $list = [];
         foreach ($paths as $folder) {
-            $list = array_merge_recursive($list, $this->detectAll($folder, $pattern));
+            $list = array_merge_recursive($list, $this->detectAll($folder, $pattern, $levels));
         }
         return $list;
     }
@@ -90,16 +93,18 @@ class ConfigFileFinder
      *
      * @param  string $folder   Location to look up from.
      * @param  string $pattern  Pattern to match the file. Pattern will also be removed from the key.
+     * @param  int    $levels   Maximum number of recursive directories.
      * @return array
      * @internal
      */
-    protected function detectRecursive($folder, $pattern)
+    protected function detectRecursive($folder, $pattern, $levels)
     {
         $path = trim(Folder::getRelativePath($folder), '/');
 
         if (is_dir($folder)) {
             // Find all system and user configuration files.
             $options = [
+                'levels'  => $levels,
                 'compare' => 'Filename',
                 'pattern' => $pattern,
                 'filters' => [
@@ -126,16 +131,18 @@ class ConfigFileFinder
      *
      * @param  string $folder   Location to look up from.
      * @param  string $pattern  Pattern to match the file. Pattern will also be removed from the key.
+     * @param  int    $levels   Maximum number of recursive directories.
      * @return array
      * @internal
      */
-    protected function detectAll($folder, $pattern)
+    protected function detectAll($folder, $pattern, $levels)
     {
         $path = trim(Folder::getRelativePath($folder), '/');
 
         if (is_dir($folder)) {
             // Find all system and user configuration files.
             $options = [
+                'levels'  => $levels,
                 'compare' => 'Filename',
                 'pattern' => $pattern,
                 'filters' => [
