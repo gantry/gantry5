@@ -4,14 +4,14 @@
 <form method="post" action="{{ gantry.route('menu/edit', id, path, 'validate') }}">
     <div class="card settings-block">
         <h4>
-            Menu Item
+            <span data-title-editable="{{ data.title }}" class="title">{{ data.title }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
             {% if blueprints.form.fields.enabled %}
             {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'name': 'enabled', 'field': blueprints.form.fields.enabled, 'value': data.enabled} %}
             {% endif %}
             <span class="g-menuitem-path font-small">/{{ path }}</span>
         </h4>
         <div class="inner-params">
-            {% include 'forms/fields.html.twig' %}
+            {% include 'forms/fields.html.twig' with {'skip': ['title'] } %}
         </div>
     </div>
     <div class="g-modal-actions">

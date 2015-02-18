@@ -216,6 +216,11 @@ ready(function() {
                         dataString.push(name + '=' + value);
                     });
 
+                    var title = content.elements.content.find('[data-title-editable]');
+                    if (title) {
+                        dataString.push('title=' + title.data('title-editable'));
+                    }
+
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response) {
                         if (!response.body.success) {
                             modal.open({
