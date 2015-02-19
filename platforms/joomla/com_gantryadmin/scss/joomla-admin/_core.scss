@@ -2,6 +2,10 @@ body.com_gantryadmin {
     color: $light-gray; 
     background-color: $body-bg !important;
 
+    a {
+        text-decoration: none;
+    }
+
     .subhead-collapse.collapse, .header {
     	display: none;
     }

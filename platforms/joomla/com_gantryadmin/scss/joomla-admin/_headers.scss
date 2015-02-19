@@ -23,6 +23,21 @@ body.com_gantryadmin {
 	            @include button-color(lighten($production, 15%), $white);
 	        }
 
+	        ul {
+	            li {
+	                &:hover {
+	                    a {
+	                        background: darken($production, 5%);
+	                    }
+	                }
+	                &.active {
+	                    a {
+	                        background: darken($production, 15%);
+	                    }
+	                }
+	            }
+	        }
+
 	    }
 
 	    #navbar {
