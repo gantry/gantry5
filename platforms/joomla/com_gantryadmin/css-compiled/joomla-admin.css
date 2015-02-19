@@ -59,6 +59,11 @@ body.com_gantryadmin #g5-container .button.button-update {
   body.com_gantryadmin #g5-container .button.button-update:hover {
     background: #522c64;
     color: #fff; }
+body.com_gantryadmin #g5-container .tooltip {
+  position: static;
+  opacity: 1;
+  line-height: inherit;
+  font-size: inherit; }
 
 body.com_gantryadmin #g5-container #sidebar ul li.active a {
   color: #3180C2; }

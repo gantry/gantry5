@@ -69,5 +69,12 @@ body.com_gantryadmin {
 	        @include button-color(darken($update-header-bg, 15%), $white);
 	    }
 
+	    .tooltip {
+	    	position: static;
+	    	opacity: 1;
+	    	line-height: inherit;
+	    	font-size: inherit;
+	    }
+
 	}
 }
