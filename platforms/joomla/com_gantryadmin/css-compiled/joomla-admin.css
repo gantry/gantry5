@@ -54,4 +54,23 @@ body.com_gantryadmin #g5-container #sidebar ul li.active a {
 #g5-container .overview-header .theme-title {
   color: #3180C2; }
 
+#g5-container h1 {
+  font-size: 2.25rem; }
+#g5-container h2 {
+  font-size: 1.9rem; }
+#g5-container h3 {
+  font-size: 1.5rem; }
+#g5-container h4 {
+  font-size: 1.15rem; }
+#g5-container h5 {
+  font-size: 1rem; }
+#g5-container h6 {
+  font-size: 0.85rem; }
+#g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
+  line-height: inherit; }
+#g5-container .page-title {
+  color: inherit;
+  text-shadow: none;
+  line-height: inherit; }
+
 /*# sourceMappingURL=joomla-admin.css.map */

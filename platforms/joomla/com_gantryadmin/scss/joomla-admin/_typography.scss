@@ -1,0 +1,37 @@
+#g5-container {
+
+	h1 {
+		font-size: $h1-font-size;
+	}
+
+	h2 {
+		font-size: $h2-font-size;
+	}
+
+	h3 {
+		font-size: $h3-font-size;
+	}
+
+	h4 {
+		font-size: $h4-font-size;
+	}
+
+	h5 {
+		font-size: $h5-font-size;
+	}
+
+	h6 {
+		font-size: $h6-font-size;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		line-height: inherit;
+	}
+
+	.page-title {
+        color: inherit;
+        text-shadow: none;
+        line-height: inherit;
+    }
+
+}
