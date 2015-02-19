@@ -10,7 +10,7 @@ var DragEvents = require('../ui/drag.events'),
     clamp      = require('mout/math/clamp'),
     precision  = require('mout/number/enforcePrecision'),
     get        = require('mout/object/get'),
-    $          = require('../utils/elements.moofx');
+    $          = require('../utils/elements.utils');
 
 require('elements/events');
 require('elements/delegation');

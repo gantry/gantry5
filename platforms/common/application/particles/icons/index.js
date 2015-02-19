@@ -1,5 +1,5 @@
 "use strict";
-var $             = require('../../utils/elements.moofx'),
+var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready'),
     modal         = require('../../ui').modal,
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),

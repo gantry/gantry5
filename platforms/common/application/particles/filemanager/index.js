@@ -1,6 +1,6 @@
 "use strict";
 
-var $             = require('../../utils/elements.moofx'),
+var $             = require('../../utils/elements.utils'),
     prime         = require('prime'),
     domready      = require('elements/domready'),
     modal         = require('../../ui').modal,

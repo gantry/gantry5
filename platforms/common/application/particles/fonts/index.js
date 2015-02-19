@@ -1,7 +1,7 @@
 "use strict";
 // fonts list: https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB2yJM8DBwt66u2MVRgb6M4t9CqkW7_IRY
 var prime       = require('prime'),
-    $           = require('../../utils/elements.moofx'),
+    $           = require('../../utils/elements.utils'),
     zen         = require('elements/zen'),
     storage     = require('prime/map')(),
     Emitter     = require('prime/emitter'),

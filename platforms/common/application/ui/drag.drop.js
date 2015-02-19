@@ -7,7 +7,7 @@ var prime      = require('prime'),
     bind       = require('mout/function/bind'),
     contains   = require('mout/array/contains'),
     DragEvents = require('./drag.events'),
-    $          = require('../utils/elements.moofx');
+    $          = require('../utils/elements.utils');
 
 // $ utils
 require('elements/events');

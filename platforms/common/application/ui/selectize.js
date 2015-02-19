@@ -10,7 +10,7 @@ var prime      = require('prime'),
     Bound      = require('prime-util/prime/bound'),
     Options    = require('prime-util/prime/options'),
 
-    $          = require('../utils/elements.moofx'),
+    $          = require('../utils/elements.utils'),
     moofx      = require('moofx'),
 
     bind       = require('mout/function/bind'),
