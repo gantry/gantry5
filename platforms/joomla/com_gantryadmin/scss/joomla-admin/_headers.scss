@@ -7,6 +7,10 @@ body.com_gantryadmin {
 
 	    #main-header {
 
+	    	.g-content {
+	            padding: 0 1.563rem;
+	        }
+
 	    	.dev-mode-toggle {
 	    		background: darken($production, 10%);
 
@@ -19,6 +23,17 @@ body.com_gantryadmin {
 	            @include button-color(lighten($production, 15%), $white);
 	        }
 
+	    }
+
+	    #navbar {
+	    	padding: 0 0.625rem;
+	    }
+
+	    .navbar-block {
+
+	    	.gantry-logo {
+    			right: 1.563rem;
+    		}
 	    }
 
 	    .inner-header {

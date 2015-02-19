@@ -23,6 +23,8 @@ body.com_gantryadmin {
 
 body.com_gantryadmin #g5-container [data-mode-indicator="production"] {
   background-color: #3180C2; }
+body.com_gantryadmin #g5-container #main-header .g-content {
+  padding: 0 1.563rem; }
 body.com_gantryadmin #g5-container #main-header .dev-mode-toggle {
   background: #276599; }
   body.com_gantryadmin #g5-container #main-header .dev-mode-toggle a {
@@ -33,6 +35,10 @@ body.com_gantryadmin #g5-container #main-header .button-save {
   body.com_gantryadmin #g5-container #main-header .button-save:hover {
     background: #4e96d2;
     color: #fff; }
+body.com_gantryadmin #g5-container #navbar {
+  padding: 0 0.625rem; }
+body.com_gantryadmin #g5-container .navbar-block .gantry-logo {
+  right: 1.563rem; }
 body.com_gantryadmin #g5-container .inner-header {
   background-color: #222;
   color: #3180C2; }
