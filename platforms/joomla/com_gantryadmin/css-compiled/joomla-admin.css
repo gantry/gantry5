@@ -9,6 +9,10 @@ body.com_gantryadmin {
     box-shadow: none !important; }
   body.com_gantryadmin #footer a {
     color: #3180C2; }
+  body.com_gantryadmin #g5-container .inner-container {
+    margin: 0 0 1.5rem 0; }
+  body.com_gantryadmin #g5-container li {
+    line-height: inherit; }
 
 #g5-container .button-primary {
   background: #3180C2;
