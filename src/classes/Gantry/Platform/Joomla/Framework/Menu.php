@@ -20,7 +20,7 @@ class Menu extends AbstractMenu
 
     public function __construct()
     {
-        $this->app = \JFactory::getApplication();
+        $this->app = \JApplicationCms::getInstance('site'); //\JFactory::getApplication('site');
 
         $lang = \JFactory::getLanguage();
         $tag = \JLanguageMultilang::isEnabled() ? $lang->getTag() : '*';
@@ -41,16 +41,37 @@ class Menu extends AbstractMenu
         static $list;
 
         if ($list === null) {
-            // FIXME:
-            $list = ['test'];
+            // Get the menu types of menus in the list.
+            $db = \JFactory::getDbo();
+
+            // Get the published menu counts.
+            $query = $db->getQuery(true)
+                ->select('menutype')
+                ->from('#__menu_types');
+
+            $db->setQuery($query);
+
+            try
+            {
+                $list = $db->loadColumn();
+            }
+            catch (\RuntimeException $e)
+            {
+                throw $e;
+            }
         }
 
         return $list;
     }
 
-    public function getDefault()
+    /**
+     * Return default menu.
+     *
+     * @return string
+     */
+    public function getDefaultMenuName()
     {
-        print_r($this->menu->getDefault());
+        return $this->default->menutype;
     }
 
     public function isActive($item)

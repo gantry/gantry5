@@ -43,13 +43,13 @@ class Menu extends HtmlController
         ]
     ];
 
-    public function item($id = 'mainmenu')
+    public function item($id = null)
     {
-        // All extra arguments become the path.
-        $path = array_slice(func_get_args(), 1);
-
         // Load the menu.
         $resource = $this->loadResource($id, !empty($_POST) ? $this->build($_POST) : null);
+
+        // All extra arguments become the path.
+        $path = array_slice(func_get_args(), 1);
 
         // Get menu item and make sure it exists.
         $item = $resource[implode('/', $path)];
@@ -105,7 +105,7 @@ class Menu extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin//pages/menu/edit.html.twig', $this->params);
     }
 
-    public function save($id = 'mainmenu')
+    public function save($id = null)
     {
         $data = $this->build($_POST);
 

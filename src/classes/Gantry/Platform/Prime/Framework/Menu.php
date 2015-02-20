@@ -54,6 +54,16 @@ class Menu extends AbstractMenu
     }
 
     /**
+     * Return default menu.
+     *
+     * @return string
+     */
+    public function getDefaultMenuName()
+    {
+        return 'mainmenu';
+    }
+
+    /**
      * Get menu items from the platform.
      *
      * @param int $levels

@@ -45,6 +45,13 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
      */
     abstract public function getMenus();
 
+    /**
+     * Return default menu.
+     *
+     * @return string
+     */
+    abstract public function getDefaultMenuName();
+
     public function instance(array $params = [], Config $menu = null)
     {
         if (!isset($params['config'])) {
@@ -55,6 +62,9 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
 
         $menus = $this->getMenus();
 
+        if ($params['menu'] === null) {
+            $params['menu'] = $this->getDefaultMenuName();
+        }
         if (!in_array($params['menu'], $menus)) {
             throw new \RuntimeException('Menu not found', 404);
         }
