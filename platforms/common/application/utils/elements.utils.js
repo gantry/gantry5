@@ -1,9 +1,10 @@
 "use strict";
-var $     = require('elements'),
-    moofx = require('moofx'),
-    map   = require('mout/array/map'),
-    slick = require('slick'),
-    zen   = require('elements/zen');
+var $      = require('elements'),
+    moofx  = require('moofx'),
+    map    = require('mout/array/map'),
+    series = require('mout/function/series'),
+    slick  = require('slick'),
+    zen    = require('elements/zen');
 
 var walk = function(combinator, method) {
 
@@ -67,6 +68,69 @@ $.implement({
         else { icon.attribute('class', this.gIndicator); }
 
         this.gIndicator = null;
+    },
+
+    slideDown: function(animation, callback) {
+        if (this.gSlideCollapsed === false) { return; }
+
+        var element = this,
+            size = this.getRealSize(),
+            callbackStart = function(){
+                element.gSlideCollapsed = false;
+            },
+            callbackEnd = function(){
+                element.attribute('style', element.gSlideStyle);
+            };
+
+        callback = typeof animation == 'function' ? animation : (callback || function(){});
+        callback = series(callbackStart, callback, callbackEnd);
+
+        animation = typeof animation == 'string' ? animation : { duration: '250ms', callback: callback };
+        this.animate({height: size.height}, animation);
+    },
+
+    slideUp: function(animation, callback) {
+        if (this.gSlideCollapsed === true) { return; }
+
+        if (typeof this.gSlideCollapsed == 'undefined') {
+            this.gSlideStyle = this.attribute('style');
+        }
+
+        var element = this,
+            callbackStart = function(){
+                element.gSlideCollapsed = true;
+            };
+
+        callback = typeof animation == 'function' ? animation : (callback || function(){});
+        callback = series(callbackStart, callback);
+
+        animation = typeof animation == 'string' ? animation : { duration: '250ms', callback: callback };
+        this.style({overflow: 'hidden'}).animate({height: 0}, animation);
+    },
+
+    slideToggle: function(animation, callback) {
+        var size = this.getRealSize();
+        return this[size.height && !this.gSlideCollapsed ? 'slideUp' : 'slideDown'](animation, callback);
+    },
+
+    getRealSize: function() {
+        var style = this.attribute('style'), size;
+        this.style({
+            position: 'relative',
+            overflow: 'inherit',
+            top: -50000,
+            height: 'auto',
+            width: 'auto'
+        });
+
+        size = {
+            width: parseInt(this.compute('width'), 10),
+            height: parseInt(this.compute('height'), 10)
+        };
+
+        this.attribute('style', style);
+
+        return size;
     },
 
     sibling: walk('++', 'find'),
