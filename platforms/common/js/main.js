@@ -1353,8 +1353,8 @@ var G5;
     },
     'e': function (require, module, exports, global) {
         'use strict';
-        var map = require('1m');
-        var slick = require('1n');
+        var map = require('1l');
+        var slick = require('1m');
         var $ = require('m');
         var gen = function (combinator, expression) {
             return map(slick.parse(expression || '*'), function (part) {
@@ -1439,7 +1439,7 @@ var G5;
     },
     'f': function (require, module, exports, global) {
         'use strict';
-        var ready = require('2'), $ = require('a'), storage = require('1k'), deepEquals = require('1g'), invoke = require('1l'), History = require('1b');
+        var ready = require('2'), $ = require('a'), storage = require('1k'), deepEquals = require('1g'), invoke = require('1n'), History = require('1b');
         var originals, collectFieldsValues = function () {
                 var map = new storage();
                 var fields = $('.settings-block [name]');
@@ -1490,7 +1490,7 @@ var G5;
     },
     'g': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1o'), zen = require('k'), storage = require('1k')(), Emitter = require('o'), Bound = require('1t'), Options = require('1u'), domready = require('2'), bind = require('1v'), map = require('1w'), forEach = require('1x'), last = require('1y'), merge = require('1p'), isFunct = require('1z'), request = require('3');
+        var prime = require('n'), $ = require('1o'), zen = require('k'), storage = require('1k')(), Emitter = require('o'), Bound = require('1p'), Options = require('1q'), domready = require('2'), bind = require('1r'), map = require('1s'), forEach = require('1t'), last = require('1u'), merge = require('1v'), isFunct = require('1w'), request = require('3');
         var Popover = new prime({
                 mixin: [
                     Bound,
@@ -1930,7 +1930,7 @@ var G5;
     },
     'h': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1o'), zen = require('k'), domready = require('2'), storage = require('1k')(), modal = require('4').modal, size = require('19'), merge = require('1p'), guid = require('1q'), toQueryString = require('1r'), contains = require('1s'), request = require('3')(), History = require('1b'), getAjaxSuffix = require('7'), mm = require('9');
+        var prime = require('n'), $ = require('1o'), zen = require('k'), domready = require('2'), storage = require('1k')(), modal = require('4').modal, size = require('19'), merge = require('1v'), guid = require('1x'), toQueryString = require('1y'), contains = require('1z'), request = require('3')(), History = require('1b'), getAjaxSuffix = require('7'), mm = require('9');
         require('g');
         var ERROR = false;
         History.Adapter.bind(window, 'statechange', function () {
@@ -2172,8 +2172,48 @@ var G5;
             });
             body.delegate('click', '#settings [data-collection-editall]', function (event, element) {
                 event.preventDefault();
-                var root = element.parent('[data-set-root]');
-                root.style('display', 'none');
+                var data = {};
+                modal.open({
+                    content: 'Loading',
+                    method: 'post',
+                    data: data,
+                    remote: $(element).attribute('href') + getAjaxSuffix(),
+                    remoteLoaded: function (response, content) {
+                        var form = content.elements.content.find('form'), submit = content.elements.content.find('input[type="submit"], button[type="submit"]'), dataString = [];
+                        if (!form || !submit) {
+                            return true;
+                        }
+                        submit.on('click', function (e) {
+                            e.preventDefault();
+                            dataString = [];
+                            submit.showSpinner();
+                            $(form[0].elements).forEach(function (input) {
+                                input = $(input);
+                                var name = input.attribute('name'), value = input.value();
+                                if (!name) {
+                                    return;
+                                }
+                                dataString.push(name + '=' + value);
+                            });
+                            request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function (error, response) {
+                                if (!response.body.success) {
+                                    modal.open({
+                                        content: response.body.html || response.body,
+                                        afterOpen: function (container) {
+                                            if (!response.body.html) {
+                                                container.style({ width: '90%' });
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    modal.close();
+                                    toastr.success('Test save', 'Settings Applied');
+                                }
+                                submit.hideSpinner();
+                            });
+                        });
+                    }
+                });
             });
             body.delegate('click', '#settings [data-collection-edit-title]', function (event, element) {
                 event.preventDefault();
@@ -2250,7 +2290,7 @@ var G5;
                                     });
                                 } else {
                                     modal.close();
-                                    toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
+                                    toastr.success('Test save', 'Settings Applied');
                                 }
                                 submit.hideSpinner();
                             });
@@ -2269,8 +2309,8 @@ var G5;
     },
     'k': function (require, module, exports, global) {
         'use strict';
-        var forEach = require('y'), map = require('1m');
-        var parse = require('29');
+        var forEach = require('y'), map = require('1l');
+        var parse = require('25');
         var $ = require('m');
         module.exports = function (expression, doc) {
             return $(map(parse(expression), function (expression) {
@@ -2308,8 +2348,8 @@ var G5;
     },
     'l': function (require, module, exports, global) {
         'use strict';
-        var color = require('25'), frame = require('26');
-        var moofx = typeof document !== 'undefined' ? require('27') : require('28');
+        var color = require('26'), frame = require('27');
+        var moofx = typeof document !== 'undefined' ? require('28') : require('29');
         moofx.requestFrame = function (callback) {
             frame.request(callback);
             return this;
@@ -2324,7 +2364,7 @@ var G5;
     'm': function (require, module, exports, global) {
         'use strict';
         var prime = require('n');
-        var forEach = require('y'), map = require('1m'), filter = require('1i'), every = require('2a'), some = require('2b');
+        var forEach = require('y'), map = require('1l'), filter = require('1i'), every = require('2d'), some = require('2e');
         var index = 0, __dc = document.__counter, counter = document.__counter = (__dc ? parseInt(__dc, 36) + 1 : 0).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n) {
             if (n === window)
@@ -2410,7 +2450,7 @@ var G5;
     },
     'n': function (require, module, exports, global) {
         'use strict';
-        var hasOwn = require('2c'), mixIn = require('w'), create = require('2d'), kindOf = require('2e');
+        var hasOwn = require('2a'), mixIn = require('w'), create = require('2b'), kindOf = require('2c');
         var hasDescriptors = true;
         try {
             Object.defineProperty({}, '~', {});
@@ -2570,7 +2610,7 @@ var G5;
         module.exports = upperCase;
     },
     'v': function (require, module, exports, global) {
-        var hasOwn = require('2c');
+        var hasOwn = require('2a');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -2654,7 +2694,7 @@ var G5;
     },
     'z': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1o'), zen = require('k'), storage = require('1k')(), Emitter = require('o'), Bound = require('1t'), Options = require('1u'), domready = require('2'), bind = require('1v'), map = require('1w'), forEach = require('1x'), last = require('1y'), merge = require('1p'), request = require('3');
+        var prime = require('n'), $ = require('1o'), zen = require('k'), storage = require('1k')(), Emitter = require('o'), Bound = require('1p'), Options = require('1q'), domready = require('2'), bind = require('1r'), map = require('1s'), forEach = require('1t'), last = require('1u'), merge = require('1v'), request = require('3');
         var animationEndSupport = false;
         domready(function () {
             var style = (document.body || document.documentElement).style;
@@ -2908,7 +2948,7 @@ var G5;
     },
     '10': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), ready = require('2'), zen = require('k'), sifter = require('2m'), Emitter = require('o'), Bound = require('1t'), Options = require('1u'), $ = require('1o'), moofx = require('l'), bind = require('1v'), forEach = require('2n'), indexOf = require('2o'), last = require('1y'), debounce = require('2p'), isArray = require('2q'), isBoolean = require('2r'), merge = require('1p'), unset = require('2s'), size = require('2t'), values = require('2u'), escapeHTML = require('2v'), trim = require('6');
+        var prime = require('n'), ready = require('2'), zen = require('k'), sifter = require('2m'), Emitter = require('o'), Bound = require('1p'), Options = require('1q'), $ = require('1o'), moofx = require('l'), bind = require('1r'), forEach = require('2n'), indexOf = require('2o'), last = require('1u'), debounce = require('2p'), isArray = require('2q'), isBoolean = require('2r'), merge = require('1v'), unset = require('2s'), size = require('2t'), values = require('2u'), escapeHTML = require('2v'), trim = require('6');
         var IS_MAC = /Mac/.test(navigator.userAgent), COUNT = 0, KEY_A = 65, KEY_COMMA = 188, KEY_RETURN = 13, KEY_ESC = 27, KEY_LEFT = 37, KEY_UP = 38, KEY_P = 80, KEY_RIGHT = 39, KEY_DOWN = 40, KEY_N = 78, KEY_BACKSPACE = 8, KEY_DELETE = 46, KEY_SHIFT = 16, KEY_CMD = IS_MAC ? 91 : 17, KEY_CTRL = IS_MAC ? 18 : 17, KEY_TAB = 9, TAG_SELECT = 1, TAG_INPUT = 2;
         var hash_key = function (value) {
             if (typeof value === 'undefined' || value === null)
@@ -4529,7 +4569,7 @@ var G5;
     },
     '12': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Emitter = require('o'), Bound = require('1t'), Options = require('1u'), zen = require('k'), $ = require('1o'), storage = require('1k')(), bind = require('1v'), merge = require('1p');
+        var prime = require('n'), Emitter = require('o'), Bound = require('1p'), Options = require('1q'), zen = require('k'), $ = require('1o'), storage = require('1k')(), bind = require('1r'), merge = require('1v');
         var Toaster = new prime({
                 mixin: [
                     Bound,
@@ -4899,7 +4939,7 @@ var G5;
         'use strict';
         var prime = require('n'), $ = require('1'), Emitter = require('o');
         var Blocks = require('2x');
-        var forOwn = require('2y'), forEach = require('2n'), size = require('19'), isArray = require('2q'), flatten = require('2z'), guid = require('1q'), set = require('30'), unset = require('2s'), get = require('14'), deepFillIn = require('31'), omit = require('32');
+        var forOwn = require('2y'), forEach = require('2n'), size = require('19'), isArray = require('2q'), flatten = require('2z'), guid = require('1x'), set = require('30'), unset = require('2s'), get = require('14'), deepFillIn = require('31'), omit = require('32');
         require('a');
         require('e');
         var rpad = require('33'), repeat = require('34');
@@ -5064,7 +5104,7 @@ var G5;
     },
     '1b': function (require, module, exports, global) {
         'use strict';
-        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('36') || {}, history = window.history;
+        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('35') || {}, history = window.history;
         try {
             sessionStorage = window.sessionStorage;
             sessionStorage.setItem('TEST', '1');
@@ -5894,7 +5934,7 @@ var G5;
         module.exports = History;
     },
     '1c': function (require, module, exports, global) {
-        var prime = require('n'), Emitter = require('o'), slice = require('35'), merge = require('1p'), deepEquals = require('1g');
+        var prime = require('n'), Emitter = require('o'), slice = require('36'), merge = require('1v'), deepEquals = require('1g');
         var History = new prime({
                 inherits: Emitter,
                 constructor: function (session) {
@@ -5968,7 +6008,7 @@ var G5;
     },
     '1d': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1o'), zen = require('k'), Emitter = require('o'), Bound = require('1t'), Options = require('1u'), Blocks = require('2x'), DragDrop = require('37'), Resizer = require('38'), Eraser = require('39'), get = require('14'), keys = require('3a'), every = require('3b'), precision = require('3c'), isArray = require('2q'), deepEquals = require('1g'), find = require('3d'), isObject = require('3e');
+        var prime = require('n'), $ = require('1o'), zen = require('k'), Emitter = require('o'), Bound = require('1p'), Options = require('1q'), Blocks = require('2x'), DragDrop = require('37'), Resizer = require('38'), Eraser = require('39'), get = require('14'), keys = require('3a'), every = require('3b'), precision = require('3c'), isArray = require('2q'), deepEquals = require('1g'), find = require('3d'), isObject = require('3e');
         var singles = {
                 disable: function () {
                     var grids = $('[data-lm-root] [data-lm-blocktype="grid"]');
@@ -6419,7 +6459,7 @@ var G5;
     },
     '1f': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1o'), zen = require('k'), Emitter = require('o'), Bound = require('1t'), Options = require('1u'), DragDrop = require('37'), Resizer = require('3h'), get = require('14'), every = require('3b'), isArray = require('2q'), isObject = require('3e'), deepClone = require('3f'), equals = require('3i');
+        var prime = require('n'), $ = require('1o'), zen = require('k'), Emitter = require('o'), Bound = require('1p'), Options = require('1q'), DragDrop = require('37'), Resizer = require('3h'), get = require('14'), every = require('3b'), isArray = require('2q'), isObject = require('3e'), deepClone = require('3f'), equals = require('3i');
         var MenuManager = new prime({
                 mixin: [
                     Bound,
@@ -6834,22 +6874,6 @@ var G5;
         module.exports = map;
     },
     '1l': function (require, module, exports, global) {
-        var slice = require('35');
-        function invoke(arr, methodName, var_args) {
-            if (arr == null) {
-                return arr;
-            }
-            var args = slice(arguments, 2);
-            var i = -1, len = arr.length, value;
-            while (++i < len) {
-                value = arr[i];
-                value[methodName].apply(value, args);
-            }
-            return arr;
-        }
-        module.exports = invoke;
-    },
-    '1m': function (require, module, exports, global) {
         var makeIterator = require('3l');
         function map(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
@@ -6865,13 +6889,29 @@ var G5;
         }
         module.exports = map;
     },
-    '1n': function (require, module, exports, global) {
+    '1m': function (require, module, exports, global) {
         'use strict';
-        module.exports = 'document' in global ? require('3m') : { parse: require('29') };
+        module.exports = 'document' in global ? require('3m') : { parse: require('25') };
+    },
+    '1n': function (require, module, exports, global) {
+        var slice = require('36');
+        function invoke(arr, methodName, var_args) {
+            if (arr == null) {
+                return arr;
+            }
+            var args = slice(arguments, 2);
+            var i = -1, len = arr.length, value;
+            while (++i < len) {
+                value = arr[i];
+                value[methodName].apply(value, args);
+            }
+            return arr;
+        }
+        module.exports = invoke;
     },
     '1o': function (require, module, exports, global) {
         'use strict';
-        var $ = require('1'), moofx = require('l'), map = require('1w'), slick = require('1n'), zen = require('k');
+        var $ = require('1'), moofx = require('l'), map = require('1s'), slick = require('1m'), zen = require('k');
         var walk = function (combinator, method) {
             return function (expression) {
                 var parts = slick.parse(expression || '*');
@@ -6933,7 +6973,85 @@ var G5;
         module.exports = $;
     },
     '1p': function (require, module, exports, global) {
-        var hasOwn = require('3n');
+        'use strict';
+        var prime = require('n');
+        var bind = require('3n');
+        var bound = prime({
+                bound: function (name) {
+                    var bound = this._bound || (this._bound = {});
+                    return bound[name] || (bound[name] = bind(this[name], this));
+                }
+            });
+        module.exports = bound;
+    },
+    '1q': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('n');
+        var merge = require('3o');
+        var Options = prime({
+                setOptions: function (options) {
+                    var args = [
+                            {},
+                            this.options
+                        ];
+                    args.push.apply(args, arguments);
+                    this.options = merge.apply(null, args);
+                    return this;
+                }
+            });
+        module.exports = Options;
+    },
+    '1r': function (require, module, exports, global) {
+        var slice = require('36');
+        function bind(fn, context, args) {
+            var argsArr = slice(arguments, 2);
+            return function () {
+                return fn.apply(context, argsArr.concat(slice(arguments)));
+            };
+        }
+        module.exports = bind;
+    },
+    '1s': function (require, module, exports, global) {
+        var makeIterator = require('3p');
+        function map(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var results = [];
+            if (arr == null) {
+                return results;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                results[i] = callback(arr[i], i, arr);
+            }
+            return results;
+        }
+        module.exports = map;
+    },
+    '1t': function (require, module, exports, global) {
+        function forEach(arr, callback, thisObj) {
+            if (arr == null) {
+                return;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (callback.call(thisObj, arr[i], i, arr) === false) {
+                    break;
+                }
+            }
+        }
+        module.exports = forEach;
+    },
+    '1u': function (require, module, exports, global) {
+        function last(arr) {
+            if (arr == null || arr.length < 1) {
+                return undefined;
+            }
+            return arr[arr.length - 1];
+        }
+        module.exports = last;
+    },
+    '1v': function (require, module, exports, global) {
+        var hasOwn = require('3q');
         var deepClone = require('3f');
         var isObject = require('3e');
         function merge() {
@@ -6956,18 +7074,25 @@ var G5;
         }
         module.exports = merge;
     },
-    '1q': function (require, module, exports, global) {
-        var randHex = require('3o');
-        var choice = require('3p');
+    '1w': function (require, module, exports, global) {
+        var isKind = require('3r');
+        function isFunction(val) {
+            return isKind(val, 'Function');
+        }
+        module.exports = isFunction;
+    },
+    '1x': function (require, module, exports, global) {
+        var randHex = require('3s');
+        var choice = require('3t');
         function guid() {
             return randHex(8) + '-' + randHex(4) + '-' + '4' + randHex(3) + '-' + choice(8, 9, 'a', 'b') + randHex(3) + '-' + randHex(12);
         }
         module.exports = guid;
     },
-    '1r': function (require, module, exports, global) {
+    '1y': function (require, module, exports, global) {
         var forOwn = require('2y');
         var isArray = require('2q');
-        var forEach = require('1x');
+        var forEach = require('1t');
         function encode(obj) {
             var query = [], arrValues, reg;
             forOwn(obj, function (val, key) {
@@ -6986,7 +7111,7 @@ var G5;
         }
         module.exports = encode;
     },
-    '1s': function (require, module, exports, global) {
+    '1z': function (require, module, exports, global) {
         var toString = require('13');
         function contains(str, substring, fromIndex) {
             str = toString(str);
@@ -6995,94 +7120,9 @@ var G5;
         }
         module.exports = contains;
     },
-    '1t': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('n');
-        var bind = require('3q');
-        var bound = prime({
-                bound: function (name) {
-                    var bound = this._bound || (this._bound = {});
-                    return bound[name] || (bound[name] = bind(this[name], this));
-                }
-            });
-        module.exports = bound;
-    },
-    '1u': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('n');
-        var merge = require('3r');
-        var Options = prime({
-                setOptions: function (options) {
-                    var args = [
-                            {},
-                            this.options
-                        ];
-                    args.push.apply(args, arguments);
-                    this.options = merge.apply(null, args);
-                    return this;
-                }
-            });
-        module.exports = Options;
-    },
-    '1v': function (require, module, exports, global) {
-        var slice = require('35');
-        function bind(fn, context, args) {
-            var argsArr = slice(arguments, 2);
-            return function () {
-                return fn.apply(context, argsArr.concat(slice(arguments)));
-            };
-        }
-        module.exports = bind;
-    },
-    '1w': function (require, module, exports, global) {
-        var makeIterator = require('3s');
-        function map(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var results = [];
-            if (arr == null) {
-                return results;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                results[i] = callback(arr[i], i, arr);
-            }
-            return results;
-        }
-        module.exports = map;
-    },
-    '1x': function (require, module, exports, global) {
-        function forEach(arr, callback, thisObj) {
-            if (arr == null) {
-                return;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (callback.call(thisObj, arr[i], i, arr) === false) {
-                    break;
-                }
-            }
-        }
-        module.exports = forEach;
-    },
-    '1y': function (require, module, exports, global) {
-        function last(arr) {
-            if (arr == null || arr.length < 1) {
-                return undefined;
-            }
-            return arr[arr.length - 1];
-        }
-        module.exports = last;
-    },
-    '1z': function (require, module, exports, global) {
-        var isKind = require('3t');
-        function isFunction(val) {
-            return isKind(val, 'Function');
-        }
-        module.exports = isFunction;
-    },
     '20': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Emitter = require('o'), Bound = require('1t'), Options = require('1u'), $ = require('1'), ready = require('2'), zen = require('k'), DragEvents = require('3u'), forEach = require('2n'), bind = require('1v'), clamp = require('1h');
+        var prime = require('n'), Emitter = require('o'), Bound = require('1p'), Options = require('1q'), $ = require('1'), ready = require('2'), zen = require('k'), DragEvents = require('3u'), forEach = require('2n'), bind = require('1r'), clamp = require('1h');
         var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
         var MOUSEDOWN = DragEvents.START, MOUSEMOVE = DragEvents.MOVE, MOUSEUP = DragEvents.STOP, FOCUSIN = isFirefox ? 'focus' : 'focusin';
         var ColorPicker = new prime({
@@ -7587,7 +7627,7 @@ var G5;
     },
     '21': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1o'), zen = require('k'), storage = require('1k')(), Emitter = require('o'), Bound = require('1t'), Options = require('1u'), domready = require('2'), bind = require('1v'), map = require('1w'), forEach = require('1x'), contains = require('18'), last = require('1y'), split = require('3v'), removeAll = require('3w'), insert = require('3x'), find = require('3y'), combine = require('3z'), merge = require('1p'), unhyphenate = require('40'), properCase = require('41'), trim = require('6'), modal = require('4').modal, async = require('42'), request = require('3'), wf = require('43');
+        var prime = require('n'), $ = require('1o'), zen = require('k'), storage = require('1k')(), Emitter = require('o'), Bound = require('1p'), Options = require('1q'), domready = require('2'), bind = require('1r'), map = require('1s'), forEach = require('1t'), contains = require('18'), last = require('1u'), split = require('3v'), removeAll = require('3w'), insert = require('3x'), find = require('3y'), combine = require('3z'), merge = require('1v'), unhyphenate = require('40'), properCase = require('41'), trim = require('6'), modal = require('4').modal, async = require('42'), request = require('3'), wf = require('43');
         require('44');
         var Fonts = new prime({
                 mixin: Bound,
@@ -8329,6 +8369,140 @@ var G5;
     },
     '25': function (require, module, exports, global) {
         'use strict';
+        var escapeRe = /([-.*+?^${}()|[\]\/\\])/g, unescapeRe = /\\/g;
+        var escape = function (string) {
+            return (string + '').replace(escapeRe, '\\$1');
+        };
+        var unescape = function (string) {
+            return (string + '').replace(unescapeRe, '');
+        };
+        var slickRe = RegExp('^(?:\\s*(,)\\s*|\\s*(<combinator>+)\\s*|(\\s+)|(<unicode>+|\\*)|\\#(<unicode>+)|\\.(<unicode>+)|\\[\\s*(<unicode1>+)(?:\\s*([*^$!~|]?=)(?:\\s*(?:(["\']?)(.*?)\\9)))?\\s*\\](?!\\])|(:+)(<unicode>+)(?:\\((?:(?:(["\'])([^\\13]*)\\13)|((?:\\([^)]+\\)|[^()]*)+))\\))?)'.replace(/<combinator>/, '[' + escape('>+~`!@$%^&={}\\;</') + ']').replace(/<unicode>/g, '(?:[\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])').replace(/<unicode1>/g, '(?:[:\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])'));
+        var Part = function Part(combinator) {
+            this.combinator = combinator || ' ';
+            this.tag = '*';
+        };
+        Part.prototype.toString = function () {
+            if (!this.raw) {
+                var xpr = '', k, part;
+                xpr += this.tag || '*';
+                if (this.id)
+                    xpr += '#' + this.id;
+                if (this.classes)
+                    xpr += '.' + this.classList.join('.');
+                if (this.attributes)
+                    for (k = 0; part = this.attributes[k++];) {
+                        xpr += '[' + part.name + (part.operator ? part.operator + '"' + part.value + '"' : '') + ']';
+                    }
+                if (this.pseudos)
+                    for (k = 0; part = this.pseudos[k++];) {
+                        xpr += ':' + part.name;
+                        if (part.value)
+                            xpr += '(' + part.value + ')';
+                    }
+                this.raw = xpr;
+            }
+            return this.raw;
+        };
+        var Expression = function Expression() {
+            this.length = 0;
+        };
+        Expression.prototype.toString = function () {
+            if (!this.raw) {
+                var xpr = '';
+                for (var j = 0, bit; bit = this[j++];) {
+                    if (j !== 1)
+                        xpr += ' ';
+                    if (bit.combinator !== ' ')
+                        xpr += bit.combinator + ' ';
+                    xpr += bit;
+                }
+                this.raw = xpr;
+            }
+            return this.raw;
+        };
+        var replacer = function (rawMatch, separator, combinator, combinatorChildren, tagName, id, className, attributeKey, attributeOperator, attributeQuote, attributeValue, pseudoMarker, pseudoClass, pseudoQuote, pseudoClassQuotedValue, pseudoClassValue) {
+            var expression, current;
+            if (separator || !this.length) {
+                expression = this[this.length++] = new Expression();
+                if (separator)
+                    return '';
+            }
+            if (!expression)
+                expression = this[this.length - 1];
+            if (combinator || combinatorChildren || !expression.length) {
+                current = expression[expression.length++] = new Part(combinator);
+            }
+            if (!current)
+                current = expression[expression.length - 1];
+            if (tagName) {
+                current.tag = unescape(tagName);
+            } else if (id) {
+                current.id = unescape(id);
+            } else if (className) {
+                var unescaped = unescape(className);
+                var classes = current.classes || (current.classes = {});
+                if (!classes[unescaped]) {
+                    classes[unescaped] = escape(className);
+                    var classList = current.classList || (current.classList = []);
+                    classList.push(unescaped);
+                    classList.sort();
+                }
+            } else if (pseudoClass) {
+                pseudoClassValue = pseudoClassValue || pseudoClassQuotedValue;
+                ;
+                (current.pseudos || (current.pseudos = [])).push({
+                    type: pseudoMarker.length == 1 ? 'class' : 'element',
+                    name: unescape(pseudoClass),
+                    escapedName: escape(pseudoClass),
+                    value: pseudoClassValue ? unescape(pseudoClassValue) : null,
+                    escapedValue: pseudoClassValue ? escape(pseudoClassValue) : null
+                });
+            } else if (attributeKey) {
+                attributeValue = attributeValue ? escape(attributeValue) : null;
+                ;
+                (current.attributes || (current.attributes = [])).push({
+                    operator: attributeOperator,
+                    name: unescape(attributeKey),
+                    escapedName: escape(attributeKey),
+                    value: attributeValue ? unescape(attributeValue) : null,
+                    escapedValue: attributeValue ? escape(attributeValue) : null
+                });
+            }
+            return '';
+        };
+        var Expressions = function Expressions(expression) {
+            this.length = 0;
+            var self = this;
+            var original = expression, replaced;
+            while (expression) {
+                replaced = expression.replace(slickRe, function () {
+                    return replacer.apply(self, arguments);
+                });
+                if (replaced === expression)
+                    throw new Error(original + ' is an invalid expression');
+                expression = replaced;
+            }
+        };
+        Expressions.prototype.toString = function () {
+            if (!this.raw) {
+                var expressions = [];
+                for (var i = 0, expression; expression = this[i++];)
+                    expressions.push(expression);
+                this.raw = expressions.join(', ');
+            }
+            return this.raw;
+        };
+        var cache = {};
+        var parse = function (expression) {
+            if (expression == null)
+                return null;
+            expression = ('' + expression).replace(/^\s+|\s+$/g, '');
+            return cache[expression] || (cache[expression] = new Expressions(expression));
+        };
+        module.exports = parse;
+    },
+    '26': function (require, module, exports, global) {
+        'use strict';
         var colors = {
                 maroon: '#800000',
                 red: '#ff0000',
@@ -8458,7 +8632,7 @@ var G5;
         ].join('|'), 'gi');
         module.exports = color;
     },
-    '26': function (require, module, exports, global) {
+    '27': function (require, module, exports, global) {
         'use strict';
         var indexOf = require('46');
         var requestFrame = global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame || global.oRequestAnimationFrame || global.msRequestAnimationFrame || function (callback) {
@@ -8488,15 +8662,15 @@ var G5;
         exports.request = request;
         exports.cancel = cancel;
     },
-    '27': function (require, module, exports, global) {
+    '28': function (require, module, exports, global) {
         'use strict';
-        var color = require('25'), frame = require('26');
+        var color = require('26'), frame = require('27');
         var cancelFrame = frame.cancel, requestFrame = frame.request;
         var prime = require('47');
         var camelize = require('48'), clean = require('49'), capitalize = require('4a'), hyphenateString = require('4b');
         var map = require('4c'), forEach = require('4d'), indexOf = require('46');
         var elements = require('4e');
-        var fx = require('28');
+        var fx = require('29');
         var matchString = function (s, r) {
             return String.prototype.match.call(s, r);
         };
@@ -9182,9 +9356,9 @@ var G5;
         };
         module.exports = moofx;
     },
-    '28': function (require, module, exports, global) {
+    '29': function (require, module, exports, global) {
         'use strict';
-        var prime = require('47'), requestFrame = require('26').request, bezier = require('4g');
+        var prime = require('47'), requestFrame = require('27').request, bezier = require('4g');
         var map = require('4c');
         var sDuration = '([\\d.]+)(s|ms)?', sCubicBezier = 'cubic-bezier\\(([-.\\d]+),([-.\\d]+),([-.\\d]+),([-.\\d]+)\\)';
         var rDuration = RegExp(sDuration), rCubicBezier = RegExp(sCubicBezier), rgCubicBezier = RegExp(sCubicBezier, 'g');
@@ -9350,141 +9524,36 @@ var G5;
         fx.prototype = Fx.prototype;
         module.exports = fx;
     },
-    '29': function (require, module, exports, global) {
-        'use strict';
-        var escapeRe = /([-.*+?^${}()|[\]\/\\])/g, unescapeRe = /\\/g;
-        var escape = function (string) {
-            return (string + '').replace(escapeRe, '\\$1');
-        };
-        var unescape = function (string) {
-            return (string + '').replace(unescapeRe, '');
-        };
-        var slickRe = RegExp('^(?:\\s*(,)\\s*|\\s*(<combinator>+)\\s*|(\\s+)|(<unicode>+|\\*)|\\#(<unicode>+)|\\.(<unicode>+)|\\[\\s*(<unicode1>+)(?:\\s*([*^$!~|]?=)(?:\\s*(?:(["\']?)(.*?)\\9)))?\\s*\\](?!\\])|(:+)(<unicode>+)(?:\\((?:(?:(["\'])([^\\13]*)\\13)|((?:\\([^)]+\\)|[^()]*)+))\\))?)'.replace(/<combinator>/, '[' + escape('>+~`!@$%^&={}\\;</') + ']').replace(/<unicode>/g, '(?:[\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])').replace(/<unicode1>/g, '(?:[:\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])'));
-        var Part = function Part(combinator) {
-            this.combinator = combinator || ' ';
-            this.tag = '*';
-        };
-        Part.prototype.toString = function () {
-            if (!this.raw) {
-                var xpr = '', k, part;
-                xpr += this.tag || '*';
-                if (this.id)
-                    xpr += '#' + this.id;
-                if (this.classes)
-                    xpr += '.' + this.classList.join('.');
-                if (this.attributes)
-                    for (k = 0; part = this.attributes[k++];) {
-                        xpr += '[' + part.name + (part.operator ? part.operator + '"' + part.value + '"' : '') + ']';
-                    }
-                if (this.pseudos)
-                    for (k = 0; part = this.pseudos[k++];) {
-                        xpr += ':' + part.name;
-                        if (part.value)
-                            xpr += '(' + part.value + ')';
-                    }
-                this.raw = xpr;
-            }
-            return this.raw;
-        };
-        var Expression = function Expression() {
-            this.length = 0;
-        };
-        Expression.prototype.toString = function () {
-            if (!this.raw) {
-                var xpr = '';
-                for (var j = 0, bit; bit = this[j++];) {
-                    if (j !== 1)
-                        xpr += ' ';
-                    if (bit.combinator !== ' ')
-                        xpr += bit.combinator + ' ';
-                    xpr += bit;
-                }
-                this.raw = xpr;
-            }
-            return this.raw;
-        };
-        var replacer = function (rawMatch, separator, combinator, combinatorChildren, tagName, id, className, attributeKey, attributeOperator, attributeQuote, attributeValue, pseudoMarker, pseudoClass, pseudoQuote, pseudoClassQuotedValue, pseudoClassValue) {
-            var expression, current;
-            if (separator || !this.length) {
-                expression = this[this.length++] = new Expression();
-                if (separator)
-                    return '';
-            }
-            if (!expression)
-                expression = this[this.length - 1];
-            if (combinator || combinatorChildren || !expression.length) {
-                current = expression[expression.length++] = new Part(combinator);
-            }
-            if (!current)
-                current = expression[expression.length - 1];
-            if (tagName) {
-                current.tag = unescape(tagName);
-            } else if (id) {
-                current.id = unescape(id);
-            } else if (className) {
-                var unescaped = unescape(className);
-                var classes = current.classes || (current.classes = {});
-                if (!classes[unescaped]) {
-                    classes[unescaped] = escape(className);
-                    var classList = current.classList || (current.classList = []);
-                    classList.push(unescaped);
-                    classList.sort();
-                }
-            } else if (pseudoClass) {
-                pseudoClassValue = pseudoClassValue || pseudoClassQuotedValue;
-                ;
-                (current.pseudos || (current.pseudos = [])).push({
-                    type: pseudoMarker.length == 1 ? 'class' : 'element',
-                    name: unescape(pseudoClass),
-                    escapedName: escape(pseudoClass),
-                    value: pseudoClassValue ? unescape(pseudoClassValue) : null,
-                    escapedValue: pseudoClassValue ? escape(pseudoClassValue) : null
-                });
-            } else if (attributeKey) {
-                attributeValue = attributeValue ? escape(attributeValue) : null;
-                ;
-                (current.attributes || (current.attributes = [])).push({
-                    operator: attributeOperator,
-                    name: unescape(attributeKey),
-                    escapedName: escape(attributeKey),
-                    value: attributeValue ? unescape(attributeValue) : null,
-                    escapedValue: attributeValue ? escape(attributeValue) : null
-                });
-            }
-            return '';
-        };
-        var Expressions = function Expressions(expression) {
-            this.length = 0;
-            var self = this;
-            var original = expression, replaced;
-            while (expression) {
-                replaced = expression.replace(slickRe, function () {
-                    return replacer.apply(self, arguments);
-                });
-                if (replaced === expression)
-                    throw new Error(original + ' is an invalid expression');
-                expression = replaced;
-            }
-        };
-        Expressions.prototype.toString = function () {
-            if (!this.raw) {
-                var expressions = [];
-                for (var i = 0, expression; expression = this[i++];)
-                    expressions.push(expression);
-                this.raw = expressions.join(', ');
-            }
-            return this.raw;
-        };
-        var cache = {};
-        var parse = function (expression) {
-            if (expression == null)
-                return null;
-            expression = ('' + expression).replace(/^\s+|\s+$/g, '');
-            return cache[expression] || (cache[expression] = new Expressions(expression));
-        };
-        module.exports = parse;
-    },
     '2a': function (require, module, exports, global) {
+        function hasOwn(obj, prop) {
+            return Object.prototype.hasOwnProperty.call(obj, prop);
+        }
+        module.exports = hasOwn;
+    },
+    '2b': function (require, module, exports, global) {
+        var mixIn = require('w');
+        function createObject(parent, props) {
+            function F() {
+            }
+            F.prototype = parent;
+            return mixIn(new F(), props);
+        }
+        module.exports = createObject;
+    },
+    '2c': function (require, module, exports, global) {
+        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
+        function kindOf(val) {
+            if (val === null) {
+                return 'Null';
+            } else if (val === UNDEF) {
+                return 'Undefined';
+            } else {
+                return _rKind.exec(_toString.call(val))[1];
+            }
+        }
+        module.exports = kindOf;
+    },
+    '2d': function (require, module, exports, global) {
         var makeIterator = require('3l');
         function every(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
@@ -9503,7 +9572,7 @@ var G5;
         }
         module.exports = every;
     },
-    '2b': function (require, module, exports, global) {
+    '2e': function (require, module, exports, global) {
         var makeIterator = require('3l');
         function some(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
@@ -9522,38 +9591,9 @@ var G5;
         }
         module.exports = some;
     },
-    '2c': function (require, module, exports, global) {
-        function hasOwn(obj, prop) {
-            return Object.prototype.hasOwnProperty.call(obj, prop);
-        }
-        module.exports = hasOwn;
-    },
-    '2d': function (require, module, exports, global) {
-        var mixIn = require('w');
-        function createObject(parent, props) {
-            function F() {
-            }
-            F.prototype = parent;
-            return mixIn(new F(), props);
-        }
-        module.exports = createObject;
-    },
-    '2e': function (require, module, exports, global) {
-        var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
-        function kindOf(val) {
-            if (val === null) {
-                return 'Null';
-            } else if (val === UNDEF) {
-                return 'Undefined';
-            } else {
-                return _rKind.exec(_toString.call(val))[1];
-            }
-        }
-        module.exports = kindOf;
-    },
     '2f': function (require, module, exports, global) {
         'use strict';
-        var kindOf = require('2e'), now = require('4h'), forEach = require('y'), indexOf = require('1j');
+        var kindOf = require('2c'), now = require('4h'), forEach = require('y'), indexOf = require('1j');
         var callbacks = {
                 timeout: {},
                 frame: [],
@@ -9633,7 +9673,7 @@ var G5;
         module.exports = defer;
     },
     '2g': function (require, module, exports, global) {
-        var kindOf = require('2e');
+        var kindOf = require('2c');
         function isKind(val, kind) {
             return kindOf(val) === kind;
         }
@@ -9721,7 +9761,7 @@ var G5;
         module.exports = rtrim;
     },
     '2l': function (require, module, exports, global) {
-        var hasOwn = require('2c');
+        var hasOwn = require('2a');
         var forIn = require('v');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
@@ -10034,7 +10074,7 @@ var G5;
     },
     '2n': function (require, module, exports, global) {
         var make = require('4i');
-        var arrForEach = require('1x');
+        var arrForEach = require('1t');
         var objForEach = require('2y');
         module.exports = make(arrForEach, objForEach);
     },
@@ -10082,14 +10122,14 @@ var G5;
         module.exports = debounce;
     },
     '2q': function (require, module, exports, global) {
-        var isKind = require('3t');
+        var isKind = require('3r');
         var isArray = Array.isArray || function (val) {
                 return isKind(val, 'Array');
             };
         module.exports = isArray;
     },
     '2r': function (require, module, exports, global) {
-        var isKind = require('3t');
+        var isKind = require('3r');
         function isBoolean(val) {
             return isKind(val, 'Boolean');
         }
@@ -10168,7 +10208,7 @@ var G5;
         };
     },
     '2y': function (require, module, exports, global) {
-        var hasOwn = require('3n');
+        var hasOwn = require('3q');
         var forIn = require('4v');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
@@ -10241,7 +10281,7 @@ var G5;
         module.exports = deepFillIn;
     },
     '32': function (require, module, exports, global) {
-        var slice = require('35');
+        var slice = require('36');
         var contains = require('18');
         function omit(obj, var_keys) {
             var keys = typeof arguments[1] !== 'string' ? arguments[1] : slice(arguments, 1), out = {};
@@ -10286,31 +10326,6 @@ var G5;
         module.exports = repeat;
     },
     '35': function (require, module, exports, global) {
-        function slice(arr, start, end) {
-            var len = arr.length;
-            if (start == null) {
-                start = 0;
-            } else if (start < 0) {
-                start = Math.max(len + start, 0);
-            } else {
-                start = Math.min(start, len);
-            }
-            if (end == null) {
-                end = len;
-            } else if (end < 0) {
-                end = Math.max(len + end, 0);
-            } else {
-                end = Math.min(end, len);
-            }
-            var result = [];
-            while (start < end) {
-                result.push(arr[start++]);
-            }
-            return result;
-        }
-        module.exports = slice;
-    },
-    '36': function (require, module, exports, global) {
         'use strict';
         var $ = require('1'), domready = require('2');
         var History = {};
@@ -10336,9 +10351,34 @@ var G5;
         }
         module.exports = History;
     },
+    '36': function (require, module, exports, global) {
+        function slice(arr, start, end) {
+            var len = arr.length;
+            if (start == null) {
+                start = 0;
+            } else if (start < 0) {
+                start = Math.max(len + start, 0);
+            } else {
+                start = Math.min(start, len);
+            }
+            if (end == null) {
+                end = len;
+            } else if (end < 0) {
+                end = Math.max(len + end, 0);
+            } else {
+                end = Math.min(end, len);
+            }
+            var result = [];
+            while (start < end) {
+                result.push(arr[start++]);
+            }
+            return result;
+        }
+        module.exports = slice;
+    },
     '37': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Emitter = require('o'), Bound = require('1t'), Options = require('1u'), bind = require('1v'), contains = require('18'), DragEvents = require('3u'), $ = require('1o');
+        var prime = require('n'), Emitter = require('o'), Bound = require('1p'), Options = require('1q'), bind = require('1r'), contains = require('18'), DragEvents = require('3u'), $ = require('1o');
         require('b');
         require('c');
         var isIE = navigator.appName === 'Microsoft Internet Explorer';
@@ -10570,7 +10610,7 @@ var G5;
     },
     '38': function (require, module, exports, global) {
         'use strict';
-        var DragEvents = require('3u'), prime = require('n'), Emitter = require('o'), Bound = require('1t'), Options = require('1u'), bind = require('1v'), isString = require('50'), nMap = require('51'), clamp = require('1h'), precision = require('3c'), get = require('14'), $ = require('1o');
+        var DragEvents = require('3u'), prime = require('n'), Emitter = require('o'), Bound = require('1p'), Options = require('1q'), bind = require('1r'), isString = require('50'), nMap = require('51'), clamp = require('1h'), precision = require('3c'), get = require('14'), $ = require('1o');
         require('b');
         require('c');
         var Resizer = new prime({
@@ -10715,7 +10755,7 @@ var G5;
     },
     '39': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1o'), Emitter = require('o'), Bound = require('1t'), Options = require('1u');
+        var prime = require('n'), $ = require('1o'), Emitter = require('o'), Bound = require('1p'), Options = require('1q');
         var Eraser = new prime({
                 mixin: [
                     Options,
@@ -10766,7 +10806,7 @@ var G5;
         module.exports = keys;
     },
     '3b': function (require, module, exports, global) {
-        var makeIterator = require('3s');
+        var makeIterator = require('3p');
         function every(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = true;
@@ -10800,7 +10840,7 @@ var G5;
         module.exports = make(arrFind, objFind);
     },
     '3e': function (require, module, exports, global) {
-        var isKind = require('3t');
+        var isKind = require('3r');
         function isObject(val) {
             return isKind(val, 'Object');
         }
@@ -11063,7 +11103,7 @@ var G5;
     },
     '3h': function (require, module, exports, global) {
         'use strict';
-        var DragEvents = require('3u'), prime = require('n'), Emitter = require('o'), Bound = require('1t'), Options = require('1u'), bind = require('1v'), isString = require('50'), nMap = require('51'), clamp = require('1h'), precision = require('3c'), get = require('14'), $ = require('1o');
+        var DragEvents = require('3u'), prime = require('n'), Emitter = require('o'), Bound = require('1p'), Options = require('1q'), bind = require('1r'), isString = require('50'), nMap = require('51'), clamp = require('1h'), precision = require('3c'), get = require('14'), $ = require('1o');
         require('b');
         require('c');
         var Resizer = new prime({
@@ -11246,7 +11286,7 @@ var G5;
         module.exports = Resizer;
     },
     '3i': function (require, module, exports, global) {
-        var hasOwn = require('3n');
+        var hasOwn = require('3q');
         var every = require('56');
         var isObject = require('3e');
         var is = require('3j');
@@ -11323,7 +11363,7 @@ var G5;
     },
     '3m': function (require, module, exports, global) {
         'use strict';
-        var parse = require('29');
+        var parse = require('25');
         var index = 0, counter = document.__counter = (parseInt(document.__counter || -1, 36) + 1).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n, xml) {
             if (n === window)
@@ -11914,34 +11954,6 @@ var G5;
         module.exports = slick;
     },
     '3n': function (require, module, exports, global) {
-        function hasOwn(obj, prop) {
-            return Object.prototype.hasOwnProperty.call(obj, prop);
-        }
-        module.exports = hasOwn;
-    },
-    '3o': function (require, module, exports, global) {
-        var choice = require('3p');
-        var _chars = '0123456789abcdef'.split('');
-        function randHex(size) {
-            size = size && size > 0 ? size : 6;
-            var str = '';
-            while (size--) {
-                str += choice(_chars);
-            }
-            return str;
-        }
-        module.exports = randHex;
-    },
-    '3p': function (require, module, exports, global) {
-        var randInt = require('5b');
-        var isArray = require('2q');
-        function choice(items) {
-            var target = arguments.length === 1 && isArray(items) ? items : arguments;
-            return target[randInt(0, target.length - 1)];
-        }
-        module.exports = choice;
-    },
-    '3q': function (require, module, exports, global) {
         var slice = require('5a');
         function bind(fn, context, args) {
             var argsArr = slice(arguments, 2);
@@ -11951,10 +11963,10 @@ var G5;
         }
         module.exports = bind;
     },
-    '3r': function (require, module, exports, global) {
-        var hasOwn = require('5c');
-        var deepClone = require('5d');
-        var isObject = require('5e');
+    '3o': function (require, module, exports, global) {
+        var hasOwn = require('5b');
+        var deepClone = require('5c');
+        var isObject = require('5d');
         function merge() {
             var i = 1, key, val, obj, target;
             target = deepClone(arguments[0]);
@@ -11975,10 +11987,10 @@ var G5;
         }
         module.exports = merge;
     },
-    '3s': function (require, module, exports, global) {
-        var identity = require('5f');
-        var prop = require('5g');
-        var deepMatches = require('5h');
+    '3p': function (require, module, exports, global) {
+        var identity = require('5e');
+        var prop = require('5f');
+        var deepMatches = require('5g');
         function makeIterator(src, thisObj) {
             if (src == null) {
                 return identity;
@@ -11999,12 +12011,40 @@ var G5;
         }
         module.exports = makeIterator;
     },
-    '3t': function (require, module, exports, global) {
+    '3q': function (require, module, exports, global) {
+        function hasOwn(obj, prop) {
+            return Object.prototype.hasOwnProperty.call(obj, prop);
+        }
+        module.exports = hasOwn;
+    },
+    '3r': function (require, module, exports, global) {
         var kindOf = require('55');
         function isKind(val, kind) {
             return kindOf(val) === kind;
         }
         module.exports = isKind;
+    },
+    '3s': function (require, module, exports, global) {
+        var choice = require('3t');
+        var _chars = '0123456789abcdef'.split('');
+        function randHex(size) {
+            size = size && size > 0 ? size : 6;
+            var str = '';
+            while (size--) {
+                str += choice(_chars);
+            }
+            return str;
+        }
+        module.exports = randHex;
+    },
+    '3t': function (require, module, exports, global) {
+        var randInt = require('5h');
+        var isArray = require('2q');
+        function choice(items) {
+            var target = arguments.length === 1 && isArray(items) ? items : arguments;
+            return target[randInt(0, target.length - 1)];
+        }
+        module.exports = choice;
     },
     '3u': function (require, module, exports, global) {
         'use strict';
@@ -12068,7 +12108,7 @@ var G5;
     },
     '3x': function (require, module, exports, global) {
         var difference = require('5i');
-        var slice = require('35');
+        var slice = require('36');
         function insert(arr, rest_items) {
             var diff = difference(slice(arguments, 1), arr);
             if (diff.length) {
@@ -14234,7 +14274,7 @@ var G5;
         module.exports = now;
     },
     '4i': function (require, module, exports, global) {
-        var slice = require('35');
+        var slice = require('36');
         function makeCollectionMethod(arrMethod, objMethod, defaultReturn) {
             return function () {
                 var args = slice(arguments);
@@ -14256,7 +14296,7 @@ var G5;
     },
     '4k': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Options = require('1u'), Bound = require('1t'), Emitter = require('o'), guid = require('1q'), zen = require('k'), $ = require('1'), get = require('14'), has = require('4j'), set = require('30');
+        var prime = require('n'), Options = require('1q'), Bound = require('1p'), Emitter = require('o'), guid = require('1x'), zen = require('k'), $ = require('1'), get = require('14'), has = require('4j'), set = require('30');
         require('e');
         var Base = new prime({
                 mixin: [
@@ -14396,7 +14436,7 @@ var G5;
     },
     '4m': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Base = require('4k'), Bound = require('1t'), Grid = require('4o'), $ = require('1'), zen = require('k'), bind = require('1v'), getAjaxURL = require('45').config;
+        var prime = require('n'), Base = require('4k'), Bound = require('1p'), Grid = require('4o'), $ = require('1'), zen = require('k'), bind = require('1r'), getAjaxURL = require('45').config;
         require('d');
         var UID = 0;
         var Section = new prime({
@@ -14525,7 +14565,7 @@ var G5;
     },
     '4q': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Base = require('4k'), $ = require('1o'), zen = require('k'), precision = require('3c'), bind = require('1v');
+        var prime = require('n'), Base = require('4k'), $ = require('1o'), zen = require('k'), precision = require('3c'), bind = require('1r');
         var Block = new prime({
                 inherits: Base,
                 options: {
@@ -14613,7 +14653,7 @@ var G5;
     },
     '4r': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Atom = require('4l'), bind = require('1v'), precision = require('3c'), getAjaxURL = require('45').config;
+        var prime = require('n'), Atom = require('4l'), bind = require('1r'), precision = require('3c'), getAjaxURL = require('45').config;
         var UID = 0;
         var Particle = new prime({
                 inherits: Atom,
@@ -14702,7 +14742,7 @@ var G5;
         module.exports = Spacer;
     },
     '4v': function (require, module, exports, global) {
-        var hasOwn = require('3n');
+        var hasOwn = require('3q');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -14758,7 +14798,7 @@ var G5;
         module.exports = append;
     },
     '4x': function (require, module, exports, global) {
-        var forEach = require('1x');
+        var forEach = require('1t');
         function namespace(obj, path) {
             if (!path)
                 return obj;
@@ -14785,7 +14825,7 @@ var G5;
         module.exports = toInt;
     },
     '50': function (require, module, exports, global) {
-        var isKind = require('3t');
+        var isKind = require('3r');
         function isString(val) {
             return isKind(val, 'String');
         }
@@ -14816,7 +14856,7 @@ var G5;
     },
     '53': function (require, module, exports, global) {
         var some = require('5y');
-        var makeIterator = require('3s');
+        var makeIterator = require('3p');
         function find(obj, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result;
@@ -14885,7 +14925,7 @@ var G5;
     },
     '56': function (require, module, exports, global) {
         var forOwn = require('2y');
-        var makeIterator = require('3s');
+        var makeIterator = require('3p');
         function every(obj, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = true;
@@ -14982,27 +15022,16 @@ var G5;
         module.exports = slice;
     },
     '5b': function (require, module, exports, global) {
-        var MIN_INT = require('60');
-        var MAX_INT = require('61');
-        var rand = require('62');
-        function randInt(min, max) {
-            min = min == null ? MIN_INT : ~~min;
-            max = max == null ? MAX_INT : ~~max;
-            return Math.round(rand(min - 0.5, max + 0.499999999999));
-        }
-        module.exports = randInt;
-    },
-    '5c': function (require, module, exports, global) {
         function hasOwn(obj, prop) {
             return Object.prototype.hasOwnProperty.call(obj, prop);
         }
         module.exports = hasOwn;
     },
-    '5d': function (require, module, exports, global) {
-        var clone = require('63');
-        var forOwn = require('64');
-        var kindOf = require('65');
-        var isPlainObject = require('66');
+    '5c': function (require, module, exports, global) {
+        var clone = require('60');
+        var forOwn = require('61');
+        var kindOf = require('62');
+        var isPlainObject = require('63');
         function deepClone(val, instanceClone) {
             switch (kindOf(val)) {
             case 'Object':
@@ -15035,20 +15064,20 @@ var G5;
         }
         module.exports = deepClone;
     },
-    '5e': function (require, module, exports, global) {
-        var isKind = require('67');
+    '5d': function (require, module, exports, global) {
+        var isKind = require('64');
         function isObject(val) {
             return isKind(val, 'Object');
         }
         module.exports = isObject;
     },
-    '5f': function (require, module, exports, global) {
+    '5e': function (require, module, exports, global) {
         function identity(val) {
             return val;
         }
         module.exports = identity;
     },
-    '5g': function (require, module, exports, global) {
+    '5f': function (require, module, exports, global) {
         function prop(name) {
             return function (obj) {
                 return obj[name];
@@ -15056,7 +15085,7 @@ var G5;
         }
         module.exports = prop;
     },
-    '5h': function (require, module, exports, global) {
+    '5g': function (require, module, exports, global) {
         var forOwn = require('2y');
         var isArray = require('2q');
         function containsMatch(array, pattern) {
@@ -15099,12 +15128,23 @@ var G5;
         }
         module.exports = deepMatches;
     },
+    '5h': function (require, module, exports, global) {
+        var MIN_INT = require('65');
+        var MAX_INT = require('66');
+        var rand = require('67');
+        function randInt(min, max) {
+            min = min == null ? MIN_INT : ~~min;
+            max = max == null ? MAX_INT : ~~max;
+            return Math.round(rand(min - 0.5, max + 0.499999999999));
+        }
+        module.exports = randInt;
+    },
     '5i': function (require, module, exports, global) {
         var unique = require('68');
         var filter = require('69');
         var some = require('6a');
         var contains = require('18');
-        var slice = require('35');
+        var slice = require('36');
         function difference(arr) {
             var arrs = slice(arguments, 1), result = filter(unique(arr), function (needle) {
                     return !some(arrs, function (haystack) {
@@ -15116,7 +15156,7 @@ var G5;
         module.exports = difference;
     },
     '5j': function (require, module, exports, global) {
-        var makeIterator = require('3s');
+        var makeIterator = require('3p');
         function findIndex(arr, iterator, thisObj) {
             iterator = makeIterator(iterator, thisObj);
             if (arr == null) {
@@ -15292,7 +15332,7 @@ var G5;
     },
     '5y': function (require, module, exports, global) {
         var forOwn = require('2y');
-        var makeIterator = require('3s');
+        var makeIterator = require('3p');
         function some(obj, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = false;
@@ -15324,26 +15364,9 @@ var G5;
         module.exports = mixIn;
     },
     '60': function (require, module, exports, global) {
-        module.exports = -2147483648;
-    },
-    '61': function (require, module, exports, global) {
-        module.exports = 2147483647;
-    },
-    '62': function (require, module, exports, global) {
-        var random = require('6c');
-        var MIN_INT = require('60');
-        var MAX_INT = require('61');
-        function rand(min, max) {
-            min = min == null ? MIN_INT : min;
-            max = max == null ? MAX_INT : max;
-            return min + (max - min) * random();
-        }
-        module.exports = rand;
-    },
-    '63': function (require, module, exports, global) {
-        var kindOf = require('65');
-        var isPlainObject = require('66');
-        var mixIn = require('6d');
+        var kindOf = require('62');
+        var isPlainObject = require('63');
+        var mixIn = require('6c');
         function clone(val) {
             switch (kindOf(val)) {
             case 'Object':
@@ -15380,9 +15403,9 @@ var G5;
         }
         module.exports = clone;
     },
-    '64': function (require, module, exports, global) {
-        var hasOwn = require('5c');
-        var forIn = require('6e');
+    '61': function (require, module, exports, global) {
+        var hasOwn = require('5b');
+        var forIn = require('6d');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
                 if (hasOwn(obj, key)) {
@@ -15392,7 +15415,7 @@ var G5;
         }
         module.exports = forOwn;
     },
-    '65': function (require, module, exports, global) {
+    '62': function (require, module, exports, global) {
         var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
         function kindOf(val) {
             if (val === null) {
@@ -15405,18 +15428,35 @@ var G5;
         }
         module.exports = kindOf;
     },
-    '66': function (require, module, exports, global) {
+    '63': function (require, module, exports, global) {
         function isPlainObject(value) {
             return !!value && typeof value === 'object' && value.constructor === Object;
         }
         module.exports = isPlainObject;
     },
-    '67': function (require, module, exports, global) {
-        var kindOf = require('65');
+    '64': function (require, module, exports, global) {
+        var kindOf = require('62');
         function isKind(val, kind) {
             return kindOf(val) === kind;
         }
         module.exports = isKind;
+    },
+    '65': function (require, module, exports, global) {
+        module.exports = -2147483648;
+    },
+    '66': function (require, module, exports, global) {
+        module.exports = 2147483647;
+    },
+    '67': function (require, module, exports, global) {
+        var random = require('6e');
+        var MIN_INT = require('65');
+        var MAX_INT = require('66');
+        function rand(min, max) {
+            min = min == null ? MIN_INT : min;
+            max = max == null ? MAX_INT : max;
+            return min + (max - min) * random();
+        }
+        module.exports = rand;
     },
     '68': function (require, module, exports, global) {
         var filter = require('69');
@@ -15438,7 +15478,7 @@ var G5;
         module.exports = unique;
     },
     '69': function (require, module, exports, global) {
-        var makeIterator = require('3s');
+        var makeIterator = require('3p');
         function filter(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var results = [];
@@ -15457,7 +15497,7 @@ var G5;
         module.exports = filter;
     },
     '6a': function (require, module, exports, global) {
-        var makeIterator = require('3s');
+        var makeIterator = require('3p');
         function some(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = false;
@@ -15488,14 +15528,7 @@ var G5;
         module.exports = forOwn;
     },
     '6c': function (require, module, exports, global) {
-        function random() {
-            return random.get();
-        }
-        random.get = Math.random;
-        module.exports = random;
-    },
-    '6d': function (require, module, exports, global) {
-        var forOwn = require('64');
+        var forOwn = require('61');
         function mixIn(target, objects) {
             var i = 0, n = arguments.length, obj;
             while (++i < n) {
@@ -15511,8 +15544,8 @@ var G5;
         }
         module.exports = mixIn;
     },
-    '6e': function (require, module, exports, global) {
-        var hasOwn = require('5c');
+    '6d': function (require, module, exports, global) {
+        var hasOwn = require('5b');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -15553,6 +15586,13 @@ var G5;
             return fn.call(thisObj, obj[key], key, obj);
         }
         module.exports = forIn;
+    },
+    '6e': function (require, module, exports, global) {
+        function random() {
+            return random.get();
+        }
+        random.get = Math.random;
+        module.exports = random;
     }
 }, this));
 //# sourceMappingURL=main.js.map
