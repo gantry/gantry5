@@ -134,7 +134,6 @@ class FileManager extends JsonController
             if ($file->dir) { $folders->append($file); }
             else { $files->append($file); }
         }*/
-        xdebug_break();
         $response = [];
         $response['html'] = $this->container['admin.theme']->render('@gantry-admin/ajax/filemanager.html.twig', ['active' => $active, 'base' => $base, 'bookmarks' => $bookmarks, 'folders' => $folders, 'files' => $files]);
 
