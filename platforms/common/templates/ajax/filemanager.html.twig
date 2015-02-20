@@ -1,19 +1,15 @@
-<div class="g-particles-header filemanager-header settings-block clearfix">{{ active|join(', ') }}</div>
+{#<div class="g-particles-header filemanager-header settings-block clearfix">{{ active|join(', ') }}</div>#}
 
 <div class="g-particles-main icons-wrapper g-grid">
-    <div class="folders g-block size-1-4">
+    <div class="folders g-block size-30">
         <ul class="g-bookmarks">
             {% for index,bookmark in bookmarks %}
-                <li class="g-bookmark">
-                    <span>{{ index }}</span>
-                    <ul class="g-folders">
+                <li class="g-bookmark{{ (index in active) ? ' selected' : '' }}">
+                    <span class="g-bookmark-title" title="{{ index }}">{{ index }} <i class="g-bookmark-collapse fa fa-fw fa-minus"></i></span>
+                    <ul class="g-folders fa-ul">
                         {% for folder in bookmark %}
-                            <li>{{ folder }}</li>
-                            <ul class="g-bookmark-folders">
-                                {% for bookmarkFolder in attribute(attribute(folders, index), folder) %}
-                                    <li data-folder="{{ bookmarkFolder|json_encode()|e('html_attr') }}">{{ bookmarkFolder.filename }}</li>
-                                {% endfor %}
-                            </ul>
+                            <li{{ (index in active) ? ' class="selected active"' : '' }} data-folder="{{ {pathname: folder}|json_encode|e('html_attr') }}"><i class="fa-li fa fa-folder-o"></i> <span class="path" title="{{ folder }}">{{ folder }}</span></li>
+                            {% include 'ajax/filemanager/subfolders.html.twig' with {'folder': attribute(attribute(folders, index), folder) } %}
                         {% endfor %}
                     </ul>
                 </li>
@@ -24,22 +20,10 @@
         </ul>
     </div>
     <div class="g-files g-block">
-        <ul>
-            {% for index,file in files %}
-                <li data-file="{{ file|json_encode()|e('html_attr') }}">
-                    {% if 'image/' in file.mime %}
-                    <div class="g-image" style="background-image:url({{ url(file.pathname) }})"></div>
-                    {% else %}
-                    <div>{{ file.extension }}</div>
-                    {% endif %}
-
-                    <span>{{ file.filename }}</span>
-                </li>
-            {% endfor %}
-        </ul>
+        {% include 'ajax/filemanager/files.html.twig' with {'files': files } %}
     </div>
 </div>
-<div class="g-breadcrumbs">{{ base }}</div>
+{#<div class="g-breadcrumbs">{{ base }}</div>#}
 <div class="g-particles-footer settings-block clearfix">
     <div class="float-right">
         <a href="#" class="button button-primary" data-select>Select</a>

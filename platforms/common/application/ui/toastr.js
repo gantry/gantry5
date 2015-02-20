@@ -5,7 +5,7 @@ var prime   = require('prime'),
     Bound   = require('prime-util/prime/bound'),
     Options = require('prime-util/prime/options'),
     zen     = require('elements/zen'),
-    $       = require('../utils/elements.moofx.js'),
+    $       = require('../utils/elements.utils.js'),
     storage = require('prime/map')(),
 
     bind    = require('mout/function/bind'),

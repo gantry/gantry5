@@ -34,6 +34,7 @@ class FileManager extends JsonController
 
         if (isset($_POST)) {
             $drives = isset($_POST['root']) ? ($_POST['root'] != 'false' ? $_POST['root'] : [DS]) : [DS];
+            $subfolder = isset($_POST['subfolder']) ? true : false;
         }
 
         if (!is_array($drives)) {
@@ -94,7 +95,7 @@ class FileManager extends JsonController
                     if ($info->isDot() || substr($info->getFilename(), 0, 1) == '.') { continue; }
                     $file = new \stdClass();
 
-                    foreach(['getFilename', 'getExtension', 'getPerms', 'getMTime', 'getBasename', 'getPath', 'getPathname', 'getSize', 'getType', 'isReadable', 'isWritable', 'isDir', 'isFile'] as $method){
+                    foreach(['getFilename', 'getExtension', 'getPerms', 'getMTime', 'getBasename', 'getPathname', 'getSize', 'getType', 'isReadable', 'isWritable', 'isDir', 'isFile'] as $method){
                         $keyMethod = strtolower(preg_replace("/^(is|get)/", '', $method));
                         $file->{$keyMethod} = $info->{$method}();
                         if ($method == 'getPathname') {
@@ -135,7 +136,19 @@ class FileManager extends JsonController
             else { $files->append($file); }
         }*/
         $response = [];
-        $response['html'] = $this->container['admin.theme']->render('@gantry-admin/ajax/filemanager.html.twig', ['active' => $active, 'base' => $base, 'bookmarks' => $bookmarks, 'folders' => $folders, 'files' => $files]);
+
+        if (!$subfolder) {
+            $response['html'] = $this->container['admin.theme']->render('@gantry-admin/ajax/filemanager.html.twig', [
+                'active'    => $active,
+                'base'      => $base,
+                'bookmarks' => $bookmarks,
+                'folders'   => $folders,
+                'files'     => $files
+            ]);
+        } else {
+            $response['subfolder'] = !$folders[$key][$folder]->count() ? false : $this->container['admin.theme']->render('@gantry-admin/ajax/filemanager/subfolders.html.twig', ['folder' => $folders[$key][$folder]]);
+            $response['files'] = !$files->count() ? false : $this->container['admin.theme']->render('@gantry-admin/ajax/filemanager/files.html.twig', ['files' => $files]);
+        }
 
         return new JsonResponse($response);
     }

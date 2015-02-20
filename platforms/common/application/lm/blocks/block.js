@@ -1,7 +1,7 @@
 "use strict";
 var prime     = require('prime'),
     Base      = require('./base'),
-    $         = require('../../utils/elements.moofx'),
+    $         = require('../../utils/elements.utils'),
     zen       = require('elements/zen'),
     precision = require('mout/number/enforcePrecision'),
     bind      = require('mout/function/bind');

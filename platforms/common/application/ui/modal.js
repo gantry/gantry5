@@ -1,7 +1,7 @@
 "use strict";
 
 var prime    = require('prime'),
-    $        = require('../utils/elements.moofx'),
+    $        = require('../utils/elements.utils'),
     zen      = require('elements/zen'),
     storage  = require('prime/map')(),
     Emitter  = require('prime/emitter'),

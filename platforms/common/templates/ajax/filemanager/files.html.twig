@@ -1,0 +1,13 @@
+<ul>
+    {% for index,file in files %}
+        <li data-file="{{ file|json_encode()|e('html_attr') }}">
+            {% if 'image/' in file.mime %}
+                <div class="g-image" style="background-image:url({{ url(file.pathname) }})"></div>
+            {% else %}
+                <div>{{ file.extension }}</div>
+            {% endif %}
+
+            <span>{{ file.filename }}</span>
+        </li>
+    {% endfor %}
+</ul>
