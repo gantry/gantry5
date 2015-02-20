@@ -48,8 +48,15 @@ class Styles extends HtmlController
 
     public function index()
     {
+        $id = $this->params['configuration'];
         $this->params['blocks'] = $this->container['styles']->group();
         $this->params['route']  = "configurations.{$this->params['configuration']}.styles";
+
+        if($id == 'default') {
+            $this->params['overrideable'] = false;
+        } else {
+            $this->params['overrideable'] = true;
+        }
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/styles/styles.html.twig', $this->params);
     }
