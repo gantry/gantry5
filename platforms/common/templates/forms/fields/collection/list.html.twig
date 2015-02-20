@@ -19,25 +19,25 @@
         <div class="settings-param {{ field.type|replace('.', '-') }}">
             {% block contents %}
                 {% set field_route = gantry.route((route ~ '.' ~ scope)|replace('.', '/') ~ field.name) %}
-                <div class="settings-param-toolbar">
-                    <span class="settings-param-title">
-                        {% block label %}
-                            {% if field.description %}
-                                <span class="tooltip" data-asTooltip-position="w" title="{{ field.description|e }}">{{- field.label|e -}}</span>
-                            {% else %}
-                                {{ field.label|e }}
-                            {% endif %}
-                            {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
-                        {% endblock %}
-                    </span>
-                    <span class="button" data-collection-add=""><i class="fa fa-fw fa-plus"></i></span>
-                    <a class="button" data-collection-editall="" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content-instance]" href="{{ field_route }}"><i class="fa fa-fw fa-pencil-square"></i></a>
-                    {% if overrideable %}
-                        <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
-                        <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
-                    {% endif %}
-                </div>
+                    <span class="settings-param-title float-left">
+                    {% block label %}
+                        {% if field.description %}
+                            <span class="tooltip" data-asTooltip-position="w" title="{{ field.description|e }}">{{ field.label|e }}</span>
+                        {% else %}
+                            {{ field.label|e }}
+                        {% endif %}
+                        {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
+                    {% endblock %}
+                </span>
                 <div class="settings-param-field" data-field-name="{{ field.name  }}">
+                    <div class="settings-param-toolbar">
+                        <span class="button" data-collection-add=""><i class="fa fa-fw fa-plus"></i></span>
+                        <a class="button" data-collection-editall="" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content-instance]" href="{{ field_route }}"><i class="fa fa-fw fa-pencil-square"></i></a>
+                        {% if overrideable %}
+                            <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
+                            <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
+                        {% endif %}
+                    </div>
                     {% block input %}
                         {% if field.fields %}
                             <ul>
