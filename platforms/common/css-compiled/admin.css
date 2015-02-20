@@ -1,11 +1,11 @@
-/* line 2, /Users/joshuamweiss/Repositories/Git/Work/bitbucket/rockettheme/gantry-playground/engines/nucleus/scss/nucleus/mixins/_utilities.scss */
+/* line 2, /Users/w00fz/Projects/git/gantry/gantry-playground/engines/nucleus/scss/nucleus/mixins/_utilities.scss */
 #g5-container .settings-block .collection-list ul, #g5-container #page-picker ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, .g5-dialog #g5-container .g-tabs ul, .g5-lm-particles-picker ul, .g5-lm-particles-picker li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content [data-file] {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* line 9, /Users/joshuamweiss/Repositories/Git/Work/bitbucket/rockettheme/gantry-playground/engines/nucleus/scss/nucleus/mixins/_utilities.scss */
+/* line 9, /Users/w00fz/Projects/git/gantry/gantry-playground/engines/nucleus/scss/nucleus/mixins/_utilities.scss */
 #g5-container .submenu-ratio i {
   position: relative;
   top: 50%;
@@ -817,7 +817,7 @@ a {
   border-width: 1px 1px 0;
   border-style: solid solid none;
   border-color: #D8D8D8 #D8D8D8;
-  padding: 5px 10px;
+  padding: 6px 10px;
 }
 /* line 109, ../scss/admin/_settings.scss */
 #g5-container .settings-block .collection-list .settings-param-title {
@@ -3592,43 +3592,106 @@ body.g5-dialog-open {
 /* line 14, ../scss/admin/particles/_filemanager.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content {
   width: 650px;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
 }
-/* line 18, ../scss/admin/particles/_filemanager.scss */
+/* line 19, ../scss/admin/particles/_filemanager.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-particles-header input, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-particles-header label, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-particles-header select {
   font-size: 0.8em;
 }
-/* line 28, ../scss/admin/particles/_filemanager.scss */
+/* line 29, ../scss/admin/particles/_filemanager.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark {
   font-family: "Monaco", "Courier New", Courier, monospace;
   font-size: 0.8em;
 }
-/* line 32, ../scss/admin/particles/_filemanager.scss */
-.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark span {
+/* line 33, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark .g-bookmark-title {
   width: 100%;
   background: #e9e9e9;
   display: block;
   border-radius: 3px;
   color: #999999;
   margin-top: 1rem;
-  padding: 4px;
+  padding: 4px 16px 4px 4px;
   white-space: pre;
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-/* line 43, ../scss/admin/particles/_filemanager.scss */
+/* line 45, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark .g-bookmark-title .g-bookmark-collapse {
+  position: absolute;
+  right: 2px;
+  top: 0;
+  bottom: 0;
+  line-height: 2.2em;
+  cursor: pointer;
+}
+/* line 56, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark.collapsed .g-bookmark-collapse::before {
+  content: "\f067";
+}
+/* line 61, ../scss/admin/particles/_filemanager.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark:first-child span {
   margin-top: 0;
 }
-/* line 49, ../scss/admin/particles/_filemanager.scss */
+/* line 65, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark .fa-ul {
+  margin-left: 1.14285714em;
+}
+/* line 67, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark .fa-ul > li {
+  cursor: pointer;
+}
+/* line 70, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark .fa-ul > li:hover {
+  color: #729DAE;
+}
+/* line 74, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark .fa-ul > li.active > .fa::before {
+  content: "\f115";
+}
+/* line 78, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-bookmarks .g-bookmark .fa-ul > li .path {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* line 86, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-folders {
+  margin: 0;
+  padding-left: 2.14285714em;
+}
+/* line 91, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files, .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .folders {
+  max-height: 500px;
+  overflow: auto;
+  margin-right: -10px;
+}
+/* line 98, ../scss/admin/particles/_filemanager.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files > ul {
+  margin: -12px 1em 6px;
+}
+/* line 102, ../scss/admin/particles/_filemanager.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files [data-file] {
   display: inline-block;
   max-width: 100px;
   vertical-align: middle;
   text-align: center;
-  margin: 6px 2px;
+  margin: 12px 15px;
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* line 59, ../scss/admin/particles/_filemanager.scss */
+/* line 112, ../scss/admin/particles/_filemanager.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files [data-file] .g-image {
   position: relative;
   float: left;
@@ -3638,7 +3701,7 @@ body.g5-dialog-open {
   background-repeat: no-repeat;
   background-size: cover;
 }
-/* line 69, ../scss/admin/particles/_filemanager.scss */
+/* line 122, ../scss/admin/particles/_filemanager.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files [data-file] div {
   background-color: #fff;
   width: 100px;
@@ -3648,9 +3711,11 @@ body.g5-dialog-open {
   font-size: 0.8em;
   border-radius: 0.1875rem;
 }
-/* line 79, ../scss/admin/particles/_filemanager.scss */
+/* line 132, ../scss/admin/particles/_filemanager.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filemanager .g5-content .g-files [data-file] span {
   font-size: 0.7em;
+  margin-top: 0.5em;
+  display: inline-block;
 }
 
 /* line 6, ../scss/admin/_particles.scss */
