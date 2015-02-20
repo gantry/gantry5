@@ -67,9 +67,73 @@ ready(function () {
     body.delegate('click', '#settings [data-collection-editall]', function (event, element) {
         event.preventDefault();
 
-        var root = element.parent('[data-set-root]');
+        var data = {};
 
-        root.style('display', 'none');
+        modal.open({
+            content: 'Loading',
+            method: 'post',
+            data: data,
+            remote: $(element).attribute('href') + getAjaxSuffix(),
+            remoteLoaded: function (response, content) {
+                var form = content.elements.content.find('form'),
+                    submit = content.elements.content.find('input[type="submit"], button[type="submit"]'),
+                    dataString = [];
+
+                if (!form || !submit) {
+                    return true;
+                }
+
+                // Particle Settings apply
+                submit.on('click', function (e) {
+                    e.preventDefault();
+                    dataString = [];
+
+                    submit.showSpinner();
+
+                    $(form[0].elements).forEach(function (input) {
+                        input = $(input);
+                        var name = input.attribute('name'),
+                            value = input.value();
+
+                        if (!name) {
+                            return;
+                        }
+                        dataString.push(name + '=' + value);
+                    });
+
+                    request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function (error, response) {
+                        if (!response.body.success) {
+                            modal.open({
+                                content: response.body.html || response.body,
+                                afterOpen: function (container) {
+                                    if (!response.body.html) {
+                                        container.style({width: '90%'});
+                                    }
+                                }
+                            });
+                        } else {
+                            /*if (response.body.path) {
+                             menumanager.items[response.body.path] = response.body.item;
+                             } else {
+                             menumanager.settings = response.body.settings;
+                             }
+
+                             if (response.body.html) {
+                             var parent = element.parent('[data-mm-id]');
+                             if (parent) {
+                             parent.html(response.body.html);
+                             }
+                             }*/
+
+                            modal.close();
+                            toastr.success('Test save', 'Settings Applied');
+                        }
+
+                        submit.hideSpinner();
+                    });
+                });
+            }
+        });
 
 
     });
@@ -189,7 +253,7 @@ ready(function () {
                             }*/
 
                             modal.close();
-                            toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
+                            toastr.success('Test save', 'Settings Applied');
                         }
 
                         submit.hideSpinner();
