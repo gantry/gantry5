@@ -817,7 +817,7 @@ a {
   border-width: 1px 1px 0;
   border-style: solid solid none;
   border-color: #D8D8D8 #D8D8D8;
-  padding: 5px 10px;
+  padding: 6px 10px;
 }
 /* line 109, ../scss/admin/_settings.scss */
 #g5-container .settings-block .collection-list .settings-param-title {
@@ -854,16 +854,22 @@ a {
 #g5-container .settings-block img {
   display: block;
 }
-/* line 148, ../scss/admin/_settings.scss */
+/* line 150, ../scss/admin/_settings.scss */
 #g5-container .g5-dialog .settings-block {
   width: 100%;
   margin: 0 0 15px;
 }
-/* line 154, ../scss/admin/_settings.scss */
+/* line 155, ../scss/admin/_settings.scss */
+#g5-container .g5-dialog .g-modal-body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  max-height: 650px;
+}
+/* line 163, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker {
   position: relative;
 }
-/* line 157, ../scss/admin/_settings.scss */
+/* line 166, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker .settings-param-field-colorpicker-preview {
   position: absolute;
   top: 2px;

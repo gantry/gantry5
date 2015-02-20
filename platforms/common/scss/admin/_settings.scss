@@ -145,9 +145,18 @@
 }
 
 // modal
-.g5-dialog .settings-block {
-    width: 100%;
-    margin: 0 0 15px;
+.g5-dialog {
+
+    .settings-block {
+        width: 100%;
+        margin: 0 0 15px;
+    }
+
+    .g-modal-body {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-height: 650px;
+    }
 }
 
 // fields styles

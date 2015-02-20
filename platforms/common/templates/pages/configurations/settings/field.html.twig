@@ -3,27 +3,35 @@
 {% block gantry %}
 <form method="POST">
     {% if blueprints.type == 'collection.list' %}
-        {% include 'forms/fields.html.twig' %}
-        <div class="g-modal-actions">
-            <a class="button float-left">Reset</a>
-            <button class="button button-primary" type="submit">Apply</button>
-            <a class="button g5-dialog-close">Cancel</a>
-        </div>
-    {% else %}
-        <div class="cards-wrapper">
-            <div class="card settings-block">
-                <h4>
-                    Edit {{ key }}
-                </h4>
-                <div class="inner-params">
-                    {% include 'forms/fields.html.twig' %}
-                </div>
+        <div class="g-modal collection">
+            <div class="g-modal-body">
+                {% include 'forms/fields.html.twig' %}
+            </div>
+            <div class="g-modal-actions">
+                <a class="button float-left">Reset</a>
+                <button class="button button-primary" type="submit">Apply</button>
+                <a class="button g5-dialog-close">Cancel</a>
             </div>
         </div>
-        <div class="g-modal-actions">
-            <a class="button float-left">Reset</a>
-            <button class="button button-primary" type="submit">Apply</button>
-            <a class="button g5-dialog-close">Cancel</a>
+    {% else %}
+        <div class="g-modal">
+            <div class="g-modal-body">
+                <div class="cards-wrapper">
+                    <div class="card settings-block">
+                        <h4>
+                            Edit {{ key }}
+                        </h4>
+                        <div class="inner-params">
+                            {% include 'forms/fields.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="g-modal-actions">
+                <a class="button float-left">Reset</a>
+                <button class="button button-primary" type="submit">Apply</button>
+                <a class="button g5-dialog-close">Cancel</a>
+            </div>
         </div>
     {% endif %}
 </form>
