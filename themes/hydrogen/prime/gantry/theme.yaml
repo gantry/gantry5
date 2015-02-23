@@ -14,6 +14,12 @@ details:
   support:
     link: http://www.rockettheme.com/forum/joomla-template-hydrogen
 
+  updates:
+    link: http://updates.rockettheme.com/themes/hydrogen.yaml
+
+  news:
+    link: http://news.rockettheme.com/prime/themes.yaml
+
   copyright: (C) 2005 - 2015 RocketTheme, LLC. All rights reserved.
   license: GPLv2
   description: Hydrogen Theme
@@ -42,6 +48,7 @@ configuration:
       - gantry-engine://scss
     files:
       - hydrogen.scss
+      - custom.scss
 
   dependencies:
     gantry: 5.0.*
@@ -49,5 +56,11 @@ configuration:
     asset/font-awesome: 4.2
     particle/menu: 1.0.*
 
-  updates: http://updates.rockettheme.com/themes/hydrogen.yaml
-  news: http://news.rockettheme.com/prime/themes.yaml
+admin:
+  styles:
+    section:
+      - header
+      - showcase
+      - subfeature
+    core:
+      - base
