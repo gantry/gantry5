@@ -58,7 +58,7 @@ class Menu extends HtmlController
         }
 
         // Fill parameters to be passed to the template file.
-        $this->params['id'] = $id;
+        $this->params['id'] = $resource->name();
         $this->params['menus'] = $resource->getMenus();
         $this->params['menu'] = $resource;
         $this->params['path'] = implode('/', $path);
@@ -98,7 +98,7 @@ class Menu extends HtmlController
         }
 
         // Fill parameters to be passed to the template file.
-        $this->params['id'] = $id;
+        $this->params['id'] = $resource->name();
         $this->params['blueprints'] = $this->loadBlueprints();
         $this->params['data'] = ['settings' => $resource->settings()];
 
@@ -107,11 +107,13 @@ class Menu extends HtmlController
 
     public function save($id = null)
     {
+        $resource = $this->loadResource($id);
+
         $data = $this->build($_POST);
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
-        $filename = $locator->findResource("gantry-config://menu/{$id}.yaml", true, true);
+        $filename = $locator->findResource("gantry-config://menu/{$resource->name()}.yaml", true, true);
 
         $file = YamlFile::instance($filename);
         $file->settings(['inline' => 99]);
@@ -149,7 +151,7 @@ class Menu extends HtmlController
         $blueprints = $this->loadBlueprints('menuitem');
 
         $this->params = [
-                'id' => $id,
+                'id' => $resource->name(),
                 'path' => $path,
                 'blueprints' => ['fields' => $blueprints['form.fields.items.fields']],
                 'data' => $item->toArray() + ['path' => $path],
@@ -207,7 +209,7 @@ class Menu extends HtmlController
         $item->update($data->toArray());
 
         // Fill parameters to be passed to the template file.
-        $this->params['id'] = $id;
+        $this->params['id'] = $resource->name();
         $this->params['item'] = $item;
         $this->params['group'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
 

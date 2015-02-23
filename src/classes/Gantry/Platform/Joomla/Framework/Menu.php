@@ -3,6 +3,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
+use Gantry\Component\Menu\Item;
 
 class Menu extends AbstractMenu
 {
@@ -35,6 +36,7 @@ class Menu extends AbstractMenu
      * Return list of menus.
      *
      * @return array
+     * @throws \RuntimeException
      */
     public function getMenus()
     {
@@ -44,7 +46,7 @@ class Menu extends AbstractMenu
             // Get the menu types of menus in the list.
             $db = \JFactory::getDbo();
 
-            // Get the published menu counts.
+            // Get the menu types.
             $query = $db->getQuery(true)
                 ->select('menutype')
                 ->from('#__menu_types');
@@ -81,7 +83,7 @@ class Menu extends AbstractMenu
         if (in_array($item->id, $path)) {
             return true;
         } elseif ($item->type == 'alias') {
-            $aliasToId = $item->params->get('aliasoptions');
+            $aliasToId = $item->link_id;
 
             if (count($path) > 0 && $aliasToId == $path[count($path) - 1]) {
                 return (bool) $this->params['highlightAlias'];
@@ -102,12 +104,13 @@ class Menu extends AbstractMenu
     /**
      * Get menu items from the platform.
      *
-     * @param int $levels
+     * @param array $params
      * @return array    List of routes to the pages.
      */
-    protected function getItemsFromPlatform($levels)
+    protected function getItemsFromPlatform($params)
     {
-        // TODO:
+        // Items are already filtered by ViewLevels and user language.
+        return $this->menu->getItems('menutype', $params['menu'] ?: $this->default->menutype);
     }
 
     /**
@@ -144,8 +147,6 @@ class Menu extends AbstractMenu
      * We should keep the contents of the function similar to Joomla in order to review it against any changes.
      *
      * @param  array  $params
-     *
-     * @return array
      */
     protected function getList(array $params)
     {
@@ -154,40 +155,52 @@ class Menu extends AbstractMenu
 
         // Make sure that the menu item exists.
         if (!$this->base) {
-            return [];
+            return;
         }
 
-        $levels = \JFactory::getUser()->getAuthorisedViewLevels();
-        asort($levels);
+        //$levels = \JFactory::getUser()->getAuthorisedViewLevels();
+        //asort($levels);
 
-        $key = 'gantry_menu_items.' . json_encode($params) . json_encode($levels) . '.' . $this->base->id;
-        $cache = \JFactory::getCache('mod_menu', '');
-        $tree = $cache->get($key);
+        //$key = 'gantry_menu_items.' . json_encode($params) . '.' . json_encode($levels) . '.' . $this->base->id;
+        //$cache = \JFactory::getCache('mod_menu', '');
+        //$this->items = $cache->get($key);
 
-        if (!$tree) {
-            $menu    = $this->app->getMenu();
+        if (!$this->items) {
+            $config = $this->config();
+            $items   = isset($config['items']) ? $config['items'] : [];
+
             $path    = $this->base->tree;
             $start   = $params['startLevel'];
             $end     = $params['endLevel'];
             $showAll = $params['showAllChildren'];
 
-            // Items are already filtered by ViewLevels and user language.
-            $menuItems = $menu->getItems('menutype', $params['menu'] ?: $this->default->menutype);
+            $menuItems = $this->getItemsFromPlatform($params);
 
-            $all = $tree = [];
-            foreach ($menuItems as $item) {
-                if (($start && $start > $item->level)
-                    || ($end && $item->level > $end)
-                    || (!$showAll && $item->level > 1 && !in_array($item->parent_id, $path))
-                    || ($start > 1 && !in_array($item->tree[$start - 2], $path))) {
+            $this->items = ['' => new Item($this, '', ['layout' => 'horizontal'])];
+            foreach ($menuItems as $menuItem) {
+                if (($start && $start > $menuItem->level)
+                    || ($end && $menuItem->level > $end)
+                    || (!$showAll && $menuItem->level > 1 && !in_array($menuItem->parent_id, $path))
+                    || ($start > 1 && !in_array($menuItem->tree[$start - 2], $path))) {
                     continue;
                 }
 
+                $itemParams = isset($items[$menuItem->route]) ? $items[$menuItem->route] : [];
+                $itemParams += [
+                    'id' => $menuItem->id,
+                    'type' => $menuItem->type,
+                    'path' => $menuItem->route,
+                    'alias' => $menuItem->alias,
+                    'title' => $menuItem->title,
+                    'link' => $menuItem->link,
+                    'link_id' => $menuItem->params->get('aliasoptions', 0),
+                    'browserNav' => $menuItem->params->get('browserNav', 0),
+                    'menu_text' => $menuItem->params->get('menu_text', 1)
+                ];
 
-                // TODO: very slow operation for large menus...
-                $item->parent = (boolean) $menu->getItems('parent_id', (int) $item->id, true);
-                $item->children = [];
-                $item->active = false;
+                $item = new Item($this, $menuItem->route, $itemParams);
+                $this->add($item);
+
                 $link  = $item->link;
 
                 switch ($item->type) {
@@ -206,7 +219,7 @@ class Menu extends AbstractMenu
 
                     case 'alias':
                         // If this is an alias use the item id stored in the parameters to make the link.
-                        $link = 'index.php?Itemid=' . $item->params->get('aliasoptions');
+                        $link = 'index.php?Itemid=' . $item->link_id;
                         break;
 
                     default:
@@ -216,8 +229,8 @@ class Menu extends AbstractMenu
                         if ($router->getMode() == JROUTER_MODE_SEF) {
                             $link = 'index.php?Itemid=' . $item->id;
 
-                            if (isset($item->query['format']) && $app->get('sef_suffix')) {
-                                $link .= '&format=' . $item->query['format'];
+                            if (isset($menuItem->query['format']) && $app->get('sef_suffix')) {
+                                $link .= '&format=' . $menuItem->query['format'];
                             }
                         } else {
                             $link .= '&Itemid=' . $item->id;
@@ -226,26 +239,21 @@ class Menu extends AbstractMenu
                 }
 
                 if (!$link) {
-                    $item->link = null;
+                    $item->url(false);
                 } elseif (strcasecmp(substr($link, 0, 4), 'http') && (strpos($link, 'index.php?') !== false)) {
-                    $item->link = \JRoute::_($link, true, $item->params->get('secure'));
+                    $item->url(\JRoute::_($link, true, $menuItem->params->get('secure')));
                 } else {
-                    $item->link = \JRoute::_($link);
+                    $item->url(\JRoute::_($link));
                 }
 
                 if ($item->type == 'url') {
                     // Moved from modules/mod_menu/tmpl/default_url.php, not sure why Joomla had application logic in there.
-                    $item->link = \JFilterOutput::ampReplace(htmlspecialchars($item->link));
+                    $item->url(\JFilterOutput::ampReplace(htmlspecialchars($item->link)));
                 }
 
-                // We prevent the double encoding because for some reason the $item is shared for menu modules and we get double encoding
-                // when the cause of that is found the argument should be removed
-                $item->title        = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8', false);
-                $item->anchor_css   = htmlspecialchars($item->params->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
-                $item->anchor_title = htmlspecialchars($item->params->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
-                $item->menu_image   = $item->params->get('menu_image', '') ?
-                    htmlspecialchars($item->params->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
-                $item->menu_text    = (bool) $item->params->get('menu_text', true);
+                $item->anchor_css   = $menuItem->params->get('menu-anchor_css', '');
+                $item->anchor_title = $menuItem->params->get('menu-anchor_title', '');
+                $item->menu_image   = $menuItem->params->get('menu_image', '');
 
                 switch ($item->browserNav)
                 {
@@ -263,20 +271,11 @@ class Menu extends AbstractMenu
                         $item->anchor_attributes = ' onclick="window.open(this.href,\'targetWindow\',\'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes' . ($params['window_open'] ? ',' . $params['window_open'] : '') . '\');return false;"';
                         break;
                 }
-
-                // Build nested tree structure.
-                if (isset($all[$item->parent_id])) {
-                    $all[$item->parent_id]->children[] = $item;
-                } else {
-                    $tree[$item->id] = $item;
-                }
-                $all[$item->id] = $item;
-
             }
 
-            $cache->store($tree, $key);
-        }
+            $this->sortAll();
 
-        return $tree;
+            //$cache->store($this->items, $key);
+        }
     }
 }

@@ -111,15 +111,13 @@ class Menu extends AbstractMenu
      * We should keep the contents of the function similar to Joomla in order to review it against any changes.
      *
      * @param  array  $params
-     *
-     * @return array
      */
     protected function getList(array $params)
     {
-        $config = $this->config();
-
         $start   = $params['startLevel'];
         $end     = $params['endLevel'];
+
+        $config = $this->config();
         $items   = isset($config['items']) ? $config['items'] : [];
 
         $menuItems = array_unique(array_merge($this->getItemsFromPlatform($start <= $end ? $end : -1), array_keys($items)));
@@ -129,8 +127,7 @@ class Menu extends AbstractMenu
         $this->base = $this->calcBase($params['base']);
         $showAll = $params['showAllChildren'];
 
-        /** @var array|Item[] $all */
-        $all = ['' => new Item($this, '', ['layout' => 'horizontal'])];
+        $this->items = ['' => new Item($this, '', ['layout' => 'horizontal'])];
         foreach ($menuItems as $name) {
             $parent = dirname($name);
             $level = substr_count($name, '/') + 1;
@@ -144,7 +141,7 @@ class Menu extends AbstractMenu
             }
 
             $item = new Item($this, $name, isset($items[$name]) && is_array($items[$name]) ? $items[$name] : []);
-
+            $this->add($item);
 
             // Placeholder page.
             if ($item->type == 'link' && !isset($this->pages[$item->path])) {
@@ -188,19 +185,8 @@ class Menu extends AbstractMenu
                     $item->anchor_attributes = ' onclick="window.open(this.href,\'targetWindow\',\'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes' . ($params['window_open'] ? ',' . $params['window_open'] : '') . '\');return false;"';
                     break;
             }
-
-            // Build nested tree structure.
-            if (isset($all[$item->parent_id])) {
-                $all[$item->parent_id]->addChild($item);
-            } else {
-                $all['']->addChild($item);
-            }
-            $all[$item->path] = $item;
         }
 
-        $ordering = $config['ordering'] ? $config['ordering'] : [];
-        $this->sortAll($all, $ordering);
-
-        return $all;
+        $this->sortAll();
     }
 }

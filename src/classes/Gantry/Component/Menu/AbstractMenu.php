@@ -77,7 +77,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
             $instance->config = $menu;
         }
 
-        $instance->items = $instance->getList($params);
+        $instance->getList($params);
 
         return $instance;
     }
@@ -189,6 +189,20 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
         return $item->path == $this->getActive()->path;
     }
 
+    public function add(Item $item)
+    {
+        $this->items[$item->path] = $item;
+
+        // Assign menu item to its parent.
+        if (isset($this->items[$item->parent_id])) {
+            $this->items[$item->parent_id]->addChild($item);
+        } else {
+            throw new \RuntimeException('Internal menu structure error');
+        }
+
+        return $this;
+    }
+
     /**
      * Get menu items from the platform.
      *
@@ -213,34 +227,32 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
     /**
      * Get a list of the menu items.
      *
-     * Logic has been mostly copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
-     * We should keep the contents of the function similar to Joomla in order to review it against any changes.
-     *
      * @param  array  $params
-     *
-     * @return array
      */
     abstract protected function getList(array $params);
 
     /**
-     * @param array|Item[] $items
      * @param array $ordering
      * @param string $path
      */
-    protected function sortAll(array &$items, array &$ordering, $path = '')
+    protected function sortAll(array &$ordering = null, $path = '')
     {
-        if (!isset($items[$path]) || !$items[$path]->hasChildren()) {
+        if (!$ordering) {
+            $config = $this->config();
+            $ordering = $config['ordering'] ? $config['ordering'] : [];
+        }
+
+        if (!isset($this->items[$path]) || !$this->items[$path]->hasChildren()) {
             return;
         }
 
-        /** @var Item $item */
-        $item = $items[$path];
+        $item = $this->items[$path];
         if ($this->isAssoc($ordering)) {
             $item->sortChildren($ordering);
 
             foreach ($ordering as $key => &$value) {
                 if (is_array($value)) {
-                    $this->sortAll($items, $value, $path ? $path . '/' . $key : $key);
+                    $this->sortAll($value, $path ? $path . '/' . $key : $key);
                 }
             }
         } else {
@@ -249,7 +261,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
             foreach ($ordering as &$group) {
                 foreach ($group as $key => &$value) {
                     if (is_array($value)) {
-                        $this->sortAll($items, $value, $path ? $path . '/' . $key : $key);
+                        $this->sortAll($value, $path ? $path . '/' . $key : $key);
                     }
                 }
             }

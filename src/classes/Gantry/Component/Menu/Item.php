@@ -55,6 +55,7 @@ class Item implements \ArrayAccess, \Iterator
     }
 
     /**
+     * @param  string|null|bool $url
      * @return string
      */
     public function url($url = false)
@@ -84,12 +85,25 @@ class Item implements \ArrayAccess, \Iterator
 
     public function groups()
     {
-        return $this->groups ?: [$this->children];
+        if ($this->groups) {
+            $list = [];
+            foreach ($this->groups as $i => $group) {
+                foreach ($group as $path) {
+                    $list[$i][] = $this->menu[$path];
+                }
+            }
+            return $list;
+        }
+        return [$this->children()];
     }
 
     public function children()
     {
-        return $this->children;
+        $list = [];
+        foreach ($this as $child) {
+            $list[] = $child;
+        }
+        return $list;
     }
 
     public function hasChildren()
@@ -115,7 +129,8 @@ class Item implements \ArrayAccess, \Iterator
     public function addChild(Item $child)
     {
         $child->level = $this->level + 1;
-        $this->children[$child->alias] = $child;
+        $child->parent_id = $this->path;
+        $this->children[$child->alias] = $child->path;
 
         return $this;
     }
@@ -168,6 +183,7 @@ class Item implements \ArrayAccess, \Iterator
         $children =& $this->children;
 
         if ($children) {
+            $menu = $this->menu;
             $ordered = [];
             $this->groups[0] = [];
             foreach ($groups as $i => $ordering) {
@@ -182,8 +198,9 @@ class Item implements \ArrayAccess, \Iterator
 
                 // Assign each menu items to the group.
                 $group = array_map(
-                    function($value) use ($i) {
-                        $value->group = $i;
+                    function($value) use ($i, $menu) {
+                        $item = $menu[$value];
+                        $item->group = $i;
                         return $value;
                     },
                     $group
@@ -217,11 +234,11 @@ class Item implements \ArrayAccess, \Iterator
     /**
      * Returns the current child.
      *
-     * @return mixed  Can return any type.
+     * @return Item
      */
     public function current()
     {
-        return current($this->children);
+        return $this->menu[current($this->children)];
     }
 
     /**
