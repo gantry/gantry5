@@ -49,8 +49,8 @@ class Configurations extends HtmlController
     {
         $path = func_get_args();
 
-        $configurations = $this->container['configurations']->all()->toArray();
         $configurations[] = 'default';
+        $configurations += $this->container['configurations']->all()->toArray();
 
         $configuration = in_array($path[0], $configurations) ? array_shift($path) : 'default';
 

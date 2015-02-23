@@ -33,8 +33,15 @@ class LayoutCollection extends Collection
         $finder = new ConfigFileFinder();
         $files = $finder->getFiles($locator->findResources($path), '|\.json$|');
         $files += $finder->getFiles($locator->findResources($path));
+
+        if (!isset($files['default'])) {
+            throw new \RuntimeException('Fatal error: Theme does not have default layout');
+        }
+        unset($files['default']);
+
         $layouts = array_keys($files);
         sort($layouts);
+        array_unshift($layouts, 'default');
 
         $this->items = $layouts;
 
