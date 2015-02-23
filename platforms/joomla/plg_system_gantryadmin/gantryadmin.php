@@ -103,7 +103,7 @@ class plgSystemGantryadmin extends JPlugin
                     case 'style.edit':
                         $id = (int) array_shift($cid);
                         if (isset($styles[$id])) {
-                            $this->app->redirect('index.php?option=com_gantryadmin&view=overview&style=' . $id);
+                            $this->app->redirect('index.php?option=com_gantryadmin&view=about&style=' . $id);
                         }
                         break;
                     default:
@@ -144,7 +144,6 @@ class plgSystemGantryadmin extends JPlugin
 
             if ($id && $uri->getVar('option') == 'com_templates' && isset($this->styles[$id]))
             {
-//                $uri->setVar('option', 'com_gantryadmin');
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
 
                 if ($this->styles[$id])
