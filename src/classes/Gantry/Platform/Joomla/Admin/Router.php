@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Admin;
 
+use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
@@ -12,10 +13,11 @@ class Router extends BaseRouter
     {
         $app = \JFactory::getApplication();
         $input = $app->input;
+        $request = new Request();
 
         \JHtml::_('behavior.keepalive');
 
-        $this->method = 'GET';
+        $this->method = $request->getMethod();
         $this->path = explode('/', $input->getString('view'));
         $this->resource = array_shift($this->path) ?: 'themes';
         $this->format = $input->getCmd('format', 'html');
