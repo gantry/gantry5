@@ -296,7 +296,9 @@ var MenuManager = new prime({
          console.groupEnd();
          }*/
 
-        this.resizer.updateItemSizes(this.block.parent('.submenu-selector').search('> [data-mm-id]'));
+        var selector = this.block.parent('.submenu-selector');
+        if (selector) { this.resizer.updateItemSizes(selector.search('> [data-mm-id]')); }
+
         this.emit('dragEnd', this.map, 'reorder');
     },
 
