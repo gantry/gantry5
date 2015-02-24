@@ -269,5 +269,5 @@ module.exports = {
     fonts: require('./fonts'),
     menu: require('./menu'),
     icons: require('./icons'),
-    filemanager: require('./filemanager')
+    filepicker: require('./filepicker')
 };

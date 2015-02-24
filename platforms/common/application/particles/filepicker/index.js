@@ -12,9 +12,9 @@ var $             = require('../../utils/elements.utils'),
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
     getAjaxURL    = require('../../utils/get-ajax-url').global;
 
-var FileManager = new prime({
+var FilePicker = new prime({
     constructor: function(element) {
-        var data = element.data('g5-filemanager');
+        var data = element.data('g5-filepicker');
         this.data = data ? JSON.parse(data) : false;
 
         console.log(this.data);
@@ -25,8 +25,8 @@ var FileManager = new prime({
             method: 'post',
             data: this.data,
             content: 'Loading',
-            className: 'g5-dialog-theme-default g5-modal-filemanager',
-            remote: getAjaxURL('filemanager') + getAjaxSuffix(),
+            className: 'g5-dialog-theme-default g5-modal-filepicker',
+            remote: getAjaxURL('filepicker') + getAjaxSuffix(),
             remoteLoaded: bind(this.loaded, this)
         });
     },
@@ -56,7 +56,7 @@ var FileManager = new prime({
             fieldData.subfolder = true;
 
             element.showIndicator('fa fa-li fa-fw fa-spin-fast fa-spinner');
-            request(getAjaxURL('filemanager') + getAjaxSuffix(), fieldData).send(bind(function(error, response) {
+            request(getAjaxURL('filepicker') + getAjaxSuffix(), fieldData).send(bind(function(error, response) {
                 element.hideIndicator();
                 this.addActiveState(element);
 
@@ -127,15 +127,15 @@ var FileManager = new prime({
 
 domready(function() {
     var body = $('body');
-    body.delegate('click', '[data-g5-filemanager]', function(event, element) {
+    body.delegate('click', '[data-g5-filepicker]', function(event, element) {
         element = $(element);
-        if (!element.GantryFileManager) {
-            element.GantryFileManager = new FileManager(element);
+        if (!element.GantryFilePicker) {
+            element.GantryFilePicker = new FilePicker(element);
         }
 
-        element.GantryFileManager.open();
+        element.GantryFilePicker.open();
     });
 });
 
 
-module.exports = FileManager;
+module.exports = FilePicker;
