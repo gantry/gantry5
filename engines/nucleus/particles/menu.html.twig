@@ -67,7 +67,7 @@
 <nav
         {%- if particle.css.id %} id="{{ particle.css.id }}"{% endif %}
         class="{%- if particle.css.class %}{{ particle.css.class }}{% endif %}" role="navigation">
-    <ul class="g-toplevel g-standard">
+    <ul class="g-toplevel g-fullwidth">
         {{ _self.displayItems(menu.root, menu) }}
     </ul>
 </nav>
