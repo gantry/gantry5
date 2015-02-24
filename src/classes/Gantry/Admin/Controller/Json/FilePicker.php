@@ -38,7 +38,7 @@ class FilePicker extends JsonController
         if (isset($_POST)) {
             $drives = isset($_POST['root']) ? ($_POST['root'] != 'false' ? $_POST['root'] : [DS]) : [DS];
             $subfolder = isset($_POST['subfolder']) ? true : false;
-            $filter = isset($_POST['filter']) ? $_POST['filter'] : false;
+            $filter = isset($_POST['filter']) ? ($_POST['filter'] != 'false' ? $_POST['filter'] : false) : false;
         }
 
         if (!is_array($drives)) {
