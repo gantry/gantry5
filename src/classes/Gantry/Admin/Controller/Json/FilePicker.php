@@ -112,6 +112,7 @@ class FilePicker extends JsonController
                     if ($file->dir) {
                         $folders[$key][$folder]->append($file);
                     } else {
+                        if ($filter && !preg_match("/".$filter."/i", $file->filename)) { continue; }
                         if (!$index) {
                             $file->mime = finfo_file($finfo, $file->pathname);
                             $files->append($file);
@@ -122,7 +123,7 @@ class FilePicker extends JsonController
                 $index++;
             }
         }
-        
+
         $response = [];
 
         if (!$subfolder) {

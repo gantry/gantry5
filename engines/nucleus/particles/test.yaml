@@ -93,3 +93,9 @@ form:
         - 'gantry-media://imagez'
         - 'gantry-something://'
         - 'media/images/bla'
+    file-6:
+      type: input.filepicker
+      label: Image Filter
+      icon: fa-file-image-o
+      root: 'gantry-media://'
+      filter: '\.(jpe?g|gif|png)$'
