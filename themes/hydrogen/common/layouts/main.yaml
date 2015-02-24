@@ -9,7 +9,7 @@ showcase:
 feature:
   container:
     - position-feature-top
-    - [position-feature-1 33, position-feature-2 33, position-feature-3 34]
+    - [position-feature-1 33.3, position-feature-2 33.3, position-feature-3 33.3]
 
 subfeature:
   container:
