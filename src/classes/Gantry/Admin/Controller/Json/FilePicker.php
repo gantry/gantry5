@@ -31,6 +31,8 @@ class FilePicker extends JsonController
         $locator = $this->container['locator'];
         $base = $locator->base;
         $bookmarks = [];
+        $drives = [DS];
+        $subfolder = false;
         $filter = false;
 
         if (isset($_POST)) {
@@ -56,6 +58,7 @@ class FilePicker extends JsonController
             if (!$isStream && (count($stream) == 2 || !file_exists($path))) {
                 continue;
             }
+
             if ($isStream && !count($resources = $locator->findResources($drive, false))) {
                 continue;
             }
@@ -119,25 +122,7 @@ class FilePicker extends JsonController
                 $index++;
             }
         }
-
-//        die;
-
-        /*foreach (new \DirectoryIterator($path) as $info) {
-            // no dot files nor files beginning with dot
-            if ($info->isDot() || substr($info->getFilename(), 0, 1) == '.') { continue; }
-            $file = new \stdClass();
-
-            foreach(['getFilename', 'getExtension', 'getPerms', 'getMTime', 'getBasename', 'getPath', 'getPathname', 'getSize', 'getType', 'isReadable', 'isWritable', 'isDir', 'isFile'] as $method){
-                $key = strtolower(preg_replace("/^(is|get)/", '', $method));
-                $file->{$key} = $info->{$method}();
-                if ($method == 'getPathname') {
-                    $file->{$key} =  Folder::getRelativePath($file->{$key});
-                }
-            }
-
-            if ($file->dir) { $folders->append($file); }
-            else { $files->append($file); }
-        }*/
+        
         $response = [];
 
         if (!$subfolder) {
