@@ -54,7 +54,7 @@ class LayoutReader
             // Section
             $list = explode(' ', $field, 2);
             $field = array_shift($list);
-            $size = ((int) array_shift($list)) ?: null;
+            $size = ((float) array_shift($list)) ?: null;
 
             $result = (object) [
                 'id' => static::id(),
@@ -94,7 +94,7 @@ class LayoutReader
     {
         $list = explode(' ', $field, 2);
         $list2 = explode('-', array_shift($list), 2);
-        $size = ((int) array_shift($list)) ?: null;
+        $size = ((float) array_shift($list)) ?: null;
         $type = array_shift($list2);
         $subtype = array_shift($list2);
         $title = ucfirst($subtype ?: $type);
