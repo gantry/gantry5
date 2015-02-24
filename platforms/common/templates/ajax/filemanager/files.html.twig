@@ -1,13 +1,43 @@
+{% macro bytesToSize(bytes) -%}
+    {% spaceless %}
+        {% set kilobyte = 1024 %}
+        {% set megabyte = kilobyte * 1024 %}
+        {% set gigabyte = megabyte * 1024 %}
+        {% set terabyte = gigabyte * 1024 %}
+
+        {% if bytes < kilobyte %}
+            {{ bytes ~ ' B' }}
+        {% elseif bytes < megabyte %}
+            {{ (bytes / kilobyte)|number_format(2, '.') ~ ' KB' }}
+        {% elseif bytes < gigabyte %}
+            {{ (bytes / megabyte)|number_format(2, '.') ~ ' MB' }}
+        {% elseif bytes < terabyte %}
+            {{ (bytes / gigabyte)|number_format(2, '.') ~ ' GB' }}
+        {% else %}
+            {{ (bytes / terabyte)|number_format(2, '.') ~ ' TB' }}
+        {% endif %}
+    {% endspaceless %}
+{%- endmacro %}
+
+<ul class="g-list-labels">
+    <li>
+        <span class="g-file-name">Name</span>
+        <span class="g-file-size">Size</span>
+        <span class="g-file-mtime">Last Modified</span>
+    </li>
+</ul>
 <ul>
     {% for index,file in files %}
         <li data-file="{{ file|json_encode()|e('html_attr') }}">
             {% if 'image/' in file.mime %}
-                <div class="g-image" style="background-image:url({{ url(file.pathname) }})"></div>
+                <div class="g-thumb g-image" style="background-image:url({{ url(file.pathname) }})"></div>
             {% else %}
-                <div>{{ file.extension }}</div>
+                <div class="g-thumb">{{ file.extension }}</div>
             {% endif %}
 
-            <span>{{ file.filename }}</span>
+            <span class="g-file-name">{{ file.filename }}</span>
+            <span class="g-file-size">{{ _self.bytesToSize(file.size) }}</span>
+            <span class="g-file-mtime">{{ file.mtime|date('j M o') }}</span>
         </li>
     {% endfor %}
 </ul>
