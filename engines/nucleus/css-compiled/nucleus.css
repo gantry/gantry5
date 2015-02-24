@@ -973,48 +973,6 @@ th {
   flex: 0 95%;
   width: 95%; }
 
-.size-33-3 {
-  -webkit-flex: 0 1 33.33333%;
-  -moz-flex: 0 1 33.33333%;
-  -ms-flex: 0 1 33.33333%;
-  flex: 0 1 33.33333%; }
-
-.size-16-7 {
-  -webkit-flex: 0 1 16.66667%;
-  -moz-flex: 0 1 16.66667%;
-  -ms-flex: 0 1 16.66667%;
-  flex: 0 1 16.66667%; }
-
-.size-14-3 {
-  -webkit-flex: 0 1 14.28571%;
-  -moz-flex: 0 1 14.28571%;
-  -ms-flex: 0 1 14.28571%;
-  flex: 0 1 14.28571%; }
-
-.size-12-5 {
-  -webkit-flex: 0 1 12.5%;
-  -moz-flex: 0 1 12.5%;
-  -ms-flex: 0 1 12.5%;
-  flex: 0 1 12.5%; }
-
-.size-11-1 {
-  -webkit-flex: 0 1 11.11111%;
-  -moz-flex: 0 1 11.11111%;
-  -ms-flex: 0 1 11.11111%;
-  flex: 0 1 11.11111%; }
-
-.size-9-1 {
-  -webkit-flex: 0 1 9.09091%;
-  -moz-flex: 0 1 9.09091%;
-  -ms-flex: 0 1 9.09091%;
-  flex: 0 1 9.09091%; }
-
-.size-8-3 {
-  -webkit-flex: 0 1 8.33333%;
-  -moz-flex: 0 1 8.33333%;
-  -ms-flex: 0 1 8.33333%;
-  flex: 0 1 8.33333%; }
-
 @media only all and (max-width: 47.938rem) {
   body [class*="size-"] {
     -webkit-box-flex: 0;
