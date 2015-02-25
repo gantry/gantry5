@@ -7,7 +7,7 @@ use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 
-class FilePicker extends JsonController
+class Filepicker extends JsonController
 {
     protected $httpVerbs = [
         'GET'  => [
