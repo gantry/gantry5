@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<extension method="upgrade" type="component" version="3.3">
-    <name>Gantry Admin</name>
+<extension version="3.4" type="component" method="upgrade">
+    <name>COM_GANTRYADMIN</name>
     <author>RocketTheme, LLC</author>
     <creationDate>September 4th, 2014</creationDate>
-    <copyright>(C) 2005 - 2014 RocketTheme, LLC. All rights reserved.</copyright>
+    <copyright>(C) 2005 - 2015 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
     <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>
     <version>5.0.0-DEV</version>
-    <description>Gantry Administration</description>
+    <description>COM_GANTRYADMIN_DESCRIPTION</description>
 
     <administration>
         <files>
@@ -23,5 +23,6 @@
             <language tag="en-GB">en-GB/en-GB.com_gantryadmin.ini</language>
             <language tag="en-GB">en-GB/en-GB.com_gantryadmin.sys.ini</language>
         </languages>
+        <menu view="themes">COM_GANTRYADMIN</menu>
     </administration>
 </extension>
