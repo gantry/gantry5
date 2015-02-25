@@ -23,6 +23,6 @@
             <language tag="en-GB">en-GB/en-GB.com_gantryadmin.ini</language>
             <language tag="en-GB">en-GB/en-GB.com_gantryadmin.sys.ini</language>
         </languages>
-        <menu view="themes">COM_GANTRYADMIN</menu>
+        <menu>COM_GANTRYADMIN</menu>
     </administration>
 </extension>

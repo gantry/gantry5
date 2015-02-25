@@ -10,6 +10,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Stylesheet\ScssCompiler;
 use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Theme;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -183,16 +184,12 @@ class Styles extends HtmlController
     {
         $configuration = $this->params['configuration'];
 
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        $out = $this->container['theme.name'] . ($configuration != 'default' ? '_'. $configuration : '');
-
-        $path = $locator->findResource("gantry-theme://css-compiled/{$out}.css", true, true);
-
-        $compiler = new ScssCompiler();
-        $compiler->setVariables($this->container['config']->flatten('styles', '-'));
-        $compiler->compileFile($this->container['theme.name'], $path);
-
+        /** @var Theme $theme */
+        $theme = $this->container['theme'];
+        $compiler = $theme->compiler();
+        $compiler
+            ->setVariables($this->container['config']->flatten('styles', '-'))
+            ->setScope($configuration)
+            ->compileFiles();
     }
 }
