@@ -29,41 +29,6 @@ class ScssCompiler extends CssCompiler
     public function __construct()
     {
         $this->compiler = new Compiler();
-
-    }
-
-    /**
-     * Get default lookup paths.
-     *
-     * @return array
-     */
-    public function getDefaultPaths()
-    {
-        $gantry = Gantry::instance();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        $paths = array_merge(
-            $locator->findResources('gantry-theme://scss'),
-            $locator->findResources('gantry-engine://scss')
-        );
-
-        return $paths;
-    }
-
-    /**
-     * Get default files to compile.
-     *
-     * @return array
-     */
-    public function getDefaultFiles()
-    {
-        $gantry = Gantry::instance();
-
-        $files = [$gantry['theme.name'], 'custom'];
-
-        return $files;
     }
 
     public function compile($in)
@@ -88,22 +53,22 @@ class ScssCompiler extends CssCompiler
         $locator = $gantry['locator'];
 
         if (!$out) {
-            $out = $locator->findResource("gantry-theme://css-compiled/{$in}{$this->scope}.css", true, true);
+            $out = $locator->findResource("gantry-theme://css-compiled/{$in}.css", true, true);
         }
+
+        $paths = array_merge(
+            $locator->findResources('gantry-theme://scss'),
+            $locator->findResources('gantry-engine://scss')
+        );
 
         // Set the lookup paths.
         $this->compiler->setBasePath($out);
-        $this->compiler->setImportPaths($this->paths ?: $this->getDefaultPaths());
+        $this->compiler->setImportPaths($paths);
         $this->compiler->setFormatter('scss_formatter_nested');
 
         // Run the compiler.
         $this->compiler->setVariables($this->getVariables());
-
-        $scss = "@import '{$in}';\n";
-        $css = $this->compiler->compile($scss);
-        if ($css == $scss) {
-            $css = "/* No {$in} CSS */\n";
-        }
+        $css = $this->compiler->compile('@import "' . $in . '.scss"');
 
         $file = File::instance($out);
 

@@ -24,12 +24,12 @@
         {% set parent = item.children ? ' parent' %}
         <li id="g-menu-item-{{ item.id }}" class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{{ parent }}{{ active }}">
             {% if item.url %}
-                <a href="{{ item.url }}"{{ class ~ title ~ item.anchor_attributes }}>{{ _self.displayTitle(item) }}</a>
+                <a class="g-menu-item-content" href="{{ item.url }}"{{ class ~ title ~ item.anchor_attributes }}>{{ _self.displayTitle(item) }}</a>
             {% else %}
                 {% if item.type == 'heading' %}
-                    <span class="g-nav-header"{{ title }}>{{ item.title }}</span>
+                    <span class="g-nav-header g-menu-item-content"{{ title }}>{{ item.title }}</span>
                 {% else %}
-                    <span class="g-separator"{{ title }}>{{ _self.displayTitle(item) }}</span>
+                    <span class="g-separator g-menu-item-content"{{ title }}>{{ _self.displayTitle(item) }}</span>
                 {% endif %}
             {% endif %}
             {% if (item.children) -%}
@@ -44,6 +44,9 @@
         {% for column, items in item.groups %}
         <div class="g-block {{ item.columnWidth(column)|toGrid }}">
             <ul class="g-sublevel">
+                <li class="g-go-back">
+                    <a href="#"><span>Back</span></a>
+                </li>            
                 {{ _self.displayItems(items, menu) }}
             </ul>
         </div>
@@ -58,7 +61,7 @@
 {% endmacro %}
 
 {% macro displaySubmenu(item, menu) %}
-    <ul class="g-dropdown">
+    <ul class="g-dropdown g-inactive">
         <li class="g-dropdown-column">
             {{ _self.displayContainers(item, menu) }}
         </li>

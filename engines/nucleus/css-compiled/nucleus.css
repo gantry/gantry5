@@ -6,7 +6,7 @@
   visibility: hidden;
   overflow: hidden; }
 
-.g-main-nav .g-toplevel > li:hover > .g-dropdown, .g-standard .g-sublevel > li:hover > .g-dropdown {
+.g-standard .g-sublevel > li:hover > .g-dropdown, .g-fullwidth .g-dropdown.g-active {
   opacity: 1;
   visibility: visible;
   overflow: visible; }
@@ -986,19 +986,26 @@ th {
 
 .g-main-nav .g-toplevel > li {
   display: inline-block;
-  -webkit-transition: all 0.1s ease-out;
-  -moz-transition: all 0.1s ease-out;
-  transition: all 0.1s ease-out; }
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  /*
+  &:hover {
+  	> .g-dropdown {
+  		@extend %active-dropdown;
+  	}
+  }
+  */ }
   .g-main-nav .g-toplevel > li > a, .g-main-nav .g-toplevel > li > .g-separator {
     display: block; }
 .g-main-nav .g-dropdown {
-  -webkit-transition: all 0.1s ease-out;
-  -moz-transition: all 0.1s ease-out;
-  transition: all 0.1s ease-out; }
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out; }
 .g-main-nav .g-sublevel > li {
-  -webkit-transition: all 0.1s ease-out;
-  -moz-transition: all 0.1s ease-out;
-  transition: all 0.1s ease-out; }
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out; }
   .g-main-nav .g-sublevel > li a, .g-main-nav .g-sublevel > li .g-separator, .g-main-nav .g-sublevel > li .g-nav-header {
     display: block; }
 
@@ -1021,9 +1028,35 @@ th {
   .g-fullwidth .g-dropdown {
     position: absolute;
     left: 0;
-    right: 0; }
+    right: 0;
+    z-index: 1; }
     .g-fullwidth .g-dropdown .g-block {
-      width: 50%; }
+      width: 50%;
+      position: relative;
+      overflow: hidden; }
+  .g-fullwidth .g-sublevel .g-dropdown {
+    top: 0;
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    transform: translateX(100%); }
+    .g-fullwidth .g-sublevel .g-dropdown.g-active {
+      -webkit-transform: translateX(0);
+      -moz-transform: translateX(0);
+      -ms-transform: translateX(0);
+      -o-transform: translateX(0);
+      transform: translateX(0); }
+  .g-fullwidth .g-sublevel.g-slide-out > .g-menu-item > .g-menu-item-content {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    transform: translateX(-100%); }
+  .g-fullwidth .g-menu-item-content {
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out; }
 
 @media only all and (max-width: 47.938rem) {
   .g-main-nav .g-toplevel {

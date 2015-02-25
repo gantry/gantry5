@@ -3,7 +3,7 @@ namespace Gantry\Framework\Base;
 
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\LayoutReader;
-use Gantry\Component\Stylesheet\CssCompilerInterface;
+use Gantry\Component\Stylesheet\ScssCompiler;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Services\ErrorServiceProvider;
@@ -35,37 +35,6 @@ trait ThemeTrait
         return $this;
     }
 
-    public function compiler()
-    {
-        static $compiler;
-
-        if (!$compiler) {
-            $compilerClass = (string) $this->details()->get('configuration.css.compiler', '\Gantry\Component\Stylesheet\ScssCompiler');
-
-            if (!class_exists($compilerClass)) {
-                throw new \RuntimeException('CSS compiler used by the theme not found');
-            }
-
-            $gantry = static::gantry();
-            $details = $this->details();
-
-            /** @var UniformResourceLocator $locator */
-            $locator = $gantry['locator'];
-
-            $paths = [];
-            foreach ((array) $details->get('configuration.css.paths') as $path) {
-                $paths = array_merge($paths, $locator->findResources($path));
-            }
-            $files = (array) $details->get('configuration.css.files');
-
-            /** @var CssCompilerInterface $compiler */
-            $compiler = new $compilerClass();
-            $compiler->setPaths($paths)->setFiles($files);
-        }
-
-        return $compiler;
-    }
-
     public function css($name)
     {
         $gantry = static::gantry();
@@ -78,10 +47,9 @@ trait ThemeTrait
         $path = $locator->findResource("gantry-theme://css-compiled/{$out}.css", false, true);
 
         if (!is_file($path)) {
-            $this->compiler()
-                ->setVariables($gantry['config']->flatten('styles', '-'))
-                ->setScope($this->layout)
-                ->compileFile($name);
+            $compiler = new ScssCompiler();
+            $compiler->setVariables($gantry['config']->flatten('styles', '-'));
+            $compiler->compileFile($name, GANTRY5_ROOT . '/' . $path);
         }
 
         return $path;

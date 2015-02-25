@@ -31,40 +31,6 @@ class LessCompiler extends CssCompiler
         $this->compiler = new Compiler();
     }
 
-    /**
-     * Get default lookup paths.
-     *
-     * @return array
-     */
-    public function getDefaultPaths()
-    {
-        $gantry = Gantry::instance();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        $paths = array_merge(
-            $locator->findResources('gantry-theme://less'),
-            $locator->findResources('gantry-engine://less')
-        );
-
-        return $paths;
-    }
-
-    /**
-     * Get default files to compile.
-     *
-     * @return array
-     */
-    public function getDefaultFiles()
-    {
-        $gantry = Gantry::instance();
-
-        $files = [$gantry['theme.name'], 'custom'];
-
-        return $files;
-    }
-
     public function compile($in)
     {
         return $this->compiler->compile($in);
@@ -87,17 +53,22 @@ class LessCompiler extends CssCompiler
         $locator = $gantry['locator'];
 
         if (!$out) {
-            $out = $locator->findResource("gantry-theme://css-compiled/{$in}{$this->scope}.css", true, true);
+            $out = $locator->findResource("gantry-theme://css-compiled/{$in}.css", true, true);
         }
+
+        $paths = array_merge(
+            $locator->findResources('gantry-theme://less'),
+            $locator->findResources('gantry-engine://less')
+        );
 
         // Set the lookup paths.
         $this->compiler->setBasePath($out);
-        $this->compiler->setImportDir($this->paths ?: $this->getDefaultPaths());
+        $this->compiler->setImportDir($paths);
         $this->compiler->setFormatter('lessjs');
 
         // Run the compiler.
         $this->compiler->setVariables($this->getVariables());
-        $css = $this->compiler->compileFile("{$in}.less");
+        $css = $this->compiler->compileFile($in . '.less"');
 
         $file = File::instance($out);
 
