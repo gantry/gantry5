@@ -38,10 +38,10 @@
     {% endif %}
 {% endmacro %}
 
-{% macro displayContainers(containers, menu) %}
+{% macro displayContainers(item, menu) %}
     <div class="g-grid">
-        {% for items in containers %}
-        <div class="g-block">
+        {% for column, items in item.groups %}
+        <div class="g-block {{ item.columnWidth(column)|toGrid }}">
             <ul class="g-sublevel">
                 {{ _self.displayItems(items, menu) }}
             </ul>
@@ -59,13 +59,13 @@
 {% macro displaySubmenu(item, menu) %}
     <ul class="g-dropdown">
         <li class="g-dropdown-column">
-            {{ _self.displayContainers(item.groups, menu) }}
+            {{ _self.displayContainers(item, menu) }}
         </li>
     </ul>
 {% endmacro %}
 
 <nav
-        {%- if particle.css.id %} id="{{ particle.css.id }}"{% endif %}
+        {%- if particle.css.id %} id="{{ particle.css.id }}" {% endif %}
         class="{%- if particle.css.class %}{{ particle.css.class }}{% endif %}" role="navigation">
     <ul class="g-toplevel g-fullwidth">
         {{ _self.displayItems(menu.root, menu) }}
