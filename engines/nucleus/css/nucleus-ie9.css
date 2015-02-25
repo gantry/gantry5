@@ -60,3 +60,14 @@ legend {
 textarea {
 	overflow: auto;
 }
+
+/* IE9 Grid Tweaks */
+.g-grid {
+	letter-spacing: -0.31em;
+}
+.g-block {
+	display: inline-block;
+	letter-spacing: normal;
+	zoom: 1;
+	vertical-align: top;
+}

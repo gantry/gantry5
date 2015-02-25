@@ -24,6 +24,7 @@
 	list-style: none;
 	margin: 0;
 	padding: 0;
+	text-rendering: optimizespeed;
 	&.nowrap {
 		@include flex-flow(row);
 	}

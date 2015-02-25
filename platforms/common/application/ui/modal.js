@@ -86,11 +86,13 @@ var Modal = new prime({
         this
             .on('dialogOpen', function(options) {
                 $('body').addClass(options.baseClassNames.open);
+                $('html').addClass(options.baseClassNames.open);
             })
             .on('dialogAfterClose', bind(function(options) {
                 var all = this.getAll();
                 if (!all || !all.length) {
                     $('body').removeClass(options.baseClassNames.open);
+                    $('html').removeClass(options.baseClassNames.open);
                 }
             }, this));
     },

@@ -63,28 +63,18 @@ form:
       type: separator.separator
 
     file-1:
-      type: input.filemanager
+      type: input.filepicker
       label: Outside Scope
       root:
         - '/Users/w00fz/Sites/'
         - '/Users'
     file-2:
-      type: input.filemanager
-      label: Image Picker
-      icon: fa-file-image-o
-    file-3:
-      type: input.filemanager
+      type: input.filepicker
       label: Upper Level
       root: '/../../../'
-    file-4:
-      type: input.filemanager
-      label: Media Path
-      icon: fa-file-image-o
-      root: 'media/images'
-    file-5:
-      type: input.filemanager
-      label: Array
-      icon: fa-file-image-o
+    file-3:
+      type: input.filepicker
+      label: Array Test
       root:
         - 'media/images'
         - '../../../../../'
@@ -93,3 +83,19 @@ form:
         - 'gantry-media://imagez'
         - 'gantry-something://'
         - 'media/images/bla'
+    file-4:
+      type: input.filepicker
+      label: Filter: '^img-'
+      icon: fa-filter
+      root: 'gantry-media://'
+      filter: '^img-'
+    file-5:
+      type: input.imagepicker
+      label: Image Picker
+    file-6:
+      type: input.imagepicker
+      label: Media Path
+      root: 'media/images'
+    file-7:
+      type: input.videopicker
+      label: Video Picker

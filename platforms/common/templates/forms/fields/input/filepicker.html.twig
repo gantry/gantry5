@@ -1,7 +1,7 @@
 {% extends "forms/field.html.twig" %}
 
 {% block input %}
-    <div class="g-filemanager">
+    <div class="g-filepicker">
         <input
                 {# required attribute structures #}
                 type="text"
@@ -16,6 +16,6 @@
                 {% if field.list is defined %}list="{{ field.list }}"{% endif %}
                 />
         {% set picker = {'field': 'input[name="' ~ (scope ~ name | fieldName) ~ '"]', 'root': (field.root | default(false)), 'filter': (field.filter | default(false)) } %}
-        <i class="fa {{ field.icon|e|default('fa-file-o') }}" data-g5-filemanager="{{ picker|json_encode()|e('html_attr') }}"></i>
+        <i class="fa {{ field.icon|e|default('fa-file-o') }}" data-g5-filepicker="{{ picker|json_encode()|e('html_attr') }}"></i>
     </div>
 {% endblock %}

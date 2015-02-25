@@ -1,0 +1,27 @@
+name: Breakpoints
+description: Breakpoint container sizes for different viewports
+type: configuration
+
+form:
+  fields:
+
+    large-desktop-container:
+      type: input.text
+      label: Large Desktop
+      default: "75rem"
+    desktop-container:
+      type: input.text
+      label: Desktop
+      default: "60rem"
+    tablet-container:
+      type: input.text
+      label: Tablet
+      default: "48rem"
+    large-mobile-container:
+      type: input.text
+      label: Large Mobile
+      default: "30rem"
+    small-mobile-container:
+      type: input.text
+      label: Small Mobile
+      default: "100%"

@@ -5,7 +5,6 @@
 
 	// Main Level
 	.g-toplevel {
-		position: relative;
 		> li {
 			display: inline-block;
 			@include transition(all .1s ease-out);

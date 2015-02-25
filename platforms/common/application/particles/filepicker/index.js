@@ -12,26 +12,26 @@ var $             = require('../../utils/elements.utils'),
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
     getAjaxURL    = require('../../utils/get-ajax-url').global;
 
-var FileManager = new prime({
-    constructor: function(element){
-        var data = element.data('g5-filemanager');
+var FilePicker = new prime({
+    constructor: function(element) {
+        var data = element.data('g5-filepicker');
         this.data = data ? JSON.parse(data) : false;
 
         console.log(this.data);
     },
 
-    open: function(){
+    open: function() {
         modal.open({
             method: 'post',
             data: this.data,
             content: 'Loading',
-            className: 'g5-dialog-theme-default g5-modal-filemanager',
-            remote: getAjaxURL('filemanager') + getAjaxSuffix(),
+            className: 'g5-dialog-theme-default g5-modal-filepicker',
+            remote: getAjaxURL('filepicker') + getAjaxSuffix(),
             remoteLoaded: bind(this.loaded, this)
         });
     },
 
-    loaded: function(response, modalInstance){
+    loaded: function(response, modalInstance) {
         var content = modalInstance.elements.content,
             bookmarks = content.search('.g-bookmark'),
             files = content.find('.g-files'),
@@ -44,7 +44,7 @@ var FileManager = new prime({
                 parent = element.parent('.g-bookmark');
 
             if (!sibling) { return; }
-            sibling.slideToggle(function(){
+            sibling.slideToggle(function() {
                 parent.toggleClass('collapsed', sibling.gSlideCollapsed);
             });
         });
@@ -56,7 +56,7 @@ var FileManager = new prime({
             fieldData.subfolder = true;
 
             element.showIndicator('fa fa-li fa-fw fa-spin-fast fa-spinner');
-            request(getAjaxURL('filemanager') + getAjaxSuffix(), fieldData).send(bind(function(error, response){
+            request(getAjaxURL('filepicker') + getAjaxSuffix(), fieldData).send(bind(function(error, response) {
                 element.hideIndicator();
                 this.addActiveState(element);
 
@@ -80,11 +80,35 @@ var FileManager = new prime({
                     files.empty();
                     if (response.body.files) {
                         dummy = zen('div').html(response.body.files);
-                        dummy.children().bottom(files).style({opacity: 0}).animate({opacity: 1}, {duration: '250ms'});
+                        dummy.children().bottom(files).style({ opacity: 0 }).animate({ opacity: 1 }, { duration: '250ms' });
                     }
                     //files.children().style({opacity: 0}).animate({opacity: 1}, {duration: '250ms'});
                 }
             }, this));
+        }, this));
+
+        content.delegate('click', '[data-file]', bind(function(e, element) {
+            var data = JSON.parse(element.data('file'));
+
+            files.search('[data-file]').removeClass('selected');
+            element.addClass('selected');
+        }, this));
+
+        content.delegate('click', '[data-files-mode]', bind(function(e, element) {
+            if (element.hasClass('active')) { return; }
+
+            var modes = $('[data-files-mode]');
+            modes.removeClass('active');
+            element.addClass('active');
+
+            files.animate({ opacity: 0 }, {
+                duration: 200,
+                callback: function() {
+                    files.attribute('class', 'g-files g-block g-filemode-' + element.data('files-mode'));
+                    files.animate({ opacity: 1 }, { duration: 200 });
+                }
+            });
+
         }, this));
     },
 
@@ -94,24 +118,24 @@ var FileManager = new prime({
 
         element.addClass('active');
 
-        while(parent.tag() == 'ul' && !parent.hasClass('g-folders')){
+        while (parent.tag() == 'ul' && !parent.hasClass('g-folders')) {
             parent.previousSibling().addClass('active');
             parent = parent.parent();
         }
     }
 });
 
-domready(function(){
+domready(function() {
     var body = $('body');
-    body.delegate('click', '[data-g5-filemanager]', function(event, element){
+    body.delegate('click', '[data-g5-filepicker]', function(event, element) {
         element = $(element);
-        if (!element.GantryFileManager){
-            element.GantryFileManager = new FileManager(element);
+        if (!element.GantryFilePicker) {
+            element.GantryFilePicker = new FilePicker(element);
         }
 
-        element.GantryFileManager.open();
+        element.GantryFilePicker.open();
     });
 });
 
 
-module.exports = FileManager;
+module.exports = FilePicker;

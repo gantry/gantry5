@@ -9,12 +9,12 @@ showcase:
 feature:
   container:
     - position-feature-top
-    - [position-feature-1, position-feature-2, position-feature-3]
+    - [position-feature-1 33.3, position-feature-2 33.3, position-feature-3 33.3]
 
 subfeature:
   container:
     - position-subfeature-top
-    - [position-subfeature-1, position-subfeature-2, position-subfeature-3, position-subfeature-4]
+    - [position-subfeature-1 25, position-subfeature-2 25, position-subfeature-3 25, position-subfeature-4 25]
 
 main:
   container:

@@ -7,7 +7,7 @@ use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 
-class FileManager extends JsonController
+class FilePicker extends JsonController
 {
     protected $httpVerbs = [
         'GET'  => [
@@ -31,10 +31,14 @@ class FileManager extends JsonController
         $locator = $this->container['locator'];
         $base = $locator->base;
         $bookmarks = [];
+        $drives = [DS];
+        $subfolder = false;
+        $filter = false;
 
         if (isset($_POST)) {
             $drives = isset($_POST['root']) ? ($_POST['root'] != 'false' ? $_POST['root'] : [DS]) : [DS];
             $subfolder = isset($_POST['subfolder']) ? true : false;
+            $filter = isset($_POST['filter']) ? ($_POST['filter'] != 'false' ? $_POST['filter'] : false) : false;
         }
 
         if (!is_array($drives)) {
@@ -54,6 +58,7 @@ class FileManager extends JsonController
             if (!$isStream && (count($stream) == 2 || !file_exists($path))) {
                 continue;
             }
+
             if ($isStream && !count($resources = $locator->findResources($drive, false))) {
                 continue;
             }
@@ -93,6 +98,7 @@ class FileManager extends JsonController
                 foreach (new \DirectoryIterator($base . DS . ltrim($folder, DS)) as $info) {
                     // no dot files nor files beginning with dot
                     if ($info->isDot() || substr($info->getFilename(), 0, 1) == '.') { continue; }
+
                     $file = new \stdClass();
 
                     foreach(['getFilename', 'getExtension', 'getPerms', 'getMTime', 'getBasename', 'getPathname', 'getSize', 'getType', 'isReadable', 'isWritable', 'isDir', 'isFile'] as $method){
@@ -106,6 +112,7 @@ class FileManager extends JsonController
                     if ($file->dir) {
                         $folders[$key][$folder]->append($file);
                     } else {
+                        if ($filter && !preg_match("/".$filter."/i", $file->filename)) { continue; }
                         if (!$index) {
                             $file->mime = finfo_file($finfo, $file->pathname);
                             $files->append($file);
@@ -117,28 +124,10 @@ class FileManager extends JsonController
             }
         }
 
-//        die;
-
-        /*foreach (new \DirectoryIterator($path) as $info) {
-            // no dot files nor files beginning with dot
-            if ($info->isDot() || substr($info->getFilename(), 0, 1) == '.') { continue; }
-            $file = new \stdClass();
-
-            foreach(['getFilename', 'getExtension', 'getPerms', 'getMTime', 'getBasename', 'getPath', 'getPathname', 'getSize', 'getType', 'isReadable', 'isWritable', 'isDir', 'isFile'] as $method){
-                $key = strtolower(preg_replace("/^(is|get)/", '', $method));
-                $file->{$key} = $info->{$method}();
-                if ($method == 'getPathname') {
-                    $file->{$key} =  Folder::getRelativePath($file->{$key});
-                }
-            }
-
-            if ($file->dir) { $folders->append($file); }
-            else { $files->append($file); }
-        }*/
         $response = [];
 
         if (!$subfolder) {
-            $response['html'] = $this->container['admin.theme']->render('@gantry-admin/ajax/filemanager.html.twig', [
+            $response['html'] = $this->container['admin.theme']->render('@gantry-admin/ajax/filepicker.html.twig', [
                 'active'    => $active,
                 'base'      => $base,
                 'bookmarks' => $bookmarks,
@@ -146,8 +135,8 @@ class FileManager extends JsonController
                 'files'     => $files
             ]);
         } else {
-            $response['subfolder'] = !$folders[$key][$folder]->count() ? false : $this->container['admin.theme']->render('@gantry-admin/ajax/filemanager/subfolders.html.twig', ['folder' => $folders[$key][$folder]]);
-            $response['files'] = !$files->count() ? false : $this->container['admin.theme']->render('@gantry-admin/ajax/filemanager/files.html.twig', ['files' => $files]);
+            $response['subfolder'] = !$folders[$key][$folder]->count() ? false : $this->container['admin.theme']->render('@gantry-admin/ajax/filepicker/subfolders.html.twig', ['folder' => $folders[$key][$folder]]);
+            $response['files'] = !$files->count() ? false : $this->container['admin.theme']->render('@gantry-admin/ajax/filepicker/files.html.twig', ['files' => $files]);
         }
 
         return new JsonResponse($response);
