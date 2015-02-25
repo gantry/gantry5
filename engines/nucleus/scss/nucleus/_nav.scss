@@ -7,7 +7,7 @@
 	.g-toplevel {
 		> li {
 			display: inline-block;
-			@include transition(all .1s ease-out);
+			@include transition(all .2s ease-out);
 			/*
 			&:hover {
 				> .g-dropdown {
@@ -24,13 +24,13 @@
 	// First Level Dropdown
 	.g-dropdown {
 		@extend %inactive-dropdown;
-	    @include transition(all .1s ease-out);
+	    @include transition(all .2s ease-out);
 	}
 
 	// Sublevel Items
 	.g-sublevel {
     	> li {
-    		@include transition(all .1s ease-out);
+    		@include transition(all .2s ease-out);
     		a, .g-separator, .g-nav-header {
     			display: block;
     		}
@@ -72,8 +72,11 @@
 		position: absolute;
 		left: 0;
 		right: 0;
+		z-index: 1;
 		.g-block {
 			width: 50%;
+			position: relative;
+			overflow: hidden; 
 		}
 
 		&.g-active {
@@ -82,11 +85,20 @@
 	}
 	.g-sublevel {
 		.g-dropdown {
+			top: 0;
 			@include transform(translateX(100%));
 			&.g-active {
 				@include transform(translateX(0));
 			}
 		}
+		&.g-slide-out {
+			> .g-menu-item > .g-menu-item-content {
+				@include transform(translateX(-100%));
+			}
+		}
+	}
+	.g-menu-item-content {
+		@include transition(all .2s ease-out);
 	}
 }
 
