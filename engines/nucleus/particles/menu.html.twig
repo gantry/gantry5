@@ -20,8 +20,9 @@
     {% if item.visible %}
         {% set title = item.anchor_title ? ' title="' ~ item.anchor_title ~ '"' %}
         {% set class = item.anchor_css ? ' class="' ~ item.anchor_css ~ '"' %}
-        {% set active = menu.isActive(item) ? ' active' : '' %}
-        <li id="g-menu-item-{{ item.id }}" class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{{ active }}">
+        {% set active = menu.isActive(item) ? ' active' %}
+        {% set parent = item.children ? ' parent' %}
+        <li id="g-menu-item-{{ item.id }}" class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{{ parent }}{{ active }}">
             {% if item.url %}
                 <a href="{{ item.url }}"{{ class ~ title ~ item.anchor_attributes }}>{{ _self.displayTitle(item) }}</a>
             {% else %}
