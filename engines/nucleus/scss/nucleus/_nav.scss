@@ -8,11 +8,13 @@
 		> li {
 			display: inline-block;
 			@include transition(all .1s ease-out);
+			/*
 			&:hover {
 				> .g-dropdown {
 					@extend %active-dropdown;
 				}
 			}
+			*/
 			> a, > .g-separator {
 				display: block;
 			}
@@ -72,6 +74,18 @@
 		right: 0;
 		.g-block {
 			width: 50%;
+		}
+
+		&.g-active {
+			@extend %active-dropdown;
+		}
+	}
+	.g-sublevel {
+		.g-dropdown {
+			@include transform(translateX(100%));
+			&.g-active {
+				@include transform(translateX(0));
+			}
 		}
 	}
 }
