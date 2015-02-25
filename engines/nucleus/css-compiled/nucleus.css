@@ -244,7 +244,8 @@ th {
   flex-flow: row wrap;
   list-style: none;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  text-rendering: optimizespeed; }
   .g-grid.nowrap {
     -webkit-flex-flow: row;
     -moz-flex-flow: row;
