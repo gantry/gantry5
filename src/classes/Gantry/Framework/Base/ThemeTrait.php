@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Framework\Base;
 
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Stylesheet\ScssCompiler;
@@ -53,6 +54,18 @@ trait ThemeTrait
         }
 
         return $path;
+    }
+
+    public function presets()
+    {
+        $gantry = static::gantry();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $filename = $locator->findResource("gantry-theme://gantry/presets.yaml");
+
+        return CompiledYamlFile::instance($filename)->content();
     }
 
     public function loadLayout($name = null)

@@ -48,6 +48,13 @@ class Config implements \ArrayAccess, ExportInterface
     {
         $old = $this->get($name, null, $separator);
         if ($old !== null) {
+            if (!is_array($old)) {
+                echo $name;var_dump($old);die();
+                throw new \RuntimeException('Value ' . $old);
+            }
+            if (!is_array($value)) {
+                throw new \RuntimeException('Value ' . $value);
+            }
             $value = $this->blueprints()->mergeData($old, $value, $name, $separator);
         }
 

@@ -1,8 +1,8 @@
 <ul class="g-grid">
-    {% set base = config.styles.base %}
-    {% set stopValue = config.styles.stop %}
-    {% set stop = (100 / config.styles.stop|default(1))|number_format(3, '.') %}
-    {% for key, swatch in swatches %}
+    {% set base = gantry.theme.presets.base %}
+    {% set stopValue = gantry.theme.presets.stop %}
+    {% set stop = (100 / gantry.theme.presets.stop|default(1))|number_format(3, '.') %}
+    {% for key, swatch in gantry.theme.presets.swatches %}
         {% set counter = 0 %}
         <li class="g-block">
             <a href="#" class="swatch" data-styles="{{ key }}">
