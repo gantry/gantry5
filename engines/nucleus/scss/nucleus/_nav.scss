@@ -148,26 +148,3 @@
 		}
 	}
 }
-
-// Mobile Menu 
-@include breakpoint(mobile-only) {
-	.g-main-nav {
-		.g-toplevel {
-			position: fixed;
-			top: 0;
-			height: 100%;
-			right: 0;
-			width: 260px;
-			overflow: auto;
-			background: #222;
-			li {
-				display: block;
-				&:hover {
-					> .g-dropdown {
-						display: none;
-					}
-				}
-			}
-		}
-	}
-}

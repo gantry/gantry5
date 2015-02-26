@@ -1,20 +1,7 @@
 // Page Container
 .g-container {
-	width: $large-desktop-container;
 	margin: 0 auto;
 	padding: 0;
-	@include breakpoint(desktop-range) {
-		width: $desktop-container;
-	}
-	@include breakpoint(tablet-range) {
-		width: $tablet-container;
-	}
-	@include breakpoint(large-mobile-range) {
-		width: $large-mobile-container;
-	}
-	@include breakpoint(small-mobile-range) {
-		width: $mobile-container;
-	}
 }
 
 // Grid Row and Column Setup
@@ -34,29 +21,12 @@
 	@include flex(1);
 	min-width: 0;
 	min-height: 0;
-	@include breakpoint(mobile-only) {
-		@include flex(0 100%);
-	}
 }
 
 // Content Block Spacing
 .g-content {
 	margin: $content-margin;
 	padding: $content-padding;
-}
-
-// Fix for Firefox versions 27 and below
-@include breakpoint(mobile-only) {
-	@supports not (flex-wrap: wrap) {
-		.g-grid {
-			display: block;
-			@include flex-wrap(inherit);
-		}
-		.g-block {
-			display: block;
-			@include flex(inherit);
-		}
-	}
 }
 
 // Reordering
@@ -72,30 +42,4 @@
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
-}
-
-// Fixed Grid Style
-.fixed-blocks {
-	@include flex-flow(row wrap);
-	.g-block {
-		@include flex(inherit);
-		width: $fixed-block-full;
-		@include breakpoint(desktop-range) {
-			width: $fixed-block-desktop;
-		}
-		@include breakpoint(tablet-range) {
-			width: $fixed-block-tablet;
-		}
-		@include breakpoint(mobile-only) {
-			width: 100%;
-		}
-	}
-}
-
-// Fix for browsers that don't support flex-wrap
-@supports not (flex-wrap: wrap) {
-	.fixed-blocks {
-		display: block;
-		@include flex-flow(inherit);
-	}
 }

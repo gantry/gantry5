@@ -215,21 +215,8 @@ th {
   text-align: left; }
 
 .g-container {
-  width: 75rem;
   margin: 0 auto;
   padding: 0; }
-  @media only all and (min-width: 60rem) and (max-width: 74.938rem) {
-    .g-container {
-      width: 60rem; } }
-  @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-    .g-container {
-      width: 48rem; } }
-  @media only all and (min-width: 30.063rem) and (max-width: 47.938rem) {
-    .g-container {
-      width: 30rem; } }
-  @media only all and (max-width: 30rem) {
-    .g-container {
-      width: 100%; } }
 
 .g-grid {
   display: -webkit-box;
@@ -261,41 +248,11 @@ th {
   flex: 1;
   min-width: 0;
   min-height: 0; }
-  @media only all and (max-width: 47.938rem) {
-    .g-block {
-      -webkit-box-flex: 0;
-      -moz-box-flex: 0;
-      box-flex: 0;
-      -webkit-flex: 0 100%;
-      -moz-flex: 0 100%;
-      -ms-flex: 0 100%;
-      flex: 0 100%; } }
 
 .g-content {
   margin: 0.625rem;
   padding: 0.938rem; }
 
-@media only all and (max-width: 47.938rem) {
-  @supports not (flex-wrap: wrap) {
-    .g-grid {
-      display: block;
-      -webkit-box-lines: inherit;
-      -moz-box-lines: inherit;
-      box-lines: inherit;
-      -webkit-flex-wrap: inherit;
-      -moz-flex-wrap: inherit;
-      -ms-flex-wrap: inherit;
-      flex-wrap: inherit; }
-
-    .g-block {
-      display: block;
-      -webkit-box-flex: inherit;
-      -moz-box-flex: inherit;
-      box-flex: inherit;
-      -webkit-flex: inherit;
-      -moz-flex: inherit;
-      -ms-flex: inherit;
-      flex: inherit; } } }
 .first-block {
   -webkit-box-ordinal-group: 0;
   -webkit-order: -1;
@@ -308,35 +265,6 @@ th {
   -ms-flex-order: 1;
   order: 1; }
 
-.fixed-blocks {
-  -webkit-flex-flow: row wrap;
-  -moz-flex-flow: row wrap;
-  flex-flow: row wrap; }
-  .fixed-blocks .g-block {
-    -webkit-box-flex: inherit;
-    -moz-box-flex: inherit;
-    box-flex: inherit;
-    -webkit-flex: inherit;
-    -moz-flex: inherit;
-    -ms-flex: inherit;
-    flex: inherit;
-    width: 25%; }
-    @media only all and (min-width: 60rem) and (max-width: 74.938rem) {
-      .fixed-blocks .g-block {
-        width: 33.33333%; } }
-    @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-      .fixed-blocks .g-block {
-        width: 50%; } }
-    @media only all and (max-width: 47.938rem) {
-      .fixed-blocks .g-block {
-        width: 100%; } }
-
-@supports not (flex-wrap: wrap) {
-  .fixed-blocks {
-    display: block;
-    -webkit-flex-flow: inherit;
-    -moz-flex-flow: inherit;
-    flex-flow: inherit; } }
 .size-5 {
   -webkit-flex: 0 1 5%;
   -moz-flex: 0 1 5%;
@@ -974,16 +902,6 @@ th {
   flex: 0 95%;
   width: 95%; }
 
-@media only all and (max-width: 47.938rem) {
-  body [class*="size-"] {
-    -webkit-box-flex: 0;
-    -moz-box-flex: 0;
-    box-flex: 0;
-    -webkit-flex: 0 100%;
-    -moz-flex: 0 100%;
-    -ms-flex: 0 100%;
-    flex: 0 100%; } }
-
 .g-main-nav .g-toplevel > li {
   display: inline-block;
   -webkit-transition: all 0.2s ease-out;
@@ -1080,19 +998,6 @@ th {
     -o-transform: translateX(-100%);
     transform: translateX(-100%); }
 
-@media only all and (max-width: 47.938rem) {
-  .g-main-nav .g-toplevel {
-    position: fixed;
-    top: 0;
-    height: 100%;
-    right: 0;
-    width: 260px;
-    overflow: auto;
-    background: #222; }
-    .g-main-nav .g-toplevel li {
-      display: block; }
-      .g-main-nav .g-toplevel li:hover > .g-dropdown {
-        display: none; } }
 body {
   font-size: 1rem;
   line-height: 1.5; }
