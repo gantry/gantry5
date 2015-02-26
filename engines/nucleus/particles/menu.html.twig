@@ -22,7 +22,7 @@
         {% set class = item.anchor_css ? ' class="' ~ item.anchor_css|e ~ '"' %}
         {% set active = menu.isActive(item) ? ' active' %}
         {% set dropdown = item.level == 1 ? ' g-' ~ item.dropdown|e %}
-        {% set parent = item.children ? ' parent' %}
+        {% set parent = item.children ? ' g-parent' %}
         <li id="g-menu-item-{{ item.id }}" class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{{ parent }}{{ active }}{{ dropdown }}">
             {% if item.url %}
                 <a class="g-menu-item-content" href="{{ item.url }}"{{ class ~ title ~ item.anchor_attributes }}>{{ _self.displayTitle(item) }}</a>
