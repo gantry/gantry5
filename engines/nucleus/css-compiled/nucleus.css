@@ -6,7 +6,7 @@
   visibility: hidden;
   overflow: hidden; }
 
-.g-standard .g-sublevel > li:hover > .g-dropdown, .g-fullwidth .g-dropdown.g-active {
+.g-standard .g-sublevel > li:hover > .g-dropdown, .g-standard .g-dropdown.g-active, .g-fullwidth .g-dropdown.g-active {
   opacity: 1;
   visibility: visible;
   overflow: visible; }

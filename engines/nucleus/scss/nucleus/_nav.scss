@@ -39,7 +39,7 @@
 }
 
 // Standard Dropdown Settings
-.g-standard {
+.g-standard {	
 	.g-sublevel {
     	> li {
     		position: relative;
@@ -59,6 +59,10 @@
 	    .g-block {
 	    	@include flex(0 100%);
 	    }
+	    // Dropdown is Active When Its Parent is Clicked
+		&.g-active {
+			@extend %active-dropdown;
+		}	    
 	}
 	.g-dropdown-column {
     	@extend %dropdown-column;
@@ -78,7 +82,7 @@
 			position: relative;
 			overflow: hidden; 
 		}
-
+		// Dropdown is Active When Its Parent is Clicked
 		&.g-active {
 			@extend %active-dropdown;
 		}
