@@ -18,6 +18,25 @@
 			> a, > .g-separator {
 				display: block;
 			}
+			.g-menu-item-content {
+				cursor: pointer;
+				@include transition(all .2s ease-out);
+			}	
+	    	// Menu Parent Indicator on Main TopLevel
+	    	&.g-parent {
+				> .g-menu-item-content {
+					&:after {
+						display: inline-block;
+						width: 1.5rem;
+						opacity: 0.5;
+						font-family: FontAwesome;
+						content: "\f078";					
+					}
+					&.g-selected:after {
+						content: "\f00d";	
+					}
+				}
+	    	}					
 		}
 	}
 
@@ -35,6 +54,18 @@
     			display: block;
     		}
     	}
+    	// Menu Parent Indicator on SubLevel
+    	.g-parent {
+			> .g-menu-item-content {
+				&:after {
+					position: absolute;
+					right: 1rem;
+					opacity: 0.5;
+					font-family: FontAwesome;
+					content: "\f054";					
+				}
+			}
+    	}
     }
 
     // Go Back Button on Dropdown
@@ -46,6 +77,7 @@
 			&:before {
 				font-family: FontAwesome;
 				content: "\f177";
+				opacity: 0.5;
 			}
 		}
 	}    
@@ -109,13 +141,11 @@
 			}
 		}
 		&.g-slide-out {
-			> .g-menu-item > .g-menu-item-content {
+			> .g-menu-item > .g-menu-item-content,
+			> .g-go-back {
 				@include transform(translateX(-100%));
 			}
 		}
-	}
-	.g-menu-item-content {
-		@include transition(all .2s ease-out);
 	}
 }
 
