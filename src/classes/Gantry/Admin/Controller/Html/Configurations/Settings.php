@@ -45,25 +45,35 @@ class Settings extends HtmlController
 
     public function index()
     {
-        $id = $this->params['configuration'];
-        $this->params['particles'] = $this->container['particles']->group();
-        $this->params['route']  = "configurations.{$this->params['configuration']}.settings";
-        $this->params['page_id'] = $id;
+        $configuration = $this->params['configuration'];
 
-        if($id == 'default') {
+        if($configuration == 'default') {
             $this->params['overrideable'] = false;
         } else {
+            $this->params['defaults'] = $this->container['defaults'];
             $this->params['overrideable'] = true;
         }
+
+        $this->params['particles'] = $this->container['particles']->group();
+        $this->params['route']  = "configurations.{$this->params['configuration']}.settings";
+        $this->params['page_id'] = $configuration;
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
     }
 
     public function display($id)
     {
+        $configuration = $this->params['configuration'];
         $particle = $this->container['particles']->get($id);
         $blueprints = new BlueprintsForm($particle);
         $prefix = 'particles.' . $id;
+
+        if($configuration == 'default') {
+            $this->params['overrideable'] = false;
+        } else {
+            $this->params['defaults'] = $this->container['defaults']->get($prefix);
+            $this->params['overrideable'] = true;
+        }
 
         $this->params += [
             'particle' => $blueprints,

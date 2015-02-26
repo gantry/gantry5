@@ -64,10 +64,12 @@
                                                 {% for childName, child in field.fields %}
                                                      {% if childName starts with '.' %}
                                                          {% set childValue = val[childName[1:]] %}
+                                                         {% set childDefault = default_value[childName[1:]] %}
                                                          {% set childName = name ~ '.' ~ key ~ childName %}
                                                      {% else %}
-                                                         {% set childName = childName|replace({'*': key}) %}
                                                          {% set childValue = nested(data, scope ~ childName) %}
+                                                         {% set childDefault = nested(defaults, scope ~ childName) %}
+                                                         {% set childName = childName|replace({'*': key}) %}
                                                      {% endif %}
 
                                                      {% if child.type == 'key' %}

@@ -2,6 +2,7 @@
     {% set scope = prefix %}
     {% set field = blueprints %}
     {% set value = data %}
+    {% set default_value = defaults %}
 
     {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
 
@@ -16,6 +17,7 @@
         {% if field.type and name not in skip and not field.skip %}
             {% set field = field + {'name': name} %}
             {% set value = nested(data, scope ~ name) %}
+            {% set default_value = nested(defaults, scope ~ name) %}
 
             {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
         {% endif %}

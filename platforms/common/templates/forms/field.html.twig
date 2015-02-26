@@ -14,11 +14,12 @@
 
 {% set name = (name is null ? field.name : name) %}
 {% set value = (value is null ? field.default : value) %}
+{% set default_value = (default_value is null ? field.default : default_value) %}
 
 {% block field %}
     <div class="settings-param {{ field.type|replace('.', '-') }}">
         {% if overrideable and field.type != 'container.set' %}
-            <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
+            <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}"{{ value != default_value ? ' checked="checked"' }} />
             <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
         {% endif %}
         {% block contents %}

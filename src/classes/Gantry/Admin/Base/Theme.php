@@ -3,6 +3,8 @@ namespace Gantry\Admin\Base;
 
 use Gantry\Admin\Particles\Particles;
 use Gantry\Admin\Styles\Styles;
+use Gantry\Component\Config\CompiledConfig;
+use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Twig\TwigExtension;
@@ -34,6 +36,22 @@ class Theme extends BaseTheme
 
         $gantry['styles'] = function ($c) {
             return new Styles($c);
+        };
+
+        $gantry['defaults'] = function($c) {
+            /** @var UniformResourceLocator $locator */
+            $locator = $c['locator'];
+
+            $cache = $locator->findResource('gantry-cache://compiled/config', true, true);
+            $paths = $locator->findResources('gantry-config://default');
+
+            $files = (new ConfigFileFinder)->locateFiles($paths);
+
+            $config = new CompiledConfig($cache, $files, function() use ($c) {
+                return $c['blueprints'];
+            });
+
+            return $config->load();
         };
 
         parent::__construct($path, $name);

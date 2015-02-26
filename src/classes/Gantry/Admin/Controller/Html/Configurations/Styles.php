@@ -48,28 +48,38 @@ class Styles extends HtmlController
 
     public function index()
     {
-        $id = $this->params['configuration'];
-        $this->params['blocks'] = $this->container['styles']->group();
-        $this->params['route']  = "configurations.{$this->params['configuration']}.styles";
+        $configuration = $this->params['configuration'];
 
-        if($id == 'default') {
+        if($configuration == 'default') {
             $this->params['overrideable'] = false;
         } else {
+            $this->params['defaults'] = $this->container['defaults'];
             $this->params['overrideable'] = true;
         }
+
+        $this->params['blocks'] = $this->container['styles']->group();
+        $this->params['route']  = "configurations.{$this->params['configuration']}.styles";
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/styles/styles.html.twig', $this->params);
     }
 
     public function display($id)
     {
+        $configuration = $this->params['configuration'];
         $style = $this->container['styles']->get($id);
         $blueprints = new BlueprintsForm($style);
         $prefix = 'styles.' . $id;
 
+        if($configuration == 'default') {
+            $this->params['overrideable'] = false;
+        } else {
+            $this->params['defaults'] = $this->container['defaults']->get($prefix);
+            $this->params['overrideable'] = true;
+        }
+
         $this->params += [
             'block' => $blueprints,
-            'data' =>  Gantry::instance()['config']->get($prefix),
+            'data' =>  $this->container['config']->get($prefix),
             'id' => $id,
             'parent' => "configurations/{$this->params['configuration']}/styles",
             'route'  => "configurations.{$this->params['configuration']}.styles.{$prefix}",
