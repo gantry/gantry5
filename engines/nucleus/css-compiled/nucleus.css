@@ -1008,6 +1008,11 @@ th {
   transition: all 0.2s ease-out; }
   .g-main-nav .g-sublevel > li a, .g-main-nav .g-sublevel > li .g-separator, .g-main-nav .g-sublevel > li .g-nav-header {
     display: block; }
+.g-main-nav .g-go-back a span {
+  display: none; }
+.g-main-nav .g-go-back a:before {
+  font-family: FontAwesome;
+  content: "\f177"; }
 
 .g-standard .g-sublevel > li {
   position: relative; }

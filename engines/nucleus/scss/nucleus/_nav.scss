@@ -36,6 +36,19 @@
     		}
     	}
     }
+
+    // Go Back Button on Dropdown
+	.g-go-back {
+		a {
+			span {
+				display: none;
+			}
+			&:before {
+				font-family: FontAwesome;
+				content: "\f177";
+			}
+		}
+	}    
 }
 
 // Standard Dropdown Settings
