@@ -41,6 +41,14 @@ form:
           type: input.text
           label: Menu Title
 
+        .dropdown:
+          type: select.selectize
+          label: Dropdown Style
+          default: standard
+          options:
+            standard: Standard
+            fullwidth: Full Width
+
         .browserNav:
           type: select.selectize
           label: Target Window

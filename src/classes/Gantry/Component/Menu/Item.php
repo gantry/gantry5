@@ -45,6 +45,7 @@ class Item implements \ArrayAccess, \Iterator
             'link' => $name,
             'parent_id' => $parent != '.' ? $parent : '',
             'layout' => 'list',
+            'dropdown' => 'standard',
             'browserNav' => 0,
             'menu_text' => true,
             'visible' => true,

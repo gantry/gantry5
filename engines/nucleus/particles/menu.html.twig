@@ -18,11 +18,12 @@
 
 {% macro displayItem(item, menu) %}
     {% if item.visible %}
-        {% set title = item.anchor_title ? ' title="' ~ item.anchor_title ~ '"' %}
-        {% set class = item.anchor_css ? ' class="' ~ item.anchor_css ~ '"' %}
+        {% set title = item.anchor_title ? ' title="' ~ item.anchor_title|e ~ '"' %}
+        {% set class = item.anchor_css ? ' class="' ~ item.anchor_css|e ~ '"' %}
         {% set active = menu.isActive(item) ? ' active' %}
+        {% set dropdown = item.level == 1 ? ' g-' ~ item.dropdown|e %}
         {% set parent = item.children ? ' parent' %}
-        <li id="g-menu-item-{{ item.id }}" class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{{ parent }}{{ active }}">
+        <li id="g-menu-item-{{ item.id }}" class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{{ parent }}{{ active }}{{ dropdown }}">
             {% if item.url %}
                 <a class="g-menu-item-content" href="{{ item.url }}"{{ class ~ title ~ item.anchor_attributes }}>{{ _self.displayTitle(item) }}</a>
             {% else %}
@@ -46,7 +47,7 @@
             <ul class="g-sublevel">
                 <li class="g-go-back">
                     <a href="#"><span>Back</span></a>
-                </li>            
+                </li>
                 {{ _self.displayItems(items, menu) }}
             </ul>
         </div>
@@ -71,7 +72,7 @@
 <nav
         {%- if particle.css.id %} id="{{ particle.css.id }}" {% endif %}
         class="{%- if particle.css.class %}{{ particle.css.class }}{% endif %}" role="navigation">
-    <ul class="g-toplevel g-fullwidth">
+    <ul class="g-toplevel">
         {{ _self.displayItems(menu.root, menu) }}
     </ul>
 </nav>
