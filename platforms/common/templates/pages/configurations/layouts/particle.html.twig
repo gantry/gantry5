@@ -21,7 +21,7 @@
                 </h4>
 
                 <div class="inner-params">
-                    {% include 'forms/fields.html.twig' with {'overridable': true, 'blueprints': particle.form, 'data': {'particle': item.attributes}, 'prefix': 'particle.'} %}
+                    {% include 'forms/fields.html.twig' with {'overrideable': true, 'blueprints': particle.form, 'data': {'particle': item.attributes}, 'prefix': 'particle.'} %}
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
                     Block
                 </h4>
                 <div class="inner-params">
-                    {% include 'forms/fields.html.twig' with {'overridable': true, 'blueprints': extra.form, 'data': {'block': item.block}, 'prefix': 'block.'} %}
+                    {% include 'forms/fields.html.twig' with {'blueprints': extra.form, 'data': {'block': item.block}, 'prefix': 'block.'} %}
                 </div>
             </div>
         </div>

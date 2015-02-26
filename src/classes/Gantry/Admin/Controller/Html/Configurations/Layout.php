@@ -161,14 +161,15 @@ class Layout extends HtmlController
         }
 
         $this->params += [
-            'extra'     => $extra,
-            'item'      => $item,
-            'particle'  => $blueprints,
-            'id'        => $name,
-            'parent'    => 'settings',
-            'route'     => 'settings.' . $prefix,
-            'action'    => str_replace('.', '/', 'configurations.' . $page . '.layout.' . $prefix . '.validate'),
-            'skip'      => ['enabled']
+            'extra'         => $extra,
+            'item'          => $item,
+            'particle'      => $blueprints,
+            'defaults'      => ['particle' => $defaults],
+            'id'            => $name,
+            'parent'        => 'settings',
+            'route'         => 'settings.' . $prefix,
+            'action'        => str_replace('.', '/', 'configurations.' . $page . '.layout.' . $prefix . '.validate'),
+            'skip'          => ['enabled']
         ];
 
         if ($extra) {
