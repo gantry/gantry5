@@ -47,8 +47,8 @@ configuration:
       - gantry-theme://scss
       - gantry-engine://scss
     files:
-      - hydrogen.scss
-      - custom.scss
+      - hydrogen
+      - custom
 
   dependencies:
     gantry: 5.0.*
