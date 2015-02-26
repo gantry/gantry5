@@ -25,7 +25,6 @@ var Resizer = new prime({
         this.setOptions(options);
         this.history = this.options.history || {};
         this.builder = this.options.builder || {};
-        this.map = this.builder.map;
         this.origin = {
             x: 0,
             y: 0,
@@ -38,7 +37,7 @@ var Resizer = new prime({
     },
 
     getBlock: function(element) {
-        return get(this.map, isString(element) ? element : $(element).data('lm-id') || '');
+        return get(this.builder.map, isString(element) ? element : $(element).data('lm-id') || '');
     },
 
     getAttribute: function(element, prop) {
@@ -50,7 +49,6 @@ var Resizer = new prime({
     },
 
     start: function(event, element, siblings, offset) {
-        this.map = this.builder.map;
         if (event.which && event.which !== 1) { return true; }
 
         // Stops text selection
