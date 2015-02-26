@@ -1,7 +1,2 @@
+// Run Size Creation Function
 @include size-x;
-
-body [class*="size-"] {
-	@include breakpoint(mobile-only) {
-		@include flex(0 100%);
-	}
-}
