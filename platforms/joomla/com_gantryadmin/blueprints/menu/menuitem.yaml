@@ -21,21 +21,18 @@ form:
         .id:
           type: input.text
           label: Menu Item Id
+          disabled: true
 
         .type:
-          type: select.selectize
+          type: input.text
           label: Menu Item Type
+          disabled: true
           default: link
-          options:
-            link: Link
-            alias: Alias
-            url: External URL
-            separator: Separator
-            heading: Heading
 
         .link:
           type: input.text
           label: Link
+          disabled: true
 
         .title:
           type: input.text
