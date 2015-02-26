@@ -61,6 +61,15 @@ a {
   line-height: 1.5; }
   #g5-container .g-block {
     position: relative; }
+    @media only all and (max-width: 47.938rem) {
+      #g5-container .g-block {
+        -webkit-box-flex: 0;
+        -moz-box-flex: 0;
+        box-flex: 0;
+        -webkit-flex: 0 100%;
+        -moz-flex: 0 100%;
+        -ms-flex: 0 100%;
+        flex: 0 100%; } }
   #g5-container .inner-container {
     margin: 1.5rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
