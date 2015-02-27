@@ -6,14 +6,14 @@ form:
   fields:
     class:
       type: input.selectize
-      label: Class
-      description: CSS class name.
+      label: CSS Classes
+      description: Enter CSS class names.
       selectize:
           delimiter: ' '
       default:
 
     extra:
       type: input.text
-      label: Attributes
-      description: Extra attributes.
+      label: HTML Attributes
+      description: Extra HTML attributes.
       default:

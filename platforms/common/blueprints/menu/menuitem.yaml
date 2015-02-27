@@ -26,6 +26,7 @@ form:
           type: select.selectize
           label: Menu Item Type
           default: link
+          placeholder: 'Select...'
           options:
             link: Link
             alias: Alias
@@ -44,6 +45,7 @@ form:
         .dropdown:
           type: select.selectize
           label: Dropdown Style
+          placeholder: 'Select...'
           default: standard
           options:
             standard: Standard
@@ -52,6 +54,7 @@ form:
         .browserNav:
           type: select.selectize
           label: Target Window
+          placeholder: 'Select...'
           options:
             0: Parent Window
             1: New Window With Navigation

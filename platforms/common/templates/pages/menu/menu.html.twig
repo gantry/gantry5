@@ -7,7 +7,7 @@
             <button type="submit" class="button button-primary button-save" data-save="Menu"><i class="fa fa-fw fa-check"></i> <span>Save Menu</span></button>
         </span>
         <h2 class="page-title">Menu Editor</h2>
-        <select data-selectize-ajaxify data-selectize data-g5-ajaxify-target="[data-g5-content]" class="menu-select-wrap">
+        <select placeholder="Select..." data-selectize-ajaxify data-selectize data-g5-ajaxify-target="[data-g5-content]" class="menu-select-wrap">
             {% for menu_name in menus %}
             <option value="{{ menu_name|e }}"
                     {% if id == menu_name %}selected="selected"{% endif %}
