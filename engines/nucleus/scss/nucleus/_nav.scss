@@ -66,21 +66,7 @@
 				}
 			}
     	}
-    }
-
-    // Go Back Button on Dropdown
-	.g-go-back {
-		a {
-			span {
-				display: none;
-			}
-			&:before {
-				font-family: FontAwesome;
-				content: "\f177";
-				opacity: 0.5;
-			}
-		}
-	}    
+    }   
 }
 
 // Standard Dropdown Settings
@@ -114,6 +100,10 @@
     }
 }
 
+.g-go-back {
+	display: none;
+}
+
 // Megamenu Settings
 .g-fullwidth {
 	position: static;
@@ -130,6 +120,21 @@
 		// Dropdown is Active When Its Parent is Clicked
 		&.g-active {
 			@extend %active-dropdown;
+		}
+
+		// Go Back Button on Dropdown
+		.g-go-back {
+			display: block;
+			a {
+				span {
+					display: none;
+				}
+				&:before {
+					font-family: FontAwesome;
+					content: "\f177";
+					opacity: 0.5;
+				}
+			}
 		}
 	}
 	.g-sublevel {
