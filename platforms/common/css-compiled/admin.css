@@ -1929,7 +1929,6 @@ body.g5-dialog-open, html.g5-dialog-open {
     animation: flyIn 0.5s; }
   .g5-dialog.g5-dialog-theme-default .g5-content {
     border-radius: 5px;
-    font-family: "Helvetica Neue", sans-serif;
     background: #f0f0f0;
     color: #444444;
     padding: 1rem;
