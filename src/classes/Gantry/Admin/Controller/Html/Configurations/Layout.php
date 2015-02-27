@@ -212,7 +212,6 @@ class Layout extends HtmlController
         $data = new Config(
             [
                 'type'    => $type,
-                'options' => $defaults,
             ],
             function () use ($validator) {
                 return $validator;
@@ -221,6 +220,7 @@ class Layout extends HtmlController
 
         // Join POST data.
         $data->join('options', isset($_POST['particle']) && is_array($_POST['particle']) ? $_POST['particle'] : []);
+        $data->set('options.enabled', (int) $data->get('options.enabled'));
 
         if ($particle) {
             if ($type != $particle) {
@@ -234,6 +234,10 @@ class Layout extends HtmlController
                 foreach ($block as $key => $param) {
                     if ($param === '') {
                         unset($block[$key]);
+                        continue;
+                    }
+                    if ($key == 'size') {
+                        $block[$key] = (int) $param;
                     }
                 }
 
