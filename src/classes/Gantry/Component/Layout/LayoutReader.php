@@ -101,6 +101,8 @@ class LayoutReader
 
         $attributes = new \stdClass;
 
+        $attributes->enabled = 1;
+
         if ($subtype && $type == 'position') {
             $attributes->key = $subtype;
         }

@@ -945,12 +945,6 @@ th {
   opacity: 0.5;
   font-family: FontAwesome;
   content: "\f054"; }
-.g-main-nav .g-go-back a span {
-  display: none; }
-.g-main-nav .g-go-back a:before {
-  font-family: FontAwesome;
-  content: "\f177";
-  opacity: 0.5; }
 
 .g-standard .g-sublevel > li {
   position: relative; }
@@ -966,6 +960,9 @@ th {
   -ms-flex: 0 100%;
   flex: 0 100%; }
 
+.g-go-back {
+  display: none; }
+
 .g-fullwidth {
   position: static; }
   .g-fullwidth .g-dropdown {
@@ -977,6 +974,14 @@ th {
       width: 50%;
       position: relative;
       overflow: hidden; }
+    .g-fullwidth .g-dropdown .g-go-back {
+      display: block; }
+      .g-fullwidth .g-dropdown .g-go-back a span {
+        display: none; }
+      .g-fullwidth .g-dropdown .g-go-back a:before {
+        font-family: FontAwesome;
+        content: "\f177";
+        opacity: 0.5; }
   .g-fullwidth .g-sublevel .g-dropdown {
     top: 0;
     -webkit-transform: translateX(100%);

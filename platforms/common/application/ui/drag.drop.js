@@ -230,16 +230,18 @@ var DragDrop = new prime({
         var scrollHeight = this.scrollHeight,
             Height = document.body.clientHeight,
             Scroll = document.body.scrollTop;
-
+        
         clearTimeout(this.scrollInterval);
-        if (clientY + 50 >= Height && Scroll + Height < scrollHeight) {
-            this.scrollInterval = setInterval(function(){
-                window.scrollTo(document.body.scrollLeft, Math.min(scrollHeight, document.body.scrollTop + 4));
-            }, 8);
-        } else if (clientY - 50 <= 100 && scrollHeight > 0) {
-            this.scrollInterval = setInterval(function(){
-                window.scrollTo(document.body.scrollLeft, Math.max(0, document.body.scrollTop - 4));
-            }, 8);
+        if (!$(overing).matches('#trash') && !$(overing).parent('#trash')) {
+            if (clientY + 50 >= Height && Scroll + Height < scrollHeight) {
+                this.scrollInterval = setInterval(function() {
+                    window.scrollTo(document.body.scrollLeft, Math.min(scrollHeight, document.body.scrollTop + 4));
+                }, 8);
+            } else if (clientY - 50 <= 100 && scrollHeight > 0) {
+                this.scrollInterval = setInterval(function() {
+                    window.scrollTo(document.body.scrollLeft, Math.max(0, document.body.scrollTop - 4));
+                }, 8);
+            }
         }
 
         // We tweak the overing to take into account the negative offset for the handle

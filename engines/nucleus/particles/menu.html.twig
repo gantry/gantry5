@@ -45,9 +45,11 @@
         {% for column, items in item.groups %}
         <div class="g-block {{ item.columnWidth(column)|toGrid }}">
             <ul class="g-sublevel">
-                <li class="g-go-back">
-                    <a href="#"><span>Back</span></a>
-                </li>
+                {% if item.level > 1 %}
+                    <li class="g-go-back">
+                        <a href="#"><span>Back</span></a>
+                    </li>
+                {% endif %}
                 {{ _self.displayItems(items, menu) }}
             </ul>
         </div>

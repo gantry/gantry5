@@ -20,6 +20,7 @@ form:
       type: select.selectize
       label: Target
       description: Target browser window when item is clicked.
+      placeholder: 'Select...'
       default: _blank
       options:
           _parent: Self

@@ -4,6 +4,7 @@ namespace Gantry\Admin\Controller\Json;
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Response\JsonResponse;
+use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 
@@ -11,7 +12,12 @@ class Filepicker extends JsonController
 {
     protected $httpVerbs = [
         'GET'  => [
-            '/*' => 'index'
+            '/'            => 'index',
+            '/*'           => 'index',
+            '/display'     => 'undefined',
+            '/display/**'  => 'displayFile',
+            '/download'    => 'undefined',
+            '/download/**' => 'downloadFile',
         ],
         'POST' => [
             '/'            => 'index',
@@ -21,7 +27,10 @@ class Filepicker extends JsonController
             '/subfolder/*' => 'subfolder'
         ],
         'PUT'  => [
-            '/*' => 'upload'
+            '/**' => 'upload'
+        ],
+        'DELETE'  => [
+            '/**' => 'delete'
         ]
     ];
 
@@ -157,5 +166,155 @@ class Filepicker extends JsonController
         $response['html'] = 'subfolder';
 
         return new JsonResponse($response);
+    }
+
+    public function displayFile()
+    {
+        $path = implode('/', func_get_args());
+
+        $this->doDownload($path, false);
+    }
+
+    public function downloadFile()
+    {
+        $path = implode('/', func_get_args());
+
+        $this->doDownload($path, true);
+    }
+
+    public function upload()
+    {
+        $path = implode('/', func_get_args());
+
+        // TODO: handle streams
+        $targetPath = GANTRY5_ROOT . '/' . $path;
+
+        if (!isset($_FILES['file']['error']) || is_array($_FILES['file']['error'])) {
+            throw new \RuntimeException('No file sent', 400);
+        }
+
+        // Check $_FILES['file']['error'] value.
+        switch ($_FILES['file']['error']) {
+            case UPLOAD_ERR_OK:
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                throw new \RuntimeException('No file sent', 400);
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+            throw new \RuntimeException('Exceeded filesize limit.', 400);
+            default:
+                throw new \RuntimeException('Unkown errors', 400);
+        }
+
+        // You should also check filesize here.
+        if ($_FILES['file']['size'] > 1000000) {
+            throw new \RuntimeException('Exceeded filesize limit.', 400);
+        }
+
+        // Check extension
+        $fileParts = pathinfo($_FILES['file']['name']);
+        $fileExt = strtolower($fileParts['extension']);
+
+        // TODO: check if download is of supported type.
+
+        // Upload it
+        if (!move_uploaded_file($_FILES['file']['tmp_name'], sprintf('%s/%s', $targetPath, $_FILES['file']['name']))) {
+            throw new \RuntimeException('Failed to move uploaded file.', 500);
+        }
+
+        return new JsonResponse(['success', 'File uploaded successfully']);
+    }
+
+    public function delete()
+    {
+        $path = implode('/', func_get_args());
+
+        if (!$path) {
+            throw new \RuntimeException('No file specified for delete', 400);
+        }
+
+        // TODO: handle streams
+        $targetPath = GANTRY5_ROOT . '/' . $path;
+
+        $file = File::instance($targetPath);
+
+        if (!$file->exists()) {
+            throw new \RuntimeException('File not found: ' . $path, 404);
+        }
+
+        try {
+            $file->delete();
+        } catch (\Exception $e) {
+            throw new \RuntimeException('File could not be deleted: ' . $path, 500);
+        }
+
+        return new JsonResponse(['success', 'File deleted: ' . $path]);
+    }
+
+    protected function doDownload($path, $download)
+    {
+        if (!$path) {
+            throw new \RuntimeException('No file specified', 400);
+        }
+
+        // TODO: handle streams
+        $targetPath = GANTRY5_ROOT . '/' . $path;
+
+        if (!file_exists($targetPath)) {
+            throw new \RuntimeException('File not found: ' . $path, 404);
+        }
+
+        $hash = md5_file($path);
+
+        // Handle 304 Not Modified
+        if (isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
+            $etag = stripslashes($_SERVER['HTTP_IF_NONE_MATCH']);
+
+            if ($etag == $hash) {
+                header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT', true, 304);
+
+                // Give fast response.
+                flush();
+                exit();
+            }
+        }
+
+        // Set file headers.
+        header('ETag: ' . $hash);
+        header('Pragma: public');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
+
+        // Get the image file information.
+        $info = getimagesize($path);
+        $isImage = (bool) $info;
+
+        if (!$download && $isImage) {
+            $fileType = $info['mime'];
+
+            // Force re-validate.
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Content-type: ' . $fileType);
+            header('Content-Disposition: inline; filename="' . basename($path) . '"');
+        } else {
+            // Force file download.
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/force-download');
+            header('Content-Type: application/octet-stream');
+            header('Content-Type: application/download');
+            header('Content-Disposition: attachment; filename="' . basename($path) . '"');
+        }
+
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Length: ' . filesize($path));
+        flush();
+
+        // Output the file contents.
+        @readfile($path);
+        flush();
+
+        exit();
     }
 }

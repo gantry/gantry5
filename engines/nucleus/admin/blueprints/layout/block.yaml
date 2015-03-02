@@ -6,25 +6,25 @@ form:
   fields:
     id:
       type: input.text
-      label: Id
-      description: CSS id.
+      label: CSS ID
+      description: Enter CSS id.
       default:
 
     class:
       type: input.selectize
-      label: Class
-      description: CSS class name.
+      label: CSS Classes
+      description: Enter CSS class names.
       selectize:
           delimiter: ' '
       default:
 
     extra:
       type: input.text
-      label: Attributes
-      description: Extra attributes.
+      label: HTML Attributes
+      description: Extra HTML attributes.
       default:
 
     size:
       type: input.text
-      label: Size
-      description: Block size in percentages (0-100).
+      label: Block Size
+      description: Block size in percentages (5-100).

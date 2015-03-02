@@ -1,0 +1,30 @@
+container:
+  header:
+    - [particle-logo 60, position-position-0 40]
+  nav:
+    - position-position-1
+
+  1:
+    - banner:
+      - position-banner
+  2:
+    - sidebar 20:
+      - position-position-6
+      - position-position-8
+    - main 60:
+      - position-position-3
+      - pagecontent
+      - position-position-2
+    - aside 20:
+      - position-position-7
+      - position-position-4
+      - position-position-5
+
+  footer:
+    - position-footer
+    - position-position-9
+    - position-position-10
+    - position-position-11
+
+  debug:
+    - position-debug

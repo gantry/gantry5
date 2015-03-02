@@ -203,7 +203,7 @@ class Layout extends HtmlController
             $validator->embed('options', CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
             $defaults = [];
         } else {
-            $type = 'particle';
+            $type = in_array($particle, ['spacer', 'pagecontent', 'position']) ? $particle :  'particle';
             $validator->embed('options', $this->container['particles']->get($particle));
             $defaults = (array) $this->container['config']->get("particles.{$particle}");
         }
@@ -212,8 +212,6 @@ class Layout extends HtmlController
         $data = new Config(
             [
                 'type'    => $type,
-                'subtype' => $particle,
-                'options' => $defaults,
             ],
             function () use ($validator) {
                 return $validator;
@@ -222,10 +220,29 @@ class Layout extends HtmlController
 
         // Join POST data.
         $data->join('options', isset($_POST['particle']) && is_array($_POST['particle']) ? $_POST['particle'] : []);
+        $data->set('options.enabled', (int) $data->get('options.enabled'));
 
-        if ($type == 'particle') {
-            $data->join('title', isset($_POST['title']) ? $_POST['title'] : 'Untitled');
-            if (isset($_POST['block'])) { $data->join('block', $_POST['block']); }
+        if ($particle) {
+            if ($type != $particle) {
+                $data->set('subtype', $particle);
+            }
+
+            $data->join('title', isset($_POST['title']) ? $_POST['title'] : ucfirst($particle));
+            if (isset($_POST['block'])) {
+                // TODO: remove empty items in some other way:
+                $block = (array) $_POST['block'];
+                foreach ($block as $key => $param) {
+                    if ($param === '') {
+                        unset($block[$key]);
+                        continue;
+                    }
+                    if ($key == 'size') {
+                        $block[$key] = (int) $param;
+                    }
+                }
+
+                $data->join('block', $block);
+            }
         }
 
         // TODO: validate
