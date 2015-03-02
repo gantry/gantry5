@@ -2,30 +2,34 @@
     font-weight: 300;
     font-family: "g-lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 
-// Headings
-h1, h2, h3, h4, h5, h6 {
-    font-weight: normal;
-    font-family: $font-family-headers;
-}
+    // Headings
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: normal;
+        font-family: $font-family-headers;
+    }
 
-h1, h2 {
-    margin: $leading-margin 0;
-}
+    h1, h2 {
+        margin: $leading-margin 0;
+    }
 
-h6 {
-    text-transform: uppercase;
-}
+    h6 {
+        text-transform: uppercase;
+    }
 
-// Strong
-b, strong {
-    font-weight: normal;
-    color: darken($core-text, 25%);
-}
+    // Strong
+    b, strong {
+        font-weight: normal;
+        color: darken($core-text, 25%);
+    }
 
-.page-title {
-    margin-top: 0.5rem;
-    display: inline-block;
-    color: inherit;
-}
+    .page-title {
+        margin-top: 0.5rem;
+        display: inline-block;
+        color: inherit;
+    }
+
+    .new {
+        display: none;
+    }
 
 }//endwrapper

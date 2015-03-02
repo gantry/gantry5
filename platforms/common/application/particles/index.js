@@ -6,10 +6,13 @@ var ready = require('elements/domready'),
     toastr = require('../ui').toastr,
     request = require('agent'),
 
+    deepClone = require('mout/lang/deepClone'),
+    createObject = require('mout/lang/createObject'),
     trim = require('mout/string/trim'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix');
 
+require('elements/insertion');
 
 ready(function () {
     var body = $('body');
@@ -17,14 +20,34 @@ ready(function () {
     body.delegate('click', '#settings [data-collection-add]', function (event, element) {
         event.preventDefault();
 
-        var content = $('.collection-list'),
-            titleEdit = element,
-            titleKey = element.data('[data-title-edit]'),
-            title = content.find('[data-collection-title-' + titleKey + ']'),
+        var titleAdd = element,
+            collection = element.parent('[data-field-name]'),
+            item = collection.find('[data-collection-add-item]'),
+            title = collection.find('[data-collection-edit-title-new]'),
             titleValue;
 
-        if (title && titleEdit) {
-            titleEdit.on('click', function () {
+        console.log(titleAdd+' titleAdd');
+        console.log(item+' item');
+        console.log(collection+' collection');
+        console.log(title+' title');
+
+        var createNew = function(element) {
+
+            /*var cloneItem = deepClone(element),
+                parentItem = cloneItem.parent,
+                newItem = parentItem.insert(cloneItem);*/
+
+            var cloneItem = element.cloneNode(true),
+                parentItem = cloneItem.parent,
+                newItem = parentItem.insert(cloneItem);
+
+            console.log(cloneItem+' cloneItem');
+            console.log(parentItem+' parentItem');
+            console.log(newItem+' newItem');
+
+            newItem.style('display', 'block');
+
+            if (title && titleAdd) {
                 title.attribute('contenteditable', 'true');
                 title[0].focus();
 
@@ -35,12 +58,18 @@ ready(function () {
                 selection.addRange(range);
 
                 titleValue = trim(title.text());
-            });
+            }
+        };
 
+        createNew(item);
+
+        if (title && titleAdd) {
             title.on('keydown', function (event) {
 
                 switch (event.keyCode) {
                     case 13: // return
+                        event.stopPropagation();
+                        createNew();
                     case 27: // esc
                         event.stopPropagation();
                         if (event.keyCode == 27) {
@@ -147,7 +176,7 @@ ready(function () {
             title = collection.find('[data-collection-edit-title-' + titleKey + ']'),
             titleValue;
 
-        console.log( titleEdit+' titleEdit');
+        console.log(titleEdit+' titleEdit');
         console.log(titleKey+' titleKey');
         console.log(collection+' collection');
         console.log(title+' title');

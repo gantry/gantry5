@@ -1,0 +1,27 @@
+<div class="input-group">
+    {% if field.prepend %}
+        {{ group(field.prepend) }}
+    {% endif %}
+    {% block input %}
+    {% endblock %}
+    {% if field.append %}
+        {{ group(field.append) }}
+    {% endif %}
+</div>
+
+{% macro group(item) %}
+    {% if item.type == "text" %}
+        {% if item.options %}
+            {% include 'forms/fields/select' with {'field.options': item.options} %}
+        {% else %}
+                <span class="input-group-addon">{{ item }}</span>
+        {% endif %}
+    {% elseif item.type == "button" %}
+        {% if item.options %}
+        {% else %}
+            <span class="input-group-btn">
+                {% include 'forms/fields/button' %}
+            </span>
+        {% endif %}
+    {% elseif item.type == "button" %}
+{% endmacro %}

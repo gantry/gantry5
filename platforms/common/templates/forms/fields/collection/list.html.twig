@@ -3,11 +3,11 @@
 
 {% block field %}
     {% if field.is_current %}
-        <div class="cards-wrapper g-grid">
+        <div class="g-grid">
             {% for key, val in value %}
                 <div class="card settings-block">
                     <h4>
-                        {{ val.name }}
+                        <span data-title-editable="{{ val.name }}" class="title">{{ val.name }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
                     </h4>
                     <div class="inner-params">
                         {{ block('collection_fields') }}
@@ -40,7 +40,20 @@
                     </div>
                     {% block input %}
                         {% if field.fields %}
-                            <ul>
+                            <ul data-collection-length="{{ value|length }}">
+                                <li style="display: none" data-collection-add-item>
+                                    <span class="title">
+                                        <span data-collection-edit-title-{{ key }}=>
+                                            new item
+                                        </span>
+                                        <span class="button-simple" data-collection-edit-title="new">
+                                            <i class="fa fa-pencil font-small"></i>
+                                        </span>
+                                        <a class="button-simple config-cog" data-collection-edit="" href="">
+                                            <i class="fa fa-cog"></i>
+                                        </a>
+                                    </span>
+                                </li>
                                 {% for key, val in value %}
                                     {% if (field.ajax == true) %}
                                         {% set field_routes = field_route ~ '/' ~ key %}
