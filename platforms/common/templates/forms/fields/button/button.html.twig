@@ -1,0 +1,15 @@
+{% extends "forms/field.html.twig" %}
+
+{% block input %}
+    <button
+            {# required attribute structures #}
+            name="{{ (scope ~ name)|fieldName }}"
+            {# non-gloval attribute structures #}
+            type="{{ field.type }}"{% endif %}
+            {# global attribute structures #}
+            {{ block('global_attributes') }}
+            >
+        {{ value }}
+        {% if field.icon is defined %} }<span class="{{ field.icon }}"></span>{% endif %}
+    </button>
+{% endblock %}
