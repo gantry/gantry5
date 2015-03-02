@@ -1,3 +1,6 @@
+p {
+  margin: 1.5rem 0; }
+
 dl {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem; }
@@ -224,8 +227,8 @@ input[type="search"],
 input[type="tel"],
 input[type="color"],
 .uneditable-input {
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border 0.2s linear, box-shadow 0.2s linear;
   -moz-transition: border 0.2s linear, box-shadow 0.2s linear;
@@ -466,13 +469,13 @@ th .tooltip-inner {
 
 .list-striped,
 .row-striped {
-  border-top: 1px solid #ddd; }
+  border-top: 1px solid #dddddd; }
 
 .list-striped li,
 .list-striped dd,
 .row-striped .row,
 .row-striped .row-fluid {
-  border-bottom: 1px solid #ddd; }
+  border-bottom: 1px solid #dddddd; }
 
 .list-striped li:nth-child(odd),
 .list-striped dd:nth-child(odd),
@@ -488,46 +491,46 @@ th .tooltip-inner {
 
 .list-bordered,
 .row-bordered {
-  border: 1px solid #ddd; }
+  border: 1px solid #dddddd; }
 
 .row-even,
 .row-odd {
-  border-bottom: 1px solid #ddd; }
+  border-bottom: 1px solid #dddddd; }
 
 .row-even {
   background-color: #fcfcfc; }
 
 .iframe-bordered {
-  border: 1px solid #ddd; }
+  border: 1px solid #dddddd; }
 
 blockquote {
-  border-left: 5px solid #ddd; }
+  border-left: 5px solid #dddddd; }
 
 blockquote small {
-  color: #999999; }
+  color: #777777; }
 
 blockquote.pull-right {
-  border-right: 5px solid #ddd; }
+  border-right: 5px solid #dddddd; }
 
 code, pre {
-  color: #666;
+  color: #444444;
   background-color: #f2f2f2;
-  border: 1px solid #ddd; }
+  border: 1px solid #dddddd; }
 
 legend {
   color: #333333;
-  border-bottom: 1px solid #ddd; }
+  border-bottom: 1px solid #dddddd; }
 
 legend small {
   color: #999999; }
 
 .input-prepend .chzn-container-single .chzn-single,
 .input-append .chzn-container-single .chzn-single {
-  border-color: #ddd; }
+  border-color: #dddddd; }
 
 .input-prepend .chzn-container-single .chzn-drop,
 .input-append .chzn-container-single .chzn-drop {
-  border-color: #ddd; }
+  border-color: #dddddd; }
 
 .nav-tabs.nav-dark {
   border-bottom: 1px solid #333;
@@ -554,7 +557,7 @@ legend small {
   background-color: #fcfcfc; }
 
 .img-polaroid {
-  background-color: #fff;
+  background-color: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
 

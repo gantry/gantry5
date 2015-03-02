@@ -1,6 +1,6 @@
 legend {
 	color: #333333;
-	border-bottom: 1px solid $core-border-color;
+	border-bottom: 1px solid $base-border-color;
 }
 
 legend small {
@@ -9,10 +9,10 @@ legend small {
 
 .input-prepend .chzn-container-single .chzn-single,
 .input-append .chzn-container-single .chzn-single {
-	border-color: $core-border-color;
+	border-color: $base-border-color;
 }
 
 .input-prepend .chzn-container-single .chzn-drop,
 .input-append .chzn-container-single .chzn-drop {
-	border-color: $core-border-color;
+	border-color: $base-border-color;
 }

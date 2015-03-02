@@ -1,4 +1,8 @@
 // Lists and Tables
+p {
+	margin: $leading-margin 0;
+}
+
 dl {
 	margin-top: $leading-margin;
 	margin-bottom: $leading-margin;

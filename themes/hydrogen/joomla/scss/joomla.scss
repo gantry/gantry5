@@ -1,20 +1,17 @@
 // REQUIRED DEPENDENCIES - DO NOT CHANGE
 
 // Load Third Party Libraries
-@import "../common/scss/vendor/bourbon/bourbon";
+@import "vendor/bourbon/bourbon";
 
 // Load Nucleus Configuration
-@import "../common/scss/configuration/nucleus/base";
-
-// Load Template Configuration
-@import "../common/scss/configuration/template/base";
+@import "configuration/nucleus/base";
 
 // Load Nucleus Mixins and Functions
-@import "../common/scss/nucleus/functions/base";
-@import "../common/scss/nucleus/mixins/base";
+@import "nucleus/functions/base";
+@import "nucleus/mixins/base";
 
-// Load Template Library
-@import "../common/scss/template/modules/base";
+// Load Template Configuration
+@import "../common/scss/configuration/base";
 
 //-------------------------------------------
 
