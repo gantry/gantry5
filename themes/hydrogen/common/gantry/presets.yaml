@@ -10,9 +10,9 @@ swatches:
   style1:
     image: 'D4D4D4.jpg'
     colors:
-      - '#7CBD90'
-      - '#FEFCD0'
-      - '#64B9B7'
+      - '#439a86'
+      - '#354d59'
+      - '#8f4dae'
   style2:
     image: 'D4D4D4.jpg'
     colors:
@@ -31,28 +31,4 @@ swatches:
       - '#F2A817'
       - '#F88316'
       - '#E15E26'
-  style5:
-    image: 'D4D4D4.jpg'
-    colors:
-      - '#39A9B5'
-      - '#38BC75'
-      - '#3071B5'
-  style6:
-    image: 'D4D4D4.jpg'
-    colors:
-      - '#C9E291'
-      - '#555555'
-      - '#2EAA9F'
-  style7:
-    image: 'D4D4D4.jpg'
-    colors:
-      - '#78D9E9'
-      - '#555555'
-      - '#ED5B57'
-  style8:
-    image: 'D4D4D4.jpg'
-    colors:
-      - '#F8F59C'
-      - '#555555'
-      - '#42C8D7'
 

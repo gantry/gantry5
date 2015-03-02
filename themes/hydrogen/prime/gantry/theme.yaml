@@ -58,9 +58,13 @@ configuration:
 
 admin:
   styles:
+    core:
+      - base
+      - accent
     section:
       - header
       - showcase
       - subfeature
-    core:
-      - base
+      - footer
+    configuration:
+      - breakpoints
