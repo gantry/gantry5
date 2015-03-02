@@ -24,6 +24,10 @@
         }
     }
 
+    &.disabled {
+        opacity: 0.6;
+    }
+
     .advanced {
         color: $orange;
     }

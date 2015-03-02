@@ -82,7 +82,7 @@ a {
         }
 
         .enabler {
-            @include enabler($green, $medium-gray);
+            @include enabler($green, $red);
         }
 
         .inner-params {
