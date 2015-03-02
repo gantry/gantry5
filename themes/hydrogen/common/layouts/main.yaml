@@ -4,7 +4,7 @@ header:
 
 showcase:
   container:
-    - position-showcase
+    - particle-showcase
 
 feature:
   container:

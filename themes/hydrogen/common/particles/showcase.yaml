@@ -1,0 +1,17 @@
+name: Showcase Sample
+description: Displays Showcase content
+type: particle
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable to the particles.
+      default: true
+
+    css.class:
+      type: input.text
+      label: Class
+      description: CSS class name for the particle.
+      default: branding
