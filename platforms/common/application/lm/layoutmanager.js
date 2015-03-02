@@ -206,6 +206,15 @@ var LayoutManager = new prime({
             return;
         }
 
+        var nonVisible = target.parent('[data-lm-blocktype="non-visible"]'),
+            child = this.block.block.find('[data-lm-id]');
+
+        if ((child ? child.data('lm-blocktype') : originalType) == 'atom') {
+            if (!nonVisible) { return; }
+        } else {
+            if (nonVisible) { return; }
+        }
+
         // handles the types cases and normalizes the locations (x and y)
         var grid, block, method;
 

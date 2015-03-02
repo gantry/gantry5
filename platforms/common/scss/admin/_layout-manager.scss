@@ -185,7 +185,25 @@
             .g-grid {
                 background: $white;
                 &:empty:after {
-                    content: "Drop non-visible particles here...";
+                    content: "Drop non-visible atoms here...";
+                }
+
+                &:hover:not(:empty):not(.no-hover):before, &:hover:not(:empty):not(.no-hover):not(.no-gear):after {
+                    display: none;
+                }
+
+                &:hover > .g-block {
+                    > .particle, > .position, > .spacer, > .pagecontent {
+                        &:after {
+                            display: none;
+                        }
+                    }
+                }
+
+                .g-block:last-child {
+                    .particle, .position, .spacer, .pagecontent, .atom {
+                        margin-right: 0;
+                    }
                 }
             }
         }
