@@ -23,17 +23,13 @@ $blue: 							#3288e6;
 // Buttons
 $button-bg:						#999999;
 
-// Mode Indicator
-$production:                    $core-accent;
-$development:                   #f27a40;
-
 // Body
 $body-bg:                       #354D59;
 
 // Headers
 $main-header-text:				$white;
 $inner-header-bg:				#253A47;
-$inner-header-text:				$production;
+$inner-header-text:				$core-accent;
 $update-header-bg:				#8F4DAE;
 
 // Main

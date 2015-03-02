@@ -2,7 +2,7 @@ body.com_gantryadmin {
 	#g5-container {
 
 	    [data-mode-indicator="production"] {
-	        background-color: $production;
+	        background-color: $core-accent;
 	    }
 
 	    #main-header {
@@ -12,27 +12,27 @@ body.com_gantryadmin {
 	        }
 
 	    	.dev-mode-toggle {
-	    		background: darken($production, 10%);
+	    		background: darken($core-accent, 10%);
 
 	    		a {
-	    			background: lighten($production, 15%);
+	    			background: lighten($core-accent, 15%);
 	    		}
 	    	}
 
 	    	.button-save {
-	            @include button-color(lighten($production, 15%), $white);
+	            @include button-color(lighten($core-accent, 15%), $white);
 	        }
 
 	        ul {
 	            li {
 	                &:hover {
 	                    a {
-	                        background: darken($production, 5%);
+	                        background: darken($core-accent, 5%);
 	                    }
 	                }
 	                &.active {
 	                    a {
-	                        background: darken($production, 15%);
+	                        background: darken($core-accent, 15%);
 	                    }
 	                }
 	            }
@@ -61,7 +61,7 @@ body.com_gantryadmin {
 	    }
 
 	    .settings-state {
-	        background: $production;
+	        background: $core-accent;
 	        color: $main-header-text;
 	    }
 
