@@ -1,5 +1,5 @@
-name: Subfeature Colors
-description: Subfeature colors for the Hydrogen theme
+name: Feature Colors
+description: Feature colors for the Hydrogen theme
 type: section
 
 form:
@@ -8,7 +8,7 @@ form:
     background:
       type: input.colorpicker
       label: Background
-      default: "#f0f0f0"
+      default: "#ffffff"
     text-color:
       type: input.colorpicker
       label: Text

@@ -64,7 +64,9 @@ admin:
     section:
       - header
       - showcase
+      - feature
       - subfeature
+      - main
       - footer
     configuration:
       - breakpoints
