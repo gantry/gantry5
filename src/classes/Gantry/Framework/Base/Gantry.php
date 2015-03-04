@@ -3,7 +3,6 @@ namespace Gantry\Framework\Base;
 
 use Gantry\Component\Config\ConfigServiceProvider;
 use Gantry\Component\Layout\LayoutCollection;
-use Gantry\Component\Layout\LayoutReader;
 use Gantry\Framework\Platform;
 use RocketTheme\Toolbox\DI\Container;
 use Gantry\Component\Filesystem\StreamsServiceProvider;

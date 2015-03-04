@@ -7,6 +7,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -57,6 +58,8 @@ class Settings extends HtmlController
         $this->params['particles'] = $this->container['particles']->group();
         $this->params['route']  = "configurations.{$this->params['configuration']}.settings";
         $this->params['page_id'] = $configuration;
+
+        //$this->params['layout'] = LayoutObject::instance($configuration);
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
     }

@@ -3,7 +3,7 @@ namespace Gantry\Framework\Base;
 
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Gantry\GantryTrait;
-use Gantry\Component\Layout\LayoutReader;
+use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\ScssCompiler;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Component\Twig\TwigExtension;
@@ -71,27 +71,10 @@ trait ThemeTrait
     public function loadLayout($name = null)
     {
         if (!$name) {
-            $name = $this->layout();
+            $name = $this->layout ?: 'default';
         }
 
-        $gantry = static::gantry();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        // TODO: convert to use configuration.
-        $layout = null;
-        $filename = $locator('gantry-layouts://' . $name . '.json');
-        if ($filename) {
-            $layout = JsonFile::instance($filename)->content();
-        } else {
-            $filename = $locator('gantry-layouts://' . $name . '.yaml');
-            if ($filename) {
-                $layout = LayoutReader::read($filename);
-            }
-        }
-
-        return $layout;
+        return Layout::instance($name);
     }
 
     public function add_to_context(array $context)

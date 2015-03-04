@@ -9,4 +9,4 @@ container:
     - [particle-date 25, particle-copyright 50, particle-branding 25]
 
 non-visible:
- - particle-custom
+ - [particle-assets]

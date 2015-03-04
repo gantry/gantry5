@@ -5,7 +5,7 @@ use Gantry\Component\Config\BlueprintsForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
-use Gantry\Component\Layout\LayoutReader;
+use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\File\JsonFile;
@@ -18,7 +18,9 @@ class Layout extends HtmlController
             '/'         => 'index',
             '/create'   => 'create',
             '/create/*' => 'create',
-            '/*'        => 'undefined'
+            '/*'        => 'undefined',
+            '/switch'   => 'undefined',
+            '/switch/*' => 'switchLayout'
         ],
         'POST'   => [
             '/'                     => 'save',
@@ -51,7 +53,7 @@ class Layout extends HtmlController
             throw new \RuntimeException('Preset not found', 404);
         }
         $this->params['page_id'] = $id;
-        $this->params['layout'] = $layout;
+        $this->params['layout'] = $layout->toArray();
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/create.html.twig', $this->params);
     }
@@ -90,7 +92,7 @@ class Layout extends HtmlController
         }
 
         $this->params['page_id'] = $id;
-        $this->params['layout'] = $layout;
+        $this->params['layout'] = $layout->toArray();
         $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($id, '_')));
         $this->params['particles'] = $groups;
 
@@ -132,7 +134,7 @@ class Layout extends HtmlController
             throw new \RuntimeException('Layout not found', 404);
         }
 
-        $item = $this->find($layout, $id);
+        $item = $layout->find($id);
         $item->type    = isset($_POST['type']) ? $_POST['type'] : $type;
         $item->subtype = isset($_POST['subtype']) ? $_POST['subtype'] : null;
         $item->title   = isset($_POST['title']) ? $_POST['title'] : 'Untitled';
@@ -185,6 +187,21 @@ class Layout extends HtmlController
             return new JsonResponse(['html' => $result, 'defaults' => ['particle' => $defaults]]);
         }
         return $result;
+    }
+
+    public function switchLayout($id)
+    {
+        // Validate only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
+        $layout = $this->getLayout($id);
+        if (!$layout->toArray()) {
+            throw new \RuntimeException('Layout not found', 404);
+        }
+
+        return new JsonResponse(['data' => $layout->toArray()]);
     }
 
     public function validate($particle)
@@ -250,44 +267,13 @@ class Layout extends HtmlController
         return new JsonResponse(['data' => $data->toArray()]);
     }
 
+    /**
+     * @param string $name
+     * @return LayoutObject
+     */
     protected function getLayout($name)
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        $layout = null;
-        $filename = $locator('gantry-layouts://' . $name . '.json');
-        if ($filename) {
-            $layout = JsonFile::instance($filename)->content();
-        } else {
-            $filename = $locator('gantry-layouts://' . $name . '.yaml');
-            if ($filename) {
-                $layout = LayoutReader::read($filename);
-            }
-        }
-
-        return $layout;
-    }
-
-    protected function find($layout, $id)
-    {
-        if (is_array($layout)) {
-            return new \stdClass;
-        }
-        foreach ($layout as $item) {
-            if (is_object($item)) {
-                if ($item->id == $id) {
-                    return $item;
-                }
-                if (isset($item->children)) {
-                    $result = $this->find($item->children, $id);
-                    if ($result) {
-                        return $result;
-                    }
-                }
-            }
-        }
-        return new \stdClass;
+        return LayoutObject::instance($name);
     }
 
     protected function getParticles()
