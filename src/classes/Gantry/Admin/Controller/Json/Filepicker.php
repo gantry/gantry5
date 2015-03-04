@@ -21,13 +21,10 @@ class Filepicker extends JsonController
         ],
         'POST' => [
             '/'            => 'index',
-            '/select'      => 'select',
-            '/select/*'    => 'select',
             '/subfolder'   => 'subfolder',
-            '/subfolder/*' => 'subfolder'
-        ],
-        'PUT'  => [
-            '/**' => 'upload'
+            '/subfolder/*' => 'subfolder',
+            '/upload'   => 'undefined',
+            '/upload/**'   => 'upload'
         ],
         'DELETE'  => [
             '/**' => 'delete'
@@ -151,15 +148,6 @@ class Filepicker extends JsonController
         return new JsonResponse($response);
     }
 
-    public function select()
-    {
-        $response = [];
-        $response['html'] = 'select';
-
-        return new JsonResponse($response);
-
-    }
-
     public function subfolder()
     {
         $response = [];
@@ -187,7 +175,7 @@ class Filepicker extends JsonController
         $path = implode('/', func_get_args());
 
         // TODO: handle streams
-        $targetPath = GANTRY5_ROOT . '/' . $path;
+        $targetPath = dirname(GANTRY5_ROOT . '/' . $path);
 
         if (!isset($_FILES['file']['error']) || is_array($_FILES['file']['error'])) {
             throw new \RuntimeException('No file sent', 400);
