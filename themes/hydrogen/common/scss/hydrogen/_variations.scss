@@ -1,3 +1,16 @@
+.flush {
+	.g-container {
+		> .g-grid {
+			> .g-block {
+				> .g-content {
+					margin: 0;
+					padding: 0;
+				}
+			}
+		}
+	}
+}
+
 .box1 {
 	background: $box1-background;
 }

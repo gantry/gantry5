@@ -24,7 +24,7 @@ form:
       type: collection.list
       array: true
       label: Features
-      value: name
+      value: title
       ajax: true
 
       fields:
