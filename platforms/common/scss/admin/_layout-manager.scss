@@ -188,14 +188,18 @@
                     content: "Drop non-visible atoms here...";
                 }
 
-                &:hover:not(:empty):not(.no-hover):before, &:hover:not(:empty):not(.no-hover):not(.no-gear):after {
+                &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
                     display: none;
+                    opacity: 0;
+                    visibility: hidden;
                 }
 
-                &:hover > .g-block {
+                > .g-block {
                     > .particle, > .position, > .spacer, > .pagecontent {
                         &:after {
                             display: none;
+                            opacity: 0;
+                            visibility: hidden;
                         }
                     }
                 }
