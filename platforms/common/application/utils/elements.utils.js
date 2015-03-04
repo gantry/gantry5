@@ -1,10 +1,11 @@
 "use strict";
-var $      = require('elements'),
-    moofx  = require('moofx'),
-    map    = require('mout/array/map'),
-    series = require('mout/function/series'),
-    slick  = require('slick'),
-    zen    = require('elements/zen');
+var $          = require('elements'),
+    moofx      = require('moofx'),
+    map        = require('mout/array/map'),
+    series     = require('mout/function/series'),
+    slick      = require('slick'),
+    zen        = require('elements/zen'),
+    progresser = require('../ui/progresser');
 
 var walk = function(combinator, method) {
 
@@ -32,6 +33,20 @@ $.implement({
         var moo = moofx(this);
         moo.animate.apply(moo, arguments);
         return this;
+    },
+
+    progresser: function(options) {
+        var instance;
+
+        this.forEach(function(node) {
+            instance = node.ProgresserInstance;
+
+            if (!instance) { instance = new progresser(node, options); }
+            else { instance.constructor(node, options); }
+
+            node.ProgresserInstance = instance;
+            return instance;
+        });
     },
 
     compute: function() {
@@ -73,20 +88,23 @@ $.implement({
     slideDown: function(animation, callback) {
         if (this.gSlideCollapsed === false) { return; }
 
-        var element = this,
-            size = this.getRealSize(),
-            callbackStart = function(){
+        var element       = this,
+            size          = this.getRealSize(),
+            callbackStart = function() {
                 element.gSlideCollapsed = false;
             },
-            callbackEnd = function(){
+            callbackEnd   = function() {
                 element.attribute('style', element.gSlideStyle);
             };
 
-        callback = typeof animation == 'function' ? animation : (callback || function(){});
+        callback = typeof animation == 'function' ? animation : (callback || function() {});
         callback = series(callbackStart, callback, callbackEnd);
 
-        animation = typeof animation == 'string' ? animation : { duration: '250ms', callback: callback };
-        this.animate({height: size.height}, animation);
+        animation = typeof animation == 'string' ? animation : {
+            duration: '250ms',
+            callback: callback
+        };
+        this.animate({ height: size.height }, animation);
     },
 
     slideUp: function(animation, callback) {
@@ -96,16 +114,19 @@ $.implement({
             this.gSlideStyle = this.attribute('style');
         }
 
-        var element = this,
-            callbackStart = function(){
+        var element       = this,
+            callbackStart = function() {
                 element.gSlideCollapsed = true;
             };
 
-        callback = typeof animation == 'function' ? animation : (callback || function(){});
+        callback = typeof animation == 'function' ? animation : (callback || function() {});
         callback = series(callbackStart, callback);
 
-        animation = typeof animation == 'string' ? animation : { duration: '250ms', callback: callback };
-        this.style({overflow: 'hidden'}).animate({height: 0}, animation);
+        animation = typeof animation == 'string' ? animation : {
+            duration: '250ms',
+            callback: callback
+        };
+        this.style({ overflow: 'hidden' }).animate({ height: 0 }, animation);
     },
 
     slideToggle: function(animation, callback) {
