@@ -1,5 +1,5 @@
-name: Feature Sample
-description: Displays Feature content
+name: Platforms Sample
+description: Displays Platform content
 type: particle
 
 form:
@@ -13,17 +13,17 @@ form:
     headline:
       type: input.text
       label: headline
-      default: Features
+      default: Multiple platforms supported with unlimited possibilities
 
     description:
       type: textarea.textarea
       label: Description
-      default: Lorem ipsum dolor sit amet consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.
+      default:
 
-    features:
+    platforms:
       type: collection.list
       array: true
-      label: Features
+      label: Platforms
       value: title
       ajax: true
 
@@ -36,10 +36,10 @@ form:
           type: input.text
           label: Title
 
+        .subtitle:
+          type: input.text
+          label: Sub Title
+
         .description:
           type: textarea.textarea
           label: Description
-
-        .class:
-          type: input.text
-          label: CSS Class
