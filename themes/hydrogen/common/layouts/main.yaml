@@ -8,8 +8,7 @@ showcase:
 
 feature:
   container:
-    - position-feature-top
-    - [position-feature-1 33.3, position-feature-2 33.3, position-feature-3 33.3]
+    - particle-feature
 
 subfeature:
   container:

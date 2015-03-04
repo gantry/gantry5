@@ -1,0 +1,41 @@
+name: Feature Sample
+description: Displays Feature content
+type: particle
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable to the particles.
+      default: true
+
+    headline:
+      type: input.text
+      label: headline
+      default: Features
+
+    description:
+      type: textarea.textarea
+      label: Description
+      default: Lorem ipsum dolor sit amet consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.
+
+    features:
+      type: collection.list
+      array: true
+      label: Features
+      value: name
+      ajax: true
+
+      fields:
+        .icon:
+          type: input.icon
+          label: Icon
+
+        .title:
+          type: input.text
+          label: Title
+
+        .description:
+          type: textarea.textarea
+          label: Description
