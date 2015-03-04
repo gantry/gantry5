@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Component\Layout;
 
+use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccess;
 use RocketTheme\Toolbox\ArrayTraits\Export;
@@ -23,6 +24,46 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     protected $references;
     protected $sections;
     protected $particles;
+
+    public static function presets()
+    {
+        $gantry = Gantry::instance();
+
+        $options = [
+            'compare' => 'Filename',
+            'pattern' => '|\.yaml|',
+            'filters' => ['key' => '|\.yaml|'],
+            'key' => 'SubPathname',
+            'value' => 'Pathname'
+        ];
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $files = Folder::all($locator->findResource('gantry-theme://layouts/presets'), $options);
+
+        $results = [];
+        foreach ($files as $preset => $filename) {
+            $results[$preset] = ucfirst($preset);
+        }
+
+        return $results;
+    }
+
+    public static function preset($name)
+    {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+        $filename = $locator->findResource("gantry-theme://layouts/presets/{$name}.yaml");
+
+        if (!$filename) {
+            throw new \RuntimeException('Preset not found', 404);
+        }
+
+        return LayoutReader::read($filename);
+    }
 
     /**
      * @param  string $name
