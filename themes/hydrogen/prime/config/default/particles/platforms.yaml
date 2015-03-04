@@ -1,0 +1,30 @@
+enabled: true
+
+css:
+  id:
+  class: ''
+
+platforms:
+  - icon: fa fa-fw fa-joomla
+    title: Joomla
+    subtitle: '<span class="subtitle">Now Available</span>'
+    description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
+    class: box1
+
+  - icon: fa fa-fw fa-clock-o
+    title: WordPress
+    subtitle: '<span class="subtitle">Coming Soon</span>'
+    description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
+    class: disabled
+
+  - icon: fa fa-fw fa-clock-o
+    title: Grav
+    subtitle: '<span class="subtitle">Coming Soon</span>'
+    description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
+    class: disabled
+
+  - icon: fa fa-fw fa-clock-o
+    title: Magento
+    subtitle: '<span class="subtitle">Coming Soon</span>'
+    description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
+    class: disabled

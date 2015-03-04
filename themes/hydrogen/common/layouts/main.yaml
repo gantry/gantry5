@@ -12,8 +12,7 @@ feature:
 
 subfeature:
   container:
-    - position-subfeature-top
-    - [position-subfeature-1 25, position-subfeature-2 25, position-subfeature-3 25, position-subfeature-4 25]
+    - particle-platforms
 
 main:
   container:

@@ -1,7 +1,31 @@
+.flush {
+	.g-container {
+		> .g-grid {
+			> .g-block {
+				> .g-content {
+					margin: 0;
+					padding: 0;
+				}
+			}
+		}
+	}
+}
+
 .box1 {
-	background: $box1-background;
+	.g-content {
+		background: $box1-background;
+		box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+	}
 }
 
 .box2 {
-	background: $box2-background;
+	.g-content {
+		background: $box2-background;
+	}
+}
+
+.disabled {
+	.g-content {
+		opacity: 0.4;
+	}
 }

@@ -159,8 +159,7 @@ h1, h2, h3, h4, h5 {
     color: #ffffff; }
 
 #g-showcase {
-  text-align: center;
-  padding: 1rem 0;
+  padding: 1.5rem 0;
   background: #354D59;
   color: #ffffff; }
   #g-showcase h1, #g-showcase h2, #g-showcase h3, #g-showcase h4, #g-showcase h5, #g-showcase h6, #g-showcase strong {
@@ -174,19 +173,18 @@ h1, h2, h3, h4, h5 {
       background: #80459c; }
 
 #g-feature {
-  text-align: center;
   padding: 1rem 0;
   background: #ffffff;
   color: #444444; }
 
 #g-subfeature {
-  text-align: center;
-  padding: 1rem 0;
+  padding: 1.5rem 0;
   background: #f0f0f0;
   color: #444444;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.1); }
 
 #g-main {
+  padding: 1.5rem 0;
   background: #ffffff;
   color: #444444; }
 
@@ -195,10 +193,32 @@ h1, h2, h3, h4, h5 {
   color: #444444;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); }
 
-.box1 {
+.flush .g-container > .g-grid > .g-block > .g-content {
+  margin: 0;
+  padding: 0; }
+
+.box1 .g-content {
+  background: #ffffff;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); }
+
+.box2 .g-content {
   background: #e0e0e0; }
 
-.box2 {
-  background: #fafafa; }
+.disabled .g-content {
+  opacity: 0.4; }
+
+.showcase-sample {
+  text-align: center; }
+
+.feature-sample {
+  text-align: center; }
+
+.platforms-sample {
+  text-align: center; }
+  .platforms-sample .subtitle {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    display: block;
+    margin-top: -1.3rem; }
 
 /*# sourceMappingURL=hydrogen.css.map */

@@ -1,0 +1,17 @@
+.showcase-sample {
+	text-align: center;
+}
+
+.feature-sample {
+	text-align: center;
+}
+
+.platforms-sample {
+	text-align: center;
+	.subtitle {
+		text-transform: uppercase;
+		font-size: $core-font-size - 0.2;
+		display: block;
+		margin-top: -1.3rem;
+	}
+}
