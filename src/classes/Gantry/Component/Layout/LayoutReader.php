@@ -24,6 +24,10 @@ class LayoutReader
         $file = YamlFile::instance($file);
         $content = (array) $file->content();
 
+        if (!isset($content['non-visible'])) {
+            $content['non-visible'] = [];
+        }
+
         $result = [];
         foreach ($content as $field => $params) {
             $child = self::parse($field, $params, 0);
@@ -59,6 +63,7 @@ class LayoutReader
             $result = (object) [
                 'id' => static::id(),
                 'type' => ($field == 'non-visible' ? $field : 'section'),
+                'subtype' => $field,
                 'title' => ucfirst($field),
                 'attributes' => (object) [],
                 'children' => []
