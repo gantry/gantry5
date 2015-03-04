@@ -96,7 +96,7 @@
                         color: $secondary-accent;
                     }
 
-                    &.active > .fa::before {
+                    &.active > .fa.fa-folder-o::before {
                         content: "\f115";
                     }
 
@@ -126,15 +126,23 @@
 
         li {
             vertical-align: middle;
+            position: relative;
             @extend .font-small;
 
             > span {
                 display: inline-block;
+                vertical-align: middle;
             }
         }
 
         .g-list-labels {
             display: none;
+        }
+
+        .g-file-error {
+            i {
+                font-size: 1rem;
+            }
         }
 
         &.g-filemode-thumbnails {
@@ -172,10 +180,51 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                     max-width: $max-width;
+                    white-space: nowrap;
                 }
 
                 .g-file-size, .g-file-mtime {
                     display: none;
+
+                    strong, b {
+                        color: inherit !important;
+                        font-weight: inherit !important;
+                    }
+                }
+
+                .g-file-progress {
+                    display: none;
+                    position: absolute;
+                    left: 50%;
+                    top: 0;
+                    margin-left: -29px;
+                    margin-top: 21px;
+                    padding: 4px;
+                    background-color: rgba(255, 255, 255, 0.5);
+                    border-radius: 50px;
+
+                    .g-file-progress-text {
+                        position: absolute;
+                        line-height: 50px;
+                        text-align: center;
+                        display: block;
+                        width: 100%;
+                        left: 0;
+
+                        i {
+                            line-height: 50px;
+                            color: $white;
+                        }
+                    }
+                }
+
+                &.g-file-uploading {
+                    .g-thumb {
+                        opacity: 0.1;
+                    }
+                    .g-file-progress {
+                        display: block;
+                    }
                 }
 
                 &.selected span {
@@ -208,6 +257,11 @@
 
                 .g-file-size {
                     width: 20%;
+
+                    strong, b {
+                        color: inherit !important;
+                        font-weight: inherit !important;
+                    }
                 }
 
                 &:nth-child(odd) {
@@ -220,6 +274,37 @@
 
                     > span:not(.g-file-name) {
                         color: lighten($core-accent, 15%);
+                    }
+                }
+
+                &.g-file-uploading {
+                    .g-file-mtime, .g-file-progress-text {
+                        display: none;
+                    }
+                    
+                    .g-file-mtime.g-file-progress {
+                        display: block;
+                    }
+
+                    .g-file-progress {
+                        width: 20%;
+                    }
+                }
+                
+                &.g-file-error {
+                    .g-file-progress-text {
+                        display: block !important;
+                        position: relative;
+
+                        i {
+                            position: absolute;
+                            text-align: center;
+                            left: 50%;
+                            margin-left: -2px;
+                            margin-top: 4px;
+                            color: white;
+                            font-size: 0.8rem;
+                        }
                     }
                 }
             }
