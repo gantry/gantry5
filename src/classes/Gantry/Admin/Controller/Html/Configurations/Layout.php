@@ -20,7 +20,9 @@ class Layout extends HtmlController
             '/create/*' => 'create',
             '/*'        => 'undefined',
             '/switch'   => 'undefined',
-            '/switch/*' => 'switchLayout'
+            '/switch/*' => 'switchLayout',
+            '/preset'   => 'undefined',
+            '/preset/*' => 'preset',
         ],
         'POST'   => [
             '/'                     => 'save',
@@ -202,6 +204,21 @@ class Layout extends HtmlController
         }
 
         return new JsonResponse(['data' => $layout->toArray()]);
+    }
+
+    public function preset($id)
+    {
+        // Validate only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
+        $preset = LayoutObject::preset($id);
+        if (!$preset) {
+            throw new \RuntimeException('Preset not found', 404);
+        }
+
+        return new JsonResponse(['data' => $preset]);
     }
 
     public function validate($particle)
