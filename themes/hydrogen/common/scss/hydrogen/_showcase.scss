@@ -11,5 +11,11 @@
 	.button {
 		background: $accent-color-2;
 		color: $showcase-text-color;
+		&:hover {
+			background: lighten($accent-color-2, 5%);
+		}
+		&:active {
+			background: darken($accent-color-2, 5%);
+		}
 	}
 }

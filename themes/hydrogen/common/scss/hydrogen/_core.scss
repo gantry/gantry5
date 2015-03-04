@@ -18,6 +18,14 @@ h1, h2, h3, h4, h5, h6, strong {
 	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
 	background: $accent-color-1;
 	color: $base-background;
+	@include transition(background 0.2s);
+	&:hover {
+		background: lighten($accent-color-1, 5%);
+	}
+	&:active {
+		background: darken($accent-color-1, 5%);
+		box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
+	}
 }
 
 .logo-large {

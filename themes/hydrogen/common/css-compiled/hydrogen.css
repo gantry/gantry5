@@ -83,7 +83,15 @@ h1, h2, h3, h4, h5, h6, strong {
   border-radius: 4px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   background: #439A86;
-  color: #ffffff; }
+  color: #ffffff;
+  -webkit-transition: background 0.2s;
+  -moz-transition: background 0.2s;
+  transition: background 0.2s; }
+  .button:hover {
+    background: #4bac95; }
+  .button:active {
+    background: #3b8877;
+    box-shadow: inset -1px -1px 1px rgba(0, 0, 0, 0.15); }
 
 .logo-large {
   display: inline-block; }
@@ -160,6 +168,10 @@ h1, h2, h3, h4, h5 {
   #g-showcase .button {
     background: #8F4DAE;
     color: #ffffff; }
+    #g-showcase .button:hover {
+      background: #9b5db7; }
+    #g-showcase .button:active {
+      background: #80459c; }
 
 #g-feature {
   text-align: center;
