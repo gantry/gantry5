@@ -1,4 +1,5 @@
 "use strict";
+// Based on Vex (https://github.com/hubspot/vex)
 
 var prime    = require('prime'),
     $        = require('../utils/elements.utils'),
