@@ -5,17 +5,17 @@
         <input
                 {# required attribute structures #}
                 type="text"
-                name="{{ (scope ~ name)|fieldName }}"
-                value="{{ value|join(', ') }}"
+                name="{{ (scope ~ name)|fieldName|e }}"
+                value="{{ value|join(', ')|e }}"
                 {# global attribute structures #}
                 {{ block('global_attributes') }}
                 {# non-gloval attribute structures #}
                 {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete }}"{% endif %}
                 {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
                 {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-                {% if field.list is defined %}list="{{ field.list }}"{% endif %}
+                {% if field.list is defined %}list="{{ field.list|e }}"{% endif %}
                 />
-        {% set picker = {'field':'input[name="' ~ ((scope ~ name)|fieldName) ~ '"]', 'data': url('gantry-admin://js/google-fonts.json')} %}
+        {% set picker = {'field':'input[name="' ~ ((scope ~ name)|fieldName|e) ~ '"]', 'data': url('gantry-admin://js/google-fonts.json')} %}
         <i class="fa fa-font" data-g5-fontpicker="{{ picker|json_encode()|e('html_attr') }}"></i>
     </div>
 {% endblock %}

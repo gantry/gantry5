@@ -5,7 +5,7 @@
     <input
             {# required attribute structures #}
             type="hidden"
-            name="{{ (scope ~ name)|fieldName }}"
+            name="{{ (scope ~ name)|fieldName|e }}"
             value="{{ value ? 1 : 0 }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}

@@ -7,7 +7,7 @@
             {% for key, val in value %}
                 <div class="card settings-block">
                     <h4>
-                        <span data-title-editable="{{ val.name }}" class="title">{{ val.name }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
+                        <span data-title-editable="{{ val.name|e }}" class="title">{{ val.name|e }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
                     </h4>
                     <div class="inner-params">
                         {{ block('collection_fields') }}
@@ -16,7 +16,7 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="settings-param {{ field.type|replace('.', '-') }}">
+        <div class="settings-param {{ field.type|replace('.', '-')|e }}">
             {% block contents %}
                 {% set field_route = gantry.route((route ~ '.' ~ scope)|replace('.', '/') ~ field.name) %}
                     <span class="settings-param-title float-left">
@@ -29,13 +29,13 @@
                         {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
                     {% endblock %}
                 </span>
-                <div class="settings-param-field" data-field-name="{{ field.name  }}">
+                <div class="settings-param-field" data-field-name="{{ field.name|e }}">
                     <div class="settings-param-toolbar">
                         <span class="button" data-collection-add=""><i class="fa fa-fw fa-plus"></i></span>
-                        <a class="button" data-collection-editall="" href="{{ field_route }}"><i class="fa fa-fw fa-pencil-square"></i></a>
+                        <a class="button" data-collection-editall="" href="{{ field_route|e }}"><i class="fa fa-fw fa-pencil-square"></i></a>
                         {% if overrideable %}
-                            <input type="checkbox" class="settings-param-toggle" id="of-{{ scope ~ name }}" />
-                            <label class="settings-param-override" for="of-{{ scope ~ name }}"></label>
+                            <input type="checkbox" class="settings-param-toggle" id="of-{{ (scope ~ name)|e }}" />
+                            <label class="settings-param-override" for="of-{{ (scope ~ name)|e }}"></label>
                         {% endif %}
                     </div>
                     {% block input %}
@@ -59,13 +59,13 @@
                                         {% set field_routes = field_route ~ '/' ~ key %}
                                         <li>
                                             <span class="title">
-                                                <span data-collection-edit-title-{{ key }}="">
+                                                <span data-collection-edit-title-{{ key|e }}="">
                                                     {{ field.value == field.key ? key : val[field.value] }}
                                                 </span>
-                                                <span class="button-simple" data-collection-edit-title="{{ key }}">
+                                                <span class="button-simple" data-collection-edit-title="{{ key|e }}">
                                                     <i class="fa fa-pencil font-small"></i>
                                                 </span>
-                                                <a class="button-simple config-cog" data-collection-edit="" href="{{ field_routes }}">
+                                                <a class="button-simple config-cog" data-collection-edit="" href="{{ field_routes|e }}">
                                                     <i class="fa fa-cog"></i>
                                                 </a>
                                             </span>
