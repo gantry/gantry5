@@ -18,6 +18,14 @@ form:
           delimiter: ' '
       default:
 
+    variations:
+      type: input.block-variations
+      label: Variations
+      description: Enter Theme Variations.
+      selectize:
+          delimiter: ' '
+      default:
+
     extra:
       type: input.text
       label: HTML Attributes

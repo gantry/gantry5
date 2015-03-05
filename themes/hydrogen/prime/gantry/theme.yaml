@@ -50,6 +50,16 @@ configuration:
       - hydrogen
       - custom
 
+  block-variations:
+    box1: Green Box
+    box2: Box 2
+    box3: Whatevs
+    box4: Box 4
+    title1: Title 1
+    title2: Title 2
+    title3: Title 3
+    title4: Title 4
+
   dependencies:
     gantry: 5.0.*
     engine/nucleus: 1.0.*
