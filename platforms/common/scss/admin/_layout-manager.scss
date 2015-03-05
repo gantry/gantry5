@@ -1,3 +1,10 @@
+$particle: #2A82B7;
+$position: #359AD9;
+$spacer: #eee;
+$pagecontent: #20A085;
+$atom: #9055AF;
+$stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%) 50%, #ccc 50%, #ccc 75%, darken(#ccc, 3%) 75%, darken(#ccc, 3%));
+
 #g5-container {
     // wrapper
 
@@ -299,9 +306,13 @@
             cursor: move;
             padding: 6px 13px;
             color: $white;
-            background: #aaaaaa;
+            background: $position;
             margin-right: 6px;
             position: relative;
+
+            &[data-lm-nodrag] {
+                cursor: default;
+            }
 
             .particle-size {
                 color: rgba($white, 0.7);
@@ -358,11 +369,11 @@
         }
 
         .particle {
-            background-color: #00B1D9;
+            background-color: $particle;
         }
 
         .spacer {
-            background-color: #eee;
+            background-color: $spacer;
             color: rgba(#666, 0.8);
 
             .particle-size {
@@ -379,11 +390,11 @@
         }
 
         .atom {
-            background-color: #9055AF;
+            background-color: $atom;
         }
 
         .pagecontent {
-            background-color: #218fda;
+            background-color: $pagecontent;
         }
 
         .placeholder {
@@ -440,6 +451,11 @@
                 margin-left: 15px;
             }
         }
+    }
+
+    .particle-disabled, [data-lm-disabled] {
+        @include background($stripes !important);
+        background-size: 50px 50px !important;
     }
 
     /* history */
@@ -623,6 +639,10 @@
         border-radius: $core-border-radius;
         cursor: move;
 
+        &[data-lm-nodrag] {
+            cursor: default;
+        }
+
         @include breakpoint(tablet-range) {
             font-size: $core-font-size - 0.2;
         }
@@ -636,29 +656,29 @@
         }
 
         &[data-lm-blocktype="spacer"] {
-            background-color: #eee;
+            background-color: $spacer;
             color: #666;
             border: 1px solid darken($medium-gray, 5);
         }
 
         &[data-lm-blocktype="position"] {
             color: #fff;
-            background-color: #aaa;
+            background-color: $position;
         }
 
         &[data-lm-blocktype="particle"] {
             color: #fff;
-            background-color: #13B0DA;
+            background-color: $particle;
         }
 
         &[data-lm-blocktype="pagecontent"] {
             color: #fff;
-            background-color: #218fda;
+            background-color: $pagecontent;
         }
 
         &[data-lm-blocktype="atom"] {
             color: #fff;
-            background-color: #9055AF;
+            background-color: $atom;
         }
     }
 
