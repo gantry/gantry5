@@ -93,4 +93,9 @@ class Platform extends BasePlatform
 
         return array_keys($files);
     }
+
+    public function settings()
+    {
+        return null;
+    }
 }

@@ -116,4 +116,6 @@ abstract class Platform
     {
         return ['' => []];
     }
+
+    abstract public function settings();
 }

@@ -48,4 +48,9 @@ class Platform extends BasePlatform
         // TODO:
         return [];
     }
+
+    public function settings()
+    {
+        return \JRoute::_('index.php?option=com_config&view=component&component=com_gantryadmin', false);
+    }
 }
