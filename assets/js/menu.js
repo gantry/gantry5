@@ -14,6 +14,7 @@ jQuery(document).ready(function($){
 	// Go Back Link for Level 1
 	$('.g-level-1').on('click', function(){
 		$(this).closest('.g-dropdown').removeClass('g-active').addClass('g-inactive').closest('.g-toplevel').removeClass('g-slide-out');
+		$(this).closest('.g-menu-item').children('.g-menu-item-content').removeClass('g-selected');
 	});		
 	// Go Back Link for Level 2+
 	$('.g-go-back').on('click', function(){
