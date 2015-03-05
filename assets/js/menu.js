@@ -20,4 +20,19 @@ jQuery(document).ready(function($){
 	$('.g-go-back').on('click', function(){
 		$(this).closest('.g-dropdown').removeClass('g-active').addClass('g-inactive').closest('.g-sublevel').removeClass('g-slide-out');
 	});		
+
+
+	// Mobile BreakPoint
+	var MBP = 768;
+
+	$(window).bind("load resize",function(e){
+		if( $(window).width() < MBP ) {
+			$('.g-main-nav').addClass('g-mobile-nav');
+		} else {
+			if( $('.g-main-nav').hasClass('g-mobile-nav') ) {
+				$('.g-main-nav').removeClass('g-mobile-nav')
+			}
+		}
+	});	
+
 });
