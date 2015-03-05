@@ -426,7 +426,7 @@
         }
 
         .block-has-changes {
-            &:not(.section) {
+            &:not(.section):not(.non-visible-section) {
                 box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
             }
 
@@ -522,7 +522,7 @@
 
 }
 
-.g5-dialog .g-tabs {
+.g5-dialog .g-tabs, .g5-popover-content .g-tabs {
     @extend #navbar;
 
     margin-right: 0 !important;
@@ -538,11 +538,61 @@
     }
 }
 
-.g5-dialog .g-pane {
+.g5-popover-content .g-tabs {
+    ul {
+        margin: -0.55rem -0.9rem 1rem !important;
+        background-color: $light-gray;
+
+        li.active {
+            background-color: $white !important;
+        }
+
+        li:hover:not(.active) {
+            background-color: darken($light-gray, 5%) !important;
+        }
+    }
+}
+
+.g5-dialog .g-pane, .g5-popover-content .g-pane {
     display: none;
     
     &.active {
         display: block;
+    }
+
+    li {
+        padding: 0.4rem;
+
+        i {
+            color: #aaa;
+        }
+
+        &:not(.g-switch-title) {
+            cursor: pointer;
+        }
+
+        &:hover:not(.g-switch-title) {
+            background-color: $light-gray;
+            border-radius: $core-border-radius;
+        }
+    }
+}
+
+.g5-popover-content .g-pane {
+    .g-switch-title {
+        padding-bottom: 7px;
+        font-weight: bold;
+        font-size: 0.85em;
+        color: #ccc;
+        text-transform: uppercase;
+    }
+
+    ul {
+        @extend %list-reset;
+        word-wrap: break-word;
+        &:not(.g-switch-presets) {
+            width: 50%;
+        }
     }
 }
 

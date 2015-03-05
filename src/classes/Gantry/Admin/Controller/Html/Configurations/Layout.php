@@ -19,7 +19,7 @@ class Layout extends HtmlController
             '/create'   => 'create',
             '/create/*' => 'create',
             '/*'        => 'undefined',
-            '/switch'   => 'undefined',
+            '/switch'   => 'listSwitches',
             '/switch/*' => 'switchLayout',
             '/preset'   => 'undefined',
             '/preset/*' => 'preset',
@@ -97,6 +97,7 @@ class Layout extends HtmlController
         $this->params['layout'] = $layout->toArray();
         $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($id, '_')));
         $this->params['particles'] = $groups;
+        $this->params['switcher_url'] = str_replace('.', '/', 'configurations.' . $id . '.layout.switch');
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/edit.html.twig', $this->params);
     }
@@ -189,6 +190,13 @@ class Layout extends HtmlController
             return new JsonResponse(['html' => $result, 'defaults' => ['particle' => $defaults]]);
         }
         return $result;
+    }
+
+    public function listSwitches()
+    {
+        $this->params['presets'] = LayoutObject::presets();
+        $result = $this->container['admin.theme']->render('@gantry-admin/layouts/switcher.html.twig', $this->params);
+        return new JsonResponse(['html' => $result]);
     }
 
     public function switchLayout($id)

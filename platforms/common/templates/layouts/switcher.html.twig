@@ -1,0 +1,66 @@
+{#<div>
+    {% set user_conf = gantry.configurations.copy.user %}
+    <select>
+        {% for current in user_conf %}
+            <option value="{{ current|e }}"
+                    {% if current == configuration %}selected="selected"{% endif %}
+                    data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', current|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
+                {{ current|replace('_', ' ')|trim|capitalize|e }}
+            </option>
+        {% endfor %}
+        {% set system_conf = gantry.configurations.system %}
+        {% if system_conf.count %}
+            <optgroup label="System Pages">
+                {% for current in system_conf %}
+                    <option value="{{ current|e }}"
+                            {% if current == configuration %}selected="selected"{% endif %}
+                            data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', current|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
+                        {{ current|replace('_', ' ')|trim|capitalize|e }}
+                    </option>
+                {% endfor %}
+            </optgroup>
+        {% endif %}
+    </select>
+</div>#}
+
+{% if presets|length > 0 %}
+<div class="g-tabs">
+    <ul>
+        <li class="active"><a href="#">Configurations</a></li>
+        <li><a href="#">Presets</a></li>
+    </ul>
+</div>
+{% endif %}
+
+<div class="g-panes">
+    <div class="g-pane active">
+        {% set user_conf = gantry.configurations.copy.user %}
+        {% set system_conf = gantry.configurations.system %}
+
+        <ul class="g-switch-conf-user{% if system_conf.count %} float-left{% endif %}">
+            <li class="g-switch-title">User</li>
+            {% for current in user_conf %}
+            <li data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ current) }}" class="g-switch-configuration">{{ current|replace('_', ' ')|trim|capitalize|e }}</li>
+            {% endfor %}
+        </ul>
+
+        {% if system_conf.count %}
+            <ul class="g-switch-conf-systems float-right">
+                <li class="g-switch-title">System</li>
+                {% for current in system_conf %}
+                    <li data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ current) }}" class="g-switch-configuration">{{ current|replace('_', ' ')|trim|capitalize|e }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    {% if presets|length > 0 %}
+    <div class="g-pane">
+        <ul class="g-switch-presets">
+            {% for key,current in presets %}
+                <li data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/preset/' ~ key) }}" class="g-switch-preset">{{ current|replace('_', ' ')|trim|capitalize|e }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>

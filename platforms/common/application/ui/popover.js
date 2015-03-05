@@ -39,6 +39,7 @@ var Popover = new prime({
         closeable: false,
         padding: true,
         targetEvents: true,
+        allowElementsClick: false,
         url: '',
         type: 'html',
         where: '#g5-container',
@@ -144,8 +145,8 @@ var Popover = new prime({
     },
 
     displayContent: function() {
-        var elementPos = this.element.position(),
-            target = this.getTarget().attribute('class', null).addClass(this.options.mainClass),
+        var elementPos    = this.element.position(),
+            target        = this.getTarget().attribute('class', null).addClass(this.options.mainClass),
             targetContent = this.getContentElement(),
             targetWidth, targetHeight, placement;
 
@@ -351,15 +352,15 @@ var Popover = new prime({
     getPlacement: function(pos, targetHeight) {
         var
             placement,
-            de = document.documentElement,
-            db = document.body,
-            clientWidth = de.clientWidth,
+            de           = document.documentElement,
+            db           = document.body,
+            clientWidth  = de.clientWidth,
             clientHeight = de.clientHeight,
-            scrollTop = Math.max(db.scrollTop, de.scrollTop),
-            scrollLeft = Math.max(db.scrollLeft, de.scrollLeft),
-            pageX = Math.max(0, pos.left - scrollLeft),
-            pageY = Math.max(0, pos.top - scrollTop),
-            arrowSize = 20;
+            scrollTop    = Math.max(db.scrollTop, de.scrollTop),
+            scrollLeft   = Math.max(db.scrollLeft, de.scrollLeft),
+            pageX        = Math.max(0, pos.left - scrollLeft),
+            pageY        = Math.max(0, pos.top - scrollTop),
+            arrowSize    = 20;
 
         // if placement equals auto，caculate the placement by element information;
         if (typeof(this.options.placement) === 'function') {
@@ -401,14 +402,14 @@ var Popover = new prime({
     },
 
     getTargetPositin: function(elementPos, placement, targetWidth, targetHeight) {
-        var pos = elementPos,
-            elementW = this.element.position().width,
-            elementH = this.element.position().height,
-            position = {},
+        var pos         = elementPos,
+            elementW    = this.element.position().width,
+            elementH    = this.element.position().height,
+            position    = {},
             arrowOffset = null,
-            arrowSize = this.options.arrow ? 28 : 0,
-            fixedW = elementW < arrowSize + 10 ? arrowSize : 0,
-            fixedH = elementH < arrowSize + 10 ? arrowSize : 0;
+            arrowSize   = this.options.arrow ? 28 : 0,
+            fixedW      = elementW < arrowSize + 10 ? arrowSize : 0,
+            fixedH      = elementH < arrowSize + 10 ? arrowSize : 0;
         switch (placement) {
             case 'bottom':
                 position = {
@@ -509,6 +510,7 @@ $.implement({
             options = options || {};
             popover = new Popover(this, options);
             storage.set(this, popover);
+            this.PopoverDefined = true;
         }
 
         return popover;
@@ -527,26 +529,26 @@ $.implement({
     },
 
     position: function() {
-        var node = this[0], box = {
+        var node    = this[0], box = {
                 left: 0,
                 right: 0,
                 top: 0,
                 bottom: 0
             },
-            win = window, doc = node.ownerDocument,
+            win     = window, doc = node.ownerDocument,
             docElem = doc.documentElement,
-            body = doc.body;
+            body    = doc.body;
 
         if (typeof node.getBoundingClientRect !== "undefined") {
             box = node.getBoundingClientRect();
         }
 
-        var clientTop = docElem.clientTop || body.clientTop || 0,
+        var clientTop  = docElem.clientTop || body.clientTop || 0,
             clientLeft = docElem.clientLeft || body.clientLeft || 0,
-            scrollTop = win.pageYOffset || docElem.scrollTop,
+            scrollTop  = win.pageYOffset || docElem.scrollTop,
             scrollLeft = win.pageXOffset || docElem.scrollLeft,
-            dx = scrollLeft - clientLeft,
-            dy = scrollTop - clientTop;
+            dx         = scrollLeft - clientLeft,
+            dy         = scrollTop - clientTop;
 
         return {
             x: box.left + dx,

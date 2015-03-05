@@ -110,9 +110,10 @@ ready(function() {
 
     // attach events
     // Modal Tabs
-    body.delegate('click', '.g-tabs a', function(event, element) {
+    body.delegate('mousedown', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
+
         var index  = 0,
             parent = element.parent('.g-tabs'),
             panes  = parent.siblings('.g-panes'),
@@ -208,6 +209,55 @@ ready(function() {
 
 
         lmhistory.push(builder.serialize());
+    });
+
+    // Switcher
+    body.delegate('mouseover', '[data-lm-switcher]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        if (!element.PopoverDefined) {
+            var popover = element.getPopover({
+                type: 'async',
+                url: element.data('lm-switcher') + getAjaxSuffix(),
+                allowElementsClick: '.g-tabs a'
+            });
+        }
+    });
+
+    // Clear Layout
+    body.delegate('mousedown', '[data-switch]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        // it's already loading something.
+        if (element.parent('.g5-popover-content').find('[data-switch] i')) {
+            return false;
+        }
+
+        element.showIndicator();
+
+        request('get', element.data('switch') + getAjaxSuffix(), function(error, response){
+            element.hideIndicator();
+
+            if (!response.body.success) {
+                modal.open({
+                    content: response.body.html || response.body,
+                    afterOpen: function(container) {
+                        if (!response.body.html) { container.style({ width: '90%' }); }
+                    }
+                });
+                return;
+            }
+
+            var structure = response.body.data;
+
+            root.data('lm-root', JSON.stringify(structure)).empty();
+            builder.setStructure(structure);
+            builder.load();
+
+            lmhistory.push(builder.serialize());
+
+            $('[data-lm-switcher]').getPopover().hide();
+        });
     });
 
     // Particles settings
