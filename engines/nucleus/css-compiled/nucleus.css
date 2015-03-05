@@ -972,12 +972,6 @@ th {
       display: block; }
       .g-fullwidth .g-dropdown .g-go-back.g-level-1 {
         display: none; }
-      .g-fullwidth .g-dropdown .g-go-back a span {
-        display: none; }
-      .g-fullwidth .g-dropdown .g-go-back a:before {
-        font-family: FontAwesome;
-        content: "\f053";
-        opacity: 0.5; }
   .g-fullwidth .g-sublevel .g-dropdown {
     top: 0;
     -webkit-transform: translateX(100%);
@@ -1000,6 +994,12 @@ th {
 
 .g-go-back.g-level-1 {
   display: none; }
+.g-go-back a span {
+  display: none; }
+.g-go-back a:before {
+  font-family: FontAwesome;
+  content: "\f053";
+  opacity: 0.5; }
 
 body {
   font-size: 1rem;

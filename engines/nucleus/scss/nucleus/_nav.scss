@@ -119,16 +119,6 @@
 				display: none;
 			}			
 			display: block;
-			a {
-				span {
-					display: none;
-				}
-				&:before {
-					font-family: FontAwesome;
-					content: "\f053";
-					opacity: 0.5;
-				}
-			}
 		}
 	}
 	.g-sublevel {
@@ -151,5 +141,15 @@
 .g-go-back {
 	&.g-level-1 {
 		display: none;
+	}	
+	a {
+		span {
+			display: none;
+		}
+		&:before {
+			font-family: FontAwesome;
+			content: "\f053";
+			opacity: 0.5;
+		}
 	}	
 }
