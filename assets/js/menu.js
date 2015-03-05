@@ -23,15 +23,19 @@ jQuery(document).ready(function($){
 
 
 	// Mobile BreakPoint
-	var MBP = 768;
+	var MBP = 768; // Temporarily hardcoded
+	var Navigation = $('.g-main-nav').clone();
+	var PageSurround = $('#g-page-surround');
 
 	$(window).bind("load resize",function(e){
 		if( $(window).width() < MBP ) {
-			$('.g-main-nav').addClass('g-mobile-nav');
+			Navigation.addClass('g-mobile-nav').insertAfter('#g-page-surround');
+			PageSurround.addClass('g-mobile-nav-active');
 		} else {
-			if( $('.g-main-nav').hasClass('g-mobile-nav') ) {
-				$('.g-main-nav').removeClass('g-mobile-nav')
-			}
+			$('.g-mobile-nav').remove();
+			if( PageSurround.hasClass('g-mobile-nav-active') ) {
+				PageSurround.removeClass('g-mobile-nav-active');
+			}			
 		}
 	});	
 

@@ -33,9 +33,11 @@
 
     {% block page_body %}
     <body{{ gantry.page.bodyAttributes }}>
-        {{ page_top }}
-        {{ page_layout }}
-        {{ page_bottom }}
+        <div id="g-page-surround">
+            {{ page_top }}
+            {{ page_layout }}
+            {{ page_bottom }}            
+        </div>
     </body>
     {% endblock %}
 </html>

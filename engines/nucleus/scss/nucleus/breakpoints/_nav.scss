@@ -1,10 +1,18 @@
-$mobile-sidemenu-width:		260px !default;
-
 // Mobile Menu 
-@include breakpoint(mobile-only) {
+@include breakpoint(mobile-only) {	
+	.g-mobile-nav-active {
+		&#g-page-surround {
+			@include transform(translateX(-$mobile-sidemenu-width));
+		}
+		.g-main-nav {
+			display: none;
+		}
+	}
+	// Main Nav
 	.g-main-nav {
 		.g-toplevel {
 			position: fixed;
+			z-index: 1;
 			top: 0;
 			height: 100%;
 			right: 0;

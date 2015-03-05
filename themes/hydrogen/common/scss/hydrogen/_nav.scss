@@ -5,6 +5,7 @@
 		> li {
 			margin-right: -4px;
 			> .g-menu-item-content {
+				color: $header-text-color;
 				padding: ($content-padding + $content-margin) 1rem;
 				line-height: normal;
 			}
@@ -33,6 +34,7 @@
 	.g-sublevel {
 		> li {
 			> .g-menu-item-content {
+				color: $header-text-color;
 				padding: ($content-padding + $content-margin)/2 1rem;
 			}
 			&:hover, &.active {
