@@ -16,17 +16,15 @@
     {% else %}
         <div class="g-modal">
             <div class="g-modal-body">
-                <div class="cards-wrapper">
-                    <div class="card settings-block">
-                        <h4>
-                            Edit {{ key }}
-                        </h4>
-                        <div class="inner-params">
-                            {% include 'forms/fields.html.twig' %}
-                        </div>
+                <div class="card settings-block">
+                    <h4>
+                        Edit {{ key }}
+                    </h4>
+                    <div class="inner-params">
+                        {% include 'forms/fields.html.twig' %}
                     </div>
                 </div>
-            </div>
+        </div>
             <div class="g-modal-actions">
                 <a class="button float-left">Reset</a>
                 <button class="button button-primary" type="submit">Apply</button>
