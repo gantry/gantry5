@@ -20,4 +20,25 @@ jQuery(document).ready(function($){
 	$('.g-go-back').on('click', function(){
 		$(this).closest('.g-dropdown').removeClass('g-active').addClass('g-inactive').closest('.g-sublevel').removeClass('g-slide-out');
 	});		
+
+
+	// Mobile BreakPoint
+	var MobileNav = $('<nav/>', { 'class': 'g-main-nav' }).addClass('g-mobile-nav');
+	$('body').append(MobileNav);
+
+	var MBP 		 = 768; // Temporarily Hardcoded
+	var TopLevel 	 = $('.g-toplevel');
+	var PageSurround = $('#g-page-surround');
+
+	$(window).bind("load resize",function(e){
+		if( $(window).width() < MBP ) {
+			PageSurround.next('.g-mobile-nav').append(TopLevel).end().addClass('g-mobile-nav-active');
+		} else {
+			PageSurround.find('.g-main-nav').append(TopLevel);
+			if( PageSurround.hasClass('g-mobile-nav-active') ) {
+				PageSurround.removeClass('g-mobile-nav-active');
+			}			
+		}
+	});	
+
 });
