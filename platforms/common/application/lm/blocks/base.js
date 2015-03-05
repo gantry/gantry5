@@ -96,6 +96,16 @@ var Base = new prime({
         return has(this.attributes, key);
     },
 
+    disable: function() {
+        this.block.attribute('title', 'This particle has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+        this.block.addClass('particle-disabled');
+    },
+
+    enable: function() {
+        this.block.attribute('title', null);
+        this.block.removeClass('particle-disabled');
+    },
+
     insert: function(target, location) {
         this.block[location || 'after'](target);
         return this;

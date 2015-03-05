@@ -136,7 +136,7 @@ ready(function() {
 
     // Sub-navigation links
     body.delegate('statechangeAfter', '#navbar [data-g5-ajaxify]', function(event, element) {
-        var root = $('[data-lm-root]');
+        root = $('[data-lm-root]');
         if (!root) { return true; }
         data = JSON.parse(root.data('lm-root'));
         builder.setStructure(data);
@@ -347,6 +347,9 @@ ready(function() {
 
                             // particle attributes
                             particle.setAttributes(response.body.data.options);
+
+                            particle[particle.getAttribute('enabled') ? 'enable' : 'disable']();
+
                             if (particle.getType() != 'section') {
                                 particle.setTitle(response.body.data.title || 'Untitled');
                                 particle.updateTitle(particle.getTitle());

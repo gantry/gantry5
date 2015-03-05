@@ -1,5 +1,6 @@
 "use strict";
 var prime      = require('prime'),
+    $          = require('elements'),
     Atom       = require('./atom'),
     bind       = require('mout/function/bind'),
     precision  = require('mout/number/enforcePrecision'),
@@ -33,7 +34,10 @@ var Particle = new prime({
     },
 
     onRendered: function(element, parent) {
-        var size = parent.getSize() || 100;
+        var size = parent.getSize() || 100,
+            globally_disabled = $('[data-lm-disabled][data-lm-subtype="' + this.getSubType() + '"]');
+
+        if (globally_disabled) { this.disable(); }
 
         this.setLabelSize(size);
         parent.on('resized', this.bound('onParentResize'));
