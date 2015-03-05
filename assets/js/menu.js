@@ -23,16 +23,18 @@ jQuery(document).ready(function($){
 
 
 	// Mobile BreakPoint
-	var MBP = 768; // Temporarily hardcoded
-	var Navigation = $('.g-main-nav').clone();
+	var MobileNav = $('<nav/>', { 'class': 'g-main-nav' }).addClass('g-mobile-nav');
+	$('body').append(MobileNav);
+
+	var MBP 		 = 768; // Temporarily Hardcoded
+	var TopLevel 	 = $('.g-toplevel');
 	var PageSurround = $('#g-page-surround');
 
 	$(window).bind("load resize",function(e){
 		if( $(window).width() < MBP ) {
-			Navigation.addClass('g-mobile-nav').insertAfter('#g-page-surround');
-			PageSurround.addClass('g-mobile-nav-active');
+			PageSurround.next('.g-mobile-nav').append(TopLevel).end().addClass('g-mobile-nav-active');
 		} else {
-			$('.g-mobile-nav').remove();
+			PageSurround.find('.g-main-nav').append(TopLevel);
 			if( PageSurround.hasClass('g-mobile-nav-active') ) {
 				PageSurround.removeClass('g-mobile-nav-active');
 			}			
