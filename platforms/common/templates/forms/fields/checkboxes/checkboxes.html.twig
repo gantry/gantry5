@@ -9,7 +9,7 @@
             <input type="checkbox"
                    id="{{ childName|e }}"
                    value="{{ key|e }}"
-                   name="{{ (scope ~ childName)|fieldName }}"
+                   name="{{ (scope ~ childName)|fieldName|e }}"
                    {% if checked %}checked="checked"{% endif %}
                     {% if field.validate.required %}required="required"{% endif %}
                     >
