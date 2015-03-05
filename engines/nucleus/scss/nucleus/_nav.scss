@@ -147,6 +147,9 @@
 			display: none;
 		}
 		&:before {
+			display: block;
+		    text-align: center;
+		    width: 1.28571em;			
 			font-family: FontAwesome;
 			content: "\f053";
 			opacity: 0.5;
