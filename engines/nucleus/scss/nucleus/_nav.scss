@@ -117,7 +117,7 @@
 		.g-go-back {
 			&.g-level-1 {
 				display: none;
-			}
+			}			
 			display: block;
 			a {
 				span {
@@ -145,4 +145,11 @@
 			}
 		}
 	}
+}
+
+// Go Back Arrow
+.g-go-back {
+	&.g-level-1 {
+		display: none;
+	}	
 }
