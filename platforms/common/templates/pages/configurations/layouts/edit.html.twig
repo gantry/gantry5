@@ -16,7 +16,12 @@
                     <ul>
                     {% for type,particle in list %}
                         {% for item_key,item in particle %}
-                            <li class="g5-lm-particle-{{ type | e }}" data-lm-blocktype="{{ type | e }}" data-lm-subtype="{{ item_key }}">{{ item | e }}</li>
+                            <li class="g5-lm-particle-{{ type | e }}"
+                                data-lm-blocktype="{{ type | e }}"
+                                data-lm-subtype="{{ item_key | e }}"
+                                {% if not config.get('particles.' ~ item_key ~ '.enabled') %}data-lm-disabled="true" style="opacity: 0.5;"{% endif %}>
+                                {{ item | e }}
+                            </li>
                         {%  endfor %}
                     {% endfor %}
                     </ul>

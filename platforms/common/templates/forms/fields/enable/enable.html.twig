@@ -10,6 +10,10 @@
             {# global attribute structures #}
             {{ block('global_attributes') }}
             />
+    {% if disabled %}
+    <span><i class="fa fa-power-off"></i></span>
+    {% else %}
     <span class="toggle"><span class="knob"></span></span>
+    {% endif %}
 </span>
 {% endblock %}
