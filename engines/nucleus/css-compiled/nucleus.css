@@ -957,9 +957,6 @@ th {
   -ms-flex: 0 100%;
   flex: 0 100%; }
 
-.g-go-back {
-  display: none; }
-
 .g-fullwidth {
   position: static; }
   .g-fullwidth .g-dropdown {
@@ -973,6 +970,8 @@ th {
       overflow: hidden; }
     .g-fullwidth .g-dropdown .g-go-back {
       display: block; }
+      .g-fullwidth .g-dropdown .g-go-back.g-level-1 {
+        display: none; }
       .g-fullwidth .g-dropdown .g-go-back a span {
         display: none; }
       .g-fullwidth .g-dropdown .g-go-back a:before {

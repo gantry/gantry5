@@ -95,10 +95,6 @@
     }
 }
 
-.g-go-back {
-	display: none;
-}
-
 // Megamenu Settings
 .g-fullwidth {
 	position: static;
@@ -119,6 +115,9 @@
 
 		// Go Back Button on Dropdown
 		.g-go-back {
+			&.g-level-1 {
+				display: none;
+			}
 			display: block;
 			a {
 				span {

@@ -57,7 +57,10 @@ $mobile-sidemenu-width:		260px !default;
 				}
 				.g-block {
 					width: 100%;
-				}				
+				}		
+				.g-go-back {
+					display: block;
+				}		
 			}		
 			.g-dropdown-column {
 		    	width: $mobile-sidemenu-width;
