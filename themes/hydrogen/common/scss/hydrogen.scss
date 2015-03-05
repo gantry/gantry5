@@ -13,12 +13,6 @@
 @import "nucleus/functions/base";
 @import "nucleus/mixins/base";
 
-//-------------------------------------------
-
-// BREAKPOINTS
-@import "nucleus/breakpoints/base";
-
-//-------------------------------------------
 
 // TEMPLATE COMPONENTS
 
@@ -54,3 +48,11 @@
 
 // Sample Content
 @import "hydrogen/sample";
+
+
+//-------------------------------------------
+
+// BREAKPOINTS
+@import "nucleus/breakpoints/base";
+
+//-------------------------------------------

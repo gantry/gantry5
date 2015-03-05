@@ -1,3 +1,5 @@
+$mobile-sidemenu-width:		260px !default;
+
 // Mobile Menu 
 @include breakpoint(mobile-only) {
 	.g-main-nav {
@@ -6,12 +8,20 @@
 			top: 0;
 			height: 100%;
 			right: 0;
-			width: 260px;
-			overflow: auto;
+			width: $mobile-sidemenu-width;
+			overflow-x: hidden;
+			overflow-y: auto; 
 			background: #222;
 			text-align: left;
+			&.g-slide-out {
+				> .g-menu-item > .g-menu-item-content,
+				> .g-go-back {
+					@include transform(translateX(-100%));
+				}
+			}			
 			li {
 				display: block;
+				margin-right: 0;
 				/*
 				&:hover {
 					> .g-dropdown {
@@ -19,6 +29,25 @@
 					}
 				}
 				*/
+				.g-menu-item-content {
+					padding: ($content-padding + $content-margin)/2 1rem;
+					line-height: 1rem;
+				}		
+		    	// Menu Parent Indicator on Mobile Layout
+		    	&.g-parent {
+					> .g-menu-item-content {
+						position: relative;
+						&:after {
+							position: absolute;
+							width: auto;
+							line-height: normal;
+							opacity: 0.5;
+							font-family: FontAwesome;
+							content: "\f054";		
+							right: 1rem;		
+						}
+					}
+		    	}						
 			}
 			.g-dropdown {
 				top: 0;
@@ -26,13 +55,14 @@
 				&.g-active {
 					@include transform(translateX(0));
 				}
-			}			
-			&.g-slide-out {
-				> .g-menu-item > .g-menu-item-content,
-				> .g-go-back {
-					@include transform(translateX(-100%));
-				}
-			}			
+				.g-block {
+					width: 100%;
+				}				
+			}		
+			.g-dropdown-column {
+		    	width: $mobile-sidemenu-width;
+		    	float: none;
+		    }							
 		}
 	}
 }
