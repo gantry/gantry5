@@ -15,10 +15,8 @@
 				}
 			}
 			*/
-			> a, > .g-separator {
-				display: block;
-			}
 			.g-menu-item-content {
+				display: block;
 				cursor: pointer;
 				@include transition(all .2s ease-out);
 			}	
@@ -50,9 +48,6 @@
 	.g-sublevel {
     	> li {
     		@include transition(all .2s ease-out);
-    		a, .g-separator, .g-nav-header {
-    			display: block;
-    		}
     	}
     	// Menu Parent Indicator on SubLevel
     	.g-parent {
@@ -146,8 +141,7 @@
 			}
 		}
 		&.g-slide-out {
-			> .g-menu-item > .g-menu-item-content,
-			> .g-go-back {
+			> .g-menu-item > .g-menu-item-content {
 				@include transform(translateX(-100%));
 			}
 		}

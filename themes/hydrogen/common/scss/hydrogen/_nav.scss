@@ -4,11 +4,12 @@
 		font-weight: 500;
 		> li {
 			margin-right: -4px;
-			> a, >.g-separator {
+			> .g-menu-item-content {
 				padding: ($content-padding + $content-margin) 1rem;
+				line-height: normal;
 			}
 			&:hover, &.active {
-				> a, > .g-separator {
+				> .g-menu-item-content {
 					background: darken($header-background, 4%);
 				}
 				.g-selected {
@@ -31,11 +32,11 @@
 
 	.g-sublevel {
 		> li {
-			> a, > .g-separator, > .g-nav-header {
+			> .g-menu-item-content {
 				padding: 0.5rem 1rem;
 			}
 			&:hover, &.active {
-				> a, > .g-separator {
+				> .g-menu-item-content {
 					background: darken($header-background, 12%);
 				}
 			}
