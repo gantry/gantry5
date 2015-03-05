@@ -6,8 +6,6 @@ var ready = require('elements/domready'),
     toastr = require('../ui').toastr,
     request = require('agent'),
 
-    deepClone = require('mout/lang/deepClone'),
-    createObject = require('mout/lang/createObject'),
     trim = require('mout/string/trim'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix');
@@ -18,12 +16,13 @@ ready(function () {
     var body = $('body');
 
     body.delegate('click', '#settings [data-collection-add]', function (event, element) {
+        element = $(element);
         event.preventDefault();
 
         var titleAdd = element,
             collection = element.parent('[data-field-name]'),
             item = collection.find('[data-collection-add-item]'),
-            title = collection.find('[data-collection-edit-title-new]'),
+            title = collection.find('[data-collection-edit-title]'),
             titleValue;
 
         console.log(titleAdd+' titleAdd');
@@ -31,34 +30,48 @@ ready(function () {
         console.log(collection+' collection');
         console.log(title+' title');
 
-        var createNew = function(element) {
+        var createNew = function(item) {
 
             /*var cloneItem = deepClone(element),
                 parentItem = cloneItem.parent,
                 newItem = parentItem.insert(cloneItem);*/
 
-            var cloneItem = element.cloneNode(true),
-                parentItem = cloneItem.parent,
-                newItem = parentItem.insert(cloneItem);
+            var cloneItem = item[0].cloneNode(true),
+                parentItem = item[0].parentNode,
+                newItem = parentItem.appendChild(cloneItem),
+                title, titleAdd, index, newIndex;
 
             console.log(cloneItem+' cloneItem');
             console.log(parentItem+' parentItem');
             console.log(newItem+' newItem');
 
-            newItem.style('display', 'block');
+            newItem.removeAttribute("style");
+            newItem.removeAttribute("data-collection-add-item");
 
-            if (title && titleAdd) {
-                title.attribute('contenteditable', 'true');
-                title[0].focus();
+            index = parentItem.getAttribute("data-collection-length");
+            newIndex = +index+1;
+            console.log(index+' index');
+            console.log(newIndex+' newIndex');
+            parentItem.setAttribute("data-collection-length", newIndex);
 
-                var range = document.createRange(), selection;
-                range.selectNodeContents(title[0]);
-                selection = window.getSelection();
-                selection.removeAllRanges();
-                selection.addRange(range);
+            titleAdd = newItem.querySelector("[data-collection-edit-title]");
+            titleAdd.setAttribute("data-collection-edit-title", newIndex);
 
-                titleValue = trim(title.text());
-            }
+            title = newItem.querySelector("[data-collection-edit-title-new]");
+            title.setAttribute("data-collection-edit-title-"+newIndex, "");
+            title.removeAttribute("data-collection-edit-title-new");
+
+            title.setAttribute('contenteditable', 'true');
+            title.setAttribute('data-collection-edit-title',  newIndex);
+            title.focus();
+
+            var range = document.createRange(), selection;
+            range.selectNodeContents(title);
+            selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            titleValue = trim(title.textContent);
         };
 
         createNew(item);
