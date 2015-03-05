@@ -11,8 +11,12 @@ jQuery(document).ready(function($){
 		}
 	});
 
-	// SubMenu Item - Go Back Link
+	// Go Back Link for Level 1
+	$('.g-level-1').on('click', function(){
+		$(this).closest('.g-dropdown').removeClass('g-active').addClass('g-inactive').closest('.g-toplevel').removeClass('g-slide-out');
+	});		
+	// Go Back Link for Level 2+
 	$('.g-go-back').on('click', function(){
 		$(this).closest('.g-dropdown').removeClass('g-active').addClass('g-inactive').closest('.g-sublevel').removeClass('g-slide-out');
-	});	
+	});		
 });
