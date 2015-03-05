@@ -9,14 +9,30 @@
 			width: 260px;
 			overflow: auto;
 			background: #222;
+			text-align: left;
 			li {
 				display: block;
+				/*
 				&:hover {
 					> .g-dropdown {
 						display: none;
 					}
 				}
+				*/
 			}
+			.g-dropdown {
+				top: 0;
+				@include transform(translateX(100%));
+				&.g-active {
+					@include transform(translateX(0));
+				}
+			}			
+			&.g-slide-out {
+				> .g-menu-item > .g-menu-item-content,
+				> .g-go-back {
+					@include transform(translateX(-100%));
+				}
+			}			
 		}
 	}
 }
