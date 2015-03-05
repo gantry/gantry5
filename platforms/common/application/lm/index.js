@@ -9,6 +9,7 @@ var ready         = require('elements/domready'),
     contains      = require('mout/array/contains'),
     size          = require('mout/collection/size'),
     trim          = require('mout/string/trim'),
+    forEach       = require('mout/collection/forEach'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
 
@@ -27,31 +28,37 @@ builder = new Builder();
 lmhistory = new LMHistory();
 savestate = new SaveState();
 
-ready(function(){
+ready(function() {
     var body = $('body');
 
-    body.delegate('click', '[data-lm-back]', function(e, element){
+    body.delegate('click', '[data-lm-back]', function(e, element) {
         if (e) { e.preventDefault(); }
         if ($(element).hasClass('disabled')) return false;
         lmhistory.undo();
     });
 
-    body.delegate('click', '[data-lm-forward]', function(e, element){
+    body.delegate('click', '[data-lm-forward]', function(e, element) {
         if (e) { e.preventDefault(); }
         if ($(element).hasClass('disabled')) return false;
         lmhistory.redo();
     });
 
     /* lmhistory events */
-    lmhistory.on('push', function(session, index, reset){
-        var HM = { back: $('[data-lm-back]'), forward: $('[data-lm-forward]') };
+    lmhistory.on('push', function(session, index, reset) {
+        var HM = {
+            back: $('[data-lm-back]'),
+            forward: $('[data-lm-forward]')
+        };
 
         if (index && HM.back.hasClass('disabled')) HM.back.removeClass('disabled');
         if (reset && !HM.forward.hasClass('disabled')) HM.forward.addClass('disabled');
         layoutmanager.updatePendingChanges();
     });
-    lmhistory.on('undo', function(session, index){
-        var HM = { back: $('[data-lm-back]'), forward: $('[data-lm-forward]') };
+    lmhistory.on('undo', function(session, index) {
+        var HM = {
+            back: $('[data-lm-back]'),
+            forward: $('[data-lm-forward]')
+        };
 
         builder.reset(session.data);
         HM.forward.removeClass('disabled');
@@ -59,8 +66,11 @@ ready(function(){
         layoutmanager.singles('disable');
         layoutmanager.updatePendingChanges();
     });
-    lmhistory.on('redo', function(session, index){
-        var HM = { back: $('[data-lm-back]'), forward: $('[data-lm-forward]') };
+    lmhistory.on('redo', function(session, index) {
+        var HM = {
+            back: $('[data-lm-back]'),
+            forward: $('[data-lm-forward]')
+        };
 
         builder.reset(session.data);
         HM.back.removeClass('disabled');
@@ -103,10 +113,10 @@ ready(function() {
     body.delegate('click', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
-        var index = 0,
+        var index  = 0,
             parent = element.parent('.g-tabs'),
-            panes = parent.siblings('.g-panes'),
-            links = parent.search('a');
+            panes  = parent.siblings('.g-panes'),
+            links  = parent.search('a');
 
         links.forEach(function(link, i) {
             if (link == element[0]) { index = i + 1; }
@@ -140,9 +150,9 @@ ready(function() {
     });
 
     // Particles filtering
-    body.delegate('input', '.sidebar-block .search input', function(event, element){
+    body.delegate('input', '.sidebar-block .search input', function(event, element) {
         var value = $(element).value().toLowerCase(),
-            list = $('.sidebar-block [data-lm-blocktype]'),
+            list  = $('.sidebar-block [data-lm-blocktype]'),
             text, type;
         if (!list) { return false; }
 
@@ -169,14 +179,33 @@ ready(function() {
     body.delegate('click', '[data-lm-samewidth]', function(event, element) {
         var clientRect = element[0].getBoundingClientRect();
         if (event.clientX < clientRect.width + clientRect.left) { return; }
-        
+
         var blocks = element.search('> [data-lm-blocktype="block"]'), id;
         if (!blocks || blocks.length == 1) { return; }
 
-        blocks.forEach(function(block){
+        blocks.forEach(function(block) {
             id = $(block).data('lm-id');
             builder.get(id).setSize(100 / blocks.length, true);
         });
+
+        lmhistory.push(builder.serialize());
+    });
+
+    // Clear Layout
+    body.delegate('click', '[data-lm-clear]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        var type, child;
+        forEach(builder.map, function(obj, id){
+            type = obj.getType();
+            child = obj.block.find('> [data-lm-id]');
+            if (child) { child = child.data('lm-blocktype'); }
+            if (contains(['particle', 'grid', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))){
+                builder.remove(id);
+                obj.block.remove();
+            }
+        }, this);
+
 
         lmhistory.push(builder.serialize());
     });
@@ -185,14 +214,14 @@ ready(function() {
     body.delegate('click', '[data-lm-settings]', function(event, element) {
         element = $(element);
 
-        var blocktype = element.data('lm-blocktype'),
+        var blocktype   = element.data('lm-blocktype'),
             settingsURL = element.data('lm-settings'),
-            data = null, parent;
+            data        = null, parent;
 
         // grid is a special case, since relies on pseudo elements for sorting and same width (evenize)
         // we need to check where the user clicked.
         if (blocktype === 'grid') {
-            var clientX = event.clientX || (event.touches && event.touches[0].clientX) || 0,
+            var clientX   = event.clientX || (event.touches && event.touches[0].clientX) || 0,
                 boundings = element[0].getBoundingClientRect();
 
             if (clientX + 4 - boundings.left < boundings.width) {
@@ -204,7 +233,7 @@ ready(function() {
         parent = element.parent('[data-lm-blocktype]');
         blocktype = element.data('lm-blocktype');
 
-        var ID = element.data('lm-id'),
+        var ID       = element.data('lm-id'),
             parentID = parent ? parent.data('lm-id') : false;
 
         if (!contains(['block', 'grid'], blocktype)) {
@@ -225,8 +254,8 @@ ready(function() {
             data: data,
             remote: settingsURL + getAjaxSuffix(),
             remoteLoaded: function(response, content) {
-                var form = content.elements.content.find('form'),
-                    submit = content.elements.content.find('input[type="submit"], button[type="submit"]'),
+                var form       = content.elements.content.find('form'),
+                    submit     = content.elements.content.find('input[type="submit"], button[type="submit"]'),
                     dataString = [];
 
                 if (!form || !submit) { return true; }
@@ -240,10 +269,10 @@ ready(function() {
 
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name = input.attribute('name'),
-                            value = input.value(),
-                            parent = input.parent('.settings-param'),
-                            override = parent ? parent.find('> input[type="checkbox"]'): null;
+                        var name     = input.attribute('name'),
+                            value    = input.value(),
+                            parent   = input.parent('.settings-param'),
+                            override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
                         dataString.push(name + '=' + value);
@@ -264,7 +293,7 @@ ready(function() {
                             });
                         } else {
                             var particle = builder.get(ID),
-                                block = null;
+                                block    = null;
 
                             // particle attributes
                             particle.setAttributes(response.body.data.options);
@@ -281,7 +310,7 @@ ready(function() {
                             if (response.body.data.block && size(response.body.data.block)) {
                                 block = builder.get(parentID);
 
-                                var sibling = block.block.nextSibling() || block.block.previousSibling(),
+                                var sibling     = block.block.nextSibling() || block.block.previousSibling(),
                                     currentSize = block.getSize(),
                                     diffSize;
 
@@ -300,7 +329,7 @@ ready(function() {
                             lmhistory.push(builder.serialize());
                             modal.close();
 
-                            toastr.success('The particle "'+particle.getTitle()+'" settings have been applied to the Layout. <br />Remember to click the Save button to store them.', 'Settings Applied');
+                            toastr.success('The particle "' + particle.getTitle() + '" settings have been applied to the Layout. <br />Remember to click the Save button to store them.', 'Settings Applied');
                         }
 
                         submit.hideIndicator();
