@@ -26,7 +26,7 @@
             <span class="settings-param-title float-left">
                 {% block label %}
                     {% if field.description %}
-                        <span class="tooltip" data-asTooltip-position="w" title="{{ field.description|e }}">{{ field.label|e }}</span>
+                        <span class="g-tooltip" data-asTooltip-position="w" data-title="{{ field.description|e }}">{{ field.label|e }}</span>
                     {% else %}
                         {{ field.label|e }}
                     {% endif %}

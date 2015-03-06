@@ -150,3 +150,40 @@ a {
         opacity: 0;
     }
 }
+
+// Tooltips
+.g-tooltip {
+    display: inline;
+    position: relative;
+}
+
+.g-tooltip:hover {
+    color: $core-accent;
+    text-decoration: none;
+}
+
+.g-tooltip:hover:after {
+    background: rgba(0,0,0,0.8);
+    border-radius: $core-border-radius;
+    bottom: 1.45rem;
+    color: $white;
+    content: attr(data-title);
+    display: block;
+    left: 0;
+    padding: .3rem 1rem;
+    position: absolute;
+    white-space: nowrap;
+    z-index: 99;
+}
+
+.g-tooltip:hover:before {
+    border: solid;
+    border-color: rgba(0,0,0,0.8) transparent;
+    border-width: .4rem .4rem 0 .4rem;
+    bottom: 1.1rem;
+    content: "";
+    display: block;
+    left: 1rem;
+    position: absolute;
+    z-index: 100;
+}
