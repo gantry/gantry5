@@ -207,6 +207,7 @@ ready(function() {
             }
         }, this);
 
+        layoutmanager.singles('cleanup', builder);
 
         lmhistory.push(builder.serialize());
     });
