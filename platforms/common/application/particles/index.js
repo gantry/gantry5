@@ -57,7 +57,7 @@ ready(function () {
             title.setAttribute("data-collection-edit-title-"+index, "");
             title.removeAttribute("data-collection-edit-title-new");
 
-            title.setAttribute('contenteditable', 'true');
+            title.setAttribute('data-title-editable', '');
             title.setAttribute('data-collection-edit-title', index);
 
             title.focus();

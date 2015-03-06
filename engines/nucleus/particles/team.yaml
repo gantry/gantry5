@@ -21,6 +21,7 @@ form:
         .name:
           type: input.text
           label: Name
+          skip: true
 
         .role:
           type: input.text

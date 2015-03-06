@@ -30,7 +30,7 @@ form:
       type: collection.list
       array: true
       label: Social Items
-      value: text
+      value: name
       ajax: true
 
       fields:
@@ -38,6 +38,7 @@ form:
         .name:
           type: input.txt
           label: Name
+          skip: true
 
         .icon:
           type: input.text
