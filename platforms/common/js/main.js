@@ -2207,7 +2207,7 @@ var G5;
                 console.log(item + ' item');
                 console.log(collection + ' collection');
                 var createNew = function (item) {
-                    var cloneItem = item.cloneNode(true), parentItem = item.parentNode, newItem = parentItem.appendChild(cloneItem), title, titleAdd, titleValue, index, newIndex;
+                    var cloneItem = item.cloneNode(true), parentItem = item.parentNode, newItem = parentItem.appendChild(cloneItem), title, titleAdd, index, newIndex;
                     console.log(cloneItem + ' cloneItem');
                     console.log(parentItem + ' parentItem');
                     console.log(newItem + ' newItem');
@@ -2219,35 +2219,32 @@ var G5;
                     console.log(newIndex + ' newIndex');
                     parentItem.setAttribute('data-collection-length', newIndex);
                     titleAdd = newItem.querySelector('[data-collection-edit-title]');
-                    titleAdd.setAttribute('data-collection-edit-title', newIndex);
+                    titleAdd.setAttribute('data-collection-edit-title', index);
                     title = newItem.querySelector('[data-collection-edit-title-new]');
-                    title.setAttribute('data-collection-edit-title-' + newIndex, '');
+                    title.setAttribute('data-collection-edit-title-' + index, '');
                     title.removeAttribute('data-collection-edit-title-new');
                     title.setAttribute('contenteditable', 'true');
-                    title.setAttribute('data-collection-edit-title', newIndex);
-                    title.focus();
+                    title.setAttribute('data-collection-edit-title', index);
                     var range = document.createRange(), selection;
                     range.selectNodeContents(title);
                     selection = window.getSelection();
                     selection.removeAllRanges();
                     selection.addRange(range);
-                    titleValue = trim(title.textContent);
+                    trim(title.textContent);
                     return title;
                 };
                 activeTitle = createNew(item);
+                console.log(activeTitle + ' activeTitle');
                 $(activeTitle).on('keydown', function (event) {
                     switch (event.keyCode) {
                     case 13:
                         event.stopPropagation();
-                        if (event.keyCode == 13) {
-                            activeTitle = createNew(item);
-                        }
+                        activeTitle.removeAttribute('contenteditable');
+                        activeTitle = createNew(item);
                         return false;
                     case 27:
                         event.stopPropagation();
-                        if (event.keyCode == 27) {
-                            activeTitle.text(titleValue);
-                        }
+                        activeTitle.text(titleValue);
                         activeTitle.setAttribute('contenteditable', null);
                         window.getSelection().removeAllRanges();
                         activeTitle.blur();
@@ -2256,7 +2253,6 @@ var G5;
                         return true;
                     }
                 }).on('blur', function () {
-                    activeTitle.setAttribute('contenteditable', null);
                     activeTitle.setAttribute('data-collection-title', trim(activeTitle.textContent));
                     window.getSelection().removeAllRanges();
                 });
@@ -10630,22 +10626,22 @@ var G5;
     },
     '2z': function (require, module, exports, global) {
         module.exports = {
-            base: require('4p'),
-            atom: require('4q'),
-            section: require('4r'),
-            'non-visible': require('4s'),
-            grid: require('4t'),
-            container: require('4u'),
-            block: require('4v'),
-            particle: require('4w'),
-            position: require('4x'),
-            pagecontent: require('4y'),
-            spacer: require('4z')
+            base: require('4o'),
+            atom: require('4p'),
+            section: require('4q'),
+            'non-visible': require('4r'),
+            grid: require('4s'),
+            container: require('4t'),
+            block: require('4u'),
+            particle: require('4v'),
+            position: require('4w'),
+            pagecontent: require('4x'),
+            spacer: require('4y')
         };
     },
     '30': function (require, module, exports, global) {
         var isArray = require('2q');
-        var append = require('4o');
+        var append = require('4z');
         function flattenTo(arr, result, level) {
             if (arr == null) {
                 return result;
@@ -16516,19 +16512,6 @@ var G5;
         module.exports = forIn;
     },
     '4o': function (require, module, exports, global) {
-        function append(arr1, arr2) {
-            if (arr2 == null) {
-                return arr1;
-            }
-            var pad = arr1.length, i = -1, len = arr2.length;
-            while (++i < len) {
-                arr1[pad + i] = arr2[i];
-            }
-            return arr1;
-        }
-        module.exports = append;
-    },
-    '4p': function (require, module, exports, global) {
         'use strict';
         var prime = require('n'), Options = require('1r'), Bound = require('1q'), Emitter = require('o'), guid = require('1y'), zen = require('k'), $ = require('1'), get = require('14'), has = require('4m'), set = require('31');
         require('e');
@@ -16641,9 +16624,9 @@ var G5;
             });
         module.exports = Base;
     },
-    '4q': function (require, module, exports, global) {
+    '4p': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Base = require('4p'), zen = require('k'), getAjaxURL = require('48').config;
+        var prime = require('n'), Base = require('4o'), zen = require('k'), getAjaxURL = require('48').config;
         var Atom = new prime({
                 inherits: Base,
                 options: { type: 'atom' },
@@ -16676,9 +16659,9 @@ var G5;
             });
         module.exports = Atom;
     },
-    '4r': function (require, module, exports, global) {
+    '4q': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Base = require('4p'), Bound = require('1q'), Grid = require('4t'), $ = require('1'), zen = require('k'), bind = require('1s'), getAjaxURL = require('48').config;
+        var prime = require('n'), Base = require('4o'), Bound = require('1q'), Grid = require('4s'), $ = require('1'), zen = require('k'), bind = require('1s'), getAjaxURL = require('48').config;
         require('d');
         var UID = 0;
         var Section = new prime({
@@ -16734,9 +16717,9 @@ var G5;
             });
         module.exports = Section;
     },
-    '4s': function (require, module, exports, global) {
+    '4r': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Section = require('4r');
+        var prime = require('n'), Section = require('4q');
         var NonVisible = new prime({
                 inherits: Section,
                 options: {
@@ -16758,9 +16741,9 @@ var G5;
             });
         module.exports = NonVisible;
     },
-    '4t': function (require, module, exports, global) {
+    '4s': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Base = require('4p'), $ = require('1'), getAjaxURL = require('48').config;
+        var prime = require('n'), Base = require('4o'), $ = require('1'), getAjaxURL = require('48').config;
         var Grid = new prime({
                 inherits: Base,
                 options: { type: 'grid' },
@@ -16790,9 +16773,9 @@ var G5;
             });
         module.exports = Grid;
     },
-    '4u': function (require, module, exports, global) {
+    '4t': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Base = require('4p'), $ = require('1');
+        var prime = require('n'), Base = require('4o'), $ = require('1');
         var Container = new prime({
                 inherits: Base,
                 options: { type: 'container' },
@@ -16805,9 +16788,9 @@ var G5;
             });
         module.exports = Container;
     },
-    '4v': function (require, module, exports, global) {
+    '4u': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Base = require('4p'), $ = require('1p'), zen = require('k'), precision = require('3d'), bind = require('1s');
+        var prime = require('n'), Base = require('4o'), $ = require('1p'), zen = require('k'), precision = require('3d'), bind = require('1s');
         var Block = new prime({
                 inherits: Base,
                 options: {
@@ -16893,9 +16876,9 @@ var G5;
             });
         module.exports = Block;
     },
-    '4w': function (require, module, exports, global) {
+    '4v': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1'), Atom = require('4q'), bind = require('1s'), precision = require('3d'), getAjaxURL = require('48').config;
+        var prime = require('n'), $ = require('1'), Atom = require('4p'), bind = require('1s'), precision = require('3d'), getAjaxURL = require('48').config;
         var UID = 0;
         var Particle = new prime({
                 inherits: Atom,
@@ -16929,9 +16912,9 @@ var G5;
             });
         module.exports = Particle;
     },
-    '4x': function (require, module, exports, global) {
+    '4w': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Particle = require('4w');
+        var prime = require('n'), Particle = require('4v');
         var UID = 0;
         var Position = new prime({
                 inherits: Particle,
@@ -16959,9 +16942,9 @@ var G5;
             });
         module.exports = Position;
     },
-    '4y': function (require, module, exports, global) {
+    '4x': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Particle = require('4w');
+        var prime = require('n'), Particle = require('4v');
         var Pagecontent = new prime({
                 inherits: Particle,
                 options: {
@@ -16972,9 +16955,9 @@ var G5;
             });
         module.exports = Pagecontent;
     },
-    '4z': function (require, module, exports, global) {
+    '4y': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Particle = require('4w');
+        var prime = require('n'), Particle = require('4v');
         var UID = 0;
         var Spacer = new prime({
                 inherits: Particle,
@@ -16985,6 +16968,19 @@ var G5;
                 }
             });
         module.exports = Spacer;
+    },
+    '4z': function (require, module, exports, global) {
+        function append(arr1, arr2) {
+            if (arr2 == null) {
+                return arr1;
+            }
+            var pad = arr1.length, i = -1, len = arr2.length;
+            while (++i < len) {
+                arr1[pad + i] = arr2[i];
+            }
+            return arr1;
+        }
+        module.exports = append;
     },
     '50': function (require, module, exports, global) {
         var forEach = require('1u');
