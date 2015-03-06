@@ -1,1 +1,3 @@
-<div class="spacer{{ segment.classes ? ' ' ~ segment.classes|join(' ') }}"></div>
+{% if (segment.attributes.enabled is null or segment.attributes.enabled) and config.get('particles.' ~ segment.type ~ '.enabled', true) %}
+    <div class="spacer{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}"></div>
+{% endif %}

@@ -7,7 +7,7 @@
 {% endset %}
 
 {% if html|trim %}
-    <div class="g-grid pure-g{{ segment.classes ? ' ' ~ segment.classes|join(' ') }}">
+    <div class="g-grid pure-g{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
       {{ html }}
     </div>
 {% endif %}

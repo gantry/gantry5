@@ -1,17 +1,17 @@
 {% set attr_class = segment.attributes.class ? ' class="' ~ segment.attributes.class|e ~ '"' %}
-{% set attr_id = segment.title|lower|replace({' ': '-'}) %}
+{% set attr_id = segment.title|lower|replace({' ': '-'})|e %}
 {% set tag_type = (attr_id in ['aside', 'footer', 'header', 'main']) ? attr_id : 'section' %}
 
 {% set html %}
-	{% if segment.children %}
-		{% for segment in segments %}
-  			{% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
-  		{% endfor %}
-  	{% endif %}
+    {% if segment.children %}
+        {% for segment in segments %}
+            {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
+        {% endfor %}
+    {% endif %}
 {% endset %}
 
 {% if html|trim %}
-	<{{ tag_type }} id="g-{{ attr_id }}" {{ attr_class }}>
-  		{{ html }}
- 	</{{ tag_type }}>
+    <{{ tag_type }} id="g-{{ attr_id }}" {{ attr_class }}>
+        {{ html }}
+    </{{ tag_type }}>
 {% endif %}

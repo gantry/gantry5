@@ -1,10 +1,12 @@
 {% set html %}
-    {% include ['particles/position.html.twig',
-    '@particles/position.html.twig'] with { gantry: gantry, site: site, page: gantry.page, position: segment.attributes } only %}
+    {% if (segment.attributes.enabled is null or segment.attributes.enabled) and config.get('particles.' ~ segment.type ~ '.enabled', true) %}
+        {% include ['particles/position.html.twig',
+        '@particles/position.html.twig'] with { gantry: gantry, site: site, page: gantry.page, position: segment.attributes } only %}
+    {% endif %}
 {% endset %}
 
 {% if html|trim %}
-<div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ') }}">
+<div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
     {{ html }}
 </div>
 {% endif %}

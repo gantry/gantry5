@@ -1,11 +1,13 @@
 {% set html %}
-   {% include ['particles/' ~ segment.subtype ~ '.html.twig',
-   '@particles/' ~ segment.subtype ~ '.html.twig']
-   ignore missing with {gantry: gantry, particle: config.particles[segment.subtype] } %}
+    {% if (segment.attributes.enabled is null or segment.attributes.enabled) and config.get('particles.' ~ segment.subtype ~ '.enabled', true) %}
+    {% include ['particles/' ~ segment.subtype ~ '.html.twig',
+    '@particles/' ~ segment.subtype ~ '.html.twig']
+    ignore missing with {gantry: gantry, particle: config.particles[segment.subtype] } %}
+    {% endif %}
 {% endset %}
 
 {% if html|trim %}
-<div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ') }}">
+<div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
     {{ html }}
 </div>
 {% endif %}
