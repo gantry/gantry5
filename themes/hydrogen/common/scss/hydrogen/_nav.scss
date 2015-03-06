@@ -59,4 +59,17 @@
     	position: fixed;
     	opacity: 1;
     }
-}	
+}
+
+// Mobile Menu 
+@include breakpoint(mobile-only) {	
+	.g-main-nav {
+		.g-toplevel {
+			background: $mobilemenu-background;									
+		}
+	}
+	.g-mobile-nav-toggle {
+	    color: $accent-color-1;
+	    background: $white;
+	}
+}
