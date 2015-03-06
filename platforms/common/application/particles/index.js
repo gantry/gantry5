@@ -16,30 +16,23 @@ ready(function () {
     var body = $('body');
 
     body.delegate('click', '#settings [data-collection-add]', function (event, element) {
-        element = $(element);
         event.preventDefault();
 
-        var titleAdd = element,
-            collection = element.parent('[data-field-name]'),
-            item = collection.find('[data-collection-add-item]'),
-            title = collection.find('[data-collection-edit-title]'),
-            titleValue;
+        var collection = $(element).parent('[data-field-name]')[0],
+            item = collection.querySelector("[data-collection-add-item]"),
+            activeTitle;
 
-        console.log(titleAdd+' titleAdd');
+
         console.log(item+' item');
         console.log(collection+' collection');
-        console.log(title+' title');
+
 
         var createNew = function(item) {
 
-            /*var cloneItem = deepClone(element),
-                parentItem = cloneItem.parent,
-                newItem = parentItem.insert(cloneItem);*/
-
-            var cloneItem = item[0].cloneNode(true),
-                parentItem = item[0].parentNode,
+            var cloneItem = item.cloneNode(true),
+                parentItem = item.parentNode,
                 newItem = parentItem.appendChild(cloneItem),
-                title, titleAdd, index, newIndex;
+                title, titleAdd, titleValue, index, newIndex;
 
             console.log(cloneItem+' cloneItem');
             console.log(parentItem+' parentItem');
@@ -72,37 +65,41 @@ ready(function () {
             selection.addRange(range);
 
             titleValue = trim(title.textContent);
+
+            return title;
         };
 
-        createNew(item);
+        activeTitle = createNew(item);
 
-        if (title && titleAdd) {
-            title.on('keydown', function (event) {
+        $(activeTitle).on('keydown', function (event) {
 
-                switch (event.keyCode) {
-                    case 13: // return
-                        event.stopPropagation();
-                        createNew();
-                    case 27: // esc
-                        event.stopPropagation();
-                        if (event.keyCode == 27) {
-                            title.text(titleValue);
-                        }
+            switch (event.keyCode) {
+                case 13: // return
+                    event.stopPropagation();
+                    if (event.keyCode == 13) {
+                        activeTitle = createNew(item);
+                    }
 
-                        title.attribute('contenteditable', null);
-                        window.getSelection().removeAllRanges();
-                        title[0].blur();
+                    return false;
+                case 27: // esc
+                    event.stopPropagation();
+                    if (event.keyCode == 27) {
+                        activeTitle.text(titleValue);
+                    }
 
-                        return false;
-                    default:
-                        return true;
-                }
-            }).on('blur', function () {
-                title.attribute('contenteditable', null);
-                title.data('collection-title', trim(title.text()));
-                window.getSelection().removeAllRanges();
-            });
-        }
+                    activeTitle.setAttribute('contenteditable', null);
+                    window.getSelection().removeAllRanges();
+                    activeTitle.blur();
+
+                    return false;
+                default:
+                    return true;
+            }
+        }).on('blur', function () {
+            activeTitle.setAttribute('contenteditable', null);
+            activeTitle.setAttribute('data-collection-title', trim(activeTitle.textContent));
+            window.getSelection().removeAllRanges();
+        });
 
     });
 
