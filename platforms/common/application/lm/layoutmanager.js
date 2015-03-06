@@ -28,13 +28,13 @@ var singles = {
         var grids = $('[data-lm-root] [data-lm-blocktype="grid"]');
         if (grids) { grids.addClass('no-hover'); }
     },
-    cleanup: function(builder) {
+    cleanup: function(builder, dropLast) {
         var emptyGrids = $('[data-lm-blocktype="section"] > .g-grid:empty, [data-lm-blocktype="container"] > .g-grid:empty');
         if (emptyGrids) {
             emptyGrids.forEach(function(grid) {
                 grid = $(grid);
-                if (grid.nextSibling('[data-lm-id]')) {
-                    // empty grids should go away unless they are last
+                // empty grids should go away unless they are last and/or dropLast is true
+                if (grid.nextSibling('[data-lm-id]') || dropLast) {
                     builder.remove(grid.data('lm-id'));
                     grid.remove();
                 }
@@ -70,8 +70,8 @@ var LayoutManager = new prime({
         singles.disable();
     },
 
-    singles: function(mode) {
-        singles[mode]();
+    singles: function(mode, builder, dropLast) {
+        singles[mode](builder, dropLast);
     },
 
     updatePendingChanges: function() {
