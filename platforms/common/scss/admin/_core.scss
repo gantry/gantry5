@@ -10,7 +10,7 @@ body {
 }
 
 a {
-    color: $secondary-accent;
+    color: $core-accent;
 }
 
 #g5-container { // wrapper
@@ -121,8 +121,11 @@ a {
     text-align: center;
     font-family: $font-family-headers;
     a {
-        color: $core-accent;
+        color: lighten($core-accent, 30%);
         text-decoration: none;
+        &:hover {
+            color: $white;
+        }
     }
 }
 
