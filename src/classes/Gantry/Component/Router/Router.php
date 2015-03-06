@@ -2,6 +2,7 @@
 namespace Gantry\Component\Router;
 
 use Gantry\Component\Controller\BaseController;
+use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Response\JsonResponse;
@@ -24,6 +25,9 @@ abstract class Router implements RouterInterface
     public function __construct(Container $container)
     {
         $this->container = $container;
+        $this->container['request'] = new Request();
+
+
     }
 
     public function dispatch()

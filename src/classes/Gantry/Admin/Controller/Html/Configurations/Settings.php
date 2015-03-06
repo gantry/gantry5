@@ -8,6 +8,7 @@ use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout as LayoutObject;
+use Gantry\Component\Request\Request;
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -134,7 +135,10 @@ class Settings extends HtmlController
 
     public function save($id = null)
     {
-        $data = $id ? [$id => $_POST] : $_POST['particles'];
+        /** @var Request $request */
+        $request = $this->container['request'];
+
+        $data = $id ? [$id => $request->getArray()] : $request->getArray('particles');
 
         foreach ($data as $name => $values) {
             $this->saveItem($name, $values);

@@ -13,7 +13,9 @@ class Router extends BaseRouter
     {
         $app = \JFactory::getApplication();
         $input = $app->input;
-        $request = new Request();
+
+        /** @var Request $request */
+        $request = $this->container['request'];
 
         \JHtml::_('behavior.keepalive');
 

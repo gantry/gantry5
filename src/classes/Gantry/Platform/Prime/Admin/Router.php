@@ -8,7 +8,8 @@ class Router extends BaseRouter
 {
     public function boot()
     {
-        $request = new Request();
+        /** @var Request $request */
+        $request = $this->container['request'];
 
         // Split normalized request path to its parts.
         $parts = array_filter(explode('/', PAGE_PATH), function($var) { return $var !== ''; });

@@ -7,6 +7,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Stylesheet\ScssCompiler;
 use Gantry\Framework\Base\Gantry;
@@ -155,7 +156,10 @@ class Styles extends HtmlController
 
     public function save($id = null)
     {
-        $data = $id ? [$id => $_POST] : (isset($_POST['styles']) ? $_POST['styles'] : []);
+        /** @var Request $request */
+        $request = $this->container['request'];
+
+        $data = $id ? [$id => $request->getArray()] : $request->getArray('styles');
 
         foreach ($data as $name => $values) {
             $this->saveItem($name, $values);

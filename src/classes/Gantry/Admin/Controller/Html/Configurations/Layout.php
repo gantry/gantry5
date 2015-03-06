@@ -6,6 +6,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Layout\Layout as LayoutObject;
+use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\File\JsonFile;
@@ -260,8 +261,11 @@ class Layout extends HtmlController
             }
         );
 
+        /** @var Request $request */
+        $request = $this->container['request'];
+
         // Join POST data.
-        $data->join('options', isset($_POST['particle']) && is_array($_POST['particle']) ? $_POST['particle'] : []);
+        $data->join('options', $request->getArray('particle'));
         $data->set('options.enabled', (int) $data->get('options.enabled'));
 
         if ($particle) {
@@ -272,7 +276,7 @@ class Layout extends HtmlController
             $data->join('title', isset($_POST['title']) ? $_POST['title'] : ucfirst($particle));
             if (isset($_POST['block'])) {
                 // TODO: remove empty items in some other way:
-                $block = (array) $_POST['block'];
+                $block = $request->getArray('block');
                 foreach ($block as $key => $param) {
                     if ($param === '') {
                         unset($block[$key]);

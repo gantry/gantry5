@@ -6,6 +6,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Menu\Item;
+use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Menu as MenuObject;
@@ -173,8 +174,11 @@ class Menu extends HtmlController
             return $validator;
         };
 
+        /** @var Request $request */
+        $request = $this->container['request'];
+
         // Create configuration from the defaults.
-        $data = new Config($_POST, $callable);
+        $data = new Config($request->getArray(), $callable);
 
         // TODO: validate
 
@@ -200,8 +204,11 @@ class Menu extends HtmlController
             return $validator;
         };
 
+        /** @var Request $request */
+        $request = $this->container['request'];
+
         // Create configuration from the defaults.
-        $data = new Config($_POST, $callable);
+        $data = new Config($request->getArray(), $callable);
 
         // TODO: validate
 
