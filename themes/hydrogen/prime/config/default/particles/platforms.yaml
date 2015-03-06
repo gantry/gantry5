@@ -9,7 +9,7 @@ platforms:
     title: Joomla
     subtitle: '<span class="subtitle">Now Available</span>'
     description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
-    class: box1
+    class: box1 shadow
 
   - icon: fa fa-fw fa-clock-o
     title: WordPress

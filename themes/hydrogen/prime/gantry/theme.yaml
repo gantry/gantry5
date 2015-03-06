@@ -51,16 +51,14 @@ configuration:
       - custom
 
   block-variations:
-    Box Variation:
-      box1: Green Box
+    Box Variations:
+      box1: Box 1
       box2: Box 2
-      box3: Whatevs
+      box3: Box 3
       box4: Box 4
-    Title Variation:
-      title1: Title 1
-      title2: Title 2
-      title3: Title 3
-      title4: Title 4
+    Effects:
+      shadow: Shadow 1
+      shadow2: Shadow 2
 
   dependencies:
     gantry: 5.0.*

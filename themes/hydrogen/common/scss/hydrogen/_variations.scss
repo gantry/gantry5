@@ -14,13 +14,44 @@
 .box1 {
 	.g-content {
 		background: $box1-background;
-		box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
 	}
 }
 
 .box2 {
 	.g-content {
 		background: $box2-background;
+	}
+}
+
+.box3 {
+	.g-content {
+		background: $accent-color-1;
+		color: $white;
+		h1, h2, h3, h4, h5, h6, strong {
+			color: $white;
+		}
+	}
+}
+
+.box4 {
+	.g-content {
+		background: $accent-color-2;
+		color: $white;
+		h1, h2, h3, h4, h5, h6, strong {
+			color: $white;
+		}
+	}
+}
+
+.shadow {
+	.g-content {
+		box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+	}
+}
+
+.shadow2 {
+	.g-content {
+		box-shadow: 0 0 4px rgba(0,0,0,0.15);
 	}
 }
 
