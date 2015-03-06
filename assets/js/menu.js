@@ -14,8 +14,10 @@ jQuery(document).ready(function($){
 	$('.g-menu-item').children('.g-menu-item-content').on('click', function(){
 		var selected = $(this);
 		if( selected.next('.g-dropdown').hasClass('g-inactive') ) {
-			selected.addClass('g-selected').next('.g-dropdown').removeClass('g-inactive').addClass('g-active').end().parent('li').parent('ul').addClass('g-slide-out');
-			selected.parent('.g-menu-item').siblings('.g-menu-item').children('ul').removeClass('g-active').addClass('g-inactive').end().children('.g-menu-item-content').removeClass('g-selected');
+			selected.addClass('g-selected').next('.g-dropdown').removeClass('g-inactive').addClass('g-active').end()
+					.parent('li').parent('ul').addClass('g-slide-out');
+			selected.parent('.g-menu-item').siblings('.g-menu-item').children('ul').removeClass('g-active').addClass('g-inactive').end()
+					.children('.g-menu-item-content').removeClass('g-selected');
 			if( Window.width() > MBP ) {
 				Body.addClass('g-nav-overlay-active');
 			}
@@ -26,8 +28,8 @@ jQuery(document).ready(function($){
 
 	// Go Back Link for Level 1
 	$('.g-level-1').on('click', function(){
-		$(this).closest('.g-dropdown').removeClass('g-active').addClass('g-inactive').closest('.g-toplevel').removeClass('g-slide-out');
-		$(this).closest('.g-menu-item').children('.g-menu-item-content').removeClass('g-selected');
+		$(this).closest('.g-dropdown').removeClass('g-active').addClass('g-inactive').closest('.g-toplevel').removeClass('g-slide-out').end()
+			   .closest('.g-menu-item').children('.g-menu-item-content').removeClass('g-selected');
 	});		
 	// Go Back Link for Level 2+
 	$('.g-go-back').on('click', function(){
