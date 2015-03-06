@@ -12,18 +12,21 @@ form:
 
     headline:
       type: input.text
-      label: headline
+      label: Headline
+      description: Customize the section headline text.
       default: Features
 
     description:
       type: textarea.textarea
       label: Description
+      description: Customize the section description.
       default: Lorem ipsum dolor sit amet consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.
 
     features:
       type: collection.list
       array: true
       label: Features
+      description: Create each item to appear in the content row.
       value: title
       ajax: true
 
