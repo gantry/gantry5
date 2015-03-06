@@ -44,11 +44,11 @@ form:
 
         .browserNav:
           type: select.selectize
-          label: Link Type
+          label: Link Target
           placeholder: 'Select...'
           options:
-            0: Default
-            1: External
+            0: Current Page
+            1: New Page
 
         .dropdown:
           type: select.selectize
