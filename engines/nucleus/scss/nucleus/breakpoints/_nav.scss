@@ -53,16 +53,25 @@
 			}
 			.g-dropdown {
 				top: 0;
+				background: transparent;
 				@include transform(translateX(100%));
 				&.g-active {
 					@include transform(translateX(0));
 				}
-				.g-block {
-					width: 100%;
-				}		
 				.g-go-back {
 					display: block;
-				}		
+				}				
+				.g-block {
+					width: 100%;
+					.g-go-back {
+						display: none;
+					}
+					&:first-child {
+						.g-go-back {
+							display: block;
+						}
+					}
+				}				
 			}		
 			.g-dropdown-column {
 		    	width: $mobile-sidemenu-width;
