@@ -29,29 +29,6 @@ ready(function() {
         }).show();
     });
 
-    body.delegate('click', '[data-g5-compile-css]', function(event, element) {
-        event.stopPropagation();
-        event.preventDefault();
-
-        element.showIndicator();
-        request('post', element.attribute('href') + getAjaxSuffix(), function(error, response) {
-            if (!response.body.success) {
-                modal.open({
-                    content: response.body.html || response.body,
-                    afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
-                    }
-                });
-
-                return false;
-            } else {
-                toastr.success('The CSS was successfully compiled!', 'CSS Compiled');
-            }
-
-            element.hideIndicator();
-        })
-    });
-
 });
 
 module.exports = {};

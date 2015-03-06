@@ -2,6 +2,7 @@
 namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Filesystem\Folder;
 
 class Cache extends HtmlController
@@ -12,11 +13,6 @@ class Cache extends HtmlController
 
         Folder::delete($locator('gantry-cache://'), false);
 
-        $this->params += [
-            'header' => 'Cache Cleared',
-            'content' => 'Cache was cleared successfully!'
-        ];
-
-        return $this->container['admin.theme']->render('@gantry-admin/pages/custom/notification.html.twig', $this->params);
+        return new JsonResponse(['html' => 'Cache was successfully cleared', 'title' => 'Cache Cleared']);
     }
 }

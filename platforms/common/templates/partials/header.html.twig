@@ -27,7 +27,7 @@
                 </li>
                 {% endif %}
                 <li>
-                    <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('cache')|e }}"><i class="fa fa-fw fa-recycle"></i> Clear Cache</a>
+                    <a href="{{ gantry.route('cache')|e }}" data-ajax-action data-ajax-action-method="get"><i class="fa fa-fw fa-recycle"></i> Clear Cache</a>
                 </li>
             </ul>
         </div>

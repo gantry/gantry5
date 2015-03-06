@@ -151,7 +151,7 @@ class Styles extends HtmlController
 
         $this->compileSettings();
 
-        return new JsonResponse(['html' => '']);
+        return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
     }
 
     public function save($id = null)

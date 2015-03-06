@@ -143,6 +143,35 @@ ready(function() {
         window.getSelection().removeAllRanges();
     }, true);
 
+    // Quick Ajax Calls [data-ajax-action]
+    body.delegate('click', '[data-ajax-action]', function(event, element){
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        var href = element.attribute('href') || element.data('ajax-action'),
+            method = element.data('ajax-action-method') || 'post';
+
+        if (!href) { return false; }
+
+        element.showIndicator();
+        request(method, href + getAjaxSuffix(), function(error, response) {
+            if (!response.body.success) {
+                modal.open({
+                    content: response.body.html || response.body,
+                    afterOpen: function(container) {
+                        if (!response.body.html) { container.style({ width: '90%' }); }
+                    }
+                });
+
+                element.hideIndicator();
+                return false;
+            } else {
+                toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+            }
+
+            element.hideIndicator();
+        })
+    });
+
 });
 
 
