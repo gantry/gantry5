@@ -1,28 +1,5 @@
 // Mobile Menu 
-@include breakpoint(mobile-only) {		
-	.g-mobile-nav-active {
-		#g-page-surround {
-			@include transform(translateX(-$mobile-sidemenu-width));
-		}
-		.g-main-nav {
-			display: none;
-			&.g-mobile-nav {
-				display: block;
-				.g-toplevel {
-					@include transform(translateX(0));
-				}				
-			}			
-		}
-		.g-mobile-nav-overlay {
-			background: fadeout($black, 50%);
-		    position: fixed;
-		    top: 0;
-		    right: 0;
-		    bottom: 0;
-		    left: 0;	    
-		    z-index: 1;		
-		}		
-	}
+@include breakpoint(mobile-only) {	
 	// Main Nav
 	.g-main-nav {
 		.g-toplevel {
@@ -93,4 +70,58 @@
 		    }							
 		}
 	}
+	// Mobile Nav Overlay
+	.g-mobile-nav-overlay {
+		background: fadeout($black, 50%);
+	    position: fixed;
+	    top: 0;
+	    right: 0;
+	    bottom: 0;
+	    left: 0;	    
+	    z-index: 1;		
+	    opacity: 0;
+	    @include transition(opacity .3s ease);
+	}	
+	// Mobile Nav Toggle
+	.g-mobile-nav-toggle {
+	    color: $accent-color-1;
+	    background: $white;
+	    display: block;
+	    position: absolute;
+	    top: 0;	    
+	    right: 0;
+	    z-index: 2;
+	    cursor: pointer;
+	    &:before {
+	    	display: block;
+	    	font-family: FontAwesome;
+	    	content: "\f0c9";
+		    font-size: 1.5rem;
+		    margin: 0;
+		    padding: 0.2rem 0.75rem;
+	    }
+	}	
+	// Mobile Nav Active State	
+	.g-mobile-nav-active {
+		#g-page-surround {
+			@include transform(translateX(-$mobile-sidemenu-width));
+		}
+		.g-main-nav {
+			display: none;
+			&.g-mobile-nav {
+				display: block;
+				.g-toplevel {
+					@include transform(translateX(0));
+				}				
+			}			
+		}
+		.g-mobile-nav-overlay {	
+			opacity: 1;
+		}	
+		.g-mobile-nav-toggle {	
+		    &:before {
+		    	content: "\f00d";
+		    }			
+		}			
+	}	
 }

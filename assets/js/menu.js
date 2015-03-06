@@ -23,25 +23,32 @@ jQuery(document).ready(function($){
 
 
 	// Mobile BreakPoint
+	var MBP 		 	 = 768; // Temporarily Hardcoded
+	var Window 			 = $(window);
 	var Body		 	 = $('body');
+	var TopLevel 	 	 = $('.g-toplevel');
+	var PageSurround 	 = $('#g-page-surround');	
 	var MobileNav 		 = $('<nav/>', { 'class': 'g-main-nav' }).addClass('g-mobile-nav');
+	var MobileNavToggle  = $('<div/>', { 'class': 'g-mobile-nav-toggle' });
 	var MobileNavOverlay = $('<div/>', { 'class': 'g-mobile-nav-overlay' });
-	Body.append(MobileNav).append(MobileNavOverlay);
 
-	var MBP 		 = 768; // Temporarily Hardcoded
-	var TopLevel 	 = $('.g-toplevel');
-	var PageSurround = $('#g-page-surround');
+	Body.append(MobileNav);
+	MobileNavOverlay.appendTo(PageSurround);
+	MobileNavToggle.appendTo(PageSurround);
 
-	$(window).bind("load resize",function(e){
-		if( $(window).width() < MBP ) {
+	Window.bind("load resize",function(e){
+		if( Window.width() < MBP ) {
 			PageSurround.next('.g-mobile-nav').append(TopLevel);
-			Body.addClass('g-mobile-nav-active');
 		} else {
 			PageSurround.find('.g-main-nav').append(TopLevel);
 			if( Body.hasClass('g-mobile-nav-active') ) {
 				Body.removeClass('g-mobile-nav-active');
-			}			
+			}
 		}
 	});	
+	
+    $('.g-mobile-nav-toggle').on('click', function() {
+		Body.toggleClass('g-mobile-nav-active');
+    });	
 
 });
