@@ -637,6 +637,7 @@ a {
   #g5-container .swatches-block .swatch {
     display: block;
     padding: 4px;
+    max-width: 350px;
     background: #fff;
     margin: 0 1px;
     border-radius: 0.1875rem;
