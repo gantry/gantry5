@@ -6,7 +6,7 @@
   visibility: hidden;
   overflow: hidden; }
 
-.g-standard .g-sublevel > li:hover > .g-dropdown, .g-standard .g-dropdown.g-active, .g-fullwidth .g-dropdown.g-active {
+.g-standard .g-dropdown.g-active, .g-fullwidth .g-dropdown.g-active {
   opacity: 1;
   visibility: visible;
   overflow: visible; }
@@ -944,7 +944,14 @@ th {
   content: "\f054"; }
 
 .g-standard .g-sublevel > li {
-  position: relative; }
+  position: relative;
+  /*
+  &:hover {
+  	> .g-dropdown {
+  		@extend %active-dropdown;
+  	}
+  }
+  */ }
 .g-standard .g-dropdown .g-dropdown {
   left: 100%;
   top: 0; }
@@ -956,6 +963,8 @@ th {
   -moz-flex: 0 100%;
   -ms-flex: 0 100%;
   flex: 0 100%; }
+.g-standard .g-go-back {
+  display: none; }
 
 .g-fullwidth {
   position: static; }
