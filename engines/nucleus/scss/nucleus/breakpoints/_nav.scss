@@ -54,6 +54,10 @@
 			.g-dropdown {
 				top: 0;
 				background: transparent;
+				position: absolute;
+				left: 0;
+				right: 0;
+				z-index: 1;				
 				@include transform(translateX(100%));
 				&.g-active {
 					@include transform(translateX(0));
@@ -80,7 +84,22 @@
 		    }							
 		}
 		.g-sublevel {
+			li {
+				position: static;
+			}
 			@include transition(transform .2s ease-out);
+			.g-dropdown {
+				top: 0;
+				@include transform(translateX(100%));
+				&.g-active {
+					@include transform(translateX(0));
+				}
+			}			
+			&.g-slide-out {
+				> .g-menu-item > .g-menu-item-content {
+					@include transform(translateX(-100%));
+				}
+			}			
 		}
 		.g-block-inactive {
 			.g-sublevel {
