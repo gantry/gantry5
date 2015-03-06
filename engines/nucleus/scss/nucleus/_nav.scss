@@ -69,11 +69,13 @@
 	.g-sublevel {
     	> li {
     		position: relative;
+    		/*
     		&:hover {
     			> .g-dropdown {
     				@extend %active-dropdown;
     			}
     		}
+    		*/
     	}
     }
     .g-dropdown {
@@ -93,6 +95,9 @@
 	.g-dropdown-column {
     	@extend %dropdown-column;
     }
+    .g-go-back {
+    	display: none;
+    }    
 }
 
 // Megamenu Settings
@@ -155,13 +160,4 @@
 			opacity: 0.5;
 		}
 	}	
-}
-
-
-
-
-
-
-.g-mobile-nav {
-	
 }
