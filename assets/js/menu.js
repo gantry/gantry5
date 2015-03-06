@@ -15,7 +15,8 @@ jQuery(document).ready(function($){
 		var selected = $(this);
 		if( selected.next('.g-dropdown').hasClass('g-inactive') ) {
 			selected.addClass('g-selected').next('.g-dropdown').removeClass('g-inactive').addClass('g-active').end()
-					.parent('li').parent('ul').addClass('g-slide-out');
+					.parent('li').parent('ul').addClass('g-slide-out').end()
+					.closest('.g-block').siblings('.g-block').addClass('g-block-inactive');
 			selected.parent('.g-menu-item').siblings('.g-menu-item').children('ul').removeClass('g-active').addClass('g-inactive').end()
 					.children('.g-menu-item-content').removeClass('g-selected');
 			if( Window.width() > MBP ) {
@@ -33,7 +34,8 @@ jQuery(document).ready(function($){
 	// Go Back Link for Level 2+
 	$('.g-go-back').on('click', function(){
 		$(this).closest('.g-dropdown').removeClass('g-active').addClass('g-inactive').closest('.g-sublevel').removeClass('g-slide-out').end()
-			   .closest('.g-menu-item').children('.g-menu-item-content').removeClass('g-selected');
+			   .closest('.g-menu-item').children('.g-menu-item-content').removeClass('g-selected').end()
+			   .closest('.g-block').siblings('.g-block').removeClass('g-block-inactive');;
 	});		
 
 	// Toggle Class on Mobile

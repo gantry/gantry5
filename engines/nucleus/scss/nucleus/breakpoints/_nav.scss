@@ -14,7 +14,7 @@
 			background: #222;
 			text-align: left;
 			@include transform(translateX($mobile-sidemenu-width));
-			@include transition(transform .3s ease);
+			@include transition(transform .3s ease-out);
 			&.g-slide-out {
 				> .g-menu-item > .g-menu-item-content,
 				> .g-go-back {
@@ -63,6 +63,7 @@
 				}				
 				.g-block {
 					width: 100%;
+					overflow: visible;
 					.g-go-back {
 						display: none;
 					}
@@ -77,6 +78,15 @@
 		    	width: $mobile-sidemenu-width;
 		    	float: none;
 		    }							
+		}
+		.g-sublevel {
+			@include transition(transform .2s ease-out);
+		}
+		.g-block-inactive {
+			.g-sublevel {
+				height: 0;
+				@include transform(translateX(-100%));
+			}
 		}
 	}
 	// Mobile Nav Toggle
