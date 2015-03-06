@@ -74,7 +74,13 @@ trait ThemeTrait
             $name = $this->layout ?: 'default';
         }
 
-        return Layout::instance($name);
+        $layout = Layout::instance($name);
+
+        if (!$layout->exists()) {
+            throw new \RuntimeException("Layout '{$name}' does not exist", 404);
+        }
+
+        return $layout;
     }
 
     public function add_to_context(array $context)
