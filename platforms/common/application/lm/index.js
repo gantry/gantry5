@@ -348,7 +348,7 @@ ready(function() {
                             // particle attributes
                             particle.setAttributes(response.body.data.options);
 
-                            particle[particle.getAttribute('enabled') ? 'enable' : 'disable']();
+                            if (particle.hasAttribute('enabled')) { particle[particle.getAttribute('enabled') ? 'enable' : 'disable'](); }
 
                             if (particle.getType() != 'section') {
                                 particle.setTitle(response.body.data.title || 'Untitled');
