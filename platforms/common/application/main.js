@@ -37,6 +37,7 @@ ready(function() {
 
         switch (page) {
             case 'layout':
+                lm.layoutmanager.singles('cleanup', lm.builder, true);
                 lm.savestate.setSession(lm.builder.serialize(null, true));
                 data.layout = JSON.stringify(lm.builder.serialize());
 
