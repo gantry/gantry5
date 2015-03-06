@@ -60,6 +60,8 @@ ready(function () {
             title.setAttribute('contenteditable', 'true');
             title.setAttribute('data-collection-edit-title', index);
 
+            title.focus();
+
             var range = document.createRange(), selection;
             range.selectNodeContents(title);
             selection = window.getSelection();
