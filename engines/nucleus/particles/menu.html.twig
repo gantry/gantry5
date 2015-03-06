@@ -69,9 +69,7 @@
     </ul>
 {% endmacro %}
 
-<nav
-        {%- if particle.css.id %} id="{{ particle.css.id }}" {% endif %}
-        class="{%- if particle.css.class %}{{ particle.css.class }}{% endif %}" role="navigation">
+<nav class="g-main-nav" role="navigation">
     <ul class="g-toplevel">
         {{ _self.displayItems(menu.root, menu) }}
     </ul>

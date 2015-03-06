@@ -2,6 +2,8 @@
 	background: $header-background;
 	color: $header-text-color;
 	text-align: center;
+	position: relative;
+	z-index: 2;
 
 	a {
 		color: $header-text-color;

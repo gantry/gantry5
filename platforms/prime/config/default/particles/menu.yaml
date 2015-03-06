@@ -1,13 +1,5 @@
 enabled: true
-
-css:
-  id:
-  class: 'g-main-nav'
-
-config:
-  menu: mainmenu
-  base: /
-  startLevel: 1
-  endLevel: 0
-  showAllChildren: true
-  window_open: 'width=200,height=300'
+base: /
+menu: mainmenu
+startLevel: 1
+endLevel: 0
