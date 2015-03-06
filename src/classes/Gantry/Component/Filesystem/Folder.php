@@ -249,15 +249,16 @@ abstract class Folder
      * Recursively delete directory from filesystem.
      *
      * @param  string $target
+     * @param  bool   $include_target
      * @throws \RuntimeException
      */
-    public static function delete($target)
+    public static function delete($target, $include_target = true)
     {
         if (!is_dir($target)) {
             throw new \RuntimeException('Cannot delete non-existing folder.');
         }
 
-        $success = self::doDelete($target);
+        $success = self::doDelete($target, $include_target);
 
         if (!$success) {
             $error = error_get_last();
@@ -265,7 +266,11 @@ abstract class Folder
         }
 
         // Make sure that the change will be detected when caching.
-        @touch(dirname($target));
+        if ($include_target) {
+            @touch(dirname($target));
+        } else {
+            @touch($target);
+        }
     }
 
     /**
@@ -289,10 +294,11 @@ abstract class Folder
 
     /**
      * @param  string $folder
+     * @param  bool   $include_target
      * @return bool
      * @internal
      */
-    protected static function doDelete($folder)
+    protected static function doDelete($folder, $include_target = true)
     {
         // Special case for symbolic links.
         if (is_link($folder)) {
@@ -306,6 +312,6 @@ abstract class Folder
             (is_dir($path)) ? self::doDelete($path) : @unlink($path);
         }
 
-        return @rmdir($folder);
+        return $include_target ? @rmdir($folder) : true;
     }
 }

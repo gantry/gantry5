@@ -4,13 +4,16 @@
             <span class="theme-title"><i class="fa fa-tint"></i> Theme: {{ gantry.theme.title }}</span>
 
             {% set settings_url = gantry.platform.settings %}
-            {% if settings_url %}
             <ul class="float-right">
+                {% if settings_url %}
                 <li>
-                    <a href="{{ settings_url|e }}"><i class="fa fa-fw fa-cog"></i></a>
+                    <a href="{{ settings_url|e }}"><i class="fa fa-cog"></i></a>
+                </li>
+                {% endif %}
+                <li>
+                    <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('cache')|e }}"><i class="fa fa-fw fa-trash"></i></a>
                 </li>
             </ul>
-            {% endif %}
             <div data-mode-toggle class="dev-mode-toggle">
                 <input type="radio" value="dev" id="dev-mode-toggle" name="mode" checked>
                 <label for="dev-mode-toggle">Dev</label>
