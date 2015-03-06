@@ -23,8 +23,10 @@ jQuery(document).ready(function($){
 
 
 	// Mobile BreakPoint
-	var MobileNav = $('<nav/>', { 'class': 'g-main-nav' }).addClass('g-mobile-nav');
-	$('body').append(MobileNav);
+	var Body		 	 = $('body');
+	var MobileNav 		 = $('<nav/>', { 'class': 'g-main-nav' }).addClass('g-mobile-nav');
+	var MobileNavOverlay = $('<div/>', { 'class': 'g-mobile-nav-overlay' });
+	Body.append(MobileNav).append(MobileNavOverlay);
 
 	var MBP 		 = 768; // Temporarily Hardcoded
 	var TopLevel 	 = $('.g-toplevel');
@@ -32,11 +34,12 @@ jQuery(document).ready(function($){
 
 	$(window).bind("load resize",function(e){
 		if( $(window).width() < MBP ) {
-			PageSurround.next('.g-mobile-nav').append(TopLevel).end().addClass('g-mobile-nav-active');
+			PageSurround.next('.g-mobile-nav').append(TopLevel);
+			Body.addClass('g-mobile-nav-active');
 		} else {
 			PageSurround.find('.g-main-nav').append(TopLevel);
-			if( PageSurround.hasClass('g-mobile-nav-active') ) {
-				PageSurround.removeClass('g-mobile-nav-active');
+			if( Body.hasClass('g-mobile-nav-active') ) {
+				Body.removeClass('g-mobile-nav-active');
 			}			
 		}
 	});	

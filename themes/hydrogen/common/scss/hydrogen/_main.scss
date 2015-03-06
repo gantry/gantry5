@@ -1,9 +1,6 @@
 #g-page-surround {
 	@include transform(translateX(0));
 	@include transition(transform .3s ease);
-	&.g-mobile-nav-active {
-		@include transform(translateX(-260px));
-	}
 }
 #g-main {
 	padding: $section-padding 0;

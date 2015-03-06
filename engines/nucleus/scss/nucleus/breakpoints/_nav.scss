@@ -1,18 +1,33 @@
 // Mobile Menu 
-@include breakpoint(mobile-only) {	
+@include breakpoint(mobile-only) {		
 	.g-mobile-nav-active {
-		&#g-page-surround {
+		#g-page-surround {
 			@include transform(translateX(-$mobile-sidemenu-width));
 		}
 		.g-main-nav {
 			display: none;
+			&.g-mobile-nav {
+				display: block;
+				.g-toplevel {
+					@include transform(translateX(0));
+				}				
+			}			
 		}
+		.g-mobile-nav-overlay {
+			background: fadeout($black, 50%);
+		    position: fixed;
+		    top: 0;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;	    
+		    z-index: 1;		
+		}		
 	}
 	// Main Nav
 	.g-main-nav {
 		.g-toplevel {
 			position: fixed;
-			z-index: 1;
+			z-index: 2;
 			top: 0;
 			height: 100%;
 			right: 0;
@@ -21,6 +36,8 @@
 			overflow-y: auto; 
 			background: #222;
 			text-align: left;
+			@include transform(translateX($mobile-sidemenu-width));
+			@include transition(transform .3s ease);
 			&.g-slide-out {
 				> .g-menu-item > .g-menu-item-content,
 				> .g-go-back {
