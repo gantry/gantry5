@@ -11,54 +11,23 @@ form:
       description: Globally enable to top particles.
       default: true
 
-    css:
-      type: container.set
-      label: Styling
-      fields:
+    base:
+      type: input.text
+      label: Base Path
+      default: /
 
-        .id:
-          type: input.text
-          label: Id
-          description: CSS Id name for the particle.
-          default:
+    menu:
+      type: input.text
+      label: Menu
+      description: Select menu.
+      default: mainmenu
 
-        .class:
-          type: input.text
-          label: Class
-          description: CSS class name for the particle.
-          default: g-main-nav
+    startLevel:
+      type: input.text
+      label: Start Level
+      default: 1
 
-    config:
-      type: container.set
-      label: Configuration
-      fields:
-
-        .menu:
-          type: input.text
-          label: Menu
-          description: Select menu.
-          default: mainmenu
-
-        .base:
-          type: input.text
-          label: Base Path
-          default: /
-
-        .startLevel:
-          type: input.text
-          label: Start Level
-          default: 1
-
-        .endLevel:
-          type: input.text
-          label: End Level
-          default: 0
-
-        .showAllChildren:
-            type: input.text
-            label: Show All Menu Items
-            default: false
-
-        .window_open:
-          type: input.text
-          label: Target Position
+    endLevel:
+      type: input.text
+      label: Max Levels
+      default: 0
