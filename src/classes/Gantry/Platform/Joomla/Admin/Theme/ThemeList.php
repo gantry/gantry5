@@ -16,7 +16,7 @@ class ThemeList
         $db    = \JFactory::getDbo();
         $query = $db
             ->getQuery(true)
-            ->select('s.id, s.template AS name, title, s.params')
+            ->select('s.id, e.extension_id, s.template AS name, s.title, s.params')
             ->from('#__template_styles AS s')
             ->where('s.client_id = 0')
             ->where('e.enabled = 1')
@@ -31,7 +31,7 @@ class ThemeList
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $list = array();
+        $list = [];
 
         foreach ($templates as $template)
         {
@@ -46,6 +46,7 @@ class ThemeList
                 $params = new \JRegistry($template->params);
 
                 $details['id'] = $template->id;
+                $details['extension_id'] = $template->extension_id;
                 $details['name'] = $template->name;
                 $details['title'] = $template->title;
                 $details['thumbnail'] = 'template_thumbnail.png';

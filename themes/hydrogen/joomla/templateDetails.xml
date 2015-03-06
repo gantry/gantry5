@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "http://www.joomla.org/xml/dtd/2.5/template-install.dtd">
 <extension version="3.3" type="template" client="site">
-	<name>hydrogen</name>
-	<version>1.0</version>
-	<creationDate>February 17, 2014</creationDate>
-	<author>RocketTheme, LLC</author>
-	<authorEmail>support@rockettheme.com</authorEmail>
+    <name>hydrogen</name>
+    <version>1.0</version>
+    <creationDate>February 17, 2014</creationDate>
+    <author>RocketTheme, LLC</author>
+    <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>
-	<copyright>(C) 2005 - 2015 RocketTheme, LLC. All rights reserved.</copyright>
-	<description>Default Gantry Template</description>
-	<files>
-	</files>
-	<positions>
+    <copyright>(C) 2005 - 2015 RocketTheme, LLC. All rights reserved.</copyright>
+    <description>Default Gantry Template</description>
+    <files>
+    </files>
+    <positions>
         <position id="header" name="Header" max_positions="6">Header</position>
         <position id="drawer" name="Drawer" max_positions="1">Drawer</position>
         <position id="top" name="Top" max_positions="6">Top</position>
@@ -36,9 +36,12 @@
         <position id="analytics" name="Analytics" max_positions="1">Analytics</position>
         <position id="login" name="Login" max_positions="1">Login</position>
         <position id="popup" name="Popup" max_positions="1">Popup</position>
-	</positions>
-	<languages folder="language">
-	</languages>
-	<config>
-	</config>
+    </positions>
+    <languages folder="language">
+    </languages>
+    <config>
+    </config>
+    <updateservers>
+        <server type="extension" priority="1" name="Hydrogen Template">http://updates.gantry-framework.org/5.0/joomla/tmpl_hydrogen.xml</server>
+    </updateservers>
 </extension>

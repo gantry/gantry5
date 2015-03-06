@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updates>
+	<update>
+		<name>com_gantryadmin</name>
+		<description>Gantry Templates</description>
+		<element>com_gantryadmin</element>
+		<type>component</type>
+		<version>5.0.0-DEV</version>
+		<infourl title="Gantry 5.0.0-DEV">http://gantry-framework.org</infourl>
+		<downloads>
+			<downloadurl type="full" format="zip">http://update.gantry-framework.org/download/com_gantry-5.0.0-DEV.zip</downloadurl>
+		</downloads>
+		<tags>
+			<tag>dev</tag>
+		</tags>
+		<maintainer>RocketTheme, LLC</maintainer>
+		<maintainerurl>http://gantry-framework.org</maintainerurl>
+		<section>Updates</section>
+		<targetplatform name="joomla" version="3.[34]"/>
+		<client>administrator</client>
+	</update>
+</updates>

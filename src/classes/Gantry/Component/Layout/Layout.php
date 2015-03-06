@@ -20,6 +20,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     protected static $instances = [];
 
     protected $name;
+    protected $exists;
     protected $items;
     protected $references;
     protected $sections;
@@ -82,10 +83,19 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      * @param string $name
      * @param array $items
      */
-    public function __construct($name, array $items)
+    public function __construct($name, array $items = null)
     {
         $this->name = $name;
-        $this->items = $items;
+        $this->items = (array) $items;
+        $this->exists = $items !== null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function exists()
+    {
+        return $this->exists;
     }
 
     /**
@@ -166,7 +176,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         /** @var UniformResourceLocator $locator */
         $locator = Gantry::instance()['locator'];
 
-        $layout = [];
+        $layout = null;
         $filename = $locator('gantry-layouts://' . $name . '.json');
         if ($filename) {
             $layout = JsonFile::instance($filename)->content();

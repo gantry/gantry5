@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension method="upgrade" type="component" version="3.3">
-    <name>Gantry Admin</name>
+    <name>COM_GANTRYADMIN</name>
     <author>RocketTheme, LLC</author>
     <creationDate>September 4th, 2014</creationDate>
     <copyright>(C) 2005 - 2014 RocketTheme, LLC. All rights reserved.</copyright>
@@ -19,9 +19,14 @@
             <folder>language</folder>
             <folder>views</folder>
         </files>
+
         <languages folder="language">
             <language tag="en-GB">en-GB/en-GB.com_gantryadmin.ini</language>
             <language tag="en-GB">en-GB/en-GB.com_gantryadmin.sys.ini</language>
         </languages>
     </administration>
+
+    <updateservers>
+        <server type="extension" priority="1" name="Gantry5">http://updates.gantry-framework.org/5.0/joomla/com_gantryadmin.xml</server>
+    </updateservers>
 </extension>
