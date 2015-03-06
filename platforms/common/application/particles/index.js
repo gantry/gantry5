@@ -27,12 +27,13 @@ ready(function () {
         console.log(collection+' collection');
 
 
+        //Pass the new item context here, which will be modified to become the new item with a proper index
         var createNew = function(item) {
 
             var cloneItem = item.cloneNode(true),
                 parentItem = item.parentNode,
                 newItem = parentItem.appendChild(cloneItem),
-                title, titleAdd, titleValue, index, newIndex;
+                title, titleAdd, index, newIndex;
 
             console.log(cloneItem+' cloneItem');
             console.log(parentItem+' parentItem');
@@ -43,20 +44,21 @@ ready(function () {
 
             index = parentItem.getAttribute("data-collection-length");
             newIndex = +index+1;
+
             console.log(index+' index');
             console.log(newIndex+' newIndex');
+
             parentItem.setAttribute("data-collection-length", newIndex);
 
             titleAdd = newItem.querySelector("[data-collection-edit-title]");
-            titleAdd.setAttribute("data-collection-edit-title", newIndex);
+            titleAdd.setAttribute("data-collection-edit-title", index);
 
             title = newItem.querySelector("[data-collection-edit-title-new]");
-            title.setAttribute("data-collection-edit-title-"+newIndex, "");
+            title.setAttribute("data-collection-edit-title-"+index, "");
             title.removeAttribute("data-collection-edit-title-new");
 
             title.setAttribute('contenteditable', 'true');
-            title.setAttribute('data-collection-edit-title',  newIndex);
-            title.focus();
+            title.setAttribute('data-collection-edit-title', index);
 
             var range = document.createRange(), selection;
             range.selectNodeContents(title);
@@ -64,28 +66,32 @@ ready(function () {
             selection.removeAllRanges();
             selection.addRange(range);
 
-            titleValue = trim(title.textContent);
+            trim(title.textContent);
 
             return title;
         };
 
         activeTitle = createNew(item);
 
+        console.log(activeTitle+' activeTitle');
+
         $(activeTitle).on('keydown', function (event) {
 
             switch (event.keyCode) {
                 case 13: // return
                     event.stopPropagation();
-                    if (event.keyCode == 13) {
-                        activeTitle = createNew(item);
-                    }
+
+                    //active title unset the current contenteditable.
+                    activeTitle.removeAttribute('contenteditable');
+
+                    //set the new context for content editable
+                    activeTitle = createNew(item);
 
                     return false;
                 case 27: // esc
                     event.stopPropagation();
-                    if (event.keyCode == 27) {
-                        activeTitle.text(titleValue);
-                    }
+
+                    activeTitle.text(titleValue);
 
                     activeTitle.setAttribute('contenteditable', null);
                     window.getSelection().removeAllRanges();
@@ -96,7 +102,6 @@ ready(function () {
                     return true;
             }
         }).on('blur', function () {
-            activeTitle.setAttribute('contenteditable', null);
             activeTitle.setAttribute('data-collection-title', trim(activeTitle.textContent));
             window.getSelection().removeAllRanges();
         });
