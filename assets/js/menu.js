@@ -16,7 +16,9 @@ jQuery(document).ready(function($){
 		if( selected.next('.g-dropdown').hasClass('g-inactive') ) {
 			selected.addClass('g-selected').next('.g-dropdown').removeClass('g-inactive').addClass('g-active').end().parent('li').parent('ul').addClass('g-slide-out');
 			selected.parent('.g-menu-item').siblings('.g-menu-item').children('ul').removeClass('g-active').addClass('g-inactive').end().children('.g-menu-item-content').removeClass('g-selected');
-			Body.addClass('g-nav-overlay-active');
+			if( Window.width() > MBP ) {
+				Body.addClass('g-nav-overlay-active');
+			}
 		} else {
 			resetSelectedActive();
 		}
