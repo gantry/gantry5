@@ -14,7 +14,7 @@
 			background: #222;
 			text-align: left;
 			@include transform(translateX($mobile-sidemenu-width));
-			@include transition(transform .3s ease);
+			@include transition(transform .3s ease-out);
 			&.g-slide-out {
 				> .g-menu-item > .g-menu-item-content,
 				> .g-go-back {
@@ -53,21 +53,40 @@
 			}
 			.g-dropdown {
 				top: 0;
+				background: transparent;
 				@include transform(translateX(100%));
 				&.g-active {
 					@include transform(translateX(0));
 				}
-				.g-block {
-					width: 100%;
-				}		
 				.g-go-back {
 					display: block;
-				}		
+				}				
+				.g-block {
+					width: 100%;
+					overflow: visible;
+					.g-go-back {
+						display: none;
+					}
+					&:first-child {
+						.g-go-back {
+							display: block;
+						}
+					}
+				}				
 			}		
 			.g-dropdown-column {
 		    	width: $mobile-sidemenu-width;
 		    	float: none;
 		    }							
+		}
+		.g-sublevel {
+			@include transition(transform .2s ease-out);
+		}
+		.g-block-inactive {
+			.g-sublevel {
+				height: 0;
+				@include transform(translateX(-100%));
+			}
 		}
 	}
 	// Mobile Nav Toggle
