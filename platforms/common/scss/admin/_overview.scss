@@ -14,7 +14,8 @@
 
     .theme-version {
         display: inline-block;
-        background: $medium-gray;
+        background: $white;
+        border: 1px solid $medium-gray;
         margin-left: $content-padding;
         padding: 0 6px;
         border-radius: $core-border-radius;
