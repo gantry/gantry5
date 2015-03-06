@@ -14,16 +14,12 @@ form:
       type: input.selectize
       label: CSS Classes
       description: Enter CSS class names.
-      selectize:
-          delimiter: ' '
       default:
 
     variations:
       type: input.block-variations
       label: Variations
       description: Enter Theme Variations.
-      selectize:
-          delimiter: ' '
       default:
 
     extra:

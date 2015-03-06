@@ -270,7 +270,7 @@ var Selectize = new prime({
 
     options: {
         plugins: [],
-        delimiter: ',',
+        delimiter: ' ',
         persist: true,
         diacritics: true,
         create: false,

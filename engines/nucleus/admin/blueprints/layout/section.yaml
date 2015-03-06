@@ -8,8 +8,6 @@ form:
       type: input.selectize
       label: CSS Classes
       description: Enter CSS class names.
-      selectize:
-          delimiter: ' '
       default:
 
     extra:
