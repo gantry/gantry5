@@ -422,8 +422,8 @@ var LayoutManager = new prime({
             if (previous.find('!> [data-lm-blocktype="container"]')) { previous = previous.parent(); }
             if (this.placeholder.parent('[data-lm-blocktype="grid"]') !== previous) {
                 multiLocationResize = {
-                    from: this.block.block.siblings(),
-                    to: this.placeholder.siblings()
+                    from: this.block.block.siblings(':not(.placeholder)'),
+                    to: this.placeholder.siblings(':not(.placeholder)')
                 };
             }
 
@@ -451,7 +451,7 @@ var LayoutManager = new prime({
         }
 
 
-        if (multiLocationResize.from || multiLocationResize.to) {
+        if (multiLocationResize.from || (multiLocationResize.to && multiLocationResize.to != this.block.block)) {
             // if !from / !to means it's empty grid, should we remove it?
             var size = this.block.getSize(), diff, block;
 
