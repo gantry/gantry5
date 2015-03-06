@@ -1,7 +1,8 @@
 "use strict";
-var prime = require('prime'),
-    Base  = require('./base'),
-    zen   = require('elements/zen'),
+var prime      = require('prime'),
+    $          = require('elements'),
+    Base       = require('./base'),
+    zen        = require('elements/zen'),
     getAjaxURL = require('../../utils/get-ajax-url').config;
 
 var Atom = new prime({
@@ -24,7 +25,7 @@ var Atom = new prime({
 
     layout: function() {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
-            subtype = this.getSubType() ? 'data-lm-blocksubtype="' + this.getSubType() + '"' : '';
+            subtype      = this.getSubType() ? 'data-lm-blocksubtype="' + this.getSubType() + '"' : '';
         return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getSubType() || this.getKey() || this.getType()) + '</span></span><div class="float-right"><i class="fa fa-cog" data-lm-nodrag data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
     },
 
@@ -38,6 +39,12 @@ var Atom = new prime({
 
         if (!state && icon) { icon.remove(); }
         if (state && !icon) { zen('i.fa.fa-circle-o.changes-indicator').before(this.block.find('.title')); }
+    },
+
+    onRendered: function(element, parent) {
+        var globally_disabled = $('[data-lm-disabled][data-lm-subtype="' + this.getSubType() + '"]');
+
+        if (globally_disabled || this.getAttribute('enabled') === 0) { this.disable(); }
     }
 });
 
