@@ -1,5 +1,6 @@
 "use strict";
 var prime    = require('prime'),
+    trim     = require('mout/string/trim'),
     Particle = require('./particle');
 
 var UID = 0;
@@ -24,7 +25,7 @@ var Position = new prime({
     },
 
     getKey: function() {
-        return (this.getAttribute('key') || this.getTitle().replace(/\s/g, '-').toLowerCase());
+        return (this.getAttribute('key') || trim(this.getTitle()).replace(/\s/g, '-').toLowerCase());
     },
 
     updateKey: function(key) {
