@@ -141,3 +141,9 @@ body.g5-dialog-open, html.g5-dialog-open {
     top: 1em;
     bottom: auto;
 }
+
+#g5-container .g5-dialog {
+    .settings-block input:not(.settings-param-toggle), .settings-block textarea, .settings-block select, .settings-block .collection-list ul {
+        width: 185px;
+    }
+}

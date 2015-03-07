@@ -3040,6 +3040,11 @@ body.g5-dialog-open, html.g5-dialog-open {
   bottom: auto;
 }
 
+/* line 146, ../scss/admin/_modal.scss */
+#g5-container .g5-dialog .settings-block input:not(.settings-param-toggle), #g5-container .g5-dialog .settings-block textarea, #g5-container .g5-dialog .settings-block select, #g5-container .g5-dialog .settings-block .collection-list ul {
+  width: 185px;
+}
+
 /*  webui popover  */
 /* line 45, ../scss/admin/_popover.scss */
 .g5-popover {
