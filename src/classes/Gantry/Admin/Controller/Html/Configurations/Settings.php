@@ -117,12 +117,14 @@ class Settings extends HtmlController
         }
         array_pop($path);
 
+        $configuration = "configurations/{$this->params['configuration']}";
         $this->params = [
+                'configuration' => $configuration,
                 'blueprints' => $fields,
                 'data' =>  $this->container['config']->get($prefix),
                 'parent' => $path
-                    ? "configurations/{$this->params['configuration']}/settings/particles/{$id}/" . implode('/', $path)
-                    : "configurations/{$this->params['configuration']}/settings/particles/{$id}",
+                    ? "$configuration/settings/particles/{$id}/" . implode('/', $path)
+                    : "$configuration/settings/particles/{$id}",
                 'route' => 'settings.' . $prefix
             ] + $this->params;
 
