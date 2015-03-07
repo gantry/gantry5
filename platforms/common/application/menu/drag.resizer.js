@@ -72,8 +72,12 @@ var Resizer = new prime({
         event.preventDefault();
 
         this.element = $(element);
-        this.element.parent('.submenu-selector').addClass('moving');
 
+        var parent = this.element.parent('.submenu-selector');
+        if (!parent) { return false; }
+
+        parent.addClass('moving');
+        
         this.siblings = {
             occupied: 0,
             elements: siblings,
