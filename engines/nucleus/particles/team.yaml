@@ -34,3 +34,27 @@ form:
         .description:
           type: textarea.textarea
           label: Name
+    stuff:
+      type: collection.list
+      array: true
+      label: Empty Example
+      value: name
+      ajax: true
+
+      fields:
+        .name:
+          type: input.text
+          label: Name
+          skip: true
+
+        .role:
+          type: input.text
+          label: Role
+
+        .image:
+          type: input.text
+          label: Image
+
+        .description:
+          type: textarea.textarea
+          label: Name
