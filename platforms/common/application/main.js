@@ -97,7 +97,7 @@ ready(function() {
     // Editable titles
     body.delegate('click', '[data-title-edit]', function(event, element){
         element = $(element);
-        var $title = element.sibling('[data-title-editable]'), title;
+        var $title = element.siblings('[data-title-editable]') || element.previousSiblings().find('[data-title-editable]') || element.nextSiblings().find('[data-title-editable]'), title;
         if (!$title) { return true; }
 
         title = $title[0];
@@ -112,6 +112,7 @@ ready(function() {
         selection.addRange(range);
 
         $title.storedTitle = trim($title.text());
+        $title.emit('title-edit-start', $title.storedTitle);
     });
 
     body.delegate('keydown', '[data-title-editable]', function(event, element){
@@ -130,6 +131,7 @@ ready(function() {
                 window.getSelection().removeAllRanges();
                 element[0].blur();
 
+                element.emit('title-edit-exit', element.data('title-editable'), event.keyCode == 13 ? 'enter' : 'esc');
                 return false;
             default:
                 return true;
@@ -141,6 +143,7 @@ ready(function() {
         element.attribute('contenteditable', null);
         element.data('title-editable', trim(element.text()));
         window.getSelection().removeAllRanges();
+        element.emit('title-edit-end', element.data('title-editable'));
     }, true);
 
     // Quick Ajax Calls [data-ajax-action]

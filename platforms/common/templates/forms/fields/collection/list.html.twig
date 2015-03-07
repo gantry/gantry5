@@ -17,6 +17,10 @@
         </div>
     {% else %}
         <div class="settings-param {{ field.type|replace('.', '-')|e }}">
+            {% if overrideable and (field.overridable is not defined or field.overridable == true) and field.type != 'container.set' %}
+                <input type="checkbox" class="settings-param-toggle" id="of-{{ (scope ~ name)|e }}"{{ value != default_value ? ' checked="checked"' }} />
+                <label class="settings-param-override" for="of-{{ (scope ~ name)|e }}"></label>
+            {% endif %}
             {% block contents %}
                 {% set field_route = gantry.route((route ~ '.' ~ scope)|replace('.', '/') ~ field.name) %}
                     <span class="settings-param-title float-left">
@@ -30,46 +34,18 @@
                     {% endblock %}
                 </span>
                 <div class="settings-param-field" data-field-name="{{ field.name|e }}">
-                    <div class="settings-param-toolbar">
-                        <span class="button" data-collection-add=""><i class="fa fa-fw fa-plus"></i></span>
-                        <a class="button" data-collection-editall="" href="{{ field_route|e }}"><i class="fa fa-fw fa-pencil-square"></i></a>
-                        {% if overrideable %}
-                            <input type="checkbox" class="settings-param-toggle" id="of-{{ (scope ~ name)|e }}" />
-                            <label class="settings-param-override" for="of-{{ (scope ~ name)|e }}"></label>
-                        {% endif %}
-                    </div>
                     {% block input %}
+                        <ul>
                         {% if field.fields %}
-                            <ul data-collection-length="{{ value|length }}">
-                                <input data-collection-data="" name="{{ (scope ~ name ~ '._json')|fieldName|e }}" type="hidden" value="{{ value|json_encode|escape('html_attr') }}"/>
-                                <li style="display: none" data-collection-add-item="">
-                                    <span class="title">
-                                        <span data-collection-edit-title-new="">
-                                            new item
-                                        </span>
-                                        <span class="button-simple" data-collection-edit-title="new">
-                                            <i class="fa fa-pencil font-small"></i>
-                                        </span>
-                                        <a class="button-simple config-cog" data-collection-edit="" href="">
-                                            <i class="fa fa-cog"></i>
-                                        </a>
-                                    </span>
-                                </li>
                                 {% for key, val in value %}
                                     {% if (field.ajax == true) %}
                                         {% set field_routes = field_route ~ '/' ~ key %}
-                                        <li>
-                                            <span class="title">
-                                                <span data-collection-edit-title-{{ key|e }}="">
-                                                    {{ field.value == field.key ? key : val[field.value] }}
-                                                </span>
-                                                <span class="button-simple" data-collection-edit-title="{{ key|e }}">
-                                                    <i class="fa fa-pencil font-small"></i>
-                                                </span>
-                                                <a class="button-simple config-cog" data-collection-edit="" href="{{ field_routes|e }}">
-                                                    <i class="fa fa-cog"></i>
-                                                </a>
-                                            </span>
+                                        <li data-collection-item="{{ field.value }}">
+                                            {% set itemValue = field.value == field.key ? key : val[field.value] %}
+                                            <i class="fa fa-reorder font-small collection-reorder"></i>
+                                            <a class="config-cog" href="{{ field_routes|e }}"><span data-title-editable="{{ itemValue }}" class="title">{{ itemValue }}</span></a>
+                                            <i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>
+                                            <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
                                         </li>
                                     {% else %}
                                         <hr />
@@ -99,8 +75,19 @@
                                         {% endblock %}
                                     {% endif %}
                                 {% endfor %}
-                            </ul>
                         {% endif %}
+                        <li data-collection-template="{{ field.value }}" style="display: none;">
+                            <i class="fa fa-reorder font-small collection-reorder"></i>
+                            <a class="config-cog" href="{{ field_route ~ '/'|e }}"><span data-title-editable="New item" class="title">New item</span></a>
+                            <i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>
+                            <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
+                        </li>
+                        <li>
+                            <span class="collection-addnew button button-simple" data-collection-addnew="" title="Add new item"><i class="fa fa-plus font-small"></i></span>
+                            <a href="{{ field_route|e }}" class="collection-editall button button-simple" data-collection-editall="" title="Edit all items" {% if value|length == 0 %}style="display: none;"{% endif %}><i class="fa fa-th-large font-small"></i></a>
+                        </li>
+                    </ul>
+                    <input data-collection-data="" name="{{ (scope ~ name ~ '._json')|fieldName|e }}" type="hidden" value="{{ value|default({})|json_encode(constant('JSON_UNESCAPED_SLASHES'))|e('html_attr') }}"/>
                     {% endblock %}
                 </div>
             {% endblock %}
