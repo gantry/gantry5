@@ -3045,6 +3045,22 @@ body.g5-dialog-open, html.g5-dialog-open {
   width: 185px;
 }
 
+/* line 152, ../scss/admin/_modal.scss */
+.g5-dialog.g5-modal-collection-editall .g5-content {
+  width: 90%;
+}
+/* line 155, ../scss/admin/_modal.scss */
+.g5-dialog.g5-modal-collection-editall .g5-content .settings-block {
+  width: 48% !important;
+  margin: 10px 1% !important;
+}
+@media only all and (max-width: 47.938rem) {
+  /* line 161, ../scss/admin/_modal.scss */
+  .g5-dialog.g5-modal-collection-editall .g5-content .settings-block {
+    width: 100% !important;
+  }
+}
+
 /*  webui popover  */
 /* line 45, ../scss/admin/_popover.scss */
 .g5-popover {

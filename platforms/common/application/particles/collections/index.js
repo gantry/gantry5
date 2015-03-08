@@ -102,7 +102,7 @@ ready(function() {
     });
 
     // Load item settings
-    body.delegate('click', '[data-collection-item] .config-cog', function(event, element) {
+    body.delegate('click', '[data-collection-item] .config-cog, [data-collection-editall]', function(event, element) {
         event.preventDefault();
 
         var data = {};
@@ -110,6 +110,7 @@ ready(function() {
         modal.open({
             content: 'Loading',
             method: 'post',
+            className: 'g5-dialog-theme-default g5-modal-collection g5-modal-collection-' + (element.data('collection-editall') !== null ? 'editall' : 'single'),
             data: data,
             remote: element.attribute('href') + getAjaxSuffix(),
             remoteLoaded: function(response, content) {

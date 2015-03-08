@@ -147,3 +147,19 @@ body.g5-dialog-open, html.g5-dialog-open {
         width: 185px;
     }
 }
+
+// collections
+.g5-dialog.g5-modal-collection-editall .g5-content {
+    width: 90%;
+
+    .settings-block {
+        width: 48% !important;
+        margin: 10px 1% !important;
+    }
+
+    @include breakpoint(mobile-only) {
+        .settings-block {
+            width: 100% !important;
+        }
+    }
+}
