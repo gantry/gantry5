@@ -11,12 +11,13 @@
     "objectdiff": "^1.1.0",
     "prime": "^0.4.2",
     "prime-util": "^0.5.0",
-    "sifter": "^0.3.4",
-    "slick": "^1.12.1"
+    "sifter": "^0.4.1",
+    "slick": "^1.12.1",
+    "sortablejs": "^1.1.1"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
-    "grunt-contrib-sass": "~0.8.1",
+    "grunt-contrib-sass": "~0.9.2",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-wrapup": "~0.1.3"
   }

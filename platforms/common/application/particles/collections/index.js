@@ -8,6 +8,7 @@ var ready         = require('elements/domready'),
     request       = require('agent'),
     lastItem      = require('mout/array/last'),
     indexOf       = require('mout/array/indexOf'),
+    simpleSort    = require('sortablejs'),
 
     trim          = require('mout/string/trim'),
 
@@ -21,19 +22,55 @@ ready(function() {
     var addNewByEnter = function(title, key) {
         if (key == 'enter' && this.CollectionNew) {
             this.CollectionNew = false;
-            body.emit('click', { target: this.parent('ul').find('[data-collection-addnew]') });
+            body.emit('click', { target: this.parent('.settings-param').find('[data-collection-addnew]') });
         }
     };
 
-    var updateTitle = function() {
+    var createSortables = function(list) {
+        var lists = list || $('.collection-list ul');
+        if (!lists) { return; }
+        lists.forEach(function(list) {
+            list = $(list);
+            list.SimpleSort = simpleSort.create(list[0], {
+                handle: '.fa-reorder',
+                filter: '[data-collection-nosort]',
+                scroll: false,
+                animation: 150,
+                onStart: function() {
+                    $(this.el).addClass('collection-sorting');
+                },
+                onEnd: function(evt) {
+                    var element = $(this.el);
+                    element.removeClass('collection-sorting');
 
+                    if (evt.oldIndex === evt.newIndex) { return; }
+
+                    var dataField = element.parent('.settings-param').find('[data-collection-data]'),
+                        data      = dataField.value();
+
+                    data = JSON.parse(data);
+
+                    data.splice(evt.newIndex, 0, data.splice(evt.oldIndex, 1)[0]);
+                    dataField.value(JSON.stringify(data));
+                    body.emit('change', { target: dataField });
+                }
+            });
+        });
     };
+
+    createSortables();
+
+    // delegate sortables collections for ajax support
+    body.delegate('mouseover', '.collection-list ul', function(event, element) {
+        if (!element.SimpleSort) { createSortables(element); }
+    });
 
     // Add new item
     body.delegate('click', '[data-collection-addnew]', function(event, element) {
-        var list      = element.parent('ul'),
-            dataField = element.parent('.settings-param').find('[data-collection-data]'),
-            tmpl      = list.find('[data-collection-template]'),
+        var param     = element.parent('.settings-param'),
+            list      = param.find('ul'),
+            dataField = param.find('[data-collection-data]'),
+            tmpl      = param.find('[data-collection-template]'),
             items     = list.search('> [data-collection-item]') || [],
             last      = $(lastItem(items));
 
@@ -49,7 +86,9 @@ ready(function() {
 
         title.href(title.href() + items.length);
 
-        clone.attribute('style', null).data('collection-item', clone.data('collection-template')).attribute('data-collection-template', null);
+        clone.attribute('style', null).data('collection-item', clone.data('collection-template'));
+        clone.attribute('data-collection-template', null);
+        clone.attribute('data-collection-nosort', null);
         editable.CollectionNew = true;
         body.emit('click', { target: title.siblings('[data-title-edit]') });
 

@@ -166,19 +166,17 @@
 
         li {
             padding: 0.1rem 0;
+        }
+    }
 
-            &:hover [data-title-edit], &:hover [data-collection-remove] {
-                color: $dark-gray;
-                opacity: 1;
-            }
+    ul:not(.collection-sorting) li {
+        &:hover [data-title-edit], &:hover [data-collection-remove] {
+            color: $dark-gray;
+            opacity: 1;
+        }
 
-            &[data-collection-item]:hover a {
-                color: $core-accent;
-            }
-
-            &:last-child:not(:nth-child(2)) {
-                margin-top: 5px;
-            }
+        &[data-collection-item]:hover a {
+            color: $core-accent;
         }
     }
 
@@ -205,7 +203,7 @@
         float: right;
         margin-top: 0.4rem;
         opacity: 0;
-        @include transition(all 0.2s ease-in-out);
+        //@include transition(all 0.2s ease-in-out);
     }
 
     .collection-reorder {

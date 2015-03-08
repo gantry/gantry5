@@ -917,48 +917,41 @@ a {
 #g5-container .collection-list .settings-param-field ul li {
   padding: 0.1rem 0;
 }
-/* line 170, ../scss/admin/_settings.scss */
-#g5-container .collection-list .settings-param-field ul li:hover [data-title-edit], #g5-container .collection-list .settings-param-field ul li:hover [data-collection-remove] {
+/* line 173, ../scss/admin/_settings.scss */
+#g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-title-edit], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-remove] {
   color: #666;
   opacity: 1;
 }
-/* line 175, ../scss/admin/_settings.scss */
-#g5-container .collection-list .settings-param-field ul li[data-collection-item]:hover a {
+/* line 178, ../scss/admin/_settings.scss */
+#g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li[data-collection-item]:hover a {
   color: #439A86;
 }
-/* line 179, ../scss/admin/_settings.scss */
-#g5-container .collection-list .settings-param-field ul li:last-child:not(:nth-child(2)) {
-  margin-top: 5px;
-}
-/* line 185, ../scss/admin/_settings.scss */
+/* line 183, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field [data-collection-item] a {
   color: #555;
   margin-left: 5px;
   vertical-align: middle;
 }
-/* line 191, ../scss/admin/_settings.scss */
+/* line 189, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field .button {
   background-color: #eee;
   color: #a2a2a2;
   padding: 6px 8px;
 }
-/* line 196, ../scss/admin/_settings.scss */
+/* line 194, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field .button:hover {
   background-color: #d4d4d4;
   color: #6e6e6e;
 }
-/* line 202, ../scss/admin/_settings.scss */
+/* line 200, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field [data-title-edit], #g5-container .collection-list .settings-param-field [data-collection-remove] {
   cursor: pointer;
   color: #cccccc;
   float: right;
   margin-top: 0.4rem;
   opacity: 0;
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
 }
-/* line 211, ../scss/admin/_settings.scss */
+/* line 209, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field .collection-reorder {
   cursor: row-resize;
   color: #999999;
