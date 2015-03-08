@@ -33,7 +33,7 @@ ready(function() {
         var parent = element.parent('.settings-param') || element.parent('h4'),
             target = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title')) : null;
 
-        if (!target || !originals) { return; }
+        if (!target || !originals || originals.get(element.attribute('name')) == null) { return; }
 
         if (originals.get(element.attribute('name')) !== element.value()) { target.showIndicator('changes-indicator font-small fa fa-circle-o fa-fw'); }
         else { target.hideIndicator(); }
