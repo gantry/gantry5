@@ -69,6 +69,7 @@ ready(function() {
     body.delegate('click', '[data-collection-addnew]', function(event, element) {
         var param     = element.parent('.settings-param'),
             list      = param.find('ul'),
+            editall   = list.find('[data-collection-editall]'),
             dataField = param.find('[data-collection-data]'),
             tmpl      = param.find('[data-collection-template]'),
             items     = list.search('> [data-collection-item]') || [],
@@ -79,7 +80,7 @@ ready(function() {
         if (last) { clone.after(last); }
         else { clone.top(list); }
 
-        if (!items.length) { list.find('[data-collection-editall]').style('display', 'inline-block'); }
+        if (!items.length && editall) { editall.style('display', 'inline-block'); }
 
         title = clone.find('a');
         editable = title.find('[data-title-editable]');
