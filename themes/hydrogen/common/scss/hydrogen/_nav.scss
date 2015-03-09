@@ -10,6 +10,7 @@
 					border-radius: $core-border-radius;
 					margin-left: -0.5rem;
 					margin-right: 1rem;
+					padding: 0.2rem;
 					&:hover {
 						background: darken($header-background, 8%);
 					}

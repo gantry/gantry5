@@ -915,18 +915,24 @@ th {
   }
   */ }
   .g-main-nav .g-toplevel > li .g-menu-item-content {
-    display: block;
+    display: inline-block;
     cursor: pointer;
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out; }
-  .g-main-nav .g-toplevel > li.g-parent > .g-menu-item-content .g-menu-parent-indicator:after {
-    display: inline-block;
-    width: 1.5rem;
-    opacity: 0.5;
-    font-family: FontAwesome;
-    content: "\f078"; }
-  .g-main-nav .g-toplevel > li.g-parent > .g-menu-item-content.g-selected .g-menu-parent-indicator:after {
+  .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator {
+    display: inline-block; }
+    .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator:after {
+      display: inline-block;
+      font-size: 0.8rem;
+      cursor: pointer;
+      width: 1.5rem;
+      opacity: 0.5;
+      font-family: FontAwesome;
+      content: "\f078"; }
+    .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator.g-selected:after {
+      content: "\f00d"; }
+  .g-main-nav .g-toplevel > li.g-parent .g-selected .g-menu-parent-indicator:after {
     content: "\f00d"; }
 .g-main-nav .g-dropdown {
   -webkit-transition: all 0.2s ease-out;
@@ -936,12 +942,18 @@ th {
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out; }
-.g-main-nav .g-sublevel .g-parent > .g-menu-item-content:after {
-  position: absolute;
-  right: 1rem;
-  opacity: 0.5;
-  font-family: FontAwesome;
-  content: "\f054"; }
+  .g-main-nav .g-sublevel > li .g-menu-item-content {
+    display: block; }
+  .g-main-nav .g-sublevel > li.g-parent .g-menu-parent-indicator {
+    display: inline; }
+    .g-main-nav .g-sublevel > li.g-parent .g-menu-parent-indicator:after {
+      position: absolute;
+      right: 1rem;
+      width: auto;
+      content: "\f054";
+      line-height: 2; }
+  .g-main-nav .g-sublevel > li .g-selected .g-menu-parent-indicator:after {
+    content: "\f00d"; }
 
 .g-standard .g-sublevel > li {
   position: relative;

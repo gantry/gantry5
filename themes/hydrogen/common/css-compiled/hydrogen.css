@@ -67,7 +67,8 @@ h1, h2, h3, h4, h5 {
       border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 0.1875rem;
       margin-left: -0.5rem;
-      margin-right: 1rem; }
+      margin-right: 1rem;
+      padding: 0.2rem; }
       .g-main-nav .g-toplevel > li > a + span:hover {
         background: #377e6d; }
     .g-main-nav .g-toplevel > li > .g-menu-item-content {

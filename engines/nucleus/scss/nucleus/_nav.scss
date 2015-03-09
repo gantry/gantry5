@@ -15,13 +15,6 @@
 				}
 			}
 			*/
-			> a {
-				+ span {
-					border: 1px solid rgba(255,255,255,0.4);
-					border-radius: $core-border-radius;
-					margin-left: -0.5rem;
-				}
-			}
 			.g-menu-item-content {
 				display: inline-block;
 				cursor: pointer;
@@ -31,6 +24,7 @@
 	    	&.g-parent {
 				.g-menu-parent-indicator {
 					display: inline-block;
+
 					&:after {
 						display: inline-block;
 						font-size: $core-font-size - 0.2;
@@ -38,9 +32,16 @@
 						width: 1.5rem;
 						opacity: 0.5;
 						font-family: FontAwesome;
-						content: "\f078";				
+						content: "\f078";		
 					}
 					&.g-selected {
+						&:after {
+							content: "\f00d";
+						}
+					}
+				}
+				.g-selected {
+					.g-menu-parent-indicator {
 						&:after {
 							content: "\f00d";
 						}
@@ -68,6 +69,7 @@
     		&.g-parent {
 	    		.g-menu-parent-indicator {
 	    			display: inline;
+
 	    			&:after {
 						position: absolute;
 						right: 1rem;
