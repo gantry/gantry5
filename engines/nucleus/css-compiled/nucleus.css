@@ -924,7 +924,6 @@ th {
     display: inline-block; }
     .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator:after {
       display: inline-block;
-      font-size: 0.8rem;
       cursor: pointer;
       width: 1.5rem;
       opacity: 0.5;
@@ -950,8 +949,7 @@ th {
       position: absolute;
       right: 1rem;
       width: auto;
-      content: "\f054";
-      line-height: 2; }
+      content: "\f054"; }
   .g-main-nav .g-sublevel > li .g-selected .g-menu-parent-indicator:after {
     content: "\f00d"; }
 

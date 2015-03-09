@@ -27,7 +27,6 @@
 
 					&:after {
 						display: inline-block;
-						font-size: $core-font-size - 0.2;
 						cursor: pointer;
 						width: 1.5rem;
 						opacity: 0.5;
@@ -75,7 +74,6 @@
 						right: 1rem;
 						width: auto;
 						content: "\f054";
-						line-height: $core-line-height + 0.5;
 					}			
 				}
 			}
