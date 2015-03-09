@@ -1,6 +1,6 @@
-@include font-face('g-lato', '../fonts/lato_light/Lato-Light', 300);
-@include font-face('g-lato', '../fonts/lato_regular/lato-regular-webfont');
-@include font-face('g-montserrat', '../fonts/montserrat_light/montserrat-light-webfont');
+@include font-face('roboto', '../fonts/roboto_light_macroman/Roboto-Light-webfont', 300);
+@include font-face('roboto', '../fonts/roboto_regular_macroman/Roboto-Regular-webfont');
+@include font-face('roboto', '../fonts/roboto_medium_macroman/Roboto-Medium-webfont', 600);
 
 body {
 	font-family: $font-family-default;
@@ -9,6 +9,7 @@ body {
 
 h1, h2, h3, h4, h5 {
 	font-family: $font-family-headers;
+	font-weight: 600
 }
 
 .button {

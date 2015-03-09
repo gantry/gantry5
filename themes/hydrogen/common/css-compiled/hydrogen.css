@@ -1,12 +1,12 @@
 body {
-  color: #444444;
+  color: #555555;
   background: #f0f0f0; }
 
 a {
   color: #439A86; }
 
 h1, h2, h3, h4, h5, h6, strong {
-  color: #2b2b2b; }
+  color: #3b3b3b; }
 
 .button {
   display: inline-block;
@@ -28,29 +28,30 @@ h1, h2, h3, h4, h5, h6, strong {
   display: inline-block; }
 
 @font-face {
-  font-family: "g-lato";
+  font-family: "roboto";
   font-weight: 300;
   font-style: normal;
-  src: url("../fonts/lato_light/Lato-Light.eot");
-  src: url("../fonts/lato_light/Lato-Light.eot?#iefix") format("embedded-opentype"), url("../fonts/lato_light/Lato-Light.woff") format("woff"), url("../fonts/lato_light/Lato-Light.ttf") format("truetype"), url("../fonts/lato_light/Lato-Light.svg#g-lato") format("svg"); }
+  src: url("../fonts/roboto_light_macroman/Roboto-Light-webfont.eot");
+  src: url("../fonts/roboto_light_macroman/Roboto-Light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto_light_macroman/Roboto-Light-webfont.woff") format("woff"), url("../fonts/roboto_light_macroman/Roboto-Light-webfont.ttf") format("truetype"), url("../fonts/roboto_light_macroman/Roboto-Light-webfont.svg#roboto") format("svg"); }
 @font-face {
-  font-family: "g-lato";
+  font-family: "roboto";
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/lato_regular/lato-regular-webfont.eot");
-  src: url("../fonts/lato_regular/lato-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato_regular/lato-regular-webfont.woff") format("woff"), url("../fonts/lato_regular/lato-regular-webfont.ttf") format("truetype"), url("../fonts/lato_regular/lato-regular-webfont.svg#g-lato") format("svg"); }
+  src: url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont.eot");
+  src: url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont.woff") format("woff"), url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont.ttf") format("truetype"), url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont.svg#roboto") format("svg"); }
 @font-face {
-  font-family: "g-montserrat";
-  font-weight: normal;
+  font-family: "roboto";
+  font-weight: 600;
   font-style: normal;
-  src: url("../fonts/montserrat_light/montserrat-light-webfont.eot");
-  src: url("../fonts/montserrat_light/montserrat-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/montserrat_light/montserrat-light-webfont.woff") format("woff"), url("../fonts/montserrat_light/montserrat-light-webfont.ttf") format("truetype"), url("../fonts/montserrat_light/montserrat-light-webfont.svg#g-montserrat") format("svg"); }
+  src: url("../fonts/roboto_medium_macroman/Roboto-Medium-webfont.eot");
+  src: url("../fonts/roboto_medium_macroman/Roboto-Medium-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto_medium_macroman/Roboto-Medium-webfont.woff") format("woff"), url("../fonts/roboto_medium_macroman/Roboto-Medium-webfont.ttf") format("truetype"), url("../fonts/roboto_medium_macroman/Roboto-Medium-webfont.svg#roboto") format("svg"); }
 body {
-  font-family: "g-lato", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   font-weight: 300; }
 
 h1, h2, h3, h4, h5 {
-  font-family: "g-montserrat", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; }
+  font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-weight: 600; }
 
 .button {
   font-weight: 500; }
@@ -134,12 +135,12 @@ h1, h2, h3, h4, h5 {
 #g-feature {
   padding: 1rem 0;
   background: #ffffff;
-  color: #444444; }
+  color: #555555; }
 
 #g-subfeature {
   padding: 1.5rem 0;
   background: #f0f0f0;
-  color: #444444;
+  color: #555555;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.1); }
 
 #g-page-surround {
@@ -155,11 +156,11 @@ h1, h2, h3, h4, h5 {
 #g-main {
   padding: 1.5rem 0;
   background: #ffffff;
-  color: #444444; }
+  color: #555555; }
 
 #g-footer {
   background: #f0f0f0;
-  color: #444444;
+  color: #555555;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); }
 
 .flush .g-container > .g-grid > .g-block > .g-content {
