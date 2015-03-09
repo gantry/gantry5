@@ -55,34 +55,40 @@ $.implement({
     },
 
     showIndicator: function(klass, keepIcon) {
-        if (typeof klass == 'boolean') {
-            keepIcon = klass;
-            klass = null;
-        }
+        this.forEach(function(node) {
+            node = $(node);
+            if (typeof klass == 'boolean') {
+                keepIcon = klass;
+                klass = null;
+            }
 
-        var icon = keepIcon ? false : this.find('i');
-        this.gHadIcon = !!icon;
+            var icon = keepIcon ? false : node.find('i');
+            node.gHadIcon = !!icon;
 
-        if (!icon) {
-            if (!this.find('span') && !this.children()) { zen('span').text(this.text()).top(this.empty()); }
+            if (!icon) {
+                if (!node.find('span') && !node.children()) { zen('span').text(node.text()).top(node.empty()); }
 
-            icon = zen('i');
-            icon.top(this);
-        }
+                icon = zen('i');
+                icon.top(node);
+            }
 
-        if (!this.gIndicator) { this.gIndicator = icon.attribute('class') || true; }
-        icon.attribute('class', klass || 'fa fa-fw fa-spin-fast fa-spinner');
+            if (!node.gIndicator) { node.gIndicator = icon.attribute('class') || true; }
+            icon.attribute('class', klass || 'fa fa-fw fa-spin-fast fa-spinner');
+        });
     },
 
     hideIndicator: function() {
-        if (!this.gIndicator) { return; }
+        this.forEach(function(node) {
+            node = $(node);
+            if (!node.gIndicator) { return; }
 
-        var icon = this.find('i');
+            var icon = node.find('i');
 
-        if (!this.gHadIcon) { icon.remove(); }
-        else { icon.attribute('class', this.gIndicator); }
+            if (!node.gHadIcon) { icon.remove(); }
+            else { icon.attribute('class', node.gIndicator); }
 
-        this.gIndicator = null;
+            node.gIndicator = null;
+        });
     },
 
     slideDown: function(animation, callback) {
