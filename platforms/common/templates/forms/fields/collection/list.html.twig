@@ -7,7 +7,7 @@
             {% for key, val in value %}
                 <div class="card settings-block">
                     <h4>
-                        <span data-title-editable="{{ field.value == field.key ? key : val[field.value] }}" class="title">{{ field.value == field.key ? key : val[field.value] }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
+                        <span data-title-editable="{{ field.value == field.key ? key : val[field.value] }}" data-collection-key="{{ field.value }}" class="title">{{ field.value == field.key ? key : val[field.value] }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
                     </h4>
                     <div class="inner-params">
                         {{ block('collection_fields') }}
@@ -48,20 +48,21 @@
                                             <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
                                         </li>
                                     {% else %}
-                                        <hr />
                                         {% block collection_fields %}
                                             <div data-g5-collections="">
                                                 {% for childName, child in field.fields %}
                                                     {% if childName starts with '.' %}
+                                                        {% set childKey = childName|trim('.') %}
                                                         {% set childValue = val[childName[1:]] %}
                                                         {% set childDefault = default_value[childName[1:]] %}
                                                         {% set childName = name ~ '.' ~ key ~ childName %}
                                                     {% else %}
+                                                        {% set childKey = childName %}
                                                         {% set childValue = nested(data, scope ~ childName) %}
                                                         {% set childDefault = nested(defaults, scope ~ childName) %}
                                                         {% set childName = childName|replace({'*': key}) %}
                                                     {% endif %}
-                                                    {% if childName not in skip and not child.skip %}
+                                                    {% if childName not in skip and not child.skip and field.value != childKey %}
                                                          {% if child.type == 'key' %}
                                                              {% include 'forms/fields/key/key.html.twig'
                                                              with {name: childName, field: child, value: key} %}
