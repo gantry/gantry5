@@ -51,6 +51,7 @@ html {
 body {
   color: #fff;
   background-color: #354D59 !important;
+  font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
@@ -75,7 +76,7 @@ a {
   #g5-container .inner-container {
     margin: 1.5rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    color: #555; }
+    color: #666; }
     @media only all and (max-width: 47.938rem) {
       #g5-container .inner-container {
         margin: 0; } }
@@ -631,7 +632,7 @@ a {
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li[data-collection-item]:hover a {
   color: #439A86; }
 #g5-container .collection-list .settings-param-field [data-collection-item] a {
-  color: #555;
+  color: #666;
   margin-left: 5px;
   vertical-align: middle; }
 #g5-container .collection-list .settings-param-field .button {
@@ -882,7 +883,7 @@ a {
       #g5-container #navbar ul li:not(.config-select-wrap).active a, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap).active a, .g5-dialog #g5-container .g-tabs ul li:not(.config-select-wrap).active a, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap).active a, .g5-popover-content #g5-container .g-tabs ul li:not(.config-select-wrap).active a {
         color: #314C59; }
     #g5-container #navbar ul li:not(.config-select-wrap) a, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a, .g5-dialog #g5-container .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap) a, .g5-popover-content #g5-container .g-tabs ul li:not(.config-select-wrap) a {
-      color: #555;
+      color: #666;
       border-color: #C6C6C6;
       display: block;
       white-space: nowrap;
@@ -1056,7 +1057,7 @@ a {
           -moz-transition: color 0.2s;
           transition: color 0.2s; }
           #g5-container .lm-blocks .section .section-actions i:hover, #g5-container .lm-blocks .non-visible-section .section-actions i:hover {
-            color: #3b3b3b; }
+            color: #4d4d4d; }
       #g5-container .lm-blocks .section:hover .section-actions, #g5-container .lm-blocks .non-visible-section:hover .section-actions {
         opacity: 1;
         -webkit-transition: opacity 0.2s ease-in;
@@ -1216,7 +1217,7 @@ a {
       font-weight: 300;
       font-size: 1.2rem;
       vertical-align: middle;
-      color: #555;
+      color: #666;
       display: inline-block;
       margin-top: -5px;
       margin-right: 5px;
@@ -1474,13 +1475,13 @@ a {
   -ms-transform: translateY(-50%);
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
-  color: #555; }
+  color: #666; }
 #g5-container .menu-selector li {
   position: relative;
   margin: 3px;
   background: #eeeeee;
   border: 1px solid #ddd;
-  color: #555;
+  color: #666;
   display: inline-block;
   cursor: move;
   -webkit-transition: background-color 0.1s ease-out;
@@ -1490,7 +1491,7 @@ a {
     content: "\f078"; }
   #g5-container .menu-selector li a {
     display: inline-block;
-    color: #555; }
+    color: #666; }
   #g5-container .menu-selector li .menu-item {
     margin: 0;
     padding: 0.938rem;
@@ -1524,17 +1525,17 @@ a {
     cursor: pointer;
     padding: 5px;
     font-size: 1.2rem;
-    color: #888888;
+    color: #999999;
     -webkit-transition: color 0.2s;
     -moz-transition: color 0.2s;
     transition: color 0.2s; }
     #g5-container .column-container .add-column:hover {
-      color: #555; }
+      color: #666; }
 #g5-container .submenu-selector {
   border: 6px solid #fff;
   box-shadow: 0 0 0 1px #ddd;
   border-radius: 0.1875rem;
-  color: #555;
+  color: #666;
   background-color: #fff; }
   #g5-container .submenu-selector.moving .g-block .submenu-reorder {
     display: none; }
@@ -1551,7 +1552,7 @@ a {
       line-height: 22px;
       text-align: center;
       z-index: 5;
-      color: #555;
+      color: #666;
       font-family: FontAwesome, sans-serif;
       border-radius: 0 0 0.1875rem 0.1875rem;
       left: 50%;
@@ -1592,12 +1593,12 @@ a {
     #g5-container .submenu-selector .submenu-items:after {
       margin-right: 6px; }
     #g5-container .submenu-selector .submenu-items li {
-      color: #555;
+      color: #666;
       cursor: pointer;
       position: relative; }
       #g5-container .submenu-selector .submenu-items li a {
         display: block;
-        color: #555; }
+        color: #666; }
       #g5-container .submenu-selector .submenu-items li .menu-item {
         padding: 0.469rem 0.938rem;
         display: block; }
