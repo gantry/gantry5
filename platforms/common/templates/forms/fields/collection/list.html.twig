@@ -7,7 +7,7 @@
             {% for key, val in value %}
                 <div class="card settings-block">
                     <h4>
-                        <span data-title-editable="{{ field.value == field.key ? key : val[field.value] }}" data-collection-key="{{ field.value }}" class="title">{{ field.value == field.key ? key : val[field.value] }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
+                        <span data-title-editable="{{ field.value == field.key ? key : val[field.value] }}" data-collection-key="{{ ('.' ~ key ~ '.' ~ field.value)|fieldName }}" class="title">{{ field.value == field.key ? key : val[field.value] }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
                     </h4>
                     <div class="inner-params">
                         {{ block('collection_fields') }}

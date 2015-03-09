@@ -189,10 +189,13 @@ ready(function() {
                         dataString.push(name + '=' + value);
                     });
 
-                    var title = content.elements.content.find('[data-title-editable]');
-                    if (title) {
-                        //todo title= should be hooked up to the field.value see parent [data-collection-item] value
-                        dataString.push('title=' + title.data('title-editable'));
+                    var titles = content.elements.content.search('[data-title-editable]'), key;
+                    if (titles) {
+                        titles.forEach(function(title){
+                            title = $(title);
+                            key = title.data('collection-key') || 'title';
+                            dataString.push(key + '=' + title.data('title-editable'));
+                        });
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
