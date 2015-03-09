@@ -163,6 +163,10 @@ ready(function() {
                     submit     = content.elements.content.find('input[type="submit"], button[type="submit"]'),
                     dataString = [];
 
+                if (JSON.parse(data).length == 1) {
+                    content.elements.content.style({width: 450});
+                }
+
                 if (!form || !submit) {
                     return true;
                 }
