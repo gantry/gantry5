@@ -68,6 +68,8 @@ ready(function() {
                     });
                 }
 
+                $('.settings-param-title').hideIndicator();
+
                 if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
         }
 
