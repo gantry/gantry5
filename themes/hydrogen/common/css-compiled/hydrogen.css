@@ -37,11 +37,11 @@ h1, h2, h3, h4, h5, h6, strong {
   font-family: "roboto";
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont.eot");
-  src: url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont.woff") format("woff"), url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont.ttf") format("truetype"), url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont.svg#roboto") format("svg"); }
+  src: url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont, 400.eot");
+  src: url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont, 400.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont, 400.woff") format("woff"), url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont, 400.ttf") format("truetype"), url("../fonts/roboto_regular_macroman/Roboto-Regular-webfont, 400.svg#roboto") format("svg"); }
 @font-face {
   font-family: "roboto";
-  font-weight: 600;
+  font-weight: 500;
   font-style: normal;
   src: url("../fonts/roboto_medium_macroman/Roboto-Medium-webfont.eot");
   src: url("../fonts/roboto_medium_macroman/Roboto-Medium-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto_medium_macroman/Roboto-Medium-webfont.woff") format("woff"), url("../fonts/roboto_medium_macroman/Roboto-Medium-webfont.ttf") format("truetype"), url("../fonts/roboto_medium_macroman/Roboto-Medium-webfont.svg#roboto") format("svg"); }
@@ -51,16 +51,16 @@ body {
 
 h1, h2, h3, h4, h5 {
   font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-  font-weight: 600; }
+  font-weight: 500; }
 
 .button {
-  font-weight: 500; }
+  font-weight: 400; }
 
 .feature-icons {
   font-size: 3rem; }
 
 .g-main-nav .g-toplevel {
-  font-weight: 500; }
+  font-weight: 400; }
   .g-main-nav .g-toplevel > li {
     margin-right: -4px; }
     .g-main-nav .g-toplevel > li > .g-menu-item-content {
