@@ -1,0 +1,30 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+<div id="assignments">
+    <form method="post">
+        <span class="float-right">
+            <button type="submit" class="button button-primary button-save" data-save="Assignments"><i class="fa fa-fw fa-check"></i> <span>Save Assignments</span></button>
+        </span>
+
+        <h2 class="page-title">Assignments</h2>
+
+        {% for type in gantry.menu.getMenuOptions %}
+        <div id="settings" class="cards-wrapper g-grid">
+            <div class="card settings-block">
+                <h4>{{ type.title ?: type.menutype }}</h4>
+
+                {% for link in type.links %}
+                <label>
+                    {% include 'forms/fields/enable/enable.html.twig' with
+                    {'default': false, 'name': 'assigned[]',
+                    'field': {'label': '- '|repeat(link.level-1) ~ link.text, 'id': 'link' ~ link.value, 'disabled': link.checked_out and link.checked_out != user.id},
+                    'value': link.template_style_id == style_id} %}
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </form>
+</div>
+{% endblock %}

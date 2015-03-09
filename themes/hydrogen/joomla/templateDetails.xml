@@ -38,8 +38,15 @@
         <position id="popup" name="Popup" max_positions="1">Popup</position>
     </positions>
     <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.tpl_hydrogen.ini</language>
+        <language tag="en-GB">en-GB/en-GB.tpl_hydrogen.sys.ini</language>
     </languages>
     <config>
+        <fields name="params">
+            <fieldset name="advanced">
+                <field name="configuration_id" type="hidden" />
+            </fieldset>
+        </fields>
     </config>
     <updateservers>
         <server type="extension" priority="1" name="Hydrogen Template">http://updates.gantry-framework.org/5.0/joomla/tmpl_hydrogen.xml</server>

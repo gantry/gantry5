@@ -24,9 +24,12 @@ class Router extends BaseRouter
         $this->resource = array_shift($this->path) ?: 'themes';
         $this->format = $input->getCmd('format', 'html');
         $ajax = ($this->format == 'json');
+        $style = $input->getInt('style', 0);
 
         $this->params = [
+            'user' => \JFactory::getUser(),
             'id'   => $input->getInt('id'),
+            'style_id' => $style,
             'ajax' => $ajax,
             'location' => $this->resource,
             'method' => $this->method,
@@ -35,7 +38,6 @@ class Router extends BaseRouter
         ];
 
         // If style is set, resolve the template and load it.
-        $style = $input->getInt('style', 0);
         if ($style) {
             \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
             $table = \JTable::getInstance('Style', 'TemplatesTable');

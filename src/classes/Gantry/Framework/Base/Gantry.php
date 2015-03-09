@@ -4,6 +4,7 @@ namespace Gantry\Framework\Base;
 use Gantry\Component\Config\ConfigServiceProvider;
 use Gantry\Component\Layout\LayoutCollection;
 use Gantry\Framework\Platform;
+use Gantry\Framework\Translator;
 use RocketTheme\Toolbox\DI\Container;
 use Gantry\Component\Filesystem\StreamsServiceProvider;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -54,6 +55,10 @@ class Gantry extends Container
 
         $instance['platform'] = function ($c) {
             return new Platform($c);
+        };
+
+        $instance['translator'] = function ($c) {
+            return new Translator;
         };
 
         // Make sure that nobody modifies the original collection by making it a factory.

@@ -21,7 +21,7 @@ class Menu extends AbstractMenu
 
     public function __construct()
     {
-        $this->app = \JApplicationCms::getInstance('site'); //\JFactory::getApplication('site');
+        $this->app = \JApplicationCms::getInstance('site');
 
         $lang = \JFactory::getLanguage();
         $tag = \JLanguageMultilang::isEnabled() ? $lang->getTag() : '*';
@@ -31,6 +31,17 @@ class Menu extends AbstractMenu
         $this->active  = $this->menu->getActive();
     }
 
+    public function getMenuOptions()
+    {
+        static $items;
+
+        if ($items === null) {
+            require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
+            $items = \MenusHelper::getMenuLinks();
+        }
+
+        return $items;
+    }
 
     /**
      * Return list of menus.
@@ -40,30 +51,14 @@ class Menu extends AbstractMenu
      */
     public function getMenus()
     {
-        static $list;
+        static $items;
 
-        if ($list === null) {
-            // Get the menu types of menus in the list.
-            $db = \JFactory::getDbo();
-
-            // Get the menu types.
-            $query = $db->getQuery(true)
-                ->select('menutype')
-                ->from('#__menu_types');
-
-            $db->setQuery($query);
-
-            try
-            {
-                $list = $db->loadColumn();
-            }
-            catch (\RuntimeException $e)
-            {
-                throw $e;
-            }
+        if ($items === null) {
+            require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
+            $items = \MenusHelper::getMenuTypes();
         }
 
-        return $list;
+        return $items;
     }
 
     /**

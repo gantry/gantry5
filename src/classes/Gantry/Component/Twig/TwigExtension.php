@@ -1,6 +1,8 @@
 <?php
 namespace Gantry\Component\Twig;
 
+use Gantry\Component\Gantry\GantryTrait;
+use Gantry\Component\Translator\TranslatorInterface;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
@@ -8,6 +10,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class TwigExtension extends \Twig_Extension
 {
+    use GantryTrait;
+
     /**
      * Returns extension name.
      *
@@ -27,7 +31,9 @@ class TwigExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
-            new \Twig_SimpleFilter('base64', 'base64_encode')
+            new \Twig_SimpleFilter('trans', [$this, 'transFilter']),
+            new \Twig_SimpleFilter('repeat', [$this, 'repeatFilter']),
+            new \Twig_SimpleFilter('base64', 'base64_encode'),
         );
     }
 
@@ -57,6 +63,36 @@ class TwigExtension extends \Twig_Extension
         $path = explode('.', $str);
 
         return array_shift($path) . ($path ? '[' . implode('][', $path) . ']' : '');
+    }
+
+    /**
+     * Translate string.
+     *
+     * @param  string  $str
+     * @return string
+     */
+    public function transFilter($str)
+    {
+        /** @var TranslatorInterface $translator */
+        static $translator;
+
+        if (!$translator) {
+            $translator = self::gantry()['translator'];
+        }
+
+        return $translator->translate($str);
+    }
+
+    /**
+     * Repeat string x times.
+     *
+     * @param  string  $str
+     * @param  int  $count
+     * @return string
+     */
+    public function repeatFilter($str, $count)
+    {
+        return str_repeat($str, (int) $count);
     }
 
     /**
