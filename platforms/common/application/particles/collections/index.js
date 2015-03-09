@@ -144,13 +144,19 @@ ready(function() {
     body.delegate('click', '[data-collection-item] .config-cog, [data-collection-editall]', function(event, element) {
         event.preventDefault();
 
-        var data = {};
+        var isEditAll = element.data('collection-editall') !== null,
+            parent    = element.parent('.settings-param'),
+            dataField = parent.find('[data-collection-data]'),
+            data      = dataField.value(),
+            item      = element.parent('[data-collection-item]'),
+            items     = parent.search('ul > [data-collection-item]');
 
+        var dataPost = { data: isEditAll ? data : JSON.stringify(JSON.parse(data)[indexOf(items, item[0])]) };
         modal.open({
             content: 'Loading',
             method: 'post',
-            className: 'g5-dialog-theme-default g5-modal-collection g5-modal-collection-' + (element.data('collection-editall') !== null ? 'editall' : 'single'),
-            data: data,
+            className: 'g5-dialog-theme-default g5-modal-collection g5-modal-collection-' + (isEditAll ? 'editall' : 'single'),
+            data: dataPost,
             remote: element.attribute('href') + getAjaxSuffix(),
             remoteLoaded: function(response, content) {
                 var form       = content.elements.content.find('form'),
