@@ -11,7 +11,7 @@ jQuery(document).ready(function($){
 	var MobileNavToggle  = $('<div/>', { 'class': 'g-mobile-nav-toggle' });	
 
 	// Open Dropdown & Overlay
-	$('.g-menu-item').children('.g-menu-item-content').on('click', function(){
+	$('.g-menu-item').children('[data-g-menuparent]').on('click', function(){
 		var selected = $(this);
 		if( selected.next('.g-dropdown').hasClass('g-inactive') ) {
 			selected.addClass('g-selected').next('.g-dropdown').removeClass('g-inactive').addClass('g-active').end()

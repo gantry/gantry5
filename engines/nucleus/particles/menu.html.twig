@@ -27,15 +27,15 @@
             {% if item.url %}
                 <a class="g-menu-item-content" href="{{ item.url }}"{{ class ~ title ~ item.anchor_attributes }}>
                     {{ _self.displayTitle(item) }}
-                    {% if (item.children) -%}
-                        <span class="g-menu-parent-indicator"></span>
-                    {%- endif %}                    
                 </a>
+                {% if (item.children) -%}
+                    <span class="g-menu-parent-indicator" data-g-menuparent="">[V]</span>
+                {%- endif %}
             {% else %}
                 {% if item.type == 'heading' %}
-                    <span class="g-nav-header g-menu-item-content"{{ title }}>{{ item.title }}
+                    <span class="g-nav-header g-menu-item-content"{{ title }} data-g-menuparent="">{{ item.title }}
                 {% else %}
-                    <span class="g-separator g-menu-item-content"{{ title }}>{{ _self.displayTitle(item) }}
+                    <span class="g-separator g-menu-item-content"{{ title }} data-g-menuparent="">{{ _self.displayTitle(item) }}
                 {% endif %}
                     {% if (item.children) -%}
                         <span class="g-menu-parent-indicator"></span>
@@ -55,7 +55,7 @@
         <div class="g-block {{ item.columnWidth(column)|toGrid }}">
             <ul class="g-sublevel">
                 <li class="g-level-{{ item.level }} g-go-back">
-                    <a class="g-menu-item-content" href="#"><span>Back</span></a>
+                    <a class="g-menu-item-content" href="#" data-g-menuparent=""><span>Back</span></a>
                 </li>   
                 {{ _self.displayItems(items, menu) }}         
             </ul>
