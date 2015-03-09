@@ -27,8 +27,7 @@
 
 #navbar {
     font-size: $navbar-font-size;
-    font-family: $font-family-headers;
-    font-weight: normal;
+    font-weight: $font-weight-medium;
     margin-right: -1px;
 
     .g-content {

@@ -1,6 +1,6 @@
-@include font-face('roboto', '../fonts/roboto_light_macroman/Roboto-Light-webfont', 300);
-@include font-face('roboto', '../fonts/roboto_regular_macroman/Roboto-Regular-webfont');
-@include font-face('roboto', '../fonts/roboto_medium_macroman/Roboto-Medium-webfont', 600);
+@include font-face('roboto', '../fonts/roboto_regular_macroman/Roboto-Regular-webfont', 400);
+@include font-face('roboto', '../fonts/roboto_medium_macroman/Roboto-Medium-webfont', 500);
+@include font-face('roboto', '../fonts/roboto_bold_macroman/Roboto-Bold-webfont', 700);
 
 .font-small, .fa.font-small {
     font-size: $core-font-size - 0.2rem;

@@ -80,7 +80,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 h4 {
                     margin: 0;
                     padding: 0;
-                    font-weight: 300;
+                    font-weight: $font-weight-regular;
                     font-family: $font-family-default;
                     font-size: 24px;
                 }

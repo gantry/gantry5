@@ -5,8 +5,7 @@
     }
 
     #main-header {
-        font-family: $font-family-headers;
-        font-weight: normal;
+        font-weight: $font-weight-medium;
         color: $main-header-text;
 
         .g-content {
@@ -86,7 +85,7 @@
             cursor: pointer;
             font-size: $core-font-size;
             font-family: $font-family-default;
-            font-weight: 300;
+            font-weight: $font-weight-regular;
             opacity: 0.5;
             line-height: 1.2;
             @include transition(opacity 0.1s ease-out);

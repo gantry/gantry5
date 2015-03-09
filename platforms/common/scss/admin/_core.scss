@@ -7,6 +7,8 @@ body {
     color: $white;
     background-color: $body-bg !important;
     margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -94,7 +96,7 @@ a {
         .theme-id {
             text-align: center;
             margin-bottom: 10px;
-            font-family: $font-family-headers;
+            font-weight: $font-weight-medium;
         }
 
         .theme-name {
@@ -119,7 +121,7 @@ a {
 #footer {
     margin-bottom: 1rem;
     text-align: center;
-    font-family: $font-family-headers;
+    font-weight: $font-weight-medium;
     a {
         color: lighten($core-accent, 30%);
         text-decoration: none;

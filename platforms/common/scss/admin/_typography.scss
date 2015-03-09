@@ -4,8 +4,7 @@
 
     // Headings
     h1, h2, h3, h4, h5, h6 {
-        font-weight: normal;
-        font-family: $font-family-headers;
+        font-weight: $font-weight-medium;
     }
 
     h1, h2 {
@@ -18,8 +17,7 @@
 
     // Strong
     b, strong {
-        font-weight: normal;
-        color: darken($core-text, 25%);
+        font-weight: $font-weight-bold;
     }
 
     .page-title {
