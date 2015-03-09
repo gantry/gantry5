@@ -25,13 +25,22 @@
         {% set parent = item.children ? ' g-parent' %}
         <li id="g-menu-item-{{ item.id }}" class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{{ parent }}{{ active }}{{ dropdown }}">
             {% if item.url %}
-                <a class="g-menu-item-content" href="{{ item.url }}"{{ class ~ title ~ item.anchor_attributes }}>{{ _self.displayTitle(item) }}</a>
+                <a class="g-menu-item-content" href="{{ item.url }}"{{ class ~ title ~ item.anchor_attributes }}>
+                    <span class="g-menu-item-link-content">{{ _self.displayTitle(item) }}</span>
+                    {% if (item.children) -%}
+                        <span class="g-menu-parent-indicator"></span>
+                    {%- endif %}                    
+                </a>
             {% else %}
                 {% if item.type == 'heading' %}
-                    <span class="g-nav-header g-menu-item-content"{{ title }}>{{ item.title }}</span>
+                    <span class="g-nav-header g-menu-item-content"{{ title }}>{{ item.title }}
                 {% else %}
-                    <span class="g-separator g-menu-item-content"{{ title }}>{{ _self.displayTitle(item) }}</span>
+                    <span class="g-separator g-menu-item-content"{{ title }}>{{ _self.displayTitle(item) }}
                 {% endif %}
+                    {% if (item.children) -%}
+                        <span class="g-menu-parent-indicator"></span>
+                    {%- endif %}                  
+                    </span>
             {% endif %}
             {% if (item.children) -%}
                 {{ _self.displaySubmenu(item, menu) }}
