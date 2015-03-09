@@ -42,21 +42,6 @@
 		}
 	}
 
-	// Menu Type Link
-	.g-parent {
-		.g-menu-item-link-content {
-		    border: 1px solid;
-		    border-radius: 0.25rem 0 0 0.25rem;
-		    padding: 0.25rem 0.5rem;
-		    + .g-menu-parent-indicator {
-			    border: 1px solid;
-			    border-radius: 0 0.25rem 0.25rem 0;
-			    margin-left: -1px;
-			    padding: 0.25rem;
-		    }
-		}
-	}	
-
 	// First Level Dropdown
 	.g-dropdown {
 		@extend %inactive-dropdown;
