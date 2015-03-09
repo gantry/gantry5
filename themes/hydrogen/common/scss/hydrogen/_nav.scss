@@ -6,7 +6,8 @@
 
 			> a {
 				+ span {
-					border: 1px solid rgba(255,255,255,0.4);
+					border: 1px solid lighten($header-background, 6%);
+					background: darken($header-background, 4%);
 					border-radius: $core-border-radius;
 					margin-left: -0.5rem;
 					margin-right: 1rem;
@@ -19,7 +20,7 @@
 
 			> .g-menu-item-content {
 				color: $header-text-color;
-				padding: ($content-padding + $content-margin) 1rem;
+				padding: 1.2rem $content-padding;
 				line-height: normal;
 			}
 			&:hover, &.active {

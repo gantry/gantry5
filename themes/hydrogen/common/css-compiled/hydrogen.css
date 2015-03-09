@@ -68,7 +68,8 @@ bold, strong {
   .g-main-nav .g-toplevel > li {
     margin-right: -4px; }
     .g-main-nav .g-toplevel > li > a + span {
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      border: 1px solid #4caf99;
+      background: #3d8c7a;
       border-radius: 0.1875rem;
       margin-left: -0.5rem;
       margin-right: 1rem;
@@ -77,7 +78,7 @@ bold, strong {
         background: #377e6d; }
     .g-main-nav .g-toplevel > li > .g-menu-item-content {
       color: #ffffff;
-      padding: 1.563rem 1rem;
+      padding: 1.2rem 0.938rem;
       line-height: normal; }
     .g-main-nav .g-toplevel > li:hover, .g-main-nav .g-toplevel > li.active {
       background: #3d8c7a; }
