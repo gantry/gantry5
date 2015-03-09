@@ -63,15 +63,22 @@ h1, h2, h3, h4, h5 {
   font-weight: 400; }
   .g-main-nav .g-toplevel > li {
     margin-right: -4px; }
+    .g-main-nav .g-toplevel > li > a + span {
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 0.1875rem;
+      margin-left: -0.5rem;
+      margin-right: 1rem; }
+      .g-main-nav .g-toplevel > li > a + span:hover {
+        background: #377e6d; }
     .g-main-nav .g-toplevel > li > .g-menu-item-content {
       color: #ffffff;
       padding: 1.563rem 1rem;
       line-height: normal; }
-    .g-main-nav .g-toplevel > li:hover > .g-menu-item-content, .g-main-nav .g-toplevel > li.active > .g-menu-item-content {
+    .g-main-nav .g-toplevel > li:hover, .g-main-nav .g-toplevel > li.active {
       background: #3d8c7a; }
-    .g-main-nav .g-toplevel > li:hover .g-selected, .g-main-nav .g-toplevel > li.active .g-selected {
-      background: #377e6d; }
-    .g-main-nav .g-toplevel > li .g-selected {
+      .g-main-nav .g-toplevel > li:hover > .g-selected, .g-main-nav .g-toplevel > li.active > .g-selected {
+        background: #377e6d; }
+    .g-main-nav .g-toplevel > li > .g-selected {
       background: #377e6d; }
   .g-main-nav .g-toplevel i {
     opacity: 0.5; }
@@ -81,7 +88,11 @@ h1, h2, h3, h4, h5 {
 .g-main-nav .g-sublevel > li > .g-menu-item-content {
   color: #ffffff;
   padding: 0.7815rem 1rem; }
-.g-main-nav .g-sublevel > li:hover > .g-menu-item-content, .g-main-nav .g-sublevel > li.active > .g-menu-item-content {
+.g-main-nav .g-sublevel > li:hover, .g-main-nav .g-sublevel > li.active {
+  background: #306f61; }
+  .g-main-nav .g-sublevel > li:hover > .g-selected, .g-main-nav .g-sublevel > li.active > .g-selected {
+    background: #306f61; }
+.g-main-nav .g-sublevel > li > .g-selected {
   background: #306f61; }
 
 .g-nav-overlay {
@@ -301,6 +312,7 @@ h1, h2, h3, h4, h5 {
       }
       */ }
       .g-main-nav .g-toplevel li .g-menu-item-content {
+        display: block;
         padding: 0.938rem 1rem;
         line-height: 1rem; }
       .g-main-nav .g-toplevel li.g-parent > .g-menu-item-content {
@@ -313,6 +325,8 @@ h1, h2, h3, h4, h5 {
           font-family: FontAwesome;
           content: "\f054";
           right: 1rem; }
+      .g-main-nav .g-toplevel li.g-parent .g-menu-parent-indicator {
+        display: none; }
     .g-main-nav .g-toplevel .g-dropdown {
       top: 0;
       background: transparent;

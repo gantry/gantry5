@@ -3,20 +3,32 @@
 		font-weight: 400;
 		> li {
 			margin-right: -4px;
+
+			> a {
+				+ span {
+					border: 1px solid rgba(255,255,255,0.4);
+					border-radius: $core-border-radius;
+					margin-left: -0.5rem;
+					margin-right: 1rem;
+					&:hover {
+						background: darken($header-background, 8%);
+					}
+				}
+			}
+
 			> .g-menu-item-content {
 				color: $header-text-color;
 				padding: ($content-padding + $content-margin) 1rem;
 				line-height: normal;
 			}
 			&:hover, &.active {
-				> .g-menu-item-content {
-					background: darken($header-background, 4%);
-				}
-				.g-selected {
+				background: darken($header-background, 4%);
+
+				> .g-selected {
 					background: darken($header-background, 8%);
 				}
 			}
-			.g-selected {
+			> .g-selected {
 				background: darken($header-background, 8%);
 			}
 		}
@@ -37,9 +49,13 @@
 				padding: ($content-padding + $content-margin)/2 1rem;
 			}
 			&:hover, &.active {
-				> .g-menu-item-content {
+				background: darken($header-background, 12%);
+				> .g-selected {
 					background: darken($header-background, 12%);
 				}
+			}
+			> .g-selected {
+				background: darken($header-background, 12%);
 			}
 		}
 	}
