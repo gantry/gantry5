@@ -23,20 +23,39 @@
 	    	// Menu Parent Indicator on Main TopLevel
 	    	&.g-parent {
 				> .g-menu-item-content {
-					&:after {
-						display: inline-block;
-						width: 1.5rem;
-						opacity: 0.5;
-						font-family: FontAwesome;
-						content: "\f078";					
+					.g-menu-parent-indicator {
+						&:after {
+							display: inline-block;
+							width: 1.5rem;
+							opacity: 0.5;
+							font-family: FontAwesome;
+							content: "\f078";					
+						}
 					}
-					&.g-selected:after {
-						content: "\f00d";	
+					&.g-selected {
+						.g-menu-parent-indicator:after {
+							content: "\f00d";
+						}
 					}
 				}
 	    	}					
 		}
 	}
+
+	// Menu Type Link
+	.g-parent {
+		.g-menu-item-link-content {
+		    border: 1px solid;
+		    border-radius: 0.25rem 0 0 0.25rem;
+		    padding: 0.25rem 0.5rem;
+		    + .g-menu-parent-indicator {
+			    border: 1px solid;
+			    border-radius: 0 0.25rem 0.25rem 0;
+			    margin-left: -1px;
+			    padding: 0.25rem;
+		    }
+		}
+	}	
 
 	// First Level Dropdown
 	.g-dropdown {

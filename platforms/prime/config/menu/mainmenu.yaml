@@ -68,7 +68,8 @@ items:
     layout: columns
 
   sample-pages:
-    type: separator
+    type: alias
+    link: /
     title: Sample Pages
     menu_icon: fa fa-fw fa-fire
     layout: columns
