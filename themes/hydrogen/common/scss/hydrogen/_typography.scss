@@ -1,19 +1,22 @@
-@include font-face('roboto', '../fonts/roboto_light_macroman/Roboto-Light-webfont', 300);
-@include font-face('roboto', '../fonts/roboto_regular_macroman/Roboto-Regular-webfont, 400');
+@include font-face('roboto', '../fonts/roboto_regular_macroman/Roboto-Regular-webfont', 400');
 @include font-face('roboto', '../fonts/roboto_medium_macroman/Roboto-Medium-webfont', 500);
+@include font-face('roboto', '../fonts/roboto_bold_macroman/Roboto-Bold-webfont', 700);
 
 body {
 	font-family: $font-family-default;
-	font-weight: 300;
+	font-weight: $font-weight-regular;
 }
 
 h1, h2, h3, h4, h5 {
-	font-family: $font-family-headers;
-	font-weight: 500
+	font-weight: $font-weight-medium;
+}
+
+bold, strong {
+	font-weight: $font-weight-bold;
 }
 
 .button {
-	font-weight: 400;
+	font-weight: $font-weight-medium;
 }
 
 .feature-icons {

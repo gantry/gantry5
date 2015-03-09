@@ -1,6 +1,8 @@
 body {
 	color: $base-text-color;
 	background: $footer-background;
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
