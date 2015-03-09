@@ -166,6 +166,16 @@
 
         li {
             padding: 0.1rem 0;
+
+            &:only-child {
+                .fa-reorder {
+                    display: none;
+                }
+
+                a {
+                    margin-left: 0;
+                }
+            }
         }
     }
 
