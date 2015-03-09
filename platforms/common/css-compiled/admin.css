@@ -36,8 +36,7 @@
   vertical-align: middle;
   font-size: 1rem;
   line-height: inherit;
-  font-weight: 300;
-  font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-weight: 500;
   cursor: pointer; }
   #g5-container .button:active, #g5-container .button-simple:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
     margin: 1px 0 -1px 0; }

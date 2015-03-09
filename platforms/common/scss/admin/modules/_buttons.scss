@@ -5,8 +5,7 @@
     vertical-align: middle;
     font-size: $core-font-size;
     line-height: inherit;
-    font-weight: 300;
-    font-family: $font-family-default;
+    font-weight: $font-weight-medium;
     cursor: pointer;
     &:active {
         margin: 1px 0 -1px 0;
