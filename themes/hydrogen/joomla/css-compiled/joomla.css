@@ -507,13 +507,13 @@ blockquote {
   border-left: 5px solid #dddddd; }
 
 blockquote small {
-  color: #777777; }
+  color: #888888; }
 
 blockquote.pull-right {
   border-right: 5px solid #dddddd; }
 
 code, pre {
-  color: #444444;
+  color: #555555;
   background-color: #f2f2f2;
   border: 1px solid #dddddd; }
 

@@ -12,4 +12,4 @@ form:
     text-color:
       type: input.colorpicker
       label: Base Text Color
-      default: "#444444"
+      default: "#555555"
