@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Framework\Base;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
@@ -65,7 +66,7 @@ trait ThemeTrait
 
         $filename = $locator->findResource("gantry-theme://gantry/presets.yaml");
 
-        return CompiledYamlFile::instance($filename)->content();
+        return new Config(CompiledYamlFile::instance($filename)->content());
     }
 
     public function loadLayout($name = null)
