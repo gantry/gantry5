@@ -71,7 +71,7 @@ class Request
         }
         $array = [];
         foreach ($current as $key => &$value) {
-            if ($key == '_json') {
+            if ($key === '_json') {
                 $array += json_decode($value, true);
             } else {
                 $array[$key] = $this->getChildren($value);
