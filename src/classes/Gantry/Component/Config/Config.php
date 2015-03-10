@@ -106,9 +106,10 @@ class Config implements \ArrayAccess, ExportInterface
      *
      * @param string $name      Dot separated path to the requested value.
      * @param string $separator Separator, defaults to '.'
+     * @param string $prefix    Name prefix.
      * @return array
      */
-    public function flatten($name = null, $separator = '.')
+    public function flatten($name = null, $separator = '.', $prefix = '')
     {
         $element = $name ? $this->offsetGet($name) : $this->items;
 
@@ -116,8 +117,11 @@ class Config implements \ArrayAccess, ExportInterface
             return [$name, $element];
         }
 
+        if (strlen($separator) == 2 && in_array($separator, ['][', ')(', '}{'])) {
+            $separator = [$separator[1], $separator[0]];
+        }
 
-        return $this->flattenNested('', $element, $separator);
+        return $this->flattenNested('', $element, $separator, $prefix);
     }
 
     /**
@@ -127,15 +131,19 @@ class Config implements \ArrayAccess, ExportInterface
      * @return array
      * @internal
      */
-    protected function flattenNested($name, &$element, $separator)
+    protected function flattenNested($name, &$element, $separator, $prefix)
     {
         $list = [];
         foreach ($element as $key => $value) {
-            $new = $name ? $name . $separator . $key : $key;
+            if (is_array($separator)) {
+                $new = ($name ? $name : $prefix) . $separator[0] . $key . $separator[1];
+            } else {
+                $new = ($name ? $name : $prefix) . $separator . $key;
+            }
             if (!is_array($value) || empty($value)) {
                 $list[$new] = $value;
             } else {
-                $list += $this->flattenNested($new, $value, $separator);
+                $list += $this->flattenNested($new, $value, $separator, $prefix);
             }
         }
 
