@@ -89,7 +89,8 @@ bold, strong {
       .g-main-nav .g-toplevel > li.active > .g-menu-item-content {
         color: #666666; }
       .g-main-nav .g-toplevel > li.active > .g-selected {
-        background: #377e6d; }
+        background: #377e6d;
+        color: #ffffff; }
     .g-main-nav .g-toplevel > li > .g-selected {
       background: #377e6d; }
   .g-main-nav .g-toplevel i {
