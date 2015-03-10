@@ -24,6 +24,11 @@ ready(function() {
             this.CollectionNew = false;
             body.emit('click', { target: this.parent('.settings-param').find('[data-collection-addnew]') });
         }
+
+        if (key == 'esc' && this.CollectionNew) {
+            this.CollectionNew = false;
+            body.emit('click', {target: this.parent('[data-collection-item]').find('[data-collection-remove]')});
+        }
     };
 
     var createSortables = function(list) {
