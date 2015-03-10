@@ -152,12 +152,12 @@ class Layout extends HtmlController
         $name = isset($item->subtype) ? $item->subtype : $type;
 
         if ($type == 'section' || $type == 'grid') {
-            $prefix = 'particles.' . $type;
+            $prefix = "particles.{$type}";
             $defaults = [];
             $extra = null;
             $blueprints = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
         } else {
-            $prefix = 'particles.' . $name;
+            $prefix = "particles.{$name}";
             $defaults = (array) $this->container['config']->get($prefix);
             $extra = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
             $blueprints = new BlueprintsForm($this->container['particles']->get($name));
@@ -168,14 +168,15 @@ class Layout extends HtmlController
         // TODO: Use blueprints to merge configuration.
         $item->attributes = (object) ($attributes + (array) $item->attributes + $defaults);
 
+        $this->params['id'] = $name;
         $this->params += [
             'extra'         => $extra,
             'item'          => $item,
+            'data'          => ['particles' => [$name => $item->attributes]],
+            'prefix'        => "particles.{$name}.",
             'particle'      => $blueprints,
-            'defaults'      => ['particle' => $defaults],
-            'id'            => $name,
             'parent'        => 'settings',
-            'route'         => 'settings.' . $prefix,
+            'route'         => "configurations.{$page}.settings",
             'action'        => str_replace('.', '/', 'configurations.' . $page . '.layout.' . $prefix . '.validate'),
             'skip'          => ['enabled']
         ];
