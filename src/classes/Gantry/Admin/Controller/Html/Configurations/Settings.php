@@ -113,11 +113,16 @@ class Settings extends HtmlController
         }
 
         // Get the prefix.
-        $prefix = "particles.{$id}." . implode('.', $path);
+        $offset = "particles.{$id}." . implode('.', $path);
         if ($value !== null) {
             $parent = $fields;
             $fields = ['fields' => $fields['fields']];
-            $prefix .= '.' . $value;
+            $offset .= '.' . $value;
+            $data = ['data' => $this->container['config']->get($offset)];
+            $prefix = 'data.';
+        } else {
+            $data = $this->container['config']->get($offset);
+            $prefix = 'data';
         }
         $fields['is_current'] = true;
 
@@ -127,11 +132,12 @@ class Settings extends HtmlController
         $this->params = [
                 'configuration' => $configuration,
                 'blueprints' => $fields,
-                'data' =>  $this->container['config']->get($prefix),
+                'data' => $data,
+                'prefix' => $prefix,
                 'parent' => $path
                     ? "$configuration/settings/particles/{$id}/" . implode('/', $path)
                     : "$configuration/settings/particles/{$id}",
-                'route' => 'settings.' . $prefix
+                'route' => 'settings.' . $offset
             ] + $this->params;
 
         if (isset($parent['key'])) {
@@ -166,7 +172,7 @@ class Settings extends HtmlController
 
         /** @var Request $request */
         $request = $this->container['request'];
-        $data->join($path, $request->getArray());
+        $data->join($path, $request->getArray('data'));
 
         // TODO: validate
 
