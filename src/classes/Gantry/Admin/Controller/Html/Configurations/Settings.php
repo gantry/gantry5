@@ -9,7 +9,9 @@ use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Component\Request\Request;
+use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Base\Gantry;
+use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -95,6 +97,10 @@ class Settings extends HtmlController
     {
         $path = func_get_args();
 
+        if (end($path) == 'validate') {
+            return call_user_func_array([$this, 'validate'], $path);
+        }
+
         $particle = $this->container['particles']->get($id);
 
         // Load blueprints.
@@ -136,6 +142,35 @@ class Settings extends HtmlController
         }
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
+    }
+
+    public function validate($particle)
+    {
+        $path = implode('.', array_slice(func_get_args(), 1, -1));
+
+        // Validate only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
+        // Load particle blueprints.
+        $validator = $this->container['particles']->get($particle);
+
+        // Create configuration from the defaults.
+        $data = new Config(
+            [],
+            function () use ($validator) {
+                return $validator;
+            }
+        );
+
+        /** @var Request $request */
+        $request = $this->container['request'];
+        $data->join($path, $request->getArray());
+
+        // TODO: validate
+
+        return new JsonResponse(['data' => $data->get($path)]);
     }
 
     public function save($id = null)
