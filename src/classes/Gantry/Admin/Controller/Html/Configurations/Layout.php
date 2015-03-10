@@ -160,7 +160,7 @@ class Layout extends HtmlController
 
         if ($type == 'section' || $type == 'grid') {
             $extra = null;
-            $blueprints = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml")->content());
+            $blueprints = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
         } else {
             $extra = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
             $blueprints = new BlueprintsForm($this->container['particles']->get($name));
@@ -187,9 +187,6 @@ class Layout extends HtmlController
                 $this->params);
         }
 
-        if (!empty($this->params['ajax'])) {
-            return new JsonResponse(['html' => $result, 'defaults' => ['particle' => $defaults]]);
-        }
         return $result;
     }
 
@@ -266,7 +263,9 @@ class Layout extends HtmlController
 
         // Join POST data.
         $data->join('options', $request->getArray('particle'));
-        $data->set('options.enabled', (int) $data->get('options.enabled'));
+        if ($particle) {
+            $data->set('options.enabled', (int) $data->get('options.enabled', 1));
+        }
 
         if ($particle) {
             if ($type != $particle) {
