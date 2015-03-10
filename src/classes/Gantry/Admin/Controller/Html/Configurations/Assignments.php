@@ -13,4 +13,9 @@ class Assignments extends HtmlController
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/assignments/assignments.html.twig', $this->params);
     }
+
+    public function store()
+    {
+        throw new \RuntimeException('Not Implemented', 404);
+    }
 }

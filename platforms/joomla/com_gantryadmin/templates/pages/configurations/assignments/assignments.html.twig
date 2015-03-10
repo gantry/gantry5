@@ -17,7 +17,7 @@
                 {% for link in type.links %}
                 <label>
                     {% include 'forms/fields/enable/enable.html.twig' with
-                    {'default': false, 'name': 'assigned[]',
+                    {'default': false, 'name': 'assigned[' ~ link.value ~ ']',
                     'field': {'label': '- '|repeat(link.level-1) ~ link.text, 'id': 'link' ~ link.value, 'disabled': link.checked_out and link.checked_out != user.id},
                     'value': link.template_style_id == style_id} %}
                 </label>
