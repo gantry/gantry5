@@ -5,7 +5,7 @@
     {% for key, swatch in gantry.theme.presets.swatches %}
         {% set counter = 0 %}
         <li class="g-block">
-            <a href="#" class="swatch" data-styles="{{ key }}">
+            <a href="#" class="swatch" data-styles="{{ gantry.theme.presets.flatten(key, '][', 'styles')|json_encode|escape('html_attr') }}">
                 <img src="{{ base ~ swatch.image }}" class="swatch-image" />
                 <span class="swatch-colors"
                         {# required attribute structures #}
