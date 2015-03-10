@@ -39,7 +39,7 @@
                 {% endif %}
                     {% if (item.children) -%}
                         <span class="g-menu-parent-indicator"></span>
-                    {%- endif %}                  
+                    {%- endif %}
                     </span>
             {% endif %}
             {% if (item.children) -%}
@@ -51,13 +51,14 @@
 
 {% macro displayContainers(item, menu) %}
     <div class="g-grid">
-        {% for column, items in item.groups %}
+        {% set groups = item.dropdown == 'standard' ? [item] : item.groups %}
+        {% for column, items in groups %}
         <div class="g-block {{ item.columnWidth(column)|toGrid }}">
             <ul class="g-sublevel">
                 <li class="g-level-{{ item.level }} g-go-back">
                     <a class="g-menu-item-content" href="#" data-g-menuparent=""><span>Back</span></a>
-                </li>   
-                {{ _self.displayItems(items, menu) }}         
+                </li>
+                {{ _self.displayItems(items, menu) }}
             </ul>
         </div>
         {% endfor %}
