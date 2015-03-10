@@ -3,6 +3,7 @@ namespace Gantry\Component\Config;
 
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
+use RocketTheme\Toolbox\ArrayTraits\Iterator;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccessWithGetters;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
 
@@ -11,9 +12,9 @@ use RocketTheme\Toolbox\Blueprints\Blueprints;
  *
  * @author RocketTheme
  */
-class Config implements \ArrayAccess, ExportInterface
+class Config implements \ArrayAccess, \Iterator, ExportInterface
 {
-    use NestedArrayAccessWithGetters, Export;
+    use NestedArrayAccessWithGetters, Iterator, Export;
 
     /**
      * @var array
