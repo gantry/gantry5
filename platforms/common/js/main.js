@@ -1101,7 +1101,7 @@ var G5;
     'a': function (require, module, exports, global) {
         'use strict';
         var $ = require('m');
-        var trim = require('t'), forEach = require('y'), filter = require('1k'), indexOf = require('1l');
+        var trim = require('t'), forEach = require('y'), filter = require('1j'), indexOf = require('1k');
         $.implement({
             setAttribute: function (name, value) {
                 return this.forEach(function (node) {
@@ -1329,7 +1329,7 @@ var G5;
     },
     'c': function (require, module, exports, global) {
         'use strict';
-        var Map = require('1j');
+        var Map = require('1l');
         var $ = require('b');
         require('e');
         $.implement({
@@ -1538,7 +1538,7 @@ var G5;
     },
     'f': function (require, module, exports, global) {
         'use strict';
-        var ready = require('2'), $ = require('a'), storage = require('1j'), deepEquals = require('1h'), invoke = require('1o'), History = require('1c');
+        var ready = require('2'), $ = require('a'), storage = require('1l'), deepEquals = require('1h'), invoke = require('1o'), History = require('1c');
         var originals, collectFieldsValues = function () {
                 var map = new storage();
                 var fields = $('.settings-block [name]');
@@ -1589,7 +1589,7 @@ var G5;
     },
     'g': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1p'), zen = require('k'), storage = require('1j')(), Emitter = require('o'), Bound = require('1u'), Options = require('1v'), domready = require('2'), bind = require('1w'), map = require('1x'), forEach = require('1y'), last = require('1z'), merge = require('1q'), isFunct = require('20'), request = require('3');
+        var prime = require('n'), $ = require('1p'), zen = require('k'), storage = require('1l')(), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), domready = require('2'), bind = require('1s'), map = require('1t'), forEach = require('1u'), last = require('1v'), merge = require('1w'), isFunct = require('1x'), request = require('3');
         var Popover = new prime({
                 mixin: [
                     Bound,
@@ -2031,7 +2031,7 @@ var G5;
     },
     'h': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1p'), zen = require('k'), domready = require('2'), storage = require('1j')(), modal = require('4').modal, size = require('19'), merge = require('1q'), guid = require('1r'), toQueryString = require('1s'), contains = require('1t'), request = require('3')(), History = require('1c'), getAjaxSuffix = require('7'), mm = require('9');
+        var prime = require('n'), $ = require('1p'), zen = require('k'), domready = require('2'), storage = require('1l')(), modal = require('4').modal, size = require('19'), merge = require('1w'), guid = require('1y'), toQueryString = require('1z'), contains = require('20'), request = require('3')(), History = require('1c'), getAjaxSuffix = require('7'), mm = require('9');
         require('g');
         var ERROR = false;
         History.Adapter.bind(window, 'statechange', function () {
@@ -2223,7 +2223,7 @@ var G5;
     'k': function (require, module, exports, global) {
         'use strict';
         var forEach = require('y'), map = require('1m');
-        var parse = require('2b');
+        var parse = require('27');
         var $ = require('m');
         module.exports = function (expression, doc) {
             return $(map(parse(expression), function (expression) {
@@ -2261,8 +2261,8 @@ var G5;
     },
     'l': function (require, module, exports, global) {
         'use strict';
-        var color = require('27'), frame = require('28');
-        var moofx = typeof document !== 'undefined' ? require('29') : require('2a');
+        var color = require('28'), frame = require('29');
+        var moofx = typeof document !== 'undefined' ? require('2a') : require('2b');
         moofx.requestFrame = function (callback) {
             frame.request(callback);
             return this;
@@ -2277,7 +2277,7 @@ var G5;
     'm': function (require, module, exports, global) {
         'use strict';
         var prime = require('n');
-        var forEach = require('y'), map = require('1m'), filter = require('1k'), every = require('2h'), some = require('2i');
+        var forEach = require('y'), map = require('1m'), filter = require('1j'), every = require('2c'), some = require('2d');
         var index = 0, __dc = document.__counter, counter = document.__counter = (__dc ? parseInt(__dc, 36) + 1 : 0).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n) {
             if (n === window)
@@ -2363,7 +2363,7 @@ var G5;
     },
     'n': function (require, module, exports, global) {
         'use strict';
-        var hasOwn = require('2c'), mixIn = require('w'), create = require('2d'), kindOf = require('2e');
+        var hasOwn = require('2e'), mixIn = require('w'), create = require('2f'), kindOf = require('2g');
         var hasDescriptors = true;
         try {
             Object.defineProperty({}, '~', {});
@@ -2428,8 +2428,8 @@ var G5;
     },
     'o': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('1l'), forEach = require('y');
-        var prime = require('n'), defer = require('2g');
+        var indexOf = require('1k'), forEach = require('y');
+        var prime = require('n'), defer = require('2h');
         var slice = Array.prototype.slice;
         var Emitter = prime({
                 on: function (event, fn) {
@@ -2475,28 +2475,28 @@ var G5;
         module.exports = Emitter;
     },
     'p': function (require, module, exports, global) {
-        var isKind = require('2f');
+        var isKind = require('2i');
         function isObject(val) {
             return isKind(val, 'Object');
         }
         module.exports = isObject;
     },
     'q': function (require, module, exports, global) {
-        var isKind = require('2f');
+        var isKind = require('2i');
         function isString(val) {
             return isKind(val, 'String');
         }
         module.exports = isString;
     },
     'r': function (require, module, exports, global) {
-        var isKind = require('2f');
+        var isKind = require('2i');
         var isArray = Array.isArray || function (val) {
                 return isKind(val, 'Array');
             };
         module.exports = isArray;
     },
     's': function (require, module, exports, global) {
-        var isKind = require('2f');
+        var isKind = require('2i');
         function isFunction(val) {
             return isKind(val, 'Function');
         }
@@ -2523,7 +2523,7 @@ var G5;
         module.exports = upperCase;
     },
     'v': function (require, module, exports, global) {
-        var hasOwn = require('2c');
+        var hasOwn = require('2e');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -2583,7 +2583,7 @@ var G5;
         module.exports = mixIn;
     },
     'x': function (require, module, exports, global) {
-        var indexOf = require('1l');
+        var indexOf = require('1k');
         function remove(arr, item) {
             var idx = indexOf(arr, item);
             if (idx !== -1)
@@ -2607,7 +2607,7 @@ var G5;
     },
     'z': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1p'), zen = require('k'), storage = require('1j')(), Emitter = require('o'), Bound = require('1u'), Options = require('1v'), domready = require('2'), bind = require('1w'), map = require('1x'), forEach = require('1y'), last = require('1z'), merge = require('1q'), request = require('3');
+        var prime = require('n'), $ = require('1p'), zen = require('k'), storage = require('1l')(), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), domready = require('2'), bind = require('1s'), map = require('1t'), forEach = require('1u'), last = require('1v'), merge = require('1w'), request = require('3');
         var animationEndSupport = false;
         domready(function () {
             var style = (document.body || document.documentElement).style;
@@ -2863,7 +2863,7 @@ var G5;
     },
     '10': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), ready = require('2'), zen = require('k'), sifter = require('2p'), Emitter = require('o'), Bound = require('1u'), Options = require('1v'), $ = require('1p'), moofx = require('l'), bind = require('1w'), forEach = require('1a'), indexOf = require('2q'), last = require('1z'), debounce = require('2r'), isArray = require('2s'), isBoolean = require('2t'), merge = require('1q'), unset = require('2u'), size = require('2v'), values = require('2w'), escapeHTML = require('2x'), trim = require('6');
+        var prime = require('n'), ready = require('2'), zen = require('k'), sifter = require('2p'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), $ = require('1p'), moofx = require('l'), bind = require('1s'), forEach = require('1a'), indexOf = require('2q'), last = require('1v'), debounce = require('2r'), isArray = require('2s'), isBoolean = require('2t'), merge = require('1w'), unset = require('2u'), size = require('2v'), values = require('2w'), escapeHTML = require('2x'), trim = require('6');
         var IS_MAC = /Mac/.test(navigator.userAgent), COUNT = 0, KEY_A = 65, KEY_COMMA = 188, KEY_RETURN = 13, KEY_ESC = 27, KEY_LEFT = 37, KEY_UP = 38, KEY_P = 80, KEY_RIGHT = 39, KEY_DOWN = 40, KEY_N = 78, KEY_BACKSPACE = 8, KEY_DELETE = 46, KEY_SHIFT = 16, KEY_CMD = IS_MAC ? 91 : 17, KEY_CTRL = IS_MAC ? 18 : 17, KEY_TAB = 9, TAG_SELECT = 1, TAG_INPUT = 2;
         var hash_key = function (value) {
             if (typeof value === 'undefined' || value === null)
@@ -4484,7 +4484,7 @@ var G5;
     },
     '12': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Emitter = require('o'), Bound = require('1u'), Options = require('1v'), zen = require('k'), $ = require('1p'), storage = require('1j')(), bind = require('1w'), merge = require('1q');
+        var prime = require('n'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), zen = require('k'), $ = require('1p'), storage = require('1l')(), bind = require('1s'), merge = require('1w');
         var Toaster = new prime({
                 mixin: [
                     Bound,
@@ -4852,18 +4852,18 @@ var G5;
     },
     '1a': function (require, module, exports, global) {
         var make = require('2y');
-        var arrForEach = require('1y');
+        var arrForEach = require('1u');
         var objForEach = require('2z');
         module.exports = make(arrForEach, objForEach);
     },
     '1b': function (require, module, exports, global) {
         'use strict';
         var prime = require('n'), $ = require('1'), Emitter = require('o');
-        var Blocks = require('30');
-        var forOwn = require('2z'), forEach = require('1a'), size = require('19'), isArray = require('2s'), flatten = require('31'), guid = require('1r'), set = require('32'), unset = require('2u'), get = require('14'), deepFillIn = require('33'), omit = require('34');
+        var Blocks = require('31');
+        var forOwn = require('2z'), forEach = require('1a'), size = require('19'), isArray = require('2s'), flatten = require('32'), guid = require('1y'), set = require('33'), unset = require('2u'), get = require('14'), deepFillIn = require('34'), omit = require('35');
         require('a');
         require('e');
-        var rpad = require('35'), repeat = require('36');
+        var rpad = require('36'), repeat = require('37');
         $.implement({
             empty: function () {
                 return this.forEach(function (node) {
@@ -5855,7 +5855,7 @@ var G5;
         module.exports = History;
     },
     '1d': function (require, module, exports, global) {
-        var prime = require('n'), Emitter = require('o'), slice = require('37'), merge = require('1q'), deepEquals = require('1h');
+        var prime = require('n'), Emitter = require('o'), slice = require('30'), merge = require('1w'), deepEquals = require('1h');
         var History = new prime({
                 inherits: Emitter,
                 constructor: function (session) {
@@ -5929,7 +5929,7 @@ var G5;
     },
     '1e': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1p'), zen = require('k'), Emitter = require('o'), Bound = require('1u'), Options = require('1v'), Blocks = require('30'), DragDrop = require('3a'), Resizer = require('3b'), Eraser = require('3c'), get = require('14'), keys = require('3d'), every = require('3e'), precision = require('3f'), isArray = require('2s'), deepEquals = require('1h'), find = require('3g'), isObject = require('3h');
+        var prime = require('n'), $ = require('1p'), zen = require('k'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), Blocks = require('31'), DragDrop = require('3a'), Resizer = require('3b'), Eraser = require('3c'), get = require('14'), keys = require('3d'), every = require('3e'), precision = require('3f'), isArray = require('2s'), deepEquals = require('1h'), find = require('3g'), isObject = require('3h');
         var singles = {
                 disable: function () {
                     var grids = $('[data-lm-root] [data-lm-blocktype="grid"]');
@@ -6390,7 +6390,7 @@ var G5;
     },
     '1g': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1p'), zen = require('k'), Emitter = require('o'), Bound = require('1u'), Options = require('1v'), DragDrop = require('3a'), Resizer = require('3j'), get = require('14'), every = require('3e'), isArray = require('2s'), isObject = require('3h'), deepClone = require('38'), equals = require('3k');
+        var prime = require('n'), $ = require('1p'), zen = require('k'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), DragDrop = require('3a'), Resizer = require('3j'), get = require('14'), every = require('3e'), isArray = require('2s'), isObject = require('3h'), deepClone = require('38'), equals = require('3k');
         var MenuManager = new prime({
                 mixin: [
                     Bound,
@@ -6671,8 +6671,44 @@ var G5;
         module.exports = clamp;
     },
     '1j': function (require, module, exports, global) {
+        var makeIterator = require('3n');
+        function filter(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var results = [];
+            if (arr == null) {
+                return results;
+            }
+            var i = -1, len = arr.length, value;
+            while (++i < len) {
+                value = arr[i];
+                if (callback(value, i, arr)) {
+                    results.push(value);
+                }
+            }
+            return results;
+        }
+        module.exports = filter;
+    },
+    '1k': function (require, module, exports, global) {
+        function indexOf(arr, item, fromIndex) {
+            fromIndex = fromIndex || 0;
+            if (arr == null) {
+                return -1;
+            }
+            var len = arr.length, i = fromIndex < 0 ? len + fromIndex : fromIndex;
+            while (i < len) {
+                if (arr[i] === item) {
+                    return i;
+                }
+                i++;
+            }
+            return -1;
+        }
+        module.exports = indexOf;
+    },
+    '1l': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('1l');
+        var indexOf = require('1k');
         var prime = require('n');
         var Map = prime({
                 constructor: function Map() {
@@ -6771,42 +6807,6 @@ var G5;
         map.prototype = Map.prototype;
         module.exports = map;
     },
-    '1k': function (require, module, exports, global) {
-        var makeIterator = require('3n');
-        function filter(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var results = [];
-            if (arr == null) {
-                return results;
-            }
-            var i = -1, len = arr.length, value;
-            while (++i < len) {
-                value = arr[i];
-                if (callback(value, i, arr)) {
-                    results.push(value);
-                }
-            }
-            return results;
-        }
-        module.exports = filter;
-    },
-    '1l': function (require, module, exports, global) {
-        function indexOf(arr, item, fromIndex) {
-            fromIndex = fromIndex || 0;
-            if (arr == null) {
-                return -1;
-            }
-            var len = arr.length, i = fromIndex < 0 ? len + fromIndex : fromIndex;
-            while (i < len) {
-                if (arr[i] === item) {
-                    return i;
-                }
-                i++;
-            }
-            return -1;
-        }
-        module.exports = indexOf;
-    },
     '1m': function (require, module, exports, global) {
         var makeIterator = require('3n');
         function map(arr, callback, thisObj) {
@@ -6825,10 +6825,10 @@ var G5;
     },
     '1n': function (require, module, exports, global) {
         'use strict';
-        module.exports = 'document' in global ? require('3o') : { parse: require('2b') };
+        module.exports = 'document' in global ? require('3o') : { parse: require('27') };
     },
     '1o': function (require, module, exports, global) {
-        var slice = require('37');
+        var slice = require('30');
         function invoke(arr, methodName, var_args) {
             if (arr == null) {
                 return arr;
@@ -6845,7 +6845,7 @@ var G5;
     },
     '1p': function (require, module, exports, global) {
         'use strict';
-        var $ = require('1'), moofx = require('l'), map = require('1x'), series = require('3q'), slick = require('1n'), zen = require('k'), progresser = require('3r');
+        var $ = require('1'), moofx = require('l'), map = require('1t'), series = require('3p'), slick = require('1n'), zen = require('k'), progresser = require('3q');
         var walk = function (combinator, method) {
             return function (expression) {
                 var parts = slick.parse(expression || '*');
@@ -6983,7 +6983,85 @@ var G5;
         module.exports = $;
     },
     '1q': function (require, module, exports, global) {
-        var hasOwn = require('3p');
+        'use strict';
+        var prime = require('n');
+        var bind = require('3s');
+        var bound = prime({
+                bound: function (name) {
+                    var bound = this._bound || (this._bound = {});
+                    return bound[name] || (bound[name] = bind(this[name], this));
+                }
+            });
+        module.exports = bound;
+    },
+    '1r': function (require, module, exports, global) {
+        'use strict';
+        var prime = require('n');
+        var merge = require('3r');
+        var Options = prime({
+                setOptions: function (options) {
+                    var args = [
+                            {},
+                            this.options
+                        ];
+                    args.push.apply(args, arguments);
+                    this.options = merge.apply(null, args);
+                    return this;
+                }
+            });
+        module.exports = Options;
+    },
+    '1s': function (require, module, exports, global) {
+        var slice = require('30');
+        function bind(fn, context, args) {
+            var argsArr = slice(arguments, 2);
+            return function () {
+                return fn.apply(context, argsArr.concat(slice(arguments)));
+            };
+        }
+        module.exports = bind;
+    },
+    '1t': function (require, module, exports, global) {
+        var makeIterator = require('3t');
+        function map(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var results = [];
+            if (arr == null) {
+                return results;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                results[i] = callback(arr[i], i, arr);
+            }
+            return results;
+        }
+        module.exports = map;
+    },
+    '1u': function (require, module, exports, global) {
+        function forEach(arr, callback, thisObj) {
+            if (arr == null) {
+                return;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (callback.call(thisObj, arr[i], i, arr) === false) {
+                    break;
+                }
+            }
+        }
+        module.exports = forEach;
+    },
+    '1v': function (require, module, exports, global) {
+        function last(arr) {
+            if (arr == null || arr.length < 1) {
+                return undefined;
+            }
+            return arr[arr.length - 1];
+        }
+        module.exports = last;
+    },
+    '1w': function (require, module, exports, global) {
+        var hasOwn = require('3u');
         var deepClone = require('38');
         var isObject = require('3h');
         function merge() {
@@ -7006,18 +7084,25 @@ var G5;
         }
         module.exports = merge;
     },
-    '1r': function (require, module, exports, global) {
-        var randHex = require('3s');
-        var choice = require('3t');
+    '1x': function (require, module, exports, global) {
+        var isKind = require('3v');
+        function isFunction(val) {
+            return isKind(val, 'Function');
+        }
+        module.exports = isFunction;
+    },
+    '1y': function (require, module, exports, global) {
+        var randHex = require('3w');
+        var choice = require('3x');
         function guid() {
             return randHex(8) + '-' + randHex(4) + '-' + '4' + randHex(3) + '-' + choice(8, 9, 'a', 'b') + randHex(3) + '-' + randHex(12);
         }
         module.exports = guid;
     },
-    '1s': function (require, module, exports, global) {
+    '1z': function (require, module, exports, global) {
         var forOwn = require('2z');
         var isArray = require('2s');
-        var forEach = require('1y');
+        var forEach = require('1u');
         function encode(obj) {
             var query = [], arrValues, reg;
             forOwn(obj, function (val, key) {
@@ -7036,7 +7121,7 @@ var G5;
         }
         module.exports = encode;
     },
-    '1t': function (require, module, exports, global) {
+    '20': function (require, module, exports, global) {
         var toString = require('13');
         function contains(str, substring, fromIndex) {
             str = toString(str);
@@ -7045,94 +7130,9 @@ var G5;
         }
         module.exports = contains;
     },
-    '1u': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('n');
-        var bind = require('3u');
-        var bound = prime({
-                bound: function (name) {
-                    var bound = this._bound || (this._bound = {});
-                    return bound[name] || (bound[name] = bind(this[name], this));
-                }
-            });
-        module.exports = bound;
-    },
-    '1v': function (require, module, exports, global) {
-        'use strict';
-        var prime = require('n');
-        var merge = require('3v');
-        var Options = prime({
-                setOptions: function (options) {
-                    var args = [
-                            {},
-                            this.options
-                        ];
-                    args.push.apply(args, arguments);
-                    this.options = merge.apply(null, args);
-                    return this;
-                }
-            });
-        module.exports = Options;
-    },
-    '1w': function (require, module, exports, global) {
-        var slice = require('37');
-        function bind(fn, context, args) {
-            var argsArr = slice(arguments, 2);
-            return function () {
-                return fn.apply(context, argsArr.concat(slice(arguments)));
-            };
-        }
-        module.exports = bind;
-    },
-    '1x': function (require, module, exports, global) {
-        var makeIterator = require('3w');
-        function map(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var results = [];
-            if (arr == null) {
-                return results;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                results[i] = callback(arr[i], i, arr);
-            }
-            return results;
-        }
-        module.exports = map;
-    },
-    '1y': function (require, module, exports, global) {
-        function forEach(arr, callback, thisObj) {
-            if (arr == null) {
-                return;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (callback.call(thisObj, arr[i], i, arr) === false) {
-                    break;
-                }
-            }
-        }
-        module.exports = forEach;
-    },
-    '1z': function (require, module, exports, global) {
-        function last(arr) {
-            if (arr == null || arr.length < 1) {
-                return undefined;
-            }
-            return arr[arr.length - 1];
-        }
-        module.exports = last;
-    },
-    '20': function (require, module, exports, global) {
-        var isKind = require('3x');
-        function isFunction(val) {
-            return isKind(val, 'Function');
-        }
-        module.exports = isFunction;
-    },
     '21': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Emitter = require('o'), Bound = require('1u'), Options = require('1v'), $ = require('1'), ready = require('2'), zen = require('k'), DragEvents = require('3y'), forEach = require('1a'), bind = require('1w'), clamp = require('1i');
+        var prime = require('n'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), $ = require('1'), ready = require('2'), zen = require('k'), DragEvents = require('3y'), forEach = require('1a'), bind = require('1s'), clamp = require('1i');
         var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
         var MOUSEDOWN = DragEvents.START, MOUSEMOVE = DragEvents.MOVE, MOUSEUP = DragEvents.STOP, FOCUSIN = isFirefox ? 'focus' : 'focusin';
         var ColorPicker = new prime({
@@ -7637,7 +7637,7 @@ var G5;
     },
     '22': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1p'), zen = require('k'), storage = require('1j')(), Emitter = require('o'), Bound = require('1u'), Options = require('1v'), domready = require('2'), bind = require('1w'), map = require('1x'), forEach = require('1y'), contains = require('18'), last = require('1z'), split = require('41'), removeAll = require('42'), insert = require('43'), find = require('44'), combine = require('45'), merge = require('1q'), unhyphenate = require('46'), properCase = require('47'), trim = require('6'), modal = require('4').modal, async = require('48'), request = require('3'), wf = require('49');
+        var prime = require('n'), $ = require('1p'), zen = require('k'), storage = require('1l')(), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), domready = require('2'), bind = require('1s'), map = require('1t'), forEach = require('1u'), contains = require('18'), last = require('1v'), split = require('41'), removeAll = require('42'), insert = require('43'), find = require('44'), combine = require('45'), merge = require('1w'), unhyphenate = require('46'), properCase = require('47'), trim = require('6'), modal = require('4').modal, async = require('48'), request = require('3'), wf = require('49');
         require('4a');
         var Fonts = new prime({
                 mixin: Bound,
@@ -8214,7 +8214,7 @@ var G5;
     },
     '24': function (require, module, exports, global) {
         'use strict';
-        var $ = require('1p'), domready = require('2'), modal = require('4').modal, getAjaxSuffix = require('7'), getAjaxURL = require('3z').global, trim = require('6'), contains = require('18');
+        var $ = require('1p'), domready = require('2'), modal = require('4').modal, getAjaxSuffix = require('7'), getAjaxURL = require('40').global, trim = require('6'), contains = require('18');
         domready(function () {
             var body = $('body');
             body.delegate('keyup', '.g-icons input[type="text"]', function (event, element) {
@@ -8348,7 +8348,7 @@ var G5;
     },
     '25': function (require, module, exports, global) {
         'use strict';
-        var $ = require('1p'), prime = require('n'), request = require('3'), zen = require('k'), domready = require('2'), bind = require('1w'), rtrim = require('17'), deepClone = require('38'), deepFillIn = require('33'), modal = require('4').modal, getAjaxSuffix = require('7'), getAjaxURL = require('3z').global, dropzone = require('40');
+        var $ = require('1p'), prime = require('n'), request = require('3'), zen = require('k'), domready = require('2'), bind = require('1s'), rtrim = require('17'), deepClone = require('38'), deepFillIn = require('34'), modal = require('4').modal, getAjaxSuffix = require('7'), getAjaxURL = require('40').global, dropzone = require('4b');
         var FilePicker = new prime({
                 constructor: function (element) {
                     var data = element.data('g5-filepicker');
@@ -8618,7 +8618,7 @@ var G5;
     },
     '26': function (require, module, exports, global) {
         'use strict';
-        var ready = require('2'), $ = require('1'), zen = require('k'), modal = require('4').modal, toastr = require('4').toastr, request = require('3'), lastItem = require('1z'), indexOf = require('2q'), simpleSort = require('4b'), trim = require('6'), getAjaxSuffix = require('7');
+        var ready = require('2'), $ = require('1'), zen = require('k'), modal = require('4').modal, toastr = require('4').toastr, request = require('3'), lastItem = require('1v'), indexOf = require('2q'), simpleSort = require('3z'), trim = require('6'), getAjaxSuffix = require('7');
         require('d');
         ready(function () {
             var body = $('body');
@@ -8626,6 +8626,10 @@ var G5;
                 if (key == 'enter' && this.CollectionNew) {
                     this.CollectionNew = false;
                     body.emit('click', { target: this.parent('.settings-param').find('[data-collection-addnew]') });
+                }
+                if (key == 'esc' && this.CollectionNew) {
+                    this.CollectionNew = false;
+                    body.emit('click', { target: this.parent('[data-collection-item]').find('[data-collection-remove]') });
                 }
             };
             var createSortables = function (list) {
@@ -8718,6 +8722,11 @@ var G5;
             });
             body.delegate('click', '[data-collection-item] .config-cog, [data-collection-editall]', function (event, element) {
                 event.preventDefault();
+                var editable = element.find('[data-title-editable]');
+                if (editable && editable.attribute('contenteditable')) {
+                    event.stopPropagation();
+                    return false;
+                }
                 var isEditAll = element.data('collection-editall') !== null, parent = element.parent('.settings-param'), dataField = parent.find('[data-collection-data]'), data = dataField.value(), item = element.parent('[data-collection-item]'), items = parent.search('ul > [data-collection-item]');
                 var dataPost = { data: isEditAll ? data : JSON.stringify(JSON.parse(data)[indexOf(items, item[0])]) };
                 modal.open({
@@ -8727,8 +8736,8 @@ var G5;
                     data: dataPost,
                     remote: element.attribute('href') + getAjaxSuffix(),
                     remoteLoaded: function (response, content) {
-                        var form = content.elements.content.find('form'), submit = content.elements.content.find('input[type="submit"], button[type="submit"]'), dataString = [];
-                        if (JSON.parse(data).length == 1) {
+                        var form = content.elements.content.find('form'), submit = content.elements.content.find('input[type="submit"], button[type="submit"]'), dataString = [], dataValue = JSON.parse(data);
+                        if (dataValue.length == 1) {
                             content.elements.content.style({ width: 450 });
                         }
                         if (!form || !submit) {
@@ -8765,6 +8774,13 @@ var G5;
                                         }
                                     });
                                 } else {
+                                    if (item) {
+                                        dataValue[indexOf(items, item[0])] = response.body.data;
+                                    } else {
+                                        dataValue = response.body.data;
+                                    }
+                                    dataField.value(JSON.stringify(dataValue));
+                                    body.emit('change', { target: dataField });
                                     modal.close();
                                     toastr.success('Collection Item updated', 'Item Updated');
                                 }
@@ -8778,6 +8794,140 @@ var G5;
         module.exports = {};
     },
     '27': function (require, module, exports, global) {
+        'use strict';
+        var escapeRe = /([-.*+?^${}()|[\]\/\\])/g, unescapeRe = /\\/g;
+        var escape = function (string) {
+            return (string + '').replace(escapeRe, '\\$1');
+        };
+        var unescape = function (string) {
+            return (string + '').replace(unescapeRe, '');
+        };
+        var slickRe = RegExp('^(?:\\s*(,)\\s*|\\s*(<combinator>+)\\s*|(\\s+)|(<unicode>+|\\*)|\\#(<unicode>+)|\\.(<unicode>+)|\\[\\s*(<unicode1>+)(?:\\s*([*^$!~|]?=)(?:\\s*(?:(["\']?)(.*?)\\9)))?\\s*\\](?!\\])|(:+)(<unicode>+)(?:\\((?:(?:(["\'])([^\\13]*)\\13)|((?:\\([^)]+\\)|[^()]*)+))\\))?)'.replace(/<combinator>/, '[' + escape('>+~`!@$%^&={}\\;</') + ']').replace(/<unicode>/g, '(?:[\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])').replace(/<unicode1>/g, '(?:[:\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])'));
+        var Part = function Part(combinator) {
+            this.combinator = combinator || ' ';
+            this.tag = '*';
+        };
+        Part.prototype.toString = function () {
+            if (!this.raw) {
+                var xpr = '', k, part;
+                xpr += this.tag || '*';
+                if (this.id)
+                    xpr += '#' + this.id;
+                if (this.classes)
+                    xpr += '.' + this.classList.join('.');
+                if (this.attributes)
+                    for (k = 0; part = this.attributes[k++];) {
+                        xpr += '[' + part.name + (part.operator ? part.operator + '"' + part.value + '"' : '') + ']';
+                    }
+                if (this.pseudos)
+                    for (k = 0; part = this.pseudos[k++];) {
+                        xpr += ':' + part.name;
+                        if (part.value)
+                            xpr += '(' + part.value + ')';
+                    }
+                this.raw = xpr;
+            }
+            return this.raw;
+        };
+        var Expression = function Expression() {
+            this.length = 0;
+        };
+        Expression.prototype.toString = function () {
+            if (!this.raw) {
+                var xpr = '';
+                for (var j = 0, bit; bit = this[j++];) {
+                    if (j !== 1)
+                        xpr += ' ';
+                    if (bit.combinator !== ' ')
+                        xpr += bit.combinator + ' ';
+                    xpr += bit;
+                }
+                this.raw = xpr;
+            }
+            return this.raw;
+        };
+        var replacer = function (rawMatch, separator, combinator, combinatorChildren, tagName, id, className, attributeKey, attributeOperator, attributeQuote, attributeValue, pseudoMarker, pseudoClass, pseudoQuote, pseudoClassQuotedValue, pseudoClassValue) {
+            var expression, current;
+            if (separator || !this.length) {
+                expression = this[this.length++] = new Expression();
+                if (separator)
+                    return '';
+            }
+            if (!expression)
+                expression = this[this.length - 1];
+            if (combinator || combinatorChildren || !expression.length) {
+                current = expression[expression.length++] = new Part(combinator);
+            }
+            if (!current)
+                current = expression[expression.length - 1];
+            if (tagName) {
+                current.tag = unescape(tagName);
+            } else if (id) {
+                current.id = unescape(id);
+            } else if (className) {
+                var unescaped = unescape(className);
+                var classes = current.classes || (current.classes = {});
+                if (!classes[unescaped]) {
+                    classes[unescaped] = escape(className);
+                    var classList = current.classList || (current.classList = []);
+                    classList.push(unescaped);
+                    classList.sort();
+                }
+            } else if (pseudoClass) {
+                pseudoClassValue = pseudoClassValue || pseudoClassQuotedValue;
+                ;
+                (current.pseudos || (current.pseudos = [])).push({
+                    type: pseudoMarker.length == 1 ? 'class' : 'element',
+                    name: unescape(pseudoClass),
+                    escapedName: escape(pseudoClass),
+                    value: pseudoClassValue ? unescape(pseudoClassValue) : null,
+                    escapedValue: pseudoClassValue ? escape(pseudoClassValue) : null
+                });
+            } else if (attributeKey) {
+                attributeValue = attributeValue ? escape(attributeValue) : null;
+                ;
+                (current.attributes || (current.attributes = [])).push({
+                    operator: attributeOperator,
+                    name: unescape(attributeKey),
+                    escapedName: escape(attributeKey),
+                    value: attributeValue ? unescape(attributeValue) : null,
+                    escapedValue: attributeValue ? escape(attributeValue) : null
+                });
+            }
+            return '';
+        };
+        var Expressions = function Expressions(expression) {
+            this.length = 0;
+            var self = this;
+            var original = expression, replaced;
+            while (expression) {
+                replaced = expression.replace(slickRe, function () {
+                    return replacer.apply(self, arguments);
+                });
+                if (replaced === expression)
+                    throw new Error(original + ' is an invalid expression');
+                expression = replaced;
+            }
+        };
+        Expressions.prototype.toString = function () {
+            if (!this.raw) {
+                var expressions = [];
+                for (var i = 0, expression; expression = this[i++];)
+                    expressions.push(expression);
+                this.raw = expressions.join(', ');
+            }
+            return this.raw;
+        };
+        var cache = {};
+        var parse = function (expression) {
+            if (expression == null)
+                return null;
+            expression = ('' + expression).replace(/^\s+|\s+$/g, '');
+            return cache[expression] || (cache[expression] = new Expressions(expression));
+        };
+        module.exports = parse;
+    },
+    '28': function (require, module, exports, global) {
         'use strict';
         var colors = {
                 maroon: '#800000',
@@ -8908,7 +9058,7 @@ var G5;
         ].join('|'), 'gi');
         module.exports = color;
     },
-    '28': function (require, module, exports, global) {
+    '29': function (require, module, exports, global) {
         'use strict';
         var indexOf = require('4c');
         var requestFrame = global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame || global.oRequestAnimationFrame || global.msRequestAnimationFrame || function (callback) {
@@ -8938,15 +9088,15 @@ var G5;
         exports.request = request;
         exports.cancel = cancel;
     },
-    '29': function (require, module, exports, global) {
+    '2a': function (require, module, exports, global) {
         'use strict';
-        var color = require('27'), frame = require('28');
+        var color = require('28'), frame = require('29');
         var cancelFrame = frame.cancel, requestFrame = frame.request;
         var prime = require('4d');
         var camelize = require('4e'), clean = require('4f'), capitalize = require('4g'), hyphenateString = require('4h');
         var map = require('4i'), forEach = require('4j'), indexOf = require('4c');
         var elements = require('4k');
-        var fx = require('2a');
+        var fx = require('2b');
         var matchString = function (s, r) {
             return String.prototype.match.call(s, r);
         };
@@ -9632,9 +9782,9 @@ var G5;
         };
         module.exports = moofx;
     },
-    '2a': function (require, module, exports, global) {
+    '2b': function (require, module, exports, global) {
         'use strict';
-        var prime = require('4d'), requestFrame = require('28').request, bezier = require('4m');
+        var prime = require('4d'), requestFrame = require('29').request, bezier = require('4m');
         var map = require('4i');
         var sDuration = '([\\d.]+)(s|ms)?', sCubicBezier = 'cubic-bezier\\(([-.\\d]+),([-.\\d]+),([-.\\d]+),([-.\\d]+)\\)';
         var rDuration = RegExp(sDuration), rCubicBezier = RegExp(sCubicBezier), rgCubicBezier = RegExp(sCubicBezier, 'g');
@@ -9800,147 +9950,51 @@ var G5;
         fx.prototype = Fx.prototype;
         module.exports = fx;
     },
-    '2b': function (require, module, exports, global) {
-        'use strict';
-        var escapeRe = /([-.*+?^${}()|[\]\/\\])/g, unescapeRe = /\\/g;
-        var escape = function (string) {
-            return (string + '').replace(escapeRe, '\\$1');
-        };
-        var unescape = function (string) {
-            return (string + '').replace(unescapeRe, '');
-        };
-        var slickRe = RegExp('^(?:\\s*(,)\\s*|\\s*(<combinator>+)\\s*|(\\s+)|(<unicode>+|\\*)|\\#(<unicode>+)|\\.(<unicode>+)|\\[\\s*(<unicode1>+)(?:\\s*([*^$!~|]?=)(?:\\s*(?:(["\']?)(.*?)\\9)))?\\s*\\](?!\\])|(:+)(<unicode>+)(?:\\((?:(?:(["\'])([^\\13]*)\\13)|((?:\\([^)]+\\)|[^()]*)+))\\))?)'.replace(/<combinator>/, '[' + escape('>+~`!@$%^&={}\\;</') + ']').replace(/<unicode>/g, '(?:[\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])').replace(/<unicode1>/g, '(?:[:\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])'));
-        var Part = function Part(combinator) {
-            this.combinator = combinator || ' ';
-            this.tag = '*';
-        };
-        Part.prototype.toString = function () {
-            if (!this.raw) {
-                var xpr = '', k, part;
-                xpr += this.tag || '*';
-                if (this.id)
-                    xpr += '#' + this.id;
-                if (this.classes)
-                    xpr += '.' + this.classList.join('.');
-                if (this.attributes)
-                    for (k = 0; part = this.attributes[k++];) {
-                        xpr += '[' + part.name + (part.operator ? part.operator + '"' + part.value + '"' : '') + ']';
-                    }
-                if (this.pseudos)
-                    for (k = 0; part = this.pseudos[k++];) {
-                        xpr += ':' + part.name;
-                        if (part.value)
-                            xpr += '(' + part.value + ')';
-                    }
-                this.raw = xpr;
-            }
-            return this.raw;
-        };
-        var Expression = function Expression() {
-            this.length = 0;
-        };
-        Expression.prototype.toString = function () {
-            if (!this.raw) {
-                var xpr = '';
-                for (var j = 0, bit; bit = this[j++];) {
-                    if (j !== 1)
-                        xpr += ' ';
-                    if (bit.combinator !== ' ')
-                        xpr += bit.combinator + ' ';
-                    xpr += bit;
-                }
-                this.raw = xpr;
-            }
-            return this.raw;
-        };
-        var replacer = function (rawMatch, separator, combinator, combinatorChildren, tagName, id, className, attributeKey, attributeOperator, attributeQuote, attributeValue, pseudoMarker, pseudoClass, pseudoQuote, pseudoClassQuotedValue, pseudoClassValue) {
-            var expression, current;
-            if (separator || !this.length) {
-                expression = this[this.length++] = new Expression();
-                if (separator)
-                    return '';
-            }
-            if (!expression)
-                expression = this[this.length - 1];
-            if (combinator || combinatorChildren || !expression.length) {
-                current = expression[expression.length++] = new Part(combinator);
-            }
-            if (!current)
-                current = expression[expression.length - 1];
-            if (tagName) {
-                current.tag = unescape(tagName);
-            } else if (id) {
-                current.id = unescape(id);
-            } else if (className) {
-                var unescaped = unescape(className);
-                var classes = current.classes || (current.classes = {});
-                if (!classes[unescaped]) {
-                    classes[unescaped] = escape(className);
-                    var classList = current.classList || (current.classList = []);
-                    classList.push(unescaped);
-                    classList.sort();
-                }
-            } else if (pseudoClass) {
-                pseudoClassValue = pseudoClassValue || pseudoClassQuotedValue;
-                ;
-                (current.pseudos || (current.pseudos = [])).push({
-                    type: pseudoMarker.length == 1 ? 'class' : 'element',
-                    name: unescape(pseudoClass),
-                    escapedName: escape(pseudoClass),
-                    value: pseudoClassValue ? unescape(pseudoClassValue) : null,
-                    escapedValue: pseudoClassValue ? escape(pseudoClassValue) : null
-                });
-            } else if (attributeKey) {
-                attributeValue = attributeValue ? escape(attributeValue) : null;
-                ;
-                (current.attributes || (current.attributes = [])).push({
-                    operator: attributeOperator,
-                    name: unescape(attributeKey),
-                    escapedName: escape(attributeKey),
-                    value: attributeValue ? unescape(attributeValue) : null,
-                    escapedValue: attributeValue ? escape(attributeValue) : null
-                });
-            }
-            return '';
-        };
-        var Expressions = function Expressions(expression) {
-            this.length = 0;
-            var self = this;
-            var original = expression, replaced;
-            while (expression) {
-                replaced = expression.replace(slickRe, function () {
-                    return replacer.apply(self, arguments);
-                });
-                if (replaced === expression)
-                    throw new Error(original + ' is an invalid expression');
-                expression = replaced;
-            }
-        };
-        Expressions.prototype.toString = function () {
-            if (!this.raw) {
-                var expressions = [];
-                for (var i = 0, expression; expression = this[i++];)
-                    expressions.push(expression);
-                this.raw = expressions.join(', ');
-            }
-            return this.raw;
-        };
-        var cache = {};
-        var parse = function (expression) {
-            if (expression == null)
-                return null;
-            expression = ('' + expression).replace(/^\s+|\s+$/g, '');
-            return cache[expression] || (cache[expression] = new Expressions(expression));
-        };
-        module.exports = parse;
-    },
     '2c': function (require, module, exports, global) {
+        var makeIterator = require('3n');
+        function every(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var result = true;
+            if (arr == null) {
+                return result;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (!callback(arr[i], i, arr)) {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
+        module.exports = every;
+    },
+    '2d': function (require, module, exports, global) {
+        var makeIterator = require('3n');
+        function some(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var result = false;
+            if (arr == null) {
+                return result;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (callback(arr[i], i, arr)) {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
+        }
+        module.exports = some;
+    },
+    '2e': function (require, module, exports, global) {
         function hasOwn(obj, prop) {
             return Object.prototype.hasOwnProperty.call(obj, prop);
         }
         module.exports = hasOwn;
     },
-    '2d': function (require, module, exports, global) {
+    '2f': function (require, module, exports, global) {
         var mixIn = require('w');
         function createObject(parent, props) {
             function F() {
@@ -9950,7 +10004,7 @@ var G5;
         }
         module.exports = createObject;
     },
-    '2e': function (require, module, exports, global) {
+    '2g': function (require, module, exports, global) {
         var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
         function kindOf(val) {
             if (val === null) {
@@ -9963,16 +10017,9 @@ var G5;
         }
         module.exports = kindOf;
     },
-    '2f': function (require, module, exports, global) {
-        var kindOf = require('2e');
-        function isKind(val, kind) {
-            return kindOf(val) === kind;
-        }
-        module.exports = isKind;
-    },
-    '2g': function (require, module, exports, global) {
+    '2h': function (require, module, exports, global) {
         'use strict';
-        var kindOf = require('2e'), now = require('4n'), forEach = require('y'), indexOf = require('1l');
+        var kindOf = require('2g'), now = require('4n'), forEach = require('y'), indexOf = require('1k');
         var callbacks = {
                 timeout: {},
                 frame: [],
@@ -10051,43 +10098,12 @@ var G5;
         };
         module.exports = defer;
     },
-    '2h': function (require, module, exports, global) {
-        var makeIterator = require('3n');
-        function every(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var result = true;
-            if (arr == null) {
-                return result;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (!callback(arr[i], i, arr)) {
-                    result = false;
-                    break;
-                }
-            }
-            return result;
-        }
-        module.exports = every;
-    },
     '2i': function (require, module, exports, global) {
-        var makeIterator = require('3n');
-        function some(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var result = false;
-            if (arr == null) {
-                return result;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (callback(arr[i], i, arr)) {
-                    result = true;
-                    break;
-                }
-            }
-            return result;
+        var kindOf = require('2g');
+        function isKind(val, kind) {
+            return kindOf(val) === kind;
         }
-        module.exports = some;
+        module.exports = isKind;
     },
     '2j': function (require, module, exports, global) {
         function toString(val) {
@@ -10171,7 +10187,7 @@ var G5;
         module.exports = rtrim;
     },
     '2n': function (require, module, exports, global) {
-        var hasOwn = require('2c');
+        var hasOwn = require('2e');
         var forIn = require('v');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
@@ -10559,14 +10575,14 @@ var G5;
         module.exports = debounce;
     },
     '2s': function (require, module, exports, global) {
-        var isKind = require('3x');
+        var isKind = require('3v');
         var isArray = Array.isArray || function (val) {
                 return isKind(val, 'Array');
             };
         module.exports = isArray;
     },
     '2t': function (require, module, exports, global) {
-        var isKind = require('3x');
+        var isKind = require('3v');
         function isBoolean(val) {
             return isKind(val, 'Boolean');
         }
@@ -10618,7 +10634,7 @@ var G5;
         module.exports = escapeHtml;
     },
     '2y': function (require, module, exports, global) {
-        var slice = require('37');
+        var slice = require('30');
         function makeCollectionMethod(arrMethod, objMethod, defaultReturn) {
             return function () {
                 var args = slice(arguments);
@@ -10631,7 +10647,7 @@ var G5;
         module.exports = makeCollectionMethod;
     },
     '2z': function (require, module, exports, global) {
-        var hasOwn = require('3p');
+        var hasOwn = require('3u');
         var forIn = require('4p');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
@@ -10643,6 +10659,31 @@ var G5;
         module.exports = forOwn;
     },
     '30': function (require, module, exports, global) {
+        function slice(arr, start, end) {
+            var len = arr.length;
+            if (start == null) {
+                start = 0;
+            } else if (start < 0) {
+                start = Math.max(len + start, 0);
+            } else {
+                start = Math.min(start, len);
+            }
+            if (end == null) {
+                end = len;
+            } else if (end < 0) {
+                end = Math.max(len + end, 0);
+            } else {
+                end = Math.min(end, len);
+            }
+            var result = [];
+            while (start < end) {
+                result.push(arr[start++]);
+            }
+            return result;
+        }
+        module.exports = slice;
+    },
+    '31': function (require, module, exports, global) {
         module.exports = {
             base: require('4q'),
             atom: require('4r'),
@@ -10657,7 +10698,7 @@ var G5;
             spacer: require('50')
         };
     },
-    '31': function (require, module, exports, global) {
+    '32': function (require, module, exports, global) {
         var isArray = require('2s');
         var append = require('51');
         function flattenTo(arr, result, level) {
@@ -10684,7 +10725,7 @@ var G5;
         }
         module.exports = flatten;
     },
-    '32': function (require, module, exports, global) {
+    '33': function (require, module, exports, global) {
         var namespace = require('52');
         function set(obj, prop, val) {
             var parts = /^(.+)\.(.+)$/.exec(prop);
@@ -10696,7 +10737,7 @@ var G5;
         }
         module.exports = set;
     },
-    '33': function (require, module, exports, global) {
+    '34': function (require, module, exports, global) {
         var forOwn = require('2z');
         var isPlainObject = require('53');
         function deepFillIn(target, defaults) {
@@ -10718,8 +10759,8 @@ var G5;
         }
         module.exports = deepFillIn;
     },
-    '34': function (require, module, exports, global) {
-        var slice = require('37');
+    '35': function (require, module, exports, global) {
+        var slice = require('30');
         var contains = require('18');
         function omit(obj, var_keys) {
             var keys = typeof arguments[1] !== 'string' ? arguments[1] : slice(arguments, 1), out = {};
@@ -10732,9 +10773,9 @@ var G5;
         }
         module.exports = omit;
     },
-    '35': function (require, module, exports, global) {
+    '36': function (require, module, exports, global) {
         var toString = require('13');
-        var repeat = require('36');
+        var repeat = require('37');
         function rpad(str, minLen, ch) {
             str = toString(str);
             ch = ch || ' ';
@@ -10742,7 +10783,7 @@ var G5;
         }
         module.exports = rpad;
     },
-    '36': function (require, module, exports, global) {
+    '37': function (require, module, exports, global) {
         var toString = require('13');
         var toInt = require('54');
         function repeat(str, n) {
@@ -10762,31 +10803,6 @@ var G5;
             return result;
         }
         module.exports = repeat;
-    },
-    '37': function (require, module, exports, global) {
-        function slice(arr, start, end) {
-            var len = arr.length;
-            if (start == null) {
-                start = 0;
-            } else if (start < 0) {
-                start = Math.max(len + start, 0);
-            } else {
-                start = Math.min(start, len);
-            }
-            if (end == null) {
-                end = len;
-            } else if (end < 0) {
-                end = Math.max(len + end, 0);
-            } else {
-                end = Math.min(end, len);
-            }
-            var result = [];
-            while (start < end) {
-                result.push(arr[start++]);
-            }
-            return result;
-        }
-        module.exports = slice;
     },
     '38': function (require, module, exports, global) {
         var clone = require('55');
@@ -11045,7 +11061,7 @@ var G5;
     },
     '3a': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Emitter = require('o'), Bound = require('1u'), Options = require('1v'), bind = require('1w'), contains = require('18'), DragEvents = require('3y'), $ = require('1p');
+        var prime = require('n'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), bind = require('1s'), contains = require('18'), DragEvents = require('3y'), $ = require('1p');
         require('b');
         require('c');
         var isIE = navigator.appName === 'Microsoft Internet Explorer';
@@ -11279,7 +11295,7 @@ var G5;
     },
     '3b': function (require, module, exports, global) {
         'use strict';
-        var DragEvents = require('3y'), prime = require('n'), Emitter = require('o'), Bound = require('1u'), Options = require('1v'), bind = require('1w'), isString = require('57'), nMap = require('58'), clamp = require('1i'), precision = require('3f'), get = require('14'), $ = require('1p');
+        var DragEvents = require('3y'), prime = require('n'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), bind = require('1s'), isString = require('57'), nMap = require('58'), clamp = require('1i'), precision = require('3f'), get = require('14'), $ = require('1p');
         require('b');
         require('c');
         var Resizer = new prime({
@@ -11422,7 +11438,7 @@ var G5;
     },
     '3c': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1p'), Emitter = require('o'), Bound = require('1u'), Options = require('1v');
+        var prime = require('n'), $ = require('1p'), Emitter = require('o'), Bound = require('1q'), Options = require('1r');
         var Eraser = new prime({
                 mixin: [
                     Options,
@@ -11473,7 +11489,7 @@ var G5;
         module.exports = keys;
     },
     '3e': function (require, module, exports, global) {
-        var makeIterator = require('3w');
+        var makeIterator = require('3t');
         function every(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = true;
@@ -11507,7 +11523,7 @@ var G5;
         module.exports = make(arrFind, objFind);
     },
     '3h': function (require, module, exports, global) {
-        var isKind = require('3x');
+        var isKind = require('3v');
         function isObject(val) {
             return isKind(val, 'Object');
         }
@@ -11541,7 +11557,7 @@ var G5;
     },
     '3j': function (require, module, exports, global) {
         'use strict';
-        var DragEvents = require('3y'), prime = require('n'), Emitter = require('o'), Bound = require('1u'), Options = require('1v'), bind = require('1w'), isString = require('57'), nMap = require('58'), clamp = require('1i'), precision = require('3f'), get = require('14'), $ = require('1p');
+        var DragEvents = require('3y'), prime = require('n'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), bind = require('1s'), isString = require('57'), nMap = require('58'), clamp = require('1i'), precision = require('3f'), get = require('14'), $ = require('1p');
         require('b');
         require('c');
         var Resizer = new prime({
@@ -11728,7 +11744,7 @@ var G5;
         module.exports = Resizer;
     },
     '3k': function (require, module, exports, global) {
-        var hasOwn = require('3p');
+        var hasOwn = require('3u');
         var every = require('5b');
         var isObject = require('3h');
         var is = require('3l');
@@ -11805,7 +11821,7 @@ var G5;
     },
     '3o': function (require, module, exports, global) {
         'use strict';
-        var parse = require('2b');
+        var parse = require('27');
         var index = 0, counter = document.__counter = (parseInt(document.__counter || -1, 36) + 1).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n, xml) {
             if (n === window)
@@ -12396,12 +12412,6 @@ var G5;
         module.exports = slick;
     },
     '3p': function (require, module, exports, global) {
-        function hasOwn(obj, prop) {
-            return Object.prototype.hasOwnProperty.call(obj, prop);
-        }
-        module.exports = hasOwn;
-    },
-    '3q': function (require, module, exports, global) {
         function series() {
             var fns = arguments;
             return function () {
@@ -12414,9 +12424,9 @@ var G5;
         }
         module.exports = series;
     },
-    '3r': function (require, module, exports, global) {
+    '3q': function (require, module, exports, global) {
         'use strict';
-        var $ = require('1'), prime = require('n'), Emitter = require('o'), Bound = require('1u'), Options = require('1v'), zen = require('k'), moofx = require('l'), bind = require('1w'), isArray = require('2s'), isNumber = require('5f');
+        var $ = require('1'), prime = require('n'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), zen = require('k'), moofx = require('l'), bind = require('1s'), isArray = require('2s'), isNumber = require('5f');
         var Progresser = new prime({
                 mixin: [
                     Bound,
@@ -12556,42 +12566,10 @@ var G5;
             });
         module.exports = Progresser;
     },
-    '3s': function (require, module, exports, global) {
-        var choice = require('3t');
-        var _chars = '0123456789abcdef'.split('');
-        function randHex(size) {
-            size = size && size > 0 ? size : 6;
-            var str = '';
-            while (size--) {
-                str += choice(_chars);
-            }
-            return str;
-        }
-        module.exports = randHex;
-    },
-    '3t': function (require, module, exports, global) {
-        var randInt = require('5g');
-        var isArray = require('2s');
-        function choice(items) {
-            var target = arguments.length === 1 && isArray(items) ? items : arguments;
-            return target[randInt(0, target.length - 1)];
-        }
-        module.exports = choice;
-    },
-    '3u': function (require, module, exports, global) {
-        var slice = require('5k');
-        function bind(fn, context, args) {
-            var argsArr = slice(arguments, 2);
-            return function () {
-                return fn.apply(context, argsArr.concat(slice(arguments)));
-            };
-        }
-        module.exports = bind;
-    },
-    '3v': function (require, module, exports, global) {
-        var hasOwn = require('5h');
-        var deepClone = require('5i');
-        var isObject = require('5j');
+    '3r': function (require, module, exports, global) {
+        var hasOwn = require('5g');
+        var deepClone = require('5h');
+        var isObject = require('5i');
         function merge() {
             var i = 1, key, val, obj, target;
             target = deepClone(arguments[0]);
@@ -12612,10 +12590,20 @@ var G5;
         }
         module.exports = merge;
     },
-    '3w': function (require, module, exports, global) {
-        var identity = require('5m');
-        var prop = require('5n');
-        var deepMatches = require('5o');
+    '3s': function (require, module, exports, global) {
+        var slice = require('5j');
+        function bind(fn, context, args) {
+            var argsArr = slice(arguments, 2);
+            return function () {
+                return fn.apply(context, argsArr.concat(slice(arguments)));
+            };
+        }
+        module.exports = bind;
+    },
+    '3t': function (require, module, exports, global) {
+        var identity = require('5k');
+        var prop = require('5l');
+        var deepMatches = require('5m');
         function makeIterator(src, thisObj) {
             if (src == null) {
                 return identity;
@@ -12636,12 +12624,40 @@ var G5;
         }
         module.exports = makeIterator;
     },
-    '3x': function (require, module, exports, global) {
+    '3u': function (require, module, exports, global) {
+        function hasOwn(obj, prop) {
+            return Object.prototype.hasOwnProperty.call(obj, prop);
+        }
+        module.exports = hasOwn;
+    },
+    '3v': function (require, module, exports, global) {
         var kindOf = require('56');
         function isKind(val, kind) {
             return kindOf(val) === kind;
         }
         module.exports = isKind;
+    },
+    '3w': function (require, module, exports, global) {
+        var choice = require('3x');
+        var _chars = '0123456789abcdef'.split('');
+        function randHex(size) {
+            size = size && size > 0 ? size : 6;
+            var str = '';
+            while (size--) {
+                str += choice(_chars);
+            }
+            return str;
+        }
+        module.exports = randHex;
+    },
+    '3x': function (require, module, exports, global) {
+        var randInt = require('5n');
+        var isArray = require('2s');
+        function choice(items) {
+            var target = arguments.length === 1 && isArray(items) ? items : arguments;
+            return target[randInt(0, target.length - 1)];
+        }
+        module.exports = choice;
     },
     '3y': function (require, module, exports, global) {
         'use strict';
@@ -12672,8 +12688,613 @@ var G5;
         module.exports = EVENT;
     },
     '3z': function (require, module, exports, global) {
+        (function (factory) {
+            'use strict';
+            if (typeof define === 'function' && define.amd) {
+                define(factory);
+            } else if (typeof module != 'undefined' && typeof module.exports != 'undefined') {
+                module.exports = factory();
+            } else if (typeof Package !== 'undefined') {
+                Sortable = factory();
+            } else {
+                window['Sortable'] = factory();
+            }
+        }(function () {
+            'use strict';
+            var dragEl, ghostEl, cloneEl, rootEl, nextEl, scrollEl, scrollParentEl, lastEl, lastCSS, oldIndex, newIndex, activeGroup, autoScroll = {}, tapEvt, touchEvt, expando = 'Sortable' + new Date().getTime(), win = window, document = win.document, parseInt = win.parseInt, supportDraggable = !!('draggable' in document.createElement('div')), _silent = false, _dispatchEvent = function (rootEl, name, targetEl, fromEl, startIndex, newIndex) {
+                    var evt = document.createEvent('Event');
+                    evt.initEvent(name, true, true);
+                    evt.item = targetEl || rootEl;
+                    evt.from = fromEl || rootEl;
+                    evt.clone = cloneEl;
+                    evt.oldIndex = startIndex;
+                    evt.newIndex = newIndex;
+                    rootEl.dispatchEvent(evt);
+                }, _customEvents = 'onAdd onUpdate onRemove onStart onEnd onFilter onSort'.split(' '), noop = function () {
+                }, abs = Math.abs, slice = [].slice, touchDragOverListeners = [], _autoScroll = _throttle(function (evt, options, rootEl) {
+                    if (rootEl && options.scroll) {
+                        var el, rect, sens = options.scrollSensitivity, speed = options.scrollSpeed, x = evt.clientX, y = evt.clientY, winWidth = window.innerWidth, winHeight = window.innerHeight, vx, vy;
+                        ;
+                        if (scrollParentEl !== rootEl) {
+                            scrollEl = options.scroll;
+                            scrollParentEl = rootEl;
+                            if (scrollEl === true) {
+                                scrollEl = rootEl;
+                                do {
+                                    if (scrollEl.offsetWidth < scrollEl.scrollWidth || scrollEl.offsetHeight < scrollEl.scrollHeight) {
+                                        break;
+                                    }
+                                } while (scrollEl = scrollEl.parentNode);
+                            }
+                        }
+                        if (scrollEl) {
+                            el = scrollEl;
+                            rect = scrollEl.getBoundingClientRect();
+                            vx = (abs(rect.right - x) <= sens) - (abs(rect.left - x) <= sens);
+                            vy = (abs(rect.bottom - y) <= sens) - (abs(rect.top - y) <= sens);
+                        }
+                        if (!(vx || vy)) {
+                            vx = (winWidth - x <= sens) - (x <= sens);
+                            vy = (winHeight - y <= sens) - (y <= sens);
+                            (vx || vy) && (el = win);
+                        }
+                        if (autoScroll.vx !== vx || autoScroll.vy !== vy || autoScroll.el !== el) {
+                            autoScroll.el = el;
+                            autoScroll.vx = vx;
+                            autoScroll.vy = vy;
+                            clearInterval(autoScroll.pid);
+                            if (el) {
+                                autoScroll.pid = setInterval(function () {
+                                    if (el === win) {
+                                        win.scrollTo(win.scrollX + vx * speed, win.scrollY + vy * speed);
+                                    } else {
+                                        vy && (el.scrollTop += vy * speed);
+                                        vx && (el.scrollLeft += vx * speed);
+                                    }
+                                }, 24);
+                            }
+                        }
+                    }
+                }, 30);
+            ;
+            function Sortable(el, options) {
+                this.el = el;
+                this.options = options = options || {};
+                var defaults = {
+                        group: Math.random(),
+                        sort: true,
+                        disabled: false,
+                        store: null,
+                        handle: null,
+                        scroll: true,
+                        scrollSensitivity: 30,
+                        scrollSpeed: 10,
+                        draggable: /[uo]l/i.test(el.nodeName) ? 'li' : '>*',
+                        ghostClass: 'sortable-ghost',
+                        ignore: 'a, img',
+                        filter: null,
+                        animation: 0,
+                        setData: function (dataTransfer, dragEl) {
+                            dataTransfer.setData('Text', dragEl.textContent);
+                        },
+                        dropBubble: false,
+                        dragoverBubble: false
+                    };
+                for (var name in defaults) {
+                    !(name in options) && (options[name] = defaults[name]);
+                }
+                var group = options.group;
+                if (!group || typeof group != 'object') {
+                    group = options.group = { name: group };
+                }
+                [
+                    'pull',
+                    'put'
+                ].forEach(function (key) {
+                    if (!(key in group)) {
+                        group[key] = true;
+                    }
+                });
+                _customEvents.forEach(function (name) {
+                    options[name] = _bind(this, options[name] || noop);
+                    _on(el, name.substr(2).toLowerCase(), options[name]);
+                }, this);
+                options.groups = ' ' + group.name + (group.put.join ? ' ' + group.put.join(' ') : '') + ' ';
+                el[expando] = options;
+                for (var fn in this) {
+                    if (fn.charAt(0) === '_') {
+                        this[fn] = _bind(this, this[fn]);
+                    }
+                }
+                _on(el, 'mousedown', this._onTapStart);
+                _on(el, 'touchstart', this._onTapStart);
+                _on(el, 'dragover', this);
+                _on(el, 'dragenter', this);
+                touchDragOverListeners.push(this._onDragOver);
+                options.store && this.sort(options.store.get(this));
+            }
+            Sortable.prototype = {
+                constructor: Sortable,
+                _dragStarted: function () {
+                    if (rootEl && dragEl) {
+                        _toggleClass(dragEl, this.options.ghostClass, true);
+                        Sortable.active = this;
+                        _dispatchEvent(rootEl, 'start', dragEl, rootEl, oldIndex);
+                    }
+                },
+                _onTapStart: function (evt) {
+                    var type = evt.type, touch = evt.touches && evt.touches[0], target = (touch || evt).target, originalTarget = target, options = this.options, el = this.el, filter = options.filter;
+                    if (type === 'mousedown' && evt.button !== 0 || options.disabled) {
+                        return;
+                    }
+                    target = _closest(target, options.draggable, el);
+                    if (!target) {
+                        return;
+                    }
+                    oldIndex = _index(target);
+                    if (typeof filter === 'function') {
+                        if (filter.call(this, evt, target, this)) {
+                            _dispatchEvent(originalTarget, 'filter', target, el, oldIndex);
+                            evt.preventDefault();
+                            return;
+                        }
+                    } else if (filter) {
+                        filter = filter.split(',').some(function (criteria) {
+                            criteria = _closest(originalTarget, criteria.trim(), el);
+                            if (criteria) {
+                                _dispatchEvent(criteria, 'filter', target, el, oldIndex);
+                                return true;
+                            }
+                        });
+                        if (filter) {
+                            evt.preventDefault();
+                            return;
+                        }
+                    }
+                    if (options.handle && !_closest(originalTarget, options.handle, el)) {
+                        return;
+                    }
+                    if (target && !dragEl && target.parentNode === el) {
+                        tapEvt = evt;
+                        rootEl = this.el;
+                        dragEl = target;
+                        nextEl = dragEl.nextSibling;
+                        activeGroup = this.options.group;
+                        dragEl.draggable = true;
+                        options.ignore.split(',').forEach(function (criteria) {
+                            _find(target, criteria.trim(), _disableDraggable);
+                        });
+                        if (touch) {
+                            tapEvt = {
+                                target: target,
+                                clientX: touch.clientX,
+                                clientY: touch.clientY
+                            };
+                            this._onDragStart(tapEvt, 'touch');
+                            evt.preventDefault();
+                        }
+                        _on(document, 'mouseup', this._onDrop);
+                        _on(document, 'touchend', this._onDrop);
+                        _on(document, 'touchcancel', this._onDrop);
+                        _on(dragEl, 'dragend', this);
+                        _on(rootEl, 'dragstart', this._onDragStart);
+                        if (!supportDraggable) {
+                            this._onDragStart(tapEvt, true);
+                        }
+                        try {
+                            if (document.selection) {
+                                document.selection.empty();
+                            } else {
+                                window.getSelection().removeAllRanges();
+                            }
+                        } catch (err) {
+                        }
+                    }
+                },
+                _emulateDragOver: function () {
+                    if (touchEvt) {
+                        _css(ghostEl, 'display', 'none');
+                        var target = document.elementFromPoint(touchEvt.clientX, touchEvt.clientY), parent = target, groupName = ' ' + this.options.group.name + '', i = touchDragOverListeners.length;
+                        if (parent) {
+                            do {
+                                if (parent[expando] && parent[expando].groups.indexOf(groupName) > -1) {
+                                    while (i--) {
+                                        touchDragOverListeners[i]({
+                                            clientX: touchEvt.clientX,
+                                            clientY: touchEvt.clientY,
+                                            target: target,
+                                            rootEl: parent
+                                        });
+                                    }
+                                    break;
+                                }
+                                target = parent;
+                            } while (parent = parent.parentNode);
+                        }
+                        _css(ghostEl, 'display', '');
+                    }
+                },
+                _onTouchMove: function (evt) {
+                    if (tapEvt) {
+                        var touch = evt.touches ? evt.touches[0] : evt, dx = touch.clientX - tapEvt.clientX, dy = touch.clientY - tapEvt.clientY, translate3d = evt.touches ? 'translate3d(' + dx + 'px,' + dy + 'px,0)' : 'translate(' + dx + 'px,' + dy + 'px)';
+                        touchEvt = touch;
+                        _css(ghostEl, 'webkitTransform', translate3d);
+                        _css(ghostEl, 'mozTransform', translate3d);
+                        _css(ghostEl, 'msTransform', translate3d);
+                        _css(ghostEl, 'transform', translate3d);
+                        evt.preventDefault();
+                    }
+                },
+                _onDragStart: function (evt, useFallback) {
+                    var dataTransfer = evt.dataTransfer, options = this.options;
+                    this._offUpEvents();
+                    if (activeGroup.pull == 'clone') {
+                        cloneEl = dragEl.cloneNode(true);
+                        _css(cloneEl, 'display', 'none');
+                        rootEl.insertBefore(cloneEl, dragEl);
+                    }
+                    if (useFallback) {
+                        var rect = dragEl.getBoundingClientRect(), css = _css(dragEl), ghostRect;
+                        ghostEl = dragEl.cloneNode(true);
+                        _css(ghostEl, 'top', rect.top - parseInt(css.marginTop, 10));
+                        _css(ghostEl, 'left', rect.left - parseInt(css.marginLeft, 10));
+                        _css(ghostEl, 'width', rect.width);
+                        _css(ghostEl, 'height', rect.height);
+                        _css(ghostEl, 'opacity', '0.8');
+                        _css(ghostEl, 'position', 'fixed');
+                        _css(ghostEl, 'zIndex', '100000');
+                        rootEl.appendChild(ghostEl);
+                        ghostRect = ghostEl.getBoundingClientRect();
+                        _css(ghostEl, 'width', rect.width * 2 - ghostRect.width);
+                        _css(ghostEl, 'height', rect.height * 2 - ghostRect.height);
+                        if (useFallback === 'touch') {
+                            _on(document, 'touchmove', this._onTouchMove);
+                            _on(document, 'touchend', this._onDrop);
+                            _on(document, 'touchcancel', this._onDrop);
+                        } else {
+                            _on(document, 'mousemove', this._onTouchMove);
+                            _on(document, 'mouseup', this._onDrop);
+                        }
+                        this._loopId = setInterval(this._emulateDragOver, 150);
+                    } else {
+                        if (dataTransfer) {
+                            dataTransfer.effectAllowed = 'move';
+                            options.setData && options.setData.call(this, dataTransfer, dragEl);
+                        }
+                        _on(document, 'drop', this);
+                    }
+                    setTimeout(this._dragStarted, 0);
+                },
+                _onDragOver: function (evt) {
+                    var el = this.el, target, dragRect, revert, options = this.options, group = options.group, groupPut = group.put, isOwner = activeGroup === group, canSort = options.sort;
+                    if (!dragEl) {
+                        return;
+                    }
+                    if (evt.preventDefault !== void 0) {
+                        evt.preventDefault();
+                        !options.dragoverBubble && evt.stopPropagation();
+                    }
+                    if (activeGroup && !options.disabled && (isOwner ? canSort || (revert = !rootEl.contains(dragEl)) : activeGroup.pull && groupPut && (activeGroup.name === group.name || groupPut.indexOf && ~groupPut.indexOf(activeGroup.name))) && (evt.rootEl === void 0 || evt.rootEl === this.el)) {
+                        _autoScroll(evt, options, this.el);
+                        if (_silent) {
+                            return;
+                        }
+                        target = _closest(evt.target, options.draggable, el);
+                        dragRect = dragEl.getBoundingClientRect();
+                        if (revert) {
+                            _cloneHide(true);
+                            if (cloneEl || nextEl) {
+                                rootEl.insertBefore(dragEl, cloneEl || nextEl);
+                            } else if (!canSort) {
+                                rootEl.appendChild(dragEl);
+                            }
+                            return;
+                        }
+                        if (el.children.length === 0 || el.children[0] === ghostEl || el === evt.target && (target = _ghostInBottom(el, evt))) {
+                            if (target) {
+                                if (target.animated) {
+                                    return;
+                                }
+                                targetRect = target.getBoundingClientRect();
+                            }
+                            _cloneHide(isOwner);
+                            el.appendChild(dragEl);
+                            this._animate(dragRect, dragEl);
+                            target && this._animate(targetRect, target);
+                        } else if (target && !target.animated && target !== dragEl && target.parentNode[expando] !== void 0) {
+                            if (lastEl !== target) {
+                                lastEl = target;
+                                lastCSS = _css(target);
+                            }
+                            var targetRect = target.getBoundingClientRect(), width = targetRect.right - targetRect.left, height = targetRect.bottom - targetRect.top, floating = /left|right|inline/.test(lastCSS.cssFloat + lastCSS.display), isWide = target.offsetWidth > dragEl.offsetWidth, isLong = target.offsetHeight > dragEl.offsetHeight, halfway = (floating ? (evt.clientX - targetRect.left) / width : (evt.clientY - targetRect.top) / height) > 0.5, nextSibling = target.nextElementSibling, after;
+                            ;
+                            _silent = true;
+                            setTimeout(_unsilent, 30);
+                            _cloneHide(isOwner);
+                            if (floating) {
+                                after = target.previousElementSibling === dragEl && !isWide || halfway && isWide;
+                            } else {
+                                after = nextSibling !== dragEl && !isLong || halfway && isLong;
+                            }
+                            if (after && !nextSibling) {
+                                el.appendChild(dragEl);
+                            } else {
+                                target.parentNode.insertBefore(dragEl, after ? nextSibling : target);
+                            }
+                            this._animate(dragRect, dragEl);
+                            this._animate(targetRect, target);
+                        }
+                    }
+                },
+                _animate: function (prevRect, target) {
+                    var ms = this.options.animation;
+                    if (ms) {
+                        var currentRect = target.getBoundingClientRect();
+                        _css(target, 'transition', 'none');
+                        _css(target, 'transform', 'translate3d(' + (prevRect.left - currentRect.left) + 'px,' + (prevRect.top - currentRect.top) + 'px,0)');
+                        target.offsetWidth;
+                        _css(target, 'transition', 'all ' + ms + 'ms');
+                        _css(target, 'transform', 'translate3d(0,0,0)');
+                        clearTimeout(target.animated);
+                        target.animated = setTimeout(function () {
+                            _css(target, 'transition', '');
+                            _css(target, 'transform', '');
+                            target.animated = false;
+                        }, ms);
+                    }
+                },
+                _offUpEvents: function () {
+                    _off(document, 'mouseup', this._onDrop);
+                    _off(document, 'touchmove', this._onTouchMove);
+                    _off(document, 'touchend', this._onDrop);
+                    _off(document, 'touchcancel', this._onDrop);
+                },
+                _onDrop: function (evt) {
+                    var el = this.el, options = this.options;
+                    clearInterval(this._loopId);
+                    clearInterval(autoScroll.pid);
+                    _off(document, 'drop', this);
+                    _off(document, 'mousemove', this._onTouchMove);
+                    _off(el, 'dragstart', this._onDragStart);
+                    this._offUpEvents();
+                    if (evt) {
+                        evt.preventDefault();
+                        !options.dropBubble && evt.stopPropagation();
+                        ghostEl && ghostEl.parentNode.removeChild(ghostEl);
+                        if (dragEl) {
+                            _off(dragEl, 'dragend', this);
+                            _disableDraggable(dragEl);
+                            _toggleClass(dragEl, this.options.ghostClass, false);
+                            if (rootEl !== dragEl.parentNode) {
+                                newIndex = _index(dragEl);
+                                _dispatchEvent(dragEl.parentNode, 'sort', dragEl, rootEl, oldIndex, newIndex);
+                                _dispatchEvent(rootEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
+                                _dispatchEvent(dragEl, 'add', dragEl, rootEl, oldIndex, newIndex);
+                                _dispatchEvent(rootEl, 'remove', dragEl, rootEl, oldIndex, newIndex);
+                            } else {
+                                cloneEl && cloneEl.parentNode.removeChild(cloneEl);
+                                if (dragEl.nextSibling !== nextEl) {
+                                    newIndex = _index(dragEl);
+                                    _dispatchEvent(rootEl, 'update', dragEl, rootEl, oldIndex, newIndex);
+                                    _dispatchEvent(rootEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
+                                }
+                            }
+                            Sortable.active && _dispatchEvent(rootEl, 'end', dragEl, rootEl, oldIndex, newIndex);
+                        }
+                        rootEl = dragEl = ghostEl = nextEl = cloneEl = scrollEl = scrollParentEl = tapEvt = touchEvt = lastEl = lastCSS = activeGroup = Sortable.active = null;
+                        this.save();
+                    }
+                },
+                handleEvent: function (evt) {
+                    var type = evt.type;
+                    if (type === 'dragover' || type === 'dragenter') {
+                        this._onDragOver(evt);
+                        _globalDragOver(evt);
+                    } else if (type === 'drop' || type === 'dragend') {
+                        this._onDrop(evt);
+                    }
+                },
+                toArray: function () {
+                    var order = [], el, children = this.el.children, i = 0, n = children.length;
+                    for (; i < n; i++) {
+                        el = children[i];
+                        if (_closest(el, this.options.draggable, this.el)) {
+                            order.push(el.getAttribute('data-id') || _generateId(el));
+                        }
+                    }
+                    return order;
+                },
+                sort: function (order) {
+                    var items = {}, rootEl = this.el;
+                    this.toArray().forEach(function (id, i) {
+                        var el = rootEl.children[i];
+                        if (_closest(el, this.options.draggable, rootEl)) {
+                            items[id] = el;
+                        }
+                    }, this);
+                    order.forEach(function (id) {
+                        if (items[id]) {
+                            rootEl.removeChild(items[id]);
+                            rootEl.appendChild(items[id]);
+                        }
+                    });
+                },
+                save: function () {
+                    var store = this.options.store;
+                    store && store.set(this);
+                },
+                closest: function (el, selector) {
+                    return _closest(el, selector || this.options.draggable, this.el);
+                },
+                option: function (name, value) {
+                    var options = this.options;
+                    if (value === void 0) {
+                        return options[name];
+                    } else {
+                        options[name] = value;
+                    }
+                },
+                destroy: function () {
+                    var el = this.el, options = this.options;
+                    _customEvents.forEach(function (name) {
+                        _off(el, name.substr(2).toLowerCase(), options[name]);
+                    });
+                    _off(el, 'mousedown', this._onTapStart);
+                    _off(el, 'touchstart', this._onTapStart);
+                    _off(el, 'dragover', this);
+                    _off(el, 'dragenter', this);
+                    Array.prototype.forEach.call(el.querySelectorAll('[draggable]'), function (el) {
+                        el.removeAttribute('draggable');
+                    });
+                    touchDragOverListeners.splice(touchDragOverListeners.indexOf(this._onDragOver), 1);
+                    this._onDrop();
+                    this.el = null;
+                }
+            };
+            function _cloneHide(state) {
+                if (cloneEl && cloneEl.state !== state) {
+                    _css(cloneEl, 'display', state ? 'none' : '');
+                    !state && cloneEl.state && rootEl.insertBefore(cloneEl, dragEl);
+                    cloneEl.state = state;
+                }
+            }
+            function _bind(ctx, fn) {
+                var args = slice.call(arguments, 2);
+                return fn.bind ? fn.bind.apply(fn, [ctx].concat(args)) : function () {
+                    return fn.apply(ctx, args.concat(slice.call(arguments)));
+                };
+            }
+            function _closest(el, selector, ctx) {
+                if (el) {
+                    ctx = ctx || document;
+                    selector = selector.split('.');
+                    var tag = selector.shift().toUpperCase(), re = new RegExp('\\s(' + selector.join('|') + ')\\s', 'g');
+                    do {
+                        if (tag === '>*' && el.parentNode === ctx || (tag === '' || el.nodeName.toUpperCase() == tag) && (!selector.length || ((' ' + el.className + ' ').match(re) || []).length == selector.length)) {
+                            return el;
+                        }
+                    } while (el !== ctx && (el = el.parentNode));
+                }
+                return null;
+            }
+            function _globalDragOver(evt) {
+                evt.dataTransfer.dropEffect = 'move';
+                evt.preventDefault();
+            }
+            function _on(el, event, fn) {
+                el.addEventListener(event, fn, false);
+            }
+            function _off(el, event, fn) {
+                el.removeEventListener(event, fn, false);
+            }
+            function _toggleClass(el, name, state) {
+                if (el) {
+                    if (el.classList) {
+                        el.classList[state ? 'add' : 'remove'](name);
+                    } else {
+                        var className = (' ' + el.className + ' ').replace(/\s+/g, ' ').replace(' ' + name + ' ', '');
+                        el.className = className + (state ? ' ' + name : '');
+                    }
+                }
+            }
+            function _css(el, prop, val) {
+                var style = el && el.style;
+                if (style) {
+                    if (val === void 0) {
+                        if (document.defaultView && document.defaultView.getComputedStyle) {
+                            val = document.defaultView.getComputedStyle(el, '');
+                        } else if (el.currentStyle) {
+                            val = el.currentStyle;
+                        }
+                        return prop === void 0 ? val : val[prop];
+                    } else {
+                        if (!(prop in style)) {
+                            prop = '-webkit-' + prop;
+                        }
+                        style[prop] = val + (typeof val === 'string' ? '' : 'px');
+                    }
+                }
+            }
+            function _find(ctx, tagName, iterator) {
+                if (ctx) {
+                    var list = ctx.getElementsByTagName(tagName), i = 0, n = list.length;
+                    if (iterator) {
+                        for (; i < n; i++) {
+                            iterator(list[i], i);
+                        }
+                    }
+                    return list;
+                }
+                return [];
+            }
+            function _disableDraggable(el) {
+                el.draggable = false;
+            }
+            function _unsilent() {
+                _silent = false;
+            }
+            function _ghostInBottom(el, evt) {
+                var lastEl = el.lastElementChild, rect = lastEl.getBoundingClientRect();
+                return evt.clientY - (rect.top + rect.height) > 5 && lastEl;
+            }
+            function _generateId(el) {
+                var str = el.tagName + el.className + el.src + el.href + el.textContent, i = str.length, sum = 0;
+                while (i--) {
+                    sum += str.charCodeAt(i);
+                }
+                return sum.toString(36);
+            }
+            function _index(el) {
+                var index = 0;
+                while (el && (el = el.previousElementSibling)) {
+                    if (el.nodeName.toUpperCase() !== 'TEMPLATE') {
+                        index++;
+                    }
+                }
+                return index;
+            }
+            function _throttle(callback, ms) {
+                var args, _this;
+                return function () {
+                    if (args === void 0) {
+                        args = arguments;
+                        _this = this;
+                        setTimeout(function () {
+                            if (args.length === 1) {
+                                callback.call(_this, args[0]);
+                            } else {
+                                callback.apply(_this, args);
+                            }
+                            args = void 0;
+                        }, ms);
+                    }
+                };
+            }
+            Sortable.utils = {
+                on: _on,
+                off: _off,
+                css: _css,
+                find: _find,
+                bind: _bind,
+                is: function (el, selector) {
+                    return !!_closest(el, selector, el);
+                },
+                throttle: _throttle,
+                closest: _closest,
+                toggleClass: _toggleClass,
+                dispatchEvent: _dispatchEvent,
+                index: _index
+            };
+            Sortable.version = '1.1.1';
+            Sortable.create = function (el, options) {
+                return new Sortable(el, options);
+            };
+            return Sortable;
+        }));
+    },
+    '40': function (require, module, exports, global) {
         'use strict';
-        var unescapeHtml = require('5l');
+        var unescapeHtml = require('5o');
         var getAjaxURL = function (view, search) {
             if (!search) {
                 search = '%ajax%';
@@ -12692,1618 +13313,6 @@ var G5;
             global: getAjaxURL,
             config: getConfAjaxURL
         };
-    },
-    '40': function (require, module, exports, global) {
-        (function () {
-            var Dropzone, Emitter, camelize, contentLoaded, detectVerticalSquash, drawImageIOSFix, noop, without, __slice = [].slice, __hasProp = {}.hasOwnProperty, __extends = function (child, parent) {
-                    for (var key in parent) {
-                        if (__hasProp.call(parent, key))
-                            child[key] = parent[key];
-                    }
-                    function ctor() {
-                        this.constructor = child;
-                    }
-                    ctor.prototype = parent.prototype;
-                    child.prototype = new ctor();
-                    child.__super__ = parent.prototype;
-                    return child;
-                };
-            noop = function () {
-            };
-            Emitter = function () {
-                function Emitter() {
-                }
-                Emitter.prototype.addEventListener = Emitter.prototype.on;
-                Emitter.prototype.on = function (event, fn) {
-                    this._callbacks = this._callbacks || {};
-                    if (!this._callbacks[event]) {
-                        this._callbacks[event] = [];
-                    }
-                    this._callbacks[event].push(fn);
-                    return this;
-                };
-                Emitter.prototype.emit = function () {
-                    var args, callback, callbacks, event, _i, _len;
-                    event = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-                    this._callbacks = this._callbacks || {};
-                    callbacks = this._callbacks[event];
-                    if (callbacks) {
-                        for (_i = 0, _len = callbacks.length; _i < _len; _i++) {
-                            callback = callbacks[_i];
-                            callback.apply(this, args);
-                        }
-                    }
-                    return this;
-                };
-                Emitter.prototype.removeListener = Emitter.prototype.off;
-                Emitter.prototype.removeAllListeners = Emitter.prototype.off;
-                Emitter.prototype.removeEventListener = Emitter.prototype.off;
-                Emitter.prototype.off = function (event, fn) {
-                    var callback, callbacks, i, _i, _len;
-                    if (!this._callbacks || arguments.length === 0) {
-                        this._callbacks = {};
-                        return this;
-                    }
-                    callbacks = this._callbacks[event];
-                    if (!callbacks) {
-                        return this;
-                    }
-                    if (arguments.length === 1) {
-                        delete this._callbacks[event];
-                        return this;
-                    }
-                    for (i = _i = 0, _len = callbacks.length; _i < _len; i = ++_i) {
-                        callback = callbacks[i];
-                        if (callback === fn) {
-                            callbacks.splice(i, 1);
-                            break;
-                        }
-                    }
-                    return this;
-                };
-                return Emitter;
-            }();
-            Dropzone = function (_super) {
-                var extend, resolveOption;
-                __extends(Dropzone, _super);
-                Dropzone.prototype.Emitter = Emitter;
-                Dropzone.prototype.events = [
-                    'drop',
-                    'dragstart',
-                    'dragend',
-                    'dragenter',
-                    'dragover',
-                    'dragleave',
-                    'addedfile',
-                    'removedfile',
-                    'thumbnail',
-                    'error',
-                    'errormultiple',
-                    'processing',
-                    'processingmultiple',
-                    'uploadprogress',
-                    'totaluploadprogress',
-                    'sending',
-                    'sendingmultiple',
-                    'success',
-                    'successmultiple',
-                    'canceled',
-                    'canceledmultiple',
-                    'complete',
-                    'completemultiple',
-                    'reset',
-                    'maxfilesexceeded',
-                    'maxfilesreached',
-                    'queuecomplete'
-                ];
-                Dropzone.prototype.defaultOptions = {
-                    url: null,
-                    method: 'post',
-                    withCredentials: false,
-                    parallelUploads: 2,
-                    uploadMultiple: false,
-                    maxFilesize: 256,
-                    paramName: 'file',
-                    createImageThumbnails: true,
-                    maxThumbnailFilesize: 10,
-                    thumbnailWidth: 120,
-                    thumbnailHeight: 120,
-                    filesizeBase: 1000,
-                    maxFiles: null,
-                    filesizeBase: 1000,
-                    params: {},
-                    clickable: true,
-                    ignoreHiddenFiles: true,
-                    acceptedFiles: null,
-                    acceptedMimeTypes: null,
-                    autoProcessQueue: true,
-                    autoQueue: true,
-                    addRemoveLinks: false,
-                    previewsContainer: null,
-                    capture: null,
-                    dictDefaultMessage: 'Drop files here to upload',
-                    dictFallbackMessage: 'Your browser does not support drag\'n\'drop file uploads.',
-                    dictFallbackText: 'Please use the fallback form below to upload your files like in the olden days.',
-                    dictFileTooBig: 'File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.',
-                    dictInvalidFileType: 'You can\'t upload files of this type.',
-                    dictResponseError: 'Server responded with {{statusCode}} code.',
-                    dictCancelUpload: 'Cancel upload',
-                    dictCancelUploadConfirmation: 'Are you sure you want to cancel this upload?',
-                    dictRemoveFile: 'Remove file',
-                    dictRemoveFileConfirmation: null,
-                    dictMaxFilesExceeded: 'You can not upload any more files.',
-                    accept: function (file, done) {
-                        return done();
-                    },
-                    init: function () {
-                        return noop;
-                    },
-                    forceFallback: false,
-                    fallback: function () {
-                        var child, messageElement, span, _i, _len, _ref;
-                        this.element.className = '' + this.element.className + ' dz-browser-not-supported';
-                        _ref = this.element.getElementsByTagName('div');
-                        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                            child = _ref[_i];
-                            if (/(^| )dz-message($| )/.test(child.className)) {
-                                messageElement = child;
-                                child.className = 'dz-message';
-                                continue;
-                            }
-                        }
-                        if (!messageElement) {
-                            messageElement = Dropzone.createElement('<div class="dz-message"><span></span></div>');
-                            this.element.appendChild(messageElement);
-                        }
-                        span = messageElement.getElementsByTagName('span')[0];
-                        if (span) {
-                            span.textContent = this.options.dictFallbackMessage;
-                        }
-                        return this.element.appendChild(this.getFallbackForm());
-                    },
-                    resize: function (file) {
-                        var info, srcRatio, trgRatio;
-                        info = {
-                            srcX: 0,
-                            srcY: 0,
-                            srcWidth: file.width,
-                            srcHeight: file.height
-                        };
-                        srcRatio = file.width / file.height;
-                        info.optWidth = this.options.thumbnailWidth;
-                        info.optHeight = this.options.thumbnailHeight;
-                        if (info.optWidth == null && info.optHeight == null) {
-                            info.optWidth = info.srcWidth;
-                            info.optHeight = info.srcHeight;
-                        } else if (info.optWidth == null) {
-                            info.optWidth = srcRatio * info.optHeight;
-                        } else if (info.optHeight == null) {
-                            info.optHeight = 1 / srcRatio * info.optWidth;
-                        }
-                        trgRatio = info.optWidth / info.optHeight;
-                        if (file.height < info.optHeight || file.width < info.optWidth) {
-                            info.trgHeight = info.srcHeight;
-                            info.trgWidth = info.srcWidth;
-                        } else {
-                            if (srcRatio > trgRatio) {
-                                info.srcHeight = file.height;
-                                info.srcWidth = info.srcHeight * trgRatio;
-                            } else {
-                                info.srcWidth = file.width;
-                                info.srcHeight = info.srcWidth / trgRatio;
-                            }
-                        }
-                        info.srcX = (file.width - info.srcWidth) / 2;
-                        info.srcY = (file.height - info.srcHeight) / 2;
-                        return info;
-                    },
-                    drop: function (e) {
-                        return this.element.classList.remove('dz-drag-hover');
-                    },
-                    dragstart: noop,
-                    dragend: function (e) {
-                        return this.element.classList.remove('dz-drag-hover');
-                    },
-                    dragenter: function (e) {
-                        return this.element.classList.add('dz-drag-hover');
-                    },
-                    dragover: function (e) {
-                        return this.element.classList.add('dz-drag-hover');
-                    },
-                    dragleave: function (e) {
-                        return this.element.classList.remove('dz-drag-hover');
-                    },
-                    paste: noop,
-                    reset: function () {
-                        return this.element.classList.remove('dz-started');
-                    },
-                    addedfile: function (file) {
-                        var node, removeFileEvent, removeLink, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2, _results;
-                        if (this.element === this.previewsContainer) {
-                            this.element.classList.add('dz-started');
-                        }
-                        if (this.previewsContainer) {
-                            file.previewElement = Dropzone.createElement(this.options.previewTemplate.trim());
-                            file.previewTemplate = file.previewElement;
-                            this.previewsContainer.appendChild(file.previewElement);
-                            _ref = file.previewElement.querySelectorAll('[data-dz-name]');
-                            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                                node = _ref[_i];
-                                node.textContent = file.name;
-                            }
-                            _ref1 = file.previewElement.querySelectorAll('[data-dz-size]');
-                            for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-                                node = _ref1[_j];
-                                node.innerHTML = this.filesize(file.size);
-                            }
-                            if (this.options.addRemoveLinks) {
-                                file._removeLink = Dropzone.createElement('<a class="dz-remove" href="javascript:undefined;" data-dz-remove>' + this.options.dictRemoveFile + '</a>');
-                                file.previewElement.appendChild(file._removeLink);
-                            }
-                            removeFileEvent = function (_this) {
-                                return function (e) {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    if (file.status === Dropzone.UPLOADING) {
-                                        return Dropzone.confirm(_this.options.dictCancelUploadConfirmation, function () {
-                                            return _this.removeFile(file);
-                                        });
-                                    } else {
-                                        if (_this.options.dictRemoveFileConfirmation) {
-                                            return Dropzone.confirm(_this.options.dictRemoveFileConfirmation, function () {
-                                                return _this.removeFile(file);
-                                            });
-                                        } else {
-                                            return _this.removeFile(file);
-                                        }
-                                    }
-                                };
-                            }(this);
-                            _ref2 = file.previewElement.querySelectorAll('[data-dz-remove]');
-                            _results = [];
-                            for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-                                removeLink = _ref2[_k];
-                                _results.push(removeLink.addEventListener('click', removeFileEvent));
-                            }
-                            return _results;
-                        }
-                    },
-                    removedfile: function (file) {
-                        var _ref;
-                        if (file.previewElement) {
-                            if ((_ref = file.previewElement) != null) {
-                                _ref.parentNode.removeChild(file.previewElement);
-                            }
-                        }
-                        return this._updateMaxFilesReachedClass();
-                    },
-                    thumbnail: function (file, dataUrl) {
-                        var thumbnailElement, _i, _len, _ref;
-                        if (file.previewElement) {
-                            file.previewElement.classList.remove('dz-file-preview');
-                            _ref = file.previewElement.querySelectorAll('[data-dz-thumbnail]');
-                            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                                thumbnailElement = _ref[_i];
-                                thumbnailElement.alt = file.name;
-                                thumbnailElement.src = dataUrl;
-                            }
-                            return setTimeout(function (_this) {
-                                return function () {
-                                    return file.previewElement.classList.add('dz-image-preview');
-                                };
-                            }(this), 1);
-                        }
-                    },
-                    error: function (file, message) {
-                        var node, _i, _len, _ref, _results;
-                        if (file.previewElement) {
-                            file.previewElement.classList.add('dz-error');
-                            if (typeof message !== 'String' && message.error) {
-                                message = message.error;
-                            }
-                            _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]');
-                            _results = [];
-                            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                                node = _ref[_i];
-                                _results.push(node.textContent = message);
-                            }
-                            return _results;
-                        }
-                    },
-                    errormultiple: noop,
-                    processing: function (file) {
-                        if (file.previewElement) {
-                            file.previewElement.classList.add('dz-processing');
-                            if (file._removeLink) {
-                                return file._removeLink.textContent = this.options.dictCancelUpload;
-                            }
-                        }
-                    },
-                    processingmultiple: noop,
-                    uploadprogress: function (file, progress, bytesSent) {
-                        var node, _i, _len, _ref, _results;
-                        if (file.previewElement) {
-                            _ref = file.previewElement.querySelectorAll('[data-dz-uploadprogress]');
-                            _results = [];
-                            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                                node = _ref[_i];
-                                if (node.nodeName === 'PROGRESS') {
-                                    _results.push(node.value = progress);
-                                } else {
-                                    _results.push(node.style.width = '' + progress + '%');
-                                }
-                            }
-                            return _results;
-                        }
-                    },
-                    totaluploadprogress: noop,
-                    sending: noop,
-                    sendingmultiple: noop,
-                    success: function (file) {
-                        if (file.previewElement) {
-                            return file.previewElement.classList.add('dz-success');
-                        }
-                    },
-                    successmultiple: noop,
-                    canceled: function (file) {
-                        return this.emit('error', file, 'Upload canceled.');
-                    },
-                    canceledmultiple: noop,
-                    complete: function (file) {
-                        if (file._removeLink) {
-                            file._removeLink.textContent = this.options.dictRemoveFile;
-                        }
-                        if (file.previewElement) {
-                            return file.previewElement.classList.add('dz-complete');
-                        }
-                    },
-                    completemultiple: noop,
-                    maxfilesexceeded: noop,
-                    maxfilesreached: noop,
-                    queuecomplete: noop,
-                    previewTemplate: '<div class="dz-preview dz-file-preview">\n  <div class="dz-image"><img data-dz-thumbnail /></div>\n  <div class="dz-details">\n    <div class="dz-size"><span data-dz-size></span></div>\n    <div class="dz-filename"><span data-dz-name></span></div>\n  </div>\n  <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>\n  <div class="dz-error-message"><span data-dz-errormessage></span></div>\n  <div class="dz-success-mark">\n    <svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">\n      <title>Check</title>\n      <defs></defs>\n      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">\n        <path d="M23.5,31.8431458 L17.5852419,25.9283877 C16.0248253,24.3679711 13.4910294,24.366835 11.9289322,25.9289322 C10.3700136,27.4878508 10.3665912,30.0234455 11.9283877,31.5852419 L20.4147581,40.0716123 C20.5133999,40.1702541 20.6159315,40.2626649 20.7218615,40.3488435 C22.2835669,41.8725651 24.794234,41.8626202 26.3461564,40.3106978 L43.3106978,23.3461564 C44.8771021,21.7797521 44.8758057,19.2483887 43.3137085,17.6862915 C41.7547899,16.1273729 39.2176035,16.1255422 37.6538436,17.6893022 L23.5,31.8431458 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z" id="Oval-2" stroke-opacity="0.198794158" stroke="#747474" fill-opacity="0.816519475" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>\n      </g>\n    </svg>\n  </div>\n  <div class="dz-error-mark">\n    <svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">\n      <title>Error</title>\n      <defs></defs>\n      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">\n        <g id="Check-+-Oval-2" sketch:type="MSLayerGroup" stroke="#747474" stroke-opacity="0.198794158" fill="#FFFFFF" fill-opacity="0.816519475">\n          <path d="M32.6568542,29 L38.3106978,23.3461564 C39.8771021,21.7797521 39.8758057,19.2483887 38.3137085,17.6862915 C36.7547899,16.1273729 34.2176035,16.1255422 32.6538436,17.6893022 L27,23.3431458 L21.3461564,17.6893022 C19.7823965,16.1255422 17.2452101,16.1273729 15.6862915,17.6862915 C14.1241943,19.2483887 14.1228979,21.7797521 15.6893022,23.3461564 L21.3431458,29 L15.6893022,34.6538436 C14.1228979,36.2202479 14.1241943,38.7516113 15.6862915,40.3137085 C17.2452101,41.8726271 19.7823965,41.8744578 21.3461564,40.3106978 L27,34.6568542 L32.6538436,40.3106978 C34.2176035,41.8744578 36.7547899,41.8726271 38.3137085,40.3137085 C39.8758057,38.7516113 39.8771021,36.2202479 38.3106978,34.6538436 L32.6568542,29 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z" id="Oval-2" sketch:type="MSShapeGroup"></path>\n        </g>\n      </g>\n    </svg>\n  </div>\n</div>'
-                };
-                extend = function () {
-                    var key, object, objects, target, val, _i, _len;
-                    target = arguments[0], objects = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-                    for (_i = 0, _len = objects.length; _i < _len; _i++) {
-                        object = objects[_i];
-                        for (key in object) {
-                            val = object[key];
-                            target[key] = val;
-                        }
-                    }
-                    return target;
-                };
-                function Dropzone(element, options) {
-                    var elementOptions, fallback, _ref;
-                    this.element = element;
-                    this.version = Dropzone.version;
-                    this.defaultOptions.previewTemplate = this.defaultOptions.previewTemplate.replace(/\n*/g, '');
-                    this.clickableElements = [];
-                    this.listeners = [];
-                    this.files = [];
-                    if (typeof this.element === 'string') {
-                        this.element = document.querySelector(this.element);
-                    }
-                    if (!(this.element && this.element.nodeType != null)) {
-                        throw new Error('Invalid dropzone element.');
-                    }
-                    if (this.element.dropzone) {
-                        throw new Error('Dropzone already attached.');
-                    }
-                    Dropzone.instances.push(this);
-                    this.element.dropzone = this;
-                    elementOptions = (_ref = Dropzone.optionsForElement(this.element)) != null ? _ref : {};
-                    this.options = extend({}, this.defaultOptions, elementOptions, options != null ? options : {});
-                    if (this.options.forceFallback || !Dropzone.isBrowserSupported()) {
-                        return this.options.fallback.call(this);
-                    }
-                    if (this.options.url == null) {
-                        this.options.url = this.element.getAttribute('action');
-                    }
-                    if (!this.options.url) {
-                        throw new Error('No URL provided.');
-                    }
-                    if (this.options.acceptedFiles && this.options.acceptedMimeTypes) {
-                        throw new Error('You can\'t provide both \'acceptedFiles\' and \'acceptedMimeTypes\'. \'acceptedMimeTypes\' is deprecated.');
-                    }
-                    if (this.options.acceptedMimeTypes) {
-                        this.options.acceptedFiles = this.options.acceptedMimeTypes;
-                        delete this.options.acceptedMimeTypes;
-                    }
-                    this.options.method = this.options.method.toUpperCase();
-                    if ((fallback = this.getExistingFallback()) && fallback.parentNode) {
-                        fallback.parentNode.removeChild(fallback);
-                    }
-                    if (this.options.previewsContainer !== false) {
-                        if (this.options.previewsContainer) {
-                            this.previewsContainer = Dropzone.getElement(this.options.previewsContainer, 'previewsContainer');
-                        } else {
-                            this.previewsContainer = this.element;
-                        }
-                    }
-                    if (this.options.clickable) {
-                        if (this.options.clickable === true) {
-                            this.clickableElements = [this.element];
-                        } else {
-                            this.clickableElements = Dropzone.getElements(this.options.clickable, 'clickable');
-                        }
-                    }
-                    this.init();
-                }
-                Dropzone.prototype.getAcceptedFiles = function () {
-                    var file, _i, _len, _ref, _results;
-                    _ref = this.files;
-                    _results = [];
-                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                        file = _ref[_i];
-                        if (file.accepted) {
-                            _results.push(file);
-                        }
-                    }
-                    return _results;
-                };
-                Dropzone.prototype.getRejectedFiles = function () {
-                    var file, _i, _len, _ref, _results;
-                    _ref = this.files;
-                    _results = [];
-                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                        file = _ref[_i];
-                        if (!file.accepted) {
-                            _results.push(file);
-                        }
-                    }
-                    return _results;
-                };
-                Dropzone.prototype.getFilesWithStatus = function (status) {
-                    var file, _i, _len, _ref, _results;
-                    _ref = this.files;
-                    _results = [];
-                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                        file = _ref[_i];
-                        if (file.status === status) {
-                            _results.push(file);
-                        }
-                    }
-                    return _results;
-                };
-                Dropzone.prototype.getQueuedFiles = function () {
-                    return this.getFilesWithStatus(Dropzone.QUEUED);
-                };
-                Dropzone.prototype.getUploadingFiles = function () {
-                    return this.getFilesWithStatus(Dropzone.UPLOADING);
-                };
-                Dropzone.prototype.getActiveFiles = function () {
-                    var file, _i, _len, _ref, _results;
-                    _ref = this.files;
-                    _results = [];
-                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                        file = _ref[_i];
-                        if (file.status === Dropzone.UPLOADING || file.status === Dropzone.QUEUED) {
-                            _results.push(file);
-                        }
-                    }
-                    return _results;
-                };
-                Dropzone.prototype.init = function () {
-                    var eventName, noPropagation, setupHiddenFileInput, _i, _len, _ref, _ref1;
-                    if (this.element.tagName === 'form') {
-                        this.element.setAttribute('enctype', 'multipart/form-data');
-                    }
-                    if (this.element.classList.contains('dropzone') && !this.element.querySelector('.dz-message')) {
-                        this.element.appendChild(Dropzone.createElement('<div class="dz-default dz-message"><span>' + this.options.dictDefaultMessage + '</span></div>'));
-                    }
-                    if (this.clickableElements.length) {
-                        setupHiddenFileInput = function (_this) {
-                            return function () {
-                                if (_this.hiddenFileInput) {
-                                    document.body.removeChild(_this.hiddenFileInput);
-                                }
-                                _this.hiddenFileInput = document.createElement('input');
-                                _this.hiddenFileInput.setAttribute('type', 'file');
-                                if (_this.options.maxFiles == null || _this.options.maxFiles > 1) {
-                                    _this.hiddenFileInput.setAttribute('multiple', 'multiple');
-                                }
-                                _this.hiddenFileInput.className = 'dz-hidden-input';
-                                if (_this.options.acceptedFiles != null) {
-                                    _this.hiddenFileInput.setAttribute('accept', _this.options.acceptedFiles);
-                                }
-                                if (_this.options.capture != null) {
-                                    _this.hiddenFileInput.setAttribute('capture', _this.options.capture);
-                                }
-                                _this.hiddenFileInput.style.visibility = 'hidden';
-                                _this.hiddenFileInput.style.position = 'absolute';
-                                _this.hiddenFileInput.style.top = '0';
-                                _this.hiddenFileInput.style.left = '0';
-                                _this.hiddenFileInput.style.height = '0';
-                                _this.hiddenFileInput.style.width = '0';
-                                document.body.appendChild(_this.hiddenFileInput);
-                                return _this.hiddenFileInput.addEventListener('change', function () {
-                                    var file, files, _i, _len;
-                                    files = _this.hiddenFileInput.files;
-                                    if (files.length) {
-                                        for (_i = 0, _len = files.length; _i < _len; _i++) {
-                                            file = files[_i];
-                                            _this.addFile(file);
-                                        }
-                                    }
-                                    return setupHiddenFileInput();
-                                });
-                            };
-                        }(this);
-                        setupHiddenFileInput();
-                    }
-                    this.URL = (_ref = window.URL) != null ? _ref : window.webkitURL;
-                    _ref1 = this.events;
-                    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-                        eventName = _ref1[_i];
-                        this.on(eventName, this.options[eventName]);
-                    }
-                    this.on('uploadprogress', function (_this) {
-                        return function () {
-                            return _this.updateTotalUploadProgress();
-                        };
-                    }(this));
-                    this.on('removedfile', function (_this) {
-                        return function () {
-                            return _this.updateTotalUploadProgress();
-                        };
-                    }(this));
-                    this.on('canceled', function (_this) {
-                        return function (file) {
-                            return _this.emit('complete', file);
-                        };
-                    }(this));
-                    this.on('complete', function (_this) {
-                        return function (file) {
-                            if (_this.getUploadingFiles().length === 0 && _this.getQueuedFiles().length === 0) {
-                                return setTimeout(function () {
-                                    return _this.emit('queuecomplete');
-                                }, 0);
-                            }
-                        };
-                    }(this));
-                    noPropagation = function (e) {
-                        e.stopPropagation();
-                        if (e.preventDefault) {
-                            return e.preventDefault();
-                        } else {
-                            return e.returnValue = false;
-                        }
-                    };
-                    this.listeners = [{
-                            element: this.element,
-                            events: {
-                                'dragstart': function (_this) {
-                                    return function (e) {
-                                        return _this.emit('dragstart', e);
-                                    };
-                                }(this),
-                                'dragenter': function (_this) {
-                                    return function (e) {
-                                        noPropagation(e);
-                                        return _this.emit('dragenter', e);
-                                    };
-                                }(this),
-                                'dragover': function (_this) {
-                                    return function (e) {
-                                        var efct;
-                                        try {
-                                            efct = e.dataTransfer.effectAllowed;
-                                        } catch (_error) {
-                                        }
-                                        e.dataTransfer.dropEffect = 'move' === efct || 'linkMove' === efct ? 'move' : 'copy';
-                                        noPropagation(e);
-                                        return _this.emit('dragover', e);
-                                    };
-                                }(this),
-                                'dragleave': function (_this) {
-                                    return function (e) {
-                                        return _this.emit('dragleave', e);
-                                    };
-                                }(this),
-                                'drop': function (_this) {
-                                    return function (e) {
-                                        noPropagation(e);
-                                        return _this.drop(e);
-                                    };
-                                }(this),
-                                'dragend': function (_this) {
-                                    return function (e) {
-                                        return _this.emit('dragend', e);
-                                    };
-                                }(this)
-                            }
-                        }];
-                    this.clickableElements.forEach(function (_this) {
-                        return function (clickableElement) {
-                            return _this.listeners.push({
-                                element: clickableElement,
-                                events: {
-                                    'click': function (evt) {
-                                        if (clickableElement !== _this.element || (evt.target === _this.element || Dropzone.elementInside(evt.target, _this.element.querySelector('.dz-message')))) {
-                                            return _this.hiddenFileInput.click();
-                                        }
-                                    }
-                                }
-                            });
-                        };
-                    }(this));
-                    this.enable();
-                    return this.options.init.call(this);
-                };
-                Dropzone.prototype.destroy = function () {
-                    var _ref;
-                    this.disable();
-                    this.removeAllFiles(true);
-                    if ((_ref = this.hiddenFileInput) != null ? _ref.parentNode : void 0) {
-                        this.hiddenFileInput.parentNode.removeChild(this.hiddenFileInput);
-                        this.hiddenFileInput = null;
-                    }
-                    delete this.element.dropzone;
-                    return Dropzone.instances.splice(Dropzone.instances.indexOf(this), 1);
-                };
-                Dropzone.prototype.updateTotalUploadProgress = function () {
-                    var activeFiles, file, totalBytes, totalBytesSent, totalUploadProgress, _i, _len, _ref;
-                    totalBytesSent = 0;
-                    totalBytes = 0;
-                    activeFiles = this.getActiveFiles();
-                    if (activeFiles.length) {
-                        _ref = this.getActiveFiles();
-                        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                            file = _ref[_i];
-                            totalBytesSent += file.upload.bytesSent;
-                            totalBytes += file.upload.total;
-                        }
-                        totalUploadProgress = 100 * totalBytesSent / totalBytes;
-                    } else {
-                        totalUploadProgress = 100;
-                    }
-                    return this.emit('totaluploadprogress', totalUploadProgress, totalBytes, totalBytesSent);
-                };
-                Dropzone.prototype._getParamName = function (n) {
-                    if (typeof this.options.paramName === 'function') {
-                        return this.options.paramName(n);
-                    } else {
-                        return '' + this.options.paramName + (this.options.uploadMultiple ? '[' + n + ']' : '');
-                    }
-                };
-                Dropzone.prototype.getFallbackForm = function () {
-                    var existingFallback, fields, fieldsString, form;
-                    if (existingFallback = this.getExistingFallback()) {
-                        return existingFallback;
-                    }
-                    fieldsString = '<div class="dz-fallback">';
-                    if (this.options.dictFallbackText) {
-                        fieldsString += '<p>' + this.options.dictFallbackText + '</p>';
-                    }
-                    fieldsString += '<input type="file" name="' + this._getParamName(0) + '" ' + (this.options.uploadMultiple ? 'multiple="multiple"' : void 0) + ' /><input type="submit" value="Upload!"></div>';
-                    fields = Dropzone.createElement(fieldsString);
-                    if (this.element.tagName !== 'FORM') {
-                        form = Dropzone.createElement('<form action="' + this.options.url + '" enctype="multipart/form-data" method="' + this.options.method + '"></form>');
-                        form.appendChild(fields);
-                    } else {
-                        this.element.setAttribute('enctype', 'multipart/form-data');
-                        this.element.setAttribute('method', this.options.method);
-                    }
-                    return form != null ? form : fields;
-                };
-                Dropzone.prototype.getExistingFallback = function () {
-                    var fallback, getFallback, tagName, _i, _len, _ref;
-                    getFallback = function (elements) {
-                        var el, _i, _len;
-                        for (_i = 0, _len = elements.length; _i < _len; _i++) {
-                            el = elements[_i];
-                            if (/(^| )fallback($| )/.test(el.className)) {
-                                return el;
-                            }
-                        }
-                    };
-                    _ref = [
-                        'div',
-                        'form'
-                    ];
-                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                        tagName = _ref[_i];
-                        if (fallback = getFallback(this.element.getElementsByTagName(tagName))) {
-                            return fallback;
-                        }
-                    }
-                };
-                Dropzone.prototype.setupEventListeners = function () {
-                    var elementListeners, event, listener, _i, _len, _ref, _results;
-                    _ref = this.listeners;
-                    _results = [];
-                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                        elementListeners = _ref[_i];
-                        _results.push(function () {
-                            var _ref1, _results1;
-                            _ref1 = elementListeners.events;
-                            _results1 = [];
-                            for (event in _ref1) {
-                                listener = _ref1[event];
-                                _results1.push(elementListeners.element.addEventListener(event, listener, false));
-                            }
-                            return _results1;
-                        }());
-                    }
-                    return _results;
-                };
-                Dropzone.prototype.removeEventListeners = function () {
-                    var elementListeners, event, listener, _i, _len, _ref, _results;
-                    _ref = this.listeners;
-                    _results = [];
-                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                        elementListeners = _ref[_i];
-                        _results.push(function () {
-                            var _ref1, _results1;
-                            _ref1 = elementListeners.events;
-                            _results1 = [];
-                            for (event in _ref1) {
-                                listener = _ref1[event];
-                                _results1.push(elementListeners.element.removeEventListener(event, listener, false));
-                            }
-                            return _results1;
-                        }());
-                    }
-                    return _results;
-                };
-                Dropzone.prototype.disable = function () {
-                    var file, _i, _len, _ref, _results;
-                    this.clickableElements.forEach(function (element) {
-                        return element.classList.remove('dz-clickable');
-                    });
-                    this.removeEventListeners();
-                    _ref = this.files;
-                    _results = [];
-                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                        file = _ref[_i];
-                        _results.push(this.cancelUpload(file));
-                    }
-                    return _results;
-                };
-                Dropzone.prototype.enable = function () {
-                    this.clickableElements.forEach(function (element) {
-                        return element.classList.add('dz-clickable');
-                    });
-                    return this.setupEventListeners();
-                };
-                Dropzone.prototype.filesize = function (size) {
-                    var cutoff, i, selectedSize, selectedUnit, unit, units, _i, _len;
-                    units = [
-                        'TB',
-                        'GB',
-                        'MB',
-                        'KB',
-                        'b'
-                    ];
-                    selectedSize = selectedUnit = null;
-                    for (i = _i = 0, _len = units.length; _i < _len; i = ++_i) {
-                        unit = units[i];
-                        cutoff = Math.pow(this.options.filesizeBase, 4 - i) / 10;
-                        if (size >= cutoff) {
-                            selectedSize = size / Math.pow(this.options.filesizeBase, 4 - i);
-                            selectedUnit = unit;
-                            break;
-                        }
-                    }
-                    selectedSize = Math.round(10 * selectedSize) / 10;
-                    return '<strong>' + selectedSize + '</strong> ' + selectedUnit;
-                };
-                Dropzone.prototype._updateMaxFilesReachedClass = function () {
-                    if (this.options.maxFiles != null && this.getAcceptedFiles().length >= this.options.maxFiles) {
-                        if (this.getAcceptedFiles().length === this.options.maxFiles) {
-                            this.emit('maxfilesreached', this.files);
-                        }
-                        return this.element.classList.add('dz-max-files-reached');
-                    } else {
-                        return this.element.classList.remove('dz-max-files-reached');
-                    }
-                };
-                Dropzone.prototype.drop = function (e) {
-                    var files, items;
-                    if (!e.dataTransfer) {
-                        return;
-                    }
-                    this.emit('drop', e);
-                    files = e.dataTransfer.files;
-                    if (files.length) {
-                        items = e.dataTransfer.items;
-                        if (items && items.length && items[0].webkitGetAsEntry != null) {
-                            this._addFilesFromItems(items);
-                        } else {
-                            this.handleFiles(files);
-                        }
-                    }
-                };
-                Dropzone.prototype.paste = function (e) {
-                    var items, _ref;
-                    if ((e != null ? (_ref = e.clipboardData) != null ? _ref.items : void 0 : void 0) == null) {
-                        return;
-                    }
-                    this.emit('paste', e);
-                    items = e.clipboardData.items;
-                    if (items.length) {
-                        return this._addFilesFromItems(items);
-                    }
-                };
-                Dropzone.prototype.handleFiles = function (files) {
-                    var file, _i, _len, _results;
-                    _results = [];
-                    for (_i = 0, _len = files.length; _i < _len; _i++) {
-                        file = files[_i];
-                        _results.push(this.addFile(file));
-                    }
-                    return _results;
-                };
-                Dropzone.prototype._addFilesFromItems = function (items) {
-                    var entry, item, _i, _len, _results;
-                    _results = [];
-                    for (_i = 0, _len = items.length; _i < _len; _i++) {
-                        item = items[_i];
-                        if (item.webkitGetAsEntry != null && (entry = item.webkitGetAsEntry())) {
-                            if (entry.isFile) {
-                                _results.push(this.addFile(item.getAsFile()));
-                            } else if (entry.isDirectory) {
-                                _results.push(this._addFilesFromDirectory(entry, entry.name));
-                            } else {
-                                _results.push(void 0);
-                            }
-                        } else if (item.getAsFile != null) {
-                            if (item.kind == null || item.kind === 'file') {
-                                _results.push(this.addFile(item.getAsFile()));
-                            } else {
-                                _results.push(void 0);
-                            }
-                        } else {
-                            _results.push(void 0);
-                        }
-                    }
-                    return _results;
-                };
-                Dropzone.prototype._addFilesFromDirectory = function (directory, path) {
-                    var dirReader, entriesReader;
-                    dirReader = directory.createReader();
-                    entriesReader = function (_this) {
-                        return function (entries) {
-                            var entry, _i, _len;
-                            for (_i = 0, _len = entries.length; _i < _len; _i++) {
-                                entry = entries[_i];
-                                if (entry.isFile) {
-                                    entry.file(function (file) {
-                                        if (_this.options.ignoreHiddenFiles && file.name.substring(0, 1) === '.') {
-                                            return;
-                                        }
-                                        file.fullPath = '' + path + '/' + file.name;
-                                        return _this.addFile(file);
-                                    });
-                                } else if (entry.isDirectory) {
-                                    _this._addFilesFromDirectory(entry, '' + path + '/' + entry.name);
-                                }
-                            }
-                        };
-                    }(this);
-                    return dirReader.readEntries(entriesReader, function (error) {
-                        return typeof console !== 'undefined' && console !== null ? typeof console.log === 'function' ? console.log(error) : void 0 : void 0;
-                    });
-                };
-                Dropzone.prototype.accept = function (file, done) {
-                    if (file.size > this.options.maxFilesize * 1024 * 1024) {
-                        return done(this.options.dictFileTooBig.replace('{{filesize}}', Math.round(file.size / 1024 / 10.24) / 100).replace('{{maxFilesize}}', this.options.maxFilesize));
-                    } else if (!Dropzone.isValidFile(file, this.options.acceptedFiles)) {
-                        return done(this.options.dictInvalidFileType);
-                    } else if (this.options.maxFiles != null && this.getAcceptedFiles().length >= this.options.maxFiles) {
-                        done(this.options.dictMaxFilesExceeded.replace('{{maxFiles}}', this.options.maxFiles));
-                        return this.emit('maxfilesexceeded', file);
-                    } else {
-                        return this.options.accept.call(this, file, done);
-                    }
-                };
-                Dropzone.prototype.addFile = function (file) {
-                    file.upload = {
-                        progress: 0,
-                        total: file.size,
-                        bytesSent: 0
-                    };
-                    this.files.push(file);
-                    file.status = Dropzone.ADDED;
-                    this.emit('addedfile', file);
-                    this._enqueueThumbnail(file);
-                    return this.accept(file, function (_this) {
-                        return function (error) {
-                            if (error) {
-                                file.accepted = false;
-                                _this._errorProcessing([file], error);
-                            } else {
-                                file.accepted = true;
-                                if (_this.options.autoQueue) {
-                                    _this.enqueueFile(file);
-                                }
-                            }
-                            return _this._updateMaxFilesReachedClass();
-                        };
-                    }(this));
-                };
-                Dropzone.prototype.enqueueFiles = function (files) {
-                    var file, _i, _len;
-                    for (_i = 0, _len = files.length; _i < _len; _i++) {
-                        file = files[_i];
-                        this.enqueueFile(file);
-                    }
-                    return null;
-                };
-                Dropzone.prototype.enqueueFile = function (file) {
-                    if (file.status === Dropzone.ADDED && file.accepted === true) {
-                        file.status = Dropzone.QUEUED;
-                        if (this.options.autoProcessQueue) {
-                            return setTimeout(function (_this) {
-                                return function () {
-                                    return _this.processQueue();
-                                };
-                            }(this), 0);
-                        }
-                    } else {
-                        throw new Error('This file can\'t be queued because it has already been processed or was rejected.');
-                    }
-                };
-                Dropzone.prototype._thumbnailQueue = [];
-                Dropzone.prototype._processingThumbnail = false;
-                Dropzone.prototype._enqueueThumbnail = function (file) {
-                    if (this.options.createImageThumbnails && file.type.match(/image.*/) && file.size <= this.options.maxThumbnailFilesize * 1024 * 1024) {
-                        this._thumbnailQueue.push(file);
-                        return setTimeout(function (_this) {
-                            return function () {
-                                return _this._processThumbnailQueue();
-                            };
-                        }(this), 0);
-                    }
-                };
-                Dropzone.prototype._processThumbnailQueue = function () {
-                    if (this._processingThumbnail || this._thumbnailQueue.length === 0) {
-                        return;
-                    }
-                    this._processingThumbnail = true;
-                    return this.createThumbnail(this._thumbnailQueue.shift(), function (_this) {
-                        return function () {
-                            _this._processingThumbnail = false;
-                            return _this._processThumbnailQueue();
-                        };
-                    }(this));
-                };
-                Dropzone.prototype.removeFile = function (file) {
-                    if (file.status === Dropzone.UPLOADING) {
-                        this.cancelUpload(file);
-                    }
-                    this.files = without(this.files, file);
-                    this.emit('removedfile', file);
-                    if (this.files.length === 0) {
-                        return this.emit('reset');
-                    }
-                };
-                Dropzone.prototype.removeAllFiles = function (cancelIfNecessary) {
-                    var file, _i, _len, _ref;
-                    if (cancelIfNecessary == null) {
-                        cancelIfNecessary = false;
-                    }
-                    _ref = this.files.slice();
-                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                        file = _ref[_i];
-                        if (file.status !== Dropzone.UPLOADING || cancelIfNecessary) {
-                            this.removeFile(file);
-                        }
-                    }
-                    return null;
-                };
-                Dropzone.prototype.createThumbnail = function (file, callback) {
-                    var fileReader;
-                    fileReader = new FileReader();
-                    fileReader.onload = function (_this) {
-                        return function () {
-                            if (file.type === 'image/svg+xml') {
-                                _this.emit('thumbnail', file, fileReader.result);
-                                if (callback != null) {
-                                    callback();
-                                }
-                                return;
-                            }
-                            return _this.createThumbnailFromUrl(file, fileReader.result, callback);
-                        };
-                    }(this);
-                    return fileReader.readAsDataURL(file);
-                };
-                Dropzone.prototype.createThumbnailFromUrl = function (file, imageUrl, callback) {
-                    var img;
-                    img = document.createElement('img');
-                    img.onload = function (_this) {
-                        return function () {
-                            var canvas, ctx, resizeInfo, thumbnail, _ref, _ref1, _ref2, _ref3;
-                            file.width = img.width;
-                            file.height = img.height;
-                            resizeInfo = _this.options.resize.call(_this, file);
-                            if (resizeInfo.trgWidth == null) {
-                                resizeInfo.trgWidth = resizeInfo.optWidth;
-                            }
-                            if (resizeInfo.trgHeight == null) {
-                                resizeInfo.trgHeight = resizeInfo.optHeight;
-                            }
-                            canvas = document.createElement('canvas');
-                            ctx = canvas.getContext('2d');
-                            canvas.width = resizeInfo.trgWidth;
-                            canvas.height = resizeInfo.trgHeight;
-                            drawImageIOSFix(ctx, img, (_ref = resizeInfo.srcX) != null ? _ref : 0, (_ref1 = resizeInfo.srcY) != null ? _ref1 : 0, resizeInfo.srcWidth, resizeInfo.srcHeight, (_ref2 = resizeInfo.trgX) != null ? _ref2 : 0, (_ref3 = resizeInfo.trgY) != null ? _ref3 : 0, resizeInfo.trgWidth, resizeInfo.trgHeight);
-                            thumbnail = canvas.toDataURL('image/png');
-                            _this.emit('thumbnail', file, thumbnail);
-                            if (callback != null) {
-                                return callback();
-                            }
-                        };
-                    }(this);
-                    if (callback != null) {
-                        img.onerror = callback;
-                    }
-                    return img.src = imageUrl;
-                };
-                Dropzone.prototype.processQueue = function () {
-                    var i, parallelUploads, processingLength, queuedFiles;
-                    parallelUploads = this.options.parallelUploads;
-                    processingLength = this.getUploadingFiles().length;
-                    i = processingLength;
-                    if (processingLength >= parallelUploads) {
-                        return;
-                    }
-                    queuedFiles = this.getQueuedFiles();
-                    if (!(queuedFiles.length > 0)) {
-                        return;
-                    }
-                    if (this.options.uploadMultiple) {
-                        return this.processFiles(queuedFiles.slice(0, parallelUploads - processingLength));
-                    } else {
-                        while (i < parallelUploads) {
-                            if (!queuedFiles.length) {
-                                return;
-                            }
-                            this.processFile(queuedFiles.shift());
-                            i++;
-                        }
-                    }
-                };
-                Dropzone.prototype.processFile = function (file) {
-                    return this.processFiles([file]);
-                };
-                Dropzone.prototype.processFiles = function (files) {
-                    var file, _i, _len;
-                    for (_i = 0, _len = files.length; _i < _len; _i++) {
-                        file = files[_i];
-                        file.processing = true;
-                        file.status = Dropzone.UPLOADING;
-                        this.emit('processing', file);
-                    }
-                    if (this.options.uploadMultiple) {
-                        this.emit('processingmultiple', files);
-                    }
-                    return this.uploadFiles(files);
-                };
-                Dropzone.prototype._getFilesWithXhr = function (xhr) {
-                    var file, files;
-                    return files = function () {
-                        var _i, _len, _ref, _results;
-                        _ref = this.files;
-                        _results = [];
-                        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                            file = _ref[_i];
-                            if (file.xhr === xhr) {
-                                _results.push(file);
-                            }
-                        }
-                        return _results;
-                    }.call(this);
-                };
-                Dropzone.prototype.cancelUpload = function (file) {
-                    var groupedFile, groupedFiles, _i, _j, _len, _len1, _ref;
-                    if (file.status === Dropzone.UPLOADING) {
-                        groupedFiles = this._getFilesWithXhr(file.xhr);
-                        for (_i = 0, _len = groupedFiles.length; _i < _len; _i++) {
-                            groupedFile = groupedFiles[_i];
-                            groupedFile.status = Dropzone.CANCELED;
-                        }
-                        file.xhr.abort();
-                        for (_j = 0, _len1 = groupedFiles.length; _j < _len1; _j++) {
-                            groupedFile = groupedFiles[_j];
-                            this.emit('canceled', groupedFile);
-                        }
-                        if (this.options.uploadMultiple) {
-                            this.emit('canceledmultiple', groupedFiles);
-                        }
-                    } else if ((_ref = file.status) === Dropzone.ADDED || _ref === Dropzone.QUEUED) {
-                        file.status = Dropzone.CANCELED;
-                        this.emit('canceled', file);
-                        if (this.options.uploadMultiple) {
-                            this.emit('canceledmultiple', [file]);
-                        }
-                    }
-                    if (this.options.autoProcessQueue) {
-                        return this.processQueue();
-                    }
-                };
-                resolveOption = function () {
-                    var args, option;
-                    option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-                    if (typeof option === 'function') {
-                        return option.apply(this, args);
-                    }
-                    return option;
-                };
-                Dropzone.prototype.uploadFile = function (file) {
-                    return this.uploadFiles([file]);
-                };
-                Dropzone.prototype.uploadFiles = function (files) {
-                    var file, formData, handleError, headerName, headerValue, headers, i, input, inputName, inputType, key, method, option, progressObj, response, updateProgress, url, value, xhr, _i, _j, _k, _l, _len, _len1, _len2, _len3, _m, _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
-                    xhr = new XMLHttpRequest();
-                    for (_i = 0, _len = files.length; _i < _len; _i++) {
-                        file = files[_i];
-                        file.xhr = xhr;
-                    }
-                    method = resolveOption(this.options.method, files);
-                    url = resolveOption(this.options.url, files);
-                    xhr.open(method, url, true);
-                    xhr.withCredentials = !!this.options.withCredentials;
-                    response = null;
-                    handleError = function (_this) {
-                        return function () {
-                            var _j, _len1, _results;
-                            _results = [];
-                            for (_j = 0, _len1 = files.length; _j < _len1; _j++) {
-                                file = files[_j];
-                                _results.push(_this._errorProcessing(files, response || _this.options.dictResponseError.replace('{{statusCode}}', xhr.status), xhr));
-                            }
-                            return _results;
-                        };
-                    }(this);
-                    updateProgress = function (_this) {
-                        return function (e) {
-                            var allFilesFinished, progress, _j, _k, _l, _len1, _len2, _len3, _results;
-                            if (e != null) {
-                                progress = 100 * e.loaded / e.total;
-                                for (_j = 0, _len1 = files.length; _j < _len1; _j++) {
-                                    file = files[_j];
-                                    file.upload = {
-                                        progress: progress,
-                                        total: e.total,
-                                        bytesSent: e.loaded
-                                    };
-                                }
-                            } else {
-                                allFilesFinished = true;
-                                progress = 100;
-                                for (_k = 0, _len2 = files.length; _k < _len2; _k++) {
-                                    file = files[_k];
-                                    if (!(file.upload.progress === 100 && file.upload.bytesSent === file.upload.total)) {
-                                        allFilesFinished = false;
-                                    }
-                                    file.upload.progress = progress;
-                                    file.upload.bytesSent = file.upload.total;
-                                }
-                                if (allFilesFinished) {
-                                    return;
-                                }
-                            }
-                            _results = [];
-                            for (_l = 0, _len3 = files.length; _l < _len3; _l++) {
-                                file = files[_l];
-                                _results.push(_this.emit('uploadprogress', file, progress, file.upload.bytesSent));
-                            }
-                            return _results;
-                        };
-                    }(this);
-                    xhr.onload = function (_this) {
-                        return function (e) {
-                            var _ref;
-                            if (files[0].status === Dropzone.CANCELED) {
-                                return;
-                            }
-                            if (xhr.readyState !== 4) {
-                                return;
-                            }
-                            response = xhr.responseText;
-                            if (xhr.getResponseHeader('content-type') && ~xhr.getResponseHeader('content-type').indexOf('application/json')) {
-                                try {
-                                    response = JSON.parse(response);
-                                } catch (_error) {
-                                    e = _error;
-                                    response = 'Invalid JSON response from server.';
-                                }
-                            }
-                            updateProgress();
-                            if (!(200 <= (_ref = xhr.status) && _ref < 300)) {
-                                return handleError();
-                            } else {
-                                return _this._finished(files, response, e);
-                            }
-                        };
-                    }(this);
-                    xhr.onerror = function (_this) {
-                        return function () {
-                            if (files[0].status === Dropzone.CANCELED) {
-                                return;
-                            }
-                            return handleError();
-                        };
-                    }(this);
-                    progressObj = (_ref = xhr.upload) != null ? _ref : xhr;
-                    progressObj.onprogress = updateProgress;
-                    headers = {
-                        'Accept': 'application/json',
-                        'Cache-Control': 'no-cache',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    };
-                    if (this.options.headers) {
-                        extend(headers, this.options.headers);
-                    }
-                    for (headerName in headers) {
-                        headerValue = headers[headerName];
-                        xhr.setRequestHeader(headerName, headerValue);
-                    }
-                    formData = new FormData();
-                    if (this.options.params) {
-                        _ref1 = this.options.params;
-                        for (key in _ref1) {
-                            value = _ref1[key];
-                            formData.append(key, value);
-                        }
-                    }
-                    for (_j = 0, _len1 = files.length; _j < _len1; _j++) {
-                        file = files[_j];
-                        this.emit('sending', file, xhr, formData);
-                    }
-                    if (this.options.uploadMultiple) {
-                        this.emit('sendingmultiple', files, xhr, formData);
-                    }
-                    if (this.element.tagName === 'FORM') {
-                        _ref2 = this.element.querySelectorAll('input, textarea, select, button');
-                        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-                            input = _ref2[_k];
-                            inputName = input.getAttribute('name');
-                            inputType = input.getAttribute('type');
-                            if (input.tagName === 'SELECT' && input.hasAttribute('multiple')) {
-                                _ref3 = input.options;
-                                for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
-                                    option = _ref3[_l];
-                                    if (option.selected) {
-                                        formData.append(inputName, option.value);
-                                    }
-                                }
-                            } else if (!inputType || (_ref4 = inputType.toLowerCase()) !== 'checkbox' && _ref4 !== 'radio' || input.checked) {
-                                formData.append(inputName, input.value);
-                            }
-                        }
-                    }
-                    for (i = _m = 0, _ref5 = files.length - 1; 0 <= _ref5 ? _m <= _ref5 : _m >= _ref5; i = 0 <= _ref5 ? ++_m : --_m) {
-                        formData.append(this._getParamName(i), files[i], files[i].name);
-                    }
-                    return xhr.send(formData);
-                };
-                Dropzone.prototype._finished = function (files, responseText, e) {
-                    var file, _i, _len;
-                    for (_i = 0, _len = files.length; _i < _len; _i++) {
-                        file = files[_i];
-                        file.status = Dropzone.SUCCESS;
-                        this.emit('success', file, responseText, e);
-                        this.emit('complete', file);
-                    }
-                    if (this.options.uploadMultiple) {
-                        this.emit('successmultiple', files, responseText, e);
-                        this.emit('completemultiple', files);
-                    }
-                    if (this.options.autoProcessQueue) {
-                        return this.processQueue();
-                    }
-                };
-                Dropzone.prototype._errorProcessing = function (files, message, xhr) {
-                    var file, _i, _len;
-                    for (_i = 0, _len = files.length; _i < _len; _i++) {
-                        file = files[_i];
-                        file.status = Dropzone.ERROR;
-                        this.emit('error', file, message, xhr);
-                        this.emit('complete', file);
-                    }
-                    if (this.options.uploadMultiple) {
-                        this.emit('errormultiple', files, message, xhr);
-                        this.emit('completemultiple', files);
-                    }
-                    if (this.options.autoProcessQueue) {
-                        return this.processQueue();
-                    }
-                };
-                return Dropzone;
-            }(Emitter);
-            Dropzone.version = '4.0.1';
-            Dropzone.options = {};
-            Dropzone.optionsForElement = function (element) {
-                if (element.getAttribute('id')) {
-                    return Dropzone.options[camelize(element.getAttribute('id'))];
-                } else {
-                    return void 0;
-                }
-            };
-            Dropzone.instances = [];
-            Dropzone.forElement = function (element) {
-                if (typeof element === 'string') {
-                    element = document.querySelector(element);
-                }
-                if ((element != null ? element.dropzone : void 0) == null) {
-                    throw new Error('No Dropzone found for given element. This is probably because you\'re trying to access it before Dropzone had the time to initialize. Use the `init` option to setup any additional observers on your Dropzone.');
-                }
-                return element.dropzone;
-            };
-            Dropzone.autoDiscover = true;
-            Dropzone.discover = function () {
-                var checkElements, dropzone, dropzones, _i, _len, _results;
-                if (document.querySelectorAll) {
-                    dropzones = document.querySelectorAll('.dropzone');
-                } else {
-                    dropzones = [];
-                    checkElements = function (elements) {
-                        var el, _i, _len, _results;
-                        _results = [];
-                        for (_i = 0, _len = elements.length; _i < _len; _i++) {
-                            el = elements[_i];
-                            if (/(^| )dropzone($| )/.test(el.className)) {
-                                _results.push(dropzones.push(el));
-                            } else {
-                                _results.push(void 0);
-                            }
-                        }
-                        return _results;
-                    };
-                    checkElements(document.getElementsByTagName('div'));
-                    checkElements(document.getElementsByTagName('form'));
-                }
-                _results = [];
-                for (_i = 0, _len = dropzones.length; _i < _len; _i++) {
-                    dropzone = dropzones[_i];
-                    if (Dropzone.optionsForElement(dropzone) !== false) {
-                        _results.push(new Dropzone(dropzone));
-                    } else {
-                        _results.push(void 0);
-                    }
-                }
-                return _results;
-            };
-            Dropzone.blacklistedBrowsers = [/opera.*Macintosh.*version\/12/i];
-            Dropzone.isBrowserSupported = function () {
-                var capableBrowser, regex, _i, _len, _ref;
-                capableBrowser = true;
-                if (window.File && window.FileReader && window.FileList && window.Blob && window.FormData && document.querySelector) {
-                    if (!('classList' in document.createElement('a'))) {
-                        capableBrowser = false;
-                    } else {
-                        _ref = Dropzone.blacklistedBrowsers;
-                        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                            regex = _ref[_i];
-                            if (regex.test(navigator.userAgent)) {
-                                capableBrowser = false;
-                                continue;
-                            }
-                        }
-                    }
-                } else {
-                    capableBrowser = false;
-                }
-                return capableBrowser;
-            };
-            without = function (list, rejectedItem) {
-                var item, _i, _len, _results;
-                _results = [];
-                for (_i = 0, _len = list.length; _i < _len; _i++) {
-                    item = list[_i];
-                    if (item !== rejectedItem) {
-                        _results.push(item);
-                    }
-                }
-                return _results;
-            };
-            camelize = function (str) {
-                return str.replace(/[\-_](\w)/g, function (match) {
-                    return match.charAt(1).toUpperCase();
-                });
-            };
-            Dropzone.createElement = function (string) {
-                var div;
-                div = document.createElement('div');
-                div.innerHTML = string;
-                return div.childNodes[0];
-            };
-            Dropzone.elementInside = function (element, container) {
-                if (element === container) {
-                    return true;
-                }
-                while (element = element.parentNode) {
-                    if (element === container) {
-                        return true;
-                    }
-                }
-                return false;
-            };
-            Dropzone.getElement = function (el, name) {
-                var element;
-                if (typeof el === 'string') {
-                    element = document.querySelector(el);
-                } else if (el.nodeType != null) {
-                    element = el;
-                }
-                if (element == null) {
-                    throw new Error('Invalid `' + name + '` option provided. Please provide a CSS selector or a plain HTML element.');
-                }
-                return element;
-            };
-            Dropzone.getElements = function (els, name) {
-                var e, el, elements, _i, _j, _len, _len1, _ref;
-                if (els instanceof Array) {
-                    elements = [];
-                    try {
-                        for (_i = 0, _len = els.length; _i < _len; _i++) {
-                            el = els[_i];
-                            elements.push(this.getElement(el, name));
-                        }
-                    } catch (_error) {
-                        e = _error;
-                        elements = null;
-                    }
-                } else if (typeof els === 'string') {
-                    elements = [];
-                    _ref = document.querySelectorAll(els);
-                    for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-                        el = _ref[_j];
-                        elements.push(el);
-                    }
-                } else if (els.nodeType != null) {
-                    elements = [els];
-                }
-                if (!(elements != null && elements.length)) {
-                    throw new Error('Invalid `' + name + '` option provided. Please provide a CSS selector, a plain HTML element or a list of those.');
-                }
-                return elements;
-            };
-            Dropzone.confirm = function (question, accepted, rejected) {
-                if (window.confirm(question)) {
-                    return accepted();
-                } else if (rejected != null) {
-                    return rejected();
-                }
-            };
-            Dropzone.isValidFile = function (file, acceptedFiles) {
-                var baseMimeType, mimeType, validType, _i, _len;
-                if (!acceptedFiles) {
-                    return true;
-                }
-                acceptedFiles = acceptedFiles.split(',');
-                mimeType = file.type;
-                baseMimeType = mimeType.replace(/\/.*$/, '');
-                for (_i = 0, _len = acceptedFiles.length; _i < _len; _i++) {
-                    validType = acceptedFiles[_i];
-                    validType = validType.trim();
-                    if (validType.charAt(0) === '.') {
-                        if (file.name.toLowerCase().indexOf(validType.toLowerCase(), file.name.length - validType.length) !== -1) {
-                            return true;
-                        }
-                    } else if (/\/\*$/.test(validType)) {
-                        if (baseMimeType === validType.replace(/\/.*$/, '')) {
-                            return true;
-                        }
-                    } else {
-                        if (mimeType === validType) {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            };
-            if (typeof jQuery !== 'undefined' && jQuery !== null) {
-                jQuery.fn.dropzone = function (options) {
-                    return this.each(function () {
-                        return new Dropzone(this, options);
-                    });
-                };
-            }
-            if (typeof module !== 'undefined' && module !== null) {
-                module.exports = Dropzone;
-            } else {
-                window.Dropzone = Dropzone;
-            }
-            Dropzone.ADDED = 'added';
-            Dropzone.QUEUED = 'queued';
-            Dropzone.ACCEPTED = Dropzone.QUEUED;
-            Dropzone.UPLOADING = 'uploading';
-            Dropzone.PROCESSING = Dropzone.UPLOADING;
-            Dropzone.CANCELED = 'canceled';
-            Dropzone.ERROR = 'error';
-            Dropzone.SUCCESS = 'success';
-            detectVerticalSquash = function (img) {
-                var alpha, canvas, ctx, data, ey, ih, iw, py, ratio, sy;
-                iw = img.naturalWidth;
-                ih = img.naturalHeight;
-                canvas = document.createElement('canvas');
-                canvas.width = 1;
-                canvas.height = ih;
-                ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0);
-                data = ctx.getImageData(0, 0, 1, ih).data;
-                sy = 0;
-                ey = ih;
-                py = ih;
-                while (py > sy) {
-                    alpha = data[(py - 1) * 4 + 3];
-                    if (alpha === 0) {
-                        ey = py;
-                    } else {
-                        sy = py;
-                    }
-                    py = ey + sy >> 1;
-                }
-                ratio = py / ih;
-                if (ratio === 0) {
-                    return 1;
-                } else {
-                    return ratio;
-                }
-            };
-            drawImageIOSFix = function (ctx, img, sx, sy, sw, sh, dx, dy, dw, dh) {
-                var vertSquashRatio;
-                vertSquashRatio = detectVerticalSquash(img);
-                return ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh / vertSquashRatio);
-            };
-            contentLoaded = function (win, fn) {
-                var add, doc, done, init, poll, pre, rem, root, top;
-                done = false;
-                top = true;
-                doc = win.document;
-                root = doc.documentElement;
-                add = doc.addEventListener ? 'addEventListener' : 'attachEvent';
-                rem = doc.addEventListener ? 'removeEventListener' : 'detachEvent';
-                pre = doc.addEventListener ? '' : 'on';
-                init = function (e) {
-                    if (e.type === 'readystatechange' && doc.readyState !== 'complete') {
-                        return;
-                    }
-                    (e.type === 'load' ? win : doc)[rem](pre + e.type, init, false);
-                    if (!done && (done = true)) {
-                        return fn.call(win, e.type || e);
-                    }
-                };
-                poll = function () {
-                    var e;
-                    try {
-                        root.doScroll('left');
-                    } catch (_error) {
-                        e = _error;
-                        setTimeout(poll, 50);
-                        return;
-                    }
-                    return init('poll');
-                };
-                if (doc.readyState !== 'complete') {
-                    if (doc.createEventObject && root.doScroll) {
-                        try {
-                            top = !win.frameElement;
-                        } catch (_error) {
-                        }
-                        if (top) {
-                            poll();
-                        }
-                    }
-                    doc[add](pre + 'DOMContentLoaded', init, false);
-                    doc[add](pre + 'readystatechange', init, false);
-                    return win[add](pre + 'load', init, false);
-                }
-            };
-            Dropzone._autoDiscoverFunction = function () {
-                if (Dropzone.autoDiscover) {
-                    return Dropzone.discover();
-                }
-            };
-            contentLoaded(window, Dropzone._autoDiscoverFunction);
-        }.call(this));
     },
     '41': function (require, module, exports, global) {
         function split(array, segments) {
@@ -14339,7 +13348,7 @@ var G5;
     },
     '43': function (require, module, exports, global) {
         var difference = require('5p');
-        var slice = require('37');
+        var slice = require('30');
         function insert(arr, rest_items) {
             var diff = difference(slice(arguments, 1), arr);
             if (diff.length) {
@@ -14350,7 +13359,7 @@ var G5;
         module.exports = insert;
     },
     '44': function (require, module, exports, global) {
-        var findIndex = require('5s');
+        var findIndex = require('5q');
         function find(arr, iterator, thisObj) {
             var idx = findIndex(arr, iterator, thisObj);
             return idx >= 0 ? arr[idx] : void 0;
@@ -14383,8 +13392,8 @@ var G5;
     },
     '47': function (require, module, exports, global) {
         var toString = require('13');
-        var lowerCase = require('5q');
-        var upperCase = require('5r');
+        var lowerCase = require('5r');
+        var upperCase = require('5s');
         function properCase(str) {
             str = toString(str);
             return lowerCase(str).replace(/^\w|\s\w/g, upperCase);
@@ -16171,609 +15180,1616 @@ var G5;
         module.exports = $;
     },
     '4b': function (require, module, exports, global) {
-        (function (factory) {
-            'use strict';
-            if (typeof define === 'function' && define.amd) {
-                define(factory);
-            } else if (typeof module != 'undefined' && typeof module.exports != 'undefined') {
-                module.exports = factory();
-            } else if (typeof Package !== 'undefined') {
-                Sortable = factory();
-            } else {
-                window['Sortable'] = factory();
-            }
-        }(function () {
-            'use strict';
-            var dragEl, ghostEl, cloneEl, rootEl, nextEl, scrollEl, scrollParentEl, lastEl, lastCSS, oldIndex, newIndex, activeGroup, autoScroll = {}, tapEvt, touchEvt, expando = 'Sortable' + new Date().getTime(), win = window, document = win.document, parseInt = win.parseInt, supportDraggable = !!('draggable' in document.createElement('div')), _silent = false, _dispatchEvent = function (rootEl, name, targetEl, fromEl, startIndex, newIndex) {
-                    var evt = document.createEvent('Event');
-                    evt.initEvent(name, true, true);
-                    evt.item = targetEl || rootEl;
-                    evt.from = fromEl || rootEl;
-                    evt.clone = cloneEl;
-                    evt.oldIndex = startIndex;
-                    evt.newIndex = newIndex;
-                    rootEl.dispatchEvent(evt);
-                }, _customEvents = 'onAdd onUpdate onRemove onStart onEnd onFilter onSort'.split(' '), noop = function () {
-                }, abs = Math.abs, slice = [].slice, touchDragOverListeners = [], _autoScroll = _throttle(function (evt, options, rootEl) {
-                    if (rootEl && options.scroll) {
-                        var el, rect, sens = options.scrollSensitivity, speed = options.scrollSpeed, x = evt.clientX, y = evt.clientY, winWidth = window.innerWidth, winHeight = window.innerHeight, vx, vy;
-                        ;
-                        if (scrollParentEl !== rootEl) {
-                            scrollEl = options.scroll;
-                            scrollParentEl = rootEl;
-                            if (scrollEl === true) {
-                                scrollEl = rootEl;
-                                do {
-                                    if (scrollEl.offsetWidth < scrollEl.scrollWidth || scrollEl.offsetHeight < scrollEl.scrollHeight) {
-                                        break;
-                                    }
-                                } while (scrollEl = scrollEl.parentNode);
-                            }
-                        }
-                        if (scrollEl) {
-                            el = scrollEl;
-                            rect = scrollEl.getBoundingClientRect();
-                            vx = (abs(rect.right - x) <= sens) - (abs(rect.left - x) <= sens);
-                            vy = (abs(rect.bottom - y) <= sens) - (abs(rect.top - y) <= sens);
-                        }
-                        if (!(vx || vy)) {
-                            vx = (winWidth - x <= sens) - (x <= sens);
-                            vy = (winHeight - y <= sens) - (y <= sens);
-                            (vx || vy) && (el = win);
-                        }
-                        if (autoScroll.vx !== vx || autoScroll.vy !== vy || autoScroll.el !== el) {
-                            autoScroll.el = el;
-                            autoScroll.vx = vx;
-                            autoScroll.vy = vy;
-                            clearInterval(autoScroll.pid);
-                            if (el) {
-                                autoScroll.pid = setInterval(function () {
-                                    if (el === win) {
-                                        win.scrollTo(win.scrollX + vx * speed, win.scrollY + vy * speed);
-                                    } else {
-                                        vy && (el.scrollTop += vy * speed);
-                                        vx && (el.scrollLeft += vx * speed);
-                                    }
-                                }, 24);
-                            }
-                        }
+        (function () {
+            var Dropzone, Emitter, camelize, contentLoaded, detectVerticalSquash, drawImageIOSFix, noop, without, __slice = [].slice, __hasProp = {}.hasOwnProperty, __extends = function (child, parent) {
+                    for (var key in parent) {
+                        if (__hasProp.call(parent, key))
+                            child[key] = parent[key];
                     }
-                }, 30);
-            ;
-            function Sortable(el, options) {
-                this.el = el;
-                this.options = options = options || {};
-                var defaults = {
-                        group: Math.random(),
-                        sort: true,
-                        disabled: false,
-                        store: null,
-                        handle: null,
-                        scroll: true,
-                        scrollSensitivity: 30,
-                        scrollSpeed: 10,
-                        draggable: /[uo]l/i.test(el.nodeName) ? 'li' : '>*',
-                        ghostClass: 'sortable-ghost',
-                        ignore: 'a, img',
-                        filter: null,
-                        animation: 0,
-                        setData: function (dataTransfer, dragEl) {
-                            dataTransfer.setData('Text', dragEl.textContent);
-                        },
-                        dropBubble: false,
-                        dragoverBubble: false
-                    };
-                for (var name in defaults) {
-                    !(name in options) && (options[name] = defaults[name]);
+                    function ctor() {
+                        this.constructor = child;
+                    }
+                    ctor.prototype = parent.prototype;
+                    child.prototype = new ctor();
+                    child.__super__ = parent.prototype;
+                    return child;
+                };
+            noop = function () {
+            };
+            Emitter = function () {
+                function Emitter() {
                 }
-                var group = options.group;
-                if (!group || typeof group != 'object') {
-                    group = options.group = { name: group };
-                }
-                [
-                    'pull',
-                    'put'
-                ].forEach(function (key) {
-                    if (!(key in group)) {
-                        group[key] = true;
+                Emitter.prototype.addEventListener = Emitter.prototype.on;
+                Emitter.prototype.on = function (event, fn) {
+                    this._callbacks = this._callbacks || {};
+                    if (!this._callbacks[event]) {
+                        this._callbacks[event] = [];
                     }
-                });
-                _customEvents.forEach(function (name) {
-                    options[name] = _bind(this, options[name] || noop);
-                    _on(el, name.substr(2).toLowerCase(), options[name]);
-                }, this);
-                options.groups = ' ' + group.name + (group.put.join ? ' ' + group.put.join(' ') : '') + ' ';
-                el[expando] = options;
-                for (var fn in this) {
-                    if (fn.charAt(0) === '_') {
-                        this[fn] = _bind(this, this[fn]);
-                    }
-                }
-                _on(el, 'mousedown', this._onTapStart);
-                _on(el, 'touchstart', this._onTapStart);
-                _on(el, 'dragover', this);
-                _on(el, 'dragenter', this);
-                touchDragOverListeners.push(this._onDragOver);
-                options.store && this.sort(options.store.get(this));
-            }
-            Sortable.prototype = {
-                constructor: Sortable,
-                _dragStarted: function () {
-                    if (rootEl && dragEl) {
-                        _toggleClass(dragEl, this.options.ghostClass, true);
-                        Sortable.active = this;
-                        _dispatchEvent(rootEl, 'start', dragEl, rootEl, oldIndex);
-                    }
-                },
-                _onTapStart: function (evt) {
-                    var type = evt.type, touch = evt.touches && evt.touches[0], target = (touch || evt).target, originalTarget = target, options = this.options, el = this.el, filter = options.filter;
-                    if (type === 'mousedown' && evt.button !== 0 || options.disabled) {
-                        return;
-                    }
-                    target = _closest(target, options.draggable, el);
-                    if (!target) {
-                        return;
-                    }
-                    oldIndex = _index(target);
-                    if (typeof filter === 'function') {
-                        if (filter.call(this, evt, target, this)) {
-                            _dispatchEvent(originalTarget, 'filter', target, el, oldIndex);
-                            evt.preventDefault();
-                            return;
+                    this._callbacks[event].push(fn);
+                    return this;
+                };
+                Emitter.prototype.emit = function () {
+                    var args, callback, callbacks, event, _i, _len;
+                    event = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+                    this._callbacks = this._callbacks || {};
+                    callbacks = this._callbacks[event];
+                    if (callbacks) {
+                        for (_i = 0, _len = callbacks.length; _i < _len; _i++) {
+                            callback = callbacks[_i];
+                            callback.apply(this, args);
                         }
-                    } else if (filter) {
-                        filter = filter.split(',').some(function (criteria) {
-                            criteria = _closest(originalTarget, criteria.trim(), el);
-                            if (criteria) {
-                                _dispatchEvent(criteria, 'filter', target, el, oldIndex);
-                                return true;
+                    }
+                    return this;
+                };
+                Emitter.prototype.removeListener = Emitter.prototype.off;
+                Emitter.prototype.removeAllListeners = Emitter.prototype.off;
+                Emitter.prototype.removeEventListener = Emitter.prototype.off;
+                Emitter.prototype.off = function (event, fn) {
+                    var callback, callbacks, i, _i, _len;
+                    if (!this._callbacks || arguments.length === 0) {
+                        this._callbacks = {};
+                        return this;
+                    }
+                    callbacks = this._callbacks[event];
+                    if (!callbacks) {
+                        return this;
+                    }
+                    if (arguments.length === 1) {
+                        delete this._callbacks[event];
+                        return this;
+                    }
+                    for (i = _i = 0, _len = callbacks.length; _i < _len; i = ++_i) {
+                        callback = callbacks[i];
+                        if (callback === fn) {
+                            callbacks.splice(i, 1);
+                            break;
+                        }
+                    }
+                    return this;
+                };
+                return Emitter;
+            }();
+            Dropzone = function (_super) {
+                var extend, resolveOption;
+                __extends(Dropzone, _super);
+                Dropzone.prototype.Emitter = Emitter;
+                Dropzone.prototype.events = [
+                    'drop',
+                    'dragstart',
+                    'dragend',
+                    'dragenter',
+                    'dragover',
+                    'dragleave',
+                    'addedfile',
+                    'removedfile',
+                    'thumbnail',
+                    'error',
+                    'errormultiple',
+                    'processing',
+                    'processingmultiple',
+                    'uploadprogress',
+                    'totaluploadprogress',
+                    'sending',
+                    'sendingmultiple',
+                    'success',
+                    'successmultiple',
+                    'canceled',
+                    'canceledmultiple',
+                    'complete',
+                    'completemultiple',
+                    'reset',
+                    'maxfilesexceeded',
+                    'maxfilesreached',
+                    'queuecomplete'
+                ];
+                Dropzone.prototype.defaultOptions = {
+                    url: null,
+                    method: 'post',
+                    withCredentials: false,
+                    parallelUploads: 2,
+                    uploadMultiple: false,
+                    maxFilesize: 256,
+                    paramName: 'file',
+                    createImageThumbnails: true,
+                    maxThumbnailFilesize: 10,
+                    thumbnailWidth: 120,
+                    thumbnailHeight: 120,
+                    filesizeBase: 1000,
+                    maxFiles: null,
+                    filesizeBase: 1000,
+                    params: {},
+                    clickable: true,
+                    ignoreHiddenFiles: true,
+                    acceptedFiles: null,
+                    acceptedMimeTypes: null,
+                    autoProcessQueue: true,
+                    autoQueue: true,
+                    addRemoveLinks: false,
+                    previewsContainer: null,
+                    capture: null,
+                    dictDefaultMessage: 'Drop files here to upload',
+                    dictFallbackMessage: 'Your browser does not support drag\'n\'drop file uploads.',
+                    dictFallbackText: 'Please use the fallback form below to upload your files like in the olden days.',
+                    dictFileTooBig: 'File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.',
+                    dictInvalidFileType: 'You can\'t upload files of this type.',
+                    dictResponseError: 'Server responded with {{statusCode}} code.',
+                    dictCancelUpload: 'Cancel upload',
+                    dictCancelUploadConfirmation: 'Are you sure you want to cancel this upload?',
+                    dictRemoveFile: 'Remove file',
+                    dictRemoveFileConfirmation: null,
+                    dictMaxFilesExceeded: 'You can not upload any more files.',
+                    accept: function (file, done) {
+                        return done();
+                    },
+                    init: function () {
+                        return noop;
+                    },
+                    forceFallback: false,
+                    fallback: function () {
+                        var child, messageElement, span, _i, _len, _ref;
+                        this.element.className = '' + this.element.className + ' dz-browser-not-supported';
+                        _ref = this.element.getElementsByTagName('div');
+                        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                            child = _ref[_i];
+                            if (/(^| )dz-message($| )/.test(child.className)) {
+                                messageElement = child;
+                                child.className = 'dz-message';
+                                continue;
                             }
-                        });
-                        if (filter) {
-                            evt.preventDefault();
-                            return;
                         }
-                    }
-                    if (options.handle && !_closest(originalTarget, options.handle, el)) {
-                        return;
-                    }
-                    if (target && !dragEl && target.parentNode === el) {
-                        tapEvt = evt;
-                        rootEl = this.el;
-                        dragEl = target;
-                        nextEl = dragEl.nextSibling;
-                        activeGroup = this.options.group;
-                        dragEl.draggable = true;
-                        options.ignore.split(',').forEach(function (criteria) {
-                            _find(target, criteria.trim(), _disableDraggable);
-                        });
-                        if (touch) {
-                            tapEvt = {
-                                target: target,
-                                clientX: touch.clientX,
-                                clientY: touch.clientY
-                            };
-                            this._onDragStart(tapEvt, 'touch');
-                            evt.preventDefault();
+                        if (!messageElement) {
+                            messageElement = Dropzone.createElement('<div class="dz-message"><span></span></div>');
+                            this.element.appendChild(messageElement);
                         }
-                        _on(document, 'mouseup', this._onDrop);
-                        _on(document, 'touchend', this._onDrop);
-                        _on(document, 'touchcancel', this._onDrop);
-                        _on(dragEl, 'dragend', this);
-                        _on(rootEl, 'dragstart', this._onDragStart);
-                        if (!supportDraggable) {
-                            this._onDragStart(tapEvt, true);
+                        span = messageElement.getElementsByTagName('span')[0];
+                        if (span) {
+                            span.textContent = this.options.dictFallbackMessage;
                         }
-                        try {
-                            if (document.selection) {
-                                document.selection.empty();
-                            } else {
-                                window.getSelection().removeAllRanges();
-                            }
-                        } catch (err) {
+                        return this.element.appendChild(this.getFallbackForm());
+                    },
+                    resize: function (file) {
+                        var info, srcRatio, trgRatio;
+                        info = {
+                            srcX: 0,
+                            srcY: 0,
+                            srcWidth: file.width,
+                            srcHeight: file.height
+                        };
+                        srcRatio = file.width / file.height;
+                        info.optWidth = this.options.thumbnailWidth;
+                        info.optHeight = this.options.thumbnailHeight;
+                        if (info.optWidth == null && info.optHeight == null) {
+                            info.optWidth = info.srcWidth;
+                            info.optHeight = info.srcHeight;
+                        } else if (info.optWidth == null) {
+                            info.optWidth = srcRatio * info.optHeight;
+                        } else if (info.optHeight == null) {
+                            info.optHeight = 1 / srcRatio * info.optWidth;
                         }
-                    }
-                },
-                _emulateDragOver: function () {
-                    if (touchEvt) {
-                        _css(ghostEl, 'display', 'none');
-                        var target = document.elementFromPoint(touchEvt.clientX, touchEvt.clientY), parent = target, groupName = ' ' + this.options.group.name + '', i = touchDragOverListeners.length;
-                        if (parent) {
-                            do {
-                                if (parent[expando] && parent[expando].groups.indexOf(groupName) > -1) {
-                                    while (i--) {
-                                        touchDragOverListeners[i]({
-                                            clientX: touchEvt.clientX,
-                                            clientY: touchEvt.clientY,
-                                            target: target,
-                                            rootEl: parent
-                                        });
-                                    }
-                                    break;
-                                }
-                                target = parent;
-                            } while (parent = parent.parentNode);
-                        }
-                        _css(ghostEl, 'display', '');
-                    }
-                },
-                _onTouchMove: function (evt) {
-                    if (tapEvt) {
-                        var touch = evt.touches ? evt.touches[0] : evt, dx = touch.clientX - tapEvt.clientX, dy = touch.clientY - tapEvt.clientY, translate3d = evt.touches ? 'translate3d(' + dx + 'px,' + dy + 'px,0)' : 'translate(' + dx + 'px,' + dy + 'px)';
-                        touchEvt = touch;
-                        _css(ghostEl, 'webkitTransform', translate3d);
-                        _css(ghostEl, 'mozTransform', translate3d);
-                        _css(ghostEl, 'msTransform', translate3d);
-                        _css(ghostEl, 'transform', translate3d);
-                        evt.preventDefault();
-                    }
-                },
-                _onDragStart: function (evt, useFallback) {
-                    var dataTransfer = evt.dataTransfer, options = this.options;
-                    this._offUpEvents();
-                    if (activeGroup.pull == 'clone') {
-                        cloneEl = dragEl.cloneNode(true);
-                        _css(cloneEl, 'display', 'none');
-                        rootEl.insertBefore(cloneEl, dragEl);
-                    }
-                    if (useFallback) {
-                        var rect = dragEl.getBoundingClientRect(), css = _css(dragEl), ghostRect;
-                        ghostEl = dragEl.cloneNode(true);
-                        _css(ghostEl, 'top', rect.top - parseInt(css.marginTop, 10));
-                        _css(ghostEl, 'left', rect.left - parseInt(css.marginLeft, 10));
-                        _css(ghostEl, 'width', rect.width);
-                        _css(ghostEl, 'height', rect.height);
-                        _css(ghostEl, 'opacity', '0.8');
-                        _css(ghostEl, 'position', 'fixed');
-                        _css(ghostEl, 'zIndex', '100000');
-                        rootEl.appendChild(ghostEl);
-                        ghostRect = ghostEl.getBoundingClientRect();
-                        _css(ghostEl, 'width', rect.width * 2 - ghostRect.width);
-                        _css(ghostEl, 'height', rect.height * 2 - ghostRect.height);
-                        if (useFallback === 'touch') {
-                            _on(document, 'touchmove', this._onTouchMove);
-                            _on(document, 'touchend', this._onDrop);
-                            _on(document, 'touchcancel', this._onDrop);
+                        trgRatio = info.optWidth / info.optHeight;
+                        if (file.height < info.optHeight || file.width < info.optWidth) {
+                            info.trgHeight = info.srcHeight;
+                            info.trgWidth = info.srcWidth;
                         } else {
-                            _on(document, 'mousemove', this._onTouchMove);
-                            _on(document, 'mouseup', this._onDrop);
+                            if (srcRatio > trgRatio) {
+                                info.srcHeight = file.height;
+                                info.srcWidth = info.srcHeight * trgRatio;
+                            } else {
+                                info.srcWidth = file.width;
+                                info.srcHeight = info.srcWidth / trgRatio;
+                            }
                         }
-                        this._loopId = setInterval(this._emulateDragOver, 150);
-                    } else {
-                        if (dataTransfer) {
-                            dataTransfer.effectAllowed = 'move';
-                            options.setData && options.setData.call(this, dataTransfer, dragEl);
+                        info.srcX = (file.width - info.srcWidth) / 2;
+                        info.srcY = (file.height - info.srcHeight) / 2;
+                        return info;
+                    },
+                    drop: function (e) {
+                        return this.element.classList.remove('dz-drag-hover');
+                    },
+                    dragstart: noop,
+                    dragend: function (e) {
+                        return this.element.classList.remove('dz-drag-hover');
+                    },
+                    dragenter: function (e) {
+                        return this.element.classList.add('dz-drag-hover');
+                    },
+                    dragover: function (e) {
+                        return this.element.classList.add('dz-drag-hover');
+                    },
+                    dragleave: function (e) {
+                        return this.element.classList.remove('dz-drag-hover');
+                    },
+                    paste: noop,
+                    reset: function () {
+                        return this.element.classList.remove('dz-started');
+                    },
+                    addedfile: function (file) {
+                        var node, removeFileEvent, removeLink, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2, _results;
+                        if (this.element === this.previewsContainer) {
+                            this.element.classList.add('dz-started');
                         }
-                        _on(document, 'drop', this);
+                        if (this.previewsContainer) {
+                            file.previewElement = Dropzone.createElement(this.options.previewTemplate.trim());
+                            file.previewTemplate = file.previewElement;
+                            this.previewsContainer.appendChild(file.previewElement);
+                            _ref = file.previewElement.querySelectorAll('[data-dz-name]');
+                            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                                node = _ref[_i];
+                                node.textContent = file.name;
+                            }
+                            _ref1 = file.previewElement.querySelectorAll('[data-dz-size]');
+                            for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+                                node = _ref1[_j];
+                                node.innerHTML = this.filesize(file.size);
+                            }
+                            if (this.options.addRemoveLinks) {
+                                file._removeLink = Dropzone.createElement('<a class="dz-remove" href="javascript:undefined;" data-dz-remove>' + this.options.dictRemoveFile + '</a>');
+                                file.previewElement.appendChild(file._removeLink);
+                            }
+                            removeFileEvent = function (_this) {
+                                return function (e) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    if (file.status === Dropzone.UPLOADING) {
+                                        return Dropzone.confirm(_this.options.dictCancelUploadConfirmation, function () {
+                                            return _this.removeFile(file);
+                                        });
+                                    } else {
+                                        if (_this.options.dictRemoveFileConfirmation) {
+                                            return Dropzone.confirm(_this.options.dictRemoveFileConfirmation, function () {
+                                                return _this.removeFile(file);
+                                            });
+                                        } else {
+                                            return _this.removeFile(file);
+                                        }
+                                    }
+                                };
+                            }(this);
+                            _ref2 = file.previewElement.querySelectorAll('[data-dz-remove]');
+                            _results = [];
+                            for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+                                removeLink = _ref2[_k];
+                                _results.push(removeLink.addEventListener('click', removeFileEvent));
+                            }
+                            return _results;
+                        }
+                    },
+                    removedfile: function (file) {
+                        var _ref;
+                        if (file.previewElement) {
+                            if ((_ref = file.previewElement) != null) {
+                                _ref.parentNode.removeChild(file.previewElement);
+                            }
+                        }
+                        return this._updateMaxFilesReachedClass();
+                    },
+                    thumbnail: function (file, dataUrl) {
+                        var thumbnailElement, _i, _len, _ref;
+                        if (file.previewElement) {
+                            file.previewElement.classList.remove('dz-file-preview');
+                            _ref = file.previewElement.querySelectorAll('[data-dz-thumbnail]');
+                            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                                thumbnailElement = _ref[_i];
+                                thumbnailElement.alt = file.name;
+                                thumbnailElement.src = dataUrl;
+                            }
+                            return setTimeout(function (_this) {
+                                return function () {
+                                    return file.previewElement.classList.add('dz-image-preview');
+                                };
+                            }(this), 1);
+                        }
+                    },
+                    error: function (file, message) {
+                        var node, _i, _len, _ref, _results;
+                        if (file.previewElement) {
+                            file.previewElement.classList.add('dz-error');
+                            if (typeof message !== 'String' && message.error) {
+                                message = message.error;
+                            }
+                            _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]');
+                            _results = [];
+                            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                                node = _ref[_i];
+                                _results.push(node.textContent = message);
+                            }
+                            return _results;
+                        }
+                    },
+                    errormultiple: noop,
+                    processing: function (file) {
+                        if (file.previewElement) {
+                            file.previewElement.classList.add('dz-processing');
+                            if (file._removeLink) {
+                                return file._removeLink.textContent = this.options.dictCancelUpload;
+                            }
+                        }
+                    },
+                    processingmultiple: noop,
+                    uploadprogress: function (file, progress, bytesSent) {
+                        var node, _i, _len, _ref, _results;
+                        if (file.previewElement) {
+                            _ref = file.previewElement.querySelectorAll('[data-dz-uploadprogress]');
+                            _results = [];
+                            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                                node = _ref[_i];
+                                if (node.nodeName === 'PROGRESS') {
+                                    _results.push(node.value = progress);
+                                } else {
+                                    _results.push(node.style.width = '' + progress + '%');
+                                }
+                            }
+                            return _results;
+                        }
+                    },
+                    totaluploadprogress: noop,
+                    sending: noop,
+                    sendingmultiple: noop,
+                    success: function (file) {
+                        if (file.previewElement) {
+                            return file.previewElement.classList.add('dz-success');
+                        }
+                    },
+                    successmultiple: noop,
+                    canceled: function (file) {
+                        return this.emit('error', file, 'Upload canceled.');
+                    },
+                    canceledmultiple: noop,
+                    complete: function (file) {
+                        if (file._removeLink) {
+                            file._removeLink.textContent = this.options.dictRemoveFile;
+                        }
+                        if (file.previewElement) {
+                            return file.previewElement.classList.add('dz-complete');
+                        }
+                    },
+                    completemultiple: noop,
+                    maxfilesexceeded: noop,
+                    maxfilesreached: noop,
+                    queuecomplete: noop,
+                    previewTemplate: '<div class="dz-preview dz-file-preview">\n  <div class="dz-image"><img data-dz-thumbnail /></div>\n  <div class="dz-details">\n    <div class="dz-size"><span data-dz-size></span></div>\n    <div class="dz-filename"><span data-dz-name></span></div>\n  </div>\n  <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>\n  <div class="dz-error-message"><span data-dz-errormessage></span></div>\n  <div class="dz-success-mark">\n    <svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">\n      <title>Check</title>\n      <defs></defs>\n      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">\n        <path d="M23.5,31.8431458 L17.5852419,25.9283877 C16.0248253,24.3679711 13.4910294,24.366835 11.9289322,25.9289322 C10.3700136,27.4878508 10.3665912,30.0234455 11.9283877,31.5852419 L20.4147581,40.0716123 C20.5133999,40.1702541 20.6159315,40.2626649 20.7218615,40.3488435 C22.2835669,41.8725651 24.794234,41.8626202 26.3461564,40.3106978 L43.3106978,23.3461564 C44.8771021,21.7797521 44.8758057,19.2483887 43.3137085,17.6862915 C41.7547899,16.1273729 39.2176035,16.1255422 37.6538436,17.6893022 L23.5,31.8431458 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z" id="Oval-2" stroke-opacity="0.198794158" stroke="#747474" fill-opacity="0.816519475" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>\n      </g>\n    </svg>\n  </div>\n  <div class="dz-error-mark">\n    <svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">\n      <title>Error</title>\n      <defs></defs>\n      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">\n        <g id="Check-+-Oval-2" sketch:type="MSLayerGroup" stroke="#747474" stroke-opacity="0.198794158" fill="#FFFFFF" fill-opacity="0.816519475">\n          <path d="M32.6568542,29 L38.3106978,23.3461564 C39.8771021,21.7797521 39.8758057,19.2483887 38.3137085,17.6862915 C36.7547899,16.1273729 34.2176035,16.1255422 32.6538436,17.6893022 L27,23.3431458 L21.3461564,17.6893022 C19.7823965,16.1255422 17.2452101,16.1273729 15.6862915,17.6862915 C14.1241943,19.2483887 14.1228979,21.7797521 15.6893022,23.3461564 L21.3431458,29 L15.6893022,34.6538436 C14.1228979,36.2202479 14.1241943,38.7516113 15.6862915,40.3137085 C17.2452101,41.8726271 19.7823965,41.8744578 21.3461564,40.3106978 L27,34.6568542 L32.6538436,40.3106978 C34.2176035,41.8744578 36.7547899,41.8726271 38.3137085,40.3137085 C39.8758057,38.7516113 39.8771021,36.2202479 38.3106978,34.6538436 L32.6568542,29 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z" id="Oval-2" sketch:type="MSShapeGroup"></path>\n        </g>\n      </g>\n    </svg>\n  </div>\n</div>'
+                };
+                extend = function () {
+                    var key, object, objects, target, val, _i, _len;
+                    target = arguments[0], objects = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+                    for (_i = 0, _len = objects.length; _i < _len; _i++) {
+                        object = objects[_i];
+                        for (key in object) {
+                            val = object[key];
+                            target[key] = val;
+                        }
                     }
-                    setTimeout(this._dragStarted, 0);
-                },
-                _onDragOver: function (evt) {
-                    var el = this.el, target, dragRect, revert, options = this.options, group = options.group, groupPut = group.put, isOwner = activeGroup === group, canSort = options.sort;
-                    if (!dragEl) {
+                    return target;
+                };
+                function Dropzone(element, options) {
+                    var elementOptions, fallback, _ref;
+                    this.element = element;
+                    this.version = Dropzone.version;
+                    this.defaultOptions.previewTemplate = this.defaultOptions.previewTemplate.replace(/\n*/g, '');
+                    this.clickableElements = [];
+                    this.listeners = [];
+                    this.files = [];
+                    if (typeof this.element === 'string') {
+                        this.element = document.querySelector(this.element);
+                    }
+                    if (!(this.element && this.element.nodeType != null)) {
+                        throw new Error('Invalid dropzone element.');
+                    }
+                    if (this.element.dropzone) {
+                        throw new Error('Dropzone already attached.');
+                    }
+                    Dropzone.instances.push(this);
+                    this.element.dropzone = this;
+                    elementOptions = (_ref = Dropzone.optionsForElement(this.element)) != null ? _ref : {};
+                    this.options = extend({}, this.defaultOptions, elementOptions, options != null ? options : {});
+                    if (this.options.forceFallback || !Dropzone.isBrowserSupported()) {
+                        return this.options.fallback.call(this);
+                    }
+                    if (this.options.url == null) {
+                        this.options.url = this.element.getAttribute('action');
+                    }
+                    if (!this.options.url) {
+                        throw new Error('No URL provided.');
+                    }
+                    if (this.options.acceptedFiles && this.options.acceptedMimeTypes) {
+                        throw new Error('You can\'t provide both \'acceptedFiles\' and \'acceptedMimeTypes\'. \'acceptedMimeTypes\' is deprecated.');
+                    }
+                    if (this.options.acceptedMimeTypes) {
+                        this.options.acceptedFiles = this.options.acceptedMimeTypes;
+                        delete this.options.acceptedMimeTypes;
+                    }
+                    this.options.method = this.options.method.toUpperCase();
+                    if ((fallback = this.getExistingFallback()) && fallback.parentNode) {
+                        fallback.parentNode.removeChild(fallback);
+                    }
+                    if (this.options.previewsContainer !== false) {
+                        if (this.options.previewsContainer) {
+                            this.previewsContainer = Dropzone.getElement(this.options.previewsContainer, 'previewsContainer');
+                        } else {
+                            this.previewsContainer = this.element;
+                        }
+                    }
+                    if (this.options.clickable) {
+                        if (this.options.clickable === true) {
+                            this.clickableElements = [this.element];
+                        } else {
+                            this.clickableElements = Dropzone.getElements(this.options.clickable, 'clickable');
+                        }
+                    }
+                    this.init();
+                }
+                Dropzone.prototype.getAcceptedFiles = function () {
+                    var file, _i, _len, _ref, _results;
+                    _ref = this.files;
+                    _results = [];
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        file = _ref[_i];
+                        if (file.accepted) {
+                            _results.push(file);
+                        }
+                    }
+                    return _results;
+                };
+                Dropzone.prototype.getRejectedFiles = function () {
+                    var file, _i, _len, _ref, _results;
+                    _ref = this.files;
+                    _results = [];
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        file = _ref[_i];
+                        if (!file.accepted) {
+                            _results.push(file);
+                        }
+                    }
+                    return _results;
+                };
+                Dropzone.prototype.getFilesWithStatus = function (status) {
+                    var file, _i, _len, _ref, _results;
+                    _ref = this.files;
+                    _results = [];
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        file = _ref[_i];
+                        if (file.status === status) {
+                            _results.push(file);
+                        }
+                    }
+                    return _results;
+                };
+                Dropzone.prototype.getQueuedFiles = function () {
+                    return this.getFilesWithStatus(Dropzone.QUEUED);
+                };
+                Dropzone.prototype.getUploadingFiles = function () {
+                    return this.getFilesWithStatus(Dropzone.UPLOADING);
+                };
+                Dropzone.prototype.getActiveFiles = function () {
+                    var file, _i, _len, _ref, _results;
+                    _ref = this.files;
+                    _results = [];
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        file = _ref[_i];
+                        if (file.status === Dropzone.UPLOADING || file.status === Dropzone.QUEUED) {
+                            _results.push(file);
+                        }
+                    }
+                    return _results;
+                };
+                Dropzone.prototype.init = function () {
+                    var eventName, noPropagation, setupHiddenFileInput, _i, _len, _ref, _ref1;
+                    if (this.element.tagName === 'form') {
+                        this.element.setAttribute('enctype', 'multipart/form-data');
+                    }
+                    if (this.element.classList.contains('dropzone') && !this.element.querySelector('.dz-message')) {
+                        this.element.appendChild(Dropzone.createElement('<div class="dz-default dz-message"><span>' + this.options.dictDefaultMessage + '</span></div>'));
+                    }
+                    if (this.clickableElements.length) {
+                        setupHiddenFileInput = function (_this) {
+                            return function () {
+                                if (_this.hiddenFileInput) {
+                                    document.body.removeChild(_this.hiddenFileInput);
+                                }
+                                _this.hiddenFileInput = document.createElement('input');
+                                _this.hiddenFileInput.setAttribute('type', 'file');
+                                if (_this.options.maxFiles == null || _this.options.maxFiles > 1) {
+                                    _this.hiddenFileInput.setAttribute('multiple', 'multiple');
+                                }
+                                _this.hiddenFileInput.className = 'dz-hidden-input';
+                                if (_this.options.acceptedFiles != null) {
+                                    _this.hiddenFileInput.setAttribute('accept', _this.options.acceptedFiles);
+                                }
+                                if (_this.options.capture != null) {
+                                    _this.hiddenFileInput.setAttribute('capture', _this.options.capture);
+                                }
+                                _this.hiddenFileInput.style.visibility = 'hidden';
+                                _this.hiddenFileInput.style.position = 'absolute';
+                                _this.hiddenFileInput.style.top = '0';
+                                _this.hiddenFileInput.style.left = '0';
+                                _this.hiddenFileInput.style.height = '0';
+                                _this.hiddenFileInput.style.width = '0';
+                                document.body.appendChild(_this.hiddenFileInput);
+                                return _this.hiddenFileInput.addEventListener('change', function () {
+                                    var file, files, _i, _len;
+                                    files = _this.hiddenFileInput.files;
+                                    if (files.length) {
+                                        for (_i = 0, _len = files.length; _i < _len; _i++) {
+                                            file = files[_i];
+                                            _this.addFile(file);
+                                        }
+                                    }
+                                    return setupHiddenFileInput();
+                                });
+                            };
+                        }(this);
+                        setupHiddenFileInput();
+                    }
+                    this.URL = (_ref = window.URL) != null ? _ref : window.webkitURL;
+                    _ref1 = this.events;
+                    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+                        eventName = _ref1[_i];
+                        this.on(eventName, this.options[eventName]);
+                    }
+                    this.on('uploadprogress', function (_this) {
+                        return function () {
+                            return _this.updateTotalUploadProgress();
+                        };
+                    }(this));
+                    this.on('removedfile', function (_this) {
+                        return function () {
+                            return _this.updateTotalUploadProgress();
+                        };
+                    }(this));
+                    this.on('canceled', function (_this) {
+                        return function (file) {
+                            return _this.emit('complete', file);
+                        };
+                    }(this));
+                    this.on('complete', function (_this) {
+                        return function (file) {
+                            if (_this.getUploadingFiles().length === 0 && _this.getQueuedFiles().length === 0) {
+                                return setTimeout(function () {
+                                    return _this.emit('queuecomplete');
+                                }, 0);
+                            }
+                        };
+                    }(this));
+                    noPropagation = function (e) {
+                        e.stopPropagation();
+                        if (e.preventDefault) {
+                            return e.preventDefault();
+                        } else {
+                            return e.returnValue = false;
+                        }
+                    };
+                    this.listeners = [{
+                            element: this.element,
+                            events: {
+                                'dragstart': function (_this) {
+                                    return function (e) {
+                                        return _this.emit('dragstart', e);
+                                    };
+                                }(this),
+                                'dragenter': function (_this) {
+                                    return function (e) {
+                                        noPropagation(e);
+                                        return _this.emit('dragenter', e);
+                                    };
+                                }(this),
+                                'dragover': function (_this) {
+                                    return function (e) {
+                                        var efct;
+                                        try {
+                                            efct = e.dataTransfer.effectAllowed;
+                                        } catch (_error) {
+                                        }
+                                        e.dataTransfer.dropEffect = 'move' === efct || 'linkMove' === efct ? 'move' : 'copy';
+                                        noPropagation(e);
+                                        return _this.emit('dragover', e);
+                                    };
+                                }(this),
+                                'dragleave': function (_this) {
+                                    return function (e) {
+                                        return _this.emit('dragleave', e);
+                                    };
+                                }(this),
+                                'drop': function (_this) {
+                                    return function (e) {
+                                        noPropagation(e);
+                                        return _this.drop(e);
+                                    };
+                                }(this),
+                                'dragend': function (_this) {
+                                    return function (e) {
+                                        return _this.emit('dragend', e);
+                                    };
+                                }(this)
+                            }
+                        }];
+                    this.clickableElements.forEach(function (_this) {
+                        return function (clickableElement) {
+                            return _this.listeners.push({
+                                element: clickableElement,
+                                events: {
+                                    'click': function (evt) {
+                                        if (clickableElement !== _this.element || (evt.target === _this.element || Dropzone.elementInside(evt.target, _this.element.querySelector('.dz-message')))) {
+                                            return _this.hiddenFileInput.click();
+                                        }
+                                    }
+                                }
+                            });
+                        };
+                    }(this));
+                    this.enable();
+                    return this.options.init.call(this);
+                };
+                Dropzone.prototype.destroy = function () {
+                    var _ref;
+                    this.disable();
+                    this.removeAllFiles(true);
+                    if ((_ref = this.hiddenFileInput) != null ? _ref.parentNode : void 0) {
+                        this.hiddenFileInput.parentNode.removeChild(this.hiddenFileInput);
+                        this.hiddenFileInput = null;
+                    }
+                    delete this.element.dropzone;
+                    return Dropzone.instances.splice(Dropzone.instances.indexOf(this), 1);
+                };
+                Dropzone.prototype.updateTotalUploadProgress = function () {
+                    var activeFiles, file, totalBytes, totalBytesSent, totalUploadProgress, _i, _len, _ref;
+                    totalBytesSent = 0;
+                    totalBytes = 0;
+                    activeFiles = this.getActiveFiles();
+                    if (activeFiles.length) {
+                        _ref = this.getActiveFiles();
+                        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                            file = _ref[_i];
+                            totalBytesSent += file.upload.bytesSent;
+                            totalBytes += file.upload.total;
+                        }
+                        totalUploadProgress = 100 * totalBytesSent / totalBytes;
+                    } else {
+                        totalUploadProgress = 100;
+                    }
+                    return this.emit('totaluploadprogress', totalUploadProgress, totalBytes, totalBytesSent);
+                };
+                Dropzone.prototype._getParamName = function (n) {
+                    if (typeof this.options.paramName === 'function') {
+                        return this.options.paramName(n);
+                    } else {
+                        return '' + this.options.paramName + (this.options.uploadMultiple ? '[' + n + ']' : '');
+                    }
+                };
+                Dropzone.prototype.getFallbackForm = function () {
+                    var existingFallback, fields, fieldsString, form;
+                    if (existingFallback = this.getExistingFallback()) {
+                        return existingFallback;
+                    }
+                    fieldsString = '<div class="dz-fallback">';
+                    if (this.options.dictFallbackText) {
+                        fieldsString += '<p>' + this.options.dictFallbackText + '</p>';
+                    }
+                    fieldsString += '<input type="file" name="' + this._getParamName(0) + '" ' + (this.options.uploadMultiple ? 'multiple="multiple"' : void 0) + ' /><input type="submit" value="Upload!"></div>';
+                    fields = Dropzone.createElement(fieldsString);
+                    if (this.element.tagName !== 'FORM') {
+                        form = Dropzone.createElement('<form action="' + this.options.url + '" enctype="multipart/form-data" method="' + this.options.method + '"></form>');
+                        form.appendChild(fields);
+                    } else {
+                        this.element.setAttribute('enctype', 'multipart/form-data');
+                        this.element.setAttribute('method', this.options.method);
+                    }
+                    return form != null ? form : fields;
+                };
+                Dropzone.prototype.getExistingFallback = function () {
+                    var fallback, getFallback, tagName, _i, _len, _ref;
+                    getFallback = function (elements) {
+                        var el, _i, _len;
+                        for (_i = 0, _len = elements.length; _i < _len; _i++) {
+                            el = elements[_i];
+                            if (/(^| )fallback($| )/.test(el.className)) {
+                                return el;
+                            }
+                        }
+                    };
+                    _ref = [
+                        'div',
+                        'form'
+                    ];
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        tagName = _ref[_i];
+                        if (fallback = getFallback(this.element.getElementsByTagName(tagName))) {
+                            return fallback;
+                        }
+                    }
+                };
+                Dropzone.prototype.setupEventListeners = function () {
+                    var elementListeners, event, listener, _i, _len, _ref, _results;
+                    _ref = this.listeners;
+                    _results = [];
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        elementListeners = _ref[_i];
+                        _results.push(function () {
+                            var _ref1, _results1;
+                            _ref1 = elementListeners.events;
+                            _results1 = [];
+                            for (event in _ref1) {
+                                listener = _ref1[event];
+                                _results1.push(elementListeners.element.addEventListener(event, listener, false));
+                            }
+                            return _results1;
+                        }());
+                    }
+                    return _results;
+                };
+                Dropzone.prototype.removeEventListeners = function () {
+                    var elementListeners, event, listener, _i, _len, _ref, _results;
+                    _ref = this.listeners;
+                    _results = [];
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        elementListeners = _ref[_i];
+                        _results.push(function () {
+                            var _ref1, _results1;
+                            _ref1 = elementListeners.events;
+                            _results1 = [];
+                            for (event in _ref1) {
+                                listener = _ref1[event];
+                                _results1.push(elementListeners.element.removeEventListener(event, listener, false));
+                            }
+                            return _results1;
+                        }());
+                    }
+                    return _results;
+                };
+                Dropzone.prototype.disable = function () {
+                    var file, _i, _len, _ref, _results;
+                    this.clickableElements.forEach(function (element) {
+                        return element.classList.remove('dz-clickable');
+                    });
+                    this.removeEventListeners();
+                    _ref = this.files;
+                    _results = [];
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        file = _ref[_i];
+                        _results.push(this.cancelUpload(file));
+                    }
+                    return _results;
+                };
+                Dropzone.prototype.enable = function () {
+                    this.clickableElements.forEach(function (element) {
+                        return element.classList.add('dz-clickable');
+                    });
+                    return this.setupEventListeners();
+                };
+                Dropzone.prototype.filesize = function (size) {
+                    var cutoff, i, selectedSize, selectedUnit, unit, units, _i, _len;
+                    units = [
+                        'TB',
+                        'GB',
+                        'MB',
+                        'KB',
+                        'b'
+                    ];
+                    selectedSize = selectedUnit = null;
+                    for (i = _i = 0, _len = units.length; _i < _len; i = ++_i) {
+                        unit = units[i];
+                        cutoff = Math.pow(this.options.filesizeBase, 4 - i) / 10;
+                        if (size >= cutoff) {
+                            selectedSize = size / Math.pow(this.options.filesizeBase, 4 - i);
+                            selectedUnit = unit;
+                            break;
+                        }
+                    }
+                    selectedSize = Math.round(10 * selectedSize) / 10;
+                    return '<strong>' + selectedSize + '</strong> ' + selectedUnit;
+                };
+                Dropzone.prototype._updateMaxFilesReachedClass = function () {
+                    if (this.options.maxFiles != null && this.getAcceptedFiles().length >= this.options.maxFiles) {
+                        if (this.getAcceptedFiles().length === this.options.maxFiles) {
+                            this.emit('maxfilesreached', this.files);
+                        }
+                        return this.element.classList.add('dz-max-files-reached');
+                    } else {
+                        return this.element.classList.remove('dz-max-files-reached');
+                    }
+                };
+                Dropzone.prototype.drop = function (e) {
+                    var files, items;
+                    if (!e.dataTransfer) {
                         return;
                     }
-                    if (evt.preventDefault !== void 0) {
-                        evt.preventDefault();
-                        !options.dragoverBubble && evt.stopPropagation();
+                    this.emit('drop', e);
+                    files = e.dataTransfer.files;
+                    if (files.length) {
+                        items = e.dataTransfer.items;
+                        if (items && items.length && items[0].webkitGetAsEntry != null) {
+                            this._addFilesFromItems(items);
+                        } else {
+                            this.handleFiles(files);
+                        }
                     }
-                    if (activeGroup && !options.disabled && (isOwner ? canSort || (revert = !rootEl.contains(dragEl)) : activeGroup.pull && groupPut && (activeGroup.name === group.name || groupPut.indexOf && ~groupPut.indexOf(activeGroup.name))) && (evt.rootEl === void 0 || evt.rootEl === this.el)) {
-                        _autoScroll(evt, options, this.el);
-                        if (_silent) {
-                            return;
-                        }
-                        target = _closest(evt.target, options.draggable, el);
-                        dragRect = dragEl.getBoundingClientRect();
-                        if (revert) {
-                            _cloneHide(true);
-                            if (cloneEl || nextEl) {
-                                rootEl.insertBefore(dragEl, cloneEl || nextEl);
-                            } else if (!canSort) {
-                                rootEl.appendChild(dragEl);
+                };
+                Dropzone.prototype.paste = function (e) {
+                    var items, _ref;
+                    if ((e != null ? (_ref = e.clipboardData) != null ? _ref.items : void 0 : void 0) == null) {
+                        return;
+                    }
+                    this.emit('paste', e);
+                    items = e.clipboardData.items;
+                    if (items.length) {
+                        return this._addFilesFromItems(items);
+                    }
+                };
+                Dropzone.prototype.handleFiles = function (files) {
+                    var file, _i, _len, _results;
+                    _results = [];
+                    for (_i = 0, _len = files.length; _i < _len; _i++) {
+                        file = files[_i];
+                        _results.push(this.addFile(file));
+                    }
+                    return _results;
+                };
+                Dropzone.prototype._addFilesFromItems = function (items) {
+                    var entry, item, _i, _len, _results;
+                    _results = [];
+                    for (_i = 0, _len = items.length; _i < _len; _i++) {
+                        item = items[_i];
+                        if (item.webkitGetAsEntry != null && (entry = item.webkitGetAsEntry())) {
+                            if (entry.isFile) {
+                                _results.push(this.addFile(item.getAsFile()));
+                            } else if (entry.isDirectory) {
+                                _results.push(this._addFilesFromDirectory(entry, entry.name));
+                            } else {
+                                _results.push(void 0);
                             }
-                            return;
+                        } else if (item.getAsFile != null) {
+                            if (item.kind == null || item.kind === 'file') {
+                                _results.push(this.addFile(item.getAsFile()));
+                            } else {
+                                _results.push(void 0);
+                            }
+                        } else {
+                            _results.push(void 0);
                         }
-                        if (el.children.length === 0 || el.children[0] === ghostEl || el === evt.target && (target = _ghostInBottom(el, evt))) {
-                            if (target) {
-                                if (target.animated) {
+                    }
+                    return _results;
+                };
+                Dropzone.prototype._addFilesFromDirectory = function (directory, path) {
+                    var dirReader, entriesReader;
+                    dirReader = directory.createReader();
+                    entriesReader = function (_this) {
+                        return function (entries) {
+                            var entry, _i, _len;
+                            for (_i = 0, _len = entries.length; _i < _len; _i++) {
+                                entry = entries[_i];
+                                if (entry.isFile) {
+                                    entry.file(function (file) {
+                                        if (_this.options.ignoreHiddenFiles && file.name.substring(0, 1) === '.') {
+                                            return;
+                                        }
+                                        file.fullPath = '' + path + '/' + file.name;
+                                        return _this.addFile(file);
+                                    });
+                                } else if (entry.isDirectory) {
+                                    _this._addFilesFromDirectory(entry, '' + path + '/' + entry.name);
+                                }
+                            }
+                        };
+                    }(this);
+                    return dirReader.readEntries(entriesReader, function (error) {
+                        return typeof console !== 'undefined' && console !== null ? typeof console.log === 'function' ? console.log(error) : void 0 : void 0;
+                    });
+                };
+                Dropzone.prototype.accept = function (file, done) {
+                    if (file.size > this.options.maxFilesize * 1024 * 1024) {
+                        return done(this.options.dictFileTooBig.replace('{{filesize}}', Math.round(file.size / 1024 / 10.24) / 100).replace('{{maxFilesize}}', this.options.maxFilesize));
+                    } else if (!Dropzone.isValidFile(file, this.options.acceptedFiles)) {
+                        return done(this.options.dictInvalidFileType);
+                    } else if (this.options.maxFiles != null && this.getAcceptedFiles().length >= this.options.maxFiles) {
+                        done(this.options.dictMaxFilesExceeded.replace('{{maxFiles}}', this.options.maxFiles));
+                        return this.emit('maxfilesexceeded', file);
+                    } else {
+                        return this.options.accept.call(this, file, done);
+                    }
+                };
+                Dropzone.prototype.addFile = function (file) {
+                    file.upload = {
+                        progress: 0,
+                        total: file.size,
+                        bytesSent: 0
+                    };
+                    this.files.push(file);
+                    file.status = Dropzone.ADDED;
+                    this.emit('addedfile', file);
+                    this._enqueueThumbnail(file);
+                    return this.accept(file, function (_this) {
+                        return function (error) {
+                            if (error) {
+                                file.accepted = false;
+                                _this._errorProcessing([file], error);
+                            } else {
+                                file.accepted = true;
+                                if (_this.options.autoQueue) {
+                                    _this.enqueueFile(file);
+                                }
+                            }
+                            return _this._updateMaxFilesReachedClass();
+                        };
+                    }(this));
+                };
+                Dropzone.prototype.enqueueFiles = function (files) {
+                    var file, _i, _len;
+                    for (_i = 0, _len = files.length; _i < _len; _i++) {
+                        file = files[_i];
+                        this.enqueueFile(file);
+                    }
+                    return null;
+                };
+                Dropzone.prototype.enqueueFile = function (file) {
+                    if (file.status === Dropzone.ADDED && file.accepted === true) {
+                        file.status = Dropzone.QUEUED;
+                        if (this.options.autoProcessQueue) {
+                            return setTimeout(function (_this) {
+                                return function () {
+                                    return _this.processQueue();
+                                };
+                            }(this), 0);
+                        }
+                    } else {
+                        throw new Error('This file can\'t be queued because it has already been processed or was rejected.');
+                    }
+                };
+                Dropzone.prototype._thumbnailQueue = [];
+                Dropzone.prototype._processingThumbnail = false;
+                Dropzone.prototype._enqueueThumbnail = function (file) {
+                    if (this.options.createImageThumbnails && file.type.match(/image.*/) && file.size <= this.options.maxThumbnailFilesize * 1024 * 1024) {
+                        this._thumbnailQueue.push(file);
+                        return setTimeout(function (_this) {
+                            return function () {
+                                return _this._processThumbnailQueue();
+                            };
+                        }(this), 0);
+                    }
+                };
+                Dropzone.prototype._processThumbnailQueue = function () {
+                    if (this._processingThumbnail || this._thumbnailQueue.length === 0) {
+                        return;
+                    }
+                    this._processingThumbnail = true;
+                    return this.createThumbnail(this._thumbnailQueue.shift(), function (_this) {
+                        return function () {
+                            _this._processingThumbnail = false;
+                            return _this._processThumbnailQueue();
+                        };
+                    }(this));
+                };
+                Dropzone.prototype.removeFile = function (file) {
+                    if (file.status === Dropzone.UPLOADING) {
+                        this.cancelUpload(file);
+                    }
+                    this.files = without(this.files, file);
+                    this.emit('removedfile', file);
+                    if (this.files.length === 0) {
+                        return this.emit('reset');
+                    }
+                };
+                Dropzone.prototype.removeAllFiles = function (cancelIfNecessary) {
+                    var file, _i, _len, _ref;
+                    if (cancelIfNecessary == null) {
+                        cancelIfNecessary = false;
+                    }
+                    _ref = this.files.slice();
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        file = _ref[_i];
+                        if (file.status !== Dropzone.UPLOADING || cancelIfNecessary) {
+                            this.removeFile(file);
+                        }
+                    }
+                    return null;
+                };
+                Dropzone.prototype.createThumbnail = function (file, callback) {
+                    var fileReader;
+                    fileReader = new FileReader();
+                    fileReader.onload = function (_this) {
+                        return function () {
+                            if (file.type === 'image/svg+xml') {
+                                _this.emit('thumbnail', file, fileReader.result);
+                                if (callback != null) {
+                                    callback();
+                                }
+                                return;
+                            }
+                            return _this.createThumbnailFromUrl(file, fileReader.result, callback);
+                        };
+                    }(this);
+                    return fileReader.readAsDataURL(file);
+                };
+                Dropzone.prototype.createThumbnailFromUrl = function (file, imageUrl, callback) {
+                    var img;
+                    img = document.createElement('img');
+                    img.onload = function (_this) {
+                        return function () {
+                            var canvas, ctx, resizeInfo, thumbnail, _ref, _ref1, _ref2, _ref3;
+                            file.width = img.width;
+                            file.height = img.height;
+                            resizeInfo = _this.options.resize.call(_this, file);
+                            if (resizeInfo.trgWidth == null) {
+                                resizeInfo.trgWidth = resizeInfo.optWidth;
+                            }
+                            if (resizeInfo.trgHeight == null) {
+                                resizeInfo.trgHeight = resizeInfo.optHeight;
+                            }
+                            canvas = document.createElement('canvas');
+                            ctx = canvas.getContext('2d');
+                            canvas.width = resizeInfo.trgWidth;
+                            canvas.height = resizeInfo.trgHeight;
+                            drawImageIOSFix(ctx, img, (_ref = resizeInfo.srcX) != null ? _ref : 0, (_ref1 = resizeInfo.srcY) != null ? _ref1 : 0, resizeInfo.srcWidth, resizeInfo.srcHeight, (_ref2 = resizeInfo.trgX) != null ? _ref2 : 0, (_ref3 = resizeInfo.trgY) != null ? _ref3 : 0, resizeInfo.trgWidth, resizeInfo.trgHeight);
+                            thumbnail = canvas.toDataURL('image/png');
+                            _this.emit('thumbnail', file, thumbnail);
+                            if (callback != null) {
+                                return callback();
+                            }
+                        };
+                    }(this);
+                    if (callback != null) {
+                        img.onerror = callback;
+                    }
+                    return img.src = imageUrl;
+                };
+                Dropzone.prototype.processQueue = function () {
+                    var i, parallelUploads, processingLength, queuedFiles;
+                    parallelUploads = this.options.parallelUploads;
+                    processingLength = this.getUploadingFiles().length;
+                    i = processingLength;
+                    if (processingLength >= parallelUploads) {
+                        return;
+                    }
+                    queuedFiles = this.getQueuedFiles();
+                    if (!(queuedFiles.length > 0)) {
+                        return;
+                    }
+                    if (this.options.uploadMultiple) {
+                        return this.processFiles(queuedFiles.slice(0, parallelUploads - processingLength));
+                    } else {
+                        while (i < parallelUploads) {
+                            if (!queuedFiles.length) {
+                                return;
+                            }
+                            this.processFile(queuedFiles.shift());
+                            i++;
+                        }
+                    }
+                };
+                Dropzone.prototype.processFile = function (file) {
+                    return this.processFiles([file]);
+                };
+                Dropzone.prototype.processFiles = function (files) {
+                    var file, _i, _len;
+                    for (_i = 0, _len = files.length; _i < _len; _i++) {
+                        file = files[_i];
+                        file.processing = true;
+                        file.status = Dropzone.UPLOADING;
+                        this.emit('processing', file);
+                    }
+                    if (this.options.uploadMultiple) {
+                        this.emit('processingmultiple', files);
+                    }
+                    return this.uploadFiles(files);
+                };
+                Dropzone.prototype._getFilesWithXhr = function (xhr) {
+                    var file, files;
+                    return files = function () {
+                        var _i, _len, _ref, _results;
+                        _ref = this.files;
+                        _results = [];
+                        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                            file = _ref[_i];
+                            if (file.xhr === xhr) {
+                                _results.push(file);
+                            }
+                        }
+                        return _results;
+                    }.call(this);
+                };
+                Dropzone.prototype.cancelUpload = function (file) {
+                    var groupedFile, groupedFiles, _i, _j, _len, _len1, _ref;
+                    if (file.status === Dropzone.UPLOADING) {
+                        groupedFiles = this._getFilesWithXhr(file.xhr);
+                        for (_i = 0, _len = groupedFiles.length; _i < _len; _i++) {
+                            groupedFile = groupedFiles[_i];
+                            groupedFile.status = Dropzone.CANCELED;
+                        }
+                        file.xhr.abort();
+                        for (_j = 0, _len1 = groupedFiles.length; _j < _len1; _j++) {
+                            groupedFile = groupedFiles[_j];
+                            this.emit('canceled', groupedFile);
+                        }
+                        if (this.options.uploadMultiple) {
+                            this.emit('canceledmultiple', groupedFiles);
+                        }
+                    } else if ((_ref = file.status) === Dropzone.ADDED || _ref === Dropzone.QUEUED) {
+                        file.status = Dropzone.CANCELED;
+                        this.emit('canceled', file);
+                        if (this.options.uploadMultiple) {
+                            this.emit('canceledmultiple', [file]);
+                        }
+                    }
+                    if (this.options.autoProcessQueue) {
+                        return this.processQueue();
+                    }
+                };
+                resolveOption = function () {
+                    var args, option;
+                    option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+                    if (typeof option === 'function') {
+                        return option.apply(this, args);
+                    }
+                    return option;
+                };
+                Dropzone.prototype.uploadFile = function (file) {
+                    return this.uploadFiles([file]);
+                };
+                Dropzone.prototype.uploadFiles = function (files) {
+                    var file, formData, handleError, headerName, headerValue, headers, i, input, inputName, inputType, key, method, option, progressObj, response, updateProgress, url, value, xhr, _i, _j, _k, _l, _len, _len1, _len2, _len3, _m, _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
+                    xhr = new XMLHttpRequest();
+                    for (_i = 0, _len = files.length; _i < _len; _i++) {
+                        file = files[_i];
+                        file.xhr = xhr;
+                    }
+                    method = resolveOption(this.options.method, files);
+                    url = resolveOption(this.options.url, files);
+                    xhr.open(method, url, true);
+                    xhr.withCredentials = !!this.options.withCredentials;
+                    response = null;
+                    handleError = function (_this) {
+                        return function () {
+                            var _j, _len1, _results;
+                            _results = [];
+                            for (_j = 0, _len1 = files.length; _j < _len1; _j++) {
+                                file = files[_j];
+                                _results.push(_this._errorProcessing(files, response || _this.options.dictResponseError.replace('{{statusCode}}', xhr.status), xhr));
+                            }
+                            return _results;
+                        };
+                    }(this);
+                    updateProgress = function (_this) {
+                        return function (e) {
+                            var allFilesFinished, progress, _j, _k, _l, _len1, _len2, _len3, _results;
+                            if (e != null) {
+                                progress = 100 * e.loaded / e.total;
+                                for (_j = 0, _len1 = files.length; _j < _len1; _j++) {
+                                    file = files[_j];
+                                    file.upload = {
+                                        progress: progress,
+                                        total: e.total,
+                                        bytesSent: e.loaded
+                                    };
+                                }
+                            } else {
+                                allFilesFinished = true;
+                                progress = 100;
+                                for (_k = 0, _len2 = files.length; _k < _len2; _k++) {
+                                    file = files[_k];
+                                    if (!(file.upload.progress === 100 && file.upload.bytesSent === file.upload.total)) {
+                                        allFilesFinished = false;
+                                    }
+                                    file.upload.progress = progress;
+                                    file.upload.bytesSent = file.upload.total;
+                                }
+                                if (allFilesFinished) {
                                     return;
                                 }
-                                targetRect = target.getBoundingClientRect();
                             }
-                            _cloneHide(isOwner);
-                            el.appendChild(dragEl);
-                            this._animate(dragRect, dragEl);
-                            target && this._animate(targetRect, target);
-                        } else if (target && !target.animated && target !== dragEl && target.parentNode[expando] !== void 0) {
-                            if (lastEl !== target) {
-                                lastEl = target;
-                                lastCSS = _css(target);
+                            _results = [];
+                            for (_l = 0, _len3 = files.length; _l < _len3; _l++) {
+                                file = files[_l];
+                                _results.push(_this.emit('uploadprogress', file, progress, file.upload.bytesSent));
                             }
-                            var targetRect = target.getBoundingClientRect(), width = targetRect.right - targetRect.left, height = targetRect.bottom - targetRect.top, floating = /left|right|inline/.test(lastCSS.cssFloat + lastCSS.display), isWide = target.offsetWidth > dragEl.offsetWidth, isLong = target.offsetHeight > dragEl.offsetHeight, halfway = (floating ? (evt.clientX - targetRect.left) / width : (evt.clientY - targetRect.top) / height) > 0.5, nextSibling = target.nextElementSibling, after;
-                            ;
-                            _silent = true;
-                            setTimeout(_unsilent, 30);
-                            _cloneHide(isOwner);
-                            if (floating) {
-                                after = target.previousElementSibling === dragEl && !isWide || halfway && isWide;
-                            } else {
-                                after = nextSibling !== dragEl && !isLong || halfway && isLong;
+                            return _results;
+                        };
+                    }(this);
+                    xhr.onload = function (_this) {
+                        return function (e) {
+                            var _ref;
+                            if (files[0].status === Dropzone.CANCELED) {
+                                return;
                             }
-                            if (after && !nextSibling) {
-                                el.appendChild(dragEl);
-                            } else {
-                                target.parentNode.insertBefore(dragEl, after ? nextSibling : target);
+                            if (xhr.readyState !== 4) {
+                                return;
                             }
-                            this._animate(dragRect, dragEl);
-                            this._animate(targetRect, target);
-                        }
-                    }
-                },
-                _animate: function (prevRect, target) {
-                    var ms = this.options.animation;
-                    if (ms) {
-                        var currentRect = target.getBoundingClientRect();
-                        _css(target, 'transition', 'none');
-                        _css(target, 'transform', 'translate3d(' + (prevRect.left - currentRect.left) + 'px,' + (prevRect.top - currentRect.top) + 'px,0)');
-                        target.offsetWidth;
-                        _css(target, 'transition', 'all ' + ms + 'ms');
-                        _css(target, 'transform', 'translate3d(0,0,0)');
-                        clearTimeout(target.animated);
-                        target.animated = setTimeout(function () {
-                            _css(target, 'transition', '');
-                            _css(target, 'transform', '');
-                            target.animated = false;
-                        }, ms);
-                    }
-                },
-                _offUpEvents: function () {
-                    _off(document, 'mouseup', this._onDrop);
-                    _off(document, 'touchmove', this._onTouchMove);
-                    _off(document, 'touchend', this._onDrop);
-                    _off(document, 'touchcancel', this._onDrop);
-                },
-                _onDrop: function (evt) {
-                    var el = this.el, options = this.options;
-                    clearInterval(this._loopId);
-                    clearInterval(autoScroll.pid);
-                    _off(document, 'drop', this);
-                    _off(document, 'mousemove', this._onTouchMove);
-                    _off(el, 'dragstart', this._onDragStart);
-                    this._offUpEvents();
-                    if (evt) {
-                        evt.preventDefault();
-                        !options.dropBubble && evt.stopPropagation();
-                        ghostEl && ghostEl.parentNode.removeChild(ghostEl);
-                        if (dragEl) {
-                            _off(dragEl, 'dragend', this);
-                            _disableDraggable(dragEl);
-                            _toggleClass(dragEl, this.options.ghostClass, false);
-                            if (rootEl !== dragEl.parentNode) {
-                                newIndex = _index(dragEl);
-                                _dispatchEvent(dragEl.parentNode, 'sort', dragEl, rootEl, oldIndex, newIndex);
-                                _dispatchEvent(rootEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
-                                _dispatchEvent(dragEl, 'add', dragEl, rootEl, oldIndex, newIndex);
-                                _dispatchEvent(rootEl, 'remove', dragEl, rootEl, oldIndex, newIndex);
-                            } else {
-                                cloneEl && cloneEl.parentNode.removeChild(cloneEl);
-                                if (dragEl.nextSibling !== nextEl) {
-                                    newIndex = _index(dragEl);
-                                    _dispatchEvent(rootEl, 'update', dragEl, rootEl, oldIndex, newIndex);
-                                    _dispatchEvent(rootEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
+                            response = xhr.responseText;
+                            if (xhr.getResponseHeader('content-type') && ~xhr.getResponseHeader('content-type').indexOf('application/json')) {
+                                try {
+                                    response = JSON.parse(response);
+                                } catch (_error) {
+                                    e = _error;
+                                    response = 'Invalid JSON response from server.';
                                 }
                             }
-                            Sortable.active && _dispatchEvent(rootEl, 'end', dragEl, rootEl, oldIndex, newIndex);
-                        }
-                        rootEl = dragEl = ghostEl = nextEl = cloneEl = scrollEl = scrollParentEl = tapEvt = touchEvt = lastEl = lastCSS = activeGroup = Sortable.active = null;
-                        this.save();
-                    }
-                },
-                handleEvent: function (evt) {
-                    var type = evt.type;
-                    if (type === 'dragover' || type === 'dragenter') {
-                        this._onDragOver(evt);
-                        _globalDragOver(evt);
-                    } else if (type === 'drop' || type === 'dragend') {
-                        this._onDrop(evt);
-                    }
-                },
-                toArray: function () {
-                    var order = [], el, children = this.el.children, i = 0, n = children.length;
-                    for (; i < n; i++) {
-                        el = children[i];
-                        if (_closest(el, this.options.draggable, this.el)) {
-                            order.push(el.getAttribute('data-id') || _generateId(el));
-                        }
-                    }
-                    return order;
-                },
-                sort: function (order) {
-                    var items = {}, rootEl = this.el;
-                    this.toArray().forEach(function (id, i) {
-                        var el = rootEl.children[i];
-                        if (_closest(el, this.options.draggable, rootEl)) {
-                            items[id] = el;
-                        }
-                    }, this);
-                    order.forEach(function (id) {
-                        if (items[id]) {
-                            rootEl.removeChild(items[id]);
-                            rootEl.appendChild(items[id]);
-                        }
-                    });
-                },
-                save: function () {
-                    var store = this.options.store;
-                    store && store.set(this);
-                },
-                closest: function (el, selector) {
-                    return _closest(el, selector || this.options.draggable, this.el);
-                },
-                option: function (name, value) {
-                    var options = this.options;
-                    if (value === void 0) {
-                        return options[name];
-                    } else {
-                        options[name] = value;
-                    }
-                },
-                destroy: function () {
-                    var el = this.el, options = this.options;
-                    _customEvents.forEach(function (name) {
-                        _off(el, name.substr(2).toLowerCase(), options[name]);
-                    });
-                    _off(el, 'mousedown', this._onTapStart);
-                    _off(el, 'touchstart', this._onTapStart);
-                    _off(el, 'dragover', this);
-                    _off(el, 'dragenter', this);
-                    Array.prototype.forEach.call(el.querySelectorAll('[draggable]'), function (el) {
-                        el.removeAttribute('draggable');
-                    });
-                    touchDragOverListeners.splice(touchDragOverListeners.indexOf(this._onDragOver), 1);
-                    this._onDrop();
-                    this.el = null;
-                }
-            };
-            function _cloneHide(state) {
-                if (cloneEl && cloneEl.state !== state) {
-                    _css(cloneEl, 'display', state ? 'none' : '');
-                    !state && cloneEl.state && rootEl.insertBefore(cloneEl, dragEl);
-                    cloneEl.state = state;
-                }
-            }
-            function _bind(ctx, fn) {
-                var args = slice.call(arguments, 2);
-                return fn.bind ? fn.bind.apply(fn, [ctx].concat(args)) : function () {
-                    return fn.apply(ctx, args.concat(slice.call(arguments)));
-                };
-            }
-            function _closest(el, selector, ctx) {
-                if (el) {
-                    ctx = ctx || document;
-                    selector = selector.split('.');
-                    var tag = selector.shift().toUpperCase(), re = new RegExp('\\s(' + selector.join('|') + ')\\s', 'g');
-                    do {
-                        if (tag === '>*' && el.parentNode === ctx || (tag === '' || el.nodeName.toUpperCase() == tag) && (!selector.length || ((' ' + el.className + ' ').match(re) || []).length == selector.length)) {
-                            return el;
-                        }
-                    } while (el !== ctx && (el = el.parentNode));
-                }
-                return null;
-            }
-            function _globalDragOver(evt) {
-                evt.dataTransfer.dropEffect = 'move';
-                evt.preventDefault();
-            }
-            function _on(el, event, fn) {
-                el.addEventListener(event, fn, false);
-            }
-            function _off(el, event, fn) {
-                el.removeEventListener(event, fn, false);
-            }
-            function _toggleClass(el, name, state) {
-                if (el) {
-                    if (el.classList) {
-                        el.classList[state ? 'add' : 'remove'](name);
-                    } else {
-                        var className = (' ' + el.className + ' ').replace(/\s+/g, ' ').replace(' ' + name + ' ', '');
-                        el.className = className + (state ? ' ' + name : '');
-                    }
-                }
-            }
-            function _css(el, prop, val) {
-                var style = el && el.style;
-                if (style) {
-                    if (val === void 0) {
-                        if (document.defaultView && document.defaultView.getComputedStyle) {
-                            val = document.defaultView.getComputedStyle(el, '');
-                        } else if (el.currentStyle) {
-                            val = el.currentStyle;
-                        }
-                        return prop === void 0 ? val : val[prop];
-                    } else {
-                        if (!(prop in style)) {
-                            prop = '-webkit-' + prop;
-                        }
-                        style[prop] = val + (typeof val === 'string' ? '' : 'px');
-                    }
-                }
-            }
-            function _find(ctx, tagName, iterator) {
-                if (ctx) {
-                    var list = ctx.getElementsByTagName(tagName), i = 0, n = list.length;
-                    if (iterator) {
-                        for (; i < n; i++) {
-                            iterator(list[i], i);
-                        }
-                    }
-                    return list;
-                }
-                return [];
-            }
-            function _disableDraggable(el) {
-                el.draggable = false;
-            }
-            function _unsilent() {
-                _silent = false;
-            }
-            function _ghostInBottom(el, evt) {
-                var lastEl = el.lastElementChild, rect = lastEl.getBoundingClientRect();
-                return evt.clientY - (rect.top + rect.height) > 5 && lastEl;
-            }
-            function _generateId(el) {
-                var str = el.tagName + el.className + el.src + el.href + el.textContent, i = str.length, sum = 0;
-                while (i--) {
-                    sum += str.charCodeAt(i);
-                }
-                return sum.toString(36);
-            }
-            function _index(el) {
-                var index = 0;
-                while (el && (el = el.previousElementSibling)) {
-                    if (el.nodeName.toUpperCase() !== 'TEMPLATE') {
-                        index++;
-                    }
-                }
-                return index;
-            }
-            function _throttle(callback, ms) {
-                var args, _this;
-                return function () {
-                    if (args === void 0) {
-                        args = arguments;
-                        _this = this;
-                        setTimeout(function () {
-                            if (args.length === 1) {
-                                callback.call(_this, args[0]);
+                            updateProgress();
+                            if (!(200 <= (_ref = xhr.status) && _ref < 300)) {
+                                return handleError();
                             } else {
-                                callback.apply(_this, args);
+                                return _this._finished(files, response, e);
                             }
-                            args = void 0;
-                        }, ms);
+                        };
+                    }(this);
+                    xhr.onerror = function (_this) {
+                        return function () {
+                            if (files[0].status === Dropzone.CANCELED) {
+                                return;
+                            }
+                            return handleError();
+                        };
+                    }(this);
+                    progressObj = (_ref = xhr.upload) != null ? _ref : xhr;
+                    progressObj.onprogress = updateProgress;
+                    headers = {
+                        'Accept': 'application/json',
+                        'Cache-Control': 'no-cache',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    };
+                    if (this.options.headers) {
+                        extend(headers, this.options.headers);
+                    }
+                    for (headerName in headers) {
+                        headerValue = headers[headerName];
+                        xhr.setRequestHeader(headerName, headerValue);
+                    }
+                    formData = new FormData();
+                    if (this.options.params) {
+                        _ref1 = this.options.params;
+                        for (key in _ref1) {
+                            value = _ref1[key];
+                            formData.append(key, value);
+                        }
+                    }
+                    for (_j = 0, _len1 = files.length; _j < _len1; _j++) {
+                        file = files[_j];
+                        this.emit('sending', file, xhr, formData);
+                    }
+                    if (this.options.uploadMultiple) {
+                        this.emit('sendingmultiple', files, xhr, formData);
+                    }
+                    if (this.element.tagName === 'FORM') {
+                        _ref2 = this.element.querySelectorAll('input, textarea, select, button');
+                        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+                            input = _ref2[_k];
+                            inputName = input.getAttribute('name');
+                            inputType = input.getAttribute('type');
+                            if (input.tagName === 'SELECT' && input.hasAttribute('multiple')) {
+                                _ref3 = input.options;
+                                for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+                                    option = _ref3[_l];
+                                    if (option.selected) {
+                                        formData.append(inputName, option.value);
+                                    }
+                                }
+                            } else if (!inputType || (_ref4 = inputType.toLowerCase()) !== 'checkbox' && _ref4 !== 'radio' || input.checked) {
+                                formData.append(inputName, input.value);
+                            }
+                        }
+                    }
+                    for (i = _m = 0, _ref5 = files.length - 1; 0 <= _ref5 ? _m <= _ref5 : _m >= _ref5; i = 0 <= _ref5 ? ++_m : --_m) {
+                        formData.append(this._getParamName(i), files[i], files[i].name);
+                    }
+                    return xhr.send(formData);
+                };
+                Dropzone.prototype._finished = function (files, responseText, e) {
+                    var file, _i, _len;
+                    for (_i = 0, _len = files.length; _i < _len; _i++) {
+                        file = files[_i];
+                        file.status = Dropzone.SUCCESS;
+                        this.emit('success', file, responseText, e);
+                        this.emit('complete', file);
+                    }
+                    if (this.options.uploadMultiple) {
+                        this.emit('successmultiple', files, responseText, e);
+                        this.emit('completemultiple', files);
+                    }
+                    if (this.options.autoProcessQueue) {
+                        return this.processQueue();
                     }
                 };
+                Dropzone.prototype._errorProcessing = function (files, message, xhr) {
+                    var file, _i, _len;
+                    for (_i = 0, _len = files.length; _i < _len; _i++) {
+                        file = files[_i];
+                        file.status = Dropzone.ERROR;
+                        this.emit('error', file, message, xhr);
+                        this.emit('complete', file);
+                    }
+                    if (this.options.uploadMultiple) {
+                        this.emit('errormultiple', files, message, xhr);
+                        this.emit('completemultiple', files);
+                    }
+                    if (this.options.autoProcessQueue) {
+                        return this.processQueue();
+                    }
+                };
+                return Dropzone;
+            }(Emitter);
+            Dropzone.version = '4.0.1';
+            Dropzone.options = {};
+            Dropzone.optionsForElement = function (element) {
+                if (element.getAttribute('id')) {
+                    return Dropzone.options[camelize(element.getAttribute('id'))];
+                } else {
+                    return void 0;
+                }
+            };
+            Dropzone.instances = [];
+            Dropzone.forElement = function (element) {
+                if (typeof element === 'string') {
+                    element = document.querySelector(element);
+                }
+                if ((element != null ? element.dropzone : void 0) == null) {
+                    throw new Error('No Dropzone found for given element. This is probably because you\'re trying to access it before Dropzone had the time to initialize. Use the `init` option to setup any additional observers on your Dropzone.');
+                }
+                return element.dropzone;
+            };
+            Dropzone.autoDiscover = true;
+            Dropzone.discover = function () {
+                var checkElements, dropzone, dropzones, _i, _len, _results;
+                if (document.querySelectorAll) {
+                    dropzones = document.querySelectorAll('.dropzone');
+                } else {
+                    dropzones = [];
+                    checkElements = function (elements) {
+                        var el, _i, _len, _results;
+                        _results = [];
+                        for (_i = 0, _len = elements.length; _i < _len; _i++) {
+                            el = elements[_i];
+                            if (/(^| )dropzone($| )/.test(el.className)) {
+                                _results.push(dropzones.push(el));
+                            } else {
+                                _results.push(void 0);
+                            }
+                        }
+                        return _results;
+                    };
+                    checkElements(document.getElementsByTagName('div'));
+                    checkElements(document.getElementsByTagName('form'));
+                }
+                _results = [];
+                for (_i = 0, _len = dropzones.length; _i < _len; _i++) {
+                    dropzone = dropzones[_i];
+                    if (Dropzone.optionsForElement(dropzone) !== false) {
+                        _results.push(new Dropzone(dropzone));
+                    } else {
+                        _results.push(void 0);
+                    }
+                }
+                return _results;
+            };
+            Dropzone.blacklistedBrowsers = [/opera.*Macintosh.*version\/12/i];
+            Dropzone.isBrowserSupported = function () {
+                var capableBrowser, regex, _i, _len, _ref;
+                capableBrowser = true;
+                if (window.File && window.FileReader && window.FileList && window.Blob && window.FormData && document.querySelector) {
+                    if (!('classList' in document.createElement('a'))) {
+                        capableBrowser = false;
+                    } else {
+                        _ref = Dropzone.blacklistedBrowsers;
+                        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                            regex = _ref[_i];
+                            if (regex.test(navigator.userAgent)) {
+                                capableBrowser = false;
+                                continue;
+                            }
+                        }
+                    }
+                } else {
+                    capableBrowser = false;
+                }
+                return capableBrowser;
+            };
+            without = function (list, rejectedItem) {
+                var item, _i, _len, _results;
+                _results = [];
+                for (_i = 0, _len = list.length; _i < _len; _i++) {
+                    item = list[_i];
+                    if (item !== rejectedItem) {
+                        _results.push(item);
+                    }
+                }
+                return _results;
+            };
+            camelize = function (str) {
+                return str.replace(/[\-_](\w)/g, function (match) {
+                    return match.charAt(1).toUpperCase();
+                });
+            };
+            Dropzone.createElement = function (string) {
+                var div;
+                div = document.createElement('div');
+                div.innerHTML = string;
+                return div.childNodes[0];
+            };
+            Dropzone.elementInside = function (element, container) {
+                if (element === container) {
+                    return true;
+                }
+                while (element = element.parentNode) {
+                    if (element === container) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            Dropzone.getElement = function (el, name) {
+                var element;
+                if (typeof el === 'string') {
+                    element = document.querySelector(el);
+                } else if (el.nodeType != null) {
+                    element = el;
+                }
+                if (element == null) {
+                    throw new Error('Invalid `' + name + '` option provided. Please provide a CSS selector or a plain HTML element.');
+                }
+                return element;
+            };
+            Dropzone.getElements = function (els, name) {
+                var e, el, elements, _i, _j, _len, _len1, _ref;
+                if (els instanceof Array) {
+                    elements = [];
+                    try {
+                        for (_i = 0, _len = els.length; _i < _len; _i++) {
+                            el = els[_i];
+                            elements.push(this.getElement(el, name));
+                        }
+                    } catch (_error) {
+                        e = _error;
+                        elements = null;
+                    }
+                } else if (typeof els === 'string') {
+                    elements = [];
+                    _ref = document.querySelectorAll(els);
+                    for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+                        el = _ref[_j];
+                        elements.push(el);
+                    }
+                } else if (els.nodeType != null) {
+                    elements = [els];
+                }
+                if (!(elements != null && elements.length)) {
+                    throw new Error('Invalid `' + name + '` option provided. Please provide a CSS selector, a plain HTML element or a list of those.');
+                }
+                return elements;
+            };
+            Dropzone.confirm = function (question, accepted, rejected) {
+                if (window.confirm(question)) {
+                    return accepted();
+                } else if (rejected != null) {
+                    return rejected();
+                }
+            };
+            Dropzone.isValidFile = function (file, acceptedFiles) {
+                var baseMimeType, mimeType, validType, _i, _len;
+                if (!acceptedFiles) {
+                    return true;
+                }
+                acceptedFiles = acceptedFiles.split(',');
+                mimeType = file.type;
+                baseMimeType = mimeType.replace(/\/.*$/, '');
+                for (_i = 0, _len = acceptedFiles.length; _i < _len; _i++) {
+                    validType = acceptedFiles[_i];
+                    validType = validType.trim();
+                    if (validType.charAt(0) === '.') {
+                        if (file.name.toLowerCase().indexOf(validType.toLowerCase(), file.name.length - validType.length) !== -1) {
+                            return true;
+                        }
+                    } else if (/\/\*$/.test(validType)) {
+                        if (baseMimeType === validType.replace(/\/.*$/, '')) {
+                            return true;
+                        }
+                    } else {
+                        if (mimeType === validType) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            };
+            if (typeof jQuery !== 'undefined' && jQuery !== null) {
+                jQuery.fn.dropzone = function (options) {
+                    return this.each(function () {
+                        return new Dropzone(this, options);
+                    });
+                };
             }
-            Sortable.utils = {
-                on: _on,
-                off: _off,
-                css: _css,
-                find: _find,
-                bind: _bind,
-                is: function (el, selector) {
-                    return !!_closest(el, selector, el);
-                },
-                throttle: _throttle,
-                closest: _closest,
-                toggleClass: _toggleClass,
-                dispatchEvent: _dispatchEvent,
-                index: _index
+            if (typeof module !== 'undefined' && module !== null) {
+                module.exports = Dropzone;
+            } else {
+                window.Dropzone = Dropzone;
+            }
+            Dropzone.ADDED = 'added';
+            Dropzone.QUEUED = 'queued';
+            Dropzone.ACCEPTED = Dropzone.QUEUED;
+            Dropzone.UPLOADING = 'uploading';
+            Dropzone.PROCESSING = Dropzone.UPLOADING;
+            Dropzone.CANCELED = 'canceled';
+            Dropzone.ERROR = 'error';
+            Dropzone.SUCCESS = 'success';
+            detectVerticalSquash = function (img) {
+                var alpha, canvas, ctx, data, ey, ih, iw, py, ratio, sy;
+                iw = img.naturalWidth;
+                ih = img.naturalHeight;
+                canvas = document.createElement('canvas');
+                canvas.width = 1;
+                canvas.height = ih;
+                ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                data = ctx.getImageData(0, 0, 1, ih).data;
+                sy = 0;
+                ey = ih;
+                py = ih;
+                while (py > sy) {
+                    alpha = data[(py - 1) * 4 + 3];
+                    if (alpha === 0) {
+                        ey = py;
+                    } else {
+                        sy = py;
+                    }
+                    py = ey + sy >> 1;
+                }
+                ratio = py / ih;
+                if (ratio === 0) {
+                    return 1;
+                } else {
+                    return ratio;
+                }
             };
-            Sortable.version = '1.1.1';
-            Sortable.create = function (el, options) {
-                return new Sortable(el, options);
+            drawImageIOSFix = function (ctx, img, sx, sy, sw, sh, dx, dy, dw, dh) {
+                var vertSquashRatio;
+                vertSquashRatio = detectVerticalSquash(img);
+                return ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh / vertSquashRatio);
             };
-            return Sortable;
-        }));
+            contentLoaded = function (win, fn) {
+                var add, doc, done, init, poll, pre, rem, root, top;
+                done = false;
+                top = true;
+                doc = win.document;
+                root = doc.documentElement;
+                add = doc.addEventListener ? 'addEventListener' : 'attachEvent';
+                rem = doc.addEventListener ? 'removeEventListener' : 'detachEvent';
+                pre = doc.addEventListener ? '' : 'on';
+                init = function (e) {
+                    if (e.type === 'readystatechange' && doc.readyState !== 'complete') {
+                        return;
+                    }
+                    (e.type === 'load' ? win : doc)[rem](pre + e.type, init, false);
+                    if (!done && (done = true)) {
+                        return fn.call(win, e.type || e);
+                    }
+                };
+                poll = function () {
+                    var e;
+                    try {
+                        root.doScroll('left');
+                    } catch (_error) {
+                        e = _error;
+                        setTimeout(poll, 50);
+                        return;
+                    }
+                    return init('poll');
+                };
+                if (doc.readyState !== 'complete') {
+                    if (doc.createEventObject && root.doScroll) {
+                        try {
+                            top = !win.frameElement;
+                        } catch (_error) {
+                        }
+                        if (top) {
+                            poll();
+                        }
+                    }
+                    doc[add](pre + 'DOMContentLoaded', init, false);
+                    doc[add](pre + 'readystatechange', init, false);
+                    return win[add](pre + 'load', init, false);
+                }
+            };
+            Dropzone._autoDiscoverFunction = function () {
+                if (Dropzone.autoDiscover) {
+                    return Dropzone.discover();
+                }
+            };
+            contentLoaded(window, Dropzone._autoDiscoverFunction);
+        }.call(this));
     },
     '4c': function (require, module, exports, global) {
         'use strict';
@@ -16788,7 +16804,7 @@ var G5;
     },
     '4d': function (require, module, exports, global) {
         'use strict';
-        var hasOwn = require('5u'), forIn = require('5v'), mixIn = require('5w'), filter = require('5x'), create = require('5y'), type = require('5z');
+        var hasOwn = require('5t'), forIn = require('5u'), mixIn = require('5v'), filter = require('5w'), create = require('5x'), type = require('5y');
         var defineProperty = Object.defineProperty, getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
         try {
             defineProperty({}, '~', {});
@@ -16854,7 +16870,7 @@ var G5;
     },
     '4f': function (require, module, exports, global) {
         'use strict';
-        var trim = require('5t');
+        var trim = require('5z');
         var clean = function (self) {
             return trim((self + '').replace(/\s+/g, ' '));
         };
@@ -17097,7 +17113,7 @@ var G5;
         module.exports = has;
     },
     '4p': function (require, module, exports, global) {
-        var hasOwn = require('3p');
+        var hasOwn = require('3u');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -17141,7 +17157,7 @@ var G5;
     },
     '4q': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Options = require('1v'), Bound = require('1u'), Emitter = require('o'), guid = require('1r'), zen = require('k'), $ = require('1'), get = require('14'), has = require('4o'), set = require('32');
+        var prime = require('n'), Options = require('1r'), Bound = require('1q'), Emitter = require('o'), guid = require('1y'), zen = require('k'), $ = require('1'), get = require('14'), has = require('4o'), set = require('33');
         require('e');
         var Base = new prime({
                 mixin: [
@@ -17254,7 +17270,7 @@ var G5;
     },
     '4r': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1'), Base = require('4q'), zen = require('k'), getAjaxURL = require('3z').config;
+        var prime = require('n'), $ = require('1'), Base = require('4q'), zen = require('k'), getAjaxURL = require('40').config;
         var Atom = new prime({
                 inherits: Base,
                 options: { type: 'atom' },
@@ -17295,7 +17311,7 @@ var G5;
     },
     '4s': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Base = require('4q'), Bound = require('1u'), Grid = require('4u'), $ = require('1'), zen = require('k'), bind = require('1w'), getAjaxURL = require('3z').config;
+        var prime = require('n'), Base = require('4q'), Bound = require('1q'), Grid = require('4u'), $ = require('1'), zen = require('k'), bind = require('1s'), getAjaxURL = require('40').config;
         require('d');
         var UID = 0;
         var Section = new prime({
@@ -17377,7 +17393,7 @@ var G5;
     },
     '4u': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Base = require('4q'), $ = require('1'), getAjaxURL = require('3z').config;
+        var prime = require('n'), Base = require('4q'), $ = require('1'), getAjaxURL = require('40').config;
         var Grid = new prime({
                 inherits: Base,
                 options: { type: 'grid' },
@@ -17424,7 +17440,7 @@ var G5;
     },
     '4w': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Base = require('4q'), $ = require('1p'), zen = require('k'), precision = require('3f'), bind = require('1w');
+        var prime = require('n'), Base = require('4q'), $ = require('1p'), zen = require('k'), precision = require('3f'), bind = require('1s');
         var Block = new prime({
                 inherits: Base,
                 options: {
@@ -17512,7 +17528,7 @@ var G5;
     },
     '4x': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1'), Atom = require('4r'), bind = require('1w'), precision = require('3f'), getAjaxURL = require('3z').config;
+        var prime = require('n'), $ = require('1'), Atom = require('4r'), bind = require('1s'), precision = require('3f'), getAjaxURL = require('40').config;
         var UID = 0;
         var Particle = new prime({
                 inherits: Atom,
@@ -17617,7 +17633,7 @@ var G5;
         module.exports = append;
     },
     '52': function (require, module, exports, global) {
-        var forEach = require('1y');
+        var forEach = require('1u');
         function namespace(obj, path) {
             if (!path)
                 return obj;
@@ -17697,7 +17713,7 @@ var G5;
         module.exports = kindOf;
     },
     '57': function (require, module, exports, global) {
-        var isKind = require('3x');
+        var isKind = require('3v');
         function isString(val) {
             return isKind(val, 'String');
         }
@@ -17728,7 +17744,7 @@ var G5;
     },
     '5a': function (require, module, exports, global) {
         var some = require('66');
-        var makeIterator = require('3w');
+        var makeIterator = require('3t');
         function find(obj, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result;
@@ -17744,7 +17760,7 @@ var G5;
     },
     '5b': function (require, module, exports, global) {
         var forOwn = require('2z');
-        var makeIterator = require('3w');
+        var makeIterator = require('3t');
         function every(obj, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = true;
@@ -17816,34 +17832,23 @@ var G5;
         module.exports = deepMatches;
     },
     '5f': function (require, module, exports, global) {
-        var isKind = require('3x');
+        var isKind = require('3v');
         function isNumber(val) {
             return isKind(val, 'Number');
         }
         module.exports = isNumber;
     },
     '5g': function (require, module, exports, global) {
-        var MIN_INT = require('67');
-        var MAX_INT = require('68');
-        var rand = require('69');
-        function randInt(min, max) {
-            min = min == null ? MIN_INT : ~~min;
-            max = max == null ? MAX_INT : ~~max;
-            return Math.round(rand(min - 0.5, max + 0.499999999999));
-        }
-        module.exports = randInt;
-    },
-    '5h': function (require, module, exports, global) {
         function hasOwn(obj, prop) {
             return Object.prototype.hasOwnProperty.call(obj, prop);
         }
         module.exports = hasOwn;
     },
-    '5i': function (require, module, exports, global) {
-        var clone = require('6b');
-        var forOwn = require('6c');
-        var kindOf = require('6d');
-        var isPlainObject = require('6e');
+    '5h': function (require, module, exports, global) {
+        var clone = require('68');
+        var forOwn = require('69');
+        var kindOf = require('6a');
+        var isPlainObject = require('6b');
         function deepClone(val, instanceClone) {
             switch (kindOf(val)) {
             case 'Object':
@@ -17876,14 +17881,14 @@ var G5;
         }
         module.exports = deepClone;
     },
-    '5j': function (require, module, exports, global) {
-        var isKind = require('6a');
+    '5i': function (require, module, exports, global) {
+        var isKind = require('67');
         function isObject(val) {
             return isKind(val, 'Object');
         }
         module.exports = isObject;
     },
-    '5k': function (require, module, exports, global) {
+    '5j': function (require, module, exports, global) {
         function slice(arr, start, end) {
             var len = arr.length;
             if (start == null) {
@@ -17908,21 +17913,13 @@ var G5;
         }
         module.exports = slice;
     },
-    '5l': function (require, module, exports, global) {
-        var toString = require('13');
-        function unescapeHtml(str) {
-            str = toString(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#0*39;/g, '\'').replace(/&quot;/g, '"');
-            return str;
-        }
-        module.exports = unescapeHtml;
-    },
-    '5m': function (require, module, exports, global) {
+    '5k': function (require, module, exports, global) {
         function identity(val) {
             return val;
         }
         module.exports = identity;
     },
-    '5n': function (require, module, exports, global) {
+    '5l': function (require, module, exports, global) {
         function prop(name) {
             return function (obj) {
                 return obj[name];
@@ -17930,7 +17927,7 @@ var G5;
         }
         module.exports = prop;
     },
-    '5o': function (require, module, exports, global) {
+    '5m': function (require, module, exports, global) {
         var forOwn = require('2z');
         var isArray = require('2s');
         function containsMatch(array, pattern) {
@@ -17973,12 +17970,31 @@ var G5;
         }
         module.exports = deepMatches;
     },
+    '5n': function (require, module, exports, global) {
+        var MIN_INT = require('6c');
+        var MAX_INT = require('6d');
+        var rand = require('6e');
+        function randInt(min, max) {
+            min = min == null ? MIN_INT : ~~min;
+            max = max == null ? MAX_INT : ~~max;
+            return Math.round(rand(min - 0.5, max + 0.499999999999));
+        }
+        module.exports = randInt;
+    },
+    '5o': function (require, module, exports, global) {
+        var toString = require('13');
+        function unescapeHtml(str) {
+            str = toString(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#0*39;/g, '\'').replace(/&quot;/g, '"');
+            return str;
+        }
+        module.exports = unescapeHtml;
+    },
     '5p': function (require, module, exports, global) {
         var unique = require('6f');
         var filter = require('6g');
         var some = require('6h');
         var contains = require('18');
-        var slice = require('37');
+        var slice = require('30');
         function difference(arr) {
             var arrs = slice(arguments, 1), result = filter(unique(arr), function (needle) {
                     return !some(arrs, function (haystack) {
@@ -17990,23 +18006,7 @@ var G5;
         module.exports = difference;
     },
     '5q': function (require, module, exports, global) {
-        var toString = require('13');
-        function lowerCase(str) {
-            str = toString(str);
-            return str.toLowerCase();
-        }
-        module.exports = lowerCase;
-    },
-    '5r': function (require, module, exports, global) {
-        var toString = require('13');
-        function upperCase(str) {
-            str = toString(str);
-            return str.toUpperCase();
-        }
-        module.exports = upperCase;
-    },
-    '5s': function (require, module, exports, global) {
-        var makeIterator = require('3w');
+        var makeIterator = require('3t');
         function findIndex(arr, iterator, thisObj) {
             iterator = makeIterator(iterator, thisObj);
             if (arr == null) {
@@ -18022,14 +18022,23 @@ var G5;
         }
         module.exports = findIndex;
     },
-    '5t': function (require, module, exports, global) {
-        'use strict';
-        var trim = function (self) {
-            return (self + '').replace(/^\s+|\s+$/g, '');
-        };
-        module.exports = trim;
+    '5r': function (require, module, exports, global) {
+        var toString = require('13');
+        function lowerCase(str) {
+            str = toString(str);
+            return str.toLowerCase();
+        }
+        module.exports = lowerCase;
     },
-    '5u': function (require, module, exports, global) {
+    '5s': function (require, module, exports, global) {
+        var toString = require('13');
+        function upperCase(str) {
+            str = toString(str);
+            return str.toUpperCase();
+        }
+        module.exports = upperCase;
+    },
+    '5t': function (require, module, exports, global) {
         'use strict';
         var hasOwnProperty = Object.hasOwnProperty;
         var hasOwn = function (self, key) {
@@ -18037,9 +18046,9 @@ var G5;
         };
         module.exports = hasOwn;
     },
-    '5v': function (require, module, exports, global) {
+    '5u': function (require, module, exports, global) {
         'use strict';
-        var has = require('5u');
+        var has = require('5t');
         var forIn = function (self, method, context) {
             for (var key in self)
                 if (method.call(context, self[key], key, self) === false)
@@ -18063,7 +18072,7 @@ var G5;
         }
         module.exports = forIn;
     },
-    '5w': function (require, module, exports, global) {
+    '5v': function (require, module, exports, global) {
         'use strict';
         var forOwn = require('6i');
         var copy = function (value, key) {
@@ -18076,9 +18085,9 @@ var G5;
         };
         module.exports = mixIn;
     },
-    '5x': function (require, module, exports, global) {
+    '5w': function (require, module, exports, global) {
         'use strict';
-        var forIn = require('5v');
+        var forIn = require('5u');
         var filter = function (self, method, context) {
             var results = {};
             forIn(self, function (value, key) {
@@ -18089,7 +18098,7 @@ var G5;
         };
         module.exports = filter;
     },
-    '5y': function (require, module, exports, global) {
+    '5x': function (require, module, exports, global) {
         'use strict';
         var create = function (self) {
             var constructor = function () {
@@ -18099,7 +18108,7 @@ var G5;
         };
         module.exports = create;
     },
-    '5z': function (require, module, exports, global) {
+    '5y': function (require, module, exports, global) {
         'use strict';
         var toString = Object.prototype.toString, types = /number|object|array|string|function|date|regexp|boolean/;
         var type = function (object) {
@@ -18113,6 +18122,13 @@ var G5;
             return 'object';
         };
         module.exports = type;
+    },
+    '5z': function (require, module, exports, global) {
+        'use strict';
+        var trim = function (self) {
+            return (self + '').replace(/^\s+|\s+$/g, '');
+        };
+        module.exports = trim;
     },
     '60': function (require, module, exports, global) {
         'use strict';
@@ -18183,7 +18199,7 @@ var G5;
     },
     '66': function (require, module, exports, global) {
         var forOwn = require('2z');
-        var makeIterator = require('3w');
+        var makeIterator = require('3t');
         function some(obj, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = false;
@@ -18198,33 +18214,16 @@ var G5;
         module.exports = some;
     },
     '67': function (require, module, exports, global) {
-        module.exports = -2147483648;
-    },
-    '68': function (require, module, exports, global) {
-        module.exports = 2147483647;
-    },
-    '69': function (require, module, exports, global) {
-        var random = require('6j');
-        var MIN_INT = require('67');
-        var MAX_INT = require('68');
-        function rand(min, max) {
-            min = min == null ? MIN_INT : min;
-            max = max == null ? MAX_INT : max;
-            return min + (max - min) * random();
-        }
-        module.exports = rand;
-    },
-    '6a': function (require, module, exports, global) {
-        var kindOf = require('6d');
+        var kindOf = require('6a');
         function isKind(val, kind) {
             return kindOf(val) === kind;
         }
         module.exports = isKind;
     },
-    '6b': function (require, module, exports, global) {
-        var kindOf = require('6d');
-        var isPlainObject = require('6e');
-        var mixIn = require('6k');
+    '68': function (require, module, exports, global) {
+        var kindOf = require('6a');
+        var isPlainObject = require('6b');
+        var mixIn = require('6j');
         function clone(val) {
             switch (kindOf(val)) {
             case 'Object':
@@ -18261,9 +18260,9 @@ var G5;
         }
         module.exports = clone;
     },
-    '6c': function (require, module, exports, global) {
-        var hasOwn = require('5h');
-        var forIn = require('6l');
+    '69': function (require, module, exports, global) {
+        var hasOwn = require('5g');
+        var forIn = require('6k');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
                 if (hasOwn(obj, key)) {
@@ -18273,7 +18272,7 @@ var G5;
         }
         module.exports = forOwn;
     },
-    '6d': function (require, module, exports, global) {
+    '6a': function (require, module, exports, global) {
         var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
         function kindOf(val) {
             if (val === null) {
@@ -18286,11 +18285,28 @@ var G5;
         }
         module.exports = kindOf;
     },
-    '6e': function (require, module, exports, global) {
+    '6b': function (require, module, exports, global) {
         function isPlainObject(value) {
             return !!value && typeof value === 'object' && value.constructor === Object;
         }
         module.exports = isPlainObject;
+    },
+    '6c': function (require, module, exports, global) {
+        module.exports = -2147483648;
+    },
+    '6d': function (require, module, exports, global) {
+        module.exports = 2147483647;
+    },
+    '6e': function (require, module, exports, global) {
+        var random = require('6l');
+        var MIN_INT = require('6c');
+        var MAX_INT = require('6d');
+        function rand(min, max) {
+            min = min == null ? MIN_INT : min;
+            max = max == null ? MAX_INT : max;
+            return min + (max - min) * random();
+        }
+        module.exports = rand;
     },
     '6f': function (require, module, exports, global) {
         var filter = require('6g');
@@ -18312,7 +18328,7 @@ var G5;
         module.exports = unique;
     },
     '6g': function (require, module, exports, global) {
-        var makeIterator = require('3w');
+        var makeIterator = require('3t');
         function filter(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var results = [];
@@ -18331,7 +18347,7 @@ var G5;
         module.exports = filter;
     },
     '6h': function (require, module, exports, global) {
-        var makeIterator = require('3w');
+        var makeIterator = require('3t');
         function some(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var result = false;
@@ -18351,7 +18367,7 @@ var G5;
     },
     '6i': function (require, module, exports, global) {
         'use strict';
-        var forIn = require('5v'), hasOwn = require('5u');
+        var forIn = require('5u'), hasOwn = require('5t');
         var forOwn = function (self, method, context) {
             forIn(self, function (value, key) {
                 if (hasOwn(self, key))
@@ -18362,14 +18378,7 @@ var G5;
         module.exports = forOwn;
     },
     '6j': function (require, module, exports, global) {
-        function random() {
-            return random.get();
-        }
-        random.get = Math.random;
-        module.exports = random;
-    },
-    '6k': function (require, module, exports, global) {
-        var forOwn = require('6c');
+        var forOwn = require('69');
         function mixIn(target, objects) {
             var i = 0, n = arguments.length, obj;
             while (++i < n) {
@@ -18385,8 +18394,8 @@ var G5;
         }
         module.exports = mixIn;
     },
-    '6l': function (require, module, exports, global) {
-        var hasOwn = require('5h');
+    '6k': function (require, module, exports, global) {
+        var hasOwn = require('5g');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -18427,6 +18436,13 @@ var G5;
             return fn.call(thisObj, obj[key], key, obj);
         }
         module.exports = forIn;
+    },
+    '6l': function (require, module, exports, global) {
+        function random() {
+            return random.get();
+        }
+        random.get = Math.random;
+        module.exports = random;
     }
 }, this));
 //# sourceMappingURL=main.js.map

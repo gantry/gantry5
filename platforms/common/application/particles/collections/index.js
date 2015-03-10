@@ -145,6 +145,12 @@ ready(function() {
     body.delegate('click', '[data-collection-item] .config-cog, [data-collection-editall]', function(event, element) {
         event.preventDefault();
 
+        var editable = element.find('[data-title-editable]');
+        if (editable && editable.attribute('contenteditable')) {
+            event.stopPropagation();
+            return false;
+        }
+
         var isEditAll = element.data('collection-editall') !== null,
             parent    = element.parent('.settings-param'),
             dataField = parent.find('[data-collection-data]'),
@@ -162,9 +168,10 @@ ready(function() {
             remoteLoaded: function(response, content) {
                 var form       = content.elements.content.find('form'),
                     submit     = content.elements.content.find('input[type="submit"], button[type="submit"]'),
-                    dataString = [];
+                    dataString = [],
+                    dataValue = JSON.parse(data);
 
-                if (JSON.parse(data).length == 1) {
+                if (dataValue.length == 1) {
                     content.elements.content.style({width: 450});
                 }
 
@@ -208,6 +215,15 @@ ready(function() {
                                 }
                             });
                         } else {
+                            if (item) { // single editing
+                                dataValue[indexOf(items, item[0])] = response.body.data;
+                            } else { // multi editing
+                                dataValue = response.body.data;
+                            }
+
+                            dataField.value(JSON.stringify(dataValue));
+                            body.emit('change', { target: dataField });
+
                             modal.close();
                             toastr.success('Collection Item updated', 'Item Updated');
                         }
