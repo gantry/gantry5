@@ -59,14 +59,20 @@ trait ThemeTrait
 
     public function presets()
     {
-        $gantry = static::gantry();
+        static $presets;
 
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
+        if (!$presets) {
+            $gantry = static::gantry();
 
-        $filename = $locator->findResource("gantry-theme://gantry/presets.yaml");
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
 
-        return new Config(CompiledYamlFile::instance($filename)->content());
+            $filename = $locator->findResource("gantry-theme://gantry/presets.yaml");
+
+            $presets = new Config(CompiledYamlFile::instance($filename)->content());
+        }
+
+        return $presets;
     }
 
     public function loadLayout($name = null)

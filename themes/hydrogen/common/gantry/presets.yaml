@@ -1,32 +1,27 @@
-css:
-  id:
-  class: 'styles'
-
-base: 'http://placehold.it/400x400/'
+base: 'gantry-admin://images'
 stop: 3
-window_open: 'width=200,height=300'
 
 swatches:
   style1:
-    image: 'D4D4D4.jpg'
+    image: 'preset1.png'
     colors:
       - '#439a86'
       - '#354d59'
       - '#8f4dae'
   style2:
-    image: 'D4D4D4.jpg'
+    image: 'preset2.png'
     colors:
       - '#6EB2C8'
       - '#FCE884'
       - '#E96785'
   style3:
-    image: 'D4D4D4.jpg'
+    image: 'preset3.png'
     colors:
       - '#61C0BA'
       - '#4A96BA'
       - '#A3517D'
   style4:
-    image: 'D4D4D4.jpg'
+    image: 'preset4.png'
     colors:
       - '#F2A817'
       - '#F88316'
