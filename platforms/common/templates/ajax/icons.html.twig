@@ -21,14 +21,14 @@
 <div class="g-particles-main icons-wrapper">
     <ul>
         {% for icon in icons %}
-            <li data-icon="{{ icon }}"><i class="fa fa-fw {{ icon }}"></i> {{ icon }}</li>
+            <li data-g-icon="{{ icon }}"><i class="fa fa-fw {{ icon }}"></i> {{ icon }}</li>
         {% endfor %}
     </ul>
 </div>
 <div class="g-particles-footer settings-block clearfix">
-    <div class="float-left icon-preview"></div>
+    <div class="float-left g-icon-preview"></div>
     <div class="float-right">
-        <a href="#" class="button button-primary" data-select>Select</a>
+        <a href="#" class="button button-primary" data-g-select="">Select</a>
         <a href="#" class="button g5-dialog-close">Cancel</a>
     </div>
 </div>
