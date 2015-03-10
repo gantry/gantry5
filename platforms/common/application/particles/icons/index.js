@@ -40,7 +40,7 @@ domready(function() {
             remoteLoaded: function(response, content) {
                 var html, large,
                     container = content.elements.content,
-                    icons = container.search('[data-icon]');
+                    icons = container.search('[data-g-icon]');
 
                 if (!icons || !response.body.success) {
                     container.html(response.body.html || response.body);
@@ -49,10 +49,10 @@ domready(function() {
 
                 var updatePreview = function() {
                     var data = [],
-                        active = container.find('[data-icon].active'),
+                        active = container.find('[data-g-icon].active'),
                         options = container.search('.g-particles-header .float-right input:checked, .g-particles-header .float-right select');
 
-                    if (active) { data.push(active.data('icon')); }
+                    if (active) { data.push(active.data('g-icon')); }
                     if (options) {
                         options.forEach(function(option) {
                             var v = $(option).value();
@@ -60,18 +60,18 @@ domready(function() {
                         });
                     }
 
-                    container.find('.icon-preview').html('<i class="fa ' + data.join(' ') + '"></i> <span>' + data[0] + '</span>');
+                    container.find('.g-icon-preview').html('<i class="fa ' + data.join(' ') + '"></i> <span>' + data[0] + '</span>');
                 };
 
                 var updateTotal = function() {
-                    var total = container.search('[data-icon]:not(.hide-icon)');
+                    var total = container.search('[data-g-icon]:not(.hide-icon)');
                     container.find('.particle-search-total').text(total ? total.length : 0);
                 };
 
-                container.delegate('click', '[data-icon]', function(event, element) {
+                container.delegate('click', '[data-g-icon]', function(event, element) {
                     element = $(element);
 
-                    var active = container.find('[data-icon].active');
+                    var active = container.find('[data-g-icon].active');
                     if (active) { active.removeClass('active'); }
 
                     element.addClass('active');
@@ -79,10 +79,10 @@ domready(function() {
                     updatePreview();
                 });
 
-                container.delegate('click', '[data-select]', function(event){
+                container.delegate('click', '[data-g-select]', function(event){
                     event.preventDefault();
 
-                    var output = container.find('.icon-preview i');
+                    var output = container.find('.g-icon-preview i');
                     field.value(output.attribute('class'));
                     realPreview.attribute('class', output.attribute('class'));
 
@@ -99,7 +99,7 @@ domready(function() {
                 container.delegate('keyup', '.particle-search-wrapper input[type="text"]', function(e, input) {
                     input = $(input);
                     var value = input.value(),
-                        hidden = container.search('[data-icon].hide-icon');
+                        hidden = container.search('[data-g-icon].hide-icon');
 
                     if (!value) {
                         if (hidden) {
@@ -109,8 +109,8 @@ domready(function() {
                         return true;
                     }
 
-                    var found = container.search('[data-icon*="' + value + '"]');
-                    container.search('[data-icon]').addClass('hide-icon');
+                    var found = container.search('[data-g-icon*="' + value + '"]');
+                    container.search('[data-g-icon]').addClass('hide-icon');
                     if (found) {
                         found.removeClass('hide-icon');
                     }
@@ -124,7 +124,7 @@ domready(function() {
                     html = '';
                     for (var i = 5, l = 0; i > l; i--) {
                         large = (!i) ? 'lg' : i + 'x';
-                        html += '<i class="fa ' + icon.data('icon') + ' fa-' + large + '"></i> ';
+                        html += '<i class="fa ' + icon.data('g-icon') + ' fa-' + large + '"></i> ';
                     }
 
                     icon.popover({
@@ -139,7 +139,7 @@ domready(function() {
                         if (instance.$target) { instance.$target.remove(); }
                     });
 
-                    if (contains(value, icon.data('icon'))) {
+                    if (contains(value, icon.data('g-icon'))) {
                         // set active icon
                         icon.addClass('active');
 

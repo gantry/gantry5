@@ -21,7 +21,7 @@
 .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content {
     width: 650px;
 
-    .icon-preview {
+    .g-icon-preview {
         padding: 0 2px;
         @include transform(translateZ(0));
 
@@ -41,6 +41,10 @@
 
         label {
             font-size: 0.75em;
+        }
+
+        .float-right input, select {
+            width: auto !important;
         }
     }
 
