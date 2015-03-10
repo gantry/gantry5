@@ -106,8 +106,6 @@ class Settings extends HtmlController
             throw new \RuntimeException('Page Not Found', 404);
         }
 
-        $fields['is_current'] = true;
-
         // Get the prefix.
         $prefix = "particles.{$id}." . implode('.', $path);
         if ($value !== null) {
@@ -115,6 +113,8 @@ class Settings extends HtmlController
             $fields = ['fields' => $fields['fields']];
             $prefix .= '.' . $value;
         }
+        $fields['is_current'] = true;
+
         array_pop($path);
 
         $configuration = "configurations/{$this->params['configuration']}";
@@ -130,6 +130,9 @@ class Settings extends HtmlController
 
         if (isset($parent['key'])) {
             $this->params['key'] = $parent['key'];
+        }
+        if (isset($parent['value'])) {
+            $this->params['title'] = $parent['value'];
         }
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
