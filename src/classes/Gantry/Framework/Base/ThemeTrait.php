@@ -118,6 +118,7 @@ trait ThemeTrait
         $loader->setPaths($locator->findResources('gantry-engine://templates'), 'nucleus');
         $loader->setPaths($locator->findResources('gantry-particles://'), 'particles');
 
+        $twig->addExtension(new \Twig_Extension_Debug());
         $twig->addExtension(new TwigExtension);
         $twig->addFilter('toGrid', new \Twig_Filter_Function(array($this, 'toGrid')));
         return $twig;
