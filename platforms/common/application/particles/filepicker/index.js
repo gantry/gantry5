@@ -38,7 +38,7 @@ var FilePicker = new prime({
             remote: getAjaxURL('filepicker') + getAjaxSuffix(),
             remoteLoaded: bind(this.loaded, this),
             afterClose: bind(function() {
-                this.dropzone.destroy();
+                if (this.dropzone) { this.dropzone.destroy(); }
             }, this)
         });
     },
@@ -76,132 +76,135 @@ var FilePicker = new prime({
             colors    = this.colors;
 
         this.content = content;
-        this.dropzone = new dropzone('body', {
-            previewTemplate: this.getPreviewTemplate(),
-            previewsContainer: files.find('ul:not(.g-list-labels)')[0],
-            thumbnailWidth: 100,
-            thumbnailHeight: 100,
-            url: bind(function(file) {
-                return getAjaxURL('filepicker/upload/' + this.getPath() + file[0].name) + getAjaxSuffix();
-            }, this)
-        });
+
+        if (files) {
+            this.dropzone = new dropzone('body', {
+                previewTemplate: this.getPreviewTemplate(),
+                previewsContainer: files.find('ul:not(.g-list-labels)')[0],
+                thumbnailWidth: 100,
+                thumbnailHeight: 100,
+                url: bind(function(file) {
+                    return getAjaxURL('filepicker/upload/' + this.getPath() + file[0].name) + getAjaxSuffix();
+                }, this)
+            });
 
 
-        this.dropzone.on('thumbnail', function(file, dataUrl) {
-            $(file.previewElement).find('[data-dz-thumbnail]').attribute('style', 'background-image: url(' + dataUrl + ');');
-        });
+            this.dropzone.on('thumbnail', function(file, dataUrl) {
+                $(file.previewElement).find('[data-dz-thumbnail]').attribute('style', 'background-image: url(' + dataUrl + ');');
+            });
 
-        this.dropzone.on('addedfile', function(file) {
-            var element      = $(file.previewElement),
-                uploader     = element.find('[data-file-uploadprogress]'),
-                isList       = files.hasClass('g-filemode-list'),
-                progressConf = {
-                    value: 0,
-                    animation: false,
-                    insertLocation: 'bottom'
-                };
+            this.dropzone.on('addedfile', function(file) {
+                var element      = $(file.previewElement),
+                    uploader     = element.find('[data-file-uploadprogress]'),
+                    isList       = files.hasClass('g-filemode-list'),
+                    progressConf = {
+                        value: 0,
+                        animation: false,
+                        insertLocation: 'bottom'
+                    };
 
-            if (!file.type.match(/image.*/)) {
-                var ext = file.name.split('.');
-                ext = (!ext.length || ext.length == 1) ? '-' : ext.reverse()[0];
-                element.find('.g-thumb').text(ext);
-            }
-
-            progressConf = deepFillIn((isList ? {
-                size: 20,
-                thickness: 10,
-                fill: {
-                    color: colors.small,
-                    gradient: false
+                if (!file.type.match(/image.*/)) {
+                    var ext = file.name.split('.');
+                    ext = (!ext.length || ext.length == 1) ? '-' : ext.reverse()[0];
+                    element.find('.g-thumb').text(ext);
                 }
-            } : {
-                size: 50,
-                thickness: 'auto',
-                fill: {
-                    gradient: colors.gradient,
-                    color: false
-                }
-            }), progressConf);
 
-            element.addClass('g-file-uploading');
-            uploader.progresser(progressConf);
-            uploader.attribute('title', 'processing...').find('.g-file-progress-text').html('&bull;&bull;&bull;').attribute('title', 'processing...');
-
-        }).on('processing', function(file) {
-
-            var element = $(file.previewElement).find('[data-file-uploadprogress]');
-            element.find('.g-file-progress-text').text('0%').attribute('title', '0%');
-
-        }).on('sending', function(file, xhr, formData) {
-
-            var element = $(file.previewElement).find('[data-file-uploadprogress]');
-            element.attribute('title', '0%').find('.g-file-progress-text').text('0%').attribute('title', '0%');
-
-        }).on('uploadprogress', function(file, progress, bytesSent) {
-
-            var element = $(file.previewElement).find('[data-file-uploadprogress]');
-            element.progresser({ value: progress / 100 });
-            element.attribute('title', Math.round(progress) + '%').find('.g-file-progress-text').text(Math.round(progress) + '%').attribute('title', Math.round(progress) + '%');
-
-        }).on('complete', function(file) {
-
-        }).on('error', function(file, error) {
-            var element  = $(file.previewElement),
-                uploader = element.find('[data-file-uploadprogress]'),
-                text     = element.find('.g-file-progress-text'),
-                isList   = files.hasClass('g-filemode-list');
-
-            element.addClass('g-file-error');
-
-            uploader.title('Error').progresser({
-                fill: {
-                    color: colors.error,
-                    gradient: false
-                },
-                value: 1,
-                thickness: isList ? 10 : 25
-            });
-
-            text.title('Error').html('<i class="fa fa-exclamation"></i>').parent('[data-file-uploadprogress]').popover({
-                content: error.html ? error.html : error,
-                placement: 'auto',
-                trigger: 'mouse',
-                style: 'above-modal',
-                width: 'auto',
-                targetEvents: false
-            });
-
-        }).on('success', function(file, response, xhr) {
-            var element  = $(file.previewElement),
-                uploader = element.find('[data-file-uploadprogress]'),
-                mtime    = element.find('.g-file-mtime'),
-                text     = element.find('.g-file-progress-text'),
-                thumb    = element.find('.g-thumb'),
-                isList   = files.hasClass('g-filemode-list');
-
-            uploader.progresser({
-                fill: {
-                    color: colors.success,
-                    gradient: false
-                },
-                value: 1,
-                thickness: isList ? 10 : 25
-            });
-
-            text.html('<i class="fa fa-check"></i>');
-
-            setTimeout(bind(function() {
-                uploader.animate({ opacity: 0 }, { duration: 500 });
-                thumb.animate({ opacity: 1 }, {
-                    duration: 500,
-                    callback: function() {
-                        element.removeClass('g-file-uploading');
-                        uploader.remove();
-                        mtime.text('just now');
+                progressConf = deepFillIn((isList ? {
+                    size: 20,
+                    thickness: 10,
+                    fill: {
+                        color: colors.small,
+                        gradient: false
                     }
+                } : {
+                    size: 50,
+                    thickness: 'auto',
+                    fill: {
+                        gradient: colors.gradient,
+                        color: false
+                    }
+                }), progressConf);
+
+                element.addClass('g-file-uploading');
+                uploader.progresser(progressConf);
+                uploader.attribute('title', 'processing...').find('.g-file-progress-text').html('&bull;&bull;&bull;').attribute('title', 'processing...');
+
+            }).on('processing', function(file) {
+
+                var element = $(file.previewElement).find('[data-file-uploadprogress]');
+                element.find('.g-file-progress-text').text('0%').attribute('title', '0%');
+
+            }).on('sending', function(file, xhr, formData) {
+
+                var element = $(file.previewElement).find('[data-file-uploadprogress]');
+                element.attribute('title', '0%').find('.g-file-progress-text').text('0%').attribute('title', '0%');
+
+            }).on('uploadprogress', function(file, progress, bytesSent) {
+
+                var element = $(file.previewElement).find('[data-file-uploadprogress]');
+                element.progresser({ value: progress / 100 });
+                element.attribute('title', Math.round(progress) + '%').find('.g-file-progress-text').text(Math.round(progress) + '%').attribute('title', Math.round(progress) + '%');
+
+            }).on('complete', function(file) {
+
+            }).on('error', function(file, error) {
+                var element  = $(file.previewElement),
+                    uploader = element.find('[data-file-uploadprogress]'),
+                    text     = element.find('.g-file-progress-text'),
+                    isList   = files.hasClass('g-filemode-list');
+
+                element.addClass('g-file-error');
+
+                uploader.title('Error').progresser({
+                    fill: {
+                        color: colors.error,
+                        gradient: false
+                    },
+                    value: 1,
+                    thickness: isList ? 10 : 25
                 });
-            }, this), 500);
-        });
+
+                text.title('Error').html('<i class="fa fa-exclamation"></i>').parent('[data-file-uploadprogress]').popover({
+                    content: error.html ? error.html : error,
+                    placement: 'auto',
+                    trigger: 'mouse',
+                    style: 'above-modal',
+                    width: 'auto',
+                    targetEvents: false
+                });
+
+            }).on('success', function(file, response, xhr) {
+                var element  = $(file.previewElement),
+                    uploader = element.find('[data-file-uploadprogress]'),
+                    mtime    = element.find('.g-file-mtime'),
+                    text     = element.find('.g-file-progress-text'),
+                    thumb    = element.find('.g-thumb'),
+                    isList   = files.hasClass('g-filemode-list');
+
+                uploader.progresser({
+                    fill: {
+                        color: colors.success,
+                        gradient: false
+                    },
+                    value: 1,
+                    thickness: isList ? 10 : 25
+                });
+
+                text.html('<i class="fa fa-check"></i>');
+
+                setTimeout(bind(function() {
+                    uploader.animate({ opacity: 0 }, { duration: 500 });
+                    thumb.animate({ opacity: 1 }, {
+                        duration: 500,
+                        callback: function() {
+                            element.removeClass('g-file-uploading');
+                            uploader.remove();
+                            mtime.text('just now');
+                        }
+                    });
+                }, this), 500);
+            });
+        }
 
         content.delegate('click', '.g-bookmark-title', function(e, element) {
             var sibling = element.nextSibling('.g-folders'),

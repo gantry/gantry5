@@ -120,7 +120,7 @@ class Filepicker extends JsonController
                     } else {
                         if ($filter && !preg_match("/".$filter."/i", $file->filename)) { continue; }
                         if (!$index) {
-                            $file->mime = finfo_file($finfo, $file->pathname);
+                            $file->mime = finfo_file($finfo, GANTRY5_ROOT . '/' . $file->pathname);
                             $files->append($file);
                         }
                     }
