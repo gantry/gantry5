@@ -1,21 +1,22 @@
 {% set presets = gantry.theme.presets %}
-{% set stopValue = presets.stop %}
-{% set stop = (100 / presets.stop|default(1))|number_format(3, '.') %}
 
 <ul class="g-grid">
     {% for key, swatch in presets.swatches %}
         {% set counter = 0 %}
         <li class="g-block">
-            <a href="#" class="swatch" data-styles="{{ presets.flatten(key, '][', 'styles')|json_encode|escape('html_attr') }}">
+            <a href="#" class="swatch" data-styles="{{ presets.flatten('swatches.' ~ key ~ '.styles', '][', 'styles')|json_encode|escape('html_attr') }}">
                 <img src="{{ url(presets.base ~ '/' ~ swatch.image)|default('http://placehold.it/400x400/D4D4D4.jpg')|e }}" class="swatch-image" />
+                {% if swatch.colors|length %}
+                {% set stop = (100 / swatch.colors|length)|number_format(3, '.') %}
                 <span class="swatch-colors"
                         {# required attribute structures #}
                         style="background: linear-gradient(to right
-                            {% for color in swatch.colors|slice(0, stop) -%}
+                            {% for color in swatch.colors -%}
                                 ,{{- color }} {{ counter -}}%, {{- color }} {{ counter + stop -}}%
                                 {% set counter = counter + stop %}
                             {%- endfor %})">
                 </span>
+                {% endif %}
             </a>
         </li>
     {% endfor %}
