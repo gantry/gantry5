@@ -33,7 +33,7 @@ ready(function() {
             type = element.data('save'),
             extras = '',
             page = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
-            saveURL = window.location.href + getAjaxSuffix();
+            saveURL = trim(window.location.href, '#') + getAjaxSuffix();
 
         switch (page) {
             case 'layout':
