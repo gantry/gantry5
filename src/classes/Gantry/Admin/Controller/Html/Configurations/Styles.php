@@ -158,39 +158,30 @@ class Styles extends HtmlController
     {
         /** @var Request $request */
         $request = $this->container['request'];
+        /** @var Config $config */
+        $config = $this->container['config'];
 
-        $data = $id ? [$id => $request->getArray()] : $request->getArray('styles');
-
-        foreach ($data as $name => $values) {
-            $this->saveItem($name, $values);
+        if ($id) {
+            $data = (array) $config->get('styles');
+            $data[$id] = $request->getArray();
+        } else {
+            $data = $request->getArray('styles');
         }
 
-        $this->compileSettings();
-
-        return $id ? $this->display($id) : $this->index();
-    }
-
-    protected function saveItem($id, $data)
-    {
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
         $configuration = $this->params['configuration'];
-        $save_dir = $locator->findResource("gantry-config://{$configuration}/styles", true, true);
-
-        $filename = "{$save_dir}/{$id}.yaml";
+        $save_dir = $locator->findResource("gantry-config://{$configuration}", true, true);
+        $filename = "{$save_dir}/styles.yaml";
 
         $file = YamlFile::instance($filename);
-        if (!is_array($data)) {
-            if ($file->exists()) {
-                $file->delete();
-            }
-        } else {
-            $blueprints = new BlueprintsForm($this->container['styles']->get($id));
-            $config = new Config($data, function() use ($blueprints) { return $blueprints; });
-            $file->save($config->toArray());
-        }
+        $file->save($data);
+
+        $this->compileSettings();
+
+        return $id ? $this->display($id) : $this->index();
     }
 
     protected function compileSettings()

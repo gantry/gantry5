@@ -32,3 +32,74 @@ swatches:
       - '#F88316'
       - '#E15E26'
 
+style1:
+
+  base:
+    background: '#ffffff'
+    text-color: '#666666'
+  accent:
+    color-1: '#439a86'
+    color-2: '#8f4dae'
+  header:
+    background: '#439a86'
+    text-color: '#ffffff'
+  showcase:
+    background: '#354d59'
+    text-color: '#ffffff'
+  feature:
+    background: '#ffffff'
+    text-color: '#666666'
+  subfeature:
+    background: '#f0f0f0'
+    text-color: '#666666'
+  main:
+    background: '#ffffff'
+    text-color: '#666666'
+  footer:
+    background: '#f0f0f0'
+    text-color: '#666666'
+
+style2:
+
+  base:
+    background: '#ffffff'
+    text-color: '#383838'
+  accent:
+    color-1: '#429942'
+    color-2: '#594cad'
+  header:
+    background: '#429942'
+    text-color: '#ffffff'
+  showcase:
+    background: '#525934'
+    text-color: '#ffffff'
+  feature:
+    background: '#ffffff'
+    text-color: '#383838'
+  subfeature:
+    background: '#f0f0f0'
+    text-color: '#383838'
+  main:
+    background: '#ffffff'
+    text-color: '#383838'
+  footer:
+    background: '#f0f0f0'
+    text-color: '#383838'
+
+style3:
+
+  base:
+    background: '#ffffff'
+    text-color: '#555555'
+  accent:
+    color-1: '#594cad'
+    color-2: '#429942'
+
+style4:
+
+  base:
+    background: '#ffffff'
+    text-color: '#555555'
+  accent:
+    color-1: '#8f4dae'
+    color-2: '#439a86'
