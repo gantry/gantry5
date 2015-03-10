@@ -80,14 +80,21 @@ bold, strong {
       color: #ffffff;
       padding: 1.2rem 0.938rem;
       line-height: normal; }
-    .g-main-nav .g-toplevel > li:hover, .g-main-nav .g-toplevel > li.active {
+    .g-main-nav .g-toplevel > li:hover {
       background: #3d8c7a; }
-      .g-main-nav .g-toplevel > li:hover > .g-selected, .g-main-nav .g-toplevel > li.active > .g-selected {
+      .g-main-nav .g-toplevel > li:hover > .g-selected {
         background: #377e6d; }
+    .g-main-nav .g-toplevel > li.active {
+      background: #ffffff; }
+      .g-main-nav .g-toplevel > li.active > .g-menu-item-content {
+        color: #666666; }
+      .g-main-nav .g-toplevel > li.active > .g-selected {
+        background: #377e6d;
+        color: #ffffff; }
     .g-main-nav .g-toplevel > li > .g-selected {
       background: #377e6d; }
   .g-main-nav .g-toplevel i {
-    opacity: 0.5; }
+    opacity: 0.6; }
 .g-main-nav .g-dropdown {
   text-align: left;
   background: #377e6d; }
@@ -102,7 +109,7 @@ bold, strong {
   background: #306f61; }
 
 .g-nav-overlay {
-  background: fadeout(#000000, 50%);
+  background: fadeout(#000000, 60%);
   top: 0;
   right: 0;
   bottom: 0;
@@ -119,6 +126,10 @@ bold, strong {
 @media only all and (max-width: 47.938rem) {
   .g-main-nav .g-toplevel {
     background: #354D59; }
+    .g-main-nav .g-toplevel > li:hover, .g-main-nav .g-toplevel > li.active {
+      background: #3d8c7a; }
+      .g-main-nav .g-toplevel > li:hover > .g-menu-item-content, .g-main-nav .g-toplevel > li.active > .g-menu-item-content {
+        color: #ffffff; }
 
   .g-mobile-nav-toggle {
     color: #439A86;
@@ -129,8 +140,6 @@ bold, strong {
   text-align: center;
   position: relative;
   z-index: 2; }
-  #g-header a {
-    color: #ffffff; }
   #g-header .g-content {
     margin: 0;
     padding: 0; }
@@ -172,6 +181,11 @@ bold, strong {
   transition: transform 0.3s ease-out; }
 
 #g-main {
+  padding: 1.5rem 0;
+  background: #ffffff;
+  color: #666666; }
+
+#g-sidebar {
   padding: 1.5rem 0;
   background: #ffffff;
   color: #666666; }

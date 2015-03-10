@@ -23,19 +23,33 @@
 				padding: 1.2rem $content-padding;
 				line-height: normal;
 			}
-			&:hover, &.active {
+			&:hover {
 				background: darken($header-background, 4%);
 
 				> .g-selected {
 					background: darken($header-background, 8%);
 				}
 			}
+
+			&.active {
+				background: $main-background;
+
+				> .g-menu-item-content {
+					color: $main-text-color;
+				}
+
+				> .g-selected {
+					background: darken($header-background, 8%);
+					color: $header-text-color;
+				}
+			}
+
 			> .g-selected {
 				background: darken($header-background, 8%);
 			}
 		}
 		i {
-			opacity: 0.5;
+			opacity: 0.6;
 		}
 	}
 
@@ -65,7 +79,7 @@
 
 // Mobile Nav Overlay
 .g-nav-overlay {
-	background: fadeout($black, 50%);
+	background: fadeout($black, 60%);
     top: 0;
     right: 0;
     bottom: 0;
@@ -83,7 +97,16 @@
 @include breakpoint(mobile-only) {	
 	.g-main-nav {
 		.g-toplevel {
-			background: $mobilemenu-background;									
+			background: $mobilemenu-background;
+			> li {
+				&:hover, &.active {
+					background: darken($header-background, 4%);
+
+					> .g-menu-item-content {
+						color: $header-text-color;
+					}
+				}
+			}							
 		}
 	}
 	.g-mobile-nav-toggle {
