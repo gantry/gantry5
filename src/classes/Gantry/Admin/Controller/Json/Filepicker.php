@@ -195,7 +195,7 @@ class Filepicker extends JsonController
         }
 
         // You should also check filesize here.
-        if ($_FILES['file']['size'] > 1000000) {
+        if ($_FILES['file']['size'] > min(ini_get('post_max_size'), ini_get('upload_max_filesize'))) {
             throw new \RuntimeException('Exceeded filesize limit.', 400);
         }
 

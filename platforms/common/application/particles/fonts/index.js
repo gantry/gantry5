@@ -706,6 +706,7 @@ var Fonts = new prime({
 domready(function() {
     var body = $('body');
     body.delegate('click', '[data-g5-fontpicker]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
         var FontPicker = storage.get(element);
         if (!FontPicker) {
             FontPicker = new Fonts();

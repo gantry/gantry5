@@ -4,7 +4,7 @@
     {% for key, preset in presets %}
         {% set counter = 0 %}
         <li class="g-block">
-            <a href="#" class="swatch" data-styles="{{ presets.flatten(key ~ '.styles', '][', 'styles')|json_encode|escape('html_attr') }}">
+            <a href="#" class="swatch" data-g-styles="{{ presets.flatten(key ~ '.styles', '][', 'styles')|json_encode|escape('html_attr') }}">
                 <img src="{{ url(preset.image)|default('http://placehold.it/400x400/D4D4D4.jpg')|e }}" class="swatch-image" />
                 {% if preset.colors|length %}
                 {% set stop = (100 / preset.colors|length)|number_format(3, '.') %}

@@ -123,6 +123,7 @@ ready(function() {
 
     // Remove item
     body.delegate('click', '[data-collection-remove]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
         var item      = element.parent('[data-collection-item]'),
             list      = element.parent('ul'),
             items     = list.search('> [data-collection-item]'),
@@ -148,7 +149,7 @@ ready(function() {
 
     // Load item settings
     body.delegate('click', '[data-collection-item] .config-cog, [data-collection-editall]', function(event, element) {
-        event.preventDefault();
+        if (event && event.preventDefault) { event.preventDefault(); }
 
         var editable = element.find('[data-title-editable]');
         if (editable && editable.attribute('contenteditable')) {

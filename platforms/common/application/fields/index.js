@@ -31,12 +31,17 @@ ready(function() {
 
     compare.single = function(event, element) {
         var parent = element.parent('.settings-param') || element.parent('h4'),
-            target = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title')) : null;
+            target = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title')) : null,
+            isOverride = parent.find('.settings-param-toggle');
 
         if (!target || !originals || originals.get(element.attribute('name')) == null) { return; }
-
-        if (originals.get(element.attribute('name')) !== element.value()) { target.showIndicator('changes-indicator font-small fa fa-circle-o fa-fw'); }
-        else { target.hideIndicator(); }
+        if (originals.get(element.attribute('name')) !== element.value()) {
+            if (isOverride && event.forceOverride && !isOverride.checked()) { isOverride[0].click(); }
+            target.showIndicator('changes-indicator font-small fa fa-circle-o fa-fw');
+        } else {
+            if (isOverride && event.forceOverride  && isOverride.checked()) { isOverride[0].click(); }
+            target.hideIndicator();
+        }
 
         compare.whole();
     };

@@ -207,6 +207,7 @@ var FilePicker = new prime({
         }
 
         content.delegate('click', '.g-bookmark-title', function(e, element) {
+            if (event && event.preventDefault) { event.preventDefault(); }
             var sibling = element.nextSibling('.g-folders'),
                 parent  = element.parent('.g-bookmark');
 
@@ -216,7 +217,8 @@ var FilePicker = new prime({
             });
         });
 
-        content.delegate('click', '[data-folder]', bind(function(e, element) {
+        content.delegate('click', '[data-folder]', bind(function(event, element) {
+            if (event && event.preventDefault) { event.preventDefault(); }
             var data = JSON.parse(element.data('folder'));
 
             fieldData.root = data.pathname;
@@ -257,7 +259,8 @@ var FilePicker = new prime({
             }, this));
         }, this));
 
-        content.delegate('click', '[data-file]', bind(function(e, element) {
+        content.delegate('click', '[data-file]', bind(function(event, element) {
+            if (event && event.preventDefault) { event.preventDefault(); }
             if (element.hasClass('g-file-error') || element.hasClass('g-file-uploading')) { return; }
             var data = JSON.parse(element.data('file'));
 
@@ -265,7 +268,8 @@ var FilePicker = new prime({
             element.addClass('selected');
         }, this));
 
-        content.delegate('click', '[data-files-mode]', bind(function(e, element) {
+        content.delegate('click', '[data-files-mode]', bind(function(event, element) {
+            if (event && event.preventDefault) { event.preventDefault(); }
             if (element.hasClass('active')) { return; }
 
             var modes = $('[data-files-mode]');
@@ -332,6 +336,7 @@ var FilePicker = new prime({
 domready(function() {
     var body = $('body');
     body.delegate('click', '[data-g5-filepicker]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
         element = $(element);
         if (!element.GantryFilePicker) {
             element.GantryFilePicker = new FilePicker(element);

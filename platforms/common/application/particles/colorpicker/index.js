@@ -77,15 +77,15 @@ var ColorPicker = new prime({
         }, this));
 
         // Update on keyup
-        body.delegate('keyup', '.colorpicker input', bind(function() {
-            this.updateFromInput(true);
+        body.delegate('keyup', '.colorpicker input', bind(function(event, element) {
+            this.updateFromInput(true, element);
             return true;
         }, this));
 
         // Update on paste
-        body.delegate('paste', '.colorpicker input', bind(function() {
+        body.delegate('paste', '.colorpicker input', bind(function(event, element) {
             setTimeout(bind(function() {
-                this.updateFromInput(true);
+                this.updateFromInput(true, element);
             }, this), 1);
         }, this));
     },
@@ -197,130 +197,134 @@ var ColorPicker = new prime({
         this.mode = 'hue';
     },
 
-    updateFromInput: function(dontFireEvent) {
-        var value = this.element.value(),
+    updateFromInput: function(dontFireEvent, element) {
+        element = this.element || element;
+        var value = element.value(),
             opacity = value.replace(/\s/g, '').match(/^rgba?\([0-9]{1,3},[0-9]{1,3},[0-9]{1,3},(.+)\)/),
             hex, hsb;
 
         value = rgbstr2hex(value) || value;
+        opacity = opacity ? clamp(opacity[1], 0, 1) : 1;
 
         if (!(hex = parseHex(value))) { hex = '#ffff00'; }
         hsb = hex2hsb(hex);
 
-        // opacity
-        this.opacity = opacity ? clamp(opacity[1], 0, 1) : 1;
-        var sliderHeight = this.opacitySlider.position().height;
-        this.opacitySlider.find('.cp-picker').style({ 'top': clamp(sliderHeight - (sliderHeight * this.opacity), 0, sliderHeight) });
+        if (this.built) {
+            // opacity
+            this.opacity = opacity;
+            var sliderHeight = this.opacitySlider.position().height;
+            this.opacitySlider.find('.cp-picker').style({ 'top': clamp(sliderHeight - (sliderHeight * this.opacity), 0, sliderHeight) });
 
-        // bg color
-        var gridHeight = this.grid.position().height,
-            gridWidth = this.grid.position().width,
-            r, phi, x, y;
+            // bg color
+            var gridHeight = this.grid.position().height,
+                gridWidth  = this.grid.position().width,
+                r, phi, x, y;
 
-        sliderHeight = this.slider.position().height;
+            sliderHeight = this.slider.position().height;
 
-        switch (this.mode) {
-            case 'wheel':
-                // Set grid position
-                r = clamp(Math.ceil(hsb.s * 0.75), 0, gridHeight / 2);
-                phi = hsb.h * Math.PI / 180;
-                x = clamp(75 - Math.cos(phi) * r, 0, gridWidth);
-                y = clamp(75 - Math.sin(phi) * r, 0, gridHeight);
-                this.grid.style({ backgroundColor: 'transparent' }).find('.cp-picker').style({
-                    top: y,
-                    left: x
-                });
+            switch (this.mode) {
+                case 'wheel':
+                    // Set grid position
+                    r = clamp(Math.ceil(hsb.s * 0.75), 0, gridHeight / 2);
+                    phi = hsb.h * Math.PI / 180;
+                    x = clamp(75 - Math.cos(phi) * r, 0, gridWidth);
+                    y = clamp(75 - Math.sin(phi) * r, 0, gridHeight);
+                    this.grid.style({ backgroundColor: 'transparent' }).find('.cp-picker').style({
+                        top: y,
+                        left: x
+                    });
 
-                // Set slider position
-                y = 150 - (hsb.b / (100 / gridHeight));
-                if (hex === '') y = 0;
-                this.slider.find('.cp-picker').style({ top: y });
+                    // Set slider position
+                    y = 150 - (hsb.b / (100 / gridHeight));
+                    if (hex === '') y = 0;
+                    this.slider.find('.cp-picker').style({ top: y });
 
-                // Update panel color
-                this.slider.style({
-                    backgroundColor: hsb2hex({
-                        h: hsb.h,
-                        s: hsb.s,
-                        b: 100
-                    })
-                });
-                break;
+                    // Update panel color
+                    this.slider.style({
+                        backgroundColor: hsb2hex({
+                            h: hsb.h,
+                            s: hsb.s,
+                            b: 100
+                        })
+                    });
+                    break;
 
-            case 'saturation':
-                // Set grid position
-                x = clamp((5 * hsb.h) / 12, 0, 150);
-                y = clamp(gridHeight - Math.ceil(hsb.b / (100 / gridHeight)), 0, gridHeight);
-                this.grid.find('.cp-picker').style({
-                    top: y,
-                    left: x
-                });
+                case 'saturation':
+                    // Set grid position
+                    x = clamp((5 * hsb.h) / 12, 0, 150);
+                    y = clamp(gridHeight - Math.ceil(hsb.b / (100 / gridHeight)), 0, gridHeight);
+                    this.grid.find('.cp-picker').style({
+                        top: y,
+                        left: x
+                    });
 
-                // Set slider position
-                y = clamp(sliderHeight - (hsb.s * (sliderHeight / 100)), 0, sliderHeight);
-                this.slider.find('.cp-picker').style({ top: y });
+                    // Set slider position
+                    y = clamp(sliderHeight - (hsb.s * (sliderHeight / 100)), 0, sliderHeight);
+                    this.slider.find('.cp-picker').style({ top: y });
 
-                // Update UI
-                this.slider.style({
-                    backgroundColor: hsb2hex({
-                        h: hsb.h,
-                        s: 100,
-                        b: hsb.b
-                    })
-                });
-                this.grid.find('.cp-grid-inner').style({ opacity: hsb.s / 100 });
-                break;
+                    // Update UI
+                    this.slider.style({
+                        backgroundColor: hsb2hex({
+                            h: hsb.h,
+                            s: 100,
+                            b: hsb.b
+                        })
+                    });
+                    this.grid.find('.cp-grid-inner').style({ opacity: hsb.s / 100 });
+                    break;
 
-            case 'brightness':
-                // Set grid position
-                x = clamp((5 * hsb.h) / 12, 0, 150);
-                y = clamp(gridHeight - Math.ceil(hsb.s / (100 / gridHeight)), 0, gridHeight);
-                this.grid.find('.cp-picker').style({
-                    top: y,
-                    left: x
-                });
+                case 'brightness':
+                    // Set grid position
+                    x = clamp((5 * hsb.h) / 12, 0, 150);
+                    y = clamp(gridHeight - Math.ceil(hsb.s / (100 / gridHeight)), 0, gridHeight);
+                    this.grid.find('.cp-picker').style({
+                        top: y,
+                        left: x
+                    });
 
-                // Set slider position
-                y = clamp(sliderHeight - (hsb.b * (sliderHeight / 100)), 0, sliderHeight);
-                this.slider.find('.cp-picker').style({ top: y });
+                    // Set slider position
+                    y = clamp(sliderHeight - (hsb.b * (sliderHeight / 100)), 0, sliderHeight);
+                    this.slider.find('.cp-picker').style({ top: y });
 
-                // Update UI
-                this.slider.style({
-                    backgroundColor: hsb2hex({
-                        h: hsb.h,
-                        s: hsb.s,
-                        b: 100
-                    })
-                });
-                this.grid.find('.cp-grid-inner').style({ opacity: 1 - (hsb.b / 100) });
-                break;
-            case 'hue':
-            default:
-                // Set grid position
-                x = clamp(Math.ceil(hsb.s / (100 / gridWidth)), 0, gridWidth);
-                y = clamp(gridHeight - Math.ceil(hsb.b / (100 / gridHeight)), 0, gridHeight);
-                this.grid.find('.cp-picker').style({
-                    top: y,
-                    left: x
-                });
+                    // Update UI
+                    this.slider.style({
+                        backgroundColor: hsb2hex({
+                            h: hsb.h,
+                            s: hsb.s,
+                            b: 100
+                        })
+                    });
+                    this.grid.find('.cp-grid-inner').style({ opacity: 1 - (hsb.b / 100) });
+                    break;
+                case 'hue':
+                default:
+                    // Set grid position
+                    x = clamp(Math.ceil(hsb.s / (100 / gridWidth)), 0, gridWidth);
+                    y = clamp(gridHeight - Math.ceil(hsb.b / (100 / gridHeight)), 0, gridHeight);
+                    this.grid.find('.cp-picker').style({
+                        top: y,
+                        left: x
+                    });
 
-                // Set slider position
-                y = clamp(sliderHeight - (hsb.h / (360 / sliderHeight)), 0, sliderHeight);
-                this.slider.find('.cp-picker').style({ top: y });
+                    // Set slider position
+                    y = clamp(sliderHeight - (hsb.h / (360 / sliderHeight)), 0, sliderHeight);
+                    this.slider.find('.cp-picker').style({ top: y });
 
-                // Update panel color
-                this.grid.style({
-                    backgroundColor: hsb2hex({
-                        h: hsb.h,
-                        s: 100,
-                        b: 100
-                    })
-                });
-                break;
+                    // Update panel color
+                    this.grid.style({
+                        backgroundColor: hsb2hex({
+                            h: hsb.h,
+                            s: 100,
+                            b: 100
+                        })
+                    });
+                    break;
+            }
         }
 
-        if (!dontFireEvent) { this.element.value(this.getValue(hex)); }
+        if (!dontFireEvent) { element.value(this.getValue(hex)); }
 
-        this.emit('change', this.element, hex, this.opacity);
+        this.emit('change', element, hex, opacity);
 
     },
 

@@ -24,6 +24,7 @@ domready(function() {
     });
 
     body.delegate('click', '[data-g5-iconpicker]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
         element = $(element);
         var field = $(element.data('g5-iconpicker')),
             realPreview = element,
@@ -69,6 +70,7 @@ domready(function() {
                 };
 
                 container.delegate('click', '[data-g-icon]', function(event, element) {
+                    if (event && event.preventDefault) { event.preventDefault(); }
                     element = $(element);
 
                     var active = container.find('[data-g-icon].active');
