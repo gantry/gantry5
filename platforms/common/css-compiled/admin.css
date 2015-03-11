@@ -1206,7 +1206,7 @@ a {
   display: inline-block;
   border-radius: 100%;
   background-color: #633679;
-  margin-left: 0.938rem;
+  margin: 0 0.938rem;
   width: 26px;
   height: 26px;
   text-align: center;

@@ -24,9 +24,21 @@ require('./utils/ajaxify-links');
 ready(function() {
     var body = $('body'),
         sentence = 'The {{type}} {{verb}} been successfully saved! {{extras}}';
+
+    // Close notification
+    body.delegate('click', '[data-g-close]', function(event, element){
+        if (event && event.preventDefault) { event.preventDefault(); }
+        var parent = element.data('g-close');
+        parent = parent ? element.parent(parent) : element;
+
+        parent.slideUp(function(){
+            parent.remove();
+        });
+    });
+
     // Save
-    body.delegate('click', '.button-save', function(e, element) {
-        e.preventDefault();
+    body.delegate('click', '.button-save', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
         element.showIndicator();
 
         var data = {},

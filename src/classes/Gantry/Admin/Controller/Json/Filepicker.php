@@ -195,8 +195,9 @@ class Filepicker extends JsonController
         }
 
         // You should also check filesize here.
-        if ($_FILES['file']['size'] > min(ini_get('post_max_size'), ini_get('upload_max_filesize'))) {
-            throw new \RuntimeException('Exceeded filesize limit.', 400);
+        $maxSize = $this->returnBytes(min(ini_get('post_max_size'), ini_get('upload_max_filesize')));
+        if ($_FILES['file']['size'] > $maxSize) {
+            throw new \RuntimeException('Exceeded filesize limit. File is ' . $_FILES['file']['size'] . ', maximum allowed is ' . $maxSize, 400);
         }
 
         // Check extension
@@ -304,5 +305,22 @@ class Filepicker extends JsonController
         flush();
 
         exit();
+    }
+
+    protected function returnBytes($size_str)
+    {
+        switch (strtolower(substr($size_str, -1))) {
+            case 'm':
+            case 'mb':
+                return (int)$size_str * 1048576;
+            case 'k':
+            case 'kb':
+                return (int)$size_str * 1024;
+            case 'g':
+            case 'gb':
+                return (int)$size_str * 1073741824;
+            default:
+                return $size_str;
+        }
     }
 }
