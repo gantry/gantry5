@@ -17,6 +17,10 @@ h1, h2, h3, h4, h5, h6, strong {
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   background: #439A86;
   color: #ffffff;
+  border: 0;
+  line-height: 1.5;
+  font-size: 1rem;
+  vertical-align: middle;
   -webkit-transition: background 0.1s;
   -moz-transition: background 0.1s;
   transition: background 0.1s; }
