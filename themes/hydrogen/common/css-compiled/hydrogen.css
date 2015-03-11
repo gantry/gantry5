@@ -10,7 +10,7 @@ a {
 h1, h2, h3, h4, h5, h6, strong {
   color: #4d4d4d; }
 
-.button {
+.button, button, html input[type="button"], input[type="reset"], input[type="submit"] {
   display: inline-block;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -20,9 +20,9 @@ h1, h2, h3, h4, h5, h6, strong {
   -webkit-transition: background 0.1s;
   -moz-transition: background 0.1s;
   transition: background 0.1s; }
-  .button:hover {
+  .button:hover, button:hover, html input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover {
     background: #4bac95; }
-  .button:active {
+  .button:active, button:active, html input[type="button"]:active, input[type="reset"]:active, input[type="submit"]:active {
     background: #3b8877;
     box-shadow: inset -1px -1px 1px rgba(0, 0, 0, 0.15); }
 
@@ -273,6 +273,29 @@ th {
 td {
   padding: 0.5rem;
   border: 1px solid #eaeaea; }
+
+fieldset {
+  border: 1px solid #dddddd; }
+
+textarea, select[multiple=multiple] {
+  background-color: white;
+  border: 1px solid #dddddd;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06); }
+  textarea:hover, select[multiple=multiple]:hover {
+    border-color: #c4c4c4; }
+  textarea:focus, select[multiple=multiple]:focus {
+    border-color: #439A86; }
+
+input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"] {
+  background-color: white;
+  border: 1px solid #dddddd;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06); }
+
+input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="url"]:hover, input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="month"]:hover, input[type="time"]:hover, input[type="week"]:hover {
+  border-color: #c4c4c4; }
+
+input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus {
+  border-color: #439A86; }
 
 .showcase-sample {
   text-align: center; }
