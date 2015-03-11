@@ -301,6 +301,14 @@ input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:ho
 input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus {
   border-color: #439A86; }
 
+.sample-content {
+  text-align: center; }
+  .sample-content .subtitle {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    display: block;
+    margin-top: -1.3rem; }
+
 .showcase-sample {
   text-align: center; }
 
