@@ -13,9 +13,9 @@ form:
     text:
       type: input.text
       label: Text
-      description: Logo text
+      description: Input logo description text.
 
     image:
-      type: input.text
+      type: input.imagepicker
       label: Image
-      description: Relative path to image.
+      description: Select desired logo image.

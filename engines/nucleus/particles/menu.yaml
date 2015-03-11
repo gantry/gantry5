@@ -1,5 +1,5 @@
 name: Menu
-description: Gantry menu.
+description: Gantry menu
 type: particle
 
 form:
@@ -8,26 +8,29 @@ form:
     enabled:
       type: input.checkbox
       label: Enabled
-      description: Globally enable to top particles.
+      description: Globally enable the menu particle.
       default: true
 
     base:
       type: input.text
       label: Base Path
+      description: Select the base path.
       default: /
 
     menu:
       type: input.text
       label: Menu
-      description: Select menu.
+      description: Select menu to be used with the particle.
       default: mainmenu
 
     startLevel:
       type: input.text
       label: Start Level
+      description: Set the start level of the menu.
       default: 1
 
     endLevel:
       type: input.text
       label: Max Levels
+      description: Set the maximum number of menu levels to display.
       default: 0

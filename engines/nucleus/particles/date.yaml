@@ -19,7 +19,7 @@ form:
     date.formats:
       type: select.date
       label: Target
-      description: Target browser window when item is clicked.
+      description: Select preferred date format.
       default: l, F d, Y
       placeholder: 'Select...'
       selectize:

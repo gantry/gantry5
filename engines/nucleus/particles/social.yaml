@@ -30,6 +30,7 @@ form:
       type: collection.list
       array: true
       label: Social Items
+      description: Create each social item to display.
       value: name
       ajax: true
 
