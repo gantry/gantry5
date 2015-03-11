@@ -145,15 +145,7 @@ class plgSystemGantryadmin extends JPlugin
             if ($id && $uri->getVar('option') == 'com_templates' && isset($this->styles[$id]))
             {
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
-
-                if ($this->styles[$id])
-                {
-                    $html .= '<span style="white-space:nowrap;margin:0 10px;background:#d63c1f;color:#fff;padding:2px 4px;font-family:Helvetica,Arial,sans-serif;border-radius:3px;">&#10029; Master</span>';
-                }
-                else
-                {
-                    $html .= '<span style="white-space:nowrap;margin:0 10px;background:#999;color:#fff;padding:2px 4px;font-family:Helvetica,Arial,sans-serif;border-radius:3px;">Override</span>';
-                }
+                $html .= '<span style="white-space:nowrap;margin:0 10px;background:#439a86;color:#fff;padding:2px 4px;font-family:Helvetica,Arial,sans-serif;border-radius:3px;">Gantry</span>';
             }
         }
 
