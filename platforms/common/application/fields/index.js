@@ -60,6 +60,10 @@ ready(function() {
 
     body.on('statechangeEnd', function() {
         var State = History.getState();
+        body.emit('updateOriginalFields');
+    });
+
+    body.on('updateOriginalFields', function(){
         originals = collectFieldsValues();
     });
 });

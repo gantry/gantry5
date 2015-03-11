@@ -85,6 +85,8 @@ ready(function() {
                 if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
         }
 
+        body.emit('updateOriginalFields');
+
         request('post', saveURL, data, function(error, response) {
             if (!response.body.success) {
                 modal.open({
