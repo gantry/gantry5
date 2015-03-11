@@ -12,4 +12,5 @@ form:
 
     ua.code:
       type: input.text
+      description: Enter the Google UA tracking code for analytics.
       label: UA Code

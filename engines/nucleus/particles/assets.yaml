@@ -14,6 +14,7 @@ form:
       type: collection.list
       array: true
       label: CSS
+      description: Add remove or modify custom CSS assets.
       value: name
       ajax: true
 
@@ -32,6 +33,7 @@ form:
       type: collection.list
       array: true
       label: Javascript
+      description: Add remove or modify custom Javascript assets.
       value: name
       ajax: true
 
