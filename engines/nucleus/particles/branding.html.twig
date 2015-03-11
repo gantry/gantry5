@@ -2,6 +2,6 @@
 
 {% block particle %}
 <div class="g-block g-branding {{ particle.css.class }} g-particle">
-    Powered by <a href="http://www.gantry-framework.org/" title="Gantry Framework" class="g-powered-by">Gantry Framework</a>
+    {{ particle.content|raw }}
 </div>
 {% endblock %}
