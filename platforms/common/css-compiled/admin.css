@@ -368,6 +368,18 @@ a {
   z-index: 100;
 }
 
+/* line 195, ../scss/admin/_core.scss */
+.button-save.g-tooltip:hover:after {
+  bottom: 3rem;
+  right: 0;
+  left: inherit;
+}
+
+/* line 201, ../scss/admin/_core.scss */
+.button-save.g-tooltip:hover:before {
+  bottom: 2.6rem;
+}
+
 @font-face {
   font-family: "roboto";
   font-weight: 400;

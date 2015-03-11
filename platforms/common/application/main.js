@@ -21,19 +21,65 @@ require('./fields');
 require('./ui/popover');
 require('./utils/ajaxify-links');
 
+var createHandler = function(divisor,noun,restOfString){
+    return function(diff){
+        var n = Math.floor(diff/divisor);
+        var pluralizedNoun = noun + ( n > 1 ? 's' : '' );
+        return "" + n + " " + pluralizedNoun + " " + restOfString;
+    }
+};
+
+var formatters = [
+    { threshold: -31535999, handler: createHandler(-31536000,	"year",     "from now" ) },
+    { threshold: -2591999, 	handler: createHandler(-2592000,  	"month",    "from now" ) },
+    { threshold: -604799,  	handler: createHandler(-604800,   	"week",     "from now" ) },
+    { threshold: -172799,   handler: createHandler(-86400,    	"day",      "from now" ) },
+    { threshold: -86399,   	handler: function(){ return      	"tomorrow" } },
+    { threshold: -3599,    	handler: createHandler(-3600,     	"hour",     "from now" ) },
+    { threshold: -59,     	handler: createHandler(-60,       	"minute",   "from now" ) },
+    { threshold: -0.9999,   handler: createHandler(-1,			"second",   "from now" ) },
+    { threshold: 1,        	handler: function(){ return      	"just now" } },
+    { threshold: 60,       	handler: createHandler(1,        	"second",	"ago" ) },
+    { threshold: 3600,     	handler: createHandler(60,       	"minute",	"ago" ) },
+    { threshold: 86400,    	handler: createHandler(3600,     	"hour",     "ago" ) },
+    { threshold: 172800,   	handler: function(){ return      	"yesterday" } },
+    { threshold: 604800,   	handler: createHandler(86400,    	"day",      "ago" ) },
+    { threshold: 2592000,  	handler: createHandler(604800,   	"week",     "ago" ) },
+    { threshold: 31536000, 	handler: createHandler(2592000,  	"month",    "ago" ) },
+    { threshold: Infinity, 	handler: createHandler(31536000, 	"year",     "ago" ) }
+];
+
+var prettyDate = {
+    format: function (date) {
+        var diff = (((new Date()).getTime() - date.getTime()) / 1000);
+        for( var i=0; i<formatters.length; i++ ){
+            if( diff < formatters[i].threshold ){
+                return formatters[i].handler(diff);
+            }
+        }
+        throw new Error("exhausted all formatter options, none found"); //should never be reached
+    }
+};
+
 ready(function() {
-    var body = $('body'),
+    var body     = $('body'),
         sentence = 'The {{type}} {{verb}} been successfully saved! {{extras}}';
 
     // Close notification
-    body.delegate('click', '[data-g-close]', function(event, element){
+    body.delegate('click', '[data-g-close]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
         var parent = element.data('g-close');
         parent = parent ? element.parent(parent) : element;
 
-        parent.slideUp(function(){
+        parent.slideUp(function() {
             parent.remove();
         });
+    });
+
+    // Save Tooltip
+    body.delegate('mouseover', '.button-save', function(event, element){
+        if (!element.lastSaved) { return true; }
+        element.addClass('g-tooltip').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
     });
 
     // Save
@@ -41,10 +87,10 @@ ready(function() {
         if (event && event.preventDefault) { event.preventDefault(); }
         element.showIndicator();
 
-        var data = {},
-            type = element.data('save'),
-            extras = '',
-            page = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
+        var data    = {},
+            type    = element.data('save'),
+            extras  = '',
+            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
             saveURL = trim(window.location.href, '#') + getAjaxSuffix();
 
         switch (page) {
@@ -70,9 +116,9 @@ ready(function() {
                 if (form && element.attribute('type') == 'submit') {
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name = input.attribute('name'),
-                            value = input.value(),
-                            parent = input.parent('.settings-param'),
+                        var name     = input.attribute('name'),
+                            value    = input.value(),
+                            parent   = input.parent('.settings-param'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
@@ -105,13 +151,14 @@ ready(function() {
             }
 
             element.hideIndicator();
+            element.lastSaved = new Date();
 
             if (page == 'layout') { lm.layoutmanager.updatePendingChanges(); }
         });
     });
 
     // Editable titles
-    body.delegate('click', '[data-title-edit]', function(event, element){
+    body.delegate('click', '[data-title-edit]', function(event, element) {
         element = $(element);
         var $title = element.siblings('[data-title-editable]') || element.previousSiblings().find('[data-title-editable]') || element.nextSiblings().find('[data-title-editable]'), title;
         if (!$title) { return true; }
@@ -131,7 +178,7 @@ ready(function() {
         $title.emit('title-edit-start', $title.storedTitle);
     });
 
-    body.delegate('keydown', '[data-title-editable]', function(event, element){
+    body.delegate('keydown', '[data-title-editable]', function(event, element) {
         element = $(element);
         switch (event.keyCode) {
             case 13: // return
@@ -154,7 +201,7 @@ ready(function() {
         }
     });
 
-    body.delegate('blur', '[data-title-editable]', function(event, element){
+    body.delegate('blur', '[data-title-editable]', function(event, element) {
         element = $(element);
         element.attribute('contenteditable', null);
         element.data('title-editable', trim(element.text()));
@@ -163,10 +210,10 @@ ready(function() {
     }, true);
 
     // Quick Ajax Calls [data-ajax-action]
-    body.delegate('click', '[data-ajax-action]', function(event, element){
+    body.delegate('click', '[data-ajax-action]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
-        var href = element.attribute('href') || element.data('ajax-action'),
+        var href   = element.attribute('href') || element.data('ajax-action'),
             method = element.data('ajax-action-method') || 'post';
 
         if (!href) { return false; }

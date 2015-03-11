@@ -190,3 +190,14 @@ a {
     position: absolute;
     z-index: 100;
 }
+
+// Save tooltips
+.button-save.g-tooltip:hover:after {
+    bottom: 3rem;
+    right: 0;
+    left: inherit;
+}
+
+.button-save.g-tooltip:hover:before {
+    bottom: 2.6rem;
+}
