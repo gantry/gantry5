@@ -9,17 +9,25 @@
 
         <h2 class="page-title">Assignments</h2>
 
-        {% for type in gantry.menu.getMenuOptions %}
+        {% for type in assignments %}
         <div id="settings" class="cards-wrapper g-grid">
             <div class="card settings-block">
-                <h4>{{ type.title ?: type.menutype }}</h4>
+                <h4>{{ type.label|e }}</h4>
 
-                {% for link in type.links %}
-                <label>
-                    {% include 'forms/fields/enable/enable.html.twig' with
-                    {'default': false, 'name': 'assigned[' ~ link.value ~ ']',
-                    'field': {'label': '- '|repeat(link.level-1) ~ link.text, 'id': 'link' ~ link.value, 'disabled': link.checked_out and link.checked_out != user.id},
-                    'value': link.template_style_id == style_id} %}
+                {% for link in type.items %}
+                <label class="settings-param">
+                    <div class="settings-param-field">
+                    {% include 'forms/fields/enable/enable.html.twig' with {
+                    'default': true,
+                    'name': link.name,
+                    'field': link.field,
+                    'value': link.value,
+                    'disabled': link.disabled
+                    } %}
+                    </div>
+                    <span class="settings-param-title">
+                        {{ link.label|e }}
+                    </span>
                 </label>
                 {% endfor %}
             </div>

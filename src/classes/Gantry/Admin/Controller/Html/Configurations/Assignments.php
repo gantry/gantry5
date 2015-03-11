@@ -2,6 +2,8 @@
 namespace Gantry\Admin\Controller\Html\Configurations;
 
 use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Request\Request;
+use Gantry\Framework\Assignments as AssignmentsObject;
 use Gantry\Framework\Menu;
 use Gantry\Framework\Pages;
 
@@ -9,6 +11,9 @@ class Assignments extends HtmlController
 {
     public function index()
     {
+        $assignments = new AssignmentsObject(isset($this->params['style_id']) ? $this->params['style_id'] : null);
+
+        $this->params['assignments'] = $assignments->get();
         $this->params['pages'] = new Pages();
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/assignments/assignments.html.twig', $this->params);
@@ -16,6 +21,12 @@ class Assignments extends HtmlController
 
     public function store()
     {
-        throw new \RuntimeException('Not Implemented', 404);
+        /** @var Request $request */
+        $request = $this->container['request'];
+
+        $assignments = new AssignmentsObject(isset($this->params['style_id']) ? $this->params['style_id'] : null);
+        $assignments->set($request->getArray());
+
+        return '';
     }
 }

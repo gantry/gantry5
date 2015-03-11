@@ -31,18 +31,6 @@ class Menu extends AbstractMenu
         $this->active  = $this->menu->getActive();
     }
 
-    public function getMenuOptions()
-    {
-        static $items;
-
-        if ($items === null) {
-            require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
-            $items = \MenusHelper::getMenuLinks();
-        }
-
-        return $items;
-    }
-
     /**
      * Return list of menus.
      *
