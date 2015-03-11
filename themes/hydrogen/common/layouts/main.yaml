@@ -8,11 +8,11 @@ showcase:
 
 feature:
   container:
-    - particle-feature
+    - particle-sample
 
 subfeature:
   container:
-    - particle-platforms
+    - particle-sample
 
 main:
   container:

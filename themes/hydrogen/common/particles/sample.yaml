@@ -1,5 +1,5 @@
-name: Platforms Sample
-description: Displays Platform content
+name: Sample Content
+description: Displays Sample Content
 type: particle
 
 form:
@@ -14,18 +14,18 @@ form:
       type: input.text
       label: Headline
       description: Customize the section headline text.
-      default: Multiple platforms supported with unlimited possibilities
+      default: Sample Headline
 
     description:
       type: textarea.textarea
       label: Description
       description: Customize the section description.
-      default:
+      default: Lorem ipsum dolor sit amet consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.
 
-    platforms:
+    samples:
       type: collection.list
       array: true
-      label: Platforms
+      label: Sample Items
       description: Create each item to appear in the content row.
       value: title
       ajax: true
@@ -48,5 +48,5 @@ form:
           label: Description
 
         .class:
-          type: textarea.textarea
-          label: Description
+          type: input.block-variations
+          label: Variations

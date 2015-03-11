@@ -1,0 +1,26 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+	<div class="sample-content">
+		<div class="g-grid">
+			<div class="g-block">
+				<div class="g-content">
+					<h2>{{ particle.headline|raw }}</h2>
+					{{ particle.description|raw }}
+				</div>
+			</div>
+		</div>
+		<div class="g-grid">
+			{% for sample in particle.samples %}
+				<div class="g-block {{ sample.class }}">
+					<div class="g-content">
+						<i class="{{ sample.icon }} sample-icons"></i>
+						<h4>{{ sample.title|raw }}</h4>
+						{{ sample.subtitle|raw }}
+						{{ sample.description|raw }}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
