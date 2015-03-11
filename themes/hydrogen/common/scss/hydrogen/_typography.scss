@@ -22,3 +22,52 @@ bold, strong {
 .feature-icons {
 	font-size: $core-font-size + 2;
 }
+
+// Blockquote
+blockquote {
+	border-left: 10px solid $rule-color;
+	p {
+		font-size: $core-font-size + 0.1;
+		color: lighten($base-text-color, 20%);
+	}
+	cite {
+		display: block;
+		text-align: right;
+		color: $base-text-color;
+		font-size: $core-font-size + 0.2;
+	}
+}
+
+// Inline and Code
+code,
+kbd,
+pre,
+samp {
+	font-family: $font-family-mono;
+}
+
+code {
+	background: $code-bg;
+	color: darken($code-text,10%);
+}
+
+pre {
+	padding: 1rem;
+	margin: 2rem 0;
+	background: $pre-bg;
+	border: 1px solid $base-border-color;
+	border-radius: $core-border-radius;
+	line-height: 1.15;
+	font-size: $core-font-size - 0.1;
+
+	code {
+		color: $pre-text;
+		background: inherit;
+		font-size: $core-font-size - 0.1;
+	}
+}
+
+// Additional
+hr {
+	border-bottom: 4px solid $rule-color;
+}
