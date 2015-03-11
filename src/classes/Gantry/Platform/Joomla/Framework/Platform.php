@@ -69,9 +69,6 @@ class Platform extends BasePlatform
             },
             $styles));
 
-        // FIXME: this is just to make something visible...
-        $extension_ids[] = 0;
-
         $extension_ids = $extension_ids ? implode(',', $extension_ids) : '-1';
 
         $db = \JFactory::getDbo();
