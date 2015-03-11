@@ -112,18 +112,21 @@ class Settings extends HtmlController
             throw new \RuntimeException('Page Not Found', 404);
         }
 
-        // Get the prefix.
+        $data = isset($_POST['data']) ? json_decode($_POST['data'], true) : null;
+
         $offset = "particles.{$id}." . implode('.', $path);
         if ($value !== null) {
             $parent = $fields;
             $fields = ['fields' => $fields['fields']];
             $offset .= '.' . $value;
-            $data = ['data' => $this->container['config']->get($offset)];
+            $data = $data ?: $this->container['config']->get($offset);
+            $data = ['data' => $data];
             $prefix = 'data.';
         } else {
-            $data = $this->container['config']->get($offset);
+            $data = $data ?: $this->container['config']->get($offset);
             $prefix = 'data';
         }
+
         $fields['is_current'] = true;
 
         array_pop($path);
