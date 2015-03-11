@@ -9,12 +9,12 @@
                 {% if preset.colors|length %}
                 {% set stop = (100 / preset.colors|length)|number_format(3, '.') %}
                 <span class="swatch-colors"
-                        {# required attribute structures #}
-                        style="background: linear-gradient(to right
-                            {% for color in preset.colors -%}
-                                ,{{- color }} {{ counter -}}%, {{- color }} {{ counter + stop -}}%
-                                {% set counter = counter + stop %}
-                            {%- endfor %})">
+                    {# required attribute structures #}
+                    style="background: linear-gradient(to right
+                        {% for color in preset.colors -%}
+                            ,{{- color }} {{ counter -}}%, {{- color }} {{ counter + stop -}}%
+                            {% set counter = counter + stop %}
+                        {%- endfor %})">
                 </span>
                 {% endif %}
             </a>
