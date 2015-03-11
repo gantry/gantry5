@@ -7,19 +7,19 @@ form:
     enabled:
       type: input.checkbox
       label: Enabled
-      description: Globally enable to the particles.
+      description: Globally enable the particle.
       default: true
 
     headline:
       type: input.text
       label: Headline
-      description: Customize the section headline text.
+      description: Customize the headline text.
       default: Sample Headline
 
     description:
       type: textarea.textarea
       label: Description
-      description: Customize the section description.
+      description: Customize the description.
       default: Lorem ipsum dolor sit amet consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.
 
     samples:
