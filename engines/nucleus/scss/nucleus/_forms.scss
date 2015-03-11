@@ -22,7 +22,7 @@ label {
 	}
 }
 
-textarea, #{$all-text-inputs}, select[multiple=multiple] {
+textarea, select[multiple=multiple] {
 	@include transition(border-color);
 	border-radius: $core-border-radius;
 	margin-bottom: $leading-margin / 2;
@@ -31,6 +31,17 @@ textarea, #{$all-text-inputs}, select[multiple=multiple] {
 	&:focus {
 		outline: none;
 	}
+}
+
+#{$all-text-inputs} {
+	@include transition(border-color);
+	border-radius: $core-border-radius;
+	margin-bottom: $leading-margin / 2;
+	padding: ($leading-margin / 4) ($leading-margin / 4);
+}
+
+#{$all-text-inputs-focus} {
+	outline: none;
 }
 
 textarea {
