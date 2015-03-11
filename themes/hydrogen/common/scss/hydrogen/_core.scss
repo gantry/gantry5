@@ -13,7 +13,7 @@ h1, h2, h3, h4, h5, h6, strong {
 	color: darken($base-text-color, 10%);
 }
 
-.button, button, html input[type="button"], input[type="reset"], input[type="submit"] {
+.button, button, input[type="button"], input[type="reset"], input[type="submit"] {
 	display: inline-block;
 	padding: 0.5rem 1rem;
 	border-radius: $border-radius;
