@@ -27,7 +27,7 @@ ready(function() {
 
         if (key == 'esc' && this.CollectionNew) {
             this.CollectionNew = false;
-            body.emit('click', {target: this.parent('[data-collection-item]').find('[data-collection-remove]')});
+            body.emit('click', { target: this.parent('[data-collection-item]').find('[data-collection-remove]') });
         }
     };
 
@@ -175,17 +175,17 @@ ready(function() {
                 var form       = content.elements.content.find('form'),
                     submit     = content.elements.content.find('input[type="submit"], button[type="submit"]'),
                     dataString = [],
-                    dataValue = JSON.parse(data);
+                    dataValue  = JSON.parse(data);
 
                 if (dataValue.length == 1) {
-                    content.elements.content.style({width: 450});
+                    content.elements.content.style({ width: 450 });
                 }
 
                 if (!form || !submit) {
                     return true;
                 }
 
-                // Particle Settings apply
+                // Collection Settings apply
                 submit.on('click', function(e) {
                     e.preventDefault();
                     dataString = [];
@@ -205,7 +205,7 @@ ready(function() {
 
                     var titles = content.elements.content.search('[data-title-editable]'), key;
                     if (titles) {
-                        titles.forEach(function(title){
+                        titles.forEach(function(title) {
                             title = $(title);
                             key = title.data('collection-key') || 'title';
                             dataString.push(key + '=' + title.data('title-editable'));
@@ -229,6 +229,14 @@ ready(function() {
 
                             dataField.value(JSON.stringify(dataValue));
                             body.emit('change', { target: dataField });
+
+                            element.parent('.settings-param-field').search('ul > [data-collection-item]').forEach(function(item, index){
+                                item = $(item);
+                                var label = item.find('[data-title-editable]'),
+                                    text = dataValue[index][item.data('collection-item')];
+
+                                label.data('title-editable', text).text(text);
+                            });
 
                             modal.close();
                             toastr.success('Collection Item updated', 'Item Updated');

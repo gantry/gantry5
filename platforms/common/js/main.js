@@ -2360,18 +2360,18 @@ var G5;
     'j': function (require, module, exports, global) {
         'use strict';
         module.exports = {
-            colorpicker: require('22'),
-            fonts: require('23'),
-            menu: require('24'),
-            icons: require('25'),
-            filepicker: require('26'),
-            collections: require('27')
+            colorpicker: require('21'),
+            fonts: require('22'),
+            menu: require('23'),
+            icons: require('24'),
+            filepicker: require('25'),
+            collections: require('26')
         };
     },
     'k': function (require, module, exports, global) {
         'use strict';
         var forEach = require('y'), map = require('1m');
-        var parse = require('21');
+        var parse = require('27');
         var $ = require('m');
         module.exports = function (expression, doc) {
             return $(map(parse(expression), function (expression) {
@@ -2425,7 +2425,7 @@ var G5;
     'm': function (require, module, exports, global) {
         'use strict';
         var prime = require('n');
-        var forEach = require('y'), map = require('1m'), filter = require('1j'), every = require('2g'), some = require('2h');
+        var forEach = require('y'), map = require('1m'), filter = require('1j'), every = require('2c'), some = require('2d');
         var index = 0, __dc = document.__counter, counter = document.__counter = (__dc ? parseInt(__dc, 36) + 1 : 0).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n) {
             if (n === window)
@@ -2511,7 +2511,7 @@ var G5;
     },
     'n': function (require, module, exports, global) {
         'use strict';
-        var hasOwn = require('2c'), mixIn = require('w'), create = require('2d'), kindOf = require('2e');
+        var hasOwn = require('2e'), mixIn = require('w'), create = require('2f'), kindOf = require('2g');
         var hasDescriptors = true;
         try {
             Object.defineProperty({}, '~', {});
@@ -2577,7 +2577,7 @@ var G5;
     'o': function (require, module, exports, global) {
         'use strict';
         var indexOf = require('1k'), forEach = require('y');
-        var prime = require('n'), defer = require('2f');
+        var prime = require('n'), defer = require('2h');
         var slice = Array.prototype.slice;
         var Emitter = prime({
                 on: function (event, fn) {
@@ -2671,7 +2671,7 @@ var G5;
         module.exports = upperCase;
     },
     'v': function (require, module, exports, global) {
-        var hasOwn = require('2c');
+        var hasOwn = require('2e');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
             _dontEnums = [
@@ -4979,7 +4979,7 @@ var G5;
     },
     '18': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1p'), zen = require('k'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), DragDrop = require('32'), Resizer = require('33'), get = require('14'), every = require('34'), isArray = require('2r'), isObject = require('2z'), deepClone = require('35'), equals = require('30');
+        var prime = require('n'), $ = require('1p'), zen = require('k'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), DragDrop = require('2y'), Resizer = require('2z'), get = require('14'), every = require('30'), isArray = require('2r'), isObject = require('31'), deepClone = require('32'), equals = require('33');
         var MenuManager = new prime({
                 mixin: [
                     Bound,
@@ -5233,11 +5233,11 @@ var G5;
         module.exports = MenuManager;
     },
     '19': function (require, module, exports, global) {
-        var is = require('2y');
-        var isObject = require('2z');
+        var is = require('34');
+        var isObject = require('31');
         var isArray = require('2r');
-        var objEquals = require('30');
-        var arrEquals = require('31');
+        var objEquals = require('33');
+        var arrEquals = require('35');
         function deepEquals(a, b, callback) {
             callback = callback || is;
             var bothObjects = isObject(a) && isObject(b);
@@ -5455,7 +5455,7 @@ var G5;
     },
     '1f': function (require, module, exports, global) {
         'use strict';
-        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('3f') || {}, history = window.history;
+        var console = window.console || undefined, document = window.document, navigator = window.navigator, sessionStorage = false, setTimeout = window.setTimeout, clearTimeout = window.clearTimeout, setInterval = window.setInterval, clearInterval = window.clearInterval, JSON = window.JSON, alert = window.alert, History = window.History = require('3m') || {}, history = window.history;
         try {
             sessionStorage = window.sessionStorage;
             sessionStorage.setItem('TEST', '1');
@@ -6285,7 +6285,7 @@ var G5;
         module.exports = History;
     },
     '1g': function (require, module, exports, global) {
-        var prime = require('n'), Emitter = require('o'), slice = require('3g'), merge = require('1w'), deepEquals = require('19');
+        var prime = require('n'), Emitter = require('o'), slice = require('3f'), merge = require('1w'), deepEquals = require('19');
         var History = new prime({
                 inherits: Emitter,
                 constructor: function (session) {
@@ -6359,7 +6359,7 @@ var G5;
     },
     '1h': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1p'), zen = require('k'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), Blocks = require('38'), DragDrop = require('32'), Resizer = require('3h'), Eraser = require('3i'), get = require('14'), keys = require('3j'), every = require('34'), precision = require('3k'), isArray = require('2r'), deepEquals = require('19'), find = require('3l'), isObject = require('2z');
+        var prime = require('n'), $ = require('1p'), zen = require('k'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), Blocks = require('38'), DragDrop = require('2y'), Resizer = require('3g'), Eraser = require('3h'), get = require('14'), keys = require('3i'), every = require('30'), precision = require('3j'), isArray = require('2r'), deepEquals = require('19'), find = require('3k'), isObject = require('31');
         var singles = {
                 disable: function () {
                     var grids = $('[data-lm-root] [data-lm-blocktype="grid"]');
@@ -6785,7 +6785,7 @@ var G5;
         module.exports = LayoutManager;
     },
     '1i': function (require, module, exports, global) {
-        var prime = require('n'), deepClone = require('35'), objectDiff = require('3n');
+        var prime = require('n'), deepClone = require('32'), objectDiff = require('3l');
         var SaveState = new prime({
                 constructor: function (session) {
                     session = deepClone(session);
@@ -6819,7 +6819,7 @@ var G5;
         module.exports = SaveState;
     },
     '1j': function (require, module, exports, global) {
-        var makeIterator = require('3m');
+        var makeIterator = require('3n');
         function filter(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var results = [];
@@ -6956,7 +6956,7 @@ var G5;
         module.exports = map;
     },
     '1m': function (require, module, exports, global) {
-        var makeIterator = require('3m');
+        var makeIterator = require('3n');
         function map(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
             var results = [];
@@ -6973,10 +6973,10 @@ var G5;
     },
     '1n': function (require, module, exports, global) {
         'use strict';
-        module.exports = 'document' in global ? require('3o') : { parse: require('21') };
+        module.exports = 'document' in global ? require('3o') : { parse: require('27') };
     },
     '1o': function (require, module, exports, global) {
-        var slice = require('3g');
+        var slice = require('3f');
         function invoke(arr, methodName, var_args) {
             if (arr == null) {
                 return arr;
@@ -7160,7 +7160,7 @@ var G5;
         module.exports = Options;
     },
     '1s': function (require, module, exports, global) {
-        var slice = require('3g');
+        var slice = require('3f');
         function bind(fn, context, args) {
             var argsArr = slice(arguments, 2);
             return function () {
@@ -7210,8 +7210,8 @@ var G5;
     },
     '1w': function (require, module, exports, global) {
         var hasOwn = require('3u');
-        var deepClone = require('35');
-        var isObject = require('2z');
+        var deepClone = require('32');
+        var isObject = require('31');
         function merge() {
             var i = 1, key, val, obj, target;
             target = deepClone(arguments[0]);
@@ -7279,140 +7279,6 @@ var G5;
         module.exports = contains;
     },
     '21': function (require, module, exports, global) {
-        'use strict';
-        var escapeRe = /([-.*+?^${}()|[\]\/\\])/g, unescapeRe = /\\/g;
-        var escape = function (string) {
-            return (string + '').replace(escapeRe, '\\$1');
-        };
-        var unescape = function (string) {
-            return (string + '').replace(unescapeRe, '');
-        };
-        var slickRe = RegExp('^(?:\\s*(,)\\s*|\\s*(<combinator>+)\\s*|(\\s+)|(<unicode>+|\\*)|\\#(<unicode>+)|\\.(<unicode>+)|\\[\\s*(<unicode1>+)(?:\\s*([*^$!~|]?=)(?:\\s*(?:(["\']?)(.*?)\\9)))?\\s*\\](?!\\])|(:+)(<unicode>+)(?:\\((?:(?:(["\'])([^\\13]*)\\13)|((?:\\([^)]+\\)|[^()]*)+))\\))?)'.replace(/<combinator>/, '[' + escape('>+~`!@$%^&={}\\;</') + ']').replace(/<unicode>/g, '(?:[\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])').replace(/<unicode1>/g, '(?:[:\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])'));
-        var Part = function Part(combinator) {
-            this.combinator = combinator || ' ';
-            this.tag = '*';
-        };
-        Part.prototype.toString = function () {
-            if (!this.raw) {
-                var xpr = '', k, part;
-                xpr += this.tag || '*';
-                if (this.id)
-                    xpr += '#' + this.id;
-                if (this.classes)
-                    xpr += '.' + this.classList.join('.');
-                if (this.attributes)
-                    for (k = 0; part = this.attributes[k++];) {
-                        xpr += '[' + part.name + (part.operator ? part.operator + '"' + part.value + '"' : '') + ']';
-                    }
-                if (this.pseudos)
-                    for (k = 0; part = this.pseudos[k++];) {
-                        xpr += ':' + part.name;
-                        if (part.value)
-                            xpr += '(' + part.value + ')';
-                    }
-                this.raw = xpr;
-            }
-            return this.raw;
-        };
-        var Expression = function Expression() {
-            this.length = 0;
-        };
-        Expression.prototype.toString = function () {
-            if (!this.raw) {
-                var xpr = '';
-                for (var j = 0, bit; bit = this[j++];) {
-                    if (j !== 1)
-                        xpr += ' ';
-                    if (bit.combinator !== ' ')
-                        xpr += bit.combinator + ' ';
-                    xpr += bit;
-                }
-                this.raw = xpr;
-            }
-            return this.raw;
-        };
-        var replacer = function (rawMatch, separator, combinator, combinatorChildren, tagName, id, className, attributeKey, attributeOperator, attributeQuote, attributeValue, pseudoMarker, pseudoClass, pseudoQuote, pseudoClassQuotedValue, pseudoClassValue) {
-            var expression, current;
-            if (separator || !this.length) {
-                expression = this[this.length++] = new Expression();
-                if (separator)
-                    return '';
-            }
-            if (!expression)
-                expression = this[this.length - 1];
-            if (combinator || combinatorChildren || !expression.length) {
-                current = expression[expression.length++] = new Part(combinator);
-            }
-            if (!current)
-                current = expression[expression.length - 1];
-            if (tagName) {
-                current.tag = unescape(tagName);
-            } else if (id) {
-                current.id = unescape(id);
-            } else if (className) {
-                var unescaped = unescape(className);
-                var classes = current.classes || (current.classes = {});
-                if (!classes[unescaped]) {
-                    classes[unescaped] = escape(className);
-                    var classList = current.classList || (current.classList = []);
-                    classList.push(unescaped);
-                    classList.sort();
-                }
-            } else if (pseudoClass) {
-                pseudoClassValue = pseudoClassValue || pseudoClassQuotedValue;
-                ;
-                (current.pseudos || (current.pseudos = [])).push({
-                    type: pseudoMarker.length == 1 ? 'class' : 'element',
-                    name: unescape(pseudoClass),
-                    escapedName: escape(pseudoClass),
-                    value: pseudoClassValue ? unescape(pseudoClassValue) : null,
-                    escapedValue: pseudoClassValue ? escape(pseudoClassValue) : null
-                });
-            } else if (attributeKey) {
-                attributeValue = attributeValue ? escape(attributeValue) : null;
-                ;
-                (current.attributes || (current.attributes = [])).push({
-                    operator: attributeOperator,
-                    name: unescape(attributeKey),
-                    escapedName: escape(attributeKey),
-                    value: attributeValue ? unescape(attributeValue) : null,
-                    escapedValue: attributeValue ? escape(attributeValue) : null
-                });
-            }
-            return '';
-        };
-        var Expressions = function Expressions(expression) {
-            this.length = 0;
-            var self = this;
-            var original = expression, replaced;
-            while (expression) {
-                replaced = expression.replace(slickRe, function () {
-                    return replacer.apply(self, arguments);
-                });
-                if (replaced === expression)
-                    throw new Error(original + ' is an invalid expression');
-                expression = replaced;
-            }
-        };
-        Expressions.prototype.toString = function () {
-            if (!this.raw) {
-                var expressions = [];
-                for (var i = 0, expression; expression = this[i++];)
-                    expressions.push(expression);
-                this.raw = expressions.join(', ');
-            }
-            return this.raw;
-        };
-        var cache = {};
-        var parse = function (expression) {
-            if (expression == null)
-                return null;
-            expression = ('' + expression).replace(/^\s+|\s+$/g, '');
-            return cache[expression] || (cache[expression] = new Expressions(expression));
-        };
-        module.exports = parse;
-    },
-    '22': function (require, module, exports, global) {
         'use strict';
         var prime = require('n'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), $ = require('1'), ready = require('2'), zen = require('k'), DragEvents = require('3y'), forEach = require('1d'), bind = require('1s'), clamp = require('1a');
         var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
@@ -7921,7 +7787,7 @@ var G5;
         });
         module.exports = ColorPicker;
     },
-    '23': function (require, module, exports, global) {
+    '22': function (require, module, exports, global) {
         'use strict';
         var prime = require('n'), $ = require('1p'), zen = require('k'), storage = require('1l')(), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), domready = require('2'), bind = require('1s'), map = require('1t'), forEach = require('1u'), contains = require('1b'), last = require('1v'), split = require('3z'), removeAll = require('40'), insert = require('41'), find = require('42'), combine = require('43'), merge = require('1w'), unhyphenate = require('44'), properCase = require('45'), trim = require('6'), modal = require('4').modal, async = require('46'), request = require('3'), wf = require('47');
         require('48');
@@ -8486,7 +8352,7 @@ var G5;
         });
         module.exports = Fonts;
     },
-    '24': function (require, module, exports, global) {
+    '23': function (require, module, exports, global) {
         'use strict';
         var $ = require('1p'), domready = require('2');
         domready(function () {
@@ -8504,7 +8370,7 @@ var G5;
         });
         module.exports = {};
     },
-    '25': function (require, module, exports, global) {
+    '24': function (require, module, exports, global) {
         'use strict';
         var $ = require('1p'), domready = require('2'), modal = require('4').modal, getAjaxSuffix = require('7'), getAjaxURL = require('49').global, trim = require('6'), contains = require('1b');
         domready(function () {
@@ -8644,9 +8510,9 @@ var G5;
         });
         module.exports = {};
     },
-    '26': function (require, module, exports, global) {
+    '25': function (require, module, exports, global) {
         'use strict';
-        var $ = require('1p'), prime = require('n'), request = require('3'), zen = require('k'), domready = require('2'), bind = require('1s'), rtrim = require('17'), deepClone = require('35'), deepFillIn = require('3b'), modal = require('4').modal, getAjaxSuffix = require('7'), getAjaxURL = require('49').global, dropzone = require('4b');
+        var $ = require('1p'), prime = require('n'), request = require('3'), zen = require('k'), domready = require('2'), bind = require('1s'), rtrim = require('17'), deepClone = require('32'), deepFillIn = require('3b'), modal = require('4').modal, getAjaxSuffix = require('7'), getAjaxURL = require('49').global, dropzone = require('4a');
         var FilePicker = new prime({
                 constructor: function (element) {
                     var data = element.data('g5-filepicker');
@@ -8929,9 +8795,9 @@ var G5;
         });
         module.exports = FilePicker;
     },
-    '27': function (require, module, exports, global) {
+    '26': function (require, module, exports, global) {
         'use strict';
-        var ready = require('2'), $ = require('1'), zen = require('k'), modal = require('4').modal, toastr = require('4').toastr, request = require('3'), lastItem = require('1v'), indexOf = require('2p'), simpleSort = require('4a'), trim = require('6'), getAjaxSuffix = require('7');
+        var ready = require('2'), $ = require('1'), zen = require('k'), modal = require('4').modal, toastr = require('4').toastr, request = require('3'), lastItem = require('1v'), indexOf = require('2p'), simpleSort = require('4b'), trim = require('6'), getAjaxSuffix = require('7');
         require('d');
         ready(function () {
             var body = $('body');
@@ -9099,6 +8965,11 @@ var G5;
                                     }
                                     dataField.value(JSON.stringify(dataValue));
                                     body.emit('change', { target: dataField });
+                                    element.parent('.settings-param-field').search('ul > [data-collection-item]').forEach(function (item, index) {
+                                        item = $(item);
+                                        var label = item.find('[data-title-editable]'), text = dataValue[index][item.data('collection-item')];
+                                        label.data('title-editable', text).text(text);
+                                    });
                                     modal.close();
                                     toastr.success('Collection Item updated', 'Item Updated');
                                 }
@@ -9110,6 +8981,140 @@ var G5;
             });
         });
         module.exports = {};
+    },
+    '27': function (require, module, exports, global) {
+        'use strict';
+        var escapeRe = /([-.*+?^${}()|[\]\/\\])/g, unescapeRe = /\\/g;
+        var escape = function (string) {
+            return (string + '').replace(escapeRe, '\\$1');
+        };
+        var unescape = function (string) {
+            return (string + '').replace(unescapeRe, '');
+        };
+        var slickRe = RegExp('^(?:\\s*(,)\\s*|\\s*(<combinator>+)\\s*|(\\s+)|(<unicode>+|\\*)|\\#(<unicode>+)|\\.(<unicode>+)|\\[\\s*(<unicode1>+)(?:\\s*([*^$!~|]?=)(?:\\s*(?:(["\']?)(.*?)\\9)))?\\s*\\](?!\\])|(:+)(<unicode>+)(?:\\((?:(?:(["\'])([^\\13]*)\\13)|((?:\\([^)]+\\)|[^()]*)+))\\))?)'.replace(/<combinator>/, '[' + escape('>+~`!@$%^&={}\\;</') + ']').replace(/<unicode>/g, '(?:[\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])').replace(/<unicode1>/g, '(?:[:\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])'));
+        var Part = function Part(combinator) {
+            this.combinator = combinator || ' ';
+            this.tag = '*';
+        };
+        Part.prototype.toString = function () {
+            if (!this.raw) {
+                var xpr = '', k, part;
+                xpr += this.tag || '*';
+                if (this.id)
+                    xpr += '#' + this.id;
+                if (this.classes)
+                    xpr += '.' + this.classList.join('.');
+                if (this.attributes)
+                    for (k = 0; part = this.attributes[k++];) {
+                        xpr += '[' + part.name + (part.operator ? part.operator + '"' + part.value + '"' : '') + ']';
+                    }
+                if (this.pseudos)
+                    for (k = 0; part = this.pseudos[k++];) {
+                        xpr += ':' + part.name;
+                        if (part.value)
+                            xpr += '(' + part.value + ')';
+                    }
+                this.raw = xpr;
+            }
+            return this.raw;
+        };
+        var Expression = function Expression() {
+            this.length = 0;
+        };
+        Expression.prototype.toString = function () {
+            if (!this.raw) {
+                var xpr = '';
+                for (var j = 0, bit; bit = this[j++];) {
+                    if (j !== 1)
+                        xpr += ' ';
+                    if (bit.combinator !== ' ')
+                        xpr += bit.combinator + ' ';
+                    xpr += bit;
+                }
+                this.raw = xpr;
+            }
+            return this.raw;
+        };
+        var replacer = function (rawMatch, separator, combinator, combinatorChildren, tagName, id, className, attributeKey, attributeOperator, attributeQuote, attributeValue, pseudoMarker, pseudoClass, pseudoQuote, pseudoClassQuotedValue, pseudoClassValue) {
+            var expression, current;
+            if (separator || !this.length) {
+                expression = this[this.length++] = new Expression();
+                if (separator)
+                    return '';
+            }
+            if (!expression)
+                expression = this[this.length - 1];
+            if (combinator || combinatorChildren || !expression.length) {
+                current = expression[expression.length++] = new Part(combinator);
+            }
+            if (!current)
+                current = expression[expression.length - 1];
+            if (tagName) {
+                current.tag = unescape(tagName);
+            } else if (id) {
+                current.id = unescape(id);
+            } else if (className) {
+                var unescaped = unescape(className);
+                var classes = current.classes || (current.classes = {});
+                if (!classes[unescaped]) {
+                    classes[unescaped] = escape(className);
+                    var classList = current.classList || (current.classList = []);
+                    classList.push(unescaped);
+                    classList.sort();
+                }
+            } else if (pseudoClass) {
+                pseudoClassValue = pseudoClassValue || pseudoClassQuotedValue;
+                ;
+                (current.pseudos || (current.pseudos = [])).push({
+                    type: pseudoMarker.length == 1 ? 'class' : 'element',
+                    name: unescape(pseudoClass),
+                    escapedName: escape(pseudoClass),
+                    value: pseudoClassValue ? unescape(pseudoClassValue) : null,
+                    escapedValue: pseudoClassValue ? escape(pseudoClassValue) : null
+                });
+            } else if (attributeKey) {
+                attributeValue = attributeValue ? escape(attributeValue) : null;
+                ;
+                (current.attributes || (current.attributes = [])).push({
+                    operator: attributeOperator,
+                    name: unescape(attributeKey),
+                    escapedName: escape(attributeKey),
+                    value: attributeValue ? unescape(attributeValue) : null,
+                    escapedValue: attributeValue ? escape(attributeValue) : null
+                });
+            }
+            return '';
+        };
+        var Expressions = function Expressions(expression) {
+            this.length = 0;
+            var self = this;
+            var original = expression, replaced;
+            while (expression) {
+                replaced = expression.replace(slickRe, function () {
+                    return replacer.apply(self, arguments);
+                });
+                if (replaced === expression)
+                    throw new Error(original + ' is an invalid expression');
+                expression = replaced;
+            }
+        };
+        Expressions.prototype.toString = function () {
+            if (!this.raw) {
+                var expressions = [];
+                for (var i = 0, expression; expression = this[i++];)
+                    expressions.push(expression);
+                this.raw = expressions.join(', ');
+            }
+            return this.raw;
+        };
+        var cache = {};
+        var parse = function (expression) {
+            if (expression == null)
+                return null;
+            expression = ('' + expression).replace(/^\s+|\s+$/g, '');
+            return cache[expression] || (cache[expression] = new Expressions(expression));
+        };
+        module.exports = parse;
     },
     '28': function (require, module, exports, global) {
         'use strict';
@@ -9244,7 +9249,7 @@ var G5;
     },
     '29': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('4j');
+        var indexOf = require('4c');
         var requestFrame = global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame || global.oRequestAnimationFrame || global.msRequestAnimationFrame || function (callback) {
                 return setTimeout(function () {
                     callback();
@@ -9276,9 +9281,9 @@ var G5;
         'use strict';
         var color = require('28'), frame = require('29');
         var cancelFrame = frame.cancel, requestFrame = frame.request;
-        var prime = require('4c');
-        var camelize = require('4d'), clean = require('4e'), capitalize = require('4f'), hyphenateString = require('4g');
-        var map = require('4h'), forEach = require('4i'), indexOf = require('4j');
+        var prime = require('4d');
+        var camelize = require('4e'), clean = require('4f'), capitalize = require('4g'), hyphenateString = require('4h');
+        var map = require('4i'), forEach = require('4j'), indexOf = require('4c');
         var elements = require('4k');
         var fx = require('2b');
         var matchString = function (s, r) {
@@ -9968,8 +9973,8 @@ var G5;
     },
     '2b': function (require, module, exports, global) {
         'use strict';
-        var prime = require('4c'), requestFrame = require('29').request, bezier = require('4m');
-        var map = require('4h');
+        var prime = require('4d'), requestFrame = require('29').request, bezier = require('4m');
+        var map = require('4i');
         var sDuration = '([\\d.]+)(s|ms)?', sCubicBezier = 'cubic-bezier\\(([-.\\d]+),([-.\\d]+),([-.\\d]+),([-.\\d]+)\\)';
         var rDuration = RegExp(sDuration), rCubicBezier = RegExp(sCubicBezier), rgCubicBezier = RegExp(sCubicBezier, 'g');
         var equations = {
@@ -10135,12 +10140,50 @@ var G5;
         module.exports = fx;
     },
     '2c': function (require, module, exports, global) {
+        var makeIterator = require('3n');
+        function every(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var result = true;
+            if (arr == null) {
+                return result;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (!callback(arr[i], i, arr)) {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
+        module.exports = every;
+    },
+    '2d': function (require, module, exports, global) {
+        var makeIterator = require('3n');
+        function some(arr, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var result = false;
+            if (arr == null) {
+                return result;
+            }
+            var i = -1, len = arr.length;
+            while (++i < len) {
+                if (callback(arr[i], i, arr)) {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
+        }
+        module.exports = some;
+    },
+    '2e': function (require, module, exports, global) {
         function hasOwn(obj, prop) {
             return Object.prototype.hasOwnProperty.call(obj, prop);
         }
         module.exports = hasOwn;
     },
-    '2d': function (require, module, exports, global) {
+    '2f': function (require, module, exports, global) {
         var mixIn = require('w');
         function createObject(parent, props) {
             function F() {
@@ -10150,7 +10193,7 @@ var G5;
         }
         module.exports = createObject;
     },
-    '2e': function (require, module, exports, global) {
+    '2g': function (require, module, exports, global) {
         var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
         function kindOf(val) {
             if (val === null) {
@@ -10163,9 +10206,9 @@ var G5;
         }
         module.exports = kindOf;
     },
-    '2f': function (require, module, exports, global) {
+    '2h': function (require, module, exports, global) {
         'use strict';
-        var kindOf = require('2e'), now = require('4n'), forEach = require('y'), indexOf = require('1k');
+        var kindOf = require('2g'), now = require('4n'), forEach = require('y'), indexOf = require('1k');
         var callbacks = {
                 timeout: {},
                 frame: [],
@@ -10244,46 +10287,8 @@ var G5;
         };
         module.exports = defer;
     },
-    '2g': function (require, module, exports, global) {
-        var makeIterator = require('3m');
-        function every(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var result = true;
-            if (arr == null) {
-                return result;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (!callback(arr[i], i, arr)) {
-                    result = false;
-                    break;
-                }
-            }
-            return result;
-        }
-        module.exports = every;
-    },
-    '2h': function (require, module, exports, global) {
-        var makeIterator = require('3m');
-        function some(arr, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var result = false;
-            if (arr == null) {
-                return result;
-            }
-            var i = -1, len = arr.length;
-            while (++i < len) {
-                if (callback(arr[i], i, arr)) {
-                    result = true;
-                    break;
-                }
-            }
-            return result;
-        }
-        module.exports = some;
-    },
     '2i': function (require, module, exports, global) {
-        var kindOf = require('2e');
+        var kindOf = require('2g');
         function isKind(val, kind) {
             return kindOf(val) === kind;
         }
@@ -10371,7 +10376,7 @@ var G5;
         module.exports = rtrim;
     },
     '2n': function (require, module, exports, global) {
-        var hasOwn = require('2c');
+        var hasOwn = require('2e');
         var forIn = require('v');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
@@ -10818,65 +10823,6 @@ var G5;
         module.exports = isPrimitive;
     },
     '2y': function (require, module, exports, global) {
-        function is(x, y) {
-            if (x === y) {
-                return x !== 0 || 1 / x === 1 / y;
-            }
-            return x !== x && y !== y;
-        }
-        module.exports = is;
-    },
-    '2z': function (require, module, exports, global) {
-        var isKind = require('3v');
-        function isObject(val) {
-            return isKind(val, 'Object');
-        }
-        module.exports = isObject;
-    },
-    '30': function (require, module, exports, global) {
-        var hasOwn = require('3u');
-        var every = require('4p');
-        var isObject = require('2z');
-        var is = require('2y');
-        function makeCompare(callback) {
-            return function (value, key) {
-                return hasOwn(this, key) && callback(value, this[key]);
-            };
-        }
-        function checkProperties(value, key) {
-            return hasOwn(this, key);
-        }
-        function equals(a, b, callback) {
-            callback = callback || is;
-            if (!isObject(a) || !isObject(b)) {
-                return callback(a, b);
-            }
-            return every(a, makeCompare(callback), b) && every(b, checkProperties, a);
-        }
-        module.exports = equals;
-    },
-    '31': function (require, module, exports, global) {
-        var is = require('2y');
-        var isArray = require('2r');
-        var every = require('34');
-        function equals(a, b, callback) {
-            callback = callback || is;
-            if (!isArray(a) || !isArray(b)) {
-                return callback(a, b);
-            }
-            if (a.length !== b.length) {
-                return false;
-            }
-            return every(a, makeCompare(callback), b);
-        }
-        function makeCompare(callback) {
-            return function (value, i) {
-                return i in this && callback(value, this[i]);
-            };
-        }
-        module.exports = equals;
-    },
-    '32': function (require, module, exports, global) {
         'use strict';
         var prime = require('n'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), bind = require('1s'), contains = require('1b'), DragEvents = require('3y'), $ = require('1p');
         require('b');
@@ -11110,9 +11056,9 @@ var G5;
             });
         module.exports = DragDrop;
     },
-    '33': function (require, module, exports, global) {
+    '2z': function (require, module, exports, global) {
         'use strict';
-        var DragEvents = require('3y'), prime = require('n'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), bind = require('1s'), isString = require('4q'), nMap = require('4r'), clamp = require('1a'), precision = require('3k'), get = require('14'), $ = require('1p');
+        var DragEvents = require('3y'), prime = require('n'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), bind = require('1s'), isString = require('4p'), nMap = require('4q'), clamp = require('1a'), precision = require('3j'), get = require('14'), $ = require('1p');
         require('b');
         require('c');
         var Resizer = new prime({
@@ -11298,7 +11244,7 @@ var G5;
             });
         module.exports = Resizer;
     },
-    '34': function (require, module, exports, global) {
+    '30': function (require, module, exports, global) {
         var makeIterator = require('3t');
         function every(arr, callback, thisObj) {
             callback = makeIterator(callback, thisObj);
@@ -11317,11 +11263,18 @@ var G5;
         }
         module.exports = every;
     },
-    '35': function (require, module, exports, global) {
-        var clone = require('4s');
+    '31': function (require, module, exports, global) {
+        var isKind = require('3v');
+        function isObject(val) {
+            return isKind(val, 'Object');
+        }
+        module.exports = isObject;
+    },
+    '32': function (require, module, exports, global) {
+        var clone = require('4r');
         var forOwn = require('37');
-        var kindOf = require('4t');
-        var isPlainObject = require('4u');
+        var kindOf = require('4s');
+        var isPlainObject = require('4t');
         function deepClone(val, instanceClone) {
             switch (kindOf(val)) {
             case 'Object':
@@ -11354,8 +11307,60 @@ var G5;
         }
         module.exports = deepClone;
     },
+    '33': function (require, module, exports, global) {
+        var hasOwn = require('3u');
+        var every = require('4u');
+        var isObject = require('31');
+        var is = require('34');
+        function makeCompare(callback) {
+            return function (value, key) {
+                return hasOwn(this, key) && callback(value, this[key]);
+            };
+        }
+        function checkProperties(value, key) {
+            return hasOwn(this, key);
+        }
+        function equals(a, b, callback) {
+            callback = callback || is;
+            if (!isObject(a) || !isObject(b)) {
+                return callback(a, b);
+            }
+            return every(a, makeCompare(callback), b) && every(b, checkProperties, a);
+        }
+        module.exports = equals;
+    },
+    '34': function (require, module, exports, global) {
+        function is(x, y) {
+            if (x === y) {
+                return x !== 0 || 1 / x === 1 / y;
+            }
+            return x !== x && y !== y;
+        }
+        module.exports = is;
+    },
+    '35': function (require, module, exports, global) {
+        var is = require('34');
+        var isArray = require('2r');
+        var every = require('30');
+        function equals(a, b, callback) {
+            callback = callback || is;
+            if (!isArray(a) || !isArray(b)) {
+                return callback(a, b);
+            }
+            if (a.length !== b.length) {
+                return false;
+            }
+            return every(a, makeCompare(callback), b);
+        }
+        function makeCompare(callback) {
+            return function (value, i) {
+                return i in this && callback(value, this[i]);
+            };
+        }
+        module.exports = equals;
+    },
     '36': function (require, module, exports, global) {
-        var slice = require('3g');
+        var slice = require('3f');
         function makeCollectionMethod(arrMethod, objMethod, defaultReturn) {
             return function () {
                 var args = slice(arguments);
@@ -11435,7 +11440,7 @@ var G5;
     },
     '3b': function (require, module, exports, global) {
         var forOwn = require('37');
-        var isPlainObject = require('4u');
+        var isPlainObject = require('4t');
         function deepFillIn(target, defaults) {
             var i = 0, n = arguments.length, obj;
             while (++i < n) {
@@ -11456,7 +11461,7 @@ var G5;
         module.exports = deepFillIn;
     },
     '3c': function (require, module, exports, global) {
-        var slice = require('3g');
+        var slice = require('3f');
         var contains = require('1b');
         function omit(obj, var_keys) {
             var keys = typeof arguments[1] !== 'string' ? arguments[1] : slice(arguments, 1), out = {};
@@ -11501,32 +11506,6 @@ var G5;
         module.exports = repeat;
     },
     '3f': function (require, module, exports, global) {
-        'use strict';
-        var $ = require('1'), domready = require('2');
-        var History = {};
-        if (typeof History.Adapter !== 'undefined') {
-            throw new Error('History.js Adapter has already been loaded...');
-        }
-        History.Adapter = {
-            bind: function (el, event, callback) {
-                $(el).on(event, callback);
-            },
-            trigger: function (el, event, extra) {
-                $(el).emit(event, extra);
-            },
-            extractEventData: function (key, event) {
-                return event && event.event && event.event[key] || event && event[key] || undefined;
-            },
-            onDomLoad: function (callback) {
-                domready(callback);
-            }
-        };
-        if (typeof History.init !== 'undefined') {
-            History.init();
-        }
-        module.exports = History;
-    },
-    '3g': function (require, module, exports, global) {
         function slice(arr, start, end) {
             var len = arr.length;
             if (start == null) {
@@ -11551,9 +11530,9 @@ var G5;
         }
         module.exports = slice;
     },
-    '3h': function (require, module, exports, global) {
+    '3g': function (require, module, exports, global) {
         'use strict';
-        var DragEvents = require('3y'), prime = require('n'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), bind = require('1s'), isString = require('4q'), nMap = require('4r'), clamp = require('1a'), precision = require('3k'), get = require('14'), $ = require('1p');
+        var DragEvents = require('3y'), prime = require('n'), Emitter = require('o'), Bound = require('1q'), Options = require('1r'), bind = require('1s'), isString = require('4p'), nMap = require('4q'), clamp = require('1a'), precision = require('3j'), get = require('14'), $ = require('1p');
         require('b');
         require('c');
         var Resizer = new prime({
@@ -11694,7 +11673,7 @@ var G5;
             });
         module.exports = Resizer;
     },
-    '3i': function (require, module, exports, global) {
+    '3h': function (require, module, exports, global) {
         'use strict';
         var prime = require('n'), $ = require('1p'), Emitter = require('o'), Bound = require('1q'), Options = require('1r');
         var Eraser = new prime({
@@ -11735,7 +11714,7 @@ var G5;
             });
         module.exports = Eraser;
     },
-    '3j': function (require, module, exports, global) {
+    '3i': function (require, module, exports, global) {
         var forOwn = require('37');
         var keys = Object.keys || function (obj) {
                 var keys = [];
@@ -11746,7 +11725,7 @@ var G5;
             };
         module.exports = keys;
     },
-    '3k': function (require, module, exports, global) {
+    '3j': function (require, module, exports, global) {
         var toNumber = require('5a');
         function enforcePrecision(val, nDecimalDigits) {
             val = toNumber(val);
@@ -11755,37 +11734,13 @@ var G5;
         }
         module.exports = enforcePrecision;
     },
-    '3l': function (require, module, exports, global) {
+    '3k': function (require, module, exports, global) {
         var make = require('36');
         var arrFind = require('42');
         var objFind = require('5b');
         module.exports = make(arrFind, objFind);
     },
-    '3m': function (require, module, exports, global) {
-        var identity = require('5c');
-        var prop = require('5d');
-        var deepMatches = require('5e');
-        function makeIterator(src, thisObj) {
-            if (src == null) {
-                return identity;
-            }
-            switch (typeof src) {
-            case 'function':
-                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
-                    return src.call(thisObj, val, i, arr);
-                } : src;
-            case 'object':
-                return function (val) {
-                    return deepMatches(val, src);
-                };
-            case 'string':
-            case 'number':
-                return prop(src);
-            }
-        }
-        module.exports = makeIterator;
-    },
-    '3n': function (require, module, exports, global) {
+    '3l': function (require, module, exports, global) {
         var objectDiff = typeof exports != 'undefined' ? exports : {};
         objectDiff.diff = function diff(a, b) {
             if (a === b) {
@@ -12003,9 +11958,59 @@ var G5;
             }
         }());
     },
+    '3m': function (require, module, exports, global) {
+        'use strict';
+        var $ = require('1'), domready = require('2');
+        var History = {};
+        if (typeof History.Adapter !== 'undefined') {
+            throw new Error('History.js Adapter has already been loaded...');
+        }
+        History.Adapter = {
+            bind: function (el, event, callback) {
+                $(el).on(event, callback);
+            },
+            trigger: function (el, event, extra) {
+                $(el).emit(event, extra);
+            },
+            extractEventData: function (key, event) {
+                return event && event.event && event.event[key] || event && event[key] || undefined;
+            },
+            onDomLoad: function (callback) {
+                domready(callback);
+            }
+        };
+        if (typeof History.init !== 'undefined') {
+            History.init();
+        }
+        module.exports = History;
+    },
+    '3n': function (require, module, exports, global) {
+        var identity = require('5c');
+        var prop = require('5d');
+        var deepMatches = require('5e');
+        function makeIterator(src, thisObj) {
+            if (src == null) {
+                return identity;
+            }
+            switch (typeof src) {
+            case 'function':
+                return typeof thisObj !== 'undefined' ? function (val, i, arr) {
+                    return src.call(thisObj, val, i, arr);
+                } : src;
+            case 'object':
+                return function (val) {
+                    return deepMatches(val, src);
+                };
+            case 'string':
+            case 'number':
+                return prop(src);
+            }
+        }
+        module.exports = makeIterator;
+    },
     '3o': function (require, module, exports, global) {
         'use strict';
-        var parse = require('21');
+        var parse = require('27');
         var index = 0, counter = document.__counter = (parseInt(document.__counter || -1, 36) + 1).toString(36), key = 'uid:' + counter;
         var uniqueID = function (n, xml) {
             if (n === window)
@@ -12815,7 +12820,7 @@ var G5;
         module.exports = hasOwn;
     },
     '3v': function (require, module, exports, global) {
-        var kindOf = require('4t');
+        var kindOf = require('4s');
         function isKind(val, kind) {
             return kindOf(val) === kind;
         }
@@ -12905,7 +12910,7 @@ var G5;
     },
     '41': function (require, module, exports, global) {
         var difference = require('5o');
-        var slice = require('3g');
+        var slice = require('3f');
         function insert(arr, rest_items) {
             var diff = difference(slice(arguments, 1), arr);
             if (diff.length) {
@@ -14759,611 +14764,6 @@ var G5;
         };
     },
     '4a': function (require, module, exports, global) {
-        (function (factory) {
-            'use strict';
-            if (typeof define === 'function' && define.amd) {
-                define(factory);
-            } else if (typeof module != 'undefined' && typeof module.exports != 'undefined') {
-                module.exports = factory();
-            } else if (typeof Package !== 'undefined') {
-                Sortable = factory();
-            } else {
-                window['Sortable'] = factory();
-            }
-        }(function () {
-            'use strict';
-            var dragEl, ghostEl, cloneEl, rootEl, nextEl, scrollEl, scrollParentEl, lastEl, lastCSS, oldIndex, newIndex, activeGroup, autoScroll = {}, tapEvt, touchEvt, expando = 'Sortable' + new Date().getTime(), win = window, document = win.document, parseInt = win.parseInt, supportDraggable = !!('draggable' in document.createElement('div')), _silent = false, _dispatchEvent = function (rootEl, name, targetEl, fromEl, startIndex, newIndex) {
-                    var evt = document.createEvent('Event');
-                    evt.initEvent(name, true, true);
-                    evt.item = targetEl || rootEl;
-                    evt.from = fromEl || rootEl;
-                    evt.clone = cloneEl;
-                    evt.oldIndex = startIndex;
-                    evt.newIndex = newIndex;
-                    rootEl.dispatchEvent(evt);
-                }, _customEvents = 'onAdd onUpdate onRemove onStart onEnd onFilter onSort'.split(' '), noop = function () {
-                }, abs = Math.abs, slice = [].slice, touchDragOverListeners = [], _autoScroll = _throttle(function (evt, options, rootEl) {
-                    if (rootEl && options.scroll) {
-                        var el, rect, sens = options.scrollSensitivity, speed = options.scrollSpeed, x = evt.clientX, y = evt.clientY, winWidth = window.innerWidth, winHeight = window.innerHeight, vx, vy;
-                        ;
-                        if (scrollParentEl !== rootEl) {
-                            scrollEl = options.scroll;
-                            scrollParentEl = rootEl;
-                            if (scrollEl === true) {
-                                scrollEl = rootEl;
-                                do {
-                                    if (scrollEl.offsetWidth < scrollEl.scrollWidth || scrollEl.offsetHeight < scrollEl.scrollHeight) {
-                                        break;
-                                    }
-                                } while (scrollEl = scrollEl.parentNode);
-                            }
-                        }
-                        if (scrollEl) {
-                            el = scrollEl;
-                            rect = scrollEl.getBoundingClientRect();
-                            vx = (abs(rect.right - x) <= sens) - (abs(rect.left - x) <= sens);
-                            vy = (abs(rect.bottom - y) <= sens) - (abs(rect.top - y) <= sens);
-                        }
-                        if (!(vx || vy)) {
-                            vx = (winWidth - x <= sens) - (x <= sens);
-                            vy = (winHeight - y <= sens) - (y <= sens);
-                            (vx || vy) && (el = win);
-                        }
-                        if (autoScroll.vx !== vx || autoScroll.vy !== vy || autoScroll.el !== el) {
-                            autoScroll.el = el;
-                            autoScroll.vx = vx;
-                            autoScroll.vy = vy;
-                            clearInterval(autoScroll.pid);
-                            if (el) {
-                                autoScroll.pid = setInterval(function () {
-                                    if (el === win) {
-                                        win.scrollTo(win.scrollX + vx * speed, win.scrollY + vy * speed);
-                                    } else {
-                                        vy && (el.scrollTop += vy * speed);
-                                        vx && (el.scrollLeft += vx * speed);
-                                    }
-                                }, 24);
-                            }
-                        }
-                    }
-                }, 30);
-            ;
-            function Sortable(el, options) {
-                this.el = el;
-                this.options = options = options || {};
-                var defaults = {
-                        group: Math.random(),
-                        sort: true,
-                        disabled: false,
-                        store: null,
-                        handle: null,
-                        scroll: true,
-                        scrollSensitivity: 30,
-                        scrollSpeed: 10,
-                        draggable: /[uo]l/i.test(el.nodeName) ? 'li' : '>*',
-                        ghostClass: 'sortable-ghost',
-                        ignore: 'a, img',
-                        filter: null,
-                        animation: 0,
-                        setData: function (dataTransfer, dragEl) {
-                            dataTransfer.setData('Text', dragEl.textContent);
-                        },
-                        dropBubble: false,
-                        dragoverBubble: false
-                    };
-                for (var name in defaults) {
-                    !(name in options) && (options[name] = defaults[name]);
-                }
-                var group = options.group;
-                if (!group || typeof group != 'object') {
-                    group = options.group = { name: group };
-                }
-                [
-                    'pull',
-                    'put'
-                ].forEach(function (key) {
-                    if (!(key in group)) {
-                        group[key] = true;
-                    }
-                });
-                _customEvents.forEach(function (name) {
-                    options[name] = _bind(this, options[name] || noop);
-                    _on(el, name.substr(2).toLowerCase(), options[name]);
-                }, this);
-                options.groups = ' ' + group.name + (group.put.join ? ' ' + group.put.join(' ') : '') + ' ';
-                el[expando] = options;
-                for (var fn in this) {
-                    if (fn.charAt(0) === '_') {
-                        this[fn] = _bind(this, this[fn]);
-                    }
-                }
-                _on(el, 'mousedown', this._onTapStart);
-                _on(el, 'touchstart', this._onTapStart);
-                _on(el, 'dragover', this);
-                _on(el, 'dragenter', this);
-                touchDragOverListeners.push(this._onDragOver);
-                options.store && this.sort(options.store.get(this));
-            }
-            Sortable.prototype = {
-                constructor: Sortable,
-                _dragStarted: function () {
-                    if (rootEl && dragEl) {
-                        _toggleClass(dragEl, this.options.ghostClass, true);
-                        Sortable.active = this;
-                        _dispatchEvent(rootEl, 'start', dragEl, rootEl, oldIndex);
-                    }
-                },
-                _onTapStart: function (evt) {
-                    var type = evt.type, touch = evt.touches && evt.touches[0], target = (touch || evt).target, originalTarget = target, options = this.options, el = this.el, filter = options.filter;
-                    if (type === 'mousedown' && evt.button !== 0 || options.disabled) {
-                        return;
-                    }
-                    target = _closest(target, options.draggable, el);
-                    if (!target) {
-                        return;
-                    }
-                    oldIndex = _index(target);
-                    if (typeof filter === 'function') {
-                        if (filter.call(this, evt, target, this)) {
-                            _dispatchEvent(originalTarget, 'filter', target, el, oldIndex);
-                            evt.preventDefault();
-                            return;
-                        }
-                    } else if (filter) {
-                        filter = filter.split(',').some(function (criteria) {
-                            criteria = _closest(originalTarget, criteria.trim(), el);
-                            if (criteria) {
-                                _dispatchEvent(criteria, 'filter', target, el, oldIndex);
-                                return true;
-                            }
-                        });
-                        if (filter) {
-                            evt.preventDefault();
-                            return;
-                        }
-                    }
-                    if (options.handle && !_closest(originalTarget, options.handle, el)) {
-                        return;
-                    }
-                    if (target && !dragEl && target.parentNode === el) {
-                        tapEvt = evt;
-                        rootEl = this.el;
-                        dragEl = target;
-                        nextEl = dragEl.nextSibling;
-                        activeGroup = this.options.group;
-                        dragEl.draggable = true;
-                        options.ignore.split(',').forEach(function (criteria) {
-                            _find(target, criteria.trim(), _disableDraggable);
-                        });
-                        if (touch) {
-                            tapEvt = {
-                                target: target,
-                                clientX: touch.clientX,
-                                clientY: touch.clientY
-                            };
-                            this._onDragStart(tapEvt, 'touch');
-                            evt.preventDefault();
-                        }
-                        _on(document, 'mouseup', this._onDrop);
-                        _on(document, 'touchend', this._onDrop);
-                        _on(document, 'touchcancel', this._onDrop);
-                        _on(dragEl, 'dragend', this);
-                        _on(rootEl, 'dragstart', this._onDragStart);
-                        if (!supportDraggable) {
-                            this._onDragStart(tapEvt, true);
-                        }
-                        try {
-                            if (document.selection) {
-                                document.selection.empty();
-                            } else {
-                                window.getSelection().removeAllRanges();
-                            }
-                        } catch (err) {
-                        }
-                    }
-                },
-                _emulateDragOver: function () {
-                    if (touchEvt) {
-                        _css(ghostEl, 'display', 'none');
-                        var target = document.elementFromPoint(touchEvt.clientX, touchEvt.clientY), parent = target, groupName = ' ' + this.options.group.name + '', i = touchDragOverListeners.length;
-                        if (parent) {
-                            do {
-                                if (parent[expando] && parent[expando].groups.indexOf(groupName) > -1) {
-                                    while (i--) {
-                                        touchDragOverListeners[i]({
-                                            clientX: touchEvt.clientX,
-                                            clientY: touchEvt.clientY,
-                                            target: target,
-                                            rootEl: parent
-                                        });
-                                    }
-                                    break;
-                                }
-                                target = parent;
-                            } while (parent = parent.parentNode);
-                        }
-                        _css(ghostEl, 'display', '');
-                    }
-                },
-                _onTouchMove: function (evt) {
-                    if (tapEvt) {
-                        var touch = evt.touches ? evt.touches[0] : evt, dx = touch.clientX - tapEvt.clientX, dy = touch.clientY - tapEvt.clientY, translate3d = evt.touches ? 'translate3d(' + dx + 'px,' + dy + 'px,0)' : 'translate(' + dx + 'px,' + dy + 'px)';
-                        touchEvt = touch;
-                        _css(ghostEl, 'webkitTransform', translate3d);
-                        _css(ghostEl, 'mozTransform', translate3d);
-                        _css(ghostEl, 'msTransform', translate3d);
-                        _css(ghostEl, 'transform', translate3d);
-                        evt.preventDefault();
-                    }
-                },
-                _onDragStart: function (evt, useFallback) {
-                    var dataTransfer = evt.dataTransfer, options = this.options;
-                    this._offUpEvents();
-                    if (activeGroup.pull == 'clone') {
-                        cloneEl = dragEl.cloneNode(true);
-                        _css(cloneEl, 'display', 'none');
-                        rootEl.insertBefore(cloneEl, dragEl);
-                    }
-                    if (useFallback) {
-                        var rect = dragEl.getBoundingClientRect(), css = _css(dragEl), ghostRect;
-                        ghostEl = dragEl.cloneNode(true);
-                        _css(ghostEl, 'top', rect.top - parseInt(css.marginTop, 10));
-                        _css(ghostEl, 'left', rect.left - parseInt(css.marginLeft, 10));
-                        _css(ghostEl, 'width', rect.width);
-                        _css(ghostEl, 'height', rect.height);
-                        _css(ghostEl, 'opacity', '0.8');
-                        _css(ghostEl, 'position', 'fixed');
-                        _css(ghostEl, 'zIndex', '100000');
-                        rootEl.appendChild(ghostEl);
-                        ghostRect = ghostEl.getBoundingClientRect();
-                        _css(ghostEl, 'width', rect.width * 2 - ghostRect.width);
-                        _css(ghostEl, 'height', rect.height * 2 - ghostRect.height);
-                        if (useFallback === 'touch') {
-                            _on(document, 'touchmove', this._onTouchMove);
-                            _on(document, 'touchend', this._onDrop);
-                            _on(document, 'touchcancel', this._onDrop);
-                        } else {
-                            _on(document, 'mousemove', this._onTouchMove);
-                            _on(document, 'mouseup', this._onDrop);
-                        }
-                        this._loopId = setInterval(this._emulateDragOver, 150);
-                    } else {
-                        if (dataTransfer) {
-                            dataTransfer.effectAllowed = 'move';
-                            options.setData && options.setData.call(this, dataTransfer, dragEl);
-                        }
-                        _on(document, 'drop', this);
-                    }
-                    setTimeout(this._dragStarted, 0);
-                },
-                _onDragOver: function (evt) {
-                    var el = this.el, target, dragRect, revert, options = this.options, group = options.group, groupPut = group.put, isOwner = activeGroup === group, canSort = options.sort;
-                    if (!dragEl) {
-                        return;
-                    }
-                    if (evt.preventDefault !== void 0) {
-                        evt.preventDefault();
-                        !options.dragoverBubble && evt.stopPropagation();
-                    }
-                    if (activeGroup && !options.disabled && (isOwner ? canSort || (revert = !rootEl.contains(dragEl)) : activeGroup.pull && groupPut && (activeGroup.name === group.name || groupPut.indexOf && ~groupPut.indexOf(activeGroup.name))) && (evt.rootEl === void 0 || evt.rootEl === this.el)) {
-                        _autoScroll(evt, options, this.el);
-                        if (_silent) {
-                            return;
-                        }
-                        target = _closest(evt.target, options.draggable, el);
-                        dragRect = dragEl.getBoundingClientRect();
-                        if (revert) {
-                            _cloneHide(true);
-                            if (cloneEl || nextEl) {
-                                rootEl.insertBefore(dragEl, cloneEl || nextEl);
-                            } else if (!canSort) {
-                                rootEl.appendChild(dragEl);
-                            }
-                            return;
-                        }
-                        if (el.children.length === 0 || el.children[0] === ghostEl || el === evt.target && (target = _ghostInBottom(el, evt))) {
-                            if (target) {
-                                if (target.animated) {
-                                    return;
-                                }
-                                targetRect = target.getBoundingClientRect();
-                            }
-                            _cloneHide(isOwner);
-                            el.appendChild(dragEl);
-                            this._animate(dragRect, dragEl);
-                            target && this._animate(targetRect, target);
-                        } else if (target && !target.animated && target !== dragEl && target.parentNode[expando] !== void 0) {
-                            if (lastEl !== target) {
-                                lastEl = target;
-                                lastCSS = _css(target);
-                            }
-                            var targetRect = target.getBoundingClientRect(), width = targetRect.right - targetRect.left, height = targetRect.bottom - targetRect.top, floating = /left|right|inline/.test(lastCSS.cssFloat + lastCSS.display), isWide = target.offsetWidth > dragEl.offsetWidth, isLong = target.offsetHeight > dragEl.offsetHeight, halfway = (floating ? (evt.clientX - targetRect.left) / width : (evt.clientY - targetRect.top) / height) > 0.5, nextSibling = target.nextElementSibling, after;
-                            ;
-                            _silent = true;
-                            setTimeout(_unsilent, 30);
-                            _cloneHide(isOwner);
-                            if (floating) {
-                                after = target.previousElementSibling === dragEl && !isWide || halfway && isWide;
-                            } else {
-                                after = nextSibling !== dragEl && !isLong || halfway && isLong;
-                            }
-                            if (after && !nextSibling) {
-                                el.appendChild(dragEl);
-                            } else {
-                                target.parentNode.insertBefore(dragEl, after ? nextSibling : target);
-                            }
-                            this._animate(dragRect, dragEl);
-                            this._animate(targetRect, target);
-                        }
-                    }
-                },
-                _animate: function (prevRect, target) {
-                    var ms = this.options.animation;
-                    if (ms) {
-                        var currentRect = target.getBoundingClientRect();
-                        _css(target, 'transition', 'none');
-                        _css(target, 'transform', 'translate3d(' + (prevRect.left - currentRect.left) + 'px,' + (prevRect.top - currentRect.top) + 'px,0)');
-                        target.offsetWidth;
-                        _css(target, 'transition', 'all ' + ms + 'ms');
-                        _css(target, 'transform', 'translate3d(0,0,0)');
-                        clearTimeout(target.animated);
-                        target.animated = setTimeout(function () {
-                            _css(target, 'transition', '');
-                            _css(target, 'transform', '');
-                            target.animated = false;
-                        }, ms);
-                    }
-                },
-                _offUpEvents: function () {
-                    _off(document, 'mouseup', this._onDrop);
-                    _off(document, 'touchmove', this._onTouchMove);
-                    _off(document, 'touchend', this._onDrop);
-                    _off(document, 'touchcancel', this._onDrop);
-                },
-                _onDrop: function (evt) {
-                    var el = this.el, options = this.options;
-                    clearInterval(this._loopId);
-                    clearInterval(autoScroll.pid);
-                    _off(document, 'drop', this);
-                    _off(document, 'mousemove', this._onTouchMove);
-                    _off(el, 'dragstart', this._onDragStart);
-                    this._offUpEvents();
-                    if (evt) {
-                        evt.preventDefault();
-                        !options.dropBubble && evt.stopPropagation();
-                        ghostEl && ghostEl.parentNode.removeChild(ghostEl);
-                        if (dragEl) {
-                            _off(dragEl, 'dragend', this);
-                            _disableDraggable(dragEl);
-                            _toggleClass(dragEl, this.options.ghostClass, false);
-                            if (rootEl !== dragEl.parentNode) {
-                                newIndex = _index(dragEl);
-                                _dispatchEvent(dragEl.parentNode, 'sort', dragEl, rootEl, oldIndex, newIndex);
-                                _dispatchEvent(rootEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
-                                _dispatchEvent(dragEl, 'add', dragEl, rootEl, oldIndex, newIndex);
-                                _dispatchEvent(rootEl, 'remove', dragEl, rootEl, oldIndex, newIndex);
-                            } else {
-                                cloneEl && cloneEl.parentNode.removeChild(cloneEl);
-                                if (dragEl.nextSibling !== nextEl) {
-                                    newIndex = _index(dragEl);
-                                    _dispatchEvent(rootEl, 'update', dragEl, rootEl, oldIndex, newIndex);
-                                    _dispatchEvent(rootEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
-                                }
-                            }
-                            Sortable.active && _dispatchEvent(rootEl, 'end', dragEl, rootEl, oldIndex, newIndex);
-                        }
-                        rootEl = dragEl = ghostEl = nextEl = cloneEl = scrollEl = scrollParentEl = tapEvt = touchEvt = lastEl = lastCSS = activeGroup = Sortable.active = null;
-                        this.save();
-                    }
-                },
-                handleEvent: function (evt) {
-                    var type = evt.type;
-                    if (type === 'dragover' || type === 'dragenter') {
-                        this._onDragOver(evt);
-                        _globalDragOver(evt);
-                    } else if (type === 'drop' || type === 'dragend') {
-                        this._onDrop(evt);
-                    }
-                },
-                toArray: function () {
-                    var order = [], el, children = this.el.children, i = 0, n = children.length;
-                    for (; i < n; i++) {
-                        el = children[i];
-                        if (_closest(el, this.options.draggable, this.el)) {
-                            order.push(el.getAttribute('data-id') || _generateId(el));
-                        }
-                    }
-                    return order;
-                },
-                sort: function (order) {
-                    var items = {}, rootEl = this.el;
-                    this.toArray().forEach(function (id, i) {
-                        var el = rootEl.children[i];
-                        if (_closest(el, this.options.draggable, rootEl)) {
-                            items[id] = el;
-                        }
-                    }, this);
-                    order.forEach(function (id) {
-                        if (items[id]) {
-                            rootEl.removeChild(items[id]);
-                            rootEl.appendChild(items[id]);
-                        }
-                    });
-                },
-                save: function () {
-                    var store = this.options.store;
-                    store && store.set(this);
-                },
-                closest: function (el, selector) {
-                    return _closest(el, selector || this.options.draggable, this.el);
-                },
-                option: function (name, value) {
-                    var options = this.options;
-                    if (value === void 0) {
-                        return options[name];
-                    } else {
-                        options[name] = value;
-                    }
-                },
-                destroy: function () {
-                    var el = this.el, options = this.options;
-                    _customEvents.forEach(function (name) {
-                        _off(el, name.substr(2).toLowerCase(), options[name]);
-                    });
-                    _off(el, 'mousedown', this._onTapStart);
-                    _off(el, 'touchstart', this._onTapStart);
-                    _off(el, 'dragover', this);
-                    _off(el, 'dragenter', this);
-                    Array.prototype.forEach.call(el.querySelectorAll('[draggable]'), function (el) {
-                        el.removeAttribute('draggable');
-                    });
-                    touchDragOverListeners.splice(touchDragOverListeners.indexOf(this._onDragOver), 1);
-                    this._onDrop();
-                    this.el = null;
-                }
-            };
-            function _cloneHide(state) {
-                if (cloneEl && cloneEl.state !== state) {
-                    _css(cloneEl, 'display', state ? 'none' : '');
-                    !state && cloneEl.state && rootEl.insertBefore(cloneEl, dragEl);
-                    cloneEl.state = state;
-                }
-            }
-            function _bind(ctx, fn) {
-                var args = slice.call(arguments, 2);
-                return fn.bind ? fn.bind.apply(fn, [ctx].concat(args)) : function () {
-                    return fn.apply(ctx, args.concat(slice.call(arguments)));
-                };
-            }
-            function _closest(el, selector, ctx) {
-                if (el) {
-                    ctx = ctx || document;
-                    selector = selector.split('.');
-                    var tag = selector.shift().toUpperCase(), re = new RegExp('\\s(' + selector.join('|') + ')\\s', 'g');
-                    do {
-                        if (tag === '>*' && el.parentNode === ctx || (tag === '' || el.nodeName.toUpperCase() == tag) && (!selector.length || ((' ' + el.className + ' ').match(re) || []).length == selector.length)) {
-                            return el;
-                        }
-                    } while (el !== ctx && (el = el.parentNode));
-                }
-                return null;
-            }
-            function _globalDragOver(evt) {
-                evt.dataTransfer.dropEffect = 'move';
-                evt.preventDefault();
-            }
-            function _on(el, event, fn) {
-                el.addEventListener(event, fn, false);
-            }
-            function _off(el, event, fn) {
-                el.removeEventListener(event, fn, false);
-            }
-            function _toggleClass(el, name, state) {
-                if (el) {
-                    if (el.classList) {
-                        el.classList[state ? 'add' : 'remove'](name);
-                    } else {
-                        var className = (' ' + el.className + ' ').replace(/\s+/g, ' ').replace(' ' + name + ' ', '');
-                        el.className = className + (state ? ' ' + name : '');
-                    }
-                }
-            }
-            function _css(el, prop, val) {
-                var style = el && el.style;
-                if (style) {
-                    if (val === void 0) {
-                        if (document.defaultView && document.defaultView.getComputedStyle) {
-                            val = document.defaultView.getComputedStyle(el, '');
-                        } else if (el.currentStyle) {
-                            val = el.currentStyle;
-                        }
-                        return prop === void 0 ? val : val[prop];
-                    } else {
-                        if (!(prop in style)) {
-                            prop = '-webkit-' + prop;
-                        }
-                        style[prop] = val + (typeof val === 'string' ? '' : 'px');
-                    }
-                }
-            }
-            function _find(ctx, tagName, iterator) {
-                if (ctx) {
-                    var list = ctx.getElementsByTagName(tagName), i = 0, n = list.length;
-                    if (iterator) {
-                        for (; i < n; i++) {
-                            iterator(list[i], i);
-                        }
-                    }
-                    return list;
-                }
-                return [];
-            }
-            function _disableDraggable(el) {
-                el.draggable = false;
-            }
-            function _unsilent() {
-                _silent = false;
-            }
-            function _ghostInBottom(el, evt) {
-                var lastEl = el.lastElementChild, rect = lastEl.getBoundingClientRect();
-                return evt.clientY - (rect.top + rect.height) > 5 && lastEl;
-            }
-            function _generateId(el) {
-                var str = el.tagName + el.className + el.src + el.href + el.textContent, i = str.length, sum = 0;
-                while (i--) {
-                    sum += str.charCodeAt(i);
-                }
-                return sum.toString(36);
-            }
-            function _index(el) {
-                var index = 0;
-                while (el && (el = el.previousElementSibling)) {
-                    if (el.nodeName.toUpperCase() !== 'TEMPLATE') {
-                        index++;
-                    }
-                }
-                return index;
-            }
-            function _throttle(callback, ms) {
-                var args, _this;
-                return function () {
-                    if (args === void 0) {
-                        args = arguments;
-                        _this = this;
-                        setTimeout(function () {
-                            if (args.length === 1) {
-                                callback.call(_this, args[0]);
-                            } else {
-                                callback.apply(_this, args);
-                            }
-                            args = void 0;
-                        }, ms);
-                    }
-                };
-            }
-            Sortable.utils = {
-                on: _on,
-                off: _off,
-                css: _css,
-                find: _find,
-                bind: _bind,
-                is: function (el, selector) {
-                    return !!_closest(el, selector, el);
-                },
-                throttle: _throttle,
-                closest: _closest,
-                toggleClass: _toggleClass,
-                dispatchEvent: _dispatchEvent,
-                index: _index
-            };
-            Sortable.version = '1.1.1';
-            Sortable.create = function (el, options) {
-                return new Sortable(el, options);
-            };
-            return Sortable;
-        }));
-    },
-    '4b': function (require, module, exports, global) {
         (function () {
             var Dropzone, Emitter, camelize, contentLoaded, detectVerticalSquash, drawImageIOSFix, noop, without, __slice = [].slice, __hasProp = {}.hasOwnProperty, __extends = function (child, parent) {
                     for (var key in parent) {
@@ -16975,7 +16375,623 @@ var G5;
             contentLoaded(window, Dropzone._autoDiscoverFunction);
         }.call(this));
     },
+    '4b': function (require, module, exports, global) {
+        (function (factory) {
+            'use strict';
+            if (typeof define === 'function' && define.amd) {
+                define(factory);
+            } else if (typeof module != 'undefined' && typeof module.exports != 'undefined') {
+                module.exports = factory();
+            } else if (typeof Package !== 'undefined') {
+                Sortable = factory();
+            } else {
+                window['Sortable'] = factory();
+            }
+        }(function () {
+            'use strict';
+            var dragEl, ghostEl, cloneEl, rootEl, nextEl, scrollEl, scrollParentEl, lastEl, lastCSS, oldIndex, newIndex, activeGroup, autoScroll = {}, tapEvt, touchEvt, expando = 'Sortable' + new Date().getTime(), win = window, document = win.document, parseInt = win.parseInt, supportDraggable = !!('draggable' in document.createElement('div')), _silent = false, _dispatchEvent = function (rootEl, name, targetEl, fromEl, startIndex, newIndex) {
+                    var evt = document.createEvent('Event');
+                    evt.initEvent(name, true, true);
+                    evt.item = targetEl || rootEl;
+                    evt.from = fromEl || rootEl;
+                    evt.clone = cloneEl;
+                    evt.oldIndex = startIndex;
+                    evt.newIndex = newIndex;
+                    rootEl.dispatchEvent(evt);
+                }, _customEvents = 'onAdd onUpdate onRemove onStart onEnd onFilter onSort'.split(' '), noop = function () {
+                }, abs = Math.abs, slice = [].slice, touchDragOverListeners = [], _autoScroll = _throttle(function (evt, options, rootEl) {
+                    if (rootEl && options.scroll) {
+                        var el, rect, sens = options.scrollSensitivity, speed = options.scrollSpeed, x = evt.clientX, y = evt.clientY, winWidth = window.innerWidth, winHeight = window.innerHeight, vx, vy;
+                        ;
+                        if (scrollParentEl !== rootEl) {
+                            scrollEl = options.scroll;
+                            scrollParentEl = rootEl;
+                            if (scrollEl === true) {
+                                scrollEl = rootEl;
+                                do {
+                                    if (scrollEl.offsetWidth < scrollEl.scrollWidth || scrollEl.offsetHeight < scrollEl.scrollHeight) {
+                                        break;
+                                    }
+                                } while (scrollEl = scrollEl.parentNode);
+                            }
+                        }
+                        if (scrollEl) {
+                            el = scrollEl;
+                            rect = scrollEl.getBoundingClientRect();
+                            vx = (abs(rect.right - x) <= sens) - (abs(rect.left - x) <= sens);
+                            vy = (abs(rect.bottom - y) <= sens) - (abs(rect.top - y) <= sens);
+                        }
+                        if (!(vx || vy)) {
+                            vx = (winWidth - x <= sens) - (x <= sens);
+                            vy = (winHeight - y <= sens) - (y <= sens);
+                            (vx || vy) && (el = win);
+                        }
+                        if (autoScroll.vx !== vx || autoScroll.vy !== vy || autoScroll.el !== el) {
+                            autoScroll.el = el;
+                            autoScroll.vx = vx;
+                            autoScroll.vy = vy;
+                            clearInterval(autoScroll.pid);
+                            if (el) {
+                                autoScroll.pid = setInterval(function () {
+                                    if (el === win) {
+                                        win.scrollTo(win.scrollX + vx * speed, win.scrollY + vy * speed);
+                                    } else {
+                                        vy && (el.scrollTop += vy * speed);
+                                        vx && (el.scrollLeft += vx * speed);
+                                    }
+                                }, 24);
+                            }
+                        }
+                    }
+                }, 30);
+            ;
+            function Sortable(el, options) {
+                this.el = el;
+                this.options = options = options || {};
+                var defaults = {
+                        group: Math.random(),
+                        sort: true,
+                        disabled: false,
+                        store: null,
+                        handle: null,
+                        scroll: true,
+                        scrollSensitivity: 30,
+                        scrollSpeed: 10,
+                        draggable: /[uo]l/i.test(el.nodeName) ? 'li' : '>*',
+                        ghostClass: 'sortable-ghost',
+                        ignore: 'a, img',
+                        filter: null,
+                        animation: 0,
+                        setData: function (dataTransfer, dragEl) {
+                            dataTransfer.setData('Text', dragEl.textContent);
+                        },
+                        dropBubble: false,
+                        dragoverBubble: false
+                    };
+                for (var name in defaults) {
+                    !(name in options) && (options[name] = defaults[name]);
+                }
+                var group = options.group;
+                if (!group || typeof group != 'object') {
+                    group = options.group = { name: group };
+                }
+                [
+                    'pull',
+                    'put'
+                ].forEach(function (key) {
+                    if (!(key in group)) {
+                        group[key] = true;
+                    }
+                });
+                _customEvents.forEach(function (name) {
+                    options[name] = _bind(this, options[name] || noop);
+                    _on(el, name.substr(2).toLowerCase(), options[name]);
+                }, this);
+                options.groups = ' ' + group.name + (group.put.join ? ' ' + group.put.join(' ') : '') + ' ';
+                el[expando] = options;
+                for (var fn in this) {
+                    if (fn.charAt(0) === '_') {
+                        this[fn] = _bind(this, this[fn]);
+                    }
+                }
+                _on(el, 'mousedown', this._onTapStart);
+                _on(el, 'touchstart', this._onTapStart);
+                _on(el, 'dragover', this);
+                _on(el, 'dragenter', this);
+                touchDragOverListeners.push(this._onDragOver);
+                options.store && this.sort(options.store.get(this));
+            }
+            Sortable.prototype = {
+                constructor: Sortable,
+                _dragStarted: function () {
+                    if (rootEl && dragEl) {
+                        _toggleClass(dragEl, this.options.ghostClass, true);
+                        Sortable.active = this;
+                        _dispatchEvent(rootEl, 'start', dragEl, rootEl, oldIndex);
+                    }
+                },
+                _onTapStart: function (evt) {
+                    var type = evt.type, touch = evt.touches && evt.touches[0], target = (touch || evt).target, originalTarget = target, options = this.options, el = this.el, filter = options.filter;
+                    if (type === 'mousedown' && evt.button !== 0 || options.disabled) {
+                        return;
+                    }
+                    target = _closest(target, options.draggable, el);
+                    if (!target) {
+                        return;
+                    }
+                    oldIndex = _index(target);
+                    if (typeof filter === 'function') {
+                        if (filter.call(this, evt, target, this)) {
+                            _dispatchEvent(originalTarget, 'filter', target, el, oldIndex);
+                            evt.preventDefault();
+                            return;
+                        }
+                    } else if (filter) {
+                        filter = filter.split(',').some(function (criteria) {
+                            criteria = _closest(originalTarget, criteria.trim(), el);
+                            if (criteria) {
+                                _dispatchEvent(criteria, 'filter', target, el, oldIndex);
+                                return true;
+                            }
+                        });
+                        if (filter) {
+                            evt.preventDefault();
+                            return;
+                        }
+                    }
+                    if (options.handle && !_closest(originalTarget, options.handle, el)) {
+                        return;
+                    }
+                    if (target && !dragEl && target.parentNode === el) {
+                        tapEvt = evt;
+                        rootEl = this.el;
+                        dragEl = target;
+                        nextEl = dragEl.nextSibling;
+                        activeGroup = this.options.group;
+                        dragEl.draggable = true;
+                        options.ignore.split(',').forEach(function (criteria) {
+                            _find(target, criteria.trim(), _disableDraggable);
+                        });
+                        if (touch) {
+                            tapEvt = {
+                                target: target,
+                                clientX: touch.clientX,
+                                clientY: touch.clientY
+                            };
+                            this._onDragStart(tapEvt, 'touch');
+                            evt.preventDefault();
+                        }
+                        _on(document, 'mouseup', this._onDrop);
+                        _on(document, 'touchend', this._onDrop);
+                        _on(document, 'touchcancel', this._onDrop);
+                        _on(dragEl, 'dragend', this);
+                        _on(rootEl, 'dragstart', this._onDragStart);
+                        if (!supportDraggable) {
+                            this._onDragStart(tapEvt, true);
+                        }
+                        try {
+                            if (document.selection) {
+                                document.selection.empty();
+                            } else {
+                                window.getSelection().removeAllRanges();
+                            }
+                        } catch (err) {
+                        }
+                    }
+                },
+                _emulateDragOver: function () {
+                    if (touchEvt) {
+                        _css(ghostEl, 'display', 'none');
+                        var target = document.elementFromPoint(touchEvt.clientX, touchEvt.clientY), parent = target, groupName = ' ' + this.options.group.name + '', i = touchDragOverListeners.length;
+                        if (parent) {
+                            do {
+                                if (parent[expando] && parent[expando].groups.indexOf(groupName) > -1) {
+                                    while (i--) {
+                                        touchDragOverListeners[i]({
+                                            clientX: touchEvt.clientX,
+                                            clientY: touchEvt.clientY,
+                                            target: target,
+                                            rootEl: parent
+                                        });
+                                    }
+                                    break;
+                                }
+                                target = parent;
+                            } while (parent = parent.parentNode);
+                        }
+                        _css(ghostEl, 'display', '');
+                    }
+                },
+                _onTouchMove: function (evt) {
+                    if (tapEvt) {
+                        var touch = evt.touches ? evt.touches[0] : evt, dx = touch.clientX - tapEvt.clientX, dy = touch.clientY - tapEvt.clientY, translate3d = evt.touches ? 'translate3d(' + dx + 'px,' + dy + 'px,0)' : 'translate(' + dx + 'px,' + dy + 'px)';
+                        touchEvt = touch;
+                        _css(ghostEl, 'webkitTransform', translate3d);
+                        _css(ghostEl, 'mozTransform', translate3d);
+                        _css(ghostEl, 'msTransform', translate3d);
+                        _css(ghostEl, 'transform', translate3d);
+                        evt.preventDefault();
+                    }
+                },
+                _onDragStart: function (evt, useFallback) {
+                    var dataTransfer = evt.dataTransfer, options = this.options;
+                    this._offUpEvents();
+                    if (activeGroup.pull == 'clone') {
+                        cloneEl = dragEl.cloneNode(true);
+                        _css(cloneEl, 'display', 'none');
+                        rootEl.insertBefore(cloneEl, dragEl);
+                    }
+                    if (useFallback) {
+                        var rect = dragEl.getBoundingClientRect(), css = _css(dragEl), ghostRect;
+                        ghostEl = dragEl.cloneNode(true);
+                        _css(ghostEl, 'top', rect.top - parseInt(css.marginTop, 10));
+                        _css(ghostEl, 'left', rect.left - parseInt(css.marginLeft, 10));
+                        _css(ghostEl, 'width', rect.width);
+                        _css(ghostEl, 'height', rect.height);
+                        _css(ghostEl, 'opacity', '0.8');
+                        _css(ghostEl, 'position', 'fixed');
+                        _css(ghostEl, 'zIndex', '100000');
+                        rootEl.appendChild(ghostEl);
+                        ghostRect = ghostEl.getBoundingClientRect();
+                        _css(ghostEl, 'width', rect.width * 2 - ghostRect.width);
+                        _css(ghostEl, 'height', rect.height * 2 - ghostRect.height);
+                        if (useFallback === 'touch') {
+                            _on(document, 'touchmove', this._onTouchMove);
+                            _on(document, 'touchend', this._onDrop);
+                            _on(document, 'touchcancel', this._onDrop);
+                        } else {
+                            _on(document, 'mousemove', this._onTouchMove);
+                            _on(document, 'mouseup', this._onDrop);
+                        }
+                        this._loopId = setInterval(this._emulateDragOver, 150);
+                    } else {
+                        if (dataTransfer) {
+                            dataTransfer.effectAllowed = 'move';
+                            options.setData && options.setData.call(this, dataTransfer, dragEl);
+                        }
+                        _on(document, 'drop', this);
+                    }
+                    setTimeout(this._dragStarted, 0);
+                },
+                _onDragOver: function (evt) {
+                    var el = this.el, target, dragRect, revert, options = this.options, group = options.group, groupPut = group.put, isOwner = activeGroup === group, canSort = options.sort;
+                    if (!dragEl) {
+                        return;
+                    }
+                    if (evt.preventDefault !== void 0) {
+                        evt.preventDefault();
+                        !options.dragoverBubble && evt.stopPropagation();
+                    }
+                    if (activeGroup && !options.disabled && (isOwner ? canSort || (revert = !rootEl.contains(dragEl)) : activeGroup.pull && groupPut && (activeGroup.name === group.name || groupPut.indexOf && ~groupPut.indexOf(activeGroup.name))) && (evt.rootEl === void 0 || evt.rootEl === this.el)) {
+                        _autoScroll(evt, options, this.el);
+                        if (_silent) {
+                            return;
+                        }
+                        target = _closest(evt.target, options.draggable, el);
+                        dragRect = dragEl.getBoundingClientRect();
+                        if (revert) {
+                            _cloneHide(true);
+                            if (cloneEl || nextEl) {
+                                rootEl.insertBefore(dragEl, cloneEl || nextEl);
+                            } else if (!canSort) {
+                                rootEl.appendChild(dragEl);
+                            }
+                            return;
+                        }
+                        if (el.children.length === 0 || el.children[0] === ghostEl || el === evt.target && (target = _ghostInBottom(el, evt))) {
+                            if (target) {
+                                if (target.animated) {
+                                    return;
+                                }
+                                targetRect = target.getBoundingClientRect();
+                            }
+                            _cloneHide(isOwner);
+                            el.appendChild(dragEl);
+                            this._animate(dragRect, dragEl);
+                            target && this._animate(targetRect, target);
+                        } else if (target && !target.animated && target !== dragEl && target.parentNode[expando] !== void 0) {
+                            if (lastEl !== target) {
+                                lastEl = target;
+                                lastCSS = _css(target);
+                            }
+                            var targetRect = target.getBoundingClientRect(), width = targetRect.right - targetRect.left, height = targetRect.bottom - targetRect.top, floating = /left|right|inline/.test(lastCSS.cssFloat + lastCSS.display), isWide = target.offsetWidth > dragEl.offsetWidth, isLong = target.offsetHeight > dragEl.offsetHeight, halfway = (floating ? (evt.clientX - targetRect.left) / width : (evt.clientY - targetRect.top) / height) > 0.5, nextSibling = target.nextElementSibling, after;
+                            ;
+                            _silent = true;
+                            setTimeout(_unsilent, 30);
+                            _cloneHide(isOwner);
+                            if (floating) {
+                                after = target.previousElementSibling === dragEl && !isWide || halfway && isWide;
+                            } else {
+                                after = nextSibling !== dragEl && !isLong || halfway && isLong;
+                            }
+                            if (after && !nextSibling) {
+                                el.appendChild(dragEl);
+                            } else {
+                                target.parentNode.insertBefore(dragEl, after ? nextSibling : target);
+                            }
+                            this._animate(dragRect, dragEl);
+                            this._animate(targetRect, target);
+                        }
+                    }
+                },
+                _animate: function (prevRect, target) {
+                    var ms = this.options.animation;
+                    if (ms) {
+                        var currentRect = target.getBoundingClientRect();
+                        _css(target, 'transition', 'none');
+                        _css(target, 'transform', 'translate3d(' + (prevRect.left - currentRect.left) + 'px,' + (prevRect.top - currentRect.top) + 'px,0)');
+                        target.offsetWidth;
+                        _css(target, 'transition', 'all ' + ms + 'ms');
+                        _css(target, 'transform', 'translate3d(0,0,0)');
+                        clearTimeout(target.animated);
+                        target.animated = setTimeout(function () {
+                            _css(target, 'transition', '');
+                            _css(target, 'transform', '');
+                            target.animated = false;
+                        }, ms);
+                    }
+                },
+                _offUpEvents: function () {
+                    _off(document, 'mouseup', this._onDrop);
+                    _off(document, 'touchmove', this._onTouchMove);
+                    _off(document, 'touchend', this._onDrop);
+                    _off(document, 'touchcancel', this._onDrop);
+                },
+                _onDrop: function (evt) {
+                    var el = this.el, options = this.options;
+                    clearInterval(this._loopId);
+                    clearInterval(autoScroll.pid);
+                    _off(document, 'drop', this);
+                    _off(document, 'mousemove', this._onTouchMove);
+                    _off(el, 'dragstart', this._onDragStart);
+                    this._offUpEvents();
+                    if (evt) {
+                        evt.preventDefault();
+                        !options.dropBubble && evt.stopPropagation();
+                        ghostEl && ghostEl.parentNode.removeChild(ghostEl);
+                        if (dragEl) {
+                            _off(dragEl, 'dragend', this);
+                            _disableDraggable(dragEl);
+                            _toggleClass(dragEl, this.options.ghostClass, false);
+                            if (rootEl !== dragEl.parentNode) {
+                                newIndex = _index(dragEl);
+                                _dispatchEvent(dragEl.parentNode, 'sort', dragEl, rootEl, oldIndex, newIndex);
+                                _dispatchEvent(rootEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
+                                _dispatchEvent(dragEl, 'add', dragEl, rootEl, oldIndex, newIndex);
+                                _dispatchEvent(rootEl, 'remove', dragEl, rootEl, oldIndex, newIndex);
+                            } else {
+                                cloneEl && cloneEl.parentNode.removeChild(cloneEl);
+                                if (dragEl.nextSibling !== nextEl) {
+                                    newIndex = _index(dragEl);
+                                    _dispatchEvent(rootEl, 'update', dragEl, rootEl, oldIndex, newIndex);
+                                    _dispatchEvent(rootEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
+                                }
+                            }
+                            Sortable.active && _dispatchEvent(rootEl, 'end', dragEl, rootEl, oldIndex, newIndex);
+                        }
+                        rootEl = dragEl = ghostEl = nextEl = cloneEl = scrollEl = scrollParentEl = tapEvt = touchEvt = lastEl = lastCSS = activeGroup = Sortable.active = null;
+                        this.save();
+                    }
+                },
+                handleEvent: function (evt) {
+                    var type = evt.type;
+                    if (type === 'dragover' || type === 'dragenter') {
+                        this._onDragOver(evt);
+                        _globalDragOver(evt);
+                    } else if (type === 'drop' || type === 'dragend') {
+                        this._onDrop(evt);
+                    }
+                },
+                toArray: function () {
+                    var order = [], el, children = this.el.children, i = 0, n = children.length;
+                    for (; i < n; i++) {
+                        el = children[i];
+                        if (_closest(el, this.options.draggable, this.el)) {
+                            order.push(el.getAttribute('data-id') || _generateId(el));
+                        }
+                    }
+                    return order;
+                },
+                sort: function (order) {
+                    var items = {}, rootEl = this.el;
+                    this.toArray().forEach(function (id, i) {
+                        var el = rootEl.children[i];
+                        if (_closest(el, this.options.draggable, rootEl)) {
+                            items[id] = el;
+                        }
+                    }, this);
+                    order.forEach(function (id) {
+                        if (items[id]) {
+                            rootEl.removeChild(items[id]);
+                            rootEl.appendChild(items[id]);
+                        }
+                    });
+                },
+                save: function () {
+                    var store = this.options.store;
+                    store && store.set(this);
+                },
+                closest: function (el, selector) {
+                    return _closest(el, selector || this.options.draggable, this.el);
+                },
+                option: function (name, value) {
+                    var options = this.options;
+                    if (value === void 0) {
+                        return options[name];
+                    } else {
+                        options[name] = value;
+                    }
+                },
+                destroy: function () {
+                    var el = this.el, options = this.options;
+                    _customEvents.forEach(function (name) {
+                        _off(el, name.substr(2).toLowerCase(), options[name]);
+                    });
+                    _off(el, 'mousedown', this._onTapStart);
+                    _off(el, 'touchstart', this._onTapStart);
+                    _off(el, 'dragover', this);
+                    _off(el, 'dragenter', this);
+                    Array.prototype.forEach.call(el.querySelectorAll('[draggable]'), function (el) {
+                        el.removeAttribute('draggable');
+                    });
+                    touchDragOverListeners.splice(touchDragOverListeners.indexOf(this._onDragOver), 1);
+                    this._onDrop();
+                    this.el = null;
+                }
+            };
+            function _cloneHide(state) {
+                if (cloneEl && cloneEl.state !== state) {
+                    _css(cloneEl, 'display', state ? 'none' : '');
+                    !state && cloneEl.state && rootEl.insertBefore(cloneEl, dragEl);
+                    cloneEl.state = state;
+                }
+            }
+            function _bind(ctx, fn) {
+                var args = slice.call(arguments, 2);
+                return fn.bind ? fn.bind.apply(fn, [ctx].concat(args)) : function () {
+                    return fn.apply(ctx, args.concat(slice.call(arguments)));
+                };
+            }
+            function _closest(el, selector, ctx) {
+                if (el) {
+                    ctx = ctx || document;
+                    selector = selector.split('.');
+                    var tag = selector.shift().toUpperCase(), re = new RegExp('\\s(' + selector.join('|') + ')\\s', 'g');
+                    do {
+                        if (tag === '>*' && el.parentNode === ctx || (tag === '' || el.nodeName.toUpperCase() == tag) && (!selector.length || ((' ' + el.className + ' ').match(re) || []).length == selector.length)) {
+                            return el;
+                        }
+                    } while (el !== ctx && (el = el.parentNode));
+                }
+                return null;
+            }
+            function _globalDragOver(evt) {
+                evt.dataTransfer.dropEffect = 'move';
+                evt.preventDefault();
+            }
+            function _on(el, event, fn) {
+                el.addEventListener(event, fn, false);
+            }
+            function _off(el, event, fn) {
+                el.removeEventListener(event, fn, false);
+            }
+            function _toggleClass(el, name, state) {
+                if (el) {
+                    if (el.classList) {
+                        el.classList[state ? 'add' : 'remove'](name);
+                    } else {
+                        var className = (' ' + el.className + ' ').replace(/\s+/g, ' ').replace(' ' + name + ' ', '');
+                        el.className = className + (state ? ' ' + name : '');
+                    }
+                }
+            }
+            function _css(el, prop, val) {
+                var style = el && el.style;
+                if (style) {
+                    if (val === void 0) {
+                        if (document.defaultView && document.defaultView.getComputedStyle) {
+                            val = document.defaultView.getComputedStyle(el, '');
+                        } else if (el.currentStyle) {
+                            val = el.currentStyle;
+                        }
+                        return prop === void 0 ? val : val[prop];
+                    } else {
+                        if (!(prop in style)) {
+                            prop = '-webkit-' + prop;
+                        }
+                        style[prop] = val + (typeof val === 'string' ? '' : 'px');
+                    }
+                }
+            }
+            function _find(ctx, tagName, iterator) {
+                if (ctx) {
+                    var list = ctx.getElementsByTagName(tagName), i = 0, n = list.length;
+                    if (iterator) {
+                        for (; i < n; i++) {
+                            iterator(list[i], i);
+                        }
+                    }
+                    return list;
+                }
+                return [];
+            }
+            function _disableDraggable(el) {
+                el.draggable = false;
+            }
+            function _unsilent() {
+                _silent = false;
+            }
+            function _ghostInBottom(el, evt) {
+                var lastEl = el.lastElementChild, rect = lastEl.getBoundingClientRect();
+                return evt.clientY - (rect.top + rect.height) > 5 && lastEl;
+            }
+            function _generateId(el) {
+                var str = el.tagName + el.className + el.src + el.href + el.textContent, i = str.length, sum = 0;
+                while (i--) {
+                    sum += str.charCodeAt(i);
+                }
+                return sum.toString(36);
+            }
+            function _index(el) {
+                var index = 0;
+                while (el && (el = el.previousElementSibling)) {
+                    if (el.nodeName.toUpperCase() !== 'TEMPLATE') {
+                        index++;
+                    }
+                }
+                return index;
+            }
+            function _throttle(callback, ms) {
+                var args, _this;
+                return function () {
+                    if (args === void 0) {
+                        args = arguments;
+                        _this = this;
+                        setTimeout(function () {
+                            if (args.length === 1) {
+                                callback.call(_this, args[0]);
+                            } else {
+                                callback.apply(_this, args);
+                            }
+                            args = void 0;
+                        }, ms);
+                    }
+                };
+            }
+            Sortable.utils = {
+                on: _on,
+                off: _off,
+                css: _css,
+                find: _find,
+                bind: _bind,
+                is: function (el, selector) {
+                    return !!_closest(el, selector, el);
+                },
+                throttle: _throttle,
+                closest: _closest,
+                toggleClass: _toggleClass,
+                dispatchEvent: _dispatchEvent,
+                index: _index
+            };
+            Sortable.version = '1.1.1';
+            Sortable.create = function (el, options) {
+                return new Sortable(el, options);
+            };
+            return Sortable;
+        }));
+    },
     '4c': function (require, module, exports, global) {
+        'use strict';
+        var indexOf = function (self, item, from) {
+            for (var l = self.length >>> 0, i = from < 0 ? Math.max(0, l + from) : from || 0; i < l; i++) {
+                if (self[i] === item)
+                    return i;
+            }
+            return -1;
+        };
+        module.exports = indexOf;
+    },
+    '4d': function (require, module, exports, global) {
         'use strict';
         var hasOwn = require('5t'), forIn = require('5u'), mixIn = require('5v'), filter = require('5w'), create = require('5x'), type = require('5y');
         var defineProperty = Object.defineProperty, getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
@@ -17032,7 +17048,7 @@ var G5;
         };
         module.exports = prime;
     },
-    '4d': function (require, module, exports, global) {
+    '4e': function (require, module, exports, global) {
         'use strict';
         var camelize = function (self) {
             return (self + '').replace(/-\D/g, function (match) {
@@ -17041,7 +17057,7 @@ var G5;
         };
         module.exports = camelize;
     },
-    '4e': function (require, module, exports, global) {
+    '4f': function (require, module, exports, global) {
         'use strict';
         var trim = require('5z');
         var clean = function (self) {
@@ -17049,7 +17065,7 @@ var G5;
         };
         module.exports = clean;
     },
-    '4f': function (require, module, exports, global) {
+    '4g': function (require, module, exports, global) {
         'use strict';
         var capitalize = function (self) {
             return (self + '').replace(/\b[a-z]/g, function (match) {
@@ -17058,7 +17074,7 @@ var G5;
         };
         module.exports = capitalize;
     },
-    '4g': function (require, module, exports, global) {
+    '4h': function (require, module, exports, global) {
         'use strict';
         var hyphenate = function (self) {
             return (self + '').replace(/[A-Z]/g, function (match) {
@@ -17067,7 +17083,7 @@ var G5;
         };
         module.exports = hyphenate;
     },
-    '4h': function (require, module, exports, global) {
+    '4i': function (require, module, exports, global) {
         'use strict';
         var map = function (self, method, context) {
             var length = self.length >>> 0, results = Array(length);
@@ -17078,7 +17094,7 @@ var G5;
         };
         module.exports = map;
     },
-    '4i': function (require, module, exports, global) {
+    '4j': function (require, module, exports, global) {
         'use strict';
         var forEach = function (self, method, context) {
             for (var i = 0, l = self.length >>> 0; i < l; i++) {
@@ -17089,20 +17105,9 @@ var G5;
         };
         module.exports = forEach;
     },
-    '4j': function (require, module, exports, global) {
-        'use strict';
-        var indexOf = function (self, item, from) {
-            for (var l = self.length >>> 0, i = from < 0 ? Math.max(0, l + from) : from || 0; i < l; i++) {
-                if (self[i] === item)
-                    return i;
-            }
-            return -1;
-        };
-        module.exports = indexOf;
-    },
     '4k': function (require, module, exports, global) {
         'use strict';
-        var prime = require('4c'), forEach = require('4i'), map = require('4h'), filter = require('60'), every = require('61'), some = require('62');
+        var prime = require('4d'), forEach = require('4j'), map = require('4i'), filter = require('60'), every = require('61'), some = require('62');
         var uniqueIndex = 0;
         var uniqueID = function (n) {
             return n === global ? 'global' : n.uniqueNumber || (n.uniqueNumber = 'n:' + (uniqueIndex++).toString(36));
@@ -17297,40 +17302,24 @@ var G5;
         module.exports = has;
     },
     '4p': function (require, module, exports, global) {
-        var forOwn = require('37');
-        var makeIterator = require('3t');
-        function every(obj, callback, thisObj) {
-            callback = makeIterator(callback, thisObj);
-            var result = true;
-            forOwn(obj, function (val, key) {
-                if (!callback(val, key, obj)) {
-                    result = false;
-                    return false;
-                }
-            });
-            return result;
-        }
-        module.exports = every;
-    },
-    '4q': function (require, module, exports, global) {
         var isKind = require('3v');
         function isString(val) {
             return isKind(val, 'String');
         }
         module.exports = isString;
     },
-    '4r': function (require, module, exports, global) {
-        var lerp = require('64');
-        var norm = require('65');
+    '4q': function (require, module, exports, global) {
+        var lerp = require('63');
+        var norm = require('64');
         function map(val, min1, max1, min2, max2) {
             return lerp(norm(val, min1, max1), min2, max2);
         }
         module.exports = map;
     },
-    '4s': function (require, module, exports, global) {
-        var kindOf = require('4t');
-        var isPlainObject = require('4u');
-        var mixIn = require('63');
+    '4r': function (require, module, exports, global) {
+        var kindOf = require('4s');
+        var isPlainObject = require('4t');
+        var mixIn = require('65');
         function clone(val) {
             switch (kindOf(val)) {
             case 'Object':
@@ -17367,7 +17356,7 @@ var G5;
         }
         module.exports = clone;
     },
-    '4t': function (require, module, exports, global) {
+    '4s': function (require, module, exports, global) {
         var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
         function kindOf(val) {
             if (val === null) {
@@ -17380,11 +17369,27 @@ var G5;
         }
         module.exports = kindOf;
     },
-    '4u': function (require, module, exports, global) {
+    '4t': function (require, module, exports, global) {
         function isPlainObject(value) {
             return !!value && typeof value === 'object' && value.constructor === Object;
         }
         module.exports = isPlainObject;
+    },
+    '4u': function (require, module, exports, global) {
+        var forOwn = require('37');
+        var makeIterator = require('3t');
+        function every(obj, callback, thisObj) {
+            callback = makeIterator(callback, thisObj);
+            var result = true;
+            forOwn(obj, function (val, key) {
+                if (!callback(val, key, obj)) {
+                    result = false;
+                    return false;
+                }
+            });
+            return result;
+        }
+        module.exports = every;
     },
     '4v': function (require, module, exports, global) {
         var hasOwn = require('3u');
@@ -17714,7 +17719,7 @@ var G5;
     },
     '52': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), Base = require('4w'), $ = require('1p'), zen = require('k'), precision = require('3k'), bind = require('1s');
+        var prime = require('n'), Base = require('4w'), $ = require('1p'), zen = require('k'), precision = require('3j'), bind = require('1s');
         var Block = new prime({
                 inherits: Base,
                 options: {
@@ -17802,7 +17807,7 @@ var G5;
     },
     '53': function (require, module, exports, global) {
         'use strict';
-        var prime = require('n'), $ = require('1'), Atom = require('4x'), bind = require('1s'), precision = require('3k'), getAjaxURL = require('49').config;
+        var prime = require('n'), $ = require('1'), Atom = require('4x'), bind = require('1s'), precision = require('3j'), getAjaxURL = require('49').config;
         var UID = 0;
         var Particle = new prime({
                 inherits: Atom,
@@ -18054,10 +18059,10 @@ var G5;
         module.exports = hasOwn;
     },
     '5i': function (require, module, exports, global) {
-        var clone = require('67');
-        var forOwn = require('68');
-        var kindOf = require('69');
-        var isPlainObject = require('6a');
+        var clone = require('68');
+        var forOwn = require('69');
+        var kindOf = require('6a');
+        var isPlainObject = require('6b');
         function deepClone(val, instanceClone) {
             switch (kindOf(val)) {
             case 'Object':
@@ -18091,7 +18096,7 @@ var G5;
         module.exports = deepClone;
     },
     '5j': function (require, module, exports, global) {
-        var isKind = require('6b');
+        var isKind = require('67');
         function isObject(val) {
             return isKind(val, 'Object');
         }
@@ -18170,7 +18175,7 @@ var G5;
         var filter = require('6g');
         var some = require('6h');
         var contains = require('1b');
-        var slice = require('3g');
+        var slice = require('3f');
         function difference(arr) {
             var arrs = slice(arguments, 1), result = filter(unique(arr), function (needle) {
                     return !some(arrs, function (haystack) {
@@ -18350,6 +18355,21 @@ var G5;
         module.exports = some;
     },
     '63': function (require, module, exports, global) {
+        function lerp(ratio, start, end) {
+            return start + (end - start) * ratio;
+        }
+        module.exports = lerp;
+    },
+    '64': function (require, module, exports, global) {
+        function norm(val, min, max) {
+            if (val < min || val > max) {
+                throw new RangeError('value (' + val + ') must be between ' + min + ' and ' + max);
+            }
+            return val === max ? 1 : (val - min) / (max - min);
+        }
+        module.exports = norm;
+    },
+    '65': function (require, module, exports, global) {
         var forOwn = require('37');
         function mixIn(target, objects) {
             var i = 0, n = arguments.length, obj;
@@ -18365,21 +18385,6 @@ var G5;
             this[key] = val;
         }
         module.exports = mixIn;
-    },
-    '64': function (require, module, exports, global) {
-        function lerp(ratio, start, end) {
-            return start + (end - start) * ratio;
-        }
-        module.exports = lerp;
-    },
-    '65': function (require, module, exports, global) {
-        function norm(val, min, max) {
-            if (val < min || val > max) {
-                throw new RangeError('value (' + val + ') must be between ' + min + ' and ' + max);
-            }
-            return val === max ? 1 : (val - min) / (max - min);
-        }
-        module.exports = norm;
     },
     '66': function (require, module, exports, global) {
         var forOwn = require('37');
@@ -18398,9 +18403,16 @@ var G5;
         module.exports = some;
     },
     '67': function (require, module, exports, global) {
-        var kindOf = require('69');
-        var isPlainObject = require('6a');
-        var mixIn = require('6k');
+        var kindOf = require('6a');
+        function isKind(val, kind) {
+            return kindOf(val) === kind;
+        }
+        module.exports = isKind;
+    },
+    '68': function (require, module, exports, global) {
+        var kindOf = require('6a');
+        var isPlainObject = require('6b');
+        var mixIn = require('6j');
         function clone(val) {
             switch (kindOf(val)) {
             case 'Object':
@@ -18437,9 +18449,9 @@ var G5;
         }
         module.exports = clone;
     },
-    '68': function (require, module, exports, global) {
+    '69': function (require, module, exports, global) {
         var hasOwn = require('5h');
-        var forIn = require('6j');
+        var forIn = require('6k');
         function forOwn(obj, fn, thisObj) {
             forIn(obj, function (val, key) {
                 if (hasOwn(obj, key)) {
@@ -18449,7 +18461,7 @@ var G5;
         }
         module.exports = forOwn;
     },
-    '69': function (require, module, exports, global) {
+    '6a': function (require, module, exports, global) {
         var _rKind = /^\[object (.*)\]$/, _toString = Object.prototype.toString, UNDEF;
         function kindOf(val) {
             if (val === null) {
@@ -18462,18 +18474,11 @@ var G5;
         }
         module.exports = kindOf;
     },
-    '6a': function (require, module, exports, global) {
+    '6b': function (require, module, exports, global) {
         function isPlainObject(value) {
             return !!value && typeof value === 'object' && value.constructor === Object;
         }
         module.exports = isPlainObject;
-    },
-    '6b': function (require, module, exports, global) {
-        var kindOf = require('69');
-        function isKind(val, kind) {
-            return kindOf(val) === kind;
-        }
-        module.exports = isKind;
     },
     '6c': function (require, module, exports, global) {
         module.exports = -2147483648;
@@ -18562,6 +18567,23 @@ var G5;
         module.exports = forOwn;
     },
     '6j': function (require, module, exports, global) {
+        var forOwn = require('69');
+        function mixIn(target, objects) {
+            var i = 0, n = arguments.length, obj;
+            while (++i < n) {
+                obj = arguments[i];
+                if (obj != null) {
+                    forOwn(obj, copyProp, target);
+                }
+            }
+            return target;
+        }
+        function copyProp(val, key) {
+            this[key] = val;
+        }
+        module.exports = mixIn;
+    },
+    '6k': function (require, module, exports, global) {
         var hasOwn = require('5h');
         var _hasDontEnumBug, _dontEnums;
         function checkDontEnum() {
@@ -18603,23 +18625,6 @@ var G5;
             return fn.call(thisObj, obj[key], key, obj);
         }
         module.exports = forIn;
-    },
-    '6k': function (require, module, exports, global) {
-        var forOwn = require('68');
-        function mixIn(target, objects) {
-            var i = 0, n = arguments.length, obj;
-            while (++i < n) {
-                obj = arguments[i];
-                if (obj != null) {
-                    forOwn(obj, copyProp, target);
-                }
-            }
-            return target;
-        }
-        function copyProp(val, key) {
-            this[key] = val;
-        }
-        module.exports = mixIn;
     },
     '6l': function (require, module, exports, global) {
         function random() {
