@@ -28,11 +28,10 @@ class LayoutCollection extends Collection
     public function load($path = 'gantry-layouts://')
     {
         /** @var UniformResourceLocator $locator */
-        $locator =$this->container['locator'];
+        $locator = $this->container['locator'];
 
         $finder = new ConfigFileFinder();
-        $files = $finder->getFiles($locator->findResources($path), '|\.json$|');
-        $files += $finder->getFiles($locator->findResources($path));
+        $files = $finder->getFiles($locator->findResources($path));
 
         if (!isset($files['default'])) {
             throw new \RuntimeException('Fatal error: Theme does not have default layout');

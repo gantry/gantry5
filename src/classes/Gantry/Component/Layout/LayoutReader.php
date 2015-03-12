@@ -1,7 +1,7 @@
 <?php
 namespace Gantry\Component\Layout;
 
-use RocketTheme\Toolbox\File\YamlFile;
+use Gantry\Component\File\CompiledYamlFile;
 
 /**
  * Read layout from simplified yaml file.
@@ -11,25 +11,26 @@ class LayoutReader
     protected static $scopes = [0 => 'grid', 1 => 'block'];
 
     /**
-     * Read layout from yaml file and return parsed version of it.
+     * Make layout from array data.
      *
-     * @param string $file
+     * @param array $data
      * @return array
      */
-    public static function read($file) {
-        if (!$file) {
-            return [];
+    public static function data(array $data)
+    {
+        // Check if we have pre-saved configuration.
+        if (isset($data['children'])) {
+            return self::object($data['children']);
         }
 
-        $file = YamlFile::instance($file);
-        $content = (array) $file->content();
+        // We have user entered file; let's build the layout.
 
-        if (!isset($content['non-visible'])) {
-            $content['non-visible'] = [];
+        if (!isset($data['non-visible'])) {
+            $data['non-visible'] = [];
         }
 
         $result = [];
-        foreach ($content as $field => $params) {
+        foreach ($data as $field => $params) {
             $child = self::parse($field, $params, 0);
             unset($child->size);
 
@@ -37,6 +38,38 @@ class LayoutReader
         }
 
         return $result;
+    }
+
+    /**
+     * Read layout from yaml file and return parsed version of it.
+     *
+     * @param string $file
+     * @return array
+     */
+    public static function read($file)
+    {
+        if (!$file) {
+            return [];
+        }
+
+        $file = CompiledYamlFile::instance($file);
+
+        return self::data((array) $file->content());
+    }
+
+    protected static function object(array $items)
+    {
+        foreach ($items as &$item) {
+            $item = (object) $item;
+            if (isset($item->attributes) && !is_object($item->attributes)) {
+                $item->attributes = (object) $item->attributes;
+            }
+            if (!empty($item->children)) {
+                $item->children = self::object($item->children);
+            }
+        }
+
+        return $items;
     }
 
     /**

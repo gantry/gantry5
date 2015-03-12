@@ -41,11 +41,13 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $files = Folder::all($locator->findResource('gantry-theme://layouts/presets'), $options);
+        $files = Folder::all($locator->findResource('gantry-theme://layouts'), $options);
+        ksort($files);
 
-        $results = [];
+        $results = ['user' => [], 'system' => []];
         foreach ($files as $preset => $filename) {
-            $results[$preset] = ucfirst($preset);
+            $scope = $preset && $preset[0] !== '_' ? 'user' : 'system';
+            $results[$scope][$preset] = ucwords(preg_replace(['|_|', '|/|'], [' ', ' / '], $preset));
         }
 
         return $results;
@@ -57,7 +59,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
-        $filename = $locator->findResource("gantry-theme://layouts/presets/{$name}.yaml");
+        $filename = $locator->findResource("gantry-theme://layouts/{$name}.yaml");
 
         if (!$filename) {
             throw new \RuntimeException('Preset not found', 404);
@@ -177,14 +179,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $locator = Gantry::instance()['locator'];
 
         $layout = null;
-        $filename = $locator('gantry-layouts://' . $name . '.json');
+        $filename = $locator("gantry-config://{$name}/layout.yaml") ?: $locator("gantry-layouts://{$name}.yaml");
+
         if ($filename) {
-            $layout = JsonFile::instance($filename)->content();
-        } else {
-            $filename = $locator('gantry-layouts://' . $name . '.yaml');
-            if ($filename) {
-                $layout = LayoutReader::read($filename);
-            }
+            $layout = LayoutReader::read($filename);
         }
 
         return new static($name, $layout);

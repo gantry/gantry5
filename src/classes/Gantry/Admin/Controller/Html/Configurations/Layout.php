@@ -98,36 +98,32 @@ class Layout extends HtmlController
         $this->params['layout'] = $layout->toArray();
         $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($id, '_')));
         $this->params['particles'] = $groups;
-        $this->params['switcher_url'] = str_replace('.', '/', 'configurations.' . $id . '.layout.switch');
+        $this->params['switcher_url'] = str_replace('.', '/', "configurations.{$id}.layout.switch");
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/edit.html.twig', $this->params);
     }
 
     public function save()
     {
-        $page = $this->params['configuration'];
-        $title = isset($_POST['title']) ? $_POST['title'] : ucfirst($page);
-        $layout = isset($_POST['layout']) ? json_decode($_POST['layout']) : null;
-
-        if (!$layout) {
+        if (!isset($_POST['layout'])) {
             throw new \RuntimeException('Error while saving layout: Structure missing', 400);
         }
 
-        $new_page = preg_replace('|[^a-z0-9_-]|', '', strtolower($title));
+        $configuration = $this->params['configuration'];
+        $layout = json_decode($_POST['layout'], true);
+        $title = isset($_POST['title']) ? $_POST['title'] : ucfirst($configuration);
+        $name = preg_replace('|[^a-z0-9_-]|', '', strtolower($title));
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $save_dir = $locator->findResource('gantry-layouts://', true, true);
-        $filename = $save_dir . "/{$new_page}.json";
+        $save_dir = $locator->findResource("gantry-config://{$configuration}", true, true);
+        $filename = "{$save_dir}/layout.yaml";
 
-        if ($page != $new_page && is_file($filename)) {
-            throw new \RuntimeException("Error while saving layout: Layout '{$new_page}' already exists", 403);
-        }
-
-        $file = JsonFile::instance($filename);
-        $file->save($layout);
+        $file = CompiledYamlFile::instance($filename);
+        $file->settings(['inline' => 20]);
+        $file->save(['children' => $layout]);
     }
 
     public function particle($type, $id)
@@ -197,6 +193,7 @@ class Layout extends HtmlController
     {
         $this->params['presets'] = LayoutObject::presets();
         $result = $this->container['admin.theme']->render('@gantry-admin/layouts/switcher.html.twig', $this->params);
+
         return new JsonResponse(['html' => $result]);
     }
 
