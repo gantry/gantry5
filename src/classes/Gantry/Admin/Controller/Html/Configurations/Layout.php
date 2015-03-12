@@ -240,6 +240,7 @@ class Layout extends HtmlController
         // Load particle blueprints and default settings.
         $validator = new Blueprints();
 
+        $name = $particle;
         if ($particle == 'section' || $particle == 'grid') {
             $type = $particle;
             $particle = null;
@@ -265,7 +266,7 @@ class Layout extends HtmlController
         $request = $this->container['request'];
 
         // Join POST data.
-        $data->join('options', $request->getArray('particle'));
+        $data->join('options', $request->getArray("particles." . $name));
         if ($particle) {
             $data->set('options.enabled', (int) $data->get('options.enabled', 1));
         }
