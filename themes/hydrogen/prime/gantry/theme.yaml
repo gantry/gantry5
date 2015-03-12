@@ -59,6 +59,8 @@ configuration:
     Effects:
       shadow: Shadow 1
       shadow2: Shadow 2
+    Utility:
+      disabled: Disabled
 
   dependencies:
     gantry: 5.0.*
