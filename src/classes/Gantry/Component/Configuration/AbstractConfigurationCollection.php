@@ -9,7 +9,7 @@ abstract class AbstractConfigurationCollection extends Collection
     /**
      * @var Container
      */
-    public $container;
+    protected $container;
 
     public function __construct(Container $container, $items = [])
     {

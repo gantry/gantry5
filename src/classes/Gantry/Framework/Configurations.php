@@ -16,8 +16,8 @@ class Configurations extends AbstractConfigurationCollection
     {
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
-        /** @var UniformResourceIterator $iterator */
 
+        /** @var UniformResourceIterator $iterator */
         $iterator = $locator->getIterator(
             $path,
             UniformResourceIterator::CURRENT_AS_PATHNAME | UniformResourceIterator::KEY_AS_FILENAME |
