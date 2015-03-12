@@ -47,7 +47,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $results = ['user' => [], 'system' => []];
         foreach ($files as $preset => $filename) {
             $scope = $preset && $preset[0] !== '_' ? 'user' : 'system';
-            $results[$scope][$preset] = ucwords(preg_replace(['|_|', '|/|'], [' ', ' / '], $preset));
+            $results[$scope][$preset] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $preset)));
         }
 
         return $results;
