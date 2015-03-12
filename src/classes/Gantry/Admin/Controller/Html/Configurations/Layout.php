@@ -308,7 +308,7 @@ class Layout extends HtmlController
         return LayoutObject::instance($name);
     }
 
-    protected function getParticles()
+    protected function getParticles($onlyEnabled = false)
     {
         $config = $this->container['config'];
 
@@ -318,9 +318,9 @@ class Layout extends HtmlController
         foreach ($particles as $name => $particle) {
             $type = isset($particle['type']) ? $particle['type'] : 'particle';
 
-            //if ($config->get("particles.{$name}.enabled", true)) {
+            if (!$onlyEnabled || $config->get("particles.{$name}.enabled", true)) {
                 $list[$type][$name] = $particle['name'];
-            //}
+            }
         }
 
         return $list;
