@@ -8,9 +8,32 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class ThemeList
 {
     /**
+     * @param string $template
      * @return array
      */
-    public static function getStyles()
+    public static function getStyles($template = null)
+    {
+        static $styles;
+
+        if ($styles === null) {
+            $styles = static::loadStyles();
+        }
+
+        if ($template) {
+            $list = [];
+            foreach ($styles as $style) {
+                if ($style->name === $template) {
+                    $list[] = $style;
+                }
+            }
+
+            return $list;
+        }
+
+        return $styles;
+    }
+
+    protected static function loadStyles()
     {
         // Load styles
         $db    = \JFactory::getDbo();
