@@ -2,7 +2,8 @@
 namespace Gantry\Framework\Base;
 
 use Gantry\Component\Config\ConfigServiceProvider;
-use Gantry\Component\Layout\LayoutCollection;
+use Gantry\Component\Configuration\ConfigurationCollection;
+use Gantry\Framework\Configurations;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Translator;
 use RocketTheme\Toolbox\DI\Container;
@@ -65,7 +66,7 @@ class Gantry extends Container
         $instance['configurations'] = $instance->factory(function ($c) {
             static $collection;
             if (!$collection) {
-                $collection = (new LayoutCollection($c))->load();
+                $collection = (new Configurations($c))->load();
             }
 
             return $collection->copy();
