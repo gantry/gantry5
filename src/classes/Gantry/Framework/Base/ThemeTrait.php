@@ -58,7 +58,8 @@ trait ThemeTrait
 
         $out = $name . ($layout !== 'default' ? '_'. $layout : '');
 
-        $path = $locator->findResource("gantry-theme://css-compiled/{$out}.css", false, true);
+        $url = "gantry-theme://css-compiled/{$out}.css";
+        $path = $locator->findResource($url, false, true);
 
         if (!is_file($path)) {
             $compiler = new ScssCompiler();
@@ -66,7 +67,7 @@ trait ThemeTrait
             $compiler->compileFile($name, GANTRY5_ROOT . '/' . $path);
         }
 
-        return $path;
+        return $url;
     }
 
     public function presets()
