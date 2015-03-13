@@ -50,7 +50,6 @@ class Config implements \ArrayAccess, \Iterator, ExportInterface
         $old = $this->get($name, null, $separator);
         if ($old !== null) {
             if (!is_array($old)) {
-                echo $name;var_dump($old);die();
                 throw new \RuntimeException('Value ' . $old);
             }
             if (!is_array($value)) {
@@ -79,6 +78,34 @@ class Config implements \ArrayAccess, \Iterator, ExportInterface
         $this->set($name, $value, $separator);
     }
 
+    /**
+     * Get value from the configuration and join it with given data.
+     *
+     * @param string  $name       Dot separated path to the requested value.
+     * @param array   $value      Value to be joined.
+     * @param string  $separator  Separator, defaults to '.'
+     */
+    public function getJoined($name, $value, $separator = '.')
+    {
+        $old = $this->get($name, null, $separator);
+
+        if ($old === null) {
+            // No value set; no need to join data.
+            return $value;
+        }
+
+        if (!is_array($old)) {
+            throw new \RuntimeException('Value ' . $old);
+        }
+        if (is_object($value)) {
+            $value = (array) $value;
+        } elseif (!is_array($value)) {
+            throw new \RuntimeException('Value ' . $value);
+        }
+
+        // Return joined data.
+        return $this->blueprints()->mergeData($old, $value, $name, $separator);
+    }
 
     /**
      * Merge two configurations together.
