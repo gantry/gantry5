@@ -64,9 +64,6 @@ bold, strong {
 .button {
   font-weight: 500; }
 
-.feature-icons {
-  font-size: 3rem; }
-
 blockquote {
   border-left: 10px solid #F0F2F4; }
   blockquote p {
@@ -308,6 +305,8 @@ input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:fo
     font-size: 0.8rem;
     display: block;
     margin-top: -1.3rem; }
+  .sample-content .sample-icons {
+    font-size: 3rem; }
 
 .showcase-sample {
   text-align: center; }

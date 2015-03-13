@@ -178,31 +178,31 @@ children:
                         -
                           icon: 'fa fa-joomla'
                           subtitle: '<span class="subtitle">Now Available</span>'
-                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
+                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
                           class: 'box1 shadow'
                           title: Joomla
                         -
                           icon: 'fa fa-clock-o'
                           subtitle: '<span class="subtitle">Coming Soon</span>'
-                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
+                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
                           class: disabled
                           title: WordPress
                         -
                           icon: 'fa fa-clock-o'
                           subtitle: '<span class="subtitle">Coming Soon</span>'
-                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
+                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
                           class: disabled
                           title: Grav
                         -
                           icon: 'fa fa-clock-o'
                           subtitle: '<span class="subtitle">Coming Soon</span>'
-                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
+                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
                           class: disabled
                           title: Magento
                         -
                           icon: 'fa fa-clock-o'
                           subtitle: '<span class="subtitle">Coming Soon</span>'
-                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
+                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
                           class: disabled
                           title: phpBB
                     children: {  }
