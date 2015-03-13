@@ -20,12 +20,16 @@ class Configurations extends AbstractConfigurationCollection
         /** @var UniformResourceIterator $iterator */
         $iterator = $locator->getIterator(
             $path,
-            UniformResourceIterator::CURRENT_AS_PATHNAME | UniformResourceIterator::KEY_AS_FILENAME |
+            UniformResourceIterator::CURRENT_AS_SELF | UniformResourceIterator::KEY_AS_FILENAME |
             UniformResourceIterator::UNIX_PATHS | UniformResourceIterator::SKIP_DOTS
         );
 
         $files = [];
-        foreach ($iterator as $name => $path) {
+        /** @var UniformResourceIterator $info */
+        foreach ($iterator as $name => $info) {
+            if (!$info->isDir() || $name[0] == '.') {
+                continue;
+            }
             $files[$name] = $name;
         }
 

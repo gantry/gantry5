@@ -43,7 +43,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $files = [];
         /** @var UniformResourceIterator $info */
         foreach ($iterator as $info) {
-            $files[] = $info->getBasename('.yaml');
+            $name = $info->getBasename('.yaml');
+            if (!$info->isFile() || $info->getExtension() != 'yaml' || $name[0] == '.') {
+                continue;
+            }
+            $files[] = $name;
         }
 
         sort($files);
