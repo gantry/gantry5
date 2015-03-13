@@ -68,7 +68,11 @@ class ScssCompiler extends CssCompiler
 
         // Run the compiler.
         $this->compiler->setVariables($this->getVariables());
-        $css = $this->compiler->compile('@import "' . $in . '.scss"');
+        $scss = '@import "' . $in . '.scss"';
+        $css = $this->compiler->compile($scss);
+        if (strpos($css, $scss) === 0) {
+            $css = '/* ' . $scss . ' */';
+        }
 
         $file = File::instance($out);
 
