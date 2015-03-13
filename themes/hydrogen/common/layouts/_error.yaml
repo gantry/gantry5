@@ -1,9 +1,12 @@
-container:
-  header:
-    - [particle-logo 20, particle-menu 80]
+header:
+  container:
+    - particle-menu
 
-  body:
+main:
+  container:
     - pagecontent
 
-  footer:
-    - [spacer 25, particle-copyright 50, particle-branding 25]
+footer:
+  container:
+  - position-footer
+  - [particle-copyright 40, spacer 30, particle-branding 30]
