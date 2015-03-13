@@ -30,9 +30,19 @@ trait ThemeTrait
         $gantry->register(new ErrorServiceProvider);
     }
 
-    public function setLayout($name)
+    public function setLayout($name = null)
     {
-        $this->layout = $name;
+        $gantry = static::gantry();
+
+        // Set default name only if configuration has not been set before.
+        if ($name === null && !isset($gantry['configuration'])) {
+            $name = 'default';
+        }
+
+        // Set configuration if given.
+        if ($name) {
+            $gantry['configuration'] = $name;
+        }
 
         return $this;
     }
@@ -44,7 +54,9 @@ trait ThemeTrait
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $out = $name . ($this->layout ? '_'. $this->layout : '');
+        $layout = $gantry['configuration'];
+
+        $out = $name . ($layout !== 'default' ? '_'. $layout : '');
 
         $path = $locator->findResource("gantry-theme://css-compiled/{$out}.css", false, true);
 
@@ -78,7 +90,11 @@ trait ThemeTrait
     public function loadLayout($name = null)
     {
         if (!$name) {
-            $name = $this->layout ?: 'default';
+            try {
+                $name = static::gantry()['configuration'];
+            } catch (\Exception $e) {
+                throw new \LogicException('Gantry: Configuration has not been defined yet', 500);
+            }
         }
 
         $layout = Layout::instance($name);
@@ -93,16 +109,17 @@ trait ThemeTrait
     public function add_to_context(array $context)
     {
         $gantry = static::gantry();
+
         $context['gantry'] = $gantry;
         $context['site'] = $gantry['site'];
-        $context['config'] = $gantry['config'];
         $context['theme'] = $this;
 
         return $context;
     }
 
-    public function segments() {
-        return $this->loadLayout($this->layout);
+    public function segments()
+    {
+        return $this->loadLayout();
     }
 
     public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)

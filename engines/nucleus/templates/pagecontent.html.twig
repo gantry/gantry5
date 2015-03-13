@@ -1,4 +1,4 @@
-{% if (segment.attributes.enabled is null or segment.attributes.enabled) and config.get('particles.' ~ segment.type ~ '.enabled', true) %}
+{% if (segment.attributes.enabled is null or segment.attributes.enabled) and gantry.config.get('particles.' ~ segment.type ~ '.enabled', true) %}
 <div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
     {{ content }}
 </div>

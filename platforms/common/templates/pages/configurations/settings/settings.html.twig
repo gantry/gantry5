@@ -22,12 +22,12 @@
                                         {{ particle.name }}
                                         <input type="hidden" name="particles[{{ id }}]"/>
                                         {% if particle.form.fields.enabled %}
-                                            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': particle.form.fields.enabled, 'value': config.get(prefix ~ 'enabled')} %}
+                                            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': particle.form.fields.enabled, 'value': gantry.config.get(prefix ~ 'enabled')} %}
                                         {% endif %}
                                     </h4>
 
                                     <div class="inner-params">
-                                        {% include 'forms/fields.html.twig' with {'overrideable': overrideable, 'blueprints': particle.form, skip: ['enabled'], data: config, "prefix": prefix} %}
+                                        {% include 'forms/fields.html.twig' with {'overrideable': overrideable, 'blueprints': particle.form, skip: ['enabled'], data: gantry.config, "prefix": prefix} %}
                                     </div>
                                 </div>
                             {% endif %}

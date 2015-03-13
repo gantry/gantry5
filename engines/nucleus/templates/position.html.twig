@@ -1,5 +1,5 @@
 {% set html %}
-    {% if (segment.attributes.enabled is null or segment.attributes.enabled) and config.get('particles.' ~ segment.type ~ '.enabled', true) %}
+    {% if (segment.attributes.enabled is null or segment.attributes.enabled) and gantry.config.get('particles.' ~ segment.type ~ '.enabled', true) %}
         {% include ['particles/position.html.twig',
         '@particles/position.html.twig'] with { gantry: gantry, site: site, page: gantry.page, position: segment.attributes } only %}
     {% endif %}

@@ -27,11 +27,17 @@ class ConfigServiceProvider implements ServiceProviderInterface
 
             $cache = $locator->findResource('gantry-cache://compiled/config', true, true);
 
-            // Get the current configuration.
-            $configuration = isset($c['configuration']) ? $c['configuration'] : 'default';
+            // Make sure configuration has been set.
+            if (!isset($c['configuration'])) {
+                throw new \LogicException('Gantry: Please set current configuration before using $gantry["config"]', 500);
+            }
+
+            // Get the current configuration and lock the value from modification.
+            $configuration = $c->lock('configuration');
 
             // Merge current configuration with the default.
             $uris = array_unique(["gantry-config://{$configuration}", 'gantry-config://default']);
+
             $paths = [];
             foreach ($uris as $uri) {
                 $paths = array_merge($paths, $locator->findResources($uri));
