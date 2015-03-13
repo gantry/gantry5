@@ -13,19 +13,6 @@ ready(function() {
 
     var body = $('body');
 
-    body.delegate('mouseover', 'a.swatch', function(event, element) {
-        element = $(element);
-        event.preventDefault();
-
-        element.getPopover({
-            trigger: 'mouse',
-            placement: 'auto',
-            targetEvents: false,
-            delay: 1,
-            content: element.html()
-        }).show();
-    });
-
     body.delegate('click', '[data-g-styles]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
         var data = JSON.parse(element.data('g-styles')), input, value, type, evt;
