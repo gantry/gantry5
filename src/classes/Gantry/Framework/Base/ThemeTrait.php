@@ -149,6 +149,11 @@ trait ThemeTrait
         return $this->details;
     }
 
+    public function configuration()
+    {
+        return $this->details()['configuration'];
+    }
+
     public function toGrid($text)
     {
         if (!$text) {

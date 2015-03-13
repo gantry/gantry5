@@ -49,6 +49,9 @@ configuration:
     files:
       - hydrogen
       - custom
+    persistent:
+      - hydrogen
+      - custom
 
   dependencies:
     gantry: 5.0.*

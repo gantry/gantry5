@@ -49,6 +49,9 @@ configuration:
     files:
       - hydrogen
       - custom
+    persistent:
+      - hydrogen
+      - custom
 
   block-variations:
     Box Variations:
