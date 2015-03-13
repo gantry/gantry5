@@ -1,7 +1,9 @@
+{% set position = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
+
 {% set html %}
-    {% if (segment.attributes.enabled is null or segment.attributes.enabled) and gantry.config.get('particles.' ~ segment.type ~ '.enabled', true) %}
+    {% if (segment.attributes.enabled is null or segment.attributes.enabled) and (position.enabled is null or position.enabled) %}
         {% include ['particles/position.html.twig',
-        '@particles/position.html.twig'] with { gantry: gantry, site: site, page: gantry.page, position: segment.attributes } only %}
+        '@particles/position.html.twig'] with { gantry: gantry, site: site, page: gantry.page, position: position } only %}
     {% endif %}
 {% endset %}
 
