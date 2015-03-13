@@ -30,14 +30,22 @@ abstract class AbstractConfigurationCollection extends Collection
 
     public function system()
     {
-        $this->items = array_values(array_filter($this->items, function($val) { return substr($val, 0, 1) === '_'; }));
+        foreach ($this->items as $key => $item) {
+            if (substr($key, 0, 1) !== '_') {
+                unset($this->items[$key]);
+            }
+        }
 
         return $this;
     }
 
     public function user()
     {
-        $this->items = array_values(array_filter($this->items, function($val) { return substr($val, 0, 1) !== '_'; }));
+        foreach ($this->items as $key => $item) {
+            if (substr($key, 0, 1) === '_') {
+                unset($this->items[$key]);
+            }
+        }
 
         return $this;
     }

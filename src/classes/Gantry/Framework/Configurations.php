@@ -30,7 +30,7 @@ class Configurations extends AbstractConfigurationCollection
             if (!$info->isDir() || $name[0] == '.') {
                 continue;
             }
-            $files[$name] = $name;
+            $files[$name] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $name)));
         }
 
         if (!isset($files['default'])) {
@@ -38,12 +38,11 @@ class Configurations extends AbstractConfigurationCollection
         }
 
         unset($files['default']);
+        unset($files['menu']);
 
-        $layouts = array_keys($files);
-        sort($layouts);
-        array_unshift($layouts, 'default');
+        asort($files);
 
-        $this->items = $layouts;
+        $this->items = ['default' => 'Default'] + $files;
 
         return $this;
     }
