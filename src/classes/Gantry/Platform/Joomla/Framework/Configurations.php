@@ -26,7 +26,13 @@ class Configurations extends AbstractConfigurationCollection
 
         asort($layouts);
 
-        $this->items = ['default' => 'Default'] + $layouts;
+        $this->items = [
+                'default' => 'Default',
+                '_body_only' => 'Body Only',
+                '_error' => 'Error',
+                '_offline' => 'Offline',
+                '_unsupported' => 'Unsupported',
+            ] + $layouts;
 
         return $this;
     }
