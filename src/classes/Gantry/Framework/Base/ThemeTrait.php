@@ -5,7 +5,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
-use Gantry\Component\Stylesheet\ScssCompiler;
+use Gantry\Component\Stylesheet\CssCompilerInterface;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Services\ErrorServiceProvider;
@@ -47,24 +47,46 @@ trait ThemeTrait
         return $this;
     }
 
+    public function compiler()
+    {
+        static $compiler;
+
+        if (!$compiler) {
+            $compilerClass = (string) $this->details()->get('configuration.css.compiler', '\Gantry\Component\Stylesheet\ScssCompiler');
+
+            if (!class_exists($compilerClass)) {
+                throw new \RuntimeException('CSS compiler used by the theme not found');
+            }
+
+            $gantry = static::gantry();
+
+            /** @var CssCompilerInterface $compiler */
+            $compiler = new $compilerClass();
+            $compiler
+                ->setTarget($this->details()->get('configuration.css.target'))
+                ->setPaths($this->details()->get('configuration.css.paths'))
+                ->setFiles($this->details()->get('configuration.css.files'))
+                ->setConfiguration($gantry['configuration']);
+        }
+
+        return $compiler;
+    }
+
     public function css($name)
     {
-        $gantry = static::gantry();
+        $gantry = self::gantry();
+
+        $compiler = $this->compiler();
+
+        $url = $compiler->getCssUrl($name);
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
-
-        $layout = $gantry['configuration'];
-
-        $out = $name . ($layout !== 'default' ? '_'. $layout : '');
-
-        $url = "gantry-theme://css-compiled/{$out}.css";
-        $path = $locator->findResource($url, false, true);
+        $path = $locator->findResource($url, true, true);
 
         if (!is_file($path)) {
-            $compiler = new ScssCompiler();
             $compiler->setVariables($gantry['config']->flatten('styles', '-'));
-            $compiler->compileFile($name, GANTRY5_ROOT . '/' . $path);
+            $compiler->compileFile($name);
         }
 
         return $url;

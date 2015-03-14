@@ -53,13 +53,10 @@ class LessCompiler extends CssCompiler
         $locator = $gantry['locator'];
 
         if (!$out) {
-            $out = $locator->findResource("gantry-theme://css-compiled/{$in}.css", true, true);
+            $out = $locator->findResource($this->getCssUrl($in), true, true);
         }
 
-        $paths = array_merge(
-            $locator->findResources('gantry-theme://less'),
-            $locator->findResources('gantry-engine://less')
-        );
+        $paths = $locator->mergeResources($this->paths);
 
         // Set the lookup paths.
         $this->compiler->setBasePath($out);
