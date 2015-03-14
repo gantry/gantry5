@@ -163,10 +163,11 @@ class Config implements \ArrayAccess, \Iterator, ExportInterface
     {
         $list = [];
         foreach ($element as $key => $value) {
+            $new = $name ? $name : $prefix;
             if (is_array($separator)) {
-                $new = ($name ? $name : $prefix) . $separator[0] . $key . $separator[1];
+                $new .= $separator[0] . $key . $separator[1];
             } else {
-                $new = ($name ? $name : $prefix) . $separator . $key;
+                $new .= ($new ? $separator : '') . $key;
             }
             if (!is_array($value) || empty($value)) {
                 $list[$new] = $value;
