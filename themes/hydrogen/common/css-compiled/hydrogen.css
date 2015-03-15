@@ -64,9 +64,6 @@ bold, strong {
 .button {
   font-weight: 500; }
 
-.feature-icons {
-  font-size: 3rem; }
-
 blockquote {
   border-left: 10px solid #F0F2F4; }
   blockquote p {
@@ -150,19 +147,7 @@ hr {
   background: #306f61; }
 
 .g-nav-overlay {
-  background: fadeout(#000000, 60%);
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  opacity: 0;
-  -webkit-transition: opacity 0.3s ease-out;
-  -moz-transition: opacity 0.3s ease-out;
-  transition: opacity 0.3s ease-out; }
-  .g-nav-overlay-active .g-nav-overlay {
-    position: fixed;
-    opacity: 1; }
+  background: fadeout(#000000, 60%); }
 
 @media only all and (max-width: 47.938rem) {
   .g-main-nav .g-toplevel {
@@ -308,6 +293,8 @@ input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:fo
     font-size: 0.8rem;
     display: block;
     margin-top: -1.3rem; }
+  .sample-content .sample-icons {
+    font-size: 3rem; }
 
 .showcase-sample {
   text-align: center; }
@@ -525,9 +512,6 @@ input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:fo
         -ms-transform: translateX(0);
         -o-transform: translateX(0);
         transform: translateX(0); }
-  .g-mobile-nav-active .g-nav-overlay {
-    opacity: 1;
-    position: fixed; }
   .g-mobile-nav-active .g-mobile-nav-toggle:before {
     content: "\f00d"; } }
 

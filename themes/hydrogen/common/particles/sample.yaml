@@ -10,6 +10,12 @@ form:
       description: Globally enable the particle.
       default: true
 
+    image:
+      type: input.imagepicker
+      label: Image
+      description: Select the main image.
+      default: gantry-media://images/logo-large.png
+
     headline:
       type: input.text
       label: Headline
@@ -21,6 +27,16 @@ form:
       label: Description
       description: Customize the description.
       default: Lorem ipsum dolor sit amet consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.
+
+    link:
+      type: input.text
+      label: Link
+      description: Specify the link address.
+
+    linktext:
+      type: input.text
+      label: Link Text
+      description: Customize the link text.
 
     samples:
       type: collection.list

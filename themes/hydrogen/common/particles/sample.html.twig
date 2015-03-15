@@ -5,8 +5,10 @@
 		<div class="g-grid">
 			<div class="g-block">
 				<div class="g-content">
-					<h2>{{ particle.headline|raw }}</h2>
+					{% if particle.image %}<img src="{{ url(particle.image) }}" class="logo-large" alt="{{ particle.headline|e }}" />{% endif %}
+					<h1>{{ particle.headline|raw }}</h1>
 					{{ particle.description|raw }}
+					{% if particle.linktext %}<p><a href="{{ particle.link|e }}" class="button">{{ particle.linktext|e }}</a></p>{% endif %}
 				</div>
 			</div>
 		</div>

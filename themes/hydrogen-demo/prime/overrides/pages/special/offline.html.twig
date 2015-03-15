@@ -15,14 +15,14 @@
     <img src="{{ offline_image }}" alt="{{ site.name }}" />
     {% endif %}
 
-    {% if config.features.feedburner.enabled and config.features.feedburner.uri %}
+    {% if gantry.config.features.feedburner.enabled and gantry.config.features.feedburner.uri %}
     <section id="g-subscription-form">
         <p class="g-subscription-title">
             {{ offline_subscription_title }}
         </p>
-        <form class="g-offline-form" action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri={{ config.features.feedburner.uri }}', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+        <form class="g-offline-form" action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri={{ gantry.config.features.feedburner.uri }}', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
             <input type="text" placeholder="{{ _._('RT_EMAIL') }}" class="inputbox" name="email">
-            <input type="hidden" value="{{ config.features.feedburner.uri }}" name="uri"/>
+            <input type="hidden" value="{{ gantry.config.features.feedburner.uri }}" name="uri"/>
             <input type="hidden" name="loc" value="en_US"/>
             <input type="submit" name="Submit" class="button" value="{{ subscribe }}" />
         </form>

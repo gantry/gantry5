@@ -19,7 +19,7 @@
                             <li class="g5-lm-particle-{{ type | e }}"
                                 data-lm-blocktype="{{ type | e }}"
                                 data-lm-subtype="{{ item_key | e }}"
-                                {% if not config.get('particles.' ~ item_key ~ '.enabled', true) %}data-lm-disabled data-lm-nodrag title="This particle has been disabled from the Settings Panel and it cannot be added into the Layout"{% endif %}>
+                                {% if not gantry.config.get('particles.' ~ item_key ~ '.enabled', true) %}data-lm-disabled data-lm-nodrag title="This particle has been disabled from the Settings Panel and it cannot be added into the Layout"{% endif %}>
                                 {{ item | e }}
                             </li>
                         {%  endfor %}

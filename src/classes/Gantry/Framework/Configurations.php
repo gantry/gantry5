@@ -16,17 +16,21 @@ class Configurations extends AbstractConfigurationCollection
     {
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
-        /** @var UniformResourceIterator $iterator */
 
+        /** @var UniformResourceIterator $iterator */
         $iterator = $locator->getIterator(
             $path,
-            UniformResourceIterator::CURRENT_AS_PATHNAME | UniformResourceIterator::KEY_AS_FILENAME |
+            UniformResourceIterator::CURRENT_AS_SELF | UniformResourceIterator::KEY_AS_FILENAME |
             UniformResourceIterator::UNIX_PATHS | UniformResourceIterator::SKIP_DOTS
         );
 
         $files = [];
-        foreach ($iterator as $name => $path) {
-            $files[$name] = $name;
+        /** @var UniformResourceIterator $info */
+        foreach ($iterator as $name => $info) {
+            if (!$info->isDir() || $name[0] == '.') {
+                continue;
+            }
+            $files[$name] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $name)));
         }
 
         if (!isset($files['default'])) {
@@ -34,12 +38,11 @@ class Configurations extends AbstractConfigurationCollection
         }
 
         unset($files['default']);
+        unset($files['menu']);
 
-        $layouts = array_keys($files);
-        sort($layouts);
-        array_unshift($layouts, 'default');
+        asort($files);
 
-        $this->items = $layouts;
+        $this->items = ['default' => 'Default'] + $files;
 
         return $this;
     }

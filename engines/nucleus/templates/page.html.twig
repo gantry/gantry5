@@ -1,3 +1,5 @@
+{% do gantry.theme.setLayout() %}
+
 {%- set content %}
     {% block content %}
     {% endblock %}
@@ -36,7 +38,7 @@
         <div id="g-page-surround">
             {{ page_top }}
             {{ page_layout }}
-            {{ page_bottom }}            
+            {{ page_bottom }}
         </div>
     </body>
     {% endblock %}

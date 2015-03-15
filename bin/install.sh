@@ -16,8 +16,8 @@ if [ -f $GIT_TARGET/configuration.php ]; then
         'engines'
         'themes/hydrogen/joomla'
         'themes/hydrogen/common'
-        'themes/gantry/joomla'
-        'themes/gantry/common'
+        'themes/hydrogen-demo/joomla'
+        'themes/hydrogen-demo/common'
     )
     targets=(
         'administrator/components/com_gantryadmin'
@@ -29,8 +29,8 @@ if [ -f $GIT_TARGET/configuration.php ]; then
         'media/gantry/engines'
         'templates/hydrogen'
         'templates/hydrogen/common'
-        'templates/gantry'
-        'templates/gantry/common'
+        'templates/hydrogen-demo'
+        'templates/hydrogen-demo/common'
         )
 elif [ -f $GIT_TARGET/wp-config.php ]; then
     PLATFORM=WordPress
@@ -39,6 +39,10 @@ elif [ -f $GIT_TARGET/wp-config.php ]; then
         'platforms/common'
         'src'
         'vendor'
+        'themes/hydrogen/wordpress'
+        'themes/hydrogen/common'
+        'themes/hydrogen-demo/wordpress'
+        'themes/hydrogen-demo/common'
         'themes/gantry/wordpress'
         'themes/gantry/common'
         'src'
@@ -49,10 +53,14 @@ elif [ -f $GIT_TARGET/wp-config.php ]; then
         'wp-content/plugins/gantryadmin/common'
         'wp-content/plugins/gantryadmin/src'
         'wp-content/plugins/gantryadmin/vendor'
-        'wp-content/themes/gantry'
-        'wp-content/themes/gantry/common'
-        'wp-content/themes/gantry/src'
-        'wp-content/themes/gantry/vendor'
+        'wp-content/themes/hydrogen'
+        'wp-content/themes/hydrogen/common'
+        'wp-content/themes/hydrogen/src'
+        'wp-content/themes/hydrogen/vendor'
+        'wp-content/themes/hydrogen-demo'
+        'wp-content/themes/hydrogen-demo/common'
+        'wp-content/themes/hydrogen-demo/src'
+        'wp-content/themes/hydrogen-demo/vendor'
         )
 elif [ -f $GIT_TARGET/system/config/system.yaml ]; then
     PLATFORM=Grav
@@ -71,10 +79,14 @@ elif [ -f $GIT_TARGET/system/config/system.yaml ]; then
         'user/plugins/gantryadmin/common'
         'user/plugins/gantryadmin/src'
         'user/plugins/gantryadmin/vendor'
-        'user/themes/gantry'
-        'user/themes/gantry/common'
-        'user/themes/gantry/src'
-        'user/themes/gantry/vendor'
+        'user/themes/hydrogen'
+        'user/themes/hydrogen/common'
+        'user/themes/hydrogen/src'
+        'user/themes/hydrogen/vendor'
+        'user/themes/hydrogen-demo'
+        'user/themes/hydrogen-demo/common'
+        'user/themes/hydrogen-demo/src'
+        'user/themes/hydrogen-demo/vendor'
         )
 elif [ -f $GIT_TARGET/mage ]; then
     PLATFORM=Magento
@@ -86,12 +98,17 @@ elif [ -f $GIT_TARGET/mage ]; then
         'platforms/magento/design/adminhtml/default/default/template/gantry'
         'platforms/magento/etc/modules/Gantry_Adminblock.xml'
 
-        'themes/gantry/magento/design'
-        'themes/gantry/common'
+        'themes/hydrogen/magento/design'
+        'themes/hydrogen/common'
+        'themes/hydrogen-demo/magento/design'
+        'themes/hydrogen-demo/common'
+
         'src'
         'vendor'
-        'themes/gantry/magento/skin'
-        'themes/gantry/common'
+        'themes/hydrogen/magento/skin'
+        'themes/hydrogen/common'
+        'themes/hydrogen-demo/magento/skin'
+        'themes/hydrogen-demo/common'
         )
     targets=(
         'app/code/local/Gantry'
@@ -116,8 +133,10 @@ elif [ -f $GIT_TARGET/viewtopic.php ]; then
         'platforms/common'
         'src'
         'vendor'
-        'themes/gantry/phpbb'
-        'themes/gantry/common'
+        'themes/hydrogen/phpbb'
+        'themes/hydrogen/common'
+        'themes/hydrogen-demo/phpbb'
+        'themes/hydrogen-demo/common'
         'src'
         'vendor'
         )
@@ -126,10 +145,14 @@ elif [ -f $GIT_TARGET/viewtopic.php ]; then
         'ext/rockettheme/gantry/common'
         'ext/rockettheme/gantry/src'
         'ext/rockettheme/gantry/vendor'
-        'styles/gantry'
-        'styles/gantry/common'
-        'styles/gantry/src'
-        'styles/gantry/vendor'
+        'styles/hydrogen'
+        'styles/hydrogen/common'
+        'styles/hydrogen/src'
+        'styles/hydrogen/vendor'
+        'styles/hydrogen-demo'
+        'styles/hydrogen-demo/common'
+        'styles/hydrogen-demo/src'
+        'styles/hydrogen-demo/vendor'
         )
 elif [ -f $GIT_TARGET/.prime ]; then
     PLATFORM=prime
@@ -148,10 +171,10 @@ elif [ -f $GIT_TARGET/.prime ]; then
         'vendor'
         'platforms/prime/.htaccess'
         'platforms/prime/index.php'
-        'themes/gantry/prime'
-        'themes/gantry/common'
         'themes/hydrogen/prime'
         'themes/hydrogen/common'
+        'themes/hydrogen-demo/prime'
+        'themes/hydrogen-demo/common'
         )
     targets=(
         'admin'
@@ -168,10 +191,10 @@ elif [ -f $GIT_TARGET/.prime ]; then
         'vendor'
         '.htaccess'
         'index.php'
-        'themes/gantry'
-        'themes/gantry/common'
         'themes/hydrogen'
         'themes/hydrogen/common'
+        'themes/hydrogen-demo'
+        'themes/hydrogen-demo/common'
         )
     rm -rf "$GIT_TARGET/cache"
     mkdir "$GIT_TARGET/cache"

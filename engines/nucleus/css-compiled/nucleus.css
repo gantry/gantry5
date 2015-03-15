@@ -1023,6 +1023,21 @@ th {
   content: "\f053";
   opacity: 0.5; }
 
+.g-nav-overlay {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease-out;
+  -moz-transition: opacity 0.3s ease-out;
+  transition: opacity 0.3s ease-out; }
+  .g-nav-overlay-active .g-nav-overlay, .g-mobile-nav-active .g-nav-overlay {
+    position: fixed;
+    opacity: 1;
+    height: 100vh; }
+
 body {
   font-size: 1rem;
   line-height: 1.5; }

@@ -5,7 +5,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
-use Gantry\Component\Stylesheet\ScssCompiler;
+use Gantry\Component\Stylesheet\CssCompilerInterface;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Services\ErrorServiceProvider;
@@ -30,31 +30,66 @@ trait ThemeTrait
         $gantry->register(new ErrorServiceProvider);
     }
 
-    public function setLayout($name)
+    public function setLayout($name = null)
     {
-        $this->layout = $name;
+        $gantry = static::gantry();
+
+        // Set default name only if configuration has not been set before.
+        if ($name === null && !isset($gantry['configuration'])) {
+            $name = 'default';
+        }
+
+        // Set configuration if given.
+        if ($name) {
+            $gantry['configuration'] = $name;
+        }
 
         return $this;
     }
 
+    public function compiler()
+    {
+        static $compiler;
+
+        if (!$compiler) {
+            $compilerClass = (string) $this->details()->get('configuration.css.compiler', '\Gantry\Component\Stylesheet\ScssCompiler');
+
+            if (!class_exists($compilerClass)) {
+                throw new \RuntimeException('CSS compiler used by the theme not found');
+            }
+
+            $gantry = static::gantry();
+
+            /** @var CssCompilerInterface $compiler */
+            $compiler = new $compilerClass();
+            $compiler
+                ->setTarget($this->details()->get('configuration.css.target'))
+                ->setPaths($this->details()->get('configuration.css.paths'))
+                ->setFiles($this->details()->get('configuration.css.files'))
+                ->setConfiguration($gantry['configuration']);
+        }
+
+        return $compiler;
+    }
+
     public function css($name)
     {
-        $gantry = static::gantry();
+        $gantry = self::gantry();
+
+        $compiler = $this->compiler();
+
+        $url = $compiler->getCssUrl($name);
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
-
-        $out = $name . ($this->layout ? '_'. $this->layout : '');
-
-        $path = $locator->findResource("gantry-theme://css-compiled/{$out}.css", false, true);
+        $path = $locator->findResource($url, true, true);
 
         if (!is_file($path)) {
-            $compiler = new ScssCompiler();
             $compiler->setVariables($gantry['config']->flatten('styles', '-'));
-            $compiler->compileFile($name, GANTRY5_ROOT . '/' . $path);
+            $compiler->compileFile($name);
         }
 
-        return $path;
+        return $url;
     }
 
     public function presets()
@@ -78,7 +113,11 @@ trait ThemeTrait
     public function loadLayout($name = null)
     {
         if (!$name) {
-            $name = $this->layout ?: 'default';
+            try {
+                $name = static::gantry()['configuration'];
+            } catch (\Exception $e) {
+                throw new \LogicException('Gantry: Configuration has not been defined yet', 500);
+            }
         }
 
         $layout = Layout::instance($name);
@@ -93,16 +132,17 @@ trait ThemeTrait
     public function add_to_context(array $context)
     {
         $gantry = static::gantry();
+
         $context['gantry'] = $gantry;
         $context['site'] = $gantry['site'];
-        $context['config'] = $gantry['config'];
         $context['theme'] = $this;
 
         return $context;
     }
 
-    public function segments() {
-        return $this->loadLayout($this->layout);
+    public function segments()
+    {
+        return $this->loadLayout();
     }
 
     public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
@@ -130,6 +170,11 @@ trait ThemeTrait
             $this->details = new ThemeDetails($this->name);
         }
         return $this->details;
+    }
+
+    public function configuration()
+    {
+        return $this->details()['configuration'];
     }
 
     public function toGrid($text)

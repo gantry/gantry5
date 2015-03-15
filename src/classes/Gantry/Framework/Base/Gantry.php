@@ -27,6 +27,25 @@ class Gantry extends Container
         return self::$instance;
     }
 
+    /**
+     * Lock the variable against modification and return the value.
+     *
+     * @param string $id
+     * @return mixed
+     */
+    public function lock($id)
+    {
+        $value = $this[$id];
+
+        // Create a dummy service.
+        $this[$id] = function () use ($value) {
+            return $value;
+        };
+
+        // Lock the service and return value.
+        return $this[$id];
+    }
+
     public function route($path)
     {
         $routes = $this->offsetGet('routes');

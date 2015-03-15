@@ -1,26 +1,395 @@
-header:
-  container:
-    - particle-menu
-
-showcase:
-  container:
-    - particle-showcase
-
-feature:
-  container:
-    - particle-sample
-
-subfeature:
-  container:
-    - particle-sample
-
-main:
-  container:
-    - position-breadcrumbs
-    - position-global_messages
-    - pagecontent
-
-footer:
-  container:
-  - position-footer
-  - [particle-copyright 40, spacer 30, particle-branding 30]
+children:
+  -
+    id: fe0bd642-d6b5-5585-6714-ffbfaabd8092
+    type: section
+    subtype: false
+    title: Header
+    attributes: {  }
+    children:
+      -
+        id: a47c2d2d-50fb-3381-122d-6a2caec65d51
+        type: container
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children:
+          -
+            id: f9eaf954-e227-3655-9d9b-66ad1dd59f82
+            type: grid
+            subtype: false
+            title: Untitled
+            attributes: {  }
+            children:
+              -
+                id: 11028638-56df-efea-1e1c-ef19b4b8464a
+                type: block
+                subtype: false
+                title: Untitled
+                attributes:
+                  size: 100
+                children:
+                  -
+                    id: b681eafb-e4a0-e4a4-312b-9a650fb7421a
+                    type: particle
+                    subtype: menu
+                    title: Menu
+                    attributes:
+                      enabled: 1
+                    children: {  }
+  -
+    id: 9b92a939-3655-2198-622e-1cbe13f5d256
+    type: section
+    subtype: false
+    title: Showcase
+    attributes: {  }
+    children:
+      -
+        id: 8f536176-2b78-469e-5e61-626ae1f9e61c
+        type: container
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children:
+          -
+            id: 53c4fb67-f070-4526-94ed-813faf0cfa56
+            type: grid
+            subtype: false
+            title: Untitled
+            attributes: {  }
+            children:
+              -
+                id: 92561833-f1b0-4152-9875-c633fd36e0c4
+                type: block
+                subtype: false
+                title: Untitled
+                attributes:
+                  size: 100
+                children:
+                  -
+                    id: a5192304-411d-4b74-9037-fbff3d37a964
+                    type: particle
+                    subtype: sample
+                    title: "\n                                Sample Content\n                            "
+                    attributes:
+                      enabled: 1
+                      image: 'gantry-media://images/logo-large.png'
+                      headline: 'Welcome to Gantry 5'
+                      description: '<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula. Praesent et nulla eu augue tempus sagittis. Mauris faucibus nibh et nibh cursus in vestibulum sapien egestas. Curabitur ut lectus tortor. Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>'
+                      link: '#'
+                      linktext: 'Read More'
+                    children: {  }
+  -
+    id: 6f818e8f-6785-89b4-df07-0273b689493d
+    type: section
+    subtype: false
+    title: Feature
+    attributes:
+      class: flush
+      extra: ''
+      enabled: 0
+    children:
+      -
+        id: 6b2fd9f6-9238-5837-1b5b-bff919f3114f
+        type: container
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children:
+          -
+            id: ab711916-b333-b861-141c-593f820eb179
+            type: grid
+            subtype: false
+            title: Untitled
+            attributes: {  }
+            children:
+              -
+                id: f7c89c62-3250-4ef0-96c4-ddec3a2205cf
+                type: block
+                subtype: false
+                title: Untitled
+                attributes:
+                  size: 100
+                children:
+                  -
+                    id: fa450f5c-6db0-4146-8a1c-e052d92d2b4d
+                    type: particle
+                    subtype: sample
+                    title: "\n                                Sample Content\n                            "
+                    attributes:
+                      enabled: 1
+                      headline: Features
+                      description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.'
+                      samples:
+                        -
+                          icon: 'fa fa-code'
+                          subtitle: ''
+                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
+                          class: ''
+                          title: 'Feature One'
+                        -
+                          icon: 'fa fa-bar-chart'
+                          subtitle: ''
+                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
+                          class: ''
+                          title: 'Feature Two'
+                        -
+                          icon: 'fa fa-sliders'
+                          subtitle: ''
+                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
+                          class: ''
+                          title: 'Feature Three'
+                    children: {  }
+  -
+    id: 9fe65519-28ea-80d5-723c-1ba2a45646f6
+    type: section
+    subtype: false
+    title: Subfeature
+    attributes:
+      class: flush
+      extra: ''
+      enabled: 0
+    children:
+      -
+        id: 05dffbab-4476-564a-ab02-093f9773b6e4
+        type: container
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children:
+          -
+            id: e46eac43-3e7a-67f0-d83a-818e62df6134
+            type: grid
+            subtype: false
+            title: Untitled
+            attributes: {  }
+            children:
+              -
+                id: a63244d5-fac2-4cc5-9476-eede2757f334
+                type: block
+                subtype: false
+                title: Untitled
+                attributes:
+                  size: 100
+                children:
+                  -
+                    id: 6670d9d8-3980-4f04-93fa-448de3d34cea
+                    type: particle
+                    subtype: sample
+                    title: "\n                                Sample Content\n                            "
+                    attributes:
+                      enabled: 1
+                      headline: 'Multiple platforms supported with unlimited possibilities'
+                      description: ''
+                      samples:
+                        -
+                          icon: 'fa fa-joomla'
+                          subtitle: '<span class="subtitle">Now Available</span>'
+                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
+                          class: 'box1 shadow'
+                          title: Joomla
+                        -
+                          icon: 'fa fa-clock-o'
+                          subtitle: '<span class="subtitle">Coming Soon</span>'
+                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
+                          class: disabled
+                          title: WordPress
+                        -
+                          icon: 'fa fa-clock-o'
+                          subtitle: '<span class="subtitle">Coming Soon</span>'
+                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
+                          class: disabled
+                          title: Grav
+                        -
+                          icon: 'fa fa-clock-o'
+                          subtitle: '<span class="subtitle">Coming Soon</span>'
+                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
+                          class: disabled
+                          title: Magento
+                        -
+                          icon: 'fa fa-clock-o'
+                          subtitle: '<span class="subtitle">Coming Soon</span>'
+                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
+                          class: disabled
+                          title: phpBB
+                    children: {  }
+  -
+    id: 059c45bc-e983-3af9-e001-151725fc3978
+    type: section
+    subtype: false
+    title: Main
+    attributes: {  }
+    children:
+      -
+        id: e244600b-2684-56a0-8111-03271f4cb09c
+        type: container
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children:
+          -
+            id: 194222ee-dc96-f8cf-e925-0a947adedb44
+            type: grid
+            subtype: false
+            title: Untitled
+            attributes: {  }
+            children:
+              -
+                id: 9f99b530-2b53-fccc-2f6c-67741a610588
+                type: block
+                subtype: false
+                title: Untitled
+                attributes:
+                  size: 100
+                children:
+                  -
+                    id: a60433f1-5870-43be-3dc6-a992fae372b8
+                    type: position
+                    subtype: false
+                    title: Breadcrumbs
+                    attributes:
+                      enabled: 1
+                      key: breadcrumbs
+                      title: Breadcrumbs
+                    children: {  }
+          -
+            id: 4163e4b5-b8e6-0b0f-8c2b-a1f2ab11bfc8
+            type: grid
+            subtype: false
+            title: Untitled
+            attributes: {  }
+            children:
+              -
+                id: cf7cc06b-20d5-63e4-92cc-91af6d7da2e8
+                type: block
+                subtype: false
+                title: Untitled
+                attributes:
+                  size: 100
+                children:
+                  -
+                    id: 25209651-b804-8bd4-6bca-d6daa7ed3d61
+                    type: position
+                    subtype: false
+                    title: Global_messages
+                    attributes:
+                      enabled: 1
+                      key: global_messages
+                      title: Global_messages
+                    children: {  }
+          -
+            id: 083233a0-51a5-f35d-c1a6-2caff7ae29ab
+            type: grid
+            subtype: false
+            title: Untitled
+            attributes: {  }
+            children:
+              -
+                id: fc49e770-1506-a62a-b109-d9dc4f882f43
+                type: block
+                subtype: false
+                title: Untitled
+                attributes:
+                  size: 100
+                children:
+                  -
+                    id: a030a082-dfa2-33c9-e84d-c2cb59f5abee
+                    type: pagecontent
+                    subtype: false
+                    title: Pagecontent
+                    attributes:
+                      enabled: 1
+                    children: {  }
+  -
+    id: 16ffefc7-f83b-6f81-9089-ed94e8e8153a
+    type: section
+    subtype: false
+    title: Footer
+    attributes: {  }
+    children:
+      -
+        id: b95dab9c-bb0c-e644-d840-700ddfe4eaf6
+        type: container
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children:
+          -
+            id: e98f3265-dd40-d8f5-de65-0e1eb3f00c14
+            type: grid
+            subtype: false
+            title: Untitled
+            attributes: {  }
+            children:
+              -
+                id: cc9c774d-351b-c1b3-e5b6-516aa9ccb200
+                type: block
+                subtype: false
+                title: Untitled
+                attributes:
+                  size: 100
+                children:
+                  -
+                    id: 9b37c280-8f3b-a5cc-0980-30205afb5550
+                    type: position
+                    subtype: false
+                    title: Footer
+                    attributes:
+                      enabled: 1
+                      key: footer
+                      title: Footer
+                    children: {  }
+          -
+            id: da46d831-548b-ff4c-cdcd-0904116da861
+            type: grid
+            subtype: false
+            title: Untitled
+            attributes: {  }
+            children:
+              -
+                id: 33986060-9261-8944-1d44-d0e62eb69e8a
+                type: block
+                subtype: false
+                title: Untitled
+                attributes:
+                  size: 40
+                children:
+                  -
+                    id: 805b1e67-0e8a-2ab0-9c25-64e25649ab49
+                    type: particle
+                    subtype: copyright
+                    title: Copyright
+                    attributes:
+                      enabled: 1
+                    children: {  }
+              -
+                id: 941c1f5b-eb6c-3f46-d570-e3c770faa708
+                type: block
+                subtype: false
+                title: Untitled
+                attributes:
+                  size: 30
+                children:
+                  -
+                    id: cac4ce38-840a-9e48-b284-ae615b7f2538
+                    type: spacer
+                    subtype: false
+                    title: Spacer
+                    attributes:
+                      enabled: 1
+                    children: {  }
+              -
+                id: d8f5c2d6-ce18-2f98-3f4b-5725ccb1ea88
+                type: block
+                subtype: false
+                title: Untitled
+                attributes:
+                  size: 30
+                children:
+                  -
+                    id: 143ca9ea-46a6-7f7d-b26e-468394ac4975
+                    type: particle
+                    subtype: branding
+                    title: Branding
+                    attributes:
+                      enabled: 1
+                    children: {  }

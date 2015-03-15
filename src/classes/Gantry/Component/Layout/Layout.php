@@ -8,6 +8,7 @@ use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
 use RocketTheme\Toolbox\File\JsonFile;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -30,22 +31,29 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     {
         $gantry = Gantry::instance();
 
-        $options = [
-            'compare' => 'Filename',
-            'pattern' => '|\.yaml|',
-            'filters' => ['key' => '|\.yaml|'],
-            'key' => 'SubPathname',
-            'value' => 'Pathname'
-        ];
-
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $files = Folder::all($locator->findResource('gantry-theme://layouts'), $options);
-        ksort($files);
+        /** @var UniformResourceIterator $iterator */
+        $iterator = $locator->getIterator(
+            'gantry-theme://layouts',
+            UniformResourceIterator::CURRENT_AS_SELF | UniformResourceIterator::UNIX_PATHS | UniformResourceIterator::SKIP_DOTS
+        );
+
+        $files = [];
+        /** @var UniformResourceIterator $info */
+        foreach ($iterator as $info) {
+            $name = $info->getBasename('.yaml');
+            if (!$info->isFile() || $info->getExtension() != 'yaml' || $name[0] == '.') {
+                continue;
+            }
+            $files[] = $name;
+        }
+
+        sort($files);
 
         $results = ['user' => [], 'system' => []];
-        foreach ($files as $preset => $filename) {
+        foreach ($files as $preset) {
             $scope = $preset && $preset[0] !== '_' ? 'user' : 'system';
             $results[$scope][$preset] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $preset)));
         }

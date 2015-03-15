@@ -53,13 +53,10 @@ class ScssCompiler extends CssCompiler
         $locator = $gantry['locator'];
 
         if (!$out) {
-            $out = $locator->findResource("gantry-theme://css-compiled/{$in}.css", true, true);
+            $out = $locator->findResource($this->getCssUrl($in), true, true);
         }
 
-        $paths = array_merge(
-            $locator->findResources('gantry-theme://scss'),
-            $locator->findResources('gantry-engine://scss')
-        );
+        $paths = $locator->mergeResources($this->paths);
 
         // Set the lookup paths.
         $this->compiler->setBasePath($out);
@@ -68,7 +65,11 @@ class ScssCompiler extends CssCompiler
 
         // Run the compiler.
         $this->compiler->setVariables($this->getVariables());
-        $css = $this->compiler->compile('@import "' . $in . '.scss"');
+        $scss = '@import "' . $in . '.scss"';
+        $css = $this->compiler->compile($scss);
+        if (strpos($css, $scss) === 0) {
+            $css = '/* ' . $scss . ' */';
+        }
 
         $file = File::instance($out);
 
