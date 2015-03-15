@@ -9,19 +9,34 @@ form:
       type: input.text
       label: Large Desktop
       default: "75rem"
+      append:
+        type: "text"
+        text: "rem"
     desktop-container:
       type: input.text
       label: Desktop
       default: "60rem"
+      append:
+        type: "text"
+        text: "rem"
     tablet-container:
       type: input.text
       label: Tablet
       default: "48rem"
+      append:
+        type: "text"
+        text: "rem"
     large-mobile-container:
       type: input.text
       label: Large Mobile
       default: "30rem"
+      append:
+        type: "text"
+        text: "rem"
     small-mobile-container:
       type: input.text
       label: Small Mobile
       default: "100%"
+      append:
+        type: "text"
+        text: "%"

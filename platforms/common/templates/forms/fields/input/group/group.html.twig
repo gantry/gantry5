@@ -1,20 +1,24 @@
-<div class="input-group">
-    {% if field.prepend %}
-        {{ group(field.prepend) }}
-    {% endif %}
-    {% block input %}
-    {% endblock %}
-    {% if field.append %}
-        {{ group(field.append) }}
-    {% endif %}
-</div>
+{% extends default ? "partials/field.html.twig" : "forms/field.html.twig" %}
 
-{% macro group(item) %}
+{% block group %}
+    <div class="input-group">
+        {% if field.prepend %}
+            {{ _self.pend(field.prepend) }}
+        {% endif %}
+        {% block input %}
+        {% endblock %}
+        {% if field.append %}
+            {{ _self.pend(field.append) }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% macro pend(item) %}
     {% if item.type == "text" %}
         {% if item.options %}
             {% include 'forms/fields/select' with {'field.options': item.options} %}
         {% else %}
-                <span class="input-group-addon">{{ item }}</span>
+            <span class="input-group-addon">{{ item.text }}</span>
         {% endif %}
     {% elseif item.type == "button" %}
         {% if item.options %}
@@ -24,4 +28,5 @@
             </span>
         {% endif %}
     {% elseif item.type == "button" %}
+    {% endif %}
 {% endmacro %}

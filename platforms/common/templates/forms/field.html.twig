@@ -34,6 +34,7 @@
                 {% endblock %}
             </span>
             <div class="settings-param-field">
+                {% block group %}
                     {% block input %}
                         <input
                                 {# required attribute structures #}
@@ -48,6 +49,7 @@
                                 {% endblock %}
                                 />
                     {% endblock %}
+                {% endblock %}
             </div>
         {% endblock %}
     </div>
