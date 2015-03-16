@@ -9,30 +9,28 @@
 
         <h2 class="page-title">Assignments</h2>
 
-        {% for type in assignments %}
-        <div id="settings" class="cards-wrapper g-grid">
-            <div class="card settings-block">
-                <h4>{{ type.label|e }}</h4>
+        <div id="settings" class="cards-wrapper">
+            {% for type in assignments %}
+                <div class="card settings-block">
+                    <h4>{{ type.label|e }}</h4>
 
-                {% for link in type.items %}
-                <label class="settings-param">
-                    <div class="settings-param-field">
-                    {% include 'forms/fields/enable/enable.html.twig' with {
-                    'default': true,
-                    'name': link.name,
-                    'field': link.field,
-                    'value': link.value,
-                    'disabled': link.disabled
-                    } %}
-                    </div>
-                    <span class="settings-param-title">
-                        {{ link.label|e }}
-                    </span>
-                </label>
-                {% endfor %}
-            </div>
-        </div>
-        {% endfor %}
+                    {% for link in type.items %}
+                    <label class="settings-param">
+                        {% include 'forms/fields/enable/enable.html.twig' with {
+                        'default': true,
+                        'name': link.name,
+                        'field': link.field,
+                        'value': link.value,
+                        'disabled': link.disabled
+                        } %}
+                        <span class="settings-param-title">
+                            {{ link.label|e }}
+                        </span>
+                    </label>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+         </div>
     </form>
 </div>
 {% endblock %}

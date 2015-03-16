@@ -87,4 +87,9 @@ body.com_gantryadmin #g5-container .tooltip {
   text-shadow: none;
   line-height: inherit; }
 
+#g5-container #assignments .card {
+  float: left; }
+#g5-container #assignments .enabler {
+  float: right; }
+
 /*# sourceMappingURL=joomla-admin.css.map */
