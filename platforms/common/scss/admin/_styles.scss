@@ -37,8 +37,12 @@
     	background: rgba(0,0,0,0.4);
     	padding: 0.5rem;
     	border-radius: 0 0 0 $core-border-radius;
+    	@include transition(background 0.2s);
     	i {
     		font-size: $core-font-size + 0.2;
+    	}
+    	&:hover {
+    		background: rgba(0,0,0,0.7);
     	}
     }
 }
