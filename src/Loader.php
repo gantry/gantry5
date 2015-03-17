@@ -58,25 +58,27 @@ class Loader
         /** @var \Composer\Autoload\ClassLoader $loader */
         $loader = require_once $base . '/vendor/autoload.php';
 
+        $dev = is_dir($base . '/platforms');
+
         // Register platform specific overrides.
         if (defined('JVERSION')) {
             define('GANTRY5_ROOT', JPATH_ROOT);
-            $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/Joomla', true);
+            $dev ? $loader->addPsr4('Gantry\\', $base . '/platforms/joomla', true) : null;
         } elseif (defined('WP_DEBUG')) {
             define('GANTRY5_ROOT', ABSPATH);
-            $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/WordPress', true);
+            $dev ? $loader->addPsr4('Gantry\\', $base . '/platforms/wordpress', true) : null;
         } elseif (defined('GRAV_VERSION')) {
             define('GANTRY5_ROOT', rtrim(ROOT_DIR, '/'));
-            $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/Grav', true);
+            $dev ? $loader->addPsr4('Gantry\\', $base . '/platforms/grav', true) : null;
         } elseif (defined('MAGENTO_ROOT')) {
             define('GANTRY5_ROOT', MAGENTO_ROOT);
-            $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/Magento', true);
+            $dev ? $loader->addPsr4('Gantry\\', $base . '/platforms/magento', true) : null;
         } elseif (defined('IN_PHPBB')) {
             global $phpbb_root_path;
             define('GANTRY5_ROOT', $phpbb_root_path);
         } elseif (defined('PRIME_ROOT')) {
             define('GANTRY5_ROOT', PRIME_ROOT);
-            $loader->addPsr4('Gantry\\', $base . '/classes/Gantry/Platform/Prime', true);
+            $dev ? $loader->addPsr4('Gantry\\', $base . '/platforms/prime', true) : null;
         }
 
         return $loader;

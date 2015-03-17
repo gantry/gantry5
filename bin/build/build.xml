@@ -186,6 +186,13 @@
 
         <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
             <fileset dir="${path.src}">
+                <include name="*.php"/>
+                <include name="composer.*"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${tmp_dir}/packages/lib_gantry5/vendor" overwrite="true">
+            <fileset dir="${path.src}/vendor">
                 <exclude name="**/test/"/>
                 <exclude name="**/tests/"/>
                 <exclude name="**/Tests/"/>
@@ -205,8 +212,16 @@
                 <exclude name="**/LICENSE"/>
                 <exclude name="**/Makefile"/>
                 <exclude name="**/todo"/>
-                <exclude name="vendor/filp/whoops/src/deprecated"/>
+                <exclude name="filp/whoops/src/deprecated"/>
             </fileset>
+        </copy>
+
+        <copy todir="${tmp_dir}/packages/lib_gantry5/classes" overwrite="true">
+            <fileset dir="${path.src}/classes"/>
+        </copy>
+
+        <copy todir="${tmp_dir}/packages/lib_gantry5/classes" overwrite="true">
+            <fileset dir="${path.src}/platforms/joomla"/>
         </copy>
 
         <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
