@@ -18,6 +18,7 @@ try
     // Initialize the template if not done already.
     if (!isset($gantry['theme.id']))
     {
+        $app = JFactory::getApplication('site');
         $template = $app->getTemplate(true);
 
         $gantry['theme.id'] = $template->id;
