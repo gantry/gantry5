@@ -15,14 +15,12 @@
             <filename>access.xml</filename>
             <filename>config.xml</filename>
             <filename>gantry5.php</filename>
-            <folder>application</folder>
             <folder>blueprints</folder>
             <folder>css-compiled</folder>
             <folder>fonts</folder>
             <folder>images</folder>
             <folder>js</folder>
             <folder>language</folder>
-            <folder>node_modules</folder>
             <folder>scss</folder>
             <folder>templates</folder>
         </files>
