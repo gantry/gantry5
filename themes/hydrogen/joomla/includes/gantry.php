@@ -6,12 +6,7 @@ use Gantry\Framework\Gantry;
 try
 {
     if (!class_exists('Gantry5\Loader')) {
-        $this->loadLanguage('plg_system_gantry5.sys');
-        $this->app->enqueueMessage(
-            JText::sprintf('PLG_SYSTEM_GANTRY5_LIBRARY_MISSING', JText::_('PLG_SYSTEM_GANTRY5')),
-            'warning'
-        );
-        return;
+        throw new LogicException('System - Gantry Framework plugin / Gantry Library missing.');
     }
 
     // Setup Gantry5 Framework or throw exception.
