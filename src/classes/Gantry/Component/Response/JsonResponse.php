@@ -41,7 +41,7 @@ class JsonResponse extends Response
         // Empty output buffer to make sure that the response is clean and valid.
         while (($output = ob_get_clean()) !== false) {
             // In debug mode send also output buffers (debug dumps, PHP notices and warnings).
-            if ($output && defined(GANTRY_DEBUG)) {
+            if ($output && defined(GANTRY5_DEBUG)) {
                 $this->messages['php'][] = $output;
             }
         }
@@ -99,7 +99,7 @@ class JsonResponse extends Response
                 'message' => $e->getMessage()
             ];
 
-            if (GANTRY_DEBUG) {
+            if (GANTRY5_DEBUG) {
                 $exception += [
                     'type' => get_class($e),
                     'file' => $e->getFile(),
@@ -110,7 +110,7 @@ class JsonResponse extends Response
             $exceptions[] = $exception;
             $e = $e->getPrevious();
         }
-        while (GANTRY_DEBUG && $e);
+        while (GANTRY5_DEBUG && $e);
 
         return $exceptions;
     }

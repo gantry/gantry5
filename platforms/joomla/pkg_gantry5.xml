@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension version="3.4" type="package" method="upgrade">
+    <name>Gantry5 Package</name>
+    <packagename>gantry5</packagename>
+    <version>5.0.0-DEV</version>
+    <creationDate>@versiondate@</creationDate>
+    <author>RocketTheme, LLC</author>
+    <authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <copyright>(C) 2005 - 2015 RocketTheme, LLC. All rights reserved.</copyright>
+    <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+    <description>Gantry5 Framework Package</description>
+
+    <scriptfile>install.php</scriptfile>
+
+    <files folder="packages">
+        <!-- Mandatory system plugin -->
+        <filename type="plugin"    group="system"     id="gantry5"      >plg_system_gantry5_v@version@.zip</filename>
+        <!-- Quick icons -->
+        <filename type="plugin"    group="quickicon"  id="gantry5"      >plg_quickicon_gantry5_v@version@.zip</filename>
+        <!-- Gantry framework library -->
+        <filename type="library"                      id="gantry5"      >lib_gantry5_v@version@.zip</filename>
+        <!-- Common media files -->
+        <filename type="file"                         id="media_gantry5">media_gantry5_v@version@.zip</filename>
+        <!-- Administration component -->
+        <filename type="component"                    id="com_gantry5"  >com_gantry5_v@version@.zip</filename>
+        <!-- Administration component -->
+        <filename type="template"                     id="g5_hydrogen"  >tpl_g5_hydrogen_v@version@.zip</filename>
+    </files>
+
+    <updateservers>
+        <server type="extension" priority="1" name="Gantry5">http://updates.gantry-framework.org/5.0/joomla/pkg_gantry5.xml</server>
+        <server type="collection" priority="2" name="Gantry5">http://updates.gantry-framework.org/5.0/joomla/list.xml</server>
+    </updateservers>
+</extension>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension version="3.4" type="component" method="upgrade">
+    <name>COM_GANTRY5</name>
+    <version>@version@</version>
+    <creationDate>@versiondate@</creationDate>
+    <author>RocketTheme, LLC</author>
+    <authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <copyright>(C) 2005 - 2015 RocketTheme, LLC. All rights reserved.</copyright>
+    <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+    <description>COM_GANTRY5_DESCRIPTION</description>
+
+    <administration>
+        <files folder="admin">
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <filename>gantry5.php</filename>
+            <folder>application</folder>
+            <folder>blueprints</folder>
+            <folder>css-compiled</folder>
+            <folder>fonts</folder>
+            <folder>images</folder>
+            <folder>js</folder>
+            <folder>language</folder>
+            <folder>node_modules</folder>
+            <folder>scss</folder>
+            <folder>templates</folder>
+        </files>
+        <menu>COM_GANTRY5</menu>
+    </administration>
+
+</extension>

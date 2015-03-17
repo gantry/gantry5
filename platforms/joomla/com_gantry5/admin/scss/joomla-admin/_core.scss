@@ -1,0 +1,37 @@
+body.com_gantry5 {
+    color: $light-gray;
+    background-color: $body-bg !important;
+
+    a {
+        text-decoration: none;
+    }
+
+    .subhead-collapse.collapse, .header {
+    	display: none;
+    }
+
+    .container-main {
+    	padding: 0;
+    }
+
+    #status {
+    	box-shadow: none !important;
+    }
+
+    #footer {
+        a {
+            color: $core-accent;
+        }
+    }
+
+    #g5-container {
+        .inner-container {
+            margin: 0 0 1.5rem 0;
+        }
+
+        li {
+            line-height: inherit;
+        }
+
+    }
+}

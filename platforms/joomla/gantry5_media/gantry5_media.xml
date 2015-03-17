@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension version="3.4" type="file" method="upgrade">
+    <name>Gantry5 Media Files</name>
+    <version>@version@</version>
+    <creationDate>@versiondate@</creationDate>
+    <author>RocketTheme, LLC</author>
+    <authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <copyright>(C) 2005 - 2015 RocketTheme, LLC. All rights reserved.</copyright>
+    <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+    <description>Gantry5 media files</description>
+
+    <fileset>
+        <files target="media/gantry5">
+            <folder>css</folder>
+            <folder>fonts</folder>
+            <folder>js</folder>
+        </files>
+    </fileset>
+</extension>

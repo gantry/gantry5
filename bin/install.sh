@@ -5,32 +5,57 @@ OPT_DELETE=0
 
 if [ -f $GIT_TARGET/configuration.php ]; then
     PLATFORM=Joomla
-    mkdir "$GIT_TARGET/media/gantry"
+    mkdir "$GIT_TARGET/libraries/gantry5"
+    mkdir "$GIT_TARGET/media/gantry5"
     sources=(
-        'platforms/joomla/com_gantryadmin'
+        # Manifest files
+        'platforms/joomla/pkg_gantry5.xml'
+        'platforms/joomla/lib_gantry5/gantry5.xml'
+        'platforms/joomla/gantry5_media/gantry5_media.xml'
+        # Component
+        'platforms/joomla/com_gantry5/admin'
         'platforms/common'
-        'src'
-        'vendor'
-        'platforms/joomla/plg_system_gantryadmin'
+        # Library
+        'src/classes'
+        'platforms/joomla/lib_gantry5/language'
+        'src/vendor'
+        'src/Loader.php'
+        # Plugins
+        'platforms/joomla/plg_system_gantry5'
+        'platforms/joomla/plg_quickicon_gantry5'
+        # Media
         'assets'
         'engines'
+        # Templates
         'themes/hydrogen/joomla'
         'themes/hydrogen/common'
-        'themes/hydrogen-demo/joomla'
-        'themes/hydrogen-demo/common'
+#        'themes/hydrogen-demo/joomla'
+#        'themes/hydrogen-demo/common'
     )
     targets=(
-        'administrator/components/com_gantryadmin'
-        'administrator/components/com_gantryadmin/common'
-        'administrator/components/com_gantryadmin/src'
-        'administrator/components/com_gantryadmin/vendor'
-        'plugins/system/gantryadmin'
-        'media/gantry/assets'
-        'media/gantry/engines'
-        'templates/hydrogen'
-        'templates/hydrogen/common'
-        'templates/hydrogen-demo'
-        'templates/hydrogen-demo/common'
+        # Manifest files
+        'administrator/manifests/packages/pkg_gantry5.xml'
+        'administrator/manifests/libraries/gantry5.xml'
+        'administrator/manifests/files/gantry5_media.xml'
+        # Component
+        'administrator/components/com_gantry5'
+        'administrator/components/com_gantry5/common'
+        # Library
+        'libraries/gantry5/classes'
+        'libraries/gantry5/language'
+        'libraries/gantry5/vendor'
+        'libraries/gantry5/Loader.php'
+        # Plugins
+        'plugins/system/gantry5'
+        'plugins/quickicon/gantry5'
+        # Media
+        'media/gantry5/assets'
+        'media/gantry5/engines'
+        # Templates
+        'templates/g5_hydrogen'
+        'templates/g5_hydrogen/common'
+#        'templates/g5_hydrogen-demo'
+#        'templates/g5_hydrogen-demo/common'
         )
 elif [ -f $GIT_TARGET/wp-config.php ]; then
     PLATFORM=WordPress

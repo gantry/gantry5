@@ -5,31 +5,17 @@ use Gantry\Framework\Gantry;
 
 try
 {
-    // Attempt to locate Gantry Framework if it hasn't already been loaded.
-    if (!class_exists('Gantry'))
-    {
-        $gantryPaths = array(
-            __DIR__ . '/../src/bootstrap.php',          // Look if Gantry has been included to the template.
-            JPATH_ROOT . '/administrator/components/com_gantryadmin/src/bootstrap.php', // Look for the admin.
+    if (!class_exists('Gantry5\Loader')) {
+        $this->loadLanguage('plg_system_gantry5.sys');
+        $this->app->enqueueMessage(
+            JText::sprintf('PLG_SYSTEM_GANTRY5_LIBRARY_MISSING', JText::_('PLG_SYSTEM_GANTRY5')),
+            'warning'
         );
-
-        foreach ($gantryPaths as $gantryPath)
-        {
-            if ($gantryPath && is_file($gantryPath))
-            {
-                $gantryBootstrap = $gantryPath;
-            }
-        }
-
-        if (!isset($gantryBootstrap))
-        {
-            throw new LogicException('Gantry Framework not found!');
-        }
-
-        require_once $gantryBootstrap;
-
-        unset($gantryPaths, $gantryPath, $gantryBootstrap);
+        return;
     }
+
+    // Setup Gantry5 Framework or throw exception.
+    Gantry5\Loader::setup();
 
     // Get Gantry instance and return it.
     $gantry = Gantry::instance();
@@ -37,20 +23,12 @@ try
     // Initialize the template if not done already.
     if (!isset($gantry['theme.id']))
     {
-        $app = JFactory::getApplication();
-        if ($app->isSite())
-        {
-            $template = $app->getTemplate(true);
+        $template = $app->getTemplate(true);
 
-            $gantry['theme.id'] = $template->id;
-            $gantry['theme.path'] = dirname(__DIR__);
-            $gantry['theme.name'] = $template->template;
-            $gantry['theme.params'] = $template->params->toArray();
-        }
-        else
-        {
-            throw new RuntimeException('Template was loaded in administration without properly initializing Gantry!');
-        }
+        $gantry['theme.id'] = $template->id;
+        $gantry['theme.path'] = dirname(__DIR__);
+        $gantry['theme.name'] = $template->template;
+        $gantry['theme.params'] = $template->params->toArray();
     }
 
     // Only a single template can be loaded at any time.
@@ -64,7 +42,5 @@ try
 catch (Exception $e)
 {
     // Oops, something went wrong!
-
-    // In frontend we want to prevent template from loading.
     JError::raiseError(500, 'Failed to load template: ' . $e->getMessage());
 }

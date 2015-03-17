@@ -50,7 +50,7 @@ class Router extends BaseRouter
             $this->container['theme.params'] = (new Registry($table->params))->toArray();
         }
 
-        $this->container['base_url'] = \JUri::base(true) . '/index.php?option=com_gantryadmin';
+        $this->container['base_url'] = \JUri::base(true) . '/index.php?option=com_gantry5';
 
         $this->container['ajax_suffix'] = '&format=json';
 

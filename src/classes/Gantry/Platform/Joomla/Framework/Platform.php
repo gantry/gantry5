@@ -26,12 +26,12 @@ class Platform extends BasePlatform
 
     public function getMediaPaths()
     {
-        return ['' => ['gantry-theme://images', 'media/gantry']];
+        return ['' => ['gantry-theme://images', 'media/gantry5']];
     }
 
     public function getEnginesPaths()
     {
-        return ['' => ['media/gantry/engines']];
+        return ['' => ['media/gantry5/engines']];
     }
 
     public function getEnginePaths()
@@ -41,7 +41,7 @@ class Platform extends BasePlatform
 
     public function getAssetsPaths()
     {
-        return ['' => ['gantry-theme://', 'media/gantry/assets']];
+        return ['' => ['gantry-theme://', 'media/gantry5/assets']];
     }
 
     public function getModules($position)
@@ -52,7 +52,7 @@ class Platform extends BasePlatform
 
     public function settings()
     {
-        return \JRoute::_('index.php?option=com_config&view=component&component=com_gantryadmin', false);
+        return \JRoute::_('index.php?option=com_config&view=component&component=com_gantry5', false);
     }
 
     public function update()
@@ -76,7 +76,7 @@ class Platform extends BasePlatform
         $query
             ->select('*')
             ->from('#__updates')
-            ->where("element='com_gantryadmin' OR extension_id IN ($extension_ids)");
+            ->where("element='com_gantry5' OR extension_id IN ($extension_ids)");
 
         $db->setQuery($query);
 

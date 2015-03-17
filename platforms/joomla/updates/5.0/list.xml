@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE extensionset>
-<extensionset name="Gantry5" description="Gantry Updates">
-	<extension name="Gantry5" description="Gantry Templates" element="com_gantryadmin" type="component" client="admin" version="5.0.0-DEV" detailsurl="http://update.gantry-framework.org/5.0/com_gantryadmin.xml"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extensionset name="Gantry5" description="Gantry5 Updates">
+	<extension name="Gantry5" description="Gantry5 Framework" element="pkg_gantry5" type="package" client="site" version="5.0.0-DEV" detailsurl="http://update.gantry-framework.org/5.0/pkg_gantry5.xml"/>
     <extension name="Hydrogen" description="Hydrogen Template" element="tmpl_hydrogen" type="template" client="site" version="1.0.0-DEV" detailsurl="http://update.gantry-framework.org/5.0/tmpl_hydrogen.xml"/>
 </extensionset>
