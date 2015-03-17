@@ -53,6 +53,10 @@
     @include breakpoint(mobile-only) {
         text-align: center;
     }
+
+    .preview-image {
+        width: 350px;
+    }
 }
 
 .overview-gantry {
