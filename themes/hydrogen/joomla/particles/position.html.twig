@@ -1,6 +1,7 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
 {% block particle %}
-<h3>{{ position.title }}</h3>
-<jdoc:include type="modules" name="{{ position.key }}" style="none" />
+    {% if gantry.platform.countModules(position.key) %}
+        <jdoc:include type="modules" name="{{ position.key }}" style="none" />
+    {% endif %}
 {% endblock %}
