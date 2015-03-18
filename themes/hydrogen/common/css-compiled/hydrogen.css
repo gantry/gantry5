@@ -304,20 +304,8 @@ input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:fo
     margin-top: -1.3rem; }
   .sample-content .sample-icons {
     font-size: 3rem; }
-
-.showcase-sample {
-  text-align: center; }
-
-.feature-sample {
-  text-align: center; }
-
-.platforms-sample {
-  text-align: center; }
-  .platforms-sample .subtitle {
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    display: block;
-    margin-top: -1.3rem; }
+  .sample-content .sample-description {
+    font-size: 1.2rem; }
 
 .g-container {
   width: 75rem; }
