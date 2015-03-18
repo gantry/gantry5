@@ -32,3 +32,4 @@ themes/*/magento/skin/default/common
 node_modules/*
 platforms/wordpress/gantryadmin/cache
 platforms/common/node_modules
+assets/application/node_modules

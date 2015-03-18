@@ -14,11 +14,18 @@ jQuery(document).ready(function($){
 	$('.g-menu-item').children('[data-g-menuparent]').on('click', function(){
 		var selected = $(this);
 		if( selected.next('.g-dropdown').hasClass('g-inactive') ) {
+
+			if (selected.parents('.g-standard')) {
+				selected.parents('.g-dropdown-column').find('.g-active').removeClass('g-active').addClass('g-inactive');
+				selected.parents('.g-dropdown-column').find('.g-selected').removeClass('g-selected');
+			}
+
+
 			selected.addClass('g-selected').next('.g-dropdown').removeClass('g-inactive').addClass('g-active').end()
 					.parent('li').parent('ul').addClass('g-slide-out').end()
 					.closest('.g-block').siblings('.g-block').addClass('g-block-inactive');
 			selected.parent('.g-menu-item').siblings('.g-menu-item').children('ul').removeClass('g-active').addClass('g-inactive').end()
-					.children('.g-menu-item-content').removeClass('g-selected');
+				.children('.g-menu-item-content').removeClass('g-selected');
 			if( Window.width() > MBP ) {
 				Body.addClass('g-nav-overlay-active');
 			}
@@ -35,7 +42,7 @@ jQuery(document).ready(function($){
 	$('.g-go-back').on('click', function(){
 		$(this).closest('.g-dropdown').removeClass('g-active').addClass('g-inactive').closest('.g-sublevel').removeClass('g-slide-out').end()
 			   .closest('.g-menu-item').children('.g-menu-item-content').removeClass('g-selected').end()
-			   .closest('.g-block').siblings('.g-block').removeClass('g-block-inactive');;
+			   .closest('.g-block').siblings('.g-block').removeClass('g-block-inactive');
 	});		
 
 	// Toggle Class on Mobile
