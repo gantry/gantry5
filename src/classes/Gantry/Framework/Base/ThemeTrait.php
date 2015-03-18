@@ -123,7 +123,9 @@ trait ThemeTrait
         $layout = Layout::instance($name);
 
         if (!$layout->exists()) {
-            throw new \RuntimeException("Layout '{$name}' does not exist", 404);
+            $layout = Layout::instance('default');
+
+            //throw new \RuntimeException("Layout '{$name}' does not exist", 404);
         }
 
         return $layout;
