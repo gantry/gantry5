@@ -11,7 +11,12 @@ class Assignments extends HtmlController
 {
     public function index()
     {
-        $assignments = new AssignmentsObject(isset($this->params['configuration']) ? $this->params['configuration'] : null);
+        $configuration = isset($this->params['configuration']) ? $this->params['configuration'] : null;
+        if ($configuration == 'default') {
+            $this->undefined();
+        }
+
+        $assignments = new AssignmentsObject($configuration);
 
         $this->params['assignments'] = $assignments->get();
         $this->params['pages'] = new Pages();
@@ -21,10 +26,15 @@ class Assignments extends HtmlController
 
     public function store()
     {
+        $configuration = isset($this->params['configuration']) ? $this->params['configuration'] : null;
+        if ($configuration == 'default') {
+            $this->undefined();
+        }
+
         /** @var Request $request */
         $request = $this->container['request'];
 
-        $assignments = new AssignmentsObject(isset($this->params['configuration']) ? $this->params['configuration'] : null);
+        $assignments = new AssignmentsObject($configuration);
         $assignments->set($request->getArray());
 
         return '';
