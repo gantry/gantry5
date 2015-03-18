@@ -49,3 +49,9 @@ items:
     menu_icon: fa fa-fw fa-book
     link: ../learn
     title: Documentation
+
+  admin/download:
+    type: alias
+    menu_icon: fa fa-fw fa-book
+    link: ../builds/gantry5
+    title: Download
