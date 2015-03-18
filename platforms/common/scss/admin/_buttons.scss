@@ -40,4 +40,10 @@
     @include button-color($yellow, darken($yellow, 40%));
 }
 
+.input-group-btn {
+    .button {
+        @include button-color(#f6f6f6, $core-text);
+    }
+}
+
 }//endwrapper
