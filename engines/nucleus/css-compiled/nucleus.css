@@ -944,11 +944,12 @@ th {
   .g-main-nav .g-sublevel > li .g-menu-item-content {
     display: block; }
   .g-main-nav .g-sublevel > li.g-parent .g-menu-parent-indicator {
-    display: inline; }
+    position: absolute;
+    right: 0.738rem;
+    top: 0.838rem;
+    width: auto;
+    text-align: center; }
     .g-main-nav .g-sublevel > li.g-parent .g-menu-parent-indicator:after {
-      position: absolute;
-      right: 1rem;
-      width: auto;
       content: "\f054"; }
   .g-main-nav .g-sublevel > li .g-selected .g-menu-parent-indicator:after {
     content: "\f00d"; }

@@ -74,7 +74,7 @@ children:
                       enabled: 1
                       image: 'gantry-media://images/logo-large.png'
                       headline: 'Welcome to Gantry 5'
-                      description: '<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula. Praesent et nulla eu augue tempus sagittis. Mauris faucibus nibh et nibh cursus in vestibulum sapien egestas. Curabitur ut lectus tortor. Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>'
+                      description: '<p>Gantry 5 is the most customizable and powerful version of the framework yet. Packed full of features such as drag-and-drop layout creation and the powerful particle system, Gantry 5 has been designed from the ground up to be lightning fast and hassle free.</p>'
                       link: '#'
                       linktext: 'Read More'
                     children: {  }
@@ -117,27 +117,24 @@ children:
                     title: "\n                                Sample Content\n                            "
                     attributes:
                       enabled: 1
-                      headline: Features
-                      description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.'
+                      headline: 'Key Features'
+                      description: '<p>Gantry5 is packed full of features created to empower the development of designs into fully functional layouts with the absolute minimum effort and fuss</p>'
                       samples:
                         -
                           icon: 'fa fa-code'
                           subtitle: ''
-                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
-                          class: ''
-                          title: 'Feature One'
+                          description: '<p>Gantry5 leverages the power of <a href="http://twig.sensiolabs.org/">Twig</a> to make creating powerful, dynamic themes quick and easy.</p>'
+                          title: 'Twig Templating'
                         -
-                          icon: 'fa fa-bar-chart'
+                          icon: 'fa fa-newspaper-o'
                           subtitle: ''
-                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
-                          class: ''
-                          title: 'Feature Two'
+                          description: '<p>Drag-and-drop functionality gives you the power to place content blocks, resize them, and configure their unique settings in seconds.</p>'
+                          title: 'Layout Manager'
                         -
-                          icon: 'fa fa-sliders'
+                          icon: 'fa fa-cubes'
                           subtitle: ''
-                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>'
-                          class: ''
-                          title: 'Feature Three'
+                          description: '<p>Create, configure, and manage content blocks as well as special features and functionality with the powerful particle system.</p>'
+                          title: 'Particles System'
                     children: {  }
   -
     id: 9fe65519-28ea-80d5-723c-1ba2a45646f6
@@ -178,38 +175,33 @@ children:
                     title: "\n                                Sample Content\n                            "
                     attributes:
                       enabled: 1
-                      headline: 'Multiple platforms supported with unlimited possibilities'
+                      headline: 'Multiple platforms with unlimited possibilities'
                       description: ''
                       samples:
                         -
                           icon: 'fa fa-joomla'
                           subtitle: '<span class="subtitle">Now Available</span>'
-                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
-                          class: 'box1 shadow'
+                          description: '<p>Now available for Joomla, Gantry 5 provides a suite of features and functionality to supercharge your Joomla site.</p>'
                           title: Joomla
                         -
                           icon: 'fa fa-clock-o'
                           subtitle: '<span class="subtitle">Coming Soon</span>'
-                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
-                          class: disabled
+                          description: '<p>Support for the WordPress platform is coming soon and will feature all of the features and functionality of Gantry 5.</p>'
                           title: WordPress
                         -
                           icon: 'fa fa-clock-o'
                           subtitle: '<span class="subtitle">Coming Soon</span>'
-                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
-                          class: disabled
+                          description: '<p>Support for the Grav platform is coming soon and will feature all of the features and functionality of Gantry 5.</p>'
                           title: Grav
                         -
                           icon: 'fa fa-clock-o'
                           subtitle: '<span class="subtitle">Coming Soon</span>'
-                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
-                          class: disabled
+                          description: '<p>Support for the Magento platform is coming soon and will feature all of the features and functionality of Gantry 5.</p>'
                           title: Magento
                         -
                           icon: 'fa fa-clock-o'
                           subtitle: '<span class="subtitle">Coming Soon</span>'
-                          description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies tristique nulla et mattis.</p>'
-                          class: disabled
+                          description: '<p>Support for the phpBB platform is coming soon and will feature all of the features and functionality of Gantry 5.</p>'
                           title: phpBB
                     children: {  }
   -
@@ -226,31 +218,6 @@ children:
         title: Untitled
         attributes: {  }
         children:
-          -
-            id: 194222ee-dc96-f8cf-e925-0a947adedb44
-            type: grid
-            subtype: false
-            title: Untitled
-            attributes: {  }
-            children:
-              -
-                id: 9f99b530-2b53-fccc-2f6c-67741a610588
-                type: block
-                subtype: false
-                title: Untitled
-                attributes:
-                  size: 100
-                children:
-                  -
-                    id: a60433f1-5870-43be-3dc6-a992fae372b8
-                    type: position
-                    subtype: false
-                    title: Breadcrumbs
-                    attributes:
-                      enabled: 1
-                      key: breadcrumbs
-                      title: Breadcrumbs
-                    children: {  }
           -
             id: 4163e4b5-b8e6-0b0f-8c2b-a1f2ab11bfc8
             type: grid
@@ -277,14 +244,14 @@ children:
                       title: Global_messages
                     children: {  }
           -
-            id: 083233a0-51a5-f35d-c1a6-2caff7ae29ab
+            id: e750084d-4086-49ca-a3c5-fce2a6e98c88
             type: grid
             subtype: false
             title: Untitled
             attributes: {  }
             children:
               -
-                id: fc49e770-1506-a62a-b109-d9dc4f882f43
+                id: e44cade9-df41-485c-b165-7f8cb641eb99
                 type: block
                 subtype: false
                 title: Untitled
@@ -292,12 +259,14 @@ children:
                   size: 100
                 children:
                   -
-                    id: a030a082-dfa2-33c9-e84d-c2cb59f5abee
-                    type: pagecontent
-                    subtype: false
-                    title: Pagecontent
+                    id: a85e6fff-8378-407c-a6c5-88775b6790b8
+                    type: particle
+                    subtype: sample
+                    title: "\n                                Sample Content\n                            "
                     attributes:
                       enabled: 1
+                      headline: 'Getting Started'
+                      description: "<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>\n<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.</p>"
                     children: {  }
   -
     id: 16ffefc7-f83b-6f81-9089-ed94e8e8153a
