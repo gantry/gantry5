@@ -19,7 +19,8 @@
                                 <div class="g-content" data-g5-content>
                                     <h1><i class="fa fa-fw fa-plug"></i> Available Themes</h1>
                                     <div class="themes cards-wrapper g-grid fixed-blocks">
-                                        {% for id, theme in styles %}
+                                        {% if themes|length %}
+                                        {% for id, theme in themes %}
                                             <div class="theme card">
                                                 <div class="theme-id">
                                                     {% if theme.icon %}<i class="fa fa-fw fa-{{ theme.icon|e }}"></i>{% endif %}
@@ -38,6 +39,9 @@
                                                 </div>
                                             </div>
                                         {% endfor %}
+                                        {% else %}
+                                            <p>No themes installed.</p>
+                                        {% endif %}
                                     </div>
                                 </div>
                             {% endblock %}

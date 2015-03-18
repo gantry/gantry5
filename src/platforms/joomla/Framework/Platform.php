@@ -62,7 +62,7 @@ class Platform extends BasePlatform
 
     public function updates()
     {
-        $styles = ThemeList::getStyles();
+        $styles = ThemeList::getThemes();
         $extension_ids = array_unique(array_map(
             function($item) {
                 return (int) $item->extension_id;

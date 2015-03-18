@@ -11,7 +11,7 @@ class ThemeList
     /**
      * @return array
      */
-    public static function getStyles()
+    public static function getThemes()
     {
         $gantry = Gantry::instance();
 
@@ -30,7 +30,7 @@ class ThemeList
                 }
 
                 $details['name'] = $theme;
-                $details['title'] = ucfirst($theme);
+                $details['title'] = $details['details.name'];
                 $details['preview_url'] = rtrim(PRIME_URI, '/') . '/' . $theme;
                 $details['admin_url'] = rtrim(PRIME_URI, '/') . '/' . $theme . '/admin';
                 $details['params'] = [];

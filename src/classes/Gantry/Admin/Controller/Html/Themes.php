@@ -8,7 +8,7 @@ class Themes extends HtmlController
 {
     public function index()
     {
-        $this->params['styles'] = (new ThemeList)->getStyles();
+        $this->params['themes'] = (new ThemeList)->getThemes();
 
         return $this->container['admin.theme']
             ->render('@gantry-admin/pages/themes/themes.html.twig', $this->params);
