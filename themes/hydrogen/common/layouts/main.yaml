@@ -182,26 +182,31 @@ children:
                           icon: 'fa fa-joomla'
                           subtitle: '<span class="subtitle">Now Available</span>'
                           description: '<p>Now available for Joomla, Gantry 5 provides a suite of features and functionality to supercharge your Joomla site.</p>'
+                          class: 'box1 shadow'
                           title: Joomla
                         -
                           icon: 'fa fa-clock-o'
                           subtitle: '<span class="subtitle">Coming Soon</span>'
                           description: '<p>Support for the WordPress platform is coming soon and will feature all of the features and functionality of Gantry 5.</p>'
+                          class: disabled
                           title: WordPress
                         -
                           icon: 'fa fa-clock-o'
                           subtitle: '<span class="subtitle">Coming Soon</span>'
                           description: '<p>Support for the Grav platform is coming soon and will feature all of the features and functionality of Gantry 5.</p>'
+                          class: disabled
                           title: Grav
                         -
                           icon: 'fa fa-clock-o'
                           subtitle: '<span class="subtitle">Coming Soon</span>'
                           description: '<p>Support for the Magento platform is coming soon and will feature all of the features and functionality of Gantry 5.</p>'
+                          class: disabled
                           title: Magento
                         -
                           icon: 'fa fa-clock-o'
                           subtitle: '<span class="subtitle">Coming Soon</span>'
                           description: '<p>Support for the phpBB platform is coming soon and will feature all of the features and functionality of Gantry 5.</p>'
+                          class: disabled
                           title: phpBB
                     children: {  }
   -
