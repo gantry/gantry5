@@ -590,8 +590,12 @@ a {
     max-width: 150px;
     margin: 5px; }
   #g5-container .settings-block i {
-    vertical-align: middle;
     line-height: inherit; }
+  #g5-container .settings-block .fa {
+    width: 1rem; }
+  #g5-container .settings-block .fa-lg {
+    font-size: inherit;
+    vertical-align: inherit; }
   #g5-container .settings-block input, #g5-container .settings-block textarea {
     padding: 6px 12px;
     border: 1px solid #ddd;

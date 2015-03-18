@@ -84,8 +84,16 @@
 
 
     i {
-        vertical-align: middle;
         line-height: inherit;
+    }
+
+    .fa {
+        width: 1rem;
+    }
+
+    .fa-lg {
+        font-size: inherit;
+        vertical-align: inherit;
     }
 
     input, textarea {
