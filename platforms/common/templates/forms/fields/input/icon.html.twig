@@ -1,21 +1,27 @@
-{% extends "forms/fields/input/group/group.html.twig" %}
+{% extends default ? "partials/field.html.twig" : "forms/field.html.twig" %}
 
 {% block input %}
     <div class="g-icons">
-        <input
-                {# required attribute structures #}
-                type="text"
-                name="{{ (scope ~ name)|fieldName|e }}"
-                value="{{ value|join(', ')|e }}"
-                {# global attribute structures #}
-                {{ block('global_attributes') }}
-                {# non-gloval attribute structures #}
-                {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete }}"{% endif %}
-                {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
-                {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-                {% if field.list is defined %}list="{{ field.list|e }}"{% endif %}
-                />
-        {% set picker = 'input[name="' ~ ((scope ~ name)|fieldName|e) ~ '"]' %}
-        <i class="{{ value|e('html_attr')|default('fa fa-hand-o-up picker') }}" data-g5-iconpicker="{{ picker|e('html_attr') }}"></i>
+        <div class="input-group">
+            <input
+                    {# required attribute structures #}
+                    type="text"
+                    name="{{ (scope ~ name)|fieldName|e }}"
+                    value="{{ value|join(', ')|e }}"
+                    {# global attribute structures #}
+                    {{ block('global_attributes') }}
+                    {# non-gloval attribute structures #}
+                    {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete }}"{% endif %}
+                    {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
+                    {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
+                    {% if field.list is defined %}list="{{ field.list|e }}"{% endif %}
+                    />
+            {% set picker = 'input[name="' ~ ((scope ~ name)|fieldName|e) ~ '"]' %}
+             <span class="input-group-btn">
+                <button class="button" type="button" data-g5-iconpicker="{{ picker|e('html_attr') }}">
+                    <i class="{{ value|e('html_attr')|default('fa fa-hand-o-up picker') }}"></i>
+                </button>
+            </span>
+        </div>
     </div>
 {% endblock %}
