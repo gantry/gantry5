@@ -16,7 +16,7 @@ loginbutton:
     class: 'widget_gantry_loginbutton'
 
 logo:
-  image: 'images/logo.png'
+  image: 'gantry-assets://images/gantrylogo.png'
   text: 'Gantry'
 
 menu:
