@@ -17,6 +17,8 @@ body.com_gantry5 {
     line-height: inherit; }
   body.com_gantry5 #g5-container textarea, body.com_gantry5 #g5-container input {
     box-shadow: none; }
+  body.com_gantry5 #g5-container input, body.com_gantry5 #g5-container button, body.com_gantry5 #g5-container select, body.com_gantry5 #g5-container textarea {
+    font-family: inherit; }
 
 #g5-container .button-primary {
   background: #3180C2;
@@ -93,5 +95,8 @@ body.com_gantry5 #g5-container .tooltip {
   float: left; }
 #g5-container #assignments .enabler {
   float: right; }
+
+body.com_gantry5 #g5-container .navbar-block #gantry-logo {
+  right: 2.1rem; }
 
 /*# sourceMappingURL=joomla-admin.css.map */
