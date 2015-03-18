@@ -21,7 +21,7 @@ class Configurations extends AbstractConfigurationCollection
 
         $layouts = [];
         foreach ($styles as $style) {
-            $layouts[$style->id] = $style->title;
+            $layouts[$style->id] = $style->style;
         }
 
         asort($layouts);
