@@ -21,11 +21,9 @@
         <!-- Gantry framework library -->
         <filename type="library"                      id="gantry5"      >lib_gantry5_v@version@.zip</filename>
         <!-- Common media files -->
-        <filename type="file"                         id="media_gantry5">media_gantry5_v@version@.zip</filename>
+        <filename type="file"                         id="gantry5_media">gantry5_media_v@version@.zip</filename>
         <!-- Administration component -->
         <filename type="component"                    id="com_gantry5"  >com_gantry5_v@version@.zip</filename>
-        <!-- Administration component -->
-        <filename type="template"                     id="g5_hydrogen"  >tpl_g5_hydrogen_v@version@.zip</filename>
     </files>
 
     <updateservers>

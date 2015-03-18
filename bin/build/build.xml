@@ -3,6 +3,9 @@
 <!--
     Gantry phing build file.
 
+    @copyright (C) 2015 RocketTheme, LLC. All rights reserved
+    @copyright (C) 2014 coder4life (@github)
+
     The following parameters can be defined inside the PHPSTORM build task as Arguments. They
     allow the build file to be platform independent as not path information resides within
     any of the build files.
@@ -69,7 +72,7 @@
         </replacetokens>
     </filterchain>
 
-    <target name="dist" depends="preflight,info,mkdir,backup,build-installer,build-component,build-library,build-media,build-plugins,package,postflight" />
+    <target name="dist" depends="preflight,info,mkdir,backup,build-installer,build-component,build-library,build-media,build-plugins,build-themes,package,postflight" />
 
     <!-- Preflight check to see if we can even run the build script -->
     <target name="preflight">
@@ -144,7 +147,7 @@
     <target name="build-component" depends="build-installer">
         <echo message="Building Component..." />
 
-        <copy todir="${tmp_dir}/packages/com_gantry5/admin">
+        <copy todir="${tmp_dir}/packages/com_gantry5/admin" overwrite="true">
             <fileset dir="${platforms.common}">
                 <exclude name=".sass-cache/"/>
                 <exclude name="application/"/>
@@ -156,7 +159,7 @@
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/com_gantry5/admin">
+        <copy todir="${tmp_dir}/packages/com_gantry5/admin" overwrite="true">
             <fileset dir="${platforms.joomla}/com_gantry5/admin">
                 <exclude name=".sass-cache/"/>
                 <exclude name="common/"/>
@@ -220,7 +223,7 @@
             <fileset dir="${path.src}/classes"/>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5/classes" overwrite="true">
+        <copy todir="${tmp_dir}/packages/lib_gantry5/classes/Gantry" overwrite="true">
             <fileset dir="${path.src}/platforms/joomla"/>
         </copy>
 
@@ -240,11 +243,15 @@
     <target name="build-media" depends="build-installer">
         <echo message="Building Media files.." />
 
-        <copy todir="${tmp_dir}/packages/gantry5_media" overwrite="true">
+        <copy todir="${tmp_dir}/packages/gantry5_media/gantry5/assets" overwrite="true">
             <fileset dir="${path.assets}"/>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/gantry5_media" overwrite="true">
+        <copy todir="${tmp_dir}/packages/gantry5_media/gantry5/engines" overwrite="true">
+            <fileset dir="${path.engines}"/>
+        </copy>
+
+        <copy todir="${tmp_dir}/packages/gantry5_media/gantry5" overwrite="true">
             <fileset dir="${platforms.joomla}/gantry5_media"/>
         </copy>
 
@@ -283,6 +290,52 @@
                 <include name="*.xml"/>
             </fileset>
         </copy>
+    </target>
+
+    <target name="build-themes" depends="build-installer">
+        <echo message="Building Themes.." />
+
+        <!-- Process all themes -->
+        <foreach param="directory" target="build-theme">
+            <fileset dir="${path.themes}">
+                <type type="dir" />
+                <depth max="0" min="0" />
+            </fileset>
+        </foreach>
+    </target>
+
+    <target name="build-theme">
+        <echo message="Building Theme ${directory}.." />
+
+        <if>
+            <available file='${path.themes}/${directory}/joomla' type='dir' />
+            <then>
+                <copy todir="${tmp_dir}/templates/tpl_g5_${directory}" overwrite="true">
+                    <fileset dir="${path.themes}/${directory}/common"/>
+                </copy>
+
+                <copy todir="${tmp_dir}/templates/tpl_g5_${directory}" overwrite="true">
+                    <fileset dir="${path.themes}/${directory}/joomla">
+                        <exclude name="common"/>
+                        <exclude name="scss.sh"/>
+                    </fileset>
+                </copy>
+
+                <!-- Add version information to all xml files -->
+                <copy todir="${tmp_dir}/templates/tpl_g5_${directory}" overwrite="true">
+                    <filterchain refid="filter"/>
+                    <fileset dir="${path.themes}/${directory}/joomla">
+                        <include name="*.xml"/>
+                    </fileset>
+                </copy>
+
+                <!-- Zip the created Zips for packages -->
+                <phingcall target="archive">
+                    <property name="destination.file" value="${package_dir}/tpl_g5_${directory}" />
+                    <property name="base.directory" value="${tmp_dir}/templates/tpl_g5_${directory}" />
+                </phingcall>
+            </then>
+        </if>
     </target>
 
     <target name="package">

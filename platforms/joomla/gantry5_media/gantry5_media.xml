@@ -11,10 +11,8 @@
     <description>Gantry5 media files</description>
 
     <fileset>
-        <files target="media/gantry5">
-            <folder>css</folder>
-            <folder>fonts</folder>
-            <folder>js</folder>
+        <files target="media">
+            <folder>gantry5</folder>
         </files>
     </fileset>
 </extension>
