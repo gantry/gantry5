@@ -19,7 +19,11 @@ class ThemeList
         $locator = $gantry['locator'];
 
         $files = Folder::all('gantry-themes://', ['recursive' => false]);
-        $list = array();
+
+        /** @var array|ThemeDetails[] $list */
+        $list = [];
+
+        ksort($files);
 
         foreach ($files as $theme) {
             if (file_exists(PRIME_ROOT . '/themes/' . $theme . '/includes/gantry.php')) {
@@ -40,29 +44,17 @@ class ThemeList
             }
         }
 
-        // Add Thumbnails links.
+        // Add Thumbnails links after adding all the paths to the locator.
         foreach ($list as $details) {
-            $details['thumbnail'] = self::getImage($locator, $details, 'thumbnail');
+            $details['thumbnail'] = $details->getUrl("details.images.thumbnail");
         }
 
         return $list;
     }
 
-    protected static function getImage(UniformResourceLocator $locator, $details, $image)
+    public static function getTheme($name)
     {
-        $image = $details["details.images.{$image}"];
-
-        if (!strpos($image, '://')) {
-            $name = $details['name'];
-            $image = "gantry-themes-{$name}://{$image}";
-        }
-
-        try {
-            $image = $locator->findResource($image, false);
-        } catch (\Exception $e) {
-            $image = false;
-        }
-
-        return $image;
+        $themes = static::getThemes();
+        return isset($themes[$name]) ? $themes[$name] : null;
     }
 }

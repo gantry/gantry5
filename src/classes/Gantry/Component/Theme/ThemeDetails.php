@@ -25,35 +25,60 @@ class ThemeDetails implements \ArrayAccess
 
     public function getPaths()
     {
-        $parent = $this->getParent();
+        $paths = array_merge(
+            ['gantry-theme://'],
+            (array) $this->get('configuration.theme.base', 'gantry-theme://common')
+        );
 
-        $paths = (array) $this->offsetGet('config.overrides');
-        $paths[] = 'gantry-themes://' . $this->offsetGet('name');
-        $paths = array_merge($paths, (array) $this->offsetGet('config.base'));
+        $parent = $this->getParent();
         if ($parent) {
-            $paths[] = "gantry-theme-{$parent}://";
+            $paths[] = "gantry-themes-{$parent}://";
         }
 
         return $this->parsePaths($paths);
     }
 
+    public function getUrl($path)
+    {
+        $uri = (string) $this->offsetGet($path);
+
+        if (strpos($uri, 'gantry-theme://') === 0) {
+            list ($scheme, $uri) = explode('://', $uri, 2);
+        }
+        if (!strpos($uri, '://')) {
+            $name = $this->offsetGet('name');
+            $uri = "gantry-themes-{$name}://{$uri}";
+        }
+
+        return $uri;
+    }
+
     public function getParent()
     {
-        $parent = (string) $this->offsetGet('config.parent');
+        $parent = (string) $this->offsetGet('configuration.theme.parent');
         return $parent && $parent != $this->offsetGet('name') ? $parent : false;
     }
 
     protected function parsePaths(array $items)
     {
-        $name = $this->offsetGet('name');
-
         foreach ($items as &$item) {
-            if (!strpos($item, '://')) {
-                $item = "gantry-themes://{$name}/{$item}";
-            }
+            $item = $this->parsePath($item);
         }
 
         return $items;
+    }
+
+    public function parsePath($path)
+    {
+        if (strpos($path, 'gantry-theme://') === 0) {
+            list ($scheme, $path) = explode('://', $path, 2);
+        }
+        if (!strpos($path, '://')) {
+            $name = $this->offsetGet('name');
+            $path = "gantry-themes://{$name}/{$path}";
+        }
+
+        return $path;
     }
 
     /**
