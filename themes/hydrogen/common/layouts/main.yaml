@@ -118,22 +118,25 @@ children:
                     attributes:
                       enabled: 1
                       headline: 'Key Features'
-                      description: '<p>Gantry5 is packed full of features created to empower the development of designs into fully functional layouts with the absolute minimum effort and fuss</p>'
+                      description: '<p>Gantry 5 is packed full of features created to empower the development of designs into fully functional layouts with the absolute minimum effort and fuss</p>'
                       samples:
                         -
                           icon: 'fa fa-code'
                           subtitle: ''
-                          description: '<p>Gantry5 leverages the power of <a href="http://twig.sensiolabs.org/">Twig</a> to make creating powerful, dynamic themes quick and easy.</p>'
+                          description: '<p>Gantry 5 leverages the power of <a href="http://twig.sensiolabs.org/">Twig</a> to make creating powerful, dynamic themes quick and easy.</p>'
+                          class: ''
                           title: 'Twig Templating'
                         -
                           icon: 'fa fa-newspaper-o'
                           subtitle: ''
                           description: '<p>Drag-and-drop functionality gives you the power to place content blocks, resize them, and configure their unique settings in seconds.</p>'
+                          class: ''
                           title: 'Layout Manager'
                         -
                           icon: 'fa fa-cubes'
                           subtitle: ''
                           description: '<p>Create, configure, and manage content blocks as well as special features and functionality with the powerful particle system.</p>'
+                          class: ''
                           title: 'Particles System'
                     children: {  }
   -
