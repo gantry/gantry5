@@ -6,6 +6,8 @@ body {
 
 a {
   color: #439A86; }
+  a:hover {
+    color: #4d4d4d; }
 
 h1, h2, h3, h4, h5, h6, strong {
   color: #4d4d4d; }
@@ -183,6 +185,10 @@ hr {
   padding: 1.5rem 0;
   background: #354D59;
   color: #ffffff; }
+  #g-showcase a {
+    color: #d8e3e8; }
+    #g-showcase a:hover {
+      color: #ffffff; }
   #g-showcase h1, #g-showcase h2, #g-showcase h3, #g-showcase h4, #g-showcase h5, #g-showcase h6, #g-showcase strong {
     color: #ffffff; }
   #g-showcase .button {

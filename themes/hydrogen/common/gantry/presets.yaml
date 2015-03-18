@@ -34,62 +34,98 @@ preset1:
 preset2:
   image: 'gantry-admin://images/preset2.png'
   colors:
-    - '#6EB2C8'
-    - '#FCE884'
-    - '#E96785'
+    - '#3180C2'
+    - '#142D53'
+    - '#EF6C00'
 
   styles:
     base:
       background: '#ffffff'
-      text-color: '#383838'
+      text-color: '#666666'
     accent:
-      color-1: '#429942'
-      color-2: '#594cad'
+      color-1: '#3180C2'
+      color-2: '#EF6C00'
     header:
-      background: '#429942'
+      background: '#3180C2'
       text-color: '#ffffff'
     showcase:
-      background: '#525934'
+      background: '#142D53'
       text-color: '#ffffff'
     feature:
       background: '#ffffff'
-      text-color: '#383838'
+      text-color: '#666666'
     subfeature:
       background: '#f0f0f0'
-      text-color: '#383838'
+      text-color: '#666666'
     main:
       background: '#ffffff'
-      text-color: '#383838'
+      text-color: '#666666'
     footer:
       background: '#f0f0f0'
-      text-color: '#383838'
+      text-color: '#666666'
 
 preset3:
   image: 'gantry-admin://images/preset3.png'
   colors:
-    - '#61C0BA'
-    - '#4A96BA'
-    - '#A3517D'
+    - '#558B2F'
+    - '#344E2C'
+    - '#8BC34A'
 
   styles:
     base:
       background: '#ffffff'
-      text-color: '#555555'
+      text-color: '#666666'
     accent:
-      color-1: '#594cad'
-      color-2: '#429942'
+      color-1: '#558B2F'
+      color-2: '#8BC34A'
+    header:
+      background: '#558B2F'
+      text-color: '#ffffff'
+    showcase:
+      background: '#344E2C'
+      text-color: '#ffffff'
+    feature:
+      background: '#ffffff'
+      text-color: '#666666'
+    subfeature:
+      background: '#f0f0f0'
+      text-color: '#666666'
+    main:
+      background: '#ffffff'
+      text-color: '#666666'
+    footer:
+      background: '#f0f0f0'
+      text-color: '#666666'
 
 preset4:
   image: 'gantry-admin://images/preset4.png'
   colors:
-    - '#F2A817'
-    - '#F88316'
-    - '#E15E26'
+    - '#BF383A'
+    - '#722829'
+    - '#757575'
 
   styles:
     base:
       background: '#ffffff'
-      text-color: '#555555'
+      text-color: '#666666'
     accent:
-      color-1: '#8f4dae'
-      color-2: '#439a86'
+      color-1: '#BF383A'
+      color-2: '#757575'
+    header:
+      background: '#BF383A'
+      text-color: '#ffffff'
+    showcase:
+      background: '#722829'
+      text-color: '#ffffff'
+    feature:
+      background: '#ffffff'
+      text-color: '#666666'
+    subfeature:
+      background: '#f0f0f0'
+      text-color: '#666666'
+    main:
+      background: '#ffffff'
+      text-color: '#666666'
+    footer:
+      background: '#f0f0f0'
+      text-color: '#666666'
