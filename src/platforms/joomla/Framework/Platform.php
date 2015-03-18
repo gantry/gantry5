@@ -44,6 +44,12 @@ class Platform extends BasePlatform
         return ['' => ['gantry-theme://', 'media/gantry5/assets']];
     }
 
+    public function countModules($position)
+    {
+        $document = \JFactory::getDocument();
+        return ($document instanceof \JDocumentHTML) ? $document->countModules($position) : 0;
+    }
+
     public function getModules($position)
     {
         // TODO:
