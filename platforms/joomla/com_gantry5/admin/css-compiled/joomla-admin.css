@@ -15,6 +15,8 @@ body.com_gantry5 {
     margin: 0 0 1.5rem 0; }
   body.com_gantry5 #g5-container li {
     line-height: inherit; }
+  body.com_gantry5 #g5-container textarea, body.com_gantry5 #g5-container input {
+    box-shadow: none; }
 
 #g5-container .button-primary {
   background: #3180C2;
