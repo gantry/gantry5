@@ -592,7 +592,8 @@ a {
   #g5-container .settings-block i {
     line-height: inherit; }
   #g5-container .settings-block .fa {
-    width: 1rem; }
+    width: 1rem;
+    text-align: center; }
   #g5-container .settings-block .fa-lg {
     font-size: inherit;
     vertical-align: inherit; }
@@ -1047,7 +1048,7 @@ a {
   text-align: center;
   background-color: #f6f6f6;
   border: 1px solid #ddd;
-  border-radius: 4px; }
+  border-radius: 0.1875rem; }
 #g5-container .input-group-btn {
   position: relative;
   font-size: 0;
@@ -1055,7 +1056,7 @@ a {
   #g5-container .input-group-btn .button {
     position: relative;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 0.1875rem;
     margin: -1px; }
 #g5-container .input-group input:not(:first-child):not(:last-child), #g5-container .input-group-addon:not(:first-child):not(:last-child), #g5-container .input-group-btn:not(:first-child):not(:last-child) {
   border-radius: 0; }
