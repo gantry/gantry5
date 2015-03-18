@@ -67,12 +67,13 @@
 
     		&.g-parent {
 	    		.g-menu-parent-indicator {
-	    			display: inline;
+	    			position: absolute;
+	    			right: $content-padding - 0.2;
+	    			top: $content-padding - 0.1;
+	    			width: auto;
+	    			text-align: center;
 
 	    			&:after {
-						position: absolute;
-						right: 1rem;
-						width: auto;
 						content: "\f054";
 					}			
 				}

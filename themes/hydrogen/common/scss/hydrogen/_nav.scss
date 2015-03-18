@@ -73,6 +73,19 @@
 			> .g-selected {
 				background: darken($header-background, 12%);
 			}
+			> a {
+				+ span {
+					border: 1px solid lighten($header-background, 6%);
+					background: darken($header-background, 4%);
+					border-radius: $core-border-radius;
+					padding: 0.1rem;
+					margin-top: -0.1rem;
+					margin-right: -0.1rem;
+					&:hover {
+						background: darken($header-background, 8%);
+					}
+				}
+			}
 		}
 	}
 }

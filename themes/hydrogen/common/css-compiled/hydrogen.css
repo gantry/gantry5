@@ -145,6 +145,15 @@ hr {
     background: #306f61; }
 .g-main-nav .g-sublevel > li > .g-selected {
   background: #306f61; }
+.g-main-nav .g-sublevel > li > a + span {
+  border: 1px solid #4caf99;
+  background: #3d8c7a;
+  border-radius: 0.1875rem;
+  padding: 0.1rem;
+  margin-top: -0.1rem;
+  margin-right: -0.1rem; }
+  .g-main-nav .g-sublevel > li > a + span:hover {
+    background: #377e6d; }
 
 .g-nav-overlay {
   background: fadeout(#000000, 60%); }
