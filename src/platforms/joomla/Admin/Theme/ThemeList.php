@@ -11,7 +11,7 @@ class ThemeList
      * @param string $template
      * @return array
      */
-    public static function getThemes($template = null)
+    public static function getThemes()
     {
         static $styles;
 
@@ -21,12 +21,18 @@ class ThemeList
 
         $list = [];
         foreach ($styles as $style) {
-            if (!$template || $style->name === $template) {
-                $list[$style->name] = $style;
-            }
+            $list[$style->name] = $style;
         }
 
+        ksort($list);
+
         return $list;
+    }
+
+    public static function getTheme($name)
+    {
+        $themes = static::getThemes();
+        return isset($themes[$name]) ? $themes[$name] : null;
     }
 
     /**
@@ -76,6 +82,7 @@ class ThemeList
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
+        /** @var array|ThemeDetails[] $list */
         $list = [];
 
         foreach ($templates as $template)
@@ -95,7 +102,6 @@ class ThemeList
                 $details['name'] = $template->name;
                 $details['title'] = $details['details.name'];
                 $details['style'] = $template->title;
-                $details['thumbnail'] = 'template_thumbnail.png';
                 $details['preview_url'] = \JUri::root(false) . 'index.php?templateStyle=' . $template->id;
                 $details['admin_url'] = \JRoute::_('index.php?option=com_gantry5&view=about&style=' . $template->id, false);
                 $details['params'] = $params->toArray();
@@ -104,29 +110,11 @@ class ThemeList
             }
         }
 
-        // Add Thumbnails links.
+        // Add Thumbnails links after adding all the paths to the locator.
         foreach ($list as $details) {
-            $details['thumbnail'] = self::getImage($locator, $details, 'thumbnail');
+            $details['thumbnail'] = $details->getUrl('details.images.thumbnail');
         }
 
         return $list;
-    }
-
-    protected static function getImage(UniformResourceLocator $locator, $details, $image)
-    {
-        $image = $details["details.images.{$image}"];
-
-        if (!strpos($image, '://')) {
-            $name = $details['name'];
-            $image = "gantry-themes-{$name}://{$image}";
-        }
-
-        try {
-            $image = $locator->findResource($image, false);
-        } catch (\Exception $e) {
-            $image = false;
-        }
-
-        return $image;
     }
 }

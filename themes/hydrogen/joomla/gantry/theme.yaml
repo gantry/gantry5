@@ -24,8 +24,8 @@ details:
   license: GPLv2
   description: Hydrogen Theme
   images:
-    thumbnail: admin/images/template_thumbnail.png
-    preview: admin/images/template_preview.png
+    thumbnail: admin/images/preset1.png
+    preview: admin/images/preset1.png
 
 configuration:
   gantry:
@@ -33,13 +33,10 @@ configuration:
     engine: nucleus
 
   theme:
+    parent: g5_hydrogen
+    base: gantry-theme://common
     file: gantry-theme://include/theme.php
     class: \Gantry\Framework\Theme
-
-  overrides:
-    - gantry-theme://custom
-    - gantry-theme://
-    - gantry-theme://common
 
   css:
     compiler: \Gantry\Component\Stylesheet\ScssCompiler
