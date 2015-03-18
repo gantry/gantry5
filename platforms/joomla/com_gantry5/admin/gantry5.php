@@ -8,7 +8,7 @@ if ((!$user->authorise('core.manage', 'com_templates') || !$user->authorise('cor
     || !$user->authorise('core.edit', 'com_templates')
     || !$user->authorise('core.create', 'com_templates')
     || !$user->authorise('core.admin', 'com_templates')) {
-    $app  = JFactory::getApplication();
+    $app = JFactory::getApplication();
     $app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
 
     return false;
@@ -18,7 +18,16 @@ if (!defined('GANTRYADMIN_PATH')) {
     define('GANTRYADMIN_PATH', JPATH_COMPONENT_ADMINISTRATOR);
 }
 
-// Setup Gantry Framework or throw exception.
+// Detect Gantry Framework or fail gracefully.
+if (!class_exists('Gantry5\Loader')) {
+    $app = JFactory::getApplication();
+    $app->enqueueMessage(
+        JText::sprintf('COM_GANTRY5_PLUGIN_MISSING', JText::_('COM_GANTRY5')),
+        'error'
+    );
+    return;
+}
+
 Gantry5\Loader::setup();
 
 $gantry = Gantry\Framework\Gantry::instance();
