@@ -112,17 +112,17 @@
         <mkdir dir="${build_dir}/distribution" />
         <mkdir dir="${build_dir}/distribution/packages" />
         <mkdir dir="${package_dir}" />
-        <mkdir dir="${package_dir}/archive" />
+        <mkdir dir="${package_dir}/backup" />
         <touch file="${package_dir}/build"/>
    </target>
 
 
     <target name="backup">
-        <echo message="Moving old packages to archive..." />
+        <echo message="Backup last build..." />
 
-        <move todir="${package_dir}/archive" preservelastmodified="true">
+        <move todir="${package_dir}/backup" preservelastmodified="true">
             <fileset dir="${package_dir}">
-                <exclude name="archive" />
+                <exclude name="backup/**" />
             </fileset>
         </move>
     </target>
