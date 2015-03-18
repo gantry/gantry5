@@ -4,7 +4,7 @@
     Gantry phing build file.
 
     @copyright (C) 2015 RocketTheme, LLC. All rights reserved
-    @copyright (C) 2014 coder4life (@github)
+    @copyright (C) 2014 Joshua Weiss, coder4life (@github)
 
     The following parameters can be defined inside the PHPSTORM build task as Arguments. They
     allow the build file to be platform independent as not path information resides within
@@ -113,15 +113,16 @@
         <mkdir dir="${build_dir}/distribution/packages" />
         <mkdir dir="${package_dir}" />
         <mkdir dir="${package_dir}/archive" />
+        <touch file="${package_dir}/build"/>
    </target>
 
 
     <target name="backup">
         <echo message="Moving old packages to archive..." />
 
-        <move todir="${package_dir}/archive" preservelastmodified="true" includeemptydirs="false">
+        <move todir="${package_dir}/archive" preservelastmodified="true">
             <fileset dir="${package_dir}">
-                <exclude name="archive/" />
+                <exclude name="archive" />
             </fileset>
         </move>
     </target>
