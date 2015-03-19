@@ -180,6 +180,8 @@ class Styles extends HtmlController
         $file = YamlFile::instance($filename);
         $file->save($data);
 
+        // Apply new styles to the current configuration and compile CSS.
+        $config->join('styles', $data);
         $this->compileSettings();
 
         return $id ? $this->display($id) : $this->index();
