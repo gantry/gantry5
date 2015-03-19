@@ -16,7 +16,7 @@ h1, h2, h3, h4, h5, h6, strong {
 	color: darken($base-text-color, 10%);
 }
 
-.button, button, input[type="button"], input[type="reset"], input[type="submit"] {
+.button, button, .btn, input[type="button"], input[type="reset"], input[type="submit"] {
 	display: inline-block;
 	padding: 0.5rem 1rem;
 	border-radius: $border-radius;
@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, h6, strong {
 	&:hover {
 		background: lighten($accent-color-1, 5%);
 	}
-	&:active {
+	&:active, &:focus {
 		background: darken($accent-color-1, 5%);
 		box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
 	}

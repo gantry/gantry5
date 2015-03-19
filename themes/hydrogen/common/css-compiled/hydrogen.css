@@ -12,7 +12,7 @@ a {
 h1, h2, h3, h4, h5, h6, strong {
   color: #4d4d4d; }
 
-.button, button, input[type="button"], input[type="reset"], input[type="submit"] {
+.button, button, .btn, input[type="button"], input[type="reset"], input[type="submit"] {
   display: inline-block;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -26,9 +26,9 @@ h1, h2, h3, h4, h5, h6, strong {
   -webkit-transition: background 0.1s;
   -moz-transition: background 0.1s;
   transition: background 0.1s; }
-  .button:hover, button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover {
+  .button:hover, button:hover, .btn:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover {
     background: #4bac95; }
-  .button:active, button:active, input[type="button"]:active, input[type="reset"]:active, input[type="submit"]:active {
+  .button:active, .button:focus, button:active, button:focus, .btn:active, .btn:focus, input[type="button"]:active, input[type="button"]:focus, input[type="reset"]:active, input[type="reset"]:focus, input[type="submit"]:active, input[type="submit"]:focus {
     background: #3b8877;
     box-shadow: inset -1px -1px 1px rgba(0, 0, 0, 0.15); }
 
