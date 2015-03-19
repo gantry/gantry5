@@ -50,6 +50,18 @@ configuration:
       - hydrogen
       - custom
 
+  block-variations:
+    Box Variations:
+      box1: Box 1
+      box2: Box 2
+      box3: Box 3
+      box4: Box 4
+    Effects:
+      shadow: Shadow 1
+      shadow2: Shadow 2
+    Utility:
+      disabled: Disabled
+
   dependencies:
     gantry: 5.0.*
     engine/nucleus: 1.0.*
@@ -58,9 +70,15 @@ configuration:
 
 admin:
   styles:
+    core:
+      - base
+      - accent
     section:
       - header
       - showcase
+      - feature
       - subfeature
-    core:
-      - base
+      - main
+      - footer
+    configuration:
+      - breakpoints
