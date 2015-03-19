@@ -32,3 +32,6 @@ form:
       type: input.text
       label: Block Size
       description: Block size in percentages (5-100).
+      append:
+        type: "text"
+        text: "%"
