@@ -3,6 +3,13 @@
 	background: $showcase-background;
 	color: $showcase-text-color;
 
+	a {
+		color: lighten($showcase-background, 60%);
+		&:hover {
+			color: $showcase-text-color;
+		}
+	}
+
 	h1, h2, h3, h4, h5, h6, strong {
 		color: $showcase-text-color;
 	}

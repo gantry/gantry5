@@ -5,17 +5,10 @@
     border-right: 1px solid;
     border-color: $navbar-border;
     position: relative;
-    .gantry-logo {
-        width: 91px;
-        height: 28px;
-        display: block;
-        background-image: url(../images/gantrylogo.png);
-        background-repeat: no-repeat;
-        background-size: cover;
-        right: $content-padding;
+    #gantry-logo {
+        right: $content-padding + $content-margin;
         top: $content-padding;
         position: absolute;
-        opacity: 0.5;
         @include breakpoint(tablet-range) {
             display: none;
         }

@@ -37,7 +37,7 @@
         text-align: center;
         background-color: #f6f6f6;
         border: 1px solid $medium-gray;
-        border-radius: 4px;
+        border-radius: $core-border-radius;
     }
 
     .input-group-btn {
@@ -48,7 +48,7 @@
         .button {
             position: relative;
             border: 1px solid $medium-gray;
-            border-radius: 4px;
+            border-radius: $core-border-radius;
             margin: -1px;
         }
     }
