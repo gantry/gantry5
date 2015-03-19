@@ -177,9 +177,8 @@ hr {
   text-align: center;
   position: relative;
   z-index: 2; }
-  #g-header .g-content {
-    margin: 0;
-    padding: 0; }
+  #g-header .g-main-nav {
+    margin: -1.563rem; }
 
 #g-showcase {
   padding: 1.5rem 0;

@@ -5,8 +5,7 @@
 	position: relative;
 	z-index: 2;
 
-	.g-content {
-		margin: 0;
-		padding: 0;
+	.g-main-nav {
+		margin: -($content-padding + $content-margin);
 	}
 }
