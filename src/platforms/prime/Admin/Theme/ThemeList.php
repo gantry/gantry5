@@ -26,7 +26,7 @@ class ThemeList
         ksort($files);
 
         foreach ($files as $theme) {
-            if (file_exists(PRIME_ROOT . '/themes/' . $theme . '/includes/gantry.php')) {
+            if (file_exists(PRIME_ROOT . '/themes/' . $theme . '/gantry/theme.yaml')) {
                 $details = new ThemeDetails($theme);
 
                 if (!$locator->schemeExists('gantry-theme-' . $theme)) {
