@@ -42,4 +42,10 @@ body.com_gantry5 {
         }
 
     }
+
+    nav.navbar * {
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+    }
 }
