@@ -8,4 +8,6 @@ $gantry = include __DIR__ . '/includes/gantry.php';
 $theme = $gantry['theme'];
 
 // Render the page.
-echo $theme->render('comingsoon.html.twig');
+echo $theme
+    ->setLayout('_comingsoon')
+    ->render('comingsoon.html.twig');

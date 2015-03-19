@@ -7,15 +7,12 @@ $gantry = include __DIR__ . '/includes/gantry.php';
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
 
-$context = [];
-
-if (isset($this->error))
-{
-    $context['errorcode'] = $this->error->getCode();
-    $context['error'] = $this->error->getMessage();
-}
+$context = array(
+    'errorcode' => isset($this->error) ? $this->error->getCode() : null,
+    'error' => isset($this->error) ? $this->error->getMessage() : null
+);
 
 // Render the page.
 echo $theme
-    ->setLayout('error')
+    ->setLayout('_error')
     ->render('error.html.twig', $context);
