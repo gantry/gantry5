@@ -2106,7 +2106,7 @@ body.g5-dialog-open, html.g5-dialog-open {
     position: relative;
     margin: 0 auto;
     max-width: 100%;
-    width: 450px;
+    width: 500px;
     font-size: 1rem;
     line-height: 1.5; }
     .g5-dialog.g5-dialog-theme-default .g5-content h1, .g5-dialog.g5-dialog-theme-default .g5-content h2, .g5-dialog.g5-dialog-theme-default .g5-content h3, .g5-dialog.g5-dialog-theme-default .g5-content h4, .g5-dialog.g5-dialog-theme-default .g5-content h5, .g5-dialog.g5-dialog-theme-default .g5-content h6, .g5-dialog.g5-dialog-theme-default .g5-content p, .g5-dialog.g5-dialog-theme-default .g5-content ul, .g5-dialog.g5-dialog-theme-default .g5-content li {
