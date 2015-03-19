@@ -10,4 +10,6 @@ $theme = $gantry['theme'];
 $raw = JRequest::getString('type') == 'raw';
 
 // Render the component.
-echo $theme->render($raw ? 'raw.html.twig' : 'component.html.twig');
+echo $theme
+    ->setLayout('_body_only')
+    ->render($raw ? 'raw.html.twig' : 'component.html.twig');

@@ -14,3 +14,4 @@ $template = \JFactory::getApplication()->getTemplate(true);
 echo $theme
     ->setLayout($template->id)
     ->render('index.html.twig');
+

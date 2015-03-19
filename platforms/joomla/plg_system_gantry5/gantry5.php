@@ -62,7 +62,7 @@ class plgSystemGantry5 extends JPlugin
         if ($option == 'com_templates' && $view == 'styles' && !$task && $type == 'html') {
             $this->styles = $this->getStyles();
 
-            $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', [$this, 'appendHtml'], $this->app->getBody());
+            $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', array($this, 'appendHtml'), $this->app->getBody());
 
             $this->app->setBody($body);
         }

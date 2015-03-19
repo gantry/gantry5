@@ -7,11 +7,11 @@ $gantry = include __DIR__ . '/includes/gantry.php';
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
 
-$context = [
+$context = array(
     'formtoken' => JHtml::_('form.token')
-];
+);
 
 // Render the page.
 echo $theme
-    ->setLayout('offline')
+    ->setLayout('_offline')
     ->render('offline.html.twig', $context);

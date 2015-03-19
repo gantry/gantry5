@@ -309,7 +309,7 @@
         <echo message="Building Theme ${directory}.." />
 
         <if>
-            <available file='${path.themes}/${directory}/joomla' type='dir' />
+            <available file='${path.themes}/${directory}/joomla/gantry/theme.yaml' type='file' />
             <then>
                 <copy todir="${tmp_dir}/templates/tpl_g5_${directory}" overwrite="true">
                     <fileset dir="${path.themes}/${directory}/common"/>

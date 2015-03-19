@@ -23,7 +23,7 @@ class Document
      *
      * @example {{ url('theme://images/logo.png')|default('http://www.placehold.it/150x100/f4f4f4') }}
      *
-     * @param  string $input    Resource to be located.
+     * @param  string $url    Resource to be located.
      * @param  bool $domain     True to include domain name.
      * @return string|null      Returns url to the resource or null if resource was not found.
      */

@@ -51,6 +51,11 @@ class Gantry extends Container
         $routes = $this->offsetGet('routes');
         $route = isset($routes[$path]) ? $routes[$path] : $routes[1];
 
+        if (!$route) {
+            // TODO: need to implement back to root in Prime..
+            return $this->offsetGet('base_url');
+        }
+
         $path = implode('/', array_filter(func_get_args(), function($var) { return isset($var) && $var !== ''; }));
 
         return '/' . ltrim($this->offsetGet('base_url') . sprintf($route, $path), '/');
