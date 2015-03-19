@@ -1,6 +1,6 @@
 header:
   container:
-    - [position-position-1]
+    - [particle-logo 20, position-position-1 80]
 
 container:
   1:
