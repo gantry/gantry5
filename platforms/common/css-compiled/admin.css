@@ -161,6 +161,8 @@ a {
       display: block; }
     #g5-container .card .theme-screenshot a {
       display: block; }
+  #g5-container .themes .card {
+    max-width: 300px; }
 
 #footer {
   margin-bottom: 1rem;
