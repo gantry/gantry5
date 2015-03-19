@@ -57,6 +57,7 @@ class Router extends BaseRouter
         $this->container['routes'] = [
             '1' => '&view=%s&style=' . $style,
 
+            'themes' => '&view=themes',
             'picker/layouts' => '&view=layouts&style=' . $style,
             'picker/particles' => '&view=particles&style=' . $style
         ];
