@@ -37,12 +37,12 @@ form:
       fields:
 
         .name:
-          type: input.txt
+          type: input.text
           label: Name
           skip: true
 
         .icon:
-          type: input.text
+          type: input.icon
           label: Icon
 
         .text:
