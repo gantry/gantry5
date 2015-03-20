@@ -90,7 +90,8 @@ ready(function() {
         title = clone.find('a');
         editable = title.find('[data-title-editable]');
 
-        title.href(title.href() + items.length);
+        var re = new RegExp('%id%', 'g');
+        title.href(title.href().replace(re, items.length));
 
         clone.attribute('style', null).data('collection-item', clone.data('collection-template'));
         clone.attribute('data-collection-template', null);

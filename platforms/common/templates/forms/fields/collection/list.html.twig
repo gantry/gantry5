@@ -22,7 +22,7 @@
                 <label class="settings-param-override" for="of-{{ (scope ~ name)|e }}"></label>
             {% endif %}
             {% block contents %}
-                {% set field_route = gantry.route((route ~ '.' ~ scope)|replace('.', '/') ~ field.name) %}
+                {% set field_route = (route ~ '.' ~ scope ~ '.' ~ field.name)|replace('.', '/') %}
                     <span class="settings-param-title float-left">
                     {% block label %}
                         {% if field.description %}
@@ -39,11 +39,10 @@
                         {% if field.fields %}
                                 {% for key, val in value %}
                                     {% if (field.ajax == true) %}
-                                        {% set field_routes = field_route ~ '/' ~ key %}
                                         <li data-collection-item="{{ field.value }}">
                                             {% set itemValue = field.value == field.key ? key : val[field.value] %}
                                             <i class="fa fa-reorder font-small collection-reorder"></i>
-                                            <a class="config-cog" href="{{ field_routes|e }}"><span data-title-editable="{{ itemValue }}" class="title">{{ itemValue }}</span></a>
+                                            <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key)|e }}"><span data-title-editable="{{ itemValue }}" class="title">{{ itemValue }}</span></a>
                                             <i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>
                                             <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
                                         </li>
@@ -82,13 +81,13 @@
                         <ul style="display: none">
                             <li data-collection-nosort data-collection-template="{{ field.value }}" style="display: none;">
                                 <i class="fa fa-reorder font-small collection-reorder"></i>
-                                <a class="config-cog" href="{{ field_route ~ '/'|e }}"><span data-title-editable="New item" class="title">New item</span></a>
+                                <a class="config-cog" href="{{ gantry.route(field_route ~ '/%id%')|e }}"><span data-title-editable="New item" class="title">New item</span></a>
                                 <i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>
                                 <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
                             </li>
                         </ul>
                         <span class="collection-addnew button button-simple" data-collection-addnew="" title="Add new item"><i class="fa fa-plus font-small"></i></span>
-                        <a href="{{ field_route|e }}" class="collection-editall button button-simple" data-collection-editall="" title="Edit all items" {% if value|length == 0 %}style="display: none;"{% endif %}><i class="fa fa-th-large font-small"></i></a>
+                        <a href="{{ gantry.route(field_route)|e }}" class="collection-editall button button-simple" data-collection-editall="" title="Edit all items" {% if value|length == 0 %}style="display: none;"{% endif %}><i class="fa fa-th-large font-small"></i></a>
                     </div>
                     <input data-collection-data="" name="{{ (scope ~ name ~ '._json')|fieldName|e }}" type="hidden" value="{{ value|default({})|json_encode(constant('JSON_UNESCAPED_SLASHES'))|e('html_attr') }}"/>
                     {% endblock %}
