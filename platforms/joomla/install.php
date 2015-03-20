@@ -57,7 +57,7 @@ class Pkg_Gantry5InstallerScript
             $app = JFactory::getApplication();
 
             foreach ($errors as $error) {
-                $app->enqueueMessage($error, 'warning');
+                $app->enqueueMessage($error, 'error');
             }
             return false;
         }
