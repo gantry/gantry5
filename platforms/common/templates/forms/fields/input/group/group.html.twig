@@ -1,7 +1,14 @@
 {% extends default ? "partials/field.html.twig" : "forms/field.html.twig" %}
 
 {% block group %}
-    <div class="input-group">
+    <div class="input-group
+        {% if field.prepend -%} prepend
+        {% endif %}
+        {% if field.append -%} append
+        {% endif %}
+    ">
+
+
         {% if field.prepend %}
             {{ _self.pend(field.prepend) }}
         {% endif %}
