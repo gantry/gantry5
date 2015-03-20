@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6, strong {
 	border-radius: $border-radius;
 	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
 	background: $accent-color-1;
-	color: $base-background;
+	color: $white;
 	border: 0;
 	line-height: $core-line-height;
 	font-size: $core-font-size;
@@ -30,6 +30,7 @@ h1, h2, h3, h4, h5, h6, strong {
 	@include transition(background 0.1s);
 	&:hover {
 		background: lighten($accent-color-1, 5%);
+		color: $white;
 	}
 	&:active, &:focus {
 		background: darken($accent-color-1, 5%);
