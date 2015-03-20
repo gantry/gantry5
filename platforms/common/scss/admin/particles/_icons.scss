@@ -14,7 +14,7 @@
     }
 }
 
-.g5-popover-icons-preview {
+.g5-popover-icons-preview, [data-g5-iconpicker] .fa {
     width: auto !important;
 }
 
@@ -27,6 +27,11 @@
 
         span {
             color: lighten(#000, 70);
+        }
+
+        i {
+            width: auto !important;
+            vertical-align: middle;
         }
     }
 
