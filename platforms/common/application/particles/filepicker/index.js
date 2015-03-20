@@ -268,6 +268,15 @@ var FilePicker = new prime({
             element.addClass('selected');
         }, this));
 
+        content.delegate('click', '[data-select]', bind(function(event, element) {
+            if (event && event.preventDefault) { event.preventDefault(); }
+            var selected = files.find('[data-file].selected'),
+                value = selected ? selected.data('file-url') : '';
+
+            $(this.data.field).value(value);
+            modal.close();
+        }, this));
+
         content.delegate('click', '[data-files-mode]', bind(function(event, element) {
             if (event && event.preventDefault) { event.preventDefault(); }
             if (element.hasClass('active')) { return; }
