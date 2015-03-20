@@ -24,14 +24,16 @@ var resetSelectedActive = function() {
 var adjustOnViewportChange = function(e) {
     var body         = $('body'),
         topLevel     = $('.g-toplevel'),
-        pageSurround = $('#g-page-surround');
+        pageSurround = $('#g-page-surround'),
+        mainNav      = pageSurround.find('.g-main-nav'),
+        mobileNav    = pageSurround.nextSibling('.g-mobile-nav');
 
     if (window.innerWidth < MBP) {
         resetSelectedActive();
-        pageSurround.nextSibling('.g-mobile-nav').appendChild(topLevel);
+        if (mobileNav) { mobileNav.appendChild(topLevel); }
     } else {
         resetSelectedActive();
-        pageSurround.find('.g-main-nav').appendChild(topLevel);
+        if (mainNav) { mainNav.appendChild(topLevel); }
         if (body.hasClass('g-mobile-nav-active')) {
             body.removeClass('g-mobile-nav-active');
         }
