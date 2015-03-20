@@ -18,8 +18,9 @@
         <folder>config</folder>
         <folder>css</folder>
         <folder>css-compiled</folder>
-        <folder>fonts</folder>
         <folder>custom</folder>
+        <folder>fields</folder>
+        <folder>fonts</folder>
         <folder>gantry</folder>
         <folder>includes</folder>
         <folder>language</folder>
@@ -41,9 +42,9 @@
     </positions>
 
     <config>
-        <fields name="params">
+        <fields name="params" addfieldpath="/templates/g5_hydrogen/fields">
             <fieldset name="advanced">
-                <field name="configuration_id" type="hidden" />
+                <field name="warning" type="warning" />
             </fieldset>
         </fields>
     </config>
