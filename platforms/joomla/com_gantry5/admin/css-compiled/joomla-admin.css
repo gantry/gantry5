@@ -1,3 +1,6 @@
+html {
+  height: inherit !important; }
+
 body.com_gantry5 {
   color: #ddd;
   background-color: #404040 !important; }
