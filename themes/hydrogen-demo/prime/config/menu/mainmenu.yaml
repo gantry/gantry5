@@ -4,8 +4,6 @@ settings:
 
 ordering:
   home:
-  about:
-  team:
   features:
     typography:
   sample-pages:
@@ -14,6 +12,7 @@ ordering:
         layout-2:
         layout-3:
       our-team:
+        team:
         layout-1:
         layout-2:
         layout-3:
@@ -52,14 +51,6 @@ ordering:
 items:
   home:
     menu_icon: fa fa-fw fa-home
-
-  about:
-    type: separator
-    title: About
-    menu_icon: fa fa-fw fa-check
-
-  team:
-    menu_icon: fa fa-fw fa-users
 
   features:
     type: separator
