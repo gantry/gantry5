@@ -27,12 +27,10 @@ try {
     $gantry = Gantry::instance();
 
     // Initialize the template if not done already.
-    if (!isset($gantry[ 'theme.id' ]))
+    if (!isset($gantry[ 'theme.name' ]))
     {
-        $gantry[ 'theme.id' ] = 0;
         $gantry[ 'theme.path' ] = get_stylesheet_directory();
         $gantry[ 'theme.name' ] = get_option( 'template' );
-        $gantry[ 'theme.params' ] = [];
     }
 
     // Only a single template can be loaded at any time.

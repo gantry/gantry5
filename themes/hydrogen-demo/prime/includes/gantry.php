@@ -7,12 +7,10 @@ try
     $gantry = Gantry::instance();
 
     // Initialize the template if not done already.
-    if (!isset($gantry['theme.id']))
+    if (!isset($gantry['theme.name']))
     {
-        $gantry['theme.id'] = 0;
         $gantry['theme.path'] = dirname(__DIR__);
         $gantry['theme.name'] = $theme;
-        $gantry['theme.params'] = [];
     }
 
     // Only a single template can be loaded at any time.

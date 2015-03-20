@@ -99,10 +99,8 @@ class plgSystemGantry5 extends JPlugin
         $template = $app->getTemplate(true);
 
         // Initialize the template.
-        $gantry['theme.id'] = $template->id;
         $gantry['theme.path'] = JPATH_THEMES . "/{$template->template}";
         $gantry['theme.name'] = $template->template;
-        $gantry['theme.params'] = $template->params->toArray();
 
         $themePath = $gantry['theme.path'] . '/includes/theme.php';
 
