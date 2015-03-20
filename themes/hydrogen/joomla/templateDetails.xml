@@ -10,6 +10,8 @@
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
     <description>TPL_G5_HYDROGEN_DESC</description>
 
+    <scriptfile>install.php</scriptfile>
+
     <files>
         <folder>admin</folder>
         <folder>blueprints</folder>

@@ -4,7 +4,8 @@ defined('_JEXEC') or die;
 /**
  * Gantry5 package installer script.
  */
-class Pkg_Gantry5InstallerScript {
+class Pkg_Gantry5InstallerScript
+{
     /**
      * List of supported versions. Newest version first!
      * @var array
@@ -51,15 +52,14 @@ class Pkg_Gantry5InstallerScript {
         $manifest = $parent->getParent()->getManifest();
 
         // Prevent installation if requirements are not met.
-        if (!$this->checkRequirements($manifest->version)) {
+        $errors = $this->checkRequirements($manifest->version);
+        if ($errors) {
+            $app = JFactory::getApplication();
+
+            foreach ($errors as $error) {
+                $app->enqueueMessage($error, 'warning');
+            }
             return false;
-        }
-
-        // Remove old log file before installation.
-        $logFile = JFactory::getConfig()->get('log_path') . '/gantry5-install.php';
-
-        if (is_file($logFile)) {
-            @unlink($logFile);
         }
 
         return true;
@@ -100,24 +100,27 @@ class Pkg_Gantry5InstallerScript {
         return $plugin->store();
     }
 
-    protected function checkRequirements($version)
+    protected function checkRequirements()
     {
-        $pass  = $this->checkVersion('PHP', phpversion());
-        $pass &= $this->checkVersion('Joomla!', JVERSION);
-        $pass &= $this->checkExtensions($this->extensions);
+        $results = array();
+        $this->checkVersion($results, 'PHP', phpversion());
+        $this->checkVersion($results, 'Joomla!', JVERSION);
+        $this->checkExtensions($results, $this->extensions);
 
-        return $pass;
+        return $results;
     }
 
-    protected function checkVersion($name, $version)
+    protected function checkVersion(array &$results, $name, $version)
     {
-        $app = JFactory::getApplication();
-
         $major = $minor = 0;
+        foreach ($this->versions[$name] as $major => $minor) {
+            if (!$major || version_compare($version, $major, '<')) {
+                continue;
+            }
 
-        foreach ($this->versions[$name] as $major=>$minor) {
-            if (!$major || version_compare($version, $major, '<')) continue;
-            if (version_compare($version, $minor, '>=')) return true;
+            if (version_compare($version, $minor, '>=')) {
+                return;
+            }
             break;
         }
 
@@ -126,23 +129,34 @@ class Pkg_Gantry5InstallerScript {
         }
 
         $recommended = end($this->versions[$name]);
-        $app->enqueueMessage(sprintf("%s %s is not supported. Minimum required version is %s %s, but it is highly recommended to use %s %s or later.", $name, $version, $name, $minor, $name, $recommended), 'notice');
 
-        return false;
+        if (version_compare($recommended, $minor, '>')) {
+            $results[] = sprintf(
+                '%s %s is not supported. Minimum required version is %s %s, but it is highly recommended to use %s %s or later version.',
+                $name,
+                $version,
+                $name,
+                $minor,
+                $name,
+                $recommended
+            );
+        } else {
+            $results[] = sprintf(
+                '%s %s is not supported. Please update to %s %s or later version.',
+                $name,
+                $version,
+                $name,
+                $minor
+            );
+        }
     }
 
-
-    protected function checkExtensions($extensions)
+    protected function checkExtensions(array &$results, $extensions)
     {
-        $app = JFactory::getApplication();
-
-        $pass = 1;
         foreach ($extensions as $name) {
             if (!extension_loaded($name)) {
-                $pass = 0;
-                $app->enqueueMessage(sprintf("Required PHP extension '%s' is missing. Please install it into your system.", $name), 'notice');
+                $results[] = sprintf("Required PHP extension '%s' is missing. Please install it into your system.", $name);
             }
         }
-        return $pass;
     }
 }
