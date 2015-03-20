@@ -126,7 +126,7 @@ ready(function() {
                     });
                 }
 
-                $('.settings-param-title').hideIndicator();
+                $('.settings-param-title, .card.settings-block > h4').hideIndicator();
 
                 if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
         }
