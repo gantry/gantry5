@@ -54,11 +54,15 @@ ready(function() {
         if (reset && !HM.forward.hasClass('disabled')) HM.forward.addClass('disabled');
         layoutmanager.updatePendingChanges();
     });
+
     lmhistory.on('undo', function(session, index) {
-        var HM = {
-            back: $('[data-lm-back]'),
-            forward: $('[data-lm-forward]')
-        };
+        var notice = $('#lm-no-layout'),
+            HM     = {
+                back: $('[data-lm-back]'),
+                forward: $('[data-lm-forward]')
+            };
+
+        if (notice) { notice.style({ display: !size(session.data) ? 'block' : 'none' }); }
 
         builder.reset(session.data);
         HM.forward.removeClass('disabled');
@@ -67,10 +71,13 @@ ready(function() {
         layoutmanager.updatePendingChanges();
     });
     lmhistory.on('redo', function(session, index) {
-        var HM = {
-            back: $('[data-lm-back]'),
-            forward: $('[data-lm-forward]')
-        };
+        var notice = $('#lm-no-layout'),
+            HM     = {
+                back: $('[data-lm-back]'),
+                forward: $('[data-lm-forward]')
+            };
+
+        if (notice) { notice.style({ display: !size(session.data) ? 'block' : 'none' }); }
 
         builder.reset(session.data);
         HM.back.removeClass('disabled');
@@ -197,11 +204,11 @@ ready(function() {
         if (event && event.preventDefault) { event.preventDefault(); }
 
         var type, child;
-        forEach(builder.map, function(obj, id){
+        forEach(builder.map, function(obj, id) {
             type = obj.getType();
             child = obj.block.find('> [data-lm-id]');
             if (child) { child = child.data('lm-blocktype'); }
-            if (contains(['particle', 'grid', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))){
+            if (contains(['particle', 'grid', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
                 builder.remove(id);
                 obj.block.remove();
             }
@@ -236,7 +243,7 @@ ready(function() {
 
         element.showIndicator();
 
-        request('get', element.data('switch') + getAjaxSuffix(), function(error, response){
+        request('get', element.data('switch') + getAjaxSuffix(), function(error, response) {
             element.hideIndicator();
 
             if (!response.body.success) {
@@ -249,9 +256,11 @@ ready(function() {
                 return;
             }
 
-            var structure = response.body.data;
+            var structure = response.body.data,
+                notice    = $('#lm-no-layout');
 
             root.data('lm-root', JSON.stringify(structure)).empty();
+            if (notice) { notice.style({ display: 'none' }); }
             builder.setStructure(structure);
             builder.load();
 
