@@ -144,7 +144,20 @@ body.g5-dialog-open, html.g5-dialog-open {
 
 #g5-container .g5-dialog {
     .settings-block input:not(.settings-param-toggle), .settings-block textarea, .settings-block select, .settings-block .collection-list ul, .settings-block .colorpicker, .settings-block .selectize-input {
-        width: 185px;
+        width: 250px;
+        @include breakpoint(small-mobile-range) {
+            width: 90% !important;
+        }
+    }
+    .input-group {
+        &.append, &.prepend {
+            input {
+                width: 209px;
+                @include breakpoint(small-mobile-range) {
+                    width: 90% !important;
+                }
+            }
+        }
     }
 }
 

@@ -21,4 +21,7 @@
 	@else if $breakpoint == mobile-only {
 		@media only #{$media} and (max-width: $breakpoints-tablet-container - 0.062) { @content; }
 	}
+	@else if $breakpoint == no-desktop {
+		@media only #{$media} and (max-width: $breakpoints-desktop-container - 0.062) { @content; }
+	}
 }

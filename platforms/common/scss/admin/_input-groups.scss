@@ -2,14 +2,13 @@
 
 #g5-container {//wrapper
 
-    .settings-block input:not(.settings-param-toggle) {
-        width: 100%;
-    }
-
     .input-group {
         position: relative;
         display: table;
         border-collapse: separate;
+        @include breakpoint(mobile-only) {
+            width: 95%;
+        }
     }
 
     .input-group input, .input-group-addon, .input-group-btn {
@@ -30,7 +29,8 @@
     }
 
     .input-group-addon {
-        padding: 6px 12px;
+        padding: 6px 0;
+        width: 42px;
         font-size: $core-font-size - 0.1;
         font-weight: 400;
         color: $core-text;
@@ -44,6 +44,9 @@
         position: relative;
         font-size: 0;
         white-space: nowrap;
+        @include breakpoint(mobile-only) {
+            width: 42px;
+        }
 
         .button {
             position: relative;
