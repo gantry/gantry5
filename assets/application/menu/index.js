@@ -25,7 +25,7 @@ var adjustOnViewportChange = function(e) {
     var body         = $('body'),
         topLevel     = $('.g-toplevel'),
         pageSurround = $('#g-page-surround'),
-        mainNav      = pageSurround.find('.g-main-nav'),
+        mainNav      = pageSurround.search('.g-main-nav'),
         mobileNav    = pageSurround.nextSibling('.g-mobile-nav');
 
     if (window.innerWidth < MBP) {
@@ -73,7 +73,9 @@ r(function() {
             var lists = parent.search('~~ .g-menu-item ul');
             if (lists) { lists.removeClass('g-active').addClass('g-inactive'); }
 
-            parent.search('[data-g-menuparent]').removeClass('g-selected');
+            // children
+            var children = el.children('.g-menu-item-content');
+            if (children) { children.removeClass('g-selected'); }
 
             if (window.innerWidth > MBP) { body.addClass('g-nav-overlay-active'); }
         } else {
@@ -82,17 +84,17 @@ r(function() {
     });
 
     // Go Back Link for Level 1 || dont think we use this :)
-    /*body.delegate('click', '.g-menu-item .g-level-1', function(e, el) {
-     el = $(el);
+    body.delegate('click', '.g-menu-item .g-level-1', function(e, el) {
+        el = $(el);
 
-     var dropdown = el.parent('.g-dropdown'),
-     toplevel = el.parent('.g-toplevel');
+        var dropdown = el.parent('.g-dropdown'),
+            toplevel = el.parent('.g-toplevel');
 
-     if (dropdown && toplevel) {
-     dropdown.removeClass('g-active').addClass('g-inactive');
-     toplevel.removeClass('g-slide-out');
-     }
-     });*/
+        if (dropdown || toplevel) {
+            if (dropdown) { dropdown.removeClass('g-active').addClass('g-inactive'); }
+            if (toplevel) { toplevel.removeClass('g-slide-out'); }
+        }
+     });
 
     // Go Back Link for Level 2+
     body.delegate('click', '.g-menu-item .g-go-back', function(e, el) {
@@ -101,8 +103,12 @@ r(function() {
         var dropdown = el.parent('.g-dropdown'),
             parent   = el.parent('.g-menu-item');
 
-        if (dropdown) { dropdown.removeClass('g-active').addClass('g-inactive').parent('.g-sublevel').removeClass('g-slide-out'); }
-        if (parent) { parent.children('.g-menu-item-content').removeClass('g-selected'); }
+        if (dropdown) {
+            var parentSublevel = dropdown.parent('.g-sublevel');
+            dropdown.removeClass('g-active').addClass('g-inactive');
+            if (parentSublevel) { parentSublevel.removeClass('g-slide-out'); }
+        }
+        if (parent) { parent.search('> .g-menu-item-content').removeClass('g-selected'); }
     });
 
     // Close menu on overlay click
