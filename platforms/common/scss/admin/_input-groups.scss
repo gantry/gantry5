@@ -53,16 +53,16 @@
         }
     }
 
-    .input-group input:not(:first-child):not(:last-child), .input-group-addon:not(:first-child):not(:last-child), .input-group-btn:not(:first-child):not(:last-child) {
+    .input-group.append.prepend input:not(:first-child):not(:last-child), .input-group-addon:not(:first-child):not(:last-child), .input-group-btn:not(:first-child):not(:last-child) {
         border-radius: 0;
     }
 
-    .input-group input:last-child, .input-group-addon:last-child, .input-group-btn:first-child > .btn-group:not(:first-child) > .button, .input-group-btn:first-child > .btn:not(:first-child), .input-group-btn:last-child > .button, .input-group-btn:last-child > .btn-group > .button, .input-group-btn:last-child > .dropdown-toggle {
+    .input-group.append input:last-child, .input-group.prepend input:last-child, .input-group-addon:last-child, .input-group-btn:first-child > .btn-group:not(:first-child) > .button, .input-group-btn:first-child > .btn:not(:first-child), .input-group-btn:last-child > .button, .input-group-btn:last-child > .btn-group > .button, .input-group-btn:last-child > .dropdown-toggle {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
     }
 
-    .input-group input:first-child, .input-group-addon:first-child, .input-group-btn:first-child > .button, .input-group-btn:first-child > .btn-group > .button, .input-group-btn:first-child > .dropdown-toggle, .input-group-btn:last-child > .btn-group:not(:last-child) > .button, .input-group-btn:last-child > .button:not(:last-child):not(.dropdown-toggle) {
+    .input-group.append input:first-child, .input-group.prepend input:first-child, .input-group-addon:first-child, .input-group-btn:first-child > .button, .input-group-btn:first-child > .btn-group > .button, .input-group-btn:first-child > .dropdown-toggle, .input-group-btn:last-child > .btn-group:not(:last-child) > .button, .input-group-btn:last-child > .button:not(:last-child):not(.dropdown-toggle) {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
     }

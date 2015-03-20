@@ -1060,12 +1060,12 @@ a {
     border: 1px solid #ddd;
     border-radius: 0.1875rem;
     margin: -1px; }
-#g5-container .input-group input:not(:first-child):not(:last-child), #g5-container .input-group-addon:not(:first-child):not(:last-child), #g5-container .input-group-btn:not(:first-child):not(:last-child) {
+#g5-container .input-group.append.prepend input:not(:first-child):not(:last-child), #g5-container .input-group-addon:not(:first-child):not(:last-child), #g5-container .input-group-btn:not(:first-child):not(:last-child) {
   border-radius: 0; }
-#g5-container .input-group input:last-child, #g5-container .input-group-addon:last-child, #g5-container .input-group-btn:first-child > .btn-group:not(:first-child) > .button, #g5-container .input-group-btn:first-child > .btn:not(:first-child), #g5-container .input-group-btn:last-child > .button, #g5-container .input-group-btn:last-child > .btn-group > .button, #g5-container .input-group-btn:last-child > .dropdown-toggle {
+#g5-container .input-group.append input:last-child, #g5-container .input-group.prepend input:last-child, #g5-container .input-group-addon:last-child, #g5-container .input-group-btn:first-child > .btn-group:not(:first-child) > .button, #g5-container .input-group-btn:first-child > .btn:not(:first-child), #g5-container .input-group-btn:last-child > .button, #g5-container .input-group-btn:last-child > .btn-group > .button, #g5-container .input-group-btn:last-child > .dropdown-toggle {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0; }
-#g5-container .input-group input:first-child, #g5-container .input-group-addon:first-child, #g5-container .input-group-btn:first-child > .button, #g5-container .input-group-btn:first-child > .btn-group > .button, #g5-container .input-group-btn:first-child > .dropdown-toggle, #g5-container .input-group-btn:last-child > .btn-group:not(:last-child) > .button, #g5-container .input-group-btn:last-child > .button:not(:last-child):not(.dropdown-toggle) {
+#g5-container .input-group.append input:first-child, #g5-container .input-group.prepend input:first-child, #g5-container .input-group-addon:first-child, #g5-container .input-group-btn:first-child > .button, #g5-container .input-group-btn:first-child > .btn-group > .button, #g5-container .input-group-btn:first-child > .dropdown-toggle, #g5-container .input-group-btn:last-child > .btn-group:not(:last-child) > .button, #g5-container .input-group-btn:last-child > .button:not(:last-child):not(.dropdown-toggle) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0; }
 
