@@ -113,10 +113,20 @@
         display: inline-block;
     }
 
-    input:not(.settings-param-toggle), textarea, select, .collection-list ul, .colorpicker {
+    input:not(.settings-param-toggle), select, .collection-list ul, .colorpicker {
         width: 250px;
         @include breakpoint(no-desktop) {
             width: 100%;
+        }
+    }
+
+    textarea {
+        width: 250px;
+        @include breakpoint(tablet-range) {
+            width: 100%;
+        }
+        @include breakpoint(mobile-only) {
+            width: 92%;
         }
     }
 
@@ -137,7 +147,7 @@
             width: 100% !important;
         }
         @include breakpoint(mobile-only) {
-            width: 95% !important;
+            width: 92% !important;
         }
     }
 

@@ -611,11 +611,19 @@ a {
   #g5-container .settings-block select {
     margin: 0 0 10px;
     display: inline-block; }
-  #g5-container .settings-block input:not(.settings-param-toggle), #g5-container .settings-block textarea, #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker {
+  #g5-container .settings-block input:not(.settings-param-toggle), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker {
     width: 250px; }
     @media only all and (max-width: 59.938rem) {
-      #g5-container .settings-block input:not(.settings-param-toggle), #g5-container .settings-block textarea, #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker {
+      #g5-container .settings-block input:not(.settings-param-toggle), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker {
         width: 100%; } }
+  #g5-container .settings-block textarea {
+    width: 250px; }
+    @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+      #g5-container .settings-block textarea {
+        width: 100%; } }
+    @media only all and (max-width: 47.938rem) {
+      #g5-container .settings-block textarea {
+        width: 92%; } }
   #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
     width: 209px; }
     @media only all and (max-width: 59.938rem) {
@@ -628,7 +636,7 @@ a {
         width: 100% !important; } }
     @media only all and (max-width: 47.938rem) {
       #g5-container .settings-block .selectize-control.single {
-        width: 95% !important; } }
+        width: 92% !important; } }
   #g5-container .settings-block img {
     display: block; }
 #g5-container .g5-dialog .settings-block {
@@ -1042,7 +1050,7 @@ a {
   border-collapse: separate; }
   @media only all and (max-width: 47.938rem) {
     #g5-container .input-group {
-      width: 95%; } }
+      width: 92%; } }
 #g5-container .input-group input, #g5-container .input-group-addon, #g5-container .input-group-btn {
   display: table-cell; }
 #g5-container .input-group-addon:first-child {
