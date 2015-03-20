@@ -2,10 +2,8 @@
 // Bootstrap Gantry framework or fail gracefully (inside included file).
 $gantry = include_once __DIR__ . '/includes/gantry.php';
 
-$gantry['theme.id'] = 0;
 $gantry['theme.path'] = __DIR__;
 $gantry['theme.name'] =  basename(__DIR__);
-$gantry['theme.params'] = [];
 
 // Define the template.
 class Theme extends \Gantry\Framework\Theme {}

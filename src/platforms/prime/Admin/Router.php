@@ -17,11 +17,8 @@ class Router extends BaseRouter
         $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : '';
 
         if ($theme) {
-            $this->container['theme.id'] = 0;
             $this->container['theme.path'] = PRIME_ROOT . '/themes/' . $theme;
             $this->container['theme.name'] = $theme;
-            $this->container['theme.title'] = ucfirst($theme);
-            $this->container['theme.params'] = [];
         }
 
         $this->load();
@@ -47,7 +44,6 @@ class Router extends BaseRouter
         $ajax = ($this->format == 'json');
 
         $this->params = [
-            'id'   => 0,
             'ajax' => $ajax,
             'location' => $this->resource,
             'method' => $this->method,

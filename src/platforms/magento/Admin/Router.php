@@ -25,11 +25,8 @@ class Router extends BaseRouter
         ];
 /*
         if ($style) {
-            $this->container['theme.id'] = 0;
             $this->container['theme.path'] = PRIME_ROOT . '/themes/' . $style;
             $this->container['theme.name'] = $style;
-            $this->container['theme.title'] = ucfirst($style);
-            $this->container['theme.params'] = [];
         }
 */
 //        $this->container['base_url'] = rtrim(PRIME_URI, '/') . "/{$style}/admin";
