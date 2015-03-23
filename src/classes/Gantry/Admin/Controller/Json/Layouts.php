@@ -12,6 +12,8 @@ class Layouts extends JsonController
 {
     public function index()
     {
+        throw new \Exception('Deprecated');
+
         $options = [
             'compare' => 'Filename',
             'pattern' => '|\.json|',

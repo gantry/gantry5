@@ -36,7 +36,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         /** @var UniformResourceIterator $iterator */
         $iterator = $locator->getIterator(
-            'gantry-theme://layouts',
+            'gantry-layouts://',
             UniformResourceIterator::CURRENT_AS_SELF | UniformResourceIterator::UNIX_PATHS | UniformResourceIterator::SKIP_DOTS
         );
 
@@ -67,7 +67,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
-        $filename = $locator->findResource("gantry-theme://layouts/{$name}.yaml");
+        $filename = $locator->findResource("gantry-layouts://{$name}.yaml");
 
         if (!$filename) {
             throw new \RuntimeException('Preset not found', 404);

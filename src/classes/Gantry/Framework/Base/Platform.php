@@ -68,7 +68,7 @@ abstract class Platform
                 // Layout definitions for the blueprints.
                 'gantry-layouts' => [
                     'type' => 'ReadOnlyStream',
-                    'prefixes' => ['' => ['gantry-theme://layouts']]
+                    'prefixes' => ['' => ['gantry-theme://layouts', 'gantry-engine://layouts']]
                 ],
                 // Gantry particles.
                 'gantry-particles' => [
@@ -84,7 +84,7 @@ abstract class Platform
                 'gantry-blueprints' => [
                     'type' => 'ReadOnlyStream',
                     'prefixes' => [
-                        '' => ['gantry-engine://blueprints', 'gantry-theme://blueprints'],
+                        '' => ['gantry-theme://blueprints', 'gantry-engine://blueprints'],
                         'particles' => ['gantry-particles://']
                     ]
                 ],
