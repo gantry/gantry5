@@ -7,11 +7,11 @@
     {% block header_section %}
     <header id="g-header">
         <div class="g-container">
-            <div class="g-grid pure-g">
-                <div class="g-block size-1-3 pure-u-1-3">
+            <div class="g-grid">
+                <div class="g-block size-1-3">
                     <h1><a href="{{ base_url_relative }}">{{ site.title }}</a></h1>
                 </div>
-                <div class="g-block pure-u-2-3">
+                <div class="g-block">
                     {% block header %}
                         {% include 'widgets/menu.html.twig' %}
                     {% endblock %}
@@ -22,20 +22,20 @@
     {% endblock %}
     <div class="g-container">
         <section id="g-main">
-            <div class="g-grid pure-g">
+            <div class="g-grid">
                 {% if layout == 'sidebar' %}
-                <div class="g-mainbody g-block pure-u-2-3">
+                <div class="g-mainbody g-block">
                     {% block breadcrumbs %}{% endblock %}
                     <div class="g-content">
                         {% block content_sidebar %}{% endblock %}
                         {% block pagination %}{% endblock %}
                     </div>
                 </div>
-                <div class="g-sidebar g-block size-1-3 pure-u-1-3">
+                <div class="g-sidebar g-block size-1-3">
                     {% block sidebar %}{% endblock %}
                 </div>
                 {% else %}
-                <div class="g-mainbody g-block pure-u-1-1">
+                <div class="g-mainbody g-block">
                     <div class="g-content">
                         {% block content_full %}{% endblock %}
                     </div>

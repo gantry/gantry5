@@ -1,7 +1,7 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
 {% block particle %}
-    <div class="g-grid pure-g">
+    <div class="g-grid">
         {% for member in particle.members %}
             <div class="g-block">
                 <img alt="image" src="{{ url(member.image)|default('http://www.placehold.it/200x250/f4f4f4') }}">
