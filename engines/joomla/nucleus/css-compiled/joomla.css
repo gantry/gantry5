@@ -388,4 +388,24 @@ th .tooltip-inner {
   height: auto;
   line-height: 1.5; }
 
+#frame {
+  margin: 20px auto;
+  width: 400px;
+  padding: 20px; }
+
+#frame img {
+  max-width: 100%;
+  height: auto; }
+
+#frame form {
+  text-align: left; }
+
+.outline {
+  padding: 2px; }
+
+#system-message {
+  margin: 0 auto;
+  padding: 20px 0 0;
+  width: 50%; }
+
 /*# sourceMappingURL=joomla.css.map */

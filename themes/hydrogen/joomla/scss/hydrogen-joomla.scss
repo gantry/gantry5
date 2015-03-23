@@ -12,10 +12,9 @@
 
 //-------------------------------------------
 
-// JOOMLA COMPONENTS
-@import "joomla/typography";
-@import "joomla/buttons";
-@import "joomla/forms";
-@import "joomla/tabs";
-@import "joomla/utilities";
-@import "joomla/offline";
+// JOOMLA TEMPLATE SPECIFIC
+@import "hydrogen-joomla/core";
+@import "hydrogen-joomla/typography";
+@import "hydrogen-joomla/forms";
+@import "hydrogen-joomla/tabs";
+@import "hydrogen-joomla/utilities";
