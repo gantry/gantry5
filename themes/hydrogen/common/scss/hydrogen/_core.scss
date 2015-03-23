@@ -35,6 +35,7 @@ h1, h2, h3, h4, h5, h6, strong {
 	&:active, &:focus {
 		background: darken($accent-color-1, 5%);
 		box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
+		color: $white;
 	}
 }
 

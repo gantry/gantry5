@@ -31,7 +31,8 @@ h1, h2, h3, h4, h5, h6, strong {
     color: #ffffff; }
   .button:active, .button:focus, button:active, button:focus, .btn:active, .btn:focus, input[type="button"]:active, input[type="button"]:focus, input[type="reset"]:active, input[type="reset"]:focus, input[type="submit"]:active, input[type="submit"]:focus {
     background: #3b8877;
-    box-shadow: inset -1px -1px 1px rgba(0, 0, 0, 0.15); }
+    box-shadow: inset -1px -1px 1px rgba(0, 0, 0, 0.15);
+    color: #ffffff; }
 
 .logo-large {
   display: inline-block; }
