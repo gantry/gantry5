@@ -3,11 +3,11 @@ defined('_JEXEC') or die;
 
 use Gantry\Framework\Gantry;
 
-$app = JFactory::getApplication('site');
-$template = $app->getTemplate(true);
-
 try
 {
+    $app = JFactory::getApplication('site');
+    $template = $app->getTemplate(true);
+
     if (!class_exists('Gantry5\Loader')) {
         throw new RuntimeException('Please install Gantry5 Framework!');
     }

@@ -94,10 +94,6 @@ class plgSystemGantry5 extends JPlugin
         // Get Gantry instance.
         $gantry = Gantry\Framework\Gantry::instance();
 
-        // Get information from the current template.
-        $app = JFactory::getApplication();
-        $template = $app->getTemplate(true);
-
         // Initialize the template.
         $gantry['theme.path'] = JPATH_THEMES . "/{$template->template}";
         $gantry['theme.name'] = $template->template;
@@ -193,7 +189,7 @@ class plgSystemGantry5 extends JPlugin
                     $params = new \Joomla\Registry\Registry;
                     $params->loadString($template->params);
 
-                    $list[$template->id] = ($params->get('master') == 'true');
+                    $list[$template->id] = true;
                 }
             }
 

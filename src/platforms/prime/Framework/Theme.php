@@ -19,7 +19,7 @@ class Theme extends Base\Theme
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-theme://twig'));
+        $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-engine://twig'));
         $loader->setPaths($locator->findResources('gantry-pages://'), 'pages');
         $loader->setPaths($locator->findResources('gantry-positions://'), 'positions');
 

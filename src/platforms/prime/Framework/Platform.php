@@ -16,6 +16,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Platform extends BasePlatform
 {
+    protected $name = 'prime';
+
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -66,16 +68,19 @@ class Platform extends BasePlatform
 
     public function getEnginesPaths()
     {
+        if (is_link(GANTRY5_ROOT . '/engines')) {
+            // Development environment.
+            return ['' => ["engines/{$this->name}", "engines/common"]];
+        }
         return ['' => ['engines']];
-    }
-
-    public function getEnginePaths()
-    {
-        return ['' => ['gantry-theme://engine', 'gantry-engines://nucleus']];
     }
 
     public function getAssetsPaths()
     {
+        if (is_link(GANTRY5_ROOT . '/assets')) {
+            // Development environment.
+            return ['' => ['gantry-theme://', "assets/{$this->name}", 'assets/common']];
+        }
         return ['' => ['gantry-theme://', 'assets']];
     }
 

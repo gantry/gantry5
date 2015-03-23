@@ -107,9 +107,9 @@ abstract class Platform
         return ['' => []];
     }
 
-    public function getEnginePaths()
+    public function getEnginePaths($name = 'nucleus')
     {
-        return ['' => []];
+        return ['' => ['gantry-theme://engine', "gantry-engines://{$name}"]];
     }
 
     public function getEnginesPaths()

@@ -9,6 +9,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Base\Theme as BaseTheme;
+use Gantry\Framework\Platform;
 use RocketTheme\Toolbox\StreamWrapper\Stream;
 use RocketTheme\Toolbox\StreamWrapper\ReadOnlyStream;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -22,13 +23,15 @@ class Theme extends BaseTheme
         $relpath = Folder::getRelativePath($path);
 
         // Initialize admin streams.
-        $gantry['platform']->set(
+        /** @var Platform $patform */
+        $patform = $gantry['platform'];
+        $nucleus = $patform->getEnginePaths('nucleus')[''];
+        $patform->set(
             'streams.gantry-admin.prefixes', [
-                ''        => [$relpath, $relpath . '/common'],
-                'assets/' => [$relpath, $relpath . '/common', 'gantry-engines://nucleus', 'gantry-assets://']
+                ''        => [$relpath, $relpath . '/common', 'gantry-theme://admin', 'gantry-engine://admin'],
+                'assets/' => array_merge([$relpath, $relpath . '/common'], $nucleus, ['gantry-assets://'])
             ]
         );
-
 
         $gantry['particles'] = function ($c) {
             return new Particles($c);
@@ -63,11 +66,6 @@ class Theme extends BaseTheme
     protected function boot()
     {
         $gantry = \Gantry\Framework\Gantry::instance();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-        $locator->addPath('gantry-admin', '', 'gantry-theme://admin');
-        $locator->addPath('gantry-admin', '', 'gantry-engine://admin');
 
         /** @var Streams $streams */
         $streams = $gantry['streams'];
