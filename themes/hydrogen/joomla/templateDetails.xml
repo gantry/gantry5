@@ -24,14 +24,12 @@
         <folder>layouts</folder>
         <folder>particles</folder>
         <folder>scss</folder>
-        <file>comingsoon.php</file>
         <file>component.php</file>
         <file>error.php</file>
         <file>index.php</file>
         <file>offline.php</file>
         <file>template_preview.png</file>
         <file>template_thumbnail.png</file>
-        <file>unsupported.php</file>
     </files>
 
     <positions>
