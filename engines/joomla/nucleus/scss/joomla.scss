@@ -10,21 +10,11 @@
 @import "nucleus/functions/base";
 @import "nucleus/mixins/base";
 
-// Load Template Configuration
-@import "configuration/base";
-
 //-------------------------------------------
 
 // JOOMLA COMPONENTS
-@import "joomla/core/typography";
-@import "joomla/core/buttons";
-@import "joomla/core/forms";
-@import "joomla/core/tabs";
-@import "joomla/core/utilities";
-
-// JOOMLA TEMPLATE SPECIFIC
-@import "joomla/template/core";
-@import "joomla/template/typography";
-@import "joomla/template/forms";
-@import "joomla/template/tabs";
-@import "joomla/template/utilities";
+@import "joomla/typography";
+@import "joomla/buttons";
+@import "joomla/forms";
+@import "joomla/tabs";
+@import "joomla/utilities";

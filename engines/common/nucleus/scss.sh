@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SASS_PATH=../common/scss:../../../engines/nucleus/scss
+SASS_PATH=../common/scss:../../../engines/common/nucleus/scss
 
 #====================================================================
 
