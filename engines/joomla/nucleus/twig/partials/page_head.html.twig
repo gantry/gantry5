@@ -1,17 +1,14 @@
 {% extends "@nucleus/page_head.html.twig" %}
 
-{% block head_title %}
-    <meta http-equiv="Content-Type" content="text/html; charset={{ site.charset }}" />
-    <title>{{ site.title }}</title>
-    <meta name="description" content="{{ site.description }}">
-{% endblock %}
+{% block head_title -%}
+{%- endblock %}
 
-{% block head_application %}
+{% block head_application -%}
     <jdoc:include type="head" />
-{% endblock %}
+{%- endblock %}
 
-{% block head_platform %}
+{% block head_platform -%}
     <link rel="stylesheet" href="{{ url('gantry-assets://css/bootstrap-gantry.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url('gantry-assets://css/icomoon.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/joomla.css') }}" type="text/css" />
-{% endblock %}
+{%- endblock %}

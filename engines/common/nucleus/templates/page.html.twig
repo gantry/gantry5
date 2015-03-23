@@ -29,11 +29,11 @@
 {%- block page %}
 <!DOCTYPE {{ gantry.page.doctype|default('xhtml') }}>
 <html{{ gantry.page.htmlAttributes }}>
-    {% block page_head %}
+    {% block page_head -%}
         {% include 'partials/page_head.html.twig' %}
-    {% endblock %}
+    {%- endblock %}
 
-    {% block page_body %}
+    {% block page_body -%}
     <body{{ gantry.page.bodyAttributes }}>
         <div id="g-page-surround">
             {{ page_top }}
@@ -41,6 +41,7 @@
             {{ page_bottom }}
         </div>
     </body>
-    {% endblock %}
+    {%- endblock %}
+
 </html>
-{% endblock %}
+{% endblock -%}
