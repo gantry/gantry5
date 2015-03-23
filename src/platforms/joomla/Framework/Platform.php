@@ -14,6 +14,8 @@ use Gantry\Framework\Base\Platform as BasePlatform;
 
 class Platform extends BasePlatform
 {
+    protected $name = 'joomla';
+
     public function getCachePath()
     {
         return Folder::getRelativePath(JPATH_CACHE) . '/gantry5';
@@ -31,16 +33,20 @@ class Platform extends BasePlatform
 
     public function getEnginesPaths()
     {
+        if (is_link(GANTRY5_ROOT . '/media/gantry5/engines')) {
+            // Development environment.
+            return ['' => ["media/gantry5/engines/{$this->name}", 'media/gantry5/engines/common']];
+        }
         return ['' => ['media/gantry5/engines']];
-    }
-
-    public function getEnginePaths()
-    {
-        return ['' => ['gantry-theme://engine', 'gantry-engines://nucleus']];
     }
 
     public function getAssetsPaths()
     {
+        if (is_link(GANTRY5_ROOT . '/media/gantry5/assets')) {
+            // Development environment.
+            return ['' => ['gantry-theme://', "media/gantry5/assets/{$this->name}", 'media/gantry5/assets/common']];
+        }
+
         return ['' => ['gantry-theme://', 'media/gantry5/assets']];
     }
 

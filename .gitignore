@@ -19,6 +19,7 @@ platforms/*/*/src
 
 # Symbolic links in themes
 themes/*/*/common
+themes/*/*/skeleton
 themes/*/*/src
 themes/*/*/cache
 themes/*/*/custom

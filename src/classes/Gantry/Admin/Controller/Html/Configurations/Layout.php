@@ -314,9 +314,10 @@ class Layout extends HtmlController
         $list = [];
         foreach ($particles as $name => $particle) {
             $type = isset($particle['type']) ? $particle['type'] : 'particle';
+            $particleName = isset($particle['name']) ? $particle['name'] : $name;
 
             if (!$onlyEnabled || $config->get("particles.{$name}.enabled", true)) {
-                $list[$type][$name] = $particle['name'];
+                $list[$type][$name] = $particleName;
             }
         }
 

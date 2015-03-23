@@ -29,8 +29,6 @@ if [ -f $GIT_TARGET/configuration.php ]; then
         # Templates
         'themes/hydrogen/joomla'
         'themes/hydrogen/common'
-#        'themes/hydrogen-demo/joomla'
-#        'themes/hydrogen-demo/common'
     )
     targets=(
         # Manifest files
@@ -54,8 +52,6 @@ if [ -f $GIT_TARGET/configuration.php ]; then
         # Templates
         'templates/g5_hydrogen'
         'templates/g5_hydrogen/common'
-#        'templates/g5_hydrogen-demo'
-#        'templates/g5_hydrogen-demo/common'
         )
 elif [ -f $GIT_TARGET/wp-config.php ]; then
     PLATFORM=WordPress

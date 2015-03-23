@@ -41,10 +41,7 @@
     <property name="path.src" value="${project_dir}/src" />
     <property name="path.themes" value="${project_dir}/themes" />
 
-    <property name="platforms.common" value="${path.platforms}/common" />
-    <property name="platforms.joomla" value="${path.platforms}/joomla" />
-
-    <xmlproperty file="${platforms.joomla}/${cfg.prefix}${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+    <xmlproperty file="${path.platforms}/joomla/${cfg.prefix}${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
     <tstamp>
         <format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
     </tstamp>
@@ -132,11 +129,11 @@
         <echo message="Building Installer.." />
 
         <!-- Copy files needed by the installer -->
-        <copy file="${platforms.joomla}/pkg_gantry5.xml" todir="${build_dir}/distribution" overwrite="true">
+        <copy file="${path.platforms}/joomla/pkg_gantry5.xml" todir="${build_dir}/distribution" overwrite="true">
             <filterchain refid="filter"/>
         </copy>
 
-        <copy file="${platforms.joomla}/install.php" todir="${build_dir}/distribution" overwrite="true">
+        <copy file="${path.platforms}/joomla/install.php" todir="${build_dir}/distribution" overwrite="true">
             <filterchain refid="filter"/>
         </copy>
 
@@ -149,7 +146,7 @@
         <echo message="Building Component..." />
 
         <copy todir="${tmp_dir}/packages/com_gantry5/admin" overwrite="true">
-            <fileset dir="${platforms.common}">
+            <fileset dir="${path.platforms}/common">
                 <exclude name=".sass-cache/"/>
                 <exclude name="application/"/>
                 <exclude name="node_modules/"/>
@@ -158,10 +155,7 @@
                 <exclude name="scss.sh"/>
                 <exclude name="**/*.js.map"/>
             </fileset>
-        </copy>
-
-        <copy todir="${tmp_dir}/packages/com_gantry5/admin" overwrite="true">
-            <fileset dir="${platforms.joomla}/com_gantry5/admin">
+            <fileset dir="${path.platforms}/joomla/com_gantry5/admin">
                 <exclude name=".sass-cache/"/>
                 <exclude name="common/"/>
                 <exclude name="Gruntfile.js"/>
@@ -173,7 +167,7 @@
         <!-- Add version information to all xml files -->
         <copy todir="${tmp_dir}/packages/com_gantry5/admin" overwrite="true">
             <filterchain refid="filter"/>
-            <fileset dir="${platforms.joomla}/com_gantry5/admin">
+            <fileset dir="${path.platforms}/joomla/com_gantry5/admin">
                 <include name="*.xml"/>
             </fileset>
         </copy>
@@ -229,13 +223,13 @@
         </copy>
 
         <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
-            <fileset dir="${platforms.joomla}/lib_gantry5"/>
+            <fileset dir="${path.platforms}/joomla/lib_gantry5"/>
         </copy>
 
         <!-- Add version information to all xml files -->
         <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
             <filterchain refid="filter"/>
-            <fileset dir="${platforms.joomla}/lib_gantry5">
+            <fileset dir="${path.platforms}/joomla/lib_gantry5">
                 <include name="*.xml"/>
             </fileset>
         </copy>
@@ -245,21 +239,23 @@
         <echo message="Building Media files.." />
 
         <copy todir="${tmp_dir}/packages/gantry5_media/gantry5/assets" overwrite="true">
-            <fileset dir="${path.assets}"/>
+            <fileset dir="${path.assets}/common"/>
+            <fileset dir="${path.assets}/joomla"/>
         </copy>
 
         <copy todir="${tmp_dir}/packages/gantry5_media/gantry5/engines" overwrite="true">
-            <fileset dir="${path.engines}"/>
+            <fileset dir="${path.engines}/common"/>
+            <fileset dir="${path.engines}/joomla"/>
         </copy>
 
         <copy todir="${tmp_dir}/packages/gantry5_media/gantry5" overwrite="true">
-            <fileset dir="${platforms.joomla}/gantry5_media"/>
+            <fileset dir="${path.platforms}/joomla/gantry5_media"/>
         </copy>
 
         <!-- Add version information to all xml files -->
         <copy todir="${tmp_dir}/packages/gantry5_media" overwrite="true">
             <filterchain refid="filter"/>
-            <fileset dir="${platforms.joomla}/gantry5_media">
+            <fileset dir="${path.platforms}/joomla/gantry5_media">
                 <include name="*.xml"/>
             </fileset>
         </copy>
@@ -269,17 +265,17 @@
         <echo message="Building Plugins.." />
 
         <copy todir="${tmp_dir}/packages/plg_system_gantry5" overwrite="true">
-            <fileset dir="${platforms.joomla}/plg_system_gantry5"/>
+            <fileset dir="${path.platforms}/joomla/plg_system_gantry5"/>
         </copy>
 
         <copy todir="${tmp_dir}/packages/plg_quickicon_gantry5" overwrite="true">
-            <fileset dir="${platforms.joomla}/plg_quickicon_gantry5"/>
+            <fileset dir="${path.platforms}/joomla/plg_quickicon_gantry5"/>
         </copy>
 
         <!-- Add version information to all xml files -->
         <copy todir="${tmp_dir}/packages/plg_system_gantry5" overwrite="true">
             <filterchain refid="filter"/>
-            <fileset dir="${platforms.joomla}/plg_system_gantry5">
+            <fileset dir="${path.platforms}/joomla/plg_system_gantry5">
                 <include name="*.xml"/>
             </fileset>
         </copy>
@@ -287,7 +283,7 @@
         <!-- Add version information to all xml files -->
         <copy todir="${tmp_dir}/packages/plg_quickicon_gantry5" overwrite="true">
             <filterchain refid="filter"/>
-            <fileset dir="${platforms.joomla}/plg_quickicon_gantry5">
+            <fileset dir="${path.platforms}/joomla/plg_quickicon_gantry5">
                 <include name="*.xml"/>
             </fileset>
         </copy>
@@ -318,7 +314,7 @@
                 <copy todir="${tmp_dir}/templates/tpl_g5_${directory}" overwrite="true">
                     <fileset dir="${path.themes}/${directory}/joomla">
                         <exclude name="common"/>
-                        <exclude name="scss.sh"/>
+                        <exclude name="custom"/>
                     </fileset>
                 </copy>
 
