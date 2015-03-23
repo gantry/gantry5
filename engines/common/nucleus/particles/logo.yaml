@@ -10,6 +10,11 @@ form:
       description: Globally enable logo particles.
       default: true
 
+    url:
+      type: input.text
+      label: Url
+      description: Url for the image. Leave empty to go to home page.
+
     text:
       type: input.text
       label: Text
