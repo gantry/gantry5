@@ -91,9 +91,3 @@ a.text-info:hover,
 a.text-info:focus {
 	color: darken($info-color, 5%);
 }
-
-// Misc
-.outline {
-	border: 1px solid $base-border-color;
-  	background: $main-background;
-}

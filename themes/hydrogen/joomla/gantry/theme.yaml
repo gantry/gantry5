@@ -45,9 +45,11 @@ configuration:
       - gantry-engine://scss
     files:
       - hydrogen
+      - hydrogen-joomla
       - custom
     persistent:
       - hydrogen
+      - hydrogen-joomla
       - custom
 
   block-variations:
