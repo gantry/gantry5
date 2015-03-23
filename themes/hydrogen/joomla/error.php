@@ -9,7 +9,8 @@ $theme = $gantry['theme'];
 
 $context = array(
     'errorcode' => isset($this->error) ? $this->error->getCode() : null,
-    'error' => isset($this->error) ? $this->error->getMessage() : null
+    'error' => isset($this->error) ? $this->error->getMessage() : null,
+    'backtrace' => $this->debug ? $this->renderBacktrace() : null
 );
 
 // Render the page.

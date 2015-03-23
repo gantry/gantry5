@@ -2,5 +2,6 @@
 
 {% block content %}
     <jdoc:include type="message" />
-    {{ errorcode|default(500) }} {{ error|default('Unknown Error') }}
+    <h1>{{ errorcode|default(500) }} {{ error|default('Unknown Error') }}</h1>
+    {{ backtrace }}
 {% endblock %}
