@@ -35,18 +35,18 @@
         <p>{{ _._("RT_OFFLINE_LOGIN_MESSAGE") }}</p>
 
         {% if not user.isRoot %}
-        <form  action="{{ site.url }}" method="post">
+        <form  action="{{ url()|e }}" method="post">
             <input name="username" id="username" class="inputbox" type="text" placeholder="{{ _._('JGLOBAL_USERNAME') }}" />
             <input type="password" name="password" class="inputbox" placeholder="{{ _._('JGLOBAL_PASSWORD') }}" />
             <input type="hidden" name="remember" class="inputbox" value="yes" id="remember" />
             <input type="submit" name="Submit" class="button" value="{{ _._('JLOGIN') }}" />
             <input type="hidden" name="option" value="com_users" />
             <input type="hidden" name="task" value="user.login" />
-            <input type="hidden" name="return" value="{{ site.url|base64 }}" />
+            <input type="hidden" name="return" value="{{ url()|base64 }}" />
             {{ formtoken }}
         </form>
         {% else %}
-        <form action="{{ site.url}}" method="post">
+        <form action="{{ url()|e }}" method="post">
             <input type="submit" name="Submit" class="button" value="{{ _._('JLOGOUT') }}" />
             <input type="hidden" name="option" value="com_users" />
             <input type="hidden" name="task" value="user.logout" />

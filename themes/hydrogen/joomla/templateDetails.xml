@@ -16,9 +16,7 @@
         <folder>admin</folder>
         <folder>blueprints</folder>
         <folder>config</folder>
-        <folder>css</folder>
         <folder>css-compiled</folder>
-        <folder>custom</folder>
         <folder>fields</folder>
         <folder>fonts</folder>
         <folder>gantry</folder>
@@ -27,7 +25,6 @@
         <folder>layouts</folder>
         <folder>particles</folder>
         <folder>scss</folder>
-        <folder>twig</folder>
         <file>comingsoon.php</file>
         <file>component.php</file>
         <file>error.php</file>
