@@ -10,6 +10,7 @@ $theme = $gantry['theme'];
 $context = array(
     'errorcode' => isset($this->error) ? $this->error->getCode() : null,
     'error' => isset($this->error) ? $this->error->getMessage() : null,
+    'debug' => $app->get('debug_lang', '0') == '1' || $app->get('debug', '0') == '1',
     'backtrace' => $this->debug ? $this->renderBacktrace() : null
 );
 

@@ -27,7 +27,7 @@
 {% endset %}
 
 {%- block page %}
-<!DOCTYPE {{ gantry.page.doctype|default('xhtml') }}>
+<!DOCTYPE {{ gantry.page.doctype|default('html') }}>
 <html{{ gantry.page.htmlAttributes }}>
     {% block page_head -%}
         {% include 'partials/page_head.html.twig' %}
