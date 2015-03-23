@@ -1186,6 +1186,12 @@ input[type="submit"] {
 .center {
   text-align: center; }
 
+.align-right {
+  text-align: right; }
+
+.align-left {
+  text-align: left; }
+
 .full-height {
   min-height: 100vh; }
 

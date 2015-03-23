@@ -62,6 +62,9 @@ configuration:
       shadow2: Shadow 2
     Utility:
       disabled: Disabled
+      align-right: Align Right
+      align-left: Align Left
+      center: Center
 
   dependencies:
     gantry: 5.0.*

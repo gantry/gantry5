@@ -65,6 +65,9 @@ input[type="color"]:focus,
 .input-prepend > .add-on,
 .input-append > .add-on {
 	vertical-align: top;
+	height: auto;
+	line-height: $core-line-height;
+	padding: 5px;
 }
 
 .input-prepend .chzn-container-single .chzn-single {
