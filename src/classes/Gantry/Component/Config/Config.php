@@ -52,7 +52,9 @@ class Config implements \ArrayAccess, \Iterator, ExportInterface
             if (!is_array($old)) {
                 throw new \RuntimeException('Value ' . $old);
             }
-            if (!is_array($value)) {
+            if (is_object($value)) {
+                $value = (array) $value;
+            } elseif (!is_array($value)) {
                 throw new \RuntimeException('Value ' . $value);
             }
             $value = $this->blueprints()->mergeData($old, $value, $name, $separator);
@@ -70,6 +72,9 @@ class Config implements \ArrayAccess, \Iterator, ExportInterface
      */
     public function joinDefaults($name, $value, $separator = '.')
     {
+        if (is_object($value)) {
+            $value = (array) $value;
+        }
         $old = $this->get($name, null, $separator);
         if ($old !== null) {
             $value = $this->blueprints()->mergeData($value, $old, $name, $separator);
@@ -84,9 +89,17 @@ class Config implements \ArrayAccess, \Iterator, ExportInterface
      * @param string  $name       Dot separated path to the requested value.
      * @param array   $value      Value to be joined.
      * @param string  $separator  Separator, defaults to '.'
+     * @return array
+     * @throws \RuntimeException
      */
     public function getJoined($name, $value, $separator = '.')
     {
+        if (is_object($value)) {
+            $value = (array) $value;
+        } elseif (!is_array($value)) {
+            throw new \RuntimeException('Value ' . $value);
+        }
+
         $old = $this->get($name, null, $separator);
 
         if ($old === null) {
@@ -96,11 +109,6 @@ class Config implements \ArrayAccess, \Iterator, ExportInterface
 
         if (!is_array($old)) {
             throw new \RuntimeException('Value ' . $old);
-        }
-        if (is_object($value)) {
-            $value = (array) $value;
-        } elseif (!is_array($value)) {
-            throw new \RuntimeException('Value ' . $value);
         }
 
         // Return joined data.
