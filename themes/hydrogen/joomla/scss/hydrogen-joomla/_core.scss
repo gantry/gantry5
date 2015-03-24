@@ -1,0 +1,9 @@
+.btn .caret {
+	border-top-color: $white;
+}
+
+.btn-group.open .btn.dropdown-toggle {
+	background: darken($accent-color-1, 5%);
+	box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
+	color: $white;
+}
