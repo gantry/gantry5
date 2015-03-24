@@ -1,6 +1,6 @@
-@include font-face('roboto', '../fonts/roboto_regular_macroman/Roboto-Regular-webfont', 400);
-@include font-face('roboto', '../fonts/roboto_medium_macroman/Roboto-Medium-webfont', 500);
-@include font-face('roboto', '../fonts/roboto_bold_macroman/Roboto-Bold-webfont', 700);
+@include font-face('roboto', 'gantry-theme://fonts/roboto_regular_macroman/Roboto-Regular-webfont', 400);
+@include font-face('roboto', 'gantry-theme://fonts/roboto_medium_macroman/Roboto-Medium-webfont', 500);
+@include font-face('roboto', 'gantry-theme://fonts/roboto_bold_macroman/Roboto-Bold-webfont', 700);
 
 body {
 	font-family: $font-family-default;
