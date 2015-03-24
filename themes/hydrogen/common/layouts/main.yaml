@@ -72,7 +72,7 @@ children:
                     title: "\n                                Sample Content\n                            "
                     attributes:
                       enabled: 1
-                      image: 'gantry-media://images/logo-large.png'
+                      image: 'gantry-assets://images/gantry-logo.png'
                       headline: 'Welcome to Gantry 5'
                       description: '<p>Gantry 5 is the most customizable and powerful version of the framework yet. Packed full of features such as <a href="#">drag-and-drop layout creation</a> and the powerful particle system, Gantry 5 has been designed from the ground up to be lightning fast and hassle free.</p>'
                       link: '#'

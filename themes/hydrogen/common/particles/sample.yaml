@@ -14,19 +14,18 @@ form:
       type: input.imagepicker
       label: Image
       description: Select the main image.
-      default: gantry-media://images/logo-large.png
 
     headline:
       type: input.text
       label: Headline
       description: Customize the headline text.
-      default: Sample Headline
+      placeholder: Enter headline
 
     description:
       type: textarea.textarea
       label: Description
       description: Customize the description.
-      default: Lorem ipsum dolor sit amet consectetur adipiscing elit. Donec ultricies tristique nulla et mattis. Phasellus id massa eget nisl congue blandit sit amet id ligula.
+      placeholder: Enter short description
 
     link:
       type: input.text
