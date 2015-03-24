@@ -1,3 +1,10 @@
+// Mobile Menu Globals
+.g-mobile-nav {
+	.g-toplevel {
+		@include transform(translateX($mobile-sidemenu-width));
+	}
+}
+
 // Mobile Menu 
 @include breakpoint(mobile-only) {	
 	// Main Nav
