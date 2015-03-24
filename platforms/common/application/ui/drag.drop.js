@@ -61,6 +61,7 @@ var DragDrop = new prime({
 
     start: function (event, element) {
         clearTimeout(this.scrollInterval);
+        $('html').attribute('style', 'height: 100% !important');
         this.scrollHeight = document.body.scrollHeight;
 
         // Prevents dragging a column from itself and limiting to its handle
@@ -142,6 +143,7 @@ var DragDrop = new prime({
 
     stop: function (event) {
         clearTimeout(this.scrollInterval);
+        $('html').attribute('style', null);
         if (!this.moved && this.options.catchClick) {
             // this is just a click
             this.element.style({transform: this.origin.transform || 'translate(0, 0)'});
@@ -232,6 +234,8 @@ var DragDrop = new prime({
             Scroll = document.body.scrollTop;
         
         clearTimeout(this.scrollInterval);
+        if (!overing) { return; }
+
         if (!$(overing).matches('#trash') && !$(overing).parent('#trash')) {
             if (clientY + 50 >= Height && Scroll + Height < scrollHeight) {
                 this.scrollInterval = setInterval(function() {
