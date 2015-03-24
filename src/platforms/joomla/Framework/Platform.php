@@ -18,7 +18,8 @@ class Platform extends BasePlatform
 
     public function getCachePath()
     {
-        return Folder::getRelativePath(JPATH_CACHE) . '/gantry5';
+        // Cannot use JPATH_CACHE as it points to admin/site depending where you are.
+        return 'cache/gantry5';
     }
 
     public function getThemesPaths()
