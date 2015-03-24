@@ -24,7 +24,7 @@ class Theme extends Base\Theme
         $loader->setPaths($locator->findResources('gantry-positions://'), 'positions');
 
         $params = array(
-            'cache' => $locator('gantry-cache://') . '/twig',
+            'cache' => $locator('gantry-cache://twig', true, true),
             'debug' => true,
             'auto_reload' => true,
             'autoescape' => false

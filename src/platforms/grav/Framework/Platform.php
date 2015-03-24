@@ -24,7 +24,7 @@ class Platform extends BasePlatform
         /** @var UniformResourceLocator $locator */
         $locator = $grav['locator'];
 
-        return $locator->findResource('cache://', false) . 'gantry5';
+        return $locator->findResource('cache://gantry5', false, true);
     }
 
     /**
