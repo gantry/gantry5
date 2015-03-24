@@ -10,7 +10,7 @@ module.exports = function(grunt) {
                     sourcemap: '../js/main.js.map',
                     sourcemapRoot: '../',
                     sourcemapURL: 'main.js.map',
-                    compress: true
+                    compress: false
                 }
             }
         },
