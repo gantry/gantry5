@@ -15,7 +15,7 @@ class Document
 
     public static function rootUri()
     {
-        return \JUri::root(true);
+        return '';
     }
 
     /**
