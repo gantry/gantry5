@@ -32,8 +32,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
         'endLevel' => 0,
         'showAllChildren' => true,
         'highlightAlias' => true,
-        'highlightParentAlias' => true,
-        'window_open' => null
+        'highlightParentAlias' => true
     ];
 
     abstract public function __construct();
@@ -54,11 +53,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
 
     public function instance(array $params = [], Config $menu = null)
     {
-        if (!isset($params['config'])) {
-            $params = $this->defaults;
-        }   else {
-            $params = $params['config'] + $this->defaults;
-        }
+        $params = $params + $this->defaults;
 
         $menus = $this->getMenus();
 

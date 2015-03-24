@@ -9,13 +9,7 @@ logo:
   text: 'Gantry'
 
 menu:
-  items:
-    menu: ''
-    base: 0
-    startLevel: 1
-    endLevel: 0
-    showAllChildren: true
-    window_open: 'width=200,height=300'
-  css:
-    id:
-    class: 'g-main-nav'
+  menu: 'mainmenu'
+  base: 0
+  startLevel: 1
+  endLevel: 0

@@ -141,12 +141,12 @@ class Menu extends AbstractMenu
             return;
         }
 
-        //$levels = \JFactory::getUser()->getAuthorisedViewLevels();
-        //asort($levels);
+        $levels = \JFactory::getUser()->getAuthorisedViewLevels();
+        asort($levels);
 
-        //$key = 'gantry_menu_items.' . json_encode($params) . '.' . json_encode($levels) . '.' . $this->base->id;
-        //$cache = \JFactory::getCache('mod_menu', '');
-        //$this->items = $cache->get($key);
+        $key = 'gantry_menu_items.' . json_encode($params) . '.' . json_encode($levels) . '.' . $this->base->id;
+        $cache = \JFactory::getCache('mod_menu', '');
+        $this->items = $cache->get($key);
 
         if (!$this->items) {
             $config = $this->config();
@@ -155,7 +155,6 @@ class Menu extends AbstractMenu
             $path    = $this->base->tree;
             $start   = $params['startLevel'];
             $end     = $params['endLevel'];
-            $showAll = $params['showAllChildren'];
 
             $menuItems = $this->getItemsFromPlatform($params);
 
@@ -163,7 +162,6 @@ class Menu extends AbstractMenu
             foreach ($menuItems as $menuItem) {
                 if (($start && $start > $menuItem->level)
                     || ($end && $menuItem->level > $end)
-                    || (!$showAll && $menuItem->level > 1 && !in_array($menuItem->parent_id, $path))
                     || ($start > 1 && !in_array($menuItem->tree[$start - 2], $path))) {
                     continue;
                 }
@@ -249,16 +247,12 @@ class Menu extends AbstractMenu
                         // Target window: New with navigation.
                         $item->anchor_attributes = ' target="_blank"';
                         break;
-                    case 2:
-                        // Target window: New without navigation.
-                        $item->anchor_attributes = ' onclick="window.open(this.href,\'targetWindow\',\'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes' . ($params['window_open'] ? ',' . $params['window_open'] : '') . '\');return false;"';
-                        break;
                 }
             }
 
             $this->sortAll();
 
-            //$cache->store($this->items, $key);
+            $cache->store($this->items, $key);
         }
     }
 }

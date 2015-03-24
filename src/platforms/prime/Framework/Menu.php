@@ -118,6 +118,7 @@ class Menu extends AbstractMenu
         $end     = $params['endLevel'];
 
         $config = $this->config();
+
         $items   = isset($config['items']) ? $config['items'] : [];
 
         $menuItems = array_unique(array_merge($this->getItemsFromPlatform($start <= $end ? $end : -1), array_keys($items)));
@@ -125,7 +126,6 @@ class Menu extends AbstractMenu
 
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
-        $showAll = $params['showAllChildren'];
 
         $this->items = ['' => new Item($this, '', ['layout' => 'horizontal'])];
         foreach ($menuItems as $name) {
@@ -133,7 +133,6 @@ class Menu extends AbstractMenu
             $level = substr_count($name, '/') + 1;
             if (($start && $start > $level)
                 || ($end && $level > $end)
-                || (!$showAll && $level > 1 && strpos($parent, $this->base) !== 0)
                 || ($start > 1 && strpos(dirname($parent), $this->base) !== 0)
                 || (!$name || $name[0] == '_' || strpos($name, '_'))
             ) {
@@ -179,10 +178,6 @@ class Menu extends AbstractMenu
                 case 1:
                     // Target window: New with navigation.
                     $item->anchor_attributes = ' target="_blank"';
-                    break;
-                case 2:
-                    // Target window: New without navigation.
-                    $item->anchor_attributes = ' onclick="window.open(this.href,\'targetWindow\',\'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes' . ($params['window_open'] ? ',' . $params['window_open'] : '') . '\');return false;"';
                     break;
             }
         }

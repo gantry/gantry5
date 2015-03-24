@@ -1,0 +1,15 @@
+{% extends "forms/fields/select/selectize.html.twig" %}
+
+{% block options %}
+    {{ parent() }}
+    {% for key in gantry.menu.getMenus() %}
+        {% set text = key|capitalize %}
+        <option
+                {# required attribute structures #}
+                {% if key == value %}selected="selected"{% endif %}
+                value="{{ key|e }}"
+                {# non-gloval attribute structures #}
+                {% if field.options.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
+                >{{ text|e }}</option>
+    {% endfor %}
+{% endblock %}

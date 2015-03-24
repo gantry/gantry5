@@ -18,7 +18,7 @@ form:
       default: /
 
     menu:
-      type: input.text
+      type: menu.list
       label: Menu
       description: Select menu to be used with the particle.
       default: mainmenu
