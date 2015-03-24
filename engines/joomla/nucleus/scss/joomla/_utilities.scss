@@ -89,3 +89,12 @@ th .tooltip-inner {
 		line-height: $core-line-height;
 	}
 }
+
+// Calendar
+.calendar {
+	.button {
+		display: table-cell;
+		background: inherit;
+		color: inherit;
+	}
+}

@@ -203,6 +203,11 @@ fieldset.radio.btn-group {
 .btn-group .chzn-results {
   white-space: normal; }
 
+.controls .input-append .btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 20px; }
+
 legend {
   margin-bottom: 1.5rem;
   font-size: 1.3rem;
@@ -391,6 +396,11 @@ th .tooltip-inner {
 .add-on [class^="icon-"], .add-on [class*=" icon-"] {
   height: auto;
   line-height: 1.5; }
+
+.calendar .button {
+  display: table-cell;
+  background: inherit;
+  color: inherit; }
 
 #frame {
   margin: 20px auto;
