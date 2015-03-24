@@ -15,7 +15,7 @@ class Document
 
     public static function rootUri()
     {
-        return '';
+        return \JUri::root(true);
     }
 
     /**
@@ -55,6 +55,6 @@ class Document
         }
 
         // TODO: add support to include domain..
-        return $url ? rtrim(static::rootUri(), '/') .'/'. $url : null;
+        return $url ? rtrim(static::rootUri(), '/') . '/' . $url : null;
     }
 }
