@@ -15,12 +15,17 @@ form:
       label: Url
       description: Url for the image. Leave empty to go to home page.
 
+    image:
+      type: input.imagepicker
+      label: Image
+      description: Select desired logo image.
+
     text:
       type: input.text
       label: Text
       description: Input logo description text.
 
-    image:
-      type: input.imagepicker
-      label: Image
-      description: Select desired logo image.
+    class:
+      type: input.text
+      label: CSS Class
+      description: Set a specific CSS class for custom styling.
