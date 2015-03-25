@@ -239,7 +239,9 @@
         <echo message="Building Media files.." />
 
         <copy todir="${tmp_dir}/packages/gantry5_media/gantry5/assets" overwrite="true">
-            <fileset dir="${path.assets}/common"/>
+            <fileset dir="${path.assets}/common">
+                <exclude name="application/**"/>
+            </fileset>
             <fileset dir="${path.assets}/joomla"/>
         </copy>
 
