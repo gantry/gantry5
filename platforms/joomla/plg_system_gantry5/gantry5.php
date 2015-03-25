@@ -82,13 +82,13 @@ class plgSystemGantry5 extends JPlugin
         $path = JPATH_THEMES . "/{$template->template}/includes/gantry.php";
 
         if (is_file($path)) {
-            // Manually setup Gantry5 Framework from the template.
+            // Manually setup Gantry 5 Framework from the template.
             include $path;
 
             return;
         }
 
-        // Setup Gantry5 Framework or throw exception.
+        // Setup Gantry 5 Framework or throw exception.
         Gantry5\Loader::setup();
 
         // Get Gantry instance.

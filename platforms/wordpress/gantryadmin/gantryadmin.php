@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Gantry5 Admin
+ * Plugin Name: Gantry 5 Admin
  * Plugin URI: //http://gantry-framework.org/
- * Description: Administrate Gantry5 based templates.
+ * Description: Administrate Gantry 5 based templates.
  * Version: 5.0
  * Author: RocketTheme
  * Author URI: http://www.rockettheme.com/

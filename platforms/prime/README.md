@@ -1,7 +1,7 @@
 Gantry Prime
 ============
 
-Gantry Prime is our primary theme development and testing platform. It is a standalone Gantry5 installation which allows both developers and testers to access all the features in both administration and the site without the overhead and quirks of installing and running a CMS.
+Gantry Prime is our primary theme development and testing platform. It is a standalone Gantry 5 installation which allows both developers and testers to access all the features in both administration and the site without the overhead and quirks of installing and running a CMS.
 
 Prime itself is a very simple environment which consists of only three small php files and the usual platform specific classes. On top of that it has some template file overrides and the test data consisting of pages, module positions and layouts.
 

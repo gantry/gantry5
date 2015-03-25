@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension version="3.4" type="package" method="upgrade">
-    <name>Gantry5 Package</name>
+    <name>Gantry 5 Package</name>
     <packagename>gantry5</packagename>
     <version>5.0.0-DEV</version>
     <creationDate>@versiondate@</creationDate>
@@ -9,7 +9,7 @@
     <authorUrl>http://www.rockettheme.com</authorUrl>
     <copyright>(C) 2005 - 2015 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
-    <description>Gantry5 Framework Package</description>
+    <description>Gantry 5 Framework Package</description>
 
     <scriptfile>install.php</scriptfile>
 
@@ -27,7 +27,7 @@
     </files>
 
     <updateservers>
-        <server type="extension" priority="1" name="Gantry5">http://updates.gantry-framework.org/5.0/joomla/pkg_gantry5.xml</server>
-        <server type="collection" priority="2" name="Gantry5">http://updates.gantry-framework.org/5.0/joomla/list.xml</server>
+        <server type="extension" priority="1" name="Gantry 5">http://updates.gantry-framework.org/5.0/joomla/pkg_gantry5.xml</server>
+        <server type="collection" priority="2" name="Gantry 5">http://updates.gantry-framework.org/5.0/joomla/list.xml</server>
     </updateservers>
 </extension>

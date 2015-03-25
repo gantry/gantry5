@@ -23,7 +23,7 @@ class Loader
 
     protected function __construct()
     {
-        $errorMessage = 'You are running PHP %s, but Gantry5 Framework needs at least PHP %s to run.';
+        $errorMessage = 'You are running PHP %s, but Gantry 5 Framework needs at least PHP %s to run.';
 
         // Fail safe version check for PHP <5.4.0.
         if (version_compare($phpVersion = PHP_VERSION, '5.4.0', '<')) {
@@ -52,7 +52,7 @@ class Loader
 
         // Initialize auto-loading.
         if (!file_exists($base . '/vendor/autoload.php')) {
-            throw new \LogicException('Please run composer in Gantry5 Library!');
+            throw new \LogicException('Please run composer in Gantry 5 Library!');
         }
 
         /** @var \Composer\Autoload\ClassLoader $loader */

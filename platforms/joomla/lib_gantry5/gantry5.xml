@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension version="3.4" type="library" method="upgrade">
-    <name>Gantry5 Framework</name>
+    <name>Gantry 5 Framework</name>
     <libraryname>gantry5</libraryname>
     <version>@version@</version>
     <creationDate>@versiondate@</creationDate>

@@ -2,7 +2,7 @@
 defined('_JEXEC') or die;
 
 /**
- * Gantry5 package installer script.
+ * Gantry 5 package installer script.
  */
 class Pkg_Gantry5InstallerScript
 {

@@ -5,10 +5,10 @@ class G5_HydrogenInstallerScript
 {
     public function preflight($type, $parent)
     {
-        // Prevent installation if Gantry5 isn't enabled.
+        // Prevent installation if Gantry 5 isn't enabled.
         try {
             if (!class_exists('Gantry5\Loader')) {
-                throw new RuntimeException('Please install Gantry5 Framework!');
+                throw new RuntimeException('Please install Gantry 5 Framework!');
             }
 
             Gantry5\Loader::setup();

@@ -17,7 +17,7 @@ class plgQuickiconGantry5 extends JPlugin
     }
 
     /**
-     * Display Gantry5 backend icon
+     * Display Gantry 5 backend icon
      *
      * @param string $context
      * @return array|null

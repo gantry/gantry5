@@ -9,10 +9,10 @@ try
     $template = $app->getTemplate(true);
 
     if (!class_exists('Gantry5\Loader')) {
-        throw new RuntimeException('Please install Gantry5 Framework!');
+        throw new RuntimeException('Please install Gantry 5 Framework!');
     }
 
-    // Setup Gantry5 Framework or throw exception.
+    // Setup Gantry 5 Framework or throw exception.
     Gantry5\Loader::setup();
 
     // Get Gantry instance and return it.
