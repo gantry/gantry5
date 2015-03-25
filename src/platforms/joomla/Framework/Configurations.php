@@ -27,11 +27,10 @@ class Configurations extends AbstractConfigurationCollection
         asort($layouts);
 
         $this->items = [
-                'default' => 'Default',
+                'default' => 'Base Configuration',
                 '_body_only' => 'Body Only',
                 '_error' => 'Error',
-                '_offline' => 'Offline',
-                '_unsupported' => 'Unsupported',
+                '_offline' => 'Offline'
             ] + $layouts;
 
         return $this;

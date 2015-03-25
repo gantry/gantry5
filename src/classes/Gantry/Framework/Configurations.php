@@ -42,7 +42,7 @@ class Configurations extends AbstractConfigurationCollection
 
         asort($files);
 
-        $this->items = ['default' => 'Default'] + $files;
+        $this->items = ['default' => 'Base Configuration'] + $files;
 
         return $this;
     }
