@@ -30,7 +30,7 @@ class Gantry5_NucleusInstallerScript
                         }
                         $subFolders = JFolder::folders($folder, '.', false, true);
                         foreach ($subFolders as $name) {
-                                JFolder::delete($name);
+                            JFolder::delete($name);
                         }
                     }
                 }
