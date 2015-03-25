@@ -27,9 +27,13 @@ form:
       options:
           '': None
           'l, F d, Y': Date1
-          'F d': Date2
-          'd M': Date3
-          'D, M d, Y': Date4
-          'D, M d, y': Date5
-          'l': Date6
-          'l j F Y': Date7
+          'l, d F': Date2
+          'D, d F': Date3
+          'F d': Date4
+          'd F': Date5
+          'd M': Date6
+          'D, M d, Y': Date7
+          'D, M d, y': Date8
+          'l': Date9
+          'l j F Y': Date10
+          'j F Y': Date11
