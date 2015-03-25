@@ -1,22 +1,26 @@
 header:
   container:
-    - [particle-menu, position-position-0]
+    - [particle-logo, position-position-0]
+
+navigation:
+  container:
+    - particle-menu
 
 container:
   1:
     - sidebar 20:
-      - particle-logo
-      - position-position-6
-      - position-position-8
-    - main 60:
-      - position-position-2
-      - position-position-3
-      - position-position-12
-      - pagecontent
-    - aside 20:
       - position-position-7
       - position-position-4
       - position-position-5
+    - main 60:
+      - position-position-2
+      - position-position-12
+      - position-global_messages
+      - pagecontent
+    - aside 20:
+      - position-position-6
+      - position-position-8
+      - position-position-3
 
 footer:
   container:
