@@ -43,6 +43,14 @@ class Pkg_Gantry5InstallerScript
 
     public function uninstall($parent)
     {
+        // Clear cached files.
+        if (is_dir(JPATH_CACHE . '/gantry5')) {
+            JFolder::delete(JPATH_CACHE . '/gantry5');
+        }
+        if (is_dir(JPATH_SITE . '/cache/gantry5')) {
+            JFolder::delete(JPATH_SITE . '/cache/gantry5');
+        }
+
         return true;
     }
 
@@ -77,7 +85,9 @@ class Pkg_Gantry5InstallerScript
             @apc_clear_cache();
         }
 
-        if ($type == 'uninstall') return true;
+        if ($type == 'uninstall') {
+            return true;
+        }
 
         $this->enablePlugin('system', 'gantry5');
         $this->enablePlugin('quickicon', 'gantry5');
