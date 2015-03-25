@@ -2,6 +2,9 @@
 	.swatches-block {
 		margin: 0 -1px;
 		padding-bottom: $content-padding;
+		.g-block {
+			text-align: center;
+		}
 		@include breakpoint(mobile-only) {
 			.g-block {
 				@include flex(0 25%);
@@ -44,5 +47,15 @@
     	&:hover {
     		background: rgba(0,0,0,0.7);
     	}
+    }
+
+    .swatch-description {
+    	display: inline-block;
+    	margin: 4px 0;
+    	background: $white;
+    	border: 1px solid #ddd;
+    	border-radius: $core-border-radius;
+    	padding: 0.1rem 0.4rem;
+    	font-weight: 500;
     }
 }
