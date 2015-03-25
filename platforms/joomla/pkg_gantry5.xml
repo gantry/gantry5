@@ -15,15 +15,15 @@
 
     <files folder="packages">
         <!-- Mandatory system plugin -->
-        <filename type="plugin"    group="system"     id="gantry5"        >plg_system_gantry5_v@version@.zip</filename>
+        <file type="plugin"    group="system"     id="gantry5"        >plg_system_gantry5_v@version@.zip</file>
         <!-- Quick icons -->
-        <filename type="plugin"    group="quickicon"  id="gantry5"        >plg_quickicon_gantry5_v@version@.zip</filename>
+        <file type="plugin"    group="quickicon"  id="gantry5"        >plg_quickicon_gantry5_v@version@.zip</file>
         <!-- Gantry framework library -->
-        <filename type="library"                      id="gantry5"        >lib_gantry5_v@version@.zip</filename>
+        <file type="library"                      id="gantry5"        >lib_gantry5_v@version@.zip</file>
         <!-- Common media files -->
-        <filename type="file"                         id="gantry5_nucleus">gantry5_nucleus_v@version@.zip</filename>
+        <file type="file"                         id="gantry5_nucleus">gantry5_nucleus_v@version@.zip</file>
         <!-- Administration component -->
-        <filename type="component"                    id="com_gantry5"    >com_gantry5_v@version@.zip</filename>
+        <file type="component"                    id="com_gantry5"    >com_gantry5_v@version@.zip</file>
     </files>
 
     <languages folder="language">
