@@ -13,15 +13,8 @@
     <scriptfile>install.php</scriptfile>
 
     <fileset>
-        <files folder="nucleus" target="media/gantry5/engines/nucleus">
-            <folder>admin</folder>
-            <folder>css</folder>
-            <folder>css-compiled</folder>
-            <folder>layouts</folder>
-            <folder>particles</folder>
-            <folder>scss</folder>
-            <folder>templates</folder>
-            <folder>twig</folder>
+        <files target="media/gantry5/engines">
+            <folder>nucleus</folder>
         </files>
     </fileset>
     <languages folder="language">

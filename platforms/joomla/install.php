@@ -43,6 +43,13 @@ class Pkg_Gantry5InstallerScript
 
     public function uninstall($parent)
     {
+        // Hack.. Joomla really doesn't give any information from the extension that's being uninstalled..
+        $manifestFile = JPATH_MANIFESTS . '/packages/pkg_gantry5.xml';
+        if (is_file($manifestFile)) {
+            $manifest = simplexml_load_file($manifestFile);
+            $this->prepareExtensions($manifest, 0);
+        }
+
         // Clear cached files.
         if (is_dir(JPATH_CACHE . '/gantry5')) {
             JFolder::delete(JPATH_CACHE . '/gantry5');
@@ -56,8 +63,8 @@ class Pkg_Gantry5InstallerScript
 
     public function preflight($type, $parent)
     {
-        /** @var JInstallerComponent $parent */
-        $manifest = $parent->getParent()->getManifest();
+        /** @var JInstallerAdapter $parent */
+        $manifest = $parent->getManifest();
 
         // Prevent installation if requirements are not met.
         $errors = $this->checkRequirements($manifest->version);
@@ -69,6 +76,9 @@ class Pkg_Gantry5InstallerScript
             }
             return false;
         }
+
+        // Disable and unlock existing extensions to prevent fatal errors (in the site).
+        $this->prepareExtensions($manifest, 0);
 
         return true;
     }
@@ -89,25 +99,45 @@ class Pkg_Gantry5InstallerScript
             return true;
         }
 
-        $this->enablePlugin('system', 'gantry5');
-        $this->enablePlugin('quickicon', 'gantry5');
+        /** @var JInstallerAdapter $parent */
+        $manifest = $parent->getManifest();
+
+        // Enable and lock extensions to prevent uninstalling them individually.
+        $this->prepareExtensions($manifest, 1);
 
         return true;
     }
 
     // Internal functions
 
-    protected function enablePlugin($group, $element)
+    protected function prepareExtensions($manifest, $state = 1)
     {
-        $plugin = JTable::getInstance('extension');
+        foreach ($manifest->files->children() as $file) {
+            $attributes = $file->attributes();
 
-        if (!$plugin->load(array('type' => 'plugin', 'folder' => $group, 'element' => $element))) {
-            return false;
+            $search = ['type' => (string) $attributes->type, 'element' => (string) $attributes->id];
+
+            $clientName = (string) $attributes->client;
+            if (!empty($clientName)) {
+                $client = JApplicationHelper::getClientInfo($clientName, true);
+                $search +=  ['client_id' => $client->id];
+            }
+
+            $group = (string) $attributes->group;
+            if (!empty($group)) {
+                $search +=  ['folder' => $group];
+            }
+
+            $extension = JTable::getInstance('extension');
+
+            if (!$extension->load($search)) {
+                continue;
+            }
+
+            $extension->protected = $state;
+            $extension->enabled = $state;
+            $extension->store();
         }
-
-        $plugin->enabled = 1;
-
-        return $plugin->store();
     }
 
     protected function checkRequirements()
