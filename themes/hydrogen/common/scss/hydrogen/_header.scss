@@ -1,11 +1,3 @@
 #g-header {
 	background: $header-background;
-	color: $header-text-color;
-	text-align: center;
-	position: relative;
-	z-index: 2;
-
-	.g-main-nav {
-		margin: -($content-padding + $content-margin);
-	}
 }

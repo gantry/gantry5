@@ -81,6 +81,7 @@ admin:
       - accent
     section:
       - header
+      - navigation
       - showcase
       - feature
       - subfeature

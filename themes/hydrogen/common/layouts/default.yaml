@@ -1,5 +1,9 @@
 header:
   container:
+    - particle-logo
+
+navigation:
+  container:
     - particle-menu
 
 main:

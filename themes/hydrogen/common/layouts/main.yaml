@@ -1,9 +1,16 @@
 children:
   -
-    id: fe0bd642-d6b5-5585-6714-ffbfaabd8092
+    id: 324a2e73-04fb-4d3f-aae9-776ef3201faf
     type: section
     subtype: false
     title: Header
+    attributes: {  }
+    children: {  }
+  -
+    id: fe0bd642-d6b5-5585-6714-ffbfaabd8092
+    type: section
+    subtype: false
+    title: Navigation
     attributes: {  }
     children:
       -

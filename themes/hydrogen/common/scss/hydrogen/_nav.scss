@@ -1,3 +1,15 @@
+#g-navigation {
+	background: $navigation-background;
+	color: $navigation-text-color;
+	text-align: center;
+	position: relative;
+	z-index: 2;
+
+	.g-main-nav {
+		margin: -($content-padding + $content-margin);
+	}
+}
+
 .g-main-nav {
 	.g-toplevel {
 		font-weight: $font-weight-medium;
@@ -6,28 +18,28 @@
 
 			> a {
 				+ span {
-					border: 1px solid lighten($header-background, 6%);
-					background: darken($header-background, 4%);
+					border: 1px solid lighten($navigation-background, 6%);
+					background: darken($navigation-background, 4%);
 					border-radius: $core-border-radius;
 					margin-left: -0.5rem;
 					margin-right: 1rem;
 					padding: 0.2rem;
 					&:hover {
-						background: darken($header-background, 8%);
+						background: darken($navigation-background, 8%);
 					}
 				}
 			}
 
 			> .g-menu-item-content {
-				color: $header-text-color;
+				color: $navigation-text-color;
 				padding: 1.2rem $content-padding;
 				line-height: normal;
 			}
 			&:hover {
-				background: darken($header-background, 4%);
+				background: darken($navigation-background, 4%);
 
 				> .g-selected {
-					background: darken($header-background, 8%);
+					background: darken($navigation-background, 8%);
 				}
 			}
 
@@ -39,13 +51,13 @@
 				}
 
 				> .g-selected {
-					background: darken($header-background, 8%);
-					color: $header-text-color;
+					background: darken($navigation-background, 8%);
+					color: $navigation-text-color;
 				}
 			}
 
 			> .g-selected {
-				background: darken($header-background, 8%);
+				background: darken($navigation-background, 8%);
 			}
 		}
 		i {
@@ -55,34 +67,34 @@
 
 	.g-dropdown {
 		text-align: left;
-		background: darken($header-background, 8%);
+		background: darken($navigation-background, 8%);
 	}
 
 	.g-sublevel {
 		> li {
 			> .g-menu-item-content {
-				color: $header-text-color;
+				color: $navigation-text-color;
 				padding: ($content-padding + $content-margin)/2 1rem;
 			}
 			&:hover, &.active {
-				background: darken($header-background, 12%);
+				background: darken($navigation-background, 12%);
 				> .g-selected {
-					background: darken($header-background, 12%);
+					background: darken($navigation-background, 12%);
 				}
 			}
 			> .g-selected {
-				background: darken($header-background, 12%);
+				background: darken($navigation-background, 12%);
 			}
 			> a {
 				+ span {
-					border: 1px solid lighten($header-background, 6%);
-					background: darken($header-background, 4%);
+					border: 1px solid lighten($navigation-background, 6%);
+					background: darken($navigation-background, 4%);
 					border-radius: $core-border-radius;
 					padding: 0.1rem;
 					margin-top: -0.1rem;
 					margin-right: -0.1rem;
 					&:hover {
-						background: darken($header-background, 8%);
+						background: darken($navigation-background, 8%);
 					}
 				}
 			}
@@ -102,10 +114,10 @@
 			background: $mobilemenu-background;
 			> li {
 				&:hover, &.active {
-					background: darken($header-background, 4%);
+					background: darken($navigation-background, 4%);
 
 					> .g-menu-item-content {
-						color: $header-text-color;
+						color: $navigation-text-color;
 					}
 				}
 			}							
