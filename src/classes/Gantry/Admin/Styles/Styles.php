@@ -76,7 +76,7 @@ class Styles
 
         foreach ($ordering as $name => $order) {
             if (isset($blocks[$name])) {
-                $list[$name] = $this->sortItems($blocks[$name], $order);
+                $list[$name] = $this->sortItems($blocks[$name], (array) $order);
             }
         }
         $list += $blocks;
