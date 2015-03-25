@@ -1,5 +1,6 @@
 preset1:
   image: 'gantry-admin://images/preset1.png'
+  description: 'Preset 1'
   colors:
     - '#439a86'
     - '#354d59'
@@ -36,6 +37,7 @@ preset1:
 
 preset2:
   image: 'gantry-admin://images/preset2.png'
+  description: 'Preset 2'
   colors:
     - '#3180C2'
     - '#142D53'
@@ -72,6 +74,7 @@ preset2:
 
 preset3:
   image: 'gantry-admin://images/preset3.png'
+  description: 'Preset 3'
   colors:
     - '#558B2F'
     - '#344E2C'
@@ -108,6 +111,7 @@ preset3:
 
 preset4:
   image: 'gantry-admin://images/preset4.png'
+  description: 'Preset 4'
   colors:
     - '#BF383A'
     - '#722829'

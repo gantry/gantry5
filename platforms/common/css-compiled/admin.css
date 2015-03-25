@@ -692,6 +692,8 @@ a {
 #g5-container .swatches-block {
   margin: 0 -1px;
   padding-bottom: 0.938rem; }
+  #g5-container .swatches-block .g-block {
+    text-align: center; }
   @media only all and (max-width: 47.938rem) {
     #g5-container .swatches-block .g-block {
       -webkit-box-flex: 0;
@@ -731,6 +733,14 @@ a {
     font-size: 1.2rem; }
   #g5-container .swatch-preview:hover {
     background: rgba(0, 0, 0, 0.7); }
+#g5-container .swatch-description {
+  display: inline-block;
+  margin: 4px 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0.1875rem;
+  padding: 0.1rem 0.4rem;
+  font-weight: 500; }
 
 #g5-container #page-picker ul .size-1-4 {
   -webkit-box-flex: 0;
