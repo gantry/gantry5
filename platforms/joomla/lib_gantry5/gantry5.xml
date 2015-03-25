@@ -11,7 +11,7 @@
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <description>LIB_GANTRY5_DESCRIPTION</description>
 
-    <files>
+    <files folder="library">
         <filename>bootstrap.php</filename>
         <filename>Loader.php</filename>
         <filename>composer.json</filename>
@@ -19,6 +19,13 @@
         <folder>classes</folder>
         <folder>vendor</folder>
     </files>
+
+    <media folder="assets" destination="gantry5/assets">
+        <folder>css</folder>
+        <folder>fonts</folder>
+        <folder>images</folder>
+        <folder>js</folder>
+    </media>
 
     <languages folder="language">
         <language tag="en-GB">en-GB/en-GB.lib_gantry5.sys.ini</language>

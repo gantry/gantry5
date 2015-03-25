@@ -69,7 +69,7 @@
         </replacetokens>
     </filterchain>
 
-    <target name="dist" depends="preflight,info,mkdir,backup,build-installer,build-component,build-library,build-media,build-plugins,build-themes,package,postflight" />
+    <target name="dist" depends="preflight,info,mkdir,backup,build-installer,build-component,build-library,build-nucleus,build-plugins,build-themes,package,postflight" />
 
     <!-- Preflight check to see if we can even run the build script -->
     <target name="preflight">
@@ -168,18 +168,6 @@
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/com_gantry5/media/assets" overwrite="true">
-            <fileset dir="${path.assets}/common">
-                <exclude name="application/**"/>
-                <exclude name="**/*.js.map"/>
-                <exclude name="**/*.sh"/>
-            </fileset>
-            <fileset dir="${path.assets}/joomla">
-                <exclude name="**/*.js.map"/>
-                <exclude name="**/*.sh"/>
-            </fileset>
-        </copy>
-
         <!-- Add version information to all xml files -->
         <copy todir="${tmp_dir}/packages/com_gantry5/admin" overwrite="true">
             <filterchain refid="filter"/>
@@ -198,14 +186,14 @@
     <target name="build-library" depends="build-installer">
         <echo message="Building Library.." />
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
+        <copy todir="${tmp_dir}/packages/lib_gantry5/library" overwrite="true">
             <fileset dir="${path.src}">
                 <include name="*.php"/>
                 <include name="composer.*"/>
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5/vendor" overwrite="true">
+        <copy todir="${tmp_dir}/packages/lib_gantry5/library/vendor" overwrite="true">
             <fileset dir="${path.src}/vendor">
                 <exclude name="**/test/"/>
                 <exclude name="**/tests/"/>
@@ -230,11 +218,11 @@
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5/classes" overwrite="true">
+        <copy todir="${tmp_dir}/packages/lib_gantry5/library/classes" overwrite="true">
             <fileset dir="${path.src}/classes"/>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5/classes/Gantry" overwrite="true">
+        <copy todir="${tmp_dir}/packages/lib_gantry5/library/classes/Gantry" overwrite="true">
             <fileset dir="${path.src}/platforms/joomla"/>
         </copy>
 
@@ -249,21 +237,31 @@
                 <include name="*.xml"/>
             </fileset>
         </copy>
+
+        <!-- Common assets -->
+        <copy todir="${tmp_dir}/packages/lib_gantry5/assets" overwrite="true">
+            <fileset dir="${path.assets}/common">
+                <exclude name="application/**"/>
+                <exclude name="**/*.js.map"/>
+                <exclude name="**/*.sh"/>
+            </fileset>
+            <fileset dir="${path.assets}/joomla">
+                <exclude name="**/*.js.map"/>
+                <exclude name="**/*.sh"/>
+            </fileset>
+        </copy>
     </target>
 
-    <target name="build-media" depends="build-installer">
+    <target name="build-nucleus" depends="build-installer">
         <echo message="Building Nucleus.." />
 
-        <copy todir="${tmp_dir}/packages/gantry5_nucleus/nucleus" overwrite="true">
+        <copy todir="${tmp_dir}/packages/gantry5_nucleus" overwrite="true">
             <fileset dir="${path.engines}/common">
                 <exclude name="**/*.sh"/>
             </fileset>
             <fileset dir="${path.engines}/joomla">
                 <exclude name="**/*.sh"/>
             </fileset>
-        </copy>
-
-        <copy todir="${tmp_dir}/packages/gantry5_nucleus" overwrite="true">
             <fileset dir="${path.platforms}/joomla/gantry5_nucleus"/>
         </copy>
 
