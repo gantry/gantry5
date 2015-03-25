@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension version="3.4" type="package" method="upgrade">
-    <name>Gantry 5 Package</name>
+    <name>pkg_gantry5</name>
     <packagename>gantry5</packagename>
     <version>5.0.0-DEV</version>
     <creationDate>@versiondate@</creationDate>
@@ -9,22 +9,26 @@
     <authorUrl>http://www.rockettheme.com</authorUrl>
     <copyright>(C) 2005 - 2015 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
-    <description>Gantry 5 Framework Package</description>
+    <description>PKG_GANTRY5_DESCRIPTION</description>
 
     <scriptfile>install.php</scriptfile>
 
     <files folder="packages">
         <!-- Mandatory system plugin -->
-        <filename type="plugin"    group="system"     id="gantry5"      >plg_system_gantry5_v@version@.zip</filename>
+        <filename type="plugin"    group="system"     id="gantry5"        >plg_system_gantry5_v@version@.zip</filename>
         <!-- Quick icons -->
-        <filename type="plugin"    group="quickicon"  id="gantry5"      >plg_quickicon_gantry5_v@version@.zip</filename>
+        <filename type="plugin"    group="quickicon"  id="gantry5"        >plg_quickicon_gantry5_v@version@.zip</filename>
         <!-- Gantry framework library -->
-        <filename type="library"                      id="gantry5"      >lib_gantry5_v@version@.zip</filename>
+        <filename type="library"                      id="gantry5"        >lib_gantry5_v@version@.zip</filename>
         <!-- Common media files -->
-        <filename type="file"                         id="gantry5_media">gantry5_media_v@version@.zip</filename>
+        <filename type="file"                         id="gantry5_nucleus">gantry5_nucleus_v@version@.zip</filename>
         <!-- Administration component -->
-        <filename type="component"                    id="com_gantry5"  >com_gantry5_v@version@.zip</filename>
+        <filename type="component"                    id="com_gantry5"    >com_gantry5_v@version@.zip</filename>
     </files>
+
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.pkg_gantry5.sys.ini</language>
+    </languages>
 
     <updateservers>
         <server type="extension" priority="1" name="Gantry 5">http://updates.gantry-framework.org/5.0/joomla/pkg_gantry5.xml</server>

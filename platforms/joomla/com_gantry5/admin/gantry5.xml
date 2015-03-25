@@ -27,4 +27,8 @@
         <menu>COM_GANTRY5</menu>
     </administration>
 
+    <media folder="media" destination="gantry5">
+        <folder>assets</folder>
+    </media>
+
 </extension>

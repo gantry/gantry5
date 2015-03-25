@@ -137,6 +137,10 @@
             <filterchain refid="filter"/>
         </copy>
 
+        <copy todir="${build_dir}/distribution/language" overwrite="true">
+            <fileset dir="${path.platforms}/joomla/language"/>
+        </copy>
+
         <copy file="${project_dir}/README.md" tofile="${build_dir}/distribution/README.txt" overwrite="true">
             <filterchain refid="filter"/>
         </copy>
@@ -161,6 +165,18 @@
                 <exclude name="Gruntfile.js"/>
                 <exclude name="package.json"/>
                 <exclude name="scss.sh"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${tmp_dir}/packages/com_gantry5/media/assets" overwrite="true">
+            <fileset dir="${path.assets}/common">
+                <exclude name="application/**"/>
+                <exclude name="**/*.js.map"/>
+                <exclude name="**/*.sh"/>
+            </fileset>
+            <fileset dir="${path.assets}/joomla">
+                <exclude name="**/*.js.map"/>
+                <exclude name="**/*.sh"/>
             </fileset>
         </copy>
 
@@ -236,28 +252,25 @@
     </target>
 
     <target name="build-media" depends="build-installer">
-        <echo message="Building Media files.." />
+        <echo message="Building Nucleus.." />
 
-        <copy todir="${tmp_dir}/packages/gantry5_media/gantry5/assets" overwrite="true">
-            <fileset dir="${path.assets}/common">
-                <exclude name="application/**"/>
+        <copy todir="${tmp_dir}/packages/gantry5_nucleus/nucleus" overwrite="true">
+            <fileset dir="${path.engines}/common">
+                <exclude name="**/*.sh"/>
             </fileset>
-            <fileset dir="${path.assets}/joomla"/>
+            <fileset dir="${path.engines}/joomla">
+                <exclude name="**/*.sh"/>
+            </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/gantry5_media/gantry5/engines" overwrite="true">
-            <fileset dir="${path.engines}/common"/>
-            <fileset dir="${path.engines}/joomla"/>
-        </copy>
-
-        <copy todir="${tmp_dir}/packages/gantry5_media/gantry5" overwrite="true">
-            <fileset dir="${path.platforms}/joomla/gantry5_media"/>
+        <copy todir="${tmp_dir}/packages/gantry5_nucleus" overwrite="true">
+            <fileset dir="${path.platforms}/joomla/gantry5_nucleus"/>
         </copy>
 
         <!-- Add version information to all xml files -->
-        <copy todir="${tmp_dir}/packages/gantry5_media" overwrite="true">
+        <copy todir="${tmp_dir}/packages/gantry5_nucleus" overwrite="true">
             <filterchain refid="filter"/>
-            <fileset dir="${path.platforms}/joomla/gantry5_media">
+            <fileset dir="${path.platforms}/joomla/gantry5_nucleus">
                 <include name="*.xml"/>
             </fileset>
         </copy>

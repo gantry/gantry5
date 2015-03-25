@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension version="3.4" type="file" method="upgrade">
-    <name>Gantry 5 Media Files</name>
+    <name>gantry5_nucleus</name>
     <version>@version@</version>
     <creationDate>@versiondate@</creationDate>
     <author>RocketTheme, LLC</author>
@@ -8,11 +8,14 @@
     <authorUrl>http://www.rockettheme.com</authorUrl>
     <copyright>(C) 2005 - 2015 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
-    <description>Gantry 5 media files</description>
+    <description>GANTRY5_NUCLEUS_DESCRIPTION</description>
 
     <fileset>
-        <files target="media">
-            <folder>gantry5</folder>
+        <files target="media/gantry5/engines">
+            <folder>nucleus</folder>
         </files>
     </fileset>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.files_gantry5_nucleus.sys.ini</language>
+    </languages>
 </extension>
