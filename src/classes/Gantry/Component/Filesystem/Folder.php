@@ -60,8 +60,8 @@ abstract class Folder
      */
     public static function getRelativePathDotDot($path, $base)
     {
-        $base = preg_replace('![\\|/]+!', '/', $base);
-        $path = preg_replace('![\\|/]+!', '/', $path);
+        $base = preg_replace('![\\\/]+!', '/', $base);
+        $path = preg_replace('![\\\/]+!', '/', $path);
 
         if ($path === $base) {
             return '';
