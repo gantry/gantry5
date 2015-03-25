@@ -657,7 +657,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
 
         &[data-lm-blocktype="spacer"] {
             background-color: $spacer;
-            color: #666;
+            color: #fff;
             border: 1px solid darken($medium-gray, 5);
         }
 

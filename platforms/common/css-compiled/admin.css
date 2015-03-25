@@ -1510,7 +1510,7 @@ a {
     margin-bottom: 0; }
   .g5-lm-particles-picker li[data-lm-blocktype="spacer"] {
     background-color: #eee;
-    color: #666;
+    color: #fff;
     border: 1px solid #d0d0d0; }
   .g5-lm-particles-picker li[data-lm-blocktype="position"] {
     color: #fff;
