@@ -65,6 +65,8 @@ configuration:
       align-right: Align Right
       align-left: Align Left
       center: Center
+      nomarginall: No Margin
+      nopaddingall: No Padding
 
   dependencies:
     gantry: 5.0.*
