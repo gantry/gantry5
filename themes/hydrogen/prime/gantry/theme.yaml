@@ -60,6 +60,8 @@ configuration:
     Effects:
       shadow: Shadow 1
       shadow2: Shadow 2
+      rounded: Rounded
+      square: Square
     Utility:
       disabled: Disabled
       align-right: Align Right
