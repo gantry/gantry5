@@ -105,6 +105,7 @@ class Pkg_Gantry5InstallerScript
         // Enable and lock extensions to prevent uninstalling them individually.
         $this->prepareExtensions($manifest, 1);
 
+        // Make sure that all file formats used by Gantry5 are editable from template manager.
         $this->adjustTemplateSettings();
 
         return true;
