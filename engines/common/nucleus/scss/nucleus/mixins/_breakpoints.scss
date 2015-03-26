@@ -6,6 +6,9 @@
 	@else if $breakpoint == desktop-range {
 		@media only #{$media} and (min-width: $breakpoints-desktop-container) and (max-width: $breakpoints-large-desktop-container - 0.062) { @content; }
 	}
+	@else if $breakpoint == desktop-only {
+		@media only #{$media} and (min-width: $breakpoints-desktop-container) { @content; }
+	}
 	@else if $breakpoint == tablet-range {
 		@media only #{$media} and (min-width: $breakpoints-tablet-container) and (max-width: $breakpoints-desktop-container - 0.062) { @content; }
 	}
