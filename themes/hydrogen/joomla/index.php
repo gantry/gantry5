@@ -12,6 +12,6 @@ $template = \JFactory::getApplication()->getTemplate(true);
 
 // Render the page.
 echo $theme
-    ->setLayout($template->id)
+    ->setLayout($template->params->get('configuration', $template->id))
     ->render('index.html.twig');
 

@@ -5,6 +5,10 @@ class G5_HydrogenInstallerScript
 {
     public function preflight($type, $parent)
     {
+        if ($type == 'uninstall') {
+            return true;
+        }
+
         // Prevent installation if Gantry 5 isn't enabled.
         try {
             if (!class_exists('Gantry5\Loader')) {
@@ -21,5 +25,20 @@ class G5_HydrogenInstallerScript
         }
 
         return true;
+    }
+
+    public function postflight($type, $parent)
+    {
+        if (in_array($type, array('install', 'discover_install')))
+        {
+            $installer = new Gantry\Framework\TemplateInstaller($parent);
+
+            // Update default style.
+            $installer->updateStyle('JLIB_INSTALLER_DEFAULT_STYLE', array('configuration' => 'default'), 1);
+
+            // Add second style for the main page and assign all home pages to it.
+            $style = $installer->addStyle('TPL_G5_HYDROGEN_MAIN_STYLE', array('configuration' => 'main'));
+            $installer->assignHomeStyle($style);
+        }
     }
 }

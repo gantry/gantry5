@@ -153,7 +153,7 @@ class plgSystemGantry5 extends JPlugin
 
             if ($id && $uri->getVar('option') == 'com_templates' && isset($this->styles[$id])) {
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
-                $html .= ' <span class="label" style="background:#439a86;color:#fff;">Gantry5</span>';
+                $html .= ' <span class="label" style="background:#439a86;color:#fff;">Gantry 5</span>';
             }
         }
 
