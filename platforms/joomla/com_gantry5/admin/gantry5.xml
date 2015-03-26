@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension version="3.4" type="component" method="upgrade">
-    <name>COM_GANTRY5</name>
+    <name>com_gantry5</name>
     <version>@version@</version>
     <creationDate>@versiondate@</creationDate>
     <author>RocketTheme, LLC</author>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension version="3.4" type="plugin" group="system" method="upgrade">
-    <name>PLG_SYSTEM_GANTRY5</name>
+    <name>plg_system_gantry5</name>
     <version>@version@</version>
     <creationDate>@versiondate@</creationDate>
     <author>RocketTheme, LLC</author>

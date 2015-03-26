@@ -105,6 +105,8 @@ class Pkg_Gantry5InstallerScript
         // Enable and lock extensions to prevent uninstalling them individually.
         $this->prepareExtensions($manifest, 1);
 
+        $this->adjustTemplateSettings();
+
         return true;
     }
 
@@ -115,17 +117,17 @@ class Pkg_Gantry5InstallerScript
         foreach ($manifest->files->children() as $file) {
             $attributes = $file->attributes();
 
-            $search = ['type' => (string) $attributes->type, 'element' => (string) $attributes->id];
+            $search = array('type' => (string) $attributes->type, 'element' => (string) $attributes->id);
 
             $clientName = (string) $attributes->client;
             if (!empty($clientName)) {
                 $client = JApplicationHelper::getClientInfo($clientName, true);
-                $search +=  ['client_id' => $client->id];
+                $search +=  array('client_id' => $client->id);
             }
 
             $group = (string) $attributes->group;
             if (!empty($group)) {
-                $search +=  ['folder' => $group];
+                $search +=  array('folder' => $group);
             }
 
             $extension = JTable::getInstance('extension');
@@ -138,6 +140,28 @@ class Pkg_Gantry5InstallerScript
             $extension->enabled = $state;
             $extension->store();
         }
+    }
+
+    protected function adjustTemplateSettings()
+    {
+        $extension = JTable::getInstance('extension');
+        if (!$extension->load(array('type' => 'component', 'element' => 'com_templates'))) {
+            return;
+        }
+
+        $params = new Joomla\Registry\Registry($extension->params);
+        $params->set('source_formats', $this->addParam($params->get('source_formats'), array('scss', 'yaml', 'twig')));
+        $params->set('font_formats', $this->addParam($params->get('font_formats'), array('eot', 'svg')));
+
+        $extension->params = $params->toString();
+        $extension->store();
+    }
+
+    protected function addParam($string, array $options)
+    {
+        $items = array_flip(explode(',', $string)) + array_flip($options);
+
+        return implode(',', array_keys($items));
     }
 
     protected function checkRequirements()
