@@ -60,3 +60,15 @@
 		opacity: 0.4;
 	}
 }
+
+.square {
+	.g-content {
+		border-radius: none;
+	}
+}
+
+.rounded {
+	.g-content {
+		border-radius: $core-border-radius;
+	}
+}
