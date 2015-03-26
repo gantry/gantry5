@@ -5,10 +5,12 @@ class TemplateInstaller
 {
     protected $extension;
 
-    public function __construct($extension)
+    public function __construct($extension = null)
     {
         \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
-        if ($extension instanceof \JInstallerAdapterTemplate) {
+        if (is_numeric($extension)) {
+            $this->loadExtension($extension);
+        } elseif ($extension instanceof \JInstallerAdapterTemplate) {
             $this->setInstaller($extension);
         }
     }
@@ -24,6 +26,12 @@ class TemplateInstaller
         return $this;
     }
 
+    public function loadExtension($id)
+    {
+        $this->extension = \JTable::getInstance('extension');
+        $this->extension->load($id);
+    }
+
     public function getStyleName($title)
     {
         return \JText::sprintf($title, \JText::_($this->extension->name));
@@ -32,6 +40,7 @@ class TemplateInstaller
     public function createStyle()
     {
         $style = \JTable::getInstance('Style', 'TemplatesTable');
+        $style->reset();
         $style->template = $this->extension->element;
         $style->client_id = $this->extension->client_id;
 
@@ -65,14 +74,16 @@ class TemplateInstaller
         return $style;
     }
 
-    public function updateStyle($name, array $configuration, $home = 0)
+    public function updateStyle($name, array $configuration, $home = null)
     {
         $style = $this->getStyle($name);
 
         if ($style->id) {
+            $home = ($home !== null ? $home : $style->home);
+
             $data = array(
-                'home' => $home,
-                'params' => json_encode($configuration)
+                'params' => json_encode($configuration),
+                'home' => $home
             );
 
             $style->save($data);
