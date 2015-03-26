@@ -47,7 +47,7 @@ class G5_HydrogenInstallerScript
             $installer->updateStyle('JLIB_INSTALLER_DEFAULT_STYLE', array('configuration' => $configuration), 1);
 
             // Add second style for the main page and assign all home pages to it.
-            $style = $installer->addStyle('TPL_G5_HYDROGEN_MAIN_STYLE', array('configuration' => 'main'));
+            $style = $installer->addStyle('TPL_G5_HYDROGEN_HOME_STYLE', array('configuration' => 'home'));
             $installer->assignHomeStyle($style);
         }
     }
