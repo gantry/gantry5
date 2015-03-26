@@ -57,6 +57,14 @@ class TemplateInstaller
         return $style;
     }
 
+    public function getDefaultStyle()
+    {
+        $style = \JTable::getInstance('Style', 'TemplatesTable');
+        $style->load(['home' => 1]);
+
+        return $style;
+    }
+
     public function updateStyle($name, array $configuration, $home = 0)
     {
         $style = $this->getStyle($name);

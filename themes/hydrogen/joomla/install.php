@@ -33,8 +33,18 @@ class G5_HydrogenInstallerScript
         {
             $installer = new Gantry\Framework\TemplateInstaller($parent);
 
+            $default = $installer->getDefaultStyle();
+            switch ($default->template) {
+                case 'beez3':
+                case 'protostar':
+                    $configuration = '_joomla_-_' . $default->template;
+                    break;
+                default:
+                    $configuration = 'default';
+            }
+
             // Update default style.
-            $installer->updateStyle('JLIB_INSTALLER_DEFAULT_STYLE', array('configuration' => 'default'), 1);
+            $installer->updateStyle('JLIB_INSTALLER_DEFAULT_STYLE', array('configuration' => $configuration), 1);
 
             // Add second style for the main page and assign all home pages to it.
             $style = $installer->addStyle('TPL_G5_HYDROGEN_MAIN_STYLE', array('configuration' => 'main'));
