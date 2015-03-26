@@ -90,10 +90,7 @@ children:
     type: section
     subtype: false
     title: Feature
-    attributes:
-      class: flush
-      extra: ''
-      enabled: 0
+    attributes: {  }
     children:
       -
         id: 6b2fd9f6-9238-5837-1b5b-bff919f3114f
@@ -101,121 +98,7 @@ children:
         subtype: false
         title: Untitled
         attributes: {  }
-        children:
-          -
-            id: ab711916-b333-b861-141c-593f820eb179
-            type: grid
-            subtype: false
-            title: Untitled
-            attributes: {  }
-            children:
-              -
-                id: f7c89c62-3250-4ef0-96c4-ddec3a2205cf
-                type: block
-                subtype: false
-                title: Untitled
-                attributes:
-                  size: 100
-                children:
-                  -
-                    id: fa450f5c-6db0-4146-8a1c-e052d92d2b4d
-                    type: particle
-                    subtype: sample
-                    title: "\n                                Sample Content\n                            "
-                    attributes:
-                      enabled: 1
-                      headline: 'Key Features'
-                      description: '<p>Gantry 5 is packed full of features created to empower the development of designs into fully functional layouts with the absolute minimum effort and fuss</p>'
-                      samples:
-                        -
-                          icon: 'fa fa-code'
-                          subtitle: ''
-                          description: '<p>Gantry 5 leverages the power of <a href="http://twig.sensiolabs.org/">Twig</a> to make creating powerful, dynamic themes quick and easy.</p>'
-                          title: 'Twig Templating'
-                        -
-                          icon: 'fa fa-newspaper-o'
-                          subtitle: ''
-                          description: '<p>Drag-and-drop functionality gives you the power to place content blocks, resize them, and configure their unique settings in seconds.</p>'
-                          title: 'Layout Manager'
-                        -
-                          icon: 'fa fa-cubes'
-                          subtitle: ''
-                          description: '<p>Create, configure, and manage content blocks as well as special features and functionality with the powerful particle system.</p>'
-                          title: 'Particles System'
-                    children: {  }
-  -
-    id: 9fe65519-28ea-80d5-723c-1ba2a45646f6
-    type: section
-    subtype: false
-    title: Subfeature
-    attributes:
-      class: flush
-      extra: ''
-      enabled: 0
-    children:
-      -
-        id: 05dffbab-4476-564a-ab02-093f9773b6e4
-        type: container
-        subtype: false
-        title: Untitled
-        attributes: {  }
-        children:
-          -
-            id: e46eac43-3e7a-67f0-d83a-818e62df6134
-            type: grid
-            subtype: false
-            title: Untitled
-            attributes: {  }
-            children:
-              -
-                id: a63244d5-fac2-4cc5-9476-eede2757f334
-                type: block
-                subtype: false
-                title: Untitled
-                attributes:
-                  size: 100
-                children:
-                  -
-                    id: 6670d9d8-3980-4f04-93fa-448de3d34cea
-                    type: particle
-                    subtype: sample
-                    title: "\n                                Sample Content\n                            "
-                    attributes:
-                      enabled: 1
-                      headline: 'Multiple platforms with unlimited possibilities'
-                      description: ''
-                      samples:
-                        -
-                          icon: 'fa fa-joomla'
-                          subtitle: '<span class="subtitle">Now Available</span>'
-                          description: ''
-                          class: 'box1 shadow'
-                          title: Joomla
-                        -
-                          icon: 'fa fa-clock-o'
-                          subtitle: '<span class="subtitle">Coming Soon</span>'
-                          description: ''
-                          class: disabled
-                          title: WordPress
-                        -
-                          icon: 'fa fa-clock-o'
-                          subtitle: '<span class="subtitle">Coming Soon</span>'
-                          description: ''
-                          class: disabled
-                          title: Grav
-                        -
-                          icon: 'fa fa-clock-o'
-                          subtitle: '<span class="subtitle">Coming Soon</span>'
-                          description: ''
-                          class: disabled
-                          title: Magento
-                        -
-                          icon: 'fa fa-clock-o'
-                          subtitle: '<span class="subtitle">Coming Soon</span>'
-                          description: ''
-                          class: disabled
-                          title: phpBB
-                    children: {  }
+        children: {  }
   -
     id: 059c45bc-e983-3af9-e001-151725fc3978
     type: section
@@ -277,8 +160,65 @@ children:
                     title: "\n                                Sample Content\n                            "
                     attributes:
                       enabled: 1
-                      headline: 'Getting Started'
-                      description: "<p>Welcome to the Gantry 5 beta featuring Hydrogen, the first theme built on the Gantry 5 framework. If you want to get started, the best way is to navigate to the Gantry Administrator by navigating to <code>http://(your site URL)/administrator</code> and navigating to <strong>Admin > Extensions > Template Manager</strong> and selecting the <strong>Hydrogen</strong> template.</p>\n\n<p>Once you are in the Gantry 5 Administrator, you will be able to edit virtually every aspect of your site from its <strong>Layout</strong> to its <strong>Style</strong>. You can even refine how the menus appear using Gantry 5’s new <strong>Menu Editor</strong>.</p>\n\n<p>You can create additional <strong>Configurations</strong> by duplicating the template’s <strong>Style</strong> as it appears in the <strong>Template Manager</strong>. This will enable you to set different style preferences for different pages, and have them assigned accordingly using the <strong>Assignments</strong> administrative panel.</p>\n\n<p>Look for more information on Gantry 5 in our documentation, and stay tuned to the RocketTheme Blog for more information on new features and development updates as development continues.</p>\n\n<h2>How to Contribute</h2>\n\n<p>Thank you for participating in the Gantry 5 beta for Joomla. We welcome you to contribute to the project by submitting bug reports through GitHub, and/or submit your own code changes to the Gantry 5 project for consideration.</p>\n\n<p>If you would like to assist in creating documentation for Gantry 5, you can do so through the Gantry 5 Documentation project on GitHub.</p>\n\n<p>Once again, thank you for participating. We hope you enjoy testing Gantry 5 every bit as much as we have enjoyed creating it.</p>"
+                      description: "<h1 class=\"center\">Getting Started</h1>\n<div class=\"device-promo\">\n\t<div class=\"macbook\">\n\t\t<div class=\"macbook-color\">\n\t\t</div>\n\t</div>\n\t<div class=\"ipad\">\n\t\t<div class=\"ipad-color\">\n\t\t</div>\n\t</div>\n\t<div class=\"iphone\">\n\t\t<div class=\"iphone-color\">\n\t\t</div>\n\t</div>\n</div><p>Welcome to the Gantry 5 beta featuring <strong>Hydrogen</strong>, the first theme built on the Gantry 5 framework. If you want to get started, the best way is to navigate to the Gantry Administrator by navigating to <code>http://(your site URL)/administrator</code> and navigating to <strong>Components > Gantry 5 Template</strong>.</p>\n\n<p>Once you are in the Gantry 5 Administrator, you will be able to edit virtually every aspect of your site from its <strong>Layout</strong> to its <strong>Style</strong>. You can even refine how the menus appear using Gantry 5’s new <strong>Menu Editor</strong>.</p>\n\n<p>You can create additional <strong>Configurations</strong> by duplicating the template’s <strong>Style</strong> as it appears in the <strong>Template Manager</strong>. </p>\n\n<p>This will enable you to set different style preferences for different pages, and have them assigned accordingly using the <strong>Assignments</strong> administrative panel.</p>\n\n<p>Look for more information on Gantry 5 in our documentation, and stay tuned to the RocketTheme Blog for more information on new features and development updates as development continues.</p>\n\n<p><a href=\"http://gantry-docs.com\" class=\"button\"><i class=\"fa fa-fw fa-graduation-cap\"></i> Learn More</a></p>\n\n<h1 class=\"center\">How to Contribute</h1>\n\n<div class=\"fa fa-github-square float-left\"></div><p>Thank you for participating in the Gantry 5 beta for Joomla. We welcome you to contribute to the project by submitting bug reports through <strong>GitHub</strong>, and/or submit your own code changes to the <strong>Gantry 5 project</strong> for consideration.</p>\n\n<p>If you would like to assist in creating documentation for Gantry 5, you can do so through the <strong>Gantry 5 Documentation</strong> project on <strong>GitHub</strong>.</p>\n\n<p>Once again, thank you for participating. We hope you enjoy testing Gantry 5 every bit as much as we have enjoyed creating it.</p>"
+                    children: {  }
+  -
+    id: 9fe65519-28ea-80d5-723c-1ba2a45646f6
+    type: section
+    subtype: false
+    title: Subfeature
+    attributes:
+      class: flush
+      extra: ''
+      enabled: 0
+    children:
+      -
+        id: 05dffbab-4476-564a-ab02-093f9773b6e4
+        type: container
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children:
+          -
+            id: e46eac43-3e7a-67f0-d83a-818e62df6134
+            type: grid
+            subtype: false
+            title: Untitled
+            attributes: {  }
+            children:
+              -
+                id: f7c89c62-3250-4ef0-96c4-ddec3a2205cf
+                type: block
+                subtype: false
+                title: Untitled
+                attributes:
+                  size: 100
+                children:
+                  -
+                    id: fa450f5c-6db0-4146-8a1c-e052d92d2b4d
+                    type: particle
+                    subtype: sample
+                    title: "\n                                Sample Content\n                            "
+                    attributes:
+                      enabled: 1
+                      headline: 'Key Features'
+                      description: '<p>Gantry 5 is packed full of features created to empower the development of designs into fully functional layouts with the absolute minimum effort and fuss</p>'
+                      samples:
+                        -
+                          icon: 'fa fa-code'
+                          subtitle: ''
+                          description: '<p>Gantry 5 leverages the power of <a href="http://twig.sensiolabs.org/">Twig</a> to make creating powerful, dynamic themes quick and easy.</p>'
+                          title: 'Twig Templating'
+                        -
+                          icon: 'fa fa-newspaper-o'
+                          subtitle: ''
+                          description: '<p>Drag-and-drop functionality gives you the power to place content blocks, resize them, and configure their unique settings in seconds.</p>'
+                          title: 'Layout Manager'
+                        -
+                          icon: 'fa fa-cubes'
+                          subtitle: ''
+                          description: '<p>Create, configure, and manage content blocks as well as special features and functionality with the powerful particle system.</p>'
+                          title: 'Particles System'
                     children: {  }
   -
     id: 16ffefc7-f83b-6f81-9089-ed94e8e8153a
