@@ -16,7 +16,7 @@ h1, h2, h3, h4, h5, h6, strong {
 	color: darken($base-text-color, 10%);
 }
 
-.button, button, .btn, input[type="button"], input[type="reset"], input[type="submit"] {
+.button {
 	display: inline-block;
 	padding: 0.5rem 1rem;
 	border-radius: $border-radius;
@@ -38,6 +38,10 @@ h1, h2, h3, h4, h5, h6, strong {
 		box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
 		color: $white;
 	}
+}
+
+.btn, button, input[type="button"], input[type="reset"], input[type="submit"] {
+
 }
 
 .gantry-logo {
