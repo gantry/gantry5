@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension version="3.4" type="template" client="site" method="upgrade">
     <name>g5_hydrogen</name>
-    <version>1.0</version>
+    <version>@version@</version>
     <creationDate>@versiondate@</creationDate>
     <author>RocketTheme, LLC</author>
     <authorEmail>support@rockettheme.com</authorEmail>
