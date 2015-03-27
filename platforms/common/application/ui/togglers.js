@@ -3,8 +3,11 @@ var ready = require('elements/domready'),
     $ = require('elements');
 
 ready(function(){
-    var hiddens;
-    $('body').delegate('click', '.enabler .toggle', function(e, element){
+    var hiddens,
+        click = ('ontouchend' in window) ? 'touchend' : 'click';
+
+    $('body').delegate(click, '.enabler .toggle', function(e, element){
+        console.log('a');
         element = $(element);
         hiddens = element.find('~~ [type=hidden]');
 
