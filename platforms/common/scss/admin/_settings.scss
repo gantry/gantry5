@@ -113,7 +113,7 @@
         display: inline-block;
     }
 
-    input:not(.settings-param-toggle), select, .collection-list ul, .colorpicker {
+    input:not(.settings-param-toggle), select, .collection-list ul, .colorpicker, .multi.selectize-control {
         width: 250px;
         @include breakpoint(no-desktop) {
             width: 100%;
