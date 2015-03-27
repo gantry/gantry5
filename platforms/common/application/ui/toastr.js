@@ -31,13 +31,13 @@ var Toaster = new prime({
 
         showDuration: 300,
         showEquation: 'cubic-bezier(0.02, 0.01, 0.47, 1)',
-        hideDuration: 1000,
+        hideDuration: 500,
         hideEquation: 'cubic-bezier(0.02, 0.01, 0.47, 1)',
 
-        timeOut: 5000, // timeOut and extendedTimeout to 0 == sticky
-        extendedTimeout: 5000,
+        timeOut: 2500, // timeOut and extendedTimeout to 0 == sticky
+        extendedTimeout: 2500,
 
-        location: 'top-right',
+        location: 'bottom-right',
 
         titleClass: 'g-notifications-title',
         messageClass: 'g-notifications-message',
