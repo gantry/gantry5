@@ -1157,7 +1157,6 @@ input[type="file"] {
   width: 100%; }
 
 select {
-  width: auto;
   max-width: 100%;
   margin-bottom: 1.5rem; }
 
