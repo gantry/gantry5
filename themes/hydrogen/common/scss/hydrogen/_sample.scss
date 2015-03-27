@@ -69,11 +69,16 @@
 			}
 		}
 	}
+	.middle {
+		text-align: center;
+	}
 	.fa-github-square {
 		color: #ddd;
-		margin-left: 3rem;
-		margin-bottom: 1rem;
+		margin-top: 1.5rem;
 		font-size: 10rem;
+		@include breakpoint(tablet-range) {
+			font-size: 8rem;
+		}
 		@include breakpoint(mobile-only) {
 			float: none !important;
 			margin-right: 0;
