@@ -1,5 +1,6 @@
+{% set scope = prefix %}
+
 {% if blueprints.type %}
-    {% set scope = prefix %}
     {% set field = blueprints %}
     {% set value = data %}
     {% set default_value = defaults %}
@@ -11,8 +12,6 @@
         {% if name starts with '.' %}
             {% set name = name[1:] %}
         {% endif %}
-
-        {% set scope = prefix %}
 
         {% if field.type and name not in skip and not field.skip %}
             {% set field = field + {'name': name} %}
