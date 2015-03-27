@@ -2,6 +2,6 @@
 
 {% block particle %}
     {% if gantry.platform.countModules(position.key) %}
-        <jdoc:include type="modules" name="{{ position.key }}" style="{{ position.chrome|default('none') }}" />
+        <jdoc:include type="modules" name="{{ position.key }}" style="{{ position.chrome|default('xhtml') }}" />
     {% endif %}
 {% endblock %}
