@@ -21,4 +21,4 @@ form:
       type: input.text
       label: Chrome
       description: Position chrome
-      placeholder: none
+      placeholder: xhtml
