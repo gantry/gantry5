@@ -429,6 +429,7 @@ var LayoutManager = new prime({
                 };
             }
 
+            if (previous.find('!> [data-lm-blocktype="container"]')) { previous = previous.parent(); }
             previous = previous.siblings(':not(.original-placeholder)');
             if (!this.block.isNew() && previous.length) { this.resizer.evenResize(previous); }
 
