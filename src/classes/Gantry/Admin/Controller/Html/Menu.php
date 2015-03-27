@@ -263,7 +263,7 @@ class Menu extends HtmlController
         /** @var MenuObject $menus */
         $menus = $this->container['menu'];
 
-        return $menus->instance(['config' => ['menu' => $id]], $config);
+        return $menus->instance(['menu' => $id], $config);
     }
 
     /**
