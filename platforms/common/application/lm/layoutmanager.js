@@ -418,9 +418,11 @@ var LayoutManager = new prime({
         // case 2: moving a block around, need to fix sizes if it's a multi location resize
         if (this.originalType === 'block' && this.block.getType() === 'block') {
             resizeCase = { case: 3 };
-            var previous = this.block.block.parent('[data-lm-blocktype="grid"]');
-            if (previous.find('!> [data-lm-blocktype="container"]')) { previous = previous.parent(); }
-            if (this.placeholder.parent('[data-lm-blocktype="grid"]') !== previous) {
+            var previous = this.block.block.parent('[data-lm-blocktype="grid"]'),
+                placeholderPrevious = this.placeholder.parent('[data-lm-blocktype="grid"]');
+            //if (previous.find('!> [data-lm-blocktype="container"]')) { previous = previous.parent(); }
+            //if (placeholderPrevious.find('!> [data-lm-blocktype="container"]')) { placeholderPrevious = placeholderPrevious.parent(); }
+            if (placeholderPrevious !== previous) {
                 multiLocationResize = {
                     from: this.block.block.siblings(':not(.placeholder)'),
                     to: this.placeholder.siblings(':not(.placeholder)')
