@@ -344,7 +344,7 @@
 
                 <!-- Zip the created Zips for packages -->
                 <phingcall target="archive">
-                    <property name="destination.file" value="${package_dir}/tpl_g5_${directory}" />
+                    <property name="destination.file" value="${package_dir}/joomla-tpl_g5_${directory}${str.fileversion}" />
                     <property name="base.directory" value="${tmp_dir}/templates/tpl_g5_${directory}" />
                 </phingcall>
             </then>
@@ -362,7 +362,7 @@
 
         <!-- Zip the created Zips for packages -->
         <phingcall target="archive">
-            <property name="destination.file" value="${package_dir}/${cfg.prefix}${cfg.name}${str.fileversion}" />
+            <property name="destination.file" value="${package_dir}/joomla-${cfg.prefix}${cfg.name}${str.fileversion}" />
             <property name="base.directory" value="${build_dir}/distribution" />
         </phingcall>
     </target>
