@@ -71,13 +71,25 @@
 	}
 	.fa-github-square {
 		color: #ddd;
-		margin-right: 3rem;
+		margin-left: 3rem;
 		margin-bottom: 1rem;
 		font-size: 10rem;
 		@include breakpoint(mobile-only) {
 			float: none !important;
 			margin-right: 0;
 		}
+	}
+	.info-box {
+		background: darken($main-background, 4%);
+		border: 1px solid darken($main-background, 10%);
+		padding: $content-padding;
+		border-radius: $core-border-radius;
+		margin-bottom: 4rem;
+	}
+	.fa-graduation-cap {
+		color: darken($main-background, 15%);
+		margin: 1rem 2rem 1rem 1rem;
+		font-size: 6rem;
 	}
 }
 
