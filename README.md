@@ -7,6 +7,16 @@ On this page, you will get some quick tips to help you hit the ground running wi
 
 We hope you enjoy Gantry 5 every bit as much as we have enjoyed making it.
 
+## Browser Requirements
+
+The back-end administration requirements of Gantry in order of preference are as follows:
+
+* Google Chrome 41+
+* Firefox 36+
+* Safari 8+
+* Opera 28+
+* Internet Explorer 10+ (9 supported at limited capacity)
+
 ## Installing Gantry 5 and the Hydrogen Theme
 
 Gantry 5 is a framework by which Gantry-powered themes are made. In order for a Gantry theme to work, you will need to install both the **framework** and the **theme**. Doing this is not difficult at all.
