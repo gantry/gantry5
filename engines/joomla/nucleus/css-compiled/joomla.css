@@ -208,6 +208,14 @@ fieldset.radio.btn-group {
   font-size: 14px;
   line-height: 20px; }
 
+.btn.jmodedit {
+  padding: 0;
+  text-align: center;
+  font-size: 0.8rem; }
+  .btn.jmodedit [class^="icon-"], .btn.jmodedit [class*=" icon-"] {
+    margin: 6px 8px;
+    align: center; }
+
 legend {
   margin-bottom: 1.5rem;
   font-size: 1.3rem;

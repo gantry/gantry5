@@ -84,3 +84,13 @@ fieldset.radio.btn-group {
 		}
 	}
 }
+
+.btn.jmodedit {
+	padding: 0;
+	text-align: center;
+	font-size: $core-font-size - 0.2;
+	[class^="icon-"], [class*=" icon-"] {
+		margin: 6px 8px;
+		align: center;
+	}
+}
