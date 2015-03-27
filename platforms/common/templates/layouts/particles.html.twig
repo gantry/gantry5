@@ -1,0 +1,13 @@
+<div class="g5-lm-particles-picker">
+    <div class="search">
+        <input type="text" placeholder="Search..." />
+        <i class="fa fa-search"></i>
+    </div>
+    <ul>
+        {% for key,list in particles %}
+            {% for type,particle in list %}
+            <li class="g5-lm-particle-{{ key | e }}" data-lm-blocktype="{{ key | e }}" data-lm-subtype="{{ type }}">{{ particle | e }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,105 @@
+// MOdal
+body.modal {
+	padding-top: 0;
+}
+
+// Thumbnails
+.thumbnail.pull-left {
+	margin: 0 10px 10px 0;
+}
+.thumbnail.pull-right {
+	margin: 0 0 10px 10px;
+}
+
+// Accordian
+.accordion-body.in:hover {
+	overflow: visible;
+}
+
+// Tooltips
+.tip-wrap {
+	max-width: 200px;
+	padding: 3px 8px;
+	text-align: center;
+	text-decoration: none;
+	border-radius: $core-border-radius;
+	z-index: 100;
+}
+
+.tooltip {
+	max-width: 400px;
+}
+.tooltip-inner {
+	max-width: none;
+	text-align: left;
+	text-shadow: none;
+}
+th .tooltip-inner {
+	font-weight: normal;
+}
+.tooltip.hasimage {
+	opacity: 1;
+}
+.tip-text {
+	text-align: left;
+}
+
+// Joomla Extras
+#helpsite-refresh {
+	vertical-align: top;
+}
+
+#pop-print {
+	float: right;
+	margin: 10px;
+}
+
+#filter-search {
+	vertical-align: top;
+}
+
+.editor {
+	overflow: hidden;
+	position: relative;
+}
+
+.search span.highlight {
+	font-weight: bold;
+	padding: 1px 4px;
+}
+
+// Images
+.img-rounded {
+	border-radius: $core-border-radius;
+}
+
+.img-polaroid {
+	padding: 4px;
+}
+
+// System Messages and Alerts
+.alert {
+	border-radius: $core-border-radius;
+}
+
+// Icomoon Resets
+.add-on {
+	[class^="icon-"], [class*=" icon-"] {
+		height: auto;
+		line-height: $core-line-height;
+	}
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	margin-right: .25em;
+	line-height: 14px;
+}
+
+// Calendar
+.calendar {
+	.button {
+		display: table-cell;
+		background: inherit;
+		color: inherit;
+	}
+}

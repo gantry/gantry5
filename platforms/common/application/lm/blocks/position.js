@@ -1,32 +1,38 @@
-var prime = require('prime'),
-    Base  = require('./base'),
-    $     = require('elements'),
-    zen   = require('elements/zen');
-
-require('elememts/attributes');
-require('elements/insertion');
+"use strict";
+var prime    = require('prime'),
+    trim     = require('mout/string/trim'),
+    Particle = require('./particle');
 
 var UID = 0;
 
 var Position = new prime({
-    inherits: Base,
+    inherits: Particle,
     options: {
         type: 'position'
     },
 
-    constructor: function(options){
+    constructor: function(options) {
         ++UID;
-        Base.call(this, options);
-        this.setAttribute('name', this.getTitle());
+        Particle.call(this, options);
+        this.setAttribute('title', this.getTitle());
+        this.setAttribute('key', this.getKey());
+
+        if (this.isNew()) { --UID; }
     },
 
-    getTitle: function(){
-        return this.getAttribute('name') || 'Position ' + UID;
+    getTitle: function() {
+        return (this.options.title || 'Position ' + UID);
     },
 
-    layout: function(){
-        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" ' + this.dropZone() +' data-lm-blocktype="' + this.getType() +'">' + this.getTitle() + '</div>';
-    }
+    getKey: function() {
+        return (this.getAttribute('key') || trim(this.getTitle()).replace(/\s/g, '-').toLowerCase());
+    },
+
+    updateKey: function(key) {
+        this.options.key = key || this.getKey();
+        this.block.find('.font-small').text(this.getKey());
+        return this;
+    },
 });
 
 module.exports = Position;

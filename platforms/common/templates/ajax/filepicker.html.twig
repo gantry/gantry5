@@ -1,0 +1,38 @@
+<div class="g-particles-header filepicker-header settings-block clearfix">
+    {#{{ active|join(', ') }}#}
+    <div class="float-right files-mode">
+        <div class="file-mode active" data-files-mode="thumbnails"><i class="fa fa-th-large"></i></div>
+        <div class="file-mode" data-files-mode="list"><i class="fa fa-th-list"></i></div>
+    </div>
+</div>
+
+<div class="g-particles-main icons-wrapper g-grid">
+    <div class="folders g-block size-30">
+        <ul class="g-bookmarks">
+            {% for index,bookmark in bookmarks %}
+                <li class="g-bookmark{{ (index in active) ? ' selected' : '' }}">
+                    <span class="g-bookmark-title" title="{{ index }}">{{ index }} <i class="g-bookmark-collapse fa fa-fw fa-minus"></i></span>
+                    <ul class="g-folders fa-ul">
+                        {% for folder in bookmark %}
+                            <li{{ (index in active) ? ' class="selected active"' : '' }} data-folder="{{ {pathname: folder}|json_encode|e('html_attr') }}"><i class="fa-li fa fa-folder-o"></i> <span class="path" title="{{ folder }}">{{ folder }}</span></li>
+                            {% include 'ajax/filepicker/subfolders.html.twig' with {'folder': attribute(attribute(folders, index), folder) } %}
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+            {#{% for index,folder in folders %}
+                <li data-folder="{{ folder|json_encode()|e('html_attr') }}">{{ folder.filename }}</li>
+            {% endfor %}#}
+        </ul>
+    </div>
+    <div class="g-files g-block g-filemode-thumbnails">
+        {% include 'ajax/filepicker/files.html.twig' with {'files': files } %}
+    </div>
+</div>
+{#<div class="g-breadcrumbs">{{ base }}</div>#}
+<div class="g-particles-footer settings-block clearfix">
+    <div class="float-right">
+        <a href="#" class="button button-primary" data-select>Select</a>
+        <a href="#" class="button g5-dialog-close">Cancel</a>
+    </div>
+</div>

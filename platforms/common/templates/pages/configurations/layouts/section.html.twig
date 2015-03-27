@@ -1,0 +1,21 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+<form method="post" action="{{ gantry.route(action) }}">
+    <div class="card settings-block">
+        <h4>
+            {{ particle.name }} {{ item.title }}
+        </h4>
+
+        <div class="inner-params">
+            <input type="hidden" name="particle" />
+            {% include 'forms/fields.html.twig' with {'overridable': true, 'blueprints': particle.form, 'data': {'particle': item.attributes}, 'prefix': 'particle.'} %}
+        </div>
+    </div>
+
+    <div class="g-modal-actions">
+        <button class="button button-primary" type="submit">Apply</button>
+        <a class="button g5-dialog-close">Cancel</a>
+    </div>
+</form>
+{% endblock %}

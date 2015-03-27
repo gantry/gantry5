@@ -1,0 +1,56 @@
+body {
+	color: $base-text-color;
+	background: $base-background;
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+	color: $accent-color-1;
+	&:hover {
+		color: darken($base-text-color, 10%);
+	}
+}
+
+h1, h2, h3, h4, h5, h6, strong {
+	color: darken($base-text-color, 10%);
+}
+
+.button {
+	display: inline-block;
+	padding: 0.5rem 1rem;
+	border-radius: $border-radius;
+	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+	background: $accent-color-1;
+	color: $white;
+	border: 0;
+	line-height: $core-line-height;
+	font-size: $core-font-size;
+	vertical-align: middle;
+	text-shadow: none;
+	@include transition(background 0.1s);
+	&:hover {
+		background: lighten($accent-color-1, 5%);
+		color: $white;
+	}
+	&:active, &:focus {
+		background: darken($accent-color-1, 5%);
+		box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
+		color: $white;
+	}
+}
+
+.btn, button, input[type="button"], input[type="reset"], input[type="submit"] {
+
+}
+
+.gantry-logo {
+	display: inline-block;
+	img {
+		width: 150px;
+	}
+}
+
+.logo-large {
+	display: inline-block;
+}

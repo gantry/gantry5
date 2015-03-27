@@ -1,91 +1,208 @@
-body #g5-container {
-    background-color: $body-bg;
-    color: $core-text;
+html {
+    width:100vw;
+    overflow-x:hidden;
+}
+
+body {
+    color: $white;
+    background-color: $body-bg !important;
+    font-family: $font-family-default;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: $core-accent;
 }
 
 #g5-container { // wrapper
+    font-size: $core-font-size;
+    line-height: $core-line-height;
 
-.fa-spin {
-    @include animation(spin 0.8s infinite linear);
-}
-
-.block {
-    position: relative;
-}
-
-&.container, .container {
-    width: 100%;
-}
-
-[data-mode-indicator]{
-    padding: 2px;
-    @include transition (background-color 0.3s ease-in-out);
-
-    border-width: 0 1px 0;
-    border-style: solid;
-    border-color: transparent darken($main-border-sides, 20%) transparent;
-
-    #sidebar & {
-        border-width: 0 0 1px 0;
-        border-style: solid;
-        border-color: transparent transparent darken($main-border-sides, 20%) transparent;
-    }
-}
-
-[data-mode-indicator="production"] {
-    background-color: $production;
-
-    #sidebar & {
-        background-color: darken($production, 15%);
-    }
-}
-
-[data-mode-indicator="development"] {
-    background-color: $development;
-
-    #sidebar & {
-        background-color: darken($development, 15%);
-    }
-}
-
-// cards
-.cards-wrapper {
-    margin: -10px;
-}
-
-.card {
-    display: inline-block;
-    background: $white;
-    border-radius: 3px;
-    box-shadow: 0 1px rgba(0, 0, 0, 0.1), -1px 0 $light-gray, 1px 0 $light-gray, 0 -1px transparentize($light-gray, 0.57);
-    padding: 10px;
-    min-width: 250px;
-    vertical-align: top;
-    margin: 10px;
-
-    &.full-width {
-        margin: 0;
-        display: block;
-    }
-
-
-    h4 {
-        margin: 0;
-
-        .enabler {
-            float: right;
+    .g-block {
+        position: relative;
+        @include breakpoint(mobile-only) {
+            @include flex(0 100%);
         }
     }
 
-    .enabler {
-        @include enabler($green, $medium-gray);
+    .inner-container {
+        margin: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        color: $core-text;
+
+        @include breakpoint(mobile-only) {
+            margin: 0;
+        }
     }
 
-    .inner-params {
-        margin: $content-margin 0 0;
-        padding-top: $content-margin;
-        border-top: 1px solid $light-gray;
+    // fast spin for fontawesome
+    .fa-spin-fast {
+        @include animation(fa-spin 1s infinite linear);
+    }
+
+    // save indicator
+    .changes-indicator {
+        opacity: 0;
+        @include animation(pulsate 1s ease-out infinite);
+    }
+
+    // badges
+    .badge {
+        border-radius: 100px;
+        background-color: $light-gray;
+        color: darken($medium-gray, 25);
+        padding: 3px 6px;
+    }
+
+    // cards
+    .cards-wrapper {
+        margin: -10px -1%;
+    }
+
+    .card {
+        display: inline-block;
+        background: $white;
+        border-radius: 3px;
+        border: 1px solid $medium-gray;
+        padding: 10px;
+        min-width: 250px;
+        vertical-align: top;
+        margin: 10px 1%;
+
+        &.full-width {
+            margin: 0;
+            display: block;
+        }
+
+        h4 {
+            margin: 0;
+
+            .enabler {
+                float: right;
+            }
+        }
+
+        .enabler {
+            @include enabler($green, $red);
+        }
+
+        .inner-params {
+            margin: $content-margin 0 0;
+            padding-top: $content-margin;
+            border-top: 1px solid $light-gray;
+        }
+
+        .theme-id {
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: $font-weight-medium;
+        }
+
+        .theme-name {
+            text-align: center;
+        }
+
+        .theme-screenshot {
+            img {
+                margin: 0 auto 10px auto;
+                display: block;
+            }
+
+            a {
+                display: block;
+            }
+        }
+    }
+    .themes {
+        .card {
+            max-width: 300px;
+        }
+    }
+
+} // end wrapper
+
+// Footer
+#footer {
+    margin-bottom: 3.5rem;
+    text-align: center;
+    font-weight: $font-weight-medium;
+    a {
+        color: lighten($core-accent, 30%);
+        text-decoration: none;
+        &:hover {
+            color: $white;
+        }
     }
 }
 
-} // end wrapper
+// Whoops Debug
+.Whoops.container {
+    position: inherit;
+}
+
+// Keyframes
+@include keyframes(pulsate) {
+    0% {
+        @include transform(scale(0.1, 0.1));
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        @include transform(scale(1.2, 1.2));
+        opacity: 0;
+    }
+}
+
+// Tooltips
+.g-tooltip {
+    display: inline;
+    position: relative;
+}
+
+.g-tooltip:hover {
+    color: $core-accent;
+    text-decoration: none;
+}
+
+.g-tooltip:hover:after {
+    background: rgba(0,0,0,0.8);
+    border-radius: $core-border-radius;
+    bottom: 1.45rem;
+    color: $white;
+    content: attr(data-title);
+    display: block;
+    left: 0;
+    padding: .3rem 1rem;
+    position: absolute;
+    white-space: nowrap;
+    z-index: 99;
+}
+
+.g-tooltip:hover:before {
+    border: solid;
+    border-color: rgba(0,0,0,0.8) transparent;
+    border-width: .4rem .4rem 0 .4rem;
+    bottom: 1.1rem;
+    content: "";
+    display: block;
+    left: 1rem;
+    position: absolute;
+    z-index: 100;
+}
+
+// Save tooltips
+.button-save.g-tooltip:hover:after {
+    bottom: 3rem;
+    right: 0;
+    left: inherit;
+}
+
+.button-save.g-tooltip:hover:before {
+    bottom: 2.6rem;
+}

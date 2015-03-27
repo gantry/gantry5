@@ -1,0 +1,43 @@
+// Page Container
+.g-container {
+	width: $breakpoints-large-desktop-container;
+	@include breakpoint(desktop-range) {
+		width: $breakpoints-desktop-container;
+	}
+	@include breakpoint(tablet-range) {
+		width: $breakpoints-tablet-container;
+	}
+	@include breakpoint(large-mobile-range) {
+		width: $breakpoints-large-mobile-container;
+	}
+	@include breakpoint(small-mobile-range) {
+		width: $breakpoints-mobile-container;
+	}
+}
+
+// Grid Row and Column Setup
+.g-block {
+	@include breakpoint(mobile-only) {
+		@include flex(0 100%);
+	}
+}
+
+body [class*="size-"] {
+	@include breakpoint(mobile-only) {
+		@include flex(0 100%);
+	}
+}
+
+// Fix for Firefox versions 27 and below
+@include breakpoint(mobile-only) {
+	@supports not (flex-wrap: wrap) {
+		.g-grid {
+			display: block;
+			@include flex-wrap(inherit);
+		}
+		.g-block {
+			display: block;
+			@include flex(inherit);
+		}
+	}
+}

@@ -1,2 +1,8 @@
-@include font-face('opensans', '../fonts/opensans_regular_macroman/OpenSans-Regular-webfont');
-@include font-face('opensanslight', '../fonts/opensans_light_macroman/OpenSans-Light-webfont');
+@include font-face('roboto', '../fonts/roboto_regular_macroman/Roboto-Regular-webfont', 400);
+@include font-face('roboto', '../fonts/roboto_medium_macroman/Roboto-Medium-webfont', 500);
+@include font-face('roboto', '../fonts/roboto_bold_macroman/Roboto-Bold-webfont', 700);
+
+.font-small, .fa.font-small {
+    font-size: $core-font-size - 0.2rem;
+    vertical-align: middle;
+}

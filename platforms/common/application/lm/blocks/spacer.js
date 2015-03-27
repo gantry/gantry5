@@ -1,21 +1,15 @@
-var prime = require('prime'),
-    Position  = require('./position');
+"use strict";
+var prime    = require('prime'),
+    Particle = require('./particle');
 
 var UID = 0;
 
 var Spacer = new prime({
-    inherits: Position,
+    inherits: Particle,
     options: {
-        type: 'spacer'
-    },
-
-    constructor: function(options){
-        ++UID;
-        Position.call(this, options);
-    },
-
-    getTitle: function(){
-        return 'Spacer';
+        type: 'spacer',
+        title: 'Spacer',
+        attributes: {}
     }
 });
 

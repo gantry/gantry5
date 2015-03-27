@@ -1,33 +1,33 @@
-// Body Base
-body #g5-container {
-    font-family: $font-family-default;
-}
-
 #g5-container {//wrapper
+    font-weight: 300;
+    font-family: $font-family-default;
 
-// Headings
-h1, h2, h3, h4, h5, h6 {
-    font-weight: normal;
-    @extend strong;
-}
+    // Headings
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: $font-weight-medium;
+    }
 
-h6 {
-    text-transform: uppercase;
-}
+    h1, h2 {
+        margin: $leading-margin 0;
+    }
 
-// Strong
-strong {
-    font-family: $font-family-bold;
-}
+    h6 {
+        text-transform: uppercase;
+    }
 
-// Page Title
-.page-title {
-    margin-top: -25px;
-    padding: 25px;
-    float: left;
-    clear: both;
-    background: $core-accent;
-    color: $white;
-}
+    // Strong
+    b, strong {
+        font-weight: $font-weight-bold;
+    }
+
+    .page-title {
+        margin-top: 0.5rem;
+        display: inline-block;
+        color: inherit;
+    }
+
+    .new {
+        display: none;
+    }
 
 }//endwrapper

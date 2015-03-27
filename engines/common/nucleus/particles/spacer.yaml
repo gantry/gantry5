@@ -1,0 +1,12 @@
+name: Spacer
+description: Add empty column to the page.
+type: spacer
+hidden: false
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable spacer.
+      default: true

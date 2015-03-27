@@ -1,0 +1,42 @@
+{% set htmlContent -%}
+{% block content -%}
+{% endblock -%}
+{% endset -%}
+
+<!DOCTYPE xhtml>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Gantry Admin</title>
+        <meta name="description" content="Gantry Admin">
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {% block stylesheets %}
+            {% for style in gantry.styles %}
+                {{ style }}
+            {% endfor %}
+        {% endblock %}
+
+        {% block javascript %}
+            <script>
+                var GANTRY_AJAX_SUFFIX = '{{ gantry.ajax_suffix }}';
+                var GANTRY_AJAX_URL = '{{ gantry.route('%ajax%')|e }}';
+                var GANTRY_AJAX_CONF_URL = '{{ gantry.route('configurations/%ajax%')|e }}';
+            </script>
+            {% for script in gantry.scripts %}
+                {{ script }}
+            {% endfor %}
+        {% endblock %}
+    </head>
+    <body>
+        {{ htmlContent }}
+
+        {% block footer_section %}
+            {% for script in gantry.scripts(true) %}
+                {{ script }}
+            {% endfor %}
+        {% endblock %}
+    </body>
+</html>

@@ -2,7 +2,12 @@
 
 .button {
     @extend %button;
-    @include button-color($light-gray, $dark-gray);
+    @include button-color($button-bg, $white);
+}
+
+.button-simple {
+    @extend %button;
+    padding: 0;
 }
 
 .button-primary {
@@ -12,7 +17,17 @@
 
 .button-secondary {
     @extend %button;
-    @include button-color($secondary-link);
+    @include button-color($secondary-text);
+}
+
+.button.disabled {
+    @extend %button;
+    background: darken($main-bg, 10%);
+    color: $white;
+    cursor: default;
+    &:active {
+        margin: 0;
+    }
 }
 
 .button.red {
@@ -23,6 +38,12 @@
 .button.yellow {
     @extend %button;
     @include button-color($yellow, darken($yellow, 40%));
+}
+
+.input-group-btn {
+    .button {
+        @include button-color(#f6f6f6, $core-text);
+    }
 }
 
 }//endwrapper

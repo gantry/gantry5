@@ -1,0 +1,17 @@
+name: Section
+description: Layout section.
+type: section
+
+form:
+  fields:
+    class:
+      type: input.selectize
+      label: CSS Classes
+      description: Enter CSS class names.
+      default:
+
+    extra:
+      type: input.text
+      label: HTML Attributes
+      description: Extra HTML attributes.
+      default:

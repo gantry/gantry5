@@ -1,0 +1,5 @@
+enabled: true
+base: /
+menu: mainmenu
+startLevel: 1
+endLevel: 0

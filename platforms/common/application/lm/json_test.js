@@ -26,7 +26,7 @@ module.exports = [
                                 "type": "position",
                                 "attributes": {
                                     "name": "Position 1",
-                                    "key": "position-1"
+                                    "key": "Position 1"
                                 },
                                 "children": []
                             }
@@ -42,10 +42,10 @@ module.exports = [
                         "children": [
                             {
                                 "id": "6e85d292-e08b-448c-a46a-f5b2693db83e",
-                                "type": "position",
+                                "type": "particle",
                                 "attributes": {
-                                    "name": "Position 2",
-                                    "key": "position-2"
+                                    "name": "Menu",
+                                    "key": "menu"
                                 },
                                 "children": []
                             }
@@ -94,7 +94,7 @@ module.exports = [
                                                 "type": "position",
                                                 "attributes": {
                                                     "name": "Position Showcase 1",
-                                                    "key": "position-showcase-1"
+                                                    "key": "showcase-1"
                                                 },
                                                 "children": []
                                             }
@@ -112,7 +112,7 @@ module.exports = [
                                                 "type": "position",
                                                 "attributes": {
                                                     "name": "Position Showcase 2",
-                                                    "key": "position-showcase-2"
+                                                    "key": "showcase-2"
                                                 },
                                                 "children": []
                                             }
@@ -150,7 +150,7 @@ module.exports = [
                                                 "type": "position",
                                                 "attributes": {
                                                     "name": "Position Feature 1",
-                                                    "key": "position-feature-1"
+                                                    "key": "feature-1"
                                                 },
                                                 "children": []
                                             }
@@ -168,7 +168,7 @@ module.exports = [
                                                 "type": "position",
                                                 "attributes": {
                                                     "name": "Position Feature 2",
-                                                    "key": "position-feature-2"
+                                                    "key": "feature-2"
                                                 },
                                                 "children": []
                                             }
@@ -203,10 +203,10 @@ module.exports = [
                                         "children": [
                                             {
                                                 "id": "f03448da-fb1b-49ec-8d33-b58152ac8b0d",
-                                                "type": "mainbody",
+                                                "type": "pagecontent",
                                                 "attributes": {
-                                                    "name": "Mainbody",
-                                                    "key": "mainbody"
+                                                    "name": "Page Content",
+                                                    "key": "pagecontent"
                                                 },
                                                 "children": []
                                             }
@@ -245,7 +245,7 @@ module.exports = [
                                                 "type": "position",
                                                 "attributes": {
                                                     "name": "Position Bottom",
-                                                    "key": "position-bottom"
+                                                    "key": "bottom"
                                                 },
                                                 "children": []
                                             }
@@ -282,6 +282,31 @@ module.exports = [
                                 "attributes": {},
                                 "children": [
                                     {
+                                        "id": "5f71de41-07a8-4cca-837c-16b81a29361e",
+                                        "type": "block",
+                                        "attributes": {
+                                            "size": 100
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "9d45007f-78eb-4e1b-b9ee-f52a72fed80a",
+                                                "type": "position",
+                                                "attributes": {
+                                                    "name": "Position Sidebar",
+                                                    "key": "sidebar"
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "3f44b134-1552-4f49-86b8-670d1add1000",
+                                "type": "grid",
+                                "attributes": {},
+                                "children": [
+                                    {
                                         "id": "6002f826-16c6-4920-b550-abdb93a9398b",
                                         "type": "block",
                                         "attributes": {
@@ -290,10 +315,10 @@ module.exports = [
                                         "children": [
                                             {
                                                 "id": "fb585b76-4db5-4611-a96c-08c09bd8d90f",
-                                                "type": "position",
+                                                "type": "particle",
                                                 "attributes": {
-                                                    "name": "Position Sidebar",
-                                                    "key": "position-sidebar"
+                                                    "name": "Social Buttons",
+                                                    "key": "social-buttons"
                                                 },
                                                 "children": []
                                             }
@@ -333,10 +358,7 @@ module.exports = [
                             {
                                 "id": "825a6498-c19b-42df-bffc-86dae90b64d8",
                                 "type": "spacer",
-                                "attributes": {
-                                    "name": "Position Footer",
-                                    "key": "position-footer"
-                                },
+                                "attributes": {},
                                 "children": []
                             }
                         ]
@@ -353,7 +375,7 @@ module.exports = [
                                 "type": "position",
                                 "attributes": {
                                     "name": "Position Footer",
-                                    "key": "position-footer"
+                                    "key": "footer"
                                 },
                                 "children": []
                             }
@@ -369,10 +391,7 @@ module.exports = [
                             {
                                 "id": "491e8d6c-c762-401f-9ebf-018d83d4a0fe",
                                 "type": "spacer",
-                                "attributes": {
-                                    "name": "Position Footer",
-                                    "key": "position-footer"
-                                },
+                                "attributes": {},
                                 "children": []
                             }
                         ]
@@ -382,6 +401,12 @@ module.exports = [
             }
         ]
 
+    },
+    {
+        "id": "a845861d-03fd-4ce2-8a05-48ecc458a768",
+        "type": "non-visible",
+        "attributes": {},
+        "children": []
     }
 ];
 
@@ -407,7 +432,7 @@ module.exports = [
                 "type": "position",
                 "attributes": {
                     "name": "Position 1",
-                    "key": "position-1"
+                    "key": "1"
                 },
                 "children": []
             }]
@@ -423,7 +448,7 @@ module.exports = [
                 "type": "position",
                 "attributes": {
                     "name": "Position Test",
-                    "key": "position-test"
+                    "key": "test"
                 },
                 "children": []
             }, {
@@ -431,7 +456,7 @@ module.exports = [
                 "type": "position",
                 "attributes": {
                     "name": "Position 2",
-                    "key": "position-2"
+                    "key": "2"
                 },
                 "children": []
             }, {
@@ -449,7 +474,7 @@ module.exports = [
                         "type": "position",
                         "attributes": {
                             "name": "Position 3",
-                            "key": "position-3"
+                            "key": "3"
                         },
                         "children": []
                     }]
@@ -478,7 +503,7 @@ module.exports = [
                 "type": "position",
                 "attributes": {
                     "name": "Position A",
-                    "key": "position-a"
+                    "key": "a"
                 },
                 "children": []
             }]

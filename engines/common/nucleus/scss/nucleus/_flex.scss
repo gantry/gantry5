@@ -1,0 +1,45 @@
+// Page Container
+.g-container {
+	margin: 0 auto;
+	padding: 0;
+}
+
+// Grid Row and Column Setup
+.g-grid {
+	@include display(flex);
+	@include flex-flow(row wrap);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-rendering: optimizespeed;
+	&.nowrap {
+		@include flex-flow(row);
+	}
+}
+
+.g-block {
+	@include flex(1);
+	min-width: 0;
+	min-height: 0;
+}
+
+// Content Block Spacing
+.g-content {
+	margin: $content-margin;
+	padding: $content-padding;
+}
+
+// Reordering
+.first-block {
+  -webkit-box-ordinal-group: 0;
+  -webkit-order: -1;
+  -ms-flex-order: -1;
+  order: -1;
+}
+
+.last-block {
+  -webkit-box-ordinal-group: 2;
+  -webkit-order: 1;
+  -ms-flex-order: 1;
+  order: 1;
+}

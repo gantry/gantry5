@@ -1,0 +1,25 @@
+container:
+  header:
+    - [particle-logo 20, particle-menu 80]
+    - position-header
+
+  1:
+    - showcase 75:
+        - [position-showcase-1 50, position-showcase-2 50]
+      feature:
+        - [position-feature-1 50, position-feature-2 50]
+      main:
+        - position-breadcrumbs
+        - position-global_messages
+        - pagecontent
+      bottom:
+        - position-bottom
+
+    - sidebar 25:
+      - particle-social
+      - position-sidebar
+      - position-right
+
+  footer:
+    - position-footer
+    - [particle-date 25, particle-copyright 50, particle-branding 25]

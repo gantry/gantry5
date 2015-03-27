@@ -1,0 +1,18 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+    <div class="g-grid">
+        {% for member in particle.members %}
+            <div class="g-block">
+                <img alt="image" src="{{ url(member.image)|default('http://www.placehold.it/200x250/f4f4f4') }}">
+            </div>
+            <div class="g-block">
+                <div class="g-content">
+                    <h3>{{ member.name|e }}</h3>
+                    <h6>{{ member.role|e }}</h6>
+                    {{ member.description }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

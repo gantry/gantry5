@@ -1,0 +1,15 @@
+name: Menu
+description: Gantry menu.
+type: particle
+
+form:
+  fields:
+
+    settings.title:
+      type: input.text
+      label: Menu Title
+
+    settings.base:
+      type: input.text
+      label: Base Path
+      default: /

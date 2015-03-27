@@ -1,0 +1,12 @@
+{% extends "forms/fields/input/group/group.html.twig" %}
+
+{% block input %}
+    <input
+            {# required attribute structures #}
+            type="hidden"
+            name="{{ (scope ~ name)|fieldName|e }}"
+            value="{{ value|join(', ')|e }}"
+            {# global attribute structures #}
+            {{ block('global_attributes') }}
+            />
+{% endblock %}

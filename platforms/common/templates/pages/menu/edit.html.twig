@@ -1,0 +1,22 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+<form method="post" action="{{ gantry.route('menu/edit', id, 'validate') }}">
+    <div class="card settings-block">
+        <h4>
+            <span data-title-editable="{{ data.settings.title }}" class="title">{{ data.settings.title }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
+            {% if blueprints.form.fields.enabled %}
+            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'name': 'enabled', 'field': blueprints.form.fields.enabled, 'value': data.enabled} %}
+            {% endif %}
+        </h4>
+        <div class="inner-params">
+            {% include 'forms/fields.html.twig' with {'blueprints': blueprints.form, 'data':  data, 'skip': ['enabled', 'settings.title']} %}
+        </div>
+    </div>
+    <div class="g-modal-actions">
+        {#<a class="button float-left">Defaults</a>#}
+        <button class="button button-primary" type="submit">Apply</button>
+        <a class="button g5-dialog-close">Cancel</a>
+    </div>
+</form>
+{% endblock %}

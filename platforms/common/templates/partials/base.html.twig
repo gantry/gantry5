@@ -1,0 +1,45 @@
+{% extends "@gantry-admin/partials/page.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/nucleus.css')|e }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/admin.css')|e }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome.min.css')|e }}" type="text/css" />
+    {{ parent() }}
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" async="async" src="{{ url('gantry-admin://assets/js/main.js')|e }}"></script>
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+<div id="g5-container">
+    <div id="main-header" data-mode-indicator="production">
+        {% include "@gantry-admin/partials/header.html.twig" %}
+    </div>
+    <div class="inner-container">
+        {% include "@gantry-admin/partials/updates.html.twig" %}
+        {% block gantry_content_wrapper %}
+            <div data-g5-content-wrapper>
+                {% include "@gantry-admin/partials/navigation.html.twig" %}
+                <div class="g-grid">
+                    <div class="g-block main-block">
+                        <section id="g-main">
+                            <div class="g-content" data-g5-content>
+                                {% block gantry %}
+                                {% endblock %}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
+
+{% block footer_section %}
+    <footer id="footer">
+        <a href="http://gantry-framework.org">Gantry Administration</a> by <a href="http://www.rockettheme.com">RocketTheme</a>.
+    </footer>
+{% endblock %}

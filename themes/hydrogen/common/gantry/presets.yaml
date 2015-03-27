@@ -1,0 +1,147 @@
+preset1:
+  image: 'gantry-admin://images/preset1.png'
+  description: 'Preset 1'
+  colors:
+    - '#439a86'
+    - '#354d59'
+    - '#8f4dae'
+
+  styles:
+    base:
+      background: '#ffffff'
+      text-color: '#666666'
+    accent:
+      color-1: '#439a86'
+      color-2: '#8f4dae'
+    header:
+      background: '#2A816D'
+      text-color: '#ffffff'
+    navigation:
+      background: '#439a86'
+      text-color: '#ffffff'
+    showcase:
+      background: '#354d59'
+      text-color: '#ffffff'
+    feature:
+      background: '#ffffff'
+      text-color: '#666666'
+    subfeature:
+      background: '#f0f0f0'
+      text-color: '#666666'
+    main:
+      background: '#ffffff'
+      text-color: '#666666'
+    footer:
+      background: '#ffffff'
+      text-color: '#666666'
+
+preset2:
+  image: 'gantry-admin://images/preset2.png'
+  description: 'Preset 2'
+  colors:
+    - '#3180C2'
+    - '#142D53'
+    - '#EF6C00'
+
+  styles:
+    base:
+      background: '#ffffff'
+      text-color: '#666666'
+    accent:
+      color-1: '#3180C2'
+      color-2: '#EF6C00'
+    header:
+      background: '#1867A9'
+      text-color: '#ffffff'
+    navigation:
+      background: '#3180C2'
+      text-color: '#ffffff'
+    showcase:
+      background: '#142D53'
+      text-color: '#ffffff'
+    feature:
+      background: '#ffffff'
+      text-color: '#666666'
+    subfeature:
+      background: '#f0f0f0'
+      text-color: '#666666'
+    main:
+      background: '#ffffff'
+      text-color: '#666666'
+    footer:
+      background: '#ffffff'
+      text-color: '#666666'
+
+preset3:
+  image: 'gantry-admin://images/preset3.png'
+  description: 'Preset 3'
+  colors:
+    - '#558B2F'
+    - '#344E2C'
+    - '#8BC34A'
+
+  styles:
+    base:
+      background: '#ffffff'
+      text-color: '#666666'
+    accent:
+      color-1: '#558B2F'
+      color-2: '#8BC34A'
+    header:
+      background: '#3C7216'
+      text-color: '#ffffff'
+    navigation:
+      background: '#558B2F'
+      text-color: '#ffffff'
+    showcase:
+      background: '#344E2C'
+      text-color: '#ffffff'
+    feature:
+      background: '#ffffff'
+      text-color: '#666666'
+    subfeature:
+      background: '#f0f0f0'
+      text-color: '#666666'
+    main:
+      background: '#ffffff'
+      text-color: '#666666'
+    footer:
+      background: '#ffffff'
+      text-color: '#666666'
+
+preset4:
+  image: 'gantry-admin://images/preset4.png'
+  description: 'Preset 4'
+  colors:
+    - '#BF383A'
+    - '#722829'
+    - '#757575'
+
+  styles:
+    base:
+      background: '#ffffff'
+      text-color: '#666666'
+    accent:
+      color-1: '#BF383A'
+      color-2: '#757575'
+    header:
+      background: '#A61F21'
+      text-color: '#ffffff'
+    navigation:
+      background: '#BF383A'
+      text-color: '#ffffff'
+    showcase:
+      background: '#722829'
+      text-color: '#ffffff'
+    feature:
+      background: '#ffffff'
+      text-color: '#666666'
+    subfeature:
+      background: '#f0f0f0'
+      text-color: '#666666'
+    main:
+      background: '#ffffff'
+      text-color: '#666666'
+    footer:
+      background: '#ffffff'
+      text-color: '#666666'

@@ -1,0 +1,47 @@
+{% do gantry.theme.setLayout() %}
+
+{%- set content %}
+    {% block content %}
+    {% endblock %}
+{% endset %}
+
+{%- set page_layout %}
+    {% block page_layout %}
+    {% for segment in gantry.theme.segments %}
+        {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
+    {% endfor %}
+    {% endblock %}
+{% endset %}
+
+{%- set page_top %}
+    {% block page_top %}
+    {% endblock %}
+{% endset %}
+
+{%- set page_bottom %}
+    {% block page_bottom %}
+        {% for script in gantry.scripts(true) %}
+            {{ script }}
+        {% endfor %}
+    {% endblock %}
+{% endset %}
+
+{%- block page %}
+<!DOCTYPE {{ gantry.page.doctype|default('html') }}>
+<html{{ gantry.page.htmlAttributes }}>
+    {% block page_head -%}
+        {% include 'partials/page_head.html.twig' %}
+    {%- endblock %}
+
+    {% block page_body -%}
+    <body{{ gantry.page.bodyAttributes }}>
+        <div id="g-page-surround">
+            {{ page_top }}
+            {{ page_layout }}
+            {{ page_bottom }}
+        </div>
+    </body>
+    {%- endblock %}
+
+</html>
+{% endblock -%}

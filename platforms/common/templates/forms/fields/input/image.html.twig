@@ -1,0 +1,19 @@
+{% extends "forms/fields/input/group/group.html.twig" %}
+
+{% block input %}
+    <input
+            {# required attribute structures #}
+            type="image"
+            name="{{ (scope ~ name)|fieldName|e }}"
+            value="{{ value|join(', ')|e }}"
+            {# global attribute structures #}
+            {{ block('global_attributes') }}
+            {# non-gloval attribute structures #}
+            {% if field.alt is defined %}alt="{{ field.alt|e }}"{% endif %}
+            {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
+            {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
+            {% if field.height is defined %}height="{{ field.height|e }}"{% endif %}
+            {% if field.src is defined %}src="{{ field.src|e }}"{% endif %}
+            {% if field.width is defined %}width="{{ field.width|e }}"{% endif %}
+            />
+{% endblock %}

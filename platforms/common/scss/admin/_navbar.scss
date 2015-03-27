@@ -1,0 +1,126 @@
+#g5-container {//wrapper
+
+.navbar-block {
+    background: $navbar-bg;
+    border-right: 1px solid;
+    border-color: $navbar-border;
+    position: relative;
+    #gantry-logo {
+        right: $content-padding + $content-margin;
+        top: $content-padding;
+        position: absolute;
+        @include breakpoint(tablet-range) {
+            display: none;
+        }
+        @include breakpoint(mobile-only) {
+            display: none;
+        }
+    }
+}
+
+#navbar {
+    font-size: $navbar-font-size;
+    font-weight: $font-weight-medium;
+    margin-right: -1px;
+
+    .g-content {
+        padding: 0;
+        margin: $content-margin 0;
+    }
+
+    ul {
+        @extend %list-reset;
+
+        li:not(.config-select-wrap) {
+            display: inline-block;
+            margin-right: -4px;
+            @include transition (background-color 0.2s ease-in-out);
+
+            &:hover {
+                background-color: darken($navbar-bg, 3%);
+            }
+
+            &.active {
+                background-color: $navbar-active;
+
+                a {
+                    color: $navbar-active-color;
+                }
+            }
+
+            a {
+                color: $navbar-color;
+                border-color: $navbar-border;
+                display: block;
+                white-space: nowrap;
+                padding: $content-padding;
+                font-size: $core-font-size;
+                @include breakpoint(tablet-range) {
+                    padding: $content-padding $content-padding - 0.2;
+                }
+                @include breakpoint(mobile-only) {
+                    text-align: center;
+                    padding: $content-padding $content-padding + 0.1;
+                }
+
+                i {
+                    margin-right: 0.6rem;
+
+                    @include breakpoint(mobile-only) {
+                        margin: 0;
+                        font-size: $core-font-size + 0.3;
+                    }
+                }
+
+                span {
+
+                    @include breakpoint(mobile-only) {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        .config-select-wrap {
+            font-size: 1rem;
+            position: relative;
+            top: 0.6rem;
+            padding: 0 $content-padding;
+            float: left;
+            @include breakpoint(tablet-range) {
+                padding: 0 $content-padding - 0.2;
+            }
+        }
+    }
+
+    ul ul {
+        text-transform: none;
+        li a {
+            color: #999;
+            padding-top: 0.2345rem;
+            padding-bottom: 0.2345rem;
+            padding-left: 42px;
+
+            &:before {
+                content: "\f054";
+                font-family: FontAwesome;
+                font-size: 100%;
+                vertical-align: middle;
+                display: inline-block;
+                font-weight: normal;
+                padding-right: 5px;
+                color: #ddd;
+            }
+        }
+    }
+}
+
+.g-block.navbar-icons {
+    flex: 0 3%;
+}
+
+.g-block.navbar-closed {
+    flex: 0;
+}
+
+}//endwrapper

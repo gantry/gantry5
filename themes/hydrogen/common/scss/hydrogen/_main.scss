@@ -1,0 +1,9 @@
+#g-page-surround {
+	@include transform(translateX(0));
+	@include transition(transform .3s ease-out);
+}
+#g-main {
+	padding: $section-padding 0;
+	background: $main-background;
+	color: $main-text-color;
+}

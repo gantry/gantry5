@@ -1,0 +1,69 @@
+@include font-face('roboto', 'gantry-theme://fonts/roboto_regular_macroman/Roboto-Regular-webfont', 400);
+@include font-face('roboto', 'gantry-theme://fonts/roboto_medium_macroman/Roboto-Medium-webfont', 500);
+@include font-face('roboto', 'gantry-theme://fonts/roboto_bold_macroman/Roboto-Bold-webfont', 700);
+
+body {
+	font-family: $font-family-default;
+	font-weight: $font-weight-regular;
+}
+
+h1, h2, h3, h4, h5 {
+	font-weight: $font-weight-medium;
+}
+
+bold, strong {
+	font-weight: $font-weight-bold;
+}
+
+.button {
+	font-weight: $font-weight-medium;
+}
+
+// Blockquote
+blockquote {
+	border-left: 10px solid $rule-color;
+	p {
+		font-size: $core-font-size + 0.1;
+		color: lighten($base-text-color, 20%);
+	}
+	cite {
+		display: block;
+		text-align: right;
+		color: $base-text-color;
+		font-size: $core-font-size + 0.2;
+	}
+}
+
+// Inline and Code
+code,
+kbd,
+pre,
+samp {
+	font-family: $font-family-mono;
+}
+
+code {
+	background: $code-bg;
+	color: darken($code-text,10%);
+}
+
+pre {
+	padding: 1rem;
+	margin: 2rem 0;
+	background: $pre-bg;
+	border: 1px solid $base-border-color;
+	border-radius: $core-border-radius;
+	line-height: 1.15;
+	font-size: $core-font-size - 0.1;
+
+	code {
+		color: $pre-text;
+		background: inherit;
+		font-size: $core-font-size - 0.1;
+	}
+}
+
+// Additional
+hr {
+	border-bottom: 4px solid $rule-color;
+}

@@ -1,0 +1,36 @@
+{% extends default ? "partials/field.html.twig" : "forms/field.html.twig" %}
+
+{% block group %}
+    <div class="input-group
+        {% if field.prepend -%} prepend
+        {% endif %}
+        {% if field.append -%} append
+        {% endif %}
+    ">
+
+
+        {% if field.prepend %}
+            {{ _self.pend(field.prepend) }}
+        {% endif %}
+        {% block input %}
+        {% endblock %}
+        {% if field.append %}
+            {{ _self.pend(field.append) }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% macro pend(item) %}
+    {% if item.type == "text" %}
+        <span class="input-group-addon">{{ item.text }}</span>
+    {% elseif item.type == "list" %}
+        {% if item.options %}
+            {% include 'forms/fields/select/selectize.html.twig' with {'field.options': item.options} %}
+        {% endif %}
+    {% elseif item.type == "button" %}
+        <span class="input-group-btn">
+            {% include 'forms/fields/button' %}
+        </span>
+    {% elseif item.type == "actions" %}
+    {% endif %}
+{% endmacro %}

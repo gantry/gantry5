@@ -1,0 +1,50 @@
+// Float Classes
+.float-left {
+	float: left !important;
+}
+
+.float-right {
+	float: right !important;
+}
+
+.hide {
+	display: none;
+}
+
+// Clearfix
+.clearfix {
+	@include clearfix;
+}
+
+// Alignment
+.center {
+	text-align: center;
+}
+
+.align-right {
+	text-align: right;
+}
+
+.align-left {
+	text-align: left;
+}
+
+// Full Height Section
+.full-height {
+	min-height: 100vh;
+}
+
+// Padding and Margin Adjustments
+.nomarginall {
+	margin: 0 !important;
+	.content {
+		margin: 0 !important;
+	}
+}
+
+.nopaddingall {
+	padding: 0 !important;
+	.content {
+		padding: 0 !important;
+	}
+}

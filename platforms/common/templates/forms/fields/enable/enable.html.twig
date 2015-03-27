@@ -1,0 +1,19 @@
+{% extends default ? "partials/field.html.twig" : "forms/field.html.twig" %}
+
+{% block input %}
+<span class="enabler">
+    <input
+            {# required attribute structures #}
+            type="hidden"
+            name="{{ (scope ~ name)|fieldName|e }}"
+            value="{{ value ? 1 : 0 }}"
+            {# global attribute structures #}
+            {{ block('global_attributes') }}
+            />
+    {% if disabled %}
+    <span><i class="fa fa-power-off"></i></span>
+    {% else %}
+    <span class="toggle"><span class="knob"></span></span>
+    {% endif %}
+</span>
+{% endblock %}

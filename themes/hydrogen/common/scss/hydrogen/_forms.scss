@@ -1,0 +1,27 @@
+textarea, select[multiple=multiple] {
+	background-color: white;
+	border: 1px solid $base-border-color;
+	box-shadow: $base-box-shadow;
+
+	&:hover {
+		border-color: $border-color-hover;
+	}
+
+	&:focus {
+		border-color: $border-color-focus;
+	}
+}
+
+#{$all-text-inputs} {
+	background-color: white;
+	border: 1px solid $base-border-color;
+	box-shadow: $base-box-shadow;
+}
+
+#{$all-text-inputs-hover} {
+	border-color: $border-color-hover;
+}
+
+#{$all-text-inputs-focus} {
+	border-color: $border-color-focus;
+}

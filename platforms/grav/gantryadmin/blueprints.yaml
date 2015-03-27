@@ -15,10 +15,3 @@ form:
           0: Disabled
         validate:
           type: bool
-
-    route:
-      type: text
-      default: /admin/gantry
-      label: Administrator path
-      placeholder: "Default route for administrator (relative to base)"
-      help: If you want to change the URL for the administrator, you can provide a path here

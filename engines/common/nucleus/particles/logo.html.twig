@@ -1,0 +1,7 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+<a href="{{ url(particle.url)|e }}" title="{{ particle.text|e }}" rel="home" class="{{ particle.class|e }}">
+    <img src="{{ url(particle.image)|e }}" alt="{{ particle.text|e }}" />
+</a>
+{% endblock %}

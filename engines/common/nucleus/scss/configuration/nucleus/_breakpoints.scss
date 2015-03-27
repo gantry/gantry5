@@ -1,0 +1,16 @@
+// Media Device Breakpoints
+$breakpoints-large-desktop-container:		75.000rem !default;
+$breakpoints-desktop-container:				60.000rem !default;
+$breakpoints-tablet-container:				48.000rem !default;
+$breakpoints-large-mobile-container:		30.000rem !default;
+$breakpoints-mobile-container:				100% !default;
+
+// Breakpoint Variables For Particles
+$media: "all" !default;
+$mobile-only: "#{$media} and (max-width:#{$breakpoints-tablet-container - 0.062})" !default;
+$no-mobile: "#{$media} and (min-width:#{$breakpoints-tablet-container})" !default;
+$small-mobile-range: "#{$media} and (max-width:#{$breakpoints-large-mobile-container})" !default;
+$large-mobile-range: "#{$media} and (min-width:#{$breakpoints-large-mobile-container + 0.063}) and (max-width:#{$breakpoints-tablet-container - 0.062})" !default;
+$tablet-range: "#{$media} and (min-width:#{$breakpoints-tablet-container}) and (max-width:#{$breakpoints-desktop-container - 0.062})" !default;
+$desktop-range: "#{$media} and (min-width:#{$breakpoints-desktop-container}) and (max-width:#{$breakpoints-large-desktop-container - 0.062})" !default;
+$large-desktop-range: "#{$media} and (min-width:#{$breakpoints-large-desktop-container})" !default;

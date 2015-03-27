@@ -1,0 +1,19 @@
+{% extends "forms/fields/input/group/group.html.twig" %}
+
+{% block input %}
+    <input
+            {# required attribute structures #}
+            type="file"
+            name="{{ (scope ~ name)|fieldName|e }}"
+            value="{{ value|join(', ')|e }}"
+            {# global attribute structures #}
+            {{ block('global_attributes') }}
+            {# non-gloval attribute structures #}
+            {% if field.accept is defined %}accept="{{ field.accept|e }}"{% endif %}
+            {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
+            {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
+            {% if field.multiple in ['on', 'true', 1] %}multiple="multiple"{% endif %}
+            {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
+            {% if field.size is defined %}size="{{ field.size|e }}"{% endif %}
+            />
+{% endblock %}

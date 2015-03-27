@@ -1,0 +1,126 @@
+.sample-content {
+	text-align: center;
+	.subtitle {
+		text-transform: uppercase;
+		font-size: $core-font-size - 0.2;
+		display: block;
+		margin-top: -1.3rem;
+	}
+	.sample-icons {
+		font-size: $core-font-size + 4;
+		color: $accent-color-1;
+		opacity: 0.6;
+	}
+	.sample-description {
+		font-size: $core-font-size + 0.2;
+	}
+	@include breakpoint(no-mobile) {
+		.device-promo {
+			width: 356px;
+			height: 203px;
+			position: relative;
+			float: right;
+			margin-left: 3rem;
+			margin-bottom: 1rem;
+			.macbook {
+				width: 356px;
+				height: 203px;
+				position: absolute;
+				z-index: 1;
+				background: url(gantry-theme://images/macbook.png);
+				.macbook-color {
+					position: absolute;
+					width: 206px;
+					height: 118px;
+					left: 37px;
+					top: 56px;
+					background: #ccc;
+				}
+			}
+			.ipad {
+				width: 356px;
+				height: 203px;
+				position: absolute;
+				z-index: 2;
+				background: url(gantry-theme://images/ipad.png);
+				.ipad-color {
+					position: absolute;
+					width: 111px;
+					height: 163px;
+					right: 27px;
+					top: 20px;
+					background: $accent-color-1;
+				}
+			}
+			.iphone {
+				width: 356px;
+				height: 203px;
+				position: absolute;
+				z-index: 3;
+				background: url(gantry-theme://images/iphone.png);
+				.iphone-color {
+					position: absolute;
+					width: 46px;
+					height: 75px;
+					right: 4px;
+					top: 112px;
+					background: $accent-color-2;
+				}
+			}
+		}
+	}
+	.middle {
+		text-align: center;
+	}
+	.fa-github-square {
+		color: #ddd;
+		margin-top: 1.5rem;
+		font-size: 10rem;
+		@include breakpoint(tablet-range) {
+			font-size: 8rem;
+		}
+		@include breakpoint(mobile-only) {
+			float: none !important;
+			margin-right: 0;
+		}
+	}
+	.info-box {
+		background: darken($main-background, 4%);
+		border: 1px solid darken($main-background, 10%);
+		padding: $content-padding;
+		border-radius: $core-border-radius;
+		margin-bottom: 4rem;
+	}
+	.fa-graduation-cap {
+		color: darken($main-background, 15%);
+		margin: 1rem 2rem 1rem 1rem;
+		font-size: 6rem;
+	}
+}
+
+@include breakpoint(desktop-only) {
+	#g-showcase {
+		.sample-description {
+			padding: 0 6rem;
+		}
+	}
+}
+
+@include breakpoint(desktop-only) {
+	#g-subfeature {
+		.sample-content {
+			.g-content {
+				padding-left: 2rem;
+				padding-right: 2rem;
+			}
+		}
+	}
+}
+
+@include breakpoint(no-mobile) {
+	#g-main {
+		.sample-content {
+			text-align: inherit;
+		}
+	}
+}

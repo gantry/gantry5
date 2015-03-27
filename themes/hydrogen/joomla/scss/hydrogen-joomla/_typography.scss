@@ -1,0 +1,64 @@
+// Lists and Tables
+.list-striped,
+.row-striped {
+	border-top: 1px solid $base-border-color;
+}
+
+.list-striped li,
+.list-striped dd,
+.row-striped .row,
+.row-striped .row-fluid {
+	border-bottom: 1px solid $base-border-color;
+}
+
+.list-striped li:nth-child(odd),
+.list-striped dd:nth-child(odd),
+.row-striped .row:nth-child(odd),
+.row-striped .row-fluid:nth-child(odd) {
+	background-color: lighten($off-white, 2%);
+}
+
+.list-striped li:hover,
+.list-striped dd:hover,
+.row-striped .row:hover,
+.row-striped .row-fluid:hover {
+	background-color: darken($off-white, 2%);
+}
+
+.list-bordered,
+.row-bordered {
+	border: 1px solid $base-border-color;
+}
+
+.row-even,
+.row-odd {
+	border-bottom: 1px solid $base-border-color;
+}
+
+.row-even {
+	background-color: lighten($off-white, 2%);
+}
+
+.iframe-bordered {
+	border: 1px solid $base-border-color;
+}
+
+// Blockquote and Code
+blockquote {
+	border-left: 5px solid $base-border-color;
+}
+
+
+blockquote small {
+	color: lighten($base-text-color, 20%);
+}
+
+blockquote.pull-right {
+	border-right: 5px solid $base-border-color;
+}
+
+code, pre {
+	color: $base-text-color;
+	background-color: darken($off-white, 2%);
+	border: 1px solid $base-border-color;
+}

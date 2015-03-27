@@ -1,0 +1,61 @@
+#g5-container {//wrapper
+	.swatches-block {
+		margin: 0 -1px;
+		padding-bottom: $content-padding;
+		.g-block {
+			text-align: center;
+		}
+		@include breakpoint(mobile-only) {
+			.g-block {
+				@include flex(0 25%);
+			}
+		}
+		.swatch {
+			display: block;
+			padding: 4px;
+			max-width: 350px;
+			background: $white;
+			margin: 0 1px;
+			border-radius: $core-border-radius;
+			border: 1px solid $medium-gray;
+			position: relative;
+		}
+
+		.swatch-image {
+			display: block;
+            margin-bottom: 2px;
+		}
+	}
+
+    .swatch-colors {
+      display: block;
+      height: 15px;
+    }
+
+    .swatch-preview {
+    	position: absolute;
+    	top: 4px;
+    	right: 4px;
+    	color: $white;
+    	background: rgba(0,0,0,0.4);
+    	padding: 0.5rem;
+    	border-radius: 0 0 0 $core-border-radius;
+    	@include transition(background 0.2s);
+    	i {
+    		font-size: $core-font-size + 0.2;
+    	}
+    	&:hover {
+    		background: rgba(0,0,0,0.7);
+    	}
+    }
+
+    .swatch-description {
+    	display: inline-block;
+    	margin: 4px 0;
+    	background: $white;
+    	border: 1px solid #ddd;
+    	border-radius: $core-border-radius;
+    	padding: 0.1rem 0.4rem;
+    	font-weight: 500;
+    }
+}

@@ -1,0 +1,9 @@
+{% set form_id = form_id ? form_id : 'gantryform' %}
+
+<form id="{{ form_id }}" method="post">
+    {% include 'forms/fields.html.twig' %}
+
+    <div class="button-bar">
+        <button class="button" name="task" value="save">Save</button>
+    </div>
+</form>

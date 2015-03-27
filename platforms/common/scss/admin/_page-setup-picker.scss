@@ -3,6 +3,13 @@
 #page-picker {
     ul {
         @extend %list-reset;
+        .size-1-4 {
+            @include flex(0 23%);
+
+            @include breakpoint(small-mobile-range) {
+                @include flex(0 100%);
+            }
+        }
     }
 
     img {
@@ -13,12 +20,18 @@
     .add-new {
         a {
             display: block;
-            @include position(absolute, 0);
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
         }
 
         i {
             @include transform(translate(-50%, -50%));
-            @include position(absolute, 50% inherit inherit 50%);
+            position: absolute;
+            top: 50%;
+            left: 50%;
             font-size: 70px;
             color: #ddd;
             display: block;

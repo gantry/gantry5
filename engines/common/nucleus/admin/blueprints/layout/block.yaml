@@ -1,0 +1,37 @@
+name: Block
+description: Layout block.
+type: block
+
+form:
+  fields:
+    id:
+      type: input.text
+      label: CSS ID
+      description: Enter CSS id.
+      default:
+
+    class:
+      type: input.selectize
+      label: CSS Classes
+      description: Enter CSS class names.
+      default:
+
+    variations:
+      type: input.block-variations
+      label: Variations
+      description: Enter Theme Variations.
+      default:
+
+    extra:
+      type: input.text
+      label: HTML Attributes
+      description: Extra HTML attributes.
+      default:
+
+    size:
+      type: input.text
+      label: Block Size
+      description: Block size in percentages (5-100).
+      append:
+        type: "text"
+        text: "%"

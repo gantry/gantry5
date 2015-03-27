@@ -1,49 +1,88 @@
 #g5-container {//wrapper
 
 .overview-header {
-    color: $white;
-    text-align: center;
-    margin: -1.60rem -1.563rem 100px;
-    max-height: 370px;
-    padding: 1px;
-    background: url(../images/bg-blurred.jpg) 50% 100%;
-    background-size: 100% 100%;
-
-    .content {
-        text-align: center;
+    .g-block {
+        padding: $content-padding;
     }
 
-    img {
-        display: block;
-        margin: 0 auto;
-    }
-
-    .circle {
+    .theme-title {
         display: inline-block;
-        @include size(120px);
-        line-height: 120px;
-        border-radius: 120px;
-        margin-bottom: -80px;
-        box-shadow: 0 0 0 1px $white;
-        font-weight: bold;
-        text-align: center;
+        color: $secondary-text;
+        margin: 0;
+        vertical-align: middle
+    }
 
+    .theme-version {
+        display: inline-block;
+        background: $white;
+        border: 1px solid $medium-gray;
+        margin-left: $content-padding;
+        padding: 0 6px;
+        border-radius: $core-border-radius;
+        font-weight: $font-weight-medium;
+        letter-spacing: 1px;
+        vertical-align: middle;
+    }
 
-        &.yellow {
-            background-color: $yellow;
-            color: darken($yellow, 30%);
-        }
+    .button {
+        float: right;
+        margin-left: $content-padding;
 
-        &.green {
-            background-color: $green;
-            color: darken($green, 30%);
-        }
-
-        &.pink {
-            background-color: $orange;
-            color: darken($orange, 30%);
+        @include breakpoint(mobile-only) {
+            float: none;
+            margin: 0;
         }
     }
+
+    @include breakpoint(mobile-only) {
+        text-align: center;
+    }
+}
+
+.overview-details {
+    margin-top: $content-padding;
+    margin-bottom: $content-padding;
+    margin-left: -($content-padding + $content-margin);
+    margin-right: -($content-padding + $content-margin);
+    padding: 0 ($content-padding + $content-margin) $content-padding ($content-padding + $content-margin);
+    border-bottom: 1px solid $medium-gray;
+    .g-block {
+        padding: $content-padding;
+    }
+
+    @include breakpoint(mobile-only) {
+        text-align: center;
+    }
+
+    .preview-image {
+        width: 350px;
+    }
+}
+
+.overview-gantry {
+    .g-block {
+        padding: $content-padding;
+    }
+
+    @include breakpoint(mobile-only) {
+        text-align: center;
+    }
+}
+
+.overview-list {
+    list-style: none;
+    margin: 0;
+    font-size: $core-font-size + 0.1;
+    i {
+        margin-right: 1rem;
+        color: $navbar-border;
+    }
+}
+
+.about-gantry {
+    margin-top: 3rem;
+    margin-left: 2rem;
+    opacity: 0.8;
 }
 
 } //endwrapper

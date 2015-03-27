@@ -1,0 +1,28 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+    <h2>
+        <span class="title">New Layout</span>
+        <i class="fa fa-pencil font-small" data-title-edit></i>
+        <span class="float-right">
+            <a href="#" class="button button-primary button-save"><i class="fa fa-check"></i> <span>Save</span></a>
+            <a href="#" class="button"><i class="fa fa-sign-in"></i> <span>Import</span></a>
+            <a href="#" class="button"><i class="fa fa-sign-out"></i> <span>Export</span></a>
+            <a href="#" class="button red"><i class="fa fa-times-circle"></i> <span>Cancel</span></a>
+        </span>
+    </h2>
+
+    <div class="lm-newblocks" data-lm-blocktypes>
+        <a class="button" href="{{ gantry.route('picker/particles')|e }}" data-lm-addparticle><i class="fa fa-plus"></i> <span>New Particle</span></a>
+        <span class="float-right">
+            <a href="#" class="button"><i class="fa fa-arrow-left"></i></a>
+            <a href="#" class="button"><i class="fa fa-history"></i> <span>History</span></a>
+            <a href="#" class="button"><i class="fa fa-arrow-right"></i></a>
+        </span>
+    </div>
+    <div id="page">
+        <div class="lm-blocks" data-lm-page="create/{{ page_id }}" data-lm-root="{{ layout|json_encode|e('html_attr') }}"></div>
+    </div>
+
+    <div id="trash" data-lm-eraseblock="" style="top: -104px;"><div class="trash-zone">&times;</div><span>Drop here to delete</span></div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% if item.children %}
+<section class="g-grid submenu-selector">
+    {% for group, children in item.groups %}
+        {% set width = item.columnWidth(group)|number_format(1) %}
+        {% set special = column is defined and group == column %}
+        {% set target = 'list-' ~ group %}
+        <div class="g-block" data-mm-id="{{ target|e }}" style="flex: 0 1 {{ width|round(1) }}%">
+            <div class="submenu-column">
+                {% include 'menu/list.html.twig' with {'item': special ? override : item, 'group': group} %}
+                {% set size = item.groups|length %}
+            </div>
+            <div class="submenu-ratio">
+                <span class="percentage"><input type="text" class="column-pc" value="{{ width|round(1) }}" tabindex="{{ group + 1 }}" min="5" max="95" />%</span>
+            </div>
+        </div>
+    {% endfor %}
+</section>
+<span class="fa fa-plus add-column"></span>
+{% endif %}

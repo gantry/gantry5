@@ -1,0 +1,27 @@
+#g-showcase {
+	padding: $section-padding 0;
+	background: $showcase-background;
+	color: $showcase-text-color;
+
+	a {
+		color: lighten($showcase-background, 60%);
+		&:hover {
+			color: $showcase-text-color;
+		}
+	}
+
+	h1, h2, h3, h4, h5, h6, strong {
+		color: $showcase-text-color;
+	}
+
+	.button {
+		background: $accent-color-2;
+		color: $showcase-text-color;
+		&:hover {
+			background: lighten($accent-color-2, 5%);
+		}
+		&:active {
+			background: darken($accent-color-2, 5%);
+		}
+	}
+}

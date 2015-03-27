@@ -1,6 +1,8 @@
 // Font Family
-$font-family-default:           "opensanslight", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-$font-family-bold:              "opensans", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+$font-family-default:           "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+$font-weight-regular:			400;
+$font-weight-medium:			500;
+$font-weight-bold:				700;
 
-// Sidebar
-$sidebar-font-size:             $core-font-size - 0.2;
+// NavBar
+$navbar-font-size:             $core-font-size - 0.2;

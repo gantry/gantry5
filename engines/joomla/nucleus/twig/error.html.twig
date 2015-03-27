@@ -1,0 +1,11 @@
+{% extends "@nucleus/page.html.twig" %}
+
+{% block page_head -%}
+    {% include 'partials/error_head.html.twig' %}
+{%- endblock %}
+
+{% block content %}
+    <jdoc:include type="message" />
+    <h1>{{ errorcode|default(500) }} {{ error|default('Unknown Error') }}</h1>
+    {{ backtrace }}
+{% endblock %}

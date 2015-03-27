@@ -1,0 +1,13 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block stylesheets %}
+    {% for css in particle.css %}
+        <link rel="stylesheet" href="{{ url(css.location) }}" type="text/css" />
+    {% endfor %}
+{% endblock %}
+
+{% block javascript %}
+    {% for script in particle.javascript %}
+        <script src="{{ url(script.location) }}"></script>
+    {% endfor %}
+{% endblock %}

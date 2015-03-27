@@ -1,268 +1,703 @@
-#g5-container { // wrapper
+$particle: #2A82B7;
+$position: #359AD9;
+$spacer: #eee;
+$pagecontent: #20A085;
+$atom: #9055AF;
+$stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%) 50%, #ccc 50%, #ccc 75%, darken(#ccc, 3%) 75%, darken(#ccc, 3%));
 
-.lm-blocks {
-    &.empty {
-        min-height: 150px;
-        border: 2px dashed #dfdfdf;
+#g5-container {
+    // wrapper
+
+    .layout-title {
+        margin-bottom: 0.5rem;
     }
 
-    .grid, .block {
-        position: relative;
+    .title ~ .fa-pencil {
+        cursor: pointer;
     }
 
-    // resizers
-    .grid > .block {
-        &:after {
-            content: "";
-            display: block;
-            position: absolute;
-            top: 0;
-            right: -8px;
-            bottom: 0;
-            width: 8px;
-            background: red;
-            z-index: 3;
-            cursor: ew-resize;
-            display: none; // temp
+    .title[contenteditable] {
+        padding: 4px;
+    }
+
+    .lm-blocks {
+        &.empty {
+            min-height: 150px;
+            border: 2px dashed #dfdfdf;
         }
 
-        &:last-child:after {
-            display: none;
-        }
-    }
-
-    &.moving .grid > .block:after {
-        display: none;
-    }
-
-    /* THIS IS FOR PAGES */
-
-    .grid {
-        margin: 10px;
-        border-radius: 3px;
-        //border: 1px solid lighten($aqua, 20%);//9AD5E7;
-        box-shadow: inset 0 0 0 1px lighten($aqua, 20%);//9AD5E7;
-    }
-
-    .section {
-        background: $main-bg;
-        cursor: move;
-
-        margin: 10px;
-        box-shadow: inset 0 0 0 1px $light-gray;
-        border-radius: 3px;
-        padding: 10px 5px;
-        // with box shadows: $gap: 11px;
-        // with box shadows: margin: 0;
-        // with box shadows: box-shadow: inset 0 0 0 $gap $white, inset 0 0 0 ($gap + 1) $light-gray;
-        // with box shadows: border-radius: $gap + 3;
-        // with box shadows: padding: (10px + $gap) (5px + $gap);
-
-
-
-        &:hover {
-            box-shadow: inset 0 0 0 1px $green;
-            //box-shadow: inset 0 0 0 $gap $white, inset 0 0 0 ($gap + 1) $green; // with box shadows
+        .g-grid, .g-block {
+            position: relative;
         }
 
-        .section-header {
-            margin: 0 5px 8px;
-
-            .button {
-                pointer-events: visible;
+        // resizers
+        .g-grid > .g-block {
+            &:after {
+                content: "";
+                position: absolute;
+                top: 0;
+                right: -8px;
+                bottom: 0;
+                width: 8px;
+                background: red;
+                z-index: 3;
+                cursor: col-resize;
+                display: none;
             }
-        }
 
-        .grid {
-            margin: 0;
-            border: 0;
-            box-shadow: none;
-
-            .block:after {
+            &:last-child:after {
                 display: none;
             }
         }
 
-    }
-
-    .grid > .block {
-        .placeholder:not(:first-child):not(:last-child) {
-            //margin: -6px 0;
-        }
-        .in-between-sections:first-child, .in-between-sections:last-child {
-            margin: 6px;
-        }
-
-        &:after {
-            content: "";
-            display: block;
-            position: absolute;
-            top: 8px;
-            right: -4px;
-            bottom: 8px;
-            width: 8px;
-            //background: $blue-gray;
-            @include stripes-background(lighten($blue-gray, 40%), 40px);
-            z-index: 3;
-            cursor: ew-resize;
-            border-radius: 8px;
-        }
-
-        &:last-child:after {
+        &.moving .g-grid > .g-block:after, &.moving .g-grid > .g-block > [data-lm-blocktype]:after,
+        &.moving .g-grid:hover > .g-block [data-lm-blocktype]:not(:empty):after {
             display: none;
         }
+
+        /* THIS IS FOR PAGES */
+
+        .g-grid .g-block {
+            .section:first-child {
+                margin-top: 0;
+            }
+
+            .section:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        .section, .non-visible-section {
+            background: $white;
+            margin: 14px 0;
+            padding: 8px;
+
+            .section-header {
+                font-size: 22px;
+                line-height: 2em;
+                padding: 0 4px;
+
+                h4 {
+                    margin: 0;
+                    padding: 0;
+                    font-weight: $font-weight-regular;
+                    font-family: $font-family-default;
+                    font-size: 24px;
+                }
+
+                i {
+                    pointer-events: visible;
+                    color: #999;
+                    margin: 0 4px;
+                }
+            }
+
+            .section-actions {
+                opacity: 0;
+                @include transition(opacity 0.2s ease-out);
+                
+                i {
+                    cursor: pointer;
+                    @include transition(color 0.2s);
+                    &:hover {
+                        color: darken($core-text, 10%);
+                    }
+                }
+            }
+
+            &:hover {
+                .section-actions {
+                    opacity: 1;
+                    @include transition(opacity 0.2s ease-in);
+                }
+            }
+
+            .g-grid {
+                margin: 8px 0;
+                padding: 4px;
+                border: 0;
+                box-shadow: none;
+                background-color: #f6f6f6;
+                min-height: 58px;
+
+                // handles
+                &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
+                    display: block;
+                    position: absolute;
+                    background: #f6f6f6;
+                    top: -1px;
+                    bottom: -1px;
+                    width: 25px;
+                    vertical-align: middle;
+                    line-height: 58px;
+                    text-align: center;
+                    z-index: 5;
+                    color: #aaa;
+                    border: 1px solid #ddd;
+                    opacity: 0;
+                }
+
+                &:not(:empty):not(.no-hover):before {
+                    font-family: FontAwesome, sans-serif;
+                    content: "\f0c9";
+                    border-radius: 3px 0 0 3px;
+                    left: -21px;
+                    cursor: move;
+                    border-right: 0 !important;
+                }
+
+                &:not(:empty):not(.no-hover):not(.no-gear):after {
+                    font-family: FontAwesome, sans-serif;
+                    content: "\f0db";
+                    border-radius: 0 3px 3px 0;
+                    right: -21px;
+                    border-left: 0 !important;
+                    cursor: pointer;
+                }
+
+                &:hover:not(:empty) {
+                    box-shadow: 0 0 0 1px #ddd;
+                }
+
+                &:hover:not(:empty):not(.no-hover):before, &:hover:not(:empty):not(.no-hover):not(.no-gear):after {
+                    opacity: 1;
+                }
+
+                &:first-child {
+                    margin-top: 0;
+                }
+
+                .g-block:after {
+                    display: none;
+                }
+
+                &:empty:after {
+                    content: "Drop particles here...";
+                    display: block;
+                    text-align: center;
+                    margin: 0 auto;
+                    position: relative;
+                    vertical-align: middle;
+                    line-height: 47px;
+                    color: #bababa;
+                }
+            }
+        }
+
+        .non-visible-section {
+            background-color: transparent;
+            margin-top: 28px;
+            border-top: 1px solid #ddd;
+
+            .g-grid {
+                background: $white;
+                &:empty:after {
+                    content: "Drop non-visible atoms here...";
+                }
+
+                &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
+                    display: none;
+                    opacity: 0;
+                    visibility: hidden;
+                }
+
+                > .g-block {
+                    > .particle, > .position, > .spacer, > .pagecontent {
+                        &:after {
+                            display: none;
+                            opacity: 0;
+                            visibility: hidden;
+                        }
+                    }
+                }
+
+                .g-block:last-child {
+                    .particle, .position, .spacer, .pagecontent, .atom {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+
+        > .g-grid > .g-block, > .g-lm-container > .g-grid > .g-block {
+            margin-right: 14px;
+            background: $white;
+            padding-bottom: 50px;
+
+            > .section {
+                border-bottom: 14px solid #eee;
+                margin-top: 0;
+                margin-bottom: 0;
+
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+
+            > .particle-size {
+                margin-right: 0;
+                position: absolute;
+                bottom: 12px;
+                right: 12px;
+
+                i {
+                    margin-right: 5px;
+                }
+            }
+        }
+
+        .g-grid {
+            &:hover > .g-block {
+                > .particle, > .position, > .spacer, > .pagecontent {
+                    &:after {
+                        content: "";
+                        top: 0;
+                        bottom: 0;
+                        width: 4px;
+                        background: #00baaa;
+                        position: absolute;
+                        right: -5px;
+                        cursor: col-resize;
+                        z-index: 10;
+                    }
+                }
+            }
+        }
+
+        .section > .g-grid > .g-block:last-child, .section > .g-lm-container > .g-grid > .g-block:last-child {
+            .particle, .position, .spacer, .pagecontent, .atom {
+                margin-right: 0;
+            }
+
+            > .particle, > .position, > .spacer, > .pagecontent {
+                &:after {
+                    display: none;
+                }
+            }
+
+        }
+
+        .g-grid > .g-block {
+            &:last-child {
+                margin-right: 0;
+            }
+
+            .in-between-sections:first-child, .in-between-sections:last-child {
+                margin: 6px;
+            }
+
+            &:after {
+                content: "";
+                display: block;
+                position: absolute;
+                right: -10px;
+                width: 6px;
+                background: #00baaa;
+                z-index: 3;
+                cursor: col-resize;
+            }
+
+            &:last-child:after {
+                display: none;
+            }
+        }
+
+        .particle, .position, .spacer, .pagecontent, .atom {
+            cursor: move;
+            padding: 6px 13px;
+            color: $white;
+            background: $position;
+            margin-right: 6px;
+            position: relative;
+
+            &[data-lm-nodrag] {
+                cursor: default;
+            }
+
+            .particle-size {
+                color: rgba($white, 0.7);
+            }
+
+            strong {
+                font-weight: bold;
+                color: $white;
+            }
+            
+            > span {
+                position: relative;
+                z-index: 2;
+
+                span {
+                    display: block;
+
+                    &:last-child {
+                        color: rgba($white, 0.7);
+                        margin-top: -3px;
+                    }
+                }
+            }
+
+            .float-right {
+                position: absolute;
+                right: 13px;
+                top: 0;
+                bottom: 0;
+                line-height: 50px;
+                float: inherit;
+
+                i {
+                    line-height: 52px;
+                    cursor: pointer;
+                    position: relative;
+                    z-index: 2;
+                }
+            }
+        }
+
+        .particle-size {
+            font-weight: 300;
+            font-size: $core-font-size + 0.2;
+            vertical-align: middle;
+            color: $core-text;
+            display: inline-block;
+            margin-top: -5px;
+            margin-right: 5px;
+            text-shadow: none;
+            @include breakpoint(tablet-range) {
+                font-size: $core-font-size;
+            }
+        }
+
+        .particle {
+            background-color: $particle;
+        }
+
+        .spacer {
+            background-color: $spacer;
+            color: rgba(#666, 0.8);
+
+            .particle-size {
+                color: rgba(#666, 0.8);
+            }
+
+            > span {
+                span {
+                    &:last-child {
+                        color: rgba(#666, 0.8);
+                    }
+                }
+            }
+        }
+
+        .atom {
+            background-color: $atom;
+        }
+
+        .pagecontent {
+            background-color: $pagecontent;
+        }
+
+        .placeholder {
+            text-align: center;
+            color: rgb(89, 135, 160);
+            text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+            background-color: #ddd;
+            border: 0;
+            padding: 1px;
+            flex: 0 1 100%;
+
+            &.in-between {
+                display: block;
+                flex: 0 0 0px;
+                margin: 0 2px 0 -4px;
+                width: 0px;
+                padding: 1px;
+                text-indent: -10000px;
+                font-size: 0px;
+                flex: 0 1 0%;
+                background-color: #555;
+            }
+
+            &.in-between-grids {
+                background-color: #555;
+                margin: -5px 0;
+
+                &.in-between-grids-first {
+                    margin: 0 0 -2px;
+                }
+
+                &.in-between-grids-last {
+                    margin: -2px 0 0;
+                }
+            }
+
+            &.in-between.in-between-sections {
+                width: auto;
+            }
+        }
+
+        .block-has-changes {
+            &:not(.section):not(.non-visible-section) {
+                box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
+            }
+
+            > span > .changes-indicator {
+                position: absolute;
+                left: -10px;
+                top: 12px;
+            }
+
+            > span .title, > span .font-small {
+                margin-left: 15px;
+            }
+        }
     }
 
-    .position, .spacer, .mainbody {
-        padding: 8px;
-        color: $sidebar-active;
-        background: $white;
-        margin: 0 4px;
-        border: 1px solid $light-gray;
-        border-radius: 3px;
+    .particle-disabled, [data-lm-disabled] {
+        @include background($stripes !important);
+        background-size: 50px 50px !important;
     }
 
-    /* END THIS IS FOR PAGES */
+    /* history */
+    #history {
+        display: inline-block;
+        float: right;
+        span {
+            display: inline-block;
+            background: #eee;
+            border-radius: 30px;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            margin-left: 5px;
+            font-size: 16px;
+            color: #777;
+            text-shadow: 0 1px $white;
 
-    /* .block {
-        padding: 8px;
-        //border: 1px solid #dfdfdf;
-        box-shadow: inset 0 0 0 1px #dfdfdf;
-        margin: 4px;
-        background: white;
+            &.disabled {
+                color: #ccc;
+            }
+        }
     }
 
-    .position, .spacer, .placeholder {
-        background-color: #ecf3f6;
-        padding: 12px;
-        box-shadow: 0 0 0 4px white inset, 0 0 0 5px #d3e5f0 inset;
-        color: #888;
+    .sidebar [data-lm-blocktype] {
+        position: relative;
+        z-index: 5;
     }
 
-    .section {
-        background: #f9f9f9;
+    /* new blocks */
+    .lm-newblocks {
+        padding-bottom: 8px;
+
+        .g-block {
+            display: inline-block;
+            text-align: center;
+            background: $navbar-bg;
+            padding: 4px 8px;
+            border-radius: 3px;
+            margin-right: 8px;
+        }
+
+        .button {
+            i {
+                line-height: $core-line-height + 0.1;
+            }
+        }
     }
 
-    .spacer {
+    /* deletion */
+    #trash {
+        position: fixed;
+        top: -100px;
+        right: 0;
+        left: 0;
+        z-index: 1200;
         text-align: center;
-        color: rgb(89, 135, 160);
-        text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
-        //border: 1px solid #97AFC5;
-        background-color: #D8DFE4;
+        font-weight: bold;
+        color: $white;
+        padding: $content-padding;
+        background: rgba(255,255,255,0.8);
+
+        .trash-zone {
+            background-color: $red;
+            font-size: $core-font-size * 2;
+            border-radius: 100px;
+            @include size(50px 50px);
+            line-height: 50px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        span {
+            font-size: $navbar-font-size;
+            color: $dark-gray;
+            text-shadow: 0 0 1px $white;
+        }
+    }
+
+}
+
+.g5-dialog .g-tabs, .g5-popover-content .g-tabs {
+    @extend #navbar;
+
+    margin-right: 0 !important;
+
+    ul {
+        background-color: $navbar-bg;
+        margin: -1rem -1rem 1rem !important;
+        border-radius: $core-border-radius $core-border-radius 0 0;
+
+        li:first-child {
+            border-radius: $core-border-radius 0 0 0;
+        }
+    }
+}
+
+.g5-popover-content .g-tabs {
+    ul {
+        margin: -0.55rem -0.9rem 1rem !important;
+        background-color: $light-gray;
+
+        li.active {
+            background-color: $white !important;
+        }
+
+        li:hover:not(.active) {
+            background-color: darken($light-gray, 5%) !important;
+        }
+    }
+}
+
+.g5-dialog .g-pane, .g5-popover-content .g-pane {
+    display: none;
+    
+    &.active {
+        display: block;
+    }
+
+    li {
+        padding: 0.4rem;
+
+        i {
+            color: #aaa;
+        }
+
+        &:not(.g-switch-title) {
+            cursor: pointer;
+        }
+
+        &:hover:not(.g-switch-title) {
+            background-color: $light-gray;
+            border-radius: $core-border-radius;
+        }
+    }
+}
+
+.g5-popover-content .g-pane {
+    .g-switch-title {
+        padding-bottom: 7px;
+        font-weight: bold;
+        font-size: 0.85em;
+        color: #ccc;
         text-transform: uppercase;
-        @include background-image(linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent));
-        background-size: 50px 50px;
-    } */
+    }
 
-    .placeholder {
-        text-align: center;
-        color: rgb(89, 135, 160);
-        text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
-        //border: 1px solid #97AFC5;
-        background-color: lighten($lavender, 20%);
-        box-shadow: inset 0 0 0 1px lighten($lavender, 15%); //DBCFF8
-        @include background-image(linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent));
-        background-size: 50px 50px;
-        border: 0;
-        padding: 2px;
-        flex: 0 1 50%;
-        //margin: 10px;
-        border-radius: 3px;
-        min-height: 6px;
-
-        &.in-between {
-            margin: -2px 0;
-            border-radius: 10px;
-            display: block;
-            flex: 0 0 0px;
-            margin: 10px -3px;
-            width: 0px;
-            padding: 3px;
-            text-indent: -10000px;
-            font-size: 0px;
-            flex: 0 1 0%;
-        }
-
-        &.in-between-sections {
-            //background-color: $pink;
-            box-shadow: inset 0 0 0 3px $white, inset 0 0 0 4px lighten($lavender, 15%); //DBCFF8
-            margin: -11px 6px;
-            min-height: 12px;
-            border-radius: 10px;
-        }
-
-        &.in-between.in-between-sections {
-            width: auto;
-            margin: -10px 6px;
+    ul {
+        @extend %list-reset;
+        word-wrap: break-word;
+        &:not(.g-switch-presets) {
+            width: 50%;
         }
     }
 }
 
-/* history */
-#history {
-    display: inline-block;
-    float: right;
-    span {
-        display: inline-block;
-        background: #eee;
-        border-radius: 30px;
-        width: 30px;
-        height: 30px;
-        text-align: center;
-        line-height: 30px;
-        margin-left: 5px;
-        font-size: 16px;
-        color: #777;
-        text-shadow: 0 1px $white;
 
-        &.disabled {
-            color: #ccc;
-        }
+.sidebar-block {
+    $negate: -($content-padding + $content-margin);
+    $compensate: $content-padding + $content-margin;
+    margin: $negate $compensate $negate $negate;
+    padding: $compensate $content-padding;
+    background-color: darken($main-bg, 2);
+    border-right: 1px solid darken($main-bg, 5);
+}
+
+.g5-lm-particles-picker {
+    ul, li {
+        @extend %list-reset;
     }
-}
 
-.sidebar [data-lm-blocktype] {
-    position: relative;
-    z-index: 5;
-}
+    ul {
+        padding: 1px;
+        margin-bottom: 1em;
+    }
 
-/* new blocks */
-.lm-newblocks {
-    padding-bottom: 8px;
-
-    .block {
+    li {
+        padding: $content-padding / 2;
+        margin: 1px 0;
+        text-align: center;
+        border-radius: $core-border-radius;
         cursor: move;
-        display: inline-block;
-        text-align: center;
-        background: $sidebar-bg;
-        padding: 4px 8px;
-        border-radius: 3px;
-        margin-right: 8px;
+
+        &[data-lm-nodrag] {
+            cursor: default;
+        }
+
+        @include breakpoint(tablet-range) {
+            font-size: $core-font-size - 0.2;
+        }
+
+        &:first-child {
+            margin-top: 0;
+        }
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &[data-lm-blocktype="spacer"] {
+            background-color: $spacer;
+            color: #666;
+            border: 1px solid darken($medium-gray, 5);
+        }
+
+        &.g5-lm-particle-spacer[data-lm-disabled] {
+            color: #fff;
+        }
+
+        &[data-lm-blocktype="position"] {
+            color: #fff;
+            background-color: $position;
+        }
+
+        &[data-lm-blocktype="particle"] {
+            color: #fff;
+            background-color: $particle;
+        }
+
+        &[data-lm-blocktype="pagecontent"] {
+            color: #fff;
+            background-color: $pagecontent;
+        }
+
+        &[data-lm-blocktype="atom"] {
+            color: #fff;
+            background-color: $atom;
+        }
+    }
+
+    .settings-block {
+        width: 100% !important;
+    }
+
+    .search {
+        position: relative;
+        margin-bottom: 10px;
+
+        i {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
     }
 }
-
-/* deletion */
-
-#trash {
-    @include position(absolute, -100px 0 inherit 0);
-    text-align: center;
-    font-weight: bold;
-    color: $white;
-    padding: $content-padding;
-
-    .trash-zone {
-        background-color: $red;
-        font-size: $core-font-size * 2;
-        border-radius: 100px;
-        @include size(50px 50px);
-        line-height: 50px;
-        margin: 0 auto;
-    }
-
-    span {
-        font-size: $sidebar-font-size;
-        color: $dark-gray;
-    }
-}
-
-} //end wrapper

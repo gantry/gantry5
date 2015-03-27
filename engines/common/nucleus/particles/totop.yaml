@@ -1,0 +1,17 @@
+name: To Top
+description: Scroll back to top.
+type: particle
+
+form:
+  fields:
+    enabled:
+      type: checkbox
+      label: Enabled
+      description: Globally enable to top particles.
+      default: true
+
+    css.class:
+      type: input.selectize
+      label: CSS Classes
+      description: CSS class name for the particle.
+      default: totop

@@ -1,0 +1,56 @@
+{% set headerContent %}
+{% block stylesheets %}
+{% endblock %}
+{% block javascript %}
+{% endblock %}
+{% endset %}
+{% do parseHtmlHeader(headerContent) %}
+
+{% set footerContent %}
+{% block javascript_footer %}
+{% endblock %}
+{% endset %}
+{% do parseHtmlHeader(footerContent, true) %}
+
+{% set name = (name is null ? field.name : name) %}
+{% set value = (value is null ? field.default : value) %}
+{% set default_value = (default_value is null ? field.default : default_value) %}
+
+{% block field %}
+    <div class="settings-param {{ field.type|replace('.', '-')|e }}">
+        {% if overrideable and (field.overridable is not defined or field.overridable == true) and field.type != 'container.set' %}
+            <input type="checkbox" class="settings-param-toggle" id="of-{{ (scope ~ name)|e }}"{{ value != default_value ? ' checked="checked"' }} />
+            <label class="settings-param-override" for="of-{{ (scope ~ name)|e }}"></label>
+        {% endif %}
+        {% block contents %}
+            <span class="settings-param-title float-left">
+                {% block label %}
+                    {% if field.description %}
+                        <span class="g-tooltip" data-title="{{ field.description|e }}">{{ field.label|e }}</span>
+                    {% else %}
+                        {{ field.label|e }}
+                    {% endif %}
+                    {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
+                {% endblock %}
+            </span>
+            <div class="settings-param-field">
+                {% block group %}
+                    {% block input %}
+                        <input
+                                {# required attribute structures #}
+                                name="{{ (scope ~ name)|fieldName|e }}"
+                                value="{{ value|join(', ')|e }}"
+                                {# global attribute structures #}
+                                {% block global_attributes %}
+                                    {% if field.class is defined %} class="{{ field.class|e }}" {% endif %}
+                                    {% if field.id is defined %} id="{{ field.id|e }}" {% endif %}
+                                    {% if field.style is defined %} style="{{ field.style|e }}" {% endif %}
+                                    {% if field.title is defined %} title="{{ field.title|e }}" {% endif %}
+                                {% endblock %}
+                                />
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

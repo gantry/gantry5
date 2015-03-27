@@ -1,22 +1,37 @@
-# Composer
-composer.lock
-vendor/**
+# OS Generated
+.DS_Store*
+ehthumbs.db
+Thumbs.db
 
 # PhpStorm
 .idea
 
+# Composer
+bin/**/composer.lock
+bin/**/vendor/**
+src/composer.lock
+src/vendor/**
+
 # Symbolic links in admin
+platforms/joomla/com_gantry5/*/common
 platforms/*/*/common
 platforms/*/*/src
-platforms/*/*/vendor
 
 # Symbolic links in themes
 themes/*/*/common
+themes/*/*/skeleton
 themes/*/*/src
-themes/*/*/vendor
 themes/*/*/cache
+themes/*/*/custom
+themes/*/magento/design/default/gantry/common
+themes/*/magento/design/default/gantry/src
+themes/*/magento/design/default/gantry/vendor
+themes/*/magento/skin/default/common
 
 # Compiled
-.sass-cache/*
+**/.sass-cache
 node_modules/*
 platforms/wordpress/gantryadmin/cache
+platforms/common/node_modules
+assets/application/node_modules
+assets/common/application/node_modules

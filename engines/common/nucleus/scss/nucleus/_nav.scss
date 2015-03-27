@@ -1,0 +1,208 @@
+.g-main-nav {
+	ul {
+		@extend %list-reset;
+	}
+
+	// Main Level
+	.g-toplevel {
+		> li {
+			display: inline-block;
+			@include transition(all .2s ease-out);
+			/*
+			&:hover {
+				> .g-dropdown {
+					@extend %active-dropdown;
+				}
+			}
+			*/
+			.g-menu-item-content {
+				display: inline-block;
+				cursor: pointer;
+				@include transition(all .2s ease-out);
+			}	
+	    	// Menu Parent Indicator on Main TopLevel
+	    	&.g-parent {
+				.g-menu-parent-indicator {
+					display: inline-block;
+
+					&:after {
+						display: inline-block;
+						cursor: pointer;
+						width: 1.5rem;
+						opacity: 0.5;
+						font-family: FontAwesome;
+						content: "\f078";		
+					}
+					&.g-selected {
+						&:after {
+							content: "\f00d";
+						}
+					}
+				}
+				.g-selected {
+					.g-menu-parent-indicator {
+						&:after {
+							content: "\f00d";
+						}
+					}
+				}
+	    	}					
+		}
+	}
+
+	// First Level Dropdown
+	.g-dropdown {
+		@extend %inactive-dropdown;
+	    @include transition(all .2s ease-out);
+	}
+
+	// Sublevel Items
+	.g-sublevel {
+    	> li {
+    		@include transition(all .2s ease-out);
+
+    		.g-menu-item-content {
+				display: block;
+			}
+
+    		&.g-parent {
+	    		.g-menu-parent-indicator {
+	    			position: absolute;
+	    			right: $content-padding - 0.2;
+	    			top: $content-padding - 0.1;
+	    			width: auto;
+	    			text-align: center;
+
+	    			&:after {
+						content: "\f054";
+					}			
+				}
+			}
+			.g-selected {
+				.g-menu-parent-indicator {
+					&:after {
+						content: "\f00d";
+					}
+				}
+			}
+    	}
+    	// Menu Parent Indicator on SubLevel
+    	.g-parent {
+		
+    	}
+    }   
+}
+
+// Standard Dropdown Settings
+.g-standard {	
+	.g-sublevel {
+    	> li {
+    		position: relative;
+    		/*
+    		&:hover {
+    			> .g-dropdown {
+    				@extend %active-dropdown;
+    			}
+    		}
+    		*/
+    	}
+    }
+    .g-dropdown {
+	    .g-dropdown {
+	    	left: 100%;
+    		top: 0;
+	    	@extend %inactive-dropdown;
+	    }
+	    .g-block {
+	    	@include flex(0 100%);
+	    }
+	    // Dropdown is Active When Its Parent is Clicked
+		&.g-active {
+			@extend %active-dropdown;
+		}	    
+	}
+	.g-dropdown-column {
+    	@extend %dropdown-column;
+    }
+    .g-go-back {
+    	display: none;
+    }    
+}
+
+// Megamenu Settings
+.g-fullwidth {
+	position: static;
+	.g-dropdown {
+		position: absolute;
+		left: 0;
+		right: 0;
+		z-index: 1;
+		.g-block {
+			width: 50%;
+			position: relative;
+			overflow: hidden; 
+		}
+		// Dropdown is Active When Its Parent is Clicked
+		&.g-active {
+			@extend %active-dropdown;
+		}
+
+		// Go Back Button on Dropdown
+		.g-go-back {
+			&.g-level-1 {
+				display: none;
+			}			
+			display: block;
+		}
+	}
+	.g-sublevel {
+		.g-dropdown {
+			top: 0;
+			@include transform(translateX(100%));
+			&.g-active {
+				@include transform(translateX(0));
+			}
+		}
+		&.g-slide-out {
+			> .g-menu-item > .g-menu-item-content {
+				@include transform(translateX(-100%));
+			}
+		}
+	}
+}
+
+// Go Back Arrow
+.g-go-back {
+	&.g-level-1 {
+		display: none;
+	}	
+	a {
+		span {
+			display: none;
+		}
+		&:before {
+			display: block;
+		    text-align: center;
+		    width: 1.28571em;			
+			font-family: FontAwesome;
+			content: "\f053";
+			opacity: 0.5;
+		}
+	}	
+}
+
+// Overlay
+.g-nav-overlay {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;	    
+    z-index: 1;		
+    opacity: 0;
+    @include transition(opacity .3s ease-out);
+    .g-nav-overlay-active &, .g-mobile-nav-active & {
+    	position: fixed;
+    	opacity: 1;
+    	height: 100vh;
+    }
+}

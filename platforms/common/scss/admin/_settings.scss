@@ -1,37 +1,111 @@
+@import "selectize";
+
 #g5-container {//wrapper
 
+#settings {
+    h2 {
+        &:first-child {
+            margin-top: 0.5rem;
+        }
+    }
+}
+
 .settings-block {
-    //@extend .card;
+    width: 48%;
+    min-width: inherit;
+    @include breakpoint(mobile-only) {
+        margin: 1% 0;
+        width: 100%;
+    }
+
+    &.card {
+        .badge {
+            margin-left: 4px;
+        }
+    }
+
+    &.disabled {
+        opacity: 0.6;
+    }
 
     .advanced {
         color: $orange;
     }
 
     .settings-param {
-        padding: 5px;
+        padding: 10px 5px;
+        clear: both;
+        position: relative;
+        border-bottom: 1px solid #f4f4f4;
 
-        &:nth-child(even){
-            background-color: #fafafa;
-            border-radius: 3px;
+        &:last-child {
+            border-bottom: 0;
         }
     }
 
-    .settings-param-title {
-        max-width: 150px;
+    input.settings-param-toggle {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        margin: -7px 15px 0 0;
+        z-index: 5;
+        
+        &:checked {
+            + .settings-param-override {
+                opacity: 0;
+                z-index: -1;
+            }
+        }
+    }
+
+    .settings-param-override {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        padding: 0;
+        background-color: transparentize(#f4f4f4, 0.5);
+        z-index: 4;
+        opacity: 1;
+        @include transition(opacity 0.3s ease-in-out, z-index 0.3s ease-in-out);
+        /*@include linear-gradient(90deg, transparentize($white, 0.7) 0%, transparentize($white, 0.7) 150px, transparentize($white, 0.4) 150px, transparentize($white, 0.4) 100%);*/
     }
 
     .settings-param-field {
         margin-left: 150px;
     }
 
-    i {
-        vertical-align: middle;
+    .settings-param-title {
+        max-width: 150px;
+        margin: 5px;
     }
 
-    input {
-        padding: 2px 4px;
+
+    i {
+        line-height: inherit;
+    }
+
+    .fa {
+        width: 1rem;
+        text-align: center;
+    }
+
+    .fa-lg {
+        font-size: inherit;
+        vertical-align: inherit;
+    }
+
+    input, textarea {
+        padding: 6px 12px;
         border: 1px solid $medium-gray;
         margin: 0;
+        height: auto;
+        max-width: 100%;
+        font-size: $core-font-size;
+        line-height: $core-line-height;
+        border-radius: $core-border-radius;
     }
 
     select {
@@ -39,8 +113,61 @@
         display: inline-block;
     }
 
+    input:not(.settings-param-toggle), select, .collection-list ul, .colorpicker, .multi.selectize-control {
+        width: 250px;
+        @include breakpoint(no-desktop) {
+            width: 100%;
+        }
+    }
+
+    textarea {
+        width: 250px;
+        @include breakpoint(tablet-range) {
+            width: 100%;
+        }
+        @include breakpoint(mobile-only) {
+            width: 92%;
+        }
+    }
+
+    .input-group {
+        &.append, &.prepend {
+            input {
+                width: 209px;
+                @include breakpoint(no-desktop) {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    .selectize-control.single {
+        width: 250px !important;
+        @include breakpoint(tablet-range) {
+            width: 100% !important;
+        }
+        @include breakpoint(mobile-only) {
+            width: 92% !important;
+        }
+    }
+
     img {
         display: block;
+    }
+}
+
+// modal
+.g5-dialog {
+
+    .settings-block {
+        width: 100%;
+        margin: 0 0 15px;
+    }
+
+    .g-modal-body {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-height: 650px;
     }
 }
 
@@ -49,9 +176,76 @@
     position: relative;
 
     .settings-param-field-colorpicker-preview {
-        @include position(absolute, 2px 2px 2px inherit);
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        bottom: 2px;
         width: $core-line-height + em(1px);
         border-radius: 3px;
+    }
+}
+
+// collections
+.collection-list .settings-param-field {
+    ul {
+        @extend %list-reset;
+        margin: 5px 0;
+
+        li {
+            padding: 0.1rem 0;
+
+            &:only-child {
+                .fa-reorder {
+                    display: none;
+                }
+
+                a {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+
+    ul:not(.collection-sorting) li {
+        &:hover [data-title-edit], &:hover [data-collection-remove] {
+            color: $dark-gray;
+            opacity: 1;
+        }
+
+        &[data-collection-item]:hover a {
+            color: $core-accent;
+        }
+    }
+
+    [data-collection-item] a {
+        color: $core-text;
+        margin-left: 5px;
+        vertical-align: middle;
+    }
+
+    .button {
+        background-color: $light-gray;
+        color: darken($light-gray, 30%);
+        padding: 6px 8px;
+
+        &:hover {
+            background-color: darken($light-gray, 10%);
+            color: darken($light-gray, 50%);
+        }
+    }
+
+    [data-title-edit], [data-collection-remove] {
+        cursor: pointer;
+        color: lighten($dark-gray, 40%);
+        float: right;
+        margin-top: 0.4rem;
+        opacity: 0;
+        //@include transition(all 0.2s ease-in-out);
+    }
+
+    .collection-reorder {
+        cursor: row-resize;
+        color: lighten($dark-gray, 20%);
     }
 }
 

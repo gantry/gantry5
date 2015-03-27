@@ -8,11 +8,16 @@ use Grav\Common\Themes;
 use Grav\Common\Twig;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class GantryAdminPlugin extends Plugin {
+class GantryAdminPlugin extends Plugin
+{
+    protected $base;
+    protected $template;
+
     /**
      * @return array
      */
-    public static function getSubscribedEvents() {
+    public static function getSubscribedEvents()
+    {
         return [
             'onPluginsInitialized' => ['detectAdmin', 900]
         ];
@@ -35,11 +40,12 @@ class GantryAdminPlugin extends Plugin {
             return;
         }
 
+        $base = rtrim($this->grav['base_url'], '/');
         $results = explode('/', $admin->route, 3);
         $theme = array_shift($results);
         $this->template = array_shift($results) ?: 'overview';
         $this->route = array_shift($results);
-        $this->base =  "{$admin->base}/{$admin->location}/{$theme}";
+        $this->base =  "{$base}{$admin->base}/{$admin->location}/{$theme}";
 
         $this->config->set('system.pages.theme', $theme);
 
@@ -58,11 +64,12 @@ class GantryAdminPlugin extends Plugin {
         $gantry = \Gantry\Framework\Gantry::instance();
         $gantry['base_url'] = $this->base;
         $gantry['routes'] = [
-            'overview' => '/overview',
+            '1' => '/%s',
+            'overview' => '',
             'settings' => '/settings',
-            'page_setup' => '/page_setup',
-            'page_setup_edit' => '/page_setup_edit',
-            'page_setup_new' => '/page_setup_new',
+            'pages' => '/pages_index',
+            'pages/edit' => '/pages_edit',
+            'pages/create' => '/pages_create',
             'assignments' => '/assignments',
             'updates' => '/updates',
         ];
@@ -71,7 +78,7 @@ class GantryAdminPlugin extends Plugin {
 
         $this->enable([
             'onPagesInitialized' => ['onPagesInitialized', 900],
-            'onTwigTemplatePaths' => ['onTwigTemplatePaths', 900],
+            'onTwigInitialized' => ['onTwigInitialized', 900],
             'onTwigSiteVariables' => ['onTwigSiteVariables', 900]
         ]);
 
@@ -87,24 +94,24 @@ class GantryAdminPlugin extends Plugin {
         $page->init(new \SplFileInfo(__DIR__ . "/pages/gantry.md"));
         $page->slug($this->template);
         $this->grav['page'] = $page;
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->grav['locator'];
-        $locator->addPath('gantry-admin', '', 'user/plugins/gantryadmin');
-        $locator->addPath('gantry-admin', 'assets', array('user/plugins/gantryadmin/common', 'user/themes/nucleus/common'));
     }
 
 
     /**
      * Add twig paths to plugin templates.
      */
-    public function onTwigTemplatePaths()
+    public function onTwigInitialized()
     {
         /** @var Twig $twig */
         $twig = $this->grav['twig'];
 
-        $twig->twig_paths[] = __DIR__ . '/templates';
-        $twig->twig_paths[] = __DIR__ . '/common/templates';
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->grav['locator'];
+        $locator->addPath('gantry-admin', '', ['user/plugins/gantryadmin', 'user/plugins/gantryadmin/common']);
+        $locator->addPath('gantry-admin', 'assets', ['user/plugins/gantryadmin/common']);
+
+        $loader = $twig->loader();
+        $loader->setPaths($locator->findResources('gantry-admin://templates'), 'gantry-admin');
     }
 
     /**
@@ -115,7 +122,7 @@ class GantryAdminPlugin extends Plugin {
         /** @var Twig $twig */
         $twig = $this->grav['twig'];
 
-        $twig->template = "gantry/{$this->template}.html.twig";
+        $twig->template = "@gantry-admin/{$this->template}.html.twig";
 
         $twig->twig_vars['location'] = $this->template;
         $twig->twig_vars['gantry_url'] = $this->base;

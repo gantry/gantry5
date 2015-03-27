@@ -1,0 +1,15 @@
+{% extends "forms/fields/input/group/group.html.twig" %}
+
+{% block input %}
+    <input
+            {# required attribute structures #}
+            type="submit"
+            name="{{ (scope ~ name)|fieldName|e }}"
+            value="{{ value|join(', ')|e }}"
+            {# global attribute structures #}
+            {{ block('global_attributes') }}
+            {# non-gloval attribute structures #}
+            {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
+            {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
+            />
+{% endblock %}

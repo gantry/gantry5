@@ -1,4 +1,17 @@
 <?php
+
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @license   Dual License: MIT or GNU/GPLv2 and later
+ *
+ * http://opensource.org/licenses/MIT
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
+ */
+
 namespace Gantry\Component\Filesystem;
 
 /**
@@ -12,15 +25,15 @@ abstract class Folder
     /**
      * Recursively find the last modified time under given path.
      *
-     * @param string $path
+     * @param  string $path
      * @return int
      */
-    public static function lastModified($path)
+    public static function lastModifiedFolder($path)
     {
+        $last_modified = 0;
+
         $directory = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new \RecursiveIteratorIterator($directory, \RecursiveIteratorIterator::SELF_FIRST);
-
-        $last_modified = 0;
 
         /** @var \RecursiveDirectoryIterator $file */
         foreach ($iterator as $file) {
@@ -29,39 +42,119 @@ abstract class Folder
                 $last_modified = $dir_modified;
             }
         }
+
         return $last_modified;
+    }
+
+    /**
+     * Get relative path between target and base path. If path isn't relative, return full path.
+     *
+     * @param  string  $path
+     * @param  string  $base
+     * @return string
+     */
+    public static function getRelativePath($path, $base = GANTRY5_ROOT)
+    {
+        $base = preg_replace('![\\\/]+!', '/', $base);
+        $path = preg_replace('![\\\/]+!', '/', $path);
+        if (strpos($path, $base) === 0) {
+            $path = ltrim(substr($path, strlen($base)), '/');
+        }
+
+        return $path;
+    }
+
+    /**
+     * Get relative path between target and base path. If path isn't relative, return full path.
+     *
+     * @param  string  $path
+     * @param  string  $base
+     * @return string
+     */
+    public static function getRelativePathDotDot($path, $base)
+    {
+        $base = preg_replace('![\\\/]+!', '/', $base);
+        $path = preg_replace('![\\\/]+!', '/', $path);
+
+        if ($path === $base) {
+            return '';
+        }
+
+        $baseParts = explode('/', isset($base[0]) && '/' === $base[0] ? substr($base, 1) : $base);
+        $pathParts = explode('/', isset($path[0]) && '/' === $path[0] ? substr($path, 1) : $path);
+
+        array_pop($baseParts);
+        $lastPart = array_pop($pathParts);
+        foreach ($baseParts as $i => $directory) {
+            if (isset($pathParts[$i]) && $pathParts[$i] === $directory) {
+                unset($baseParts[$i], $pathParts[$i]);
+            } else {
+                break;
+            }
+        }
+        $pathParts[] = $lastPart;
+        $path = str_repeat('../', count($baseParts)) . implode('/', $pathParts);
+
+        return '' === $path
+            || '/' === $path[0]
+            || false !== ($colonPos = strpos($path, ':')) && ($colonPos < ($slashPos = strpos($path, '/')) || false === $slashPos)
+            ? "./$path" : $path;
+    }
+
+    /**
+     * Shift first directory out of the path.
+     *
+     * @param string $path
+     * @return string
+     */
+    public static function shift(&$path)
+    {
+        $parts = explode('/', trim($path, '/'), 2);
+        $result = array_shift($parts);
+        $path = array_shift($parts);
+
+        return $result ?: null;
     }
 
     /**
      * Return recursive list of all files and directories under given path.
      *
-     * @param string $path
-     * @param array  $params
+     * @param  string            $path
+     * @param  array             $params
      * @return array
      * @throws \RuntimeException
      */
     public static function all($path, array $params = array())
     {
-        $realPath = realpath($path);
-
-        if ($realPath === false) {
+        if ($path === false) {
             throw new \RuntimeException("Path to {$path} doesn't exist.");
         }
 
-        $compare = $params['compare'] ? 'get' . $params['compare'] : null;
-        $pattern = $params['pattern'] ? $params['pattern'] : null;
-        $filters = $params['filters'] ? $params['filters'] : null;
-        $key = $params['key'] ? 'get' . $params['key'] : null;
-        $value = $params['value'] ? 'get' . $params['value'] : 'SubPathname';
+        $compare = isset($params['compare']) ? 'get' . $params['compare'] : null;
+        $pattern = isset($params['pattern']) ? $params['pattern'] : null;
+        $filters = isset($params['filters']) ? $params['filters'] : null;
+        $recursive = isset($params['recursive']) ? $params['recursive'] : true;
+        $levels = isset($params['levels']) ? $params['levels'] : -1;
+        $key = isset($params['key']) ? 'get' . $params['key'] : null;
+        $value = isset($params['value']) ? 'get' . $params['value'] : ($recursive ? 'getSubPathname' : 'getFilename');
 
-        $directory = new \RecursiveDirectoryIterator($realPath,
-            \RecursiveDirectoryIterator::SKIP_DOTS + \FilesystemIterator::UNIX_PATHS + \FilesystemIterator::CURRENT_AS_SELF);
-        $iterator = new \RecursiveIteratorIterator($directory, \RecursiveIteratorIterator::SELF_FIRST);
+        if ($recursive) {
+            $directory = new \RecursiveDirectoryIterator($path,
+                \RecursiveDirectoryIterator::SKIP_DOTS + \FilesystemIterator::UNIX_PATHS + \FilesystemIterator::CURRENT_AS_SELF);
+            $iterator = new \RecursiveIteratorIterator($directory, \RecursiveIteratorIterator::SELF_FIRST);
+            $iterator->setMaxDepth(max($levels, -1));
+        } else {
+            $iterator = new \FilesystemIterator($path);
+        }
 
         $results = array();
 
         /** @var \RecursiveDirectoryIterator $file */
         foreach ($iterator as $file) {
+            // Ignore hidden files.
+            if ($file->getFilename()[0] == '.') {
+                continue;
+            }
             if ($compare && $pattern && !preg_match($pattern, $file->{$compare}())) {
                 continue;
             }
@@ -72,12 +165,22 @@ abstract class Folder
                     $fileKey = preg_replace($filters['key'], '', $fileKey);
                 }
                 if (isset($filters['value'])) {
-                    $filePath = preg_replace($filters['value'], '', $filePath);
+                    $filter = $filters['value'];
+                    if (is_callable($filter)) {
+                        $filePath = call_user_func($filter, $file);
+                    } else {
+                        $filePath = preg_replace($filter, '', $filePath);
+                    }
                 }
             }
 
-            $results[$fileKey] = $filePath;
+            if ($fileKey !== null) {
+                $results[$fileKey] = $filePath;
+            } else {
+                $results[] = $filePath;
+            }
         }
+
         return $results;
     }
 
@@ -98,7 +201,7 @@ abstract class Folder
         }
 
         // Make sure that path to the target exists before copying.
-        self::mkdir($target);
+        self::create($target);
 
         $success = true;
 
@@ -140,7 +243,7 @@ abstract class Folder
         }
 
         // Make sure that path to the target exists before moving.
-        self::mkdir(dirname($target));
+        self::create(dirname($target));
 
         // Just rename the directory.
         $success = @rename($source, $target);
@@ -159,15 +262,16 @@ abstract class Folder
      * Recursively delete directory from filesystem.
      *
      * @param  string $target
+     * @param  bool   $include_target
      * @throws \RuntimeException
      */
-    public static function delete($target)
+    public static function delete($target, $include_target = true)
     {
         if (!is_dir($target)) {
             throw new \RuntimeException('Cannot delete non-existing folder.');
         }
 
-        $success = self::doDelete($target);
+        $success = self::doDelete($target, $include_target);
 
         if (!$success) {
             $error = error_get_last();
@@ -175,15 +279,39 @@ abstract class Folder
         }
 
         // Make sure that the change will be detected when caching.
-        @touch(dirname($target));
+        if ($include_target) {
+            @touch(dirname($target));
+        } else {
+            @touch($target);
+        }
+    }
+
+    /**
+     * @param  string  $folder
+     * @throws \RuntimeException
+     * @internal
+     */
+    public static function create($folder)
+    {
+        if (is_dir($folder)) {
+            return;
+        }
+
+        $success = @mkdir($folder, 0777, true);
+
+        if (!$success) {
+            $error = error_get_last();
+            throw new \RuntimeException($error['message']);
+        }
     }
 
     /**
      * @param  string $folder
+     * @param  bool   $include_target
      * @return bool
      * @internal
      */
-    protected static function doDelete($folder)
+    protected static function doDelete($folder, $include_target = true)
     {
         // Special case for symbolic links.
         if (is_link($folder)) {
@@ -197,25 +325,6 @@ abstract class Folder
             (is_dir($path)) ? self::doDelete($path) : @unlink($path);
         }
 
-        return @rmdir($folder);
-    }
-
-    /**
-     * @param  string  $folder
-     * @throws \RuntimeException
-     * @internal
-     */
-    protected static function mkdir($folder)
-    {
-        if (is_dir($folder)) {
-            return;
-        }
-
-        $success = @mkdir($folder, 0777, true);
-
-        if (!$success) {
-            $error = error_get_last();
-            throw new \RuntimeException($error['message']);
-        }
+        return $include_target ? @rmdir($folder) : true;
     }
 }

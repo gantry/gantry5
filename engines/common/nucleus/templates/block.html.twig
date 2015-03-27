@@ -1,0 +1,14 @@
+{% set html %}
+    {% if segment.children %}
+        {% for segment in segments %}
+            {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
+        {% endfor %}
+    {% endif %}
+{% endset %}
+
+{% if html|trim %}
+    <div {% if segment.attributes.id %}id="{{ segment.attributes.id|e }}"{% endif %}
+         class="g-block{{ segment.attributes.variations ? ' ' ~ segment.attributes.variations|join(' ')|e }}{{ segment.attributes.class ? ' ' ~ segment.attributes.class|join(' ')|e }} {{ segment.attributes.size|toGrid }}">
+        {{ html }}
+    </div>
+{% endif %}

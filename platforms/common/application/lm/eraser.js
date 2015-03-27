@@ -1,5 +1,6 @@
+"use strict";
 var prime     = require('prime'),
-    $         = require('./utils/elements.moofx'),
+    $         = require('../utils/elements.utils'),
     Emitter   = require('prime/emitter'),
     Bound     = require('prime-util/prime/bound'),
     Options   = require('prime-util/prime/options');
@@ -15,7 +16,7 @@ var Eraser = new prime({
 
         this.element = $(element);
 
-        if (!this.element) return;
+        if (!this.element) { return; }
         this.hide(true);
     },
 

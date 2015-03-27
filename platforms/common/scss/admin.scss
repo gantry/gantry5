@@ -16,13 +16,6 @@
 // Load Admin Mixins
 @import "admin/mixins/base";
 
-// Text Alignment Classes
-@import "nucleus/particles/align-text";
-
-// Show and Hide Based on Screen Size
-@import "nucleus/particles/visibility";
-
-
 // Load Template Library
 @import "admin/modules/base";
 
@@ -39,14 +32,17 @@
 // Settings
 @import "admin/settings";
 
+// Styles
+@import "admin/styles";
+
 // Page Setup
 @import "admin/page-setup";
 
-// Sidebar
-@import "admin/sidebar";
-
 // Headers
 @import "admin/headers";
+
+// Nav Bar
+@import "admin/navbar";
 
 // Typography
 @import "admin/typography";
@@ -54,5 +50,21 @@
 // Buttons
 @import "admin/buttons";
 
+// Input Grups
+@import "admin/input-groups";
+
 // Layout Manager
 @import "admin/layout-manager";
+
+// Menu Editor
+@import "admin/menu";
+
+// Modal
+@import "admin/modules/modal";
+@import "admin/modal";
+
+// Popover
+@import "admin/popover";
+
+// Particles
+@import "admin/particles";

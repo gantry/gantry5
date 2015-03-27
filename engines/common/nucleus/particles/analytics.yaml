@@ -1,0 +1,16 @@
+name: Google Analytics
+description: Configure Google Analytics.
+type: atom
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable analytic particles.
+      default: false
+
+    ua.code:
+      type: input.text
+      description: Enter the Google UA tracking code for analytics.
+      label: UA Code

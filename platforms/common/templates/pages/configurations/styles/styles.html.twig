@@ -1,0 +1,36 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+<div id="styles">
+    <form method="post">
+        <span class="float-right">
+            <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}" class="button button-secondary" data-ajax-action><i class="fa fa-fw fa-tasks"></i> <span>Recompile CSS</span></a>
+            <button type="submit" class="button button-primary button-save" data-save="Styles"><i class="fa fa-fw fa-check"></i> <span>Save Styles</span></button>
+        </span>
+        <h2 class="page-title">
+            <span class="title">Styles</span>
+        </h2>
+
+        <div class="swatches-block">
+            {% include 'partials/presets.html.twig' %}
+        </div>
+
+        {% for group, list in blocks %}
+        <h2>{{ group|capitalize }} Styles</h2>
+
+        <div id="styles" class="cards-wrapper g-grid">
+
+            {% for id, block in list %}
+                {% set prefix = 'styles.' ~ id ~ '.' %}
+                <div class="card settings-block">
+                    <h4>{{ block.name }}</h4>
+                    <div class="inner-params">
+                        {% include 'forms/fields.html.twig' with {'overrideable': overrideable, 'blueprints': block.form, 'data': gantry.config} %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </form>
+</div>
+{% endblock %}

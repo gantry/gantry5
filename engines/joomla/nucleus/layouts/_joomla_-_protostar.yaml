@@ -1,0 +1,28 @@
+header:
+  container:
+    - [particle-logo 50, position-position-0 50]
+
+navigation:
+  container:
+    - [particle-menu]
+
+container:
+  1:
+    - sidebar 20:
+      - position-position-8
+    - main 60:
+      - position-position-3
+      - position-global_messages
+      - pagecontent
+      - position-position-2
+    - aside 20:
+      - position-position-7
+
+footer:
+  container:
+    - position-footer
+    - [particle-copyright 40, spacer 30, particle-branding 30]
+
+debug:
+  container:
+    - position-debug

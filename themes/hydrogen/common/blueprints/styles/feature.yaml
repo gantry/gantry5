@@ -1,0 +1,15 @@
+name: Feature Colors
+description: Feature colors for the Hydrogen theme
+type: section
+
+form:
+  fields:
+
+    background:
+      type: input.colorpicker
+      label: Background
+      default: "#ffffff"
+    text-color:
+      type: input.colorpicker
+      label: Text
+      default: "#666666"

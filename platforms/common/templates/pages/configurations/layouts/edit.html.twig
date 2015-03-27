@@ -1,0 +1,73 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+<div class="g-grid">
+    <div class="g-block sidebar-block size-14">
+        <h2 class="page-title">
+            <span class="title">Particles</span>
+        </h2>
+        <div class="g5-lm-particles-picker">
+            <div class="search settings-block">
+                <input type="text" placeholder="Filter..." />
+                <i class="fa fa-fw fa-search"></i>
+            </div>
+                {% for key, list in particles %}
+                    {{ key|capitalize|e }}
+                    <ul>
+                    {% for type, particle in list %}
+                        {% for item_key, item in particle %}
+                            <li class="g5-lm-particle-{{ type|e }}"
+                                data-lm-blocktype="{{ type|e }}"
+                                data-lm-subtype="{{ item_key|e }}"
+                                {% if not gantry.config.get('particles.' ~ item_key ~ '.enabled', true) %}data-lm-disabled data-lm-nodrag title="This particle has been disabled from the Settings Panel and it cannot be added into the Layout"{% endif %}>
+                                {{ item|e }}
+                            </li>
+                        {%  endfor %}
+                    {% endfor %}
+                    </ul>
+                {% endfor %}
+        </div>
+    </div>
+    <div class="g-block main-block">
+        <span class="float-right">
+            {#<a href="#" class="button"><i class="fa fa-fw fa-sign-in"></i> <span>Import</span></a>
+            <a href="#" class="button"><i class="fa fa-fw fa-sign-out"></i> <span>Export</span></a>#}
+            <a href="#" class="button" data-lm-switcher="{{ gantry.route(switcher_url)|e }}"><i class="fa fa-fw fa-code-fork"></i> <span>Load</span></a>
+            <a href="#" class="button" data-lm-clear><i class="fa fa-fw fa-trash-o"></i> <span>Clear</span></a>
+            <a href="#" class="button button-primary button-save" data-save="Layout"><i class="fa fa-fw fa-check"></i> <span>Save Layout</span></a>
+        </span>
+        <h2 class="page-title layout-title">
+            <span class="title">Layout</span>
+        </h2>
+
+        <div class="lm-newblocks clearfix" data-lm-blocktypes>
+            {#<a class="button" href="{{ gantry.route('picker/particles')|e }}" data-lm-addparticle><i class="fa fa-plus"></i> <span>New Particle</span></a>#}
+            <span class="float-right">
+                <a data-lm-back href="#" class="button disabled"><i class="fa fa-fw fa-arrow-left"></i> Undo</a>
+                {#<a href="#" class="button"><i class="fa fa-fw fa-history"></i> <span>History</span></a>#}
+                <a data-lm-forward href="#" class="button disabled">Redo <i class="fa fa-fw fa-arrow-right"></i></a>
+            </span>
+        </div>
+        <div id="page">
+            <div class="lm-blocks" data-lm-page="{{ page_id|e }}" data-lm-root="{{ layout|json_encode|e('html_attr') }}"></div>
+            {% if layout is empty %}
+            <div id="lm-no-layout" class="cards-wrapper g-grid">
+                <div class="card settings-block">
+                    <h4>No layout specified!</h4>
+                    <div class="inner-params">
+                        <p>This configuration has no layout specified and will use layout defined in <i>Base Configuration</i>.</p>
+                        <p>To use preset layout or copy layout from any existing configuration:</p>
+                        <ul>
+                            <li>Click on <strong>Load</strong></li>
+                            <li>Select a new layout from either <strong>Presets</strong> or <strong>Configurations</strong></li>
+                            <li>Click on <strong>Save Layout</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div id="trash" data-lm-eraseblock><div class="trash-zone">&times;</div><span>Drop here to delete</span></div>
+{% endblock %}

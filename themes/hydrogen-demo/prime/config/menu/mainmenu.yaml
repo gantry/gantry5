@@ -1,0 +1,169 @@
+settings:
+  title: Main Menu
+  base: /
+
+ordering:
+  home:
+  features:
+    typography:
+  sample-pages:
+    - about-us:
+        layout-1:
+        layout-2:
+        layout-3:
+      our-team:
+        team:
+        layout-1:
+        layout-2:
+        layout-3:
+      pricing:
+        layout-1:
+        layout-2:
+        layout-3:
+    - faq:
+        layout-1:
+        layout-2:
+        layout-3:
+      services:
+        layout-1:
+        layout-2:
+        layout-3:
+      blog:
+        layout-1:
+        layout-2:
+        layout-3:
+  special:
+    - title:
+      error:
+      unsupported:
+      offline:
+      comingsoon:
+    - separator:
+      component:
+      raw:
+  admin:
+    about:
+    configurations:
+    menu:
+    themes:
+    learn:
+
+items:
+  home:
+    menu_icon: fa fa-fw fa-home
+
+  features:
+    type: separator
+    title: Features
+    menu_icon: fa fa-fw fa-bolt
+    layout: columns
+
+  sample-pages:
+    type: alias
+    link: /
+    title: Sample Pages
+    menu_icon: fa fa-fw fa-fire
+    layout: columns
+
+  sample-pages/about-us:
+    type: separator
+    title: About Us
+    menu_icon: fa fa-fw fa-ra
+
+  sample-pages/our-team:
+    type: separator
+    title: Our Team
+    menu_icon: fa fa-fw fa-users
+
+  sample-pages/pricing:
+    type: separator
+    title: Pricing
+    menu_icon: fa fa-fw fa-usd
+
+  sample-pages/faq:
+    type: separator
+    title: FAQ
+    menu_icon: fa fa-fw fa-book
+
+  sample-pages/services:
+    type: separator
+    title: Services
+    menu_icon: fa fa-fw fa-taxi
+
+  sample-pages/blog:
+    type: separator
+    title: Blog
+    menu_icon: fa fa-fw fa-calendar-o
+
+  special:
+    type: separator
+    title: Special Pages
+    menu_icon: fa fa-fw fa-shield
+    layout: columns
+
+  special/title:
+    type: heading
+    title: Special Pages
+
+  special/error:
+    menu_icon: fa fa-fw fa-warning
+
+  special/unsupported:
+    menu_icon: fa fa-fw fa-wheelchair
+
+  special/offline:
+    menu_icon: fa fa-fw fa-power-off
+
+  special/comingsoon:
+    menu_icon: fa fa-fw fa-paint-brush
+
+  special/separator:
+    type: separator
+    title: Component Stuff
+
+  special/component:
+    menu_icon: fa fa-fw fa-file-text-o
+
+  special/raw:
+    menu_icon: fa fa-fw fa-file-code-o
+
+  admin:
+    type: separator
+    title: Admin
+    menu_icon: fa fa-fw fa-cogs
+
+  admin/about:
+    type: alias
+    menu_icon: fa fa-fw fa-question-circle
+    link: admin
+    title: Theme Admin
+
+  admin/configurations:
+    type: alias
+    menu_icon: fa fa-fw fa-star
+    link: admin/configurations
+    title: Configurations
+
+  admin/menu:
+    type: alias
+    menu_icon: fa fa-fw fa-wrench
+    link: admin/menu
+    title: Menu Manager
+
+  admin/themes:
+    type: alias
+    menu_icon: fa fa-fw fa-tint
+    link: ../
+    title: Back to Themes
+
+  admin/learn:
+    type: alias
+    menu_icon: fa fa-fw fa-book
+    link: ../learn
+    title: Documentation
+
+  admin/download:
+    type: alias
+    menu_icon: fa fa-fw fa-book
+    link: ../builds/gantry5
+    title: Download

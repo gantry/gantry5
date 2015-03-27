@@ -1,0 +1,68 @@
+// Basics
+$white:							#ffffff;
+$black:							#000000;
+$off-white:						#f7f7f7;
+
+// Base
+$base-background:				#ffffff !default;
+$base-text-color:				#666666 !default;
+$base-border-color:				#dddddd !default;
+
+// Accents
+$accent-color-1:				#439A86 !default;
+$accent-color-2:				#8F4DAE !default;
+
+// Header
+$header-background:				#439A86 !default;
+$header-text-color:				#ffffff !default;
+
+// Navigation
+$navigation-background:			#439a86 !default;
+$navigation-text-color:			#ffffff !default;
+
+// Showcase
+$showcase-background:			#354D59 !default;
+$showcase-text-color:			#ffffff !default;
+
+// Feature
+$feature-background:			#ffffff !default;
+$feature-text-color:			#666666 !default;
+
+// Subfeature
+$subfeature-background:			#f0f0f0 !default;
+$subfeature-text-color:			#666666 !default;
+
+// Main
+$main-background:				#ffffff !default;
+$main-text-color:				#666666 !default;
+
+// Footer
+$footer-background:				#ffffff !default;
+$footer-text-color:				#666666 !default;
+
+// Block Variations
+$box1-background:				#ffffff !default;
+$box2-background:				#e0e0e0 !default;
+
+// Mobile Menu Sidepanel
+$mobilemenu-background:			#354D59 !default;
+
+// System Messsages and Alerts
+$warning-color:					#c09853;
+$error-color:					#b94a48;
+$info-color:					#3a87ad;
+$success-color:					#468847;
+
+// Typography
+$rule-color:					#F0F2F4;
+$code-text:						#c7254e;
+$code-bg:						#f9f2f4;
+$pre-text:						#237794;
+$pre-bg:						#f6f6f6;
+
+// Borders
+$border-color-hover:			darken($base-border-color, 10%);
+$border-color-focus:			$accent-color-1;
+
+// Shadows
+$base-box-shadow: 				inset 0 1px 3px hsla(0, 0%, 0%, 0.06);

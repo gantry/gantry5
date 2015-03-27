@@ -1,0 +1,14 @@
+{% set updates = gantry.platform.updates %}
+{% if updates %}
+<div class="g-grid">
+    <div class="g-block">
+        <div class="update-header clearfix">
+            <span class="update-text">Updates Available: {{ updates|join(', ') }}</span>
+            <div class="update-tools">
+                <a href="{{ gantry.platform.update|e }}" class="button button-update"><i class="fa fa-refresh"></i> <span>Update</span></a>
+                <a href="#" class="fa fa-close" data-g-close=".g-grid"></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

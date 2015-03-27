@@ -1,0 +1,26 @@
+<li class="config-select-wrap">
+    {# TODO: we need to switch the selected attribute properly and update the active page based on the selected on, right now it's styles #}
+    <select id="configuration-selector" class="config-select" data-selectize-ajaxify data-selectize="{{ {allowEmptyOption: true}|json_encode|e('html_attr') }}">
+        {% set user_conf = gantry.configurations.user %}
+        {% for name, title in user_conf %}
+            <option value="{{ name|e }}"
+                    {% if name == configuration %}selected="selected"{% endif %}
+                    data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
+                {{ title|e }}
+            </option>
+        {% endfor %}
+
+        {% set system_conf = gantry.configurations.system %}
+        {% if system_conf.count %}
+        <optgroup label="System Pages">
+            {% for name, title in system_conf %}
+                <option value="{{ name|e }}"
+                        {% if name == configuration %}selected="selected"{% endif %}
+                        data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
+                    {{ title|e }}
+                </option>
+            {% endfor %}
+        </optgroup>
+        {% endif %}
+    </select>
+</li>

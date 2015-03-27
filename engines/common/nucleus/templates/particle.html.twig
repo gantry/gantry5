@@ -1,0 +1,15 @@
+{% set particle = gantry.config.getJoined('particles.' ~ segment.subtype, segment.attributes) %}
+
+{% set html %}
+    {% if ((segment.attributes.enabled is null or segment.attributes.enabled) and (particle.enabled is null or particle.enabled)) %}
+    {% include ['particles/' ~ segment.subtype ~ '.html.twig',
+    '@particles/' ~ segment.subtype ~ '.html.twig']
+    ignore missing with {gantry: gantry, particle: particle } %}
+    {% endif %}
+{% endset %}
+
+{% if html|trim %}
+<div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
+    {{ html }}
+</div>
+{% endif %}

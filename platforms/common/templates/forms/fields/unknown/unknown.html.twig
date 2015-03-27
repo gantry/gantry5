@@ -1,0 +1,5 @@
+{% if field.fields %}
+    {% include 'forms/fields/array/list.list.twig' %}
+{% else %}
+    {% include 'forms/fields/input/text.html.twig' %}
+{% endif %}

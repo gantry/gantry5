@@ -1,0 +1,7 @@
+{% set pagecontent = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
+
+{% if (segment.attributes.enabled is null or segment.attributes.enabled) and (pagecontent.enabled is null or pagecontent.enabled) %}
+<div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
+    {{ content }}
+</div>
+{% endif %}

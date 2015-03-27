@@ -1,0 +1,50 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+
+{% block content %}
+    <div id="g5-container" class="g-container">
+        <div class="inner-container">
+            <div class="g-grid">
+                <div class="g-block main-block">
+                    <section id="main">
+                        <div data-g5-content>
+                            {% block gantry %}
+                                <div class="g-content" data-g5-content>
+                                    <h1><i class="fa fa-fw fa-plug"></i> Available Themes</h1>
+                                    <div class="themes cards-wrapper g-grid fixed-blocks">
+                                        {% if themes|length %}
+                                        {% for id, theme in themes %}
+                                            <div class="theme card">
+                                                <div class="theme-id">
+                                                    {% if theme.details.icon %}<i class="fa fa-fw fa-{{ theme.details.icon|e }}"></i>{% endif %}
+                                                    {{ theme.title|e }}
+                                                </div>
+                                                <div class="theme-screenshot">
+                                                    <a href="{{ theme.admin_url|e }}">
+                                                        <img src="{{ url(theme.thumbnail)|default('http://www.placehold.it/206x150/f4f4f4')|e }}" />
+                                                    </a>
+                                                </div>
+                                                <div class="theme-name">
+                                                    {% if theme.preview_url %}
+                                                    <a class="button" href="{{ theme.preview_url|e }}">Preview</a>
+                                                    {% endif %}
+                                                    <a class="button button-primary" href="{{ theme.admin_url|e }}">Configure</a>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        {% else %}
+                                            <p>No themes installed.</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endblock %}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer_section %}
+{% endblock %}

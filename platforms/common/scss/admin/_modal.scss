@@ -1,0 +1,178 @@
+@import "toastr";
+
+.g5-dialog, .g5-dialog *, .g5-dialog *:before, .g5-dialog *:after {
+    @include box-sizing(border-box);
+}
+
+.g5-dialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 1111;
+}
+
+.g5-overlay {
+    @include animation(fadeIn 0.5s);
+    @include transform(translate3d(0, 0, 0));
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.4);
+    .g5-dialog.g5-closing & {
+        @include animation(fadeOut 0.5s);
+    }
+}
+
+.g5-content {
+    @include animation(fadeIn 0.5s);
+    background: $white;
+    .g5-dialog.g5-closing & {
+        @include animation(fadeOut 0.5s);
+    }
+}
+
+.g5-close:before {
+    font-family: Arial, sans-serif;
+    content: "\00D7";
+}
+
+.g5-dialog-loading-spinner {
+    @include animation(rotate 0.7s linear infinite);
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
+    position: fixed;
+    z-index: 1112;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 2em;
+    width: 2em;
+    background: white;
+}
+
+body.g5-dialog-open, html.g5-dialog-open {
+    overflow: hidden;
+}
+
+.g5-dialog.g5-dialog-theme-default {
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    &.g5-closing .g5-content {
+        @include animation(flyOut 0.5s);
+    }
+    .g5-content {
+        @include animation(flyIn 0.5s);
+    }
+    .g5-content {
+        border-radius: 5px;
+        background: #f0f0f0;
+        color: #444444;
+        padding: 1rem;
+        position: relative;
+        margin: 0 auto;
+        max-width: 100%;
+        width: 500px;
+        font-size: 1rem;
+        line-height: 1.5;
+        h1, h2, h3, h4, h5, h6, p, ul, li {
+            color: inherit;
+        }
+    }
+    .g5-close {
+        border-radius: 5px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        &:before {
+            border-radius: 3px;
+            position: absolute;
+            content: "\00D7";
+            font-size: 26px;
+            font-weight: normal;
+            line-height: 31px;
+            height: 30px;
+            width: 30px;
+            text-align: center;
+            top: 3px;
+            right: 3px;
+            color: #bbbbbb;
+            background: transparent;
+        }
+        &:hover:before, &:active:before {
+            color: #777777;
+            background: #e0e0e0;
+        }
+    }
+
+    .g-menuitem-path {
+        display: block;
+        color: $core-accent;
+    }
+
+    .g-modal-actions {
+        background: #eaeaea;
+        padding: 0.5em 1em;
+        margin: 0 -1em -1em;
+        border-top: 1px solid #e0e0e0;
+        border-radius: 0 0 5px 5px;
+        text-align: right;
+    }
+
+    form {
+        margin: 0;
+    }
+}
+
+.g5-dialog-loading-spinner.g5-dialog-theme-default {
+    box-shadow: 0 0 0 0.5em #f0f0f0, 0 0 1px 0.5em rgba(0, 0, 0, 0.3);
+    border-radius: 100%;
+    background: #f0f0f0;
+    border: 0.2em solid transparent;
+    border-top-color: #bbbbbb;
+    top: 1em;
+    bottom: auto;
+}
+
+#g5-container .g5-dialog {
+    .settings-block input:not(.settings-param-toggle), .settings-block textarea, .settings-block select, .settings-block .collection-list ul, .settings-block .colorpicker, .settings-block .selectize-input {
+        width: 250px;
+        @include breakpoint(small-mobile-range) {
+            width: 90% !important;
+        }
+    }
+    .input-group {
+        &.append, &.prepend {
+            input {
+                width: 209px;
+                @include breakpoint(small-mobile-range) {
+                    width: 90% !important;
+                }
+            }
+        }
+    }
+}
+
+// collections
+.g5-dialog.g5-modal-collection-editall .g5-content {
+    width: 90%;
+
+    .settings-block:not(:only-child) {
+        width: 48% !important;
+        margin: 10px 1% !important;
+    }
+
+    @include breakpoint(mobile-only) {
+        .settings-block {
+            width: 100% !important;
+        }
+    }
+}

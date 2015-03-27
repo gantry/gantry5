@@ -1,5 +1,8 @@
+"use strict";
 var prime   = require('prime'),
     Options = require('prime-util/prime/options'),
+    Bound    = require('prime-util/prime/bound'),
+    Emitter = require('prime/emitter'),
     guid    = require('mout/random/guid'),
     zen     = require('elements/zen'),
     $       = require('elements'),
@@ -11,81 +14,132 @@ var prime   = require('prime'),
 require('elements/traversal');
 
 var Base = new prime({
-    mixin: Options,
+    mixin: [Bound, Options],
+    inherits: Emitter,
     options: {
+        subtype: false,
         attributes: {}
     },
-    constructor: function(options){
+    constructor: function(options) {
         this.setOptions(options);
-        this.fresh      = !this.options.id;
-        this.id         = this.options.id || this.guid();
+        this.fresh = !this.options.id;
+        this.id = this.options.id || this.guid();
         this.attributes = this.options.attributes || {};
 
         this.block = zen('div').html(this.layout()).firstChild();
 
+        this.on('rendered', this.bound('onRendered'));
+
         return this;
     },
 
-    guid: function(){
+    guid: function() {
         return guid();
     },
 
-    getId: function(){
+    getId: function() {
         return this.id || (this.id = this.guid());
     },
 
-    getType: function(){
+    getType: function() {
         return this.options.type || '';
     },
 
-    getTitle: function(){
+    getSubType: function() {
+        return this.options.subtype || '';
+    },
+
+    getTitle: function() {
+        return this.options.title || 'Untitled';
+    },
+
+    setTitle: function(title) {
+        this.options.title = title || 'Untitled';
+        return this;
+    },
+
+    getKey: function() {
         return '';
     },
 
-    getAttribute: function(key){
+    getPageId: function() {
+        var root = $('[data-lm-root]');
+        if (!root) return 'data-root-not-found';
+
+        return root.data('lm-page');
+    },
+
+    getAttribute: function(key) {
         return get(this.attributes, key);
     },
 
-    getAttributes: function(){
+    getAttributes: function() {
         return this.attributes || {};
     },
 
-    setAttribute: function(key, value){
+    updateTitle: function() {
+        return this;
+    },
+
+    setAttribute: function(key, value) {
         set(this.attributes, key, value);
         return this;
     },
 
-    hasAttribute: function(key){
+    setAttributes: function(attributes) {
+        this.attributes = attributes;
+
+        return this;
+    },
+
+    hasAttribute: function(key) {
         return has(this.attributes, key);
     },
 
-    insert: function(target, location){
+    disable: function() {
+        this.block.attribute('title', 'This particle has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+        this.block.addClass('particle-disabled');
+    },
+
+    enable: function() {
+        this.block.attribute('title', null);
+        this.block.removeClass('particle-disabled');
+    },
+
+    insert: function(target, location) {
         this.block[location || 'after'](target);
         return this;
     },
 
-    adopt: function(element){
+    adopt: function(element) {
         element.insert(this.block);
         return this;
     },
 
-    isNew: function(fresh){
-        if (typeof fresh !== 'undefined') this.fresh = !!fresh;
+    isNew: function(fresh) {
+        if (typeof fresh !== 'undefined') {
+            this.fresh = !!fresh;
+        }
         return this.fresh;
     },
 
-    dropZone: function(){
-        var root = $('[data-lm-root]'),
-            mode = root.data('lm-root'),
-            type = this.getType();
-
-        if (mode == 'page' && type != 'section' && type != 'grid' && type != 'block') return '';
+    dropzone: function() {
         return 'data-lm-dropzone';
     },
 
-    layout: function(){},
+    addDropzone: function(){
+        this.block.data('lm-dropzone', true);
+    },
 
-    setLayout: function(layout){
+    removeDropzone: function(){
+        this.block.data('lm-dropzone', null);
+    },
+
+    layout: function() {},
+
+    onRendered: function(){},
+
+    setLayout: function(layout) {
         this.block = layout;
         return this;
     }

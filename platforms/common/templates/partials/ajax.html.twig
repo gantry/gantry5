@@ -1,0 +1,21 @@
+{% block content %}
+{% block gantry_content_wrapper %}
+    {% if navbar %}
+    <div data-g5-content-wrapper>
+        {% include "@gantry-admin/partials/navigation.html.twig" %}
+        <div class="g-grid">
+            <div class="g-block main-block">
+                <section id="g-main">
+                    <div class="g-content" data-g5-content>
+                        {% block gantry %}
+                        {% endblock %}
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    {% else %}
+        {{ block('gantry') }}
+    {% endif %}
+{% endblock %}
+{% endblock %}

@@ -1,12 +1,14 @@
 // Core
 $core-text:                     #666;
-$core-accent:                   #5D9CEC;
-$secondary-link:                #F8B450;
+$secondary-text:				#314C59;
+$core-accent:                   #439A86;
+$secondary-accent:              #729DAE;
+$tertiary-accent:              	#48B0D7;
 $white:                         #fff;
 $black:                         #000;
 $light-gray:                    #eee;
-$medium-gray:                   #ccd1d9;
-$dark-gray:                     #656d78;
+$medium-gray:                   #ddd;
+$dark-gray:                     #666;
 
 $blue-gray:                     #54606e;
 $aqua:                          #4fc1e9;
@@ -16,26 +18,29 @@ $orange:                        #fc6e51;
 $red:                           #ed5565;
 $lavender:                      #ac92ec;
 $pink:                          #ec87c0;
+$blue: 							#3288e6;
+
+// Buttons
+$button-bg:						#999999;
 
 // Body
-$body-bg:                       #e7e7e7;
+$body-bg:                       #354D59;
 
-// Sidebar
-$sidebar-bg:                    #f4f5f9;
-$sidebar-shadow:                inset -3px 0 0 -1px transparentize($black, 0.96);
-$sidebar-color:                 #a2a9bc;
-$sidebar-active:                #c3c9d5;
-$sidebar-active-color:          $white;
+// Headers
+$main-header-text:				$white;
+$inner-header-bg:				#253A47;
+$inner-header-text:				$core-accent;
+$update-header-bg:				#8F4DAE;
 
 // Main
-$main-bg:                       #fafafa;
-$main-border-sides:             #dfe0e4;
-$main-border-bottom:            #d0d1d5;
-$main-border:                   $main-bg $main-border-sides $main-border-bottom;
+$main-bg:                       #f0f0f0;
 
-$main-header-bg:                $white;
-$main-header-border:            #ddd;
+// NavBar
+$navbar-bg:                    	#DADADA;
+$navbar-border:					#C6C6C6;
+$navbar-color:                 	#666;
+$navbar-active:                	$main-bg;
+$navbar-active-color:          	$secondary-text;
 
-// Mode Indicator
-$production:                    #48cfad;//#bceb9e;//#85db81;
-$development:                   #f27a40;//#fbba79;//#ef5d5d;
+// Menu Editor
+$menu-editor-bg:				#b3b3b3;

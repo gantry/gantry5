@@ -1,0 +1,28 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+<form method="post" action="{{ gantry.route('menu', id) }}">
+    <div class="menu-header">
+        <span class="float-right">
+            <button type="submit" class="button button-primary button-save" data-save="Menu"><i class="fa fa-fw fa-check"></i> <span>Save Menu</span></button>
+        </span>
+        <h2 class="page-title">Menu Editor</h2>
+        <select placeholder="Select..." data-selectize-ajaxify data-selectize data-g5-ajaxify-target="[data-g5-content]" class="menu-select-wrap">
+            {% for menu_name in menus %}
+            <option value="{{ menu_name|e }}"
+                    {% if id == menu_name %}selected="selected"{% endif %}
+                    data-data="{{ {url: gantry.route('menu', menu_name)}|json_encode|e('html_attr') }}">
+                {{ menu_name|capitalize|e }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div id="menu-editor"
+         data-menu-ordering="{{ menu.ordering|json_encode|escape('html_attr') }}"
+         data-menu-items="{{ menu.items|json_encode|escape('html_attr') }}"
+         data-menu-settings="{{ menu.settings|json_encode|escape('html_attr') }}">
+        {% include 'menu/base.html.twig' with {'item': menu.root} %}
+    </div>
+</form>
+{% endblock %}

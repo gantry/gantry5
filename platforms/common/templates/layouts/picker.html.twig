@@ -1,0 +1,6 @@
+<h1>Layout Presets</h1>
+<ul>
+    {% for name,layout in presets.layouts %}
+        <li><a data-g5-lm-picker data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" data-g5-ajaxify-href="{{ gantry.route('configurations', 'FIXME', 'layout/create', name) }}">{{ layout.name|e }}</a></li>
+    {% endfor %}
+</ul>
