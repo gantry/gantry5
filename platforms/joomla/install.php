@@ -24,7 +24,7 @@ class Pkg_Gantry5InstallerScript
      * List of required PHP extensions.
      * @var array
      */
-    protected $extensions = array ('json', 'pcre');
+    protected $extensions = array ('fileinfo', 'pcre');
 
     public function install($parent)
     {
