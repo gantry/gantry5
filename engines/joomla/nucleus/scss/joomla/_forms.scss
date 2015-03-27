@@ -103,3 +103,14 @@ input, textarea, .uneditable-input {
 input.invalid {
 	border: 1px solid #9d261d;
 }
+
+// Module Editing
+#modules-form {
+	.btn-group {
+		font-size: inherit;
+	}
+	.radio.btn-group input[type=radio] {
+		display: inherit;
+		margin-left: inherit;
+	}
+}

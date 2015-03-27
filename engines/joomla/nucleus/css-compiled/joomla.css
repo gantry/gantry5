@@ -305,6 +305,12 @@ input, textarea, .uneditable-input {
 input.invalid {
   border: 1px solid #9d261d; }
 
+#modules-form .btn-group {
+  font-size: inherit; }
+#modules-form .radio.btn-group input[type=radio] {
+  display: inherit;
+  margin-left: inherit; }
+
 .nav-list > li.offset > a {
   padding-left: 30px;
   font-size: 12px; }
