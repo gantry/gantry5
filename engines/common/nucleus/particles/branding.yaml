@@ -17,7 +17,7 @@ form:
       default: 'Powered by <a href="http://www.gantry-framework.org/" title="Gantry Framework" class="g-powered-by">Gantry Framework</a>'
 
     css.class:
-      type: input.text
-      label: Class
+      type: input.selectize
+      label: CSS Classes
       description: CSS class name for the particle.
       default: branding

@@ -26,6 +26,6 @@ form:
       description: Input logo description text.
 
     class:
-      type: input.text
-      label: CSS Class
+      type: input.selectize
+      label: CSS Classes
       description: Set a specific CSS class for custom styling.

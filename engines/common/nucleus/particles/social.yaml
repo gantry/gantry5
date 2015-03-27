@@ -11,8 +11,8 @@ form:
       default: true
 
     css.class:
-      type: input.text
-      label: Class
+      type: input.selectize
+      label: CSS Classes
       description: CSS class name for the particle.
       default: social
 
