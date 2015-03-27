@@ -673,7 +673,7 @@ var Selectize = new prime({
 
             if (!this.Options.hasOwnProperty(value)) return;
             if (inputMode === 'single') this.clear();
-            if (inputMode === 'multi' && this.isFull()) return;
+            if (inputMode === 'multi' && (this.isFull() || !value)) return;
 
             var dummy = zen('div').html(this.render('item', this.Options[value]));
             $item = dummy.firstChild();
