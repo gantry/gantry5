@@ -20,7 +20,7 @@ The first thing you need to do is download the latest build of Gantry 5 and Hydr
 
 Once you have the latest packages, installation is simple. We have provided a step-by-step guide in the **Installation** portion of this documentation.
 
-* [Learn More](http://docs.gantry.org/gantry5/basics/installation)
+[**Learn More**](http://docs.gantry.org/gantry5/basics/installation)
 
 ## Accessing the Gantry Administrator
 
