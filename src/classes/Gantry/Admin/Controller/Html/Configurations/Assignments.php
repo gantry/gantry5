@@ -25,14 +25,12 @@ class Assignments extends HtmlController
     public function index()
     {
         $configuration = isset($this->params['configuration']) ? $this->params['configuration'] : null;
-        if ($configuration == 'default') {
-            $this->undefined();
+        if ($configuration !== 'default') {
+            $assignments = new AssignmentsObject($configuration);
+
+            $this->params['assignments'] = $assignments->get();
+            $this->params['pages'] = new Pages();
         }
-
-        $assignments = new AssignmentsObject($configuration);
-
-        $this->params['assignments'] = $assignments->get();
-        $this->params['pages'] = new Pages();
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/assignments/assignments.html.twig', $this->params);
     }
@@ -40,7 +38,7 @@ class Assignments extends HtmlController
     public function store()
     {
         $configuration = isset($this->params['configuration']) ? $this->params['configuration'] : null;
-        if ($configuration == 'default') {
+        if ($configuration === 'default') {
             $this->undefined();
         }
 
