@@ -43,14 +43,17 @@
 
     <xmlproperty file="${path.platforms}/joomla/${cfg.prefix}${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
     <tstamp>
-        <format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
+        <format property="str.datefmt" pattern="${cfg.datefmt}" />
     </tstamp>
-    <condition property="version.date" value="${str.datefmt}">
-        <istrue value="${cfg.adddate}" />
-    </condition>
+    <tstamp>
+        <format property="str.datexml" pattern="${cfg.date}" />
+    </tstamp>
+    <property name="version.date" value="${str.datexml}" />
+
     <condition property="str.version" value="_${cfg.versionprefix}${xml.version}">
         <istrue value="${cfg.addversion}" />
     </condition>
+    <property name="str.date" value="" />
     <condition property="str.date" value="_${str.datefmt}">
         <istrue value="${cfg.adddate}" />
     </condition>
