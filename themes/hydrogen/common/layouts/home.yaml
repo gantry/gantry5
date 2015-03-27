@@ -342,3 +342,18 @@ children:
                       css:
                         class: particle_gantry_branding
                     children: {  }
+  -
+    id: d05a3108-ac88-ce22-06c7-95ef865a6e3f
+    type: non-visible
+    subtype: false
+    title: Non-visible
+    attributes:
+      name: 'Non-Visible Section'
+    children:
+      -
+        id: fcf4a421-3373-4075-b1e9-10857ef17e30
+        type: grid
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children: {  }
