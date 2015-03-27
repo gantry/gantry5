@@ -1,6 +1,8 @@
 Gantry Framework
 ================
 
+[![Join the chat at https://gitter.im/gantry/gantry5](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gantry/gantry5?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Documentation for all the supported platforms can be found from [themes](themes/README.md) folder.
 
 Best place to get started is to take a look into Gantry Prime which is our primary theme development and testing environment.
