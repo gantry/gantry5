@@ -25,7 +25,6 @@ label {
 textarea, select[multiple=multiple] {
 	@include transition(border-color);
 	border-radius: $core-border-radius;
-	margin-bottom: $leading-margin / 2;
 	padding: ($leading-margin / 4) ($leading-margin / 4);
 
 	&:focus {
@@ -36,7 +35,6 @@ textarea, select[multiple=multiple] {
 #{$all-text-inputs} {
 	@include transition(border-color);
 	border-radius: $core-border-radius;
-	margin-bottom: $leading-margin / 2;
 	padding: ($leading-margin / 4) ($leading-margin / 4);
 }
 
