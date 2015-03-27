@@ -30,6 +30,7 @@ themes/*/magento/skin/default/common
 
 # Compiled
 **/.sass-cache
+**/*.map
 node_modules/*
 platforms/wordpress/gantryadmin/cache
 platforms/common/node_modules
