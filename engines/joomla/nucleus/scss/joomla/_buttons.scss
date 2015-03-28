@@ -75,6 +75,7 @@ fieldset.radio.btn-group {
 	white-space: normal;
 }
 
+// Button Resets
 .controls {
 	.input-append {
 		.btn {
@@ -93,4 +94,8 @@ fieldset.radio.btn-group {
 		margin: 6px 8px;
 		align: center;
 	}
+}
+
+.filters.btn-toolbar .btn-group, .filters.btn-toolbar {
+	font-size: inherit;
 }

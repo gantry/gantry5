@@ -216,6 +216,9 @@ fieldset.radio.btn-group {
     margin: 6px 8px;
     align: center; }
 
+.filters.btn-toolbar .btn-group, .filters.btn-toolbar {
+  font-size: inherit; }
+
 legend {
   margin-bottom: 1.5rem;
   font-size: 1.3rem;
