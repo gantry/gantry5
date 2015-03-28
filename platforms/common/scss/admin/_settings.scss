@@ -121,7 +121,7 @@
     }
 
     textarea {
-        width: 250px;
+        width: 100%;
         @include breakpoint(tablet-range) {
             width: 100%;
         }

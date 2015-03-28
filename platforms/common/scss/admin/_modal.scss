@@ -79,7 +79,7 @@ body.g5-dialog-open, html.g5-dialog-open {
         position: relative;
         margin: 0 auto;
         max-width: 100%;
-        width: 500px;
+        width: 600px;
         font-size: 1rem;
         line-height: 1.5;
         h1, h2, h3, h4, h5, h6, p, ul, li {
@@ -143,11 +143,14 @@ body.g5-dialog-open, html.g5-dialog-open {
 }
 
 #g5-container .g5-dialog {
-    .settings-block input:not(.settings-param-toggle), .settings-block textarea, .settings-block select, .settings-block .collection-list ul, .settings-block .colorpicker, .settings-block .selectize-input {
+    .settings-block input:not(.settings-param-toggle), .settings-block select, .settings-block .collection-list ul, .settings-block .colorpicker, .settings-block .selectize-input {
         width: 250px;
         @include breakpoint(small-mobile-range) {
             width: 90% !important;
         }
+    }
+    .settings-block textarea {
+        width: 90%;
     }
     .input-group {
         &.append, &.prepend {
