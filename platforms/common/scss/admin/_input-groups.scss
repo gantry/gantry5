@@ -7,7 +7,7 @@
         display: table;
         border-collapse: separate;
         @include breakpoint(mobile-only) {
-            width: 92%;
+            width: 90%;
         }
     }
 
