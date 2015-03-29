@@ -329,6 +329,11 @@ var Fonts = new prime({
 
     toggle: function(event, element) {
         element = $(element);
+        var target = $(event.target);
+
+        if (target.attribute('type') == 'checkbox') {
+            target.checked(!target.checked());
+        }
 
         this.select(element.parent('[data-font]') || element, element.parent('[data-font]') ? element.data('variant') : false, element);
 
