@@ -77,7 +77,7 @@ var Fonts = new prime({
         });
 
         if (container) {
-            container.empty().appendChild(this.buildLayout());
+            container.empty().attribute('style', null).appendChild(this.buildLayout());
             this.scroll(container.find('ul.g-fonts-list'));
             this.updateTotal();
             this.selectFromValue();
