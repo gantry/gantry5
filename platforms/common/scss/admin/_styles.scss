@@ -4,6 +4,7 @@
 		padding-bottom: $content-padding;
 		.g-block {
 			text-align: center;
+			margin: 0 1px;
 		}
 		@include breakpoint(mobile-only) {
 			.g-block {
@@ -15,7 +16,7 @@
 			padding: 4px;
 			max-width: 350px;
 			background: $white;
-			margin: 0 1px;
+			margin: 0 auto;
 			border-radius: $core-border-radius;
 			border: 1px solid $medium-gray;
 			position: relative;
