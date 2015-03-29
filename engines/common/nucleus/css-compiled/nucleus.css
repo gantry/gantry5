@@ -1130,7 +1130,6 @@ textarea, select[multiple=multiple] {
   -moz-transition: border-color;
   transition: border-color;
   border-radius: 0.1875rem;
-  margin-bottom: 0.75rem;
   padding: 0.375rem 0.375rem; }
   textarea:focus, select[multiple=multiple]:focus {
     outline: none; }
@@ -1140,7 +1139,6 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
   -moz-transition: border-color;
   transition: border-color;
   border-radius: 0.1875rem;
-  margin-bottom: 0.75rem;
   padding: 0.375rem 0.375rem; }
 
 input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus {
@@ -1183,13 +1181,13 @@ input[type="submit"] {
   clear: both; }
 
 .center {
-  text-align: center; }
+  text-align: center !important; }
 
 .align-right {
-  text-align: right; }
+  text-align: right !important; }
 
 .align-left {
-  text-align: left; }
+  text-align: left !important; }
 
 .full-height {
   min-height: 100vh; }
@@ -1203,5 +1201,28 @@ input[type="submit"] {
   padding: 0 !important; }
   .nopaddingall .content {
     padding: 0 !important; }
+
+.hidden {
+  display: none;
+  visibility: hidden; }
+
+.visible-phone {
+  display: none !important; }
+
+.visible-tablet {
+  display: none !important; }
+
+.hidden-desktop {
+  display: none !important; }
+
+.visible-desktop {
+  display: inherit !important; }
+
+@media print {
+  .visible-print {
+    display: inherit !important; }
+
+  .hidden-print {
+    display: none !important; } }
 
 /*# sourceMappingURL=nucleus.css.map */

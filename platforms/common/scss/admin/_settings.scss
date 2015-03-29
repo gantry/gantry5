@@ -121,13 +121,7 @@
     }
 
     textarea {
-        width: 250px;
-        @include breakpoint(tablet-range) {
-            width: 100%;
-        }
-        @include breakpoint(mobile-only) {
-            width: 92%;
-        }
+        width: 90%;
     }
 
     .input-group {
