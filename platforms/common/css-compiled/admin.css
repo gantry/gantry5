@@ -913,53 +913,54 @@ a {
 /* line 123, ../scss/admin/_settings.scss */
 #g5-container .settings-block textarea {
   width: 90%;
+  min-height: 150px;
 }
-/* line 129, ../scss/admin/_settings.scss */
+/* line 130, ../scss/admin/_settings.scss */
 #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
   width: 209px;
 }
 @media only all and (max-width: 59.938rem) {
-  /* line 129, ../scss/admin/_settings.scss */
+  /* line 130, ../scss/admin/_settings.scss */
   #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
     width: 100%;
   }
 }
-/* line 138, ../scss/admin/_settings.scss */
+/* line 139, ../scss/admin/_settings.scss */
 #g5-container .settings-block .selectize-control.single {
   width: 250px !important;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-  /* line 138, ../scss/admin/_settings.scss */
+  /* line 139, ../scss/admin/_settings.scss */
   #g5-container .settings-block .selectize-control.single {
     width: 100% !important;
   }
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 138, ../scss/admin/_settings.scss */
+  /* line 139, ../scss/admin/_settings.scss */
   #g5-container .settings-block .selectize-control.single {
     width: 92% !important;
   }
 }
-/* line 148, ../scss/admin/_settings.scss */
+/* line 149, ../scss/admin/_settings.scss */
 #g5-container .settings-block img {
   display: block;
 }
-/* line 156, ../scss/admin/_settings.scss */
+/* line 157, ../scss/admin/_settings.scss */
 #g5-container .g5-dialog .settings-block {
   width: 100%;
   margin: 0 0 15px;
 }
-/* line 161, ../scss/admin/_settings.scss */
+/* line 162, ../scss/admin/_settings.scss */
 #g5-container .g5-dialog .g-modal-body {
   overflow-x: hidden;
   overflow-y: scroll;
   max-height: 650px;
 }
-/* line 169, ../scss/admin/_settings.scss */
+/* line 170, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker {
   position: relative;
 }
-/* line 172, ../scss/admin/_settings.scss */
+/* line 173, ../scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker .settings-param-field-colorpicker-preview {
   position: absolute;
   top: 2px;
@@ -968,49 +969,49 @@ a {
   width: 1.5625em;
   border-radius: 3px;
 }
-/* line 184, ../scss/admin/_settings.scss */
+/* line 185, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul {
   margin: 5px 0;
 }
-/* line 188, ../scss/admin/_settings.scss */
+/* line 189, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul li {
   padding: 0.1rem 0;
 }
-/* line 192, ../scss/admin/_settings.scss */
+/* line 193, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul li:only-child .fa-reorder {
   display: none;
 }
-/* line 196, ../scss/admin/_settings.scss */
+/* line 197, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul li:only-child a {
   margin-left: 0;
 }
-/* line 204, ../scss/admin/_settings.scss */
+/* line 205, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-title-edit], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-remove] {
   color: #666;
   opacity: 1;
 }
-/* line 209, ../scss/admin/_settings.scss */
+/* line 210, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li[data-collection-item]:hover a {
   color: #439A86;
 }
-/* line 214, ../scss/admin/_settings.scss */
+/* line 215, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field [data-collection-item] a {
   color: #666;
   margin-left: 5px;
   vertical-align: middle;
 }
-/* line 220, ../scss/admin/_settings.scss */
+/* line 221, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field .button {
   background-color: #eee;
   color: #a2a2a2;
   padding: 6px 8px;
 }
-/* line 225, ../scss/admin/_settings.scss */
+/* line 226, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field .button:hover {
   background-color: #d4d4d4;
   color: #6e6e6e;
 }
-/* line 231, ../scss/admin/_settings.scss */
+/* line 232, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field [data-title-edit], #g5-container .collection-list .settings-param-field [data-collection-remove] {
   cursor: pointer;
   color: #cccccc;
@@ -1018,7 +1019,7 @@ a {
   margin-top: 0.4rem;
   opacity: 0;
 }
-/* line 240, ../scss/admin/_settings.scss */
+/* line 241, ../scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field .collection-reorder {
   cursor: row-resize;
   color: #999999;
