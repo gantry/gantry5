@@ -24,16 +24,16 @@
 
         <ul class="g-switch-conf-user{% if system_conf.count %} float-left{% endif %}">
             <li class="g-switch-title">User</li>
-            {% for current in user_conf %}
-                <li data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ current) }}" class="g-switch-configuration">{{ current|replace('_', ' ')|trim|capitalize|e }}</li>
+            {% for key,current in user_conf %}
+                <li data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ key) }}" class="g-switch-configuration">{{ current|replace('_', ' ')|trim|capitalize|e }}</li>
             {% endfor %}
         </ul>
 
         {% if system_conf.count %}
             <ul class="g-switch-conf-systems float-right">
                 <li class="g-switch-title">System</li>
-                {% for current in system_conf %}
-                    <li data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ current) }}" class="g-switch-configuration">{{ current|replace('_', ' ')|trim|capitalize|e }}</li>
+                {% for key,current in system_conf %}
+                    <li data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ key) }}" class="g-switch-configuration">{{ current|replace('_', ' ')|trim|capitalize|e }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
