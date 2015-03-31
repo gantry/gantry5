@@ -645,10 +645,12 @@ a {
   overflow-x: hidden;
   overflow-y: scroll;
   max-height: 650px; }
-@media only all and (max-width: 59.938rem) {
-  #g5-container .g5-dialog .settings-param {
-    padding: 2px 5px;
-    border: 0; } }
+#g5-container .g5-dialog .settings-param {
+  padding: 5px; }
+  @media only all and (max-width: 59.938rem) {
+    #g5-container .g5-dialog .settings-param {
+      padding: 2px 5px;
+      border: 0; } }
 #g5-container .settings-param-field-colorpicker {
   position: relative; }
   #g5-container .settings-param-field-colorpicker .settings-param-field-colorpicker-preview {

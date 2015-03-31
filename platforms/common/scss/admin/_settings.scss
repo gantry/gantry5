@@ -166,6 +166,7 @@
     }
 
     .settings-param {
+        padding: 5px;
         @include breakpoint(no-desktop) {
             padding: 2px 5px;
             border: 0;
