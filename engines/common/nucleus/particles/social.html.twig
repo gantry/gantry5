@@ -3,7 +3,7 @@
 {% block particle %}
     <div class="g-social">
         {% for item in particle.items %}
-            <a target="{{ particle.target }}" href="{{ item.link }}" title="{{ item.text }}">
+            <a target="{{ particle.target }}" href="{{ item.link|e }}" title="{{ item.text }}">
                 <span class="{{ item.icon }}"></span>
                 <span class="g-social-text">{{ item.text }}</span>
             </a>
