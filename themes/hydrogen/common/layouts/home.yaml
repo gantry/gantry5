@@ -5,7 +5,14 @@ children:
     subtype: false
     title: Header
     attributes: {  }
-    children: {  }
+    children:
+      -
+        id: a4efbce3-8ed0-aa1d-c694-033ba3b4142b
+        type: container
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children: {  }
   -
     id: fe0bd642-d6b5-5585-6714-ffbfaabd8092
     type: section
