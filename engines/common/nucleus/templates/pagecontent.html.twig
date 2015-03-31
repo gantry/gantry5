@@ -1,7 +1,14 @@
 {% set pagecontent = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
 
-{% if (segment.attributes.enabled is null or segment.attributes.enabled) and (pagecontent.enabled is null or pagecontent.enabled) %}
-<div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
-    {{ content }}
-</div>
+{% set html %}
+    {% if (segment.attributes.enabled is null or segment.attributes.enabled) and (pagecontent.enabled is null or pagecontent.enabled) %}
+        {{ content }}
+    {% endif %}
+{% endset %}
+
+{% if html|trim %}
+    {% do gantry.theme.joomla(true) %}
+    <div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
+        {{ html }}
+    </div>
 {% endif %}

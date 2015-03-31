@@ -1,16 +1,4 @@
-{% extends "@nucleus/page_head.html.twig" %}
-
-{% block head_title -%}
-{%- endblock %}
+{% extends "partials/page_head.html.twig" %}
 
 {% block head_application -%}
-{%- endblock %}
-
-{% block head_platform -%}
-    <link rel="stylesheet" href="{{ url('gantry-assets://css/bootstrap-gantry.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/joomla.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ url('media/jui/css/icomoon.css') }}" type="text/css" />
-    {% if debug %}
-    <link rel="stylesheet" href="{{ url('media/cms/css/debug.css') }}" type="text/css" />
-    {% endif %}
 {%- endblock %}
