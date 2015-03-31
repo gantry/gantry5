@@ -1112,11 +1112,6 @@ fieldset {
   padding: 0.938rem;
   margin: 0 0 1.5rem 0; }
 
-input,
-label,
-select {
-  display: block; }
-
 label {
   margin-bottom: 0.375rem; }
   label.required:after {
