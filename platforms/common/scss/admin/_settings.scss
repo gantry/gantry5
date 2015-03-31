@@ -164,6 +164,13 @@
         overflow-y: scroll;
         max-height: 650px;
     }
+
+    .settings-param {
+        @include breakpoint(no-desktop) {
+            padding: 2px 5px;
+            border: 0;
+        }
+    }
 }
 
 // fields styles
