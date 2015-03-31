@@ -32,9 +32,11 @@ use RocketTheme\Toolbox\ArrayTraits\Export;
  * @property int $group
  * @property int $level
  */
-class Item implements \ArrayAccess, \Iterator
+class Item implements \ArrayAccess, \Iterator, \Serializable
 {
     use ArrayAccessWithGetters, Export;
+
+    const VERSION = 1;
 
     protected $items;
     protected $menu;
@@ -42,7 +44,7 @@ class Item implements \ArrayAccess, \Iterator
     protected $children = [];
     protected $url;
 
-    public function __construct($menu, $name, array $item = [])
+    public function __construct(AbstractMenu $menu, $name, array $item = [])
     {
         $this->menu = $menu;
 
@@ -67,6 +69,33 @@ class Item implements \ArrayAccess, \Iterator
         ];
     }
 
+    public function serialize()
+    {
+        // FIXME: need to create collection class to gather the sibling data.
+        return serialize([
+            'version' => static::VERSION,
+            'items' => $this->items,
+            'groups' => $this->groups,
+            'children' => $this->children,
+            'url' => $this->url
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        // FIXME: need to create collection class to gather the sibling data.
+        $data = unserialize($serialized);
+
+        if (!isset($data['version']) && $data['version'] === static::VERSION) {
+            throw new \UnexpectedValueException('Serialized data is not valid');
+        }
+
+        $this->items = $data['items'];
+        $this->groups =  $data['groups'];
+        $this->children = $data['children'];
+        $this->url = $data['url'];
+    }
+
     /**
      * @param  string|null|bool $url
      * @return string
@@ -80,11 +109,20 @@ class Item implements \ArrayAccess, \Iterator
     }
 
     /**
+     * @return AbstractMenu
+     * @deprecated Need to break relationship to the menu and use a collection instead.
+     */
+    protected function menu()
+    {
+        return $this->menu;
+    }
+
+    /**
      * @return Item
      */
     public function parent()
     {
-        return $this->menu[$this->items['parent_id']];
+        return $this->menu()[$this->items['parent_id']];
     }
 
     public function columnWidth($column)
@@ -102,7 +140,7 @@ class Item implements \ArrayAccess, \Iterator
             $list = [];
             foreach ($this->groups as $i => $group) {
                 foreach ($group as $path) {
-                    $list[$i][] = $this->menu[$path];
+                    $list[$i][] = $this->menu()[$path];
                 }
             }
             return $list;
@@ -196,7 +234,7 @@ class Item implements \ArrayAccess, \Iterator
         $children =& $this->children;
 
         if ($children) {
-            $menu = $this->menu;
+            $menu = $this->menu();
             $ordered = [];
             $this->groups[0] = [];
             foreach ($groups as $i => $ordering) {
@@ -251,7 +289,7 @@ class Item implements \ArrayAccess, \Iterator
      */
     public function current()
     {
-        return $this->menu[current($this->children)];
+        return $this->menu()[current($this->children)];
     }
 
     /**

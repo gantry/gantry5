@@ -154,11 +154,18 @@ class Menu extends AbstractMenu
         $levels = \JFactory::getUser()->getAuthorisedViewLevels();
         asort($levels);
 
-        $key = 'gantry_menu_items.' . json_encode($params) . '.' . json_encode($levels) . '.' . $this->base->id;
-        $cache = \JFactory::getCache('mod_menu', '');
-        $this->items = $cache->get($key);
+        // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
+        //$key = 'gantry_menu_items.' . json_encode($params) . '.' . json_encode($levels) . '.' . $this->base->id;
+        //$cache = \JFactory::getCache('mod_menu', '');
+        //try {
+        //    $this->items = $cache->get($key);
+        //} catch (\Exception $e) {
+        //    $this->items = false;
+        //}
 
-        if (!$this->items) {
+        $this->items = false;
+
+        if ($this->items === false) {
             $config = $this->config();
             $items   = isset($config['items']) ? $config['items'] : [];
 
@@ -262,7 +269,8 @@ class Menu extends AbstractMenu
 
             $this->sortAll();
 
-            $cache->store($this->items, $key);
+            // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
+            // $cache->store($this->items, $key);
         }
     }
 }
