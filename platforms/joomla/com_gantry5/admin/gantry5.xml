@@ -10,6 +10,12 @@
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
     <description>COM_GANTRY5_DESCRIPTION</description>
 
+    <files folder="site">
+        <filename>gantry5.php</filename>
+        <filename>router.php</filename>
+        <folder>views</folder>
+    </files>
+
     <administration>
         <files folder="admin">
             <filename>access.xml</filename>

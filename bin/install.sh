@@ -13,6 +13,7 @@ if [ -f $GIT_TARGET/configuration.php ]; then
         'platforms/joomla/lib_gantry5/gantry5.xml'
         'platforms/joomla/gantry5_media/gantry5_media.xml'
         # Component
+        'platforms/joomla/com_gantry5/site'
         'platforms/joomla/com_gantry5/admin'
         'platforms/common'
         # Library
@@ -36,6 +37,7 @@ if [ -f $GIT_TARGET/configuration.php ]; then
         'administrator/manifests/libraries/gantry5.xml'
         'administrator/manifests/files/gantry5_media.xml'
         # Component
+        'components/com_gantry5'
         'administrator/components/com_gantry5'
         'administrator/components/com_gantry5/common'
         # Library
