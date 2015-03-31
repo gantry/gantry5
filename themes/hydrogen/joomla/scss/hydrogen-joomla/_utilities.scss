@@ -29,6 +29,15 @@ a.muted:focus {
 .alert {
 	background-color: lighten($warning-color, 41%);
 	border-color: lighten($warning-color, 34%);
+
+	.alert-link, .alert-link:hover {
+		color: darken($warning-color, 10%);
+		font-weight: bold;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }
 
 .alert,
@@ -46,9 +55,18 @@ a.text-warning:focus {
 	color: $success-color;
 	background-color: lighten($success-color, 50%);
 	border-color: lighten($success-color, 42%);
+
+	.alert-link, .alert-link:hover {
+		color: darken($success-color, 10%);
+		font-weight: bold;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }
 
-.alert-success h4, 
+.alert-success h4,
 .text-success {
 	color: $success-color;
 }
@@ -63,10 +81,19 @@ a.text-success:focus {
 	color: $error-color;
 	background-color: lighten($error-color, 43%);
 	border-color: lighten($error-color, 37%);
+
+	.alert-link, .alert-link:hover {
+		color: darken($error-color, 10%);
+		font-weight: bold;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }
 
 .alert-danger h4,
-.alert-error h4, 
+.alert-error h4,
 .text-error {
 	color: $error-color;
 }
@@ -80,9 +107,18 @@ a.text-error:focus {
 	color: $info-color;
 	background-color: lighten($info-color, 47%);
 	border-color: lighten($info-color, 40%);
+
+	.alert-link, .alert-link:hover {
+		color: darken($info-color, 10%);
+		font-weight: bold;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }
 
-.alert-info h4, 
+.alert-info h4,
 .text-info {
 	color: $info-color;
 }
