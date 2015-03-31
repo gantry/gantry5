@@ -26,7 +26,7 @@ var adjustOnViewportChange = function() {
         topLevel     = $('.g-toplevel'),
         pageSurround = $('#g-page-surround'),
         mainNav      = pageSurround.search('.g-main-nav'),
-        mobileNav    = pageSurround.nextSibling('.g-mobile-nav');
+        mobileNav    = pageSurround.nextSiblings('.g-mobile-nav');
 
     if (window.innerWidth < MBP) {
         resetSelectedActive();
