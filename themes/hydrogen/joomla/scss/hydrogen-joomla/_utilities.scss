@@ -30,7 +30,7 @@ a.muted:focus {
 	background-color: lighten($warning-color, 41%);
 	border-color: lighten($warning-color, 34%);
 
-	.alert-link, .alert-link:hover {
+	a, a:hover, .alert-link, .alert-link:hover {
 		color: darken($warning-color, 10%);
 		font-weight: bold;
 
@@ -56,7 +56,7 @@ a.text-warning:focus {
 	background-color: lighten($success-color, 50%);
 	border-color: lighten($success-color, 42%);
 
-	.alert-link, .alert-link:hover {
+	a, a:hover, .alert-link, .alert-link:hover {
 		color: darken($success-color, 10%);
 		font-weight: bold;
 
@@ -82,7 +82,7 @@ a.text-success:focus {
 	background-color: lighten($error-color, 43%);
 	border-color: lighten($error-color, 37%);
 
-	.alert-link, .alert-link:hover {
+	a, a:hover, .alert-link, .alert-link:hover {
 		color: darken($error-color, 10%);
 		font-weight: bold;
 
@@ -108,7 +108,7 @@ a.text-error:focus {
 	background-color: lighten($info-color, 47%);
 	border-color: lighten($info-color, 40%);
 
-	.alert-link, .alert-link:hover {
+	a, a:hover, .alert-link, .alert-link:hover {
 		color: darken($info-color, 10%);
 		font-weight: bold;
 
