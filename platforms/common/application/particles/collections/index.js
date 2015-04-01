@@ -201,7 +201,7 @@ ready(function() {
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
-                        dataString.push(name + '=' + value);
+                        dataString.push(name + '=' + encodeURIComponent(value));
                     });
 
                     var titles = content.elements.content.search('[data-title-editable]'), key;
@@ -209,7 +209,7 @@ ready(function() {
                         titles.forEach(function(title) {
                             title = $(title);
                             key = title.data('collection-key') || 'title';
-                            dataString.push(key + '=' + title.data('title-editable'));
+                            dataString.push(key + '=' + encodeURIComponent(title.data('title-editable')));
                         });
                     }
 

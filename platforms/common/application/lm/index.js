@@ -359,12 +359,12 @@ ready(function() {
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
-                        dataString.push(name + '=' + value);
+                        dataString.push(name + '=' + encodeURIComponent(value));
                     });
 
                     var title = content.elements.content.find('[data-title-editable]');
                     if (title) {
-                        dataString.push('title=' + title.data('title-editable'));
+                        dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
