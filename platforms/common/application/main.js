@@ -79,7 +79,7 @@ ready(function() {
     // Save Tooltip
     body.delegate('mouseover', '.button-save', function(event, element){
         if (!element.lastSaved) { return true; }
-        element.addClass('g-tooltip').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
+        element.addClass('g-tooltip').addClass('g-tooltip-right').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
     });
 
     // Save

@@ -183,8 +183,9 @@ ready(function() {
         });
     });
 
-    // Grid same widths button (even-ize)
+    // Grid same widths button (evenize, equalize)
     body.delegate('click', '[data-lm-samewidth]', function(event, element) {
+        if (element.LMTooltip) { element.LMTooltip.remove(); }
         var clientRect = element[0].getBoundingClientRect();
         if (event.clientX < clientRect.width + clientRect.left) { return; }
 
@@ -197,6 +198,29 @@ ready(function() {
         });
 
         lmhistory.push(builder.serialize());
+    });
+
+    body.delegate('mouseover', '[data-lm-samewidth]', function(event, element) {
+        var clientRect = element[0].getBoundingClientRect(),
+            clientX = event.clientX || (event.touches && event.touches[0].clientX) || 0,
+            tooltips = {
+                equalize: clientX + 5 > clientRect.width + clientRect.left,
+                move: clientX - 5 < clientRect.left
+            };
+
+        if (!tooltips.equalize && !tooltips.move) { return; }
+
+        var msg = tooltips.equalize ? 'Equalize the width the blocks in this grid' : 'Sort or Move the Grid',
+            tooltip = zen('span.g-tooltip.g-tooltip-force[data-title="' + msg + '"]').top(element);
+
+        if (tooltips.equalize) { tooltip.addClass('g-tooltip-right'); }
+        tooltip.style({position: 'absolute', top: 26 }).style(tooltips.equalize ? 'right' : 'left', -30);
+
+        element.LMTooltip = tooltip;
+    });
+
+    body.delegate('mouseout', '[data-lm-samewidth]', function(event, element) {
+        if (element.LMTooltip) { element.LMTooltip.remove(); }
     });
 
     // Clear Layout

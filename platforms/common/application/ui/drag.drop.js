@@ -61,6 +61,7 @@ var DragDrop = new prime({
 
     start: function (event, element) {
         clearTimeout(this.scrollInterval);
+        if (element.LMTooltip) { element.LMTooltip.remove(); }
         $('html').attribute('style', 'height: 100% !important');
         this.scrollHeight = document.body.scrollHeight;
 
