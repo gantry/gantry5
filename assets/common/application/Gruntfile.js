@@ -8,7 +8,7 @@ module.exports = function(grunt) {
                 options: {
                     output: '../js/main.js',
                     sourcemap: '../js/main.js.map',
-                    sourcemapRoot: '../',
+                    sourcemapRoot: '../application/',
                     sourcemapURL: 'main.js.map',
                     compress: true
                 }

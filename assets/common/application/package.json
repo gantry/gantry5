@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "dependencies": {
     "domready": "^1.0.7",
-    "elements": "git+https://git@github.com/w00fz/elements.git"
+    "elements": "git+https://git@github.com/w00fz/elements.git",
+    "prime": "^0.4.2"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
