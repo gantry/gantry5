@@ -2,6 +2,6 @@
 
 {% block particle %}
     <div class="g-date">
-        <span>{{ "now"|date(particle.date.formats) }}</span>
+        <span>{{ "now"|date(particle.date.formats|default('l, F d, Y')) }}</span>
     </div>
 {% endblock %}
