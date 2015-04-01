@@ -606,9 +606,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     ul {
         @extend %list-reset;
         word-wrap: break-word;
-        &:not(.g-switch-presets) {
-            width: 50%;
-        }
+        width: 50%;
     }
 }
 
