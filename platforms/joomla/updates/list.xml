@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extensionset name="Gantry 5" description="Gantry 5 Updates">
+	<extension name="Gantry 5" description="Gantry 5 Framework" element="pkg_gantry5" type="package" client="site" version="5.0.0-beta.1" detailsurl="http://updates.gantry.org/5.0/joomla/pkg_gantry5.xml"/>
+    <extension name="Hydrogen" description="Hydrogen Template" element="g5_hydrogen" type="template" client="site" version="5.0.0-beta.1" detailsurl="http://updates.gantry.org/5.0/joomla/tpl_g5_hydrogen.xml"/>
+</extensionset>
