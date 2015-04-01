@@ -25,6 +25,7 @@ use Gantry\Framework\Base\Platform as BasePlatform;
 class Platform extends BasePlatform
 {
     protected $name = 'joomla';
+    protected $settings_key = 'return';
 
     public function getCachePath()
     {
@@ -76,6 +77,11 @@ class Platform extends BasePlatform
     public function settings()
     {
         return \JRoute::_('index.php?option=com_config&view=component&component=com_gantry5', false);
+    }
+
+    public function settings_key()
+    {
+        return $this->settings_key;
     }
 
     public function update()

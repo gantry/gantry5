@@ -19,6 +19,7 @@ preset1:
     navigation:
       background: '#439a86'
       text-color: '#ffffff'
+      overlay: 'rgba(0, 0, 0, 0.4)'
     showcase:
       background: '#354d59'
       text-color: '#ffffff'
@@ -56,6 +57,7 @@ preset2:
     navigation:
       background: '#3180C2'
       text-color: '#ffffff'
+      overlay: 'rgba(0, 0, 0, 0.4)'
     showcase:
       background: '#142D53'
       text-color: '#ffffff'
@@ -93,6 +95,7 @@ preset3:
     navigation:
       background: '#558B2F'
       text-color: '#ffffff'
+      overlay: 'rgba(0, 0, 0, 0.4)'
     showcase:
       background: '#344E2C'
       text-color: '#ffffff'
@@ -130,6 +133,7 @@ preset4:
     navigation:
       background: '#BF383A'
       text-color: '#ffffff'
+      overlay: 'rgba(0, 0, 0, 0.4)'
     showcase:
       background: '#722829'
       text-color: '#ffffff'

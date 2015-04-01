@@ -187,6 +187,7 @@ a {
     position: absolute;
     white-space: nowrap;
     z-index: 99;
+    font-size: $core-font-size - 0.2;
 }
 
 .g-tooltip:hover:before, .g-tooltip.g-tooltip-force:before {
