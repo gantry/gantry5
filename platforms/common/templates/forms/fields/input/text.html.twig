@@ -9,7 +9,7 @@
             {# global attribute structures #}
             {{ block('global_attributes') }}
             {# non-gloval attribute structures #}
-            {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete }}"{% endif %}
+            {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete|e }}"{% endif %}
             {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
             {% if field.dirname is defined %}dirname="{{ field.dirname|e }}"{% endif %}
             {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
