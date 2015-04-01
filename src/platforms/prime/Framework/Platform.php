@@ -17,6 +17,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class Platform extends BasePlatform
 {
     protected $name = 'prime';
+    protected $settings_key = '';
 
     public function __construct(Container $container)
     {
@@ -100,6 +101,11 @@ class Platform extends BasePlatform
     }
 
     public function settings()
+    {
+        return null;
+    }
+
+    public function settings_key()
     {
         return null;
     }

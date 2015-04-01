@@ -30,6 +30,7 @@ abstract class Platform
 {
     use NestedArrayAccess, Export;
 
+    protected $settings_key;
     protected $items;
     protected $container;
 
@@ -131,4 +132,5 @@ abstract class Platform
     }
 
     abstract public function settings();
+    abstract public function settings_key();
 }
