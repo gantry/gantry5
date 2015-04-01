@@ -1,8 +1,11 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
+{% set start_date = particle.date.start|trim in ['now', ''] ? 'now'|date('Y') : particle.date.start|e %}
+{% set end_date = particle.date.end|trim in ['now', ''] ? 'now'|date('Y') : particle.date.end|e %}
+
 {% block particle %}
 Copyright &copy;
-{% if (particle.date.start) %}{{ particle.date.start|e }} - {% endif %}
-{{ particle.date.end in ['now', ''] ? 'now'|date('Y') : particle.date.end|e }}
+{% if (start_date != end_date) %}{{ start_date|e }} - {% endif %}
+{{ end_date|e }}
 {{ particle.owner|e }}
 {% endblock %}
