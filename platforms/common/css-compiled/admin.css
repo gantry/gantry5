@@ -250,7 +250,8 @@ a {
   padding: .3rem 1rem;
   position: absolute;
   white-space: nowrap;
-  z-index: 99; }
+  z-index: 99;
+  font-size: 0.8rem; }
 
 .g-tooltip:hover:before, .g-tooltip.g-tooltip-force:before {
   border: solid;
