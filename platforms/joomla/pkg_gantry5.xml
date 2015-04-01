@@ -31,7 +31,7 @@
     </languages>
 
     <updateservers>
-        <server type="extension" priority="1" name="Gantry 5">http://updates.gantry-framework.org/5.0/joomla/pkg_gantry5.xml</server>
-        <server type="collection" priority="2" name="Gantry 5">http://updates.gantry-framework.org/5.0/joomla/list.xml</server>
+        <server type="extension" priority="1" name="Gantry 5">http://updates.gantry.org/5.0/joomla/pkg_gantry5.xml</server>
+        <server type="collection" priority="2" name="Gantry 5">http://updates.gantry.org/5.0/joomla/list.xml</server>
     </updateservers>
 </extension>
