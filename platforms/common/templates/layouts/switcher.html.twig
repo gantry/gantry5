@@ -10,7 +10,7 @@
     <div class="g-pane active">
         {% for name, group in presets %}
         <ul class="g-switch-presets{% if name == 'user' %} float-left{% else %} float-right{% endif %}">
-            <li class="g-switch-title">{{ name|capitalize|e }}</li>
+            <li class="g-switch-title">{{ name == 'user' ? 'User' : 'Platform' }}</li>
             {% for key, current in group %}
             <li data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/preset/' ~ key) }}" class="g-switch-preset">{{ current|e }}</li>
             {% endfor %}
