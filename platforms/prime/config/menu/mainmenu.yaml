@@ -13,45 +13,63 @@ ordering:
 
 items:
   home:
-    menu_icon: fa fa-fw fa-home
+    icon: fa fa-fw fa-home
+
+  features:
+    type: alias
+    link: features/typography
+    title: Features
+    icon: fa fa-fw fa-bolt
+    layout: columns
+
+  sample-pages:
+    title: Sample Pages
+    icon: fa fa-fw fa-fire
 
   admin:
     type: separator
     title: Admin
-    menu_icon: fa fa-fw fa-cogs
+    icon: fa fa-fw fa-cogs
+    target: _blank
 
   admin/about:
     type: alias
-    menu_icon: fa fa-fw fa-question-circle
     link: admin
     title: Theme Admin
+    icon: fa fa-fw fa-question-circle
+    target: _blank
 
   admin/configurations:
     type: alias
-    menu_icon: fa fa-fw fa-star
     link: admin/configurations
     title: Configurations
+    icon: fa fa-fw fa-star
+    target: _blank
 
   admin/menu:
     type: alias
-    menu_icon: fa fa-fw fa-wrench
     link: admin/menu
     title: Menu Manager
+    icon: fa fa-fw fa-wrench
+    target: _blank
 
   admin/themes:
     type: alias
-    menu_icon: fa fa-fw fa-tint
     link: ../
     title: Back to Themes
+    icon: fa fa-fw fa-tint
+    target: _blank
 
   admin/learn:
     type: alias
-    menu_icon: fa fa-fw fa-book
     link: ../learn
     title: Documentation
+    icon: fa fa-fw fa-tint
+    target: _blank
 
   admin/download:
     type: alias
-    menu_icon: fa fa-fw fa-book
     link: ../builds/gantry5
     title: Download
+    icon: fa fa-fw fa-book
+    target: _blank

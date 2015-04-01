@@ -167,19 +167,6 @@ class Menu extends AbstractMenu
                         $item->url('/' . trim(PRIME_URI . '/' . THEME . '/' . $item->link, '/'));
                     }
             }
-
-            switch ($item->browserNav)
-            {
-                default:
-                case 0:
-                    // Target window: Parent.
-                    $item->anchor_attributes = '';
-                    break;
-                case 1:
-                    // Target window: New with navigation.
-                    $item->anchor_attributes = ' target="_blank"';
-                    break;
-            }
         }
 
         $this->sortAll();

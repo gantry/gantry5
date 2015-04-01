@@ -191,9 +191,7 @@ class Menu extends AbstractMenu
                     'alias' => $menuItem->alias,
                     'title' => $menuItem->title,
                     'link' => $menuItem->link,
-                    'link_id' => $menuItem->params->get('aliasoptions', 0),
-                    'browserNav' => $menuItem->params->get('browserNav', 0),
-                    'menu_text' => $menuItem->params->get('menu_text', 1)
+                    'icon_only' => !$menuItem->params->get('menu_text', 1)
                 ];
 
                 $item = new Item($this, $menuItem->route, $itemParams);
@@ -217,7 +215,7 @@ class Menu extends AbstractMenu
 
                     case 'alias':
                         // If this is an alias use the item id stored in the parameters to make the link.
-                        $link = 'index.php?Itemid=' . $item->link_id;
+                        $link = 'index.php?Itemid=' . $menuItem->params->get('aliasoptions', 0);
                         break;
 
                     default:
@@ -249,20 +247,20 @@ class Menu extends AbstractMenu
                     $item->url(\JFilterOutput::ampReplace(htmlspecialchars($item->link)));
                 }
 
-                $item->anchor_css   = $menuItem->params->get('menu-anchor_css', '');
-                $item->anchor_title = $menuItem->params->get('menu-anchor_title', '');
-                $item->menu_image   = $menuItem->params->get('menu_image', '');
+                $item->text = $menuItem->params->get('menu-anchor_title', '');
+                $item->image = $menuItem->params->get('menu_image', '');
 
-                switch ($item->browserNav)
+                switch ($menuItem->params->get('browserNav', 0))
                 {
                     default:
                     case 0:
                         // Target window: Parent.
-                        $item->anchor_attributes = '';
+                        $item->target = '_self';
                         break;
                     case 1:
+                    case 2:
                         // Target window: New with navigation.
-                        $item->anchor_attributes = ' target="_blank"';
+                        $item->target = '_blank';
                         break;
                 }
             }

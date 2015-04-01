@@ -50,55 +50,55 @@ ordering:
 
 items:
   home:
-    menu_icon: fa fa-fw fa-home
+    icon: fa fa-fw fa-home
 
   features:
     type: separator
     title: Features
-    menu_icon: fa fa-fw fa-bolt
+    icon: fa fa-fw fa-bolt
     layout: columns
 
   sample-pages:
     type: alias
     link: /
     title: Sample Pages
-    menu_icon: fa fa-fw fa-fire
+    icon: fa fa-fw fa-fire
     layout: columns
 
   sample-pages/about-us:
     type: separator
     title: About Us
-    menu_icon: fa fa-fw fa-ra
+    icon: fa fa-fw fa-ra
 
   sample-pages/our-team:
     type: separator
     title: Our Team
-    menu_icon: fa fa-fw fa-users
+    icon: fa fa-fw fa-users
 
   sample-pages/pricing:
     type: separator
     title: Pricing
-    menu_icon: fa fa-fw fa-usd
+    icon: fa fa-fw fa-usd
 
   sample-pages/faq:
     type: separator
     title: FAQ
-    menu_icon: fa fa-fw fa-book
+    icon: fa fa-fw fa-book
 
   sample-pages/services:
     type: separator
     title: Services
-    menu_icon: fa fa-fw fa-taxi
+    icon: fa fa-fw fa-taxi
 
   sample-pages/blog:
     type: separator
     title: Blog
-    menu_icon: fa fa-fw fa-calendar-o
+    icon: fa fa-fw fa-calendar-o
 
   special:
     type: separator
     title: Special Pages
-    menu_icon: fa fa-fw fa-shield
+    icon: fa fa-fw fa-shield
     layout: columns
 
   special/title:
@@ -106,64 +106,70 @@ items:
     title: Special Pages
 
   special/error:
-    menu_icon: fa fa-fw fa-warning
+    icon: fa fa-fw fa-warning
 
   special/unsupported:
-    menu_icon: fa fa-fw fa-wheelchair
+    icon: fa fa-fw fa-wheelchair
 
   special/offline:
-    menu_icon: fa fa-fw fa-power-off
+    icon: fa fa-fw fa-power-off
 
   special/comingsoon:
-    menu_icon: fa fa-fw fa-paint-brush
+    icon: fa fa-fw fa-paint-brush
 
   special/separator:
     type: separator
     title: Component Stuff
 
   special/component:
-    menu_icon: fa fa-fw fa-file-text-o
+    icon: fa fa-fw fa-file-text-o
 
   special/raw:
-    menu_icon: fa fa-fw fa-file-code-o
+    icon: fa fa-fw fa-file-code-o
 
   admin:
     type: separator
     title: Admin
-    menu_icon: fa fa-fw fa-cogs
+    icon: fa fa-fw fa-cogs
 
   admin/about:
     type: alias
-    menu_icon: fa fa-fw fa-question-circle
+    icon: fa fa-fw fa-question-circle
     link: admin
     title: Theme Admin
+    target: _blank
 
   admin/configurations:
     type: alias
-    menu_icon: fa fa-fw fa-star
+    icon: fa fa-fw fa-star
     link: admin/configurations
     title: Configurations
+    target: _blank
 
   admin/menu:
     type: alias
-    menu_icon: fa fa-fw fa-wrench
+    icon: fa fa-fw fa-wrench
     link: admin/menu
     title: Menu Manager
+    target: _blank
 
   admin/themes:
     type: alias
-    menu_icon: fa fa-fw fa-tint
+    icon: fa fa-fw fa-tint
     link: ../
     title: Back to Themes
+    target: _blank
 
   admin/learn:
     type: alias
-    menu_icon: fa fa-fw fa-book
+    icon: fa fa-fw fa-book
     link: ../learn
     title: Documentation
+    target: _blank
 
   admin/download:
     type: alias
-    menu_icon: fa fa-fw fa-book
+    icon: fa fa-fw fa-book
     link: ../builds/gantry5
     title: Download
+    target: _blank

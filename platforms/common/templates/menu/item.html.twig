@@ -4,17 +4,12 @@
 {% set attributes = (item.children) ? ' data-g5-ajaxify="" data-g5-ajaxify-params="' ~ ('{"inline":1}'|escape('html_attr')) ~ '" ' ~ ajaxTarget ~ ' href="' ~ gantry.route('menu', id, item.path) ~ '"' : '' %}
 
 <{{ tag ~ attributes }} class="menu-item">
-    {% if item.menu_image %}
-        <img src="{{ item.menu_image|e }}" alt="{{ item.title|e }}" />
-        {% if item.menu_text %}
-            <span class="g-image-title">{{ item.title|e }}</span>
-        {% endif %}
-    {% elseif item.menu_icon %}
-        <i class="{{ item.menu_icon|e }}"></i>
-        {% if item.menu_text %}
-            {{ item.title|e }}
-        {% endif %}
-    {% else %}
+    {% if item.image %}
+        <img src="{{ item.image|e }}" />
+    {% elseif item.icon %}
+        <i class="{{ item.icon|e }}"></i>
+    {% endif %}
+    {% if not item.icon_only or not (item.image or item.icon) %}
         {{ item.title|e }}
     {% endif %}
     {% if (item.children) -%}

@@ -69,18 +69,13 @@ ordering:
 
 items:
   home:
-    menu_icon: fa fa-fw fa-home
+    icon: fa fa-fw fa-home
 
   features:
     type: alias
     link: features/typography
     title: Features
-    browserNav: 0
-    params:
-    anchor_css:
-    anchor_title:
-    menu_image:
-    menu_icon: fa fa-fw fa-bolt
+    icon: fa fa-fw fa-bolt
     layout: columns
 
   features/overview:
@@ -125,66 +120,62 @@ items:
   sample-pages:
     type: separator
     title: Sample Pages
-    menu_icon: fa fa-fw fa-fire
+    icon: fa fa-fw fa-fire
     columns: [25, 50, 25]
 
   sample-pages/about-us:
     type: separator
     title: About Us
-    menu_icon: fa fa-fw fa-ra
+    icon: fa fa-fw fa-ra
 
   sample-pages/our-team:
     type: separator
     title: Our Team
-    menu_icon: fa fa-fw fa-users
+    icon: fa fa-fw fa-users
 
   sample-pages/pricing:
     type: separator
     title: Pricing
-    menu_icon: fa fa-fw fa-usd
+    icon: fa fa-fw fa-usd
 
   sample-pages/faq:
     type: separator
     title: FAQ
-    menu_icon: fa fa-fw fa-book
+    icon: fa fa-fw fa-book
 
   sample-pages/services:
     type: separator
     title: Services
-    menu_icon: fa fa-fw fa-taxi
+    icon: fa fa-fw fa-taxi
 
   sample-pages/blog:
     type: separator
     title: Blog
-    menu_icon: fa fa-fw fa-calendar-o
+    icon: fa fa-fw fa-calendar-o
 
   special:
     type: alias
     link: special/error
     title: Special Pages
-    browserNav: 0
-    anchor_css:
-    anchor_title:
-    menu_image:
-    menu_icon: fa fa-fw fa-shield
+    icon: fa fa-fw fa-shield
 
   special/error:
-    menu_icon: fa fa-fw fa-warning
+    icon: fa fa-fw fa-warning
 
   special/unsupported:
-    menu_icon: fa fa-fw fa-wheelchair
+    icon: fa fa-fw fa-wheelchair
 
   special/offline:
-    menu_icon: fa fa-fw fa-power-off
+    icon: fa fa-fw fa-power-off
 
   special/comingsoon:
-    menu_icon: fa fa-fw fa-paint-brush
+    icon: fa fa-fw fa-paint-brush
 
   special/component:
-    menu_icon: fa fa-fw fa-file-text-o
+    icon: fa fa-fw fa-file-text-o
 
   special/raw:
-    menu_icon: fa fa-fw fa-file-code-o
+    icon: fa fa-fw fa-file-code-o
 
   styles:
   styles/preset-1:

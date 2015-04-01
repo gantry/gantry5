@@ -38,6 +38,14 @@ form:
           type: input.text
           label: Menu Title
 
+        .target:
+          type: select.selectize
+          label: Link Target
+          placeholder: 'Select...'
+          options:
+            _self: Current Window or Tab
+            _blank: New Window or Tab
+
         .dropdown:
           type: select.selectize
           label: Dropdown Style
@@ -46,27 +54,14 @@ form:
             standard: Standard
             fullwidth: Full Width
 
-        .browserNav:
-          type: select.selectize
-          label: Target Window
-          placeholder: 'Select...'
-          options:
-            0: Parent Window
-            1: New Window With Navigation
-            2: New Window Without Navigation
-
-        .anchor_css:
-          type: input.text
-          label: Link CSS Style
-
-        .anchor_title:
-          type: input.text
-          label: Link Hover Title
-
-        .menu_image:
-          type: input.text
-          label: Link Image
-
-        .menu_icon:
+        .icon:
           type: input.icon
-          label: Link Icon
+          label: Icon
+
+        .image:
+          type: input.imagepicker
+          label: Image
+
+        .text:
+          type: input.text
+          label: Subtext
