@@ -74,7 +74,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable
             'dropdown' => 'standard',
             'icon' => '',
             'image' => '',
-            'text' => '',
+            'subtitle' => '',
             'icon_only' => false,
             'visible' => true,
             'group' => 0,

@@ -247,7 +247,7 @@ class Menu extends AbstractMenu
                     $item->url(\JFilterOutput::ampReplace(htmlspecialchars($item->link)));
                 }
 
-                $item->text = $menuItem->params->get('menu-anchor_title', '');
+                $item->subtitle = $menuItem->params->get('menu-anchor_title', '');
                 $item->image = $menuItem->params->get('menu_image', '');
 
                 switch ($menuItem->params->get('browserNav', 0))
