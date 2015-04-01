@@ -11,6 +11,9 @@
 }
 
 .g-main-nav {
+	@include breakpoint(no-mobile) {
+		position: relative;
+	}
 	.g-toplevel {
 		font-weight: $font-weight-medium;
 		> li {
