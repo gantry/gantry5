@@ -41,7 +41,7 @@
                                     {% if (field.ajax == true) %}
                                         <li data-collection-item="{{ field.value|e }}">
                                             {% set itemValue = field.value == field.key ? key : val[field.value] %}
-                                            <i class="fa fa-reorder font-small collection-reorder"></i>
+                                            <i class="fa fa-reorder font-small item-reorder"></i>
                                             <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key)|e }}"><span data-title-editable="{{ itemValue|e }}" class="title">{{ itemValue|e }}</span></a>
                                             <i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>
                                             <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
@@ -80,7 +80,7 @@
                     <div>
                         <ul style="display: none">
                             <li data-collection-nosort data-collection-template="{{ field.value|e }}" style="display: none;">
-                                <i class="fa fa-reorder font-small collection-reorder"></i>
+                                <i class="fa fa-reorder font-small item-reorder"></i>
                                 <a class="config-cog" href="{{ gantry.route(field_route ~ '/%id%')|e }}"><span data-title-editable="New item" class="title">New item</span></a>
                                 <i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>
                                 <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>

@@ -4,10 +4,11 @@ var ready         = require('elements/domready'),
     $             = require('elements'),
     zen           = require('elements/zen'),
     has           = require('mout/object/has'),
+    some          = require('mout/array/some'),
     modal         = require('../../ui').modal,
     toastr        = require('../../ui').toastr,
     request       = require('agent'),
-    isArray       = require('mout/lang/isArray'),
+    indexOf       = require('mout/array/indexOf'),
     contains      = require('mout/array/contains'),
     lastItem      = require('mout/array/last'),
     simpleSort    = require('sortablejs'),
@@ -49,11 +50,11 @@ ready(function() {
         var item      = element.parent('[data-keyvalue-item]'),
             key       = item.find('input[type="text"]').data('keyvalue-key'),
             dataField = element.parent('.settings-param').find('[data-keyvalue-data]'),
+            items     = element.parent('ul').search('> [data-keyvalue-item]'),
+            index     = indexOf(items, item[0]),
             data      = JSON.parse(dataField.value());
 
-        if (isArray(data)) { data = {}; }
-
-        delete data[key];
+        data.splice(index, 1);
         dataField.value(escapeUnicode(JSON.stringify(data)));
         item.remove();
 
@@ -69,30 +70,33 @@ ready(function() {
             key        = keyElement.data('keyvalue-key'),
             keyValue   = trim(keyElement.value()),
             valValue   = trim(valElement.value()),
+            items     = element.parent('ul').search('> [data-keyvalue-item]:not(.g-keyvalue-warning):not(.g-keyvalue-excluded)'),
+            index     = indexOf(items, parent[0]),
 
             dataField  = element.parent('.settings-param').find('[data-keyvalue-data]'),
             data       = JSON.parse(dataField.value()),
             exclude    = JSON.parse(dataField.data('keyvalue-exclude')),
             excluded   = contains(exclude, keyValue),
-            duplicate  = has(data, keyValue) && key !== keyValue;
-
-        if (isArray(data)) { data = {}; }
+            duplicate  = some(data, function(obj) { return has(obj, keyValue); }) && key !== keyValue;
 
         if (keyElement == element) {
             // renamed or cleared key, need to cleanup JSON
             if (key !== keyValue && !duplicate) {
-                delete data[key];
+                data.splice(index, 1);
                 keyElement.data('keyvalue-key', keyValue || '');
             }
 
-            wrapper[duplicate ? 'addClass' : 'removeClass']('g-keyvalue-warning');
-            wrapper[excluded ? 'addClass' : 'removeClass']('g-keyvalue-excluded');
+            parent[duplicate ? 'addClass' : 'removeClass']('g-keyvalue-warning');
+            parent[excluded ? 'addClass' : 'removeClass']('g-keyvalue-excluded');
 
             wrapper[excluded || duplicate ? 'addClass' : 'removeClass']('g-tooltip');
             wrapper.data('title', duplicate ? 'The key "' + keyValue + '" is a duplicate' : (excluded ? 'The key "' + keyValue + '" has been excluded and cannot be used' : null));
         }
 
-        if (keyValue && !excluded && !duplicate) { data[keyValue] = valValue; }
+        if (keyValue && !excluded && !duplicate) {
+            if (!data[index]) { data.splice(index, 0, {}); }
+            data[index][keyValue] = valValue;
+        }
 
         dataField.value(escapeUnicode(JSON.stringify(data)));
         body.emit('change', { target: dataField });

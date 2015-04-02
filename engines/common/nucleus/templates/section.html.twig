@@ -4,8 +4,10 @@
 {% set tag_type = (attr_id in ['aside', 'footer', 'header', 'main']) ? attr_id : 'section' %}
 
 {% if segment.attributes.extra %}
-    {% for key, value in segment.attributes.extra %}
-    {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+    {% for attributes in segment.attributes.extra %}
+        {% for key, value in attributes %}
+        {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+        {% endfor %}
     {% endfor %}
 {% endif %}
 

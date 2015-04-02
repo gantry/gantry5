@@ -36,8 +36,8 @@ form:
       key_placeholder: Attribute (title, data-text, ...)
       value_placeholder: Value
       default:
-        style: 'display: none;'
-        data-set-test: 'hello world'
+        - style: 'display: none;'
+        - data-set-test: 'hello world'
 
     keyvalue-3:
       type: collection.keyvalue
@@ -46,8 +46,8 @@ form:
       value_placeholder: Value
       size: small
       default:
-        name: 'twitter:card'
-        content: 'The card type, which will be one of “summary”, “summary_large_image”, “photo”, “gallery”, “product”, “app”, or “player”.'
+        - name: 'twitter:card'
+        - content: 'The card type, which will be one of “summary”, “summary_large_image”, “photo”, “gallery”, “product”, “app”, or “player”.'
 
     sep1:
       type: separator.separator

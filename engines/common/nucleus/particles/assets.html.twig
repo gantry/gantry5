@@ -4,8 +4,10 @@
     {% for css in particle.css %}
         {% set attr_extra = '' %}
         {% if css.extra %}
-            {% for key, value in css.extra %}
-                {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+            {% for attributes in css.extra %}
+                {% for key, value in attributes %}
+                    {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+                {% endfor %}
             {% endfor %}
         {% endif %}
 
@@ -17,8 +19,10 @@
     {% for script in particle.javascript %}
         {% set attr_extra = '' %}
         {% if script.extra %}
-            {% for key, value in script.extra %}
-                {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+            {% for attributes in script.extra %}
+                {% for key, value in attributes %}
+                    {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+                {% endfor %}
             {% endfor %}
         {% endif %}
 

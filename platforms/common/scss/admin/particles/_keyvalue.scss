@@ -1,13 +1,8 @@
 #g5-container .settings-block .g-keyvalue-field {
     ul {
-        margin: 5px 0;
-        padding: 0;
-        list-style: none;
-
         li {
-            padding: 0.1rem 0;
-            position: relative;
-            
+            margin: 5px 0;
+
             .g-keyvalue-wrapper {
                 display: inline-block;
                 position: relative;
@@ -31,11 +26,11 @@
                 }
             }
 
-            .g-keyvalue-excluded {
+            &.g-keyvalue-excluded {
                 color: $red;
             }
 
-            .g-keyvalue-warning {
+            &.g-keyvalue-warning {
                 color: orange;
             }
         }
@@ -114,4 +109,5 @@
     .g-keyvalue-value {
         margin-left: 1em;
     }
+
 }
