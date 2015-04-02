@@ -1,4 +1,9 @@
-// MOdal
+// Box model Resets for Joomla / Bootstrap2
+.platform-content *, .platform-content *::before, .platform-content *::after {
+	@include box-sizing(content-box);
+}
+
+// Modal
 body.modal {
 	padding-top: 0;
 }
