@@ -13,11 +13,20 @@ class Document extends BaseDocument
         switch ($element['tag']) {
             case 'link':
                 if (!empty($element['href']) && !empty($element['rel']) && $element['rel'] == 'stylesheet') {
+                    $attrs = [];
                     $href = $element['href'];
-                    $type = !empty($element['type']) ? $element['type'] : 'text/css';
-                    $media = !empty($element['media']) ? $element['media'] : null;
-                    unset($element['tag'], $element['rel'], $element['content'], $element['href'], $element['type'], $element['media']);
-                    self::$styles[$href] = "<link rel=\"stylesheet\" href=\"{$href}\" type=\"{$type}\"" . ($media ? " media=\"{$media}\"" : '') . " />";
+                    unset($element['tag'], $element['href'], $element['rel'], $element['content']);
+
+                    foreach($element as $name => $value) {
+                        if (!$value) {
+                            if ($name == 'type') { $value = 'text/css'; }
+                            if ($name == 'media') { $value = null; }
+                        }
+
+                        $attrs[] = $name . '="' . $value . '"';
+                    }
+
+                    self::$styles[$href] = '<link rel="stylesheet" href="' . $href . '" ' . implode(" ", $attrs) . '" />';
                     return true;
                 }
                 break;
@@ -35,8 +44,15 @@ class Document extends BaseDocument
                 $location = $in_footer ? 'footer' : 'header';
                 if (!empty($element['src'])) {
                     $src = $element['src'];
-                    $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
-                    self::$scripts[$location][$src] = "<script type=\"{$type}\" src=\"{$src}\"></script>";
+                    unset($element['tag'], $element['src'], $element['content']);
+
+                    foreach($element as $name => $value) {
+                        if (!$value && $name == 'type') { $value = 'text/javascript'; }
+
+                        $attrs[] = $name . '="' . $value . '"';
+                    }
+
+                    self::$scripts[$location][$src] = '<script src="' . $src . '" ' . implode(" ", $attrs) .'></script>';
                     return true;
 
                 } elseif (!empty($element['content'])) {
