@@ -26,7 +26,7 @@ class Document extends BaseDocument
                         $attrs[] = $name . '="' . $value . '"';
                     }
 
-                    self::$styles[$href] = '<link rel="stylesheet" href="' . $href . '" ' . implode(" ", $attrs) . '" />';
+                    self::$styles[$href] = '<link rel="stylesheet" href="' . $href . '" ' . implode(" ", $attrs) . ' />';
                     return true;
                 }
                 break;
