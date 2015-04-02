@@ -3696,10 +3696,24 @@ body.g5-dialog-open, html.g5-dialog-open {
 #g5-container .settings-block .g-keyvalue-field ul li:hover [data-keyvalue-remove] {
   display: inline-block;
 }
+#g5-container .settings-block .g-keyvalue-field ul li .g-tooltip:after {
+  bottom: 2.25rem;
+}
+#g5-container .settings-block .g-keyvalue-field ul li .g-tooltip:before {
+  bottom: 1.90rem;
+  left: 0.8rem;
+}
+#g5-container .settings-block .g-keyvalue-field ul li .g-keyvalue-excluded {
+  color: #ed5565;
+}
+#g5-container .settings-block .g-keyvalue-field ul li .g-keyvalue-warning {
+  color: orange;
+}
 #g5-container .settings-block .g-keyvalue-field ul .g-keyvalue-sep {
   position: absolute;
   top: 50%;
   left: 50%;
+  color: #ddd;
   margin: -12px 0 0 -8px;
 }
 #g5-container .settings-block .g-keyvalue-field ul input {

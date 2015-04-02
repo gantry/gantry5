@@ -19,12 +19,32 @@
                     display: inline-block;
                 }
             }
+
+            .g-tooltip {
+                &:after {
+                    bottom: 2.25rem;
+                }
+
+                &:before {
+                    bottom: 1.90rem;
+                    left: 0.8rem;
+                }
+            }
+
+            .g-keyvalue-excluded {
+                color: $red;
+            }
+
+            .g-keyvalue-warning {
+                color: orange;
+            }
         }
 
         .g-keyvalue-sep {
             position: absolute;
             top: 50%;
             left: 50%;
+            color: $medium-gray;
             margin: -12px 0 0 -8px;
         }
 

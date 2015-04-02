@@ -5,11 +5,6 @@
         <ul>
         {% if value %}
         {% for key, val in value %}
-            {#<li>
-                <span class="g-keyvalue-key"><span data-title-editable="{{ key }}">{{ key }}</span> <i data-title-edit class="fa fa-fw fa-pencil font-small"></i></span>
-                <i class="fa fa-fw fa-arrow-circle-o-right"></i>
-                <span class="g-keyvalue-value"><span data-title-editable="{{ val }}">{{ val }}</span> <i data-title-edit class="fa fa-fw fa-pencil font-small"></i></span>
-            </li>#}
             <li data-keyvalue-item>
                 <div class="g-keyvalue-wrapper">
                     <input class="g-keyvalue-input-key" type="text" data-keyvalue-key="{{ key|e }}" value="{{ key|e }}" {% if field.key_placeholder is defined %}placeholder="{{ field.key_placeholder|e }}"{% endif %} />
@@ -34,5 +29,5 @@
             <i class="fa fa-fw fa-trash font-small" data-keyvalue-remove></i>
         </li>
     </ul>
-    <input type="hidden" data-keyvalue-data name="{{ (scope ~ name ~ '._json')|fieldName|e }}"  value="{{ value|default({})|json_encode(constant('JSON_UNESCAPED_SLASHES'))|e('html_attr') }}" />
+    <input type="hidden" data-keyvalue-data data-keyvalue-exclude="{{ field.exclude|default([])|json_encode|e('html_attr') }}" name="{{ (scope ~ name ~ '._json')|fieldName|e }}"  value="{{ value|default({})|json_encode(constant('JSON_UNESCAPED_SLASHES'))|e('html_attr') }}" />
 {% endblock %}
