@@ -23,6 +23,45 @@ require('elements/insertion');
 ready(function() {
     var body = $('body');
 
+    var createSortables = function(list) {
+        var lists = list || $('.g-keyvalue-field ul');
+        if (!lists) { return; }
+        lists.forEach(function(list) {
+            list = $(list);
+            list.SimpleSort = simpleSort.create(list[0], {
+                handle: '.fa-reorder',
+                filter: '[data-keyvalue-nosort]',
+                scroll: false,
+                animation: 150,
+                onStart: function() {
+                    $(this.el).addClass('keyvalue-sorting');
+                },
+                onEnd: function(evt) {
+                    var element = $(this.el);
+                    element.removeClass('keyvalue-sorting');
+
+                    if (evt.oldIndex === evt.newIndex) { return; }
+
+                    var dataField = element.parent('.settings-param').find('[data-keyvalue-data]'),
+                        data      = dataField.value();
+
+                    data = JSON.parse(data);
+
+                    data.splice(evt.newIndex, 0, data.splice(evt.oldIndex, 1)[0]);
+                    dataField.value(JSON.stringify(data));
+                    body.emit('change', { target: dataField });
+                }
+            });
+        });
+    };
+
+    createSortables();
+
+    // delegate sortables collections for ajax support
+    body.delegate('mouseover', '.g-keyvalue-field ul', function(event, element) {
+        if (!element.SimpleSort) { createSortables(element); }
+    });
+
     // Add new item
     body.delegate('click', '[data-keyvalue-addnew]', function(event, element) {
         var param = element.parent('.settings-param'),

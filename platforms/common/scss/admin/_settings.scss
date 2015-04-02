@@ -200,13 +200,14 @@
 }
 
 // collections
-.collection-list .settings-param-field {
+.collection-list .settings-param-field, .collection-keyvalue .settings-param-field .g-keyvalue-field {
     ul {
         @extend %list-reset;
         margin: 5px 0;
 
         li {
             padding: 0.1rem 0;
+            position: relative;
 
             &:only-child {
                 .fa-reorder {
@@ -220,6 +221,13 @@
         }
     }
 
+    .item-reorder {
+        cursor: row-resize;
+        color: lighten($dark-gray, 20%);
+    }
+}
+
+.collection-list .settings-param-field {
     ul:not(.collection-sorting) li {
         &:hover [data-title-edit], &:hover [data-collection-remove] {
             color: $dark-gray;
@@ -244,11 +252,6 @@
         margin-top: 0.4rem;
         opacity: 0;
         //@include transition(all 0.2s ease-in-out);
-    }
-
-    .collection-reorder {
-        cursor: row-resize;
-        color: lighten($dark-gray, 20%);
     }
 }
 

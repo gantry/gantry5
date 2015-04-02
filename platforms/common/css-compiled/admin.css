@@ -1,4 +1,4 @@
-#g5-container .collection-list .settings-param-field ul, #g5-container #page-picker ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, .g5-dialog #g5-container .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, .g5-popover-content #g5-container .g-tabs ul, .g5-popover-content .g-pane ul, .g5-lm-particles-picker ul, .g5-lm-particles-picker li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file] {
+#g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #page-picker ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, .g5-dialog #g5-container .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, .g5-popover-content #g5-container .g-tabs ul, .g5-popover-content .g-pane ul, .g5-lm-particles-picker ul, .g5-lm-particles-picker li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file] {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -865,17 +865,22 @@ a {
   width: 1.5625em;
   border-radius: 3px;
 }
-#g5-container .collection-list .settings-param-field ul {
+#g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul {
   margin: 5px 0;
 }
-#g5-container .collection-list .settings-param-field ul li {
+#g5-container .collection-list .settings-param-field ul li, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li {
   padding: 0.1rem 0;
+  position: relative;
 }
-#g5-container .collection-list .settings-param-field ul li:only-child .fa-reorder {
+#g5-container .collection-list .settings-param-field ul li:only-child .fa-reorder, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li:only-child .fa-reorder {
   display: none;
 }
-#g5-container .collection-list .settings-param-field ul li:only-child a {
+#g5-container .collection-list .settings-param-field ul li:only-child a, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li:only-child a {
   margin-left: 0;
+}
+#g5-container .collection-list .settings-param-field .item-reorder, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field .item-reorder {
+  cursor: row-resize;
+  color: #999999;
 }
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-title-edit], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-remove] {
   color: #666;
@@ -895,10 +900,6 @@ a {
   float: right;
   margin-top: 0.4rem;
   opacity: 0;
-}
-#g5-container .collection-list .settings-param-field .collection-reorder {
-  cursor: row-resize;
-  color: #999999;
 }
 
 #g5-container .swatches-block {
@@ -3679,14 +3680,8 @@ body.g5-dialog-open, html.g5-dialog-open {
   color: #888;
 }
 
-#g5-container .settings-block .g-keyvalue-field ul {
-  margin: 5px 0;
-  padding: 0;
-  list-style: none;
-}
 #g5-container .settings-block .g-keyvalue-field ul li {
-  padding: 0.1rem 0;
-  position: relative;
+  margin: 5px 0;
 }
 #g5-container .settings-block .g-keyvalue-field ul li .g-keyvalue-wrapper {
   display: inline-block;
@@ -3703,10 +3698,10 @@ body.g5-dialog-open, html.g5-dialog-open {
   bottom: 1.90rem;
   left: 0.8rem;
 }
-#g5-container .settings-block .g-keyvalue-field ul li .g-keyvalue-excluded {
+#g5-container .settings-block .g-keyvalue-field ul li.g-keyvalue-excluded {
   color: #ed5565;
 }
-#g5-container .settings-block .g-keyvalue-field ul li .g-keyvalue-warning {
+#g5-container .settings-block .g-keyvalue-field ul li.g-keyvalue-warning {
   color: orange;
 }
 #g5-container .settings-block .g-keyvalue-field ul .g-keyvalue-sep {
