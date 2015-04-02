@@ -576,7 +576,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         display: block;
     }
 
-    li {
+    li[data-switch] {
         padding: 0.4rem;
 
         i {
