@@ -41,6 +41,17 @@
         &:last-child {
             border-bottom: 0;
         }
+
+        .button.button-simple {
+            background-color: $light-gray;
+            color: darken($light-gray, 30%);
+            padding: 6px 8px;
+
+            &:hover {
+                background-color: darken($light-gray, 10%);
+                color: darken($light-gray, 50%);
+            }
+        }
     }
 
     input.settings-param-toggle {
@@ -224,17 +235,6 @@
         color: $core-text;
         margin-left: 5px;
         vertical-align: middle;
-    }
-
-    .button {
-        background-color: $light-gray;
-        color: darken($light-gray, 30%);
-        padding: 6px 8px;
-
-        &:hover {
-            background-color: darken($light-gray, 10%);
-            color: darken($light-gray, 50%);
-        }
     }
 
     [data-title-edit], [data-collection-remove] {
