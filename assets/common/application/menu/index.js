@@ -93,7 +93,7 @@ r(function() {
             if (dropdown) { dropdown.removeClass('g-active').addClass('g-inactive'); }
             if (toplevel) { toplevel.removeClass('g-slide-out'); }
         }
-     });
+    });
 
     // Go Back Link for Level 2+
     body.delegate('click', '.g-menu-item .g-go-back', function(e, el) {
