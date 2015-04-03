@@ -114,7 +114,7 @@ class Menu extends HtmlController
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $resource->name();
         $this->params['blueprints'] = $this->loadBlueprints();
-        $this->params['data'] = ['settings' => $resource->settings(), 'settings_key' => $resource->settings_key()];
+        $this->params['data'] = ['settings' => $resource->settings()];
 
         return $this->container['admin.theme']->render('@gantry-admin//pages/menu/edit.html.twig', $this->params);
     }
