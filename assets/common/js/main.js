@@ -36,7 +36,7 @@ var G5;
             }
         };
         var adjustOnViewportChange = function () {
-            var body = $('body'), topLevel = $('.g-toplevel'), pageSurround = $('#g-page-surround'), mainNav = pageSurround.search('.g-main-nav'), mobileNav = pageSurround.nextSibling('.g-mobile-nav');
+            var body = $('body'), topLevel = $('.g-toplevel'), pageSurround = $('#g-page-surround'), mainNav = pageSurround.search('.g-main-nav'), mobileNav = pageSurround.nextSiblings('.g-mobile-nav');
             if (window.innerWidth < MBP) {
                 resetSelectedActive();
                 if (mobileNav) {
@@ -286,7 +286,7 @@ var G5;
     '6': function (require, module, exports, global) {
         'use strict';
         var $ = require('5');
-        var trim = require('j'), forEach = require('b'), filter = require('f'), indexOf = require('k');
+        var trim = require('i'), forEach = require('b'), filter = require('f'), indexOf = require('j');
         $.implement({
             setAttribute: function (name, value) {
                 return this.forEach(function (node) {
@@ -458,7 +458,7 @@ var G5;
     },
     '7': function (require, module, exports, global) {
         'use strict';
-        var Emitter = require('i');
+        var Emitter = require('k');
         var $ = require('5');
         var html = document.documentElement;
         var addEventListener = html.addEventListener ? function (node, event, handle, useCapture) {
@@ -674,7 +674,7 @@ var G5;
         var $ = require('7');
         require('9');
         $.implement({
-            delegate: function (event, selector, handle) {
+            delegate: function (event, selector, handle, useCapture) {
                 return this.forEach(function (node) {
                     var self = $(node);
                     var delegation = self._delegation || (self._delegation = {}), events = delegation[event] || (delegation[event] = {}), map = events[selector] || (events[selector] = new Map());
@@ -688,17 +688,17 @@ var G5;
                         return res;
                     };
                     map.set(handle, action);
-                    self.on(event, action);
+                    self.on(event, action, useCapture);
                 });
             },
-            undelegate: function (event, selector, handle) {
+            undelegate: function (event, selector, handle, useCapture) {
                 return this.forEach(function (node) {
                     var self = $(node), delegation, events, map;
                     if (!(delegation = self._delegation) || !(events = delegation[event]) || !(map = events[selector]))
                         return;
                     var action = map.get(handle);
                     if (action) {
-                        self.off(event, action);
+                        self.off(event, action, useCapture);
                         map.remove(action);
                         if (!map.count())
                             delete events[selector];
@@ -1008,9 +1008,38 @@ var G5;
         module.exports = some;
     },
     'i': function (require, module, exports, global) {
+        var toString = require('s');
+        var WHITE_SPACES = require('t');
+        var ltrim = require('u');
+        var rtrim = require('v');
+        function trim(str, chars) {
+            str = toString(str);
+            chars = chars || WHITE_SPACES;
+            return ltrim(rtrim(str, chars), chars);
+        }
+        module.exports = trim;
+    },
+    'j': function (require, module, exports, global) {
+        function indexOf(arr, item, fromIndex) {
+            fromIndex = fromIndex || 0;
+            if (arr == null) {
+                return -1;
+            }
+            var len = arr.length, i = fromIndex < 0 ? len + fromIndex : fromIndex;
+            while (i < len) {
+                if (arr[i] === item) {
+                    return i;
+                }
+                i++;
+            }
+            return -1;
+        }
+        module.exports = indexOf;
+    },
+    'k': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('k'), forEach = require('b');
-        var prime = require('e'), defer = require('s');
+        var indexOf = require('j'), forEach = require('b');
+        var prime = require('e'), defer = require('w');
         var slice = Array.prototype.slice;
         var Emitter = prime({
                 on: function (event, fn) {
@@ -1055,42 +1084,13 @@ var G5;
         Emitter.EMIT_SYNC = {};
         module.exports = Emitter;
     },
-    'j': function (require, module, exports, global) {
-        var toString = require('t');
-        var WHITE_SPACES = require('u');
-        var ltrim = require('v');
-        var rtrim = require('w');
-        function trim(str, chars) {
-            str = toString(str);
-            chars = chars || WHITE_SPACES;
-            return ltrim(rtrim(str, chars), chars);
-        }
-        module.exports = trim;
-    },
-    'k': function (require, module, exports, global) {
-        function indexOf(arr, item, fromIndex) {
-            fromIndex = fromIndex || 0;
-            if (arr == null) {
-                return -1;
-            }
-            var len = arr.length, i = fromIndex < 0 ? len + fromIndex : fromIndex;
-            while (i < len) {
-                if (arr[i] === item) {
-                    return i;
-                }
-                i++;
-            }
-            return -1;
-        }
-        module.exports = indexOf;
-    },
     'l': function (require, module, exports, global) {
         'use strict';
         module.exports = 'document' in global ? require('x') : { parse: require('d') };
     },
     'm': function (require, module, exports, global) {
         'use strict';
-        var indexOf = require('k');
+        var indexOf = require('j');
         var prime = require('e');
         var Map = prime({
                 constructor: function Map() {
@@ -1260,8 +1260,89 @@ var G5;
         module.exports = kindOf;
     },
     's': function (require, module, exports, global) {
+        function toString(val) {
+            return val == null ? '' : val.toString();
+        }
+        module.exports = toString;
+    },
+    't': function (require, module, exports, global) {
+        module.exports = [
+            ' ',
+            '\n',
+            '\r',
+            '\t',
+            '\f',
+            '\x0B',
+            '\xa0',
+            '\u1680',
+            '\u180e',
+            '\u2000',
+            '\u2001',
+            '\u2002',
+            '\u2003',
+            '\u2004',
+            '\u2005',
+            '\u2006',
+            '\u2007',
+            '\u2008',
+            '\u2009',
+            '\u200a',
+            '\u2028',
+            '\u2029',
+            '\u202f',
+            '\u205f',
+            '\u3000'
+        ];
+    },
+    'u': function (require, module, exports, global) {
+        var toString = require('s');
+        var WHITE_SPACES = require('t');
+        function ltrim(str, chars) {
+            str = toString(str);
+            chars = chars || WHITE_SPACES;
+            var start = 0, len = str.length, charLen = chars.length, found = true, i, c;
+            while (found && start < len) {
+                found = false;
+                i = -1;
+                c = str.charAt(start);
+                while (++i < charLen) {
+                    if (c === chars[i]) {
+                        found = true;
+                        start++;
+                        break;
+                    }
+                }
+            }
+            return start >= len ? '' : str.substr(start, len);
+        }
+        module.exports = ltrim;
+    },
+    'v': function (require, module, exports, global) {
+        var toString = require('s');
+        var WHITE_SPACES = require('t');
+        function rtrim(str, chars) {
+            str = toString(str);
+            chars = chars || WHITE_SPACES;
+            var end = str.length - 1, charLen = chars.length, found = true, i, c;
+            while (found && end >= 0) {
+                found = false;
+                i = -1;
+                c = str.charAt(end);
+                while (++i < charLen) {
+                    if (c === chars[i]) {
+                        found = true;
+                        end--;
+                        break;
+                    }
+                }
+            }
+            return end >= 0 ? str.substring(0, end + 1) : '';
+        }
+        module.exports = rtrim;
+    },
+    'w': function (require, module, exports, global) {
         'use strict';
-        var kindOf = require('r'), now = require('12'), forEach = require('b'), indexOf = require('k');
+        var kindOf = require('r'), now = require('12'), forEach = require('b'), indexOf = require('j');
         var callbacks = {
                 timeout: {},
                 frame: [],
@@ -1339,87 +1420,6 @@ var G5;
             });
         };
         module.exports = defer;
-    },
-    't': function (require, module, exports, global) {
-        function toString(val) {
-            return val == null ? '' : val.toString();
-        }
-        module.exports = toString;
-    },
-    'u': function (require, module, exports, global) {
-        module.exports = [
-            ' ',
-            '\n',
-            '\r',
-            '\t',
-            '\f',
-            '\x0B',
-            '\xa0',
-            '\u1680',
-            '\u180e',
-            '\u2000',
-            '\u2001',
-            '\u2002',
-            '\u2003',
-            '\u2004',
-            '\u2005',
-            '\u2006',
-            '\u2007',
-            '\u2008',
-            '\u2009',
-            '\u200a',
-            '\u2028',
-            '\u2029',
-            '\u202f',
-            '\u205f',
-            '\u3000'
-        ];
-    },
-    'v': function (require, module, exports, global) {
-        var toString = require('t');
-        var WHITE_SPACES = require('u');
-        function ltrim(str, chars) {
-            str = toString(str);
-            chars = chars || WHITE_SPACES;
-            var start = 0, len = str.length, charLen = chars.length, found = true, i, c;
-            while (found && start < len) {
-                found = false;
-                i = -1;
-                c = str.charAt(start);
-                while (++i < charLen) {
-                    if (c === chars[i]) {
-                        found = true;
-                        start++;
-                        break;
-                    }
-                }
-            }
-            return start >= len ? '' : str.substr(start, len);
-        }
-        module.exports = ltrim;
-    },
-    'w': function (require, module, exports, global) {
-        var toString = require('t');
-        var WHITE_SPACES = require('u');
-        function rtrim(str, chars) {
-            str = toString(str);
-            chars = chars || WHITE_SPACES;
-            var end = str.length - 1, charLen = chars.length, found = true, i, c;
-            while (found && end >= 0) {
-                found = false;
-                i = -1;
-                c = str.charAt(end);
-                while (++i < charLen) {
-                    if (c === chars[i]) {
-                        found = true;
-                        end--;
-                        break;
-                    }
-                }
-            }
-            return end >= 0 ? str.substring(0, end + 1) : '';
-        }
-        module.exports = rtrim;
     },
     'x': function (require, module, exports, global) {
         'use strict';

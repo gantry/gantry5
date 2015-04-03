@@ -219,7 +219,8 @@ class Layout extends HtmlController
 
         $layout = $this->getLayout($id);
         if (!$layout->toArray()) {
-            throw new \RuntimeException('Layout not found', 404);
+            // Layout hasn't been defined, return default layout instead.
+            $layout = $this->getLayout('default');
         }
 
         return new JsonResponse(['data' => $layout->toArray()]);

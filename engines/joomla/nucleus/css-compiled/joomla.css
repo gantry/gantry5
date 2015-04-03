@@ -216,6 +216,9 @@ fieldset.radio.btn-group {
     margin: 6px 8px;
     align: center; }
 
+.filters.btn-toolbar .btn-group, .filters.btn-toolbar {
+  font-size: inherit; }
+
 legend {
   margin-bottom: 1.5rem;
   font-size: 1.3rem;
@@ -244,8 +247,7 @@ input[type="color"]:focus,
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6); }
 
 input, textarea, .uneditable-input {
-  width: 90%;
-  max-width: 250px; }
+  width: 90%; }
 
 .input-block-level {
   display: block;
@@ -305,6 +307,12 @@ input, textarea, .uneditable-input {
 input.invalid {
   border: 1px solid #9d261d; }
 
+#modules-form .btn-group {
+  font-size: inherit; }
+#modules-form .radio.btn-group input[type=radio] {
+  display: inherit;
+  margin-left: inherit; }
+
 .nav-list > li.offset > a {
   padding-left: 30px;
   font-size: 12px; }
@@ -336,6 +344,11 @@ input.invalid {
 
 .dropdown-menu {
   text-align: left; }
+
+.platform-content *, .platform-content *::before, .platform-content *::after {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box; }
 
 body.modal {
   padding-top: 0; }
@@ -431,7 +444,6 @@ th .tooltip-inner {
 
 #system-message {
   margin: 0 auto;
-  padding: 20px 0 0;
-  width: 50%; }
+  padding: 20px 0 0; }
 
 /*# sourceMappingURL=joomla.css.map */

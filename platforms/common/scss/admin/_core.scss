@@ -163,14 +163,19 @@ a {
 .g-tooltip {
     display: inline;
     position: relative;
+
+    &:before, &:after {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
 }
 
-.g-tooltip:hover {
+.g-tooltip:hover, .g-tooltip.g-tooltip-force {
     color: $core-accent;
     text-decoration: none;
 }
 
-.g-tooltip:hover:after {
+.g-tooltip:hover:after, .g-tooltip.g-tooltip-force:after {
     background: rgba(0,0,0,0.8);
     border-radius: $core-border-radius;
     bottom: 1.45rem;
@@ -182,9 +187,10 @@ a {
     position: absolute;
     white-space: nowrap;
     z-index: 99;
+    font-size: $core-font-size - 0.2;
 }
 
-.g-tooltip:hover:before {
+.g-tooltip:hover:before, .g-tooltip.g-tooltip-force:before {
     border: solid;
     border-color: rgba(0,0,0,0.8) transparent;
     border-width: .4rem .4rem 0 .4rem;
@@ -196,13 +202,30 @@ a {
     z-index: 100;
 }
 
+.g-tooltip.g-tooltip-right:hover:after, .g-tooltip.g-tooltip-right.g-tooltip-force:after {
+    left: inherit;
+    right: 0;
+}
+
+.g-tooltip.g-tooltip-right:hover:before, .g-tooltip.g-tooltip-right.g-tooltip-force:before {
+    left: inherit;
+    right: 1rem;
+}
+
 // Save tooltips
 .button-save.g-tooltip:hover:after {
     bottom: 3rem;
-    right: 0;
-    left: inherit;
 }
 
 .button-save.g-tooltip:hover:before {
     bottom: 2.6rem;
+}
+
+// Section actions tooltips
+.section-actions .g-tooltip:hover:before {
+    right: 7px;
+    bottom: 1.5rem;
+}
+.section-actions .g-tooltip:hover:after {
+    bottom: 1.9rem;
 }

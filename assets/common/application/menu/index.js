@@ -26,7 +26,7 @@ var adjustOnViewportChange = function() {
         topLevel     = $('.g-toplevel'),
         pageSurround = $('#g-page-surround'),
         mainNav      = pageSurround.search('.g-main-nav'),
-        mobileNav    = pageSurround.nextSibling('.g-mobile-nav');
+        mobileNav    = pageSurround.nextSiblings('.g-mobile-nav');
 
     if (window.innerWidth < MBP) {
         resetSelectedActive();
@@ -93,7 +93,7 @@ r(function() {
             if (dropdown) { dropdown.removeClass('g-active').addClass('g-inactive'); }
             if (toplevel) { toplevel.removeClass('g-slide-out'); }
         }
-     });
+    });
 
     // Go Back Link for Level 2+
     body.delegate('click', '.g-menu-item .g-go-back', function(e, el) {

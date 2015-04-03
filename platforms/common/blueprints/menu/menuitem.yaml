@@ -42,13 +42,13 @@ form:
           type: input.text
           label: Menu Title
 
-        .browserNav:
+        .target:
           type: select.selectize
           label: Link Target
           placeholder: 'Select...'
           options:
-            0: Current Page
-            1: New Page
+            _self: Current Window or Tab
+            _blank: New Window or Tab
 
         .dropdown:
           type: select.selectize
@@ -59,10 +59,10 @@ form:
             standard: Standard
             fullwidth: Full Width
 
-        .menu_icon:
+        .icon:
           type: input.icon
           label: Icon
 
-        .subtext:
-          type: input.text
-          label: Subtext
+#        .subtitle:
+#          type: input.text
+#          label: Subtitle

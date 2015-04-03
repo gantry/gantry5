@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "dependencies": {
     "domready": "^1.0.7",
-    "elements": "*"
+    "elements": "git+https://git@github.com/w00fz/elements.git"
   },
   "devDependencies": {
     "grunt": "~0.4.5",

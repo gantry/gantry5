@@ -33,7 +33,14 @@ class LayoutReader
     {
         // Check if we have pre-saved configuration.
         if (isset($data['children'])) {
-            return self::object($data['children']);
+            $result = self::object($data['children']);
+
+            $last = end($result);
+            if ($last->type !== 'non-visible') {
+                $result[] = self::parse('non-visible', [], 0);
+            }
+
+            return $result;
         }
 
         // We have user entered file; let's build the layout.

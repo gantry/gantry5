@@ -213,12 +213,12 @@ ready(function() {
                             value = input.value();
 
                         if (!name) { return; }
-                        dataString.push(name + '=' + value);
+                        dataString.push(name + '=' + encodeURIComponent(value));
                     });
 
                     var title = content.elements.content.find('[data-title-editable]');
                     if (title) {
-                        dataString.push((isRoot ? 'settings[title]' : 'title') + '=' + title.data('title-editable'));
+                        dataString.push((isRoot ? 'settings[title]' : 'title') + '=' + encodeURIComponent(title.data('title-editable')));
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response) {

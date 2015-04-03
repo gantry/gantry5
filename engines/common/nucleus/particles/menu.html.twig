@@ -1,31 +1,29 @@
 {% set menu = gantry.menu.instance(particle) %}
 
 {% macro displayTitle(item) %}
-    {% if item.menu_image %}
-        <img src="{{ item.menu_image }}" alt="{{ item.title }}" />
-        {% if item.menu_text %}
-            <span class="g-image-title">{{ item.title }}</span>
+    {% if item.image %}
+        <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
+    {% elseif item.icon %}
+        <i class="{{ item.icon|e }}"></i>
+    {% endif %}
+    {% if not item.icon_only or not (item.image or item.icon) %}
+        <span class="g-menu-item-title">{{ item.title|e }}</span>
+        {% if false and item.subtitle %}
+            <span class="g-menu-item-subtitle">{{ item.subtitle|e }}</span>
         {% endif %}
-    {% elseif item.menu_icon %}
-        <i class="{{ item.menu_icon|e }}"></i>
-        {% if item.menu_text %}
-            {{ item.title }}
-        {% endif %}
-    {% else %}
-        {{ item.title }}
     {% endif %}
 {% endmacro %}
 
 {% macro displayItem(item, menu) %}
     {% if item.visible %}
-        {% set title = item.anchor_title ? ' title="' ~ item.anchor_title|e ~ '"' %}
-        {% set class = item.anchor_css ? ' class="' ~ item.anchor_css|e ~ '"' %}
+        {% set title = item.icon_only ? ' title="' ~ item.title|e ~ '"' %}
         {% set active = menu.isActive(item) ? ' active' %}
         {% set dropdown = item.level == 1 ? ' g-' ~ item.dropdown|e %}
         {% set parent = item.children ? ' g-parent' %}
-        <li id="g-menu-item-{{ item.id }}" class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{{ parent }}{{ active }}{{ dropdown }}">
+        {% set target = item.target != '_self' ? ' target="' ~ item.target|e ~ '"' %}
+        <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{{ parent|raw }}{{ active|raw }}{{ dropdown|raw }}">
             {% if item.url %}
-                <a class="g-menu-item-content" href="{{ item.url }}"{{ class ~ title ~ item.anchor_attributes }}>
+                <a class="g-menu-item-content" href="{{ item.url|e }}"{{ title|raw ~ target|raw }}>
                     {{ _self.displayTitle(item) }}
                 </a>
                 {% if (item.children) -%}
@@ -33,9 +31,9 @@
                 {%- endif %}
             {% else %}
                 {% if item.type == 'heading' %}
-                    <span class="g-nav-header g-menu-item-content"{{ title }} data-g-menuparent="">{{ item.title }}
+                    <span class="g-nav-header g-menu-item-content"{{ title|raw }} data-g-menuparent="">{{ item.title|e }}
                 {% else %}
-                    <span class="g-separator g-menu-item-content"{{ title }} data-g-menuparent="">{{ _self.displayTitle(item) }}
+                    <span class="g-separator g-menu-item-content"{{ title|raw }} data-g-menuparent="">{{ _self.displayTitle(item) }}
                 {% endif %}
                     {% if (item.children) -%}
                         <span class="g-menu-parent-indicator"></span>
@@ -53,9 +51,9 @@
     <div class="g-grid">
         {% set groups = item.dropdown == 'standard' ? [item] : item.groups %}
         {% for column, items in groups %}
-        <div class="g-block {{ item.columnWidth(column)|toGrid }}">
+        <div class="g-block {{ item.columnWidth(column)|toGrid|e }}">
             <ul class="g-sublevel">
-                <li class="g-level-{{ item.level }} g-go-back">
+                <li class="g-level-{{ item.level|e }} g-go-back">
                     <a class="g-menu-item-content" href="#" data-g-menuparent=""><span>Back</span></a>
                 </li>
                 {{ _self.displayItems(items, menu) }}

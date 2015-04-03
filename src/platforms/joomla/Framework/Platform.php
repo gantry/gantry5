@@ -25,6 +25,7 @@ use Gantry\Framework\Base\Platform as BasePlatform;
 class Platform extends BasePlatform
 {
     protected $name = 'joomla';
+    protected $settings_key = 'return';
 
     public function getCachePath()
     {
@@ -78,6 +79,11 @@ class Platform extends BasePlatform
         return \JRoute::_('index.php?option=com_config&view=component&component=com_gantry5', false);
     }
 
+    public function settings_key()
+    {
+        return $this->settings_key;
+    }
+
     public function update()
     {
         return \JRoute::_('index.php?option=com_installer&view=update', false);
@@ -99,7 +105,7 @@ class Platform extends BasePlatform
         $query
             ->select('*')
             ->from('#__updates')
-            ->where("element='com_gantry5' OR extension_id IN ($extension_ids)");
+            ->where("element='pkg_gantry5' OR extension_id IN ($extension_ids)");
 
         $db->setQuery($query);
 
@@ -108,6 +114,10 @@ class Platform extends BasePlatform
         $list = [];
         foreach ($updates as $update)
         {
+            // Remove number from Gantry 5.
+            if ($update->element == 'pkg_gantry5') {
+                $update->name = preg_replace('|[\d\s]|', '', $update->name);
+            }
             $list[] = $update->name . ' ' . $update->version;
         }
 

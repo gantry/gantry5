@@ -41,6 +41,17 @@
         &:last-child {
             border-bottom: 0;
         }
+
+        .button.button-simple {
+            background-color: $light-gray;
+            color: darken($light-gray, 30%);
+            padding: 6px 8px;
+
+            &:hover {
+                background-color: darken($light-gray, 10%);
+                color: darken($light-gray, 50%);
+            }
+        }
     }
 
     input.settings-param-toggle {
@@ -121,13 +132,8 @@
     }
 
     textarea {
-        width: 250px;
-        @include breakpoint(tablet-range) {
-            width: 100%;
-        }
-        @include breakpoint(mobile-only) {
-            width: 92%;
-        }
+        width: 90%;
+        min-height: 150px;
     }
 
     .input-group {
@@ -169,6 +175,14 @@
         overflow-y: scroll;
         max-height: 650px;
     }
+
+    .settings-param {
+        padding: 5px;
+        @include breakpoint(no-desktop) {
+            padding: 2px 5px;
+            border: 0;
+        }
+    }
 }
 
 // fields styles
@@ -186,13 +200,14 @@
 }
 
 // collections
-.collection-list .settings-param-field {
+.collection-list .settings-param-field, .collection-keyvalue .settings-param-field .g-keyvalue-field {
     ul {
         @extend %list-reset;
         margin: 5px 0;
 
         li {
             padding: 0.1rem 0;
+            position: relative;
 
             &:only-child {
                 .fa-reorder {
@@ -206,6 +221,13 @@
         }
     }
 
+    .item-reorder {
+        cursor: row-resize;
+        color: lighten($dark-gray, 20%);
+    }
+}
+
+.collection-list .settings-param-field {
     ul:not(.collection-sorting) li {
         &:hover [data-title-edit], &:hover [data-collection-remove] {
             color: $dark-gray;
@@ -223,17 +245,6 @@
         vertical-align: middle;
     }
 
-    .button {
-        background-color: $light-gray;
-        color: darken($light-gray, 30%);
-        padding: 6px 8px;
-
-        &:hover {
-            background-color: darken($light-gray, 10%);
-            color: darken($light-gray, 50%);
-        }
-    }
-
     [data-title-edit], [data-collection-remove] {
         cursor: pointer;
         color: lighten($dark-gray, 40%);
@@ -241,11 +252,6 @@
         margin-top: 0.4rem;
         opacity: 0;
         //@include transition(all 0.2s ease-in-out);
-    }
-
-    .collection-reorder {
-        cursor: row-resize;
-        color: lighten($dark-gray, 20%);
     }
 }
 

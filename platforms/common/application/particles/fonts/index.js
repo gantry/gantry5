@@ -77,7 +77,7 @@ var Fonts = new prime({
         });
 
         if (container) {
-            container.empty().appendChild(this.buildLayout());
+            container.empty().attribute('style', null).appendChild(this.buildLayout());
             this.scroll(container.find('ul.g-fonts-list'));
             this.updateTotal();
             this.selectFromValue();
@@ -329,6 +329,11 @@ var Fonts = new prime({
 
     toggle: function(event, element) {
         element = $(element);
+        var target = $(event.target);
+
+        if (target.attribute('type') == 'checkbox') {
+            target.checked(!target.checked());
+        }
 
         this.select(element.parent('[data-font]') || element, element.parent('[data-font]') ? element.data('variant') : false, element);
 

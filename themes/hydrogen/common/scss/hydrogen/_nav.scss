@@ -11,6 +11,9 @@
 }
 
 .g-main-nav {
+	@include breakpoint(no-mobile) {
+		position: relative;
+	}
 	.g-toplevel {
 		font-weight: $font-weight-medium;
 		> li {
@@ -104,7 +107,7 @@
 
 // Nav Overlay
 .g-nav-overlay {
-	background: fadeout($black, 60%);
+	background: $navigation-overlay;
 }
 
 // Mobile Menu 

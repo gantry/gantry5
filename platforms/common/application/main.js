@@ -4,6 +4,7 @@ var $             = require('elements'),
     ui            = require('./ui'),
     interpolate   = require('mout/string/interpolate'),
     trim          = require('mout/string/trim'),
+    setParam      = require('mout/queryString/setParam'),
     modal         = ui.modal,
     toastr        = ui.toastr,
 
@@ -76,10 +77,24 @@ ready(function() {
         });
     });
 
+    // Platform Settings redirect
+    body.delegate('mousedown', '[data-settings-key]', function(event, element){
+        var key = element.data('settings-key');
+        if (!key) { return true; }
+
+        var redirect = window.location.search,
+            settings = element.attribute('href'),
+            uri = window.location.href.split('?');
+        if (uri.length > 1 && uri[0].match(/index.php$/)) { redirect = 'index.php' + redirect; }
+
+        redirect = setParam(settings, key, btoa(redirect));
+        element.href(redirect);
+    });
+
     // Save Tooltip
     body.delegate('mouseover', '.button-save', function(event, element){
         if (!element.lastSaved) { return true; }
-        element.addClass('g-tooltip').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
+        element.addClass('g-tooltip').addClass('g-tooltip-right').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
     });
 
     // Save

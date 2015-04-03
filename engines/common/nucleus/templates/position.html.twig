@@ -8,7 +8,10 @@
 {% endset %}
 
 {% if html|trim %}
-<div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
-    {{ html }}
-</div>
+    {% do gantry.theme.joomla(true) %}
+    <div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
+    	<div class="platform-content">
+        	{{ html }}
+        </div>
+    </div>
 {% endif %}

@@ -32,9 +32,11 @@ use RocketTheme\Toolbox\ArrayTraits\Export;
  * @property int $group
  * @property int $level
  */
-class Item implements \ArrayAccess, \Iterator
+class Item implements \ArrayAccess, \Iterator, \Serializable
 {
     use ArrayAccessWithGetters, Export;
+
+    const VERSION = 1;
 
     protected $items;
     protected $menu;
@@ -42,12 +44,22 @@ class Item implements \ArrayAccess, \Iterator
     protected $children = [];
     protected $url;
 
-    public function __construct($menu, $name, array $item = [])
+    public function __construct(AbstractMenu $menu, $name, array $item = [])
     {
         $this->menu = $menu;
 
         $parent = dirname($name);
         $alias = basename($name);
+
+        // TODO: Backwards compatibility with beta1, remove after betas..
+        if (isset($item['menu_icon'])) {
+            $item['icon'] = $item['menu_icon'];
+            unset($item['menu_icon']);
+        }
+        if (isset($item['menu_image'])) {
+            $item['image'] = $item['menu_image'];
+            unset($item['menu_image']);
+        }
 
         $this->items = $item + [
             'id' => preg_replace('|[^a-z0-9]|i', '-', $name) ?: 'root',
@@ -58,13 +70,44 @@ class Item implements \ArrayAccess, \Iterator
             'link' => $name,
             'parent_id' => $parent != '.' ? $parent : '',
             'layout' => 'list',
+            'target' => '_self',
             'dropdown' => 'standard',
-            'menu_text' => true,
+            'icon' => '',
+            'image' => '',
+            'subtitle' => '',
+            'icon_only' => false,
             'visible' => true,
             'group' => 0,
             'columns' => [],
             'level' => 0,
         ];
+    }
+
+    public function serialize()
+    {
+        // FIXME: need to create collection class to gather the sibling data.
+        return serialize([
+            'version' => static::VERSION,
+            'items' => $this->items,
+            'groups' => $this->groups,
+            'children' => $this->children,
+            'url' => $this->url
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        // FIXME: need to create collection class to gather the sibling data.
+        $data = unserialize($serialized);
+
+        if (!isset($data['version']) && $data['version'] === static::VERSION) {
+            throw new \UnexpectedValueException('Serialized data is not valid');
+        }
+
+        $this->items = $data['items'];
+        $this->groups =  $data['groups'];
+        $this->children = $data['children'];
+        $this->url = $data['url'];
     }
 
     /**
@@ -80,11 +123,20 @@ class Item implements \ArrayAccess, \Iterator
     }
 
     /**
+     * @return AbstractMenu
+     * @deprecated Need to break relationship to the menu and use a collection instead.
+     */
+    protected function menu()
+    {
+        return $this->menu;
+    }
+
+    /**
      * @return Item
      */
     public function parent()
     {
-        return $this->menu[$this->items['parent_id']];
+        return $this->menu()[$this->items['parent_id']];
     }
 
     public function columnWidth($column)
@@ -102,7 +154,7 @@ class Item implements \ArrayAccess, \Iterator
             $list = [];
             foreach ($this->groups as $i => $group) {
                 foreach ($group as $path) {
-                    $list[$i][] = $this->menu[$path];
+                    $list[$i][] = $this->menu()[$path];
                 }
             }
             return $list;
@@ -196,7 +248,7 @@ class Item implements \ArrayAccess, \Iterator
         $children =& $this->children;
 
         if ($children) {
-            $menu = $this->menu;
+            $menu = $this->menu();
             $ordered = [];
             $this->groups[0] = [];
             foreach ($groups as $i => $ordering) {
@@ -251,7 +303,7 @@ class Item implements \ArrayAccess, \Iterator
      */
     public function current()
     {
-        return $this->menu[current($this->children)];
+        return $this->menu()[current($this->children)];
     }
 
     /**

@@ -49,6 +49,7 @@ var Resizer = new prime({
     },
 
     start: function(event, element, siblings, offset) {
+        if (element.LMTooltip) { element.LMTooltip.remove(); }
         if (event.which && event.which !== 1) { return true; }
 
         // Stops text selection

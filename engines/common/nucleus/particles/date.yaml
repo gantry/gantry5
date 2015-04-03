@@ -25,7 +25,6 @@ form:
       selectize:
           allowEmptyOption: true
       options:
-          '': None
           'l, F d, Y': Date1
           'l, d F': Date2
           'D, d F': Date3

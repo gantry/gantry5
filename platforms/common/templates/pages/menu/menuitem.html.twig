@@ -11,7 +11,7 @@
             <span class="g-menuitem-path font-small">/{{ path }}</span>
         </h4>
         <div class="inner-params">
-            {% include 'forms/fields.html.twig' with {'skip': ['title'] } %}
+            {% include 'forms/fields.html.twig' with {'skip': ['enabled', 'title'] } %}
         </div>
     </div>
     <div class="g-modal-actions">

@@ -18,15 +18,15 @@
 
 // Alignment
 .center {
-	text-align: center;
+	text-align: center !important;
 }
 
 .align-right {
-	text-align: right;
+	text-align: right !important;
 }
 
 .align-left {
-	text-align: left;
+	text-align: left !important;
 }
 
 // Full Height Section
@@ -46,5 +46,36 @@
 	padding: 0 !important;
 	.content {
 		padding: 0 !important;
+	}
+}
+
+// Hidden Classes
+.hidden {
+	display: none;
+	visibility: hidden;
+}
+
+.visible-phone {
+  	display: none !important;
+}
+
+.visible-tablet {
+  	display: none !important;
+}
+
+.hidden-desktop {
+  	display: none !important;
+}
+
+.visible-desktop {
+  	display: inherit !important;
+}
+
+@media print {
+	.visible-print {
+	display: inherit !important;
+	}
+	.hidden-print {
+	display: none !important;
 	}
 }

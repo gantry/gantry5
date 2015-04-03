@@ -14,13 +14,12 @@
 
 namespace Gantry\Framework\Base;
 
-use Gantry\Component\Config\ConfigServiceProvider;
-use Gantry\Component\Configuration\ConfigurationCollection;
 use Gantry\Framework\Configurations;
 use Gantry\Framework\Platform;
+use Gantry\Framework\Services\ConfigServiceProvider;
+use Gantry\Framework\Services\StreamsServiceProvider;
 use Gantry\Framework\Translator;
 use RocketTheme\Toolbox\DI\Container;
-use Gantry\Component\Filesystem\StreamsServiceProvider;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Gantry extends Container

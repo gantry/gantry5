@@ -16,6 +16,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Theme extends BaseTheme
 {
+    protected $joomla;
+
     public function __construct($path, $name = '')
     {
         parent::__construct($path, $name);
@@ -50,12 +52,21 @@ class Theme extends BaseTheme
         $this->language = $doc->language;
         $this->direction = $doc->direction;
 
-        // Add JavaScript Frameworks
-        \JHtml::_('bootstrap.framework');
-        // Load optional RTL Bootstrap CSS
-        \JHtml::_('bootstrap.loadCss', false, $this->direction);
-
         return $twig->render($file, $context);
+    }
+
+    public function debug()
+    {
+        return JDEBUG;
+    }
+
+    public function joomla($enable = null)
+    {
+        if ($enable !== null) {
+            $this->joomla = (bool) $enable;
+        }
+
+        return (bool) $this->joomla;
     }
 
     public function widgets_init()

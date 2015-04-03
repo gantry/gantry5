@@ -74,7 +74,7 @@ ready(function() {
     body.delegate('click', '[data-collection-addnew]', function(event, element) {
         var param     = element.parent('.settings-param'),
             list      = param.find('ul'),
-            editall   = list.find('[data-collection-editall]'),
+            editall   = list.parent().find('[data-collection-editall]'),
             dataField = param.find('[data-collection-data]'),
             tmpl      = param.find('[data-collection-template]'),
             items     = list.search('> [data-collection-item]') || [],
@@ -85,7 +85,7 @@ ready(function() {
         if (last) { clone.after(last); }
         else { clone.top(list); }
 
-        if (!items.length && editall) { editall.style('display', 'inline-block'); }
+        if (items.length && editall) { editall.style('display', 'inline-block'); }
 
         title = clone.find('a');
         editable = title.find('[data-title-editable]');
@@ -136,7 +136,7 @@ ready(function() {
         data.splice(index, 1);
         dataField.value(JSON.stringify(data));
         item.remove();
-        if (items.length == 1) { list.find('[data-collection-editall]').style('display', 'none'); }
+        if (items.length) { list.parent().find('[data-collection-editall]').style('display', 'none'); }
         body.emit('change', { target: dataField });
     });
 
@@ -201,7 +201,7 @@ ready(function() {
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
-                        dataString.push(name + '=' + value);
+                        dataString.push(name + '=' + encodeURIComponent(value));
                     });
 
                     var titles = content.elements.content.search('[data-title-editable]'), key;
@@ -209,7 +209,7 @@ ready(function() {
                         titles.forEach(function(title) {
                             title = $(title);
                             key = title.data('collection-key') || 'title';
-                            dataString.push(key + '=' + title.data('title-editable'));
+                            dataString.push(key + '=' + encodeURIComponent(title.data('title-editable')));
                         });
                     }
 

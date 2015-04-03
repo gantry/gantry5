@@ -11,7 +11,7 @@
                     {# global attribute structures #}
                     {{ block('global_attributes') }}
                     {# non-gloval attribute structures #}
-                    {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete }}"{% endif %}
+                    {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete|e }}"{% endif %}
                     {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
                     {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
                     {% if field.list is defined %}list="{{ field.list|e }}"{% endif %}
@@ -19,7 +19,7 @@
             {% set picker = 'input[name="' ~ ((scope ~ name)|fieldName|e) ~ '"]' %}
              <span class="input-group-btn">
                 <button class="button" type="button" data-g5-iconpicker="{{ picker|e('html_attr') }}">
-                    <i class="{{ value|e('html_attr')|default('fa fa-hand-o-up picker') }}"></i>
+                    <i class="{{ value|default('fa fa-hand-o-up picker')|e('html_attr') }}"></i>
                 </button>
             </span>
         </div>

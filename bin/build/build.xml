@@ -152,6 +152,10 @@
     <target name="build-component" depends="build-installer">
         <echo message="Building Component..." />
 
+        <copy todir="${tmp_dir}/packages/com_gantry5/site" overwrite="true">
+            <fileset dir="${path.platforms}/joomla/com_gantry5/site"/>
+        </copy>
+
         <copy todir="${tmp_dir}/packages/com_gantry5/admin" overwrite="true">
             <fileset dir="${path.platforms}/common">
                 <exclude name=".sass-cache/"/>

@@ -72,7 +72,7 @@ class plgQuickiconGantry5 extends JPlugin
         } elseif (!empty($updates)) {
             // Has updates
             $quickicons[] = array(
-                'link' => JRoute::_('index.php?option=com_installer&view=update&filter_search=gantry5'),
+                'link' => JRoute::_('index.php?option=com_installer&view=update'),
                 'image' => 'download',
                 'text' => JText::_('PLG_QUICKICON_GANTRY5_UPDATE_NOW'),
                 'group' => 'MOD_QUICKICON_MAINTENANCE'
