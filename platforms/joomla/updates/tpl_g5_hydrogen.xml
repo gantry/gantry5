@@ -11,7 +11,7 @@
 			<downloadurl type="full" format="zip">http://updates.gantry.org/download/5.0.0-beta.2/joomla-tpl_g5_hydrogen_v5.0.0-beta.2.zip</downloadurl>
 		</downloads>
 		<tags>
-			<tag>dev</tag>
+			<tag>stable</tag>
 		</tags>
 		<maintainer>RocketTheme, LLC</maintainer>
 		<maintainerurl>http://gantry-framework.org</maintainerurl>
