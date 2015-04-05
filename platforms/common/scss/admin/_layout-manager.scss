@@ -620,7 +620,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     border-right: 1px solid darken($main-bg, 5);
 }
 
-.g5-lm-particles-picker {
+.g5-lm-particles-picker, .g5-mm-particles-picker {
     ul, li {
         @extend %list-reset;
     }
@@ -637,7 +637,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         border-radius: $core-border-radius;
         cursor: move;
 
-        &[data-lm-nodrag] {
+        &[data-lm-nodrag], &[data-mm-nodrag] {
             cursor: default;
         }
 
@@ -653,22 +653,22 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             margin-bottom: 0;
         }
 
-        &[data-lm-blocktype="spacer"] {
+        &[data-lm-blocktype="spacer"], &[data-mm-blocktype="spacer"] {
             background-color: $spacer;
             color: #666;
             border: 1px solid darken($medium-gray, 5);
         }
 
-        &.g5-lm-particle-spacer[data-lm-disabled] {
+        &.g5-lm-particle-spacer[data-lm-disabled], &.g5-mm-particle-spacer[data-mm-disabled] {
             color: #fff;
         }
 
-        &[data-lm-blocktype="position"] {
+        &[data-lm-blocktype="position"], &[data-mm-blocktype="position"] {
             color: #fff;
             background-color: $position;
         }
 
-        &[data-lm-blocktype="particle"] {
+        &[data-lm-blocktype="particle"], &[data-mm-blocktype="particle"] {
             color: #fff;
             background-color: $particle;
         }

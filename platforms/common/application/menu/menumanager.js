@@ -86,7 +86,7 @@ var MenuManager = new prime({
     },
 
     start: function(event, element) {
-        var root = element.parent('.menu-selector') || element.parent('.submenu-column') || element.parent('.submenu-selector'),
+        var root = element.parent('.menu-selector') || element.parent('.submenu-column') || element.parent('.submenu-selector') || element.parent('.g5-mm-particles-picker'),
             size = $(element).position();
 
         this.block = null;
@@ -108,7 +108,7 @@ var MenuManager = new prime({
         if (!this.placeholder) { this.placeholder = zen((this.type == 'column' ? 'div' : 'li') + '.block.placeholder[data-mm-placeholder]'); }
         this.placeholder.style({ display: 'none' });
         this.original = $(clone).after(element).style({
-            display: 'block',
+            display: 'inline-block',
             opacity: 1
         }).addClass('original-placeholder').data('lm-dropzone', null);
         this.originalType = type;

@@ -23,7 +23,7 @@ ready(function() {
     var body = $('body');
 
     menumanager = new MenuManager('body', {
-        delegate: '#menu-editor > section ul li, .submenu-column, .submenu-column li, .column-container .g-block',
+        delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li, .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
         exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
         resize_handles: '.submenu-column:not(:last-child)',

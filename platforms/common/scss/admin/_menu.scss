@@ -57,6 +57,16 @@ $submenu-ratio:                 60px;
     }
 
 }
+	
+.g5-mm-particles-picker {
+	li {
+		display: inline-block;
+
+		i {
+			opacity: 0.5;
+		}
+	}
+}
 
 .menu-selector-bar {
 	margin: $content-margin 0;
