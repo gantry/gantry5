@@ -29,27 +29,31 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class Menu extends HtmlController
 {
     protected $httpVerbs = [
-        'GET' => [
-            '/'             => 'item',
-            '/*'            => 'item',
-            '/*/**'         => 'item',
-            '/edit'         => 'undefined',
-            '/edit/*'       => 'edit',
-            '/edit/*/**'    => 'menuitem',
+        'GET'    => [
+            '/'                  => 'item',
+            '/*'                 => 'item',
+            '/*/**'              => 'item',
+            '/edit'              => 'undefined',
+            '/edit/*'            => 'edit',
+            '/edit/*/__module'   => 'menuitem_module',
+            '/edit/*/__particle' => 'menuitem_particle',
+            '/edit/*/**'         => 'menuitem',
         ],
-        'POST' => [
-            '/'             => 'save',
-            '/*'            => 'save',
-            '/*/**'         => 'item',
-            '/edit'         => 'undefined',
-            '/edit/*'       => 'edit',
-            '/edit/*/**'    => 'menuitem',
+        'POST'   => [
+            '/'                => 'save',
+            '/*'               => 'save',
+            '/*/**'            => 'item',
+            '/edit'            => 'undefined',
+            '/edit/*'          => 'edit',
+            '/edit/*/__module'   => 'menuitem_module',
+            '/edit/*/__particle' => 'menuitem_particle',
+            '/edit/*/**'       => 'menuitem',
             '/edit/*/validate' => 'validate',
         ],
-        'PUT' => [
+        'PUT'    => [
             '/*' => 'replace'
         ],
-        'PATCH' => [
+        'PATCH'  => [
             '/*' => 'update'
         ],
         'DELETE' => [
@@ -165,13 +169,23 @@ class Menu extends HtmlController
         $blueprints = $this->loadBlueprints('menuitem');
 
         $this->params = [
-                'id' => $resource->name(),
-                'path' => $path,
+                'id'         => $resource->name(),
+                'path'       => $path,
                 'blueprints' => ['fields' => $blueprints['form.fields.items.fields']],
-                'data' => $item->toArray() + ['path' => $path],
+                'data'       => $item->toArray() + ['path' => $path],
             ] + $this->params;
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/menu/menuitem.html.twig', $this->params);
+    }
+
+    public function menuitem_module($id)
+    {
+        return $this->container['admin.theme']->render('@gantry-admin/menu/module.html.twig');
+    }
+
+    public function menuitem_particle($id)
+    {
+        return $this->container['admin.theme']->render('@gantry-admin/menu/particle.html.twig');
     }
 
     public function validate($id)
@@ -255,6 +269,7 @@ class Menu extends HtmlController
      *
      * @param string $id
      * @param Config $config
+     *
      * @return MenuObject
      * @throws \RuntimeException
      */
@@ -270,6 +285,7 @@ class Menu extends HtmlController
      * Load blueprints.
      *
      * @param string $name
+     *
      * @return BlueprintsForm
      */
     protected function loadBlueprints($name = 'menu')
