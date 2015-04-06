@@ -2025,6 +2025,9 @@ a {
 #g5-container .g5-mm-particles-picker li i {
   opacity: 0.5;
 }
+#g5-container .g5-mm-particles-picker li .config-cog {
+  display: none;
+}
 #g5-container .menu-selector-bar {
   margin: 0.625rem 0;
   padding: 4px 28px 4px 4px;

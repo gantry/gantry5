@@ -48,7 +48,13 @@ ready(function() {
 
         if (this.type == 'particle' && this.isNewParticle) {
             modal.open({
-                content: '<h2>Once a new Module or Particle gets dropped in, this modal will open with a list of Modules / Particles to choose from and configure</h2>'
+                content: 'Loading',
+                method: 'post',
+                //data: data,
+                remote: $(this.block).find('.config-cog').attribute('href') + getAjaxSuffix(),
+                remoteLoaded: function(response, content) {
+                    console.log('loaded');
+                }
             });
         }
 
