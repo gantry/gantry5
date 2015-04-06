@@ -180,12 +180,39 @@ class Menu extends HtmlController
 
     public function menuitem_module($id)
     {
-        return $this->container['admin.theme']->render('@gantry-admin/menu/module.html.twig');
+        return $this->container['admin.theme']->render('@gantry-admin/menu/module.html.twig', $this->params);
     }
 
     public function menuitem_particle($id)
     {
-        return $this->container['admin.theme']->render('@gantry-admin/menu/particle.html.twig');
+        $groups = [
+            'Positions' => ['position' => [], 'spacer' => [], 'pagecontent' => []],
+            'Particles' => ['particle' => []],
+            'Atoms' => ['atom' => []]
+        ];
+
+        $particles = [
+            'position'    => [],
+            'spacer'      => [],
+            'pagecontent' => [],
+            'particle' => [],
+            'atom' => []
+        ];
+
+        $particles = array_replace($particles, $this->getParticles());
+
+        foreach ($particles as &$group) {
+            asort($group);
+        }
+
+        foreach ($groups as $section => $children) {
+            foreach ($children as $key => $child) {
+                $groups[$section][$key] = $particles[$key];
+            }
+        }
+
+        $this->params['particles'] = $groups;
+        return $this->container['admin.theme']->render('@gantry-admin/menu/particle.html.twig', $this->params);
     }
 
     public function validate($id)
@@ -335,5 +362,19 @@ class Menu extends HtmlController
         $data->set('items', $items);
 
         return $data;
+    }
+
+    protected function getParticles()
+    {
+        $particles = $this->container['particles']->all();
+
+        $list = [];
+        foreach ($particles as $name => $particle) {
+            $type = isset($particle['type']) ? $particle['type'] : 'particle';
+            $particleName = isset($particle['name']) ? $particle['name'] : $name;
+            $list[$type][$name] = $particleName;
+        }
+
+        return $list;
     }
 }
