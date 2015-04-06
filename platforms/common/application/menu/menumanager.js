@@ -90,6 +90,7 @@ var MenuManager = new prime({
             size = $(element).position();
 
         this.block = null;
+        this.targetLevel = undefined;
         this.addNewItem = false;
         this.type =  (element.matches('[data-mm-blocktype]') ? 'particle' : element.parent('.g-toplevel') || element.matches('.g-toplevel') ? 'main' : (element.matches('.g-block') ? 'column' : 'columns_items'));
         this.wasActive = element.hasClass('active');
@@ -161,25 +162,27 @@ var MenuManager = new prime({
             dataLevel = target.data('mm-level'),
             originalLevel = this.block.data('mm-level');
 
-        if (this.type === 'particle' && targetType === 'column') {
+        if (this.type === 'particle' && (targetType === 'main' && !dataLevel)) {
             this.dragdrop.matched = false;
+            return;
+        }
+
+        // Workaround for layout and style of columns
+        if (dataLevel === null && (this.type === 'columns_items' || this.type === 'particle')) {
+            var submenu_items = target.find('.submenu-items');
+            if (!submenu_items || submenu_items.children()) {
+                this.dragdrop.matched = false;
+                return;
+            }
+
+            this.placeholder.style({ display: 'block' }).bottom(submenu_items);
+            this.addNewItem = submenu_items;
+            this.targetLevel = 2;
             return;
         }
 
 
         if (this.type !== 'particle') {
-            // Workaround for layout and style of columns
-            if (dataLevel === null && this.type === 'columns_items') {
-                var submenu_items = target.find('.submenu-items');
-                if (!submenu_items || submenu_items.children()) {
-                    this.dragdrop.matched = false;
-                    return;
-                }
-
-                this.placeholder.style({ display: 'block' }).bottom(submenu_items);
-                this.addNewItem = submenu_items;
-                return;
-            }
 
             // We only allow sorting between same level items
             if (this.type !== 'column' && originalLevel !== dataLevel) {
@@ -232,6 +235,8 @@ var MenuManager = new prime({
                 break;
         }
 
+        this.targetLevel = dataLevel;
+
         // If it's not a block we don't want a small version of the placeholder
         this.placeholder.style({ display: 'block' })[targetType !== 'main' ? 'removeClass' : 'addClass']('in-between');
 
@@ -239,6 +244,7 @@ var MenuManager = new prime({
 
     nolocation: function(/*event*/) {
         if (this.placeholder) { this.placeholder.remove(); }
+        this.targetLevel = undefined;
     },
 
     stop: function(event, target, element) {
@@ -250,11 +256,12 @@ var MenuManager = new prime({
         if (!this.dragdrop.matched && !this.addNewItem) {
             if (this.placeholder) { this.placeholder.remove(); }
 
+            this.type = undefined;
             return;
         }
 
         var placeholderParent = this.placeholder.parent();
-        if (!placeholderParent) { return; }
+        if (!placeholderParent) { this.type = undefined; return; }
 
         if (this.addNewItem) { this.block.attribute('style', null).removeClass('active'); }
 
@@ -300,7 +307,7 @@ var MenuManager = new prime({
         }
 
         // Column reordering, we just need to swap the array indexes
-        if (!this.itemFrom && !this.itemTo) {
+        if (!this.itemFrom && !this.itemTo && this.type !== 'particle') {
             var colsOrder = [],
                 active = $('.g-toplevel [data-mm-id].active').data('mm-id');
             items = parent.search('> [data-mm-id]');
@@ -343,7 +350,7 @@ var MenuManager = new prime({
         }
 
         if (this.original) {
-            if (!this.isNewParticle || !this.dragdrop.matched) { this.original.remove(); }
+            if (!this.isNewParticle || (!this.dragdrop.matched && !this.targetLevel)) { this.original.remove(); }
             else { this.original.attribute('style', null).removeClass('original-placeholder'); }
         }
 
