@@ -91,7 +91,7 @@ var MenuManager = new prime({
 
         this.block = null;
         this.addNewItem = false;
-        this.type = element.parent('.g-toplevel') || element.matches('.g-toplevel') ? 'main' : (element.matches('.g-block') ? 'column' : 'columns_items');
+        this.type =  (element.matches('[data-mm-blocktype]') ? 'particle' : element.parent('.g-toplevel') || element.matches('.g-toplevel') ? 'main' : (element.matches('.g-block') ? 'column' : 'columns_items'));
         this.wasActive = element.hasClass('active');
         this.root = root;
 
@@ -114,14 +114,34 @@ var MenuManager = new prime({
         this.originalType = type;
         this.block = element;
 
-        element.style({
-            position: 'absolute',
-            zIndex: 1000,
-            width: Math.ceil(size.width),
-            height: Math.ceil(size.height)
-        }).addClass('active');
+        if (!element.parent('.g5-mm-particles-picker')) {
+            element.style({
+                position: 'absolute',
+                zIndex: 1000,
+                width: Math.ceil(size.width),
+                height: Math.ceil(size.height)
+            }).addClass('active');
 
-        this.placeholder.before(element);
+            this.placeholder.before(element);
+        } else {
+            var position = element.position(),
+                parentOffset = {
+                    top: element.parent()[0].scrollTop,
+                    left: element.parent()[0].scrollLeft
+                };
+            this.original.style({
+                position: 'absolute',
+                opacity: 0.5
+            }).style({
+                left: element[0].offsetLeft - parentOffset.left,
+                top: element[0].offsetTop - parentOffset.top,
+                width: position.width,
+                height: position.height
+            });
+            this.element = this.dragdrop.element;
+            this.block = this.dragdrop.element;
+            this.dragdrop.element = this.original;
+        }
 
         if (this.type == 'column') {
             root.search('.g-block > *').style({ 'pointer-events': 'none' });
@@ -136,42 +156,47 @@ var MenuManager = new prime({
         target = $(target);
         if (!this.placeholder) { this.placeholder = zen((this.type == 'column' ? 'div' : 'li') + '.block.placeholder[data-mm-placeholder]').style({ display: 'none' }); }
 
-        var targetType = target.parent('.g-toplevel') || target.matches('.g-toplevel') ? 'main' : (target.matches('.g-block') ? 'column' : 'columns_items'),
+        var targetType = target.matches('[data-mm-blocktype]') ? 'particle' : (target.parent('.g-toplevel') || target.matches('.g-toplevel') ? 'main' : (target.matches('.g-block') ? 'column' : 'columns_items')),
             dataLevel = target.data('mm-level'),
             originalLevel = this.block.data('mm-level');
-        /*,
-         dataID = target.data('mm-id'),
-         originalID = this.block.data('mm-id');*/
 
-        // Workaround for layout and style of columns
-        if (dataLevel === null && this.type === 'columns_items') {
-            var submenu_items = target.find('.submenu-items');
-            if (!submenu_items || submenu_items.children()) {
+        if (this.type === 'particle' && targetType === 'column') {
+            this.dragdrop.matched = false;
+            return;
+        }
+
+
+        if (this.type !== 'particle') {
+            // Workaround for layout and style of columns
+            if (dataLevel === null && this.type === 'columns_items') {
+                var submenu_items = target.find('.submenu-items');
+                if (!submenu_items || submenu_items.children()) {
+                    this.dragdrop.matched = false;
+                    return;
+                }
+
+                this.placeholder.style({ display: 'block' }).bottom(submenu_items);
+                this.addNewItem = submenu_items;
+                return;
+            }
+
+            // We only allow sorting between same level items
+            if (this.type !== 'column' && originalLevel !== dataLevel) {
                 this.dragdrop.matched = false;
                 return;
             }
 
-            this.placeholder.style({ display: 'block' }).bottom(submenu_items);
-            this.addNewItem = submenu_items;
-            return;
-        }
+            // Ensuring columns can only be dragged before/after other columns
+            if (this.type == 'column' && dataLevel) {
+                this.dragdrop.matched = false;
+                return;
+            }
 
-        // We only allow sorting between same level items
-        if (this.type !== 'column' && originalLevel !== dataLevel) {
-            this.dragdrop.matched = false;
-            return;
-        }
-
-        // Ensuring columns can only be dragged before/after other columns
-        if (this.type == 'column' && dataLevel) {
-            this.dragdrop.matched = false;
-            return;
-        }
-
-        // For levels > 2 we only allow sorting within the same column
-        if (dataLevel > 2 && target.parent('ul') != this.block.parent('ul')) {
-            this.dragdrop.matched = false;
-            return;
+            // For levels > 2 we only allow sorting within the same column
+            if (dataLevel > 2 && target.parent('ul') != this.block.parent('ul')) {
+                this.dragdrop.matched = false;
+                return;
+            }
         }
 
         // Check for adjacents and avoid inserting any placeholder since it would be the same position
@@ -234,7 +259,12 @@ var MenuManager = new prime({
 
         var parent = this.block.parent();
 
-        this.original.remove();
+        if (this.original) {
+            if (!this.original.parent('.g5-mm-particles-picker')) { this.original.remove(); }
+            else { this.original.attribute('style', null).removeClass('original-placeholder'); }
+        }
+
+
         this.block.after(this.placeholder);
         this.placeholder.remove();
         this.itemTo = this.block.parent('[data-mm-id]');
@@ -311,7 +341,11 @@ var MenuManager = new prime({
             if (flex) { this.block.style('flex', '0 1 ' + flex + ' %'); }
         }
 
-        if (this.original) { this.original.remove(); }
+        if (this.original) {
+            if (!this.original.parent('.g5-mm-particles-picker') || !this.dragdrop.matched) { this.original.remove(); }
+            else { this.original.attribute('style', null).removeClass('original-placeholder'); }
+        }
+
         if (!this.wasActive && this.block) { this.block.removeClass('active'); }
     }
 });
