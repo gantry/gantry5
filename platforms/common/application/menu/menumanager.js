@@ -93,6 +93,7 @@ var MenuManager = new prime({
         this.addNewItem = false;
         this.type =  (element.matches('[data-mm-blocktype]') ? 'particle' : element.parent('.g-toplevel') || element.matches('.g-toplevel') ? 'main' : (element.matches('.g-block') ? 'column' : 'columns_items'));
         this.wasActive = element.hasClass('active');
+        this.isNewParticle = element.parent('.g5-mm-particles-picker');
         this.root = root;
 
         this.itemID = element.data('mm-id');
@@ -114,7 +115,7 @@ var MenuManager = new prime({
         this.originalType = type;
         this.block = element;
 
-        if (!element.parent('.g5-mm-particles-picker')) {
+        if (!this.isNewParticle) {
             element.style({
                 position: 'absolute',
                 zIndex: 1000,
@@ -260,7 +261,7 @@ var MenuManager = new prime({
         var parent = this.block.parent();
 
         if (this.original) {
-            if (!this.original.parent('.g5-mm-particles-picker')) { this.original.remove(); }
+            if (!this.isNewParticle) { this.original.remove(); }
             else { this.original.attribute('style', null).removeClass('original-placeholder'); }
         }
 
@@ -342,7 +343,7 @@ var MenuManager = new prime({
         }
 
         if (this.original) {
-            if (!this.original.parent('.g5-mm-particles-picker') || !this.dragdrop.matched) { this.original.remove(); }
+            if (!this.isNewParticle || !this.dragdrop.matched) { this.original.remove(); }
             else { this.original.attribute('style', null).removeClass('original-placeholder'); }
         }
 

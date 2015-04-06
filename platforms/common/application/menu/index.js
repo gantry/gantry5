@@ -45,6 +45,12 @@ ready(function() {
         } else {
             save.hideIndicator();
         }
+
+        if (this.type == 'particle' && this.isNewParticle) {
+            modal.open({
+                content: '<h2>Once a new Module or Particle gets dropped in, this modal will open with a list of Modules / Particles to choose from and configure</h2>'
+            });
+        }
     });
 
     module.exports.menumanager = menumanager;
