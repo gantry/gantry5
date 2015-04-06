@@ -1,6 +1,15 @@
 {% set attr_class = segment.attributes.class ? ' class="' ~ segment.attributes.class|e ~ '"' %}
 {% set attr_id = segment.title|lower|replace({' ': '-'})|e %}
+{% set attr_extra = '' %}
 {% set tag_type = (attr_id in ['aside', 'footer', 'header', 'main']) ? attr_id : 'section' %}
+
+{% if segment.attributes.extra %}
+    {% for attributes in segment.attributes.extra %}
+        {% for key, value in attributes %}
+        {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+        {% endfor %}
+    {% endfor %}
+{% endif %}
 
 {% set html %}
     {% if segment.children %}
@@ -11,7 +20,7 @@
 {% endset %}
 
 {% if html|trim %}
-    <{{ tag_type }} id="g-{{ attr_id }}" {{ attr_class }}>
+    <{{ tag_type }} id="g-{{ attr_id }}" {{ attr_class }}{{ attr_extra }}>
         {{ html }}
     </{{ tag_type }}>
 {% endif %}

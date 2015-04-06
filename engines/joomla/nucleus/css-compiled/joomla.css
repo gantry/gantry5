@@ -345,6 +345,11 @@ input.invalid {
 .dropdown-menu {
   text-align: left; }
 
+.platform-content *, .platform-content *::before, .platform-content *::after {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box; }
+
 body.modal {
   padding-top: 0; }
 

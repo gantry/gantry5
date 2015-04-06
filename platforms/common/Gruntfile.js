@@ -5,7 +5,7 @@ module.exports = function(grunt) {
                 options: {
                     trace: true,
                     style: 'expanded',
-                    lineNumbers: true,
+                    lineNumbers: false,
                     loadPath: '../../engines/common/nucleus/scss/'
                 },
                 files: [{

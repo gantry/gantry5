@@ -25,8 +25,8 @@ Gantry 5 is a framework by which Gantry-powered themes are made. In order for a 
 
 The first thing you need to do is download the latest build of Gantry 5 and Hydrogen. You can do so by clicking the links below, or via [GitHub](http://github.com/gantry/gantry5/).
 
-* [Download Gantry 5](https://github.com/gantry/gantry5/releases/download/5.0.0-beta.1/joomla-pkg_gantry5_v5.0.0-beta.1.zip)
-* [Download Hydrogen Theme](https://github.com/gantry/gantry5/releases/download/5.0.0-beta.1/joomla-tpl_g5_hydrogen_v5.0.0-beta.1.zip)
+* [Download Gantry 5](https://github.com/gantry/gantry5/releases/download/5.0.0-beta.2/joomla-pkg_gantry5_v5.0.0-beta.2.zip)
+* [Download Hydrogen Theme](https://github.com/gantry/gantry5/releases/download/5.0.0-beta.2/joomla-tpl_g5_hydrogen_v5.0.0-beta.2.zip)
 
 >>> During the initial beta, the **Framework** and **Template** are being distributed in different installable packages. A bundled package is planned, but will likely be available after the initial beta launch.
 
@@ -36,7 +36,7 @@ Once you have the latest packages, installation is simple. We have provided a st
 
 ## Accessing the Gantry Administrator
 
-### Joomla 
+### Joomla
 When you have installed and activated both the Gantry framework and Hydrogen, you can access the Gantry 5 administrator in several different ways. The easiest being simply navigating to **Components > Gantry 5 Templates** from the back end of Joomla.
 
 Here, you will see a list of any installed Gantry-powered themes. You can **Preview** the theme from here or select **Configure** to go directly to the **Gantry Administrator** where you can get started modifying your Gantry-powered site.
@@ -47,8 +47,8 @@ The Gantry Administrator has multiple administrative tools you can flip through 
 
 You will notice the following menu items in the Gantry 5 Administrator:
 
-1. **Menu Editor**: This administrative panel gives you the ability to enhance the platform's menu by altering styling, rearranging links, and creating menu items that sit outside of the CMS's integrated Menu Manager.    
-    
+1. **Menu Editor**: This administrative panel gives you the ability to enhance the platform's menu by altering styling, rearranging links, and creating menu items that sit outside of the CMS's integrated Menu Manager.
+
 2. **About**: This page gives you quick, at-a-glance information about the currently-accessed theme. This is a one-stop shop for information about the theme including: name, version number, creator, support links, features, and more.
 
 3. **Platform Settings**: This button takes you to the CMS' settings page for Gantry 5. In Joomla, this is the **Permissions** configuration page.

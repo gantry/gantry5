@@ -12,12 +12,12 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Component\Filesystem;
+namespace Gantry\Framework\Services;
 
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Component\Filesystem\Streams;
 use Pimple\Container;
 use RocketTheme\Toolbox\DI\ServiceProviderInterface;
-use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use RocketTheme\Toolbox\StreamWrapper\ReadOnlyStream;
 use RocketTheme\Toolbox\StreamWrapper\Stream;

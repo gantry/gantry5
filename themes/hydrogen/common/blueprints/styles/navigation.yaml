@@ -13,3 +13,8 @@ form:
       type: input.colorpicker
       label: Text
       default: "#ffffff"
+    overlay:
+      type: input.colorpicker
+      label: Overlay
+      description: Set the color of the page overlay when the certain menu modes are active.
+      default: "rgba(0, 0, 0, 0.4)"

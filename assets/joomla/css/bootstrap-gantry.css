@@ -167,6 +167,10 @@ textarea {
 	}
 }
 
+.img-rounded {
+        border-radius: 6px;
+}
+
 .img-circle {
 	border-radius: 500px;
 }
@@ -540,6 +544,51 @@ em {
 
 cite {
 	font-style: normal;
+}
+
+.muted {
+  color: #999999;
+}
+
+a.muted:hover,
+a.muted:focus {
+  color: #808080;
+}
+
+.text-warning {
+  color: #c09853;
+}
+
+a.text-warning:hover,
+a.text-warning:focus {
+  color: #a47e3c;
+}
+
+.text-error {
+  color: #b94a48;
+}
+
+a.text-error:hover,
+a.text-error:focus {
+  color: #953b39;
+}
+
+.text-info {
+  color: #3a87ad;
+}
+
+a.text-info:hover,
+a.text-info:focus {
+  color: #2d6987;
+}
+
+.text-success {
+  color: #468847;
+}
+
+a.text-success:hover,
+a.text-success:focus {
+  color: #356635;
 }
 
 .text-left {
@@ -2202,7 +2251,7 @@ button.close {
 .btn {
 	display: inline-block;
 	*display: inline;
-	padding: 6px 12px;
+	padding: 4px 12px;
 	margin-bottom: 0;
 	*margin-left: .3em;
 	font-size: 14px;

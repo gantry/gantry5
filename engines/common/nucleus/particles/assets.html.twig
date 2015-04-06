@@ -2,12 +2,30 @@
 
 {% block stylesheets %}
     {% for css in particle.css %}
-        <link rel="stylesheet" href="{{ url(css.location) }}" type="text/css" />
+        {% set attr_extra = '' %}
+        {% if css.extra %}
+            {% for attributes in css.extra %}
+                {% for key, value in attributes %}
+                    {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        <link rel="stylesheet" href="{{ url(css.location) }}" type="text/css"{{ attr_extra }} />
     {% endfor %}
 {% endblock %}
 
 {% block javascript %}
     {% for script in particle.javascript %}
-        <script src="{{ url(script.location) }}"></script>
+        {% set attr_extra = '' %}
+        {% if script.extra %}
+            {% for attributes in script.extra %}
+                {% for key, value in attributes %}
+                    {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra }}></script>
     {% endfor %}
 {% endblock %}
