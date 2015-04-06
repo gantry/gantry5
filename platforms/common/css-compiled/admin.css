@@ -2311,6 +2311,9 @@ a {
   font-size: 1.5rem;
   cursor: pointer;
 }
+#g5-container .menu-editor-particles ul:last-child {
+  margin: 0;
+}
 #g5-container .menu-editor-particles [data-lm-blocktype] {
   color: #fff;
   display: inline-block;

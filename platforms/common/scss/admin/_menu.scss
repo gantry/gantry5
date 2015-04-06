@@ -386,6 +386,10 @@ $submenu-ratio:                 60px;
 
 // Modal style for Module / Particles
 .menu-editor-particles {
+	ul:last-child {
+		margin: 0;
+	}
+
 	[data-lm-blocktype] {
 		color: $white;
 		display: inline-block;
