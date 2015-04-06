@@ -1975,7 +1975,8 @@ a {
 .g5-lm-particles-picker .search i, .g5-mm-particles-picker .search i {
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 50%;
+  margin-top: -12px;
 }
 
 #g5-container #menu-editor .parent-indicator:before {
@@ -2309,6 +2310,21 @@ a {
   right: 1rem;
   font-size: 1.5rem;
   cursor: pointer;
+}
+#g5-container .menu-editor-particles [data-lm-blocktype] {
+  color: #fff;
+  display: inline-block;
+  margin: 0.3em;
+  cursor: pointer;
+}
+#g5-container .menu-editor-particles [data-lm-blocktype].selected {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #666;
+}
+#g5-container .menu-editor-particles [data-lm-blocktype="spacer"] {
+  color: #666;
+}
+#g5-container .menu-editor-particles .search input {
+  width: 100% !important;
 }
 
 @-webkit-keyframes fadeIn {

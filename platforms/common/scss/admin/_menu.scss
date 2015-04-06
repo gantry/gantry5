@@ -384,4 +384,26 @@ $submenu-ratio:                 60px;
 	}
 }
 
+// Modal style for Module / Particles
+.menu-editor-particles {
+	[data-lm-blocktype] {
+		color: $white;
+		display: inline-block;
+		margin: 0.3em;
+		cursor: pointer;
+
+		&.selected {
+			box-shadow: 0 0 0 2px $white, 0 0 0 4px $dark-gray;
+		}
+	}
+
+	[data-lm-blocktype="spacer"] {
+		color: $dark-gray;
+	}
+
+	.search input {
+		width: 100% !important;
+	}
+}
+
 }// end wrapper
