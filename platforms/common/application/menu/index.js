@@ -51,6 +51,8 @@ ready(function() {
                 content: '<h2>Once a new Module or Particle gets dropped in, this modal will open with a list of Modules / Particles to choose from and configure</h2>'
             });
         }
+
+        this.type = undefined;
     });
 
     module.exports.menumanager = menumanager;
