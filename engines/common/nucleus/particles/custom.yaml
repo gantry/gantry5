@@ -1,0 +1,16 @@
+name: Custom HTML
+description: Display custom HTML block.
+type: particle
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable the particle.
+      default: true
+
+    html:
+      type: textarea.textarea
+      label: Custom HTML
+      description: Enter custom HTML into here.
