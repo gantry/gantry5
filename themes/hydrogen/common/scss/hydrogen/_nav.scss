@@ -7,6 +7,83 @@
 
 	.g-main-nav {
 		margin: -($content-padding + $content-margin);
+
+		.g-toplevel {
+			> li {
+				> a {
+					+ span {
+						border: 1px solid lighten($navigation-background, 6%);
+						background: darken($navigation-background, 4%);
+						&:hover {
+							background: darken($navigation-background, 8%);
+						}
+					}
+				}
+
+				> .g-menu-item-content {
+					color: $navigation-text-color;
+				}
+				&:hover {
+					background: darken($navigation-background, 4%);
+
+					> .g-selected {
+						background: darken($navigation-background, 8%);
+					}
+				}
+
+				&.active {
+					background: $main-background;
+
+					> .g-menu-item-content {
+						color: $main-text-color;
+					}
+
+					> .g-selected {
+						background: darken($navigation-background, 8%);
+						color: $navigation-text-color;
+					}
+				}
+
+				> .g-selected {
+					background: darken($navigation-background, 8%);
+				}
+			}
+		}
+
+		.g-dropdown {
+			background: darken($navigation-background, 8%);
+		}
+
+		.g-sublevel {
+			> li {
+				> .g-menu-item-content {
+					color: $navigation-text-color;
+				}
+
+				&:hover, &.active {
+					background: darken($navigation-background, 12%);
+
+					> .g-selected {
+						background: darken($navigation-background, 12%);
+					}
+				}
+
+				> .g-selected {
+					background: darken($navigation-background, 12%);
+				}
+
+				> a {
+					+ span {
+						border: 1px solid lighten($navigation-background, 6%);
+						background: darken($navigation-background, 4%);
+
+						&:hover {
+							background: darken($navigation-background, 8%);
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -21,48 +98,19 @@
 
 			> a {
 				+ span {
-					border: 1px solid lighten($navigation-background, 6%);
-					background: darken($navigation-background, 4%);
 					border-radius: $core-border-radius;
 					margin-left: -0.5rem;
 					margin-right: 1rem;
 					padding: 0.2rem;
-					&:hover {
-						background: darken($navigation-background, 8%);
-					}
 				}
 			}
 
 			> .g-menu-item-content {
-				color: $navigation-text-color;
 				padding: 1.2rem $content-padding;
 				line-height: normal;
 			}
-			&:hover {
-				background: darken($navigation-background, 4%);
-
-				> .g-selected {
-					background: darken($navigation-background, 8%);
-				}
-			}
-
-			&.active {
-				background: $main-background;
-
-				> .g-menu-item-content {
-					color: $main-text-color;
-				}
-
-				> .g-selected {
-					background: darken($navigation-background, 8%);
-					color: $navigation-text-color;
-				}
-			}
-
-			> .g-selected {
-				background: darken($navigation-background, 8%);
-			}
 		}
+
 		i {
 			opacity: 0.6;
 		}
@@ -70,35 +118,20 @@
 
 	.g-dropdown {
 		text-align: left;
-		background: darken($navigation-background, 8%);
 	}
 
 	.g-sublevel {
 		> li {
 			> .g-menu-item-content {
-				color: $navigation-text-color;
 				padding: ($content-padding + $content-margin)/2 1rem;
 			}
-			&:hover, &.active {
-				background: darken($navigation-background, 12%);
-				> .g-selected {
-					background: darken($navigation-background, 12%);
-				}
-			}
-			> .g-selected {
-				background: darken($navigation-background, 12%);
-			}
+
 			> a {
 				+ span {
-					border: 1px solid lighten($navigation-background, 6%);
-					background: darken($navigation-background, 4%);
 					border-radius: $core-border-radius;
 					padding: 0.1rem;
 					margin-top: -0.1rem;
 					margin-right: -0.1rem;
-					&:hover {
-						background: darken($navigation-background, 8%);
-					}
 				}
 			}
 		}
@@ -108,26 +141,4 @@
 // Nav Overlay
 .g-nav-overlay {
 	background: $navigation-overlay;
-}
-
-// Mobile Menu 
-@include breakpoint(mobile-only) {	
-	.g-main-nav {
-		.g-toplevel {
-			background: $mobilemenu-background;
-			> li {
-				&:hover, &.active {
-					background: darken($navigation-background, 4%);
-
-					> .g-menu-item-content {
-						color: $navigation-text-color;
-					}
-				}
-			}							
-		}
-	}
-	.g-mobile-nav-toggle {
-	    color: $accent-color-1;
-	    background: $white;
-	}
 }
