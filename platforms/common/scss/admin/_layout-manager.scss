@@ -663,7 +663,8 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             color: #fff;
         }
 
-        &[data-lm-blocktype="position"], &[data-mm-blocktype="position"] {
+        &[data-lm-blocktype="position"], &[data-mm-blocktype="position"],
+        &[data-lm-blocktype="module"], &[data-mm-blocktype="module"] {
             color: #fff;
             background-color: $position;
         }

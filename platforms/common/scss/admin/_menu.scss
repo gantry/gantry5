@@ -22,6 +22,22 @@ $submenu-ratio:                 60px;
 				opacity: 1;
 			}
 		}
+
+		.menu-item {
+			.title {
+				font-size: 1rem;
+			}
+
+			.badge {
+				background-color: #aaa;
+				color: $white;
+				margin-left: 0.5em;
+			}
+		}
+
+		&[data-mm-original-type] .fa-arrows-alt {
+			display: none;
+		}
 	}
 }
 
@@ -112,7 +128,7 @@ $submenu-ratio:                 60px;
 		}
 
 		.menu-item {
-            margin: 0;
+			margin: 0;
 			padding: $content-padding;
 			font-size: $core-font-size + 0.1;
 			@include breakpoint(mobile-only) {
