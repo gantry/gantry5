@@ -67,7 +67,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .section, .atoms-section {
+        .section, .atoms-section, .offcanvas-section {
             background: $white;
             margin: 14px 0;
             padding: 8px;
@@ -184,38 +184,47 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .atoms-section {
+        .atoms-section, .offcanvas-section {
             background-color: transparent;
             margin-top: 28px;
             border-top: 1px solid #ddd;
 
             .g-grid {
                 background: $white;
-                &:empty:after {
-                    content: "Drop atoms atoms here...";
-                }
+            }
+        }
 
-                &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
-                    display: none;
-                    opacity: 0;
-                    visibility: hidden;
-                }
+        .atoms-section {
+            &:empty:after {
+                content: "Drop atoms here...";
+            }
 
-                > .g-block {
-                    > .particle, > .position, > .spacer, > .pagecontent {
-                        &:after {
-                            display: none;
-                            opacity: 0;
-                            visibility: hidden;
-                        }
+            &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
+                display: none;
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            > .g-block {
+                > .particle, > .position, > .spacer, > .pagecontent {
+                    &:after {
+                        display: none;
+                        opacity: 0;
+                        visibility: hidden;
                     }
                 }
+            }
 
-                .g-block:last-child {
-                    .particle, .position, .spacer, .pagecontent, .atom {
-                        margin-right: 0;
-                    }
+            .g-block:last-child {
+                .particle, .position, .spacer, .pagecontent, .atom {
+                    margin-right: 0;
                 }
+            }
+        }
+
+        .offcanvas-section {
+            .g-grid:empty:after {
+                content: "Drop particles here...";
             }
         }
 
@@ -437,7 +446,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
 
         .block-has-changes {
-            &:not(.section):not(.atoms-section) {
+            &:not(.section):not(.atoms-section):not(.offcanvas-section) {
                 box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
             }
 
