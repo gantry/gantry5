@@ -269,6 +269,19 @@ ready(function() {
             }
         });
     });
+
+    //// Modules / Particles
+    // selection
+    body.delegate('click', '.menu-editor-particles [data-lm-blocktype], .menu-editor-modules [data-mm-module]', function(event, element){
+        var container = element.parent('.menu-editor-particles, .menu-editor-modules'),
+            elements = container.search('[data-lm-blocktype], [data-mm-module]'),
+            selectButton = container.parent('.g5-content').find('[data-mm-select]');
+
+        elements.removeClass('selected');
+        element.addClass('selected');
+
+        selectButton.attribute('disabled', null);
+    });
 });
 
 module.exports = {
