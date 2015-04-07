@@ -238,14 +238,14 @@ var DragDrop = new prime({
         if (!overing) { return; }
 
         if (!$(overing).matches('#trash') && !$(overing).parent('#trash')) {
-            var st, sl;
+            var st, sl, trash = $('#g5-container #trash');
             if (clientY + 50 >= Height && Scroll + Height < scrollHeight) {
                 this.scrollInterval = setInterval(function() {
                     sl = (window.pageXOffset || document.documentElement.scrollLeft) - (document.documentElement.clientLeft || 0);
                     st = (window.pageYOffset || document.documentElement.scrollTop)  - (document.documentElement.clientTop || 0);
                     window.scrollTo(sl, Math.min(scrollHeight, st + 4));
                 }, 8);
-            } else if (clientY - 50 <= 100 && scrollHeight > 0) {
+            } else if (clientY - 50 <= (trash ? trash[0].offsetHeight : 0) && scrollHeight > 0) {
                 this.scrollInterval = setInterval(function() {
                     sl = (window.pageXOffset || document.documentElement.scrollLeft) - (document.documentElement.clientLeft || 0);
                     st = (window.pageYOffset || document.documentElement.scrollTop)  - (document.documentElement.clientTop || 0);
