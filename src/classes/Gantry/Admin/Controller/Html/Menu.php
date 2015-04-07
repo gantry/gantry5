@@ -180,6 +180,8 @@ class Menu extends HtmlController
 
     public function menuitem_module($id)
     {
+        $this->params['modules'] = $this->container['platform']->listModules();
+
         return $this->container['admin.theme']->render('@gantry-admin/menu/module.html.twig', $this->params);
     }
 

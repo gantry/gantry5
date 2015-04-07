@@ -14,6 +14,7 @@ namespace Gantry\Framework;
 use Gantry\Admin\Theme\ThemeList;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
+use Joomla\Registry\Registry;
 
 /**
  * The Platform Configuration class contains configuration information.
@@ -72,6 +73,32 @@ class Platform extends BasePlatform
     {
         // TODO:
         return [];
+    }
+
+    public function listModules()
+    {
+        $db = \JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('a.id, a.title, a.position, a.published AS enabled')
+            ->from('#__modules AS a');
+
+        // Join on the asset groups table.
+        $query->select('ag.title AS access')
+            ->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access')
+            ->where('a.published >= 0')
+            ->where('a.client_id = 0')
+            ->order('a.position, a.ordering');
+
+        $db->setQuery($query);
+
+        try {
+            $result = $db->loadObjectList();
+        } catch (\RuntimeException $e) {
+            return false;
+        }
+
+        return $result;
     }
 
     public function settings()

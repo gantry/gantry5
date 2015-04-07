@@ -1,3 +1,7 @@
+{# Available variables:
+
+module.[id | title | position | enabled | access]
+#}
 <form method="post" action="{{ gantry.route('menu/edit', id, 'validate') }}">
     <div class="card settings-block">
         <h4>
@@ -5,14 +9,12 @@
         </h4>
         <div class="inner-params">
             <ul>
-                <li><span class="title">Search 1</span> <span class="sub-title">search</span></li>
-                <li><span class="title">Search 2</span> <span class="sub-title">search</span></li>
-                <li><span class="title">Search 3</span> <span class="sub-title">search</span></li>
-                <li><span class="title">Search 4</span> <span class="sub-title">search</span></li>
-                <li><span class="title">Search 5</span> <span class="sub-title">search</span></li>
-                <li><span class="title">Search 6</span> <span class="sub-title">search</span></li>
-                <li><span class="title">Search 7</span> <span class="sub-title">search</span></li>
-                <li><span class="title">Search 8</span> <span class="sub-title">search</span></li>
+                {% for module in modules %}
+                <li>
+                    <span class="title">{{ module.title }}</span>
+                    <span class="sub-title badge">{{ module.position|default('None') }}</span>
+                </li>
+                {% endfor %}
             </ul>
         </div>
     </div>
