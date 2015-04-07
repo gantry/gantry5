@@ -30,5 +30,7 @@
          data-menu-settings="{{ menu.settings|json_encode|escape('html_attr') }}">
         {% include 'menu/base.html.twig' with {'item': menu.root} %}
     </div>
+
+    <div id="trash" data-lm-eraseblock><div class="trash-zone">&times;</div><span>Drop here to delete</span></div>
 </form>
 {% endblock %}
