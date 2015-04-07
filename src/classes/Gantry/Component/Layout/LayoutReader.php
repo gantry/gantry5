@@ -40,6 +40,12 @@ class LayoutReader
                 'atoms' => self::parse('atoms', [], 0)
             ];
             foreach ($result as $key => &$item) {
+                // FIXME: remove before release
+                if ($item->type == 'non-visible') {
+                    $item->type = 'atoms';
+                    $item->attributes->name = 'Atoms Section';
+                }
+
                 if (isset($invisible[$item->type])) {
                     $invisible[$item->type] = $item;
                     unset($result[$key]);
@@ -52,6 +58,12 @@ class LayoutReader
         }
 
         // We have user entered file; let's build the layout.
+
+        // FIXME: remove before release
+        if (isset($data['non-visible'])) {
+            $data['offcanvas'] = [];
+            unset ($data['non-visible']);
+        }
 
         // Two last items are always offcanvas and atoms.
         $invisible = [
