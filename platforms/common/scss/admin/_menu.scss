@@ -282,7 +282,8 @@ $submenu-ratio:                 60px;
 			}
 			.config-cog {
 				right: 4px;
-				top: 0.8rem;
+				top: 50%;
+				margin-top: -12px;
 			}
 			.parent-indicator {
 				&:before {

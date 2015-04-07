@@ -2221,7 +2221,8 @@ a {
 }
 #g5-container .submenu-selector .submenu-items li .config-cog {
   right: 4px;
-  top: 0.8rem;
+  top: 50%;
+  margin-top: -12px;
 }
 #g5-container .submenu-selector .submenu-items li .parent-indicator:before {
   content: "\f054";
