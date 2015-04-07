@@ -629,7 +629,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     border-right: 1px solid darken($main-bg, 5);
 }
 
-.g5-lm-particles-picker, .g5-mm-particles-picker {
+.g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker {
     ul, li {
         @extend %list-reset;
     }

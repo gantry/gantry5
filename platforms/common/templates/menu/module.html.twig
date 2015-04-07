@@ -8,19 +8,30 @@ module.[id | title | position | enabled | access]
             Pick a Module
         </h4>
         <div class="inner-params">
-            <ul>
-                {% for module in modules %}
-                <li>
-                    <span class="title">{{ module.title }}</span>
-                    <span class="sub-title badge">{{ module.position|default('None') }}</span>
-                </li>
-                {% endfor %}
-            </ul>
+            <div class="g5-mm-modules-picker menu-editor-modules">
+                <div class="search">
+                    <input type="text" placeholder="Search..." />
+                    <i class="fa fa-search"></i>
+                </div>
+                <div class="modules-wrapper">
+                    <ul>
+                        {% for module in modules %}
+                        <li data-mm-module="module-{{ module.id }}">
+                            <span class="module-wrapper">
+                                <span class="title">{{ module.title }}</span>
+                                <span class="sub-title font-small"><strong>Type</strong>: {{ module.module|default('none') }}</span>
+                                <span class="sub-title font-small"><strong>Position</strong>: {{ module.position|default('none') }}</span>
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
     <div class="g-modal-actions">
         {#<a class="button float-left">Defaults</a>#}
-        <button class="button button-primary" type="submit">Select</button>
+        <button class="button button-primary" type="submit" data-mm-select>Select <i class="fa fa-fw fa-chevron-right"></i></button>
         <a class="button g5-dialog-close">Cancel</a>
     </div>
 </form>

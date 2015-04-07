@@ -80,7 +80,7 @@ class Platform extends BasePlatform
         $db = \JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select('a.id, a.title, a.position, a.published AS enabled')
+        $query->select('a.id, a.title, a.position, a.module, a.published AS enabled')
             ->from('#__modules AS a');
 
         // Join on the asset groups table.
@@ -88,7 +88,7 @@ class Platform extends BasePlatform
             ->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access')
             ->where('a.published >= 0')
             ->where('a.client_id = 0')
-            ->order('a.position, a.ordering');
+            ->order('a.position, a.module, a.ordering');
 
         $db->setQuery($query);
 

@@ -403,13 +403,12 @@ $submenu-ratio:                 60px;
 }
 
 // Modal style for Module / Particles
-.menu-editor-particles {
+.menu-editor-particles, .menu-editor-modules {
 	ul:last-child {
 		margin: 0;
 	}
 
-	[data-lm-blocktype] {
-		color: $white;
+	[data-lm-blocktype], [data-mm-module] {
 		display: inline-block;
 		margin: 0.3em;
 		cursor: pointer;
@@ -419,12 +418,49 @@ $submenu-ratio:                 60px;
 		}
 	}
 
+	[data-lm-blocktype] {
+		color: $white;
+	}
+
+	.modules-wrapper {
+		max-height: 500px;
+		overflow: auto;
+	}
+
+	[data-mm-module] {
+		text-align: left;
+		color: $dark-gray;
+		background-color: $light-gray;
+		padding: $content-padding / 2;
+		width: 48%;
+		min-height: 100px;
+		vertical-align: middle;
+		position: relative;
+		
+		.module-wrapper {
+			top: 50%;
+			position: absolute;
+			@include transform(translate(0, -50%));
+		}
+	}
+
 	[data-lm-blocktype="spacer"] {
 		color: $dark-gray;
 	}
 
 	.search input {
 		width: 100% !important;
+	}
+}
+
+.menu-editor-modules {
+	ul {
+		display: table;
+	}
+	.sub-title {
+		margin: 0;
+		display: block;
+		color: lighten($dark-gray, 10%);
 	}
 }
 
