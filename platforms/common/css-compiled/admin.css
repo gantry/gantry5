@@ -33,7 +33,7 @@
   transition: all 0.3s ease-in-out;
 }
 
-#g5-container .button, #g5-container .button-simple, #g5-container .button-primary, #g5-container .button-secondary, #g5-container .button.disabled, #g5-container .button.red, #g5-container .button.yellow {
+#g5-container .button, #g5-container .button-simple, #g5-container .button-primary, #g5-container .button-secondary, #g5-container .button.disabled, #g5-container .button[disabled], #g5-container .button.red, #g5-container .button.yellow {
   display: inline-block;
   border-radius: 0.1875rem;
   padding: 6px 12px;
@@ -46,7 +46,7 @@
 #g5-container .button:active, #g5-container .button-simple:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
   margin: 1px 0 -1px 0;
 }
-#g5-container .button i + span, #g5-container .button-simple i + span, #g5-container .button-primary i + span, #g5-container .button-secondary i + span, #g5-container .button.disabled i + span, #g5-container .button.red i + span, #g5-container .button.yellow i + span {
+#g5-container .button i + span, #g5-container .button-simple i + span, #g5-container .button-primary i + span, #g5-container .button-secondary i + span, #g5-container .button.disabled i + span, #g5-container .button[disabled] i + span, #g5-container .button.red i + span, #g5-container .button.yellow i + span {
   margin-left: 8px;
 }
 
@@ -1333,12 +1333,12 @@ a {
   background: #263b45;
   color: #fff;
 }
-#g5-container .button.disabled {
+#g5-container .button.disabled, #g5-container .button[disabled] {
   background: #d6d6d6;
   color: #fff;
   cursor: default;
 }
-#g5-container .button.disabled:active {
+#g5-container .button.disabled:active, #g5-container .button[disabled]:active {
   margin: 0;
 }
 #g5-container .button.red {

@@ -1,7 +1,7 @@
 @mixin button-color($color, $text: $white) {
     background: $color;
     color: $text;
-    &:hover {
+    &:not(.disabled):not([disabled]):hover {
         background: darken($color, 6%);
         color: $text;
     }
