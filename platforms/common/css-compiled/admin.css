@@ -2001,6 +2001,7 @@ a {
   background-color: #aaa;
   color: #fff;
   margin-left: 0.5em;
+  font-size: 0.6rem;
 }
 #g5-container #menu-editor li[data-mm-original-type] .fa-arrows-alt {
   display: none;
