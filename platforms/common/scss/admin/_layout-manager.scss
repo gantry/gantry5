@@ -67,7 +67,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .section, .non-visible-section {
+        .section, .atoms-section {
             background: $white;
             margin: 14px 0;
             padding: 8px;
@@ -184,7 +184,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .non-visible-section {
+        .atoms-section {
             background-color: transparent;
             margin-top: 28px;
             border-top: 1px solid #ddd;
@@ -192,7 +192,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             .g-grid {
                 background: $white;
                 &:empty:after {
-                    content: "Drop non-visible atoms here...";
+                    content: "Drop atoms atoms here...";
                 }
 
                 &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
@@ -437,7 +437,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
 
         .block-has-changes {
-            &:not(.section):not(.non-visible-section) {
+            &:not(.section):not(.atoms-section) {
                 box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
             }
 

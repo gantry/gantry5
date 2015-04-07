@@ -2,17 +2,17 @@
 var prime   = require('prime'),
     Section = require('./section');
 
-var NonVisible = new prime({
+var Atoms = new prime({
     inherits: Section,
     options: {
-        type: 'non-visible',
+        type: 'atoms',
         attributes: {
-            name: "Non-Visible Section"
+            name: "Atoms Section"
         }
     },
 
     layout: function() {
-        return '<div class="non-visible-section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4></div></div>';
+        return '<div class="atoms-section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4></div></div>';
     },
 
     getId: function() {
@@ -27,4 +27,4 @@ var NonVisible = new prime({
     }
 });
 
-module.exports = NonVisible;
+module.exports = Atoms;

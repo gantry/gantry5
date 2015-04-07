@@ -37,7 +37,7 @@ class LayoutReader
 
             $invisible = [
                 'offcanvas' => self::parse('offcanvas', [], 0),
-                'non-visible' => self::parse('non-visible', [], 0)
+                'atoms' => self::parse('atoms', [], 0)
             ];
             foreach ($result as $key => &$item) {
                 if (isset($invisible[$item->type])) {
@@ -53,12 +53,12 @@ class LayoutReader
 
         // We have user entered file; let's build the layout.
 
-        // Two last items are always offcanvas and non-visible.
+        // Two last items are always offcanvas and atoms.
         $invisible = [
             'offcanvas' => isset($data['offcanvas']) ? $data['offcanvas'] : [],
-            'non-visible' => isset($data['non-visible']) ? $data['non-visible'] : []
+            'atoms' => isset($data['atoms']) ? $data['atoms'] : []
         ];
-        unset($data['offcanvas'], $data['non-visible']);
+        unset($data['offcanvas'], $data['atoms']);
         $data += $invisible;
 
         $result = [];
@@ -128,7 +128,7 @@ class LayoutReader
             $result = (object) [
                 'id' => static::id(),
                 // TODO: add offcanvas type..
-                'type' => (in_array($field, ['non-visible']) ? $field : 'section'),
+                'type' => (in_array($field, ['atoms', 'offcanvas']) ? $field : 'section'),
                 'subtype' => $field,
                 'title' => ucfirst($field),
                 'attributes' => (object) [],

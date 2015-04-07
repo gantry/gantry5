@@ -541,11 +541,11 @@ children:
                     children: {  }
   -
     id: e9a5e0df-b070-acf0-df1a-1a2a00b23954
-    type: non-visible
+    type: atoms
     subtype: false
-    title: Non-visible
+    title: Atoms
     attributes:
-      name: 'Non-Visible Section'
+      name: 'Atoms Section'
     children:
       -
         id: 489d3685-c1b0-4524-b27e-491da3792e07

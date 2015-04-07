@@ -206,7 +206,7 @@ var LayoutManager = new prime({
             return;
         }
 
-        var nonVisible = target.parent('[data-lm-blocktype="non-visible"]'),
+        var nonVisible = target.parent('[data-lm-blocktype="atoms"]'),
             child = this.block.block.find('[data-lm-id]');
 
         if ((child ? child.data('lm-blocktype') : originalType) == 'atom') {

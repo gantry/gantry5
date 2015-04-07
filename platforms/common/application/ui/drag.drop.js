@@ -120,9 +120,9 @@ var DragDrop = new prime({
             (this.element.parent().data('lm-blocktype') === 'section' && this.element.parent().parent().parent().data('lm-root'))
         ) { columns = false; }
 
-        // Resizing and only if it's not a non-visible section
+        // Resizing and only if it's not a non-visible (atoms) section
         if ((offset < 6 && this.element.parent().find(':last-child') !== this.element) || (columns && offset > 3 && offset < 10)) {
-            if (this.element.parent('[data-lm-blocktype="non-visible"]')) { return false; }
+            if (this.element.parent('[data-lm-blocktype="atoms"]')) { return false; }
 
             this.emit('dragdrop:resize', event, this.element, (this.element.parent('[data-mm-id]') || this.element).siblings(':not(.placeholder)'), this.origin.offset.x);
             return false;

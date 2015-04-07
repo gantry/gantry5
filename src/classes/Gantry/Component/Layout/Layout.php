@@ -180,7 +180,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 }
                 if ($item->type == 'section') {
                     $this->sections[$item->subtype] = $item;
-                } elseif ($item->type == 'non-visible') {
+                } elseif ($item->type == 'atoms') {
                     $this->sections[$item->type] = $item;
                 }
                 if (isset($item->children) && is_array($item->children)) {
