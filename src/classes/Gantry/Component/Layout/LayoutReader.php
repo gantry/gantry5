@@ -35,19 +35,31 @@ class LayoutReader
         if (isset($data['children'])) {
             $result = self::object($data['children']);
 
-            $last = end($result);
-            if ($last->type !== 'non-visible') {
-                $result[] = self::parse('non-visible', [], 0);
+            $invisible = [
+                'offcanvas' => self::parse('offcanvas', [], 0),
+                'non-visible' => self::parse('non-visible', [], 0)
+            ];
+            foreach ($result as $key => &$item) {
+                if (isset($invisible[$item->type])) {
+                    $invisible[$item->type] = $item;
+                    unset($result[$key]);
+                }
             }
 
-            return $result;
+            $result += $invisible;
+
+            return array_values($result);
         }
 
         // We have user entered file; let's build the layout.
 
-        if (!isset($data['non-visible'])) {
-            $data['non-visible'] = [];
-        }
+        // Two last items are always offcanvas and non-visible.
+        $invisible = [
+            'offcanvas' => isset($data['offcanvas']) ? $data['offcanvas'] : [],
+            'non-visible' => isset($data['non-visible']) ? $data['non-visible'] : []
+        ];
+        unset($data['offcanvas'], $data['non-visible']);
+        $data += $invisible;
 
         $result = [];
         foreach ($data as $field => $params) {
@@ -115,7 +127,8 @@ class LayoutReader
 
             $result = (object) [
                 'id' => static::id(),
-                'type' => ($field == 'non-visible' ? $field : 'section'),
+                // TODO: add offcanvas type..
+                'type' => (in_array($field, ['non-visible']) ? $field : 'section'),
                 'subtype' => $field,
                 'title' => ucfirst($field),
                 'attributes' => (object) [],
