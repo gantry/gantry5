@@ -1,0 +1,21 @@
+// Mobile Menu 
+@include breakpoint(mobile-only) {	
+	.g-main-nav {
+		.g-toplevel {
+			background: $mobilemenu-background;
+			> li {
+				&:hover, &.active {
+					background: darken($navigation-background, 4%);
+
+					> .g-menu-item-content {
+						color: $navigation-text-color;
+					}
+				}
+			}							
+		}
+	}
+	.g-mobile-nav-toggle {
+	    color: $accent-color-1;
+	    background: $white;
+	}
+}
