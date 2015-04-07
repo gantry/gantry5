@@ -273,7 +273,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .section > .g-grid > .g-block:last-child, .section > .g-lm-container > .g-grid > .g-block:last-child {
+        .section > .g-grid > .g-block:last-child, .section > .g-lm-container > .g-grid > .g-block:last-child, .offcanvas-section > .g-grid > .g-block:last-child, {
             .particle, .position, .spacer, .pagecontent, .atom {
                 margin-right: 0;
             }
