@@ -1,4 +1,4 @@
-<form method="post" action="{{ gantry.route('menu/edit', id, 'validate') }}">
+<form method="post" action="{{ gantry.route('FIXME') }}" class="menu-editor-extras">
     <div class="card settings-block">
         <h4>
             Pick a Particle
@@ -17,6 +17,7 @@
                                 {% for item_key, item in particle %}
                                     <li class="g5-lm-particle-{{ type|e }}"
                                         data-lm-nodrag
+                                        data-mm-type="particle"
                                         data-lm-blocktype="{{ type|e }}"
                                         data-lm-subtype="{{ item_key|e }}">
                                         {{ item|e }}

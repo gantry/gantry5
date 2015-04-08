@@ -5,6 +5,7 @@ var ready         = require('elements/domready'),
     zen           = require('elements/zen'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
+    extraItems    = require('./extra-items'),
     request       = require('agent'),
     deepEquals    = require('mout/lang/deepEquals'),
     trim          = require('mout/string/trim'),
@@ -30,39 +31,9 @@ ready(function() {
         catchClick: true
     });
 
-    menumanager.on('dragEnd', function(map, mode) { // mode [reorder, resize, evenResize]
-        this.resizer.updateItemSizes();
 
-        var save = $('[data-save]'),
-            current = {
-                settings: this.settings,
-                ordering: this.ordering,
-                items: this.items
-            };
-
-        if (!deepEquals(map, current)) {
-            save.showIndicator('fa fa-fw changes-indicator fa-circle-o');
-        } else {
-            save.hideIndicator();
-        }
-
-        if (this.type == 'particle' && this.isNewParticle) {
-            var blocktype = this.block.data('mm-blocktype');
-            this.block.attribute('data-mm-blocktype', null).data('mm-level', this.targetLevel).addClass('g-menu-item-' + blocktype).data('mm-original-type', blocktype);
-            zen('span.menu-item-type.badge').text(blocktype).after(this.block.find('.menu-item .title'));
-            modal.open({
-                content: 'Loading',
-                method: 'post',
-                //data: data,
-                remote: $(this.block).find('.config-cog').attribute('href') + getAjaxSuffix(),
-                remoteLoaded: function(response, content) {
-                    console.log('loaded');
-                }
-            });
-        }
-
-        this.type = undefined;
-    });
+    // Handles Modules / Particles items in the Menu
+    menumanager.on('dragEnd', extraItems);
 
     module.exports.menumanager = menumanager;
 
@@ -268,19 +239,6 @@ ready(function() {
                 });
             }
         });
-    });
-
-    //// Modules / Particles
-    // selection
-    body.delegate('click', '.menu-editor-particles [data-lm-blocktype], .menu-editor-modules [data-mm-module]', function(event, element){
-        var container = element.parent('.menu-editor-particles, .menu-editor-modules'),
-            elements = container.search('[data-lm-blocktype], [data-mm-module]'),
-            selectButton = container.parent('.g5-content').find('[data-mm-select]');
-
-        elements.removeClass('selected');
-        element.addClass('selected');
-
-        selectButton.attribute('disabled', null);
     });
 });
 
