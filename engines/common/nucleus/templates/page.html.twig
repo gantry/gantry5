@@ -34,15 +34,20 @@
     {%- endblock %}
 
     {% block page_body -%}
+    {% set segment_offcanvas = false %}
     <body{{ gantry.page.bodyAttributes }}>
+        {% for segment in gantry.theme.segments if segment.type == 'offcanvas' %}
+            {% set segment_offcanvas = true %}
+            {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
+        {% endfor %}
         <div id="g-page-surround">
+            {% if segment_offcanvas %}
+            <div class="g-offcanvas-toggle" data-offcanvas-toggle><i class="fa fa-fw fa-bars"></i></div>
+            {% endif %}
             {{ page_top }}
             {{ page_layout }}
             {{ page_bottom }}
         </div>
-        {% for segment in gantry.theme.segments if segment.type == 'offcanvas' %}
-            {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
-        {% endfor %}
     </body>
     {%- endblock %}
 
