@@ -55,18 +55,15 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
                     var container = element.parent('.menu-editor-extras'),
                         selected  = container.find('[data-lm-blocktype].selected, [data-mm-module].selected'),
                         type      = selected.data('mm-type'),
-                        data      = {};
+                        data      = {type: type};
 
                     switch (type) {
                         case 'particle':
-                            data[type] = {
-                                type: selected.data('lm-blocktype'),
-                                subtype: selected.data('lm-subtype')
-                            };
+                            data['particle'] = selected.data('lm-subtype');
                             break;
 
                         case 'module':
-                            data[type] = { module_id: selected.data('mm-module') };
+                            data['module_id'] = selected.data('mm-module');
                             break;
                     }
 
