@@ -1,3 +1,17 @@
+// New Menu Stuff
+#g-offcanvas {
+	position: fixed;
+	z-index: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: $mobile-sidemenu-width;
+	overflow-x: hidden;
+	overflow-y: auto; 
+	text-align: left;
+}
+
 // Mobile Menu Globals
 .g-mobile-nav {
 	.g-toplevel {

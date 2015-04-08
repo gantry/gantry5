@@ -1,3 +1,8 @@
+// Sidepanel Off Canvas Container
+#g-offcanvas {
+	background: $mobilemenu-background;
+}
+
 // Mobile Menu 
 @include breakpoint(mobile-only) {	
 	.g-main-nav {
