@@ -259,6 +259,7 @@ var MenuManager = new prime({
             if (this.placeholder) { this.placeholder.remove(); }
 
             this.type = undefined;
+            this.targetLevel = false;
             this.isParticle = undefined;
             return;
         }
@@ -266,6 +267,7 @@ var MenuManager = new prime({
         var placeholderParent = this.placeholder.parent();
         if (!placeholderParent) {
             this.type = undefined;
+            this.targetLevel = false;
             this.isParticle = undefined;
             return;
         }
