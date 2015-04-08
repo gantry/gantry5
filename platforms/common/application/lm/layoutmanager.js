@@ -266,6 +266,7 @@ var LayoutManager = new prime({
 
     nolocation: function(event) {
         if (this.placeholder) { this.placeholder.remove(); }
+        if (!this.block) { return; }
 
         if (!this.block.isNew()) {
             if ($(event.target).matches(this.eraser.element) || this.eraser.element.find($(event.target))) {
@@ -498,7 +499,7 @@ var LayoutManager = new prime({
 
         if (!this.block) { this.block = get(this.builder.map, element.data('lm-id')); }
         if (this.block && this.block.getType() === 'block') { this.block.setSize(); }
-        if (this.block && this.block.isNew()) { this.element.attribute('style', null); }
+        if (this.block && this.block.isNew() && this.element) { this.element.attribute('style', null); }
 
         if (this.originalType === 'grid') {
             var blocks, block;

@@ -16,9 +16,9 @@ var prime      = require('prime'),
 
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-var MOUSEDOWN = DragEvents.START,
-    MOUSEMOVE = DragEvents.MOVE,
-    MOUSEUP   = DragEvents.STOP,
+var MOUSEDOWN = DragEvents.EVENTS.START,
+    MOUSEMOVE = DragEvents.EVENTS.MOVE,
+    MOUSEUP   = DragEvents.EVENTS.STOP,
     FOCUSIN   = isFirefox ? 'focus' : 'focusin';
 
 var ColorPicker = new prime({
@@ -33,34 +33,13 @@ var ColorPicker = new prime({
 
     attach: function() {
         var body = $('body');
-        body.delegate(MOUSEDOWN, '.colorpicker i', bind(function(event, element) {
-            var input = $(element).sibling('input');
-            input[0].focus();
-            this.show(event, input);
+
+        MOUSEDOWN.forEach(bind(function(mousedown) {
+            body.delegate(mousedown, '.colorpicker i', this.bound('iconClick'));
         }, this));
 
         body.delegate(FOCUSIN, '.colorpicker input', this.bound('show'), true);
 
-        body.on(MOUSEDOWN, bind(function(event) {
-            var target = $(event.target);
-            if (!target.parent('.cp-wrapper') && !target.parent('.colorpicker')) {
-                this.hide();
-            }
-        }, this));
-
-        body.delegate(MOUSEDOWN, '.cp-grid, .cp-slider, .cp-opacity-slider', bind(function(event, element) {
-            event.preventDefault();
-            this.target = element;
-            this.move(this.target, event, true);
-        }, this));
-
-        body.on(MOUSEMOVE, bind(function(event) {
-            if (this.target) { this.move(this.target, event); }
-        }, this));
-
-        body.on(MOUSEUP, bind(function() {
-            this.target = null;
-        }, this));
 
         body.delegate('keydown', '.colorpicker input', bind(function(event, element) {
             switch (event.keyCode) {
@@ -90,12 +69,9 @@ var ColorPicker = new prime({
         }, this));
     },
 
-    hide: function() {
-        if (!this.built) { return; }
-        this.wrapper.removeClass('cp-visible');
-    },
-
     show: function(event, element) {
+        var body = $('body');
+
         if (!this.built) {
             this.build();
         }
@@ -104,16 +80,84 @@ var ColorPicker = new prime({
         this.reposition();
         this.wrapper.addClass('cp-visible');
         this.updateFromInput();
+
+        MOUSEMOVE.forEach(bind(function(mousemove) {
+            body.on(mousemove, this.bound('bodyMove'));
+        }, this));
+
+        MOUSEDOWN.forEach(bind(function(mousedown) {
+            this.wrapper.delegate(mousedown, '.cp-grid, .cp-slider, .cp-opacity-slider', this.bound('bodyDown'));
+            body.on(mousedown, this.bound('bodyClick'));
+        }, this));
+
+        MOUSEUP.forEach(bind(function(mouseup) {
+            body.on(mouseup, this.bound('targetReset'));
+        }, this));
+    },
+
+    hide: function() {
+        var body = $('body');
+
+        if (!this.built) { return; }
+        this.wrapper.removeClass('cp-visible');
+
+        MOUSEMOVE.forEach(bind(function(mousemove) {
+            body.off(mousemove, this.bound('bodyMove'));
+        }, this));
+
+        MOUSEDOWN.forEach(bind(function(mousedown) {
+            this.wrapper.undelegate(mousedown, '.cp-grid, .cp-slider, .cp-opacity-slider', this.bound('bodyDown'));
+            body.off(mousedown, this.bound('bodyClick'));
+        }, this));
+
+        MOUSEUP.forEach(bind(function(mouseup) {
+            body.off(mouseup, this.bound('targetReset'));
+        }, this));
+    },
+
+    iconClick: function(event, element) {
+        event.preventDefault();
+
+        var input = $(element).sibling('input');
+        input[0].focus();
+
+        this.show(event, input);
+    },
+
+    bodyMove: function(event) {
+        event.preventDefault();
+
+        if (this.target) { this.move(this.target, event); }
+    },
+
+    bodyClick: function(event) {
+        var target = $(event.target);
+        if (!target.parent('.cp-wrapper') && !target.parent('.colorpicker')) {
+            this.hide();
+        }
+    },
+
+    bodyDown: function(event, element) {
+        event.preventDefault();
+
+        this.target = element;
+        this.move(this.target, event, true);
+    },
+
+    targetReset: function(event) {
+        event.preventDefault();
+
+        this.target = null;
     },
 
     move: function(target, event) {
-        var input = this.element,
-            picker = target.find('.cp-picker'),
+        var input      = this.element,
+            picker     = target.find('.cp-picker'),
             clientRect = target[0].getBoundingClientRect(),
-            offsetX = clientRect.left + window.scrollX,
-            offsetY = clientRect.top + window.scrollY,
-            x = Math.round(event.pageX - offsetX),
-            y = Math.round(event.pageY - offsetY),
+            offsetX    = clientRect.left + window.scrollX,
+            offsetY    = clientRect.top + window.scrollY,
+            x          = Math.round(event.pageX - offsetX),
+            y          = Math.round(event.pageY - offsetY),
             wx, wy, r, phi;
 
         // Touch support
@@ -179,8 +223,8 @@ var ColorPicker = new prime({
         };
 
         tabs.delegate('click', '> div', bind(function(event, element) {
-            var active = tabs.find('.active'),
-                mode = active.attribute('class').replace(/\s|active|cp-tab-/g, ''),
+            var active  = tabs.find('.active'),
+                mode    = active.attribute('class').replace(/\s|active|cp-tab-/g, ''),
                 newMode = element.attribute('class').replace(/\s|active|cp-tab-/g, '');
 
             this.wrapper.removeClass('cp-mode-' + mode).addClass('cp-mode-' + newMode);
@@ -199,7 +243,7 @@ var ColorPicker = new prime({
 
     updateFromInput: function(dontFireEvent, element) {
         element = this.element || element;
-        var value = element.value(),
+        var value   = element.value(),
             opacity = value.replace(/\s/g, '').match(/^rgba?\([0-9]{1,3},[0-9]{1,3},[0-9]{1,3},(.+)\)/),
             hex, hsb;
 
@@ -346,24 +390,24 @@ var ColorPicker = new prime({
         var hex, hue, saturation, brightness, x, y, r, phi,
 
             // Panel objects
-            grid = this.wrapper.find('.cp-grid'),
-            slider = this.wrapper.find('.cp-slider'),
-            opacitySlider = this.wrapper.find('.cp-opacity-slider'),
+            grid                = this.wrapper.find('.cp-grid'),
+            slider              = this.wrapper.find('.cp-slider'),
+            opacitySlider       = this.wrapper.find('.cp-opacity-slider'),
 
             // Picker objects
-            gridPicker = grid.find('.cp-picker'),
-            sliderPicker = slider.find('.cp-picker'),
-            opacityPicker = opacitySlider.find('.cp-picker'),
+            gridPicker          = grid.find('.cp-picker'),
+            sliderPicker        = slider.find('.cp-picker'),
+            opacityPicker       = opacitySlider.find('.cp-picker'),
 
             // Picker positions
-            gridPos = getCoords(gridPicker, grid),
-            sliderPos = getCoords(sliderPicker, slider),
-            opacityPos = getCoords(opacityPicker, opacitySlider),
+            gridPos             = getCoords(gridPicker, grid),
+            sliderPos           = getCoords(sliderPicker, slider),
+            opacityPos          = getCoords(opacityPicker, opacitySlider),
 
             // Sizes
-            gridWidth = grid[0].getBoundingClientRect().width,
-            gridHeight = grid[0].getBoundingClientRect().height,
-            sliderHeight = slider[0].getBoundingClientRect().height,
+            gridWidth           = grid[0].getBoundingClientRect().width,
+            gridHeight          = grid[0].getBoundingClientRect().height,
+            sliderHeight        = slider[0].getBoundingClientRect().height,
             opacitySliderHeight = opacitySlider[0].getBoundingClientRect().height;
 
         var value = this.element.value();
@@ -653,8 +697,8 @@ ready(function() {
     var x = new ColorPicker(), body = $('body');
     x.on('change', function(element, hex, opacity) {
         clearTimeout(this.timer);
-        var rgb = hex2rgb(hex),
-            yiq = (((rgb.r * 299) + (rgb.g * 587) + (rgb.b * 114)) / 1000) >= 128 ? 'dark' : 'light',
+        var rgb   = hex2rgb(hex),
+            yiq   = (((rgb.r * 299) + (rgb.g * 587) + (rgb.b * 114)) / 1000) >= 128 ? 'dark' : 'light',
             check = yiq == 'dark' || (!opacity || opacity < 0.35);
 
         if (opacity < 1) {
@@ -666,9 +710,9 @@ ready(function() {
 
         element.parent('.colorpicker')[!check ? 'addClass' : 'removeClass']('light-text');
 
-        this.timer = setTimeout(function(){
+        this.timer = setTimeout(function() {
             element.emit('input');
-            body.emit('input', {target: element});
+            body.emit('input', { target: element });
         }, 150);
 
     });
