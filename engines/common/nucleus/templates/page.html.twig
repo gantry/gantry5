@@ -7,7 +7,7 @@
 
 {%- set page_layout %}
     {% block page_layout %}
-    {% for segment in gantry.theme.segments %}
+    {% for segment in gantry.theme.segments if segment.type != 'offcanvas' %}
         {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
     {% endfor %}
     {% endblock %}
@@ -40,6 +40,9 @@
             {{ page_layout }}
             {{ page_bottom }}
         </div>
+        {% for segment in gantry.theme.segments if segment.type == 'offcanvas' %}
+            {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
+        {% endfor %}
     </body>
     {%- endblock %}
 
