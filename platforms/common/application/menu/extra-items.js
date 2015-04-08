@@ -25,7 +25,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
 
     if (this.isParticle && this.isNewParticle) {
         var blocktype = this.block.data('mm-blocktype');
-        this.block.attribute('data-mm-blocktype', null).data('mm-level', this.targetLevel).addClass('g-menu-item-' + blocktype).data('mm-original-type', blocktype);
+        this.block.attribute('data-mm-blocktype', null).addClass('g-menu-item-' + blocktype).data('mm-original-type', blocktype);
         zen('span.menu-item-type.badge').text(blocktype).after(this.block.find('.menu-item .title'));
         modal.open({
             content: 'Loading',

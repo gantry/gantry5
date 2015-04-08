@@ -10,6 +10,8 @@ var prime     = require('prime'),
     get       = require('mout/object/get'),
 
     every     = require('mout/array/every'),
+    last      = require('mout/array/last'),
+    indexOf   = require('mout/array/indexOf'),
     isArray   = require('mout/lang/isArray'),
     isObject  = require('mout/lang/isObject'),
     deepClone = require('mout/lang/deepClone'),
@@ -96,12 +98,18 @@ var MenuManager = new prime({
         this.isParticle = element.matches('[data-mm-blocktype]') || element.matches('[data-mm-original-type]');
         this.wasActive = element.hasClass('active');
         this.isNewParticle = element.parent('.g5-mm-particles-picker');
+        this.ParticleIndex = -1;
         this.root = root;
 
         this.itemID = element.data('mm-id');
         this.itemLevel = element.data('mm-level');
         this.itemFrom = element.parent('[data-mm-id]');
         this.itemTo = null;
+
+        if (this.isParticle && !this.isNewParticle) {
+            var children = element.parent().children('[data-mm-id]');
+            this.ParticleIndex = indexOf(children, element[0]);
+        }
 
         root.addClass('moving');
 
@@ -250,6 +258,7 @@ var MenuManager = new prime({
     },
 
     stop: function(event, target, element) {
+        target = $(target);
         if (target) { element.removeClass('active'); }
         if (this.type == 'column') {
             this.root.search('.g-block > *').attribute('style', null);
@@ -285,7 +294,18 @@ var MenuManager = new prime({
         this.block.after(this.placeholder);
         this.placeholder.remove();
         this.itemTo = this.block.parent('[data-mm-id]');
+        this.currentLevel = this.itemLevel;
         if (this.wasActive) { element.addClass('active'); }
+
+        if (this.isParticle) {
+            var id = last(this.itemID.split('/')),
+                targetItem = (target || this.itemTo),
+                base = targetItem[target ? 'parent' : 'find']('[data-mm-base]').data('mm-base');
+
+            this.itemID = base ? base + '/' + id : id;
+            this.itemLevel = this.targetLevel;
+            this.block.data('mm-id', this.itemID).data('mm-level', this.targetLevel);
+        }
 
         var path = this.itemID.split('/'),
             items, column;
@@ -313,6 +333,13 @@ var MenuManager = new prime({
 
                 this.ordering[path][column] = items;
             }, this);
+
+            // Refresh the origin if it's a particle
+            base = this.itemFrom ? (this.itemFrom.attribute('data-mm-base') !== null ? this.itemFrom : this.itemFrom.find('[data-mm-base]')) : null;
+            if (this.isParticle && base && this.targetLevel != this.currentLevel) {
+                var list = (this.itemFrom.data('mm-id').match(/\d+$/) || [0])[0];
+                this.ordering[base.data('mm-base') || ''][list].splice(this.ParticleIndex, 1);
+            }
         }
 
         // Column reordering, we just need to swap the array indexes
