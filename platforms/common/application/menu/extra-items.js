@@ -1,6 +1,7 @@
 "use strict";
 var $             = require('elements'),
     zen           = require('elements/zen'),
+    ready         = require('elements/domready'),
     modal         = require('../ui').modal,
     request       = require('agent'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
@@ -33,44 +34,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
             //data: data,
             remote: $(this.block).find('.config-cog').attribute('href') + getAjaxSuffix(),
             remoteLoaded: function(response, content) {
-                //// Modules / Particles
-                // selection
-                content.elements.container.delegate('click', '.menu-editor-extras [data-lm-blocktype], .menu-editor-extras [data-mm-module]', function(event, element) {
-                    var container    = element.parent('.menu-editor-extras'),
-                        elements     = container.search('[data-lm-blocktype], [data-mm-module]'),
-                        selectButton = container.find('[data-mm-select]');
 
-                    elements.removeClass('selected');
-                    element.addClass('selected');
-
-                    selectButton.attribute('disabled', null);
-                });
-
-                // second step
-                content.elements.container.delegate('click', '.menu-editor-extras [data-mm-select]', function(event, element) {
-                    event.preventDefault();
-
-                    if (element.hasClass('disabled') || element.attribute('disabled')) { return false; }
-
-                    var container = element.parent('.menu-editor-extras'),
-                        selected  = container.find('[data-lm-blocktype].selected, [data-mm-module].selected'),
-                        type      = selected.data('mm-type'),
-                        data      = {type: type};
-
-                    switch (type) {
-                        case 'particle':
-                            data['particle'] = selected.data('lm-subtype');
-                            break;
-
-                        case 'module':
-                            data['module_id'] = selected.data('mm-module');
-                            break;
-                    }
-
-                    element.showIndicator();
-
-                    StepTwo(data, content.elements.content, element);
-                });
             }
         });
     }
@@ -98,5 +62,47 @@ var StepTwo = function(data, content, button) {
         content.html(response.body.html);
     });
 };
+
+
+ready(function(){
+    var body = $('body');
+    
+    body.delegate('click', '.menu-editor-extras [data-lm-blocktype], .menu-editor-extras [data-mm-module]', function(event, element) {
+        var container    = element.parent('.menu-editor-extras'),
+            elements     = container.search('[data-lm-blocktype], [data-mm-module]'),
+            selectButton = container.find('[data-mm-select]');
+
+        elements.removeClass('selected');
+        element.addClass('selected');
+
+        selectButton.attribute('disabled', null);
+    });
+
+    // second step
+    body.delegate('click', '.menu-editor-extras [data-mm-select]', function(event, element) {
+        event.preventDefault();
+
+        if (element.hasClass('disabled') || element.attribute('disabled')) { return false; }
+
+        var container = element.parent('.menu-editor-extras'),
+            selected  = container.find('[data-lm-blocktype].selected, [data-mm-module].selected'),
+            type      = selected.data('mm-type'),
+            data      = {type: type};
+
+        switch (type) {
+            case 'particle':
+                data['particle'] = selected.data('lm-subtype');
+                break;
+
+            case 'module':
+                data['module_id'] = selected.data('mm-module');
+                break;
+        }
+
+        element.showIndicator();
+
+        StepTwo(data, element.parent('.g5-content'), element);
+    });
+});
 
 module.exports = StepOne;
