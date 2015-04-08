@@ -43,7 +43,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
 };
 
 var StepTwo = function(data, content, button) {
-    var uri = content.find('form').attribute('action');
+    var uri = content.find('[data-mm-particle-stepone]').data('mm-particle-stepone');
 
     request('post', uri + getAjaxSuffix(), data, function(error, response) {
         if (!response.body.success) {
@@ -66,7 +66,7 @@ var StepTwo = function(data, content, button) {
 
 ready(function(){
     var body = $('body');
-    
+
     body.delegate('click', '.menu-editor-extras [data-lm-blocktype], .menu-editor-extras [data-mm-module]', function(event, element) {
         var container    = element.parent('.menu-editor-extras'),
             elements     = container.search('[data-lm-blocktype], [data-mm-module]'),
