@@ -7,6 +7,7 @@ var $             = require('elements'),
     deepEquals    = require('mout/lang/deepEquals');
 
 var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
+    if (mode !== 'reorder') { return; }
     this.resizer.updateItemSizes();
 
     var save    = $('[data-save]'),
