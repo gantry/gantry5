@@ -1,6 +1,7 @@
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
+    bind       = require('mout/function/bind'),
     zen        = require('elements/zen'),
     Emitter    = require('prime/emitter'),
     Bound      = require('prime-util/prime/bound'),
@@ -324,8 +325,13 @@ var LayoutManager = new prime({
 
         this.eraser.hide();
 
-        $(document).off(this.dragdrop.EVENTS.MOVE, this.dragdrop.bound('move'));
-        $(document).off(this.dragdrop.EVENTS.STOP, this.dragdrop.bound('stop'));
+        this.dragdrop.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
+            $('body').off(event, this.dragdrop.bound('move'));
+        }, this));
+
+        this.dragdrop.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
+            $('body').off(event, this.dragdrop.bound('stop'));
+        }, this));
 
         this.builder.remove(this.block.getId());
 
