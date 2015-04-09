@@ -3,6 +3,11 @@
 	background: $mobilemenu-background;
 }
 
+.g-offcanvas-toggle {
+	font-size: $core-font-size + 0.5;
+	color: $white;
+}
+
 // Mobile Menu 
 @include breakpoint(mobile-only) {	
 	.g-main-nav {
