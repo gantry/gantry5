@@ -1,6 +1,7 @@
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
+    bind       = require('mout/function/bind'),
     zen        = require('elements/zen'),
     Emitter    = require('prime/emitter'),
     Bound      = require('prime-util/prime/bound'),
@@ -268,8 +269,11 @@ var LayoutManager = new prime({
         if (this.placeholder) { this.placeholder.remove(); }
         if (!this.block) { return; }
 
+        var target = event.type.match(/^touch/i) ? document.elementFromPoint(event.touches.item(0).clientX, event.touches.item(0).clientY) : event.target;
+
         if (!this.block.isNew()) {
-            if ($(event.target).matches(this.eraser.element) || this.eraser.element.find($(event.target))) {
+            target = $(target);
+            if (target.matches(this.eraser.element) || this.eraser.element.find(target)) {
                 this.dragdrop.removeElement = true;
                 this.eraser.over();
             } else {
@@ -324,8 +328,13 @@ var LayoutManager = new prime({
 
         this.eraser.hide();
 
-        $(document).off(this.dragdrop.EVENTS.MOVE, this.dragdrop.bound('move'));
-        $(document).off(this.dragdrop.EVENTS.STOP, this.dragdrop.bound('stop'));
+        this.dragdrop.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
+            $('body').off(event, this.dragdrop.bound('move'));
+        }, this));
+
+        this.dragdrop.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
+            $('body').off(event, this.dragdrop.bound('stop'));
+        }, this));
 
         this.builder.remove(this.block.getId());
 
