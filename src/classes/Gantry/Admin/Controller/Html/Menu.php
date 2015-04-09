@@ -23,6 +23,7 @@ use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Menu as MenuObject;
+use Gantry\Framework\Platform;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -33,22 +34,26 @@ class Menu extends HtmlController
             '/'                  => 'item',
             '/*'                 => 'item',
             '/*/**'              => 'item',
+            '/particle'          => 'particle',
+            '/create'            => 'undefined',
+            '/create/module'     => 'createModule',
+            '/create/particle'   => 'createParticle',
             '/edit'              => 'undefined',
             '/edit/*'            => 'edit',
-            '/edit/*/__module'   => 'menuitem_module',
-            '/edit/*/__particle' => 'menuitem_particle',
-            '/edit/*/**'         => 'menuitem',
+            '/edit/*/**'         => 'editItem',
         ],
         'POST'   => [
-            '/'                => 'save',
-            '/*'               => 'save',
-            '/*/**'            => 'item',
-            '/edit'            => 'undefined',
-            '/edit/*'          => 'edit',
-            '/edit/*/__module'   => 'menuitem_module',
-            '/edit/*/__particle' => 'menuitem_particle',
-            '/edit/*/**'       => 'menuitem',
-            '/edit/*/validate' => 'validate',
+            '/'                  => 'save',
+            '/*'                 => 'save',
+            '/*/**'              => 'item',
+            '/particle'          => 'particle',
+            '/create'            => 'undefined',
+            '/create/module'     => 'createModule',
+            '/create/particle'   => 'createParticle',
+            '/edit'              => 'undefined',
+            '/edit/*'            => 'edit',
+            '/edit/*/**'         => 'editItem',
+            '/edit/*/validate'   => 'validate',
         ],
         'PUT'    => [
             '/*' => 'replace'
@@ -138,7 +143,7 @@ class Menu extends HtmlController
         $file->save($data->toArray());
     }
 
-    public function menuitem($id)
+    public function editItem($id)
     {
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
@@ -178,19 +183,59 @@ class Menu extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/pages/menu/menuitem.html.twig', $this->params);
     }
 
-    public function menuitem_module($id)
+    public function particle()
     {
-        $this->params['modules'] = $this->container['platform']->listModules();
+        $name = isset($_POST['particle']) ? $_POST['particle'] : null;
+
+        $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml")->content());
+        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+
+        $item = new \stdClass();
+        $item->type    = $blueprints->get('type', 'particle');
+        $item->title   = $blueprints->get('name');
+        if (!isset($item->attributes)) {
+            $item->attributes = new \stdClass;
+        }
+        if (isset($_POST['block'])) {
+            $item->block = (object) $_POST['block'];
+        }
+
+        $attributes = isset($_POST['options']) && is_array($_POST['options']) ? $_POST['options'] : [];
+
+        // TODO: Use blueprints to merge configuration.
+        $item->attributes = (object) ($attributes + (array) $item->attributes);
+
+        $this->params['id'] = $name;
+        $this->params += [
+            'block'         => $block,
+            'item'          => $item,
+            'data'          => ['particles' => [$name => $item->attributes]],
+            'prefix'        => "particles.{$name}.",
+            'particle'      => $blueprints,
+            'parent'        => 'settings',
+            'route'         => "menu.particle",
+            'action'        => 'menu/particle/validate',
+            'skip'          => ['enabled']
+        ];
+
+        return $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params);
+    }
+
+    public function createModule()
+    {
+        /** @var Platform $platform */
+        $platform = $this->container['platform'];
+
+        $this->params['modules'] = $platform->listModules();
 
         return $this->container['admin.theme']->render('@gantry-admin/menu/module.html.twig', $this->params);
     }
 
-    public function menuitem_particle($id)
+    public function createParticle()
     {
         $groups = [
             'Positions' => ['position' => [], 'spacer' => [], 'pagecontent' => []],
             'Particles' => ['particle' => []],
-            'Atoms' => ['atom' => []]
         ];
 
         $particles = [
@@ -198,10 +243,10 @@ class Menu extends HtmlController
             'spacer'      => [],
             'pagecontent' => [],
             'particle' => [],
-            'atom' => []
         ];
 
         $particles = array_replace($particles, $this->getParticles());
+        unset($particles['atom']);
 
         foreach ($particles as &$group) {
             asort($group);
