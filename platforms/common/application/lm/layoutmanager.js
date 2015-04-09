@@ -269,8 +269,11 @@ var LayoutManager = new prime({
         if (this.placeholder) { this.placeholder.remove(); }
         if (!this.block) { return; }
 
+        var target = event.type.match(/^touch/i) ? document.elementFromPoint(event.touches.item(0).clientX, event.touches.item(0).clientY) : event.target;
+
         if (!this.block.isNew()) {
-            if ($(event.target).matches(this.eraser.element) || this.eraser.element.find($(event.target))) {
+            target = $(target);
+            if (target.matches(this.eraser.element) || this.eraser.element.find(target)) {
                 this.dragdrop.removeElement = true;
                 this.eraser.over();
             } else {

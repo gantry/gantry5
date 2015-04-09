@@ -1754,6 +1754,7 @@ module.exports = {
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
+    bind       = require('mout/function/bind'),
     zen        = require('elements/zen'),
     Emitter    = require('prime/emitter'),
     Bound      = require('prime-util/prime/bound'),
@@ -2021,8 +2022,11 @@ var LayoutManager = new prime({
         if (this.placeholder) { this.placeholder.remove(); }
         if (!this.block) { return; }
 
+        var target = event.type.match(/^touch/i) ? document.elementFromPoint(event.touches.item(0).clientX, event.touches.item(0).clientY) : event.target;
+
         if (!this.block.isNew()) {
-            if ($(event.target).matches(this.eraser.element) || this.eraser.element.find($(event.target))) {
+            target = $(target);
+            if (target.matches(this.eraser.element) || this.eraser.element.find(target)) {
                 this.dragdrop.removeElement = true;
                 this.eraser.over();
             } else {
@@ -2077,8 +2081,13 @@ var LayoutManager = new prime({
 
         this.eraser.hide();
 
-        $(document).off(this.dragdrop.EVENTS.MOVE, this.dragdrop.bound('move'));
-        $(document).off(this.dragdrop.EVENTS.STOP, this.dragdrop.bound('stop'));
+        this.dragdrop.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
+            $('body').off(event, this.dragdrop.bound('move'));
+        }, this));
+
+        this.dragdrop.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
+            $('body').off(event, this.dragdrop.bound('stop'));
+        }, this));
 
         this.builder.remove(this.block.getId());
 
@@ -2270,7 +2279,7 @@ var LayoutManager = new prime({
 
 module.exports = LayoutManager;
 
-},{"../ui/drag.drop":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/ui/drag.drop.js","../utils/elements.utils":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/utils/elements.utils.js","./blocks":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/blocks/index.js","./drag.resizer":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/drag.resizer.js","./eraser":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/eraser.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/zen.js","mout/array/every":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/array/every.js","mout/collection/find":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/collection/find.js","mout/lang/deepEquals":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/deepEquals.js","mout/lang/isArray":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/isArray.js","mout/lang/isObject":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/isObject.js","mout/number/enforcePrecision":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/number/enforcePrecision.js","mout/object/get":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/object/get.js","mout/object/keys":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/object/keys.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/index.js","prime-util/prime/bound":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime-util/prime/bound.js","prime-util/prime/options":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime-util/prime/options.js","prime/emitter":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/emitter.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/main.js":[function(require,module,exports){
+},{"../ui/drag.drop":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/ui/drag.drop.js","../utils/elements.utils":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/utils/elements.utils.js","./blocks":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/blocks/index.js","./drag.resizer":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/drag.resizer.js","./eraser":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/eraser.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/zen.js","mout/array/every":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/array/every.js","mout/collection/find":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/collection/find.js","mout/function/bind":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/function/bind.js","mout/lang/deepEquals":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/deepEquals.js","mout/lang/isArray":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/isArray.js","mout/lang/isObject":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/isObject.js","mout/number/enforcePrecision":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/number/enforcePrecision.js","mout/object/get":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/object/get.js","mout/object/keys":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/object/keys.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/index.js","prime-util/prime/bound":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime-util/prime/bound.js","prime-util/prime/options":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime-util/prime/options.js","prime/emitter":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/emitter.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/main.js":[function(require,module,exports){
 var $             = require('elements'),
     ready         = require('elements/domready'),
     request       = require('agent'),
@@ -6235,11 +6244,11 @@ var DragDrop = new prime({
         });
 
         this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
-            $(document).on(event, this.bound('move'));
+            $('body').on(event, this.bound('move'));
         }, this));
 
         this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-            $(document).on(event, this.bound('stop'));
+            $('body').on(event, this.bound('stop'));
         }, this));
 
         this.emit('dragdrop:start', event, this.element);
@@ -6261,11 +6270,11 @@ var DragDrop = new prime({
             this.emit('dragdrop:click', event, this.element);
 
             this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
-                $(document).off(event, this.bound('move'));
+                $('body').off(event, this.bound('move'));
             }, this));
 
             this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-                $(document).off(event, this.bound('stop'));
+                $('body').off(event, this.bound('stop'));
             }, this));
 
             this.element = null;
@@ -6277,11 +6286,11 @@ var DragDrop = new prime({
 
         if (this.removeElement) {
             this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
-                $(document).off(event, this.bound('move'));
+                $('body').off(event, this.bound('move'));
             }, this));
 
             this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-                $(document).off(event, this.bound('stop'));
+                $('body').off(event, this.bound('stop'));
             }, this));
 
             return this.emit('dragdrop:stop:erase', event, this.element);
@@ -6324,11 +6333,11 @@ var DragDrop = new prime({
         }
 
         this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
-            $(document).off(event, this.bound('move'));
+            $('body').off(event, this.bound('move'));
         }, this));
 
         this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-            $(document).off(event, this.bound('stop'));
+            $('body').off(event, this.bound('stop'));
         }, this));
 
         this.element = null;
