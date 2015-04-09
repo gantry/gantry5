@@ -2694,11 +2694,11 @@ var Resizer = new prime({
 
 
         this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
-            $(document).off(event, this.bound('move'));
+            $(document).on(event, this.bound('move'));
         }, this));
 
         this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-            $(document).off(event, this.bound('stop'));
+            $(document).on(event, this.bound('stop'));
         }, this));
     },
 
