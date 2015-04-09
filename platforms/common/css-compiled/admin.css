@@ -2330,6 +2330,15 @@ a {
 #g5-container .menu-editor-particles ul:last-child, #g5-container .menu-editor-modules ul:last-child {
   margin: 0;
 }
+#g5-container .menu-editor-particles .module-infos, #g5-container .menu-editor-modules .module-infos {
+  position: absolute;
+  top: 0;
+  right: 7px;
+  color: #BBB;
+}
+#g5-container .menu-editor-particles .module-infos .g-tooltip-right:before, #g5-container .menu-editor-modules .module-infos .g-tooltip-right:before {
+  right: 0.1rem;
+}
 #g5-container .menu-editor-particles [data-lm-blocktype], #g5-container .menu-editor-particles [data-mm-module], #g5-container .menu-editor-modules [data-lm-blocktype], #g5-container .menu-editor-modules [data-mm-module] {
   display: inline-block;
   margin: 0.3em;

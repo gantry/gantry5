@@ -408,6 +408,17 @@ $submenu-ratio:                 60px;
 		margin: 0;
 	}
 
+	.module-infos {
+		position: absolute;
+		top: 0;
+		right: 7px;
+		color: #BBB;
+
+		.g-tooltip-right:before {
+			right: 0.1rem;
+		}
+	}
+
 	[data-lm-blocktype], [data-mm-module] {
 		display: inline-block;
 		margin: 0.3em;
