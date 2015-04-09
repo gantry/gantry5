@@ -2907,6 +2907,51 @@ var StepTwo = function(data, content, button) {
 
         var urlTemplate = content.find('.g-urltemplate');
         if (urlTemplate) { $('body').emit('input', {target: urlTemplate}); }
+
+        var form       = content.find('form'),
+            submit     = content.find('input[type="submit"], button[type="submit"]'),
+            dataString = [];
+
+        if (!form || !submit) { return true; }
+
+        // Particle Settings apply
+        submit.on('click', function(e) {
+            e.preventDefault();
+            dataString = [];
+
+            submit.showIndicator();
+
+            $(form[0].elements).forEach(function(input) {
+                input = $(input);
+                var name     = input.attribute('name'),
+                    value    = input.value(),
+                    parent   = input.parent('.settings-param'),
+                    override = parent ? parent.find('> input[type="checkbox"]') : null;
+
+                if (!name || input.disabled() || (override && !override.checked())) { return; }
+                dataString.push(name + '=' + encodeURIComponent(value));
+            });
+
+            var title = content.find('[data-title-editable]');
+            if (title) {
+                dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
+            }
+
+            request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
+                if (!response.body.success) {
+                    modal.open({
+                        content: response.body.html || response.body,
+                        afterOpen: function(container) {
+                            if (!response.body.html) { container.style({ width: '90%' }); }
+                        }
+                    });
+                } else {
+                    console.log('missing bits!');
+                }
+
+                submit.hideIndicator();
+            });
+        });
     });
 };
 

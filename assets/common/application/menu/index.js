@@ -43,6 +43,12 @@ ready(function() {
     DetectMouse(function(mode) {
         module.exports.menu = new Menu(mode);
     });
+
+    var nav = $('nav.g-main-nav'),
+        target = $('#g-mobilemenu-container'),
+        clone = nav[0].cloneNode(true);
+
+    $(clone).bottom(target);
 });
 
 module.exports = {};
