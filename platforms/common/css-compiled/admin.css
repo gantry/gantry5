@@ -112,6 +112,7 @@ a {
   background-color: #eee;
   color: #9d9d9d;
   padding: 3px 6px;
+  text-shadow: none;
 }
 #g5-container .cards-wrapper {
   margin: -10px -1%;
