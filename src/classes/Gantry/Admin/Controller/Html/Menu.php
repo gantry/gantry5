@@ -24,6 +24,7 @@ use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Menu as MenuObject;
 use Gantry\Framework\Platform;
+use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -35,9 +36,10 @@ class Menu extends HtmlController
             '/*'                 => 'item',
             '/*/**'              => 'item',
             '/particle'          => 'particle',
-            '/create'            => 'undefined',
-            '/create/module'     => 'createModule',
-            '/create/particle'   => 'createParticle',
+            '/particle/*'        => 'validateParticle',
+            '/select'            => 'undefined',
+            '/select/particle'   => 'selectParticle',
+            '/select/module'     => 'selectModule',
             '/edit'              => 'undefined',
             '/edit/*'            => 'edit',
             '/edit/*/**'         => 'editItem',
@@ -47,9 +49,10 @@ class Menu extends HtmlController
             '/*'                 => 'save',
             '/*/**'              => 'item',
             '/particle'          => 'particle',
-            '/create'            => 'undefined',
-            '/create/module'     => 'createModule',
-            '/create/particle'   => 'createParticle',
+            '/particle/*'        => 'validateParticle',
+            '/select'            => 'undefined',
+            '/select/particle'   => 'selectParticle',
+            '/select/module'     => 'selectModule',
             '/edit'              => 'undefined',
             '/edit/*'            => 'edit',
             '/edit/*/**'         => 'editItem',
@@ -204,35 +207,79 @@ class Menu extends HtmlController
         $item = new Config($data, $callable);
         $item->set('type', $blueprints->get('type', 'particle'));
         $item->def('title', $blueprints->get('name'));
-        if (!isset($item->attributes)) {
-            $item->attributes = new \stdClass;
+        if (!isset($item->options)) {
+            $item->options = new \stdClass;
         }
         if (isset($_POST['block'])) {
             $item->block = (object) $_POST['block'];
         }
 
-        $attributes = isset($_POST['options']) && is_array($_POST['options']) ? $_POST['options'] : [];
+        $options= isset($_POST['options']) && is_array($_POST['options']) ? $_POST['options'] : [];
 
         // TODO: Use blueprints to merge configuration.
-        $item->attributes = (object) ($attributes + (array) $item->attributes);
+        $item->options = (object) ($options + (array) $item->options);
 
         $this->params['id'] = $name;
         $this->params += [
             'block'         => $block,
             'item'          => $item,
-            'data'          => ['particles' => [$name => $item->attributes]],
-            'prefix'        => "particles.{$name}.",
+            'data'          => ['particles' => [$name => $item->options]],
+            'prefix'        => "particle.",
             'particle'      => $blueprints,
             'parent'        => 'settings',
             'route'         => "menu.particle",
-            'action'        => 'menu/particle/validate',
+            'action'        => "menu/particle/{$name}",
             'skip'          => ['enabled']
         ];
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params);
     }
 
-    public function createModule()
+
+    public function validateParticle($name)
+    {
+        // Validate only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
+        /** @var Request $request */
+        $request = $this->container['request'];
+
+        // Load particle blueprints and default settings.
+        $validator = new Blueprints();
+        $validator->embed('options', $this->container['particles']->get($name));
+
+        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+
+        // Create configuration from the defaults.
+        $data = new Config([],
+            function () use ($validator) {
+                return $validator;
+            }
+        );
+
+        $data->set('type', 'particle');
+        $data->set('particle', $name);
+        $data->def('title', $blueprints->get('name'));
+        $data->set('options.particle', $request->getArray('particle'));
+        $data->def('options.particle.enabled', 1);
+
+        $block = $request->getArray('block');
+        foreach ($block as $key => $param) {
+            if ($param === '') {
+                unset($block[$key]);
+            }
+        }
+
+        $data->join('options.block', $block);
+
+        // TODO: validate
+
+        return new JsonResponse(['data' => $data->toArray()]);
+    }
+
+    public function selectModule()
     {
         /** @var Platform $platform */
         $platform = $this->container['platform'];
@@ -242,7 +289,7 @@ class Menu extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/menu/module.html.twig', $this->params);
     }
 
-    public function createParticle()
+    public function selectParticle()
     {
         $groups = [
             'Positions' => ['position' => [], 'spacer' => [], 'pagecontent' => []],
