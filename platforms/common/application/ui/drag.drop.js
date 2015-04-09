@@ -142,11 +142,11 @@ var DragDrop = new prime({
         });
 
         this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
-            $(document).on(event, this.bound('move'));
+            $('body').on(event, this.bound('move'));
         }, this));
 
         this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-            $(document).on(event, this.bound('stop'));
+            $('body').on(event, this.bound('stop'));
         }, this));
 
         this.emit('dragdrop:start', event, this.element);
@@ -168,11 +168,11 @@ var DragDrop = new prime({
             this.emit('dragdrop:click', event, this.element);
 
             this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
-                $(document).off(event, this.bound('move'));
+                $('body').off(event, this.bound('move'));
             }, this));
 
             this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-                $(document).off(event, this.bound('stop'));
+                $('body').off(event, this.bound('stop'));
             }, this));
 
             this.element = null;
@@ -184,11 +184,11 @@ var DragDrop = new prime({
 
         if (this.removeElement) {
             this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
-                $(document).off(event, this.bound('move'));
+                $('body').off(event, this.bound('move'));
             }, this));
 
             this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-                $(document).off(event, this.bound('stop'));
+                $('body').off(event, this.bound('stop'));
             }, this));
 
             return this.emit('dragdrop:stop:erase', event, this.element);
@@ -231,11 +231,11 @@ var DragDrop = new prime({
         }
 
         this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
-            $(document).off(event, this.bound('move'));
+            $('body').off(event, this.bound('move'));
         }, this));
 
         this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-            $(document).off(event, this.bound('stop'));
+            $('body').off(event, this.bound('stop'));
         }, this));
 
         this.element = null;
