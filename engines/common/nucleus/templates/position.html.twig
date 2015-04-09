@@ -2,8 +2,8 @@
 
 {% set html %}
     {% if (segment.attributes.enabled is null or segment.attributes.enabled) and (position.enabled is null or position.enabled) %}
-        {% include ['particles/position.html.twig',
-        '@particles/position.html.twig'] with { gantry: gantry, site: site, page: gantry.page, position: position } only %}
+        {% include ['particles/' ~ segment.subtype|default('position') ~ '.html.twig',
+        '@particles/' ~ segment.subtype|default('position') ~ '.html.twig'] with { gantry: gantry, site: site, page: gantry.page, position: position } only %}
     {% endif %}
 {% endset %}
 

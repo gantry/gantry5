@@ -1,5 +1,5 @@
-name: Module Position
-description: Display a module position.
+name: Module Instance
+description: Display a module instance.
 type: position
 hidden: false
 
@@ -11,14 +11,14 @@ form:
       description: Globally enable module positions.
       default: true
 
-    key:
+    module_id:
       type: input.text
-      label: Key
-      description: Position name.
+      label: Module Id
+      description: Enter module Id.
       overridable: false
 
     chrome:
       type: input.text
       label: Chrome
-      description: Module chrome in this position.
+      description: Module chrome.
       placeholder: xhtml
