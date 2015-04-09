@@ -9,7 +9,7 @@
 }
 
 // Mobile Menu 
-@include breakpoint(mobile-only) {	
+#g-offcanvas {
 	.g-main-nav {
 		.g-toplevel {
 			background: $mobilemenu-background;
@@ -24,8 +24,8 @@
 			}							
 		}
 	}
-	.g-mobile-nav-toggle {
-	    color: $accent-color-1;
-	    background: $white;
-	}
+}
+
+#g-mobilemenu-container {
+	margin: -($content-padding + $content-margin);
 }
