@@ -255,8 +255,7 @@ ready(function() {
 
 });
 
-
-module.exports = {
+var modules = {
     /*mout    : require('mout'),
      prime   : require('prime'),
      "$"     : elements,
@@ -273,3 +272,6 @@ module.exports = {
     zen: require('elements/zen'),
     moofx: require('moofx')
 };
+
+window.G5 = modules;
+module.exports = modules;

@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
     grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
         sass: {
             dist: {
                 options: {
@@ -17,36 +18,85 @@ module.exports = function(grunt) {
                 }]
             }
         },
-        wrapup: {
-            build: {
-                requires: {
-                    'G5': './application/main.js'
-                },
+
+        browserify: {
+            options: {
+                debug: true
+            },
+            dev: {
                 options: {
-                    output: 'js/main.js',
-                    sourcemap: 'js/main.js.map',
-                    sourcemapRoot: '../',
-                    sourcemapURL: 'main.js.map',
-                    compress: false
+                    watch: true,
+                    browserifyOptions: {
+                        debug: true
+                    },
+                    postBundleCB: function(err, src, cb) {
+                        var through = require('through');
+                        var stream = through().pause().queue(src).end();
+                        var buffer = '';
+                        stream.pipe(require('mold-source-map').transformSourcesRelativeTo(__dirname + '/application')).pipe(through(function(chunk) {
+                            buffer += chunk.toString();
+                        }, function() {
+                            cb(err, buffer);
+                        }));
+                        stream.resume();
+
+                        grunt.task.run('exorcise');
+                    }
+                },
+                src: ['application/main.js'], // src: '<%= browserify.dev.src %>',
+                dest: 'js/main.js'
+            },
+            prod: {
+                options: {
+                    postBundleCB: function(err, src, cb){
+                        cb(err, src);
+                        grunt.task.run('uglify');
+                    }
+                },
+                src: ['application/main.js'], // src: '<%= browserify.dev.src %>',
+                dest: 'js/main.js'
+            }
+        },
+
+        exorcise: {
+            bundle: {
+                options: {
+                    root: '/G5'
+                },
+                files: {
+                    'js/main.js.map': ['js/main.js']
                 }
             }
         },
+
+        uglify: {
+            options: {
+                banner: '/*! <%= pkg.name %> - <%= grunt.template.today("yyyy-mm-dd") %> */'
+            },
+            target: {
+                files: {
+                    'js/main.js': ['js/main.js']
+                }
+            }
+
+        },
+
         watch: {
             css: {
                 files: 'scss/**/*.scss',
                 tasks: ['sass']
-            },
-
-            js: {
-                files: ['application/**/*.js', 'Gruntfile.js'],
-                tasks: ['wrapup']
             }
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-wrapup');
-    grunt.registerTask('default', ['watch']);
-    grunt.registerTask('all', ['sass', 'wrapup']);
+    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-exorcise');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+
+    grunt.registerTask('default', ['browserify', 'watch']);
+    grunt.registerTask('js', ['browserify']);
+    grunt.registerTask('css', ['sass']);
+    grunt.registerTask('all', ['sass', 'browserify']);
 };
