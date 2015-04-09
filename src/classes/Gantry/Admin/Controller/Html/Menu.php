@@ -276,7 +276,7 @@ class Menu extends HtmlController
 
         // TODO: validate
 
-        return new JsonResponse(['data' => $data->toArray()]);
+        return new JsonResponse(['item' => $data->toArray(), 'html' => 'TODO']);
     }
 
     public function selectModule()
