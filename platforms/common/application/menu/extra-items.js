@@ -100,7 +100,7 @@ ready(function(){
             case 'module':
                 data['particle'] = type;
                 data['title'] = selected.find('[data-mm-title]').data('mm-title');
-                data['attributes'] = { module_id: selected.data('mm-module') };
+                data['options'] = { module_id: selected.data('mm-module') };
                 break;
         }
 
