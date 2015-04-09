@@ -1,0 +1,21 @@
+#g-offcanvas {
+	position: fixed;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow-x: hidden;
+	overflow-y: auto; 
+	text-align: left;
+}
+
+.g-offcanvas-toggle {
+	display: block;
+	position: absolute;
+	top: 0.7rem;
+	left: 0.7rem;
+	z-index: 10;
+	line-height: 1;
+	cursor: pointer;
+}
