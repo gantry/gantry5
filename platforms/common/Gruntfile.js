@@ -26,6 +26,7 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     watch: true,
+                    //transform: [exorcist('js/main.js.map', 'main.js.map', '/G5')],
                     browserifyOptions: {
                         debug: true
                     },
@@ -33,14 +34,13 @@ module.exports = function(grunt) {
                         var through = require('through');
                         var stream = through().pause().queue(src).end();
                         var buffer = '';
-                        stream.pipe(require('mold-source-map').transformSourcesRelativeTo(__dirname + '/application')).pipe(through(function(chunk) {
-                            buffer += chunk.toString();
-                        }, function() {
-                            cb(err, buffer);
-                        }));
-                        stream.resume();
 
-                        grunt.task.run('exorcise');
+                        stream
+                            .pipe(require('mold-source-map').transformSourcesRelativeTo(__dirname + '/application'))
+                            .pipe(require('exorcist')('js/main.js.map', 'main.js.map', '/G5'))
+                            .pipe(through(function(chunk) { buffer += chunk.toString(); }, function() { cb(err, buffer); }));
+
+                        stream.resume();
                     }
                 },
                 src: ['application/main.js'], // src: '<%= browserify.dev.src %>',
@@ -95,8 +95,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-exorcise');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
-    grunt.registerTask('default', ['browserify', 'watch']);
-    grunt.registerTask('js', ['browserify']);
+    grunt.registerTask('default', ['browserify:dev', 'exorcise', 'watch']);
+    grunt.registerTask('js', ['browserify:prod']);
     grunt.registerTask('css', ['sass']);
     grunt.registerTask('all', ['sass', 'browserify']);
 };
