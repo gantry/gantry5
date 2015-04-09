@@ -3,25 +3,43 @@ var $             = require('elements'),
     zen           = require('elements/zen'),
     ready         = require('elements/domready'),
     modal         = require('../ui').modal,
+    toastr        = require('../ui').toastr,
     request       = require('agent'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     deepEquals    = require('mout/lang/deepEquals');
 
+var menumanager = null;
+
+var randomID = function randomString(len, an) {
+    an = an && an.toLowerCase();
+    var str = "", i = 0, min = an == 'a' ? 10 : 0, max = an == 'n' ? 10 : 62;
+
+    for (; i++ < len;) {
+        var r = Math.random() * (max - min) + min << 0;
+        str += String.fromCharCode(r += r > 9 ? r < 36 ? 55 : 61 : 48);
+    }
+    return str;
+};
+
 var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
-    if (mode !== 'reorder') { return; }
+    if (this.isNewParticle && mode !== 'reorder') { return; }
     this.resizer.updateItemSizes();
 
-    var save    = $('[data-save]'),
+    menumanager = this;
+
+    var save = $('[data-save]'),
         current = {
             settings: this.settings,
             ordering: this.ordering,
             items: this.items
         };
 
-    if (!deepEquals(map, current)) {
-        save.showIndicator('fa fa-fw changes-indicator fa-circle-o');
-    } else {
-        save.hideIndicator();
+    if (!this.isNewParticle) {
+        if (!deepEquals(map, current)) {
+            save.showIndicator('fa fa-fw changes-indicator fa-circle-o');
+        } else {
+            save.hideIndicator();
+        }
     }
 
     if (this.isParticle && this.isNewParticle) {
@@ -32,10 +50,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
             content: 'Loading',
             method: 'post',
             //data: data,
-            remote: $(this.block).find('.config-cog').attribute('href') + getAjaxSuffix(),
-            remoteLoaded: function(response, content) {
-
-            }
+            remote: $(this.block).find('.config-cog').attribute('href') + getAjaxSuffix()
         });
     }
 
@@ -62,10 +77,10 @@ var StepTwo = function(data, content, button) {
         content.html(response.body.html);
 
         var urlTemplate = content.find('.g-urltemplate');
-        if (urlTemplate) { $('body').emit('input', {target: urlTemplate}); }
+        if (urlTemplate) { $('body').emit('input', { target: urlTemplate }); }
 
-        var form       = content.find('form'),
-            submit     = content.find('input[type="submit"], button[type="submit"]'),
+        var form = content.find('form'),
+            submit = content.find('input[type="submit"], button[type="submit"]'),
             dataString = [];
 
         if (!form || !submit) { return true; }
@@ -79,9 +94,9 @@ var StepTwo = function(data, content, button) {
 
             $(form[0].elements).forEach(function(input) {
                 input = $(input);
-                var name     = input.attribute('name'),
-                    value    = input.value(),
-                    parent   = input.parent('.settings-param'),
+                var name = input.attribute('name'),
+                    value = input.value(),
+                    parent = input.parent('.settings-param'),
                     override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                 if (!name || input.disabled() || (override && !override.checked())) { return; }
@@ -102,7 +117,21 @@ var StepTwo = function(data, content, button) {
                         }
                     });
                 } else {
-                    console.log('missing bits!');
+                    var element = menumanager.element,
+                        path = element.data('mm-id') + '-',
+                        id = randomID(5);
+
+                    while (menumanager.items[path + id]) { id = randomID(5); }
+                    menumanager.items[path + id] = response.body.item;
+
+                    if (response.body.html) {
+                        element.html(response.body.html);
+                    }
+
+                    menumanager.isNewParticle = false;
+                    menumanager.emit('dragEnd', menumanager.map);
+                    modal.close();
+                    toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
                 }
 
                 submit.hideIndicator();
@@ -112,12 +141,12 @@ var StepTwo = function(data, content, button) {
 };
 
 
-ready(function(){
+ready(function() {
     var body = $('body');
 
     body.delegate('click', '.menu-editor-extras [data-lm-blocktype], .menu-editor-extras [data-mm-module]', function(event, element) {
-        var container    = element.parent('.menu-editor-extras'),
-            elements     = container.search('[data-lm-blocktype], [data-mm-module]'),
+        var container = element.parent('.menu-editor-extras'),
+            elements = container.search('[data-lm-blocktype], [data-mm-module]'),
             selectButton = container.find('[data-mm-select]');
 
         elements.removeClass('selected');
@@ -133,9 +162,9 @@ ready(function(){
         if (element.hasClass('disabled') || element.attribute('disabled')) { return false; }
 
         var container = element.parent('.menu-editor-extras'),
-            selected  = container.find('[data-lm-blocktype].selected, [data-mm-module].selected'),
-            type      = selected.data('mm-type'),
-            data      = {type: 'particle'};
+            selected = container.find('[data-lm-blocktype].selected, [data-mm-module].selected'),
+            type = selected.data('mm-type'),
+            data = { type: 'particle' };
 
         switch (type) {
             case 'particle':
