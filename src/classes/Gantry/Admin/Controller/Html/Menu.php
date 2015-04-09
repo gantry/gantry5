@@ -185,14 +185,25 @@ class Menu extends HtmlController
 
     public function particle()
     {
-        $name = isset($_POST['particle']) ? $_POST['particle'] : null;
+        /** @var Request $request */
+        $request = $this->container['request'];
+
+        $data = $request->getArray();
+        $name = isset($data['particle']) ? $data['particle'] : null;
 
         $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml")->content());
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));
 
-        $item = new \stdClass();
-        $item->type    = $blueprints->get('type', 'particle');
-        $item->title   = $blueprints->get('name');
+        // Load particle blueprints and default settings.
+        $validator = $this->loadBlueprints('menu');
+        $callable = function () use ($validator) {
+            return $validator;
+        };
+
+        // Create configuration from the defaults.
+        $item = new Config($data, $callable);
+        $item->set('type', $blueprints->get('type', 'particle'));
+        $item->def('title', $blueprints->get('name'));
         if (!isset($item->attributes)) {
             $item->attributes = new \stdClass;
         }
