@@ -206,3 +206,123 @@
     	height: 100vh;
     }
 }
+
+// Mobile Menu 
+#g-mobilemenu-container {
+	.g-main-nav {
+		.g-toplevel {
+		
+			li {
+				display: block;
+				margin-right: 0;
+				/*
+				&:hover {
+					> .g-dropdown {
+						display: none;
+					}
+				}
+				*/
+				.g-menu-item-content {
+					display: block;
+					padding: $content-padding 1rem;
+					line-height: 1rem;
+				}
+
+		    	// Menu Parent Indicator on Mobile Layout
+		    	&.g-parent {
+					> .g-menu-item-content {
+						position: relative;
+						&:after {
+							position: absolute;
+							width: auto;
+							line-height: normal;
+							opacity: 0.5;
+							font-family: FontAwesome;
+							content: "\f054";		
+							right: 1rem;		
+						}
+					}
+					
+					// Temporarily Hide Parent Indicator
+					.g-menu-parent-indicator {
+						display: none;
+					}
+		    	}						
+			}
+			.g-dropdown {
+				top: 0;
+				background: transparent;
+				position: absolute;
+				left: 0;
+				right: 0;
+				z-index: 1;				
+				@include transform(translateX(100%));
+				&.g-active {
+					@include transform(translateX(0));
+				}
+				.g-go-back {
+					display: block;
+				}				
+				.g-block {
+					width: 100%;
+					overflow: visible;
+					.g-go-back {
+						display: none;
+					}
+					&:first-child {
+						.g-go-back {
+							display: block;
+						}
+					}
+				}				
+			}		
+			.g-dropdown-column {
+		    	float: none;
+		    }							
+		}
+		.g-sublevel {
+			li {
+				position: static;
+			}
+			@include transition(transform .2s ease-out);
+			.g-dropdown {
+				top: 0;
+				@include transform(translateX(100%));
+				&.g-active {
+					@include transform(translateX(0));
+				}
+			}			
+			&.g-slide-out {
+				> .g-menu-item > .g-menu-item-content {
+					@include transform(translateX(-100%));
+				}
+			}			
+		}
+		.g-block-inactive {
+			.g-sublevel {
+				height: 0;
+				@include transform(translateX(-100%));
+			}
+		}
+	}
+	// Mobile Nav Active State	
+	.g-mobile-nav-active {
+		#g-page-surround {
+			//@include transform(translateX(-$mobile-sidemenu-width));
+		}
+		.g-main-nav {
+			display: none;
+			&.g-mobile-nav {
+				display: block;
+				.g-toplevel {
+					@include transform(translateX(0));
+				}				
+			}			
+		}
+		.g-mobile-nav-toggle {	
+		    &:before {
+		    	content: "\f00d";
+		    }			
+		}			
+	}
+}
