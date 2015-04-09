@@ -87,7 +87,7 @@ ready(function(){
         var container = element.parent('.menu-editor-extras'),
             selected  = container.find('[data-lm-blocktype].selected, [data-mm-module].selected'),
             type      = selected.data('mm-type'),
-            data      = {type: type};
+            data      = {type: 'particle'};
 
         switch (type) {
             case 'particle':
@@ -95,6 +95,8 @@ ready(function(){
                 break;
 
             case 'module':
+                data['particle'] = type;
+                data['title'] = selected.find('[data-mm-title]').data('mm-title');
                 data['module_id'] = selected.data('mm-module');
                 break;
         }
