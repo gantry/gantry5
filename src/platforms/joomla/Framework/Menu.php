@@ -200,7 +200,6 @@ class Menu extends AbstractMenu
                 $link  = $item->link;
 
                 switch ($item->type) {
-                    case 'particle':
                     case 'separator':
                     case 'heading':
                         // These types have no link.
@@ -266,25 +265,7 @@ class Menu extends AbstractMenu
                 }
             }
 
-            // Add custom menu elements.
-            foreach ($items as $route => $item) {
-                if ($item['type'] != 'particle') {
-                    continue;
-                }
-                $tree = explode('/', $route);
-                $parentTree = $tree;
-                array_pop($parentTree);
-
-                $item['level'] = $level = count($tree);
-                $item['parent_id'] = implode('/', $parentTree);
-                if (($start && $start > $level)
-                    || ($end && $level > $end)
-                    || ($start > 1 && !in_array($tree[$start - 2], $route))) {
-                    continue;
-                }
-                $item = new Item($this, $route, $item);
-                $this->add($item);
-            }
+            $this->addParticles($items, $start, $end);
 
             $this->sortAll();
 

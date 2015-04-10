@@ -169,6 +169,8 @@ class Menu extends AbstractMenu
             }
         }
 
+        $this->addParticles($items, $start, $end);
+
         $this->sortAll();
     }
 }
