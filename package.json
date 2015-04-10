@@ -1,0 +1,34 @@
+{
+  "name": "gantry5",
+  "version": "1.0.0",
+  "description": "Gantry 5 / JS and CSS bundler",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^9.0.8",
+    "gulp": "^3.8.11",
+    "gulp-if": "^1.2.5",
+    "gulp-ruby-sass": "^1.0.1",
+    "gulp-sourcemaps": "^1.5.1",
+    "gulp-uglify": "^1.1.0",
+    "gulp-util": "^3.0.4",
+    "merge-stream": "^0.1.7",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.1.0",
+    "yargs": "^3.7.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gantry/gantry5.git"
+  },
+  "author": "Djamil Legato",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gantry/gantry5/issues"
+  },
+  "homepage": "https://github.com/gantry/gantry5"
+}

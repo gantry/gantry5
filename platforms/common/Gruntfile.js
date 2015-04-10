@@ -26,7 +26,6 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     watch: true,
-                    //transform: [exorcist('js/main.js.map', 'main.js.map', '/G5')],
                     browserifyOptions: {
                         debug: true
                     },
