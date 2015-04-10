@@ -184,7 +184,8 @@ ready(function() {
             remoteLoaded: function(response, content) {
                 var form = content.elements.content.find('form'),
                     submit = content.elements.content.find('input[type="submit"], button[type="submit"]'),
-                    dataString = [];
+                    dataString = [],
+                    path;
 
                 if (!form || !submit) { return true; }
 
@@ -218,8 +219,11 @@ ready(function() {
                                 }
                             });
                         } else {
-                            if (response.body.path) {
-                                menumanager.items[response.body.path] = response.body.item;
+                            if (response.body.path || (response.body.item && response.body.item.type == 'particle')) {
+                                path = response.body.path || element.parent('[data-mm-id]').data('mm-id');
+                                menumanager.items[path] = response.body.item;
+                            } else if (response.body.item && response.body.item.type == 'particle') {
+
                             } else {
                                 menumanager.settings = response.body.settings;
                             }
