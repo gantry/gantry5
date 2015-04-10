@@ -180,6 +180,7 @@ ready(function() {
         if (!$title) { return true; }
 
         title = $title[0];
+        $title.text(trim($title.text()));
 
         $title.attribute('contenteditable', true);
         title.focus();
