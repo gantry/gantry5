@@ -1,6 +1,7 @@
 // Sidepanel Off Canvas Container
 #g-offcanvas {
 	background: $mobilemenu-background;
+	width: $offcanvas-width;
 }
 
 .g-offcanvas-toggle {
@@ -21,11 +22,21 @@
 						color: $navigation-text-color;
 					}
 				}
-			}							
+			}
+			.g-dropdown-column {
+				width: $offcanvas-width;
+			}			
 		}
 	}
 }
 
 #g-mobilemenu-container {
 	margin: -($content-padding + $content-margin);
+}
+
+// Mobile Menu Globals
+.g-mobile-nav {
+	.g-toplevel {
+		//@include transform(translateX($offcanvas-width));
+	}
 }
