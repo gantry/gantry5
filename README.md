@@ -99,7 +99,7 @@ If you would like to set this up in your own development environment, you can do
 
 The first thing you need is `Node / NPM`. If you don’t have them already, you can grab the installer for your OS from [https://nodejs.org/download/](https://nodejs.org/download/).
 
-Once that’s done, you can install **Gulp**. We recommend installing Gulp globally so you can use the command from any folder. Here is the command to do so: `npm install —global gulp`
+Once that’s done, you can install **Gulp**. We recommend installing Gulp globally so you can use the command from any folder. Here is the command to do so: `npm install —-global gulp`
 
 Now that you have the required pieces, the next step is to install all of the JS module dependencies. To do so, make sure you are at the root of the Gantry 5 project, and run the command `npm install`.
 
