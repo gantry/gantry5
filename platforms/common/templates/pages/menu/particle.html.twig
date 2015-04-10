@@ -14,14 +14,14 @@
             <div class="card settings-block">
                 <h4>
                     <span data-title-editable="{{ item.title }}" class="title">{{ item.title }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
-                    <span class="badge font-small">{{ id }}</span>
+                    <span class="badge font-small">{{ item.options.type }}</span>
                     {% if particle.form.fields.enabled %}
-                    {% include 'forms/fields/enable/enable.html.twig' with {'name': 'particle.enabled', 'field': particle.form.fields.enabled, 'value': item.options.enabled, 'default': 1} %}
+                    {% include 'forms/fields/enable/enable.html.twig' with {'name': 'particle.enabled', 'field': particle.form.fields.enabled, 'value': item.options.particle.enabled, 'default': 1} %}
                     {% endif %}
                 </h4>
 
                 <div class="inner-params">
-                    {% include 'forms/fields.html.twig' with {'overrideable': false, 'blueprints': particle.form} %}
+                    {% include 'forms/fields.html.twig' with {'blueprints': particle.form, 'data': item.options, 'prefix': 'particle.', 'skip': ['enabled']} %}
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
                     Block
                 </h4>
                 <div class="inner-params">
-                    {% include 'forms/fields.html.twig' with {'blueprints': block.form, 'data': {'block': item.block}, 'prefix': 'block.'} %}
+                    {% include 'forms/fields.html.twig' with {'blueprints': block.form, 'data': item.options, 'prefix': 'block.'} %}
                 </div>
             </div>
         </div>

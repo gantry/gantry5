@@ -205,31 +205,19 @@ class Menu extends HtmlController
 
         // Create configuration from the defaults.
         $item = new Config($data, $callable);
-        $item->set('type', $blueprints->get('type', 'particle'));
+        $item->def('type', 'particle');
         $item->def('title', $blueprints->get('name'));
-        if (!isset($item->options)) {
-            $item->options = new \stdClass;
-        }
-        if (isset($_POST['block'])) {
-            $item->block = (object) $_POST['block'];
-        }
+        $item->def('options.type', $blueprints->get('type', 'particle'));
+        $item->def('options.particle', []);
+        $item->def('options.block', []);
 
-        $options= isset($_POST['options']) && is_array($_POST['options']) ? $_POST['options'] : [];
-
-        // TODO: Use blueprints to merge configuration.
-        $item->options = (object) ($options + (array) $item->options);
-
-        $this->params['id'] = $name;
         $this->params += [
-            'block'         => $block,
             'item'          => $item,
-            'data'          => ['particles' => [$name => $item->options]],
-            'prefix'        => "particle.",
+            'block'         => $block,
             'particle'      => $blueprints,
             'parent'        => 'settings',
             'route'         => "menu.particle",
-            'action'        => "menu/particle/{$name}",
-            'skip'          => ['enabled']
+            'action'        => "menu/particle/{$name}"
         ];
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params);
@@ -261,7 +249,7 @@ class Menu extends HtmlController
 
         $data->set('type', 'particle');
         $data->set('particle', $name);
-        $data->def('title', $blueprints->get('name'));
+        $data->set('title', $request->get('title') ?: $blueprints->get('name'));
         $data->set('options.particle', $request->getArray('particle'));
         $data->def('options.particle.enabled', 1);
 
