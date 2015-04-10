@@ -26,6 +26,8 @@ var paths = {
     css: []
 };
 
+// -- DO NOT EDIT BELOW --
+
 var compileCSS = function(app) {
     var _in = app.in,
         _out = app.out.split(/[\\/]/).pop(),
