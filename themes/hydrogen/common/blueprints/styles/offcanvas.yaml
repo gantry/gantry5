@@ -1,0 +1,15 @@
+name: Offanvas Section
+description: Paramters for the Off Canvas sidepanel section.
+type: configuration
+
+form:
+  fields:
+
+    width:
+      type: input.text
+      label: Panel Width
+      default: "17rem"
+      pattern: '\d+(\.\d+){0,1}(rem|em|ex|ch|vw|vh|vmin|vmax|%|px|cm|mm|in|pt|pc)'
+      append:
+        type: "text"
+        text: "rem"
