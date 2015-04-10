@@ -50,7 +50,7 @@ var compileCSS = function(app) {
         _out = app.out.split(/[\\/]/).pop(),
         _load = app.load || false,
         _dest = app.out.substring(0, app.out.lastIndexOf('/')),
-        _maps = './' + app.in.substring(0, app.in.lastIndexOf('/')).split(/[\\/]/).pop();
+        _maps = '../' + app.in.substring(0, app.in.lastIndexOf('/')).split(/[\\/]/).pop();
 
     gutil.log(gutil.colors.blue('*'), 'Compiling', _in);
 
@@ -68,7 +68,7 @@ var compileCSS = function(app) {
             gutil.log(gutil.colors.green('√'), 'Saved ' + _in);
         })
         .on('error', gutil.log)
-        .pipe(gulpif(!prod, sourcemaps.write('../', { sourceRoot: _maps })))
+        .pipe(gulpif(!prod, sourcemaps.write('.', { sourceRoot: _maps })))
         .pipe(gulp.dest(_dest));
 };
 
