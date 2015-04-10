@@ -203,10 +203,16 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 content: "Drop atoms here...";
             }
 
-            &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
-                display: none;
-                opacity: 0;
-                visibility: hidden;
+            .g-grid {
+                &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
+                    display: none;
+                    opacity: 0;
+                    visibility: hidden;
+                }
+
+                > .g-tooltip {
+                    display: none;
+                }
             }
 
             > .g-block {
