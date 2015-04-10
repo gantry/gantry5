@@ -91,27 +91,27 @@ We recommend chatting with the team via [Gitter](https://gitter.im/gantry/gantry
 
 ## Bundling JS and Compiling SCSS
 
-In our dev environment we use Gulp to bundle javascript and compile sass with the capability of `watch` so that any change on target files will automatically trigger the recompilation.
+In our development environment, we use **Gulp** to bundle **JavaScript** and compile **SCSS** with the capability of `watch` so that any change on target files will automatically trigger the recompilation.
 
-If you wish to set this environment up, here is how to do it, it's pretty simple.
+If you would like to set this up in your own development environment, you can do so following these simple instructions.
 
-> Note that for this to work you need to have Gantry 5 source and not a package. You can either clone it or download the source from GitHub.
+> Note that for this to work, you need to have **Gantry 5** source and not a package. You can either **clone** it or **download** the source from GitHub.
 
-The first thing you need is `Node / NPM`. If you don't have them already, you can grab the installer for your OS from https://nodejs.org/download/.
+The first thing you need is `Node / NPM`. If you don’t have them already, you can grab the installer for your OS from [https://nodejs.org/download/](https://nodejs.org/download/).
 
-Once that's done, you can install `Gulp`. I reccomend installing Gulp globally so that you can use the command from any folder: `npm install --global gulp`
+Once that’s done, you can install **Gulp**. We recommend installing Gulp globally so you can use the command from any folder. Here is the command to do so: `npm install —global gulp`
 
-Now that you have everything that's needed, the next step is to install all the JS module dependencies. To do so make sure you are at the root of the Gantry 5 project and then run the command `npm install`.
+Now that you have the required pieces, the next step is to install all of the JS module dependencies. To do so, make sure you are at the root of the Gantry 5 project, and run the command `npm install`.
 
-Because we have 2 set of JS applications, one for admin and one for site, you will also need to install the JS modules for those. Still from the root of your project you can run the command: 
+Because we have two sets of JS applications, one for admin and one for the site, you will also need to install the JS modules for those. Still, from the root of your project you can run this command: 
 
 `cd platforms/common/ && npm install && cd ../../assets/common/ && npm install && cd ../../`
 
-At this point you have everything that's needed to run Gulp, just type the command `gulp` and you should see the CSS and JS getting compiled.
+At this point you have everything you need to run Gulp. Just type the command `gulp` and you should see the CSS and JS getting compiled.
 
 We provide a few handy tasks as well:
 
-  1. `$ gulp` / `$ gulp all`: Compiles every CSS and JS in the project
-  2. `$ gulp watch`: Starts the compilers in `watch` mode. Any change applied to targeted JS or SCSS files will trigger an automatic recompilation
-  3. `$ gulp css` / `$ gulp js`: Compiles either all CSS or JS files, in case you are only interested into one and not the other
-  4. `$ gulp --prod`: Compiles every CSS and JS in production mode. The compiled files won't have sourcemaps and will get compressed (this usually takes slightly longer than normal mode)
+  1. `$ gulp` / `$ gulp all`: Compiles all of the CSS and JS in the project.
+  2. `$ gulp watch`: Starts the compilers in `watch` mode. Any change applied to targeted **JS** or **SCSS** files will trigger an automatic recompilation.
+  3. `$ gulp css` / `$ gulp js`: Compiles all of either CSS or JS files, in case you are only working on one and not the other.
+  4. `$ gulp —prod`: Compiles every CSS and JS in production mode. The compiled files won’t have source maps and will be compressed (this usually takes slightly longer than normal mode).
