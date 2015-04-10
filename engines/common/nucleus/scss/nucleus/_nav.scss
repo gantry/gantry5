@@ -308,7 +308,7 @@
 	// Mobile Nav Active State	
 	.g-mobile-nav-active {
 		#g-page-surround {
-			//@include transform(translateX(-$mobile-sidemenu-width));
+			//@include transform(translateX(-$offcanvas-width));
 		}
 		.g-main-nav {
 			display: none;
