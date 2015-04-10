@@ -1,14 +1,13 @@
-{% set position = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
+{% set particle = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
 
 {% set html %}
-    {% if (segment.attributes.enabled is null or segment.attributes.enabled) and (position.enabled is null or position.enabled) %}
+    {% if (segment.attributes.enabled is null or segment.attributes.enabled) and (particle.enabled is null or particle.enabled) %}
         {% include ['particles/' ~ segment.subtype|default('position') ~ '.html.twig',
-        '@particles/' ~ segment.subtype|default('position') ~ '.html.twig'] with { gantry: gantry, site: site, page: gantry.page, position: position } only %}
+        '@particles/' ~ segment.subtype|default('position') ~ '.html.twig'] with { gantry: gantry, site: site, page: gantry.page, particle: particle } only %}
     {% endif %}
 {% endset %}
 
 {% if html|trim %}
-    {% do gantry.theme.joomla(true) %}
     <div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
     	<div class="platform-content">
         	{{ html }}
