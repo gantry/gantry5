@@ -45,7 +45,7 @@ var compileCSS = function(app) {
         container: _out,
         sourcemap: !prod,
         loadPath: _load,
-        style: prod ? 'compressed' : 'expanded',
+        style: prod ? 'compact' : 'expanded',
         lineNumbers: !prod,
         trace: !prod
     };
