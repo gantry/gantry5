@@ -1,7 +1,11 @@
 // Sidepanel Off Canvas Container
 #g-offcanvas {
-	background: $mobilemenu-background;
+	background: $offcanvas-background;
 	width: $offcanvas-width;
+	color: $offcanvas-text-color;
+	a {
+
+	}
 }
 
 .g-offcanvas-toggle {
@@ -13,13 +17,16 @@
 #g-offcanvas {
 	.g-main-nav {
 		.g-toplevel {
-			background: $mobilemenu-background;
+			background: $offcanvas-background;
 			> li {
+				> .g-menu-item-content {
+					color: $offcanvas-text-color;
+				}
 				&:hover, &.active {
 					background: darken($navigation-background, 4%);
 
 					> .g-menu-item-content {
-						color: $navigation-text-color;
+						color: $offcanvas-text-color;
 					}
 				}
 			}
