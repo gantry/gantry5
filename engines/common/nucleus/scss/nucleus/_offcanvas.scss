@@ -19,3 +19,18 @@
 	line-height: 1;
 	cursor: pointer;
 }
+
+.g-offcanvas-active {
+	overflow-x: hidden;
+}
+
+// Right Positioning
+.g-offcanvas-right {
+	#g-offcanvas {
+		left: inherit;
+	}
+	.g-offcanvas-toggle {
+		left: inherit;
+		right: 0.7rem;
+	}
+}

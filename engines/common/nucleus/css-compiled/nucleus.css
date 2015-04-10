@@ -1840,6 +1840,21 @@ input[type="submit"] {
   cursor: pointer;
 }
 
+/* line 23, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+.g-offcanvas-active {
+  overflow-x: hidden;
+}
+
+/* line 29, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+.g-offcanvas-right #g-offcanvas {
+  left: inherit;
+}
+/* line 32, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+.g-offcanvas-right .g-offcanvas-toggle {
+  left: inherit;
+  right: 0.7rem;
+}
+
 
 
 /*# sourceMappingURL=nucleus.css.map */
