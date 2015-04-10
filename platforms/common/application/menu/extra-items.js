@@ -5,6 +5,7 @@ var $             = require('elements'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
     request       = require('agent'),
+    indexOf       = require('mout/array/indexOf'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     deepEquals    = require('mout/lang/deepEquals');
 
@@ -85,7 +86,7 @@ var StepTwo = function(data, content, button) {
 
         if (!form || !submit) { return true; }
 
-        // Particle Settings apply
+        // Module / Particle Settings apply
         submit.on('click', function(e) {
             e.preventDefault();
             dataString = [];
@@ -119,10 +120,16 @@ var StepTwo = function(data, content, button) {
                 } else {
                     var element = menumanager.element,
                         path = element.data('mm-id') + '-',
-                        id = randomID(5);
+                        id = randomID(5),
+                        base = element.parent('[data-mm-base]').data('mm-base'),
+                        col = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
+                        index = indexOf(element.parent().children('[data-mm-id]'), element[0]);
 
                     while (menumanager.items[path + id]) { id = randomID(5); }
+                    
                     menumanager.items[path + id] = response.body.item;
+                    menumanager.ordering[base][col].splice(index, 1, path + id);
+                    element.data('mm-id', path + id);
 
                     if (response.body.html) {
                         element.html(response.body.html);
@@ -174,7 +181,7 @@ ready(function() {
             case 'module':
                 data['particle'] = type;
                 data['title'] = selected.find('[data-mm-title]').data('mm-title');
-                data['options'] = { module_id: selected.data('mm-module') };
+                data['options'] = { particle: { module_id: selected.data('mm-module') } };
                 break;
         }
 

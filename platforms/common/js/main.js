@@ -1,4 +1,343 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/fields/index.js":[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./platforms/common/application/main.js":[function(require,module,exports){
+var $             = require('elements'),
+    ready         = require('elements/domready'),
+    request       = require('agent'),
+    ui            = require('./ui'),
+    interpolate   = require('mout/string/interpolate'),
+    trim          = require('mout/string/trim'),
+    setParam      = require('mout/queryString/setParam'),
+    modal         = ui.modal,
+    toastr        = ui.toastr,
+
+    getAjaxSuffix = require('./utils/get-ajax-suffix'),
+
+    lm            = require('./lm'),
+    mm            = require('./menu');
+
+require('elements/attributes');
+require('elements/events');
+require('elements/delegation');
+require('elements/insertion');
+require('elements/traversal');
+require('./fields');
+require('./ui/popover');
+require('./utils/ajaxify-links');
+
+var createHandler = function(divisor,noun,restOfString){
+    return function(diff){
+        var n = Math.floor(diff/divisor);
+        var pluralizedNoun = noun + ( n > 1 ? 's' : '' );
+        return "" + n + " " + pluralizedNoun + " " + restOfString;
+    }
+};
+
+var formatters = [
+    { threshold: -31535999, handler: createHandler(-31536000,	"year",     "from now" ) },
+    { threshold: -2591999, 	handler: createHandler(-2592000,  	"month",    "from now" ) },
+    { threshold: -604799,  	handler: createHandler(-604800,   	"week",     "from now" ) },
+    { threshold: -172799,   handler: createHandler(-86400,    	"day",      "from now" ) },
+    { threshold: -86399,   	handler: function(){ return      	"tomorrow" } },
+    { threshold: -3599,    	handler: createHandler(-3600,     	"hour",     "from now" ) },
+    { threshold: -59,     	handler: createHandler(-60,       	"minute",   "from now" ) },
+    { threshold: -0.9999,   handler: createHandler(-1,			"second",   "from now" ) },
+    { threshold: 1,        	handler: function(){ return      	"just now" } },
+    { threshold: 60,       	handler: createHandler(1,        	"second",	"ago" ) },
+    { threshold: 3600,     	handler: createHandler(60,       	"minute",	"ago" ) },
+    { threshold: 86400,    	handler: createHandler(3600,     	"hour",     "ago" ) },
+    { threshold: 172800,   	handler: function(){ return      	"yesterday" } },
+    { threshold: 604800,   	handler: createHandler(86400,    	"day",      "ago" ) },
+    { threshold: 2592000,  	handler: createHandler(604800,   	"week",     "ago" ) },
+    { threshold: 31536000, 	handler: createHandler(2592000,  	"month",    "ago" ) },
+    { threshold: Infinity, 	handler: createHandler(31536000, 	"year",     "ago" ) }
+];
+
+var prettyDate = {
+    format: function (date) {
+        var diff = (((new Date()).getTime() - date.getTime()) / 1000);
+        for( var i=0; i<formatters.length; i++ ){
+            if( diff < formatters[i].threshold ){
+                return formatters[i].handler(diff);
+            }
+        }
+        throw new Error("exhausted all formatter options, none found"); //should never be reached
+    }
+};
+
+ready(function() {
+    var body     = $('body'),
+        sentence = 'The {{type}} {{verb}} been successfully saved! {{extras}}';
+
+    // Close notification
+    body.delegate('click', '[data-g-close]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
+        var parent = element.data('g-close');
+        parent = parent ? element.parent(parent) : element;
+
+        parent.slideUp(function() {
+            parent.remove();
+        });
+    });
+
+    // Platform Settings redirect
+    body.delegate('mousedown', '[data-settings-key]', function(event, element){
+        var key = element.data('settings-key');
+        if (!key) { return true; }
+
+        var redirect = window.location.search,
+            settings = element.attribute('href'),
+            uri = window.location.href.split('?');
+        if (uri.length > 1 && uri[0].match(/index.php$/)) { redirect = 'index.php' + redirect; }
+
+        redirect = setParam(settings, key, btoa(redirect));
+        element.href(redirect);
+    });
+
+    // Save Tooltip
+    body.delegate('mouseover', '.button-save', function(event, element){
+        if (!element.lastSaved) { return true; }
+        element.addClass('g-tooltip').addClass('g-tooltip-right').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
+    });
+
+    // Save
+    body.delegate('click', '.button-save', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
+        element.showIndicator();
+
+        var data    = {},
+            type    = element.data('save'),
+            extras  = '',
+            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
+            saveURL = trim(window.location.href, '#') + getAjaxSuffix();
+
+        switch (page) {
+            case 'layout':
+                lm.layoutmanager.singles('cleanup', lm.builder, true);
+                lm.savestate.setSession(lm.builder.serialize(null, true));
+                data.layout = JSON.stringify(lm.builder.serialize());
+
+                break;
+            case 'menu':
+                data.menutype = $('select.menu-select-wrap').value();
+                data.settings = JSON.stringify(mm.menumanager.settings);
+                data.ordering = JSON.stringify(mm.menumanager.ordering);
+                data.items = JSON.stringify(mm.menumanager.items);
+
+                saveURL = element.parent('form').attribute('action') + getAjaxSuffix();
+                break;
+
+            case 'other':
+            default:
+                var form = element.parent('form');
+
+                if (form && element.attribute('type') == 'submit') {
+                    $(form[0].elements).forEach(function(input) {
+                        input = $(input);
+                        var name     = input.attribute('name'),
+                            value    = input.value(),
+                            parent   = input.parent('.settings-param'),
+                            override = parent ? parent.find('> input[type="checkbox"]') : null;
+
+                        if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        data[name] = value;
+                    });
+                }
+
+                $('.settings-param-title, .card.settings-block > h4').hideIndicator();
+
+                if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
+        }
+
+        body.emit('updateOriginalFields');
+
+        request('post', saveURL, data, function(error, response) {
+            if (!response.body.success) {
+                modal.open({
+                    content: response.body.html || response.body,
+                    afterOpen: function(container) {
+                        if (!response.body.html) { container.style({ width: '90%' }); }
+                    }
+                });
+            } else {
+                modal.close();
+                toastr.success(interpolate(sentence, {
+                    verb: type.slice(-1) == 's' ? 'have' : 'has',
+                    type: type,
+                    extras: extras
+                }), type + ' Saved');
+            }
+
+            element.hideIndicator();
+            element.lastSaved = new Date();
+
+            if (page == 'layout') { lm.layoutmanager.updatePendingChanges(); }
+        });
+    });
+
+    // Editable titles
+    body.delegate('click', '[data-title-edit]', function(event, element) {
+        element = $(element);
+        var $title = element.siblings('[data-title-editable]') || element.previousSiblings().find('[data-title-editable]') || element.nextSiblings().find('[data-title-editable]'), title;
+        if (!$title) { return true; }
+
+        title = $title[0];
+
+        $title.attribute('contenteditable', true);
+        title.focus();
+
+        var range = document.createRange(), selection;
+        range.selectNodeContents(title);
+        selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        $title.storedTitle = trim($title.text());
+        $title.emit('title-edit-start', $title.storedTitle);
+    });
+
+    body.delegate('keydown', '[data-title-editable]', function(event, element) {
+        element = $(element);
+        switch (event.keyCode) {
+            case 13: // return
+            case 27: // esc
+                event.stopPropagation();
+                if (event.keyCode == 27) {
+                    if (typeof element.storedTitle !== 'undefined') {
+                        element.text(element.storedTitle);
+                    }
+                }
+
+                element.attribute('contenteditable', null);
+                window.getSelection().removeAllRanges();
+                element[0].blur();
+
+                element.emit('title-edit-exit', element.data('title-editable'), event.keyCode == 13 ? 'enter' : 'esc');
+                return false;
+            default:
+                return true;
+        }
+    });
+
+    body.delegate('blur', '[data-title-editable]', function(event, element) {
+        element = $(element);
+        element.attribute('contenteditable', null);
+        element.data('title-editable', trim(element.text()));
+        window.getSelection().removeAllRanges();
+        element.emit('title-edit-end', element.data('title-editable'));
+    }, true);
+
+    // Quick Ajax Calls [data-ajax-action]
+    body.delegate('click', '[data-ajax-action]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        var href   = element.attribute('href') || element.data('ajax-action'),
+            method = element.data('ajax-action-method') || 'post';
+
+        if (!href) { return false; }
+
+        element.showIndicator();
+        request(method, href + getAjaxSuffix(), function(error, response) {
+            if (!response.body.success) {
+                modal.open({
+                    content: response.body.html || response.body,
+                    afterOpen: function(container) {
+                        if (!response.body.html) { container.style({ width: '90%' }); }
+                    }
+                });
+
+                element.hideIndicator();
+                return false;
+            } else {
+                toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+            }
+
+            element.hideIndicator();
+        })
+    });
+
+});
+
+var modules = {
+    /*mout    : require('mout'),
+     prime   : require('prime'),
+     "$"     : elements,
+     zen     : zen,
+     domready: domready,
+     agent   : require('agent'),*/
+    lm: lm,
+    mm: mm,
+    ui: require('./ui'),
+    styles: require('./styles'),
+    "$": $,
+    domready: require('elements/domready'),
+    particles: require('./particles'),
+    zen: require('elements/zen'),
+    moofx: require('moofx')
+};
+
+window.G5 = modules;
+module.exports = modules;
+
+},{"./fields":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/fields/index.js","./lm":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/index.js","./menu":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/menu/index.js","./particles":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/particles/index.js","./styles":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/styles/index.js","./ui":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/ui/index.js","./ui/popover":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/ui/popover.js","./utils/ajaxify-links":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/utils/ajaxify-links.js","./utils/get-ajax-suffix":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/utils/get-ajax-suffix.js","agent":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/agent/index.js","elements":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/index.js","elements/attributes":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/attributes.js","elements/delegation":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/delegation.js","elements/domready":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/domready.js","elements/events":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/events.js","elements/insertion":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/insertion.js","elements/traversal":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/traversal.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/zen.js","moofx":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/moofx/index.js","mout/queryString/setParam":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/queryString/setParam.js","mout/string/interpolate":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/string/interpolate.js","mout/string/trim":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/string/trim.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/node_modules/browserify/node_modules/process/browser.js":[function(require,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+var queue = [];
+var draining = false;
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    draining = true;
+    var currentQueue;
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        var i = -1;
+        while (++i < len) {
+            currentQueue[i]();
+        }
+        len = queue.length;
+    }
+    draining = false;
+}
+process.nextTick = function (fun) {
+    queue.push(fun);
+    if (!draining) {
+        setTimeout(drainQueue, 0);
+    }
+};
+
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+// TODO(shtylman)
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/fields/index.js":[function(require,module,exports){
 "use strict";
 var ready      = require('elements/domready'),
     $          = require('elements/attributes'),
@@ -2289,286 +2628,7 @@ var LayoutManager = new prime({
 
 module.exports = LayoutManager;
 
-},{"../ui/drag.drop":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/ui/drag.drop.js","../utils/elements.utils":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/utils/elements.utils.js","./blocks":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/blocks/index.js","./drag.resizer":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/drag.resizer.js","./eraser":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/eraser.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/zen.js","mout/array/every":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/array/every.js","mout/collection/find":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/collection/find.js","mout/function/bind":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/function/bind.js","mout/lang/deepEquals":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/deepEquals.js","mout/lang/isArray":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/isArray.js","mout/lang/isObject":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/isObject.js","mout/number/enforcePrecision":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/number/enforcePrecision.js","mout/object/get":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/object/get.js","mout/object/keys":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/object/keys.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/index.js","prime-util/prime/bound":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime-util/prime/bound.js","prime-util/prime/options":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime-util/prime/options.js","prime/emitter":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/emitter.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/main.js":[function(require,module,exports){
-var $             = require('elements'),
-    ready         = require('elements/domready'),
-    request       = require('agent'),
-    ui            = require('./ui'),
-    interpolate   = require('mout/string/interpolate'),
-    trim          = require('mout/string/trim'),
-    setParam      = require('mout/queryString/setParam'),
-    modal         = ui.modal,
-    toastr        = ui.toastr,
-
-    getAjaxSuffix = require('./utils/get-ajax-suffix'),
-
-    lm            = require('./lm'),
-    mm            = require('./menu');
-
-require('elements/attributes');
-require('elements/events');
-require('elements/delegation');
-require('elements/insertion');
-require('elements/traversal');
-require('./fields');
-require('./ui/popover');
-require('./utils/ajaxify-links');
-
-var createHandler = function(divisor,noun,restOfString){
-    return function(diff){
-        var n = Math.floor(diff/divisor);
-        var pluralizedNoun = noun + ( n > 1 ? 's' : '' );
-        return "" + n + " " + pluralizedNoun + " " + restOfString;
-    }
-};
-
-var formatters = [
-    { threshold: -31535999, handler: createHandler(-31536000,	"year",     "from now" ) },
-    { threshold: -2591999, 	handler: createHandler(-2592000,  	"month",    "from now" ) },
-    { threshold: -604799,  	handler: createHandler(-604800,   	"week",     "from now" ) },
-    { threshold: -172799,   handler: createHandler(-86400,    	"day",      "from now" ) },
-    { threshold: -86399,   	handler: function(){ return      	"tomorrow" } },
-    { threshold: -3599,    	handler: createHandler(-3600,     	"hour",     "from now" ) },
-    { threshold: -59,     	handler: createHandler(-60,       	"minute",   "from now" ) },
-    { threshold: -0.9999,   handler: createHandler(-1,			"second",   "from now" ) },
-    { threshold: 1,        	handler: function(){ return      	"just now" } },
-    { threshold: 60,       	handler: createHandler(1,        	"second",	"ago" ) },
-    { threshold: 3600,     	handler: createHandler(60,       	"minute",	"ago" ) },
-    { threshold: 86400,    	handler: createHandler(3600,     	"hour",     "ago" ) },
-    { threshold: 172800,   	handler: function(){ return      	"yesterday" } },
-    { threshold: 604800,   	handler: createHandler(86400,    	"day",      "ago" ) },
-    { threshold: 2592000,  	handler: createHandler(604800,   	"week",     "ago" ) },
-    { threshold: 31536000, 	handler: createHandler(2592000,  	"month",    "ago" ) },
-    { threshold: Infinity, 	handler: createHandler(31536000, 	"year",     "ago" ) }
-];
-
-var prettyDate = {
-    format: function (date) {
-        var diff = (((new Date()).getTime() - date.getTime()) / 1000);
-        for( var i=0; i<formatters.length; i++ ){
-            if( diff < formatters[i].threshold ){
-                return formatters[i].handler(diff);
-            }
-        }
-        throw new Error("exhausted all formatter options, none found"); //should never be reached
-    }
-};
-
-ready(function() {
-    var body     = $('body'),
-        sentence = 'The {{type}} {{verb}} been successfully saved! {{extras}}';
-
-    // Close notification
-    body.delegate('click', '[data-g-close]', function(event, element) {
-        if (event && event.preventDefault) { event.preventDefault(); }
-        var parent = element.data('g-close');
-        parent = parent ? element.parent(parent) : element;
-
-        parent.slideUp(function() {
-            parent.remove();
-        });
-    });
-
-    // Platform Settings redirect
-    body.delegate('mousedown', '[data-settings-key]', function(event, element){
-        var key = element.data('settings-key');
-        if (!key) { return true; }
-
-        var redirect = window.location.search,
-            settings = element.attribute('href'),
-            uri = window.location.href.split('?');
-        if (uri.length > 1 && uri[0].match(/index.php$/)) { redirect = 'index.php' + redirect; }
-
-        redirect = setParam(settings, key, btoa(redirect));
-        element.href(redirect);
-    });
-
-    // Save Tooltip
-    body.delegate('mouseover', '.button-save', function(event, element){
-        if (!element.lastSaved) { return true; }
-        element.addClass('g-tooltip').addClass('g-tooltip-right').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
-    });
-
-    // Save
-    body.delegate('click', '.button-save', function(event, element) {
-        if (event && event.preventDefault) { event.preventDefault(); }
-        element.showIndicator();
-
-        var data    = {},
-            type    = element.data('save'),
-            extras  = '',
-            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
-            saveURL = trim(window.location.href, '#') + getAjaxSuffix();
-
-        switch (page) {
-            case 'layout':
-                lm.layoutmanager.singles('cleanup', lm.builder, true);
-                lm.savestate.setSession(lm.builder.serialize(null, true));
-                data.layout = JSON.stringify(lm.builder.serialize());
-
-                break;
-            case 'menu':
-                data.menutype = $('select.menu-select-wrap').value();
-                data.settings = JSON.stringify(mm.menumanager.settings);
-                data.ordering = JSON.stringify(mm.menumanager.ordering);
-                data.items = JSON.stringify(mm.menumanager.items);
-
-                saveURL = element.parent('form').attribute('action') + getAjaxSuffix();
-                break;
-
-            case 'other':
-            default:
-                var form = element.parent('form');
-
-                if (form && element.attribute('type') == 'submit') {
-                    $(form[0].elements).forEach(function(input) {
-                        input = $(input);
-                        var name     = input.attribute('name'),
-                            value    = input.value(),
-                            parent   = input.parent('.settings-param'),
-                            override = parent ? parent.find('> input[type="checkbox"]') : null;
-
-                        if (!name || input.disabled() || (override && !override.checked())) { return; }
-                        data[name] = value;
-                    });
-                }
-
-                $('.settings-param-title, .card.settings-block > h4').hideIndicator();
-
-                if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
-        }
-
-        body.emit('updateOriginalFields');
-
-        request('post', saveURL, data, function(error, response) {
-            if (!response.body.success) {
-                modal.open({
-                    content: response.body.html || response.body,
-                    afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
-                    }
-                });
-            } else {
-                modal.close();
-                toastr.success(interpolate(sentence, {
-                    verb: type.slice(-1) == 's' ? 'have' : 'has',
-                    type: type,
-                    extras: extras
-                }), type + ' Saved');
-            }
-
-            element.hideIndicator();
-            element.lastSaved = new Date();
-
-            if (page == 'layout') { lm.layoutmanager.updatePendingChanges(); }
-        });
-    });
-
-    // Editable titles
-    body.delegate('click', '[data-title-edit]', function(event, element) {
-        element = $(element);
-        var $title = element.siblings('[data-title-editable]') || element.previousSiblings().find('[data-title-editable]') || element.nextSiblings().find('[data-title-editable]'), title;
-        if (!$title) { return true; }
-
-        title = $title[0];
-
-        $title.attribute('contenteditable', true);
-        title.focus();
-
-        var range = document.createRange(), selection;
-        range.selectNodeContents(title);
-        selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        $title.storedTitle = trim($title.text());
-        $title.emit('title-edit-start', $title.storedTitle);
-    });
-
-    body.delegate('keydown', '[data-title-editable]', function(event, element) {
-        element = $(element);
-        switch (event.keyCode) {
-            case 13: // return
-            case 27: // esc
-                event.stopPropagation();
-                if (event.keyCode == 27) {
-                    if (typeof element.storedTitle !== 'undefined') {
-                        element.text(element.storedTitle);
-                    }
-                }
-
-                element.attribute('contenteditable', null);
-                window.getSelection().removeAllRanges();
-                element[0].blur();
-
-                element.emit('title-edit-exit', element.data('title-editable'), event.keyCode == 13 ? 'enter' : 'esc');
-                return false;
-            default:
-                return true;
-        }
-    });
-
-    body.delegate('blur', '[data-title-editable]', function(event, element) {
-        element = $(element);
-        element.attribute('contenteditable', null);
-        element.data('title-editable', trim(element.text()));
-        window.getSelection().removeAllRanges();
-        element.emit('title-edit-end', element.data('title-editable'));
-    }, true);
-
-    // Quick Ajax Calls [data-ajax-action]
-    body.delegate('click', '[data-ajax-action]', function(event, element) {
-        if (event && event.preventDefault) { event.preventDefault(); }
-
-        var href   = element.attribute('href') || element.data('ajax-action'),
-            method = element.data('ajax-action-method') || 'post';
-
-        if (!href) { return false; }
-
-        element.showIndicator();
-        request(method, href + getAjaxSuffix(), function(error, response) {
-            if (!response.body.success) {
-                modal.open({
-                    content: response.body.html || response.body,
-                    afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
-                    }
-                });
-
-                element.hideIndicator();
-                return false;
-            } else {
-                toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
-            }
-
-            element.hideIndicator();
-        })
-    });
-
-});
-
-var modules = {
-    /*mout    : require('mout'),
-     prime   : require('prime'),
-     "$"     : elements,
-     zen     : zen,
-     domready: domready,
-     agent   : require('agent'),*/
-    lm: lm,
-    mm: mm,
-    ui: require('./ui'),
-    styles: require('./styles'),
-    "$": $,
-    domready: require('elements/domready'),
-    particles: require('./particles'),
-    zen: require('elements/zen'),
-    moofx: require('moofx')
-};
-
-window.G5 = modules;
-module.exports = modules;
-
-},{"./fields":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/fields/index.js","./lm":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/index.js","./menu":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/menu/index.js","./particles":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/particles/index.js","./styles":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/styles/index.js","./ui":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/ui/index.js","./ui/popover":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/ui/popover.js","./utils/ajaxify-links":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/utils/ajaxify-links.js","./utils/get-ajax-suffix":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/utils/get-ajax-suffix.js","agent":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/agent/index.js","elements":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/index.js","elements/attributes":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/attributes.js","elements/delegation":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/delegation.js","elements/domready":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/domready.js","elements/events":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/events.js","elements/insertion":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/insertion.js","elements/traversal":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/traversal.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/zen.js","moofx":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/moofx/index.js","mout/queryString/setParam":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/queryString/setParam.js","mout/string/interpolate":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/string/interpolate.js","mout/string/trim":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/string/trim.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/menu/drag.resizer.js":[function(require,module,exports){
+},{"../ui/drag.drop":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/ui/drag.drop.js","../utils/elements.utils":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/utils/elements.utils.js","./blocks":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/blocks/index.js","./drag.resizer":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/drag.resizer.js","./eraser":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/lm/eraser.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/zen.js","mout/array/every":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/array/every.js","mout/collection/find":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/collection/find.js","mout/function/bind":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/function/bind.js","mout/lang/deepEquals":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/deepEquals.js","mout/lang/isArray":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/isArray.js","mout/lang/isObject":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/isObject.js","mout/number/enforcePrecision":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/number/enforcePrecision.js","mout/object/get":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/object/get.js","mout/object/keys":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/object/keys.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/index.js","prime-util/prime/bound":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime-util/prime/bound.js","prime-util/prime/options":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime-util/prime/options.js","prime/emitter":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/emitter.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/menu/drag.resizer.js":[function(require,module,exports){
 "use strict";
 var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
@@ -2849,6 +2909,7 @@ var $             = require('elements'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
     request       = require('agent'),
+    indexOf       = require('mout/array/indexOf'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     deepEquals    = require('mout/lang/deepEquals');
 
@@ -2929,7 +2990,7 @@ var StepTwo = function(data, content, button) {
 
         if (!form || !submit) { return true; }
 
-        // Particle Settings apply
+        // Module / Particle Settings apply
         submit.on('click', function(e) {
             e.preventDefault();
             dataString = [];
@@ -2963,10 +3024,16 @@ var StepTwo = function(data, content, button) {
                 } else {
                     var element = menumanager.element,
                         path = element.data('mm-id') + '-',
-                        id = randomID(5);
+                        id = randomID(5),
+                        base = element.parent('[data-mm-base]').data('mm-base'),
+                        col = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
+                        index = indexOf(element.parent().children('[data-mm-id]'), element[0]);
 
                     while (menumanager.items[path + id]) { id = randomID(5); }
+                    
                     menumanager.items[path + id] = response.body.item;
+                    menumanager.ordering[base][col].splice(index, 1, path + id);
+                    element.data('mm-id', path + id);
 
                     if (response.body.html) {
                         element.html(response.body.html);
@@ -3018,7 +3085,7 @@ ready(function() {
             case 'module':
                 data['particle'] = type;
                 data['title'] = selected.find('[data-mm-title]').data('mm-title');
-                data['options'] = { module_id: selected.data('mm-module') };
+                data['options'] = { particle: { module_id: selected.data('mm-module') } };
                 break;
         }
 
@@ -3029,7 +3096,7 @@ ready(function() {
 });
 
 module.exports = StepOne;
-},{"../ui":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/ui/index.js","../utils/get-ajax-suffix":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/utils/get-ajax-suffix.js","agent":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/agent/index.js","elements":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/index.js","elements/domready":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/domready.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/zen.js","mout/lang/deepEquals":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/deepEquals.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/menu/index.js":[function(require,module,exports){
+},{"../ui":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/ui/index.js","../utils/get-ajax-suffix":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/utils/get-ajax-suffix.js","agent":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/agent/index.js","elements":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/index.js","elements/domready":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/domready.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/elements/zen.js","mout/array/indexOf":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/array/indexOf.js","mout/lang/deepEquals":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/mout/lang/deepEquals.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/menu/index.js":[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     MenuManager   = require('./menumanager'),
@@ -14598,67 +14665,7 @@ var toString = require('../lang/toString');
 
 }).call(this,require('_process'))
 
-},{"_process":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/browserify/node_modules/process/browser.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/browserify/node_modules/process/browser.js":[function(require,module,exports){
-// shim for using process in browser
-
-var process = module.exports = {};
-var queue = [];
-var draining = false;
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    draining = true;
-    var currentQueue;
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        var i = -1;
-        while (++i < len) {
-            currentQueue[i]();
-        }
-        len = queue.length;
-    }
-    draining = false;
-}
-process.nextTick = function (fun) {
-    queue.push(fun);
-    if (!draining) {
-        setTimeout(drainQueue, 0);
-    }
-};
-
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-// TODO(shtylman)
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/dropzone/dist/dropzone.js":[function(require,module,exports){
+},{"_process":"/Users/w00fz/Projects/git/gantry/gantry5/node_modules/browserify/node_modules/process/browser.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/dropzone/dist/dropzone.js":[function(require,module,exports){
 
 /*
  *
@@ -21685,7 +21692,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/browserify/node_modules/process/browser.js","mout/array/forEach":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/node_modules/mout/array/forEach.js","mout/array/indexOf":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/node_modules/mout/array/indexOf.js","mout/lang/kindOf":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/node_modules/mout/lang/kindOf.js","mout/time/now":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/node_modules/mout/time/now.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/emitter.js":[function(require,module,exports){
+},{"_process":"/Users/w00fz/Projects/git/gantry/gantry5/node_modules/browserify/node_modules/process/browser.js","mout/array/forEach":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/node_modules/mout/array/forEach.js","mout/array/indexOf":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/node_modules/mout/array/indexOf.js","mout/lang/kindOf":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/node_modules/mout/lang/kindOf.js","mout/time/now":"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/node_modules/mout/time/now.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/node_modules/prime/emitter.js":[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -24642,7 +24649,7 @@ module.exports = parse
 	return Sortable;
 });
 
-},{}]},{},["/Users/w00fz/Projects/git/gantry/gantry5/platforms/common/application/main.js"])
+},{}]},{},["./platforms/common/application/main.js"])
 
 
 //# sourceMappingURL=main.js.map
