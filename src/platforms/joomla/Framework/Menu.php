@@ -272,8 +272,11 @@ class Menu extends AbstractMenu
                     continue;
                 }
                 $tree = explode('/', $route);
+                $parentTree = $tree;
+                array_pop($parentTree);
+
                 $item['level'] = $level = count($tree);
-                $item['parent_id'] = '';
+                $item['parent_id'] = implode('/', $parentTree);
                 if (($start && $start > $level)
                     || ($end && $level > $end)
                     || ($start > 1 && !in_array($tree[$start - 2], $route))) {
