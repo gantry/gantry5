@@ -29,7 +29,7 @@
 <ul>
     {% for index,file in files %}
         <li data-file="{{ file|json_encode()|e('html_attr') }}" data-file-url="{{ url(file.pathname) }}">
-            {% if 'image/' in file.mime %}
+            {% if file.isImage %}
                 <div class="g-thumb g-image" style="background-image:url({{ url(file.pathname) }})"></div>
             {% else %}
                 <div class="g-thumb">{{ file.extension }}</div>
