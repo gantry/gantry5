@@ -3090,8 +3090,8 @@ ready(function() {
         }
 
         element.showIndicator();
-
-        StepTwo(data, element.parent('.g5-content'), element);
+        
+        StepTwo({ item: JSON.stringify(data) }, element.parent('.g5-content'), element);
     });
 });
 
