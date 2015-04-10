@@ -200,9 +200,10 @@ class Menu extends AbstractMenu
                 $link  = $item->link;
 
                 switch ($item->type) {
+                    case 'particle':
                     case 'separator':
                     case 'heading':
-                        // Separator and heading has no link.
+                        // These types have no link.
                         $link = null;
                         break;
 
@@ -263,6 +264,23 @@ class Menu extends AbstractMenu
                         $item->target = '_blank';
                         break;
                 }
+            }
+
+            // Add custom menu elements.
+            foreach ($items as $route => $item) {
+                if ($item['type'] != 'particle') {
+                    continue;
+                }
+                $tree = explode('/', $route);
+                $item['level'] = $level = count($tree);
+                $item['parent_id'] = '';
+                if (($start && $start > $level)
+                    || ($end && $level > $end)
+                    || ($start > 1 && !in_array($tree[$start - 2], $route))) {
+                    continue;
+                }
+                $item = new Item($this, $route, $item);
+                $this->add($item);
             }
 
             $this->sortAll();

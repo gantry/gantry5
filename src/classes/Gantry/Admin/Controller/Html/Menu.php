@@ -191,7 +191,13 @@ class Menu extends HtmlController
         /** @var Request $request */
         $request = $this->container['request'];
 
-        $data = $request->getArray();
+        $data = $request->get('item');
+        if ($data) {
+            $data = json_decode($data, true);
+        } else {
+            $data = $request->getArray();
+        }
+
         $name = isset($data['particle']) ? $data['particle'] : null;
 
         $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml")->content());
@@ -264,7 +270,12 @@ class Menu extends HtmlController
 
         // TODO: validate
 
-        return new JsonResponse(['item' => $data->toArray(), 'html' => 'TODO']);
+        // Fill parameters to be passed to the template file.
+        $this->params['item'] = (object) $data->toArray();
+
+        $html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
+
+        return new JsonResponse(['item' => $data->toArray(), 'html' => $html]);
     }
 
     public function selectModule()
