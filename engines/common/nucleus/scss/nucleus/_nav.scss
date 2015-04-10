@@ -211,17 +211,9 @@
 #g-mobilemenu-container {
 	.g-main-nav {
 		.g-toplevel {
-		
 			li {
 				display: block;
 				margin-right: 0;
-				/*
-				&:hover {
-					> .g-dropdown {
-						display: none;
-					}
-				}
-				*/
 				.g-menu-item-content {
 					display: block;
 					padding: $content-padding 1rem;
@@ -304,25 +296,5 @@
 				@include transform(translateX(-100%));
 			}
 		}
-	}
-	// Mobile Nav Active State	
-	.g-mobile-nav-active {
-		#g-page-surround {
-			//@include transform(translateX(-$offcanvas-width));
-		}
-		.g-main-nav {
-			display: none;
-			&.g-mobile-nav {
-				display: block;
-				.g-toplevel {
-					@include transform(translateX(0));
-				}				
-			}			
-		}
-		.g-mobile-nav-toggle {	
-		    &:before {
-		    	content: "\f00d";
-		    }			
-		}			
 	}
 }
