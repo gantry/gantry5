@@ -120,6 +120,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 background-color: #f6f6f6;
                 min-height: 58px;
 
+                &.original-placeholder {
+                    margin-top: 0;
+                }
+
                 // handles
                 &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
                     display: block;

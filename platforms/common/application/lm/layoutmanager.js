@@ -138,6 +138,7 @@ var LayoutManager = new prime({
                 position: 'absolute',
                 zIndex: 1500,
                 opacity: 0.5,
+                margin: 0,
                 width: Math.ceil(size.width),
                 height: Math.ceil(size.height)
             }).find('[data-lm-blocktype]');
