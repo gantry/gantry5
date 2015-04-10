@@ -1,19 +1,10 @@
 {
-  "name": "gantry5-admin",
+  "name": "gantry5-hydrogen",
   "version": "1.0.0",
   "dependencies": {
-    "agent": "^0.2.1",
-    "async": "^0.9.0",
-    "dropzone": "^4.0.1",
+    "domready": "^1.0.7",
     "elements": "git+https://git@github.com/w00fz/elements.git",
-    "moofx": "^3.2.0",
-    "mout": "~0.11.0",
-    "objectdiff": "^1.1.0",
-    "prime": "^0.4.2",
-    "prime-util": "^0.5.0",
-    "sifter": "^0.4.1",
-    "slick": "^1.12.1",
-    "sortablejs": "^1.1.1"
+    "prime": "^0.4.2"
   },
   "devDependencies": {
     "browserify": "^9.0.8",

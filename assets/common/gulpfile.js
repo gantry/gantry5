@@ -19,30 +19,11 @@ var gulp       = require('gulp'),
 var paths = {
     js: [
         { // admin
-            in: './platforms/common/application/main.js',
-            out: './platforms/common/js/main.js'
-        },
-        { // frontend
-            in: './assets/common/application/main.js',
-            out: './assets/common/js/main.js'
+            in: './application/main.js',
+            out: './js/main.js'
         }
     ],
-    css: [
-        { // admin
-            in: './platforms/common/scss/admin.scss',
-            out: './platforms/common/css-compiled/admin.css',
-            load: './engines/common/nucleus/scss'
-        },
-        { // admin - joomla
-            in: './platforms/joomla/com_gantry5/admin/scss/joomla-admin.scss',
-            out: './platforms/joomla/com_gantry5/admin/css-compiled/joomla-admin.css',
-            load: './engines/common/nucleus/scss'
-        },
-        { // nucleus
-            in: './engines/common/nucleus/scss/nucleus.scss',
-            out: './engines/common/nucleus/css-compiled/nucleus.css'
-        }
-    ]
+    css: []
 };
 
 var compileCSS = function(app) {
@@ -76,7 +57,7 @@ var compileJS = function(app, watching) {
     var _in = app.in,
         _out = app.out.split(/[\\/]/).pop(),
         _dest = app.out.substring(0, app.out.lastIndexOf('/')),
-        _maps = './' + app.in.substring(0, app.in.lastIndexOf('/')).split(/[\\/]/).pop();
+        _maps = './';
 
     if (!watching) {
         gutil.log(gutil.colors.blue('*'), 'Compiling', _in);
