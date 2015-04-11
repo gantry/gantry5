@@ -160,7 +160,7 @@ class Layout extends HtmlController
 
         $name = isset($item->subtype) ? $item->subtype : $type;
 
-        if ($type == 'section' || $type == 'grid') {
+        if ($type == 'section' || $type == 'grid' || $type == 'offcanvas') {
             $prefix = "particles.{$type}";
             $defaults = [];
             $extra = null;
