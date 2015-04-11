@@ -252,7 +252,7 @@ class Layout extends HtmlController
         $validator = new Blueprints();
 
         $name = $particle;
-        if ($particle == 'section' || $particle == 'grid') {
+        if ($particle == 'section' || $particle == 'grid' || $particle == 'offcanvas') {
             $type = $particle;
             $particle = null;
             $validator->embed('options', CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
