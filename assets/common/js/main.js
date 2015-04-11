@@ -77,6 +77,7 @@ module.exports = {};
 var ready   = require('domready'),
     prime   = require('prime'),
     bind    = require('mout/function/bind'),
+    forEach = require('mout/array/forEach'),
     Bound   = require('prime-util/prime/bound'),
     Options = require('prime-util/prime/options'),
     $       = require('elements'),
@@ -96,6 +97,14 @@ var prefix = (function() {
         js: pre[0].toUpperCase() + pre.substr(1)
     };
 })();
+
+var hasTouchEvents     = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch,
+    msPointerSupported = window.navigator.msPointerEnabled,
+    touch              = {
+        start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
+        move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
+        end: msPointerSupported ? 'MSPointerUp' : 'touchend'
+    };
 
 var Offcanvas = new prime({
 
@@ -136,9 +145,11 @@ var Offcanvas = new prime({
 
     attach: function() {
         var body = $('body');
-        body.delegate('click', '[data-offcanvas-toggle]', this.bound('toggle'));
-        body.delegate('click', '[data-offcanvas-open]', this.bound('open'));
-        body.delegate('click', '[data-offcanvas-close]', this.bound('close'));
+
+        forEach(['toggle', 'open', 'close'], bind(function(mode) {
+            body.delegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
+            if (hasTouchEvents) { body.delegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
+        }, this));
 
         this.overlay = zen('div[data-offcanvas-close].' + this.options.overlayClass).top(this.panel);
 
@@ -147,17 +158,21 @@ var Offcanvas = new prime({
 
     detach: function() {
         var body = $('body');
-        body.undelegate('click', '[data-offcanvas-toggle]', this.bound('toggle'));
-        body.undelegate('click', '[data-offcanvas-open]', this.bound('open'));
-        body.undelegate('click', '[data-offcanvas-close]', this.bound('close'));
+
+        forEach(['toggle', 'open', 'close'], bind(function(mode) {
+            body.undelegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
+            if (hasTouchEvents) { body.undelegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
+        }, this));
 
         this.overlay.remove();
 
         return this;
     },
 
-    open: function() {
+    open: function(event, element) {
+        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
         if (this.opened) { return this; }
+
         var body = $('body')[0];
 
         if (!~body.className.search(this.options.openClass)) {
@@ -167,7 +182,7 @@ var Offcanvas = new prime({
         this.overlay[0].style.opacity = 1;
 
         this._setTransition();
-        this._translateXTo(this.options.padding);
+        this._translateXTo((!~body.className.search('g-offcanvas-right') ? 1 : -1) * this.options.padding);
         this.opened = true;
 
         setTimeout(bind(function() {
@@ -179,8 +194,10 @@ var Offcanvas = new prime({
         return this;
     },
 
-    close: function() {
+    close: function(event) {
+        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
         if (!this.opened && !this.opening) { return this; }
+
         var body = $('body')[0];
 
         this.overlay[0].style.opacity = 0;
@@ -200,8 +217,10 @@ var Offcanvas = new prime({
         return this;
     },
 
-    toggle: function() {
-        return this[this.opened ? 'close' : 'open']();
+    toggle: function(event, element) {
+        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+
+        return this[this.opened ? 'close' : 'open'](event, element);
     },
 
     _setTransition: function() {
@@ -219,7 +238,7 @@ var Offcanvas = new prime({
 });
 
 module.exports = Offcanvas;
-},{"domready":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js","elements":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/index.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/zen.js","mout/function/bind":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/function/bind.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js","prime-util/prime/bound":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/prime/bound.js","prime-util/prime/options":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/prime/options.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js":[function(require,module,exports){
+},{"domready":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js","elements":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/index.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/zen.js","mout/array/forEach":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/array/forEach.js","mout/function/bind":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/function/bind.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js","prime-util/prime/bound":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/prime/bound.js","prime-util/prime/options":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/prime/options.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js":[function(require,module,exports){
 /*!
   * domready (c) Dustin Diaz 2014 - License MIT
   */
@@ -2689,7 +2708,9 @@ module.exports = function(expression, doc){
 
 }
 
-},{"./base":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/base.js","mout/array/forEach":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/forEach.js","mout/array/map":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/map.js","slick/parser":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/slick/parser.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/array/slice.js":[function(require,module,exports){
+},{"./base":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/base.js","mout/array/forEach":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/forEach.js","mout/array/map":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/map.js","slick/parser":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/slick/parser.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/array/forEach.js":[function(require,module,exports){
+arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/forEach.js"][0].apply(exports,arguments)
+},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/array/slice.js":[function(require,module,exports){
 
 
     /**
