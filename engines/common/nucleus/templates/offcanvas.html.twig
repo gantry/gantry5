@@ -1,11 +1,11 @@
 {% set offcanvas %}
-    {% if segment.children %}
-        {% for segment in segments %}
-            {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
-        {% endfor %}
-    {% endif %}
+    {% for child in segment.children %}
+        {% include '@nucleus/' ~ child.type ~ '.html.twig' with { 'segments': child.children } %}
+    {% endfor %}
 {% endset %}
 
 {% if offcanvas|trim %}
-<div id="g-offcanvas">{{ offcanvas }}</div>
+<div id="g-offcanvas">
+    {{ offcanvas }}
+</div>
 {% endif %}
