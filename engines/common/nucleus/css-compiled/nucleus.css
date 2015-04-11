@@ -1374,35 +1374,30 @@ th {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1;
+  z-index: -1;
   opacity: 0;
-  -webkit-transition: opacity 0.3s ease-out;
-  -moz-transition: opacity 0.3s ease-out;
-  transition: opacity 0.3s ease-out;
-}
-/* line 203, engines/common/nucleus/scss/nucleus/_nav.scss */
-.g-nav-overlay-active .g-nav-overlay, .g-mobile-nav-active .g-nav-overlay {
   position: fixed;
-  opacity: 1;
-  height: 100vh;
+  -webkit-transition: opacity 0.3s ease-out, z-index 0.1s ease-out;
+  -moz-transition: opacity 0.3s ease-out, z-index 0.1s ease-out;
+  transition: opacity 0.3s ease-out, z-index 0.1s ease-out;
 }
 
-/* line 214, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 210, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel li {
   display: block;
   margin-right: 0;
 }
-/* line 217, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 213, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel li .g-menu-item-content {
   display: block;
   padding: 0.938rem 1rem;
   line-height: 1rem;
 }
-/* line 225, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 221, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel li.g-parent > .g-menu-item-content {
   position: relative;
 }
-/* line 227, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 223, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel li.g-parent > .g-menu-item-content:after {
   position: absolute;
   width: auto;
@@ -1412,11 +1407,11 @@ th {
   content: "\f054";
   right: 1rem;
 }
-/* line 239, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 235, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel li.g-parent .g-menu-parent-indicator {
   display: none;
 }
-/* line 244, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 240, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown {
   top: 0;
   background: transparent;
@@ -1430,7 +1425,7 @@ th {
   -o-transform: translateX(100%);
   transform: translateX(100%);
 }
-/* line 252, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 248, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown.g-active {
   -webkit-transform: translateX(0);
   -moz-transform: translateX(0);
@@ -1438,38 +1433,38 @@ th {
   -o-transform: translateX(0);
   transform: translateX(0);
 }
-/* line 255, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 251, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown .g-go-back {
   display: block;
 }
-/* line 258, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 254, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown .g-block {
   width: 100%;
   overflow: visible;
 }
-/* line 261, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 257, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown .g-block .g-go-back {
   display: none;
 }
-/* line 265, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 261, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown .g-block:first-child .g-go-back {
   display: block;
 }
-/* line 271, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 267, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown-column {
   float: none;
 }
-/* line 275, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 271, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-sublevel {
   -webkit-transition: -webkit-transform 0.2s ease-out;
   -moz-transition: -moz-transform 0.2s ease-out;
   transition: transform 0.2s ease-out;
 }
-/* line 276, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 272, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-sublevel li {
   position: static;
 }
-/* line 280, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 276, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-sublevel .g-dropdown {
   top: 0;
   -webkit-transform: translateX(100%);
@@ -1478,7 +1473,7 @@ th {
   -o-transform: translateX(100%);
   transform: translateX(100%);
 }
-/* line 283, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 279, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-sublevel .g-dropdown.g-active {
   -webkit-transform: translateX(0);
   -moz-transform: translateX(0);
@@ -1486,7 +1481,7 @@ th {
   -o-transform: translateX(0);
   transform: translateX(0);
 }
-/* line 288, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 284, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-sublevel.g-slide-out > .g-menu-item > .g-menu-item-content {
   -webkit-transform: translateX(-100%);
   -moz-transform: translateX(-100%);
@@ -1494,7 +1489,7 @@ th {
   -o-transform: translateX(-100%);
   transform: translateX(-100%);
 }
-/* line 294, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 290, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-block-inactive .g-sublevel {
   height: 0;
   -webkit-transform: translateX(-100%);
@@ -1792,7 +1787,6 @@ input[type="submit"] {
 /* line 1, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 #g-offcanvas {
   position: fixed;
-  z-index: 100;
   top: 0;
   left: 0;
   right: 0;
@@ -1802,7 +1796,7 @@ input[type="submit"] {
   text-align: left;
 }
 
-/* line 13, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 12, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-toggle {
   display: block;
   position: absolute;
@@ -1813,16 +1807,28 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-/* line 23, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 22, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-active {
   overflow-x: hidden;
 }
 
+/* line 26, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+.g-offcanvas-open {
+  overflow: hidden;
+}
 /* line 29, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+.g-offcanvas-open .g-nav-overlay {
+  z-index: 5;
+  position: fixed;
+  opacity: 1;
+  height: 100vh;
+}
+
+/* line 39, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-right #g-offcanvas {
   left: inherit;
 }
-/* line 32, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 42, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-right .g-offcanvas-toggle {
   left: inherit;
   right: 0.7rem;

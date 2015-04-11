@@ -12,20 +12,6 @@
 	color: $white;
 }
 
-.g-offcanvas-active {
-	#g-page-surround {
-		@include transform(translateX($offcanvas-width));
-	}
-}
-
-.g-offcanvas-right {
-	&.g-offcanvas-active {
-		#g-page-surround {
-			@include transform(translateX(-$offcanvas-width));
-		}
-	}
-}
-
 // Mobile Menu 
 #g-offcanvas {
 	.g-main-nav {

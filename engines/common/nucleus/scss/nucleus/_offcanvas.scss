@@ -1,6 +1,5 @@
 #g-offcanvas {
 	position: fixed;
-	z-index: 100;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -22,6 +21,17 @@
 
 .g-offcanvas-active {
 	overflow-x: hidden;
+}
+
+.g-offcanvas-open {
+    overflow: hidden;
+
+    .g-nav-overlay {
+        z-index: 5;
+        position: fixed;
+        opacity: 1;
+        height: 100vh;
+    }
 }
 
 // Right Positioning

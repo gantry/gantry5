@@ -1,10 +1,21 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./assets/common/application/main.js":[function(require,module,exports){
 "use strict";
 
-module.exports = {
-    menu: require('./menu')
-};
-},{"./menu":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/application/menu/index.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/application/menu/index.js":[function(require,module,exports){
+var ready     = require('domready'),
+    menu      = require('./menu'),
+    offcanvas = require('./offcanvas'),
+
+    instances = {};
+
+ready(function() {
+    instances = {
+        offcanvas: new offcanvas(),
+        menu: menu
+    };
+});
+
+module.exports = window.G5 = instances;
+},{"./menu":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/application/menu/index.js","./offcanvas":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/application/offcanvas/index.js","domready":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/application/menu/index.js":[function(require,module,exports){
 "use strict";
 
 var ready = require('domready'),
@@ -59,7 +70,156 @@ ready(function() {
 });
 
 module.exports = {};
-},{"domready":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js","elements":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/index.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/zen.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js":[function(require,module,exports){
+},{"domready":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js","elements":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/index.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/zen.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/application/offcanvas/index.js":[function(require,module,exports){
+"use strict";
+// Based on the awesome Slideout.js <https://mango.github.io/slideout/>
+
+var ready   = require('domready'),
+    prime   = require('prime'),
+    bind    = require('mout/function/bind'),
+    Bound   = require('prime-util/prime/bound'),
+    Options = require('prime-util/prime/options'),
+    $       = require('elements'),
+    zen     = require('elements/zen');
+
+// thanks David Walsh
+var prefix = (function() {
+    var styles = window.getComputedStyle(document.documentElement, ''),
+        pre = (Array.prototype.slice.call(styles).join('')
+            .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
+        )[1],
+        dom = ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1];
+    return {
+        dom: dom,
+        lowercase: pre,
+        css: '-' + pre + '-',
+        js: pre[0].toUpperCase() + pre.substr(1)
+    };
+})();
+
+var Offcanvas = new prime({
+
+    mixin: [Bound, Options],
+
+    options: {
+        effect: 'ease',
+        duration: 300,
+        tolerance: 70,
+        padding: 0,
+        touch: true,
+
+        openClass: 'g-offcanvas-open',
+        overlayClass: 'g-nav-overlay'
+    },
+
+    constructor: function(options) {
+        this.setOptions(options);
+
+        this.opening = false;
+        this.moved = false;
+        this.opened = false;
+        this.preventOpen = false;
+        this.offsetX = {
+            start: 0,
+            current: 0
+        };
+
+        this.panel = $('#g-page-surround');
+        this.offcanvas = $('#g-offcanvas');
+
+        if (!this.panel || !this.offcanvas) { return false; }
+
+        if (!this.options.padding) { this.setOptions({ padding: this.offcanvas[0].getBoundingClientRect().width }); }
+
+        return this.attach();
+    },
+
+    attach: function() {
+        var body = $('body');
+        body.delegate('click', '[data-offcanvas-toggle]', this.bound('toggle'));
+        body.delegate('click', '[data-offcanvas-open]', this.bound('open'));
+        body.delegate('click', '[data-offcanvas-close]', this.bound('close'));
+
+        this.overlay = zen('div[data-offcanvas-close].' + this.options.overlayClass).top(this.panel);
+
+        return this;
+    },
+
+    detach: function() {
+        var body = $('body');
+        body.undelegate('click', '[data-offcanvas-toggle]', this.bound('toggle'));
+        body.undelegate('click', '[data-offcanvas-open]', this.bound('open'));
+        body.undelegate('click', '[data-offcanvas-close]', this.bound('close'));
+
+        this.overlay.remove();
+
+        return this;
+    },
+
+    open: function() {
+        if (this.opened) { return this; }
+        var body = $('body')[0];
+
+        if (!~body.className.search(this.options.openClass)) {
+            body.className += ' ' + this.options.openClass;
+        }
+
+        this.overlay[0].style.opacity = 1;
+
+        this._setTransition();
+        this._translateXTo(this.options.padding);
+        this.opened = true;
+
+        setTimeout(bind(function() {
+            var panel = this.panel[0];
+
+            panel.style.transition = panel.style['-webkit-transition'] = '';
+        }, this), this.options.duration);
+
+        return this;
+    },
+
+    close: function() {
+        if (!this.opened && !this.opening) { return this; }
+        var body = $('body')[0];
+
+        this.overlay[0].style.opacity = 0;
+
+        this._setTransition();
+        this._translateXTo(0);
+        this.opened = false;
+
+        setTimeout(bind(function() {
+            var panel = this.panel[0];
+
+            body.className = body.className.replace(' ' + this.options.openClass, '');
+            panel.style.transition = panel.style['-webkit-transition'] = '';
+        }, this), this.options.duration);
+
+
+        return this;
+    },
+
+    toggle: function() {
+        return this[this.opened ? 'close' : 'open']();
+    },
+
+    _setTransition: function() {
+        var panel = this.panel[0];
+
+        panel.style[prefix.css + 'transition'] = panel.style.transition = prefix.css + 'transform ' + this.options.duration + 'ms ' + this.options.effect;
+    },
+
+    _translateXTo: function(x) {
+        var panel = this.panel[0];
+        this.offsetX.current = x;
+
+        panel.style[prefix.css + 'transform'] = panel.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+    }
+});
+
+module.exports = Offcanvas;
+},{"domready":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js","elements":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/index.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/zen.js","mout/function/bind":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/function/bind.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js","prime-util/prime/bound":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/prime/bound.js","prime-util/prime/options":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/prime/options.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js":[function(require,module,exports){
 /*!
   * domready (c) Dustin Diaz 2014 - License MIT
   */
@@ -2529,7 +2689,316 @@ module.exports = function(expression, doc){
 
 }
 
-},{"./base":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/base.js","mout/array/forEach":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/forEach.js","mout/array/map":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/map.js","slick/parser":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/slick/parser.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/defer.js":[function(require,module,exports){
+},{"./base":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/base.js","mout/array/forEach":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/forEach.js","mout/array/map":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/map.js","slick/parser":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/slick/parser.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/array/slice.js":[function(require,module,exports){
+
+
+    /**
+     * Create slice of source array or array-like object
+     */
+    function slice(arr, start, end){
+        var len = arr.length;
+
+        if (start == null) {
+            start = 0;
+        } else if (start < 0) {
+            start = Math.max(len + start, 0);
+        } else {
+            start = Math.min(start, len);
+        }
+
+        if (end == null) {
+            end = len;
+        } else if (end < 0) {
+            end = Math.max(len + end, 0);
+        } else {
+            end = Math.min(end, len);
+        }
+
+        var result = [];
+        while (start < end) {
+            result.push(arr[start++]);
+        }
+
+        return result;
+    }
+
+    module.exports = slice;
+
+
+
+},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/function/bind.js":[function(require,module,exports){
+var slice = require('../array/slice');
+
+    /**
+     * Return a function that will execute in the given context, optionally adding any additional supplied parameters to the beginning of the arguments collection.
+     * @param {Function} fn  Function.
+     * @param {object} context   Execution context.
+     * @param {rest} args    Arguments (0...n arguments).
+     * @return {Function} Wrapped Function.
+     */
+    function bind(fn, context, args){
+        var argsArr = slice(arguments, 2); //curried args
+        return function(){
+            return fn.apply(context, argsArr.concat(slice(arguments)));
+        };
+    }
+
+    module.exports = bind;
+
+
+
+},{"../array/slice":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/array/slice.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/array/slice.js":[function(require,module,exports){
+arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/array/slice.js"][0].apply(exports,arguments)
+},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/function/bind.js":[function(require,module,exports){
+arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/function/bind.js"][0].apply(exports,arguments)
+},{"../array/slice":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/array/slice.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/clone.js":[function(require,module,exports){
+var kindOf = require('./kindOf');
+var isPlainObject = require('./isPlainObject');
+var mixIn = require('../object/mixIn');
+
+    /**
+     * Clone native types.
+     */
+    function clone(val){
+        switch (kindOf(val)) {
+            case 'Object':
+                return cloneObject(val);
+            case 'Array':
+                return cloneArray(val);
+            case 'RegExp':
+                return cloneRegExp(val);
+            case 'Date':
+                return cloneDate(val);
+            default:
+                return val;
+        }
+    }
+
+    function cloneObject(source) {
+        if (isPlainObject(source)) {
+            return mixIn({}, source);
+        } else {
+            return source;
+        }
+    }
+
+    function cloneRegExp(r) {
+        var flags = '';
+        flags += r.multiline ? 'm' : '';
+        flags += r.global ? 'g' : '';
+        flags += r.ignorecase ? 'i' : '';
+        return new RegExp(r.source, flags);
+    }
+
+    function cloneDate(date) {
+        return new Date(+date);
+    }
+
+    function cloneArray(arr) {
+        return arr.slice();
+    }
+
+    module.exports = clone;
+
+
+
+},{"../object/mixIn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/mixIn.js","./isPlainObject":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isPlainObject.js","./kindOf":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/kindOf.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/deepClone.js":[function(require,module,exports){
+var clone = require('./clone');
+var forOwn = require('../object/forOwn');
+var kindOf = require('./kindOf');
+var isPlainObject = require('./isPlainObject');
+
+    /**
+     * Recursively clone native types.
+     */
+    function deepClone(val, instanceClone) {
+        switch ( kindOf(val) ) {
+            case 'Object':
+                return cloneObject(val, instanceClone);
+            case 'Array':
+                return cloneArray(val, instanceClone);
+            default:
+                return clone(val);
+        }
+    }
+
+    function cloneObject(source, instanceClone) {
+        if (isPlainObject(source)) {
+            var out = {};
+            forOwn(source, function(val, key) {
+                this[key] = deepClone(val, instanceClone);
+            }, out);
+            return out;
+        } else if (instanceClone) {
+            return instanceClone(source);
+        } else {
+            return source;
+        }
+    }
+
+    function cloneArray(arr, instanceClone) {
+        var out = [],
+            i = -1,
+            n = arr.length,
+            val;
+        while (++i < n) {
+            out[i] = deepClone(arr[i], instanceClone);
+        }
+        return out;
+    }
+
+    module.exports = deepClone;
+
+
+
+
+},{"../object/forOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/forOwn.js","./clone":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/clone.js","./isPlainObject":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isPlainObject.js","./kindOf":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/kindOf.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isKind.js":[function(require,module,exports){
+arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/isKind.js"][0].apply(exports,arguments)
+},{"./kindOf":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/kindOf.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isObject.js":[function(require,module,exports){
+var isKind = require('./isKind');
+    /**
+     */
+    function isObject(val) {
+        return isKind(val, 'Object');
+    }
+    module.exports = isObject;
+
+
+},{"./isKind":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isKind.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isPlainObject.js":[function(require,module,exports){
+
+
+    /**
+     * Checks if the value is created by the `Object` constructor.
+     */
+    function isPlainObject(value) {
+        return (!!value && typeof value === 'object' &&
+            value.constructor === Object);
+    }
+
+    module.exports = isPlainObject;
+
+
+
+},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/kindOf.js":[function(require,module,exports){
+arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/kindOf.js"][0].apply(exports,arguments)
+},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/forIn.js":[function(require,module,exports){
+arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/forIn.js"][0].apply(exports,arguments)
+},{"./hasOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/hasOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/forOwn.js":[function(require,module,exports){
+arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/forOwn.js"][0].apply(exports,arguments)
+},{"./forIn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/forIn.js","./hasOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/hasOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/hasOwn.js":[function(require,module,exports){
+arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/hasOwn.js"][0].apply(exports,arguments)
+},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/merge.js":[function(require,module,exports){
+var hasOwn = require('./hasOwn');
+var deepClone = require('../lang/deepClone');
+var isObject = require('../lang/isObject');
+
+    /**
+     * Deep merge objects.
+     */
+    function merge() {
+        var i = 1,
+            key, val, obj, target;
+
+        // make sure we don't modify source element and it's properties
+        // objects are passed by reference
+        target = deepClone( arguments[0] );
+
+        while (obj = arguments[i++]) {
+            for (key in obj) {
+                if ( ! hasOwn(obj, key) ) {
+                    continue;
+                }
+
+                val = obj[key];
+
+                if ( isObject(val) && isObject(target[key]) ){
+                    // inception, deep merge objects
+                    target[key] = merge(target[key], val);
+                } else {
+                    // make sure arrays, regexp, date, objects are cloned
+                    target[key] = deepClone(val);
+                }
+
+            }
+        }
+
+        return target;
+    }
+
+    module.exports = merge;
+
+
+
+},{"../lang/deepClone":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/deepClone.js","../lang/isObject":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isObject.js","./hasOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/hasOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/mixIn.js":[function(require,module,exports){
+var forOwn = require('./forOwn');
+
+    /**
+    * Combine properties from all the objects into first one.
+    * - This method affects target object in place, if you want to create a new Object pass an empty object as first param.
+    * @param {object} target    Target Object
+    * @param {...object} objects    Objects to be combined (0...n objects).
+    * @return {object} Target Object.
+    */
+    function mixIn(target, objects){
+        var i = 0,
+            n = arguments.length,
+            obj;
+        while(++i < n){
+            obj = arguments[i];
+            if (obj != null) {
+                forOwn(obj, copyProp, target);
+            }
+        }
+        return target;
+    }
+
+    function copyProp(val, key){
+        this[key] = val;
+    }
+
+    module.exports = mixIn;
+
+
+},{"./forOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/forOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/prime/bound.js":[function(require,module,exports){
+"use strict";
+
+// credits to @cpojer's Class.Binds, released under the MIT license
+// https://github.com/cpojer/mootools-class-extras/blob/master/Source/Class.Binds.js
+
+var prime = require("prime")
+var bind = require("mout/function/bind")
+
+var bound = prime({
+
+    bound: function(name){
+        var bound = this._bound || (this._bound = {})
+        return bound[name] || (bound[name] = bind(this[name], this))
+    }
+
+})
+
+module.exports = bound
+
+},{"mout/function/bind":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/function/bind.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/prime/options.js":[function(require,module,exports){
+"use strict";
+
+var prime = require("prime")
+var merge = require("mout/object/merge")
+
+var Options = prime({
+
+    setOptions: function(options){
+        var args = [{}, this.options]
+        args.push.apply(args, arguments)
+        this.options = merge.apply(null, args)
+        return this
+    }
+
+})
+
+module.exports = Options
+
+},{"mout/object/merge":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/merge.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/defer.js":[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -2965,35 +3434,7 @@ arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_module
 },{"./forIn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/forIn.js","./hasOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/hasOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/hasOwn.js":[function(require,module,exports){
 arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/hasOwn.js"][0].apply(exports,arguments)
 },{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/mixIn.js":[function(require,module,exports){
-var forOwn = require('./forOwn');
-
-    /**
-    * Combine properties from all the objects into first one.
-    * - This method affects target object in place, if you want to create a new Object pass an empty object as first param.
-    * @param {object} target    Target Object
-    * @param {...object} objects    Objects to be combined (0...n objects).
-    * @return {object} Target Object.
-    */
-    function mixIn(target, objects){
-        var i = 0,
-            n = arguments.length,
-            obj;
-        while(++i < n){
-            obj = arguments[i];
-            if (obj != null) {
-                forOwn(obj, copyProp, target);
-            }
-        }
-        return target;
-    }
-
-    function copyProp(val, key){
-        this[key] = val;
-    }
-
-    module.exports = mixIn;
-
-
+arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/mixIn.js"][0].apply(exports,arguments)
 },{"./forOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/forOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/time/now.js":[function(require,module,exports){
 
 
