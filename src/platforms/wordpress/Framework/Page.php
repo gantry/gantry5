@@ -14,12 +14,11 @@ class Page extends Base\Page
         return $this->getAttributes($attributes);
     }
 
-    public function bodyAttributes()
+    public function bodyAttributes($attributes = [])
     {
         // TODO: we might need something like
         // class="{{body_class}}" data-template="{{ twigTemplate|default('base.twig') }}"
 
-        $attributes = (array) $this->config->get('page.body', []);
-        return $this->getAttributes(array_unique($attributes));
+        return $this->getAttributes((array) $this->config->get('page.body'), $attributes);
     }
 }

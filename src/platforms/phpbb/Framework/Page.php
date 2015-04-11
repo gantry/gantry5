@@ -14,19 +14,19 @@ class Page extends Base\Page
         return $this->getAttributes($attributes);
     }
 
-    public function bodyAttributes()
+    public function bodyAttributes($attributes = [])
     {
         $classes = ['nojs', 'notouch', 'section-{SCRIPT_NAME}', '{S_CONTENT_DIRECTION}', '{BODY_CLASS}'];
 
-        $attributes = (array) $this->config->get('page.body', []);
-        $attributes['id'] = 'phpbb';
+        $baseAttributes = (array) $this->config->get('page.body', []);
+        $baseAttributes['id'] = 'phpbb';
 
-        if (!empty($attributes['class'])) {
-            $attributes['class'] = array_merge((array) $attributes['class'], $classes);
+        if (!empty($baseAttributes['class'])) {
+            $baseAttributes['class'] = array_merge((array) $baseAttributes['class'], $classes);
         } else {
-            $attributes['class'] = $classes;
+            $baseAttributes['class'] = $classes;
         }
 
-        return $this->getAttributes(array_unique($attributes));
+        return $this->getAttributes($baseAttributes, $attributes);
     }
 }
