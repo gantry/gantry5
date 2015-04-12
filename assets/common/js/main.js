@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./assets/common/application/main.js":[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
 
 var ready     = require('domready'),
@@ -15,7 +15,7 @@ ready(function() {
 });
 
 module.exports = window.G5 = instances;
-},{"./menu":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/application/menu/index.js","./offcanvas":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/application/offcanvas/index.js","domready":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/application/menu/index.js":[function(require,module,exports){
+},{"./menu":2,"./offcanvas":3,"domready":5}],2:[function(require,module,exports){
 "use strict";
 
 var ready = require('domready'),
@@ -70,18 +70,22 @@ ready(function() {
 });
 
 module.exports = {};
-},{"domready":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js","elements":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/index.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/zen.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/application/offcanvas/index.js":[function(require,module,exports){
-"use strict";
+},{"domready":5,"elements":10,"elements/zen":37,"prime":58}],3:[function(require,module,exports){
+// Offcanvas slide with desktop, touch and all-in-one touch devices support.
+// Fast and optimized using CSS3 transitions
 // Based on the awesome Slideout.js <https://mango.github.io/slideout/>
 
-var ready   = require('domready'),
-    prime   = require('prime'),
-    bind    = require('mout/function/bind'),
-    forEach = require('mout/array/forEach'),
-    Bound   = require('prime-util/prime/bound'),
-    Options = require('prime-util/prime/options'),
-    $       = require('elements'),
-    zen     = require('elements/zen');
+"use strict";
+
+var ready    = require('domready'),
+    prime    = require('prime'),
+    bind     = require('mout/function/bind'),
+    forEach  = require('mout/array/forEach'),
+    decouple = require('../utils/decouple'),
+    Bound    = require('prime-util/prime/bound'),
+    Options  = require('prime-util/prime/options'),
+    $        = require('elements'),
+    zen      = require('elements/zen');
 
 // thanks David Walsh
 var prefix = (function() {
@@ -98,13 +102,8 @@ var prefix = (function() {
     };
 })();
 
-var hasTouchEvents     = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch,
-    msPointerSupported = window.navigator.msPointerEnabled,
-    touch              = {
-        start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
-        move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
-        end: msPointerSupported ? 'MSPointerUp' : 'touchend'
-    };
+var hasTouchEvents = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch,
+    isScrolling    = false, scrollTimeout;
 
 var Offcanvas = new prime({
 
@@ -126,6 +125,7 @@ var Offcanvas = new prime({
 
         this.opening = false;
         this.moved = false;
+        this.dragging = false;
         this.opened = false;
         this.preventOpen = false;
         this.offsetX = {
@@ -138,7 +138,17 @@ var Offcanvas = new prime({
 
         if (!this.panel || !this.offcanvas) { return false; }
 
-        if (!this.options.padding) { this.setOptions({ padding: this.offcanvas[0].getBoundingClientRect().width }); }
+        if (!this.options.padding) {
+            this.offcanvas[0].style.display = 'block';
+            var width = this.offcanvas[0].getBoundingClientRect().width;
+            this.offcanvas[0].style.display = null;
+
+            this.setOptions({ padding: width });
+        }
+
+        if (this.options.touch && hasTouchEvents) {
+            this._touchEvents();
+        }
 
         return this.attach();
     },
@@ -169,14 +179,15 @@ var Offcanvas = new prime({
         return this;
     },
 
-    open: function(event, element) {
+    open: function(event) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
         if (this.opened) { return this; }
 
-        var body = $('body')[0];
+        var html = $('html')[0],
+            body = $('body')[0];
 
-        if (!~body.className.search(this.options.openClass)) {
-            body.className += ' ' + this.options.openClass;
+        if (!~html.className.search(this.options.openClass)) {
+            html.className += ' ' + this.options.openClass;
         }
 
         this.overlay[0].style.opacity = 1;
@@ -194,11 +205,12 @@ var Offcanvas = new prime({
         return this;
     },
 
-    close: function(event) {
+    close: function(event, element) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
         if (!this.opened && !this.opening) { return this; }
+        if (this.panel !== element && this.dragging) { return false; }
 
-        var body = $('body')[0];
+        var html = $('html')[0];
 
         this.overlay[0].style.opacity = 0;
 
@@ -209,7 +221,7 @@ var Offcanvas = new prime({
         setTimeout(bind(function() {
             var panel = this.panel[0];
 
-            body.className = body.className.replace(' ' + this.options.openClass, '');
+            html.className = html.className.replace(' ' + this.options.openClass, '');
             panel.style.transition = panel.style['-webkit-transition'] = '';
         }, this), this.options.duration);
 
@@ -234,11 +246,126 @@ var Offcanvas = new prime({
         this.offsetX.current = x;
 
         panel.style[prefix.css + 'transform'] = panel.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+    },
+
+    _touchEvents: function() {
+        var msPointerSupported = window.navigator.msPointerEnabled,
+            self = this,
+            html = $('html'),
+            body = $('body'),
+            touch = {
+                start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
+                move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
+                end: msPointerSupported ? 'MSPointerUp' : 'touchend'
+            };
+
+        decouple(body, 'scroll', function() {
+            if (!self.moved) {
+                clearTimeout(scrollTimeout);
+                isScrolling = true;
+                scrollTimeout = setTimeout(function() {
+                    isScrolling = false;
+                }, 250);
+            }
+        });
+
+        body.on(touch.move, function(event) {
+            if (self.moved) { event.preventDefault(); }
+            self.dragging = true;
+        });
+
+        this.panel.on(touch.start, function(event) {
+            if (!event.touches) { return; }
+
+            self.moved = false;
+            self.opening = false;
+            self.dragging = false;
+            self.offsetX.start = event.touches[0].pageX;
+            self.preventOpen = (!self.opened && self.offcanvas[0].clientWidth !== 0);
+        });
+
+        this.panel.on('touchcancel', function() {
+            self.moved = false;
+            self.opening = false;
+        });
+
+        this.panel.on(touch.end, function(event) {
+
+            if (self.moved) {
+                var tolerance = Math.abs(self.offsetX.current) > self.options.tolerance;
+                self[self.opening && tolerance ? 'open' : 'close'](event, self.panel);
+            }
+
+            self.moved = false;
+        });
+
+        this.panel.on(touch.move, function(event) {
+            if (isScrolling || self.preventOpen || !event.touches) { return; }
+
+            var diffX = event.touches[0].clientX - self.offsetX.start;
+            var translateX = self.offsetX.current = diffX;
+
+            if (Math.abs(translateX) > self.options.padding) { return; }
+
+            if (Math.abs(diffX) > 20) {
+                self.opening = true;
+
+                if (self.opened && diffX > 0 || !self.opened && diffX < 0) { return; }
+
+                if (!self.moved && !~html[0].className.search(self.options.openClass)) {
+                    html[0].className += ' ' + self.options.openClass;
+                }
+
+                if (diffX <= 0) {
+                    translateX = diffX + self.options.padding;
+                    self.opening = false;
+                }
+
+                self.panel[0].style[prefix.css + 'transform'] = self.panel[0].style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+
+                self.moved = true;
+            }
+
+        });
     }
 });
 
 module.exports = Offcanvas;
-},{"domready":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js","elements":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/index.js","elements/zen":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/zen.js","mout/array/forEach":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/array/forEach.js","mout/function/bind":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/function/bind.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js","prime-util/prime/bound":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/prime/bound.js","prime-util/prime/options":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/prime/options.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/domready/ready.js":[function(require,module,exports){
+},{"../utils/decouple":4,"domready":5,"elements":10,"elements/zen":37,"mout/array/forEach":38,"mout/function/bind":40,"prime":58,"prime-util/prime/bound":54,"prime-util/prime/options":55}],4:[function(require,module,exports){
+'use strict';
+
+var rAF = (function() {
+    return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        function(callback) { window.setTimeout(callback, 1000 / 60); };
+}());
+
+var decouple = function(element, event, callback) {
+    var evt, tracking = false;
+    element = element[0] || element;
+
+    var capture = function(e) {
+        evt = e;
+        track();
+    };
+
+    var track = function() {
+        if (!tracking) {
+            rAF(update);
+            tracking = true;
+        }
+    };
+
+    var update = function() {
+        callback.call(element, evt);
+        tracking = false;
+    };
+
+    element.addEventListener(event, capture, false);
+};
+
+module.exports = decouple;
+},{}],5:[function(require,module,exports){
 /*!
   * domready (c) Dustin Diaz 2014 - License MIT
   */
@@ -270,7 +397,7 @@ module.exports = Offcanvas;
 
 });
 
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/attributes.js":[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /*
 attributes
 */"use strict"
@@ -489,7 +616,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/base.js","mout/array/filter":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/filter.js","mout/array/forEach":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/forEach.js","mout/array/indexOf":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/indexOf.js","mout/string/trim":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/string/trim.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/base.js":[function(require,module,exports){
+},{"./base":7,"mout/array/filter":13,"mout/array/forEach":14,"mout/array/indexOf":15,"mout/string/trim":32}],7:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -620,7 +747,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/every.js","mout/array/filter":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/filter.js","mout/array/forEach":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/forEach.js","mout/array/map":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/map.js","mout/array/some":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/some.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/delegation.js":[function(require,module,exports){
+},{"mout/array/every":12,"mout/array/filter":13,"mout/array/forEach":14,"mout/array/map":16,"mout/array/some":17,"prime":58}],8:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -703,7 +830,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/events.js","./traversal":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/traversal.js","prime/map":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/map.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/events.js":[function(require,module,exports){
+},{"./events":9,"./traversal":36,"prime/map":59}],9:[function(require,module,exports){
 /*
 events
 */"use strict"
@@ -783,7 +910,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/base.js","prime/emitter":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/emitter.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/index.js":[function(require,module,exports){
+},{"./base":7,"prime/emitter":57}],10:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -797,7 +924,7 @@ var $ = require("./base")
 
 module.exports = $
 
-},{"./attributes":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/attributes.js","./base":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/base.js","./delegation":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/delegation.js","./events":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/events.js","./insertion":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/insertion.js","./traversal":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/traversal.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/insertion.js":[function(require,module,exports){
+},{"./attributes":6,"./base":7,"./delegation":8,"./events":9,"./insertion":11,"./traversal":36}],11:[function(require,module,exports){
 /*
 insertion
 */"use strict"
@@ -891,7 +1018,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/base.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/every.js":[function(require,module,exports){
+},{"./base":7}],12:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -920,7 +1047,7 @@ var makeIterator = require('../function/makeIterator_');
     module.exports = every;
 
 
-},{"../function/makeIterator_":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/function/makeIterator_.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/filter.js":[function(require,module,exports){
+},{"../function/makeIterator_":19}],13:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -948,7 +1075,7 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{"../function/makeIterator_":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/function/makeIterator_.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/forEach.js":[function(require,module,exports){
+},{"../function/makeIterator_":19}],14:[function(require,module,exports){
 
 
     /**
@@ -973,7 +1100,7 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/indexOf.js":[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 
 
     /**
@@ -1003,7 +1130,7 @@ var makeIterator = require('../function/makeIterator_');
     module.exports = indexOf;
 
 
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/map.js":[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -1027,7 +1154,7 @@ var makeIterator = require('../function/makeIterator_');
      module.exports = map;
 
 
-},{"../function/makeIterator_":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/function/makeIterator_.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/some.js":[function(require,module,exports){
+},{"../function/makeIterator_":19}],17:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -1056,7 +1183,7 @@ var makeIterator = require('../function/makeIterator_');
     module.exports = some;
 
 
-},{"../function/makeIterator_":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/function/makeIterator_.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/function/identity.js":[function(require,module,exports){
+},{"../function/makeIterator_":19}],18:[function(require,module,exports){
 
 
     /**
@@ -1070,7 +1197,7 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/function/makeIterator_.js":[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 var identity = require('./identity');
 var prop = require('./prop');
 var deepMatches = require('../object/deepMatches');
@@ -1106,7 +1233,7 @@ var deepMatches = require('../object/deepMatches');
 
 
 
-},{"../object/deepMatches":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/deepMatches.js","./identity":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/function/identity.js","./prop":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/function/prop.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/function/prop.js":[function(require,module,exports){
+},{"../object/deepMatches":25,"./identity":18,"./prop":20}],20:[function(require,module,exports){
 
 
     /**
@@ -1122,7 +1249,7 @@ var deepMatches = require('../object/deepMatches');
 
 
 
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/isArray.js":[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -1132,7 +1259,7 @@ var isKind = require('./isKind');
     module.exports = isArray;
 
 
-},{"./isKind":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/isKind.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/isKind.js":[function(require,module,exports){
+},{"./isKind":22}],22:[function(require,module,exports){
 var kindOf = require('./kindOf');
     /**
      * Check if value is from a specific "kind".
@@ -1143,7 +1270,7 @@ var kindOf = require('./kindOf');
     module.exports = isKind;
 
 
-},{"./kindOf":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/kindOf.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/kindOf.js":[function(require,module,exports){
+},{"./kindOf":23}],23:[function(require,module,exports){
 
 
     var _rKind = /^\[object (.*)\]$/,
@@ -1165,7 +1292,7 @@ var kindOf = require('./kindOf');
     module.exports = kindOf;
 
 
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/toString.js":[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 
 
     /**
@@ -1180,7 +1307,7 @@ var kindOf = require('./kindOf');
 
 
 
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/deepMatches.js":[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var isArray = require('../lang/isArray');
 
@@ -1237,7 +1364,7 @@ var isArray = require('../lang/isArray');
 
 
 
-},{"../lang/isArray":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/isArray.js","./forOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/forOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/forIn.js":[function(require,module,exports){
+},{"../lang/isArray":21,"./forOwn":27}],26:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 
     var _hasDontEnumBug,
@@ -1315,7 +1442,7 @@ var hasOwn = require('./hasOwn');
 
 
 
-},{"./hasOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/hasOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/forOwn.js":[function(require,module,exports){
+},{"./hasOwn":28}],27:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var forIn = require('./forIn');
 
@@ -1336,7 +1463,7 @@ var forIn = require('./forIn');
 
 
 
-},{"./forIn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/forIn.js","./hasOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/hasOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/hasOwn.js":[function(require,module,exports){
+},{"./forIn":26,"./hasOwn":28}],28:[function(require,module,exports){
 
 
     /**
@@ -1350,7 +1477,7 @@ var forIn = require('./forIn');
 
 
 
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/string/WHITE_SPACES.js":[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 
     /**
      * Contains all Unicode white-spaces. Taken from
@@ -1364,7 +1491,7 @@ var forIn = require('./forIn');
     ];
 
 
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/string/ltrim.js":[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 var toString = require('../lang/toString');
 var WHITE_SPACES = require('./WHITE_SPACES');
     /**
@@ -1400,7 +1527,7 @@ var WHITE_SPACES = require('./WHITE_SPACES');
     module.exports = ltrim;
 
 
-},{"../lang/toString":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/toString.js","./WHITE_SPACES":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/string/WHITE_SPACES.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/string/rtrim.js":[function(require,module,exports){
+},{"../lang/toString":24,"./WHITE_SPACES":29}],31:[function(require,module,exports){
 var toString = require('../lang/toString');
 var WHITE_SPACES = require('./WHITE_SPACES');
     /**
@@ -1435,7 +1562,7 @@ var WHITE_SPACES = require('./WHITE_SPACES');
     module.exports = rtrim;
 
 
-},{"../lang/toString":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/toString.js","./WHITE_SPACES":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/string/WHITE_SPACES.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/string/trim.js":[function(require,module,exports){
+},{"../lang/toString":24,"./WHITE_SPACES":29}],32:[function(require,module,exports){
 var toString = require('../lang/toString');
 var WHITE_SPACES = require('./WHITE_SPACES');
 var ltrim = require('./ltrim');
@@ -1452,7 +1579,7 @@ var rtrim = require('./rtrim');
     module.exports = trim;
 
 
-},{"../lang/toString":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/toString.js","./WHITE_SPACES":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/string/WHITE_SPACES.js","./ltrim":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/string/ltrim.js","./rtrim":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/string/rtrim.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/slick/finder.js":[function(require,module,exports){
+},{"../lang/toString":24,"./WHITE_SPACES":29,"./ltrim":30,"./rtrim":31}],33:[function(require,module,exports){
 /*
 Slick Finder
 */"use strict"
@@ -2283,7 +2410,7 @@ slick.parse = parse;
 
 module.exports = slick
 
-},{"./parser":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/slick/parser.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/slick/index.js":[function(require,module,exports){
+},{"./parser":35}],34:[function(require,module,exports){
 (function (global){
 /*
 slick
@@ -2293,7 +2420,7 @@ module.exports = "document" in global ? require("./finder") : { parse: require("
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./finder":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/slick/finder.js","./parser":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/slick/parser.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/slick/parser.js":[function(require,module,exports){
+},{"./finder":33,"./parser":35}],35:[function(require,module,exports){
 /*
 Slick Parser
  - originally created by the almighty Thomas Aylott <@subtlegradient> (http://subtlegradient.com)
@@ -2545,7 +2672,7 @@ var parse = function(expression){
 
 module.exports = parse
 
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/traversal.js":[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 /*
 traversal
 */"use strict"
@@ -2650,7 +2777,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/base.js","mout/array/map":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/map.js","slick":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/slick/index.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/zen.js":[function(require,module,exports){
+},{"./base":7,"mout/array/map":16,"slick":34}],37:[function(require,module,exports){
 /*
 zen
 */"use strict"
@@ -2708,9 +2835,9 @@ module.exports = function(expression, doc){
 
 }
 
-},{"./base":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/base.js","mout/array/forEach":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/forEach.js","mout/array/map":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/map.js","slick/parser":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/slick/parser.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/array/forEach.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/forEach.js"][0].apply(exports,arguments)
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/array/slice.js":[function(require,module,exports){
+},{"./base":7,"mout/array/forEach":14,"mout/array/map":16,"slick/parser":35}],38:[function(require,module,exports){
+arguments[4][14][0].apply(exports,arguments)
+},{"dup":14}],39:[function(require,module,exports){
 
 
     /**
@@ -2747,7 +2874,7 @@ arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_module
 
 
 
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/function/bind.js":[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 var slice = require('../array/slice');
 
     /**
@@ -2768,11 +2895,11 @@ var slice = require('../array/slice');
 
 
 
-},{"../array/slice":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/array/slice.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/array/slice.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/array/slice.js"][0].apply(exports,arguments)
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/function/bind.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/mout/function/bind.js"][0].apply(exports,arguments)
-},{"../array/slice":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/array/slice.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/clone.js":[function(require,module,exports){
+},{"../array/slice":39}],41:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"dup":39}],42:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"../array/slice":41,"dup":40}],43:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -2823,7 +2950,7 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/mixIn.js","./isPlainObject":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isPlainObject.js","./kindOf":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/kindOf.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/deepClone.js":[function(require,module,exports){
+},{"../object/mixIn":53,"./isPlainObject":47,"./kindOf":48}],44:[function(require,module,exports){
 var clone = require('./clone');
 var forOwn = require('../object/forOwn');
 var kindOf = require('./kindOf');
@@ -2873,9 +3000,9 @@ var isPlainObject = require('./isPlainObject');
 
 
 
-},{"../object/forOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/forOwn.js","./clone":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/clone.js","./isPlainObject":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isPlainObject.js","./kindOf":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/kindOf.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isKind.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/isKind.js"][0].apply(exports,arguments)
-},{"./kindOf":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/kindOf.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isObject.js":[function(require,module,exports){
+},{"../object/forOwn":50,"./clone":43,"./isPlainObject":47,"./kindOf":48}],45:[function(require,module,exports){
+arguments[4][22][0].apply(exports,arguments)
+},{"./kindOf":48,"dup":22}],46:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -2885,7 +3012,7 @@ var isKind = require('./isKind');
     module.exports = isObject;
 
 
-},{"./isKind":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isKind.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isPlainObject.js":[function(require,module,exports){
+},{"./isKind":45}],47:[function(require,module,exports){
 
 
     /**
@@ -2900,15 +3027,15 @@ var isKind = require('./isKind');
 
 
 
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/kindOf.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/kindOf.js"][0].apply(exports,arguments)
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/forIn.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/forIn.js"][0].apply(exports,arguments)
-},{"./hasOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/hasOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/forOwn.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/forOwn.js"][0].apply(exports,arguments)
-},{"./forIn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/forIn.js","./hasOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/hasOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/hasOwn.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/hasOwn.js"][0].apply(exports,arguments)
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/merge.js":[function(require,module,exports){
+},{}],48:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"dup":23}],49:[function(require,module,exports){
+arguments[4][26][0].apply(exports,arguments)
+},{"./hasOwn":51,"dup":26}],50:[function(require,module,exports){
+arguments[4][27][0].apply(exports,arguments)
+},{"./forIn":49,"./hasOwn":51,"dup":27}],51:[function(require,module,exports){
+arguments[4][28][0].apply(exports,arguments)
+},{"dup":28}],52:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var deepClone = require('../lang/deepClone');
 var isObject = require('../lang/isObject');
@@ -2950,7 +3077,7 @@ var isObject = require('../lang/isObject');
 
 
 
-},{"../lang/deepClone":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/deepClone.js","../lang/isObject":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/lang/isObject.js","./hasOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/hasOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/mixIn.js":[function(require,module,exports){
+},{"../lang/deepClone":44,"../lang/isObject":46,"./hasOwn":51}],53:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -2980,7 +3107,7 @@ var forOwn = require('./forOwn');
     module.exports = mixIn;
 
 
-},{"./forOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/forOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/prime/bound.js":[function(require,module,exports){
+},{"./forOwn":50}],54:[function(require,module,exports){
 "use strict";
 
 // credits to @cpojer's Class.Binds, released under the MIT license
@@ -3000,7 +3127,7 @@ var bound = prime({
 
 module.exports = bound
 
-},{"mout/function/bind":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/function/bind.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/prime/options.js":[function(require,module,exports){
+},{"mout/function/bind":42,"prime":58}],55:[function(require,module,exports){
 "use strict";
 
 var prime = require("prime")
@@ -3019,7 +3146,7 @@ var Options = prime({
 
 module.exports = Options
 
-},{"mout/object/merge":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/merge.js","prime":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/defer.js":[function(require,module,exports){
+},{"mout/object/merge":52,"prime":58}],56:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -3138,7 +3265,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":"/Users/w00fz/Projects/git/gantry/gantry5/node_modules/browserify/node_modules/process/browser.js","mout/array/forEach":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/array/forEach.js","mout/array/indexOf":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/array/indexOf.js","mout/lang/kindOf":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/lang/kindOf.js","mout/time/now":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/time/now.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/emitter.js":[function(require,module,exports){
+},{"_process":69,"mout/array/forEach":60,"mout/array/indexOf":61,"mout/lang/kindOf":63,"mout/time/now":68}],57:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -3204,7 +3331,7 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/defer.js","./index":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js","mout/array/forEach":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/array/forEach.js","mout/array/indexOf":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/array/indexOf.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js":[function(require,module,exports){
+},{"./defer":56,"./index":58,"mout/array/forEach":60,"mout/array/indexOf":61}],58:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -3296,7 +3423,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/lang/createObject.js","mout/lang/kindOf":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/lang/kindOf.js","mout/object/hasOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/hasOwn.js","mout/object/mixIn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/mixIn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/map.js":[function(require,module,exports){
+},{"mout/lang/createObject":62,"mout/lang/kindOf":63,"mout/object/hasOwn":66,"mout/object/mixIn":67}],59:[function(require,module,exports){
 /*
 Map
 */"use strict"
@@ -3422,11 +3549,11 @@ map.prototype = Map.prototype
 
 module.exports = map
 
-},{"./index":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/index.js","mout/array/indexOf":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/array/indexOf.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/array/forEach.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/forEach.js"][0].apply(exports,arguments)
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/array/indexOf.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/array/indexOf.js"][0].apply(exports,arguments)
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/lang/createObject.js":[function(require,module,exports){
+},{"./index":58,"mout/array/indexOf":61}],60:[function(require,module,exports){
+arguments[4][14][0].apply(exports,arguments)
+},{"dup":14}],61:[function(require,module,exports){
+arguments[4][15][0].apply(exports,arguments)
+},{"dup":15}],62:[function(require,module,exports){
 var mixIn = require('../object/mixIn');
 
     /**
@@ -3446,17 +3573,17 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/mixIn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/lang/kindOf.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/lang/kindOf.js"][0].apply(exports,arguments)
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/forIn.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/forIn.js"][0].apply(exports,arguments)
-},{"./hasOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/hasOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/forOwn.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/forOwn.js"][0].apply(exports,arguments)
-},{"./forIn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/forIn.js","./hasOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/hasOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/hasOwn.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/elements/node_modules/mout/object/hasOwn.js"][0].apply(exports,arguments)
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/mixIn.js":[function(require,module,exports){
-arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime-util/node_modules/mout/object/mixIn.js"][0].apply(exports,arguments)
-},{"./forOwn":"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/object/forOwn.js"}],"/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_modules/prime/node_modules/mout/time/now.js":[function(require,module,exports){
+},{"../object/mixIn":67}],63:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"dup":23}],64:[function(require,module,exports){
+arguments[4][26][0].apply(exports,arguments)
+},{"./hasOwn":66,"dup":26}],65:[function(require,module,exports){
+arguments[4][27][0].apply(exports,arguments)
+},{"./forIn":64,"./hasOwn":66,"dup":27}],66:[function(require,module,exports){
+arguments[4][28][0].apply(exports,arguments)
+},{"dup":28}],67:[function(require,module,exports){
+arguments[4][53][0].apply(exports,arguments)
+},{"./forOwn":65,"dup":53}],68:[function(require,module,exports){
 
 
     /**
@@ -3476,7 +3603,7 @@ arguments[4]["/Users/w00fz/Projects/git/gantry/gantry5/assets/common/node_module
 
 
 
-},{}],"/Users/w00fz/Projects/git/gantry/gantry5/node_modules/browserify/node_modules/process/browser.js":[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -3536,7 +3663,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},["./assets/common/application/main.js"])
+},{}]},{},[1])
 
 
 //# sourceMappingURL=main.js.map

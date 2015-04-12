@@ -271,7 +271,7 @@ var DragDrop = new prime({
         // Logic to auto-scroll on drag
         var scrollHeight = this.scrollHeight,
             Height       = document.body.clientHeight,
-            Scroll       = document.body.scrollTop;
+            Scroll       = window.pageYOffset;
 
         clearTimeout(this.scrollInterval);
         if (!overing) { return; }

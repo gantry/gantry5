@@ -77,7 +77,7 @@ var compileJS = function(app, watching) {
 
         cache: {},
         packageCache: {},
-        fullPaths: true
+        fullPaths: false
     });
 
     if (watching) {
