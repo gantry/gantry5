@@ -1794,9 +1794,10 @@ input[type="submit"] {
   overflow-x: hidden;
   overflow-y: auto;
   text-align: left;
+  display: none;
 }
 
-/* line 12, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 13, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-toggle {
   display: block;
   position: absolute;
@@ -1807,28 +1808,36 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-/* line 22, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 23, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-active {
   overflow-x: hidden;
 }
 
-/* line 26, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 27, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-open {
   overflow: hidden;
 }
-/* line 29, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 30, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+.g-offcanvas-open body {
+  overflow: hidden;
+}
+/* line 34, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-open .g-nav-overlay {
   z-index: 5;
   position: fixed;
   opacity: 1;
   height: 100vh;
 }
+/* line 41, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+.g-offcanvas-open #g-offcanvas {
+  display: block;
+}
 
-/* line 39, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 48, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-right #g-offcanvas {
   left: inherit;
 }
-/* line 42, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 51, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-right .g-offcanvas-toggle {
   left: inherit;
   right: 0.7rem;

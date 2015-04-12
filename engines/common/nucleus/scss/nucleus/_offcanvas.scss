@@ -7,6 +7,7 @@
 	overflow-x: hidden;
 	overflow-y: auto; 
 	text-align: left;
+    display: none;
 }
 
 .g-offcanvas-toggle {
@@ -26,11 +27,19 @@
 .g-offcanvas-open {
     overflow: hidden;
 
+    body {
+        overflow: hidden;
+    }
+
     .g-nav-overlay {
         z-index: 5;
         position: fixed;
         opacity: 1;
         height: 100vh;
+    }
+    
+    #g-offcanvas {
+        display: block;
     }
 }
 

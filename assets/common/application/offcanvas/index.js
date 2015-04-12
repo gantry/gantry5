@@ -1,14 +1,18 @@
-"use strict";
+// Offcanvas slide with desktop, touch and all-in-one touch devices support.
+// Fast and optimized using CSS3 transitions
 // Based on the awesome Slideout.js <https://mango.github.io/slideout/>
 
-var ready   = require('domready'),
-    prime   = require('prime'),
-    bind    = require('mout/function/bind'),
-    forEach = require('mout/array/forEach'),
-    Bound   = require('prime-util/prime/bound'),
-    Options = require('prime-util/prime/options'),
-    $       = require('elements'),
-    zen     = require('elements/zen');
+"use strict";
+
+var ready    = require('domready'),
+    prime    = require('prime'),
+    bind     = require('mout/function/bind'),
+    forEach  = require('mout/array/forEach'),
+    decouple = require('../utils/decouple'),
+    Bound    = require('prime-util/prime/bound'),
+    Options  = require('prime-util/prime/options'),
+    $        = require('elements'),
+    zen      = require('elements/zen');
 
 // thanks David Walsh
 var prefix = (function() {
@@ -25,13 +29,8 @@ var prefix = (function() {
     };
 })();
 
-var hasTouchEvents     = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch,
-    msPointerSupported = window.navigator.msPointerEnabled,
-    touch              = {
-        start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
-        move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
-        end: msPointerSupported ? 'MSPointerUp' : 'touchend'
-    };
+var hasTouchEvents = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch,
+    isScrolling    = false, scrollTimeout;
 
 var Offcanvas = new prime({
 
@@ -53,6 +52,7 @@ var Offcanvas = new prime({
 
         this.opening = false;
         this.moved = false;
+        this.dragging = false;
         this.opened = false;
         this.preventOpen = false;
         this.offsetX = {
@@ -65,7 +65,17 @@ var Offcanvas = new prime({
 
         if (!this.panel || !this.offcanvas) { return false; }
 
-        if (!this.options.padding) { this.setOptions({ padding: this.offcanvas[0].getBoundingClientRect().width }); }
+        if (!this.options.padding) {
+            this.offcanvas[0].style.display = 'block';
+            var width = this.offcanvas[0].getBoundingClientRect().width;
+            this.offcanvas[0].style.display = null;
+
+            this.setOptions({ padding: width });
+        }
+
+        if (this.options.touch && hasTouchEvents) {
+            this._touchEvents();
+        }
 
         return this.attach();
     },
@@ -96,14 +106,15 @@ var Offcanvas = new prime({
         return this;
     },
 
-    open: function(event, element) {
+    open: function(event) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
         if (this.opened) { return this; }
 
-        var body = $('body')[0];
+        var html = $('html')[0],
+            body = $('body')[0];
 
-        if (!~body.className.search(this.options.openClass)) {
-            body.className += ' ' + this.options.openClass;
+        if (!~html.className.search(this.options.openClass)) {
+            html.className += ' ' + this.options.openClass;
         }
 
         this.overlay[0].style.opacity = 1;
@@ -121,11 +132,12 @@ var Offcanvas = new prime({
         return this;
     },
 
-    close: function(event) {
+    close: function(event, element) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
         if (!this.opened && !this.opening) { return this; }
+        if (this.panel !== element && this.dragging) { return false; }
 
-        var body = $('body')[0];
+        var html = $('html')[0];
 
         this.overlay[0].style.opacity = 0;
 
@@ -136,7 +148,7 @@ var Offcanvas = new prime({
         setTimeout(bind(function() {
             var panel = this.panel[0];
 
-            body.className = body.className.replace(' ' + this.options.openClass, '');
+            html.className = html.className.replace(' ' + this.options.openClass, '');
             panel.style.transition = panel.style['-webkit-transition'] = '';
         }, this), this.options.duration);
 
@@ -161,6 +173,87 @@ var Offcanvas = new prime({
         this.offsetX.current = x;
 
         panel.style[prefix.css + 'transform'] = panel.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+    },
+
+    _touchEvents: function() {
+        var msPointerSupported = window.navigator.msPointerEnabled,
+            self = this,
+            html = $('html'),
+            body = $('body'),
+            touch = {
+                start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
+                move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
+                end: msPointerSupported ? 'MSPointerUp' : 'touchend'
+            };
+
+        decouple(body, 'scroll', function() {
+            if (!self.moved) {
+                clearTimeout(scrollTimeout);
+                isScrolling = true;
+                scrollTimeout = setTimeout(function() {
+                    isScrolling = false;
+                }, 250);
+            }
+        });
+
+        body.on(touch.move, function(event) {
+            if (self.moved) { event.preventDefault(); }
+            self.dragging = true;
+        });
+
+        this.panel.on(touch.start, function(event) {
+            if (!event.touches) { return; }
+
+            self.moved = false;
+            self.opening = false;
+            self.dragging = false;
+            self.offsetX.start = event.touches[0].pageX;
+            self.preventOpen = (!self.opened && self.offcanvas[0].clientWidth !== 0);
+        });
+
+        this.panel.on('touchcancel', function() {
+            self.moved = false;
+            self.opening = false;
+        });
+
+        this.panel.on(touch.end, function(event) {
+
+            if (self.moved) {
+                var tolerance = Math.abs(self.offsetX.current) > self.options.tolerance;
+                self[self.opening && tolerance ? 'open' : 'close'](event, self.panel);
+            }
+
+            self.moved = false;
+        });
+
+        this.panel.on(touch.move, function(event) {
+            if (isScrolling || self.preventOpen || !event.touches) { return; }
+
+            var diffX = event.touches[0].clientX - self.offsetX.start;
+            var translateX = self.offsetX.current = diffX;
+
+            if (Math.abs(translateX) > self.options.padding) { return; }
+
+            if (Math.abs(diffX) > 20) {
+                self.opening = true;
+
+                if (self.opened && diffX > 0 || !self.opened && diffX < 0) { return; }
+
+                if (!self.moved && !~html[0].className.search(self.options.openClass)) {
+                    html[0].className += ' ' + self.options.openClass;
+                }
+
+                if (diffX <= 0) {
+                    translateX = diffX + self.options.padding;
+                    self.opening = false;
+                }
+
+                self.panel[0].style[prefix.css + 'transform'] = self.panel[0].style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+
+                self.moved = true;
+            }
+
+        });
     }
 });
 
