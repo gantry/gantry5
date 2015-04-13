@@ -5355,8 +5355,10 @@ var Fonts = new prime({
         if (charsetSelected) { charsetSelected.text('(' + subset.length + ' selected)'); }
 
         $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop;
+
         this.toggleExpansion();
         setTimeout(bind(function() { this.toggleExpansion(); }, this), 50);
+        setTimeout(bind(function() { $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop; }, this, 250));
     },
 
     select: function(element, variant/*, target*/) {
