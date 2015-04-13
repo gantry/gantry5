@@ -127,6 +127,11 @@ var Fonts = new prime({
     scroll: function(container) {
         clearTimeout(this.throttle);
         this.throttle = setTimeout(bind(function() {
+            if (!container) {
+                clearTimeout(this.throttle);
+                return;
+            }
+
             var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li:not(.g-font-hide)', 5000),
                 list = [];
 
