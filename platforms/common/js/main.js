@@ -3602,8 +3602,6 @@ var MenuManager = new prime({
             opacity: 0
         };
 
-        console.log(this.block);
-
         element.animate(transition, {
             duration: '150ms'
         });
@@ -3621,9 +3619,6 @@ var MenuManager = new prime({
         this.dragdrop.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
             $('body').off(event, this.dragdrop.bound('stop'));
         }, this));
-
-
-        console.log(this.itemID, this.ordering, this.items);
 
         var particle = this.block,
             base = particle.parent('[data-mm-base]').data('mm-base'),
