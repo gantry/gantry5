@@ -1,11 +1,13 @@
 "use strict";
 var prime     = require('prime'),
     $         = require('../utils/elements.utils'),
+    bind       = require('mout/function/bind'),
     zen       = require('elements/zen'),
     Emitter   = require('prime/emitter'),
     Bound     = require('prime-util/prime/bound'),
     Options   = require('prime-util/prime/options'),
     DragDrop  = require('../ui/drag.drop'),
+    Eraser     = require('../ui/eraser'),
     Resizer   = require('./drag.resizer'),
     get       = require('mout/object/get'),
 
@@ -30,6 +32,7 @@ var MenuManager = new prime({
 
         this.dragdrop = new DragDrop(element, options, this);
         this.resizer = new Resizer(element, options, this);
+        this.eraser = new Eraser('[data-mm-eraseparticle]', options);
         this.dragdrop
             .on('dragdrop:click', this.bound('click'))
             .on('dragdrop:start', this.bound('start'))
@@ -37,6 +40,7 @@ var MenuManager = new prime({
             .on('dragdrop:location', this.bound('location'))
             .on('dragdrop:nolocation', this.bound('nolocation'))
             .on('dragdrop:resize', this.bound('resize'))
+            .on('dragdrop:stop:erase', this.bound('removeElement'))
             .on('dragdrop:stop', this.bound('stop'))
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
 
@@ -128,7 +132,7 @@ var MenuManager = new prime({
         if (!this.isNewParticle) {
             element.style({
                 position: 'absolute',
-                zIndex: 1000,
+                zIndex: 1500,
                 width: Math.ceil(size.width),
                 height: Math.ceil(size.height)
             }).addClass('active');
@@ -154,6 +158,11 @@ var MenuManager = new prime({
             this.dragdrop.element = this.original;
         }
 
+        // it's a module or a particle and we allow for them to be deleted
+        if (!this.isNewParticle && type.match(/__(module|particle)-[a-z0-9]{5}$/i)) {
+            this.eraser.show();
+        }
+
         if (this.type == 'column') {
             root.search('.g-block > *').style({ 'pointer-events': 'none' });
         }
@@ -165,6 +174,7 @@ var MenuManager = new prime({
 
     location: function(event, location, target/*, element*/) {
         target = $(target);
+        (!this.isNewParticle ? this.original : this.block).style({transform: 'translate(0, 0)'});
         if (!this.placeholder) { this.placeholder = zen((this.type == 'column' ? 'div' : 'li') + '.block.placeholder[data-mm-placeholder]').style({ display: 'none' }); }
 
         var targetType = target.parent('.g-toplevel') || target.matches('.g-toplevel') ? 'main' : (target.matches('.g-block') ? 'column' : 'columns_items'),
@@ -252,13 +262,80 @@ var MenuManager = new prime({
 
     },
 
-    nolocation: function(/*event*/) {
+    nolocation: function(event) {
+        (!this.isNewParticle ? this.original : this.block).style({transform: 'translate(0, 0)'});
         if (this.placeholder) { this.placeholder.remove(); }
         this.targetLevel = undefined;
+
+        var target = event.type.match(/^touch/i) ? document.elementFromPoint(event.touches.item(0).clientX, event.touches.item(0).clientY) : event.target;
+
+        if (!this.isNewParticle && this.itemID.match(/__(module|particle)-[a-z0-9]{5}$/i)) {
+            target = $(target);
+            if (target.matches(this.eraser.element) || this.eraser.element.find(target)) {
+                this.dragdrop.removeElement = true;
+                this.eraser.over();
+            } else {
+                this.dragdrop.removeElement = false;
+                this.eraser.out();
+            }
+        }
+    },
+
+    removeElement: function(event, element) {
+        this.dragdrop.removeElement = false;
+
+        var transition = {
+            opacity: 0
+        };
+
+        console.log(this.block);
+
+        element.animate(transition, {
+            duration: '150ms'
+        });
+
+        if (this.type == 'column') {
+            this.root.search('.g-block > *').style({ 'pointer-events': 'none' });
+        }
+
+        this.eraser.hide();
+
+        this.dragdrop.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
+            $('body').off(event, this.dragdrop.bound('move'));
+        }, this));
+
+        this.dragdrop.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
+            $('body').off(event, this.dragdrop.bound('stop'));
+        }, this));
+
+
+        console.log(this.itemID, this.ordering, this.items);
+
+        var particle = this.block,
+            base = particle.parent('[data-mm-base]').data('mm-base'),
+            col = (particle.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
+            index = indexOf(particle.parent().children('[data-mm-id]:not(.original-placeholder)'), particle[0]);
+
+        delete this.items[this.itemID];
+        this.ordering[base][col].splice(index, 1);
+
+        this.block.remove();
+        this.original.remove();
+        this.root.removeClass('moving');
+
+        this.emit('dragEnd', this.map, 'reorder');
     },
 
     stop: function(event, target, element) {
         target = $(target);
+
+        // we are removing the block
+        var lastOvered = $(this.dragdrop.lastOvered);
+        if (lastOvered && lastOvered.matches(this.eraser.element.find('.trash-zone'))) {
+            this.eraser.hide();
+            return;
+        }
+
         if (target) { element.removeClass('active'); }
         if (this.type == 'column') {
             this.root.search('.g-block > *').attribute('style', null);
@@ -270,6 +347,7 @@ var MenuManager = new prime({
             this.type = undefined;
             this.targetLevel = false;
             this.isParticle = undefined;
+            this.eraser.hide();
             return;
         }
 
@@ -284,6 +362,7 @@ var MenuManager = new prime({
         if (this.addNewItem) { this.block.attribute('style', null).removeClass('active'); }
 
         var parent = this.block.parent();
+        this.eraser.hide();
 
         if (this.original) {
             if (!this.isNewParticle) { this.original.remove(); }

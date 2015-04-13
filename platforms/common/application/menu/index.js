@@ -43,6 +43,10 @@ ready(function() {
     // Refresh ordering/items on menu type change or Menu navigation link
     body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(event, element) {
         menumanager.setRoot();
+
+        // refresh LM eraser
+        menumanager.eraser.element = $('[data-mm-eraseparticle]');
+        menumanager.eraser.hide();
     });
 
     body.delegate(FOCUSIN, '.percentage input', function(event, element) {

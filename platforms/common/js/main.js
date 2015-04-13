@@ -278,7 +278,7 @@ var modules = {
 window.G5 = modules;
 module.exports = modules;
 
-},{"./fields":3,"./lm":21,"./menu":25,"./particles":33,"./styles":36,"./ui":39,"./ui/popover":41,"./utils/ajaxify-links":46,"./utils/get-ajax-suffix":49,"agent":54,"elements":81,"elements/attributes":76,"elements/delegation":78,"elements/domready":79,"elements/events":80,"elements/insertion":82,"elements/traversal":104,"elements/zen":105,"moofx":106,"mout/queryString/setParam":209,"mout/string/interpolate":220,"mout/string/trim":227}],2:[function(require,module,exports){
+},{"./fields":3,"./lm":20,"./menu":24,"./particles":32,"./styles":35,"./ui":39,"./ui/popover":41,"./utils/ajaxify-links":46,"./utils/get-ajax-suffix":49,"agent":54,"elements":81,"elements/attributes":76,"elements/delegation":78,"elements/domready":79,"elements/events":80,"elements/insertion":82,"elements/traversal":104,"elements/zen":105,"moofx":106,"mout/queryString/setParam":209,"mout/string/interpolate":220,"mout/string/trim":227}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -1527,52 +1527,7 @@ var Resizer = new prime({
 
 module.exports = Resizer;
 
-},{"../ui/drag.events":38,"../utils/elements.utils":47,"elements/delegation":78,"elements/events":80,"mout/function/bind":158,"mout/lang/isString":176,"mout/math/clamp":180,"mout/math/map":182,"mout/number/enforcePrecision":186,"mout/object/get":195,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],19:[function(require,module,exports){
-"use strict";
-var prime     = require('prime'),
-    $         = require('../utils/elements.utils'),
-    Emitter   = require('prime/emitter'),
-    Bound     = require('prime-util/prime/bound'),
-    Options   = require('prime-util/prime/options');
-
-
-var Eraser = new prime({
-    mixin: [Options, Bound],
-
-    inherits: Emitter,
-
-    constructor: function(element, options){
-        this.setOptions(options);
-
-        this.element = $(element);
-
-        if (!this.element) { return; }
-        this.hide(true);
-    },
-
-    show: function(fast){
-        this.out();
-        this.element[fast ? 'style' : 'animate']({top: 0}, {duration: '150ms'});
-    },
-
-    hide: function(fast){
-        var top = {top: -(this.element[0].offsetHeight)};
-        this.out();
-        this.element[fast ? 'style' : 'animate'](top, {duration: '150ms'});
-    },
-
-    over: function(){
-        this.element.find('.trash-zone').animate({transform: 'scale(1.2)'}, {duration: '150ms', equation: 'cubic-bezier(0.5,0,0.5,1)'});
-    },
-
-    out: function(){
-        this.element.find('.trash-zone').animate({transform: 'scale(1)'}, {duration: '150ms', equation: 'cubic-bezier(0.5,0,0.5,1)'});
-    }
-});
-
-module.exports = Eraser;
-
-},{"../utils/elements.utils":47,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],20:[function(require,module,exports){
+},{"../ui/drag.events":37,"../utils/elements.utils":47,"elements/delegation":78,"elements/events":80,"mout/function/bind":158,"mout/lang/isString":176,"mout/math/clamp":180,"mout/math/map":182,"mout/number/enforcePrecision":186,"mout/object/get":195,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],19:[function(require,module,exports){
 var prime      = require('prime'),
     Emitter    = require('prime/emitter'),
     slice      = require('mout/array/slice'),
@@ -1661,7 +1616,7 @@ var History = new prime({
 
 module.exports = History;
 
-},{"mout/array/slice":150,"mout/lang/deepEquals":166,"mout/object/merge":199,"prime":249,"prime/emitter":248}],21:[function(require,module,exports){
+},{"mout/array/slice":150,"mout/lang/deepEquals":166,"mout/object/merge":199,"prime":249,"prime/emitter":248}],20:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     //json          = require('./json_test'), // debug
@@ -2100,7 +2055,7 @@ module.exports = {
     history: lmhistory,
     savestate: savestate
 };
-},{"../ui":39,"../ui/popover":41,"../utils/get-ajax-suffix":49,"../utils/history":52,"../utils/save-state":53,"./builder":17,"./history":20,"./layoutmanager":22,"agent":54,"elements/attributes":76,"elements/domready":79,"elements/zen":105,"mout/array/contains":135,"mout/collection/forEach":155,"mout/collection/size":157,"mout/string/trim":227}],22:[function(require,module,exports){
+},{"../ui":39,"../ui/popover":41,"../utils/get-ajax-suffix":49,"../utils/history":52,"../utils/save-state":53,"./builder":17,"./history":19,"./layoutmanager":21,"agent":54,"elements/attributes":76,"elements/domready":79,"elements/zen":105,"mout/array/contains":135,"mout/collection/forEach":155,"mout/collection/size":157,"mout/string/trim":227}],21:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
@@ -2111,8 +2066,8 @@ var prime      = require('prime'),
     Options    = require('prime-util/prime/options'),
     Blocks     = require('./blocks'),
     DragDrop   = require('../ui/drag.drop'),
+    Eraser     = require('../ui/eraser'),
     Resizer    = require('./drag.resizer'),
-    Eraser     = require('./eraser'),
     get        = require('mout/object/get'),
     keys       = require('mout/object/keys'),
 
@@ -2284,6 +2239,7 @@ var LayoutManager = new prime({
 
     location: function(event, location, target/*, element*/) {
         target = $(target);
+        (!this.block.isNew() ? this.original : this.element).style({transform: 'translate(0, 0)'});
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' }); }
 
         var position,
@@ -2370,6 +2326,7 @@ var LayoutManager = new prime({
     },
 
     nolocation: function(event) {
+        (!this.block.isNew() ? this.original : this.element).style({transform: 'translate(0, 0)'});
         if (this.placeholder) { this.placeholder.remove(); }
         if (!this.block) { return; }
 
@@ -2630,7 +2587,7 @@ var LayoutManager = new prime({
 
 module.exports = LayoutManager;
 
-},{"../ui/drag.drop":37,"../utils/elements.utils":47,"./blocks":10,"./drag.resizer":18,"./eraser":19,"elements/zen":105,"mout/array/every":138,"mout/collection/find":154,"mout/function/bind":158,"mout/lang/deepEquals":166,"mout/lang/isArray":168,"mout/lang/isObject":173,"mout/number/enforcePrecision":186,"mout/object/get":195,"mout/object/keys":198,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],23:[function(require,module,exports){
+},{"../ui/drag.drop":36,"../ui/eraser":38,"../utils/elements.utils":47,"./blocks":10,"./drag.resizer":18,"elements/zen":105,"mout/array/every":138,"mout/collection/find":154,"mout/function/bind":158,"mout/lang/deepEquals":166,"mout/lang/isArray":168,"mout/lang/isObject":173,"mout/number/enforcePrecision":186,"mout/object/get":195,"mout/object/keys":198,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],22:[function(require,module,exports){
 "use strict";
 var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
@@ -2903,7 +2860,7 @@ var Resizer = new prime({
 
 module.exports = Resizer;
 
-},{"../ui/drag.events":38,"../utils/elements.utils":47,"elements/delegation":78,"elements/events":80,"mout/function/bind":158,"mout/lang/isString":176,"mout/math/clamp":180,"mout/math/map":182,"mout/number/enforcePrecision":186,"mout/object/get":195,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],24:[function(require,module,exports){
+},{"../ui/drag.events":37,"../utils/elements.utils":47,"elements/delegation":78,"elements/events":80,"mout/function/bind":158,"mout/lang/isString":176,"mout/math/clamp":180,"mout/math/map":182,"mout/number/enforcePrecision":186,"mout/object/get":195,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],23:[function(require,module,exports){
 "use strict";
 var $             = require('elements'),
     zen           = require('elements/zen'),
@@ -3098,7 +3055,7 @@ ready(function() {
 });
 
 module.exports = StepOne;
-},{"../ui":39,"../utils/get-ajax-suffix":49,"agent":54,"elements":81,"elements/domready":79,"elements/zen":105,"mout/array/indexOf":144,"mout/lang/deepEquals":166}],25:[function(require,module,exports){
+},{"../ui":39,"../utils/get-ajax-suffix":49,"agent":54,"elements":81,"elements/domready":79,"elements/zen":105,"mout/array/indexOf":144,"mout/lang/deepEquals":166}],24:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     MenuManager   = require('./menumanager'),
@@ -3144,6 +3101,10 @@ ready(function() {
     // Refresh ordering/items on menu type change or Menu navigation link
     body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(event, element) {
         menumanager.setRoot();
+
+        // refresh LM eraser
+        menumanager.eraser.element = $('[data-mm-eraseparticle]');
+        menumanager.eraser.hide();
     });
 
     body.delegate(FOCUSIN, '.percentage input', function(event, element) {
@@ -3350,15 +3311,17 @@ ready(function() {
 module.exports = {
     menumanager: menumanager
 };
-},{"../ui":39,"../utils/get-ajax-suffix":49,"./extra-items":24,"./menumanager":26,"agent":54,"elements":81,"elements/domready":79,"elements/zen":105,"mout/array/contains":135,"mout/lang/deepEquals":166,"mout/math/clamp":180,"mout/string/trim":227}],26:[function(require,module,exports){
+},{"../ui":39,"../utils/get-ajax-suffix":49,"./extra-items":23,"./menumanager":25,"agent":54,"elements":81,"elements/domready":79,"elements/zen":105,"mout/array/contains":135,"mout/lang/deepEquals":166,"mout/math/clamp":180,"mout/string/trim":227}],25:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     $         = require('../utils/elements.utils'),
+    bind       = require('mout/function/bind'),
     zen       = require('elements/zen'),
     Emitter   = require('prime/emitter'),
     Bound     = require('prime-util/prime/bound'),
     Options   = require('prime-util/prime/options'),
     DragDrop  = require('../ui/drag.drop'),
+    Eraser     = require('../ui/eraser'),
     Resizer   = require('./drag.resizer'),
     get       = require('mout/object/get'),
 
@@ -3383,6 +3346,7 @@ var MenuManager = new prime({
 
         this.dragdrop = new DragDrop(element, options, this);
         this.resizer = new Resizer(element, options, this);
+        this.eraser = new Eraser('[data-mm-eraseparticle]', options);
         this.dragdrop
             .on('dragdrop:click', this.bound('click'))
             .on('dragdrop:start', this.bound('start'))
@@ -3390,6 +3354,7 @@ var MenuManager = new prime({
             .on('dragdrop:location', this.bound('location'))
             .on('dragdrop:nolocation', this.bound('nolocation'))
             .on('dragdrop:resize', this.bound('resize'))
+            .on('dragdrop:stop:erase', this.bound('removeElement'))
             .on('dragdrop:stop', this.bound('stop'))
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
 
@@ -3481,7 +3446,7 @@ var MenuManager = new prime({
         if (!this.isNewParticle) {
             element.style({
                 position: 'absolute',
-                zIndex: 1000,
+                zIndex: 1500,
                 width: Math.ceil(size.width),
                 height: Math.ceil(size.height)
             }).addClass('active');
@@ -3507,6 +3472,11 @@ var MenuManager = new prime({
             this.dragdrop.element = this.original;
         }
 
+        // it's a module or a particle and we allow for them to be deleted
+        if (!this.isNewParticle && type.match(/__(module|particle)-[a-z0-9]{5}$/i)) {
+            this.eraser.show();
+        }
+
         if (this.type == 'column') {
             root.search('.g-block > *').style({ 'pointer-events': 'none' });
         }
@@ -3518,6 +3488,7 @@ var MenuManager = new prime({
 
     location: function(event, location, target/*, element*/) {
         target = $(target);
+        (!this.isNewParticle ? this.original : this.block).style({transform: 'translate(0, 0)'});
         if (!this.placeholder) { this.placeholder = zen((this.type == 'column' ? 'div' : 'li') + '.block.placeholder[data-mm-placeholder]').style({ display: 'none' }); }
 
         var targetType = target.parent('.g-toplevel') || target.matches('.g-toplevel') ? 'main' : (target.matches('.g-block') ? 'column' : 'columns_items'),
@@ -3605,13 +3576,80 @@ var MenuManager = new prime({
 
     },
 
-    nolocation: function(/*event*/) {
+    nolocation: function(event) {
+        (!this.isNewParticle ? this.original : this.block).style({transform: 'translate(0, 0)'});
         if (this.placeholder) { this.placeholder.remove(); }
         this.targetLevel = undefined;
+
+        var target = event.type.match(/^touch/i) ? document.elementFromPoint(event.touches.item(0).clientX, event.touches.item(0).clientY) : event.target;
+
+        if (!this.isNewParticle && this.itemID.match(/__(module|particle)-[a-z0-9]{5}$/i)) {
+            target = $(target);
+            if (target.matches(this.eraser.element) || this.eraser.element.find(target)) {
+                this.dragdrop.removeElement = true;
+                this.eraser.over();
+            } else {
+                this.dragdrop.removeElement = false;
+                this.eraser.out();
+            }
+        }
+    },
+
+    removeElement: function(event, element) {
+        this.dragdrop.removeElement = false;
+
+        var transition = {
+            opacity: 0
+        };
+
+        console.log(this.block);
+
+        element.animate(transition, {
+            duration: '150ms'
+        });
+
+        if (this.type == 'column') {
+            this.root.search('.g-block > *').style({ 'pointer-events': 'none' });
+        }
+
+        this.eraser.hide();
+
+        this.dragdrop.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
+            $('body').off(event, this.dragdrop.bound('move'));
+        }, this));
+
+        this.dragdrop.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
+            $('body').off(event, this.dragdrop.bound('stop'));
+        }, this));
+
+
+        console.log(this.itemID, this.ordering, this.items);
+
+        var particle = this.block,
+            base = particle.parent('[data-mm-base]').data('mm-base'),
+            col = (particle.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
+            index = indexOf(particle.parent().children('[data-mm-id]:not(.original-placeholder)'), particle[0]);
+
+        delete this.items[this.itemID];
+        this.ordering[base][col].splice(index, 1);
+
+        this.block.remove();
+        this.original.remove();
+        this.root.removeClass('moving');
+
+        this.emit('dragEnd', this.map, 'reorder');
     },
 
     stop: function(event, target, element) {
         target = $(target);
+
+        // we are removing the block
+        var lastOvered = $(this.dragdrop.lastOvered);
+        if (lastOvered && lastOvered.matches(this.eraser.element.find('.trash-zone'))) {
+            this.eraser.hide();
+            return;
+        }
+
         if (target) { element.removeClass('active'); }
         if (this.type == 'column') {
             this.root.search('.g-block > *').attribute('style', null);
@@ -3623,6 +3661,7 @@ var MenuManager = new prime({
             this.type = undefined;
             this.targetLevel = false;
             this.isParticle = undefined;
+            this.eraser.hide();
             return;
         }
 
@@ -3637,6 +3676,7 @@ var MenuManager = new prime({
         if (this.addNewItem) { this.block.attribute('style', null).removeClass('active'); }
 
         var parent = this.block.parent();
+        this.eraser.hide();
 
         if (this.original) {
             if (!this.isNewParticle) { this.original.remove(); }
@@ -3750,7 +3790,7 @@ var MenuManager = new prime({
 
 module.exports = MenuManager;
 
-},{"../ui/drag.drop":37,"../utils/elements.utils":47,"./drag.resizer":23,"elements/zen":105,"mout/array/every":138,"mout/array/indexOf":144,"mout/array/last":147,"mout/lang/deepClone":165,"mout/lang/isArray":168,"mout/lang/isObject":173,"mout/object/equals":190,"mout/object/get":195,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],27:[function(require,module,exports){
+},{"../ui/drag.drop":36,"../ui/eraser":38,"../utils/elements.utils":47,"./drag.resizer":22,"elements/zen":105,"mout/array/every":138,"mout/array/indexOf":144,"mout/array/last":147,"mout/function/bind":158,"mout/lang/deepClone":165,"mout/lang/isArray":168,"mout/lang/isObject":173,"mout/object/equals":190,"mout/object/get":195,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],26:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),
@@ -4006,7 +4046,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":39,"../../utils/get-ajax-suffix":49,"agent":54,"elements":81,"elements/domready":79,"elements/insertion":82,"elements/zen":105,"mout/array/indexOf":144,"mout/array/last":147,"mout/string/trim":227,"sortablejs":264}],28:[function(require,module,exports){
+},{"../../ui":39,"../../utils/get-ajax-suffix":49,"agent":54,"elements":81,"elements/domready":79,"elements/insertion":82,"elements/zen":105,"mout/array/indexOf":144,"mout/array/last":147,"mout/string/trim":227,"sortablejs":264}],27:[function(require,module,exports){
 "use strict";
 
 var prime      = require('prime'),
@@ -4729,7 +4769,7 @@ ready(function() {
 
 module.exports = ColorPicker;
 
-},{"../../ui/drag.events":38,"elements":81,"elements/domready":79,"elements/zen":105,"mout/collection/forEach":155,"mout/function/bind":158,"mout/math/clamp":180,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],29:[function(require,module,exports){
+},{"../../ui/drag.events":37,"elements":81,"elements/domready":79,"elements/zen":105,"mout/collection/forEach":155,"mout/function/bind":158,"mout/math/clamp":180,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],28:[function(require,module,exports){
 "use strict";
 
 var $             = require('../../utils/elements.utils'),
@@ -5089,7 +5129,7 @@ domready(function() {
 
 
 module.exports = FilePicker;
-},{"../../ui":39,"../../utils/elements.utils":47,"../../utils/get-ajax-suffix":49,"../../utils/get-ajax-url":50,"agent":54,"dropzone":75,"elements/domready":79,"elements/zen":105,"mout/function/bind":158,"mout/lang/deepClone":165,"mout/object/deepFillIn":188,"mout/string/rtrim":226,"prime":249}],30:[function(require,module,exports){
+},{"../../ui":39,"../../utils/elements.utils":47,"../../utils/get-ajax-suffix":49,"../../utils/get-ajax-url":50,"agent":54,"dropzone":75,"elements/domready":79,"elements/zen":105,"mout/function/bind":158,"mout/lang/deepClone":165,"mout/object/deepFillIn":188,"mout/string/rtrim":226,"prime":249}],29:[function(require,module,exports){
 "use strict";
 // fonts list: https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB2yJM8DBwt66u2MVRgb6M4t9CqkW7_IRY
 var prime       = require('prime'),
@@ -5815,7 +5855,7 @@ domready(function() {
 });
 
 module.exports = Fonts;
-},{"../../ui":39,"../../utils/elements.utils":47,"../../utils/elements.viewport":48,"./webfont":31,"agent":54,"async":74,"elements/domready":79,"elements/zen":105,"mout/array/combine":134,"mout/array/contains":135,"mout/array/find":140,"mout/array/forEach":143,"mout/array/insert":145,"mout/array/last":147,"mout/array/map":148,"mout/array/removeAll":149,"mout/array/split":152,"mout/function/bind":158,"mout/object/merge":199,"mout/string/properCase":223,"mout/string/trim":227,"mout/string/unhyphenate":229,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248,"prime/map":250}],31:[function(require,module,exports){
+},{"../../ui":39,"../../utils/elements.utils":47,"../../utils/elements.viewport":48,"./webfont":30,"agent":54,"async":74,"elements/domready":79,"elements/zen":105,"mout/array/combine":134,"mout/array/contains":135,"mout/array/find":140,"mout/array/forEach":143,"mout/array/insert":145,"mout/array/last":147,"mout/array/map":148,"mout/array/removeAll":149,"mout/array/split":152,"mout/function/bind":158,"mout/object/merge":199,"mout/string/properCase":223,"mout/string/trim":227,"mout/string/unhyphenate":229,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248,"prime/map":250}],30:[function(require,module,exports){
 /* Web Font Loader v1.5.14 - (c) Adobe Systems, Google. License: Apache 2.0 */
 ;(function(window,document,undefined){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function k(a,b,c){k=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return k.apply(null,arguments)}var n=Date.now||function(){return+new Date};function q(a,b){this.J=a;this.t=b||a;this.C=this.t.document}q.prototype.createElement=function(a,b,c){a=this.C.createElement(a);if(b)for(var d in b)b.hasOwnProperty(d)&&("style"==d?a.style.cssText=b[d]:a.setAttribute(d,b[d]));c&&a.appendChild(this.C.createTextNode(c));return a};function r(a,b,c){a=a.C.getElementsByTagName(b)[0];a||(a=document.documentElement);a&&a.lastChild&&a.insertBefore(c,a.lastChild)}function ca(a,b){function c(){a.C.body?b():setTimeout(c,0)}c()}
     function s(a,b,c){b=b||[];c=c||[];for(var d=a.className.split(/\s+/),e=0;e<b.length;e+=1){for(var f=!1,g=0;g<d.length;g+=1)if(b[e]===d[g]){f=!0;break}f||d.push(b[e])}b=[];for(e=0;e<d.length;e+=1){f=!1;for(g=0;g<c.length;g+=1)if(d[e]===c[g]){f=!0;break}f||b.push(d[e])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function t(a,b){for(var c=a.className.split(/\s+/),d=0,e=c.length;d<e;d++)if(c[d]==b)return!0;return!1}
@@ -5848,7 +5888,7 @@ module.exports = Fonts;
 
 
 module.exports = window.WebFont;
-},{}],32:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 "use strict";
 var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready'),
@@ -6022,7 +6062,7 @@ domready(function() {
 });
 
 module.exports = {};
-},{"../../ui":39,"../../utils/elements.utils":47,"../../utils/get-ajax-suffix":49,"../../utils/get-ajax-url":50,"elements/domready":79,"mout/array/contains":135,"mout/string/trim":227}],33:[function(require,module,exports){
+},{"../../ui":39,"../../utils/elements.utils":47,"../../utils/get-ajax-suffix":49,"../../utils/get-ajax-url":50,"elements/domready":79,"mout/array/contains":135,"mout/string/trim":227}],32:[function(require,module,exports){
 "use strict";
 
 module.exports = {
@@ -6034,7 +6074,7 @@ module.exports = {
     collections: require('./collections'),
     keyvalue: require('./keyvalue')
 };
-},{"./collections":27,"./colorpicker":28,"./filepicker":29,"./fonts":30,"./icons":32,"./keyvalue":34,"./menu":35}],34:[function(require,module,exports){
+},{"./collections":26,"./colorpicker":27,"./filepicker":28,"./fonts":29,"./icons":31,"./keyvalue":33,"./menu":34}],33:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),
@@ -6183,7 +6223,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":39,"../../utils/get-ajax-suffix":49,"agent":54,"elements":81,"elements/domready":79,"elements/insertion":82,"elements/zen":105,"mout/array/contains":135,"mout/array/indexOf":144,"mout/array/last":147,"mout/array/some":151,"mout/object/has":196,"mout/string/escapeUnicode":219,"mout/string/trim":227,"sortablejs":264}],35:[function(require,module,exports){
+},{"../../ui":39,"../../utils/get-ajax-suffix":49,"agent":54,"elements":81,"elements/domready":79,"elements/insertion":82,"elements/zen":105,"mout/array/contains":135,"mout/array/indexOf":144,"mout/array/last":147,"mout/array/some":151,"mout/object/has":196,"mout/string/escapeUnicode":219,"mout/string/trim":227,"sortablejs":264}],34:[function(require,module,exports){
 "use strict";
 var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready');
@@ -6199,7 +6239,7 @@ domready(function() {
 });
 
 module.exports = {};
-},{"../../utils/elements.utils":47,"elements/domready":79}],36:[function(require,module,exports){
+},{"../../utils/elements.utils":47,"elements/domready":79}],35:[function(require,module,exports){
 "use strict";
 var ready = require('elements/domready'),
     $ = require('elements/attributes'),
@@ -6261,7 +6301,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":39,"../ui/popover":41,"elements/attributes":76,"elements/domready":79,"mout/array/contains":135,"mout/collection/forEach":155}],37:[function(require,module,exports){
+},{"../ui":39,"../ui/popover":41,"elements/attributes":76,"elements/domready":79,"mout/array/contains":135,"mout/collection/forEach":155}],36:[function(require,module,exports){
 "use strict";
 
 var prime      = require('prime'),
@@ -6629,7 +6669,7 @@ var DragDrop = new prime({
 
 module.exports = DragDrop;
 
-},{"../utils/elements.utils":47,"./drag.events":38,"elements/delegation":78,"elements/events":80,"mout/array/contains":135,"mout/function/bind":158,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],38:[function(require,module,exports){
+},{"../utils/elements.utils":47,"./drag.events":37,"elements/delegation":78,"elements/events":80,"mout/array/contains":135,"mout/function/bind":158,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],37:[function(require,module,exports){
 "use strict";
 var getSupportedEvent = function(events) {
     events = events.split(' ');
@@ -6685,7 +6725,52 @@ module.exports = {
     EVENTS: EVENTS
 };
 
-},{}],39:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
+"use strict";
+var prime     = require('prime'),
+    $         = require('../utils/elements.utils'),
+    Emitter   = require('prime/emitter'),
+    Bound     = require('prime-util/prime/bound'),
+    Options   = require('prime-util/prime/options');
+
+
+var Eraser = new prime({
+    mixin: [Options, Bound],
+
+    inherits: Emitter,
+
+    constructor: function(element, options){
+        this.setOptions(options);
+
+        this.element = $(element);
+
+        if (!this.element) { return; }
+        this.hide(true);
+    },
+
+    show: function(fast){
+        this.out();
+        this.element[fast ? 'style' : 'animate']({top: 0}, {duration: '150ms'});
+    },
+
+    hide: function(fast){
+        var top = {top: -(this.element[0].offsetHeight)};
+        this.out();
+        this.element[fast ? 'style' : 'animate'](top, {duration: '150ms'});
+    },
+
+    over: function(){
+        this.element.find('.trash-zone').animate({transform: 'scale(1.2)'}, {duration: '150ms', equation: 'cubic-bezier(0.5,0,0.5,1)'});
+    },
+
+    out: function(){
+        this.element.find('.trash-zone').animate({transform: 'scale(1)'}, {duration: '150ms', equation: 'cubic-bezier(0.5,0,0.5,1)'});
+    }
+});
+
+module.exports = Eraser;
+
+},{"../utils/elements.utils":47,"prime":249,"prime-util/prime/bound":245,"prime-util/prime/options":246,"prime/emitter":248}],39:[function(require,module,exports){
 "use strict";
 
 var Modal = require('./modal'),
@@ -10306,7 +10391,7 @@ domready(function() {
 
 
 module.exports = {};
-},{"../menu":25,"../ui":39,"../ui/popover":41,"../utils/elements.utils":47,"./get-ajax-suffix":49,"./history":52,"agent":54,"elements/domready":79,"elements/zen":105,"mout/collection/size":157,"mout/object/merge":199,"mout/queryString/encode":208,"mout/random/guid":211,"mout/string/contains":217,"prime":249,"prime/map":250}],47:[function(require,module,exports){
+},{"../menu":24,"../ui":39,"../ui/popover":41,"../utils/elements.utils":47,"./get-ajax-suffix":49,"./history":52,"agent":54,"elements/domready":79,"elements/zen":105,"mout/collection/size":157,"mout/object/merge":199,"mout/queryString/encode":208,"mout/random/guid":211,"mout/string/contains":217,"prime":249,"prime/map":250}],47:[function(require,module,exports){
 "use strict";
 var $          = require('elements'),
     moofx      = require('moofx'),

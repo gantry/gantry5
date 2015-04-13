@@ -8,8 +8,8 @@ var prime      = require('prime'),
     Options    = require('prime-util/prime/options'),
     Blocks     = require('./blocks'),
     DragDrop   = require('../ui/drag.drop'),
+    Eraser     = require('../ui/eraser'),
     Resizer    = require('./drag.resizer'),
-    Eraser     = require('./eraser'),
     get        = require('mout/object/get'),
     keys       = require('mout/object/keys'),
 
@@ -181,6 +181,7 @@ var LayoutManager = new prime({
 
     location: function(event, location, target/*, element*/) {
         target = $(target);
+        (!this.block.isNew() ? this.original : this.element).style({transform: 'translate(0, 0)'});
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' }); }
 
         var position,
@@ -267,6 +268,7 @@ var LayoutManager = new prime({
     },
 
     nolocation: function(event) {
+        (!this.block.isNew() ? this.original : this.element).style({transform: 'translate(0, 0)'});
         if (this.placeholder) { this.placeholder.remove(); }
         if (!this.block) { return; }
 
