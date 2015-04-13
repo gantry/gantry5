@@ -229,7 +229,9 @@ var Offcanvas = new prime({
         this.panel.on(touch.move, function(event) {
             if (isScrolling || self.preventOpen || !event.touches) { return; }
 
-            var diffX = event.touches[0].clientX - self.offsetX.start;
+            var placement = (!~body[0].className.search('g-offcanvas-right') ? 1 : -1), // 1: left, -1: right
+                place = placement < 0 ? 'right' : 'left',
+                diffX = event.touches[0].clientX - self.offsetX.start;
             var translateX = self.offsetX.current = diffX;
 
             if (Math.abs(translateX) > self.options.padding) { return; }
@@ -237,14 +239,18 @@ var Offcanvas = new prime({
             if (Math.abs(diffX) > 20) {
                 self.opening = true;
 
-                if (self.opened && diffX > 0 || !self.opened && diffX < 0) { return; }
+                // offcanvas on left
+                if (place == 'left' && (self.opened && diffX > 0 || !self.opened && diffX < 0)) { return; }
+
+                // offcanvas on right
+                if (place == 'right' && (self.opened && diffX < 0 || !self.opened && diffX > 0)) { return; }
 
                 if (!self.moved && !~html[0].className.search(self.options.openClass)) {
                     html[0].className += ' ' + self.options.openClass;
                 }
 
-                if (diffX <= 0) {
-                    translateX = diffX + self.options.padding;
+                if ((place == 'left' && diffX <= 0) || (place == 'right' && diffX >= 0)) {
+                    translateX = diffX + (placement * self.options.padding);
                     self.opening = false;
                 }
 
