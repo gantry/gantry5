@@ -11,6 +11,7 @@ var gulp       = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     browserify = require('browserify'),
     watchify   = require('watchify'),
+    jsonminify = require('gulp-jsonminify'),
     sass       = require('gulp-ruby-sass'),
 
     prod       = !!(argv.p || argv.prod || argv.production),
@@ -41,6 +42,12 @@ var paths = {
         { // nucleus
             in: './engines/common/nucleus/scss/nucleus.scss',
             out: './engines/common/nucleus/css-compiled/nucleus.css'
+        }
+    ],
+    minify: [
+        { // google fonts
+            in: './platforms/common/js/google-fonts.json',
+            out: './platforms/common/js/google-fonts.json'
         }
     ]
 };
@@ -120,6 +127,33 @@ var bundleShare = function(bundle, _in, _out, _maps, _dest) {
         .pipe(gulp.dest(_dest));
 };
 
+var minifyJS = function() {
+    var streams = [];
+    paths.minify.forEach(function(app) {
+        var _file = app.in.substring(app.in.lastIndexOf('/')).split(/[\\/]/).pop(),
+            _dest = app.out.substring(0, app.out.lastIndexOf('/')),
+            _ext = _file.split('.').pop();
+
+        gutil.log(gutil.colors.blue('*'), 'Minifying', app.in);
+
+        streams.push(gulp.src(app.in)
+            .on('end', function() {
+                gutil.log(gutil.colors.green('√'), 'Saved ' + app.in);
+            })
+            .on('error', gutil.log)
+            .pipe(gulpif(_ext == 'json', jsonminify(), uglify()))
+            .pipe(gulp.dest(_dest)));
+    });
+
+    return merge(streams);
+};
+
+gulp.task('minify', function() {
+    if (!prod) { return; }
+
+    return minifyJS();
+});
+
 gulp.task('watchify', function() {
     watch = true;
 
@@ -160,5 +194,5 @@ gulp.task('watch', ['watchify'], function() {
     });
 });
 
-gulp.task('all', ['css', 'js']);
+gulp.task('all', ['css', 'js', 'minify']);
 gulp.task('default', ['all']);
