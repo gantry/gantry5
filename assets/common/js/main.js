@@ -164,7 +164,7 @@ var Offcanvas = new prime({
 
         forEach(['toggle', 'open', 'close'], bind(function(mode) {
             body.delegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
-            body.delegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode));
+            if (hasTouchEvents) { body.delegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
         }, this));
 
         this.overlay = zen('div[data-offcanvas-close].' + this.options.overlayClass).top(this.panel);
@@ -177,7 +177,7 @@ var Offcanvas = new prime({
 
         forEach(['toggle', 'open', 'close'], bind(function(mode) {
             body.undelegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
-            body.undelegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode));
+            if (hasTouchEvents) { body.undelegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
         }, this));
 
         this.overlay.remove();
