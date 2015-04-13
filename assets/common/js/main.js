@@ -70,22 +70,23 @@ ready(function() {
 });
 
 module.exports = {};
-},{"domready":5,"elements":10,"elements/zen":37,"prime":58}],3:[function(require,module,exports){
+},{"domready":5,"elements":10,"elements/zen":37,"prime":61}],3:[function(require,module,exports){
 // Offcanvas slide with desktop, touch and all-in-one touch devices support.
 // Fast and optimized using CSS3 transitions
 // Based on the awesome Slideout.js <https://mango.github.io/slideout/>
 
 "use strict";
 
-var ready    = require('domready'),
-    prime    = require('prime'),
-    bind     = require('mout/function/bind'),
-    forEach  = require('mout/array/forEach'),
-    decouple = require('../utils/decouple'),
-    Bound    = require('prime-util/prime/bound'),
-    Options  = require('prime-util/prime/options'),
-    $        = require('elements'),
-    zen      = require('elements/zen');
+var ready     = require('domready'),
+    prime     = require('prime'),
+    bind      = require('mout/function/bind'),
+    forEach   = require('mout/array/forEach'),
+    mapNumber = require('mout/math/map'),
+    decouple  = require('../utils/decouple'),
+    Bound     = require('prime-util/prime/bound'),
+    Options   = require('prime-util/prime/options'),
+    $         = require('elements'),
+    zen       = require('elements/zen');
 
 // thanks David Walsh
 var prefix = (function() {
@@ -183,17 +184,17 @@ var Offcanvas = new prime({
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
         if (this.opened) { return this; }
 
-        var html = $('html')[0],
-            body = $('body')[0];
+        var html = $('html'),
+            body = $('body');
 
-        if (!~html.className.search(this.options.openClass)) {
-            html.className += ' ' + this.options.openClass;
+        if (!html.hasClass(this.options.openClass)) {
+            html.addClass(this.options.openClass);
         }
 
         this.overlay[0].style.opacity = 1;
 
         this._setTransition();
-        this._translateXTo((!~body.className.search('g-offcanvas-right') ? 1 : -1) * this.options.padding);
+        this._translateXTo((body.hasClass('g-offcanvas-right') ? -1 : 1) * this.options.padding);
         this.opened = true;
 
         setTimeout(bind(function() {
@@ -210,7 +211,7 @@ var Offcanvas = new prime({
         if (!this.opened && !this.opening) { return this; }
         if (this.panel !== element && this.dragging) { return false; }
 
-        var html = $('html')[0];
+        var html = $('html');
 
         this.overlay[0].style.opacity = 0;
 
@@ -221,7 +222,7 @@ var Offcanvas = new prime({
         setTimeout(bind(function() {
             var panel = this.panel[0];
 
-            html.className = html.className.replace(' ' + this.options.openClass, '');
+            html.removeClass(this.options.openClass);
             panel.style.transition = panel.style['-webkit-transition'] = '';
         }, this), this.options.duration);
 
@@ -302,10 +303,11 @@ var Offcanvas = new prime({
         this.panel.on(touch.move, function(event) {
             if (isScrolling || self.preventOpen || !event.touches) { return; }
 
-            var placement = (!~body[0].className.search('g-offcanvas-right') ? 1 : -1), // 1: left, -1: right
+            var placement = (body.hasClass('g-offcanvas-right') ? -1 : 1), // 1: left, -1: right
                 place = placement < 0 ? 'right' : 'left',
-                diffX = event.touches[0].clientX - self.offsetX.start;
-            var translateX = self.offsetX.current = diffX;
+                diffX = event.touches[0].clientX - self.offsetX.start,
+                translateX = self.offsetX.current = diffX,
+                overlayOpacity;
 
             if (Math.abs(translateX) > self.options.padding) { return; }
 
@@ -318,8 +320,8 @@ var Offcanvas = new prime({
                 // offcanvas on right
                 if (place == 'right' && (self.opened && diffX < 0 || !self.opened && diffX > 0)) { return; }
 
-                if (!self.moved && !~html[0].className.search(self.options.openClass)) {
-                    html[0].className += ' ' + self.options.openClass;
+                if (!self.moved && !html.hasClass(self.options.openClass)) {
+                    html.addClass(self.options.openClass);
                 }
 
                 if ((place == 'left' && diffX <= 0) || (place == 'right' && diffX >= 0)) {
@@ -327,7 +329,10 @@ var Offcanvas = new prime({
                     self.opening = false;
                 }
 
+                overlayOpacity = mapNumber(Math.abs(translateX), 0, self.options.padding, 0, 1);
+
                 self.panel[0].style[prefix.css + 'transform'] = self.panel[0].style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+                self.overlay[0].style.opacity = overlayOpacity;
 
                 self.moved = true;
             }
@@ -337,7 +342,7 @@ var Offcanvas = new prime({
 });
 
 module.exports = Offcanvas;
-},{"../utils/decouple":4,"domready":5,"elements":10,"elements/zen":37,"mout/array/forEach":38,"mout/function/bind":40,"prime":58,"prime-util/prime/bound":54,"prime-util/prime/options":55}],4:[function(require,module,exports){
+},{"../utils/decouple":4,"domready":5,"elements":10,"elements/zen":37,"mout/array/forEach":38,"mout/function/bind":40,"mout/math/map":42,"prime":61,"prime-util/prime/bound":57,"prime-util/prime/options":58}],4:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
@@ -753,7 +758,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":12,"mout/array/filter":13,"mout/array/forEach":14,"mout/array/map":16,"mout/array/some":17,"prime":58}],8:[function(require,module,exports){
+},{"mout/array/every":12,"mout/array/filter":13,"mout/array/forEach":14,"mout/array/map":16,"mout/array/some":17,"prime":61}],8:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -836,7 +841,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":9,"./traversal":36,"prime/map":59}],9:[function(require,module,exports){
+},{"./events":9,"./traversal":36,"prime/map":62}],9:[function(require,module,exports){
 /*
 events
 */"use strict"
@@ -916,7 +921,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":7,"prime/emitter":57}],10:[function(require,module,exports){
+},{"./base":7,"prime/emitter":60}],10:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -2902,10 +2907,51 @@ var slice = require('../array/slice');
 
 
 },{"../array/slice":39}],41:[function(require,module,exports){
+
+    /**
+    * Linear interpolation.
+    * IMPORTANT:will return `Infinity` if numbers overflow Number.MAX_VALUE
+    */
+    function lerp(ratio, start, end){
+        return start + (end - start) * ratio;
+    }
+
+    module.exports = lerp;
+
+
+},{}],42:[function(require,module,exports){
+var lerp = require('./lerp');
+var norm = require('./norm');
+    /**
+    * Maps a number from one scale to another.
+    * @example map(3, 0, 4, -1, 1) -> 0.5
+    */
+    function map(val, min1, max1, min2, max2){
+        return lerp( norm(val, min1, max1), min2, max2 );
+    }
+    module.exports = map;
+
+
+},{"./lerp":41,"./norm":43}],43:[function(require,module,exports){
+
+    /**
+    * Gets normalized ratio of value inside range.
+    */
+    function norm(val, min, max){
+        if (val < min || val > max) {
+            throw new RangeError('value (' + val + ') must be between ' + min + ' and ' + max);
+        }
+
+        return val === max ? 1 : (val - min) / (max - min);
+    }
+    module.exports = norm;
+
+
+},{}],44:[function(require,module,exports){
 arguments[4][39][0].apply(exports,arguments)
-},{"dup":39}],42:[function(require,module,exports){
+},{"dup":39}],45:[function(require,module,exports){
 arguments[4][40][0].apply(exports,arguments)
-},{"../array/slice":41,"dup":40}],43:[function(require,module,exports){
+},{"../array/slice":44,"dup":40}],46:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -2956,7 +3002,7 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":53,"./isPlainObject":47,"./kindOf":48}],44:[function(require,module,exports){
+},{"../object/mixIn":56,"./isPlainObject":50,"./kindOf":51}],47:[function(require,module,exports){
 var clone = require('./clone');
 var forOwn = require('../object/forOwn');
 var kindOf = require('./kindOf');
@@ -3006,9 +3052,9 @@ var isPlainObject = require('./isPlainObject');
 
 
 
-},{"../object/forOwn":50,"./clone":43,"./isPlainObject":47,"./kindOf":48}],45:[function(require,module,exports){
+},{"../object/forOwn":53,"./clone":46,"./isPlainObject":50,"./kindOf":51}],48:[function(require,module,exports){
 arguments[4][22][0].apply(exports,arguments)
-},{"./kindOf":48,"dup":22}],46:[function(require,module,exports){
+},{"./kindOf":51,"dup":22}],49:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -3018,7 +3064,7 @@ var isKind = require('./isKind');
     module.exports = isObject;
 
 
-},{"./isKind":45}],47:[function(require,module,exports){
+},{"./isKind":48}],50:[function(require,module,exports){
 
 
     /**
@@ -3033,15 +3079,15 @@ var isKind = require('./isKind');
 
 
 
-},{}],48:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],49:[function(require,module,exports){
+},{"dup":23}],52:[function(require,module,exports){
 arguments[4][26][0].apply(exports,arguments)
-},{"./hasOwn":51,"dup":26}],50:[function(require,module,exports){
+},{"./hasOwn":54,"dup":26}],53:[function(require,module,exports){
 arguments[4][27][0].apply(exports,arguments)
-},{"./forIn":49,"./hasOwn":51,"dup":27}],51:[function(require,module,exports){
+},{"./forIn":52,"./hasOwn":54,"dup":27}],54:[function(require,module,exports){
 arguments[4][28][0].apply(exports,arguments)
-},{"dup":28}],52:[function(require,module,exports){
+},{"dup":28}],55:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var deepClone = require('../lang/deepClone');
 var isObject = require('../lang/isObject');
@@ -3083,7 +3129,7 @@ var isObject = require('../lang/isObject');
 
 
 
-},{"../lang/deepClone":44,"../lang/isObject":46,"./hasOwn":51}],53:[function(require,module,exports){
+},{"../lang/deepClone":47,"../lang/isObject":49,"./hasOwn":54}],56:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -3113,7 +3159,7 @@ var forOwn = require('./forOwn');
     module.exports = mixIn;
 
 
-},{"./forOwn":50}],54:[function(require,module,exports){
+},{"./forOwn":53}],57:[function(require,module,exports){
 "use strict";
 
 // credits to @cpojer's Class.Binds, released under the MIT license
@@ -3133,7 +3179,7 @@ var bound = prime({
 
 module.exports = bound
 
-},{"mout/function/bind":42,"prime":58}],55:[function(require,module,exports){
+},{"mout/function/bind":45,"prime":61}],58:[function(require,module,exports){
 "use strict";
 
 var prime = require("prime")
@@ -3152,7 +3198,7 @@ var Options = prime({
 
 module.exports = Options
 
-},{"mout/object/merge":52,"prime":58}],56:[function(require,module,exports){
+},{"mout/object/merge":55,"prime":61}],59:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -3271,7 +3317,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":69,"mout/array/forEach":60,"mout/array/indexOf":61,"mout/lang/kindOf":63,"mout/time/now":68}],57:[function(require,module,exports){
+},{"_process":72,"mout/array/forEach":63,"mout/array/indexOf":64,"mout/lang/kindOf":66,"mout/time/now":71}],60:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -3337,7 +3383,7 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":56,"./index":58,"mout/array/forEach":60,"mout/array/indexOf":61}],58:[function(require,module,exports){
+},{"./defer":59,"./index":61,"mout/array/forEach":63,"mout/array/indexOf":64}],61:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -3429,7 +3475,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":62,"mout/lang/kindOf":63,"mout/object/hasOwn":66,"mout/object/mixIn":67}],59:[function(require,module,exports){
+},{"mout/lang/createObject":65,"mout/lang/kindOf":66,"mout/object/hasOwn":69,"mout/object/mixIn":70}],62:[function(require,module,exports){
 /*
 Map
 */"use strict"
@@ -3555,11 +3601,11 @@ map.prototype = Map.prototype
 
 module.exports = map
 
-},{"./index":58,"mout/array/indexOf":61}],60:[function(require,module,exports){
+},{"./index":61,"mout/array/indexOf":64}],63:[function(require,module,exports){
 arguments[4][14][0].apply(exports,arguments)
-},{"dup":14}],61:[function(require,module,exports){
+},{"dup":14}],64:[function(require,module,exports){
 arguments[4][15][0].apply(exports,arguments)
-},{"dup":15}],62:[function(require,module,exports){
+},{"dup":15}],65:[function(require,module,exports){
 var mixIn = require('../object/mixIn');
 
     /**
@@ -3579,17 +3625,17 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":67}],63:[function(require,module,exports){
+},{"../object/mixIn":70}],66:[function(require,module,exports){
 arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],64:[function(require,module,exports){
+},{"dup":23}],67:[function(require,module,exports){
 arguments[4][26][0].apply(exports,arguments)
-},{"./hasOwn":66,"dup":26}],65:[function(require,module,exports){
+},{"./hasOwn":69,"dup":26}],68:[function(require,module,exports){
 arguments[4][27][0].apply(exports,arguments)
-},{"./forIn":64,"./hasOwn":66,"dup":27}],66:[function(require,module,exports){
+},{"./forIn":67,"./hasOwn":69,"dup":27}],69:[function(require,module,exports){
 arguments[4][28][0].apply(exports,arguments)
-},{"dup":28}],67:[function(require,module,exports){
-arguments[4][53][0].apply(exports,arguments)
-},{"./forOwn":65,"dup":53}],68:[function(require,module,exports){
+},{"dup":28}],70:[function(require,module,exports){
+arguments[4][56][0].apply(exports,arguments)
+},{"./forOwn":68,"dup":56}],71:[function(require,module,exports){
 
 
     /**
@@ -3609,7 +3655,7 @@ arguments[4][53][0].apply(exports,arguments)
 
 
 
-},{}],69:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};

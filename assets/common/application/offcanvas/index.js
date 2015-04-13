@@ -4,15 +4,16 @@
 
 "use strict";
 
-var ready    = require('domready'),
-    prime    = require('prime'),
-    bind     = require('mout/function/bind'),
-    forEach  = require('mout/array/forEach'),
-    decouple = require('../utils/decouple'),
-    Bound    = require('prime-util/prime/bound'),
-    Options  = require('prime-util/prime/options'),
-    $        = require('elements'),
-    zen      = require('elements/zen');
+var ready     = require('domready'),
+    prime     = require('prime'),
+    bind      = require('mout/function/bind'),
+    forEach   = require('mout/array/forEach'),
+    mapNumber = require('mout/math/map'),
+    decouple  = require('../utils/decouple'),
+    Bound     = require('prime-util/prime/bound'),
+    Options   = require('prime-util/prime/options'),
+    $         = require('elements'),
+    zen       = require('elements/zen');
 
 // thanks David Walsh
 var prefix = (function() {
@@ -110,17 +111,17 @@ var Offcanvas = new prime({
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
         if (this.opened) { return this; }
 
-        var html = $('html')[0],
-            body = $('body')[0];
+        var html = $('html'),
+            body = $('body');
 
-        if (!~html.className.search(this.options.openClass)) {
-            html.className += ' ' + this.options.openClass;
+        if (!html.hasClass(this.options.openClass)) {
+            html.addClass(this.options.openClass);
         }
 
         this.overlay[0].style.opacity = 1;
 
         this._setTransition();
-        this._translateXTo((!~body.className.search('g-offcanvas-right') ? 1 : -1) * this.options.padding);
+        this._translateXTo((body.hasClass('g-offcanvas-right') ? -1 : 1) * this.options.padding);
         this.opened = true;
 
         setTimeout(bind(function() {
@@ -137,7 +138,7 @@ var Offcanvas = new prime({
         if (!this.opened && !this.opening) { return this; }
         if (this.panel !== element && this.dragging) { return false; }
 
-        var html = $('html')[0];
+        var html = $('html');
 
         this.overlay[0].style.opacity = 0;
 
@@ -148,7 +149,7 @@ var Offcanvas = new prime({
         setTimeout(bind(function() {
             var panel = this.panel[0];
 
-            html.className = html.className.replace(' ' + this.options.openClass, '');
+            html.removeClass(this.options.openClass);
             panel.style.transition = panel.style['-webkit-transition'] = '';
         }, this), this.options.duration);
 
@@ -229,10 +230,11 @@ var Offcanvas = new prime({
         this.panel.on(touch.move, function(event) {
             if (isScrolling || self.preventOpen || !event.touches) { return; }
 
-            var placement = (!~body[0].className.search('g-offcanvas-right') ? 1 : -1), // 1: left, -1: right
+            var placement = (body.hasClass('g-offcanvas-right') ? -1 : 1), // 1: left, -1: right
                 place = placement < 0 ? 'right' : 'left',
-                diffX = event.touches[0].clientX - self.offsetX.start;
-            var translateX = self.offsetX.current = diffX;
+                diffX = event.touches[0].clientX - self.offsetX.start,
+                translateX = self.offsetX.current = diffX,
+                overlayOpacity;
 
             if (Math.abs(translateX) > self.options.padding) { return; }
 
@@ -245,8 +247,8 @@ var Offcanvas = new prime({
                 // offcanvas on right
                 if (place == 'right' && (self.opened && diffX < 0 || !self.opened && diffX > 0)) { return; }
 
-                if (!self.moved && !~html[0].className.search(self.options.openClass)) {
-                    html[0].className += ' ' + self.options.openClass;
+                if (!self.moved && !html.hasClass(self.options.openClass)) {
+                    html.addClass(self.options.openClass);
                 }
 
                 if ((place == 'left' && diffX <= 0) || (place == 'right' && diffX >= 0)) {
@@ -254,7 +256,10 @@ var Offcanvas = new prime({
                     self.opening = false;
                 }
 
+                overlayOpacity = mapNumber(Math.abs(translateX), 0, self.options.padding, 0, 1);
+
                 self.panel[0].style[prefix.css + 'transform'] = self.panel[0].style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+                self.overlay[0].style.opacity = overlayOpacity;
 
                 self.moved = true;
             }
