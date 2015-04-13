@@ -1,4 +1,4 @@
-// Offcanvas slide with desktop, touch and all-in-one touch devices support.
+// Offcanvas slide with desktop, touch and all-in-one touch devices support that supports both left and right placement.
 // Fast and optimized using CSS3 transitions
 // Based on the awesome Slideout.js <https://mango.github.io/slideout/>
 
@@ -9,6 +9,7 @@ var ready     = require('domready'),
     bind      = require('mout/function/bind'),
     forEach   = require('mout/array/forEach'),
     mapNumber = require('mout/math/map'),
+    clamp     = require('mout/math/clamp'),
     decouple  = require('../utils/decouple'),
     Bound     = require('prime-util/prime/bound'),
     Options   = require('prime-util/prime/options'),
@@ -40,7 +41,9 @@ var Offcanvas = new prime({
     options: {
         effect: 'ease',
         duration: 300,
-        tolerance: 70,
+        tolerance: function(padding) { // tolerance can also be just an integer value
+            return padding / 2;
+        },
         padding: 0,
         touch: true,
 
@@ -74,6 +77,8 @@ var Offcanvas = new prime({
             this.setOptions({ padding: width });
         }
 
+        this.tolerance = typeof this.options.tolerance == 'function' ? this.options.tolerance.call(this, this.options.padding) : this.options.tolerance;
+
         if (this.options.touch && hasTouchEvents) {
             this._touchEvents();
         }
@@ -86,7 +91,7 @@ var Offcanvas = new prime({
 
         forEach(['toggle', 'open', 'close'], bind(function(mode) {
             body.delegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
-            if (hasTouchEvents) { body.delegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
+            body.delegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode));
         }, this));
 
         this.overlay = zen('div[data-offcanvas-close].' + this.options.overlayClass).top(this.panel);
@@ -99,7 +104,7 @@ var Offcanvas = new prime({
 
         forEach(['toggle', 'open', 'close'], bind(function(mode) {
             body.undelegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
-            if (hasTouchEvents) { body.undelegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
+            body.undelegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode));
         }, this));
 
         this.overlay.remove();
@@ -109,6 +114,8 @@ var Offcanvas = new prime({
 
     open: function(event) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+        else { this.dragging = false; }
+
         if (this.opened) { return this; }
 
         var html = $('html'),
@@ -135,6 +142,8 @@ var Offcanvas = new prime({
 
     close: function(event, element) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+        else { this.dragging = false; }
+
         if (!this.opened && !this.opening) { return this; }
         if (this.panel !== element && this.dragging) { return false; }
 
@@ -159,6 +168,7 @@ var Offcanvas = new prime({
 
     toggle: function(event, element) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+        else { this.dragging = false; }
 
         return this[this.opened ? 'close' : 'open'](event, element);
     },
@@ -220,8 +230,13 @@ var Offcanvas = new prime({
         this.panel.on(touch.end, function(event) {
 
             if (self.moved) {
-                var tolerance = Math.abs(self.offsetX.current) > self.options.tolerance;
-                self[self.opening && tolerance ? 'open' : 'close'](event, self.panel);
+                var tolerance = Math.abs(self.offsetX.current) > self.tolerance,
+                    placement = body.hasClass('g-offcanvas-right') ? true : false,
+                    direction = !placement ? (self.offsetX.current < 0) : (self.offsetX.current > 0);
+
+                self.opening = tolerance ? !direction : direction;
+                self.opened = !self.opening;
+                self[self.opening ? 'open' : 'close'](event, self.panel);
             }
 
             self.moved = false;
@@ -232,13 +247,12 @@ var Offcanvas = new prime({
 
             var placement = (body.hasClass('g-offcanvas-right') ? -1 : 1), // 1: left, -1: right
                 place = placement < 0 ? 'right' : 'left',
-                diffX = event.touches[0].clientX - self.offsetX.start,
+                diffX = clamp(event.touches[0].clientX - self.offsetX.start, -self.options.padding, self.options.padding),
                 translateX = self.offsetX.current = diffX,
                 overlayOpacity;
 
             if (Math.abs(translateX) > self.options.padding) { return; }
-
-            if (Math.abs(diffX) > 20) {
+            if (Math.abs(diffX) > 0) {
                 self.opening = true;
 
                 // offcanvas on left

@@ -70,8 +70,8 @@ ready(function() {
 });
 
 module.exports = {};
-},{"domready":5,"elements":10,"elements/zen":37,"prime":61}],3:[function(require,module,exports){
-// Offcanvas slide with desktop, touch and all-in-one touch devices support.
+},{"domready":5,"elements":10,"elements/zen":37,"prime":62}],3:[function(require,module,exports){
+// Offcanvas slide with desktop, touch and all-in-one touch devices support that supports both left and right placement.
 // Fast and optimized using CSS3 transitions
 // Based on the awesome Slideout.js <https://mango.github.io/slideout/>
 
@@ -82,6 +82,7 @@ var ready     = require('domready'),
     bind      = require('mout/function/bind'),
     forEach   = require('mout/array/forEach'),
     mapNumber = require('mout/math/map'),
+    clamp     = require('mout/math/clamp'),
     decouple  = require('../utils/decouple'),
     Bound     = require('prime-util/prime/bound'),
     Options   = require('prime-util/prime/options'),
@@ -113,7 +114,9 @@ var Offcanvas = new prime({
     options: {
         effect: 'ease',
         duration: 300,
-        tolerance: 70,
+        tolerance: function(padding) { // tolerance can also be just an integer value
+            return padding / 2;
+        },
         padding: 0,
         touch: true,
 
@@ -147,6 +150,8 @@ var Offcanvas = new prime({
             this.setOptions({ padding: width });
         }
 
+        this.tolerance = typeof this.options.tolerance == 'function' ? this.options.tolerance.call(this, this.options.padding) : this.options.tolerance;
+
         if (this.options.touch && hasTouchEvents) {
             this._touchEvents();
         }
@@ -159,7 +164,7 @@ var Offcanvas = new prime({
 
         forEach(['toggle', 'open', 'close'], bind(function(mode) {
             body.delegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
-            if (hasTouchEvents) { body.delegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
+            body.delegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode));
         }, this));
 
         this.overlay = zen('div[data-offcanvas-close].' + this.options.overlayClass).top(this.panel);
@@ -172,7 +177,7 @@ var Offcanvas = new prime({
 
         forEach(['toggle', 'open', 'close'], bind(function(mode) {
             body.undelegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
-            if (hasTouchEvents) { body.undelegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
+            body.undelegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode));
         }, this));
 
         this.overlay.remove();
@@ -182,6 +187,8 @@ var Offcanvas = new prime({
 
     open: function(event) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+        else { this.dragging = false; }
+
         if (this.opened) { return this; }
 
         var html = $('html'),
@@ -208,6 +215,8 @@ var Offcanvas = new prime({
 
     close: function(event, element) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+        else { this.dragging = false; }
+
         if (!this.opened && !this.opening) { return this; }
         if (this.panel !== element && this.dragging) { return false; }
 
@@ -232,6 +241,7 @@ var Offcanvas = new prime({
 
     toggle: function(event, element) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+        else { this.dragging = false; }
 
         return this[this.opened ? 'close' : 'open'](event, element);
     },
@@ -293,8 +303,13 @@ var Offcanvas = new prime({
         this.panel.on(touch.end, function(event) {
 
             if (self.moved) {
-                var tolerance = Math.abs(self.offsetX.current) > self.options.tolerance;
-                self[self.opening && tolerance ? 'open' : 'close'](event, self.panel);
+                var tolerance = Math.abs(self.offsetX.current) > self.tolerance,
+                    placement = body.hasClass('g-offcanvas-right') ? true : false,
+                    direction = !placement ? (self.offsetX.current < 0) : (self.offsetX.current > 0);
+
+                self.opening = tolerance ? !direction : direction;
+                self.opened = !self.opening;
+                self[self.opening ? 'open' : 'close'](event, self.panel);
             }
 
             self.moved = false;
@@ -305,13 +320,12 @@ var Offcanvas = new prime({
 
             var placement = (body.hasClass('g-offcanvas-right') ? -1 : 1), // 1: left, -1: right
                 place = placement < 0 ? 'right' : 'left',
-                diffX = event.touches[0].clientX - self.offsetX.start,
+                diffX = clamp(event.touches[0].clientX - self.offsetX.start, -self.options.padding, self.options.padding),
                 translateX = self.offsetX.current = diffX,
                 overlayOpacity;
 
             if (Math.abs(translateX) > self.options.padding) { return; }
-
-            if (Math.abs(diffX) > 20) {
+            if (Math.abs(diffX) > 0) {
                 self.opening = true;
 
                 // offcanvas on left
@@ -342,7 +356,7 @@ var Offcanvas = new prime({
 });
 
 module.exports = Offcanvas;
-},{"../utils/decouple":4,"domready":5,"elements":10,"elements/zen":37,"mout/array/forEach":38,"mout/function/bind":40,"mout/math/map":42,"prime":61,"prime-util/prime/bound":57,"prime-util/prime/options":58}],4:[function(require,module,exports){
+},{"../utils/decouple":4,"domready":5,"elements":10,"elements/zen":37,"mout/array/forEach":38,"mout/function/bind":40,"mout/math/clamp":41,"mout/math/map":43,"prime":62,"prime-util/prime/bound":58,"prime-util/prime/options":59}],4:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
@@ -758,7 +772,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":12,"mout/array/filter":13,"mout/array/forEach":14,"mout/array/map":16,"mout/array/some":17,"prime":61}],8:[function(require,module,exports){
+},{"mout/array/every":12,"mout/array/filter":13,"mout/array/forEach":14,"mout/array/map":16,"mout/array/some":17,"prime":62}],8:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -841,7 +855,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":9,"./traversal":36,"prime/map":62}],9:[function(require,module,exports){
+},{"./events":9,"./traversal":36,"prime/map":63}],9:[function(require,module,exports){
 /*
 events
 */"use strict"
@@ -921,7 +935,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":7,"prime/emitter":60}],10:[function(require,module,exports){
+},{"./base":7,"prime/emitter":61}],10:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -2909,6 +2923,17 @@ var slice = require('../array/slice');
 },{"../array/slice":39}],41:[function(require,module,exports){
 
     /**
+     * Clamps value inside range.
+     */
+    function clamp(val, min, max){
+        return val < min? min : (val > max? max : val);
+    }
+    module.exports = clamp;
+
+
+},{}],42:[function(require,module,exports){
+
+    /**
     * Linear interpolation.
     * IMPORTANT:will return `Infinity` if numbers overflow Number.MAX_VALUE
     */
@@ -2919,7 +2944,7 @@ var slice = require('../array/slice');
     module.exports = lerp;
 
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 var lerp = require('./lerp');
 var norm = require('./norm');
     /**
@@ -2932,7 +2957,7 @@ var norm = require('./norm');
     module.exports = map;
 
 
-},{"./lerp":41,"./norm":43}],43:[function(require,module,exports){
+},{"./lerp":42,"./norm":44}],44:[function(require,module,exports){
 
     /**
     * Gets normalized ratio of value inside range.
@@ -2947,11 +2972,11 @@ var norm = require('./norm');
     module.exports = norm;
 
 
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 arguments[4][39][0].apply(exports,arguments)
-},{"dup":39}],45:[function(require,module,exports){
+},{"dup":39}],46:[function(require,module,exports){
 arguments[4][40][0].apply(exports,arguments)
-},{"../array/slice":44,"dup":40}],46:[function(require,module,exports){
+},{"../array/slice":45,"dup":40}],47:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -3002,7 +3027,7 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":56,"./isPlainObject":50,"./kindOf":51}],47:[function(require,module,exports){
+},{"../object/mixIn":57,"./isPlainObject":51,"./kindOf":52}],48:[function(require,module,exports){
 var clone = require('./clone');
 var forOwn = require('../object/forOwn');
 var kindOf = require('./kindOf');
@@ -3052,9 +3077,9 @@ var isPlainObject = require('./isPlainObject');
 
 
 
-},{"../object/forOwn":53,"./clone":46,"./isPlainObject":50,"./kindOf":51}],48:[function(require,module,exports){
+},{"../object/forOwn":54,"./clone":47,"./isPlainObject":51,"./kindOf":52}],49:[function(require,module,exports){
 arguments[4][22][0].apply(exports,arguments)
-},{"./kindOf":51,"dup":22}],49:[function(require,module,exports){
+},{"./kindOf":52,"dup":22}],50:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -3064,7 +3089,7 @@ var isKind = require('./isKind');
     module.exports = isObject;
 
 
-},{"./isKind":48}],50:[function(require,module,exports){
+},{"./isKind":49}],51:[function(require,module,exports){
 
 
     /**
@@ -3079,15 +3104,15 @@ var isKind = require('./isKind');
 
 
 
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],52:[function(require,module,exports){
+},{"dup":23}],53:[function(require,module,exports){
 arguments[4][26][0].apply(exports,arguments)
-},{"./hasOwn":54,"dup":26}],53:[function(require,module,exports){
+},{"./hasOwn":55,"dup":26}],54:[function(require,module,exports){
 arguments[4][27][0].apply(exports,arguments)
-},{"./forIn":52,"./hasOwn":54,"dup":27}],54:[function(require,module,exports){
+},{"./forIn":53,"./hasOwn":55,"dup":27}],55:[function(require,module,exports){
 arguments[4][28][0].apply(exports,arguments)
-},{"dup":28}],55:[function(require,module,exports){
+},{"dup":28}],56:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var deepClone = require('../lang/deepClone');
 var isObject = require('../lang/isObject');
@@ -3129,7 +3154,7 @@ var isObject = require('../lang/isObject');
 
 
 
-},{"../lang/deepClone":47,"../lang/isObject":49,"./hasOwn":54}],56:[function(require,module,exports){
+},{"../lang/deepClone":48,"../lang/isObject":50,"./hasOwn":55}],57:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -3159,7 +3184,7 @@ var forOwn = require('./forOwn');
     module.exports = mixIn;
 
 
-},{"./forOwn":53}],57:[function(require,module,exports){
+},{"./forOwn":54}],58:[function(require,module,exports){
 "use strict";
 
 // credits to @cpojer's Class.Binds, released under the MIT license
@@ -3179,7 +3204,7 @@ var bound = prime({
 
 module.exports = bound
 
-},{"mout/function/bind":45,"prime":61}],58:[function(require,module,exports){
+},{"mout/function/bind":46,"prime":62}],59:[function(require,module,exports){
 "use strict";
 
 var prime = require("prime")
@@ -3198,7 +3223,7 @@ var Options = prime({
 
 module.exports = Options
 
-},{"mout/object/merge":55,"prime":61}],59:[function(require,module,exports){
+},{"mout/object/merge":56,"prime":62}],60:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -3317,7 +3342,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":72,"mout/array/forEach":63,"mout/array/indexOf":64,"mout/lang/kindOf":66,"mout/time/now":71}],60:[function(require,module,exports){
+},{"_process":73,"mout/array/forEach":64,"mout/array/indexOf":65,"mout/lang/kindOf":67,"mout/time/now":72}],61:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -3383,7 +3408,7 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":59,"./index":61,"mout/array/forEach":63,"mout/array/indexOf":64}],61:[function(require,module,exports){
+},{"./defer":60,"./index":62,"mout/array/forEach":64,"mout/array/indexOf":65}],62:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -3475,7 +3500,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":65,"mout/lang/kindOf":66,"mout/object/hasOwn":69,"mout/object/mixIn":70}],62:[function(require,module,exports){
+},{"mout/lang/createObject":66,"mout/lang/kindOf":67,"mout/object/hasOwn":70,"mout/object/mixIn":71}],63:[function(require,module,exports){
 /*
 Map
 */"use strict"
@@ -3601,11 +3626,11 @@ map.prototype = Map.prototype
 
 module.exports = map
 
-},{"./index":61,"mout/array/indexOf":64}],63:[function(require,module,exports){
+},{"./index":62,"mout/array/indexOf":65}],64:[function(require,module,exports){
 arguments[4][14][0].apply(exports,arguments)
-},{"dup":14}],64:[function(require,module,exports){
+},{"dup":14}],65:[function(require,module,exports){
 arguments[4][15][0].apply(exports,arguments)
-},{"dup":15}],65:[function(require,module,exports){
+},{"dup":15}],66:[function(require,module,exports){
 var mixIn = require('../object/mixIn');
 
     /**
@@ -3625,17 +3650,17 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":70}],66:[function(require,module,exports){
+},{"../object/mixIn":71}],67:[function(require,module,exports){
 arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],67:[function(require,module,exports){
+},{"dup":23}],68:[function(require,module,exports){
 arguments[4][26][0].apply(exports,arguments)
-},{"./hasOwn":69,"dup":26}],68:[function(require,module,exports){
+},{"./hasOwn":70,"dup":26}],69:[function(require,module,exports){
 arguments[4][27][0].apply(exports,arguments)
-},{"./forIn":67,"./hasOwn":69,"dup":27}],69:[function(require,module,exports){
+},{"./forIn":68,"./hasOwn":70,"dup":27}],70:[function(require,module,exports){
 arguments[4][28][0].apply(exports,arguments)
-},{"dup":28}],70:[function(require,module,exports){
-arguments[4][56][0].apply(exports,arguments)
-},{"./forOwn":68,"dup":56}],71:[function(require,module,exports){
+},{"dup":28}],71:[function(require,module,exports){
+arguments[4][57][0].apply(exports,arguments)
+},{"./forOwn":69,"dup":57}],72:[function(require,module,exports){
 
 
     /**
@@ -3655,7 +3680,7 @@ arguments[4][56][0].apply(exports,arguments)
 
 
 
-},{}],72:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
