@@ -9,6 +9,8 @@ var prime       = require('prime'),
     Options     = require('prime-util/prime/options'),
     domready    = require('elements/domready'),
 
+    decouple    = require('../../utils/decouple'),
+
     bind        = require('mout/function/bind'),
     map         = require('mout/array/map'),
     forEach     = require('mout/array/forEach'),
@@ -379,7 +381,7 @@ var Fonts = new prime({
         this.buildHeader(html).top(html);
         this.buildFooter(html).bottom(html);
 
-        ul.on('scroll', bind(this.scroll, this, ul));
+        decouple(ul, 'scroll', bind(this.scroll, this, ul));
 
         html.delegate('click', '.g-fonts-list li[data-font]', bind(this.toggle, this));
 
@@ -504,7 +506,7 @@ var Fonts = new prime({
             this.field.value('family=' + name + (variation.length ? ':' + variation.join(',') : '') + (charset.length ? '&subset=' + charset.join(',') : ''));
 
             this.field.emit('input');
-            $('body').emit('input', {target: this.field});
+            $('body').emit('input', { target: this.field });
 
             modal.close();
         }, this));
