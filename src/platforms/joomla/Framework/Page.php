@@ -53,20 +53,20 @@ class Page extends Base\Page
         return $this->getAttributes($attributes);
     }
 
-    public function bodyAttributes()
+    public function bodyAttributes($attributes = [])
     {
         $classes = ['site', $this->option, "view-{$this->view}"];
         $classes[] = $this->layout ? 'layout-' . $this->layout : 'no-layout';
         $classes[] = $this->task ? 'task-' . $this->task : 'no-task';
         if ($this->itemid) $classes[] = 'itemid-' . $this->itemid;
 
-        $attributes = (array) $this->config->get('page.body', []);
-        if (!empty($attributes['class'])) {
-            $attributes['class'] = array_merge((array) $attributes['class'], $classes);
+        $baseAttributes = (array) $this->config->get('page.body', []);
+        if (!empty($baseAttributes['class'])) {
+            $baseAttributes['class'] = array_merge((array) $baseAttributes['class'], $classes);
         } else {
-            $attributes['class'] = $classes;
+            $baseAttributes['class'] = $classes;
         }
 
-        return $this->getAttributes(array_unique($attributes));
+        return $this->getAttributes($baseAttributes, $attributes);
     }
 }

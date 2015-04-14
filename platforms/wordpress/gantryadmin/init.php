@@ -48,7 +48,7 @@ function gantry_layout_manager() {
     // Define Gantry Admin services.
     $gantry = Gantry\Framework\Gantry::instance();
     $gantry['admin.theme'] = function ( $c ) {
-        return new \Gantry\Admin\Theme\Theme( GANTRYADMIN_PATH );
+        return new \Gantry\Admin\Theme( GANTRYADMIN_PATH );
     };
 
     // Boot the service.

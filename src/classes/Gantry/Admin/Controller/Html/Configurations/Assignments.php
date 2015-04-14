@@ -18,7 +18,6 @@ use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Request\Request;
 use Gantry\Framework\Assignments as AssignmentsObject;
 use Gantry\Framework\Menu;
-use Gantry\Framework\Pages;
 
 class Assignments extends HtmlController
 {
@@ -29,7 +28,6 @@ class Assignments extends HtmlController
             $assignments = new AssignmentsObject($configuration);
 
             $this->params['assignments'] = $assignments->get();
-            $this->params['pages'] = new Pages();
         }
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/assignments/assignments.html.twig', $this->params);

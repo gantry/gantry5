@@ -14,8 +14,8 @@
 
 namespace Gantry\Admin\Base;
 
-use Gantry\Admin\Particles\Particles;
-use Gantry\Admin\Styles\Styles;
+use Gantry\Admin\Particles;
+use Gantry\Admin\Styles;
 use Gantry\Component\Config\CompiledConfig;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Filesystem\Folder;

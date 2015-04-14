@@ -1,7 +1,6 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
 {% block particle %}
-    {% if gantry.platform.countModules(position.key) %}
-        <jdoc:include type="modules" name="{{ position.key }}" style="{{ position.chrome|default('xhtml') }}" />
-    {% endif %}
+    {% do gantry.theme.joomla(true) %}
+    {{ gantry.platform.displayModules(particle.key, {'style': particle.chrome|default('xhtml')}) }}
 {% endblock %}

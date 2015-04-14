@@ -9,6 +9,8 @@ var prime       = require('prime'),
     Options     = require('prime-util/prime/options'),
     domready    = require('elements/domready'),
 
+    decouple    = require('../../utils/decouple'),
+
     bind        = require('mout/function/bind'),
     map         = require('mout/array/map'),
     forEach     = require('mout/array/forEach'),
@@ -127,6 +129,11 @@ var Fonts = new prime({
     scroll: function(container) {
         clearTimeout(this.throttle);
         this.throttle = setTimeout(bind(function() {
+            if (!container) {
+                clearTimeout(this.throttle);
+                return;
+            }
+
             var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li:not(.g-font-hide)', 5000),
                 list = [];
 
@@ -221,8 +228,10 @@ var Fonts = new prime({
         if (charsetSelected) { charsetSelected.text('(' + subset.length + ' selected)'); }
 
         $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop;
+
         this.toggleExpansion();
         setTimeout(bind(function() { this.toggleExpansion(); }, this), 50);
+        setTimeout(bind(function() { $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop; }, this, 250));
     },
 
     select: function(element, variant/*, target*/) {
@@ -374,7 +383,7 @@ var Fonts = new prime({
         this.buildHeader(html).top(html);
         this.buildFooter(html).bottom(html);
 
-        ul.on('scroll', bind(this.scroll, this, ul));
+        decouple(ul, 'scroll', bind(this.scroll, this, ul));
 
         html.delegate('click', '.g-fonts-list li[data-font]', bind(this.toggle, this));
 
@@ -499,7 +508,7 @@ var Fonts = new prime({
             this.field.value('family=' + name + (variation.length ? ':' + variation.join(',') : '') + (charset.length ? '&subset=' + charset.join(',') : ''));
 
             this.field.emit('input');
-            $('body').emit('input', {target: this.field});
+            $('body').emit('input', { target: this.field });
 
             modal.close();
         }, this));

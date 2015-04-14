@@ -19,7 +19,7 @@ h1, h2, h3, h4, h5, h6, strong {
 .button {
 	display: inline-block;
 	padding: 0.5rem 1rem;
-	border-radius: $border-radius;
+	border-radius: $core-border-radius;
 	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
 	background: $accent-color-1;
 	color: $white;
@@ -46,6 +46,10 @@ h1, h2, h3, h4, h5, h6, strong {
 
 .gantry-logo {
 	display: inline-block;
+	@include breakpoint(mobile-only) {
+		display: block;
+		text-align: center;
+	}
 	img {
 		width: 150px;
 	}

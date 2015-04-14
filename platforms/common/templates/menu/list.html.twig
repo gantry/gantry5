@@ -1,6 +1,6 @@
 {% set children = (item.level == 1 ? item.group(group) : item.children) %}
 
-<ul class="submenu-items">
+<ul class="submenu-items" data-mm-base="{{ item.path }}" data-mm-base-level="{{ item.level }}">
     {%- if item.level > 1 %}
         <li>
             <a class="menu-item" data-g5-ajaxify="" data-g5-ajaxify-params="{{ {'inline': 1, 'group': group}|json_encode|escape('html_attr') }}" data-g5-ajaxify-target-parent=".submenu-column" href="{{ gantry.route('menu', id, item.parent.path) }}">

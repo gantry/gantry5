@@ -12,6 +12,8 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Gantry\GantryTrait;
+use Gantry\Joomla\CacheHelper;
+use Joomla\Utilities\ArrayHelper;
 
 class Assignments
 {
@@ -97,7 +99,7 @@ class Assignments
             $user = \JFactory::getUser();
 
             if (!empty($active) && is_array($active)) {
-                \JArrayHelper::toInteger($active);
+                ArrayHelper::toInteger($active);
 
                 // Update the mapping for menu items that this style IS assigned to.
                 $query = $db->getQuery(true)
@@ -130,31 +132,8 @@ class Assignments
         }
 
         // Clean the cache.
-        $this->cleanCache();
+        CacheHelper::cleanTemplates();
 
         return ($n > 0);
-    }
-
-    protected function cleanCache()
-    {
-        $this->cleanCacheType('com_templates');
-        $this->cleanCacheType('_system');
-    }
-
-    private function cleanCacheType($group)
-    {
-        $conf = \JFactory::getConfig();
-        $dispatcher = \JEventDispatcher::getInstance();
-
-        $options = array(
-            'defaultgroup' => $group,
-            'cachebase' => $conf->get('cache_path', JPATH_SITE . '/cache')
-        );
-
-        $cache = \JCache::getInstance('callback', $options);
-        $cache->clean();
-
-        // Trigger the onContentCleanCache event.
-        $dispatcher->trigger('onContentCleanCache', $options);
     }
 }

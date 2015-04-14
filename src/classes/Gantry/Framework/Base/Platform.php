@@ -133,4 +133,9 @@ abstract class Platform
 
     abstract public function settings();
     abstract public function settings_key();
+
+    public function listModules()
+    {
+        return false;
+    }
 }

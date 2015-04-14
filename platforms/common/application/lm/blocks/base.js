@@ -22,6 +22,7 @@ var Base = new prime({
     },
     constructor: function(options) {
         this.setOptions(options);
+
         this.fresh = !this.options.id;
         this.id = this.options.id || this.guid();
         this.attributes = this.options.attributes || {};

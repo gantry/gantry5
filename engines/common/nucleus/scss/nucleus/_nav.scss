@@ -31,7 +31,8 @@
 						width: 1.5rem;
 						opacity: 0.5;
 						font-family: FontAwesome;
-						content: "\f078";		
+						content: "\f078";
+						text-align: center;
 					}
 					&.g-selected {
 						&:after {
@@ -196,13 +197,101 @@
     top: 0;
     right: 0;
     bottom: 0;
-    left: 0;	    
-    z-index: 1;		
+    left: 0;
+    z-index: -1;
     opacity: 0;
-    @include transition(opacity .3s ease-out);
-    .g-nav-overlay-active &, .g-mobile-nav-active & {
-    	position: fixed;
-    	opacity: 1;
-    	height: 100vh;
-    }
+    position: fixed;
+    @include transition(opacity .3s ease-out, z-index .1s ease-out);
+}
+
+// Mobile Menu 
+#g-mobilemenu-container {
+	.g-main-nav {
+		.g-toplevel {
+			li {
+				display: block;
+				margin-right: 0;
+				.g-menu-item-content {
+					display: block;
+					padding: $content-padding 1rem;
+					line-height: 1rem;
+				}
+
+		    	// Menu Parent Indicator on Mobile Layout
+		    	&.g-parent {
+					> .g-menu-item-content {
+						position: relative;
+						&:after {
+							position: absolute;
+							width: auto;
+							line-height: normal;
+							opacity: 0.5;
+							font-family: FontAwesome;
+							content: "\f054";		
+							right: 1rem;		
+						}
+					}
+					
+					// Temporarily Hide Parent Indicator
+					.g-menu-parent-indicator {
+						display: none;
+					}
+		    	}						
+			}
+			.g-dropdown {
+				top: 0;
+				background: transparent;
+				position: absolute;
+				left: 0;
+				right: 0;
+				z-index: 1;				
+				@include transform(translateX(100%));
+				&.g-active {
+					@include transform(translateX(0));
+				}
+				.g-go-back {
+					display: block;
+				}				
+				.g-block {
+					width: 100%;
+					overflow: visible;
+					.g-go-back {
+						display: none;
+					}
+					&:first-child {
+						.g-go-back {
+							display: block;
+						}
+					}
+				}				
+			}		
+			.g-dropdown-column {
+		    	float: none;
+		    }							
+		}
+		.g-sublevel {
+			li {
+				position: static;
+			}
+			@include transition(transform .2s ease-out);
+			.g-dropdown {
+				top: 0;
+				@include transform(translateX(100%));
+				&.g-active {
+					@include transform(translateX(0));
+				}
+			}			
+			&.g-slide-out {
+				> .g-menu-item > .g-menu-item-content {
+					@include transform(translateX(-100%));
+				}
+			}			
+		}
+		.g-block-inactive {
+			.g-sublevel {
+				height: 0;
+				@include transform(translateX(-100%));
+			}
+		}
+	}
 }

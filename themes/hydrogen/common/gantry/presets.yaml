@@ -35,6 +35,9 @@ preset1:
     footer:
       background: '#ffffff'
       text-color: '#666666'
+    offcanvas:
+      background: '#354d59'
+      text-color: '#ffffff'
 
 preset2:
   image: 'gantry-admin://images/preset2.png'
@@ -73,6 +76,9 @@ preset2:
     footer:
       background: '#ffffff'
       text-color: '#666666'
+    offcanvas:
+      background: '#142D53'
+      text-color: '#ffffff'
 
 preset3:
   image: 'gantry-admin://images/preset3.png'
@@ -111,6 +117,9 @@ preset3:
     footer:
       background: '#ffffff'
       text-color: '#666666'
+    offcanvas:
+      background: '#344E2C'
+      text-color: '#ffffff'
 
 preset4:
   image: 'gantry-admin://images/preset4.png'
@@ -149,3 +158,6 @@ preset4:
     footer:
       background: '#ffffff'
       text-color: '#666666'
+    offcanvas:
+      background: '#722829'
+      text-color: '#ffffff'

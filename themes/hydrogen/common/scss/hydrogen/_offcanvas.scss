@@ -1,0 +1,41 @@
+#g-offcanvas {
+	background: $offcanvas-background;
+	width: $offcanvas-width;
+	color: $offcanvas-text-color;
+	a {
+
+	}
+}
+
+.g-offcanvas-toggle {
+	font-size: $core-font-size + 0.5;
+	color: $white;
+}
+
+// Mobile Menu 
+#g-offcanvas {
+	.g-main-nav {
+		.g-toplevel {
+			background: $offcanvas-background;
+			> li {
+				> .g-menu-item-content {
+					color: $offcanvas-text-color;
+				}
+				&:hover, &.active {
+					background: darken($navigation-background, 4%);
+
+					> .g-menu-item-content {
+						color: $offcanvas-text-color;
+					}
+				}
+			}
+			.g-dropdown-column {
+				width: $offcanvas-width;
+			}			
+		}
+	}
+}
+
+#g-mobilemenu-container {
+	margin: -($content-padding + $content-margin);
+}

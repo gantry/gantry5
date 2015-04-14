@@ -190,7 +190,9 @@ class Menu extends AbstractMenu
                     'path' => $menuItem->route,
                     'alias' => $menuItem->alias,
                     'title' => $menuItem->title,
+                    'subtitle' => $menuItem->params->get('menu-anchor_title', ''),
                     'link' => $menuItem->link,
+                    'image' => $menuItem->params->get('menu_image', ''),
                     'icon_only' => !$menuItem->params->get('menu_text', 1)
                 ];
 
@@ -202,7 +204,7 @@ class Menu extends AbstractMenu
                 switch ($item->type) {
                     case 'separator':
                     case 'heading':
-                        // Separator and heading has no link.
+                        // These types have no link.
                         $link = null;
                         break;
 
@@ -247,9 +249,6 @@ class Menu extends AbstractMenu
                     $item->url(\JFilterOutput::ampReplace(htmlspecialchars($item->link)));
                 }
 
-                $item->subtitle = $menuItem->params->get('menu-anchor_title', '');
-                $item->image = $menuItem->params->get('menu_image', '');
-
                 switch ($menuItem->params->get('browserNav', 0))
                 {
                     default:
@@ -264,6 +263,8 @@ class Menu extends AbstractMenu
                         break;
                 }
             }
+
+            $this->addParticles($items, $start, $end);
 
             $this->sortAll();
 

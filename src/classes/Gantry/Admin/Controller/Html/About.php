@@ -14,7 +14,7 @@
 
 namespace Gantry\Admin\Controller\Html;
 
-use Gantry\Admin\Theme\ThemeList;
+use Gantry\Admin\ThemeList;
 use Gantry\Component\Controller\HtmlController;
 
 class About extends HtmlController

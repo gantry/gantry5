@@ -35,19 +35,43 @@ class LayoutReader
         if (isset($data['children'])) {
             $result = self::object($data['children']);
 
-            $last = end($result);
-            if ($last->type !== 'non-visible') {
-                $result[] = self::parse('non-visible', [], 0);
+            $invisible = [
+                'offcanvas' => self::parse('offcanvas', [], 0),
+                'atoms' => self::parse('atoms', [], 0)
+            ];
+            foreach ($result as $key => &$item) {
+                // FIXME: remove before release
+                if ($item->type == 'non-visible') {
+                    $item->type = 'atoms';
+                    $item->attributes->name = 'Atoms Section';
+                }
+
+                if (isset($invisible[$item->type])) {
+                    $invisible[$item->type] = $item;
+                    unset($result[$key]);
+                }
             }
 
-            return $result;
+            $result += $invisible;
+
+            return array_values($result);
         }
 
         // We have user entered file; let's build the layout.
 
-        if (!isset($data['non-visible'])) {
-            $data['non-visible'] = [];
+        // FIXME: remove before release
+        if (isset($data['non-visible'])) {
+            $data['offcanvas'] = [];
+            unset ($data['non-visible']);
         }
+
+        // Two last items are always offcanvas and atoms.
+        $invisible = [
+            'offcanvas' => isset($data['offcanvas']) ? $data['offcanvas'] : [],
+            'atoms' => isset($data['atoms']) ? $data['atoms'] : []
+        ];
+        unset($data['offcanvas'], $data['atoms']);
+        $data += $invisible;
 
         $result = [];
         foreach ($data as $field => $params) {
@@ -115,7 +139,8 @@ class LayoutReader
 
             $result = (object) [
                 'id' => static::id(),
-                'type' => ($field == 'non-visible' ? $field : 'section'),
+                // TODO: add offcanvas type..
+                'type' => (in_array($field, ['atoms', 'offcanvas']) ? $field : 'section'),
                 'subtype' => $field,
                 'title' => ucfirst($field),
                 'attributes' => (object) [],

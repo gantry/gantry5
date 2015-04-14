@@ -68,18 +68,4 @@ class Theme extends BaseTheme
 
         return (bool) $this->joomla;
     }
-
-    public function widgets_init()
-    {
-        $gantry = Gantry::instance();
-        $positions = (array) $gantry['config']->get('positions');
-
-        foreach ($positions as $name => $params) {
-            $params = (array) $params;
-            if (!isset($params['name'])) {
-                $params['name'] = ucfirst($name);
-            }
-            // Register position.
-        }
-    }
 }

@@ -31,7 +31,7 @@ class G5_HydrogenInstallerScript
     {
         if (in_array($type, array('install', 'discover_install')))
         {
-            $installer = new Gantry\Framework\TemplateInstaller($parent);
+            $installer = new Gantry\Joomla\TemplateInstaller($parent);
 
             $default = $installer->getDefaultStyle();
             switch ($default->template) {
