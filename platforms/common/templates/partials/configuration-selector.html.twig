@@ -10,17 +10,15 @@
         </optgroup>
 
         {% set user_conf = gantry.configurations.user %}
-        {% if user_conf|length %}
+        {% if user_conf.count %}
         <optgroup label="Theme Pages">
-        {% for name, title in user_conf %}
-            <option value="{{ name|e }}"
-                    {% if name == configuration %}selected="selected"{% endif %}
-                    data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
-                {{ title|e }}
-            </option>
-            {% if (name == 'default') %}
-            {% endif %}
-        {% endfor %}
+            {% for name, title in user_conf %}
+                <option value="{{ name|e }}"
+                        {% if name == configuration %}selected="selected"{% endif %}
+                        data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
+                    {{ title|e }}
+                </option>
+            {% endfor %}
         </optgroup>
         {% endif %}
 
