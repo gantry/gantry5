@@ -49,7 +49,7 @@ class twig extends \phpbb\template\twig\twig
             define('GANTRYADMIN_PATH', GANTRY5_ROOT . '/ext/rockettheme/gantry');
 
             $this->gantry['admin.theme'] = function () {
-                return new \Gantry\Admin\Theme\Theme(GANTRYADMIN_PATH);
+                return new \Gantry\Admin\Theme(GANTRYADMIN_PATH);
             };
 
             // Boot the service.

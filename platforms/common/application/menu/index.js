@@ -5,6 +5,7 @@ var ready         = require('elements/domready'),
     zen           = require('elements/zen'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
+    extraItems    = require('./extra-items'),
     request       = require('agent'),
     deepEquals    = require('mout/lang/deepEquals'),
     trim          = require('mout/string/trim'),
@@ -23,29 +24,16 @@ ready(function() {
     var body = $('body');
 
     menumanager = new MenuManager('body', {
-        delegate: '#menu-editor > section ul li, .submenu-column, .submenu-column li, .column-container .g-block',
+        delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li, .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
         exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
         resize_handles: '.submenu-column:not(:last-child)',
         catchClick: true
     });
 
-    menumanager.on('dragEnd', function(map, mode) { // mode [reorder, resize, evenResize]
-        this.resizer.updateItemSizes();
 
-        var save = $('[data-save]'),
-            current = {
-                settings: this.settings,
-                ordering: this.ordering,
-                items: this.items
-            };
-
-        if (!deepEquals(map, current)) {
-            save.showIndicator('fa fa-fw changes-indicator fa-circle-o');
-        } else {
-            save.hideIndicator();
-        }
-    });
+    // Handles Modules / Particles items in the Menu
+    menumanager.on('dragEnd', extraItems);
 
     module.exports.menumanager = menumanager;
 
@@ -55,6 +43,10 @@ ready(function() {
     // Refresh ordering/items on menu type change or Menu navigation link
     body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(event, element) {
         menumanager.setRoot();
+
+        // refresh LM eraser
+        menumanager.eraser.element = $('[data-mm-eraseparticle]');
+        menumanager.eraser.hide();
     });
 
     body.delegate(FOCUSIN, '.percentage input', function(event, element) {
@@ -196,7 +188,8 @@ ready(function() {
             remoteLoaded: function(response, content) {
                 var form = content.elements.content.find('form'),
                     submit = content.elements.content.find('input[type="submit"], button[type="submit"]'),
-                    dataString = [];
+                    dataString = [],
+                    path;
 
                 if (!form || !submit) { return true; }
 
@@ -230,8 +223,11 @@ ready(function() {
                                 }
                             });
                         } else {
-                            if (response.body.path) {
-                                menumanager.items[response.body.path] = response.body.item;
+                            if (response.body.path || (response.body.item && response.body.item.type == 'particle')) {
+                                path = response.body.path || element.parent('[data-mm-id]').data('mm-id');
+                                menumanager.items[path] = response.body.item;
+                            } else if (response.body.item && response.body.item.type == 'particle') {
+
                             } else {
                                 menumanager.settings = response.body.settings;
                             }

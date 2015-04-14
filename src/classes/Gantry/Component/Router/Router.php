@@ -108,7 +108,7 @@ abstract class Router implements RouterInterface
         }
 
         $this->container['admin.theme'] = function () {
-            return new \Gantry\Admin\Theme\Theme(GANTRYADMIN_PATH);
+            return new \Gantry\Admin\Theme(GANTRYADMIN_PATH);
         };
 
         // Boot the service.

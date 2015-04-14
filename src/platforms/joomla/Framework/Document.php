@@ -45,10 +45,12 @@ class Document extends BaseDocument
                 if (!empty($element['src'])) {
                     $src = $element['src'];
                     $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
+                    $defer = isset($element['defer']) ? true : false;
+                    $async = isset($element['async']) ? true : false;
                     if ($in_footer) {
                        self::$scripts['footer'][$src] = "<script type=\"{$type}\" src=\"{$src}\"></script>";
                     } else {
-                        $doc->addScript($src, $type);
+                        $doc->addScript($src, $type, $defer, $async);
                     }
                     return true;
 

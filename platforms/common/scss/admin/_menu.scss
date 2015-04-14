@@ -22,6 +22,23 @@ $submenu-ratio:                 60px;
 				opacity: 1;
 			}
 		}
+
+		.menu-item {
+			.title {
+				font-size: 1rem;
+			}
+
+			.badge {
+				background-color: #aaa;
+				color: $white;
+				margin-left: 0.5em;
+				font-size: 0.6rem;
+			}
+		}
+
+		&[data-mm-original-type] .fa-arrows-alt {
+			display: none;
+		}
 	}
 }
 
@@ -56,6 +73,20 @@ $submenu-ratio:                 60px;
         outline: none;
     }
 
+}
+	
+.g5-mm-particles-picker {
+	li {
+		display: inline-block;
+
+		i {
+			opacity: 0.5;
+		}
+		
+		.config-cog {
+			display: none;
+		}
+	}
 }
 
 .menu-selector-bar {
@@ -98,7 +129,7 @@ $submenu-ratio:                 60px;
 		}
 
 		.menu-item {
-            margin: 0;
+			margin: 0;
 			padding: $content-padding;
 			font-size: $core-font-size + 0.1;
 			@include breakpoint(mobile-only) {
@@ -252,7 +283,8 @@ $submenu-ratio:                 60px;
 			}
 			.config-cog {
 				right: 4px;
-				top: 0.8rem;
+				top: 50%;
+				margin-top: -12px;
 			}
 			.parent-indicator {
 				&:before {
@@ -367,6 +399,79 @@ $submenu-ratio:                 60px;
 		right: 1rem;
 		font-size: $core-font-size + 0.5;
 		cursor: pointer;
+	}
+}
+
+// Modal style for Module / Particles
+.menu-editor-particles, .menu-editor-modules {
+	ul:last-child {
+		margin: 0;
+	}
+
+	.module-infos {
+		position: absolute;
+		top: 0;
+		right: 7px;
+		color: #BBB;
+
+		.g-tooltip-right:before {
+			right: 0.1rem;
+		}
+	}
+
+	[data-lm-blocktype], [data-mm-module] {
+		display: inline-block;
+		margin: 0.3em;
+		cursor: pointer;
+
+		&.selected {
+			box-shadow: 0 0 0 2px $white, 0 0 0 4px $dark-gray;
+		}
+	}
+
+	[data-lm-blocktype] {
+		color: $white;
+	}
+
+	.modules-wrapper {
+		max-height: 500px;
+		overflow: auto;
+	}
+
+	[data-mm-module] {
+		text-align: left;
+		color: $dark-gray;
+		background-color: $light-gray;
+		padding: $content-padding / 2;
+		width: 47%;
+		min-height: 100px;
+		vertical-align: middle;
+		position: relative;
+		
+		.module-wrapper {
+			top: 50%;
+			position: absolute;
+			@include transform(translate(0, -50%));
+		}
+	}
+
+	[data-lm-blocktype="spacer"] {
+		color: $dark-gray;
+	}
+
+	.search input {
+		width: 100% !important;
+	}
+}
+
+.menu-editor-modules {
+	ul {
+		display: table;
+	}
+	.sub-title {
+		margin: 0;
+		display: block;
+		color: lighten($dark-gray, 10%);
 	}
 }
 

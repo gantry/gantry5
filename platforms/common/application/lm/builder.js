@@ -131,7 +131,11 @@ var Builder = new prime({
             return;
         }
 
-        var Element = new Blocks[value.type](deepFillIn({
+        if (!Blocks[value.type]) {
+            console[console.error ? 'error' : 'log'](value.type + ' does not exist');
+        }
+
+        var Element = new (Blocks[value.type] || Blocks['section'])(deepFillIn({
             id: key,
             attributes: {},
             subtype: value.subtype || false,

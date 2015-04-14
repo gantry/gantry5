@@ -88,10 +88,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     border-radius: $selectize-border-radius;
 
     .selectize-control.multi &.has-items {
-        $padding-x: $selectize-padding-x;
-        $padding-top: $selectize-padding-y - $selectize-padding-item-y - $selectize-width-item-border;
-        $padding-bottom: $selectize-padding-y - $selectize-padding-item-y - $selectize-margin-item-y - $selectize-width-item-border;
-        padding: $padding-top $padding-x $padding-bottom;
+        padding: 4px 0 1px;
     }
 
     &.full {
@@ -253,7 +250,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     &.multi {
         .selectize-input {
             &.has-items {
-                $padding-x: $selectize-padding-x - 3px;
+                $padding-x: $selectize-padding-x - 7px;
                 padding-left: $padding-x;
                 padding-right: $padding-x;
             }

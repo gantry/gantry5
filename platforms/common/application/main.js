@@ -179,6 +179,7 @@ ready(function() {
         if (!$title) { return true; }
 
         title = $title[0];
+        $title.text(trim($title.text()));
 
         $title.attribute('contenteditable', true);
         title.focus();
@@ -255,8 +256,7 @@ ready(function() {
 
 });
 
-
-module.exports = {
+var modules = {
     /*mout    : require('mout'),
      prime   : require('prime'),
      "$"     : elements,
@@ -273,3 +273,6 @@ module.exports = {
     zen: require('elements/zen'),
     moofx: require('moofx')
 };
+
+window.G5 = modules;
+module.exports = modules;

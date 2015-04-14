@@ -4,7 +4,7 @@
     {% if ((segment.attributes.enabled is null or segment.attributes.enabled) and (particle.enabled is null or particle.enabled)) %}
     {% include ['particles/' ~ segment.subtype ~ '.html.twig',
     '@particles/' ~ segment.subtype ~ '.html.twig']
-    ignore missing with {gantry: gantry, particle: particle } %}
+    ignore missing with {gantry: gantry, site: site, page: gantry.page, particle: particle } only %}
     {% endif %}
 {% endset %}
 

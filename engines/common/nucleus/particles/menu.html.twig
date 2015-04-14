@@ -1,6 +1,16 @@
 {% set menu = gantry.menu.instance(particle) %}
 
-{% macro displayTitle(item) %}
+{% macro displayParticle(item, gantry) %}
+    {% if item.particle.enabled is null or item.particle.enabled %}
+        {% set classes = item.options.block.class %}
+        <div class="menu-item-particle{{ classes ? ' ' ~ classes }}">
+        {% include ['particles/' ~ item.particle ~ '.html.twig', '@particles/' ~ item.particle ~ '.html.twig']
+        ignore missing with {gantry: gantry, particle: item.options.particle } only %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro displayTitle(item, gantry) %}
     {% if item.image %}
         <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
     {% elseif item.icon %}
@@ -14,7 +24,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro displayItem(item, menu) %}
+{% macro displayItem(item, menu, gantry) %}
     {% if item.visible %}
         {% set title = item.icon_only ? ' title="' ~ item.title|e ~ '"' %}
         {% set active = menu.isActive(item) ? ' active' %}
@@ -24,13 +34,15 @@
         <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{{ parent|raw }}{{ active|raw }}{{ dropdown|raw }}">
             {% if item.url %}
                 <a class="g-menu-item-content" href="{{ item.url|e }}"{{ title|raw ~ target|raw }}>
-                    {{ _self.displayTitle(item) }}
+                    {{ _self.displayTitle(item, gantry) }}
                 </a>
                 {% if (item.children) -%}
                     <span class="g-menu-parent-indicator" data-g-menuparent=""></span>
                 {%- endif %}
             {% else %}
-                {% if item.type == 'heading' %}
+                {% if item.type == 'particle' %}
+                    {{ _self.displayParticle(item, gantry) }}
+                {% elseif item.type == 'heading' %}
                     <span class="g-nav-header g-menu-item-content"{{ title|raw }} data-g-menuparent="">{{ item.title|e }}
                 {% else %}
                     <span class="g-separator g-menu-item-content"{{ title|raw }} data-g-menuparent="">{{ _self.displayTitle(item) }}
@@ -41,13 +53,13 @@
                     </span>
             {% endif %}
             {% if (item.children) -%}
-                {{ _self.displaySubmenu(item, menu) }}
+                {{ _self.displaySubmenu(item, menu, gantry) }}
             {%- endif %}
         </li>
     {% endif %}
 {% endmacro %}
 
-{% macro displayContainers(item, menu) %}
+{% macro displayContainers(item, menu, gantry) %}
     <div class="g-grid">
         {% set groups = item.dropdown == 'standard' ? [item] : item.groups %}
         {% for column, items in groups %}
@@ -56,29 +68,29 @@
                 <li class="g-level-{{ item.level|e }} g-go-back">
                     <a class="g-menu-item-content" href="#" data-g-menuparent=""><span>Back</span></a>
                 </li>
-                {{ _self.displayItems(items, menu) }}
+                {{ _self.displayItems(items, menu, gantry) }}
             </ul>
         </div>
         {% endfor %}
     </div>
 {% endmacro %}
 
-{% macro displayItems(items, menu) %}
+{% macro displayItems(items, menu, gantry) %}
     {% for item in items %}
-        {{ _self.displayItem(item, menu) }}
+        {{ _self.displayItem(item, menu, gantry) }}
     {% endfor %}
 {% endmacro %}
 
-{% macro displaySubmenu(item, menu) %}
+{% macro displaySubmenu(item, menu, gantry) %}
     <ul class="g-dropdown g-inactive">
         <li class="g-dropdown-column">
-            {{ _self.displayContainers(item, menu) }}
+            {{ _self.displayContainers(item, menu, gantry) }}
         </li>
     </ul>
 {% endmacro %}
 
 <nav class="g-main-nav" role="navigation">
     <ul class="g-toplevel">
-        {{ _self.displayItems(menu.root, menu) }}
+        {{ _self.displayItems(menu.root, menu, gantry) }}
     </ul>
 </nav>

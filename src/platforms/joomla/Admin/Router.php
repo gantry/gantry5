@@ -17,6 +17,9 @@ use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
 use Joomla\Registry\Registry;
 
+/**
+ * Gantry administration router for Joomla.
+ */
 class Router extends BaseRouter
 {
     public function boot()
@@ -68,14 +71,19 @@ class Router extends BaseRouter
         ];
     }
 
+    /**
+     * Send response to the client.
+     *
+     * @param Response $response
+     */
     protected function send(Response $response)
     {
-        // Output HTTP header.
         $app = \JFactory::getApplication();
         $document = \JFactory::getDocument();
         $document->setCharset($response->charset);
         $document->setMimeEncoding($response->mimeType);
 
+        // Output HTTP header.
         header("HTTP/1.1 {$response->getStatus()}", true, $response->getStatusCode());
         header("Content-Type: {$response->mimeType}; charset={$response->charset}");
         foreach ($response->getHeaders() as $key => $values) {
@@ -85,6 +93,8 @@ class Router extends BaseRouter
                 $replace = false;
             }
         }
+
+        // Output Gantry response.
         echo $response;
 
         if ($response instanceof JsonResponse) {

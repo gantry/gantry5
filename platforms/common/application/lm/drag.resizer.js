@@ -17,7 +17,7 @@ require('elements/delegation');
 
 var Resizer = new prime({
     mixin: [Bound, Options],
-    EVENTS: DragEvents,
+    DRAG_EVENTS: DragEvents,
     options: {
         minSize: 5
     },
@@ -49,6 +49,8 @@ var Resizer = new prime({
     },
 
     start: function(event, element, siblings, offset) {
+        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+        
         if (element.LMTooltip) { element.LMTooltip.remove(); }
         if (event.which && event.which !== 1) { return true; }
 
@@ -98,11 +100,18 @@ var Resizer = new prime({
         this.origin.offset.parentRect.left = this.element.parent().find('> [data-lm-id]:first-child')[0].getBoundingClientRect().left;
         this.origin.offset.parentRect.right = this.element.parent().find('> [data-lm-id]:last-child')[0].getBoundingClientRect().right;
 
-        $(document).on(this.EVENTS.MOVE, this.bound('move'));
-        $(document).on(this.EVENTS.STOP, this.bound('stop'));
+        this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
+            $(document).on(event, this.bound('move'));
+        }, this));
+
+        this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
+            $(document).on(event, this.bound('stop'));
+        }, this));
     },
 
     move: function(event) {
+        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+
         var clientX = event.clientX || event.touches[0].clientX || 0,
             clientY = event.clientY || event.touches[0].clientY || 0,
             parentRect = this.origin.offset.parentRect;
@@ -161,9 +170,16 @@ var Resizer = new prime({
         this.lastY = clientY;
     },
 
-    stop: function(/*event*/) {
-        $(document).off(this.EVENTS.MOVE, this.bound('move'));
-        $(document).off(this.EVENTS.STOP, this.bound('stop'));
+    stop: function(event) {
+        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+
+        this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
+            $(document).off(event, this.bound('move'));
+        }, this));
+
+        this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
+            $(document).off(event, this.bound('move'));
+        }, this));
 
         if (this.origin.size !== this.getSize(this.element)) { this.history.push(this.builder.serialize()); }
     },

@@ -240,6 +240,34 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
     abstract protected function getList(array $params);
 
     /**
+     * @param array $items
+     * @param int $start
+     * @param int $end
+     */
+    protected function addParticles(array $items, $start, $end)
+    {
+        // Add custom menu elements.
+        foreach ($items as $route => $item) {
+            if (!isset($item['type']) || $item['type'] != 'particle') {
+                continue;
+            }
+            $tree = explode('/', $route);
+            $parentTree = $tree;
+            array_pop($parentTree);
+
+            $item['level'] = $level = count($tree);
+            $item['parent_id'] = implode('/', $parentTree);
+            if (($start && $start > $level)
+                || ($end && $level > $end)
+                || ($start > 1 && !in_array($tree[$start - 2], $route))) {
+                continue;
+            }
+            $item = new Item($this, $route, $item);
+            $this->add($item);
+        }
+    }
+
+    /**
      * @param array $ordering
      * @param string $path
      */

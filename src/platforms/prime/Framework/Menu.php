@@ -1,12 +1,12 @@
 <?php
 namespace Gantry\Framework;
 
-use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
+use Gantry\Prime\Pages;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Menu extends AbstractMenu
@@ -76,7 +76,7 @@ class Menu extends AbstractMenu
         }
 
         // Initialize pages.
-        $this->pages = new Pages();
+        $this->pages = new Pages;
 
         // Return flat list of routes.
         return array_keys($this->pages->toArray());
@@ -168,6 +168,8 @@ class Menu extends AbstractMenu
                     }
             }
         }
+
+        $this->addParticles($items, $start, $end);
 
         $this->sortAll();
     }

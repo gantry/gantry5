@@ -1,0 +1,6 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+    {% do gantry.theme.joomla(true) %}
+    {{ gantry.platform.displayModule(particle.module_id, {'style': particle.chrome|default('xhtml'), 'position': 'particle'}) }}
+{% endblock %}

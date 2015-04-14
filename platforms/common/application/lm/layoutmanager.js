@@ -1,14 +1,15 @@
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
+    bind       = require('mout/function/bind'),
     zen        = require('elements/zen'),
     Emitter    = require('prime/emitter'),
     Bound      = require('prime-util/prime/bound'),
     Options    = require('prime-util/prime/options'),
     Blocks     = require('./blocks'),
     DragDrop   = require('../ui/drag.drop'),
+    Eraser     = require('../ui/eraser'),
     Resizer    = require('./drag.resizer'),
-    Eraser     = require('./eraser'),
     get        = require('mout/object/get'),
     keys       = require('mout/object/keys'),
 
@@ -137,6 +138,7 @@ var LayoutManager = new prime({
                 position: 'absolute',
                 zIndex: 1500,
                 opacity: 0.5,
+                margin: 0,
                 width: Math.ceil(size.width),
                 height: Math.ceil(size.height)
             }).find('[data-lm-blocktype]');
@@ -179,6 +181,7 @@ var LayoutManager = new prime({
 
     location: function(event, location, target/*, element*/) {
         target = $(target);
+        (!this.block.isNew() ? this.original : this.element).style({transform: 'translate(0, 0)'});
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' }); }
 
         var position,
@@ -206,7 +209,7 @@ var LayoutManager = new prime({
             return;
         }
 
-        var nonVisible = target.parent('[data-lm-blocktype="non-visible"]'),
+        var nonVisible = target.parent('[data-lm-blocktype="atoms"]'),
             child = this.block.block.find('[data-lm-id]');
 
         if ((child ? child.data('lm-blocktype') : originalType) == 'atom') {
@@ -265,10 +268,15 @@ var LayoutManager = new prime({
     },
 
     nolocation: function(event) {
+        (!this.block.isNew() ? this.original : this.element).style({transform: 'translate(0, 0)'});
         if (this.placeholder) { this.placeholder.remove(); }
+        if (!this.block) { return; }
+
+        var target = event.type.match(/^touch/i) ? document.elementFromPoint(event.touches.item(0).clientX, event.touches.item(0).clientY) : event.target;
 
         if (!this.block.isNew()) {
-            if ($(event.target).matches(this.eraser.element) || this.eraser.element.find($(event.target))) {
+            target = $(target);
+            if (target.matches(this.eraser.element) || this.eraser.element.find(target)) {
                 this.dragdrop.removeElement = true;
                 this.eraser.over();
             } else {
@@ -323,8 +331,13 @@ var LayoutManager = new prime({
 
         this.eraser.hide();
 
-        $(document).off(this.dragdrop.EVENTS.MOVE, this.dragdrop.bound('move'));
-        $(document).off(this.dragdrop.EVENTS.STOP, this.dragdrop.bound('stop'));
+        this.dragdrop.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
+            $('body').off(event, this.dragdrop.bound('move'));
+        }, this));
+
+        this.dragdrop.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
+            $('body').off(event, this.dragdrop.bound('stop'));
+        }, this));
 
         this.builder.remove(this.block.getId());
 
@@ -498,7 +511,7 @@ var LayoutManager = new prime({
 
         if (!this.block) { this.block = get(this.builder.map, element.data('lm-id')); }
         if (this.block && this.block.getType() === 'block') { this.block.setSize(); }
-        if (this.block && this.block.isNew()) { this.element.attribute('style', null); }
+        if (this.block && this.block.isNew() && this.element) { this.element.attribute('style', null); }
 
         if (this.originalType === 'grid') {
             var blocks, block;
