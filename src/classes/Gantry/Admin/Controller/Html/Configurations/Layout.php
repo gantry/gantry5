@@ -297,7 +297,7 @@ class Layout extends HtmlController
                         continue;
                     }
                     if ($key == 'size') {
-                        $block[$key] = (int) $param;
+                        $block[$key] = round($param, 4);
                     }
                 }
 
