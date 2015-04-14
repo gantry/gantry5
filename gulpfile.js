@@ -1,7 +1,29 @@
 'use strict';
 
-var gulp       = require('gulp'),
-    argv       = require('yargs').argv,
+var gulp = require('gulp'),
+    paths;
+
+// if we call `up` or `update`, we just need to run through projs and update all NPM deps
+if (process.argv.slice(2).join(',').match(/(update|up|--update|-up)/)) {
+    gulp.task('default', function() {
+        paths = ['./', 'platforms/common', 'assets/common', 'engines/common/nucleus'];
+
+        var exec = require('child_process').exec, child;
+        paths.forEach(function(path) {
+            console.log("Updating JS dependencies in: " + path);
+            child = exec('cd ' + path + ' && npm update --save --save-dev',
+                function(error, stdout, stderr) {
+                    if (stdout) { console.log('Completed `' + path + '`:', "\n", stdout); }
+                    if (stderr) { console.log('Error `' + path + '`:' + stderr); }
+                    if (error !== null) { console.log('Exec error `' + path + '`:' + error); }
+                });
+        });
+    });
+    
+    return;
+}
+
+var argv       = require('yargs').argv,
     gutil      = require('gulp-util'),
     gulpif     = require('gulp-if'),
     uglify     = require('gulp-uglify'),
@@ -17,7 +39,7 @@ var gulp       = require('gulp'),
     prod       = !!(argv.p || argv.prod || argv.production),
     watch      = false;
 
-var paths = {
+paths = {
     js: [
         { // admin
             in: './platforms/common/application/main.js',
