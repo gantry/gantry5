@@ -79,7 +79,12 @@ trait ThemeTrait
                 ->setTarget($this->details()->get('configuration.css.target'))
                 ->setPaths($this->details()->get('configuration.css.paths'))
                 ->setFiles($this->details()->get('configuration.css.files'))
-                ->setConfiguration($gantry['configuration']);
+                ->setConfiguration($gantry['configuration'])
+                ->registerFunction('parse-font', function($args, $c){ // TODO
+                    $value = trim($c->compileValue(reset($args)), '\'"');
+                    var_dump($value);
+                    die;
+                });
         }
 
         return $compiler;

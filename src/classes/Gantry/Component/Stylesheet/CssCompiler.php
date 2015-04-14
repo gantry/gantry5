@@ -133,6 +133,13 @@ abstract class CssCompiler implements CssCompilerInterface
     {
         $this->variables = array_filter($variables);
 
+        foreach($this->variables as $key => $value) {
+            // check colors and units else quote
+            if (preg_match("/(^(#|rgba?)|(%|rem|vh|vw|em|px|cm|mm|ch|vim|vmax|in|pt|pc|ex)$)/", $value)) { continue; }
+
+            $this->variables[$key] = "'{$value}'";
+        }
+
         return $this;
     }
 

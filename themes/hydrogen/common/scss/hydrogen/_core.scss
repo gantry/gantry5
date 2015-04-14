@@ -16,8 +16,11 @@ a {
 	}
 }
 
+import-font($base-heading-font);
+
 h1, h2, h3, h4, h5, h6, strong {
 	color: darken($base-text-color, 10%);
+    font-family: parse-font($base-heading-font); // @import 'file.google'; font: 'Ubuntu', sans-serif;
 }
 
 .button {

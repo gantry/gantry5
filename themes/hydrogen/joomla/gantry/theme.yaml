@@ -70,6 +70,9 @@ configuration:
       center: Center
       nomarginall: No Margin
       nopaddingall: No Padding
+  local-fonts:
+    Meriweather: gantry-theme://fonts/merriweather-regular-webfont
+    Meriweather Bold: gantry-theme://fonts/merriweather-bold-webfont
 
   dependencies:
     gantry: 5.0.*

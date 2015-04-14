@@ -1,5 +1,5 @@
-name: Base Colors
-description: Base colors for the Hydrogen theme
+name: Base Styles
+description: Base styles for the Hydrogen theme
 type: core
 
 form:
@@ -13,3 +13,10 @@ form:
       type: input.colorpicker
       label: Base Text Color
       default: "#666666"
+    heading-font:
+      type: input.fonts
+      label: Heading Font
+      default: 'family=Varela&subset=latin,latin-ext'
+      options:
+        - Meriweather Bold, Verdana, sans-serif
+        - Meriweather, Verdana, sans-serif

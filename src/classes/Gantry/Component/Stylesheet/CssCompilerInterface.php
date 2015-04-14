@@ -48,6 +48,8 @@ interface CssCompilerInterface
 
     public function getVariables();
     public function setVariables(array $variables);
+    public function registerFunction($name, callable $callback);
+    public function unregisterFunction($name);
     public function compileFile($in, $out = null);
 
     /**

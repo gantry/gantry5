@@ -100,4 +100,23 @@ class ScssCompiler extends CssCompiler
 
         return true;
     }
+
+    /**
+     * @param string $name       Name of function to register to the compiler.
+     * @param string $callback   Function to run when called by the compiler.
+     * @return ScssCompiler      Returns the instance
+     */
+    public function registerFunction($name, callable $callback) {
+        $this->compiler->registerFunction($name, $callback);
+        return $this->compiler;
+    }
+
+    /**
+     * @param string $name       Name of function to unregister.
+     * @return ScssCompiler      Returns the instance
+     */
+    public function unregisterFunction($name) {
+        $this->compiler->unregisterFunction($name);
+        return $this;
+    }
 }
