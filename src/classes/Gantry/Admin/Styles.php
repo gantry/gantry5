@@ -16,7 +16,7 @@ namespace Gantry\Admin;
 
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
-use Gantry\Framework\Theme;
+use Gantry\Framework\Theme as SiteTheme;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Styles
@@ -81,7 +81,7 @@ class Styles
     {
         $list = [];
 
-        /** @var Theme $theme */
+        /** @var SiteTheme $theme */
         $theme = $this->container['theme'];
         $ordering = (array) $theme->details()['admin.styles'];
 
