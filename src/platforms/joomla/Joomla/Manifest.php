@@ -13,8 +13,6 @@ namespace Gantry\Joomla;
 
 /**
  * Joomla manifest file modifier.
- *
- * @package Gantry\Admin
  */
 class Manifest
 {
