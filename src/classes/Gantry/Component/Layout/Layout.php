@@ -37,8 +37,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     protected $exists;
     protected $items;
     protected $references;
-    protected $sections;
-    protected $particles;
+    protected $types;
 
     public static function presets()
     {
@@ -136,13 +135,34 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * @return array
      */
-    public function sections()
+    public function referencesByType($type = null, $subtype = null)
     {
         if (!isset($this->references)) {
             $this->initReferences();
         }
 
-        return $this->sections;
+        if (!$type) {
+            return $this->types;
+        } elseif (!$subtype) {
+            return isset($this->types[$type]) ? $this->types[$type] : [];
+        }
+        return isset($this->types[$type][$subtype]) ? $this->types[$type][$subtype] : [];
+    }
+
+    /**
+     * @return array
+     */
+    public function sections()
+    {
+        return $this->referencesByType('section', 'section');
+    }
+
+    /**
+     * @return array
+     */
+    public function positions()
+    {
+        return $this->referencesByType('position', 'position');
     }
 
     /**
@@ -170,7 +190,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         if ($items === null) {
             $items = $this->items;
             $this->references = [];
-            $this->sections = [];
+            $this->types = [];
         }
 
         foreach ($items as $item) {
@@ -178,11 +198,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 if (isset($item->id)) {
                     $this->references[$item->id] = $item;
                 }
-                if ($item->type == 'section') {
-                    $this->sections[$item->subtype] = $item;
-                } elseif ($item->type == 'atoms') {
-                    $this->sections[$item->type] = $item;
-                }
+                $type = $item->type;
+                $subtype = !empty($item->subtype) ? $item->subtype : $type;
+
+                $this->types[$type][$subtype] = $item;
+
                 if (isset($item->children) && is_array($item->children)) {
                     $this->initReferences($item->children);
                 }
