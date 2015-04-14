@@ -200,7 +200,7 @@ trait ThemeTrait
 
         $number = round($text, 1);
         $number = max(5, $number);
-        $number = $number == 100 ? 100 : min(95, $number);
+        $number = (string) ($number == 100 ? 100 : min(95, $number));
 
         static $sizes = array(
             '33.3' => 'size-33-3',
