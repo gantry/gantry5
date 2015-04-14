@@ -5,6 +5,10 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+#g-page-surround {
+	background: $base-background;
+}
+
 a {
 	color: $accent-color-1;
 	&:hover {
