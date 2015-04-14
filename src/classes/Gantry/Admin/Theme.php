@@ -12,7 +12,7 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Admin\Theme;
+namespace Gantry\Admin;
 
 use Gantry\Admin\Base\Theme as BaseTheme;
 

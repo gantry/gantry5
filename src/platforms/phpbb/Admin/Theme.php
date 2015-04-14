@@ -1,5 +1,5 @@
 <?php
-namespace Gantry\Admin\Theme;
+namespace Gantry\Admin;
 
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Filesystem\Streams;

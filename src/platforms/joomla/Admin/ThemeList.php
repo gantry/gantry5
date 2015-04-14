@@ -9,7 +9,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-namespace Gantry\Admin\Theme;
+namespace Gantry\Admin;
 
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;

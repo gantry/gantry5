@@ -11,7 +11,7 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Admin\Theme\ThemeList;
+use Gantry\Admin\ThemeList;
 use Gantry\Component\Configuration\AbstractConfigurationCollection;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
