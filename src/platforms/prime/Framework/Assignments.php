@@ -33,7 +33,7 @@ class Assignments
                 $this->pages[] = [
                     'name' => 'page[' . $page . ']',
                     'field' => ['id', 'link-' . preg_replace('|[^a-zA-Z0-9-]|', '-', $page)],
-                    'value' => 1, // TODO
+                    'value' => 0, // TODO
                     'label' => str_repeat('- ', count($path)) . ucwords(end($path))
                 ];
             }
