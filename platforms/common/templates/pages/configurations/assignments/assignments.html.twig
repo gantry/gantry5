@@ -1,21 +1,45 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-    <h2 class="page-title">Assignments</h2>
+<div id="assignments">
+    {% if assignments %}
+    <form method="post">
+        <span class="float-right">
+            <button type="submit" class="button button-primary button-save" data-save="Assignments"><i class="fa fa-fw fa-check"></i> <span>Save Assignments</span></button>
+        </span>
 
-    <div id="settings" class="cards-wrapper">
-        <div class="card settings-block">
-            <h4>Pages</h4>
-            <div class="inner-params">
-                {% for page, value in pages %}
-                    <div>
-                        <label>
-                        {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'name': page, 'field': [], 'value': value} %}
-                        {{ page|e }}
-                        </label>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
+        <h2 class="page-title">Assignments</h2>
+
+        <div id="settings" class="cards-wrapper">
+            {% for type in assignments %}
+                <div class="card settings-block">
+                    <h4>{{ type.label|e }}</h4>
+
+                    {% for link in type.items %}
+                    <label class="settings-param">
+                        {% include 'forms/fields/enable/enable.html.twig' with {
+                        'default': true,
+                        'name': link.name,
+                        'field': link.field,
+                        'value': link.value,
+                        'disabled': link.disabled
+                        } %}
+                        <span class="settings-param-title">
+                            {{ link.label|e }}
+                        </span>
+                    </label>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+         </div>
+    </form>
+    {% else %}
+    <h2 class="page-title">Assignments</h2>
+    {% if configuration == 'default' %}
+    <p>You cannot assign Base Configuration to your menu items.</p>
+    {% else %}
+    <p>No assignments available!</p>
+    {% endif %}
+    {% endif %}
+</div>
 {% endblock %}
