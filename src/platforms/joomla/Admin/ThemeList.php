@@ -18,8 +18,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class ThemeList
 {
     /**
-     * @param string $template
-     * @return array
+    * @return array
      */
     public static function getThemes()
     {
