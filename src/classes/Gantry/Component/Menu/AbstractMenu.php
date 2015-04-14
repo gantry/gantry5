@@ -205,7 +205,6 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
         if (isset($this->items[$item->parent_id])) {
             $this->items[$item->parent_id]->addChild($item);
         } else {
-            print_r($item->toArray());die();
             throw new \RuntimeException('Internal menu structure error');
         }
 
@@ -249,7 +248,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
     {
         // Add custom menu elements.
         foreach ($items as $route => $item) {
-            if ($item['type'] != 'particle') {
+            if (!isset($item['type']) || $item['type'] != 'particle') {
                 continue;
             }
             $tree = explode('/', $route);
