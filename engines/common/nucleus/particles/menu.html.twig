@@ -32,26 +32,28 @@
         {% set parent = item.children ? ' g-parent' %}
         {% set target = item.target != '_self' ? ' target="' ~ item.target|e ~ '"' %}
         <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{{ parent|raw }}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}g-menu-item-link-parent{% endif %}">
-            {% if item.url %}
-                <a class="g-menu-item-content" href="{{ item.url|e }}"{{ title|raw ~ target|raw }}>
-                    {{ _self.displayTitle(item, gantry) }}
-                </a>
-                {% if (item.children) -%}
-                    <span class="g-menu-parent-indicator" data-g-menuparent=""></span>
-                {%- endif %}
-            {% else %}
-                {% if item.type == 'particle' %}
-                    {{ _self.displayParticle(item, gantry) }}
-                {% elseif item.type == 'heading' %}
-                    <span class="g-nav-header g-menu-item-content"{{ title|raw }} data-g-menuparent="">{{ item.title|e }}
-                {% else %}
-                    <span class="g-separator g-menu-item-content"{{ title|raw }} data-g-menuparent="">{{ _self.displayTitle(item) }}
-                {% endif %}
-                    </span>
+            <div class="g-menu-item-container">
+                {% if item.url %}
+                    <a class="g-menu-item-content" href="{{ item.url|e }}"{{ title|raw ~ target|raw }}>
+                        {{ _self.displayTitle(item, gantry) }}
+                    </a>
                     {% if (item.children) -%}
-                        <span class="g-menu-parent-indicator"></span>
+                        <span class="g-menu-parent-indicator" data-g-menuparent=""></span>
                     {%- endif %}
-            {% endif %}
+                {% else %}
+                    {% if item.type == 'particle' %}
+                        {{ _self.displayParticle(item, gantry) }}
+                    {% elseif item.type == 'heading' %}
+                        <span class="g-nav-header g-menu-item-content"{{ title|raw }} data-g-menuparent="">{{ item.title|e }}
+                    {% else %}
+                        <span class="g-separator g-menu-item-content"{{ title|raw }} data-g-menuparent="">{{ _self.displayTitle(item) }}
+                    {% endif %}
+                        </span>
+                        {% if (item.children) -%}
+                            <span class="g-menu-parent-indicator"></span>
+                        {%- endif %}
+                {% endif %}
+            </div>
             {% if (item.children) -%}
                 {{ _self.displaySubmenu(item, menu, gantry) }}
             {%- endif %}

@@ -9,19 +9,13 @@
 			display: inline-block;
 			cursor: pointer;
 			@include transition(all .2s ease-out);
-			/*
-			&:hover {
-				> .g-dropdown {
-					@extend %active-dropdown;
-				}
-			}
-			*/
+
 			.g-menu-item-content {
 				display: inline-block;
 				vertical-align: middle;
 				cursor: pointer;
 				@include transition(all .2s ease-out);
-			}	
+			}
 	    	// Menu Parent Indicator on Main TopLevel
 	    	&.g-parent {
 				.g-menu-parent-indicator {
@@ -113,13 +107,6 @@
 	.g-sublevel {
     	> li {
     		position: relative;
-    		/*
-    		&:hover {
-    			> .g-dropdown {
-    				@extend %active-dropdown;
-    			}
-    		}
-    		*/
     	}
     }
     .g-dropdown {
@@ -233,19 +220,20 @@
 
 		    	// Menu Parent Indicator on Mobile Layout
 		    	&.g-parent {
-					> .g-menu-item-content {
-						position: relative;
-						&:after {
-							position: absolute;
-							width: auto;
-							line-height: normal;
-							opacity: 0.5;
-							font-family: FontAwesome;
-							content: "\f054";		
-							right: 1rem;		
+		    		> .g-menu-item-container {
+						> .g-menu-item-content {
+							position: relative;
+							&:after {
+								position: absolute;
+								width: auto;
+								line-height: normal;
+								opacity: 0.5;
+								font-family: FontAwesome;
+								content: "\f054";		
+								right: 1rem;		
+							}
 						}
 					}
-					
 					// Temporarily Hide Parent Indicator
 					.g-menu-parent-indicator {
 						display: none;
