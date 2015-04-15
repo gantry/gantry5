@@ -9,6 +9,9 @@
 		margin: -($content-padding + $content-margin);
 
 		.g-toplevel {
+			@include display(flex);
+			@include flex-flow(row wrap);
+			justify-content: center;
 			> li {
 				> a {
 					+ span {
@@ -94,19 +97,17 @@
 	.g-toplevel {
 		font-weight: $font-weight-medium;
 		> li {
-			margin-right: -4px;
+			padding: 1.2rem $content-padding;
 
 			> a {
 				+ span {
 					border-radius: $core-border-radius;
-					margin-left: -0.5rem;
-					margin-right: 1rem;
+					margin: -0.2rem 0 -0.2rem 0.5rem;
 					padding: 0.2rem;
 				}
 			}
 
 			> .g-menu-item-content {
-				padding: 1.2rem $content-padding;
 				line-height: normal;
 			}
 		}

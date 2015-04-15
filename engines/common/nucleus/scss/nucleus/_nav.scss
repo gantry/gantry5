@@ -17,6 +17,7 @@
 			*/
 			.g-menu-item-content {
 				display: inline-block;
+				vertical-align: middle;
 				cursor: pointer;
 				@include transition(all .2s ease-out);
 			}	
@@ -49,6 +50,17 @@
 				}
 	    	}					
 		}
+		.g-menu-item-link-parent {
+    		.g-menu-parent-indicator {
+    			vertical-align: middle;
+    		}
+    	}
+	}
+
+	.g-menu-item-subtitle {
+		display: block;
+		font-size: $core-font-size - 0.2;
+		line-height: 1;
 	}
 
 	// First Level Dropdown
