@@ -1235,6 +1235,7 @@ th {
 /* line 8, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-toplevel > li {
   display: inline-block;
+  cursor: pointer;
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
@@ -1246,7 +1247,7 @@ th {
   }
   */
 }
-/* line 18, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 19, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-toplevel > li .g-menu-item-content {
   display: inline-block;
   vertical-align: middle;
@@ -1255,11 +1256,12 @@ th {
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
 }
-/* line 26, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 27, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator {
   display: inline-block;
+  vertical-align: middle;
 }
-/* line 29, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 31, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator:after {
   display: inline-block;
   cursor: pointer;
@@ -1269,41 +1271,37 @@ th {
   content: "\f078";
   text-align: center;
 }
-/* line 39, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 41, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator.g-selected:after {
   content: "\f00d";
 }
-/* line 46, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 48, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-toplevel > li.g-parent .g-selected .g-menu-parent-indicator:after {
   content: "\f00d";
 }
-/* line 54, engines/common/nucleus/scss/nucleus/_nav.scss */
-.g-main-nav .g-toplevel .g-menu-item-link-parent .g-menu-parent-indicator {
-  vertical-align: middle;
-}
-/* line 60, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 57, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-menu-item-subtitle {
   display: block;
   font-size: 0.8rem;
   line-height: 1;
 }
-/* line 67, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 64, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-dropdown {
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
 }
-/* line 74, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 71, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li {
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
 }
-/* line 77, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 74, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li .g-menu-item-content {
   display: block;
 }
-/* line 82, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 79, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li.g-parent .g-menu-parent-indicator {
   position: absolute;
   right: 0.738rem;
@@ -1311,16 +1309,16 @@ th {
   width: auto;
   text-align: center;
 }
-/* line 89, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 86, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li.g-parent .g-menu-parent-indicator:after {
   content: "\f054";
 }
-/* line 96, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 93, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li .g-selected .g-menu-parent-indicator:after {
   content: "\f00d";
 }
 
-/* line 112, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 109, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-standard .g-sublevel > li {
   position: relative;
   /*
@@ -1331,12 +1329,12 @@ th {
   }
   */
 }
-/* line 124, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 121, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-standard .g-dropdown .g-dropdown {
   left: 100%;
   top: 0;
 }
-/* line 129, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 126, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-standard .g-dropdown .g-block {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
@@ -1346,37 +1344,37 @@ th {
   -ms-flex: 0 100%;
   flex: 0 100%;
 }
-/* line 140, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 137, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-standard .g-go-back {
   display: none;
 }
 
-/* line 146, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 143, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-fullwidth {
   position: static;
 }
-/* line 148, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 145, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-fullwidth .g-dropdown {
   position: absolute;
   left: 0;
   right: 0;
   z-index: 1;
 }
-/* line 153, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 150, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-fullwidth .g-dropdown .g-block {
   width: 50%;
   position: relative;
   overflow: hidden;
 }
-/* line 164, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 161, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-fullwidth .g-dropdown .g-go-back {
   display: block;
 }
-/* line 165, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 162, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-fullwidth .g-dropdown .g-go-back.g-level-1 {
   display: none;
 }
-/* line 172, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 169, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-fullwidth .g-sublevel .g-dropdown {
   top: 0;
   -webkit-transform: translateX(100%);
@@ -1385,7 +1383,7 @@ th {
   -o-transform: translateX(100%);
   transform: translateX(100%);
 }
-/* line 175, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 172, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-fullwidth .g-sublevel .g-dropdown.g-active {
   -webkit-transform: translateX(0);
   -moz-transform: translateX(0);
@@ -1393,7 +1391,7 @@ th {
   -o-transform: translateX(0);
   transform: translateX(0);
 }
-/* line 180, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 177, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-fullwidth .g-sublevel.g-slide-out > .g-menu-item > .g-menu-item-content {
   -webkit-transform: translateX(-100%);
   -moz-transform: translateX(-100%);
@@ -1402,15 +1400,15 @@ th {
   transform: translateX(-100%);
 }
 
-/* line 189, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 186, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-go-back.g-level-1 {
   display: none;
 }
-/* line 193, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 190, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-go-back a span {
   display: none;
 }
-/* line 196, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 193, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-go-back a:before {
   display: block;
   text-align: center;
@@ -1420,7 +1418,7 @@ th {
   opacity: 0.5;
 }
 
-/* line 208, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 205, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-nav-overlay {
   top: 0;
   right: 0;
@@ -1434,22 +1432,22 @@ th {
   transition: opacity 0.3s ease-out, z-index 0.1s ease-out;
 }
 
-/* line 223, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 220, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel li {
   display: block;
   margin-right: 0;
+  padding: 0.938rem 1rem;
 }
-/* line 226, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 224, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel li .g-menu-item-content {
   display: block;
-  padding: 0.938rem 1rem;
   line-height: 1rem;
 }
-/* line 234, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 231, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel li.g-parent > .g-menu-item-content {
   position: relative;
 }
-/* line 236, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 233, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel li.g-parent > .g-menu-item-content:after {
   position: absolute;
   width: auto;
@@ -1459,11 +1457,11 @@ th {
   content: "\f054";
   right: 1rem;
 }
-/* line 248, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 245, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel li.g-parent .g-menu-parent-indicator {
   display: none;
 }
-/* line 253, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 250, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown {
   top: 0;
   background: transparent;
@@ -1477,7 +1475,7 @@ th {
   -o-transform: translateX(100%);
   transform: translateX(100%);
 }
-/* line 261, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 258, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown.g-active {
   -webkit-transform: translateX(0);
   -moz-transform: translateX(0);
@@ -1485,38 +1483,38 @@ th {
   -o-transform: translateX(0);
   transform: translateX(0);
 }
-/* line 264, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 261, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown .g-go-back {
   display: block;
 }
-/* line 267, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 264, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown .g-block {
   width: 100%;
   overflow: visible;
 }
-/* line 270, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 267, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown .g-block .g-go-back {
   display: none;
 }
-/* line 274, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 271, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown .g-block:first-child .g-go-back {
   display: block;
 }
-/* line 280, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 277, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown-column {
   float: none;
 }
-/* line 284, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 281, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-sublevel {
   -webkit-transition: -webkit-transform 0.2s ease-out;
   -moz-transition: -moz-transform 0.2s ease-out;
   transition: transform 0.2s ease-out;
 }
-/* line 285, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 282, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-sublevel li {
   position: static;
 }
-/* line 289, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 286, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-sublevel .g-dropdown {
   top: 0;
   -webkit-transform: translateX(100%);
@@ -1525,7 +1523,7 @@ th {
   -o-transform: translateX(100%);
   transform: translateX(100%);
 }
-/* line 292, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 289, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-sublevel .g-dropdown.g-active {
   -webkit-transform: translateX(0);
   -moz-transform: translateX(0);
@@ -1533,7 +1531,7 @@ th {
   -o-transform: translateX(0);
   transform: translateX(0);
 }
-/* line 297, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 294, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-sublevel.g-slide-out > .g-menu-item > .g-menu-item-content {
   -webkit-transform: translateX(-100%);
   -moz-transform: translateX(-100%);
@@ -1541,7 +1539,7 @@ th {
   -o-transform: translateX(-100%);
   transform: translateX(-100%);
 }
-/* line 303, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 300, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-main-nav .g-block-inactive .g-sublevel {
   height: 0;
   -webkit-transform: translateX(-100%);

@@ -47,10 +47,10 @@
                 {% else %}
                     <span class="g-separator g-menu-item-content"{{ title|raw }} data-g-menuparent="">{{ _self.displayTitle(item) }}
                 {% endif %}
+                    </span>
                     {% if (item.children) -%}
                         <span class="g-menu-parent-indicator"></span>
                     {%- endif %}
-                    </span>
             {% endif %}
             {% if (item.children) -%}
                 {{ _self.displaySubmenu(item, menu, gantry) }}

@@ -7,6 +7,7 @@
 	.g-toplevel {
 		> li {
 			display: inline-block;
+			cursor: pointer;
 			@include transition(all .2s ease-out);
 			/*
 			&:hover {
@@ -25,6 +26,7 @@
 	    	&.g-parent {
 				.g-menu-parent-indicator {
 					display: inline-block;
+					vertical-align: middle;
 
 					&:after {
 						display: inline-block;
@@ -50,11 +52,6 @@
 				}
 	    	}					
 		}
-		.g-menu-item-link-parent {
-    		.g-menu-parent-indicator {
-    			vertical-align: middle;
-    		}
-    	}
 	}
 
 	.g-menu-item-subtitle {
@@ -223,9 +220,9 @@
 			li {
 				display: block;
 				margin-right: 0;
+				padding: $content-padding 1rem;
 				.g-menu-item-content {
 					display: block;
-					padding: $content-padding 1rem;
 					line-height: 1rem;
 				}
 
