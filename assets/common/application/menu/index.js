@@ -86,7 +86,6 @@ var Menu = new prime({
 
     touchend: function(event) {
         event.stopPropagation();
-        event.preventDefault();
 
         var selectors = this.selectors,
             states = this.states;
@@ -97,6 +96,10 @@ var Menu = new prime({
 
         if (indicator) {
             target = indicator;
+        }
+
+        if (target.matches(selectors.touchIndicator)) {
+            event.preventDefault();
         }
 
         parent = target.matches(selectors.item) ? target : target.parent(selectors.item);

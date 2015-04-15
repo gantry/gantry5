@@ -3,6 +3,16 @@
 		@extend %list-reset;
 	}
 
+    // Fix for mouse overs and transitions
+    &:not(.g-menu-hastouch) {
+        .g-dropdown {
+           top: -9999px;
+            &.g-active {
+                top: auto;
+            }
+        }
+    }
+
 	// Main Level
 	.g-toplevel {
 		> li {
@@ -58,11 +68,6 @@
 	.g-dropdown {
 		@extend %inactive-dropdown;
 	    @include transition(all .2s ease-out);
-        top: -9999px;
-
-        &.g-active {
-            top: auto;
-        }
     }
 
 	// Sublevel Items
