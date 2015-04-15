@@ -9,8 +9,10 @@ var ready     = require('domready'),
 ready(function() {
     instances = {
         offcanvas: new offcanvas(),
-        menu: menu
+        menu: new menu()
     };
+
+    module.exports = window.G5 = instances;
 });
 
 module.exports = window.G5 = instances;

@@ -1,54 +1,90 @@
 "use strict";
 
-var ready = require('domready'),
-    prime = require('prime'),
-    $     = require('elements'),
-    zen   = require('elements/zen');
+var ready       = require('domready'),
+    prime       = require('prime'),
+    $           = require('elements'),
+    zen         = require('elements/zen'),
+    bind        = require('mout/function/bind'),
+    timeout     = require('mout/function/timeout'),
+    Bound       = require('prime-util/prime/bound'),
+    Options     = require('prime-util/prime/options');
+
+var MAX_LOCATIONS_TRACK = 3;
 
 var Menu = new prime({
+
+    mixin: [Bound, Options],
+
     options: {
-        submenu: {
-            dir: 'right',
-            selector: '*'
+        selectors: {
+            mainContainer: '.g-main-nav',
+            mobileContainer: '#g-mobilemenu-container',
+            rootItems: '> ul > li',
+            parent: '.g-parent',
+            item: '.g-menu-item',
+            dropdown: '.g-dropdown',
+            touchIndicator: '.g-menu-parent-indicator'
         },
-        tolerance: 75,
-        mode: null
+
+        states: {
+            active: 'g-active',
+            inactive: 'g-inactive',
+            selected: 'g-selected'
+        }
     },
 
-    constructor: function(mode) {
-        this.options.mode = mode;
-        console.log(this.options.mode);
-    }
+    constructor: function(options) {
+        this.setOptions(options);
+
+        this.selectors = this.options.selectors;
+        this.states = this.options.states;
+        this.active = null;
+        this.location = [];
+
+        this.attach();
+    },
+
+    attach: function() {
+        var selectors = this.selectors,
+            main = $(selectors.mainContainer + ' ' + selectors.item);
+
+        main.on('mouseenter', this.bound('mouseenter'));
+        main.on('mouseleave', this.bound('mouseleave'));
+    },
+
+    detach: function() {
+        var selectors = this.selectors,
+            main = $(selectors.mainContainer + ' ' + selectors.item);
+
+        main.off('mouseenter', this.bound('mouseenter'));
+        main.off('mouseleave', this.bound('mouseleave'));
+    },
+
+    mouseenter: function(event) {
+        this.openDropdown(event.target);
+    },
+
+    mouseleave: function(event) {
+        this.closeDropdown(event.target);
+    },
+
+    openDropdown: function(element) {
+        var dropdown = $(element.target || element).find(this.selectors.dropdown);
+
+        if (dropdown) {
+            dropdown.removeClass(this.states.inactive).addClass(this.states.active);
+        }
+    },
+
+    closeDropdown: function(element) {
+        var dropdown = $(element.target || element).find(this.selectors.dropdown);
+
+        if (dropdown) {
+            dropdown.removeClass(this.states.active).addClass(this.states.inactive);
+        }
+    },
+
+    _debug: function() {}
 });
 
-// Trick to detect if the user is able to move the cursor or is just touch
-// will be used to initialize the menu with click/touch only events vs hovers
-var DetectMouse = function(callback) {
-    var body = $('body'), type;
-    var detectMouse = function(e) {
-        type = (e.type === 'mousemove') ? 'mouse' : (e.type === 'touchstart' ? 'touch' : false);
-
-        body.off('mousemove', detectMouse);
-        body.off('touchstart', detectMouse);
-
-        callback.call(undefined, type);
-    };
-
-    body.on('mousemove', detectMouse);
-    body.on('touchstart', detectMouse);
-};
-
-// Initialize the menu only when we know what's the mode (mouse/touch)
-ready(function() {
-    DetectMouse(function(mode) {
-        module.exports.menu = new Menu(mode);
-    });
-
-    var nav = $('nav.g-main-nav'),
-        target = $('#g-mobilemenu-container'),
-        clone = nav[0].cloneNode(true);
-
-    $(clone).bottom(target);
-});
-
-module.exports = {};
+module.exports = Menu;
