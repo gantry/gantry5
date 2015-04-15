@@ -6,7 +6,8 @@
     "elements": "git://github.com/w00fz/elements.git",
     "mout": "^0.11.0",
     "prime": "^0.4.2",
-    "prime-util": "^0.5.0"
+    "prime-util": "^0.5.0",
+    "slick": "^1.12.1"
   },
   "devDependencies": {
     "browserify": "^9.0.8",
