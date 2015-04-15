@@ -9,6 +9,8 @@
 		margin: -($content-padding + $content-margin);
 
 		.g-toplevel {
+			@include display(flex);
+			@include flex-flow(row wrap);
 			justify-content: center;
 			> li {
 
@@ -93,8 +95,6 @@
 		position: relative;
 	}
 	.g-toplevel {
-		@include display(flex);
-		@include flex-flow(row wrap);
 		font-weight: $font-weight-medium;
 		> li {
 			padding: 1.2rem $content-padding;
