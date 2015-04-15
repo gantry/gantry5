@@ -10,67 +10,105 @@ var ready     = require('domready'),
 ready(function() {
     instances = {
         offcanvas: new offcanvas(),
-        menu: menu
+        menu: new menu()
     };
+
+    module.exports = window.G5 = instances;
 });
 
 module.exports = window.G5 = instances;
 },{"./menu":2,"./offcanvas":3,"domready":5}],2:[function(require,module,exports){
 "use strict";
 
-var ready = require('domready'),
-    prime = require('prime'),
-    $     = require('elements'),
-    zen   = require('elements/zen');
+var ready       = require('domready'),
+    prime       = require('prime'),
+    $           = require('elements'),
+    zen         = require('elements/zen'),
+    bind        = require('mout/function/bind'),
+    timeout     = require('mout/function/timeout'),
+    Bound       = require('prime-util/prime/bound'),
+    Options     = require('prime-util/prime/options');
+
+var MAX_LOCATIONS_TRACK = 3;
 
 var Menu = new prime({
+
+    mixin: [Bound, Options],
+
     options: {
-        submenu: {
-            dir: 'right',
-            selector: '*'
+        selectors: {
+            mainContainer: '.g-main-nav',
+            mobileContainer: '#g-mobilemenu-container',
+            rootItems: '> ul > li',
+            parent: '.g-parent',
+            item: '.g-menu-item',
+            dropdown: '.g-dropdown',
+            touchIndicator: '.g-menu-parent-indicator'
         },
-        tolerance: 75,
-        mode: null
+
+        states: {
+            active: 'g-active',
+            inactive: 'g-inactive',
+            selected: 'g-selected'
+        }
     },
 
-    constructor: function(mode) {
-        this.options.mode = mode;
-        console.log(this.options.mode);
-    }
+    constructor: function(options) {
+        this.setOptions(options);
+
+        this.selectors = this.options.selectors;
+        this.states = this.options.states;
+        this.active = null;
+        this.location = [];
+
+        this.attach();
+    },
+
+    attach: function() {
+        var selectors = this.selectors,
+            main = $(selectors.mainContainer + ' ' + selectors.item);
+
+        main.on('mouseenter', this.bound('mouseenter'));
+        main.on('mouseleave', this.bound('mouseleave'));
+    },
+
+    detach: function() {
+        var selectors = this.selectors,
+            main = $(selectors.mainContainer + ' ' + selectors.item);
+
+        main.off('mouseenter', this.bound('mouseenter'));
+        main.off('mouseleave', this.bound('mouseleave'));
+    },
+
+    mouseenter: function(event) {
+        this.openDropdown(event.target);
+    },
+
+    mouseleave: function(event) {
+        this.closeDropdown(event.target);
+    },
+
+    openDropdown: function(element) {
+        var dropdown = $(element.target || element).find(this.selectors.dropdown);
+
+        if (dropdown) {
+            dropdown.removeClass(this.states.inactive).addClass(this.states.active);
+        }
+    },
+
+    closeDropdown: function(element) {
+        var dropdown = $(element.target || element).find(this.selectors.dropdown);
+
+        if (dropdown) {
+            dropdown.removeClass(this.states.active).addClass(this.states.inactive);
+        }
+    },
+
+    _debug: function() {}
 });
 
-// Trick to detect if the user is able to move the cursor or is just touch
-// will be used to initialize the menu with click/touch only events vs hovers
-var DetectMouse = function(callback) {
-    var body = $('body'), type;
-    var detectMouse = function(e) {
-        type = (e.type === 'mousemove') ? 'mouse' : (e.type === 'touchstart' ? 'touch' : false);
-
-        body.off('mousemove', detectMouse);
-        body.off('touchstart', detectMouse);
-
-        callback.call(undefined, type);
-    };
-
-    body.on('mousemove', detectMouse);
-    body.on('touchstart', detectMouse);
-};
-
-// Initialize the menu only when we know what's the mode (mouse/touch)
-ready(function() {
-    DetectMouse(function(mode) {
-        module.exports.menu = new Menu(mode);
-    });
-
-    var nav = $('nav.g-main-nav'),
-        target = $('#g-mobilemenu-container'),
-        clone = nav[0].cloneNode(true);
-
-    $(clone).bottom(target);
-});
-
-module.exports = {};
-},{"domready":5,"elements":10,"elements/zen":37,"prime":62}],3:[function(require,module,exports){
+module.exports = Menu;
+},{"domready":5,"elements":10,"elements/zen":37,"mout/function/bind":40,"mout/function/timeout":41,"prime":63,"prime-util/prime/bound":59,"prime-util/prime/options":60}],3:[function(require,module,exports){
 // Offcanvas slide with desktop, touch and all-in-one touch devices support that supports both left and right placement.
 // Fast and optimized using CSS3 transitions
 // Based on the awesome Slideout.js <https://mango.github.io/slideout/>
@@ -356,7 +394,7 @@ var Offcanvas = new prime({
 });
 
 module.exports = Offcanvas;
-},{"../utils/decouple":4,"domready":5,"elements":10,"elements/zen":37,"mout/array/forEach":38,"mout/function/bind":40,"mout/math/clamp":41,"mout/math/map":43,"prime":62,"prime-util/prime/bound":58,"prime-util/prime/options":59}],4:[function(require,module,exports){
+},{"../utils/decouple":4,"domready":5,"elements":10,"elements/zen":37,"mout/array/forEach":38,"mout/function/bind":40,"mout/math/clamp":42,"mout/math/map":44,"prime":63,"prime-util/prime/bound":59,"prime-util/prime/options":60}],4:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
@@ -772,7 +810,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":12,"mout/array/filter":13,"mout/array/forEach":14,"mout/array/map":16,"mout/array/some":17,"prime":62}],8:[function(require,module,exports){
+},{"mout/array/every":12,"mout/array/filter":13,"mout/array/forEach":14,"mout/array/map":16,"mout/array/some":17,"prime":63}],8:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -855,7 +893,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":9,"./traversal":36,"prime/map":63}],9:[function(require,module,exports){
+},{"./events":9,"./traversal":36,"prime/map":64}],9:[function(require,module,exports){
 /*
 events
 */"use strict"
@@ -935,7 +973,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":7,"prime/emitter":61}],10:[function(require,module,exports){
+},{"./base":7,"prime/emitter":62}],10:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -2921,6 +2959,25 @@ var slice = require('../array/slice');
 
 
 },{"../array/slice":39}],41:[function(require,module,exports){
+var slice = require('../array/slice');
+
+    /**
+     * Delays the call of a function within a given context.
+     */
+    function timeout(fn, millis, context){
+
+        var args = slice(arguments, 3);
+
+        return setTimeout(function() {
+            fn.apply(context, args);
+        }, millis);
+    }
+
+    module.exports = timeout;
+
+
+
+},{"../array/slice":39}],42:[function(require,module,exports){
 
     /**
      * Clamps value inside range.
@@ -2931,7 +2988,7 @@ var slice = require('../array/slice');
     module.exports = clamp;
 
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 
     /**
     * Linear interpolation.
@@ -2944,7 +3001,7 @@ var slice = require('../array/slice');
     module.exports = lerp;
 
 
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 var lerp = require('./lerp');
 var norm = require('./norm');
     /**
@@ -2957,7 +3014,7 @@ var norm = require('./norm');
     module.exports = map;
 
 
-},{"./lerp":42,"./norm":44}],44:[function(require,module,exports){
+},{"./lerp":43,"./norm":45}],45:[function(require,module,exports){
 
     /**
     * Gets normalized ratio of value inside range.
@@ -2972,11 +3029,11 @@ var norm = require('./norm');
     module.exports = norm;
 
 
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 arguments[4][39][0].apply(exports,arguments)
-},{"dup":39}],46:[function(require,module,exports){
+},{"dup":39}],47:[function(require,module,exports){
 arguments[4][40][0].apply(exports,arguments)
-},{"../array/slice":45,"dup":40}],47:[function(require,module,exports){
+},{"../array/slice":46,"dup":40}],48:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -3027,7 +3084,7 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":57,"./isPlainObject":51,"./kindOf":52}],48:[function(require,module,exports){
+},{"../object/mixIn":58,"./isPlainObject":52,"./kindOf":53}],49:[function(require,module,exports){
 var clone = require('./clone');
 var forOwn = require('../object/forOwn');
 var kindOf = require('./kindOf');
@@ -3077,9 +3134,9 @@ var isPlainObject = require('./isPlainObject');
 
 
 
-},{"../object/forOwn":54,"./clone":47,"./isPlainObject":51,"./kindOf":52}],49:[function(require,module,exports){
+},{"../object/forOwn":55,"./clone":48,"./isPlainObject":52,"./kindOf":53}],50:[function(require,module,exports){
 arguments[4][22][0].apply(exports,arguments)
-},{"./kindOf":52,"dup":22}],50:[function(require,module,exports){
+},{"./kindOf":53,"dup":22}],51:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -3089,7 +3146,7 @@ var isKind = require('./isKind');
     module.exports = isObject;
 
 
-},{"./isKind":49}],51:[function(require,module,exports){
+},{"./isKind":50}],52:[function(require,module,exports){
 
 
     /**
@@ -3104,15 +3161,15 @@ var isKind = require('./isKind');
 
 
 
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],53:[function(require,module,exports){
+},{"dup":23}],54:[function(require,module,exports){
 arguments[4][26][0].apply(exports,arguments)
-},{"./hasOwn":55,"dup":26}],54:[function(require,module,exports){
+},{"./hasOwn":56,"dup":26}],55:[function(require,module,exports){
 arguments[4][27][0].apply(exports,arguments)
-},{"./forIn":53,"./hasOwn":55,"dup":27}],55:[function(require,module,exports){
+},{"./forIn":54,"./hasOwn":56,"dup":27}],56:[function(require,module,exports){
 arguments[4][28][0].apply(exports,arguments)
-},{"dup":28}],56:[function(require,module,exports){
+},{"dup":28}],57:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var deepClone = require('../lang/deepClone');
 var isObject = require('../lang/isObject');
@@ -3154,7 +3211,7 @@ var isObject = require('../lang/isObject');
 
 
 
-},{"../lang/deepClone":48,"../lang/isObject":50,"./hasOwn":55}],57:[function(require,module,exports){
+},{"../lang/deepClone":49,"../lang/isObject":51,"./hasOwn":56}],58:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -3184,7 +3241,7 @@ var forOwn = require('./forOwn');
     module.exports = mixIn;
 
 
-},{"./forOwn":54}],58:[function(require,module,exports){
+},{"./forOwn":55}],59:[function(require,module,exports){
 "use strict";
 
 // credits to @cpojer's Class.Binds, released under the MIT license
@@ -3204,7 +3261,7 @@ var bound = prime({
 
 module.exports = bound
 
-},{"mout/function/bind":46,"prime":62}],59:[function(require,module,exports){
+},{"mout/function/bind":47,"prime":63}],60:[function(require,module,exports){
 "use strict";
 
 var prime = require("prime")
@@ -3223,7 +3280,7 @@ var Options = prime({
 
 module.exports = Options
 
-},{"mout/object/merge":56,"prime":62}],60:[function(require,module,exports){
+},{"mout/object/merge":57,"prime":63}],61:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -3342,7 +3399,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":73,"mout/array/forEach":64,"mout/array/indexOf":65,"mout/lang/kindOf":67,"mout/time/now":72}],61:[function(require,module,exports){
+},{"_process":74,"mout/array/forEach":65,"mout/array/indexOf":66,"mout/lang/kindOf":68,"mout/time/now":73}],62:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -3408,7 +3465,7 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":60,"./index":62,"mout/array/forEach":64,"mout/array/indexOf":65}],62:[function(require,module,exports){
+},{"./defer":61,"./index":63,"mout/array/forEach":65,"mout/array/indexOf":66}],63:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -3500,7 +3557,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":66,"mout/lang/kindOf":67,"mout/object/hasOwn":70,"mout/object/mixIn":71}],63:[function(require,module,exports){
+},{"mout/lang/createObject":67,"mout/lang/kindOf":68,"mout/object/hasOwn":71,"mout/object/mixIn":72}],64:[function(require,module,exports){
 /*
 Map
 */"use strict"
@@ -3626,11 +3683,11 @@ map.prototype = Map.prototype
 
 module.exports = map
 
-},{"./index":62,"mout/array/indexOf":65}],64:[function(require,module,exports){
+},{"./index":63,"mout/array/indexOf":66}],65:[function(require,module,exports){
 arguments[4][14][0].apply(exports,arguments)
-},{"dup":14}],65:[function(require,module,exports){
+},{"dup":14}],66:[function(require,module,exports){
 arguments[4][15][0].apply(exports,arguments)
-},{"dup":15}],66:[function(require,module,exports){
+},{"dup":15}],67:[function(require,module,exports){
 var mixIn = require('../object/mixIn');
 
     /**
@@ -3650,17 +3707,17 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":71}],67:[function(require,module,exports){
+},{"../object/mixIn":72}],68:[function(require,module,exports){
 arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],68:[function(require,module,exports){
+},{"dup":23}],69:[function(require,module,exports){
 arguments[4][26][0].apply(exports,arguments)
-},{"./hasOwn":70,"dup":26}],69:[function(require,module,exports){
+},{"./hasOwn":71,"dup":26}],70:[function(require,module,exports){
 arguments[4][27][0].apply(exports,arguments)
-},{"./forIn":68,"./hasOwn":70,"dup":27}],70:[function(require,module,exports){
+},{"./forIn":69,"./hasOwn":71,"dup":27}],71:[function(require,module,exports){
 arguments[4][28][0].apply(exports,arguments)
-},{"dup":28}],71:[function(require,module,exports){
-arguments[4][57][0].apply(exports,arguments)
-},{"./forOwn":69,"dup":57}],72:[function(require,module,exports){
+},{"dup":28}],72:[function(require,module,exports){
+arguments[4][58][0].apply(exports,arguments)
+},{"./forOwn":70,"dup":58}],73:[function(require,module,exports){
 
 
     /**
@@ -3680,7 +3737,7 @@ arguments[4][57][0].apply(exports,arguments)
 
 
 
-},{}],73:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
