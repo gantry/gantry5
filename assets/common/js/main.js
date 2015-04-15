@@ -118,7 +118,7 @@ var Menu = new prime({
             target = indicator;
         }
 
-        if (target.matches(selectors.touchIndicator)) {
+        if (!indicator || target.matches(selectors.touchIndicator)) {
             event.preventDefault();
         }
 
