@@ -1,15 +1,16 @@
 "use strict";
 
-var ready       = require('domready'),
-    prime       = require('prime'),
-    $           = require('elements'),
-    zen         = require('elements/zen'),
-    bind        = require('mout/function/bind'),
-    timeout     = require('mout/function/timeout'),
-    Bound       = require('prime-util/prime/bound'),
-    Options     = require('prime-util/prime/options');
+var ready   = require('domready'),
+    prime   = require('prime'),
+    $       = require('elements'),
+    zen     = require('elements/zen'),
+    bind    = require('mout/function/bind'),
+    timeout = require('mout/function/timeout'),
+    Bound   = require('prime-util/prime/bound'),
+    Options = require('prime-util/prime/options');
 
-var MAX_LOCATIONS_TRACK = 3;
+
+var hasTouchEvents = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
 var Menu = new prime({
 
@@ -29,7 +30,8 @@ var Menu = new prime({
         states: {
             active: 'g-active',
             inactive: 'g-inactive',
-            selected: 'g-selected'
+            selected: 'g-selected',
+            touchEvents: 'g-menu-hastouch'
         }
     },
 
@@ -40,6 +42,10 @@ var Menu = new prime({
         this.states = this.options.states;
         this.active = null;
         this.location = [];
+
+        if (hasTouchEvents) {
+            $(this.selectors.mainContainer).addClass(this.states.touchEvents);
+        }
 
         this.attach();
     },
