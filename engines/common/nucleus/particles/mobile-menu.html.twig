@@ -1,5 +1,6 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
 {% block particle %}
-    <div id="g-mobilemenu-container"></div>
+    {# TODO: data-g-menu-breakpoint should pull the value from $large-mobile-container (breakpoints.yaml) #}
+    <div id="g-mobilemenu-container" data-g-menu-breakpoint="30rem"></div>
 {% endblock %}
