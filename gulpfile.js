@@ -37,6 +37,7 @@ var argv       = require('yargs').argv,
     sass       = require('gulp-ruby-sass'),
 
     prod       = !!(argv.p || argv.prod || argv.production),
+    watchType  = (argv.css && argv.js) ? 'all' : (argv.css ? 'css' : (argv.js ? 'js' : 'all')),
     watch      = false;
 
 paths = {
@@ -177,6 +178,7 @@ gulp.task('minify', function() {
 });
 
 gulp.task('watchify', function() {
+    if (watchType != 'js' && watchType != 'all') { return; }
     watch = true;
 
     // watch js
@@ -206,6 +208,8 @@ gulp.task('css', function(done) {
 });
 
 gulp.task('watch', ['watchify'], function() {
+    if (watchType != 'css' && watchType != 'all') { return; }
+
     // watch css
     paths.css.forEach(function(app) {
         var _path = app.in.substring(0, app.in.lastIndexOf('/'));
