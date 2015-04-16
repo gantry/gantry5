@@ -58,12 +58,6 @@
 		}
 	}
 
-	.g-menu-item-subtitle {
-		display: block;
-		font-size: $core-font-size - 0.2;
-		line-height: 1;
-	}
-
 	// First Level Dropdown
 	.g-dropdown {
 		@extend %inactive-dropdown;
@@ -99,10 +93,6 @@
 					}
 				}
 			}
-    	}
-    	// Menu Parent Indicator on SubLevel
-    	.g-parent {
-		
     	}
     }   
 }
@@ -196,6 +186,13 @@
 			opacity: 0.5;
 		}
 	}	
+}
+
+// Subtitle
+.g-menu-item-subtitle {
+	display: block;
+	font-size: $core-font-size - 0.2;
+	line-height: 1.1;
 }
 
 // Overlay
