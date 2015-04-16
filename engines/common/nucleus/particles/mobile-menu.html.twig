@@ -1,6 +1,5 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
 {% block particle %}
-    {# TODO: data-g-menu-breakpoint should pull the value from $large-mobile-container (breakpoints.yaml) #}
-    <div id="g-mobilemenu-container" data-g-menu-breakpoint="30rem"></div>
+    <div id="g-mobilemenu-container" data-g-menu-breakpoint="{{ gantry.config.get('styles.breakpoints.large-mobile-container')|default('30rem') }}"></div>
 {% endblock %}
