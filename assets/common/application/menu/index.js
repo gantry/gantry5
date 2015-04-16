@@ -25,7 +25,8 @@ var Menu = new prime({
             parent: '.g-parent',
             item: '.g-menu-item',
             dropdown: '.g-dropdown',
-            touchIndicator: '.g-menu-parent-indicator'
+            touchIndicator: '.g-menu-parent-indicator',
+            canHover: '.g-main-nav'
         },
 
         states: {
@@ -94,6 +95,7 @@ var Menu = new prime({
 
     mouseenter: function(event) {
         var element = $(event.target);
+        if (!element.parent(this.options.selectors.canHover)) { return; }
         if (element.parent(this.options.selectors.item) && !element.parent('.g-standard')) { return; }
 
         this.openDropdown(element);
@@ -101,6 +103,7 @@ var Menu = new prime({
 
     mouseleave: function(event) {
         var element = $(event.target);
+        if (!element.parent(this.options.selectors.canHover)) { return; }
         if (element.parent(this.options.selectors.item) && !element.parent('.g-standard')) { return; }
 
         this.closeDropdown(element);
