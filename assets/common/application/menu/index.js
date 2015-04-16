@@ -77,11 +77,17 @@ var Menu = new prime({
     },
 
     mouseenter: function(event) {
-        this.openDropdown(event.target);
+        var element = $(event.target);
+        if (element.parent(this.options.selectors.item) && !element.parent('.g-standard')) { return; }
+
+        this.openDropdown(element);
     },
 
     mouseleave: function(event) {
-        this.closeDropdown(event.target);
+        var element = $(event.target);
+        if (element.parent(this.options.selectors.item) && !element.parent('.g-standard')) { return; }
+
+        this.closeDropdown(element);
     },
 
     touchend: function(event) {
