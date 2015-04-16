@@ -14,25 +14,27 @@
 
 // Mobile Menu 
 #g-offcanvas {
-	.g-main-nav {
-		.g-toplevel {
-			background: $offcanvas-background;
-			> li {
+	.g-toplevel {
+		background: $offcanvas-background;
+		> li {
+			> .g-menu-item-container {
 				> .g-menu-item-content {
 					color: $offcanvas-text-color;
 				}
-				&:hover, &.active {
-					background: darken($navigation-background, 4%);
-
+			}
+			&:hover, &.active {
+				background: darken($navigation-background, 4%);
+				
+				> .g-menu-item-container {
 					> .g-menu-item-content {
 						color: $offcanvas-text-color;
 					}
 				}
 			}
-			.g-dropdown-column {
-				width: $offcanvas-width;
-			}			
 		}
+		.g-dropdown-column {
+			width: $offcanvas-width;
+		}			
 	}
 }
 

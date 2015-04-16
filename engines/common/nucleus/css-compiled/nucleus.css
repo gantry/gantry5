@@ -22,7 +22,7 @@
 }
 
 /* line 2, engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
-.g-main-nav ul {
+.g-main-nav ul, #g-mobilemenu-container .g-toplevel {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1427,22 +1427,22 @@ th {
 }
 
 /* line 217, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-toplevel li {
+#g-mobilemenu-container .g-toplevel li {
   display: block;
   margin-right: 0;
   padding: 0.938rem 1rem;
 }
 /* line 221, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-toplevel li .g-menu-item-content {
+#g-mobilemenu-container .g-toplevel li .g-menu-item-content {
   display: block;
   line-height: 1rem;
 }
 /* line 229, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-toplevel li.g-parent > .g-menu-item-container > .g-menu-item-content {
+#g-mobilemenu-container .g-toplevel li.g-parent > .g-menu-item-container > .g-menu-item-content {
   position: relative;
 }
 /* line 231, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-toplevel li.g-parent > .g-menu-item-container > .g-menu-item-content:after {
+#g-mobilemenu-container .g-toplevel li.g-parent > .g-menu-item-container > .g-menu-item-content:after {
   position: absolute;
   width: auto;
   line-height: normal;
@@ -1452,11 +1452,11 @@ th {
   right: 1rem;
 }
 /* line 243, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-toplevel li.g-parent .g-menu-parent-indicator {
+#g-mobilemenu-container .g-toplevel li.g-parent .g-menu-parent-indicator {
   display: none;
 }
 /* line 248, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown {
+#g-mobilemenu-container .g-toplevel .g-dropdown {
   top: 0;
   background: transparent;
   position: absolute;
@@ -1470,7 +1470,7 @@ th {
   transform: translateX(100%);
 }
 /* line 256, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown.g-active {
+#g-mobilemenu-container .g-toplevel .g-dropdown.g-active {
   -webkit-transform: translateX(0);
   -moz-transform: translateX(0);
   -ms-transform: translateX(0);
@@ -1478,38 +1478,38 @@ th {
   transform: translateX(0);
 }
 /* line 259, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown .g-go-back {
+#g-mobilemenu-container .g-toplevel .g-dropdown .g-go-back {
   display: block;
 }
 /* line 262, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown .g-block {
+#g-mobilemenu-container .g-toplevel .g-dropdown .g-block {
   width: 100%;
   overflow: visible;
 }
 /* line 265, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown .g-block .g-go-back {
+#g-mobilemenu-container .g-toplevel .g-dropdown .g-block .g-go-back {
   display: none;
 }
 /* line 269, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown .g-block:first-child .g-go-back {
+#g-mobilemenu-container .g-toplevel .g-dropdown .g-block:first-child .g-go-back {
   display: block;
 }
 /* line 275, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-toplevel .g-dropdown-column {
+#g-mobilemenu-container .g-toplevel .g-dropdown-column {
   float: none;
 }
 /* line 279, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-sublevel {
+#g-mobilemenu-container .g-sublevel {
   -webkit-transition: -webkit-transform 0.2s ease-out;
   -moz-transition: -moz-transform 0.2s ease-out;
   transition: transform 0.2s ease-out;
 }
 /* line 280, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-sublevel li {
+#g-mobilemenu-container .g-sublevel li {
   position: static;
 }
 /* line 284, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-sublevel .g-dropdown {
+#g-mobilemenu-container .g-sublevel .g-dropdown {
   top: 0;
   -webkit-transform: translateX(100%);
   -moz-transform: translateX(100%);
@@ -1518,7 +1518,7 @@ th {
   transform: translateX(100%);
 }
 /* line 287, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-sublevel .g-dropdown.g-active {
+#g-mobilemenu-container .g-sublevel .g-dropdown.g-active {
   -webkit-transform: translateX(0);
   -moz-transform: translateX(0);
   -ms-transform: translateX(0);
@@ -1526,7 +1526,7 @@ th {
   transform: translateX(0);
 }
 /* line 292, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-sublevel.g-slide-out > .g-menu-item > .g-menu-item-content {
+#g-mobilemenu-container .g-sublevel.g-slide-out > .g-menu-item > .g-menu-item-content {
   -webkit-transform: translateX(-100%);
   -moz-transform: translateX(-100%);
   -ms-transform: translateX(-100%);
@@ -1534,7 +1534,7 @@ th {
   transform: translateX(-100%);
 }
 /* line 298, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-main-nav .g-block-inactive .g-sublevel {
+#g-mobilemenu-container .g-block-inactive .g-sublevel {
   height: 0;
   -webkit-transform: translateX(-100%);
   -moz-transform: translateX(-100%);
