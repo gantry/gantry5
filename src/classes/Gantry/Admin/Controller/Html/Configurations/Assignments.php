@@ -18,6 +18,7 @@ use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Request\Request;
 use Gantry\Framework\Assignments as AssignmentsObject;
 use Gantry\Framework\Menu;
+use RocketTheme\Toolbox\Event\Event;
 
 class Assignments extends HtmlController
 {
@@ -45,6 +46,12 @@ class Assignments extends HtmlController
 
         $assignments = new AssignmentsObject($configuration);
         $assignments->set($request->getArray());
+
+        // Fire save event.
+        $event = new Event;
+        $event->controller = $this;
+        $event->assignments = $assignments;
+        $this->container->fireEvent('admin.assignments.save', $event);
 
         return '';
     }

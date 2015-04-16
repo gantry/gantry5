@@ -2,7 +2,7 @@
     "name": "gantry",
     "version":"5.0.0@dev",
     "description": "Gantry Framework Library",
-    "license": "GPLv2",
+    "license": "MIT",
     "minimum-stability": "dev",
 
     "require": {
