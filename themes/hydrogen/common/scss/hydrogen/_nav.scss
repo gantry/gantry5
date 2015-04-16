@@ -12,6 +12,7 @@
 			@include display(flex);
 			@include flex-flow(row wrap);
 			justify-content: center;
+			-webkit-justify-content: center;
 			> li {
 
 				&.g-menu-item-link-parent {
