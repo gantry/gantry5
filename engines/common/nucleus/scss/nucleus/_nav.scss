@@ -6,7 +6,8 @@
     // Fix for mouse overs and transitions
     &:not(.g-menu-hastouch) {
         .g-dropdown {
-           top: -9999px;
+        	z-index: 10;
+           	top: -9999px;
             &.g-active {
                 top: 100%;
             }
@@ -21,6 +22,7 @@
 		> li {
 			display: inline-block;
 			cursor: pointer;
+			position: relative;
 			@include transition(background .2s ease-out);
 
 			.g-menu-item-content {
