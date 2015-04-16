@@ -67,6 +67,7 @@
 	// Sublevel Items
 	.g-sublevel {
     	> li {
+    		position: relative;
     		@include transition(background .2s ease-out);
 
     		.g-menu-item-content {
