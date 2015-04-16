@@ -18,17 +18,13 @@
 		background: $offcanvas-background;
 		> li {
 			> .g-menu-item-container {
-				> .g-menu-item-content {
-					color: $offcanvas-text-color;
-				}
+				color: $offcanvas-text-color;
 			}
 			&:hover, &.active {
 				background: darken($accent-color-1, 4%);
 				
 				> .g-menu-item-container {
-					> .g-menu-item-content {
-						color: $offcanvas-text-color;
-					}
+					color: $offcanvas-text-color;
 				}
 			}
 		}

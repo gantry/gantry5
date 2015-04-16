@@ -20,10 +20,8 @@
 			> li {
 				> .g-menu-item-container {
 					color: $header-text-color;
-					> .g-menu-item-content {
-						color: $header-text-color;
-					}
 				}
+				
 				&:hover {
 					background: darken($header-background, 6%);
 					
@@ -39,10 +37,6 @@
 					
 					> .g-menu-item-container {
 						color: $main-text-color;
-
-						> .g-menu-item-content {
-							color: $main-text-color;
-						}
 
 						> .g-selected {
 							background: darken($header-background, 6%);
@@ -66,9 +60,6 @@
 			> li {
 				> .g-menu-item-container {
 					color: $header-text-color;
-					> .g-menu-item-content {
-						color: $header-text-color;
-					}
 				}
 
 				&:hover, &.active {

@@ -25,9 +25,6 @@
 			> li {
 				> .g-menu-item-container {
 					color: $navigation-text-color;
-					> .g-menu-item-content {
-						color: $navigation-text-color;
-					}
 				}
 				&:hover {
 					background: darken($navigation-background, 6%);
@@ -44,9 +41,6 @@
 
 					> .g-menu-item-container {
 						color: $main-text-color;
-						> .g-menu-item-content {
-							color: $main-text-color;
-						}
 					
 						> .g-selected {
 							background: darken($navigation-background, 6%);
@@ -69,9 +63,7 @@
 		.g-sublevel {
 			> li {
 				> .g-menu-item-container {
-					> .g-menu-item-content {
-						color: $navigation-text-color;
-					}
+					color: $navigation-text-color;
 				}
 
 				&:hover, &.active {
