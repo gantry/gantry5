@@ -74,7 +74,8 @@
     		@include transition(background .2s ease-out);
 
     		.g-menu-item-content {
-				display: block;
+				display: inline-block;
+				vertical-align: middle;
 			}
 
     		&.g-parent {
@@ -194,6 +195,13 @@
 	}	
 }
 
+// Icons
+.g-menu-item-container {
+	i {
+		vertical-align: middle;
+	}
+}
+
 // Subtitle
 .g-menu-item-subtitle {
 	display: block;
@@ -224,7 +232,7 @@
 			position: relative;
 			cursor: pointer;
 			.g-menu-item-content {
-				display: block;
+				display: inline-block;
 				line-height: 1rem;
 			}
 
@@ -304,5 +312,13 @@
 			height: 0;
 			@include transform(translateX(-100%));
 		}
+	}
+	.g-menu-item-subtitle {
+		line-height: 1.5;
+	}
+	i {
+		float: left;
+		line-height: 1.4rem;
+		margin-right: 0.3rem;
 	}
 }

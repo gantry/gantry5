@@ -11,11 +11,6 @@
 {% endmacro %}
 
 {% macro displayTitle(item, gantry) %}
-    {% if item.image %}
-        <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
-    {% elseif item.icon %}
-        <i class="{{ item.icon|e }}"></i>
-    {% endif %}
     {% if not item.icon_only or not (item.image or item.icon) %}
         <span class="g-menu-item-title">{{ item.title|e }}</span>
         {% if item.subtitle %}
@@ -33,6 +28,11 @@
         {% set target = item.target != '_self' ? ' target="' ~ item.target|e ~ '"' %}
         <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{{ parent|raw }}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}g-menu-item-link-parent{% endif %}">
             <div class="g-menu-item-container">
+                {% if item.image %}
+                    <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
+                {% elseif item.icon %}
+                    <i class="{{ item.icon|e }}"></i>
+                {% endif %}
                 {% if item.url %}
                     <a class="g-menu-item-content" href="{{ item.url|e }}"{{ title|raw ~ target|raw }}>
                         {{ _self.displayTitle(item, gantry) }}
