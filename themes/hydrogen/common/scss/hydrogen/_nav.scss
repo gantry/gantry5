@@ -16,11 +16,13 @@
 			> li {
 
 				&.g-menu-item-link-parent {
-					.g-menu-parent-indicator {
-						border: 1px solid lighten($navigation-background, 6%);
-						background: darken($navigation-background, 4%);
-						&:hover {
-							background: darken($navigation-background, 8%);
+					> .g-menu-item-container {
+						> .g-menu-parent-indicator {
+							border: 1px solid lighten($navigation-background, 6%);
+							background: darken($navigation-background, 4%);
+							&:hover {
+								background: darken($navigation-background, 8%);
+							}
 						}
 					}
 				}
