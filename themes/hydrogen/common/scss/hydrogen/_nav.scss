@@ -33,10 +33,10 @@
 					background: darken($navigation-background, 4%);
 
 					> .g-menu-item-container {
-					> .g-selected {
-							background: darken($navigation-background, 8%);
+						> .g-selected {
+								background: darken($navigation-background, 8%);
+							}
 						}
-					}
 				}
 
 				&.active {

@@ -40,6 +40,10 @@
 					> .g-menu-item-container {
 						color: $main-text-color;
 
+						> .g-menu-item-content {
+							color: $main-text-color;
+						}
+
 						> .g-selected {
 							background: darken($header-background, 8%);
 							color: $header-text-color;
