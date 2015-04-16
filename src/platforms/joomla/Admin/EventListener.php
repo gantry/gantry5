@@ -11,6 +11,11 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Component\Layout\Layout;
+use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Configurations;
+use Gantry\Joomla\Manifest;
+use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 
 class EventListener implements EventSubscriberInterface
@@ -25,19 +30,43 @@ class EventListener implements EventSubscriberInterface
         ];
     }
 
-    public function onStylesSave($event)
+    public function onStylesSave(Event $event)
     {
     }
 
-    public function onSettingsSave($event)
+    public function onSettingsSave(Event $event)
     {
     }
 
-    public function onLayoutSave($event)
+    public function onLayoutSave(Event $event)
     {
+        $gantry = Gantry::instance();
+
+        /** @var Configurations $configurations */
+        $configurations = $gantry['configurations'];
+
+        $list = [];
+        foreach ($configurations as $name => $title) {
+            $layout = Layout::instance($name);
+
+            if (!$layout->exists()) {
+                continue;
+            }
+
+            foreach($layout->positions() as $position) {
+                if (!isset($position->attributes->key)) {
+                    continue;
+                }
+                $list[$position->attributes->key] = $position->title;
+            }
+        }
+
+        $manifest = new Manifest($gantry['theme.name']);
+        $manifest->setPositions(array_keys($list));
+        $manifest->save();
     }
 
-    public function onAssignmentsSave($event)
+    public function onAssignmentsSave(Event $event)
     {
     }
 }
