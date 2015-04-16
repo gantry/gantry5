@@ -89,9 +89,11 @@
 				}
 			}
 		}
+	}
 
-		&.g-menu-hastouch {
-			.g-toplevel {
+	.g-menu-hastouch {
+		.g-toplevel {
+			> li {
 				&.g-menu-item-link-parent {
 					> .g-menu-item-container {
 						> .g-menu-parent-indicator {
