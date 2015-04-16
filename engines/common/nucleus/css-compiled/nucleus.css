@@ -1238,7 +1238,7 @@ th {
 }
 /* line 10, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav:not(.g-menu-hastouch) .g-dropdown.g-active {
-  top: auto;
+  top: 100%;
 }
 /* line 13, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav:not(.g-menu-hastouch) .g-dropdown .g-dropdown {
