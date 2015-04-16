@@ -61,7 +61,7 @@ var Menu = new prime({
 
         main.on('mouseenter', this.bound('mouseenter'));
         main.on('mouseleave', this.bound('mouseleave'));
-        body.delegate('click', '.g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
+        body.delegate('click', ':not(.g-main-nav) '  + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
 
         if (hasTouchEvents) {
             $(selectors.linkedParent).on('touchend', this.bound('touchend'));
