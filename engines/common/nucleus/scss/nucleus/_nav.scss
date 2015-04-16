@@ -218,6 +218,8 @@
 			display: block;
 			margin-right: 0;
 			padding: $content-padding 1rem;
+			position: relative;
+			cursor: pointer;
 			.g-menu-item-content {
 				display: block;
 				line-height: 1rem;
@@ -228,20 +230,20 @@
 	    		> .g-menu-item-container {
 					> .g-menu-item-content {
 						position: relative;
-						&:after {
-							position: absolute;
-							width: auto;
-							line-height: normal;
-							opacity: 0.5;
-							font-family: FontAwesome;
-							content: "\f054";		
-							right: 1rem;		
-						}
 					}
 				}
 				// Temporarily Hide Parent Indicator
 				.g-menu-parent-indicator {
-					display: none;
+					&:after {
+						position: absolute;
+						width: auto;
+						line-height: normal;
+						opacity: 0.5;
+						font-family: FontAwesome;
+						content: "\f054";
+						top: $content-padding;	
+						right: 1rem;		
+					}
 				}
 	    	}						
 		}
