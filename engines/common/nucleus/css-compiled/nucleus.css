@@ -1244,18 +1244,15 @@ th {
 .g-main-nav .g-toplevel > li {
   display: inline-block;
   cursor: pointer;
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
+  -webkit-transition: background 0.2s ease-out;
+  -moz-transition: background 0.2s ease-out;
+  transition: background 0.2s ease-out;
 }
 /* line 23, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-toplevel > li .g-menu-item-content {
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
 }
 /* line 31, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator {
@@ -1288,15 +1285,15 @@ th {
 }
 /* line 68, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-dropdown {
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
+  -webkit-transition: opacity 0.2s ease-out;
+  -moz-transition: opacity 0.2s ease-out;
+  transition: opacity 0.2s ease-out;
 }
 /* line 75, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li {
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
+  -webkit-transition: background 0.2s ease-out;
+  -moz-transition: background 0.2s ease-out;
+  transition: background 0.2s ease-out;
 }
 /* line 78, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li .g-menu-item-content {
