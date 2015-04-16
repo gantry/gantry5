@@ -47,18 +47,7 @@ class EventListener implements EventSubscriberInterface
 
         $list = [];
         foreach ($configurations as $name => $title) {
-            $layout = Layout::instance($name);
-
-            if (!$layout->exists()) {
-                continue;
-            }
-
-            foreach($layout->positions() as $position) {
-                if (!isset($position->attributes->key)) {
-                    continue;
-                }
-                $list[$position->attributes->key] = $position->title;
-            }
+            $list += Layout::instance($name)->positions();
         }
 
         $manifest = new Manifest($gantry['theme.name']);

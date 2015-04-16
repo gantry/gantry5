@@ -133,6 +133,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
+     * @param string $type
+     * @param string $subtype
      * @return array
      */
     public function referencesByType($type = null, $subtype = null)
@@ -150,19 +152,23 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
-     * @return array
-     */
-    public function sections()
-    {
-        return $this->referencesByType('section', 'section');
-    }
-
-    /**
-     * @return array
+     * Return list of positions (key) with their titles (value).
+     *
+     * @return array Array of position => title
      */
     public function positions()
     {
-        return $this->referencesByType('position', 'position');
+        $positions = $this->referencesByType('position', 'position');
+
+        $list = [];
+        foreach($positions as $position) {
+            if (!isset($position->attributes->key)) {
+                continue;
+            }
+            $list[$position->attributes->key] = $position->title;
+        }
+
+        return $list;
     }
 
     /**
