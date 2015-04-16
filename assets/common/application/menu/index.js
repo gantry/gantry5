@@ -26,6 +26,7 @@ var Menu = new prime({
             item: '.g-menu-item',
             dropdown: '.g-dropdown',
             touchIndicator: '.g-menu-parent-indicator',
+            linkedParent: '[data-g-menuparent]',
             canHover: '.g-main-nav'
         },
 
@@ -55,42 +56,29 @@ var Menu = new prime({
     attach: function() {
         var selectors = this.selectors,
             main = $(selectors.mainContainer + ' ' + selectors.item),
-            mobileContainer = $(selectors.mobileContainer);
+            mobileContainer = $(selectors.mobileContainer),
+            body = $('body');
 
         main.on('mouseenter', this.bound('mouseenter'));
         main.on('mouseleave', this.bound('mouseleave'));
+        body.delegate('click', '.g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
 
         if (hasTouchEvents) {
-            var parents = $(selectors.mainContainer + '.' + this.states.touchEvents + ' ' + selectors.parent);
-            parents.on('touchend', this.bound('touchend'));
+            $(selectors.linkedParent).on('touchend', this.bound('touchend'));
         }
 
         if (mobileContainer) {
-            var query = 'only all and (max-width: ' + (mobileContainer.data('g-menu-breakpoint') || '30rem') + ')',
+            var query = 'only all and (max-width: ' + (mobileContainer.data('g-menu-breakpoint') || '48rem') + ')',
                 match = matchMedia(query);
             match.addListener(this.bound('_checkQuery'));
             this._checkQuery(match);
         }
     },
 
-    detach: function() {
-        var selectors = this.selectors,
-            main = $(selectors.mainContainer + ' ' + selectors.item),
-            mobileContainer = $(selectors.mobileContainer);
+    detach: function() {},
 
-        main.off('mouseenter', this.bound('mouseenter'));
-        main.off('mouseleave', this.bound('mouseleave'));
-
-        if (hasTouchEvents) {
-            var parents = $(selectors.mainContainer + '.' + this.states.touchEvents + ' ' + selectors.parent);
-            parents.off('touchend', this.bound('touchend'));
-        }
-
-        if (mobileContainer) {
-            var query = 'only all and (max-width: ' + (mobileContainer.data('g-menu-breakpoint') || '30rem') + ')',
-                match = matchMedia(query);
-            match.removeListener(this.bound('_checkQuery'));
-        }
+    click: function(event) {
+        this.touchend(event);
     },
 
     mouseenter: function(event) {
@@ -110,31 +98,44 @@ var Menu = new prime({
     },
 
     touchend: function(event) {
-        event.stopPropagation();
-
         var selectors = this.selectors,
             states = this.states;
 
         var target = $(event.target),
-            indicator = target.find('> div > ' + selectors.touchIndicator),
+            indicator = target.parent(selectors.item).find(selectors.touchIndicator),
+            menuType = target.parent('.g-standard') ? 'standard' : 'megamenu',
             parent, isSelected;
 
         if (indicator) {
             target = indicator;
         }
 
+        parent = target.matches(selectors.item) ? target : target.parent(selectors.item);
+        isSelected = parent.hasClass(states.selected);
+
+        if (!parent.find(selectors.dropdown) && !indicator) { console.log(event); return true; }
+
+        event.stopPropagation();
         if (!indicator || target.matches(selectors.touchIndicator)) {
             event.preventDefault();
         }
-
-        parent = target.matches(selectors.item) ? target : target.parent(selectors.item);
-        isSelected = parent.hasClass(states.selected);
 
         if (!isSelected) {
             var currentlyOpen = parent.siblings().search(selectors.touchIndicator + ' !> * !> ' + selectors.item + '.' + states.selected);
             (currentlyOpen || []).forEach(bind(function(open) {
                 this.closeDropdown(open);
             }, this));
+        }
+
+        /*if (target.parent('.g-go-back')) {
+            target.parent('.g-active').removeClass('g-active');
+            target.parent('.g-slide-out').removeClass('g-slide-out');
+            return;
+        }*/
+console.log(parent);
+        if (menuType == 'megamenu' && (parent.find(' > ' + selectors.dropdown) || target.parent('.g-go-back'))) {
+            var sublevel = target.parent('.g-sublevel');
+            if (sublevel) sublevel[!isSelected ? 'addClass' : 'removeClass']('g-slide-out');
         }
 
         this[!isSelected ? 'openDropdown' : 'closeDropdown'](parent);
