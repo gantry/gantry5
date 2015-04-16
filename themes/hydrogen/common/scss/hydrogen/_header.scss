@@ -19,6 +19,7 @@
 
 			> li {
 				> .g-menu-item-container {
+					color: $header-text-color;
 					> .g-menu-item-content {
 						color: $header-text-color;
 					}
@@ -37,9 +38,7 @@
 					background: $main-background;
 					
 					> .g-menu-item-container {
-						> .g-menu-item-content {
-							color: $main-text-color;
-						}
+						color: $main-text-color;
 
 						> .g-selected {
 							background: darken($header-background, 8%);
@@ -62,6 +61,7 @@
 		.g-sublevel {
 			> li {
 				> .g-menu-item-container {
+					color: $header-text-color;
 					> .g-menu-item-content {
 						color: $header-text-color;
 					}

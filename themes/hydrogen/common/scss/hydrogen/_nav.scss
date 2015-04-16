@@ -24,6 +24,7 @@
 
 			> li {
 				> .g-menu-item-container {
+					color: $navigation-text-color;
 					> .g-menu-item-content {
 						color: $navigation-text-color;
 					}
@@ -42,6 +43,7 @@
 					background: $main-background;
 
 					> .g-menu-item-container {
+						color: $main-text-color;
 						> .g-menu-item-content {
 							color: $main-text-color;
 						}
@@ -158,6 +160,11 @@
 			}
 		}
 	}
+}
+
+// Subtitle
+.g-menu-item-subtitle {
+	opacity: 0.7;
 }
 
 // Nav Overlay
