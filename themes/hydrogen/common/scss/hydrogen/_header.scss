@@ -25,11 +25,11 @@
 					}
 				}
 				&:hover {
-					background: darken($header-background, 4%);
+					background: darken($header-background, 6%);
 					
 					> .g-menu-item-container {
 						> .g-selected {
-							background: darken($header-background, 8%);
+							background: darken($header-background, 6%);
 						}
 					}
 				}
@@ -45,21 +45,21 @@
 						}
 
 						> .g-selected {
-							background: darken($header-background, 8%);
+							background: darken($header-background, 6%);
 							color: $header-text-color;
 						}
 					}
 				}
 				> .g-menu-item-container {
 					> .g-selected {
-						background: darken($header-background, 8%);
+						background: darken($header-background, 6%);
 					}
 				}
 			}
 		}
 
 		.g-dropdown {
-			background: darken($header-background, 8%);
+			background: darken($header-background, 6%);
 		}
 
 		.g-sublevel {
@@ -72,16 +72,16 @@
 				}
 
 				&:hover, &.active {
-					background: darken($header-background, 12%);
+					background: darken($header-background, 10%);
 					> .g-menu-item-container {
 						> .g-selected {
-							background: darken($header-background, 12%);
+							background: darken($header-background, 10%);
 						}
 					}
 				}
 				> .g-menu-item-container {
 					> .g-selected {
-						background: darken($header-background, 12%);
+						background: darken($header-background, 10%);
 					}
 				}
 			}
