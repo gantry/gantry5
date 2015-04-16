@@ -40,6 +40,7 @@ var Menu = new prime({
         selectors: {
             mainContainer: '.g-main-nav',
             mobileContainer: '#g-mobilemenu-container',
+            topLevel: '.g-toplevel',
             rootItems: '> ul > li',
             parent: '.g-parent',
             item: '.g-menu-item',
@@ -72,7 +73,8 @@ var Menu = new prime({
 
     attach: function() {
         var selectors = this.selectors,
-            main = $(selectors.mainContainer + ' ' + selectors.item);
+            main = $(selectors.mainContainer + ' ' + selectors.item),
+            mobileContainer = $(selectors.mobileContainer);
 
         main.on('mouseenter', this.bound('mouseenter'));
         main.on('mouseleave', this.bound('mouseleave'));
@@ -81,11 +83,19 @@ var Menu = new prime({
             var parents = $(selectors.mainContainer + '.' + this.states.touchEvents + ' ' + selectors.parent);
             parents.on('touchend', this.bound('touchend'));
         }
+
+        if (mobileContainer) {
+            var query = 'only all and (max-width: ' + (mobileContainer.data('g-menu-breakpoint') || '30rem') + ')',
+                match = matchMedia(query);
+            match.addListener(this.bound('_checkQuery'));
+            this._checkQuery(match);
+        }
     },
 
     detach: function() {
         var selectors = this.selectors,
-            main = $(selectors.mainContainer + ' ' + selectors.item);
+            main = $(selectors.mainContainer + ' ' + selectors.item),
+            mobileContainer = $(selectors.mobileContainer);
 
         main.off('mouseenter', this.bound('mouseenter'));
         main.off('mouseleave', this.bound('mouseleave'));
@@ -94,14 +104,26 @@ var Menu = new prime({
             var parents = $(selectors.mainContainer + '.' + this.states.touchEvents + ' ' + selectors.parent);
             parents.off('touchend', this.bound('touchend'));
         }
+
+        if (mobileContainer) {
+            var query = 'only all and (max-width: ' + (mobileContainer.data('g-menu-breakpoint') || '30rem') + ')',
+                match = matchMedia(query);
+            match.removeListener(this.bound('_checkQuery'));
+        }
     },
 
     mouseenter: function(event) {
-        this.openDropdown(event.target);
+        var element = $(event.target);
+        if (element.parent(this.options.selectors.item) && !element.parent('.g-standard')) { return; }
+
+        this.openDropdown(element);
     },
 
     mouseleave: function(event) {
-        this.closeDropdown(event.target);
+        var element = $(event.target);
+        if (element.parent(this.options.selectors.item) && !element.parent('.g-standard')) { return; }
+
+        this.closeDropdown(element);
     },
 
     touchend: function(event) {
@@ -154,6 +176,22 @@ var Menu = new prime({
 
         if (dropdown) {
             dropdown.removeClass(this.states.active).addClass(this.states.inactive);
+        }
+    },
+
+    _checkQuery: function(mq) {
+
+        var selectors = this.options.selectors,
+            mobileContainer = $(selectors.mobileContainer),
+            mainContainer = $(selectors.mainContainer),
+            find;
+
+        if (mq.matches) {
+            find = mainContainer.find(selectors.topLevel);
+            if (find) { find.top(mobileContainer); }
+        } else {
+            find = mobileContainer.find(selectors.topLevel);
+            if (find) { find.top(mainContainer); }
         }
     },
 
