@@ -201,7 +201,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 $type = $item->type;
                 $subtype = !empty($item->subtype) ? $item->subtype : $type;
 
-                $this->types[$type][$subtype] = $item;
+                $this->types[$type][$subtype][] = $item;
 
                 if (isset($item->children) && is_array($item->children)) {
                     $this->initReferences($item->children);
