@@ -135,7 +135,7 @@ var Menu = new prime({
         parent = target.matches(selectors.item) ? target : target.parent(selectors.item);
         isSelected = parent.hasClass(states.selected);
 
-        if (!parent.find(selectors.dropdown) && !indicator) { console.log(event); return true; }
+        if (!parent.find(selectors.dropdown) && !indicator) { return true; }
 
         event.stopPropagation();
         if (!indicator || target.matches(selectors.touchIndicator)) {
@@ -149,12 +149,6 @@ var Menu = new prime({
             }, this));
         }
 
-        /*if (target.parent('.g-go-back')) {
-            target.parent('.g-active').removeClass('g-active');
-            target.parent('.g-slide-out').removeClass('g-slide-out');
-            return;
-        }*/
-console.log(parent);
         if (menuType == 'megamenu' && (parent.find(' > ' + selectors.dropdown) || target.parent('.g-go-back'))) {
             var sublevel = target.parent('.g-sublevel');
             if (sublevel) sublevel[!isSelected ? 'addClass' : 'removeClass']('g-slide-out');
