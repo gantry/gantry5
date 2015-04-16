@@ -22,14 +22,18 @@
 		> li {
 			display: inline-block;
 			cursor: pointer;
-			@include transition(background .2s ease-out);
+			@include transition(background .2s ease-out, transform .2s ease-out);
 
 			.g-menu-item-content {
 				display: inline-block;
 				vertical-align: middle;
 				cursor: pointer;
-				//@include transition(all .2s ease-out); // is this needed?
 			}
+
+            .g-menu-item-container {
+                @include transition(transform .2s ease-out);
+            }
+
 	    	// Menu Parent Indicator on Main TopLevel
 	    	&.g-parent {
 				.g-menu-parent-indicator {
