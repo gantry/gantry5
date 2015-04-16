@@ -45,14 +45,15 @@ class Manifest
 
     public function setPositions(array $positions)
     {
-        $target = $this->xml->positions[0];
-
         // Remove all the old positions.
-        foreach ($target->children() as $child) {
-            unset($child);
+        $target = $this->xml->xpath('//positions/*');
+        foreach ($target as $child) {
+            unset($child[0]);
         }
 
         // Create the new positions.
+        sort($positions);
+        $target = $this->xml->positions[0];
         foreach ($positions as $position) {
             $target->addChild('position', $position);
         }
