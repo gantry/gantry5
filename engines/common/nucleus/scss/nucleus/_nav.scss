@@ -64,14 +64,14 @@
 	// First Level Dropdown
 	.g-dropdown {
 		@extend %inactive-dropdown;
-	    @include transition(opacity .2s ease-out);
+	    @include transition(opacity .2s ease-out, transform .2s ease-out);
     }
 
 	// Sublevel Items
 	.g-sublevel {
     	> li {
     		position: relative;
-    		@include transition(background .2s ease-out);
+    		@include transition(background .2s ease-out, transform .2s ease-out);
 
     		.g-menu-item-content {
 				display: inline-block;
@@ -172,7 +172,7 @@
 			}
 		}
 		&.g-slide-out {
-			> .g-menu-item > .g-menu-item-content {
+			> .g-menu-item > .g-menu-item-container {
 				@include transform(translateX(-100%));
 			}
 		}
