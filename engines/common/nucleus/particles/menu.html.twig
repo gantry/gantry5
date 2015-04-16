@@ -27,14 +27,14 @@
         {% set parent = item.children ? ' g-parent' %}
         {% set target = item.target != '_self' ? ' target="' ~ item.target|e ~ '"' %}
         <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{{ parent|raw }}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}g-menu-item-link-parent{% endif %}">
-            <a class="g-menu-item-container">
+            <a class="g-menu-item-container" href="{{ item.url|e }}"{{ title|raw ~ target|raw }}>
                 {% if item.image %}
                     <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
                 {% elseif item.icon %}
                     <i class="{{ item.icon|e }}"></i>
                 {% endif %}
                 {% if item.url %}
-                    <span class="g-menu-item-content" href="{{ item.url|e }}"{{ title|raw ~ target|raw }}>
+                    <span class="g-menu-item-content">
                         {{ _self.displayTitle(item, gantry) }}
                     </span>
                     {% if (item.children) -%}
