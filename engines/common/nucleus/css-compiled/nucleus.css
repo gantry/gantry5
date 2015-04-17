@@ -1588,6 +1588,31 @@ th {
   margin-right: 0.3rem;
 }
 
+/* line 344, engines/common/nucleus/scss/nucleus/_nav.scss */
+#g-offcanvas .g-toplevel {
+  position: relative !important;
+}
+/* line 346, engines/common/nucleus/scss/nucleus/_nav.scss */
+#g-offcanvas .g-toplevel li {
+  position: static !important;
+}
+/* line 349, engines/common/nucleus/scss/nucleus/_nav.scss */
+#g-offcanvas .g-toplevel .g-menu-item-container {
+  position: relative !important;
+}
+/* line 352, engines/common/nucleus/scss/nucleus/_nav.scss */
+#g-offcanvas .g-toplevel .g-dropdown, #g-offcanvas .g-toplevel .g-sublevel {
+  margin: 0 !important;
+  background: #354d59 !important;
+  -webkit-transition: opacity 0.2s ease-out, -webkit-transform 0.2s ease-out;
+  -moz-transition: opacity 0.2s ease-out, -moz-transform 0.2s ease-out;
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+/* line 358, engines/common/nucleus/scss/nucleus/_nav.scss */
+#g-offcanvas .g-toplevel .g-dropdown .g-dropdown-column, #g-offcanvas .g-toplevel .g-sublevel .g-dropdown-column {
+  padding: 0 !important;
+}
+
 /* line 2, engines/common/nucleus/scss/nucleus/_typography.scss */
 body {
   font-size: 1rem;

@@ -337,3 +337,26 @@
 		margin-right: 0.3rem;
 	}
 }
+
+
+
+// FIXME: Collection of fixes for non main-nav :not(.g-main-nav)
+#g-offcanvas .g-toplevel {
+    position: relative !important;
+    li {
+        position: static !important;
+    }
+    .g-menu-item-container {
+        position: relative !important;
+    }
+    .g-dropdown, .g-sublevel {
+        margin: 0 !important;
+        background: #354d59 !important;
+
+        @include transition(opacity .2s ease-out, transform .2s ease-out);
+
+        .g-dropdown-column {
+            padding: 0 !important;
+        }
+    }
+}
