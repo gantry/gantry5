@@ -14,13 +14,13 @@
 
 namespace Gantry\Framework\Services;
 
+use Gantry\Component\Whoops\Run;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Whoops\Handler\JsonResponseHandler;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Handler\PlainTextHandler;
-use Whoops\Run;
 
 class ErrorServiceProvider implements ServiceProviderInterface
 {
@@ -37,7 +37,7 @@ class ErrorServiceProvider implements ServiceProviderInterface
         $error_page->setEditor('sublime');
         foreach ($locator->findResources('gantry-assets://css/whoops.css') as $path) {
             $error_page->addResourcePath(dirname($path));
-     }
+        }
         $error_page->addCustomCss('whoops.css');
 
         $json_page = new JsonResponseHandler;
