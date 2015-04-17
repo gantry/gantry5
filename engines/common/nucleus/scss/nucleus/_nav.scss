@@ -333,6 +333,9 @@
 			> .g-menu-item, > .g-go-back {
 				> .g-menu-item-container {
 					@include transform(translateX(-100%));
+					> .g-menu-parent-indicator {
+						display: none;
+					}
 				}
 			}
 		}

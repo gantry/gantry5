@@ -1561,18 +1561,22 @@ th {
   -o-transform: translateX(-100%);
   transform: translateX(-100%);
 }
-/* line 341, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 336, engines/common/nucleus/scss/nucleus/_nav.scss */
+#g-mobilemenu-container .g-toplevel.g-slide-out > .g-menu-item > .g-menu-item-container > .g-menu-parent-indicator, #g-mobilemenu-container .g-toplevel.g-slide-out > .g-go-back > .g-menu-item-container > .g-menu-parent-indicator, #g-mobilemenu-container .g-sublevel.g-slide-out > .g-menu-item > .g-menu-item-container > .g-menu-parent-indicator, #g-mobilemenu-container .g-sublevel.g-slide-out > .g-go-back > .g-menu-item-container > .g-menu-parent-indicator {
+  display: none;
+}
+/* line 344, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container .g-menu-item-subtitle {
   line-height: 1.5;
 }
-/* line 344, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 347, engines/common/nucleus/scss/nucleus/_nav.scss */
 #g-mobilemenu-container i {
   float: left;
   line-height: 1.4rem;
   margin-right: 0.3rem;
 }
 
-/* line 351, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 354, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-menu-overlay.g-menu-overlay-open {
   z-index: 2;
   position: fixed;
