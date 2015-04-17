@@ -159,8 +159,9 @@ var Menu = new prime({
                 blocks;
 
             if (sublevel) {
-                if (target.parent(selectors.mainContainer) && !sublevel.hasClass('g-toplevel')) { this._fixHeights(sublevel, slideout, isGoingBack); }
-                if (columns && (blocks = columns.search('> .g-grid > .g-block'))) {
+                var isNavMenu = target.parent(selectors.mainContainer);
+                if (isNavMenu && !sublevel.hasClass('g-toplevel')) { this._fixHeights(sublevel, slideout, isGoingBack); }
+                if (!isNavMenu && columns && (blocks = columns.search('> .g-grid > .g-block'))) {
                     if (blocks.length > 1) { sublevel = blocks.search('> .g-sublevel'); }
                 }
 
