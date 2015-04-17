@@ -175,6 +175,12 @@ var Menu = new prime({
         element.removeClass(this.states.selected);
 
         if (dropdown) {
+            var slideouts = dropdown.search('.g-slide-out, .' + this.states.selected),
+                actives = dropdown.search('.' + this.states.active);
+
+            if (slideouts) { slideouts.removeClass('g-slide-out').removeClass(this.states.selected); }
+            if (actives) { actives.removeClass( this.states.active).addClass(this.states.inactive); }
+
             dropdown.removeClass(this.states.active).addClass(this.states.inactive);
         }
     },
