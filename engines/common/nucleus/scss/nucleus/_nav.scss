@@ -317,7 +317,7 @@
 			}
 		}			
 		&.g-slide-out {
-			> .g-menu-item > .g-menu-item-content {
+			> .g-menu-item > .g-menu-item-container {
 				@include transform(translateX(-100%));
 			}
 		}			

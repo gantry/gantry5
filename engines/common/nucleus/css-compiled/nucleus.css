@@ -1561,7 +1561,7 @@ th {
   transform: translateX(0);
 }
 /* line 320, engines/common/nucleus/scss/nucleus/_nav.scss */
-#g-mobilemenu-container .g-sublevel.g-slide-out > .g-menu-item > .g-menu-item-content {
+#g-mobilemenu-container .g-sublevel.g-slide-out > .g-menu-item > .g-menu-item-container {
   -webkit-transform: translateX(-100%);
   -moz-transform: translateX(-100%);
   -ms-transform: translateX(-100%);
