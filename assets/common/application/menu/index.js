@@ -61,7 +61,7 @@ var Menu = new prime({
 
         main.on('mouseenter', this.bound('mouseenter'));
         main.on('mouseleave', this.bound('mouseleave'));
-        body.delegate('click', ':not(.g-main-nav) '  + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
+        body.delegate('click', ':not(.g-main-nav) ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
 
         if (hasTouchEvents) {
             $(selectors.linkedParent).on('touchend', this.bound('touchend'));
@@ -104,6 +104,7 @@ var Menu = new prime({
         var target = $(event.target),
             indicator = target.parent(selectors.item).find(selectors.touchIndicator),
             menuType = target.parent('.g-standard') ? 'standard' : 'megamenu',
+            isGoingBack = target.parent('.g-go-back'),
             parent, isSelected;
 
         if (indicator) {
@@ -127,9 +128,12 @@ var Menu = new prime({
             }, this));
         }
 
-        if (menuType == 'megamenu' && (parent.find(' > ' + selectors.dropdown) || target.parent('.g-go-back'))) {
-            var sublevel = target.parent('.g-sublevel');
-            if (sublevel) sublevel[!isSelected ? 'addClass' : 'removeClass']('g-slide-out');
+        if ((menuType == 'megamenu' || !parent.parent('.g-main-nav')) && (parent.find(' > ' + selectors.dropdown) || isGoingBack)) {
+            var sublevel = target.parent('.g-sublevel'), slideout = parent.find('.g-sublevel');
+            if (sublevel) {
+                this._fixHeights(sublevel, slideout, isGoingBack);
+                sublevel[!isSelected ? 'addClass' : 'removeClass']('g-slide-out');
+            }
         }
 
         this[!isSelected ? 'openDropdown' : 'closeDropdown'](parent);
@@ -153,13 +157,32 @@ var Menu = new prime({
         element.removeClass(this.states.selected);
 
         if (dropdown) {
-            var slideouts = dropdown.search('.g-slide-out, .' + this.states.selected),
+            var sublevels = dropdown.search('.g-sublevel'),
+                slideouts = dropdown.search('.g-slide-out, .' + this.states.selected),
                 actives = dropdown.search('.' + this.states.active);
 
+            if (sublevels) { sublevels.attribute('style', null); }
             if (slideouts) { slideouts.removeClass('g-slide-out').removeClass(this.states.selected); }
-            if (actives) { actives.removeClass( this.states.active).addClass(this.states.inactive); }
+            if (actives) { actives.removeClass(this.states.active).addClass(this.states.inactive); }
 
             dropdown.removeClass(this.states.active).addClass(this.states.inactive);
+        }
+    },
+
+    _fixHeights: function(parent, sublevel, isGoingBack) {
+        console.log('fix');
+        if (parent == sublevel) { return; }
+        if (isGoingBack) { parent.attribute('style', null); }
+
+        var heights = {
+            from: parent[0].getBoundingClientRect(),
+            to: sublevel[0].getBoundingClientRect()
+        };
+
+        if (!isGoingBack) {
+            // if from height is < than to height set the parent height else, set the target
+            if (heights.from.height < heights.to.height) { parent[0].style.height = Math.max(heights.from.height, heights.to.height) + 'px'; }
+            else { sublevel[0].style.height = Math.max(heights.from.height, heights.to.height) + 'px'; }
         }
     },
 
