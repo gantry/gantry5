@@ -111,15 +111,12 @@ class Menu extends AbstractMenu
      * We should keep the contents of the function similar to Joomla in order to review it against any changes.
      *
      * @param  array  $params
+     * @param  array  $items
      */
-    protected function getList(array $params)
+    public function getList(array $params, array $items)
     {
         $start   = $params['startLevel'];
         $end     = $params['endLevel'];
-
-        $config = $this->config();
-
-        $items   = isset($config['items']) ? $config['items'] : [];
 
         $menuItems = array_unique(array_merge($this->getItemsFromPlatform($start <= $end ? $end : -1), array_keys($items)));
         sort($menuItems);
@@ -127,7 +124,6 @@ class Menu extends AbstractMenu
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
 
-        $this->items = ['' => new Item($this, '', ['layout' => 'horizontal'])];
         foreach ($menuItems as $name) {
             $parent = dirname($name);
             $level = substr_count($name, '/') + 1;
@@ -168,9 +164,5 @@ class Menu extends AbstractMenu
                     }
             }
         }
-
-        $this->addParticles($items, $start, $end);
-
-        $this->sortAll();
     }
 }
