@@ -291,7 +291,6 @@ class Menu extends HtmlController
     public function selectParticle()
     {
         $groups = [
-            'Positions' => ['position' => [], 'spacer' => [], 'pagecontent' => []],
             'Particles' => ['particle' => []],
         ];
 
@@ -303,7 +302,7 @@ class Menu extends HtmlController
         ];
 
         $particles = array_replace($particles, $this->getParticles());
-        unset($particles['atom']);
+        unset($particles['atom'], $particles['position']);
 
         foreach ($particles as &$group) {
             asort($group);
