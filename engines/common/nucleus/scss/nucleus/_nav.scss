@@ -241,14 +241,6 @@
 
 // Mobile Menu 
 #g-mobilemenu-container {
-	.g-dropdown {
-		@include transition(opacity .2s ease-out, transform .2s ease-out);
-		@include transform(translateX(100%));
-		&.g-active {
-			@include transform(translateX(0));
-		}
-	}
-
 	ul {
 		@extend %list-reset;
 	}
@@ -297,6 +289,11 @@
 			left: 0;
 			right: 0;
 			z-index: 1;
+			@include transition(transform .2s ease-out);
+			@include transform(translateX(100%));
+			&.g-active {
+				@include transform(translateX(0));
+			}
 			.g-go-back {
 				display: block;
 			}				
@@ -326,16 +323,21 @@
 			top: 0;
 		}					
 	}
+
+	.g-menu-item-container {
+		@include transition(transform .2s ease-out);
+	}
+
 	.g-toplevel, .g-sublevel {
 		&.g-slide-out {
 			> .g-menu-item {
 				> .g-menu-item-container {
-					@include transition(opacity .2s ease-out, transform .2s ease-out);
 					@include transform(translateX(-100%));
 				}
 			}
 		}
 	}
+
 	.g-menu-item-subtitle {
 		line-height: 1.5;
 	}
