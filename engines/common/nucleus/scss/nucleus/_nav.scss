@@ -83,6 +83,9 @@
 			}
 
     		&.g-parent {
+    			.g-menu-item-content {
+					margin-right: 2rem;
+				}
 	    		.g-menu-parent-indicator {
 	    			position: absolute;
 	    			right: $content-padding - 0.2;
