@@ -249,21 +249,26 @@
 	    	// Menu Parent Indicator on Mobile Layout
 	    	&.g-parent {
 	    		> .g-menu-item-container {
+	    			position: static;
 					> .g-menu-item-content {
 						position: relative;
 					}
 				}
-				// Temporarily Hide Parent Indicator
+
 				.g-menu-parent-indicator {
+					position: absolute;
+	    			right: $content-padding - 0.2;
+	    			top: $content-padding - 0.1;
+	    			text-align: center;
+
 					&:after {
-						position: absolute;
-						width: auto;
-						line-height: normal;
+						display: inline-block;
+						text-align: center;
 						opacity: 0.5;
+						width: 1.5rem;
+						line-height: normal;
 						font-family: FontAwesome;
 						content: "\f054";
-						top: $content-padding;	
-						right: 1rem;		
 					}
 				}
 	    	}						
