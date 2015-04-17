@@ -242,6 +242,7 @@
 // Mobile Menu 
 #g-mobilemenu-container {
 	.g-dropdown {
+		@include transition(opacity .2s ease-out, transform .2s ease-out);
 		@include transform(translateX(100%));
 		&.g-active {
 			@include transform(translateX(0));
@@ -296,7 +297,6 @@
 			left: 0;
 			right: 0;
 			z-index: 1;
-			@include transition(opacity .2s ease-out, transform .2s ease-out);
 			.g-go-back {
 				display: block;
 			}				
@@ -322,25 +322,18 @@
 		li {
 			position: static;
 		}
-		@include transition(transform .2s ease-out);
 		.g-dropdown {
 			top: 0;
 		}					
 	}
 	.g-toplevel, .g-sublevel {
-		@include transition(opacity .2s ease-out, transform .2s ease-out);
 		&.g-slide-out {
 			> .g-menu-item {
 				> .g-menu-item-container {
+					@include transition(opacity .2s ease-out, transform .2s ease-out);
 					@include transform(translateX(-100%));
 				}
 			}
-		}
-	}
-	.g-block-inactive {
-		.g-sublevel {
-			height: 0;
-			@include transform(translateX(-100%));
 		}
 	}
 	.g-menu-item-subtitle {
