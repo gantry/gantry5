@@ -330,7 +330,7 @@
 
 	.g-toplevel, .g-sublevel {
 		&.g-slide-out {
-			> .g-menu-item {
+			> .g-menu-item, > .g-go-back {
 				> .g-menu-item-container {
 					@include transform(translateX(-100%));
 				}
