@@ -1777,7 +1777,7 @@ input[type="submit"] {
 }
 
 /* line 10, engines/common/nucleus/scss/nucleus/_utilities.scss */
-.hide {
+.hide, body .g-offcanvas-hide {
   display: none;
 }
 
@@ -1912,11 +1912,11 @@ input[type="submit"] {
   display: block;
 }
 
-/* line 48, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 52, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-right #g-offcanvas {
   left: inherit;
 }
-/* line 51, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 55, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-right .g-offcanvas-toggle {
   left: inherit;
   right: 0.7rem;

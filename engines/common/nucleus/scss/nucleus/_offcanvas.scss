@@ -43,6 +43,10 @@
     }
 }
 
+body .g-offcanvas-hide {
+    @extend .hide;
+}
+
 // Right Positioning
 .g-offcanvas-right {
 	#g-offcanvas {
