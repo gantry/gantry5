@@ -131,9 +131,17 @@ var Menu = new prime({
         }
 
         if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown) || isGoingBack)) {
-            var sublevel = target.parent('.g-sublevel') || target.parent('.g-toplevel'), slideout = parent.find('.g-sublevel');
+            var sublevel = target.parent('.g-sublevel') || target.parent('.g-toplevel'),
+                slideout = parent.find('.g-sublevel'),
+                columns = parent.parent('.g-dropdown-column'),
+                blocks;
+
             if (sublevel) {
                 this._fixHeights(sublevel, slideout, isGoingBack);
+                if (columns && (blocks = columns.search('> .g-grid > .g-block'))) {
+                    if (blocks.length > 1) { sublevel = blocks.search('> .g-sublevel'); }
+                }
+                
                 sublevel[!isSelected ? 'addClass' : 'removeClass']('g-slide-out');
             }
         }
