@@ -92,7 +92,7 @@ var Menu = new prime({
         }
 
         if (mobileContainer) {
-            var query = 'only all and (max-width: ' + (mobileContainer.data('g-menu-breakpoint') || '48rem') + ')',
+            var query = 'only all and (max-width: ' + this._calculateBreakpoint((mobileContainer.data('g-menu-breakpoint') || '48rem')) + ')',
                 match = matchMedia(query);
             match.addListener(this.bound('_checkQuery'));
             this._checkQuery(match);
@@ -153,7 +153,7 @@ var Menu = new prime({
         }
 
         if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown) || isGoingBack)) {
-            var sublevel = target.parent('.g-sublevel'), slideout = parent.find('.g-sublevel');
+            var sublevel = target.parent('.g-sublevel') || target.parent('.g-toplevel'), slideout = parent.find('.g-sublevel');
             if (sublevel) {
                 this._fixHeights(sublevel, slideout, isGoingBack);
                 sublevel[!isSelected ? 'addClass' : 'removeClass']('g-slide-out');
@@ -228,6 +228,14 @@ var Menu = new prime({
             if (heights.from.height < heights.to.height) { parent[0].style.height = Math.max(heights.from.height, heights.to.height) + 'px'; }
             else { sublevel[0].style.height = Math.max(heights.from.height, heights.to.height) + 'px'; }
         }
+    },
+
+    _calculateBreakpoint: function(value) {
+        var digit = parseFloat(value.match(/^\d{1,}/).shift()),
+            unit = value.match(/[a-z]{1,}$/i).shift(),
+            tolerance = unit.match(/r?em/) ? -0.062 : -1;
+
+        return (digit + tolerance) + unit;
     },
 
     _checkQuery: function(mq) {
