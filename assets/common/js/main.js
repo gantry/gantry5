@@ -526,7 +526,7 @@ var Offcanvas = new prime({
             blocks = this.offcanvas.search('.g-block'),
             mobileContainer = $('#g-mobilemenu-container');
 
-        if (!togglers || (mutator && (mutator.target || mutator.srcElement)) !== mobileContainer[0]) { return; }
+        if (!togglers || (mutator && ((mutator.target || mutator.srcElement) !== mobileContainer[0]))) { return; }
         if (this.opened) { this.close(); }
 
         var check = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
