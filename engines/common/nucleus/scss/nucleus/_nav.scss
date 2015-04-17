@@ -257,8 +257,7 @@
 
 				.g-menu-parent-indicator {
 					position: absolute;
-	    			right: $content-padding - 0.2;
-	    			top: $content-padding - 0.1;
+	    			right: 0;
 	    			text-align: center;
 
 					&:after {
