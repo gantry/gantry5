@@ -115,75 +115,78 @@
 }
 
 // Standard Dropdown Settings
-.g-standard {
-	position: relative;
-	.g-sublevel {
-    	> li {
-    		position: relative;
-    	}
-    }
-    .g-dropdown {
-    	top: 100%;
+.g-main-nav {
+	.g-standard {
+		position: relative;
+		.g-sublevel {
+	    	> li {
+	    		position: relative;
+	    	}
+	    }
 	    .g-dropdown {
-	    	left: 100%;
-    		top: 0;
-	    	@extend %inactive-dropdown;
+	    	top: 100%;
+		    .g-dropdown {
+		    	left: 100%;
+	    		top: 0;
+		    	@extend %inactive-dropdown;
+		    }
+		    .g-block {
+		    	@include flex(0 100%);
+		    }
+		    // Dropdown is Active When Its Parent is Clicked
+			&.g-active {
+				@extend %active-dropdown;
+			}	    
+		}
+		.g-dropdown-column {
+	    	@extend %dropdown-column;
 	    }
-	    .g-block {
-	    	@include flex(0 100%);
-	    }
-	    // Dropdown is Active When Its Parent is Clicked
-		&.g-active {
-			@extend %active-dropdown;
-		}	    
+	    .g-go-back {
+	    	display: none;
+	    }    
 	}
-	.g-dropdown-column {
-    	@extend %dropdown-column;
-    }
-    .g-go-back {
-    	display: none;
-    }    
 }
 
 // Megamenu Settings
-.g-fullwidth {
-	
-	.g-dropdown {
-		position: absolute;
-		left: 0;
-		right: 0;
-		z-index: 1;
-		top: 100%;
-		.g-block {
-			width: 50%;
-			position: relative;
-			overflow: hidden; 
-		}
-		// Dropdown is Active When Its Parent is Clicked
-		&.g-active {
-			@extend %active-dropdown;
-		}
-
-		// Go Back Button on Dropdown
-		.g-go-back {
-			&.g-level-1 {
-				display: none;
-			}			
-			display: block;
-		}
-	}
-	.g-sublevel {
+.g-main-nav {
+	.g-fullwidth {
 		.g-dropdown {
-			top: 0;
-			@include transform(translateX(100%));
+			position: absolute;
+			left: 0;
+			right: 0;
+			z-index: 1;
+			top: 100%;
+			.g-block {
+				width: 50%;
+				position: relative;
+				overflow: hidden; 
+			}
+			// Dropdown is Active When Its Parent is Clicked
 			&.g-active {
-				@include transform(translateX(0));
+				@extend %active-dropdown;
+			}
+
+			// Go Back Button on Dropdown
+			.g-go-back {
+				&.g-level-1 {
+					display: none;
+				}			
+				display: block;
 			}
 		}
-		&.g-slide-out {
-			.g-menu-item {
-				.g-menu-item-container {
-					@include transform(translateX(-100%));
+		.g-sublevel {
+			.g-dropdown {
+				top: 0;
+				@include transform(translateX(100%));
+				&.g-active {
+					@include transform(translateX(0));
+				}
+			}
+			&.g-slide-out {
+				> .g-menu-item {
+					> .g-menu-item-container {
+						@include transform(translateX(-100%));
+					}
 				}
 			}
 		}
@@ -238,13 +241,19 @@
 
 // Mobile Menu 
 #g-mobilemenu-container {
+	.g-dropdown {
+		@include transform(translateX(100%));
+		&.g-active {
+			@include transform(translateX(0));
+		}
+	}
+
 	.g-toplevel {
 		@extend %list-reset;
 		li {
 			display: block;
 			margin-right: 0;
 			padding: $content-padding 1rem;
-			position: relative;
 			cursor: pointer;
 			.g-menu-item-content {
 				display: inline-block;
@@ -254,7 +263,6 @@
 	    	// Menu Parent Indicator on Mobile Layout
 	    	&.g-parent {
 	    		> .g-menu-item-container {
-	    			position: static;
 					> .g-menu-item-content {
 						position: relative;
 					}
@@ -283,11 +291,7 @@
 			position: absolute;
 			left: 0;
 			right: 0;
-			z-index: 1;				
-			@include transform(translateX(100%));
-			&.g-active {
-				@include transform(translateX(0));
-			}
+			z-index: 1;	
 			.g-go-back {
 				display: block;
 			}				
@@ -315,14 +319,12 @@
 		@include transition(transform .2s ease-out);
 		.g-dropdown {
 			top: 0;
-			@include transform(translateX(100%));
-			&.g-active {
-				@include transform(translateX(0));
-			}
 		}			
 		&.g-slide-out {
-			> .g-menu-item > .g-menu-item-container {
-				@include transform(translateX(-100%));
+			> .g-menu-item {
+				> .g-menu-item-container {
+					@include transform(translateX(-100%));
+				}
 			}
 		}			
 	}
@@ -351,13 +353,7 @@
 
 // FIXME: Collection of fixes for non main-nav :not(.g-main-nav)
 #g-offcanvas .g-toplevel {
-    position: relative !important;
-    li {
-        position: static !important;
-    }
-    .g-menu-item-container {
-        position: relative !important;
-    }
+
     .g-dropdown, .g-sublevel {
         margin: 0 !important;
         background: #354d59 !important;
