@@ -25,9 +25,9 @@ var Menu = new prime({
             parent: '.g-parent',
             item: '.g-menu-item',
             dropdown: '.g-dropdown',
+            overlay: '.g-menu-overlay',
             touchIndicator: '.g-menu-parent-indicator',
-            linkedParent: '[data-g-menuparent]',
-            canHover: '.g-main-nav'
+            linkedParent: '[data-g-menuparent]'
         },
 
         states: {
@@ -43,6 +43,7 @@ var Menu = new prime({
 
         this.selectors = this.options.selectors;
         this.states = this.options.states;
+        this.overlay = zen('div' + this.selectors.overlay).top('#g-page-surround');
         this.active = null;
         this.location = [];
 
@@ -61,10 +62,11 @@ var Menu = new prime({
 
         main.on('mouseenter', this.bound('mouseenter'));
         main.on('mouseleave', this.bound('mouseleave'));
-        body.delegate('click', ':not(.g-main-nav) ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
+        body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
 
         if (hasTouchEvents) {
             $(selectors.linkedParent).on('touchend', this.bound('touchend'));
+            this.overlay.on('touchend', this.bound('closeAllDropdowns'));
         }
 
         if (mobileContainer) {
@@ -83,7 +85,7 @@ var Menu = new prime({
 
     mouseenter: function(event) {
         var element = $(event.target);
-        if (!element.parent(this.options.selectors.canHover)) { return; }
+        if (!element.parent(this.options.selectors.mainContainer)) { return; }
         if (element.parent(this.options.selectors.item) && !element.parent('.g-standard')) { return; }
 
         this.openDropdown(element);
@@ -91,7 +93,7 @@ var Menu = new prime({
 
     mouseleave: function(event) {
         var element = $(event.target);
-        if (!element.parent(this.options.selectors.canHover)) { return; }
+        if (!element.parent(this.options.selectors.mainContainer)) { return; }
         if (element.parent(this.options.selectors.item) && !element.parent('.g-standard')) { return; }
 
         this.closeDropdown(element);
@@ -128,7 +130,7 @@ var Menu = new prime({
             }, this));
         }
 
-        if ((menuType == 'megamenu' || !parent.parent('.g-main-nav')) && (parent.find(' > ' + selectors.dropdown) || isGoingBack)) {
+        if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown) || isGoingBack)) {
             var sublevel = target.parent('.g-sublevel'), slideout = parent.find('.g-sublevel');
             if (sublevel) {
                 this._fixHeights(sublevel, slideout, isGoingBack);
@@ -137,6 +139,7 @@ var Menu = new prime({
         }
 
         this[!isSelected ? 'openDropdown' : 'closeDropdown'](parent);
+        if (event.type !== 'click') { this.toggleOverlay(target.parent(selectors.mainContainer)); }
     },
 
     openDropdown: function(element) {
@@ -169,8 +172,27 @@ var Menu = new prime({
         }
     },
 
+    closeAllDropdowns: function() {
+        var selectors = this.selectors,
+            states = this.states,
+            topLevel = $(selectors.mainContainer + ' > .g-toplevel'),
+            roots = topLevel.search(' >' + selectors.item);
+
+        if (roots) { roots.removeClass(states.selected); }
+        if (topLevel) { this.closeDropdown(topLevel); }
+
+        this.toggleOverlay(topLevel);
+    },
+
+    toggleOverlay: function(menu) {
+        if (!menu) { return; }
+        var shouldOpen = !!menu.find('.g-active, .g-selected');
+
+        this.overlay[shouldOpen ? 'addClass' : 'removeClass']('g-menu-overlay-open');
+        this.overlay[0].style.opacity = shouldOpen ? 1 : 0;
+    },
+
     _fixHeights: function(parent, sublevel, isGoingBack) {
-        console.log('fix');
         if (parent == sublevel) { return; }
         if (isGoingBack) { parent.attribute('style', null); }
 

@@ -220,7 +220,7 @@
 }
 
 // Overlay
-.g-nav-overlay {
+.g-nav-overlay, .g-menu-overlay {
     top: 0;
     right: 0;
     bottom: 0;
@@ -338,7 +338,12 @@
 	}
 }
 
-
+.g-menu-overlay.g-menu-overlay-open {
+    z-index: 2;
+    position: fixed;
+    opacity: 1;
+    height: 100vh;
+}
 
 // FIXME: Collection of fixes for non main-nav :not(.g-main-nav)
 #g-offcanvas .g-toplevel {
