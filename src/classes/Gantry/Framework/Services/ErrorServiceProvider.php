@@ -15,6 +15,7 @@
 namespace Gantry\Framework\Services;
 
 use Gantry\Component\Whoops\Run;
+use Gantry\Framework\Platform;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -29,8 +30,12 @@ class ErrorServiceProvider implements ServiceProviderInterface
         /** @var UniformResourceLocator $locator */
         $locator = $container['locator'];
 
+        /** @var Platform $platform */
+        $platform = $container['platform'];
+
         // Setup Whoops-based error handler
         $errors = new Run;
+        $errors->registerPaths($platform->errorHandlerPaths());
 
         $error_page = new PrettyPageHandler;
         $error_page->setPageTitle('Crikey! There was an error...');

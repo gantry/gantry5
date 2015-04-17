@@ -131,6 +131,11 @@ abstract class Platform
         return ['' => []];
     }
 
+    public function errorHandlerPaths()
+    {
+        return [];
+    }
+
     abstract public function settings();
     abstract public function settings_key();
 
