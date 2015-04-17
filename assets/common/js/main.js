@@ -548,6 +548,8 @@ var Offcanvas = new prime({
             blocks = this.offcanvas.search('.g-block'),
             mobileContainer = $('#g-mobilemenu-container');
 
+        if (!mobileContainer) { return; }
+
         if (!togglers || (mutator && ((mutator.target || mutator.srcElement) !== mobileContainer[0]))) { return; }
         if (this.opened) { this.close(); }
 

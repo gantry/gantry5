@@ -97,11 +97,15 @@ var Offcanvas = new prime({
             if (hasTouchEvents) { body.delegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
         }, this));
 
-        this.offcanvas.on('DOMSubtreeModified', this.bound('_checkTogglers')); // IE8 < has propertychange
+        this.attachMutationEvent();
 
         this.overlay = zen('div[data-offcanvas-close].' + this.options.overlayClass).top(this.panel);
 
         return this;
+    },
+
+    attachMutationEvent: function() {
+        this.offcanvas.on('DOMSubtreeModified', this.bound('_checkTogglers')); // IE8 < has propertychange
     },
 
     detach: function() {
@@ -112,12 +116,17 @@ var Offcanvas = new prime({
             if (hasTouchEvents) { body.undelegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
         }, this));
 
-        this.offcanvas.off('DOMSubtreeModified', this.bound('_checkTogglers'));
+        this.detachMutationEvent();
 
         this.overlay.remove();
 
         return this;
     },
+
+    detachMutationEvent: function() {
+        this.offcanvas.off('DOMSubtreeModified', this.bound('_checkTogglers'));
+    },
+
 
     open: function(event) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
@@ -294,6 +303,12 @@ var Offcanvas = new prime({
         var togglers = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
             blocks = this.offcanvas.search('.g-block'),
             mobileContainer = $('#g-mobilemenu-container');
+
+        // if there is no mobile menu there's no need to check the offcanvas mutation
+        if (!mobileContainer) {
+            this.detachMutationEvent();
+            return;
+        }
 
         if (!togglers || (mutator && ((mutator.target || mutator.srcElement) !== mobileContainer[0]))) { return; }
         if (this.opened) { this.close(); }
