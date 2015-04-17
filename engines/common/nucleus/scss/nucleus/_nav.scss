@@ -181,8 +181,10 @@
 			}
 		}
 		&.g-slide-out {
-			> .g-menu-item > .g-menu-item-container {
-				@include transform(translateX(-100%));
+			.g-menu-item {
+				.g-menu-item-container {
+					@include transform(translateX(-100%));
+				}
 			}
 		}
 	}
