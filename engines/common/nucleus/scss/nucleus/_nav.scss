@@ -248,8 +248,12 @@
 		}
 	}
 
-	.g-toplevel {
+	ul {
 		@extend %list-reset;
+	}
+
+	.g-toplevel {
+		position: relative;
 		li {
 			display: block;
 			margin-right: 0;
@@ -291,7 +295,8 @@
 			position: absolute;
 			left: 0;
 			right: 0;
-			z-index: 1;	
+			z-index: 1;
+			@include transition(opacity .2s ease-out, transform .2s ease-out);
 			.g-go-back {
 				display: block;
 			}				
@@ -310,6 +315,7 @@
 		}		
 		.g-dropdown-column {
 	    	float: none;
+	    	padding: 0;
 	    }							
 	}
 	.g-sublevel {
@@ -319,14 +325,17 @@
 		@include transition(transform .2s ease-out);
 		.g-dropdown {
 			top: 0;
-		}			
+		}					
+	}
+	.g-toplevel, .g-sublevel {
+		@include transition(opacity .2s ease-out, transform .2s ease-out);
 		&.g-slide-out {
 			> .g-menu-item {
 				> .g-menu-item-container {
 					@include transform(translateX(-100%));
 				}
 			}
-		}			
+		}
 	}
 	.g-block-inactive {
 		.g-sublevel {
@@ -349,19 +358,4 @@
     position: fixed;
     opacity: 1;
     height: 100vh;
-}
-
-// FIXME: Collection of fixes for non main-nav :not(.g-main-nav)
-#g-offcanvas .g-toplevel {
-
-    .g-dropdown, .g-sublevel {
-        margin: 0 !important;
-        background: #354d59 !important;
-
-        @include transition(opacity .2s ease-out, transform .2s ease-out);
-
-        .g-dropdown-column {
-            padding: 0 !important;
-        }
-    }
 }
