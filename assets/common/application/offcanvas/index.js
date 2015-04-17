@@ -10,6 +10,7 @@ var ready     = require('domready'),
     forEach   = require('mout/array/forEach'),
     mapNumber = require('mout/math/map'),
     clamp     = require('mout/math/clamp'),
+    trim      = require('mout/string/trim'),
     decouple  = require('../utils/decouple'),
     Bound     = require('prime-util/prime/bound'),
     Options   = require('prime-util/prime/options'),
@@ -83,6 +84,8 @@ var Offcanvas = new prime({
             this._touchEvents();
         }
 
+        this._checkTogglers();
+
         return this.attach();
     },
 
@@ -93,6 +96,8 @@ var Offcanvas = new prime({
             body.delegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
             if (hasTouchEvents) { body.delegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
         }, this));
+
+        this.offcanvas.on('DOMSubtreeModified', this.bound('_checkTogglers')); // IE8 < has propertychange
 
         this.overlay = zen('div[data-offcanvas-close].' + this.options.overlayClass).top(this.panel);
 
@@ -106,6 +111,8 @@ var Offcanvas = new prime({
             body.undelegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
             if (hasTouchEvents) { body.undelegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
         }, this));
+
+        this.offcanvas.off('DOMSubtreeModified', this.bound('_checkTogglers'));
 
         this.overlay.remove();
 
@@ -143,6 +150,8 @@ var Offcanvas = new prime({
     close: function(event, element) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
         else { this.dragging = false; }
+
+        element = element || window;
 
         if (!this.opened && !this.opening) { return this; }
         if (this.panel !== element && this.dragging) { return false; }
@@ -279,6 +288,18 @@ var Offcanvas = new prime({
             }
 
         });
+    },
+
+    _checkTogglers: function(mutator) {
+        var togglers = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
+            blocks = this.offcanvas.search('.g-block'),
+            mobileContainer = $('#g-mobilemenu-container');
+
+        if (!togglers) { return; }
+        if (this.opened) { this.close(); }
+
+        var check = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
+        togglers[check ? 'addClass' : 'removeClass']('g-offcanvas-hide');
     }
 });
 

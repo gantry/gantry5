@@ -199,7 +199,7 @@ var Menu = new prime({
 });
 
 module.exports = Menu;
-},{"../utils/dollar-extras":5,"domready":6,"elements/zen":38,"mout/function/bind":42,"mout/function/timeout":46,"prime":75,"prime-util/prime/bound":71,"prime-util/prime/options":72}],3:[function(require,module,exports){
+},{"../utils/dollar-extras":5,"domready":6,"elements/zen":38,"mout/function/bind":42,"mout/function/timeout":46,"prime":80,"prime-util/prime/bound":76,"prime-util/prime/options":77}],3:[function(require,module,exports){
 // Offcanvas slide with desktop, touch and all-in-one touch devices support that supports both left and right placement.
 // Fast and optimized using CSS3 transitions
 // Based on the awesome Slideout.js <https://mango.github.io/slideout/>
@@ -212,6 +212,7 @@ var ready     = require('domready'),
     forEach   = require('mout/array/forEach'),
     mapNumber = require('mout/math/map'),
     clamp     = require('mout/math/clamp'),
+    trim      = require('mout/string/trim'),
     decouple  = require('../utils/decouple'),
     Bound     = require('prime-util/prime/bound'),
     Options   = require('prime-util/prime/options'),
@@ -285,6 +286,8 @@ var Offcanvas = new prime({
             this._touchEvents();
         }
 
+        this._checkTogglers();
+
         return this.attach();
     },
 
@@ -295,6 +298,8 @@ var Offcanvas = new prime({
             body.delegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
             if (hasTouchEvents) { body.delegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
         }, this));
+
+        this.offcanvas.on('DOMSubtreeModified', this.bound('_checkTogglers')); // IE8 < has propertychange
 
         this.overlay = zen('div[data-offcanvas-close].' + this.options.overlayClass).top(this.panel);
 
@@ -308,6 +313,8 @@ var Offcanvas = new prime({
             body.undelegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
             if (hasTouchEvents) { body.undelegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
         }, this));
+
+        this.offcanvas.off('DOMSubtreeModified', this.bound('_checkTogglers'));
 
         this.overlay.remove();
 
@@ -345,6 +352,8 @@ var Offcanvas = new prime({
     close: function(event, element) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
         else { this.dragging = false; }
+
+        element = element || window;
 
         if (!this.opened && !this.opening) { return this; }
         if (this.panel !== element && this.dragging) { return false; }
@@ -481,11 +490,23 @@ var Offcanvas = new prime({
             }
 
         });
+    },
+
+    _checkTogglers: function(mutator) {
+        var togglers = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
+            blocks = this.offcanvas.search('.g-block'),
+            mobileContainer = $('#g-mobilemenu-container');
+
+        if (!togglers) { return; }
+        if (this.opened) { this.close(); }
+
+        var check = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
+        togglers[check ? 'addClass' : 'removeClass']('g-offcanvas-hide');
     }
 });
 
 module.exports = Offcanvas;
-},{"../utils/decouple":4,"domready":6,"elements":11,"elements/zen":38,"mout/array/forEach":39,"mout/function/bind":42,"mout/math/clamp":50,"mout/math/map":52,"prime":75,"prime-util/prime/bound":71,"prime-util/prime/options":72}],4:[function(require,module,exports){
+},{"../utils/decouple":4,"domready":6,"elements":11,"elements/zen":38,"mout/array/forEach":39,"mout/function/bind":42,"mout/math/clamp":51,"mout/math/map":53,"mout/string/trim":62,"prime":80,"prime-util/prime/bound":76,"prime-util/prime/options":77}],4:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
@@ -548,7 +569,7 @@ $.implement({
 
 module.exports = $;
 
-},{"elements":11,"mout/array/map":40,"slick":87}],6:[function(require,module,exports){
+},{"elements":11,"mout/array/map":40,"slick":92}],6:[function(require,module,exports){
 /*!
   * domready (c) Dustin Diaz 2014 - License MIT
   */
@@ -930,7 +951,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":13,"mout/array/filter":14,"mout/array/forEach":15,"mout/array/map":17,"mout/array/some":18,"prime":75}],9:[function(require,module,exports){
+},{"mout/array/every":13,"mout/array/filter":14,"mout/array/forEach":15,"mout/array/map":17,"mout/array/some":18,"prime":80}],9:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -1013,7 +1034,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":10,"./traversal":37,"prime/map":76}],10:[function(require,module,exports){
+},{"./events":10,"./traversal":37,"prime/map":81}],10:[function(require,module,exports){
 /*
 events
 */"use strict"
@@ -1093,7 +1114,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":8,"prime/emitter":74}],11:[function(require,module,exports){
+},{"./base":8,"prime/emitter":79}],11:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -3084,7 +3105,7 @@ var slice = require('../array/slice');
 arguments[4][19][0].apply(exports,arguments)
 },{"dup":19}],44:[function(require,module,exports){
 arguments[4][20][0].apply(exports,arguments)
-},{"../object/deepMatches":54,"./identity":43,"./prop":45,"dup":20}],45:[function(require,module,exports){
+},{"../object/deepMatches":55,"./identity":43,"./prop":45,"dup":20}],45:[function(require,module,exports){
 arguments[4][21][0].apply(exports,arguments)
 },{"dup":21}],46:[function(require,module,exports){
 var slice = require('../array/slice');
@@ -3112,6 +3133,8 @@ arguments[4][23][0].apply(exports,arguments)
 },{"./kindOf":49,"dup":23}],49:[function(require,module,exports){
 arguments[4][24][0].apply(exports,arguments)
 },{"dup":24}],50:[function(require,module,exports){
+arguments[4][25][0].apply(exports,arguments)
+},{"dup":25}],51:[function(require,module,exports){
 
     /**
      * Clamps value inside range.
@@ -3122,7 +3145,7 @@ arguments[4][24][0].apply(exports,arguments)
     module.exports = clamp;
 
 
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 
     /**
     * Linear interpolation.
@@ -3135,7 +3158,7 @@ arguments[4][24][0].apply(exports,arguments)
     module.exports = lerp;
 
 
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 var lerp = require('./lerp');
 var norm = require('./norm');
     /**
@@ -3148,7 +3171,7 @@ var norm = require('./norm');
     module.exports = map;
 
 
-},{"./lerp":51,"./norm":53}],53:[function(require,module,exports){
+},{"./lerp":52,"./norm":54}],54:[function(require,module,exports){
 
     /**
     * Gets normalized ratio of value inside range.
@@ -3163,19 +3186,27 @@ var norm = require('./norm');
     module.exports = norm;
 
 
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 arguments[4][26][0].apply(exports,arguments)
-},{"../lang/isArray":47,"./forOwn":56,"dup":26}],55:[function(require,module,exports){
+},{"../lang/isArray":47,"./forOwn":57,"dup":26}],56:[function(require,module,exports){
 arguments[4][27][0].apply(exports,arguments)
-},{"./hasOwn":57,"dup":27}],56:[function(require,module,exports){
+},{"./hasOwn":58,"dup":27}],57:[function(require,module,exports){
 arguments[4][28][0].apply(exports,arguments)
-},{"./forIn":55,"./hasOwn":57,"dup":28}],57:[function(require,module,exports){
+},{"./forIn":56,"./hasOwn":58,"dup":28}],58:[function(require,module,exports){
 arguments[4][29][0].apply(exports,arguments)
-},{"dup":29}],58:[function(require,module,exports){
+},{"dup":29}],59:[function(require,module,exports){
+arguments[4][30][0].apply(exports,arguments)
+},{"dup":30}],60:[function(require,module,exports){
+arguments[4][31][0].apply(exports,arguments)
+},{"../lang/toString":50,"./WHITE_SPACES":59,"dup":31}],61:[function(require,module,exports){
+arguments[4][32][0].apply(exports,arguments)
+},{"../lang/toString":50,"./WHITE_SPACES":59,"dup":32}],62:[function(require,module,exports){
+arguments[4][33][0].apply(exports,arguments)
+},{"../lang/toString":50,"./WHITE_SPACES":59,"./ltrim":60,"./rtrim":61,"dup":33}],63:[function(require,module,exports){
 arguments[4][41][0].apply(exports,arguments)
-},{"dup":41}],59:[function(require,module,exports){
+},{"dup":41}],64:[function(require,module,exports){
 arguments[4][42][0].apply(exports,arguments)
-},{"../array/slice":58,"dup":42}],60:[function(require,module,exports){
+},{"../array/slice":63,"dup":42}],65:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -3226,7 +3257,7 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":70,"./isPlainObject":64,"./kindOf":65}],61:[function(require,module,exports){
+},{"../object/mixIn":75,"./isPlainObject":69,"./kindOf":70}],66:[function(require,module,exports){
 var clone = require('./clone');
 var forOwn = require('../object/forOwn');
 var kindOf = require('./kindOf');
@@ -3276,9 +3307,9 @@ var isPlainObject = require('./isPlainObject');
 
 
 
-},{"../object/forOwn":67,"./clone":60,"./isPlainObject":64,"./kindOf":65}],62:[function(require,module,exports){
+},{"../object/forOwn":72,"./clone":65,"./isPlainObject":69,"./kindOf":70}],67:[function(require,module,exports){
 arguments[4][23][0].apply(exports,arguments)
-},{"./kindOf":65,"dup":23}],63:[function(require,module,exports){
+},{"./kindOf":70,"dup":23}],68:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -3288,7 +3319,7 @@ var isKind = require('./isKind');
     module.exports = isObject;
 
 
-},{"./isKind":62}],64:[function(require,module,exports){
+},{"./isKind":67}],69:[function(require,module,exports){
 
 
     /**
@@ -3303,15 +3334,15 @@ var isKind = require('./isKind');
 
 
 
-},{}],65:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 arguments[4][24][0].apply(exports,arguments)
-},{"dup":24}],66:[function(require,module,exports){
+},{"dup":24}],71:[function(require,module,exports){
 arguments[4][27][0].apply(exports,arguments)
-},{"./hasOwn":68,"dup":27}],67:[function(require,module,exports){
+},{"./hasOwn":73,"dup":27}],72:[function(require,module,exports){
 arguments[4][28][0].apply(exports,arguments)
-},{"./forIn":66,"./hasOwn":68,"dup":28}],68:[function(require,module,exports){
+},{"./forIn":71,"./hasOwn":73,"dup":28}],73:[function(require,module,exports){
 arguments[4][29][0].apply(exports,arguments)
-},{"dup":29}],69:[function(require,module,exports){
+},{"dup":29}],74:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var deepClone = require('../lang/deepClone');
 var isObject = require('../lang/isObject');
@@ -3353,7 +3384,7 @@ var isObject = require('../lang/isObject');
 
 
 
-},{"../lang/deepClone":61,"../lang/isObject":63,"./hasOwn":68}],70:[function(require,module,exports){
+},{"../lang/deepClone":66,"../lang/isObject":68,"./hasOwn":73}],75:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -3383,7 +3414,7 @@ var forOwn = require('./forOwn');
     module.exports = mixIn;
 
 
-},{"./forOwn":67}],71:[function(require,module,exports){
+},{"./forOwn":72}],76:[function(require,module,exports){
 "use strict";
 
 // credits to @cpojer's Class.Binds, released under the MIT license
@@ -3403,7 +3434,7 @@ var bound = prime({
 
 module.exports = bound
 
-},{"mout/function/bind":59,"prime":75}],72:[function(require,module,exports){
+},{"mout/function/bind":64,"prime":80}],77:[function(require,module,exports){
 "use strict";
 
 var prime = require("prime")
@@ -3422,7 +3453,7 @@ var Options = prime({
 
 module.exports = Options
 
-},{"mout/object/merge":69,"prime":75}],73:[function(require,module,exports){
+},{"mout/object/merge":74,"prime":80}],78:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -3541,7 +3572,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":89,"mout/array/forEach":77,"mout/array/indexOf":78,"mout/lang/kindOf":80,"mout/time/now":85}],74:[function(require,module,exports){
+},{"_process":94,"mout/array/forEach":82,"mout/array/indexOf":83,"mout/lang/kindOf":85,"mout/time/now":90}],79:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -3607,7 +3638,7 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":73,"./index":75,"mout/array/forEach":77,"mout/array/indexOf":78}],75:[function(require,module,exports){
+},{"./defer":78,"./index":80,"mout/array/forEach":82,"mout/array/indexOf":83}],80:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -3699,7 +3730,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":79,"mout/lang/kindOf":80,"mout/object/hasOwn":83,"mout/object/mixIn":84}],76:[function(require,module,exports){
+},{"mout/lang/createObject":84,"mout/lang/kindOf":85,"mout/object/hasOwn":88,"mout/object/mixIn":89}],81:[function(require,module,exports){
 /*
 Map
 */"use strict"
@@ -3825,11 +3856,11 @@ map.prototype = Map.prototype
 
 module.exports = map
 
-},{"./index":75,"mout/array/indexOf":78}],77:[function(require,module,exports){
+},{"./index":80,"mout/array/indexOf":83}],82:[function(require,module,exports){
 arguments[4][15][0].apply(exports,arguments)
-},{"dup":15}],78:[function(require,module,exports){
+},{"dup":15}],83:[function(require,module,exports){
 arguments[4][16][0].apply(exports,arguments)
-},{"dup":16}],79:[function(require,module,exports){
+},{"dup":16}],84:[function(require,module,exports){
 var mixIn = require('../object/mixIn');
 
     /**
@@ -3849,17 +3880,17 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":84}],80:[function(require,module,exports){
+},{"../object/mixIn":89}],85:[function(require,module,exports){
 arguments[4][24][0].apply(exports,arguments)
-},{"dup":24}],81:[function(require,module,exports){
+},{"dup":24}],86:[function(require,module,exports){
 arguments[4][27][0].apply(exports,arguments)
-},{"./hasOwn":83,"dup":27}],82:[function(require,module,exports){
+},{"./hasOwn":88,"dup":27}],87:[function(require,module,exports){
 arguments[4][28][0].apply(exports,arguments)
-},{"./forIn":81,"./hasOwn":83,"dup":28}],83:[function(require,module,exports){
+},{"./forIn":86,"./hasOwn":88,"dup":28}],88:[function(require,module,exports){
 arguments[4][29][0].apply(exports,arguments)
-},{"dup":29}],84:[function(require,module,exports){
-arguments[4][70][0].apply(exports,arguments)
-},{"./forOwn":82,"dup":70}],85:[function(require,module,exports){
+},{"dup":29}],89:[function(require,module,exports){
+arguments[4][75][0].apply(exports,arguments)
+},{"./forOwn":87,"dup":75}],90:[function(require,module,exports){
 
 
     /**
@@ -3879,9 +3910,9 @@ arguments[4][70][0].apply(exports,arguments)
 
 
 
-},{}],86:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 arguments[4][34][0].apply(exports,arguments)
-},{"./parser":88,"dup":34}],87:[function(require,module,exports){
+},{"./parser":93,"dup":34}],92:[function(require,module,exports){
 (function (global){
 /*
 slick
@@ -3891,9 +3922,9 @@ module.exports = "document" in global ? require("./finder") : { parse: require("
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./finder":86,"./parser":88}],88:[function(require,module,exports){
+},{"./finder":91,"./parser":93}],93:[function(require,module,exports){
 arguments[4][36][0].apply(exports,arguments)
-},{"dup":36}],89:[function(require,module,exports){
+},{"dup":36}],94:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
