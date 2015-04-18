@@ -65,6 +65,25 @@ class Platform extends BasePlatform
 
     public function getMediaPaths()
     {
-        return ['' => ['user://']];
+        return ['' => ['user://gantry5']];
+    }
+
+    public function getEnginesPaths()
+    {
+        if (is_link('user://gantry5/engines')) {
+            // Development environment.
+            return ['' => ["user://gantry5/engines/{$this->name}", 'user://gantry5/engines/common']];
+        }
+        return ['' => ['user://gantry5/engines']];
+    }
+
+    public function getAssetsPaths()
+    {
+        if (is_link('user://gantry5/assets')) {
+            // Development environment.
+            return ['' => ['gantry-theme://', "user://gantry5/assets/{$this->name}", 'user://gantry5/assets/common']];
+        }
+
+        return ['' => ['gantry-theme://', 'user://gantry5/assets']];
     }
 }

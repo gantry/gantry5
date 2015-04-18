@@ -87,29 +87,32 @@ elif [ -f $GIT_TARGET/wp-config.php ]; then
         )
 elif [ -f $GIT_TARGET/system/config/system.yaml ]; then
     PLATFORM=Grav
+    mkdir "$GIT_TARGET/user/gantry5"
     sources=(
-        'platforms/grav/gantryadmin'
+        # Admin plugin
+        'platforms/grav/gantry5'
         'platforms/common'
+        # Libraries
         'src'
-        'vendor'
-        'themes/gantry/grav'
-        'themes/gantry/common'
-        'src'
-        'vendor'
+        # Assets
+        'assets'
+        'engines'
+        # Themes
+        'themes/hydrogen/grav'
+        'themes/hydrogen/common'
         )
     targets=(
-        'user/plugins/gantryadmin'
-        'user/plugins/gantryadmin/common'
-        'user/plugins/gantryadmin/src'
-        'user/plugins/gantryadmin/vendor'
+        # Admin plugin
+        'user/plugins/gantry5'
+        'user/plugins/gantry5/common'
+        # Libraries
+        'user/plugins/gantry5/src'
+        # Assets
+        'user/gantry5/assets'
+        'user/gantry5/engines'
+        # Themes
         'user/themes/hydrogen'
         'user/themes/hydrogen/common'
-        'user/themes/hydrogen/src'
-        'user/themes/hydrogen/vendor'
-        'user/themes/hydrogen-demo'
-        'user/themes/hydrogen-demo/common'
-        'user/themes/hydrogen-demo/src'
-        'user/themes/hydrogen-demo/vendor'
         )
 elif [ -f $GIT_TARGET/mage ]; then
     PLATFORM=Magento

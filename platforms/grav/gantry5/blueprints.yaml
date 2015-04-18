@@ -1,6 +1,6 @@
-name: Gantry Template Administration
+name: Gantry 5 Template Framework
 version: 1.0.0
-description: Enables Gantry template administration.
+description: Allows Gantry 5 templates to run.
 validation: strict
 
 form:

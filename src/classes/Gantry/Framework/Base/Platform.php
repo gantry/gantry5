@@ -136,8 +136,15 @@ abstract class Platform
         return [];
     }
 
-    abstract public function settings();
-    abstract public function settings_key();
+    public function settings()
+    {
+        return null;
+    }
+
+    public function settings_key()
+    {
+        return $this->settings_key;
+    }
 
     public function listModules()
     {

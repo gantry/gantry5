@@ -175,11 +175,6 @@ class Platform extends BasePlatform
         return \JRoute::_('index.php?option=com_config&view=component&component=com_gantry5', false);
     }
 
-    public function settings_key()
-    {
-        return $this->settings_key;
-    }
-
     public function update()
     {
         return \JRoute::_('index.php?option=com_installer&view=update', false);
