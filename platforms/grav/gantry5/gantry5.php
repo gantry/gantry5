@@ -2,7 +2,10 @@
 namespace Grav\Plugin;
 
 use Composer\Autoload\ClassLoader;
+use Gantry\Admin\Router;
 use Gantry\Framework\Base\ThemeTrait;
+use Gantry\Framework\Gantry;
+use Gantry5\Loader;
 use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
 use Grav\Common\Themes;
@@ -22,7 +25,7 @@ class Gantry5Plugin extends Plugin
         return [
             'onPluginsInitialized' => [
                 ['initialize', 1000],
-                ['detectAdmin', 900]
+                ['detectGantryAdmin', 900]
             ]
         ];
     }
@@ -39,7 +42,7 @@ class Gantry5Plugin extends Plugin
      *
      * Disables system cache.
      */
-    public function detectAdmin()
+    public function detectGantryAdmin()
     {
         if (!isset($this->grav['admin'])) {
             return;
@@ -49,6 +52,10 @@ class Gantry5Plugin extends Plugin
         $admin = $this->grav['admin'];
         if ($admin->location != 'themes' || !$admin->route) {
             return;
+        }
+
+        if (!defined('GANTRYADMIN_PATH')) {
+            define('GANTRYADMIN_PATH', __DIR__);
         }
 
         $base = rtrim($this->grav['base_url'], '/');
@@ -72,14 +79,16 @@ class Gantry5Plugin extends Plugin
             return;
         }
 
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = Gantry::instance();
         $gantry['base_url'] = $this->base;
-        $gantry['routes'] = [
-            '1' => '/%s',
-            'about' => ''
-        ];
+        $gantry['router'] = function ($c) {
+            return new Router($c);
+        };
 
-        $this->grav['gantry'] = $gantry;
+        // Dispatch to the controller.
+        //$gantry['router']->dispatch();
+
+        $this->grav['gantry5'] = $gantry;
 
         $this->enable([
             'onPagesInitialized' => ['onPagesInitialized', 900],
