@@ -58,7 +58,7 @@ body {
 
 /* line 21, engines/common/nucleus/scss/nucleus/_core.scss */
 #g-page-surround {
-  height: 100vh;
+  height: 100%;
 }
 
 /* line 25, engines/common/nucleus/scss/nucleus/_core.scss */
@@ -1904,7 +1904,7 @@ input[type="submit"] {
   z-index: 5;
   position: fixed;
   opacity: 1;
-  height: 100vh;
+  height: 100%;
 }
 /* line 41, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-open #g-offcanvas {
