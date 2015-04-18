@@ -349,3 +349,50 @@ children:
                       css:
                         class: particle_gantry_branding
                     children: {  }
+  -
+    id: b81f55bf-64d5-7b6f-2018-ed3f22daea4f
+    type: offcanvas
+    subtype: false
+    title: Offcanvas
+    attributes:
+      name: 'Offcanvas Section'
+    children:
+      -
+        id: 1d77dfdd-a44c-4d76-8ebf-6b683de4748b
+        type: grid
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children:
+          -
+            id: 35c4d946-c99e-43ad-b5b1-6c7ae5ae1aab
+            type: block
+            subtype: false
+            title: Untitled
+            attributes:
+              size: 100
+              extra: {  }
+            children:
+              -
+                id: dcbf7c39-89a1-41bf-8878-92020f172dbc
+                type: particle
+                subtype: mobile-menu
+                title: "\n                                Mobile Menu\n                            "
+                attributes:
+                  enabled: 1
+                children: {  }
+  -
+    id: 4cbd4d8c-fc04-f92b-0d49-35dc882cb729
+    type: atoms
+    subtype: false
+    title: Atoms
+    attributes:
+      name: 'Atoms Section'
+    children:
+      -
+        id: 368d843e-8e70-4465-801c-8f945904fda1
+        type: grid
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children: {  }

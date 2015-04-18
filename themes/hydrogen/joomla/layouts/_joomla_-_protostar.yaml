@@ -434,6 +434,38 @@ children:
                       title: Debug
                     children: {  }
   -
+    id: b81f55bf-64d5-7b6f-2018-ed3f22daea4f
+    type: offcanvas
+    subtype: false
+    title: Offcanvas
+    attributes:
+      name: 'Offcanvas Section'
+    children:
+      -
+        id: 1d77dfdd-a44c-4d76-8ebf-6b683de4748b
+        type: grid
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children:
+          -
+            id: 35c4d946-c99e-43ad-b5b1-6c7ae5ae1aab
+            type: block
+            subtype: false
+            title: Untitled
+            attributes:
+              size: 100
+              extra: {  }
+            children:
+              -
+                id: dcbf7c39-89a1-41bf-8878-92020f172dbc
+                type: particle
+                subtype: mobile-menu
+                title: "\n                                Mobile Menu\n                            "
+                attributes:
+                  enabled: 1
+                children: {  }
+  -
     id: fcd1faab-9eca-88f7-2eaf-16d5a6ec6b0d
     type: atoms
     subtype: false
