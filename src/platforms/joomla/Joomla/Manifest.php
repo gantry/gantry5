@@ -61,6 +61,11 @@ class Manifest
 
     public function save()
     {
+        // Do not save manifest if template has been symbolically linked.
+        if (is_link(dirname($this->path))) {
+            return;
+        }
+
         if (!$this->xml->asXML($this->path)) {
             throw new \RuntimeException(sprintf('Saving manifest for %s template failed', $this->theme));
         }
