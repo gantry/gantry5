@@ -24,6 +24,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Platform extends BasePlatform
 {
+    protected $name = 'grav';
+
     /**
      * @return array
      */
@@ -70,7 +72,12 @@ class Platform extends BasePlatform
 
     public function getEnginesPaths()
     {
-        if (is_link('user://gantry5/engines')) {
+        $grav = Grav::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $grav['locator'];
+
+        if (is_link($locator('user://gantry5/engines'))) {
             // Development environment.
             return ['' => ["user://gantry5/engines/{$this->name}", 'user://gantry5/engines/common']];
         }
@@ -79,7 +86,12 @@ class Platform extends BasePlatform
 
     public function getAssetsPaths()
     {
-        if (is_link('user://gantry5/assets')) {
+        $grav = Grav::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $grav['locator'];
+
+        if (is_link($locator('user://gantry5/assets'))) {
             // Development environment.
             return ['' => ['gantry-theme://', "user://gantry5/assets/{$this->name}", 'user://gantry5/assets/common']];
         }
