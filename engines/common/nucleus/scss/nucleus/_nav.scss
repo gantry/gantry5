@@ -99,7 +99,7 @@
 				}
 			}
 			.g-selected {
-				.g-menu-parent-indicator {
+				> .g-menu-parent-indicator {
 					&:after {
 						content: "\f00d";
 					}

@@ -1322,7 +1322,7 @@ th {
   content: "\f054";
 }
 /* line 103, engines/common/nucleus/scss/nucleus/_nav.scss */
-.g-main-nav .g-sublevel > li .g-selected .g-menu-parent-indicator:after {
+.g-main-nav .g-sublevel > li .g-selected > .g-menu-parent-indicator:after {
   content: "\f00d";
 }
 
