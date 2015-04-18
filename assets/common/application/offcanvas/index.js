@@ -121,7 +121,7 @@ var Offcanvas = new prime({
                 end: msPointerSupported ? 'MSPointerUp' : 'touchend'
             };
 
-        this._scrollBound = decouple(this.bodyEl, 'scroll', this.bound('_bodyScroll'));
+        this._scrollBound = decouple(this.htmlEl, 'scroll', this.bound('_bodyScroll'));
         this.bodyEl.on(touch.move, this.bound('_bodyMove'));
         this.panel.on(touch.start, this.bound('_touchStart'));
         this.panel.on('touchcancel', this.bound('_touchCancel'));
@@ -160,7 +160,7 @@ var Offcanvas = new prime({
                 end: msPointerSupported ? 'MSPointerUp' : 'touchend'
             };
 
-        this.bodyEl[0].removeEventListener('scroll', this._scrollBound);
+        this.htmlEl[0].removeEventListener('scroll', this._scrollBound);
         this.bodyEl.off(touch.move, this.bound('_bodyMove'));
         this.panel.off(touch.start, this.bound('_touchStart'));
         this.panel.off('touchcancel', this.bound('_touchCancel'));
