@@ -20,7 +20,7 @@
                                         data-mm-type="particle"
                                         data-lm-blocktype="{{ type|e }}"
                                         data-lm-subtype="{{ item_key|e }}">
-                                        {{ item|e }}
+                                        <span data-mm-filter="{{ item|e }}">{{ item|e }}</span>
                                     </li>
                                 {%  endfor %}
                             {% endfor %}

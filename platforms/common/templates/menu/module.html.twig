@@ -21,10 +21,10 @@ module.[id | title | position | enabled | access]
                                 <span class="g-tooltip g-tooltip-right" data-title="{{ (module.enabled ? 'Published' : 'Unpublished') ~ ' / ' ~ module.access }}"><i class="fa fa-fw fa-{{ module.enabled ? 'toggle-on' : 'toggle-off' }}"></i></span>
                             </span>
                             <span class="module-wrapper">
-                                <span class="title" data-mm-title="{{ module.title }}">
+                                <span class="title" data-mm-title="{{ module.title }}" data-mm-filter="{{ module.title|e }}">
                                     {{ module.title }}
                                 </span>
-                                <span class="sub-title font-small"><strong>Type</strong>: {{ module.module|default('none') }}</span>
+                                <span class="sub-title font-small" data-mm-filter="{{ module.module|default('none')|e }}"><strong>Type</strong>: {{ module.module|default('none') }}</span>
                                 <span class="sub-title font-small"><strong>Position</strong>: {{ module.position|default('none') }}</span>
                             </span>
                         </li>

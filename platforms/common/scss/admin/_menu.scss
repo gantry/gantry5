@@ -423,6 +423,10 @@ $submenu-ratio:                 60px;
 		display: inline-block;
 		margin: 0.3em;
 		cursor: pointer;
+        
+        &.hidden {
+            display: none;
+        }
 
 		&.selected {
 			box-shadow: 0 0 0 2px $white, 0 0 0 4px $dark-gray;

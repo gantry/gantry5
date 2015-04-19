@@ -2797,19 +2797,23 @@ a {
   cursor: pointer;
 }
 /* line 427, platforms/common/scss/admin/_menu.scss */
+#g5-container .menu-editor-particles [data-lm-blocktype].hidden, #g5-container .menu-editor-particles [data-mm-module].hidden, #g5-container .menu-editor-modules [data-lm-blocktype].hidden, #g5-container .menu-editor-modules [data-mm-module].hidden {
+  display: none;
+}
+/* line 431, platforms/common/scss/admin/_menu.scss */
 #g5-container .menu-editor-particles [data-lm-blocktype].selected, #g5-container .menu-editor-particles [data-mm-module].selected, #g5-container .menu-editor-modules [data-lm-blocktype].selected, #g5-container .menu-editor-modules [data-mm-module].selected {
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px #666;
 }
-/* line 432, platforms/common/scss/admin/_menu.scss */
+/* line 436, platforms/common/scss/admin/_menu.scss */
 #g5-container .menu-editor-particles [data-lm-blocktype], #g5-container .menu-editor-modules [data-lm-blocktype] {
   color: #fff;
 }
-/* line 436, platforms/common/scss/admin/_menu.scss */
+/* line 440, platforms/common/scss/admin/_menu.scss */
 #g5-container .menu-editor-particles .modules-wrapper, #g5-container .menu-editor-modules .modules-wrapper {
   max-height: 500px;
   overflow: auto;
 }
-/* line 441, platforms/common/scss/admin/_menu.scss */
+/* line 445, platforms/common/scss/admin/_menu.scss */
 #g5-container .menu-editor-particles [data-mm-module], #g5-container .menu-editor-modules [data-mm-module] {
   text-align: left;
   color: #666;
@@ -2820,7 +2824,7 @@ a {
   vertical-align: middle;
   position: relative;
 }
-/* line 451, platforms/common/scss/admin/_menu.scss */
+/* line 455, platforms/common/scss/admin/_menu.scss */
 #g5-container .menu-editor-particles [data-mm-module] .module-wrapper, #g5-container .menu-editor-modules [data-mm-module] .module-wrapper {
   top: 50%;
   position: absolute;
@@ -2830,20 +2834,20 @@ a {
   -o-transform: translate(0, -50%);
   transform: translate(0, -50%);
 }
-/* line 458, platforms/common/scss/admin/_menu.scss */
+/* line 462, platforms/common/scss/admin/_menu.scss */
 #g5-container .menu-editor-particles [data-lm-blocktype="spacer"], #g5-container .menu-editor-modules [data-lm-blocktype="spacer"] {
   color: #666;
 }
-/* line 462, platforms/common/scss/admin/_menu.scss */
+/* line 466, platforms/common/scss/admin/_menu.scss */
 #g5-container .menu-editor-particles .search input, #g5-container .menu-editor-modules .search input {
   width: 100% !important;
 }
-/* line 468, platforms/common/scss/admin/_menu.scss */
+/* line 472, platforms/common/scss/admin/_menu.scss */
 #g5-container .menu-editor-modules ul {
   display: table;
   width: 100%;
 }
-/* line 472, platforms/common/scss/admin/_menu.scss */
+/* line 476, platforms/common/scss/admin/_menu.scss */
 #g5-container .menu-editor-modules .sub-title {
   margin: 0;
   display: block;
