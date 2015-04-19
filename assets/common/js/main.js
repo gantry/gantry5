@@ -313,7 +313,7 @@ var Offcanvas = new prime({
         effect: 'ease',
         duration: 300,
         tolerance: function(padding) { // tolerance can also be just an integer value
-            return padding / 2;
+            return padding / 3;
         },
         padding: 0,
         touch: true,
