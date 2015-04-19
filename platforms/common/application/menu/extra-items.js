@@ -74,11 +74,11 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
                         filter = $(filter);
                         text = trim(filter.data('mm-filter')).toLowerCase();
                         if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
-                            found.push(filter.parent('[data-mm-type]'));
+                            found.push(filter.matches('[data-mm-type]') ? filter : filter.parent('[data-mm-type]'));
                         }
                     }, this);
 
-                    $(found).removeClass('hidden');
+                    if (found.length) { $(found).removeClass('hidden'); }
                 });
             }
         });
