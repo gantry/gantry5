@@ -2940,6 +2940,9 @@ var StepTwo = function(data, content, button) {
 
         content.html(response.body.html);
 
+        var selects = $('[data-selectize]');
+        if (selects) { selects.selectize(); }
+
         var urlTemplate = content.find('.g-urltemplate');
         if (urlTemplate) { $('body').emit('input', { target: urlTemplate }); }
 
