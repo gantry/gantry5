@@ -2841,8 +2841,9 @@ a {
 /* line 468, platforms/common/scss/admin/_menu.scss */
 #g5-container .menu-editor-modules ul {
   display: table;
+  width: 100%;
 }
-/* line 471, platforms/common/scss/admin/_menu.scss */
+/* line 472, platforms/common/scss/admin/_menu.scss */
 #g5-container .menu-editor-modules .sub-title {
   margin: 0;
   display: block;
