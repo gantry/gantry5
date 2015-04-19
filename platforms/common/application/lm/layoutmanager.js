@@ -30,7 +30,7 @@ var singles = {
         if (grids) { grids.addClass('no-hover'); }
     },
     cleanup: function(builder, dropLast) {
-        var emptyGrids = $('[data-lm-blocktype="section"] > .g-grid:empty, [data-lm-blocktype="container"] > .g-grid:empty');
+        var emptyGrids = $('[data-lm-blocktype="section"] > .g-grid:empty, [data-lm-blocktype="container"] > .g-grid:empty, [data-lm-blocktype="offcanvas"] > .g-grid:empty');
         if (emptyGrids) {
             emptyGrids.forEach(function(grid) {
                 grid = $(grid);
