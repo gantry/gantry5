@@ -3,7 +3,25 @@
 	width: $offcanvas-width;
 	color: $offcanvas-text-color;
 	a {
+		color: lighten($offcanvas-background, 50%);
+		&:hover {
+			color: $offcanvas-text-color;
+		}
+	}
 
+	h1, h2, h3, h4, h5, h6, strong {
+		color: $offcanvas-text-color;
+	}
+
+	.button {
+		background: $accent-color-2;
+		color: $offcanvas-text-color;
+		&:hover {
+			background: lighten($accent-color-2, 5%);
+		}
+		&:active {
+			background: darken($accent-color-2, 5%);
+		}
 	}
 }
 
