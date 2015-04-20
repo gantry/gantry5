@@ -6785,11 +6785,13 @@ var Eraser = new prime({
     },
 
     show: function(fast){
+        if (!this.element) { return; }
         this.out();
         this.element[fast ? 'style' : 'animate']({top: 0}, {duration: '150ms'});
     },
 
     hide: function(fast){
+        if (!this.element) { return; }
         var top = {top: -(this.element[0].offsetHeight)};
         this.out();
         this.element[fast ? 'style' : 'animate'](top, {duration: '150ms'});
