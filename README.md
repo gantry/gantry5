@@ -25,8 +25,8 @@ Gantry 5 is a framework by which Gantry-powered themes are made. In order for a 
 
 The first thing you need to do is download the latest build of Gantry 5 and Hydrogen. You can do so by clicking the links below, or via [GitHub](http://github.com/gantry/gantry5/).
 
-* [Download Gantry 5](https://github.com/gantry/gantry5/releases/download/5.0.0-beta.2/joomla-pkg_gantry5_v5.0.0-beta.2.zip)
-* [Download Hydrogen Theme](https://github.com/gantry/gantry5/releases/download/5.0.0-beta.2/joomla-tpl_g5_hydrogen_v5.0.0-beta.2.zip)
+* [Download Gantry 5](https://github.com/gantry/gantry5/releases/download/5.0.0-beta.3/joomla-pkg_gantry5_v5.0.0-beta.3.zip)
+* [Download Hydrogen Theme](https://github.com/gantry/gantry5/releases/download/5.0.0-beta.3/joomla-tpl_g5_hydrogen_v5.0.0-beta.3.zip)
 
 >>> During the initial beta, the **Framework** and **Template** are being distributed in different installable packages. A bundled package is planned, but will likely be available after the initial beta launch.
 
@@ -103,7 +103,7 @@ Once that’s done, you can install **Gulp**. We recommend installing Gulp globa
 
 Now that you have the required pieces, the next step is to install all of the JS module dependencies. To do so, make sure you are at the root of the Gantry 5 project, and run the command `npm install`.
 
-Because we have two sets of JS applications, one for admin and one for the site, you will also need to install the JS modules for those. Still, from the root of your project you can run this command: 
+Because we have two sets of JS applications, one for admin and one for the site, you will also need to install the JS modules for those. Still, from the root of your project you can run this command:
 
 `cd platforms/common/ && npm install && cd ../../assets/common/ && npm install && cd ../../`
 
