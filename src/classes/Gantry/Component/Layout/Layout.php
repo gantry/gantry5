@@ -37,8 +37,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     protected $exists;
     protected $items;
     protected $references;
-    protected $sections;
-    protected $particles;
+    protected $types;
 
     public static function presets()
     {
@@ -134,15 +133,42 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
+     * @param string $type
+     * @param string $subtype
      * @return array
      */
-    public function sections()
+    public function referencesByType($type = null, $subtype = null)
     {
         if (!isset($this->references)) {
             $this->initReferences();
         }
 
-        return $this->sections;
+        if (!$type) {
+            return $this->types;
+        } elseif (!$subtype) {
+            return isset($this->types[$type]) ? $this->types[$type] : [];
+        }
+        return isset($this->types[$type][$subtype]) ? $this->types[$type][$subtype] : [];
+    }
+
+    /**
+     * Return list of positions (key) with their titles (value).
+     *
+     * @return array Array of position => title
+     */
+    public function positions()
+    {
+        $positions = $this->referencesByType('position', 'position');
+
+        $list = [];
+        foreach($positions as $position) {
+            if (!isset($position->attributes->key)) {
+                continue;
+            }
+            $list[$position->attributes->key] = $position->title;
+        }
+
+        return $list;
     }
 
     /**
@@ -170,7 +196,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         if ($items === null) {
             $items = $this->items;
             $this->references = [];
-            $this->sections = [];
+            $this->types = [];
         }
 
         foreach ($items as $item) {
@@ -178,11 +204,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 if (isset($item->id)) {
                     $this->references[$item->id] = $item;
                 }
-                if ($item->type == 'section') {
-                    $this->sections[$item->subtype] = $item;
-                } elseif ($item->type == 'non-visible') {
-                    $this->sections[$item->type] = $item;
-                }
+                $type = $item->type;
+                $subtype = !empty($item->subtype) ? $item->subtype : $type;
+
+                $this->types[$type][$subtype][] = $item;
+
                 if (isset($item->children) && is_array($item->children)) {
                     $this->initReferences($item->children);
                 }

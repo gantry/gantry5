@@ -1,0 +1,17 @@
+name: Gantry 5 Template Framework
+version: 1.0.0
+description: Allows Gantry 5 templates to run.
+validation: strict
+
+form:
+  fields:
+    enabled:
+        type: toggle
+        label: Plugin status
+        highlight: 1
+        default: 1
+        options:
+          1: Enabled
+          0: Disabled
+        validate:
+          type: bool

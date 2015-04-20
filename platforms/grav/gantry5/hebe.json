@@ -1,0 +1,15 @@
+{
+   "project":"grav-plugin-gantry5",
+   "platforms":{
+      "grav":{
+         "nodes":{
+            "plugin":[
+               {
+                  "source":"/",
+                  "destination":"/user/plugins/gantry5"
+               }
+            ]
+         }
+      }
+   }
+}

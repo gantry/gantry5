@@ -14,11 +14,11 @@ form:
     key:
       type: input.text
       label: Key
-      description: Position name
+      description: Position name.
       overridable: false
 
     chrome:
       type: input.text
       label: Chrome
-      description: Position chrome
+      description: Module chrome in this position.
       placeholder: xhtml

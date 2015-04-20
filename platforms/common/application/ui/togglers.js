@@ -1,13 +1,10 @@
 "use strict";
 var ready = require('elements/domready'),
-    $ = require('elements');
+    $     = require('elements');
 
-ready(function(){
-    var hiddens,
-        click = ('ontouchend' in window) ? 'touchend' : 'click';
-
-    $('body').delegate(click, '.enabler .toggle', function(e, element){
-        console.log('a');
+var hiddens,
+    toggles = function(event, element) {
+        if (event.type.match(/^touch/)) { event.preventDefault(); }
         element = $(element);
         hiddens = element.find('~~ [type=hidden]');
 
@@ -15,7 +12,12 @@ ready(function(){
         hiddens.value(hiddens.value() == '0' ? '1' : '0');
 
         hiddens.emit('change');
-        $('body').emit('change', {target: hiddens});
+        $('body').emit('change', { target: hiddens });
+    };
+
+ready(function() {
+    ['touchend', 'click'].forEach(function(event) {
+        $('body').delegate(event, '.enabler .toggle', toggles);
     });
 });
 

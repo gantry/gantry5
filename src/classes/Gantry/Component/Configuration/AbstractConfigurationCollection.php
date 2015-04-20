@@ -55,7 +55,7 @@ abstract class AbstractConfigurationCollection extends Collection
     public function user()
     {
         foreach ($this->items as $key => $item) {
-            if (substr($key, 0, 1) === '_') {
+            if (substr($key, 0, 1) === '_' || $key == 'default') {
                 unset($this->items[$key]);
             }
         }

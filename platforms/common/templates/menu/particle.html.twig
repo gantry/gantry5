@@ -1,0 +1,39 @@
+<div data-mm-particle-stepone="{{ gantry.route('menu/particle') }}" class="menu-editor-extras">
+    <div class="card settings-block">
+        <h4>
+            Pick a Particle
+        </h4>
+        <div class="inner-params">
+            <div class="g5-lm-particles-picker menu-editor-particles">
+                <div class="search">
+                    <input type="text" placeholder="Search..." />
+                    <i class="fa fa-search"></i>
+                </div>
+                <ul>
+                    {% for key, list in particles %}
+                        {{ key|capitalize|e }}
+                        <ul>
+                            {% for type, particle in list %}
+                                {% for item_key, item in particle %}
+                                    <li class="g5-lm-particle-{{ type|e }}"
+                                        data-lm-nodrag
+                                        data-mm-type="particle"
+                                        data-lm-blocktype="{{ type|e }}"
+                                        data-mm-filter="{{ item|e }}"
+                                        data-lm-subtype="{{ item_key|e }}">
+                                        {{ item|e }}
+                                    </li>
+                                {%  endfor %}
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="g-modal-actions">
+        {#<a class="button float-left">Defaults</a>#}
+        <button class="button button-primary" type="submit" data-mm-select disabled>Select <i class="fa fa-fw fa-chevron-right"></i></button>
+        <a class="button g5-dialog-close">Cancel</a>
+    </div>
+</div>

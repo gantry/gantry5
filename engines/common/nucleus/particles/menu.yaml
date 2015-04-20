@@ -11,6 +11,11 @@ form:
       description: Globally enable the menu particle.
       default: true
 
+    _info:
+      type: separator.note
+      class: alert alert-info
+      content: GANTRY5_PARTICLE_MENU_INFO
+
     base:
       type: input.text
       label: Base Path
@@ -21,7 +26,9 @@ form:
       type: menu.list
       label: Menu
       description: Select menu to be used with the particle.
-      default: mainmenu
+      default: ''
+      options:
+        '': -- Select Menu --
 
     startLevel:
       type: input.text

@@ -20,7 +20,7 @@
     @include button-color($secondary-text);
 }
 
-.button.disabled {
+.button.disabled, .button[disabled] {
     @extend %button;
     background: darken($main-bg, 10%);
     color: $white;

@@ -9,6 +9,7 @@
 @viewport{width:device-width}
 
 html {
+    height: 100%;
 	font-size: 100%;
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
@@ -16,6 +17,10 @@ html {
 
 body {
 	margin: 0;
+}
+
+#g-page-surround {
+	min-height: 100vh;
 }
 
 article,

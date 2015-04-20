@@ -44,6 +44,7 @@ class TwigExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
+            new \Twig_SimpleFilter('html', [$this, 'htmlFilter']),
             new \Twig_SimpleFilter('trans', [$this, 'transFilter']),
             new \Twig_SimpleFilter('repeat', [$this, 'repeatFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode'),
@@ -76,6 +77,32 @@ class TwigExtension extends \Twig_Extension
         $path = explode('.', $str);
 
         return array_shift($path) . ($path ? '[' . implode('][', $path) . ']' : '');
+    }
+
+    /**
+     * Parse raw html.
+     *
+     * @param  string  $str
+     * @return string
+     */
+    public function htmlFilter($str)
+    {
+        $str = preg_replace_callback('^(\s)(src|href)="(.*?)"^', [$this, 'linkHandler'], $str);
+        $str = preg_replace_callback('^(\s)url\((.*?)\)^', [$this, 'urlHandler'], $str);
+
+        return $str;
+    }
+
+    public function linkHandler(array $matches)
+    {
+        $url = $this->urlFunc($matches[3]);
+        return "{$matches[1]}{$matches[2]}=\"{$url}\"";
+    }
+
+    public function urlHandler(array $matches)
+    {
+        $url = $this->urlFunc(trim($matches[2]), '"\'');
+        return "{$matches[1]}url({$url})";
     }
 
     /**

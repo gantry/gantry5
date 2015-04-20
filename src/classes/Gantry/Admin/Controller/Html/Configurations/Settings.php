@@ -15,16 +15,14 @@
 namespace Gantry\Admin\Controller\Html\Configurations;
 
 use Gantry\Component\Config\BlueprintsForm;
-use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
-use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
+use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -205,6 +203,12 @@ class Settings extends HtmlController
         foreach ($data as $name => $values) {
             $this->saveItem($name, $values);
         }
+
+        // Fire save event.
+        $event = new Event;
+        $event->controller = $this;
+        $event->data = $data;
+        $this->container->fireEvent('admin.settings.save', $event);
 
         return $id ? $this->display($id) : $this->index();
     }

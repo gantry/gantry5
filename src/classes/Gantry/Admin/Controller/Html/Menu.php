@@ -23,33 +23,45 @@ use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Menu as MenuObject;
+use Gantry\Framework\Platform;
+use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Menu extends HtmlController
 {
     protected $httpVerbs = [
-        'GET' => [
-            '/'             => 'item',
-            '/*'            => 'item',
-            '/*/**'         => 'item',
-            '/edit'         => 'undefined',
-            '/edit/*'       => 'edit',
-            '/edit/*/**'    => 'menuitem',
+        'GET'    => [
+            '/'                  => 'item',
+            '/*'                 => 'item',
+            '/*/**'              => 'item',
+            '/particle'          => 'particle',
+            '/particle/*'        => 'validateParticle',
+            '/select'            => 'undefined',
+            '/select/particle'   => 'selectParticle',
+            '/select/module'     => 'selectModule',
+            '/edit'              => 'undefined',
+            '/edit/*'            => 'edit',
+            '/edit/*/**'         => 'editItem',
         ],
-        'POST' => [
-            '/'             => 'save',
-            '/*'            => 'save',
-            '/*/**'         => 'item',
-            '/edit'         => 'undefined',
-            '/edit/*'       => 'edit',
-            '/edit/*/**'    => 'menuitem',
-            '/edit/*/validate' => 'validate',
+        'POST'   => [
+            '/'                  => 'save',
+            '/*'                 => 'save',
+            '/*/**'              => 'item',
+            '/particle'          => 'particle',
+            '/particle/*'        => 'validateParticle',
+            '/select'            => 'undefined',
+            '/select/particle'   => 'selectParticle',
+            '/select/module'     => 'selectModule',
+            '/edit'              => 'undefined',
+            '/edit/*'            => 'edit',
+            '/edit/*/**'         => 'editItem',
+            '/edit/*/validate'   => 'validate',
         ],
-        'PUT' => [
+        'PUT'    => [
             '/*' => 'replace'
         ],
-        'PATCH' => [
+        'PATCH'  => [
             '/*' => 'update'
         ],
         'DELETE' => [
@@ -134,7 +146,7 @@ class Menu extends HtmlController
         $file->save($data->toArray());
     }
 
-    public function menuitem($id)
+    public function editItem($id)
     {
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
@@ -165,13 +177,145 @@ class Menu extends HtmlController
         $blueprints = $this->loadBlueprints('menuitem');
 
         $this->params = [
-                'id' => $resource->name(),
-                'path' => $path,
+                'id'         => $resource->name(),
+                'path'       => $path,
                 'blueprints' => ['fields' => $blueprints['form.fields.items.fields']],
-                'data' => $item->toArray() + ['path' => $path],
+                'data'       => $item->toArray() + ['path' => $path],
             ] + $this->params;
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/menu/menuitem.html.twig', $this->params);
+    }
+
+    public function particle()
+    {
+        /** @var Request $request */
+        $request = $this->container['request'];
+
+        $data = $request->get('item');
+        if ($data) {
+            $data = json_decode($data, true);
+        } else {
+            $data = $request->getArray();
+        }
+
+        $name = isset($data['particle']) ? $data['particle'] : null;
+
+        $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml")->content());
+        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+
+        // Load particle blueprints and default settings.
+        $validator = $this->loadBlueprints('menu');
+        $callable = function () use ($validator) {
+            return $validator;
+        };
+
+        // Create configuration from the defaults.
+        $item = new Config($data, $callable);
+        $item->def('type', 'particle');
+        $item->def('title', $blueprints->get('name'));
+        $item->def('options.type', $blueprints->get('type', 'particle'));
+        $item->def('options.particle', []);
+        $item->def('options.block', []);
+
+        $this->params += [
+            'item'          => $item,
+            'block'         => $block,
+            'particle'      => $blueprints,
+            'parent'        => 'settings',
+            'route'         => "menu.particle",
+            'action'        => "menu/particle/{$name}"
+        ];
+
+        return $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params);
+    }
+
+
+    public function validateParticle($name)
+    {
+        // Validate only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
+        /** @var Request $request */
+        $request = $this->container['request'];
+
+        // Load particle blueprints and default settings.
+        $validator = new Blueprints();
+        $validator->embed('options', $this->container['particles']->get($name));
+
+        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+
+        // Create configuration from the defaults.
+        $data = new Config([],
+            function () use ($validator) {
+                return $validator;
+            }
+        );
+
+        $data->set('type', 'particle');
+        $data->set('particle', $name);
+        $data->set('title', $request->get('title') ?: $blueprints->get('name'));
+        $data->set('options.particle', $request->getArray('particle'));
+        $data->def('options.particle.enabled', 1);
+
+        $block = $request->getArray('block');
+        foreach ($block as $key => $param) {
+            if ($param === '') {
+                unset($block[$key]);
+            }
+        }
+
+        $data->join('options.block', $block);
+
+        // TODO: validate
+
+        // Fill parameters to be passed to the template file.
+        $this->params['item'] = (object) $data->toArray();
+
+        $html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
+
+        return new JsonResponse(['item' => $data->toArray(), 'html' => $html]);
+    }
+
+    public function selectModule()
+    {
+        /** @var Platform $platform */
+        $platform = $this->container['platform'];
+
+        $this->params['modules'] = $platform->listModules();
+
+        return $this->container['admin.theme']->render('@gantry-admin/menu/module.html.twig', $this->params);
+    }
+
+    public function selectParticle()
+    {
+        $groups = [
+            'Particles' => ['particle' => []],
+        ];
+
+        $particles = [
+            'position'    => [],
+            'spacer'      => [],
+            'pagecontent' => [],
+            'particle' => [],
+        ];
+
+        $particles = array_replace($particles, $this->getParticles());
+        unset($particles['atom'], $particles['position']);
+
+        foreach ($particles as &$group) {
+            asort($group);
+        }
+
+        foreach ($groups as $section => $children) {
+            foreach ($children as $key => $child) {
+                $groups[$section][$key] = $particles[$key];
+            }
+        }
+
+        $this->params['particles'] = $groups;
+        return $this->container['admin.theme']->render('@gantry-admin/menu/particle.html.twig', $this->params);
     }
 
     public function validate($id)
@@ -255,6 +399,7 @@ class Menu extends HtmlController
      *
      * @param string $id
      * @param Config $config
+     *
      * @return MenuObject
      * @throws \RuntimeException
      */
@@ -270,6 +415,7 @@ class Menu extends HtmlController
      * Load blueprints.
      *
      * @param string $name
+     *
      * @return BlueprintsForm
      */
     protected function loadBlueprints($name = 'menu')
@@ -319,5 +465,19 @@ class Menu extends HtmlController
         $data->set('items', $items);
 
         return $data;
+    }
+
+    protected function getParticles()
+    {
+        $particles = $this->container['particles']->all();
+
+        $list = [];
+        foreach ($particles as $name => $particle) {
+            $type = isset($particle['type']) ? $particle['type'] : 'particle';
+            $particleName = isset($particle['name']) ? $particle['name'] : $name;
+            $list[$type][$name] = $particleName;
+        }
+
+        return $list;
     }
 }

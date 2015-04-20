@@ -18,11 +18,19 @@
         </select>
     </div>
 
+    <div class="g5-mm-particles-picker">
+        <ul class="g-menu-addblock">
+            <li data-mm-blocktype="module" data-mm-id="__module"><span class="menu-item"><i class="fa fa-fw fa-arrows-alt"></i> <span class="title">Module</span></span> <a class="config-cog" href="{{ gantry.route('menu/select/module') }}"><i class="fa fa-cog"></i></a></li>
+            <li data-mm-blocktype="particle" data-mm-id="__particle"><span class="menu-item"><i class="fa fa-fw fa-arrows-alt"></i> <span class="title">Particle</span></span></span> <a class="config-cog" href="{{ gantry.route('menu/select/particle') }}"><i class="fa fa-cog"></i></a></li>
+        </ul>
+    </div>
     <div id="menu-editor"
          data-menu-ordering="{{ menu.ordering|json_encode|escape('html_attr') }}"
          data-menu-items="{{ menu.items|json_encode|escape('html_attr') }}"
          data-menu-settings="{{ menu.settings|json_encode|escape('html_attr') }}">
         {% include 'menu/base.html.twig' with {'item': menu.root} %}
     </div>
+
+    <div id="trash" data-mm-eraseparticle><div class="trash-zone">&times;</div><span>Drop here to delete</span></div>
 </form>
 {% endblock %}

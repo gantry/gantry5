@@ -14,13 +14,14 @@
 
 namespace Gantry\Framework\Services;
 
+use Gantry\Component\Whoops\Run;
+use Gantry\Framework\Platform;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Whoops\Handler\JsonResponseHandler;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Handler\PlainTextHandler;
-use Whoops\Run;
 
 class ErrorServiceProvider implements ServiceProviderInterface
 {
@@ -29,15 +30,19 @@ class ErrorServiceProvider implements ServiceProviderInterface
         /** @var UniformResourceLocator $locator */
         $locator = $container['locator'];
 
+        /** @var Platform $platform */
+        $platform = $container['platform'];
+
         // Setup Whoops-based error handler
         $errors = new Run;
+        $errors->registerPaths($platform->errorHandlerPaths());
 
         $error_page = new PrettyPageHandler;
         $error_page->setPageTitle('Crikey! There was an error...');
         $error_page->setEditor('sublime');
         foreach ($locator->findResources('gantry-assets://css/whoops.css') as $path) {
             $error_page->addResourcePath(dirname($path));
-     }
+        }
         $error_page->addCustomCss('whoops.css');
 
         $json_page = new JsonResponseHandler;

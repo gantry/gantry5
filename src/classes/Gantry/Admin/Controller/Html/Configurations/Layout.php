@@ -22,6 +22,7 @@ use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
+use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -125,7 +126,6 @@ class Layout extends HtmlController
         $configuration = $this->params['configuration'];
         $layout = json_decode($_POST['layout'], true);
         $title = isset($_POST['title']) ? $_POST['title'] : ucfirst($configuration);
-        $name = preg_replace('|[^a-z0-9_-]|', '', strtolower($title));
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
@@ -137,6 +137,12 @@ class Layout extends HtmlController
         $file = CompiledYamlFile::instance($filename);
         $file->settings(['inline' => 20]);
         $file->save(['children' => $layout]);
+
+        // Fire save event.
+        $event = new Event;
+        $event->controller = $this;
+        $event->layout = $layout;
+        $this->container->fireEvent('admin.layout.save', $event);
     }
 
     public function particle($type, $id)
@@ -160,7 +166,7 @@ class Layout extends HtmlController
 
         $name = isset($item->subtype) ? $item->subtype : $type;
 
-        if ($type == 'section' || $type == 'grid') {
+        if ($type == 'section' || $type == 'grid' || $type == 'offcanvas') {
             $prefix = "particles.{$type}";
             $defaults = [];
             $extra = null;
@@ -252,7 +258,7 @@ class Layout extends HtmlController
         $validator = new Blueprints();
 
         $name = $particle;
-        if ($particle == 'section' || $particle == 'grid') {
+        if ($particle == 'section' || $particle == 'grid' || $particle == 'offcanvas') {
             $type = $particle;
             $particle = null;
             $validator->embed('options', CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
@@ -297,7 +303,7 @@ class Layout extends HtmlController
                         continue;
                     }
                     if ($key == 'size') {
-                        $block[$key] = (int) $param;
+                        $block[$key] = round($param, 4);
                     }
                 }
 

@@ -140,8 +140,9 @@ class Menu extends AbstractMenu
      * We should keep the contents of the function similar to Joomla in order to review it against any changes.
      *
      * @param  array  $params
+     * @param  array  $items
      */
-    protected function getList(array $params)
+    public function getList(array $params, array $items)
     {
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
@@ -163,19 +164,13 @@ class Menu extends AbstractMenu
         //    $this->items = false;
         //}
 
-        $this->items = false;
-
-        if ($this->items === false) {
-            $config = $this->config();
-            $items   = isset($config['items']) ? $config['items'] : [];
-
+        if (1) {
             $path    = $this->base->tree;
             $start   = $params['startLevel'];
             $end     = $params['endLevel'];
 
             $menuItems = $this->getItemsFromPlatform($params);
 
-            $this->items = ['' => new Item($this, '', ['layout' => 'horizontal'])];
             foreach ($menuItems as $menuItem) {
                 if (($start && $start > $menuItem->level)
                     || ($end && $menuItem->level > $end)
@@ -190,7 +185,9 @@ class Menu extends AbstractMenu
                     'path' => $menuItem->route,
                     'alias' => $menuItem->alias,
                     'title' => $menuItem->title,
+                    'subtitle' => $menuItem->params->get('menu-anchor_title', ''),
                     'link' => $menuItem->link,
+                    'image' => $menuItem->params->get('menu_image', ''),
                     'icon_only' => !$menuItem->params->get('menu_text', 1)
                 ];
 
@@ -202,7 +199,7 @@ class Menu extends AbstractMenu
                 switch ($item->type) {
                     case 'separator':
                     case 'heading':
-                        // Separator and heading has no link.
+                        // These types have no link.
                         $link = null;
                         break;
 
@@ -247,9 +244,6 @@ class Menu extends AbstractMenu
                     $item->url(\JFilterOutput::ampReplace(htmlspecialchars($item->link)));
                 }
 
-                $item->subtitle = $menuItem->params->get('menu-anchor_title', '');
-                $item->image = $menuItem->params->get('menu_image', '');
-
                 switch ($menuItem->params->get('browserNav', 0))
                 {
                     default:
@@ -264,9 +258,6 @@ class Menu extends AbstractMenu
                         break;
                 }
             }
-
-            $this->sortAll();
-
             // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
             // $cache->store($this->items, $key);
         }

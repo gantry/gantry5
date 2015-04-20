@@ -27,8 +27,14 @@
 	.g-content {
 		background: $accent-color-1;
 		color: $white;
-		h1, h2, h3, h4, h5, h6, strong {
+		h1, h2, h3, h4, h5, h6, strong, i {
 			color: $white;
+		}
+		a {
+			color: lighten($accent-color-1, 35%);
+			&:hover {
+				color: $white;
+			}
 		}
 	}
 }
@@ -37,8 +43,14 @@
 	.g-content {
 		background: $accent-color-2;
 		color: $white;
-		h1, h2, h3, h4, h5, h6, strong {
+		h1, h2, h3, h4, h5, h6, strong, i {
 			color: $white;
+		}
+		a {
+			color: lighten($accent-color-2, 35%);
+			&:hover {
+				color: $white;
+			}
 		}
 	}
 }

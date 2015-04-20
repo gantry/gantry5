@@ -5,7 +5,10 @@
 {% endset %}
 
 {% if html|trim %}
-    <div class="g-container">
+    {% set attr_id = segment.attributes.id ? ' id="' ~ segment.attributes.id|e ~ '"' %}
+    {% set classes = segment.attributes.class ? ' ' ~ segment.attributes.class|e ~ '"' %}
+
+    <div{{ attr_id }} class="g-container{{ classes }}">
         {{ html }}
     </div>
 {% endif %}

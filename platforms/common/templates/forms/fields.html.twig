@@ -22,11 +22,3 @@
         {% endif %}
     {% endfor %}
 {% endif %}
-
-{% if data.extra %}
-    {% for name, value in data.extra %}
-        {% set field = {name: '_json.' ~ name} %}
-        {% set value = value|json_encode|e %}
-        {% include 'forms/fields/hidden/hidden.html.twig' %}
-    {% endfor %}
-{% endif %}

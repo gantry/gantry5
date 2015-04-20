@@ -1,7 +1,8 @@
 #g-page-surround {
-	@include transform(translateX(0));
-	@include transition(transform .3s ease-out);
+    @include transform(translate3d(0, 0, 0));
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
+
 #g-main {
 	padding: $section-padding 0;
 	background: $main-background;

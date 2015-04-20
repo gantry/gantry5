@@ -33,16 +33,18 @@ class Page
         return $this->getAttributes($this->config->get('page.html'));
     }
 
-    public function bodyAttributes()
+    public function bodyAttributes($attributes = [])
     {
-        return $this->getAttributes($this->config->get('page.body'));
+        return $this->getAttributes($this->config->get('page.body'), $attributes);
     }
 
-    protected function getAttributes($params)
+    protected function getAttributes($params, $extra = [])
     {
+        $params = array_merge_recursive($params, $extra);
+
         $list = [];
         foreach ($params as $param => $value) {
-            $value = array_unique((array) $value);
+            $value = array_filter(array_unique((array) $value));
             $list[] = $param . '="' . implode(' ', $value) . '"';
         }
 

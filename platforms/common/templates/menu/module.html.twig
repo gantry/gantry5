@@ -1,0 +1,42 @@
+{# Available variables:
+
+module.[id | title | position | enabled | access]
+#}
+<div data-mm-particle-stepone="{{ gantry.route('menu/particle') }}" class="menu-editor-extras">
+    <div class="card settings-block">
+        <h4>
+            Pick a Module
+        </h4>
+        <div class="inner-params">
+            <div class="g5-mm-modules-picker menu-editor-modules">
+                <div class="search">
+                    <input type="text" placeholder="Search..." />
+                    <i class="fa fa-search"></i>
+                </div>
+                <div class="modules-wrapper">
+                    <ul>
+                        {% for module in modules %}
+                        <li data-mm-module="{{ module.id }}" data-mm-type="module">
+                            <span class="module-infos">
+                                <span class="g-tooltip g-tooltip-right" data-title="{{ (module.enabled ? 'Published' : 'Unpublished') ~ ' / ' ~ module.access }}"><i class="fa fa-fw fa-{{ module.enabled ? 'toggle-on' : 'toggle-off' }}"></i></span>
+                            </span>
+                            <span class="module-wrapper">
+                                <span class="title" data-mm-title="{{ module.title }}" data-mm-filter="{{ module.title|e }}">
+                                    {{ module.title }}
+                                </span>
+                                <span class="sub-title font-small" data-mm-filter="{{ module.module|default('none')|e }}"><strong>Type</strong>: {{ module.module|default('none') }}</span>
+                                <span class="sub-title font-small"><strong>Position</strong>: {{ module.position|default('none') }}</span>
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="g-modal-actions">
+        {#<a class="button float-left">Defaults</a>#}
+        <button class="button button-primary" type="submit" data-mm-select disabled>Select <i class="fa fa-fw fa-chevron-right"></i></button>
+        <a class="button g5-dialog-close">Cancel</a>
+    </div>
+</div>

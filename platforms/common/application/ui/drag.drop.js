@@ -26,9 +26,9 @@ var DragDrop = new prime({
         catchClick: false
     },
 
-    EVENTS: DragEvents,
+    DRAG_EVENTS: DragEvents,
 
-    constructor: function (container, options) {
+    constructor: function(container, options) {
         this.container = $(container);
         if (!this.container) { return; }
         this.setOptions(options);
@@ -51,15 +51,21 @@ var DragDrop = new prime({
         this.attach();
     },
 
-    attach: function () {
-        this.container.delegate(this.EVENTS.START, this.options.delegate, this.bound('start'));
+    attach: function() {
+        this.DRAG_EVENTS.EVENTS.START.forEach(bind(function(event) {
+            this.container.delegate(event, this.options.delegate, this.bound('start'));
+        }, this));
     },
 
-    detach: function () {
-        this.container.undelegate(this.EVENTS.START, this.options.delegate, this.bound('start'));
+    detach: function() {
+        this.DRAG_EVENTS.EVENTS.START.forEach(bind(function(event) {
+            this.container.undelegate(event, this.options.delegate, this.bound('start'));
+        }, this));
     },
 
-    start: function (event, element) {
+    start: function(event, element) {
+        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+
         clearTimeout(this.scrollInterval);
         if (element.LMTooltip) { element.LMTooltip.remove(); }
         $('html').attribute('style', 'height: 100% !important');
@@ -110,9 +116,9 @@ var DragDrop = new prime({
             return false;
         }
 
-        var offset = Math.abs(this.origin.offset.x),
+        var offset  = Math.abs(this.origin.offset.x),
             columns = (this.element.parent().data('lm-blocktype') === 'grid' && this.element.parent().parent().data('lm-root')) ||
-                      (this.element.parent().parent().data('lm-blocktype') == 'container' && this.element.parent().parent().parent().data('lm-root'));
+                (this.element.parent().parent().data('lm-blocktype') == 'container' && this.element.parent().parent().parent().data('lm-root'));
 
         if (
             this.element.data('lm-blocktype') == 'grid' &&
@@ -120,9 +126,9 @@ var DragDrop = new prime({
             (this.element.parent().data('lm-blocktype') === 'section' && this.element.parent().parent().parent().data('lm-root'))
         ) { columns = false; }
 
-        // Resizing and only if it's not a non-visible section
+        // Resizing and only if it's not a non-visible (atoms) section
         if ((offset < 6 && this.element.parent().find(':last-child') !== this.element) || (columns && offset > 3 && offset < 10)) {
-            if (this.element.parent('[data-lm-blocktype="non-visible"]')) { return false; }
+            if (this.element.parent('[data-lm-blocktype="atoms"]')) { return false; }
 
             this.emit('dragdrop:resize', event, this.element, (this.element.parent('[data-mm-id]') || this.element).siblings(':not(.placeholder)'), this.origin.offset.x);
             return false;
@@ -135,26 +141,40 @@ var DragDrop = new prime({
             zIndex: 100
         });
 
-        $(document).on(this.EVENTS.MOVE, this.bound('move'));
-        $(document).on(this.EVENTS.STOP, this.bound('stop'));
+        this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
+            $('body').on(event, this.bound('move'));
+        }, this));
+
+        this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
+            $('body').on(event, this.bound('stop'));
+        }, this));
+
         this.emit('dragdrop:start', event, this.element);
 
         return this.element;
     },
 
-    stop: function (event) {
+    stop: function(event) {
+        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+
         clearTimeout(this.scrollInterval);
         $('html').attribute('style', null);
         if (!this.moved && this.options.catchClick) {
             // this is just a click
-            this.element.style({transform: this.origin.transform || 'translate(0, 0)'});
+            this.element.style({ transform: this.origin.transform || 'translate(0, 0)' });
             this.emit('dragdrop:stop', event, this.matched, this.element);
             this._removeStyleAttribute(this.element);
             this.emit('dragdrop:stop:animation', this.element);
             this.emit('dragdrop:click', event, this.element);
 
-            $(document).off(this.EVENTS.MOVE, this.bound('move'));
-            $(document).off(this.EVENTS.STOP, this.bound('stop'));
+            this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
+                $('body').off(event, this.bound('move'));
+            }, this));
+
+            this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
+                $('body').off(event, this.bound('stop'));
+            }, this));
+
             this.element = null;
 
             return;
@@ -162,7 +182,18 @@ var DragDrop = new prime({
 
         var settings = { duration: '250ms' };
 
-        if (this.removeElement) { return this.emit('dragdrop:stop:erase', event, this.element); }
+        if (this.removeElement) {
+            this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
+                $('body').off(event, this.bound('move'));
+            }, this));
+
+            this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
+                $('body').off(event, this.bound('stop'));
+            }, this));
+
+            return this.emit('dragdrop:stop:erase', event, this.element);
+        }
+
         if (this.element) {
 
             this.emit('dragdrop:stop', event, this.matched, this.element);
@@ -176,9 +207,9 @@ var DragDrop = new prime({
 
             if (!this.matched) {
 
-                settings.callback = bind(function (element) {
+                settings.callback = bind(function(element) {
                     this._removeStyleAttribute(element);
-                    setTimeout(bind(function(){
+                    setTimeout(bind(function() {
                         this.emit('dragdrop:stop:animation', element);
                     }, this), 1);
                 }, this, this.element);
@@ -199,12 +230,20 @@ var DragDrop = new prime({
             }
         }
 
-        $(document).off(this.EVENTS.MOVE, this.bound('move'));
-        $(document).off(this.EVENTS.STOP, this.bound('stop'));
+        this.DRAG_EVENTS.EVENTS.MOVE.forEach(bind(function(event) {
+            $('body').off(event, this.bound('move'));
+        }, this));
+
+        this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
+            $('body').off(event, this.bound('stop'));
+        }, this));
+
         this.element = null;
     },
 
-    move: function (event) {
+    move: function(event) {
+        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+
         if (this.options.catchClick) {
             var didItMove = {
                 x: event.changedTouches ? event.changedTouches[0].pageX : event.pageX,
@@ -226,29 +265,29 @@ var DragDrop = new prime({
         var clientX = event.clientX || (event.touches && event.touches[0].clientX) || 0,
             clientY = event.clientY || (event.touches && event.touches[0].clientY) || 0,
             overing = document.elementFromPoint(clientX, clientY),
-            isGrid = this.element.data('lm-blocktype') === 'grid';
+            isGrid  = this.element.data('lm-blocktype') === 'grid';
 
 
         // Logic to auto-scroll on drag
         var scrollHeight = this.scrollHeight,
-            Height = document.body.clientHeight,
-            Scroll = document.body.scrollTop;
-        
+            Height       = document.body.clientHeight,
+            Scroll       = window.pageYOffset;
+
         clearTimeout(this.scrollInterval);
         if (!overing) { return; }
 
         if (!$(overing).matches('#trash') && !$(overing).parent('#trash')) {
-            var st, sl;
+            var st, sl, trash = $('#g5-container #trash');
             if (clientY + 50 >= Height && Scroll + Height < scrollHeight) {
                 this.scrollInterval = setInterval(function() {
                     sl = (window.pageXOffset || document.documentElement.scrollLeft) - (document.documentElement.clientLeft || 0);
-                    st = (window.pageYOffset || document.documentElement.scrollTop)  - (document.documentElement.clientTop || 0);
+                    st = (window.pageYOffset || document.documentElement.scrollTop) - (document.documentElement.clientTop || 0);
                     window.scrollTo(sl, Math.min(scrollHeight, st + 4));
                 }, 8);
-            } else if (clientY - 50 <= 100 && scrollHeight > 0) {
+            } else if (clientY - 50 <= (trash ? trash[0].offsetHeight : 0) && scrollHeight > 0) {
                 this.scrollInterval = setInterval(function() {
                     sl = (window.pageXOffset || document.documentElement.scrollLeft) - (document.documentElement.clientLeft || 0);
-                    st = (window.pageYOffset || document.documentElement.scrollTop)  - (document.documentElement.clientTop || 0);
+                    st = (window.pageYOffset || document.documentElement.scrollTop) - (document.documentElement.clientTop || 0);
                     window.scrollTo(sl, Math.max(0, st - 4));
                 }, 8);
             }
@@ -265,8 +304,8 @@ var DragDrop = new prime({
         this.matched = $(overing).matches(this.options.droppables) ? overing : ($(overing).parent(this.options.droppables) || [false])[0];
         this.isPlaceHolder = $(overing).matches('[data-lm-placeholder]') ? true : ($(overing).parent('[data-lm-placeholder]') ? true : false);
 
-        var deltaX = this.lastX - clientX,
-            deltaY = this.lastY - clientY,
+        var deltaX    = this.lastX - clientX,
+            deltaY    = this.lastY - clientY,
             direction = Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0 && 'left' ||
                 Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0 && 'right' ||
                 Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0 && 'up' ||
@@ -315,7 +354,7 @@ var DragDrop = new prime({
         this.emit('dragdrop:move', event, this.element);
     },
 
-    _removeStyleAttribute: function (element) {
+    _removeStyleAttribute: function(element) {
         element = $(element || this.element);
         if (element.data('mm-id')) { return; }
 

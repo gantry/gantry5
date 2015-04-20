@@ -1,5 +1,7 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
+{% set settings_url = gantry.platform.settings %}
+{% set settings_key = gantry.platform.settings_key %}
 
 {% block content %}
     <div id="g5-container" class="g-container">
@@ -7,10 +9,19 @@
             <div class="g-grid">
                 <div class="g-block main-block">
                     <section id="main">
-                        <div data-g5-content>
+                        <div data-g5-content="">
                             {% block gantry %}
-                                <div class="g-content" data-g5-content>
-                                    <h1><i class="fa fa-fw fa-plug"></i> Available Themes</h1>
+                                <div class="g-content" data-g5-content="">
+                                    <div class="g-grid overview-header">
+                                        <div class="g-block">
+                                            <h2 class="theme-title"><i class="fa fa-fw fa-plug"></i> Available Themes</h2>
+                                        </div>
+                                    {% if settings_url %}
+                                        <div class="g-block">
+                                            <a class="button button-primary" href="{{ settings_url|e }}" data-settings-key="{{ settings_key|e }}"><i class="fa fa-cog"></i> Platform Settings</a>
+                                        </div>
+                                    {% endif %}
+                                    </div>
                                     <div class="themes cards-wrapper g-grid fixed-blocks">
                                         {% if themes|length %}
                                         {% for id, theme in themes %}

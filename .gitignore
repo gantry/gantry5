@@ -36,3 +36,5 @@ platforms/wordpress/gantryadmin/cache
 platforms/common/node_modules
 assets/application/node_modules
 assets/common/application/node_modules
+assets/common/node_modules
+engines/common/nucleus/node_modules

@@ -23,16 +23,16 @@ class Page extends Base\Page
         return $this->getAttributes($attributes);
     }
 
-    public function bodyAttributes()
+    public function bodyAttributes($attributes = [])
     {
-        $attributes = (array) $this->config->get('page.body', []);
-        if (!empty($attributes['class'])) {
-            $attributes['class'] = array_merge((array) $attributes['class'], explode(' ', $this->getBodyClass()));
+        $baseAttributes = (array) $this->config->get('page.body', []);
+        if (!empty($baseAttributes['class'])) {
+            $baseAttributes['class'] = array_merge((array) $baseAttributes['class'], explode(' ', $this->getBodyClass()));
         } else {
-            $attributes['class'] = explode(' ', $this->getBodyClass());
+            $baseAttributes['class'] = explode(' ', $this->getBodyClass());
         }
 
-        return $this->getAttributes(array_unique($attributes));
+        return $this->getAttributes($baseAttributes, $attributes);
     }
 
     public function getChildHtml($position)

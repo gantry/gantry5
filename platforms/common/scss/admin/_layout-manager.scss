@@ -67,7 +67,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .section, .non-visible-section {
+        .section, .atoms-section, .offcanvas-section {
             background: $white;
             margin: 14px 0;
             padding: 8px;
@@ -119,6 +119,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 box-shadow: none;
                 background-color: #f6f6f6;
                 min-height: 58px;
+
+                &.original-placeholder {
+                    margin-top: 0;
+                }
 
                 // handles
                 &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
@@ -184,38 +188,53 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .non-visible-section {
+        .atoms-section, .offcanvas-section {
             background-color: transparent;
             margin-top: 28px;
             border-top: 1px solid #ddd;
 
             .g-grid {
                 background: $white;
-                &:empty:after {
-                    content: "Drop non-visible atoms here...";
-                }
+            }
+        }
 
+        .atoms-section {
+            &:empty:after {
+                content: "Drop atoms here...";
+            }
+
+            .g-grid {
                 &:not(:empty):not(.no-hover):before, &:not(:empty):not(.no-hover):not(.no-gear):after {
                     display: none;
                     opacity: 0;
                     visibility: hidden;
                 }
 
-                > .g-block {
-                    > .particle, > .position, > .spacer, > .pagecontent {
-                        &:after {
-                            display: none;
-                            opacity: 0;
-                            visibility: hidden;
-                        }
-                    }
+                > .g-tooltip {
+                    display: none;
                 }
+            }
 
-                .g-block:last-child {
-                    .particle, .position, .spacer, .pagecontent, .atom {
-                        margin-right: 0;
+            > .g-block {
+                > .particle, > .position, > .spacer, > .pagecontent {
+                    &:after {
+                        display: none;
+                        opacity: 0;
+                        visibility: hidden;
                     }
                 }
+            }
+
+            .g-block:last-child {
+                .particle, .position, .spacer, .pagecontent, .atom {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        .offcanvas-section {
+            .g-grid:empty:after {
+                content: "Drop particles here...";
             }
         }
 
@@ -264,7 +283,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .section > .g-grid > .g-block:last-child, .section > .g-lm-container > .g-grid > .g-block:last-child {
+        .section > .g-grid > .g-block:last-child, .section > .g-lm-container > .g-grid > .g-block:last-child, .offcanvas-section > .g-grid > .g-block:last-child, {
             .particle, .position, .spacer, .pagecontent, .atom {
                 margin-right: 0;
             }
@@ -437,7 +456,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
 
         .block-has-changes {
-            &:not(.section):not(.non-visible-section) {
+            &:not(.section):not(.atoms-section):not(.offcanvas-section) {
                 box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
             }
 
@@ -620,7 +639,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     border-right: 1px solid darken($main-bg, 5);
 }
 
-.g5-lm-particles-picker {
+.g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker {
     ul, li {
         @extend %list-reset;
     }
@@ -637,7 +656,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         border-radius: $core-border-radius;
         cursor: move;
 
-        &[data-lm-nodrag] {
+        &[data-lm-nodrag], &[data-mm-nodrag] {
             cursor: default;
         }
 
@@ -653,22 +672,23 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             margin-bottom: 0;
         }
 
-        &[data-lm-blocktype="spacer"] {
+        &[data-lm-blocktype="spacer"], &[data-mm-blocktype="spacer"] {
             background-color: $spacer;
             color: #666;
             border: 1px solid darken($medium-gray, 5);
         }
 
-        &.g5-lm-particle-spacer[data-lm-disabled] {
+        &.g5-lm-particle-spacer[data-lm-disabled], &.g5-mm-particle-spacer[data-mm-disabled] {
             color: #fff;
         }
 
-        &[data-lm-blocktype="position"] {
+        &[data-lm-blocktype="position"], &[data-mm-blocktype="position"],
+        &[data-lm-blocktype="module"], &[data-mm-blocktype="module"] {
             color: #fff;
             background-color: $position;
         }
 
-        &[data-lm-blocktype="particle"] {
+        &[data-lm-blocktype="particle"], &[data-mm-blocktype="particle"] {
             color: #fff;
             background-color: $particle;
         }
@@ -695,7 +715,8 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         i {
             position: absolute;
             right: 10px;
-            top: 10px;
+            top: 50%;
+            margin-top: -12px;
         }
     }
 }

@@ -39,7 +39,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
     protected $items;
 
     protected $defaults = [
-        'menu' => 'mainmenu',
+        'menu' => '',
         'base' => '/',
         'startLevel' => 1,
         'endLevel' => 0,
@@ -70,7 +70,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
 
         $menus = $this->getMenus();
 
-        if ($params['menu'] === null) {
+        if (!$params['menu']) {
             $params['menu'] = $this->getDefaultMenuName();
         }
         if (!in_array($params['menu'], $menus)) {
@@ -83,9 +83,26 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
         if ($menu) {
             $instance->override = true;
             $instance->config = $menu;
+        } else {
+            $instance->config = null;
         }
 
-        $instance->getList($params);
+        $config = $instance->config();
+        $items = isset($config['items']) ? $config['items'] : [];
+
+        // Create menu structure.
+        $instance->init();
+
+        // Get menu items from the system (if not specified otherwise).
+        if ($config->get('settings.type') !== 'custom') {
+            $instance->getList($params, $items);
+        }
+
+        // Add custom menu items.
+        $instance->addCustom($params, $items);
+
+        // Sort menu items.
+        $instance->sortAll();
 
         return $instance;
     }
@@ -197,6 +214,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
         return $item->path == $this->getActive()->path;
     }
 
+    public function init()
+    {
+        $this->items = ['' => new Item($this, '', ['layout' => 'horizontal'])];
+    }
+
     public function add(Item $item)
     {
         $this->items[$item->path] = $item;
@@ -205,7 +227,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
         if (isset($this->items[$item->parent_id])) {
             $this->items[$item->parent_id]->addChild($item);
         } else {
-            throw new \RuntimeException('Internal menu structure error');
+            throw new \RuntimeException(sprintf("Internal menu structure error: Parent '%s' not in menu.", $item->parent_id));
         }
 
         return $this;
@@ -236,14 +258,51 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
      * Get a list of the menu items.
      *
      * @param  array  $params
+     * @param  array  $items
      */
-    abstract protected function getList(array $params);
+    abstract public function getList(array $params, array $items);
+
+    /**
+     * Add custom menu items.
+     *
+     * @param  array  $params
+     * @param array $items
+     */
+    public function addCustom(array $params, array $items)
+    {
+        $start   = $params['startLevel'];
+        $end     = $params['endLevel'];
+
+        $config = $this->config();
+        $type = $config->get('settings.type');
+
+        // Add custom menu elements.
+        foreach ($items as $route => $item) {
+            if ($type !== 'custom' && (!isset($item['type']) || $item['type'] !== 'particle')) {
+                continue;
+            }
+
+            $tree = explode('/', $route);
+            $parentTree = $tree;
+            array_pop($parentTree);
+
+            $item['level'] = $level = count($tree);
+            $item['parent_id'] = implode('/', $parentTree);
+            if (($start && $start > $level)
+                || ($end && $level > $end)
+                || ($start > 1 && !in_array($tree[$start - 2], $route))) {
+                continue;
+            }
+            $item = new Item($this, $route, $item);
+            $this->add($item);
+        }
+    }
 
     /**
      * @param array $ordering
      * @param string $path
      */
-    protected function sortAll(array &$ordering = null, $path = '')
+    public function sortAll(array &$ordering = null, $path = '')
     {
         if (!$ordering) {
             $config = $this->config();

@@ -9,7 +9,7 @@
         <div class="card settings-block">
             <h4>
                 {% if title %}
-                    <span data-title-editable="{{ data.data[title]|e }}" data-collection-key="{{ (prefix ~ title)|fieldName }}" class="title">
+                    <span data-title-editable="{{ data.data[title]|trim|e }}" data-collection-key="{{ (prefix ~ title)|fieldName }}" class="title">
                         {{ data.data[title]|e }}
                     </span>
                     <i class="fa fa-pencil font-small" data-title-edit=""></i>

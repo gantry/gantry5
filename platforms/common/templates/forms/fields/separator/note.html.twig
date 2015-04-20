@@ -1,0 +1,5 @@
+{% extends "forms/field.html.twig" %}
+
+{% block field %}
+    <div class="{{ field.class|e|default("alert alert-warning") }}">{{ field.content|trans }}</div>
+{% endblock %}

@@ -200,16 +200,16 @@ trait ThemeTrait
 
         $number = round($text, 1);
         $number = max(5, $number);
-        $number = $number == 100 ? 100 : min(95, $number);
+        $number = (string) ($number == 100 ? 100 : min(95, $number));
 
         static $sizes = array(
-            '33.3' => 'size-1-3',
-            '16.7' => 'size-1-6',
-            '14.3' => 'size-1-7',
-            '12.5' => 'size-1-8',
-            '11.1' => 'size-1-9',
-            '9.1'  => 'size-1-11',
-            '8.3'  => 'size-1-12'
+            '33.3' => 'size-33-3',
+            '16.7' => 'size-16-7',
+            '14.3' => 'size-14-3',
+            '12.5' => 'size-12-5',
+            '11.1' => 'size-11-1',
+            '9.1'  => 'size-9-1',
+            '8.3'  => 'size-8-3'
         );
 
         return isset($sizes[$number]) ? ' ' . $sizes[$number] : 'size-' . (int) $number;

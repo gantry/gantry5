@@ -5,9 +5,25 @@
     {% endblock %}
 {% endset %}
 
+{% set offcanvas = null %}
+{%- for segment in gantry.theme.segments if segment.type == 'offcanvas' %}
+    {% set offcanvas = segment %}
+{% endfor %}
+
+{%- set page_offcanvas %}
+    {% block page_offcanvas %}
+        {% if offcanvas %}
+            {% include '@nucleus/' ~ offcanvas.type ~ '.html.twig' with { 'segment': offcanvas } %}
+        {% endif %}
+    {% endblock %}
+{% endset %}
+
+{% set page_offcanvas = page_offcanvas|trim ?: '' %}
+{% set offcanvas_position = page_offcanvas ? offcanvas.attributes.position|default('g-offcanvas-left') : '' %}
+
 {%- set page_layout %}
     {% block page_layout %}
-    {% for segment in gantry.theme.segments %}
+    {% for segment in gantry.theme.segments if segment.type != 'offcanvas' %}
         {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
     {% endfor %}
     {% endblock %}
@@ -32,14 +48,18 @@
     {% block page_head -%}
         {% include 'partials/page_head.html.twig' %}
     {%- endblock %}
-
     {% block page_body -%}
-    <body{{ gantry.page.bodyAttributes }}>
+    <body{{ gantry.page.bodyAttributes({'class': [offcanvas_position]}) }}>
+        {{ page_offcanvas }}
         <div id="g-page-surround">
+            {% if page_offcanvas|trim %}
+            <div class="g-offcanvas-toggle" data-offcanvas-toggle><i class="fa fa-fw fa-bars"></i></div>
+            {% endif %}
             {{ page_top }}
             {{ page_layout }}
             {{ page_bottom }}
         </div>
+        <script type="text/javascript" src="{{ url('gantry-assets://js/main.js') }}"></script>
     </body>
     {%- endblock %}
 
