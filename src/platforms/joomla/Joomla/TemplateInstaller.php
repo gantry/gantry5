@@ -139,4 +139,122 @@ class TemplateInstaller
         $db->setQuery($query);
         $db->execute();
     }
+
+    protected function getComponent()
+    {
+        static $component_id;
+
+        if (!$component_id) {
+            // Get Gantry component id.
+            $component_id = \JComponentHelper::getComponent('com_gantry5')->id;
+        }
+
+        return $component_id;
+    }
+
+    /**
+     * @param array $item [menutype, title, alias, link, template_style_id, params]
+     * @throws \Exception
+     */
+    public function addMenuItem(array $item)
+    {
+        $component_id = $this->getComponent();
+
+        $table = \JTable::getInstance('menu');
+
+        // Defaults for the item.
+        $item += [
+            'menutype'     => 'mainmenu',
+            'title'        => 'Home',
+            'alias'        => 'gantry5',
+            'link'         => 'index.php?option=com_gantry5&view=custom',
+            'type'         => 'component',
+            'published'    => 1,
+            'parent_id'    => 1,
+            'component_id' => $component_id,
+            'access'       => 1,
+            'template_style_id' => 0,
+            'params'       => '{}',
+            'home'         => 0,
+            'language'     => '*',
+            'client_id'    => 0
+        ];
+
+        $table->setLocation(1, 'last-child');
+
+        if (!$table->bind($item) || !$table->check() || !$table->store()) {
+            throw new \Exception($table->getError());
+        }
+
+        /** @var \JCache|\JCacheController $cache */
+        $cache = \JFactory::getCache();
+        $cache->clean('mod_menu');
+
+        return $table->id;
+    }
+
+    /**
+     * @param string $type
+     * @param string $title
+     * @param string $description
+     * @throws \Exception
+     */
+    public function createMenu($type, $title, $description)
+    {
+        $table = \JTable::getInstance('MenuType');
+        $data  = array(
+            'menutype'    => $type,
+            'title'       => $title,
+            'description' => $description
+        );
+
+        if (!$table->bind($data) || !$table->check()) {
+            // Menu already exists, do nothing
+            return;
+        }
+
+        if (!$table->store()) {
+            throw new \Exception($table->getError());
+        }
+    }
+
+    /**
+     * @param string $type
+     * @param bool $force
+     */
+    public function deleteMenu($type, $force = false)
+    {
+        if ($force) {
+            $this->unsetHome($type);
+        }
+
+        $table = \JTable::getInstance('MenuType');
+        $table->load(array('menutype' => $type));
+
+        if ($table->id) {
+            $success = $table->delete();
+
+            if (!$success) {
+                \JFactory::getApplication()->enqueueMessage($table->getError(), 'error');
+            }
+        }
+
+        /** @var \JCache|\JCacheController $cache */
+        $cache = \JFactory::getCache();
+        $cache->clean('mod_menu');
+    }
+
+    public function unsetHome($type)
+    {
+        // Update the mapping for menu items that this style IS assigned to.
+        $db = \JFactory::getDbo();
+
+        $query = $db->getQuery(true)
+            ->update('#__menu')
+            ->set('home=0')
+            ->where('menutype=' . $db->quote($type))
+            ->where('client_id=0');
+        $db->setQuery($query);
+        $db->execute();
+    }
 }
