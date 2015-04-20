@@ -4,7 +4,7 @@
 	color: $showcase-text-color;
 
 	a {
-		color: lighten($showcase-background, 60%);
+		color: lighten($showcase-background, 50%);
 		&:hover {
 			color: $showcase-text-color;
 		}
