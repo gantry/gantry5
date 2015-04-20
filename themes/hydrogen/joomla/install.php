@@ -29,8 +29,7 @@ class G5_HydrogenInstallerScript
 
     public function postflight($type, $parent)
     {
-        if (in_array($type, array('install', 'discover_install')))
-        {
+        if (in_array($type, array('install', 'discover_install'))) {
             $installer = new Gantry\Joomla\TemplateInstaller($parent);
 
             $default = $installer->getDefaultStyle();
@@ -48,7 +47,22 @@ class G5_HydrogenInstallerScript
 
             // Add second style for the main page and assign all home pages to it.
             $style = $installer->addStyle('TPL_G5_HYDROGEN_HOME_STYLE', array('configuration' => 'home'));
-            $installer->assignHomeStyle($style);
+
+            // Create sample pages.
+            try {
+                $installer->deleteMenu('hydrogen', true);
+                $installer->createMenu('hydrogen', 'Hydrogen Template', 'Sample menu.');
+                $installer->addMenuItem([
+                    'menutype' => 'hydrogen',
+                    'title' => 'Hydrogen Home',
+                    'alias' => 'hydrogen',
+                    'template_style_id' => $style->id,
+                    'home' => 1
+                ]);
+            } catch (Exception $e) {
+                $app = JFactory::getApplication();
+                $app->enqueueMessage(JText::sprintf($e->getMessage()), 'error');
+            }
         }
     }
 }
