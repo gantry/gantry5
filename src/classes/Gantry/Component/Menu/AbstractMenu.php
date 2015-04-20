@@ -39,7 +39,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
     protected $items;
 
     protected $defaults = [
-        'menu' => 'mainmenu',
+        'menu' => '',
         'base' => '/',
         'startLevel' => 1,
         'endLevel' => 0,
@@ -70,7 +70,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
 
         $menus = $this->getMenus();
 
-        if ($params['menu'] === null) {
+        if (!$params['menu']) {
             $params['menu'] = $this->getDefaultMenuName();
         }
         if (!in_array($params['menu'], $menus)) {
