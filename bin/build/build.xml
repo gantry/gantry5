@@ -72,7 +72,7 @@
         </replacetokens>
     </filterchain>
 
-    <target name="dist" depends="preflight,info,mkdir,backup,build-installer,build-component,build-library,build-nucleus,build-plugins,build-themes,package,postflight" />
+    <target name="dist" depends="preflight,info,mkdir,backup,assets-prod,build-installer,build-component,build-library,build-nucleus,build-plugins,build-themes,assets-dev,package,postflight" />
 
     <!-- Preflight check to see if we can even run the build script -->
     <target name="preflight">
@@ -84,10 +84,20 @@
         <trycatch>
             <try>
                 <!-- Fail the build if npm is not installed -->
-                <exec command="npm -v" checkreturn="true" passthru="true" />
+                <exec command="npm -v" checkreturn="true" passthru="true" output="/dev/null" />
             </try>
             <catch>
                 <fail message="Please install Node Package Manager" />
+            </catch>
+        </trycatch>
+
+        <trycatch>
+            <try>
+                <!-- Fail the build if npm is not installed -->
+                <exec command="npm list -g gulp|grep gulp" checkreturn="true" passthru="true" output="/dev/null" />
+            </try>
+            <catch>
+                <fail message="Please install Gulp globally" />
             </catch>
         </trycatch>
     </target>
@@ -128,6 +138,11 @@
     </target>
 
     <!-- Initialize all project related files, at this point we are past any "location" setup work so its safe to proceed -->
+    <target name="assets-prod">
+        <echo message="Removing Sourcemaps and compressing Assets (CSS/JS)..." />
+        <exec command="gulp --prod" checkreturn="true" passthru="true" />
+    </target>
+
     <target name="build-installer">
         <echo message="Building Installer.." />
 
@@ -161,17 +176,20 @@
                 <exclude name=".sass-cache/"/>
                 <exclude name="application/"/>
                 <exclude name="node_modules/"/>
-                <exclude name="Gruntfile.js"/>
+                <exclude name="gulpfile.js"/>
                 <exclude name="package.json"/>
                 <exclude name="scss.sh"/>
                 <exclude name="**/*.js.map"/>
+                <exclude name="**/*.css.map"/>
             </fileset>
             <fileset dir="${path.platforms}/joomla/com_gantry5/admin">
                 <exclude name=".sass-cache/"/>
                 <exclude name="common/"/>
-                <exclude name="Gruntfile.js"/>
+                <exclude name="gulpfile.js"/>
                 <exclude name="package.json"/>
                 <exclude name="scss.sh"/>
+                <exclude name="**/*.js.map"/>
+                <exclude name="**/*.css.map"/>
             </fileset>
         </copy>
 
@@ -250,11 +268,19 @@
             <fileset dir="${path.assets}/common">
                 <exclude name="application/**"/>
                 <exclude name="**/*.js.map"/>
+                <exclude name="**/*.css.map"/>
                 <exclude name="**/*.sh"/>
+                <exclude name="node_modules/"/>
+                <exclude name="gulpfile.js"/>
+                <exclude name="package.json"/>
             </fileset>
             <fileset dir="${path.assets}/joomla">
                 <exclude name="**/*.js.map"/>
+                <exclude name="**/*.css.map"/>
                 <exclude name="**/*.sh"/>
+                <exclude name="node_modules/"/>
+                <exclude name="gulpfile.js"/>
+                <exclude name="package.json"/>
             </fileset>
         </copy>
     </target>
@@ -265,6 +291,13 @@
         <copy todir="${tmp_dir}/packages/gantry5_nucleus" overwrite="true">
             <fileset dir="${path.engines}/common">
                 <exclude name="**/*.sh"/>
+                <exclude name="**/.sass-cache/"/>
+                <exclude name="**/node_modules/"/>
+                <exclude name="**/gulpfile.js"/>
+                <exclude name="**/package.json"/>
+                <exclude name="**/scss.sh"/>
+                <exclude name="**/*.js.map"/>
+                <exclude name="**/*.css.map"/>
             </fileset>
             <fileset dir="${path.engines}/joomla">
                 <exclude name="**/*.sh"/>
@@ -353,6 +386,11 @@
                 </phingcall>
             </then>
         </if>
+    </target>
+
+    <target name="assets-dev">
+        <echo message="Reverting Assets to Dev (CSS/JS)..." />
+        <exec command="gulp" checkreturn="true" passthru="true" />
     </target>
 
     <target name="package">
