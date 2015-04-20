@@ -461,7 +461,7 @@ children:
                 id: dcbf7c39-89a1-41bf-8878-92020f172dbc
                 type: particle
                 subtype: mobile-menu
-                title: "\n                                Mobile Menu\n                            "
+                title: "Mobile Menu"
                 attributes:
                   enabled: 1
                 children: {  }
