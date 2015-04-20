@@ -36,9 +36,9 @@
 
 					> .g-menu-item-container {
 						> .g-selected {
-								background: darken($navigation-background, 6%);
-							}
+							background: darken($navigation-background, 6%);
 						}
+					}
 				}
 
 				&.active {
