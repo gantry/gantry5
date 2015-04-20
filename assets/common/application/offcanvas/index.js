@@ -61,9 +61,15 @@ var Offcanvas = new prime({
         this.dragging = false;
         this.opened = false;
         this.preventOpen = false;
-        this.offsetX = {
-            start: 0,
-            current: 0
+        this.offset = {
+            x: {
+                start: 0,
+                current: 0
+            },
+            y: {
+                start: 0,
+                current: 0
+            }
         };
 
         this.bodyEl = $('body');
@@ -121,7 +127,7 @@ var Offcanvas = new prime({
                 end: msPointerSupported ? 'MSPointerUp' : 'touchend'
             };
 
-        this._scrollBound = decouple(this.htmlEl, 'scroll', this.bound('_bodyScroll'));
+        this._scrollBound = decouple(window, 'scroll', this.bound('_bodyScroll'));
         this.bodyEl.on(touch.move, this.bound('_bodyMove'));
         this.panel.on(touch.start, this.bound('_touchStart'));
         this.panel.on('touchcancel', this.bound('_touchCancel'));
@@ -160,7 +166,7 @@ var Offcanvas = new prime({
                 end: msPointerSupported ? 'MSPointerUp' : 'touchend'
             };
 
-        this.htmlEl[0].removeEventListener('scroll', this._scrollBound);
+        window.removeEventListener('scroll', this._scrollBound);
         this.bodyEl.off(touch.move, this.bound('_bodyMove'));
         this.panel.off(touch.start, this.bound('_touchStart'));
         this.panel.off('touchcancel', this.bound('_touchCancel'));
@@ -235,7 +241,7 @@ var Offcanvas = new prime({
 
     _translateXTo: function(x) {
         var panel = this.panel[0];
-        this.offsetX.current = x;
+        this.offset.x.current = x;
 
         panel.style[prefix.css + 'transform'] = panel.style.transform = 'translate3d(' + x + 'px, 0, 0)';
     },
@@ -253,6 +259,8 @@ var Offcanvas = new prime({
     _bodyMove: function() {
         if (this.moved) { event.preventDefault(); }
         this.dragging = true;
+
+        return false;
     },
 
     _touchStart: function(event) {
@@ -261,7 +269,8 @@ var Offcanvas = new prime({
         this.moved = false;
         this.opening = false;
         this.dragging = false;
-        this.offsetX.start = event.touches[0].pageX;
+        this.offset.x.start = event.touches[0].pageX;
+        this.offset.y.start = event.touches[0].pageY;
         this.preventOpen = (!this.opened && this.offcanvas[0].clientWidth !== 0);
     },
 
@@ -275,11 +284,13 @@ var Offcanvas = new prime({
 
         var placement = (this.bodyEl.hasClass('g-offcanvas-right') ? -1 : 1), // 1: left, -1: right
             place = placement < 0 ? 'right' : 'left',
-            diffX = clamp(event.touches[0].clientX - this.offsetX.start, -this.options.padding, this.options.padding),
-            translateX = this.offsetX.current = diffX,
+            diffX = clamp(event.touches[0].clientX - this.offset.x.start, -this.options.padding, this.options.padding),
+            translateX = this.offset.x.current = diffX,
+            diffY = Math.abs(event.touches[0].pageY - this.offset.y.start),
             overlayOpacity;
 
         if (Math.abs(translateX) > this.options.padding) { return; }
+        if (diffY > 5 && !this.moved) { return; }
         if (Math.abs(diffX) > 0) {
             this.opening = true;
 
@@ -309,9 +320,9 @@ var Offcanvas = new prime({
 
     _touchEnd: function(event) {
         if (this.moved) {
-            var tolerance = Math.abs(this.offsetX.current) > this.tolerance,
+            var tolerance = Math.abs(this.offset.x.current) > this.tolerance,
                 placement = this.bodyEl.hasClass('g-offcanvas-right') ? true : false,
-                direction = !placement ? (this.offsetX.current < 0) : (this.offsetX.current > 0);
+                direction = !placement ? (this.offset.x.current < 0) : (this.offset.x.current > 0);
 
             this.opening = tolerance ? !direction : direction;
             this.opened = !this.opening;
@@ -319,6 +330,8 @@ var Offcanvas = new prime({
         }
 
         this.moved = false;
+
+        return true;
     },
 
     _checkTogglers: function(mutator) {
