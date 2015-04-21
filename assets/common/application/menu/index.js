@@ -226,7 +226,6 @@ var Menu = new prime({
     },
 
     _checkQuery: function(mq) {
-
         var selectors = this.options.selectors,
             mobileContainer = $(selectors.mobileContainer),
             mainContainer = $(selectors.mainContainer),

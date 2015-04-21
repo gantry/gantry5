@@ -10,6 +10,7 @@ var ready     = require('domready'),
     forEach   = require('mout/array/forEach'),
     mapNumber = require('mout/math/map'),
     clamp     = require('mout/math/clamp'),
+    timeout   = require('mout/function/timeout'),
     trim      = require('mout/string/trim'),
     decouple  = require('../utils/decouple'),
     Bound     = require('prime-util/prime/bound'),
@@ -336,8 +337,8 @@ var Offcanvas = new prime({
 
     _checkTogglers: function(mutator) {
         var togglers = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
-            blocks = this.offcanvas.search('.g-block'),
-            mobileContainer = $('#g-mobilemenu-container');
+            mobileContainer = $('#g-mobilemenu-container'),
+            blocks;
 
         // if there is no mobile menu there's no need to check the offcanvas mutation
         if (!mobileContainer) {
@@ -348,14 +349,18 @@ var Offcanvas = new prime({
         if (!togglers || (mutator && ((mutator.target || mutator.srcElement) !== mobileContainer[0]))) { return; }
         if (this.opened) { this.close(); }
 
-        var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
-        togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
+        timeout(function(){
+            blocks = this.offcanvas.search('.g-block');
+            var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
 
-        if (!shouldCollapse && !this.attached) { this.attach(); }
-        else if (shouldCollapse && this.attached) {
-            this.detach();
-            this.attachMutationEvent();
-        }
+            togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
+
+            if (!shouldCollapse && !this.attached) { this.attach(); }
+            else if (shouldCollapse && this.attached) {
+                this.detach();
+                this.attachMutationEvent();
+            }
+        }, 0, this);
     }
 });
 

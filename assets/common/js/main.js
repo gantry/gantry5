@@ -248,7 +248,6 @@ var Menu = new prime({
     },
 
     _checkQuery: function(mq) {
-
         var selectors = this.options.selectors,
             mobileContainer = $(selectors.mobileContainer),
             mainContainer = $(selectors.mainContainer),
@@ -280,6 +279,7 @@ var ready     = require('domready'),
     forEach   = require('mout/array/forEach'),
     mapNumber = require('mout/math/map'),
     clamp     = require('mout/math/clamp'),
+    timeout   = require('mout/function/timeout'),
     trim      = require('mout/string/trim'),
     decouple  = require('../utils/decouple'),
     Bound     = require('prime-util/prime/bound'),
@@ -606,8 +606,8 @@ var Offcanvas = new prime({
 
     _checkTogglers: function(mutator) {
         var togglers = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
-            blocks = this.offcanvas.search('.g-block'),
-            mobileContainer = $('#g-mobilemenu-container');
+            mobileContainer = $('#g-mobilemenu-container'),
+            blocks;
 
         // if there is no mobile menu there's no need to check the offcanvas mutation
         if (!mobileContainer) {
@@ -618,19 +618,23 @@ var Offcanvas = new prime({
         if (!togglers || (mutator && ((mutator.target || mutator.srcElement) !== mobileContainer[0]))) { return; }
         if (this.opened) { this.close(); }
 
-        var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
-        togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
+        timeout(function(){
+            blocks = this.offcanvas.search('.g-block');
+            var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
 
-        if (!shouldCollapse && !this.attached) { this.attach(); }
-        else if (shouldCollapse && this.attached) {
-            this.detach();
-            this.attachMutationEvent();
-        }
+            togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
+
+            if (!shouldCollapse && !this.attached) { this.attach(); }
+            else if (shouldCollapse && this.attached) {
+                this.detach();
+                this.attachMutationEvent();
+            }
+        }, 0, this);
     }
 });
 
 module.exports = Offcanvas;
-},{"../utils/decouple":4,"domready":6,"elements":11,"elements/zen":38,"mout/array/forEach":39,"mout/function/bind":42,"mout/math/clamp":51,"mout/math/map":53,"mout/string/trim":62,"prime":80,"prime-util/prime/bound":76,"prime-util/prime/options":77}],4:[function(require,module,exports){
+},{"../utils/decouple":4,"domready":6,"elements":11,"elements/zen":38,"mout/array/forEach":39,"mout/function/bind":42,"mout/function/timeout":46,"mout/math/clamp":51,"mout/math/map":53,"mout/string/trim":62,"prime":80,"prime-util/prime/bound":76,"prime-util/prime/options":77}],4:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
