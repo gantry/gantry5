@@ -153,6 +153,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable
         if ($this->groups) {
             $list = [];
             foreach ($this->groups as $i => $group) {
+                $list[$i] = [];
                 foreach ($group as $path) {
                     $list[$i][] = $this->menu()[$path];
                 }
@@ -250,7 +251,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable
         if ($children) {
             $menu = $this->menu();
             $ordered = [];
-            $this->groups[0] = [];
+
+            // Create empty groups.
+            $this->groups = array_fill(0, max(1, count($this->items['columns'])), []);
+
             foreach ($groups as $i => $ordering) {
                 if (!is_array($ordering)) {
                     continue;
