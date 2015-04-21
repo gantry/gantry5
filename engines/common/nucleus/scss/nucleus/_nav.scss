@@ -49,16 +49,13 @@
 						content: "\f078";
 						text-align: center;
 					}
-					&.g-selected {
-						&:after {
-							content: "\f00d";
-						}
-					}
 				}
-				.g-selected {
-					.g-menu-parent-indicator {
-						&:after {
-							content: "\f00d";
+				&.g-selected {
+					> .g-menu-item-container {
+						> .g-menu-parent-indicator {
+							&:after {
+								content: "\f00d";
+							}
 						}
 					}
 				}
@@ -97,11 +94,13 @@
 						content: "\f054";
 					}			
 				}
-			}
-			.g-selected {
-				> .g-menu-parent-indicator {
-					&:after {
-						content: "\f00d";
+				&.g-selected {
+					> .g-menu-item-container {
+						> .g-menu-parent-indicator {
+							&:after {
+								content: "\f00d";
+							}
+						}
 					}
 				}
 			}
