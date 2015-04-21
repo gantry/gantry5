@@ -105,11 +105,12 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     }
 
     > * {
-        vertical-align: baseline;
+        vertical-align: top;
         display: -moz-inline-stack;
         display: inline-block;
         zoom: 1;
         *display: inline;
+        @include ellipsis(215px);
     }
     .selectize-control.multi & > div {
         cursor: pointer;
@@ -181,6 +182,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     border-radius: 0 0 $selectize-border-radius $selectize-border-radius;
 
     [data-selectable] {
+        @include word-wrap;
         cursor: pointer;
         overflow: hidden;
         .highlight {

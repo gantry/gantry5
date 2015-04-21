@@ -616,13 +616,18 @@ a {
 }
 /* line 107, platforms/common/scss/admin/_selectize.scss */
 .selectize-input > * {
-  vertical-align: baseline;
+  vertical-align: top;
   display: -moz-inline-stack;
   display: inline-block;
   zoom: 1;
   *display: inline;
+  display: inline-block;
+  max-width: 215px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-/* line 114, platforms/common/scss/admin/_selectize.scss */
+/* line 115, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input > div {
   cursor: pointer;
   margin: 0 3px 3px 0;
@@ -631,19 +636,19 @@ a {
   color: #fff;
   border: 1px solid transparent;
 }
-/* line 122, platforms/common/scss/admin/_selectize.scss */
+/* line 123, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input > div.active {
   background: #92c836;
   color: #fff;
   border: 1px solid transparent;
 }
-/* line 129, platforms/common/scss/admin/_selectize.scss */
+/* line 130, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input.disabled > div, .selectize-control.multi .selectize-input.disabled > div.active {
   color: white;
   background: gainsboro;
   border: 1px solid rgba(77, 77, 77, 0);
 }
-/* line 135, platforms/common/scss/admin/_selectize.scss */
+/* line 136, platforms/common/scss/admin/_selectize.scss */
 .selectize-input > input {
   display: inline-block !important;
   padding: 0 !important;
@@ -658,23 +663,23 @@ a {
   -webkit-user-select: auto !important;
   box-shadow: none !important;
 }
-/* line 136, platforms/common/scss/admin/_selectize.scss */
+/* line 137, platforms/common/scss/admin/_selectize.scss */
 .selectize-input > input::-ms-clear {
   display: none;
 }
-/* line 151, platforms/common/scss/admin/_selectize.scss */
+/* line 152, platforms/common/scss/admin/_selectize.scss */
 .selectize-input > input:focus {
   outline: none !important;
 }
 
-/* line 155, platforms/common/scss/admin/_selectize.scss */
+/* line 156, platforms/common/scss/admin/_selectize.scss */
 .selectize-input::after {
   content: ' ';
   display: block;
   clear: left;
 }
 
-/* line 161, platforms/common/scss/admin/_selectize.scss */
+/* line 162, platforms/common/scss/admin/_selectize.scss */
 .selectize-input.dropdown-active::before {
   content: ' ';
   display: block;
@@ -686,7 +691,7 @@ a {
   right: 0;
 }
 
-/* line 172, platforms/common/scss/admin/_selectize.scss */
+/* line 173, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown {
   position: absolute;
   z-index: 10;
@@ -700,60 +705,63 @@ a {
   box-sizing: border-box;
   border-radius: 0 0 3px 3px;
 }
-/* line 183, platforms/common/scss/admin/_selectize.scss */
+/* line 184, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown [data-selectable] {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-all;
   cursor: pointer;
   overflow: hidden;
 }
-/* line 186, platforms/common/scss/admin/_selectize.scss */
+/* line 188, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown [data-selectable] .highlight {
   background: rgba(72, 176, 215, 0.5);
   border-radius: 1px;
 }
-/* line 191, platforms/common/scss/admin/_selectize.scss */
+/* line 193, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown [data-selectable], .selectize-dropdown .optgroup-header {
   padding: 5px 12px;
 }
-/* line 194, platforms/common/scss/admin/_selectize.scss */
+/* line 196, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown .optgroup:first-child .optgroup-header {
   border-top: 0 none;
 }
-/* line 197, platforms/common/scss/admin/_selectize.scss */
+/* line 199, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown .optgroup-header {
   color: #666;
   background: #fff;
   cursor: default;
 }
-/* line 202, platforms/common/scss/admin/_selectize.scss */
+/* line 204, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown .active {
   background-color: rgba(72, 176, 215, 0.3);
   color: #495c68;
 }
-/* line 205, platforms/common/scss/admin/_selectize.scss */
+/* line 207, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown .active.create {
   color: #495c68;
 }
-/* line 209, platforms/common/scss/admin/_selectize.scss */
+/* line 211, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown .create {
   color: rgba(102, 102, 102, 0.6);
 }
 
-/* line 214, platforms/common/scss/admin/_selectize.scss */
+/* line 216, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown-content {
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 200px;
 }
 
-/* line 221, platforms/common/scss/admin/_selectize.scss */
+/* line 223, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.single .selectize-input, .selectize-control.single .selectize-input input {
   cursor: pointer;
 }
-/* line 222, platforms/common/scss/admin/_selectize.scss */
+/* line 224, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.single .selectize-input.input-active, .selectize-control.single .selectize-input.input-active input {
   cursor: text;
 }
-/* line 224, platforms/common/scss/admin/_selectize.scss */
+/* line 226, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.single .selectize-input:after {
   content: "\f078";
   font-family: FontAwesome;
@@ -767,54 +775,54 @@ a {
   color: #808080;
   font-size: 0.8em;
 }
-/* line 238, platforms/common/scss/admin/_selectize.scss */
+/* line 240, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.single .selectize-input.dropdown-active:after {
   content: "\f077";
   font-family: FontAwesome;
 }
 
-/* line 244, platforms/common/scss/admin/_selectize.scss */
+/* line 246, platforms/common/scss/admin/_selectize.scss */
 .selectize-control .selectize-input.disabled {
   opacity: 0.5;
   background-color: #fafafa;
 }
 
-/* line 252, platforms/common/scss/admin/_selectize.scss */
+/* line 254, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input.has-items {
   padding-left: 5px;
   padding-right: 5px;
 }
-/* line 257, platforms/common/scss/admin/_selectize.scss */
+/* line 259, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input.disabled [data-value] {
   color: #999;
   text-shadow: none;
   background: none;
   box-shadow: none;
 }
-/* line 263, platforms/common/scss/admin/_selectize.scss */
+/* line 265, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input.disabled [data-value], .selectize-control.multi .selectize-input.disabled [data-value] .remove {
   border-color: #e6e6e6;
 }
-/* line 266, platforms/common/scss/admin/_selectize.scss */
+/* line 268, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input.disabled [data-value] .remove {
   background: none;
 }
-/* line 270, platforms/common/scss/admin/_selectize.scss */
+/* line 272, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input [data-value] {
   text-shadow: 0 1px 0 #2a98c2;
   border-radius: 3px;
 }
-/* line 273, platforms/common/scss/admin/_selectize.scss */
+/* line 275, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.multi .selectize-input [data-value].active {
   background-color: #2a98c2;
 }
 
-/* line 287, platforms/common/scss/admin/_selectize.scss */
+/* line 289, platforms/common/scss/admin/_selectize.scss */
 .selectize-control.single .selectize-input, .selectize-dropdown.single {
   border-color: #ddd;
 }
 
-/* line 292, platforms/common/scss/admin/_selectize.scss */
+/* line 294, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown .optgroup-header {
   padding-top: 7px;
   font-weight: bold;
@@ -822,11 +830,11 @@ a {
   color: #ddd;
   text-transform: uppercase;
 }
-/* line 299, platforms/common/scss/admin/_selectize.scss */
+/* line 301, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown .optgroup {
   border-top: 1px solid #f0f0f0;
 }
-/* line 301, platforms/common/scss/admin/_selectize.scss */
+/* line 303, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown .optgroup:first-child {
   border-top: 0 none;
 }
