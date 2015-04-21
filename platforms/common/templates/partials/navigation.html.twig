@@ -1,7 +1,8 @@
 <div class="g-grid">
     <div class="g-block navbar-block">
         <nav id="gantry">
-            <section id="navbar">
+            {% set style = location == 'menu' or location == 'about' ? ' style="overflow: hidden; height: 0;"' : '' %}
+            <section id="navbar"{{ style }}>
                 <ul>
                     {% include 'partials/configuration-selector.html.twig' %}
                     <li {{ (location == 'configurations/styles') ? 'class="active"' }}>

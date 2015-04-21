@@ -10234,6 +10234,7 @@ var prime         = require('prime'),
     modal         = require('../ui').modal,
 
     size          = require('mout/collection/size'),
+    indexOf       = require('mout/array/indexOf'),
     merge         = require('mout/object/merge'),
     guid          = require('mout/random/guid'),
     toQueryString = require('mout/queryString/encode'),
@@ -10246,7 +10247,7 @@ var prime         = require('prime'),
 
 require('../ui/popover');
 
-var ERROR = false;
+var ERROR = false, ConfNavIndex = -1;
 
 History.Adapter.bind(window, 'statechange', function() {
     if (request.running()) {
@@ -10257,13 +10258,16 @@ History.Adapter.bind(window, 'statechange', function() {
         URI = State.url,
         Data = State.data,
         sidebar = $('#navbar'),
+        mainheader = $('#main-header'),
         params = '';
+
 
     if (size(Data) && Data.parsed !== false && storage.get(Data.uuid)) {
         Data = storage.get(Data.uuid);
     }
 
     if (Data.element) {
+        var isTopNavigation = Data.element.parent('#main-header');
         body.emit('statechangeBefore', { target: Data.element, Data: Data });
     } else {
         var url = URI.replace(window.location.origin, '');
@@ -10272,10 +10276,23 @@ History.Adapter.bind(window, 'statechange', function() {
 
     URI = URI + getAjaxSuffix();
 
-    if (sidebar && Data.element && Data.element.parent('#navbar')) {
-        var lis = sidebar.search('li');
+    if (sidebar && Data.element) {
+        var lis = sidebar.search('li'), active = sidebar.search('li.active');
+        ConfNavIndex = indexOf(lis, active ? active[0] : lis[1]);
         lis.removeClass('active');
-        Data.element.parent('li').addClass('active');
+
+        if (Data.element.parent('#navbar')) {
+            Data.element.parent('li').addClass('active');
+        }
+    }
+
+    if (mainheader && Data.element) {
+        var lis = mainheader.search('.float-right li');
+        lis.removeClass('active');
+
+        if (Data.element.parent('#main-header')) {
+            Data.element.parent('li').addClass('active');
+        }
     }
 
     if (Data.params) {
@@ -10284,7 +10301,6 @@ History.Adapter.bind(window, 'statechange', function() {
     }
 
     if (!ERROR) { modal.closeAll(); }
-
     request.url(URI + params).data(Data.extras || {}).method(Data.extras ? 'post' : 'get').send(function(error, response) {
         if (!response.body.success) {
             ERROR = true;
@@ -10306,19 +10322,24 @@ History.Adapter.bind(window, 'statechange', function() {
 
         var target = Data.parent ? Data.element.parent(Data.parent) : $(Data.target),
             destination = (target || $('[data-g5-content]') || body);
-
+console.log(response, Data);
         if (response.body && response.body.html) {
             var fader;
             destination.html(response.body.html);
             if (fader = (destination.matches('[data-g5-content]') ? destination : destination.find('[data-g5-content]'))) {
-                fader.style({opacity: 0}).animate({opacity: 1});
+                fader.style({ opacity: 0 });
+                $('#navbar')[isTopNavigation ? 'slideUp' : 'slideDown']();
+                fader.animate({ opacity: 1 });
             }
         } else { destination.html(response.body); }
 
         body.getPopover().hideAll(true).destroy();
 
         if (Data.element) {
-            body.emit('statechangeAfter', { target: Data.element, Data: Data });
+            body.emit('statechangeAfter', {
+                target: Data.element,
+                Data: Data
+            });
         }
 
         var element = (Data.event && Data.event.activeSpinner) || Data.element;
@@ -10334,7 +10355,7 @@ History.Adapter.bind(window, 'statechange', function() {
     });
 });
 
-var selectorChangeEvent = function(){
+var selectorChangeEvent = function() {
     var selectors = $('[data-selectize-ajaxify]');
     if (!selectors) { return; }
 
@@ -10370,6 +10391,22 @@ var selectorChangeEvent = function(){
 
 domready(function() {
     var body = $('body');
+
+    // back to configuration
+    body.delegate('click', '.button-back-to-conf', function(event, element) {
+        event.preventDefault();
+
+        element.showIndicator();
+
+        ConfNavIndex = ConfNavIndex == -1 ? 1 : ConfNavIndex;
+        var navbar = $('#navbar'),
+            item = navbar.find('li:nth-child(' + (ConfNavIndex + 1) + ') [data-g5-ajaxify]');
+
+        body.emit('click', { target: item });
+        navbar.slideDown();
+    });
+
+    // generic ajaxified links
     body.delegate('click', '[data-g5-ajaxify]', function(event, element) {
         if (event && event.preventDefault) {
             if (event.which === 2 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) {
@@ -10431,7 +10468,7 @@ domready(function() {
 
 
 module.exports = {};
-},{"../menu":24,"../ui":39,"../ui/popover":41,"../utils/elements.utils":48,"./get-ajax-suffix":50,"./history":53,"agent":55,"elements/domready":80,"elements/zen":106,"mout/collection/size":158,"mout/object/merge":200,"mout/queryString/encode":209,"mout/random/guid":212,"mout/string/contains":218,"prime":250,"prime/map":251}],47:[function(require,module,exports){
+},{"../menu":24,"../ui":39,"../ui/popover":41,"../utils/elements.utils":48,"./get-ajax-suffix":50,"./history":53,"agent":55,"elements/domready":80,"elements/zen":106,"mout/array/indexOf":145,"mout/collection/size":158,"mout/object/merge":200,"mout/queryString/encode":209,"mout/random/guid":212,"mout/string/contains":218,"prime":250,"prime/map":251}],47:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
@@ -10560,8 +10597,6 @@ $.implement({
     },
 
     slideDown: function(animation, callback) {
-        if (this.gSlideCollapsed === false) { return; }
-
         var element       = this,
             size          = this.getRealSize(),
             callbackStart = function() {
@@ -10572,6 +10607,7 @@ $.implement({
             };
 
         callback = typeof animation == 'function' ? animation : (callback || function() {});
+        if (this.gSlideCollapsed === false) { return callback(); }
         callback = series(callbackStart, callback, callbackEnd);
 
         animation = typeof animation == 'string' ? animation : {
@@ -10582,8 +10618,6 @@ $.implement({
     },
 
     slideUp: function(animation, callback) {
-        if (this.gSlideCollapsed === true) { return; }
-
         if (typeof this.gSlideCollapsed == 'undefined') {
             this.gSlideStyle = this.attribute('style');
         }
@@ -10594,6 +10628,7 @@ $.implement({
             };
 
         callback = typeof animation == 'function' ? animation : (callback || function() {});
+        if (this.gSlideCollapsed === true) { return callback(); }
         callback = series(callbackStart, callback);
 
         animation = typeof animation == 'string' ? animation : {
