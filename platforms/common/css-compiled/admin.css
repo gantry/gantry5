@@ -391,23 +391,34 @@ a {
   right: 1rem;
 }
 
-/* line 217, platforms/common/scss/admin/_core.scss */
+/* line 216, platforms/common/scss/admin/_core.scss */
+.g-tooltip.g-tooltip-bottom:hover:after, .g-tooltip.g-tooltip-bottom.g-tooltip-force:after {
+  bottom: auto;
+}
+
+/* line 220, platforms/common/scss/admin/_core.scss */
+.g-tooltip.g-tooltip-bottom:hover:before, .g-tooltip.g-tooltip-bottom.g-tooltip-force:before {
+  border-width: 0 .4rem .4rem .4rem;
+  bottom: -0.1rem;
+}
+
+/* line 227, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:after {
   bottom: 3rem;
 }
 
-/* line 221, platforms/common/scss/admin/_core.scss */
+/* line 231, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:before {
   bottom: 2.6rem;
 }
 
-/* line 226, platforms/common/scss/admin/_core.scss */
+/* line 236, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:before {
   right: 7px;
   bottom: 1.5rem;
 }
 
-/* line 230, platforms/common/scss/admin/_core.scss */
+/* line 240, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:after {
   bottom: 1.9rem;
 }
