@@ -1694,16 +1694,12 @@ fieldset {
 label {
   margin-bottom: 0.375rem;
 }
-/* line 10, engines/common/nucleus/scss/nucleus/_forms.scss */
-label.required:after {
-  content: "*";
-}
-/* line 14, engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 9, engines/common/nucleus/scss/nucleus/_forms.scss */
 label abbr {
   display: none;
 }
 
-/* line 19, engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 14, engines/common/nucleus/scss/nucleus/_forms.scss */
 textarea, select[multiple=multiple] {
   -webkit-transition: border-color;
   -moz-transition: border-color;
@@ -1711,12 +1707,12 @@ textarea, select[multiple=multiple] {
   border-radius: 0.1875rem;
   padding: 0.375rem 0.375rem;
 }
-/* line 24, engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 19, engines/common/nucleus/scss/nucleus/_forms.scss */
 textarea:focus, select[multiple=multiple]:focus {
   outline: none;
 }
 
-/* line 29, engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 24, engines/common/nucleus/scss/nucleus/_forms.scss */
 input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"] {
   -webkit-transition: border-color;
   -moz-transition: border-color;
@@ -1725,34 +1721,34 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
   padding: 0.375rem 0.375rem;
 }
 
-/* line 35, engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 30, engines/common/nucleus/scss/nucleus/_forms.scss */
 input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus {
   outline: none;
 }
 
-/* line 39, engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 34, engines/common/nucleus/scss/nucleus/_forms.scss */
 textarea {
   resize: vertical;
 }
 
-/* line 43, engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 38, engines/common/nucleus/scss/nucleus/_forms.scss */
 input[type="checkbox"], input[type="radio"] {
   display: inline;
   margin-right: 0.375rem;
 }
 
-/* line 48, engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 43, engines/common/nucleus/scss/nucleus/_forms.scss */
 input[type="file"] {
   width: 100%;
 }
 
-/* line 52, engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 47, engines/common/nucleus/scss/nucleus/_forms.scss */
 select {
   max-width: 100%;
   margin-bottom: 1.5rem;
 }
 
-/* line 58, engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 53, engines/common/nucleus/scss/nucleus/_forms.scss */
 button,
 input[type="submit"] {
   cursor: pointer;
