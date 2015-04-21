@@ -34,6 +34,10 @@ class ThemeDetails implements \ArrayAccess
 
         $this->items = CompiledYamlFile::instance($locator("gantry-themes://{$theme}/gantry/theme.yaml"))->content();
         $this->offsetSet('name', $theme);
+
+        $parent = $this->offsetGet('configuration.theme.parent') ?: $theme;
+
+        $this->offsetSet('parent', $theme !== $parent ? $parent : null);
     }
 
     public function getPaths()
@@ -69,7 +73,7 @@ class ThemeDetails implements \ArrayAccess
     public function getParent()
     {
         $parent = (string) $this->offsetGet('configuration.theme.parent');
-        return $parent && $parent != $this->offsetGet('name') ? $parent : false;
+        return $parent && $parent != $this->offsetGet('name') ? $parent : null;
     }
 
     protected function parsePaths(array $items)

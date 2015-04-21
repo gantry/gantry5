@@ -28,7 +28,7 @@
                                             <div class="theme card">
                                                 <div class="theme-id">
                                                     {% if theme.details.icon %}<i class="fa fa-fw fa-{{ theme.details.icon|e }}"></i>{% endif %}
-                                                    {{ theme.title|e }}
+                                                    {{ theme.title|e }} <small>({{ theme.name|e }})</small>
                                                 </div>
                                                 <div class="theme-screenshot">
                                                     <a href="{{ theme.admin_url|e }}">
