@@ -138,7 +138,7 @@ var Menu = new prime({
 
             if (sublevel) {
                 var isNavMenu = target.parent(selectors.mainContainer);
-                if (isNavMenu && !sublevel.hasClass('g-toplevel')) { this._fixHeights(sublevel, slideout, isGoingBack); }
+                this._fixHeights(sublevel, slideout, isGoingBack, isNavMenu);
                 if (!isNavMenu && columns && (blocks = columns.search('> .g-grid > .g-block'))) {
                     if (blocks.length > 1) { sublevel = blocks.search('> .g-sublevel'); }
                 }
@@ -201,19 +201,33 @@ var Menu = new prime({
         this.overlay[0].style.opacity = shouldOpen ? 1 : 0;
     },
 
-    _fixHeights: function(parent, sublevel, isGoingBack) {
+    _fixHeights: function(parent, sublevel, isGoingBack, isNavMenu) {
         if (parent == sublevel) { return; }
         if (isGoingBack) { parent.attribute('style', null); }
 
         var heights = {
-            from: parent[0].getBoundingClientRect(),
-            to: sublevel[0].getBoundingClientRect()
-        };
+                from: parent[0].getBoundingClientRect(),
+                to: (!isNavMenu ? sublevel.parent('.g-dropdown')[0] : sublevel[0]).getBoundingClientRect()
+            },
+            height = Math.max(heights.from.height, heights.to.height);
 
         if (!isGoingBack) {
             // if from height is < than to height set the parent height else, set the target
-            if (heights.from.height < heights.to.height) { parent[0].style.height = Math.max(heights.from.height, heights.to.height) + 'px'; }
-            else { sublevel[0].style.height = Math.max(heights.from.height, heights.to.height) + 'px'; }
+            if (heights.from.height < heights.to.height) { parent[0].style.height = height + 'px'; }
+            else { sublevel[0].style.height = height + 'px'; }
+
+            // fix sublevels heights in side menu (offcanvas etc)
+            if (!isNavMenu) {
+                var maxHeight = height,
+                    block = $(sublevel).parent('.g-block:not(.size-100)'),
+                    column = block ? block.parent('.g-dropdown-column') : null;
+                (sublevel.parents('.g-slide-out, .g-dropdown-column') || parent).forEach(function(slideout) {
+                    maxHeight = Math.max(height, parseInt(slideout.style.height, 10));
+                });
+
+                if (column) { column[0].style.height = maxHeight + 'px'; }
+                sublevel[0].style.height = maxHeight + 'px';
+            }
         }
     },
 
