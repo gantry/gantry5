@@ -10322,7 +10322,7 @@ History.Adapter.bind(window, 'statechange', function() {
 
         var target = Data.parent ? Data.element.parent(Data.parent) : $(Data.target),
             destination = (target || $('[data-g5-content]') || body);
-console.log(response, Data);
+
         if (response.body && response.body.html) {
             var fader;
             destination.html(response.body.html);
