@@ -58,32 +58,22 @@ if [ -f $GIT_TARGET/configuration.php ]; then
 elif [ -f $GIT_TARGET/wp-config.php ]; then
     PLATFORM=WordPress
     sources=(
-        'platforms/wordpress/gantryadmin'
+        # Admin
+        'platforms/wordpress/gantry5'
         'platforms/common'
         'src'
-        'vendor'
+        # Themes
         'themes/hydrogen/wordpress'
         'themes/hydrogen/common'
-        'themes/hydrogen-demo/wordpress'
-        'themes/hydrogen-demo/common'
-        'themes/gantry/wordpress'
-        'themes/gantry/common'
-        'src'
-        'vendor'
         )
     targets=(
-        'wp-content/plugins/gantryadmin'
-        'wp-content/plugins/gantryadmin/common'
-        'wp-content/plugins/gantryadmin/src'
-        'wp-content/plugins/gantryadmin/vendor'
+        # Admin
+        'wp-content/plugins/gantry5'
+        'wp-content/plugins/gantry5/common'
+        'wp-content/plugins/gantry5/src'
+        # Themes
         'wp-content/themes/hydrogen'
         'wp-content/themes/hydrogen/common'
-        'wp-content/themes/hydrogen/src'
-        'wp-content/themes/hydrogen/vendor'
-        'wp-content/themes/hydrogen-demo'
-        'wp-content/themes/hydrogen-demo/common'
-        'wp-content/themes/hydrogen-demo/src'
-        'wp-content/themes/hydrogen-demo/vendor'
         )
 elif [ -f $GIT_TARGET/system/config/system.yaml ]; then
     PLATFORM=Grav
