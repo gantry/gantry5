@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "dependencies": {
     "domready": "^1.0.7",
-    "elements": "git+https://git@github.com/w00fz/elements.git",
+    "elements": "git://github.com/w00fz/elements.git",
     "mout": "^0.11.0",
     "prime": "^0.4.2",
-    "prime-util": "^0.5.0"
+    "prime-util": "^0.5.0",
+    "slick": "^1.12.1"
   },
   "devDependencies": {
     "browserify": "^9.0.8",
@@ -14,12 +15,12 @@
     "gulp-if": "^1.2.5",
     "gulp-ruby-sass": "^1.0.1",
     "gulp-sourcemaps": "^1.5.1",
-    "gulp-uglify": "^1.1.0",
+    "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.4",
     "merge-stream": "^0.1.7",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.1.0",
-    "yargs": "^3.7.0"
+    "watchify": "^3.1.1",
+    "yargs": "^3.7.2"
   }
 }

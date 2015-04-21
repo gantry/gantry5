@@ -27,7 +27,7 @@
 .g-offcanvas-open {
     overflow: hidden;
 
-    body {
+    body, #g-page-surround {
         overflow: hidden;
     }
 
@@ -35,12 +35,16 @@
         z-index: 5;
         position: fixed;
         opacity: 1;
-        height: 100vh;
+        height: 100%;
     }
     
     #g-offcanvas {
         display: block;
     }
+}
+
+body .g-offcanvas-hide {
+    @extend .hide;
 }
 
 // Right Positioning

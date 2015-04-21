@@ -4,73 +4,270 @@
 var ready     = require('domready'),
     menu      = require('./menu'),
     offcanvas = require('./offcanvas'),
+    $         = require('./utils/dollar-extras'),
 
     instances = {};
 
 ready(function() {
     instances = {
         offcanvas: new offcanvas(),
-        menu: menu
+        menu: new menu(),
+        $: $
     };
+
+    module.exports = window.G5 = instances;
 });
 
 module.exports = window.G5 = instances;
-},{"./menu":2,"./offcanvas":3,"domready":5}],2:[function(require,module,exports){
+},{"./menu":2,"./offcanvas":3,"./utils/dollar-extras":5,"domready":6}],2:[function(require,module,exports){
 "use strict";
 
-var ready = require('domready'),
-    prime = require('prime'),
-    $     = require('elements'),
-    zen   = require('elements/zen');
+var ready   = require('domready'),
+    prime   = require('prime'),
+    $       = require('../utils/dollar-extras'),
+    zen     = require('elements/zen'),
+    bind    = require('mout/function/bind'),
+    timeout = require('mout/function/timeout'),
+    Bound   = require('prime-util/prime/bound'),
+    Options = require('prime-util/prime/options');
+
+
+var hasTouchEvents = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
 var Menu = new prime({
+
+    mixin: [Bound, Options],
+
     options: {
-        submenu: {
-            dir: 'right',
-            selector: '*'
+        selectors: {
+            mainContainer: '.g-main-nav',
+            mobileContainer: '#g-mobilemenu-container',
+            topLevel: '.g-toplevel',
+            rootItems: '> ul > li',
+            parent: '.g-parent',
+            item: '.g-menu-item',
+            dropdown: '.g-dropdown',
+            overlay: '.g-menu-overlay',
+            touchIndicator: '.g-menu-parent-indicator',
+            linkedParent: '[data-g-menuparent]'
         },
-        tolerance: 75,
-        mode: null
+
+        states: {
+            active: 'g-active',
+            inactive: 'g-inactive',
+            selected: 'g-selected',
+            touchEvents: 'g-menu-hastouch'
+        }
     },
 
-    constructor: function(mode) {
-        this.options.mode = mode;
-        console.log(this.options.mode);
-    }
+    constructor: function(options) {
+        this.setOptions(options);
+
+        this.selectors = this.options.selectors;
+        this.states = this.options.states;
+        this.overlay = zen('div' + this.selectors.overlay).top('#g-page-surround');
+        this.active = null;
+        this.location = [];
+
+        if (hasTouchEvents) {
+            $(this.selectors.mainContainer).addClass(this.states.touchEvents);
+        }
+
+        this.attach();
+    },
+
+    attach: function() {
+        var selectors = this.selectors,
+            main = $(selectors.mainContainer + ' ' + selectors.item),
+            mobileContainer = $(selectors.mobileContainer),
+            body = $('body');
+
+        main.on('mouseenter', this.bound('mouseenter'));
+        main.on('mouseleave', this.bound('mouseleave'));
+        body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
+
+        if (hasTouchEvents) {
+            $(selectors.linkedParent).on('touchend', this.bound('touchend'));
+            this.overlay.on('touchend', this.bound('closeAllDropdowns'));
+        }
+
+        if (mobileContainer) {
+            var query = 'only all and (max-width: ' + this._calculateBreakpoint((mobileContainer.data('g-menu-breakpoint') || '48rem')) + ')',
+                match = matchMedia(query);
+            match.addListener(this.bound('_checkQuery'));
+            this._checkQuery(match);
+        }
+    },
+
+    detach: function() {},
+
+    click: function(event) {
+        this.touchend(event);
+    },
+
+    mouseenter: function(event) {
+        var element = $(event.target);
+        if (!element.parent(this.options.selectors.mainContainer)) { return; }
+        if (element.parent(this.options.selectors.item) && !element.parent('.g-standard')) { return; }
+
+        this.openDropdown(element);
+    },
+
+    mouseleave: function(event) {
+        var element = $(event.target);
+        if (!element.parent(this.options.selectors.mainContainer)) { return; }
+        if (element.parent(this.options.selectors.item) && !element.parent('.g-standard')) { return; }
+
+        this.closeDropdown(element);
+    },
+
+    touchend: function(event) {
+        var selectors = this.selectors,
+            states = this.states;
+
+        var target = $(event.target),
+            indicator = target.parent(selectors.item).find(selectors.touchIndicator),
+            menuType = target.parent('.g-standard') ? 'standard' : 'megamenu',
+            isGoingBack = target.parent('.g-go-back'),
+            parent, isSelected;
+
+        if (indicator) {
+            target = indicator;
+        }
+
+        parent = target.matches(selectors.item) ? target : target.parent(selectors.item);
+        isSelected = parent.hasClass(states.selected);
+
+        if (!parent.find(selectors.dropdown) && !indicator) { return true; }
+
+        event.stopPropagation();
+        if (!indicator || target.matches(selectors.touchIndicator)) {
+            event.preventDefault();
+        }
+
+        if (!isSelected) {
+            var currentlyOpen = parent.siblings().search(selectors.touchIndicator + ' !> * !> ' + selectors.item + '.' + states.selected);
+            (currentlyOpen || []).forEach(bind(function(open) {
+                this.closeDropdown(open);
+            }, this));
+        }
+
+        if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown) || isGoingBack)) {
+            var sublevel = target.parent('.g-sublevel') || target.parent('.g-toplevel'),
+                slideout = parent.find('.g-sublevel'),
+                columns = parent.parent('.g-dropdown-column'),
+                blocks;
+
+            if (sublevel) {
+                var isNavMenu = target.parent(selectors.mainContainer);
+                if (isNavMenu && !sublevel.hasClass('g-toplevel')) { this._fixHeights(sublevel, slideout, isGoingBack); }
+                if (!isNavMenu && columns && (blocks = columns.search('> .g-grid > .g-block'))) {
+                    if (blocks.length > 1) { sublevel = blocks.search('> .g-sublevel'); }
+                }
+
+                sublevel[!isSelected ? 'addClass' : 'removeClass']('g-slide-out');
+            }
+        }
+
+        this[!isSelected ? 'openDropdown' : 'closeDropdown'](parent);
+        if (event.type !== 'click') { this.toggleOverlay(target.parent(selectors.mainContainer)); }
+    },
+
+    openDropdown: function(element) {
+        element = $(element.target || element);
+        var dropdown = element.find(this.selectors.dropdown);
+
+        element.addClass(this.states.selected);
+
+        if (dropdown) {
+            dropdown.removeClass(this.states.inactive).addClass(this.states.active);
+        }
+    },
+
+    closeDropdown: function(element) {
+        element = $(element.target || element);
+        var dropdown = element.find(this.selectors.dropdown);
+
+        element.removeClass(this.states.selected);
+
+        if (dropdown) {
+            var sublevels = dropdown.search('.g-sublevel'),
+                slideouts = dropdown.search('.g-slide-out, .' + this.states.selected),
+                actives = dropdown.search('.' + this.states.active);
+
+            if (sublevels) { sublevels.attribute('style', null); }
+            if (slideouts) { slideouts.removeClass('g-slide-out').removeClass(this.states.selected); }
+            if (actives) { actives.removeClass(this.states.active).addClass(this.states.inactive); }
+
+            dropdown.removeClass(this.states.active).addClass(this.states.inactive);
+        }
+    },
+
+    closeAllDropdowns: function() {
+        var selectors = this.selectors,
+            states = this.states,
+            topLevel = $(selectors.mainContainer + ' > .g-toplevel'),
+            roots = topLevel.search(' >' + selectors.item);
+
+        if (roots) { roots.removeClass(states.selected); }
+        if (topLevel) { this.closeDropdown(topLevel); }
+
+        this.toggleOverlay(topLevel);
+    },
+
+    toggleOverlay: function(menu) {
+        if (!menu) { return; }
+        var shouldOpen = !!menu.find('.g-active, .g-selected');
+
+        this.overlay[shouldOpen ? 'addClass' : 'removeClass']('g-menu-overlay-open');
+        this.overlay[0].style.opacity = shouldOpen ? 1 : 0;
+    },
+
+    _fixHeights: function(parent, sublevel, isGoingBack) {
+        if (parent == sublevel) { return; }
+        if (isGoingBack) { parent.attribute('style', null); }
+
+        var heights = {
+            from: parent[0].getBoundingClientRect(),
+            to: sublevel[0].getBoundingClientRect()
+        };
+
+        if (!isGoingBack) {
+            // if from height is < than to height set the parent height else, set the target
+            if (heights.from.height < heights.to.height) { parent[0].style.height = Math.max(heights.from.height, heights.to.height) + 'px'; }
+            else { sublevel[0].style.height = Math.max(heights.from.height, heights.to.height) + 'px'; }
+        }
+    },
+
+    _calculateBreakpoint: function(value) {
+        var digit = parseFloat(value.match(/^\d{1,}/).shift()),
+            unit = value.match(/[a-z]{1,}$/i).shift(),
+            tolerance = unit.match(/r?em/) ? -0.062 : -1;
+
+        return (digit + tolerance) + unit;
+    },
+
+    _checkQuery: function(mq) {
+
+        var selectors = this.options.selectors,
+            mobileContainer = $(selectors.mobileContainer),
+            mainContainer = $(selectors.mainContainer),
+            find;
+
+        if (mq.matches) {
+            find = mainContainer.find(selectors.topLevel);
+            if (find) { find.top(mobileContainer); }
+        } else {
+            find = mobileContainer.find(selectors.topLevel);
+            if (find) { find.top(mainContainer); }
+        }
+    },
+
+    _debug: function() {}
 });
 
-// Trick to detect if the user is able to move the cursor or is just touch
-// will be used to initialize the menu with click/touch only events vs hovers
-var DetectMouse = function(callback) {
-    var body = $('body'), type;
-    var detectMouse = function(e) {
-        type = (e.type === 'mousemove') ? 'mouse' : (e.type === 'touchstart' ? 'touch' : false);
-
-        body.off('mousemove', detectMouse);
-        body.off('touchstart', detectMouse);
-
-        callback.call(undefined, type);
-    };
-
-    body.on('mousemove', detectMouse);
-    body.on('touchstart', detectMouse);
-};
-
-// Initialize the menu only when we know what's the mode (mouse/touch)
-ready(function() {
-    DetectMouse(function(mode) {
-        module.exports.menu = new Menu(mode);
-    });
-
-    var nav = $('nav.g-main-nav'),
-        target = $('#g-mobilemenu-container'),
-        clone = nav[0].cloneNode(true);
-
-    $(clone).bottom(target);
-});
-
-module.exports = {};
-},{"domready":5,"elements":10,"elements/zen":37,"prime":62}],3:[function(require,module,exports){
+module.exports = Menu;
+},{"../utils/dollar-extras":5,"domready":6,"elements/zen":38,"mout/function/bind":42,"mout/function/timeout":46,"prime":80,"prime-util/prime/bound":76,"prime-util/prime/options":77}],3:[function(require,module,exports){
 // Offcanvas slide with desktop, touch and all-in-one touch devices support that supports both left and right placement.
 // Fast and optimized using CSS3 transitions
 // Based on the awesome Slideout.js <https://mango.github.io/slideout/>
@@ -83,6 +280,7 @@ var ready     = require('domready'),
     forEach   = require('mout/array/forEach'),
     mapNumber = require('mout/math/map'),
     clamp     = require('mout/math/clamp'),
+    trim      = require('mout/string/trim'),
     decouple  = require('../utils/decouple'),
     Bound     = require('prime-util/prime/bound'),
     Options   = require('prime-util/prime/options'),
@@ -115,7 +313,7 @@ var Offcanvas = new prime({
         effect: 'ease',
         duration: 300,
         tolerance: function(padding) { // tolerance can also be just an integer value
-            return padding / 2;
+            return padding / 3;
         },
         padding: 0,
         touch: true,
@@ -127,15 +325,25 @@ var Offcanvas = new prime({
     constructor: function(options) {
         this.setOptions(options);
 
+        this.attached = false;
         this.opening = false;
         this.moved = false;
         this.dragging = false;
         this.opened = false;
         this.preventOpen = false;
-        this.offsetX = {
-            start: 0,
-            current: 0
+        this.offset = {
+            x: {
+                start: 0,
+                current: 0
+            },
+            y: {
+                start: 0,
+                current: 0
+            }
         };
+
+        this.bodyEl = $('body');
+        this.htmlEl = $('html');
 
         this.panel = $('#g-page-surround');
         this.offcanvas = $('#g-offcanvas');
@@ -152,38 +360,90 @@ var Offcanvas = new prime({
 
         this.tolerance = typeof this.options.tolerance == 'function' ? this.options.tolerance.call(this, this.options.padding) : this.options.tolerance;
 
-        if (this.options.touch && hasTouchEvents) {
-            this._touchEvents();
-        }
+        this.attach();
+        this._checkTogglers();
 
-        return this.attach();
+        return this;
     },
 
     attach: function() {
-        var body = $('body');
+        this.attached = true;
+
+        if (this.options.touch && hasTouchEvents) {
+            this.attachTouchEvents();
+        }
 
         forEach(['toggle', 'open', 'close'], bind(function(mode) {
-            body.delegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
-            if (hasTouchEvents) { body.delegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
+            this.bodyEl.delegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
+            if (hasTouchEvents) { this.bodyEl.delegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
         }, this));
+
+        this.attachMutationEvent();
 
         this.overlay = zen('div[data-offcanvas-close].' + this.options.overlayClass).top(this.panel);
 
         return this;
     },
 
+    attachMutationEvent: function() {
+        this.offcanvas.on('DOMSubtreeModified', this.bound('_checkTogglers')); // IE8 < has propertychange
+    },
+
+    attachTouchEvents: function() {
+        var msPointerSupported = window.navigator.msPointerEnabled,
+            touch = {
+                start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
+                move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
+                end: msPointerSupported ? 'MSPointerUp' : 'touchend'
+            };
+
+        this._scrollBound = decouple(window, 'scroll', this.bound('_bodyScroll'));
+        this.bodyEl.on(touch.move, this.bound('_bodyMove'));
+        this.panel.on(touch.start, this.bound('_touchStart'));
+        this.panel.on('touchcancel', this.bound('_touchCancel'));
+        this.panel.on(touch.end, this.bound('_touchEnd'));
+        this.panel.on(touch.move, this.bound('_touchMove'));
+    },
+
     detach: function() {
-        var body = $('body');
+        this.attached = false;
+
+        if (this.options.touch && hasTouchEvents) {
+            this.detachTouchEvents();
+        }
 
         forEach(['toggle', 'open', 'close'], bind(function(mode) {
-            body.undelegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
-            if (hasTouchEvents) { body.undelegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
+            this.bodyEl.undelegate('click', '[data-offcanvas-' + mode + ']', this.bound(mode));
+            if (hasTouchEvents) { this.bodyEl.undelegate('touchend', '[data-offcanvas-' + mode + ']', this.bound(mode)); }
         }, this));
+
+        this.detachMutationEvent();
 
         this.overlay.remove();
 
         return this;
     },
+
+    detachMutationEvent: function() {
+        this.offcanvas.off('DOMSubtreeModified', this.bound('_checkTogglers'));
+    },
+
+    detachTouchEvents: function() {
+        var msPointerSupported = window.navigator.msPointerEnabled,
+            touch = {
+                start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
+                move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
+                end: msPointerSupported ? 'MSPointerUp' : 'touchend'
+            };
+
+        window.removeEventListener('scroll', this._scrollBound);
+        this.bodyEl.off(touch.move, this.bound('_bodyMove'));
+        this.panel.off(touch.start, this.bound('_touchStart'));
+        this.panel.off('touchcancel', this.bound('_touchCancel'));
+        this.panel.off(touch.end, this.bound('_touchEnd'));
+        this.panel.off(touch.move, this.bound('_touchMove'));
+    },
+
 
     open: function(event) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
@@ -191,17 +451,14 @@ var Offcanvas = new prime({
 
         if (this.opened) { return this; }
 
-        var html = $('html'),
-            body = $('body');
-
-        if (!html.hasClass(this.options.openClass)) {
-            html.addClass(this.options.openClass);
+        if (!this.htmlEl.hasClass(this.options.openClass)) {
+            this.htmlEl.addClass(this.options.openClass);
         }
 
         this.overlay[0].style.opacity = 1;
 
         this._setTransition();
-        this._translateXTo((body.hasClass('g-offcanvas-right') ? -1 : 1) * this.options.padding);
+        this._translateXTo((this.bodyEl.hasClass('g-offcanvas-right') ? -1 : 1) * this.options.padding);
         this.opened = true;
 
         setTimeout(bind(function() {
@@ -217,10 +474,10 @@ var Offcanvas = new prime({
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
         else { this.dragging = false; }
 
+        element = element || window;
+
         if (!this.opened && !this.opening) { return this; }
         if (this.panel !== element && this.dragging) { return false; }
-
-        var html = $('html');
 
         this.overlay[0].style.opacity = 0;
 
@@ -231,7 +488,7 @@ var Offcanvas = new prime({
         setTimeout(bind(function() {
             var panel = this.panel[0];
 
-            html.removeClass(this.options.openClass);
+            this.htmlEl.removeClass(this.options.openClass);
             panel.style.transition = panel.style['-webkit-transition'] = '';
         }, this), this.options.duration);
 
@@ -254,109 +511,126 @@ var Offcanvas = new prime({
 
     _translateXTo: function(x) {
         var panel = this.panel[0];
-        this.offsetX.current = x;
+        this.offset.x.current = x;
 
         panel.style[prefix.css + 'transform'] = panel.style.transform = 'translate3d(' + x + 'px, 0, 0)';
     },
 
-    _touchEvents: function() {
-        var msPointerSupported = window.navigator.msPointerEnabled,
-            self = this,
-            html = $('html'),
-            body = $('body'),
-            touch = {
-                start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
-                move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
-                end: msPointerSupported ? 'MSPointerUp' : 'touchend'
-            };
+    _bodyScroll: function() {
+        if (!this.moved) {
+            clearTimeout(scrollTimeout);
+            isScrolling = true;
+            scrollTimeout = setTimeout(function() {
+                isScrolling = false;
+            }, 250);
+        }
+    },
 
-        decouple(body, 'scroll', function() {
-            if (!self.moved) {
-                clearTimeout(scrollTimeout);
-                isScrolling = true;
-                scrollTimeout = setTimeout(function() {
-                    isScrolling = false;
-                }, 250);
-            }
-        });
+    _bodyMove: function() {
+        if (this.moved) { event.preventDefault(); }
+        this.dragging = true;
 
-        body.on(touch.move, function(event) {
-            if (self.moved) { event.preventDefault(); }
-            self.dragging = true;
-        });
+        return false;
+    },
 
-        this.panel.on(touch.start, function(event) {
-            if (!event.touches) { return; }
+    _touchStart: function(event) {
+        if (!event.touches) { return; }
 
-            self.moved = false;
-            self.opening = false;
-            self.dragging = false;
-            self.offsetX.start = event.touches[0].pageX;
-            self.preventOpen = (!self.opened && self.offcanvas[0].clientWidth !== 0);
-        });
+        this.moved = false;
+        this.opening = false;
+        this.dragging = false;
+        this.offset.x.start = event.touches[0].pageX;
+        this.offset.y.start = event.touches[0].pageY;
+        this.preventOpen = (!this.opened && this.offcanvas[0].clientWidth !== 0);
+    },
 
-        this.panel.on('touchcancel', function() {
-            self.moved = false;
-            self.opening = false;
-        });
+    _touchCancel: function() {
+        this.moved = false;
+        this.opening = false;
+    },
 
-        this.panel.on(touch.end, function(event) {
+    _touchMove: function(event) {
+        if (isScrolling || this.preventOpen || !event.touches) { return; }
 
-            if (self.moved) {
-                var tolerance = Math.abs(self.offsetX.current) > self.tolerance,
-                    placement = body.hasClass('g-offcanvas-right') ? true : false,
-                    direction = !placement ? (self.offsetX.current < 0) : (self.offsetX.current > 0);
+        var placement = (this.bodyEl.hasClass('g-offcanvas-right') ? -1 : 1), // 1: left, -1: right
+            place = placement < 0 ? 'right' : 'left',
+            diffX = clamp(event.touches[0].clientX - this.offset.x.start, -this.options.padding, this.options.padding),
+            translateX = this.offset.x.current = diffX,
+            diffY = Math.abs(event.touches[0].pageY - this.offset.y.start),
+            overlayOpacity;
 
-                self.opening = tolerance ? !direction : direction;
-                self.opened = !self.opening;
-                self[self.opening ? 'open' : 'close'](event, self.panel);
-            }
+        if (Math.abs(translateX) > this.options.padding) { return; }
+        if (diffY > 5 && !this.moved) { return; }
+        if (Math.abs(diffX) > 0) {
+            this.opening = true;
 
-            self.moved = false;
-        });
+            // offcanvas on left
+            if (place == 'left' && (this.opened && diffX > 0 || !this.opened && diffX < 0)) { return; }
 
-        this.panel.on(touch.move, function(event) {
-            if (isScrolling || self.preventOpen || !event.touches) { return; }
+            // offcanvas on right
+            if (place == 'right' && (this.opened && diffX < 0 || !this.opened && diffX > 0)) { return; }
 
-            var placement = (body.hasClass('g-offcanvas-right') ? -1 : 1), // 1: left, -1: right
-                place = placement < 0 ? 'right' : 'left',
-                diffX = clamp(event.touches[0].clientX - self.offsetX.start, -self.options.padding, self.options.padding),
-                translateX = self.offsetX.current = diffX,
-                overlayOpacity;
-
-            if (Math.abs(translateX) > self.options.padding) { return; }
-            if (Math.abs(diffX) > 0) {
-                self.opening = true;
-
-                // offcanvas on left
-                if (place == 'left' && (self.opened && diffX > 0 || !self.opened && diffX < 0)) { return; }
-
-                // offcanvas on right
-                if (place == 'right' && (self.opened && diffX < 0 || !self.opened && diffX > 0)) { return; }
-
-                if (!self.moved && !html.hasClass(self.options.openClass)) {
-                    html.addClass(self.options.openClass);
-                }
-
-                if ((place == 'left' && diffX <= 0) || (place == 'right' && diffX >= 0)) {
-                    translateX = diffX + (placement * self.options.padding);
-                    self.opening = false;
-                }
-
-                overlayOpacity = mapNumber(Math.abs(translateX), 0, self.options.padding, 0, 1);
-
-                self.panel[0].style[prefix.css + 'transform'] = self.panel[0].style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
-                self.overlay[0].style.opacity = overlayOpacity;
-
-                self.moved = true;
+            if (!this.moved && !this.htmlEl.hasClass(this.options.openClass)) {
+                this.htmlEl.addClass(this.options.openClass);
             }
 
-        });
+            if ((place == 'left' && diffX <= 0) || (place == 'right' && diffX >= 0)) {
+                translateX = diffX + (placement * this.options.padding);
+                this.opening = false;
+            }
+
+            overlayOpacity = mapNumber(Math.abs(translateX), 0, this.options.padding, 0, 1);
+
+            this.panel[0].style[prefix.css + 'transform'] = this.panel[0].style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+            this.overlay[0].style.opacity = overlayOpacity;
+
+            this.moved = true;
+        }
+    },
+
+    _touchEnd: function(event) {
+        if (this.moved) {
+            var tolerance = Math.abs(this.offset.x.current) > this.tolerance,
+                placement = this.bodyEl.hasClass('g-offcanvas-right') ? true : false,
+                direction = !placement ? (this.offset.x.current < 0) : (this.offset.x.current > 0);
+
+            this.opening = tolerance ? !direction : direction;
+            this.opened = !this.opening;
+            this[this.opening ? 'open' : 'close'](event, this.panel);
+        }
+
+        this.moved = false;
+
+        return true;
+    },
+
+    _checkTogglers: function(mutator) {
+        var togglers = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
+            blocks = this.offcanvas.search('.g-block'),
+            mobileContainer = $('#g-mobilemenu-container');
+
+        // if there is no mobile menu there's no need to check the offcanvas mutation
+        if (!mobileContainer) {
+            this.detachMutationEvent();
+            return;
+        }
+
+        if (!togglers || (mutator && ((mutator.target || mutator.srcElement) !== mobileContainer[0]))) { return; }
+        if (this.opened) { this.close(); }
+
+        var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
+        togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
+
+        if (!shouldCollapse && !this.attached) { this.attach(); }
+        else if (shouldCollapse && this.attached) {
+            this.detach();
+            this.attachMutationEvent();
+        }
     }
 });
 
 module.exports = Offcanvas;
-},{"../utils/decouple":4,"domready":5,"elements":10,"elements/zen":37,"mout/array/forEach":38,"mout/function/bind":40,"mout/math/clamp":41,"mout/math/map":43,"prime":62,"prime-util/prime/bound":58,"prime-util/prime/options":59}],4:[function(require,module,exports){
+},{"../utils/decouple":4,"domready":6,"elements":11,"elements/zen":38,"mout/array/forEach":39,"mout/function/bind":42,"mout/math/clamp":51,"mout/math/map":53,"mout/string/trim":62,"prime":80,"prime-util/prime/bound":76,"prime-util/prime/options":77}],4:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
@@ -387,10 +661,41 @@ var decouple = function(element, event, callback) {
     };
 
     element.addEventListener(event, capture, false);
+
+    return capture;
 };
 
 module.exports = decouple;
 },{}],5:[function(require,module,exports){
+"use strict";
+var $          = require('elements'),
+    map        = require('mout/array/map'),
+    slick      = require('slick');
+
+var walk = function(combinator, method) {
+
+    return function(expression) {
+        var parts = slick.parse(expression || "*");
+
+        expression = map(parts, function(part) {
+            return combinator + " " + part;
+        }).join(', ');
+
+        return this[method](expression);
+    };
+
+};
+
+
+$.implement({
+    sibling: walk('++', 'find'),
+    siblings: walk('~~', 'search')
+});
+
+
+module.exports = $;
+
+},{"elements":11,"mout/array/map":40,"slick":92}],6:[function(require,module,exports){
 /*!
   * domready (c) Dustin Diaz 2014 - License MIT
   */
@@ -422,7 +727,7 @@ module.exports = decouple;
 
 });
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /*
 attributes
 */"use strict"
@@ -641,7 +946,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":7,"mout/array/filter":13,"mout/array/forEach":14,"mout/array/indexOf":15,"mout/string/trim":32}],7:[function(require,module,exports){
+},{"./base":8,"mout/array/filter":14,"mout/array/forEach":15,"mout/array/indexOf":16,"mout/string/trim":33}],8:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -772,7 +1077,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":12,"mout/array/filter":13,"mout/array/forEach":14,"mout/array/map":16,"mout/array/some":17,"prime":62}],8:[function(require,module,exports){
+},{"mout/array/every":13,"mout/array/filter":14,"mout/array/forEach":15,"mout/array/map":17,"mout/array/some":18,"prime":80}],9:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -855,7 +1160,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":9,"./traversal":36,"prime/map":63}],9:[function(require,module,exports){
+},{"./events":10,"./traversal":37,"prime/map":81}],10:[function(require,module,exports){
 /*
 events
 */"use strict"
@@ -935,7 +1240,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":7,"prime/emitter":61}],10:[function(require,module,exports){
+},{"./base":8,"prime/emitter":79}],11:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -949,7 +1254,7 @@ var $ = require("./base")
 
 module.exports = $
 
-},{"./attributes":6,"./base":7,"./delegation":8,"./events":9,"./insertion":11,"./traversal":36}],11:[function(require,module,exports){
+},{"./attributes":7,"./base":8,"./delegation":9,"./events":10,"./insertion":12,"./traversal":37}],12:[function(require,module,exports){
 /*
 insertion
 */"use strict"
@@ -1043,7 +1348,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":7}],12:[function(require,module,exports){
+},{"./base":8}],13:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -1072,7 +1377,7 @@ var makeIterator = require('../function/makeIterator_');
     module.exports = every;
 
 
-},{"../function/makeIterator_":19}],13:[function(require,module,exports){
+},{"../function/makeIterator_":20}],14:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -1100,7 +1405,7 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{"../function/makeIterator_":19}],14:[function(require,module,exports){
+},{"../function/makeIterator_":20}],15:[function(require,module,exports){
 
 
     /**
@@ -1125,7 +1430,7 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 
 
     /**
@@ -1155,7 +1460,7 @@ var makeIterator = require('../function/makeIterator_');
     module.exports = indexOf;
 
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -1179,7 +1484,7 @@ var makeIterator = require('../function/makeIterator_');
      module.exports = map;
 
 
-},{"../function/makeIterator_":19}],17:[function(require,module,exports){
+},{"../function/makeIterator_":20}],18:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -1208,7 +1513,7 @@ var makeIterator = require('../function/makeIterator_');
     module.exports = some;
 
 
-},{"../function/makeIterator_":19}],18:[function(require,module,exports){
+},{"../function/makeIterator_":20}],19:[function(require,module,exports){
 
 
     /**
@@ -1222,7 +1527,7 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 var identity = require('./identity');
 var prop = require('./prop');
 var deepMatches = require('../object/deepMatches');
@@ -1258,7 +1563,7 @@ var deepMatches = require('../object/deepMatches');
 
 
 
-},{"../object/deepMatches":25,"./identity":18,"./prop":20}],20:[function(require,module,exports){
+},{"../object/deepMatches":26,"./identity":19,"./prop":21}],21:[function(require,module,exports){
 
 
     /**
@@ -1274,7 +1579,7 @@ var deepMatches = require('../object/deepMatches');
 
 
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -1284,7 +1589,7 @@ var isKind = require('./isKind');
     module.exports = isArray;
 
 
-},{"./isKind":22}],22:[function(require,module,exports){
+},{"./isKind":23}],23:[function(require,module,exports){
 var kindOf = require('./kindOf');
     /**
      * Check if value is from a specific "kind".
@@ -1295,7 +1600,7 @@ var kindOf = require('./kindOf');
     module.exports = isKind;
 
 
-},{"./kindOf":23}],23:[function(require,module,exports){
+},{"./kindOf":24}],24:[function(require,module,exports){
 
 
     var _rKind = /^\[object (.*)\]$/,
@@ -1317,7 +1622,7 @@ var kindOf = require('./kindOf');
     module.exports = kindOf;
 
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 
 
     /**
@@ -1332,7 +1637,7 @@ var kindOf = require('./kindOf');
 
 
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var isArray = require('../lang/isArray');
 
@@ -1389,7 +1694,7 @@ var isArray = require('../lang/isArray');
 
 
 
-},{"../lang/isArray":21,"./forOwn":27}],26:[function(require,module,exports){
+},{"../lang/isArray":22,"./forOwn":28}],27:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 
     var _hasDontEnumBug,
@@ -1467,7 +1772,7 @@ var hasOwn = require('./hasOwn');
 
 
 
-},{"./hasOwn":28}],27:[function(require,module,exports){
+},{"./hasOwn":29}],28:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var forIn = require('./forIn');
 
@@ -1488,7 +1793,7 @@ var forIn = require('./forIn');
 
 
 
-},{"./forIn":26,"./hasOwn":28}],28:[function(require,module,exports){
+},{"./forIn":27,"./hasOwn":29}],29:[function(require,module,exports){
 
 
     /**
@@ -1502,7 +1807,7 @@ var forIn = require('./forIn');
 
 
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 
     /**
      * Contains all Unicode white-spaces. Taken from
@@ -1516,7 +1821,7 @@ var forIn = require('./forIn');
     ];
 
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 var toString = require('../lang/toString');
 var WHITE_SPACES = require('./WHITE_SPACES');
     /**
@@ -1552,7 +1857,7 @@ var WHITE_SPACES = require('./WHITE_SPACES');
     module.exports = ltrim;
 
 
-},{"../lang/toString":24,"./WHITE_SPACES":29}],31:[function(require,module,exports){
+},{"../lang/toString":25,"./WHITE_SPACES":30}],32:[function(require,module,exports){
 var toString = require('../lang/toString');
 var WHITE_SPACES = require('./WHITE_SPACES');
     /**
@@ -1587,7 +1892,7 @@ var WHITE_SPACES = require('./WHITE_SPACES');
     module.exports = rtrim;
 
 
-},{"../lang/toString":24,"./WHITE_SPACES":29}],32:[function(require,module,exports){
+},{"../lang/toString":25,"./WHITE_SPACES":30}],33:[function(require,module,exports){
 var toString = require('../lang/toString');
 var WHITE_SPACES = require('./WHITE_SPACES');
 var ltrim = require('./ltrim');
@@ -1604,7 +1909,7 @@ var rtrim = require('./rtrim');
     module.exports = trim;
 
 
-},{"../lang/toString":24,"./WHITE_SPACES":29,"./ltrim":30,"./rtrim":31}],33:[function(require,module,exports){
+},{"../lang/toString":25,"./WHITE_SPACES":30,"./ltrim":31,"./rtrim":32}],34:[function(require,module,exports){
 /*
 Slick Finder
 */"use strict"
@@ -2435,7 +2740,7 @@ slick.parse = parse;
 
 module.exports = slick
 
-},{"./parser":35}],34:[function(require,module,exports){
+},{"./parser":36}],35:[function(require,module,exports){
 (function (global){
 /*
 slick
@@ -2445,7 +2750,7 @@ module.exports = "document" in global ? require("./finder") : { parse: require("
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./finder":33,"./parser":35}],35:[function(require,module,exports){
+},{"./finder":34,"./parser":36}],36:[function(require,module,exports){
 /*
 Slick Parser
  - originally created by the almighty Thomas Aylott <@subtlegradient> (http://subtlegradient.com)
@@ -2697,7 +3002,7 @@ var parse = function(expression){
 
 module.exports = parse
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 /*
 traversal
 */"use strict"
@@ -2802,7 +3107,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":7,"mout/array/map":16,"slick":34}],37:[function(require,module,exports){
+},{"./base":8,"mout/array/map":17,"slick":35}],38:[function(require,module,exports){
 /*
 zen
 */"use strict"
@@ -2860,9 +3165,11 @@ module.exports = function(expression, doc){
 
 }
 
-},{"./base":7,"mout/array/forEach":14,"mout/array/map":16,"slick/parser":35}],38:[function(require,module,exports){
-arguments[4][14][0].apply(exports,arguments)
-},{"dup":14}],39:[function(require,module,exports){
+},{"./base":8,"mout/array/forEach":15,"mout/array/map":17,"slick/parser":36}],39:[function(require,module,exports){
+arguments[4][15][0].apply(exports,arguments)
+},{"dup":15}],40:[function(require,module,exports){
+arguments[4][17][0].apply(exports,arguments)
+},{"../function/makeIterator_":44,"dup":17}],41:[function(require,module,exports){
 
 
     /**
@@ -2899,7 +3206,7 @@ arguments[4][14][0].apply(exports,arguments)
 
 
 
-},{}],40:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 var slice = require('../array/slice');
 
     /**
@@ -2920,7 +3227,40 @@ var slice = require('../array/slice');
 
 
 
-},{"../array/slice":39}],41:[function(require,module,exports){
+},{"../array/slice":41}],43:[function(require,module,exports){
+arguments[4][19][0].apply(exports,arguments)
+},{"dup":19}],44:[function(require,module,exports){
+arguments[4][20][0].apply(exports,arguments)
+},{"../object/deepMatches":55,"./identity":43,"./prop":45,"dup":20}],45:[function(require,module,exports){
+arguments[4][21][0].apply(exports,arguments)
+},{"dup":21}],46:[function(require,module,exports){
+var slice = require('../array/slice');
+
+    /**
+     * Delays the call of a function within a given context.
+     */
+    function timeout(fn, millis, context){
+
+        var args = slice(arguments, 3);
+
+        return setTimeout(function() {
+            fn.apply(context, args);
+        }, millis);
+    }
+
+    module.exports = timeout;
+
+
+
+},{"../array/slice":41}],47:[function(require,module,exports){
+arguments[4][22][0].apply(exports,arguments)
+},{"./isKind":48,"dup":22}],48:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"./kindOf":49,"dup":23}],49:[function(require,module,exports){
+arguments[4][24][0].apply(exports,arguments)
+},{"dup":24}],50:[function(require,module,exports){
+arguments[4][25][0].apply(exports,arguments)
+},{"dup":25}],51:[function(require,module,exports){
 
     /**
      * Clamps value inside range.
@@ -2931,7 +3271,7 @@ var slice = require('../array/slice');
     module.exports = clamp;
 
 
-},{}],42:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 
     /**
     * Linear interpolation.
@@ -2944,7 +3284,7 @@ var slice = require('../array/slice');
     module.exports = lerp;
 
 
-},{}],43:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 var lerp = require('./lerp');
 var norm = require('./norm');
     /**
@@ -2957,7 +3297,7 @@ var norm = require('./norm');
     module.exports = map;
 
 
-},{"./lerp":42,"./norm":44}],44:[function(require,module,exports){
+},{"./lerp":52,"./norm":54}],54:[function(require,module,exports){
 
     /**
     * Gets normalized ratio of value inside range.
@@ -2972,11 +3312,27 @@ var norm = require('./norm');
     module.exports = norm;
 
 
-},{}],45:[function(require,module,exports){
-arguments[4][39][0].apply(exports,arguments)
-},{"dup":39}],46:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"../array/slice":45,"dup":40}],47:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
+arguments[4][26][0].apply(exports,arguments)
+},{"../lang/isArray":47,"./forOwn":57,"dup":26}],56:[function(require,module,exports){
+arguments[4][27][0].apply(exports,arguments)
+},{"./hasOwn":58,"dup":27}],57:[function(require,module,exports){
+arguments[4][28][0].apply(exports,arguments)
+},{"./forIn":56,"./hasOwn":58,"dup":28}],58:[function(require,module,exports){
+arguments[4][29][0].apply(exports,arguments)
+},{"dup":29}],59:[function(require,module,exports){
+arguments[4][30][0].apply(exports,arguments)
+},{"dup":30}],60:[function(require,module,exports){
+arguments[4][31][0].apply(exports,arguments)
+},{"../lang/toString":50,"./WHITE_SPACES":59,"dup":31}],61:[function(require,module,exports){
+arguments[4][32][0].apply(exports,arguments)
+},{"../lang/toString":50,"./WHITE_SPACES":59,"dup":32}],62:[function(require,module,exports){
+arguments[4][33][0].apply(exports,arguments)
+},{"../lang/toString":50,"./WHITE_SPACES":59,"./ltrim":60,"./rtrim":61,"dup":33}],63:[function(require,module,exports){
+arguments[4][41][0].apply(exports,arguments)
+},{"dup":41}],64:[function(require,module,exports){
+arguments[4][42][0].apply(exports,arguments)
+},{"../array/slice":63,"dup":42}],65:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -3027,7 +3383,7 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":57,"./isPlainObject":51,"./kindOf":52}],48:[function(require,module,exports){
+},{"../object/mixIn":75,"./isPlainObject":69,"./kindOf":70}],66:[function(require,module,exports){
 var clone = require('./clone');
 var forOwn = require('../object/forOwn');
 var kindOf = require('./kindOf');
@@ -3077,9 +3433,9 @@ var isPlainObject = require('./isPlainObject');
 
 
 
-},{"../object/forOwn":54,"./clone":47,"./isPlainObject":51,"./kindOf":52}],49:[function(require,module,exports){
-arguments[4][22][0].apply(exports,arguments)
-},{"./kindOf":52,"dup":22}],50:[function(require,module,exports){
+},{"../object/forOwn":72,"./clone":65,"./isPlainObject":69,"./kindOf":70}],67:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"./kindOf":70,"dup":23}],68:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -3089,7 +3445,7 @@ var isKind = require('./isKind');
     module.exports = isObject;
 
 
-},{"./isKind":49}],51:[function(require,module,exports){
+},{"./isKind":67}],69:[function(require,module,exports){
 
 
     /**
@@ -3104,15 +3460,15 @@ var isKind = require('./isKind');
 
 
 
-},{}],52:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],53:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"./hasOwn":55,"dup":26}],54:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
+arguments[4][24][0].apply(exports,arguments)
+},{"dup":24}],71:[function(require,module,exports){
 arguments[4][27][0].apply(exports,arguments)
-},{"./forIn":53,"./hasOwn":55,"dup":27}],55:[function(require,module,exports){
+},{"./hasOwn":73,"dup":27}],72:[function(require,module,exports){
 arguments[4][28][0].apply(exports,arguments)
-},{"dup":28}],56:[function(require,module,exports){
+},{"./forIn":71,"./hasOwn":73,"dup":28}],73:[function(require,module,exports){
+arguments[4][29][0].apply(exports,arguments)
+},{"dup":29}],74:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var deepClone = require('../lang/deepClone');
 var isObject = require('../lang/isObject');
@@ -3154,7 +3510,7 @@ var isObject = require('../lang/isObject');
 
 
 
-},{"../lang/deepClone":48,"../lang/isObject":50,"./hasOwn":55}],57:[function(require,module,exports){
+},{"../lang/deepClone":66,"../lang/isObject":68,"./hasOwn":73}],75:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -3184,7 +3540,7 @@ var forOwn = require('./forOwn');
     module.exports = mixIn;
 
 
-},{"./forOwn":54}],58:[function(require,module,exports){
+},{"./forOwn":72}],76:[function(require,module,exports){
 "use strict";
 
 // credits to @cpojer's Class.Binds, released under the MIT license
@@ -3204,7 +3560,7 @@ var bound = prime({
 
 module.exports = bound
 
-},{"mout/function/bind":46,"prime":62}],59:[function(require,module,exports){
+},{"mout/function/bind":64,"prime":80}],77:[function(require,module,exports){
 "use strict";
 
 var prime = require("prime")
@@ -3223,7 +3579,7 @@ var Options = prime({
 
 module.exports = Options
 
-},{"mout/object/merge":56,"prime":62}],60:[function(require,module,exports){
+},{"mout/object/merge":74,"prime":80}],78:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -3342,7 +3698,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":73,"mout/array/forEach":64,"mout/array/indexOf":65,"mout/lang/kindOf":67,"mout/time/now":72}],61:[function(require,module,exports){
+},{"_process":94,"mout/array/forEach":82,"mout/array/indexOf":83,"mout/lang/kindOf":85,"mout/time/now":90}],79:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -3408,7 +3764,7 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":60,"./index":62,"mout/array/forEach":64,"mout/array/indexOf":65}],62:[function(require,module,exports){
+},{"./defer":78,"./index":80,"mout/array/forEach":82,"mout/array/indexOf":83}],80:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -3500,7 +3856,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":66,"mout/lang/kindOf":67,"mout/object/hasOwn":70,"mout/object/mixIn":71}],63:[function(require,module,exports){
+},{"mout/lang/createObject":84,"mout/lang/kindOf":85,"mout/object/hasOwn":88,"mout/object/mixIn":89}],81:[function(require,module,exports){
 /*
 Map
 */"use strict"
@@ -3626,11 +3982,11 @@ map.prototype = Map.prototype
 
 module.exports = map
 
-},{"./index":62,"mout/array/indexOf":65}],64:[function(require,module,exports){
-arguments[4][14][0].apply(exports,arguments)
-},{"dup":14}],65:[function(require,module,exports){
+},{"./index":80,"mout/array/indexOf":83}],82:[function(require,module,exports){
 arguments[4][15][0].apply(exports,arguments)
-},{"dup":15}],66:[function(require,module,exports){
+},{"dup":15}],83:[function(require,module,exports){
+arguments[4][16][0].apply(exports,arguments)
+},{"dup":16}],84:[function(require,module,exports){
 var mixIn = require('../object/mixIn');
 
     /**
@@ -3650,17 +4006,17 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":71}],67:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],68:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"./hasOwn":70,"dup":26}],69:[function(require,module,exports){
+},{"../object/mixIn":89}],85:[function(require,module,exports){
+arguments[4][24][0].apply(exports,arguments)
+},{"dup":24}],86:[function(require,module,exports){
 arguments[4][27][0].apply(exports,arguments)
-},{"./forIn":68,"./hasOwn":70,"dup":27}],70:[function(require,module,exports){
+},{"./hasOwn":88,"dup":27}],87:[function(require,module,exports){
 arguments[4][28][0].apply(exports,arguments)
-},{"dup":28}],71:[function(require,module,exports){
-arguments[4][57][0].apply(exports,arguments)
-},{"./forOwn":69,"dup":57}],72:[function(require,module,exports){
+},{"./forIn":86,"./hasOwn":88,"dup":28}],88:[function(require,module,exports){
+arguments[4][29][0].apply(exports,arguments)
+},{"dup":29}],89:[function(require,module,exports){
+arguments[4][75][0].apply(exports,arguments)
+},{"./forOwn":87,"dup":75}],90:[function(require,module,exports){
 
 
     /**
@@ -3680,7 +4036,21 @@ arguments[4][57][0].apply(exports,arguments)
 
 
 
-},{}],73:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
+arguments[4][34][0].apply(exports,arguments)
+},{"./parser":93,"dup":34}],92:[function(require,module,exports){
+(function (global){
+/*
+slick
+*/"use strict"
+
+module.exports = "document" in global ? require("./finder") : { parse: require("./parser") }
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+
+},{"./finder":91,"./parser":93}],93:[function(require,module,exports){
+arguments[4][36][0].apply(exports,arguments)
+},{"dup":36}],94:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};

@@ -140,8 +140,9 @@ class Menu extends AbstractMenu
      * We should keep the contents of the function similar to Joomla in order to review it against any changes.
      *
      * @param  array  $params
+     * @param  array  $items
      */
-    protected function getList(array $params)
+    public function getList(array $params, array $items)
     {
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
@@ -163,19 +164,13 @@ class Menu extends AbstractMenu
         //    $this->items = false;
         //}
 
-        $this->items = false;
-
-        if ($this->items === false) {
-            $config = $this->config();
-            $items   = isset($config['items']) ? $config['items'] : [];
-
+        if (1) {
             $path    = $this->base->tree;
             $start   = $params['startLevel'];
             $end     = $params['endLevel'];
 
             $menuItems = $this->getItemsFromPlatform($params);
 
-            $this->items = ['' => new Item($this, '', ['layout' => 'horizontal'])];
             foreach ($menuItems as $menuItem) {
                 if (($start && $start > $menuItem->level)
                     || ($end && $menuItem->level > $end)
@@ -263,11 +258,6 @@ class Menu extends AbstractMenu
                         break;
                 }
             }
-
-            $this->addParticles($items, $start, $end);
-
-            $this->sortAll();
-
             // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
             // $cache->store($this->items, $key);
         }

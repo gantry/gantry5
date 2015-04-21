@@ -5,7 +5,7 @@
     "agent": "^0.2.1",
     "async": "^0.9.0",
     "dropzone": "^4.0.1",
-    "elements": "git+https://git@github.com/w00fz/elements.git",
+    "elements": "git://github.com/w00fz/elements.git",
     "moofx": "^3.2.0",
     "mout": "~0.11.0",
     "objectdiff": "^1.1.0",
@@ -21,12 +21,12 @@
     "gulp-if": "^1.2.5",
     "gulp-ruby-sass": "^1.0.1",
     "gulp-sourcemaps": "^1.5.1",
-    "gulp-uglify": "^1.1.0",
+    "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.4",
     "merge-stream": "^0.1.7",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.1.0",
-    "yargs": "^3.7.0"
+    "watchify": "^3.1.1",
+    "yargs": "^3.7.2"
   }
 }

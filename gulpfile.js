@@ -1,7 +1,35 @@
 'use strict';
 
-var gulp       = require('gulp'),
-    argv       = require('yargs').argv,
+var paths,
+    gulp         = require('gulp'),
+    convertBytes = function(bytes) {
+        var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        if (bytes == 0) return '0 Byte';
+        var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+        return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+    };
+
+// if we call `up` or `update`, we just need to run through projs and update all NPM deps
+if (process.argv.slice(2).join(',').match(/(update|up|--update|-up)/)) {
+    gulp.task('default', function() {
+        paths = ['./', 'platforms/common', 'assets/common', 'engines/common/nucleus'];
+
+        var exec = require('child_process').exec, child;
+        paths.forEach(function(path) {
+            console.log("Updating JS dependencies in: " + path);
+            child = exec('cd ' + path + ' && npm update --save --save-dev',
+                function(error, stdout, stderr) {
+                    if (stdout) { console.log('Completed `' + path + '`:', "\n", stdout); }
+                    if (stderr) { console.log('Error `' + path + '`:' + stderr); }
+                    if (error !== null) { console.log('Exec error `' + path + '`:' + error); }
+                });
+        });
+    });
+
+    return;
+}
+
+var argv       = require('yargs').argv,
     gutil      = require('gulp-util'),
     gulpif     = require('gulp-if'),
     uglify     = require('gulp-uglify'),
@@ -15,9 +43,10 @@ var gulp       = require('gulp'),
     sass       = require('gulp-ruby-sass'),
 
     prod       = !!(argv.p || argv.prod || argv.production),
+    watchType  = (argv.css && argv.js) ? 'all' : (argv.css ? 'css' : (argv.js ? 'js' : 'all')),
     watch      = false;
 
-var paths = {
+paths = {
     js: [
         { // admin
             in: './platforms/common/application/main.js',
@@ -48,6 +77,10 @@ var paths = {
         { // google fonts
             in: './platforms/common/js/google-fonts.json',
             out: './platforms/common/js/google-fonts.json'
+        },
+        { // matchMedia polyfill
+            in: './assets/common/js/matchmedia.polyfill.js',
+            out: './assets/common/js/matchmedia.polyfill.js'
         }
     ]
 };
@@ -94,6 +127,7 @@ var compileJS = function(app, watching) {
     var bundle = browserify({
         entries: [_in],
         debug: !prod,
+        watch: watching,
 
         cache: {},
         packageCache: {},
@@ -102,9 +136,14 @@ var compileJS = function(app, watching) {
 
     if (watching) {
         bundle = watchify(bundle);
+        bundle.on('log', function(msg) {
+            var bytes = msg.match(/^(\d{1,})\s/)[1];
+            msg = msg.replace(/^\d{1,}\sbytes/, convertBytes(bytes));
+            gutil.log(gutil.colors.green('√'), 'Done, ', msg, '...');
+        });
         bundle.on('update', function(files) {
             gutil.log(gutil.colors.red('>'), 'Change detected in', files.join(', '), '...');
-            bundleShare(bundle, _in, _out, _maps, _dest);
+            return bundleShare(bundle, _in, _out, _maps, _dest);
         });
     }
 
@@ -113,6 +152,9 @@ var compileJS = function(app, watching) {
 
 var bundleShare = function(bundle, _in, _out, _maps, _dest) {
     return bundle.bundle()
+        .on('error', function(error){
+            gutil.log('Browserify', '' + error);
+        })
         .on('end', function() {
             gutil.log(gutil.colors.green('√'), 'Saved ' + _in);
         })
@@ -121,7 +163,6 @@ var bundleShare = function(bundle, _in, _out, _maps, _dest) {
         // sourcemaps start
         .pipe(gulpif(!prod, sourcemaps.init({ loadMaps: true })))
         .pipe(gulpif(prod, uglify()))
-        .on('error', gutil.log)
         .pipe(gulpif(!prod, sourcemaps.write('.', { sourceRoot: _maps })))
         // sourcemaps end
         .pipe(gulp.dest(_dest));
@@ -155,6 +196,7 @@ gulp.task('minify', function() {
 });
 
 gulp.task('watchify', function() {
+    if (watchType != 'js' && watchType != 'all') { return; }
     watch = true;
 
     // watch js
@@ -184,6 +226,8 @@ gulp.task('css', function(done) {
 });
 
 gulp.task('watch', ['watchify'], function() {
+    if (watchType != 'css' && watchType != 'all') { return; }
+
     // watch css
     paths.css.forEach(function(app) {
         var _path = app.in.substring(0, app.in.lastIndexOf('/'));

@@ -14,6 +14,7 @@
 
 namespace Gantry\Component\Router;
 
+use Gantry\Admin\EventListener;
 use Gantry\Component\Controller\BaseController;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
@@ -21,6 +22,7 @@ use Gantry\Component\Response\Response;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Router\RouterInterface;
 use RocketTheme\Toolbox\DI\Container;
+use RocketTheme\Toolbox\Event\EventDispatcher;
 
 abstract class Router implements RouterInterface
 {
@@ -39,8 +41,6 @@ abstract class Router implements RouterInterface
     {
         $this->container = $container;
         $this->container['request'] = new Request();
-
-
     }
 
     public function dispatch()
@@ -113,6 +113,15 @@ abstract class Router implements RouterInterface
 
         // Boot the service.
         $this->container['admin.theme'];
+
+        // Add event listener.
+        if (class_exists('Gantry\\Admin\\EventListener')) {
+            $listener = new EventListener;
+
+            /** @var EventDispatcher $events */
+            $events = $this->container['events'];
+            $events->addSubscriber($listener);
+        }
     }
 
     protected function getErrorResponse(\Exception $e, $json = false)

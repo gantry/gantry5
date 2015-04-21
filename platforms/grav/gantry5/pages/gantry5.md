@@ -1,5 +1,5 @@
 ---
-title: Gantry Admin
+title: Gantry Templates
 
 access:
     admin.themes: true

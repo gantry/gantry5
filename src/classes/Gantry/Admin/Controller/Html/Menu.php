@@ -220,9 +220,11 @@ class Menu extends HtmlController
         $this->params += [
             'item'          => $item,
             'block'         => $block,
+            'data'          => ['particles' => [$name => $item->options['particle']]],
             'particle'      => $blueprints,
             'parent'        => 'settings',
-            'route'         => "menu.particle",
+            'prefix'        => "particles.{$name}.",
+            'route'         => "configurations.default.settings",
             'action'        => "menu/particle/{$name}"
         ];
 
@@ -256,7 +258,7 @@ class Menu extends HtmlController
         $data->set('type', 'particle');
         $data->set('particle', $name);
         $data->set('title', $request->get('title') ?: $blueprints->get('name'));
-        $data->set('options.particle', $request->getArray('particle'));
+        $data->set('options.particle', $request->getArray("particles.{$name}"));
         $data->def('options.particle.enabled', 1);
 
         $block = $request->getArray('block');
@@ -291,7 +293,6 @@ class Menu extends HtmlController
     public function selectParticle()
     {
         $groups = [
-            'Positions' => ['position' => [], 'spacer' => [], 'pagecontent' => []],
             'Particles' => ['particle' => []],
         ];
 
@@ -303,7 +304,7 @@ class Menu extends HtmlController
         ];
 
         $particles = array_replace($particles, $this->getParticles());
-        unset($particles['atom']);
+        unset($particles['atom'], $particles['position']);
 
         foreach ($particles as &$group) {
             asort($group);

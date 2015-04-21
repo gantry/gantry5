@@ -15,16 +15,14 @@
 namespace Gantry\Admin\Controller\Html\Configurations;
 
 use Gantry\Component\Config\BlueprintsForm;
-use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
-use Gantry\Component\Stylesheet\ScssCompiler;
 use Gantry\Framework\Base\Gantry;
 use Gantry\Framework\Theme;
+use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -192,6 +190,12 @@ class Styles extends HtmlController
 
         $file = YamlFile::instance($filename);
         $file->save($data);
+
+        // Fire save event.
+        $event = new Event;
+        $event->controller = $this;
+        $event->data = $data;
+        $this->container->fireEvent('admin.styles.save', $event);
 
         // Apply new styles to the current configuration and compile CSS.
         $config->join('styles', $data);

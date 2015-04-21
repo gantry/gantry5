@@ -6,6 +6,7 @@ var $             = require('elements'),
     toastr        = require('../ui').toastr,
     request       = require('agent'),
     indexOf       = require('mout/array/indexOf'),
+    trim          = require('mout/string/trim'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     deepEquals    = require('mout/lang/deepEquals');
 
@@ -51,7 +52,35 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
             content: 'Loading',
             method: 'post',
             //data: data,
-            remote: $(this.block).find('.config-cog').attribute('href') + getAjaxSuffix()
+            remote: $(this.block).find('.config-cog').attribute('href') + getAjaxSuffix(),
+            remoteLoaded: function(response, modal) {
+                var search = modal.elements.content.find('.search input'),
+                    blocks = modal.elements.content.search('[data-mm-type]'),
+                    filters = modal.elements.content.search('[data-mm-filter]');
+
+                if (!search || !filters || !blocks) { return; }
+
+                search.on('input', function() {
+                    if (!this.value()) {
+                        blocks.removeClass('hidden');
+                        return;
+                    }
+
+                    blocks.addClass('hidden');
+
+                    var found = [], value = this.value().toLowerCase(), text;
+
+                    filters.forEach(function(filter){
+                        filter = $(filter);
+                        text = trim(filter.data('mm-filter')).toLowerCase();
+                        if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
+                            found.push(filter.matches('[data-mm-type]') ? filter : filter.parent('[data-mm-type]'));
+                        }
+                    }, this);
+
+                    if (found.length) { $(found).removeClass('hidden'); }
+                });
+            }
         });
     }
 
@@ -76,6 +105,9 @@ var StepTwo = function(data, content, button) {
         }
 
         content.html(response.body.html);
+
+        var selects = $('[data-selectize]');
+        if (selects) { selects.selectize(); }
 
         var urlTemplate = content.find('.g-urltemplate');
         if (urlTemplate) { $('body').emit('input', { target: urlTemplate }); }

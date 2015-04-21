@@ -28,6 +28,8 @@ var decouple = function(element, event, callback) {
     };
 
     element.addEventListener(event, capture, false);
+
+    return capture;
 };
 
 module.exports = decouple;

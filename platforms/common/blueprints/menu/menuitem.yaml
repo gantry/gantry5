@@ -63,6 +63,6 @@ form:
           type: input.icon
           label: Icon
 
-#        .subtitle:
-#          type: input.text
-#          label: Subtitle
+        .subtitle:
+          type: input.text
+          label: Subtitle

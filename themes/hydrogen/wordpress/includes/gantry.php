@@ -5,23 +5,11 @@ use Gantry\Framework\Gantry;
 
 try {
     // Attempt to locate Gantry Framework if it hasn't already been loaded.
-    if ( !class_exists( 'Gantry' ) ) {
-        $paths = array(
-            __DIR__ . '/../src/bootstrap.php',                      // Look if Gantry has been included to the template.
-            WP_CONTENT_DIR . '/themes/gantry/src/bootstrap.php'     // Finally look from the default gantry template.
-        );
-        foreach ( $paths as $path ) {
-            if ( $path && is_file( $path ) ) {
-                $bootstrap = $path;
-            }
-        }
-
-        if ( !$bootstrap ) {
-            throw new LogicException( 'Gantry Framework not found!' );
-        }
-
-        require_once $bootstrap;
+    if ( !class_exists( 'Gantry5\\Loader' ) ) {
+        throw new LogicException( 'Gantry Framework not found!' );
     }
+
+    Gantry5\Loader::setup();
 
     // Get Gantry instance.
     $gantry = Gantry::instance();

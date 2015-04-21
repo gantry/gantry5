@@ -213,6 +213,16 @@ a {
     right: 1rem;
 }
 
+.g-tooltip.g-tooltip-bottom:hover:after, .g-tooltip.g-tooltip-bottom.g-tooltip-force:after {
+    bottom: auto;
+}
+
+.g-tooltip.g-tooltip-bottom:hover:before, .g-tooltip.g-tooltip-bottom.g-tooltip-force:before {
+    border-width: 0 .4rem .4rem .4rem;
+    bottom: -0.1rem;
+}
+
+
 // Save tooltips
 .button-save.g-tooltip:hover:after {
     bottom: 3rem;

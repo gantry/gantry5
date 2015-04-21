@@ -83,7 +83,7 @@ children:
                     id: a5192304-411d-4b74-9037-fbff3d37a964
                     type: particle
                     subtype: sample
-                    title: "\n                                Sample Content\n                            "
+                    title: "Sample Content"
                     attributes:
                       enabled: 1
                       image: 'gantry-assets://images/gantry5-logo.png'
@@ -164,7 +164,7 @@ children:
                     id: a85e6fff-8378-407c-a6c5-88775b6790b8
                     type: particle
                     subtype: sample
-                    title: "\n                                Sample Content\n                            "
+                    title: "Sample Content"
                     attributes:
                       enabled: 1
                       description: "<h1 class=\"center\">Getting Started</h1>\n<div class=\"device-promo\"><div class=\"macbook\"><div class=\"macbook-color\"></div></div><div class=\"ipad\"><div class=\"ipad-color\"></div></div><div class=\"iphone\"><div class=\"iphone-color\"></div></div></div><p>Welcome to the Gantry 5 beta featuring <strong>Hydrogen</strong>, the first theme built on the Gantry 5 framework. If you want to get started, the best way is to navigate to the Gantry Administrator by navigating to <code>http://(your site URL)/administrator</code> and navigating to <strong>Components > Gantry 5 Template</strong>.</p>\n\n<p>Once you are in the Gantry 5 Administrator, you will be able to edit virtually every aspect of your site from its <strong>Layout</strong> to its <strong>Style</strong>. You can even refine how the menus appear using Gantry 5’s new <strong>Menu Editor</strong>.</p>\n\n<p>You can create additional <strong>Configurations</strong> by duplicating the template’s <strong>Style</strong> as it appears in the <strong>Template Manager</strong>. </p>\n\n<p>This will enable you to set different style preferences for different pages, and have them assigned accordingly using the <strong>Assignments</strong> administrative panel.</p>\n\n<div class=\"info-box\"><div class=\"fa fa-graduation-cap float-left\"></div><p>Look for more information on Gantry 5 in our documentation, and stay tuned to the RocketTheme Blog for more information on new features and development updates as development continues.</p>\n\n<p><a href=\"http://docs.gantry.org\" class=\"button\">Learn More</a></p></div>\n\n<h1 class=\"center\">How to Contribute</h1>\n\n<div class=\"g-grid\">\n<div class=\"g-block size-37\"><p>Thank you for participating in the Gantry 5 beta for Joomla. We welcome you to contribute to the project by submitting bug reports through <strong>GitHub</strong>, and/or submit your own code changes to the <strong>Gantry 5 project</strong> for consideration.</p>\n<p><a href=\"https://github.com/gantry/gantry5\" class=\"button\">Gantry 5 on GitHub</a></p>\n</div>\n<div class=\"g-block size-26 middle\"><div class=\"fa fa-github-square\"></div></div>\n\n<div class=\"g-block size-37\"><p>If you would like to assist in creating documentation for Gantry 5, you can do so through the <strong>Gantry 5 Documentation</strong> project on <strong>GitHub</strong>.</p>\n<p><a href=\"https://github.com/gantry/docs\" class=\"button\">Gantry Docs on GitHub</a></p>\n</div>\n</div>\n\n<p>Once again, thank you for participating. We hope you enjoy testing Gantry 5 every bit as much as we have enjoyed creating it.</p>"
@@ -205,7 +205,7 @@ children:
                     id: fa450f5c-6db0-4146-8a1c-e052d92d2b4d
                     type: particle
                     subtype: sample
-                    title: "\n                                Sample Content\n                            "
+                    title: "Sample Content"
                     attributes:
                       enabled: 1
                       headline: 'Key Features'
@@ -302,7 +302,7 @@ children:
                     id: 05232faa-f0f5-4386-a567-cbaa6c323e6b
                     type: particle
                     subtype: social
-                    title: "\n                                Social\n                            "
+                    title: "Social"
                     attributes:
                       enabled: 1
                       css:
@@ -349,3 +349,50 @@ children:
                       css:
                         class: particle_gantry_branding
                     children: {  }
+  -
+    id: b81f55bf-64d5-7b6f-2018-ed3f22daea4f
+    type: offcanvas
+    subtype: false
+    title: Offcanvas
+    attributes:
+      name: 'Offcanvas Section'
+    children:
+      -
+        id: 1d77dfdd-a44c-4d76-8ebf-6b683de4748b
+        type: grid
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children:
+          -
+            id: 35c4d946-c99e-43ad-b5b1-6c7ae5ae1aab
+            type: block
+            subtype: false
+            title: Untitled
+            attributes:
+              size: 100
+              extra: {  }
+            children:
+              -
+                id: dcbf7c39-89a1-41bf-8878-92020f172dbc
+                type: particle
+                subtype: mobile-menu
+                title: "Mobile Menu"
+                attributes:
+                  enabled: 1
+                children: {  }
+  -
+    id: 4cbd4d8c-fc04-f92b-0d49-35dc882cb729
+    type: atoms
+    subtype: false
+    title: Atoms
+    attributes:
+      name: 'Atoms Section'
+    children:
+      -
+        id: 368d843e-8e70-4465-801c-8f945904fda1
+        type: grid
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children: {  }

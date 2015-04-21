@@ -2088,7 +2088,7 @@ var singles = {
         if (grids) { grids.addClass('no-hover'); }
     },
     cleanup: function(builder, dropLast) {
-        var emptyGrids = $('[data-lm-blocktype="section"] > .g-grid:empty, [data-lm-blocktype="container"] > .g-grid:empty');
+        var emptyGrids = $('[data-lm-blocktype="section"] > .g-grid:empty, [data-lm-blocktype="container"] > .g-grid:empty, [data-lm-blocktype="offcanvas"] > .g-grid:empty');
         if (emptyGrids) {
             emptyGrids.forEach(function(grid) {
                 grid = $(grid);
@@ -2869,6 +2869,7 @@ var $             = require('elements'),
     toastr        = require('../ui').toastr,
     request       = require('agent'),
     indexOf       = require('mout/array/indexOf'),
+    trim          = require('mout/string/trim'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     deepEquals    = require('mout/lang/deepEquals');
 
@@ -2914,7 +2915,35 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
             content: 'Loading',
             method: 'post',
             //data: data,
-            remote: $(this.block).find('.config-cog').attribute('href') + getAjaxSuffix()
+            remote: $(this.block).find('.config-cog').attribute('href') + getAjaxSuffix(),
+            remoteLoaded: function(response, modal) {
+                var search = modal.elements.content.find('.search input'),
+                    blocks = modal.elements.content.search('[data-mm-type]'),
+                    filters = modal.elements.content.search('[data-mm-filter]');
+
+                if (!search || !filters || !blocks) { return; }
+
+                search.on('input', function() {
+                    if (!this.value()) {
+                        blocks.removeClass('hidden');
+                        return;
+                    }
+
+                    blocks.addClass('hidden');
+
+                    var found = [], value = this.value().toLowerCase(), text;
+
+                    filters.forEach(function(filter){
+                        filter = $(filter);
+                        text = trim(filter.data('mm-filter')).toLowerCase();
+                        if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
+                            found.push(filter.matches('[data-mm-type]') ? filter : filter.parent('[data-mm-type]'));
+                        }
+                    }, this);
+
+                    if (found.length) { $(found).removeClass('hidden'); }
+                });
+            }
         });
     }
 
@@ -2939,6 +2968,9 @@ var StepTwo = function(data, content, button) {
         }
 
         content.html(response.body.html);
+
+        var selects = $('[data-selectize]');
+        if (selects) { selects.selectize(); }
 
         var urlTemplate = content.find('.g-urltemplate');
         if (urlTemplate) { $('body').emit('input', { target: urlTemplate }); }
@@ -3055,7 +3087,7 @@ ready(function() {
 });
 
 module.exports = StepOne;
-},{"../ui":39,"../utils/get-ajax-suffix":50,"agent":55,"elements":82,"elements/domready":80,"elements/zen":106,"mout/array/indexOf":145,"mout/lang/deepEquals":167}],24:[function(require,module,exports){
+},{"../ui":39,"../utils/get-ajax-suffix":50,"agent":55,"elements":82,"elements/domready":80,"elements/zen":106,"mout/array/indexOf":145,"mout/lang/deepEquals":167,"mout/string/trim":228}],24:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     MenuManager   = require('./menumanager'),
@@ -6753,11 +6785,13 @@ var Eraser = new prime({
     },
 
     show: function(fast){
+        if (!this.element) { return; }
         this.out();
         this.element[fast ? 'style' : 'animate']({top: 0}, {duration: '150ms'});
     },
 
     hide: function(fast){
+        if (!this.element) { return; }
         var top = {top: -(this.element[0].offsetHeight)};
         this.out();
         this.element[fast ? 'style' : 'animate'](top, {duration: '150ms'});

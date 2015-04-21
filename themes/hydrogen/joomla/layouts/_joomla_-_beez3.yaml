@@ -433,11 +433,11 @@ children:
                     id: 5ddbd658-045c-5852-0e9d-06e63b094323
                     type: position
                     subtype: false
-                    title: '9'
+                    title: 'Position-9'
                     attributes:
                       enabled: 1
-                      key: '9'
-                      title: '9'
+                      key: 'position-9'
+                      title: 'position-9'
                     children: {  }
               -
                 id: d37feef7-0a29-6d49-f549-4291432cb840
@@ -451,11 +451,11 @@ children:
                     id: 481e01f9-68ac-d1c8-d5e4-3c3002fed362
                     type: position
                     subtype: false
-                    title: '10'
+                    title: 'Position-10'
                     attributes:
                       enabled: 1
-                      key: '10'
-                      title: '10'
+                      key: 'position-10'
+                      title: 'position-10'
                     children: {  }
               -
                 id: 1f4d8205-6b0f-1851-2d4a-e3de27a023b2
@@ -469,11 +469,11 @@ children:
                     id: 77ad7fc6-ba9c-9a81-63ee-5ae8dff42b8f
                     type: position
                     subtype: false
-                    title: '11'
+                    title: 'Position-11'
                     attributes:
                       enabled: 1
-                      key: '11'
-                      title: '11'
+                      key: 'position-11'
+                      title: 'position-11'
                     children: {  }
           -
             id: 8f4c9aa2-f866-ebaa-5372-3cf043ef2fc6
@@ -494,11 +494,11 @@ children:
                     id: 54e494e3-889e-c6e0-c2a1-363837988c39
                     type: position
                     subtype: false
-                    title: '14'
+                    title: 'Position-14'
                     attributes:
                       enabled: 1
-                      key: '14'
-                      title: '14'
+                      key: 'position-14'
+                      title: 'position-14'
                     children: {  }
   -
     id: 838edc20-2112-1305-bf30-5f6ed496705d
@@ -539,6 +539,38 @@ children:
                       key: debug
                       title: Debug
                     children: {  }
+  -
+    id: b81f55bf-64d5-7b6f-2018-ed3f22daea4f
+    type: offcanvas
+    subtype: false
+    title: Offcanvas
+    attributes:
+      name: 'Offcanvas Section'
+    children:
+      -
+        id: 1d77dfdd-a44c-4d76-8ebf-6b683de4748b
+        type: grid
+        subtype: false
+        title: Untitled
+        attributes: {  }
+        children:
+          -
+            id: 35c4d946-c99e-43ad-b5b1-6c7ae5ae1aab
+            type: block
+            subtype: false
+            title: Untitled
+            attributes:
+              size: 100
+              extra: {  }
+            children:
+              -
+                id: dcbf7c39-89a1-41bf-8878-92020f172dbc
+                type: particle
+                subtype: mobile-menu
+                title: "Mobile Menu"
+                attributes:
+                  enabled: 1
+                children: {  }
   -
     id: e9a5e0df-b070-acf0-df1a-1a2a00b23954
     type: atoms

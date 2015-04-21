@@ -54,8 +54,18 @@ class Router extends BaseRouter
             $table = \JTable::getInstance('Style', 'TemplatesTable');
             $table->load($style);
 
-            $this->container['theme.path'] = JPATH_SITE . '/templates/' . $table->template;
-            $this->container['theme.name'] = $table->template;
+            $template = $table->template;
+            $path = JPATH_SITE . '/templates/' . $template;
+
+            $this->container['theme.path'] = $path;
+            $this->container['theme.name'] = $template;
+
+            // Load language file for the template.
+            $languageFile = 'tpl_' . $template;
+            $lang = \JFactory::getLanguage();
+            $lang->load($languageFile, JPATH_SITE)
+                || $lang->load($languageFile, $path)
+                || $lang->load($languageFile, $path, 'en-GB');
         }
 
         $this->container['base_url'] = \JUri::base(true) . '/index.php?option=com_gantry5';

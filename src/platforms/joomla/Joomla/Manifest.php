@@ -45,14 +45,15 @@ class Manifest
 
     public function setPositions(array $positions)
     {
-        $target = $this->xml->positions[0];
-
         // Remove all the old positions.
-        foreach ($target->children() as $child) {
-            unset($child);
+        $target = $this->xml->xpath('//positions/*');
+        foreach ($target as $child) {
+            unset($child[0]);
         }
 
         // Create the new positions.
+        sort($positions);
+        $target = $this->xml->positions[0];
         foreach ($positions as $position) {
             $target->addChild('position', $position);
         }
@@ -60,6 +61,11 @@ class Manifest
 
     public function save()
     {
+        // Do not save manifest if template has been symbolically linked.
+        if (is_link(dirname($this->path))) {
+            return;
+        }
+
         if (!$this->xml->asXML($this->path)) {
             throw new \RuntimeException(sprintf('Saving manifest for %s template failed', $this->theme));
         }

@@ -20,6 +20,8 @@ use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Services\StreamsServiceProvider;
 use Gantry\Framework\Translator;
 use RocketTheme\Toolbox\DI\Container;
+use RocketTheme\Toolbox\Event\Event;
+use RocketTheme\Toolbox\Event\EventDispatcher;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Gantry extends Container
@@ -58,6 +60,20 @@ class Gantry extends Container
         return $this[$id];
     }
 
+    /**
+     * Fires an event with optional parameters.
+     *
+     * @param  string $eventName
+     * @param  Event  $event
+     * @return Event
+     */
+    public function fireEvent($eventName, Event $event = null)
+    {
+        /** @var EventDispatcher $events */
+        $events = $this['events'];
+        return $events->dispatch($eventName, $event);
+    }
+
     public function route($path)
     {
         $routes = $this->offsetGet('routes');
@@ -89,6 +105,10 @@ class Gantry extends Container
 
         $instance->register(new ConfigServiceProvider);
         $instance->register(new StreamsServiceProvider);
+
+        $instance['events'] = function ($c) {
+            return new EventDispatcher;
+        };
 
         $instance['platform'] = function ($c) {
             return new Platform($c);

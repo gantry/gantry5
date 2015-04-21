@@ -165,14 +165,14 @@ class Platform extends BasePlatform
         return $result;
     }
 
+    public function errorHandlerPaths()
+    {
+        return ['|gantry5|'];
+    }
+
     public function settings()
     {
         return \JRoute::_('index.php?option=com_config&view=component&component=com_gantry5', false);
-    }
-
-    public function settings_key()
-    {
-        return $this->settings_key;
     }
 
     public function update()

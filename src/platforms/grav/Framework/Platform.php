@@ -24,6 +24,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Platform extends BasePlatform
 {
+    protected $name = 'grav';
+
     /**
      * @return array
      */
@@ -65,6 +67,35 @@ class Platform extends BasePlatform
 
     public function getMediaPaths()
     {
-        return ['' => ['user://']];
+        return ['' => ['user://gantry5']];
+    }
+
+    public function getEnginesPaths()
+    {
+        $grav = Grav::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $grav['locator'];
+
+        if (is_link($locator('user://gantry5/engines'))) {
+            // Development environment.
+            return ['' => ["user://gantry5/engines/{$this->name}", 'user://gantry5/engines/common']];
+        }
+        return ['' => ['user://gantry5/engines']];
+    }
+
+    public function getAssetsPaths()
+    {
+        $grav = Grav::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $grav['locator'];
+
+        if (is_link($locator('user://gantry5/assets'))) {
+            // Development environment.
+            return ['' => ['gantry-theme://', "user://gantry5/assets/{$this->name}", 'user://gantry5/assets/common']];
+        }
+
+        return ['' => ['gantry-theme://', 'user://gantry5/assets']];
     }
 }
