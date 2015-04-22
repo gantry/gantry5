@@ -47,8 +47,11 @@ var Menu = new prime({
         this.active = null;
         this.location = [];
 
+        var mainContainer = $(this.selectors.mainContainer);
+        if (!mainContainer) { return; }
+
         if (hasTouchEvents) {
-            $(this.selectors.mainContainer).addClass(this.states.touchEvents);
+            mainContainer.addClass(this.states.touchEvents);
         }
 
         this.attach();
@@ -65,7 +68,8 @@ var Menu = new prime({
         body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
 
         if (hasTouchEvents) {
-            $(selectors.linkedParent).on('touchend', this.bound('touchend'));
+            var linkedParent = $(selectors.linkedParent);
+            if (linkedParent) { linkedParent.on('touchend', this.bound('touchend')); }
             this.overlay.on('touchend', this.bound('closeAllDropdowns'));
         }
 
@@ -130,7 +134,7 @@ var Menu = new prime({
             }, this));
         }
 
-        if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown) || isGoingBack)) {
+        if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown + ', > * > ' + selectors.dropdown) || isGoingBack)) {
             var sublevel = target.parent('.g-sublevel') || target.parent('.g-toplevel'),
                 slideout = parent.find('.g-sublevel'),
                 columns = parent.parent('.g-dropdown-column'),
