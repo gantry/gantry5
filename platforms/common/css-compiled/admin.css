@@ -484,11 +484,6 @@ a {
   letter-spacing: 1px;
   vertical-align: middle;
 }
-/* line 27, platforms/common/scss/admin/_overview.scss */
-#g5-container .overview-header .button {
-  float: right;
-  margin-left: 0.938rem;
-}
 @media only all and (max-width: 47.938rem) {
   /* line 27, platforms/common/scss/admin/_overview.scss */
   #g5-container .overview-header .button {
@@ -502,7 +497,7 @@ a {
     text-align: center;
   }
 }
-/* line 42, platforms/common/scss/admin/_overview.scss */
+/* line 39, platforms/common/scss/admin/_overview.scss */
 #g5-container .overview-details {
   margin-top: 0.938rem;
   margin-bottom: 0.938rem;
@@ -511,42 +506,42 @@ a {
   padding: 0 1.563rem 0.938rem 1.563rem;
   border-bottom: 1px solid #ddd;
 }
-/* line 49, platforms/common/scss/admin/_overview.scss */
+/* line 46, platforms/common/scss/admin/_overview.scss */
 #g5-container .overview-details .g-block {
   padding: 0.938rem;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 42, platforms/common/scss/admin/_overview.scss */
+  /* line 39, platforms/common/scss/admin/_overview.scss */
   #g5-container .overview-details {
     text-align: center;
   }
 }
-/* line 57, platforms/common/scss/admin/_overview.scss */
+/* line 54, platforms/common/scss/admin/_overview.scss */
 #g5-container .overview-details .preview-image {
   width: 350px;
 }
-/* line 63, platforms/common/scss/admin/_overview.scss */
+/* line 60, platforms/common/scss/admin/_overview.scss */
 #g5-container .overview-gantry .g-block {
   padding: 0.938rem;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 62, platforms/common/scss/admin/_overview.scss */
+  /* line 59, platforms/common/scss/admin/_overview.scss */
   #g5-container .overview-gantry {
     text-align: center;
   }
 }
-/* line 72, platforms/common/scss/admin/_overview.scss */
+/* line 69, platforms/common/scss/admin/_overview.scss */
 #g5-container .overview-list {
   list-style: none;
   margin: 0;
   font-size: 1.1rem;
 }
-/* line 76, platforms/common/scss/admin/_overview.scss */
+/* line 73, platforms/common/scss/admin/_overview.scss */
 #g5-container .overview-list i {
   margin-right: 1rem;
   color: #C6C6C6;
 }
-/* line 82, platforms/common/scss/admin/_overview.scss */
+/* line 79, platforms/common/scss/admin/_overview.scss */
 #g5-container .about-gantry {
   margin-top: 3rem;
   margin-left: 2rem;

@@ -25,9 +25,6 @@
     }
 
     .button {
-        float: right;
-        margin-left: $content-padding;
-
         @include breakpoint(mobile-only) {
             float: none;
             margin: 0;
