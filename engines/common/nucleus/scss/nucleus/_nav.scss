@@ -24,6 +24,16 @@
 			cursor: pointer;
 			@include transition(background .2s ease-out, transform .2s ease-out);
 
+			// First Level Dropdown Offset
+			> .g-dropdown-offset {
+				position: absolute;
+				top: 100%;
+				width: 100%;
+				left: 0;
+				right: 0;
+				z-index: 1;
+			}
+
 			.g-menu-item-content {
 				display: inline-block;
 				vertical-align: middle;
@@ -147,7 +157,7 @@
 .g-main-nav {
 	.g-fullwidth {
 		.g-dropdown {
-			position: absolute;
+			//position: absolute;
 			left: 0;
 			right: 0;
 			z-index: 1;
@@ -282,6 +292,7 @@
 				}
 	    	}						
 		}
+
 		.g-dropdown {
 			top: 0;
 			background: transparent;

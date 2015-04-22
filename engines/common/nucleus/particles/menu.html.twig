@@ -86,11 +86,13 @@
 {% endmacro %}
 
 {% macro displaySubmenu(item, menu, gantry) %}
-    <ul class="g-dropdown g-inactive">
-        <li class="g-dropdown-column">
-            {{ _self.displayContainers(item, menu, gantry) }}
-        </li>
-    </ul>
+    {% if item.level == 1 %}<div class="g-dropdown-offset">{% endif %}
+        <ul class="g-dropdown g-inactive">
+            <li class="g-dropdown-column">
+                {{ _self.displayContainers(item, menu, gantry) }}
+            </li>
+        </ul>
+    {% if item.level == 1 %}</div>{% endif %}
 {% endmacro %}
 
 <nav class="g-main-nav" role="navigation">
