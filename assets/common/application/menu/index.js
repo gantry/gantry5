@@ -142,7 +142,7 @@ var Menu = new prime({
 
             if (sublevel) {
                 var isNavMenu = target.parent(selectors.mainContainer);
-                this._fixHeights(sublevel, slideout, isGoingBack, isNavMenu);
+                if (!isNavMenu || (isNavMenu && !sublevel.matches('.g-toplevel'))) { this._fixHeights(sublevel, slideout, isGoingBack, isNavMenu); }
                 if (!isNavMenu && columns && (blocks = columns.search('> .g-grid > .g-block'))) {
                     if (blocks.length > 1) { sublevel = blocks.search('> .g-sublevel'); }
                 }
@@ -195,6 +195,17 @@ var Menu = new prime({
         if (topLevel) { this.closeDropdown(topLevel); }
 
         this.toggleOverlay(topLevel);
+    },
+
+    resetStates: function(menu) {
+        if (!menu) { return; }
+        var items = menu.search('.g-toplevel, .g-dropdown-column, .g-dropdown, .g-selected, .g-active, .g-slide-out'),
+            actives = menu.search('.g-active');
+        if (!items) { return; }
+
+        menu.attribute('style', null).removeClass('g-selected').removeClass('g-slide-out');
+        items.attribute('style', null).removeClass('g-selected').removeClass('g-slide-out');
+        if (actives) { actives.removeClass('g-active').addClass('g-inactive'); }
     },
 
     toggleOverlay: function(menu) {
@@ -256,6 +267,8 @@ var Menu = new prime({
             find = mobileContainer.find(selectors.topLevel);
             if (find) { find.top(mainContainer); }
         }
+
+        this.resetStates(find);
     },
 
     _debug: function() {}
