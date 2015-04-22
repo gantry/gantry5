@@ -1823,38 +1823,59 @@ input[type="submit"] {
 }
 
 /* line 53, engines/common/nucleus/scss/nucleus/_utilities.scss */
+.full-width {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 100%;
+  -moz-flex: 0 100%;
+  -ms-flex: 0 100%;
+  flex: 0 100%;
+}
+/* line 55, engines/common/nucleus/scss/nucleus/_utilities.scss */
+.full-width .g-block {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 100%;
+  -moz-flex: 0 100%;
+  -ms-flex: 0 100%;
+  flex: 0 100%;
+}
+
+/* line 61, engines/common/nucleus/scss/nucleus/_utilities.scss */
 .hidden {
   display: none;
   visibility: hidden;
 }
 
-/* line 58, engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 66, engines/common/nucleus/scss/nucleus/_utilities.scss */
 .visible-phone {
   display: none !important;
 }
 
-/* line 62, engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 70, engines/common/nucleus/scss/nucleus/_utilities.scss */
 .visible-tablet {
   display: none !important;
 }
 
-/* line 66, engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 74, engines/common/nucleus/scss/nucleus/_utilities.scss */
 .hidden-desktop {
   display: none !important;
 }
 
-/* line 70, engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 78, engines/common/nucleus/scss/nucleus/_utilities.scss */
 .visible-desktop {
   display: inherit !important;
 }
 
 @media print {
-  /* line 75, engines/common/nucleus/scss/nucleus/_utilities.scss */
+  /* line 83, engines/common/nucleus/scss/nucleus/_utilities.scss */
   .visible-print {
     display: inherit !important;
   }
 
-  /* line 78, engines/common/nucleus/scss/nucleus/_utilities.scss */
+  /* line 86, engines/common/nucleus/scss/nucleus/_utilities.scss */
   .hidden-print {
     display: none !important;
   }

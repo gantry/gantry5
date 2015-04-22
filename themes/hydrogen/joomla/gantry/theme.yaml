@@ -68,6 +68,7 @@ configuration:
       align-right: Align Right
       align-left: Align Left
       center: Center
+      full-width: Full Width
       nomarginall: No Margin
       nopaddingall: No Padding
 
