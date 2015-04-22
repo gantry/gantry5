@@ -10,6 +10,7 @@ var $             = require('elements'),
 
     getAjaxSuffix = require('./utils/get-ajax-suffix'),
 
+    flags         = require('./utils/flags-state'),
     lm            = require('./lm'),
     mm            = require('./menu');
 
@@ -59,6 +60,12 @@ var prettyDate = {
             }
         }
         throw new Error("exhausted all formatter options, none found"); //should never be reached
+    }
+};
+
+window.onbeforeunload = function(){
+    if (flags.get('pending')) {
+        return 'You haven\'t saved your changes and by leaving the page they will be lost.\nDo you want to leave without saving?';
     }
 };
 
@@ -169,6 +176,10 @@ ready(function() {
             element.lastSaved = new Date();
 
             if (page == 'layout') { lm.layoutmanager.updatePendingChanges(); }
+
+            // all good, disable 'pending' flag
+            flags.set('pending', false);
+            flags.emit('update:pending');
         });
     });
 

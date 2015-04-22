@@ -16,6 +16,7 @@ var prime         = require('prime'),
 
     request       = require('agent')(),
     History       = require('./history'),
+    flags         = require('./flags-state'),
     getAjaxSuffix = require('./get-ajax-suffix'),
     mm            = require('../menu');
 
@@ -170,12 +171,38 @@ domready(function() {
     body.delegate('click', '.button-back-to-conf', function(event, element) {
         event.preventDefault();
 
-        element.showIndicator();
-
         ConfNavIndex = ConfNavIndex == -1 ? 1 : ConfNavIndex;
         var navbar = $('#navbar'),
             item = navbar.find('li:nth-child(' + (ConfNavIndex + 1) + ') [data-g5-ajaxify]');
 
+        if (flags.get('pending')) {
+            flags.warning(function(response, content){
+                var saveContinue = content.find('.button-primary'),
+                    closeStay = content.find('.button:not(.button-primary)'),
+                    flagCallback = function(){
+                        flags.off('update:pending', flagCallback);
+                        modal.close();
+
+                        body.emit('click', { target: item });
+                        navbar.slideDown();
+                    };
+
+                if (!saveContinue) { return; }
+                saveContinue.on('click', function(event) {
+                    event.preventDefault();
+                    if (this.attribute('disabled')) { return false; }
+
+                    this.attribute('disabled', 'disabled');
+                    flags.on('update:pending', flagCallback);
+                    body.emit('click', {target: $('.button-save')});
+                });
+            });
+
+            return;
+        }
+
+        element.showIndicator();
+        
         body.emit('click', { target: item });
         navbar.slideDown();
     });
@@ -188,6 +215,30 @@ domready(function() {
             }
 
             event.preventDefault();
+        }
+
+        if (flags.get('pending')) {
+            flags.warning(function(response, content){
+                var saveContinue = content.find('.button-primary'),
+                    closeStay = content.find('.button:not(.button-primary)'),
+                    flagCallback = function(){
+                        flags.off('update:pending', flagCallback);
+                        modal.close();
+                        body.emit('click', event);
+                    };
+
+                if (!saveContinue) { return; }
+                saveContinue.on('click', function(event) {
+                    event.preventDefault();
+                    if (this.attribute('disabled')) { return false; }
+
+                    this.attribute('disabled', 'disabled');
+                    flags.on('update:pending', flagCallback);
+                    body.emit('click', {target: $('.button-save')});
+                });
+            });
+
+            return;
         }
 
         element.showIndicator();

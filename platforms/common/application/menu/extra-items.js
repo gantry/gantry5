@@ -8,6 +8,7 @@ var $             = require('elements'),
     indexOf       = require('mout/array/indexOf'),
     trim          = require('mout/string/trim'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    flags         = require('../utils/flags-state'),
     deepEquals    = require('mout/lang/deepEquals');
 
 var menumanager = null;
@@ -39,8 +40,10 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
     if (!this.isNewParticle) {
         if (!deepEquals(map, current)) {
             save.showIndicator('fa fa-fw changes-indicator fa-circle-o');
+            flags.set('pending', true);
         } else {
             save.hideIndicator();
+            flags.set('pending', false);
         }
     }
 
@@ -70,7 +73,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
 
                     var found = [], value = this.value().toLowerCase(), text;
 
-                    filters.forEach(function(filter){
+                    filters.forEach(function(filter) {
                         filter = $(filter);
                         text = trim(filter.data('mm-filter')).toLowerCase();
                         if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
@@ -158,7 +161,7 @@ var StepTwo = function(data, content, button) {
                         index = indexOf(element.parent().children('[data-mm-id]'), element[0]);
 
                     while (menumanager.items[path + id]) { id = randomID(5); }
-                    
+
                     menumanager.items[path + id] = response.body.item;
                     menumanager.ordering[base][col].splice(index, 1, path + id);
                     element.data('mm-id', path + id);
@@ -218,7 +221,7 @@ ready(function() {
         }
 
         element.showIndicator();
-        
+
         StepTwo({ item: JSON.stringify(data) }, element.parent('.g5-content'), element);
     });
 });

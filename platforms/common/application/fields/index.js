@@ -4,7 +4,8 @@ var ready      = require('elements/domready'),
     storage    = require('prime/map'),
     deepEquals = require('mout/lang/deepEquals'),
     invoke     = require('mout/array/invoke'),
-    History    = require('../utils/history');
+    History    = require('../utils/history'),
+    flags      = require('../utils/flags-state');
 
 
 var originals, collectFieldsValues = function() {
@@ -54,6 +55,7 @@ ready(function() {
 
         if (!save) { return; }
 
+        flags.set('pending', !equals);
         save[equals ? 'hideIndicator' : 'showIndicator']('changes-indicator fa fa-circle-o fa-fw');
     };
 
