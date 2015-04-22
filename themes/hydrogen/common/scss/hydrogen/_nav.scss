@@ -88,6 +88,20 @@
 		}
 	}
 
+	.align-left {
+		.g-toplevel {
+			justify-content: flex-start;
+			-webkit-justify-content: flex-start;
+		}
+	}
+
+	.align-right {
+		.g-toplevel {
+			justify-content: flex-end;
+			-webkit-justify-content: flex-end;
+		}
+	}
+
 	.g-menu-hastouch {
 		.g-toplevel {
 			> li {
