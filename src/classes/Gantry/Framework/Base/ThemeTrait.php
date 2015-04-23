@@ -146,22 +146,47 @@ trait ThemeTrait
 
     protected function prepareLayout(array &$items)
     {
-        foreach ($items as &$item) {
+        foreach ($items as $i => &$item) {
             if (!empty($item->children)) {
                 $this->prepareLayout($item->children);
             }
 
             // TODO: remove hard coded types.
             switch ($item->type) {
+                case 'pagecontent':
+                    break;
+
                 case 'atom':
                 case 'particle':
                 case 'position':
                 case 'spacer':
                     $item->content = $this->renderContent($item);
                     if (!$item->content) {
-                        unset($item);
+                        unset($items[$i]);
                     }
+
                     break;
+
+                default:
+                    if (!$item->children) {
+                        unset($items[$i]);
+                        break;
+                    }
+
+                    $dynamicSize = 0;
+                    $fixedSize = 0;
+                    foreach ($item->children as $child) {
+                        if (!isset($child->attributes->size)) {
+                            $child->attributes->size = 100 / count($item->children);
+                        }
+                        $dynamicSize += $child->attributes->size;
+                    }
+                    if (round($dynamicSize, 1) != 100) {
+                        $multiplier = (100 - $fixedSize) / $dynamicSize;
+                        foreach ($item->children as $child) {
+                            $child->attributes->size *= $multiplier;
+                        }
+                    }
             }
         }
     }
@@ -170,7 +195,7 @@ trait ThemeTrait
     {
         $context = $this->add_to_context(['segment' => $item]);
 
-        return $this->render("@nucleus/content/{$item->type}.html.twig", $context);
+        return trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
     }
 
     public function add_to_context(array $context)
