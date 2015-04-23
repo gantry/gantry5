@@ -12,7 +12,19 @@
 	position: relative;
 	z-index: 3;
 
+	a {
+		color: lighten($header-background, 40%);
+		&:hover {
+			color: $header-text-color;
+		}
+	}
+
 	.g-main-nav {
+		
+		h1, h2, h3, h4, h5, h6, strong {
+			color: $header-text-color;
+		}
+
 		.g-toplevel {
 			@include display(flex);
 			@include flex-flow(row wrap);
@@ -21,32 +33,23 @@
 				> .g-menu-item-container {
 					color: $header-text-color;
 				}
-				
 				&:hover {
 					background: darken($header-background, 6%);
-					
-					> .g-menu-item-container {
-						> .g-selected {
-							background: darken($header-background, 6%);
-						}
-					}
 				}
 
 				&.active {
 					background: $main-background;
-					
+
 					> .g-menu-item-container {
 						color: $main-text-color;
+					}
 
-						> .g-selected {
-							background: darken($header-background, 6%);
+					&.g-selected {
+						background: darken($header-background, 6%);
+
+						> .g-menu-item-container {
 							color: $header-text-color;
 						}
-					}
-				}
-				> .g-menu-item-container {
-					> .g-selected {
-						background: darken($header-background, 6%);
 					}
 				}
 			}
@@ -64,16 +67,6 @@
 
 				&:hover, &.active {
 					background: darken($header-background, 10%);
-					> .g-menu-item-container {
-						> .g-selected {
-							background: darken($header-background, 10%);
-						}
-					}
-				}
-				> .g-menu-item-container {
-					> .g-selected {
-						background: darken($header-background, 10%);
-					}
 				}
 			}
 		}
@@ -88,6 +81,15 @@
 							border-radius: $core-border-radius;
 							margin: -0.2rem 0 -0.2rem 0.5rem;
 							padding: 0.2rem;
+						}
+					}
+				}
+				&.active {
+					&.g-menu-item-link-parent {
+						> .g-menu-item-container {
+							> .g-menu-parent-indicator {
+								color: $navigation-text-color;
+							}
 						}
 					}
 				}

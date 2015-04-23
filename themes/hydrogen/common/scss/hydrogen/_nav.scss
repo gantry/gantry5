@@ -18,8 +18,19 @@
 	position: relative;
 	z-index: 2;
 
+	a {
+		color: lighten($navigation-background, 40%);
+		&:hover {
+			color: $navigation-text-color;
+		}
+	}
+
 	.g-main-nav {
 		margin: -($content-padding + $content-margin);
+
+		h1, h2, h3, h4, h5, h6, strong {
+			color: $navigation-text-color;
+		}
 
 		.g-toplevel {
 			@include display(flex);
@@ -33,12 +44,6 @@
 				}
 				&:hover {
 					background: darken($navigation-background, 6%);
-
-					> .g-menu-item-container {
-						> .g-selected {
-							background: darken($navigation-background, 6%);
-						}
-					}
 				}
 
 				&.active {
@@ -46,16 +51,14 @@
 
 					> .g-menu-item-container {
 						color: $main-text-color;
-					
-						> .g-selected {
-							background: darken($navigation-background, 6%);
+					}
+
+					&.g-selected {
+						background: darken($navigation-background, 6%);
+
+						> .g-menu-item-container {
 							color: $navigation-text-color;
 						}
-					}
-				}
-				> .g-menu-item-container {
-					> .g-selected {
-						background: darken($navigation-background, 6%);
 					}
 				}
 			}
@@ -73,16 +76,6 @@
 
 				&:hover, &.active {
 					background: darken($navigation-background, 10%);
-					> .g-menu-item-container {
-						> .g-selected {
-							background: darken($navigation-background, 10%);
-						}
-					}
-				}
-				> .g-menu-item-container {
-					> .g-selected {
-						background: darken($navigation-background, 10%);
-					}
 				}
 			}
 		}
@@ -112,6 +105,15 @@
 							border-radius: $core-border-radius;
 							margin: -0.2rem 0 -0.2rem 0.5rem;
 							padding: 0.2rem;
+						}
+					}
+				}
+				&.active {
+					&.g-menu-item-link-parent {
+						> .g-menu-item-container {
+							> .g-menu-parent-indicator {
+								color: $navigation-text-color;
+							}
 						}
 					}
 				}
