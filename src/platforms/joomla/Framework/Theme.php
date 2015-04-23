@@ -63,6 +63,10 @@ class Theme extends BaseTheme
     public function joomla($enable = null)
     {
         if ($enable !== null) {
+            if ($enable) {
+                // Workaround for Joomla! not loading bootstrap when it needs it.
+                \JHtml::_('bootstrap.framework');
+            }
             $this->joomla = (bool) $enable;
         }
 
