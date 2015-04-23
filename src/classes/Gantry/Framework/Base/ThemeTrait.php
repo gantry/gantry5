@@ -144,6 +144,35 @@ trait ThemeTrait
         return $layout;
     }
 
+    protected function prepareLayout(array &$items)
+    {
+        foreach ($items as &$item) {
+            if (!empty($item->children)) {
+                $this->prepareLayout($item->children);
+            }
+
+            // TODO: remove hard coded types.
+            switch ($item->type) {
+                case 'atom':
+                case 'particle':
+                case 'position':
+                case 'spacer':
+                    $item->content = $this->renderContent($item);
+                    if (!$item->content) {
+                        unset($item);
+                    }
+                    break;
+            }
+        }
+    }
+
+    protected function renderContent($item)
+    {
+        $context = $this->add_to_context(['segment' => $item]);
+
+        return $this->render("@nucleus/content/{$item->type}.html.twig", $context);
+    }
+
     public function add_to_context(array $context)
     {
         $gantry = static::gantry();
@@ -157,7 +186,10 @@ trait ThemeTrait
 
     public function segments()
     {
-        return $this->loadLayout();
+        $segments = $this->loadLayout()->toArray();
+        $this->prepareLayout($segments);
+
+        return $segments;
     }
 
     public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
