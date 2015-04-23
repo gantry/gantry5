@@ -171,17 +171,26 @@ var selectorChangeEvent = function() {
 
             if (flags.get('pending')) {
                 flags.warning(function(response, content) {
-                    var saveContinue = content.find('.button-primary'),
-                        closeStay = content.find('.button:not(.button-primary)');
+                    var saveContinue = content.find('[data-g-unsaved-save]'),
+                        discardContinue = content.find('[data-g-unsaved-discard]');
 
                     if (!saveContinue) { return; }
-                    saveContinue.on('click', function(event) {
-                        event.preventDefault();
+                    saveContinue.on('click', function(e) {
+                        e.preventDefault();
                         if (this.attribute('disabled')) { return false; }
 
-                        this.attribute('disabled', 'disabled');
+                        $([saveContinue, discardContinue]).attribute('disabled');
                         flags.on('update:pending', flagCallback);
                         $('body').emit('click', { target: $('.button-save') });
+                    });
+
+                    discardContinue.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
+
+                        $([saveContinue, discardContinue]).attribute('disabled');
+                        flags.set('pending', false);
+                        flagCallback();
                     });
                 }, function() {
                     TMP_SELECTIZE_DISABLE = true;
@@ -212,8 +221,8 @@ domready(function() {
 
         if (flags.get('pending')) {
             flags.warning(function(response, content) {
-                var saveContinue = content.find('.button-primary'),
-                    closeStay = content.find('.button:not(.button-primary)'),
+                var saveContinue = content.find('[data-g-unsaved-save]'),
+                    discardContinue = content.find('[data-g-unsaved-discard]'),
                     flagCallback = function() {
                         flags.off('update:pending', flagCallback);
                         modal.close();
@@ -223,13 +232,22 @@ domready(function() {
                     };
 
                 if (!saveContinue) { return; }
-                saveContinue.on('click', function(event) {
-                    event.preventDefault();
+                saveContinue.on('click', function(e) {
+                    e.preventDefault();
                     if (this.attribute('disabled')) { return false; }
 
-                    this.attribute('disabled', 'disabled');
+                    $([saveContinue, discardContinue]).attribute('disabled');
                     flags.on('update:pending', flagCallback);
                     body.emit('click', { target: $('.button-save') });
+                });
+
+                discardContinue.on('click', function(e) {
+                    e.preventDefault();
+                    if (this.attribute('disabled')) { return false; }
+
+                    $([saveContinue, discardContinue]).attribute('disabled');
+                    flags.set('pending', false);
+                    flagCallback();
                 });
             });
 
@@ -254,8 +272,8 @@ domready(function() {
 
         if (flags.get('pending')) {
             flags.warning(function(response, content) {
-                var saveContinue = content.find('.button-primary'),
-                    closeStay = content.find('.button:not(.button-primary)'),
+                var saveContinue = content.find('[data-g-unsaved-save]'),
+                    discardContinue = content.find('[data-g-unsaved-discard]'),
                     flagCallback = function() {
                         flags.off('update:pending', flagCallback);
                         modal.close();
@@ -263,13 +281,22 @@ domready(function() {
                     };
 
                 if (!saveContinue) { return; }
-                saveContinue.on('click', function(event) {
-                    event.preventDefault();
+                saveContinue.on('click', function(e) {
+                    e.preventDefault();
                     if (this.attribute('disabled')) { return false; }
 
-                    this.attribute('disabled', 'disabled');
+                    $([saveContinue, discardContinue]).attribute('disabled');
                     flags.on('update:pending', flagCallback);
                     body.emit('click', { target: $('.button-save') });
+                });
+
+                discardContinue.on('click', function(e) {
+                    e.preventDefault();
+                    if (this.attribute('disabled')) { return false; }
+
+                    $([saveContinue, discardContinue]).attribute('disabled');
+                    flags.set('pending', false);
+                    flagCallback();
                 });
             });
 
