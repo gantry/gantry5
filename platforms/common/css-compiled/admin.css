@@ -2829,7 +2829,7 @@ a {
 }
 /* line 440, platforms/common/scss/admin/_menu.scss */
 #g5-container .menu-editor-particles .modules-wrapper, #g5-container .menu-editor-modules .modules-wrapper {
-  max-height: 500px;
+  max-height: 400px;
   overflow: auto;
 }
 /* line 445, platforms/common/scss/admin/_menu.scss */
