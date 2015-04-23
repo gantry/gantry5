@@ -21,6 +21,10 @@
 	.g-main-nav {
 		margin: -($content-padding + $content-margin);
 
+		h1, h2, h3, h4, h5, h6, strong {
+			color: $navigation-text-color;
+		}
+
 		.g-toplevel {
 			@include display(flex);
 			@include flex-flow(row wrap);

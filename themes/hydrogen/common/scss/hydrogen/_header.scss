@@ -13,6 +13,11 @@
 	z-index: 3;
 
 	.g-main-nav {
+		
+		h1, h2, h3, h4, h5, h6, strong {
+			color: $navigation-text-color;
+		}
+
 		.g-toplevel {
 			@include display(flex);
 			@include flex-flow(row wrap);
