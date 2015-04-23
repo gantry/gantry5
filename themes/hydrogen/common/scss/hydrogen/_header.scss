@@ -12,6 +12,13 @@
 	position: relative;
 	z-index: 3;
 
+	a {
+		color: lighten($header-background, 40%);
+		&:hover {
+			color: $header-text-color;
+		}
+	}
+
 	.g-main-nav {
 		
 		h1, h2, h3, h4, h5, h6, strong {

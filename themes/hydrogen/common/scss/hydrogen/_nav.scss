@@ -18,6 +18,13 @@
 	position: relative;
 	z-index: 2;
 
+	a {
+		color: lighten($navigation-background, 40%);
+		&:hover {
+			color: $navigation-text-color;
+		}
+	}
+
 	.g-main-nav {
 		margin: -($content-padding + $content-margin);
 
