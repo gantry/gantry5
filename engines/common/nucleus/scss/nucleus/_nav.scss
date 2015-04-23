@@ -221,8 +221,9 @@
 
 // Icons
 .g-menu-item-container {
-	i {
+	> i {
 		vertical-align: middle;
+		margin-right: 0.2rem;
 	}
 }
 
