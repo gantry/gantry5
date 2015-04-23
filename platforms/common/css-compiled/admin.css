@@ -998,33 +998,45 @@ a {
 #g5-container .settings-block img {
   display: block;
 }
+/* line 164, platforms/common/scss/admin/_settings.scss */
+#g5-container .settings-block.search {
+  position: relative;
+  margin-bottom: 10px;
+}
 /* line 168, platforms/common/scss/admin/_settings.scss */
+#g5-container .settings-block.search i {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -12px;
+}
+/* line 180, platforms/common/scss/admin/_settings.scss */
 #g5-container .g5-dialog .settings-block {
   width: 100%;
   margin: 0 0 15px;
 }
-/* line 173, platforms/common/scss/admin/_settings.scss */
+/* line 185, platforms/common/scss/admin/_settings.scss */
 #g5-container .g5-dialog .g-modal-body {
   overflow-x: hidden;
   overflow-y: scroll;
   max-height: 650px;
 }
-/* line 179, platforms/common/scss/admin/_settings.scss */
+/* line 191, platforms/common/scss/admin/_settings.scss */
 #g5-container .g5-dialog .settings-param {
   padding: 5px;
 }
 @media only all and (max-width: 59.938rem) {
-  /* line 179, platforms/common/scss/admin/_settings.scss */
+  /* line 191, platforms/common/scss/admin/_settings.scss */
   #g5-container .g5-dialog .settings-param {
     padding: 2px 5px;
     border: 0;
   }
 }
-/* line 189, platforms/common/scss/admin/_settings.scss */
+/* line 201, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker {
   position: relative;
 }
-/* line 192, platforms/common/scss/admin/_settings.scss */
+/* line 204, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker .settings-param-field-colorpicker-preview {
   position: absolute;
   top: 2px;
@@ -1033,44 +1045,44 @@ a {
   width: 1.5625em;
   border-radius: 3px;
 }
-/* line 204, platforms/common/scss/admin/_settings.scss */
+/* line 216, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul {
   margin: 5px 0;
 }
-/* line 208, platforms/common/scss/admin/_settings.scss */
+/* line 220, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul li, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li {
   padding: 0.1rem 0;
   position: relative;
 }
-/* line 213, platforms/common/scss/admin/_settings.scss */
+/* line 225, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul li:only-child .fa-reorder, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li:only-child .fa-reorder {
   display: none;
 }
-/* line 217, platforms/common/scss/admin/_settings.scss */
+/* line 229, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul li:only-child a, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li:only-child a {
   margin-left: 0;
 }
-/* line 224, platforms/common/scss/admin/_settings.scss */
+/* line 236, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field .item-reorder, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field .item-reorder {
   cursor: row-resize;
   color: #999999;
 }
-/* line 232, platforms/common/scss/admin/_settings.scss */
+/* line 244, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-title-edit], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-remove] {
   color: #666;
   opacity: 1;
 }
-/* line 237, platforms/common/scss/admin/_settings.scss */
+/* line 249, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li[data-collection-item]:hover a {
   color: #439A86;
 }
-/* line 242, platforms/common/scss/admin/_settings.scss */
+/* line 254, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field [data-collection-item] a {
   color: #666;
   margin-left: 5px;
   vertical-align: middle;
 }
-/* line 248, platforms/common/scss/admin/_settings.scss */
+/* line 260, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field [data-title-edit], #g5-container .collection-list .settings-param-field [data-collection-remove] {
   cursor: pointer;
   color: #cccccc;
@@ -1155,8 +1167,70 @@ a {
 }
 
 /* line 3, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .card {
+  float: left;
+}
+/* line 6, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .enabler {
+  float: right;
+}
+/* line 10, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .settings-param {
   display: block;
+  border-bottom: 0;
+  border-top: 1px solid #f4f4f4;
+}
+/* line 16, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .g-assignments-filters {
+  position: relative;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+/* line 21, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .g-assignments-filters .search.settings-block {
+  width: 90%;
+  display: inline-block;
+  margin-bottom: 0;
+  margin-right: 25px;
+}
+/* line 27, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .g-assignments-filters .search.settings-block, #g5-container #assignments .g-assignments-filters .search.settings-block input {
+  font-size: 0.85rem;
+}
+/* line 32, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .g-assignments-filters [data-g-assignments-check], #g5-container #assignments .g-assignments-filters [data-g-assignments-uncheck] {
+  background-color: transparent;
+  padding: 0;
+  font-size: 0.85rem;
+  cursor: pointer;
+  position: absolute;
+  line-height: 1;
+  right: 0;
+}
+/* line 42, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .g-assignments-filters [data-g-assignments-check] {
+  top: 4px;
+}
+/* line 46, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .g-assignments-filters [data-g-assignments-uncheck] {
+  bottom: 0;
+}
+/* line 50, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .g-assignments-filters .g-tooltip:hover:before {
+  left: 2px;
+}
+/* line 55, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .card .g-assignments-filters .search {
+  width: 65%;
+}
+/* line 58, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .card .g-assignments-filters .search i {
+  margin-top: -15px;
+}
+/* line 63, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments h4 {
+  padding: 12px 6px;
+  line-height: 2;
 }
 
 /* line 6, platforms/common/scss/admin/_page-setup-picker.scss */
@@ -2373,18 +2447,6 @@ a {
 /* line 707, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .settings-block, .g5-mm-particles-picker .settings-block, .g5-mm-modules-picker .settings-block {
   width: 100% !important;
-}
-/* line 711, platforms/common/scss/admin/_layout-manager.scss */
-.g5-lm-particles-picker .search, .g5-mm-particles-picker .search, .g5-mm-modules-picker .search {
-  position: relative;
-  margin-bottom: 10px;
-}
-/* line 715, platforms/common/scss/admin/_layout-manager.scss */
-.g5-lm-particles-picker .search i, .g5-mm-particles-picker .search i, .g5-mm-modules-picker .search i {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  margin-top: -12px;
 }
 
 /* line 8, platforms/common/scss/admin/_menu.scss */

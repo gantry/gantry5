@@ -10,10 +10,31 @@
 
         <h2 class="page-title">Assignments</h2>
 
-        <div class="cards-wrapper">
+        <div>
+            <div class="g-assignments-filters" data-g-global-filter>
+                <div class="search settings-block">
+                    <input type="text" placeholder="Global Filter...">
+                    <i class="fa fa-fw fa-search"></i>
+                </div>
+                <span data-g-assignments-uncheck class="g-tooltip g-tooltip-right" data-title="Unselect all menu items"><i class="fa fa-fw fa-toggle-off"></i></span>
+                <span data-g-assignments-check class="g-tooltip g-tooltip-right" data-title="Selects all menu items"><i class="fa fa-fw fa-toggle-on"></i></span>
+            </div>
+        </div>
+
+        <div class="cards-wrapper clearfix">
             {% for type in assignments %}
                 <div class="card settings-block">
-                    <h4>{{ type.label|e }}</h4>
+                    <h4>
+                        {{ type.label|e }}
+                        <div class="g-assignments-filters float-right align-right">
+                            <div class="search settings-block">
+                                <input type="text" placeholder="Filter...">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                            <span data-g-assignments-uncheck class="g-tooltip g-tooltip-right" data-title="Unselect all menu items"><i class="fa fa-fw fa-toggle-off"></i></span>
+                            <span data-g-assignments-check class="g-tooltip g-tooltip-right" data-title="Selects all menu items"><i class="fa fa-fw fa-toggle-on"></i></span>
+                        </div>
+                    </h4>
 
                     {% for link in type.items %}
                     <label class="settings-param">
@@ -25,7 +46,7 @@
                         'disabled': link.disabled
                         } %}
                         <span class="settings-param-title">
-                            {{ link.label|e }}
+                            {{- link.label -}}
                         </span>
                     </label>
                     {% endfor %}

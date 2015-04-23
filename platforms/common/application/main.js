@@ -22,6 +22,7 @@ require('elements/traversal');
 require('./fields');
 require('./ui/popover');
 require('./utils/ajaxify-links');
+require('./utils/rAF-polyfill');
 
 var createHandler = function(divisor,noun,restOfString){
     return function(diff){
@@ -276,6 +277,7 @@ var modules = {
      agent   : require('agent'),*/
     lm: lm,
     mm: mm,
+    assingments: require('./assignments'),
     ui: require('./ui'),
     styles: require('./styles'),
     "$": $,
