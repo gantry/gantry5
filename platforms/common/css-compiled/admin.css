@@ -2448,6 +2448,18 @@ a {
 .g5-lm-particles-picker .settings-block, .g5-mm-particles-picker .settings-block, .g5-mm-modules-picker .settings-block {
   width: 100% !important;
 }
+/* line 711, platforms/common/scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker .search, .g5-mm-particles-picker .search, .g5-mm-modules-picker .search {
+  position: relative;
+  margin-bottom: 10px;
+}
+/* line 715, platforms/common/scss/admin/_layout-manager.scss */
+.g5-lm-particles-picker .search i, .g5-mm-particles-picker .search i, .g5-mm-modules-picker .search i {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -12px;
+}
 
 /* line 8, platforms/common/scss/admin/_menu.scss */
 #g5-container #menu-editor .parent-indicator:before {

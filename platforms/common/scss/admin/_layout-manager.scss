@@ -707,4 +707,16 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     .settings-block {
         width: 100% !important;
     }
+
+    .search {
+        position: relative;
+        margin-bottom: 10px;
+
+        i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            margin-top: -12px;
+        }
+    }
 }
