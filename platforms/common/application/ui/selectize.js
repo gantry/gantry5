@@ -1176,12 +1176,16 @@ var Selectize = new prime({
         }
     },
 
-    getValue: function() {
+    getValue: function(value) {
         if (this.tagType === TAG_SELECT && this.input.attribute('multiple')) {
-            return this.items;
+            return value || this.items;
         } else {
-            return this.items.join(this.options.delimiter);
+            return (value || this.items).join(this.options.delimiter);
         }
+    },
+
+    getPreviousValue: function() {
+        return this.previousValue;
     },
 
     /**
@@ -1192,6 +1196,7 @@ var Selectize = new prime({
     setValue: function(value) {
         debounce_events(this, ['change'], function() {
             this.clear();
+            this.previousValue = this.getValue() || value;
             this.addItems(value);
         });
     },

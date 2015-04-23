@@ -22,7 +22,7 @@ var prime         = require('prime'),
 
 require('../ui/popover');
 
-var ERROR = false, ConfNavIndex = -1;
+var ERROR = false, TMP_SELECTIZE_DISABLE = false, ConfNavIndex = -1;
 
 History.Adapter.bind(window, 'statechange', function() {
     if (request.running()) {
@@ -43,7 +43,10 @@ History.Adapter.bind(window, 'statechange', function() {
 
     if (Data.element) {
         var isTopNavigation = Data.element.parent('#main-header');
-        body.emit('statechangeBefore', { target: Data.element, Data: Data });
+        body.emit('statechangeBefore', {
+            target: Data.element,
+            Data: Data
+        });
     } else {
         var url = URI.replace(window.location.origin, '');
         Data.element = $('[href="' + url + '"]');
@@ -140,23 +143,55 @@ var selectorChangeEvent = function() {
         if (!selectize || selectize.HasChangeEvent) { return; }
 
         selectize.on('change', function() {
+            if (TMP_SELECTIZE_DISABLE) { TMP_SELECTIZE_DISABLE = false; return false; }
             var value = selectize.getValue(),
-                options = selectize.Options;
+                options = selectize.Options,
+                flagCallback = function() {
+                    flags.off('update:pending', flagCallback);
+                    modal.close();
+
+                    selectize.input
+                        .data('g5-ajaxify', '')
+                        .data('g5-ajaxify-target', selector.data('g5-ajaxify-target') || '[data-g5-content-wrapper]')
+                        .data('g5-ajaxify-target-parent', selector.data('g5-ajaxify-target-parent') || null)
+                        .data('g5-ajaxify-href', options[value].url)
+                        .data('g5-ajaxify-params', options[value].params ? JSON.stringify(options[value].params) : null);
+
+
+                    var active = $('#navbar li.active') || $('#main-header li.active') || $('#navbar li:nth-child(2)');
+                    if (active) { active.showIndicator(); }
+
+                    $('body').emit('click', {
+                        target: selectize.input,
+                        activeSpinner: active
+                    });
+                };
 
             if (!options[value]) { return; }
 
-            selectize.input
-                .data('g5-ajaxify', '')
-                .data('g5-ajaxify-target', selector.data('g5-ajaxify-target') || '[data-g5-content-wrapper]')
-                .data('g5-ajaxify-target-parent', selector.data('g5-ajaxify-target-parent') || null)
-                .data('g5-ajaxify-href', options[value].url)
-                .data('g5-ajaxify-params', options[value].params ? JSON.stringify(options[value].params) : null);
+            if (flags.get('pending')) {
+                flags.warning(function(response, content) {
+                    var saveContinue = content.find('.button-primary'),
+                        closeStay = content.find('.button:not(.button-primary)');
 
+                    if (!saveContinue) { return; }
+                    saveContinue.on('click', function(event) {
+                        event.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
 
-            var active = $('#navbar li.active') || $('#main-header li.active') || $('#navbar li:nth-child(2)');
-            if (active) { active.showIndicator(); }
+                        this.attribute('disabled', 'disabled');
+                        flags.on('update:pending', flagCallback);
+                        $('body').emit('click', { target: $('.button-save') });
+                    });
+                }, function() {
+                    TMP_SELECTIZE_DISABLE = true;
+                    selectize.setValue(selectize.getPreviousValue());
+                });
 
-            $('body').emit('click', { target: selectize.input, activeSpinner: active });
+                return;
+            }
+
+            flagCallback();
         });
 
         selectize.HasChangeEvent = true;
@@ -176,10 +211,10 @@ domready(function() {
             item = navbar.find('li:nth-child(' + (ConfNavIndex + 1) + ') [data-g5-ajaxify]');
 
         if (flags.get('pending')) {
-            flags.warning(function(response, content){
+            flags.warning(function(response, content) {
                 var saveContinue = content.find('.button-primary'),
                     closeStay = content.find('.button:not(.button-primary)'),
-                    flagCallback = function(){
+                    flagCallback = function() {
                         flags.off('update:pending', flagCallback);
                         modal.close();
 
@@ -194,7 +229,7 @@ domready(function() {
 
                     this.attribute('disabled', 'disabled');
                     flags.on('update:pending', flagCallback);
-                    body.emit('click', {target: $('.button-save')});
+                    body.emit('click', { target: $('.button-save') });
                 });
             });
 
@@ -202,7 +237,7 @@ domready(function() {
         }
 
         element.showIndicator();
-        
+
         body.emit('click', { target: item });
         navbar.slideDown();
     });
@@ -218,10 +253,10 @@ domready(function() {
         }
 
         if (flags.get('pending')) {
-            flags.warning(function(response, content){
+            flags.warning(function(response, content) {
                 var saveContinue = content.find('.button-primary'),
                     closeStay = content.find('.button:not(.button-primary)'),
-                    flagCallback = function(){
+                    flagCallback = function() {
                         flags.off('update:pending', flagCallback);
                         modal.close();
                         body.emit('click', event);
@@ -234,7 +269,7 @@ domready(function() {
 
                     this.attribute('disabled', 'disabled');
                     flags.on('update:pending', flagCallback);
-                    body.emit('click', {target: $('.button-save')});
+                    body.emit('click', { target: $('.button-save') });
                 });
             });
 
@@ -280,7 +315,7 @@ domready(function() {
 
         if (navbar = element.parent('#navbar, #main-header')) {
             if (actives) { actives.removeClass('active'); }
-            
+
             active = navbar.search('.active');
             if (active) { active.removeClass('active'); }
             element.parent('li').addClass('active');

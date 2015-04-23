@@ -33,7 +33,7 @@ var FlagsState = new prime({
         return this.flags.values();
     },
 
-    warning: function(callback) {
+    warning: function(callback, afterclose) {
         modal.open({
             content: 'Loading...',
             remote: getAjaxURL('unsaved') + getAjaxSuffix(),
@@ -42,7 +42,8 @@ var FlagsState = new prime({
                 if (!callback) { return; }
 
                 callback.call(this, response, content, modal);
-            }
+            },
+            afterClose: afterclose || function(){}
         });
     }
 
