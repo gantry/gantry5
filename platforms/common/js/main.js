@@ -10290,7 +10290,7 @@ History.Adapter.bind(window, 'statechange', function() {
     }
 
     if (Data.element) {
-        var isTopNavigation = Data.element.parent('#main-header');
+        var isTopNavOrMenu = Data.element.parent('#main-header') || Data.element.matches('.menu-select-wrap');
         body.emit('statechangeBefore', {
             target: Data.element,
             Data: Data
@@ -10354,7 +10354,7 @@ History.Adapter.bind(window, 'statechange', function() {
             destination.html(response.body.html);
             if (fader = (destination.matches('[data-g5-content]') ? destination : destination.find('[data-g5-content]'))) {
                 fader.style({ opacity: 0 });
-                $('#navbar')[isTopNavigation ? 'slideUp' : 'slideDown']();
+                $('#navbar')[isTopNavOrMenu ? 'slideUp' : 'slideDown']();
                 fader.animate({ opacity: 1 });
             }
         } else { destination.html(response.body); }
