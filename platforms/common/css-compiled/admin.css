@@ -1154,6 +1154,11 @@ a {
   font-weight: 500;
 }
 
+/* line 3, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .settings-param {
+  display: block;
+}
+
 /* line 6, platforms/common/scss/admin/_page-setup-picker.scss */
 #g5-container #page-picker ul .size-1-4 {
   -webkit-box-flex: 0;
