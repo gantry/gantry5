@@ -429,9 +429,10 @@ var Map         = map,
 
         treatLabel: function(event, element) {
             if ($(event.target).matches('.knob, .toggle')) { return; }
-            var input = element.find('input[type="hidden"]'),
-                value = input.value();
+            var input = element.find('input[type="hidden"]:not([disabled])');
+            if (!input) { return; }
 
+            var value = input.value();
             value = !!+value;
             input.value(Number(!value)).emit('change');
             $('body').emit('change', { target: input });
