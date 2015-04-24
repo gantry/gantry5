@@ -76,6 +76,13 @@ class Document
                 // Scheme did not exist; assume that we had valid scheme (like http) so no modification is needed.
                 return $url;
             }
+        } else {
+            // Relative path.
+            $realPath = realpath(GANTRY5_ROOT . '/' . $url);
+            if ($realPath) {
+                $timestamp = sprintf('%x', filemtime($realPath));
+                $url = "{$url}?{$timestamp}";
+            }
         }
 
         // TODO: add support to include domain..
