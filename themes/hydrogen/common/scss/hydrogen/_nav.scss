@@ -38,6 +38,12 @@
 	}
 
 	@include main-nav-indicators($navigation-background, $navigation-text-color);
+
+	.search {
+		input {
+			color: $main-text-color;
+		}
+	}
 }
 
 .g-main-nav {
