@@ -11,6 +11,16 @@
             display: block;
             border-bottom: 0;
             border-top: 1px solid #f4f4f4;
+            margin: 5px 0;
+
+            .settings-param-title {
+                line-height: 1em;
+                vertical-align: middle;
+
+                .changes-indicator {
+                    margin-left: -1em;
+                }
+            }
         }
 
         .g-assignments-filters {

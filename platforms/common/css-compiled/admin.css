@@ -1179,25 +1179,35 @@ a {
   display: block;
   border-bottom: 0;
   border-top: 1px solid #f4f4f4;
+  margin: 5px 0;
 }
 /* line 16, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .settings-param .settings-param-title {
+  line-height: 1em;
+  vertical-align: middle;
+}
+/* line 20, platforms/common/scss/admin/_assignments.scss */
+#g5-container #assignments .settings-param .settings-param-title .changes-indicator {
+  margin-left: -1em;
+}
+/* line 26, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters {
   position: relative;
   margin-bottom: 1rem;
   display: inline-block;
 }
-/* line 21, platforms/common/scss/admin/_assignments.scss */
+/* line 31, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters .search.settings-block {
   width: 90%;
   display: inline-block;
   margin-bottom: 0;
   margin-right: 25px;
 }
-/* line 27, platforms/common/scss/admin/_assignments.scss */
+/* line 37, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters .search.settings-block, #g5-container #assignments .g-assignments-filters .search.settings-block input {
   font-size: 0.85rem;
 }
-/* line 32, platforms/common/scss/admin/_assignments.scss */
+/* line 42, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters [data-g-assignments-check], #g5-container #assignments .g-assignments-filters [data-g-assignments-uncheck] {
   background-color: transparent;
   padding: 0;
@@ -1207,27 +1217,27 @@ a {
   line-height: 1;
   right: 0;
 }
-/* line 42, platforms/common/scss/admin/_assignments.scss */
+/* line 52, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters [data-g-assignments-check] {
   top: 4px;
 }
-/* line 46, platforms/common/scss/admin/_assignments.scss */
+/* line 56, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters [data-g-assignments-uncheck] {
   bottom: 0;
 }
-/* line 50, platforms/common/scss/admin/_assignments.scss */
+/* line 60, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters .g-tooltip:hover:before {
   left: 2px;
 }
-/* line 55, platforms/common/scss/admin/_assignments.scss */
+/* line 65, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .card .g-assignments-filters .search {
   width: 65%;
 }
-/* line 58, platforms/common/scss/admin/_assignments.scss */
+/* line 68, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .card .g-assignments-filters .search i {
   margin-top: -15px;
 }
-/* line 63, platforms/common/scss/admin/_assignments.scss */
+/* line 73, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments h4 {
   padding: 12px 6px;
   line-height: 2;
