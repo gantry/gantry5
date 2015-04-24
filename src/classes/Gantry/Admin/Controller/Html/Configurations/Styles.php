@@ -212,19 +212,10 @@ class Styles extends HtmlController
         $theme = $this->container['theme'];
         $configuration = $this->params['configuration'];
 
-        $compiler = $theme->compiler();
-
         if ($configuration === 'default') {
-            /** @var Configurations $configurations */
-            $configurations = $this->container['configurations'];
-            foreach ($configurations as $configuration => $title) {
-                $config = ConfigServiceProvider::load($this->container, $configuration);
-
-                $compiler->setConfiguration($configuration)->setVariables($config->flatten('styles', '-'));
-                $compiler->compileAll();
-            }
-
+            $theme->updateCss();
         } else {
+            $compiler = $theme->compiler();
             $compiler->setVariables($this->container['config']->flatten('styles', '-'));
             $compiler->compileAll();
         }
