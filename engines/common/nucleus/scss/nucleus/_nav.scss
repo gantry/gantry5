@@ -28,16 +28,6 @@
 				cursor: initial;
 			}
 
-			// First Level Dropdown Offset
-			> .g-dropdown-offset {
-				position: absolute;
-				top: 100%;
-				width: 100%;
-				left: 0;
-				right: 0;
-				z-index: 1;
-			}
-
 			.g-menu-item-content {
 				display: inline-block;
 				vertical-align: middle;
@@ -165,7 +155,7 @@
 .g-main-nav {
 	.g-fullwidth {
 		.g-dropdown {
-			//position: absolute;
+			position: absolute;
 			left: 0;
 			right: 0;
 			z-index: 1;
@@ -206,6 +196,12 @@
 		}
 	}
 }
+
+// Left/Right Dropdown Offsets
+//@include dropdown-offset-x(5px);
+
+// Left/Right Dropdown Offsets
+//@include dropdown-offset-y(5px);
 
 // Go Back Arrow
 .g-go-back {
