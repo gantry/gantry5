@@ -67,7 +67,7 @@ class Document
                 // Attempt to find our resource.
                 $path = $locator->findResource($uri, false);
                 if ($path) {
-                    $timestamp = sprintf('%x', filemtime($path));
+                    $timestamp = sprintf('%x', filemtime(GANTRY5_ROOT . '/' . $path));
                     $url = "{$path}?{$timestamp}" . ($fragment ? "#{$fragment}" : '');
                 } else {
                     $url = null;
