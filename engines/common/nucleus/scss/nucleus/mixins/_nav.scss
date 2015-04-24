@@ -38,11 +38,11 @@
 }
 
 // Dropdown Side Offset
-@mixin dropdown-offset-x($offset: 5px) {
+@mixin dropdown-offset-x($offset: 5px, $direction: left) {
 	.g-main-nav {
 		.g-standard {
 			.g-dropdown {
-				margin-left: $offset;
+				margin-#{$direction}: $offset;
 				&:after {
 					content: "";
 				    position: absolute;
@@ -57,7 +57,7 @@
 				}
 			}
 			> .g-dropdown {
-				margin-left: 0;
+				margin-#{$direction}: 0;
 			}
 		}
 	}
