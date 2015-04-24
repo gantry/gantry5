@@ -1,16 +1,3 @@
-%dropdown-column {
-	width: $menu-col-width;
-	float: left;
-}
-
-%link-parent-indicator {
-	border: 1px solid lighten($navigation-background, 6%);
-	background: darken($navigation-background, 4%);
-	&:hover {
-		background: darken($navigation-background, 8%);
-	}
-}
-
 #g-navigation {
 	background: $navigation-background;
 	color: $navigation-text-color;
@@ -27,61 +14,12 @@
 
 	.g-main-nav {
 		margin: -($content-padding + $content-margin);
-
-		h1, h2, h3, h4, h5, h6, strong {
-			color: $navigation-text-color;
-		}
-
+		@include main-nav-colors($navigation-background, $navigation-text-color, $main-background, $main-text-color);
 		.g-toplevel {
 			@include display(flex);
 			@include flex-flow(row wrap);
 			justify-content: center;
 			-webkit-justify-content: center;
-
-			> li {
-				> .g-menu-item-container {
-					color: $navigation-text-color;
-				}
-				&:not(.g-menu-item-type-particle):not(.g-menu-item-type-module) {
-					&:hover {
-						background: darken($navigation-background, 6%);
-					}
-
-					&.active {
-						background: $main-background;
-
-						> .g-menu-item-container {
-							color: $main-text-color;
-						}
-
-						&.g-selected {
-							background: darken($navigation-background, 6%);
-
-							> .g-menu-item-container {
-								color: $navigation-text-color;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		.g-dropdown {
-			background: darken($navigation-background, 6%);
-		}
-
-		.g-sublevel {
-			> li {
-				> .g-menu-item-container {
-					color: $navigation-text-color;
-				}
-
-				&:not(.g-menu-item-type-particle):not(.g-menu-item-type-module) {
-					&:hover, &.active {
-						background: darken($navigation-background, 10%);
-					}
-				}
-			}
 		}
 	}
 
@@ -99,49 +37,7 @@
 		}
 	}
 
-	.g-menu-hastouch {
-		.g-toplevel {
-			> li {
-				&.g-menu-item-link-parent {
-					> .g-menu-item-container {
-						> .g-menu-parent-indicator {
-							@extend %link-parent-indicator;
-							border-radius: $core-border-radius;
-							margin: -0.2rem 0 -0.2rem 0.5rem;
-							padding: 0.2rem;
-						}
-					}
-				}
-				&.active {
-					&.g-menu-item-link-parent {
-						> .g-menu-item-container {
-							> .g-menu-parent-indicator {
-								color: $navigation-text-color;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-.g-menu-hastouch .g-standard, .g-fullwidth {
-	.g-sublevel {
-		> li {
-			&.g-menu-item-link-parent {
-				> .g-menu-item-container {
-					> .g-menu-parent-indicator {
-						@extend %link-parent-indicator;
-						border-radius: $core-border-radius;
-						padding: 0.1rem;
-						margin-top: -0.1rem;
-						margin-right: -0.1rem;
-					}
-				}
-			}
-		}
-	}
+	@include main-nav-indicators($navigation-background, $navigation-text-color);
 }
 
 .g-main-nav {
