@@ -1,8 +1,8 @@
 details:
   name: Hydrogen
-  version: "5.0.0-beta.3"
+  version: "5.0.0-beta.4"
   icon: paper-plane
-  date: March 20, 2015
+  date: April 24, 2015
   author:
     name: RocketTheme, LLC
     email: support@rockettheme.com
@@ -68,6 +68,7 @@ configuration:
       align-right: Align Right
       align-left: Align Left
       center: Center
+      full-width: Full Width
       nomarginall: No Margin
       nopaddingall: No Padding
 

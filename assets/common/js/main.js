@@ -69,8 +69,11 @@ var Menu = new prime({
         this.active = null;
         this.location = [];
 
+        var mainContainer = $(this.selectors.mainContainer);
+        if (!mainContainer) { return; }
+
         if (hasTouchEvents) {
-            $(this.selectors.mainContainer).addClass(this.states.touchEvents);
+            mainContainer.addClass(this.states.touchEvents);
         }
 
         this.attach();
@@ -87,7 +90,8 @@ var Menu = new prime({
         body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
 
         if (hasTouchEvents) {
-            $(selectors.linkedParent).on('touchend', this.bound('touchend'));
+            var linkedParent = $(selectors.linkedParent);
+            if (linkedParent) { linkedParent.on('touchend', this.bound('touchend')); }
             this.overlay.on('touchend', this.bound('closeAllDropdowns'));
         }
 
@@ -152,7 +156,7 @@ var Menu = new prime({
             }, this));
         }
 
-        if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown) || isGoingBack)) {
+        if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown + ', > * > ' + selectors.dropdown) || isGoingBack)) {
             var sublevel = target.parent('.g-sublevel') || target.parent('.g-toplevel'),
                 slideout = parent.find('.g-sublevel'),
                 columns = parent.parent('.g-dropdown-column'),
@@ -160,7 +164,7 @@ var Menu = new prime({
 
             if (sublevel) {
                 var isNavMenu = target.parent(selectors.mainContainer);
-                if (isNavMenu && !sublevel.hasClass('g-toplevel')) { this._fixHeights(sublevel, slideout, isGoingBack); }
+                if (!isNavMenu || (isNavMenu && !sublevel.matches('.g-toplevel'))) { this._fixHeights(sublevel, slideout, isGoingBack, isNavMenu); }
                 if (!isNavMenu && columns && (blocks = columns.search('> .g-grid > .g-block'))) {
                     if (blocks.length > 1) { sublevel = blocks.search('> .g-sublevel'); }
                 }
@@ -215,6 +219,17 @@ var Menu = new prime({
         this.toggleOverlay(topLevel);
     },
 
+    resetStates: function(menu) {
+        if (!menu) { return; }
+        var items = menu.search('.g-toplevel, .g-dropdown-column, .g-dropdown, .g-selected, .g-active, .g-slide-out'),
+            actives = menu.search('.g-active');
+        if (!items) { return; }
+
+        menu.attribute('style', null).removeClass('g-selected').removeClass('g-slide-out');
+        items.attribute('style', null).removeClass('g-selected').removeClass('g-slide-out');
+        if (actives) { actives.removeClass('g-active').addClass('g-inactive'); }
+    },
+
     toggleOverlay: function(menu) {
         if (!menu) { return; }
         var shouldOpen = !!menu.find('.g-active, .g-selected');
@@ -223,19 +238,33 @@ var Menu = new prime({
         this.overlay[0].style.opacity = shouldOpen ? 1 : 0;
     },
 
-    _fixHeights: function(parent, sublevel, isGoingBack) {
+    _fixHeights: function(parent, sublevel, isGoingBack, isNavMenu) {
         if (parent == sublevel) { return; }
         if (isGoingBack) { parent.attribute('style', null); }
 
         var heights = {
-            from: parent[0].getBoundingClientRect(),
-            to: sublevel[0].getBoundingClientRect()
-        };
+                from: parent[0].getBoundingClientRect(),
+                to: (!isNavMenu ? sublevel.parent('.g-dropdown')[0] : sublevel[0]).getBoundingClientRect()
+            },
+            height = Math.max(heights.from.height, heights.to.height);
 
         if (!isGoingBack) {
             // if from height is < than to height set the parent height else, set the target
-            if (heights.from.height < heights.to.height) { parent[0].style.height = Math.max(heights.from.height, heights.to.height) + 'px'; }
-            else { sublevel[0].style.height = Math.max(heights.from.height, heights.to.height) + 'px'; }
+            if (heights.from.height < heights.to.height) { parent[0].style.height = height + 'px'; }
+            else { sublevel[0].style.height = height + 'px'; }
+
+            // fix sublevels heights in side menu (offcanvas etc)
+            if (!isNavMenu) {
+                var maxHeight = height,
+                    block = $(sublevel).parent('.g-block:not(.size-100)'),
+                    column = block ? block.parent('.g-dropdown-column') : null;
+                (sublevel.parents('.g-slide-out, .g-dropdown-column') || parent).forEach(function(slideout) {
+                    maxHeight = Math.max(height, parseInt(slideout.style.height, 10));
+                });
+
+                if (column) { column[0].style.height = maxHeight + 'px'; }
+                sublevel[0].style.height = maxHeight + 'px';
+            }
         }
     },
 
@@ -248,7 +277,6 @@ var Menu = new prime({
     },
 
     _checkQuery: function(mq) {
-
         var selectors = this.options.selectors,
             mobileContainer = $(selectors.mobileContainer),
             mainContainer = $(selectors.mainContainer),
@@ -261,6 +289,8 @@ var Menu = new prime({
             find = mobileContainer.find(selectors.topLevel);
             if (find) { find.top(mainContainer); }
         }
+
+        this.resetStates(find);
     },
 
     _debug: function() {}
@@ -280,6 +310,7 @@ var ready     = require('domready'),
     forEach   = require('mout/array/forEach'),
     mapNumber = require('mout/math/map'),
     clamp     = require('mout/math/clamp'),
+    timeout   = require('mout/function/timeout'),
     trim      = require('mout/string/trim'),
     decouple  = require('../utils/decouple'),
     Bound     = require('prime-util/prime/bound'),
@@ -606,8 +637,8 @@ var Offcanvas = new prime({
 
     _checkTogglers: function(mutator) {
         var togglers = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
-            blocks = this.offcanvas.search('.g-block'),
-            mobileContainer = $('#g-mobilemenu-container');
+            mobileContainer = $('#g-mobilemenu-container'),
+            blocks;
 
         // if there is no mobile menu there's no need to check the offcanvas mutation
         if (!mobileContainer) {
@@ -618,19 +649,23 @@ var Offcanvas = new prime({
         if (!togglers || (mutator && ((mutator.target || mutator.srcElement) !== mobileContainer[0]))) { return; }
         if (this.opened) { this.close(); }
 
-        var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
-        togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
+        timeout(function(){
+            blocks = this.offcanvas.search('.g-block');
+            var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
 
-        if (!shouldCollapse && !this.attached) { this.attach(); }
-        else if (shouldCollapse && this.attached) {
-            this.detach();
-            this.attachMutationEvent();
-        }
+            togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
+
+            if (!shouldCollapse && !this.attached) { this.attach(); }
+            else if (shouldCollapse && this.attached) {
+                this.detach();
+                this.attachMutationEvent();
+            }
+        }, 0, this);
     }
 });
 
 module.exports = Offcanvas;
-},{"../utils/decouple":4,"domready":6,"elements":11,"elements/zen":38,"mout/array/forEach":39,"mout/function/bind":42,"mout/math/clamp":51,"mout/math/map":53,"mout/string/trim":62,"prime":80,"prime-util/prime/bound":76,"prime-util/prime/options":77}],4:[function(require,module,exports){
+},{"../utils/decouple":4,"domready":6,"elements":11,"elements/zen":38,"mout/array/forEach":39,"mout/function/bind":42,"mout/function/timeout":46,"mout/math/clamp":51,"mout/math/map":53,"mout/string/trim":62,"prime":80,"prime-util/prime/bound":76,"prime-util/prime/options":77}],4:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {

@@ -15,6 +15,7 @@
 namespace Gantry\Component\Stylesheet;
 
 use Gantry\Component\Gantry\GantryTrait;
+use Leafo\ScssPhp\Colors;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 abstract class CssCompiler implements CssCompilerInterface
@@ -132,6 +133,21 @@ abstract class CssCompiler implements CssCompilerInterface
     public function setVariables(array $variables)
     {
         $this->variables = array_filter($variables);
+
+        foreach($this->variables as &$value) {
+            // Check variable against colors and units.
+            if (preg_match("/(^(#|rgba?|hsla?)|(%|rem|vh|vw|em|px|cm|mm|ch|vmin|vmax|in|pt|pc|ex)$)/i", $value)) {
+                continue;
+            }
+
+            // Check variable against predefined color names (we use Leafo SCSS Color class to do that).
+            if (isset(Colors::$cssColors[strtolower($value)])) {
+                continue;
+            }
+
+            // All the unknown values need to be quoted.
+            $value = "'{$value}'";
+        }
 
         return $this;
     }

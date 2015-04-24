@@ -92,8 +92,6 @@ $.implement({
     },
 
     slideDown: function(animation, callback) {
-        if (this.gSlideCollapsed === false) { return; }
-
         var element       = this,
             size          = this.getRealSize(),
             callbackStart = function() {
@@ -104,6 +102,7 @@ $.implement({
             };
 
         callback = typeof animation == 'function' ? animation : (callback || function() {});
+        if (this.gSlideCollapsed === false) { return callback(); }
         callback = series(callbackStart, callback, callbackEnd);
 
         animation = typeof animation == 'string' ? animation : {
@@ -114,8 +113,6 @@ $.implement({
     },
 
     slideUp: function(animation, callback) {
-        if (this.gSlideCollapsed === true) { return; }
-
         if (typeof this.gSlideCollapsed == 'undefined') {
             this.gSlideStyle = this.attribute('style');
         }
@@ -126,6 +123,7 @@ $.implement({
             };
 
         callback = typeof animation == 'function' ? animation : (callback || function() {});
+        if (this.gSlideCollapsed === true) { return callback(); }
         callback = series(callbackStart, callback);
 
         animation = typeof animation == 'string' ? animation : {

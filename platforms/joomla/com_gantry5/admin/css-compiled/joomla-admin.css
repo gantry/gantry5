@@ -172,15 +172,6 @@ body.com_gantry5 #g5-container .tooltip {
   line-height: inherit;
 }
 
-/* line 3, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_assignments.scss */
-#g5-container #assignments .card {
-  float: left;
-}
-/* line 6, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_assignments.scss */
-#g5-container #assignments .enabler {
-  float: right;
-}
-
 /* line 4, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_navbar.scss */
 body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   right: 2.1rem;

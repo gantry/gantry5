@@ -21,6 +21,7 @@ use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Component\Twig\TwigExtension;
+use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -36,6 +37,9 @@ trait ThemeTrait
 {
     use GantryTrait;
 
+    /**
+     * Initialize theme.
+     */
     public function init()
     {
         $gantry = static::gantry();
@@ -43,6 +47,30 @@ trait ThemeTrait
         $gantry->register(new ErrorServiceProvider);
     }
 
+    /**
+     * Update all CSS files in the theme.
+     */
+    public function updateCss()
+    {
+        $gantry = static::gantry();
+        $compiler = $this->compiler();
+
+        /** @var Configurations $configurations */
+        $configurations = $gantry['configurations'];
+        foreach ($configurations as $configuration => $title) {
+            $config = ConfigServiceProvider::load($gantry, $configuration);
+
+            $compiler->setConfiguration($configuration)->setVariables($config->flatten('styles', '-'));
+            $compiler->compileAll();
+        }
+    }
+
+    /**
+     * Set current layout.
+     *
+     * @param string $name
+     * @return $this
+     */
     public function setLayout($name = null)
     {
         $gantry = static::gantry();
@@ -60,6 +88,12 @@ trait ThemeTrait
         return $this;
     }
 
+    /**
+     * Return CSS compiler used in the theme.
+     *
+     * @return CssCompilerInterface
+     * @throws \RuntimeException
+     */
     public function compiler()
     {
         static $compiler;
@@ -71,20 +105,30 @@ trait ThemeTrait
                 throw new \RuntimeException('CSS compiler used by the theme not found');
             }
 
-            $gantry = static::gantry();
+            $details = $this->details();
 
             /** @var CssCompilerInterface $compiler */
             $compiler = new $compilerClass();
             $compiler
-                ->setTarget($this->details()->get('configuration.css.target'))
-                ->setPaths($this->details()->get('configuration.css.paths'))
-                ->setFiles($this->details()->get('configuration.css.files'))
-                ->setConfiguration($gantry['configuration']);
+                ->setTarget($details->get('configuration.css.target'))
+                ->setPaths($details->get('configuration.css.paths'))
+                ->setFiles($details->get('configuration.css.files'));
         }
+
+        $gantry = static::gantry();
+        $compiler->setConfiguration(isset($gantry['configuration']) ? $gantry['configuration'] : 'default');
 
         return $compiler;
     }
 
+    /**
+     * Returns URL to CSS file.
+     *
+     * If file does not exist, it will be created by using CSS compiler.
+     *
+     * @param string $name
+     * @return string
+     */
     public function css($name)
     {
         $gantry = self::gantry();
@@ -105,6 +149,11 @@ trait ThemeTrait
         return $url;
     }
 
+    /**
+     * Returns style presets for the theme.
+     *
+     * @return Config
+     */
     public function presets()
     {
         static $presets;
@@ -123,6 +172,13 @@ trait ThemeTrait
         return $presets;
     }
 
+    /**
+     * Load current layout and its configuration.
+     *
+     * @param string $name
+     * @return Layout
+     * @throws \LogicException
+     */
     public function loadLayout($name = null)
     {
         if (!$name) {
@@ -137,8 +193,6 @@ trait ThemeTrait
 
         if (!$layout->exists()) {
             $layout = Layout::instance('default');
-
-            //throw new \RuntimeException("Layout '{$name}' does not exist", 404);
         }
 
         return $layout;
@@ -155,9 +209,17 @@ trait ThemeTrait
         return $context;
     }
 
+    /**
+     * Returns all non-empty segments from the layout.
+     *
+     * @return array
+     */
     public function segments()
     {
-        return $this->loadLayout();
+        $segments = $this->loadLayout()->toArray();
+        $this->prepareLayout($segments);
+
+        return $segments;
     }
 
     public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
@@ -179,6 +241,11 @@ trait ThemeTrait
         return $twig;
     }
 
+    /**
+     * Returns details of the theme.
+     *
+     * @return ThemeDetails
+     */
     public function details()
     {
         if (!$this->details) {
@@ -187,11 +254,22 @@ trait ThemeTrait
         return $this->details;
     }
 
+    /**
+     * Returns configuration of the theme.
+     *
+     * @return array
+     */
     public function configuration()
     {
-        return $this->details()['configuration'];
+        return (array) $this->details()['configuration'];
     }
 
+    /**
+     * Function to convert block sizes into CSS classes.
+     *
+     * @param $text
+     * @return string
+     */
     public function toGrid($text)
     {
         if (!$text) {
@@ -278,5 +356,76 @@ trait ThemeTrait
         }
 
         $this->details()->offsetUnset('details.' . $offset);
+    }
+
+
+    /**
+     * Prepare layout by loading all the positions and particles.
+     *
+     * Action is needed before displaying the layout as it recalculates block widths based on the visible content.
+     *
+     * @param array $items
+     * @internal
+     */
+    protected function prepareLayout(array &$items)
+    {
+        foreach ($items as $i => &$item) {
+            if (!empty($item->children)) {
+                $this->prepareLayout($item->children);
+            }
+
+            // TODO: remove hard coded types.
+            switch ($item->type) {
+                case 'pagecontent':
+                    break;
+
+                case 'atom':
+                case 'particle':
+                case 'position':
+                case 'spacer':
+                    $item->content = $this->renderContent($item);
+                    if (!$item->content) {
+                        unset($items[$i]);
+                    }
+
+                    break;
+
+                default:
+                    if (!$item->children) {
+                        unset($items[$i]);
+                        break;
+                    }
+
+                    $dynamicSize = 0;
+                    $fixedSize = 0;
+                    foreach ($item->children as $child) {
+                        if (!isset($child->attributes->size)) {
+                            $child->attributes->size = 100 / count($item->children);
+                        }
+                        $dynamicSize += $child->attributes->size;
+                    }
+                    if (round($dynamicSize, 1) != 100) {
+                        $multiplier = (100 - $fixedSize) / $dynamicSize;
+                        foreach ($item->children as $child) {
+                            $child->attributes->size *= $multiplier;
+                        }
+                    }
+            }
+        }
+    }
+
+    /**
+     * Renders individual content block, like particle or position.
+     *
+     * Function is used to pre-render content.
+     *
+     * @param object $item
+     * @return string
+     */
+    protected function renderContent($item)
+    {
+        $context = $this->add_to_context(['segment' => $item]);
+
+        return trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
     }
 }

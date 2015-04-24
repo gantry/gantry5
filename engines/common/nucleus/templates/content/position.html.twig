@@ -1,7 +1,8 @@
+{% set enabled = gantry.config.get('particles.' ~ segment.type ~ '.enabled', 1) %}
 {% set particle = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
 
 {% set html %}
-    {% if (segment.attributes.enabled is null or segment.attributes.enabled) and (particle.enabled is null or particle.enabled) %}
+    {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
         {% include ['particles/' ~ segment.subtype|default('position') ~ '.html.twig',
         '@particles/' ~ segment.subtype|default('position') ~ '.html.twig'] with { gantry: gantry, site: site, page: gantry.page, particle: particle } only %}
     {% endif %}

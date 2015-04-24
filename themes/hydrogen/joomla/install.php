@@ -29,9 +29,9 @@ class G5_HydrogenInstallerScript
 
     public function postflight($type, $parent)
     {
-        if (in_array($type, array('install', 'discover_install'))) {
-            $installer = new Gantry\Joomla\TemplateInstaller($parent);
+        $installer = new Gantry\Joomla\TemplateInstaller($parent);
 
+        if (in_array($type, array('install', 'discover_install'))) {
             $default = $installer->getDefaultStyle();
             switch ($default->template) {
                 case 'beez3':
@@ -64,5 +64,7 @@ class G5_HydrogenInstallerScript
                 $app->enqueueMessage(JText::sprintf($e->getMessage()), 'error');
             }
         }
+
+        $installer->cleanup();
     }
 }

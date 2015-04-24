@@ -1,0 +1,78 @@
+#g5-container {
+    #assignments {
+        .card {
+            float: left;
+        }
+        .enabler {
+            float: right;
+        }
+
+        .settings-param {
+            display: block;
+            border-bottom: 0;
+            border-top: 1px solid #f4f4f4;
+            margin: 5px 0;
+
+            .settings-param-title {
+                line-height: 1em;
+                vertical-align: middle;
+
+                .changes-indicator {
+                    margin-left: -1em;
+                }
+            }
+        }
+
+        .g-assignments-filters {
+            position: relative;
+            margin-bottom: 1rem;
+            display: inline-block;
+
+            .search.settings-block {
+                width: 90%;
+                display: inline-block;
+                margin-bottom: 0;
+                margin-right: 25px;
+
+                &, input {
+                    font-size: 0.85rem;
+                }
+            }
+
+            [data-g-assignments-check], [data-g-assignments-uncheck] {
+                background-color: transparent;
+                padding: 0;
+                font-size: 0.85rem;
+                cursor: pointer;
+                position: absolute;
+                line-height: 1;
+                right: 0;
+            }
+
+            [data-g-assignments-check] {
+                top: 4px;
+            }
+
+            [data-g-assignments-uncheck] {
+                bottom: 0;
+            }
+
+            .g-tooltip:hover:before {
+                left: 2px;
+            }
+        }
+
+        .card .g-assignments-filters .search {
+            width: 65%;
+
+            i {
+                margin-top: -15px;
+            }
+        }
+
+        h4 {
+            padding: 12px 6px;
+            line-height: 2;
+        }
+    }
+}

@@ -24,6 +24,20 @@
 			cursor: pointer;
 			@include transition(background .2s ease-out, transform .2s ease-out);
 
+			&.g-menu-item-type-particle, &.g-menu-item-type-module {
+				cursor: initial;
+			}
+
+			// First Level Dropdown Offset
+			> .g-dropdown-offset {
+				position: absolute;
+				top: 100%;
+				width: 100%;
+				left: 0;
+				right: 0;
+				z-index: 1;
+			}
+
 			.g-menu-item-content {
 				display: inline-block;
 				vertical-align: middle;
@@ -49,16 +63,13 @@
 						content: "\f078";
 						text-align: center;
 					}
-					&.g-selected {
-						&:after {
-							content: "\f00d";
-						}
-					}
 				}
-				.g-selected {
-					.g-menu-parent-indicator {
-						&:after {
-							content: "\f00d";
+				&.g-selected {
+					> .g-menu-item-container {
+						> .g-menu-parent-indicator {
+							&:after {
+								content: "\f00d";
+							}
 						}
 					}
 				}
@@ -76,6 +87,10 @@
 	.g-sublevel {
     	> li {
     		@include transition(background .2s ease-out, transform .2s ease-out);
+
+    		&.g-menu-item-type-particle, &.g-menu-item-type-module {
+				cursor: initial;
+			}
 
     		.g-menu-item-content {
 				display: inline-block;
@@ -97,11 +112,13 @@
 						content: "\f054";
 					}			
 				}
-			}
-			.g-selected {
-				> .g-menu-parent-indicator {
-					&:after {
-						content: "\f00d";
+				&.g-selected {
+					> .g-menu-item-container {
+						> .g-menu-parent-indicator {
+							&:after {
+								content: "\f00d";
+							}
+						}
 					}
 				}
 			}
@@ -148,7 +165,7 @@
 .g-main-nav {
 	.g-fullwidth {
 		.g-dropdown {
-			position: absolute;
+			//position: absolute;
 			left: 0;
 			right: 0;
 			z-index: 1;
@@ -212,8 +229,9 @@
 
 // Icons
 .g-menu-item-container {
-	i {
+	> i {
 		vertical-align: middle;
+		margin-right: 0.2rem;
 	}
 }
 
@@ -283,6 +301,7 @@
 				}
 	    	}						
 		}
+
 		.g-dropdown {
 			top: 0;
 			background: transparent;
@@ -317,6 +336,7 @@
 	    }							
 	}
 	.g-sublevel {
+        cursor: default;
 		li {
 			position: static;
 		}

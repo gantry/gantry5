@@ -257,4 +257,15 @@ class TemplateInstaller
         $db->setQuery($query);
         $db->execute();
     }
+
+    public function cleanup()
+    {
+        $name = $this->extension->name;
+        $path = JPATH_SITE . '/templates/' . $name;
+
+        $cssPath = $path . '/custom/css-compiled';
+        if (is_dir($cssPath)) {
+            \JFolder::delete($cssPath);
+        }
+    }
 }

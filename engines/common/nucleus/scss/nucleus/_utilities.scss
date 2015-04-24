@@ -49,6 +49,14 @@
 	}
 }
 
+// Size Adjustment
+.full-width {
+	@include flex(0 100%);
+	.g-block {
+		@include flex(0 100%);
+	}
+}
+
 // Hidden Classes
 .hidden {
 	display: none;

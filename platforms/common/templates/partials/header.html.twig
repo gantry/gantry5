@@ -1,7 +1,7 @@
 <div class="g-grid">
     <div class="g-block">
         <div class="g-content clearfix">
-            <span class="theme-title"><i class="fa fa-tint"></i> Theme: {{ gantry.theme.title }}</span>
+            <span class="theme-title"><i class="fa fa-tint"></i> Theme: {{ gantry.theme.title|e }} <small>({{ gantry.theme.name|e }})</small></span>
 
             {% set settings_url = gantry.platform.settings %}
             {% set settings_key = gantry.platform.settings_key %}

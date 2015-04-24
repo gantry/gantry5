@@ -47,8 +47,11 @@ var Menu = new prime({
         this.active = null;
         this.location = [];
 
+        var mainContainer = $(this.selectors.mainContainer);
+        if (!mainContainer) { return; }
+
         if (hasTouchEvents) {
-            $(this.selectors.mainContainer).addClass(this.states.touchEvents);
+            mainContainer.addClass(this.states.touchEvents);
         }
 
         this.attach();
@@ -65,7 +68,8 @@ var Menu = new prime({
         body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
 
         if (hasTouchEvents) {
-            $(selectors.linkedParent).on('touchend', this.bound('touchend'));
+            var linkedParent = $(selectors.linkedParent);
+            if (linkedParent) { linkedParent.on('touchend', this.bound('touchend')); }
             this.overlay.on('touchend', this.bound('closeAllDropdowns'));
         }
 
@@ -130,7 +134,7 @@ var Menu = new prime({
             }, this));
         }
 
-        if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown) || isGoingBack)) {
+        if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown + ', > * > ' + selectors.dropdown) || isGoingBack)) {
             var sublevel = target.parent('.g-sublevel') || target.parent('.g-toplevel'),
                 slideout = parent.find('.g-sublevel'),
                 columns = parent.parent('.g-dropdown-column'),
@@ -138,7 +142,7 @@ var Menu = new prime({
 
             if (sublevel) {
                 var isNavMenu = target.parent(selectors.mainContainer);
-                if (isNavMenu && !sublevel.hasClass('g-toplevel')) { this._fixHeights(sublevel, slideout, isGoingBack); }
+                if (!isNavMenu || (isNavMenu && !sublevel.matches('.g-toplevel'))) { this._fixHeights(sublevel, slideout, isGoingBack, isNavMenu); }
                 if (!isNavMenu && columns && (blocks = columns.search('> .g-grid > .g-block'))) {
                     if (blocks.length > 1) { sublevel = blocks.search('> .g-sublevel'); }
                 }
@@ -193,6 +197,17 @@ var Menu = new prime({
         this.toggleOverlay(topLevel);
     },
 
+    resetStates: function(menu) {
+        if (!menu) { return; }
+        var items = menu.search('.g-toplevel, .g-dropdown-column, .g-dropdown, .g-selected, .g-active, .g-slide-out'),
+            actives = menu.search('.g-active');
+        if (!items) { return; }
+
+        menu.attribute('style', null).removeClass('g-selected').removeClass('g-slide-out');
+        items.attribute('style', null).removeClass('g-selected').removeClass('g-slide-out');
+        if (actives) { actives.removeClass('g-active').addClass('g-inactive'); }
+    },
+
     toggleOverlay: function(menu) {
         if (!menu) { return; }
         var shouldOpen = !!menu.find('.g-active, .g-selected');
@@ -201,19 +216,33 @@ var Menu = new prime({
         this.overlay[0].style.opacity = shouldOpen ? 1 : 0;
     },
 
-    _fixHeights: function(parent, sublevel, isGoingBack) {
+    _fixHeights: function(parent, sublevel, isGoingBack, isNavMenu) {
         if (parent == sublevel) { return; }
         if (isGoingBack) { parent.attribute('style', null); }
 
         var heights = {
-            from: parent[0].getBoundingClientRect(),
-            to: sublevel[0].getBoundingClientRect()
-        };
+                from: parent[0].getBoundingClientRect(),
+                to: (!isNavMenu ? sublevel.parent('.g-dropdown')[0] : sublevel[0]).getBoundingClientRect()
+            },
+            height = Math.max(heights.from.height, heights.to.height);
 
         if (!isGoingBack) {
             // if from height is < than to height set the parent height else, set the target
-            if (heights.from.height < heights.to.height) { parent[0].style.height = Math.max(heights.from.height, heights.to.height) + 'px'; }
-            else { sublevel[0].style.height = Math.max(heights.from.height, heights.to.height) + 'px'; }
+            if (heights.from.height < heights.to.height) { parent[0].style.height = height + 'px'; }
+            else { sublevel[0].style.height = height + 'px'; }
+
+            // fix sublevels heights in side menu (offcanvas etc)
+            if (!isNavMenu) {
+                var maxHeight = height,
+                    block = $(sublevel).parent('.g-block:not(.size-100)'),
+                    column = block ? block.parent('.g-dropdown-column') : null;
+                (sublevel.parents('.g-slide-out, .g-dropdown-column') || parent).forEach(function(slideout) {
+                    maxHeight = Math.max(height, parseInt(slideout.style.height, 10));
+                });
+
+                if (column) { column[0].style.height = maxHeight + 'px'; }
+                sublevel[0].style.height = maxHeight + 'px';
+            }
         }
     },
 
@@ -226,7 +255,6 @@ var Menu = new prime({
     },
 
     _checkQuery: function(mq) {
-
         var selectors = this.options.selectors,
             mobileContainer = $(selectors.mobileContainer),
             mainContainer = $(selectors.mainContainer),
@@ -239,6 +267,8 @@ var Menu = new prime({
             find = mobileContainer.find(selectors.topLevel);
             if (find) { find.top(mainContainer); }
         }
+
+        this.resetStates(find);
     },
 
     _debug: function() {}

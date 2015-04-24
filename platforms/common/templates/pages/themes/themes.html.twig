@@ -18,7 +18,7 @@
                                         </div>
                                     {% if settings_url %}
                                         <div class="g-block">
-                                            <a class="button button-primary" href="{{ settings_url|e }}" data-settings-key="{{ settings_key|e }}"><i class="fa fa-cog"></i> Platform Settings</a>
+                                            <a class="button button-primary float-right" href="{{ settings_url|e }}" data-settings-key="{{ settings_key|e }}"><i class="fa fa-cog"></i> Platform Settings</a>
                                         </div>
                                     {% endif %}
                                     </div>
@@ -28,7 +28,7 @@
                                             <div class="theme card">
                                                 <div class="theme-id">
                                                     {% if theme.details.icon %}<i class="fa fa-fw fa-{{ theme.details.icon|e }}"></i>{% endif %}
-                                                    {{ theme.title|e }}
+                                                    {{ theme.title|e }} <small>({{ theme.name|e }})</small>
                                                 </div>
                                                 <div class="theme-screenshot">
                                                     <a href="{{ theme.admin_url|e }}">

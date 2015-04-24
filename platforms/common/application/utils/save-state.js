@@ -1,6 +1,7 @@
 var prime      = require('prime'),
-    deepClone  = require('mout/lang/deepClone'),
-    objectDiff = require('objectdiff');
+    deepClone  = require('mout/lang/deepClone');
+
+//var objectDiff = require('objectdiff');
 
 var SaveState = new prime({
 
@@ -33,11 +34,15 @@ var SaveState = new prime({
     },
 
     getDiff: function(data) {
+        // Unsupported at this state
+        return data;
+        /*
         var diff = objectDiff.diff(this.getData(), data);
         return {
             diff: diff,
             xml: objectDiff.convertToXMLString(diff)
         };
+        */
     }
 });
 

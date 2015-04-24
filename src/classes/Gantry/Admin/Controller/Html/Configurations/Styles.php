@@ -21,6 +21,8 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Configurations;
+use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Theme;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -208,9 +210,14 @@ class Styles extends HtmlController
     {
         /** @var Theme $theme */
         $theme = $this->container['theme'];
+        $configuration = $this->params['configuration'];
 
-        $compiler = $theme->compiler();
-        $compiler->setVariables($this->container['config']->flatten('styles', '-'));
-        $compiler->compileAll();
+        if ($configuration === 'default') {
+            $theme->updateCss();
+        } else {
+            $compiler = $theme->compiler();
+            $compiler->setVariables($this->container['config']->flatten('styles', '-'));
+            $compiler->compileAll();
+        }
     }
 }

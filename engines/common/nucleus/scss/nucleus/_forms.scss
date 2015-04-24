@@ -6,11 +6,6 @@ fieldset {
 
 label {
 	margin-bottom: $leading-margin / 4;
-
-	&.required:after {
-		content: "*";
-	}
-
 	abbr {
 		display: none;
 	}

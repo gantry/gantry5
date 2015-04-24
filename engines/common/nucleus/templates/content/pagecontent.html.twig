@@ -1,7 +1,7 @@
-{% set pagecontent = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
+{% set enabled = gantry.config.get('particles.' ~ segment.subtype ~ '.enabled', 1) %}
 
 {% set html %}
-    {% if (segment.attributes.enabled is null or segment.attributes.enabled) and (pagecontent.enabled is null or pagecontent.enabled) %}
+    {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
         {{ content }}
     {% endif %}
 {% endset %}
