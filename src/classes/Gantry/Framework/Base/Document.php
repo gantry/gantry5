@@ -61,11 +61,17 @@ class Document
             try {
                 // Remove fragment part before resolving location of the file.
                 $parts = explode('#', $url, 2);
-                $url = array_shift($parts);
+                $uri = array_shift($parts);
                 $fragment = array_shift($parts);
 
                 // Attempt to find our resource.
-                $url = $locator->findResource($url, false) . ($fragment ? "#{$fragment}" : '');
+                $path = $locator->findResource($uri, false);
+                if ($path) {
+                    $timestamp = sprintf('%x', filemtime($path));
+                    $url = "{$path}?{$timestamp}" . ($fragment ? "#{$fragment}" : '');
+                } else {
+                    $url = null;
+                }
             } catch (\Exception $e) {
                 // Scheme did not exist; assume that we had valid scheme (like http) so no modification is needed.
                 return $url;
