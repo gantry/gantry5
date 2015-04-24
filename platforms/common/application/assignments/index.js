@@ -20,6 +20,7 @@ var Map         = map,
         toggleSection: function(e, element) {
             if (e.type.match(/^touch/)) { e.preventDefault(); }
             if (element.parent('[data-g-global-filter]')) { return Assignments.globalToggleSection(e, element); }
+            if (element.matches('label')) { return Assignments.treatLabel(e, element); }
 
             var card = element.parent('.card'),
                 toggles = Map.get(card),
@@ -72,6 +73,16 @@ var Map         = map,
             });
         },
 
+        treatLabel: function(event, element) {
+            if ($(event.target).matches('.knob, .toggle')) { return; }
+            var input = element.find('input[type="hidden"]'),
+                value = input.value();
+
+            value = !!+value;
+            input.value(Number(!value)).emit('change');
+            $('body').emit('change', { target: input });
+        },
+
         globalToggleSection: function(e, element) {
             var mode = element.data('g-assignments-check') == null ? '[data-g-assignments-uncheck]' : '[data-g-assignments-check]',
                 search = $('#assignments .card ' + mode);
@@ -99,8 +110,8 @@ ready(function() {
     var body = $('body');
 
     body.delegate('input', '#assignments .search input[type="text"]', Assignments.filterSection);
-    body.delegate('click', '#assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
-    body.delegate('touchend', '#assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
+    body.delegate('click', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
+    body.delegate('touchend', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
 });
 
 module.exports = {};
