@@ -270,7 +270,7 @@ domready(function() {
             event.preventDefault();
         }
 
-        if (flags.get('pending')) {
+        if (flags.get('pending') && (!element.matches('a.menu-item') && !element.parent('[data-menu-items]'))) {
             flags.warning(function(response, content) {
                 var saveContinue = content.find('[data-g-unsaved-save]'),
                     discardContinue = content.find('[data-g-unsaved-discard]'),
