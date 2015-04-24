@@ -24,6 +24,10 @@
 			cursor: pointer;
 			@include transition(background .2s ease-out, transform .2s ease-out);
 
+			&.g-menu-item-type-particle, &.g-menu-item-type-module {
+				cursor: initial;
+			}
+
 			// First Level Dropdown Offset
 			> .g-dropdown-offset {
 				position: absolute;
@@ -83,6 +87,10 @@
 	.g-sublevel {
     	> li {
     		@include transition(background .2s ease-out, transform .2s ease-out);
+
+    		&.g-menu-item-type-particle, &.g-menu-item-type-module {
+				cursor: initial;
+			}
 
     		.g-menu-item-content {
 				display: inline-block;

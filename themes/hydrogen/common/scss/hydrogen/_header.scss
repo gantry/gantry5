@@ -33,22 +33,24 @@
 				> .g-menu-item-container {
 					color: $header-text-color;
 				}
-				&:hover {
-					background: darken($header-background, 6%);
-				}
-
-				&.active {
-					background: $main-background;
-
-					> .g-menu-item-container {
-						color: $main-text-color;
+				&:not(.g-menu-item-type-particle):not(.g-menu-item-type-module) {
+					&:hover {
+						background: darken($header-background, 6%);
 					}
 
-					&.g-selected {
-						background: darken($header-background, 6%);
+					&.active {
+						background: $main-background;
 
 						> .g-menu-item-container {
-							color: $header-text-color;
+							color: $main-text-color;
+						}
+
+						&.g-selected {
+							background: darken($header-background, 6%);
+
+							> .g-menu-item-container {
+								color: $header-text-color;
+							}
 						}
 					}
 				}
@@ -64,9 +66,10 @@
 				> .g-menu-item-container {
 					color: $header-text-color;
 				}
-
-				&:hover, &.active {
-					background: darken($header-background, 10%);
+				&:not(.g-menu-item-type-particle):not(.g-menu-item-type-module) {
+					&:hover, &.active {
+						background: darken($header-background, 10%);
+					}
 				}
 			}
 		}

@@ -39,11 +39,13 @@
 				> .g-menu-item-container {
 					color: $offcanvas-text-color;
 				}
-				&:hover, &.active {
-					background: darken($accent-color-1, 4%);
-					
-					> .g-menu-item-container {
-						color: $offcanvas-text-color;
+				&:not(.g-menu-item-type-particle):not(.g-menu-item-type-module) {
+					&:hover, &.active {
+						background: darken($accent-color-1, 4%);
+						
+						> .g-menu-item-container {
+							color: $offcanvas-text-color;
+						}
 					}
 				}
 				&.g-menu-item-link-parent {
