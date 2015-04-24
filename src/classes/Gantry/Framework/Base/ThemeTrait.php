@@ -105,7 +105,6 @@ trait ThemeTrait
                 throw new \RuntimeException('CSS compiler used by the theme not found');
             }
 
-            $gantry = static::gantry();
             $details = $this->details();
 
             /** @var CssCompilerInterface $compiler */
@@ -116,6 +115,7 @@ trait ThemeTrait
                 ->setFiles($details->get('configuration.css.files'));
         }
 
+        $gantry = static::gantry();
         $compiler->setConfiguration(isset($gantry['configuration']) ? $gantry['configuration'] : 'default');
 
         return $compiler;
