@@ -10433,7 +10433,7 @@ History.Adapter.bind(window, 'statechange', function() {
         }
     }
 
-    if (mainheader && Data.element) {
+    if (mainheader && Data.element && (!Data.element.matches('a.menu-item') && !Data.element.matches('select.menu-select-wrap'))) {
         var lis = mainheader.search('.float-right li');
         lis.removeClass('active');
 
