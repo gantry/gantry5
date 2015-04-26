@@ -328,7 +328,8 @@ var Popover = new prime({
     },
 
     targetClickHandler: function(e) {
-        e.stopPropagation();
+        var target = $(e.target);
+        if (target.tag() !== 'a') { e.stopPropagation(); }
     },
 
     initTargetEvents: function() {

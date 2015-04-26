@@ -1,4 +1,5 @@
 var $             = require('elements'),
+    zen           = require('elements/zen'),
     ready         = require('elements/domready'),
     request       = require('agent'),
     ui            = require('./ui'),
@@ -83,6 +84,22 @@ ready(function() {
         parent.slideUp(function() {
             parent.remove();
         });
+    });
+
+    // Extras
+    body.delegate('click', '[data-g-extras]', function(event, element){
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        if (!element.PopoverDefined) {
+            var content = element.find('[data-popover-content]') || element.siblings('[data-popover-content]'),
+                popover = element.getPopover({
+                    style: 'extras',
+                    width: 220,
+                    content: zen('ul').html(content.html())[0].outerHTML
+                });
+
+            element.getPopover().show();
+        }
     });
 
     // Platform Settings redirect
@@ -241,12 +258,13 @@ ready(function() {
     body.delegate('click', '[data-ajax-action]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
-        var href   = element.attribute('href') || element.data('ajax-action'),
-            method = element.data('ajax-action-method') || 'post';
+        var href      = element.attribute('href') || element.data('ajax-action'),
+            method    = element.data('ajax-action-method') || 'post',
+            indicator = $(element.data('ajax-action-indicator')) || element;
 
         if (!href) { return false; }
 
-        element.showIndicator();
+        indicator.showIndicator();
         request(method, href + getAjaxSuffix(), function(error, response) {
             if (!response.body.success) {
                 modal.open({
@@ -256,13 +274,13 @@ ready(function() {
                     }
                 });
 
-                element.hideIndicator();
+                indicator.hideIndicator();
                 return false;
             } else {
                 toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
             }
 
-            element.hideIndicator();
+            indicator.hideIndicator();
         })
     });
 

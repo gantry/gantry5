@@ -1,5 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var $             = require('elements'),
+    zen           = require('elements/zen'),
     ready         = require('elements/domready'),
     request       = require('agent'),
     ui            = require('./ui'),
@@ -84,6 +85,22 @@ ready(function() {
         parent.slideUp(function() {
             parent.remove();
         });
+    });
+
+    // Extras
+    body.delegate('click', '[data-g-extras]', function(event, element){
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        if (!element.PopoverDefined) {
+            var content = element.find('[data-popover-content]') || element.siblings('[data-popover-content]'),
+                popover = element.getPopover({
+                    style: 'extras',
+                    width: 220,
+                    content: zen('ul').html(content.html())[0].outerHTML
+                });
+
+            element.getPopover().show();
+        }
     });
 
     // Platform Settings redirect
@@ -242,12 +259,13 @@ ready(function() {
     body.delegate('click', '[data-ajax-action]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
-        var href   = element.attribute('href') || element.data('ajax-action'),
-            method = element.data('ajax-action-method') || 'post';
+        var href      = element.attribute('href') || element.data('ajax-action'),
+            method    = element.data('ajax-action-method') || 'post',
+            indicator = $(element.data('ajax-action-indicator')) || element;
 
         if (!href) { return false; }
 
-        element.showIndicator();
+        indicator.showIndicator();
         request(method, href + getAjaxSuffix(), function(error, response) {
             if (!response.body.success) {
                 modal.open({
@@ -257,13 +275,13 @@ ready(function() {
                     }
                 });
 
-                element.hideIndicator();
+                indicator.hideIndicator();
                 return false;
             } else {
                 toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
             }
 
-            element.hideIndicator();
+            indicator.hideIndicator();
         })
     });
 
@@ -7635,7 +7653,8 @@ var Popover = new prime({
     },
 
     targetClickHandler: function(e) {
-        e.stopPropagation();
+        var target = $(e.target);
+        if (target.tag() !== 'a') { e.stopPropagation(); }
     },
 
     initTargetEvents: function() {
