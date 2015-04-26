@@ -150,4 +150,9 @@ abstract class Platform
     {
         return false;
     }
+
+    public function getName()
+    {
+        return $this->name;
+    }
 }
