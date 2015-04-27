@@ -12,6 +12,12 @@ dd {
 	margin-left: $leading-margin;
 }
 
+ul.menu {
+	ul {
+		margin-left: $leading-margin;
+	}
+}
+
 .list-striped,
 .row-striped {
 	list-style: none;
