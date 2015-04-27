@@ -69,3 +69,9 @@ copyright:
 debug:
   container:
     - position-debug
+
+offcanvas:
+    - [particle-mobile-menu]
+
+atoms:
+    - [atom-google-analytics]
