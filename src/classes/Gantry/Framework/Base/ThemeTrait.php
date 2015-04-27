@@ -37,6 +37,8 @@ trait ThemeTrait
 {
     use GantryTrait;
 
+    protected $segments;
+
     /**
      * Initialize theme.
      */
@@ -216,10 +218,12 @@ trait ThemeTrait
      */
     public function segments()
     {
-        $segments = $this->loadLayout()->toArray();
-        $this->prepareLayout($segments);
+        if (!isset($this->segments)) {
+            $this->segments = $this->loadLayout()->toArray();
+            $this->prepareLayout($this->segments);
+        }
 
-        return $segments;
+        return $this->segments;
     }
 
     public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
