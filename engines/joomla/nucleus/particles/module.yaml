@@ -27,4 +27,4 @@ form:
       type: input.text
       label: Chrome
       description: Module chrome.
-      placeholder: xhtml
+      placeholder: gantry
