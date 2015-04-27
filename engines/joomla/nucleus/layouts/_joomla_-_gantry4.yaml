@@ -1,26 +1,26 @@
+drawer:
+  container:
+    - [position-drawer 100]
+
 top:
   container:
-    - [position-top-a 20,position-top-b 20,position-top-c 20,position-top-d 20,position-top-e 20]
+    - [position-top-a 33.3,position-top-b 33.3,position-top-c 33.3]
 
 navigation:
   container:
     - [position-header-a 30, particle-menu 70]
 
-drawer:
-  container:
-    - [position-drawer 100]
-
 showcase:
   container:
-    - [position-showcase-a 20,position-showcase-b 20,position-showcase-c 20,position-showcase-d 20,position-showcase-e 20]
+    - [position-showcase-a 33.3,position-showcase-b 33.3,position-showcase-c 33.3]
 
 feature:
   container:
-    - [position-feature-a 20,position-feature-b 20,position-feature-c 20,position-feature-d 20,position-feature-e 20]
+    - [position-feature-a 33.3,position-feature-b 33.3,position-feature-c 33.3]
 
 utility:
   container:
-    - [position-utility-a 20,position-utility-b 20,position-utility-c 20,position-utility-d 20,position-utility-e 20]
+    - [position-utility-a 33.3,position-utility-b 33.3,position-utility-c 33.3]
 
 breadcrumb:
   container:
@@ -28,42 +28,40 @@ breadcrumb:
 
 maintop:
   container:
-    - [position-maintop-a 20,position-maintop-b 20,position-maintop-c 20,position-maintop-d 20,position-maintop-e 20]
+    - [position-maintop-a 33.3,position-maintop-b 33.3,position-maintop-c 33.3]
 
 container:
   1:
-    - sidebar_a 20:
-      - position-sidebar-a
-    - mainbody 60:
+    - mainbody 80:
       - position-global_messages
-      - [position-content-top-a 20,position-content-top-b 20,position-content-top-c 20,position-content-top-d 20,position-content-top-e 20]
+      - [position-content-top-a 33.3,position-content-top-b 33.3,position-content-top-c 33.3]
       - pagecontent
-      - [position-content-bottom-a 20,position-content-bottom-b 20,position-content-bottom-c 20,position-content-bottom-d 20,position-content-bottom-e 20]
-    - sidebar_b 15:
+      - [position-content-bottom-a 33.3,position-content-bottom-b 33.3,position-content-bottom-c 33.3]
+    - sidebar 20:
+      - position-sidebar-a
       - position-sidebar-b
-    - sidebar_c 5:
       - position-sidebar-c
 
 
 mainbottom:
   container:
-    - [position-mainbottom-a 20,position-mainbottom-b 20,position-mainbottom-c 20,position-mainbottom-d 20,position-mainbottom-e 20]
+    - [position-mainbottom-a 33.3,position-mainbottom-b 33.3,position-mainbottom-c 33.3]
 
 extension:
   container:
-    - [position-extension-a 20,position-extension-b 20,position-extension-c 20,position-extension-d 20,position-extension-e 20]
+    - [position-extension-a 33.3,position-extension-b 33.3,position-extension-c 33.3]
 
 bottom:
   container:
-    - [position-bottom-a 20,position-bottom-b 20,position-bottom-c 20,position-bottom-d 20,position-bottom-e 20]
+    - [position-bottom-a 33.3,position-bottom-b 33.3,position-bottom-c 33.3]
 
 footer:
   container:
-    - [position-footer-a 20,position-footer-b 20,position-footer-c 20,position-footer-d 20,position-footer-e 20]
+    - [position-footer-a 33.3,position-footer-b 33.3,position-footer-c 33.3]
 
 copyright:
   container:
-    - [position-copyright-a 20,position-copyright-b 20,position-copyright-c 20,position-copyright-d 20,position-copyright-e 20]
+    - [position-copyright-a 33.3,position-copyright-b 33.3,position-copyright-c 33.3]
     - [particle-copyright 40, spacer 30, particle-branding 30]
 
 debug:
