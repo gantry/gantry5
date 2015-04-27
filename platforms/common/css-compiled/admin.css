@@ -3380,7 +3380,7 @@ a {
 }
 
 /* line 61, platforms/common/scss/admin/_modal.scss */
-body.g5-dialog-open, html.g5-dialog-open {
+html.g5-dialog-open {
   overflow: hidden;
 }
 
