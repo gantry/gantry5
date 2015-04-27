@@ -159,7 +159,7 @@ var MenuManager = new prime({
         }
 
         // it's a module or a particle and we allow for them to be deleted
-        if (!this.isNewParticle && type.match(/__(module|particle)-[a-z0-9]{5}$/i)) {
+        if (!this.isNewParticle && (type && type.match(/__(module|particle)-[a-z0-9]{5}$/i))) {
             this.eraser.show();
         }
 
@@ -189,7 +189,7 @@ var MenuManager = new prime({
         // Workaround for layout and style of columns
         if (dataLevel === null && (this.type === 'columns_items' || this.isParticle)) {
             var submenu_items = target.find('.submenu-items');
-            if (!submenu_items || submenu_items.children()) {
+            if (!submenu_items || submenu_items.children() || originalLevel > 2) {
                 this.dragdrop.matched = false;
                 return;
             }
