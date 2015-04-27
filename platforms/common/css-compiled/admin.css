@@ -3763,7 +3763,14 @@ html.g5-dialog-open {
 /* line 297, platforms/common/scss/admin/_popover.scss */
 .g5-popover-extras a {
   display: block;
-  padding: 4px 0;
+  padding: 0.4rem;
+  color: #666;
+}
+/* line 302, platforms/common/scss/admin/_popover.scss */
+.g5-popover-extras a:hover {
+  color: #666;
+  background-color: #eee;
+  border-radius: 4px;
 }
 
 /* line 1, platforms/common/scss/admin/particles/_colorpicker.scss */

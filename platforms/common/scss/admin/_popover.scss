@@ -296,6 +296,13 @@ $close-color:               #000;
 
     a {
         display: block;
-        padding: 4px 0;
+        padding: 0.4rem;
+        color: $core-text;
+
+        &:hover {
+            color: $core-text;
+            background-color: #eee;
+            border-radius: $border-radius-base;
+        }
     }
 }
