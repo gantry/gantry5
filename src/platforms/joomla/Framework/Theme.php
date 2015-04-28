@@ -26,6 +26,17 @@ class Theme extends BaseTheme
         $this->url = \JUri::root(true) . '/templates/' . $this->name;
     }
 
+    public function init()
+    {
+        parent::init();
+
+        \JPluginHelper::importPlugin('gantry5');
+
+        // Trigger the onGantryThemeInit event.
+        $dispatcher = \JEventDispatcher::getInstance();
+        $dispatcher->trigger('onGantry5ThemeInit', ['theme' => $this]);
+    }
+
     public function renderer()
     {
         if (!$this->renderer) {

@@ -56,6 +56,10 @@
                 ],
                 "plugins":[
                     {
+                        "source":"/platforms/joomla/plg_gantry5_preset",
+                        "destination":"/plugins/gantry5/preset"
+                    },
+                    {
                         "source":"/platforms/joomla/plg_system_gantry5",
                         "destination":"/plugins/system/gantry5"
                     },

@@ -16,6 +16,7 @@ namespace Gantry\Framework\Base;
 
 use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
@@ -38,6 +39,7 @@ trait ThemeTrait
     use GantryTrait;
 
     protected $segments;
+    protected $preset;
 
     /**
      * Initialize theme.
@@ -56,6 +58,15 @@ trait ThemeTrait
     {
         $gantry = static::gantry();
         $compiler = $this->compiler();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+        $path = $locator->findResource($compiler->getTarget(), true, true);
+
+        // Make sure that all the CSS files get deleted.
+        if (is_dir($path)) {
+            Folder::delete($path, false);
+        }
 
         /** @var Configurations $configurations */
         $configurations = $gantry['configurations'];
@@ -91,6 +102,22 @@ trait ThemeTrait
     }
 
     /**
+     * Set preset to be used.
+     *
+     * @param string $name
+     * @return $this
+     */
+    public function setPreset($name = null)
+    {
+        // Set preset if given.
+        if ($name) {
+            $this->preset = $name;
+        }
+
+        return $this;
+    }
+
+    /**
      * Return CSS compiler used in the theme.
      *
      * @return CssCompilerInterface
@@ -117,8 +144,12 @@ trait ThemeTrait
                 ->setFiles($details->get('configuration.css.files'));
         }
 
-        $gantry = static::gantry();
-        $compiler->setConfiguration(isset($gantry['configuration']) ? $gantry['configuration'] : 'default');
+        if ($this->preset) {
+            $compiler->setConfiguration($this->preset);
+        } else {
+            $gantry = static::gantry();
+            $compiler->setConfiguration(isset($gantry['configuration']) ? $gantry['configuration'] : 'default');
+        }
 
         return $compiler;
     }
@@ -144,7 +175,12 @@ trait ThemeTrait
         $path = $locator->findResource($url, true, true);
 
         if (!is_file($path)) {
-            $compiler->setVariables($gantry['config']->flatten('styles', '-'));
+            if ($this->preset) {
+                $variables = $this->presets()->flatten($this->preset . '.styles', '-');
+            } else {
+                $variables = $gantry['config']->flatten('styles', '-');
+            }
+            $compiler->setVariables($variables);
             $compiler->compileFile($name);
         }
 

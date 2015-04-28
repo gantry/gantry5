@@ -54,6 +54,14 @@ abstract class CssCompiler implements CssCompilerInterface
     protected $files;
 
     /**
+     * @return string
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+    /**
      * @param string $target
      * @return $this
      */
