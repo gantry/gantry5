@@ -2113,17 +2113,18 @@ a {
 #g5-container .lm-blocks .particle > span, #g5-container .lm-blocks .position > span, #g5-container .lm-blocks .spacer > span, #g5-container .lm-blocks .pagecontent > span, #g5-container .lm-blocks .atom > span {
   position: relative;
   z-index: 2;
+  display: inline-block;
 }
-/* line 349, platforms/common/scss/admin/_layout-manager.scss */
+/* line 350, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle > span span, #g5-container .lm-blocks .position > span span, #g5-container .lm-blocks .spacer > span span, #g5-container .lm-blocks .pagecontent > span span, #g5-container .lm-blocks .atom > span span {
   display: block;
 }
-/* line 352, platforms/common/scss/admin/_layout-manager.scss */
+/* line 353, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle > span span:last-child, #g5-container .lm-blocks .position > span span:last-child, #g5-container .lm-blocks .spacer > span span:last-child, #g5-container .lm-blocks .pagecontent > span span:last-child, #g5-container .lm-blocks .atom > span span:last-child {
   color: rgba(255, 255, 255, 0.7);
   margin-top: -3px;
 }
-/* line 359, platforms/common/scss/admin/_layout-manager.scss */
+/* line 360, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle .float-right, #g5-container .lm-blocks .position .float-right, #g5-container .lm-blocks .spacer .float-right, #g5-container .lm-blocks .pagecontent .float-right, #g5-container .lm-blocks .atom .float-right {
   position: absolute;
   right: 13px;
@@ -2132,14 +2133,14 @@ a {
   line-height: 50px;
   float: inherit;
 }
-/* line 367, platforms/common/scss/admin/_layout-manager.scss */
+/* line 368, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle .float-right i, #g5-container .lm-blocks .position .float-right i, #g5-container .lm-blocks .spacer .float-right i, #g5-container .lm-blocks .pagecontent .float-right i, #g5-container .lm-blocks .atom .float-right i {
   line-height: 52px;
   cursor: pointer;
   position: relative;
   z-index: 2;
 }
-/* line 376, platforms/common/scss/admin/_layout-manager.scss */
+/* line 377, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle-size {
   font-weight: 300;
   font-size: 1.2rem;
@@ -2151,37 +2152,37 @@ a {
   text-shadow: none;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-  /* line 376, platforms/common/scss/admin/_layout-manager.scss */
+  /* line 377, platforms/common/scss/admin/_layout-manager.scss */
   #g5-container .lm-blocks .particle-size {
     font-size: 1rem;
   }
 }
-/* line 390, platforms/common/scss/admin/_layout-manager.scss */
+/* line 391, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .particle {
   background-color: #2A82B7;
 }
-/* line 394, platforms/common/scss/admin/_layout-manager.scss */
+/* line 395, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .spacer {
   background-color: #eee;
   color: rgba(102, 102, 102, 0.8);
 }
-/* line 398, platforms/common/scss/admin/_layout-manager.scss */
+/* line 399, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .spacer .particle-size {
   color: rgba(102, 102, 102, 0.8);
 }
-/* line 404, platforms/common/scss/admin/_layout-manager.scss */
+/* line 405, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .spacer > span span:last-child {
   color: rgba(102, 102, 102, 0.8);
 }
-/* line 411, platforms/common/scss/admin/_layout-manager.scss */
+/* line 412, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .atom {
   background-color: #9055AF;
 }
-/* line 415, platforms/common/scss/admin/_layout-manager.scss */
+/* line 416, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .pagecontent {
   background-color: #20A085;
 }
-/* line 419, platforms/common/scss/admin/_layout-manager.scss */
+/* line 420, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder {
   text-align: center;
   color: #5987a0;
@@ -2191,7 +2192,7 @@ a {
   padding: 1px;
   flex: 0 1 100%;
 }
-/* line 428, platforms/common/scss/admin/_layout-manager.scss */
+/* line 429, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between {
   display: block;
   flex: 0 0 0px;
@@ -2203,49 +2204,49 @@ a {
   flex: 0 1 0%;
   background-color: #555;
 }
-/* line 440, platforms/common/scss/admin/_layout-manager.scss */
+/* line 441, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between-grids {
   background-color: #555;
   margin: -5px 0;
 }
-/* line 444, platforms/common/scss/admin/_layout-manager.scss */
+/* line 445, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between-grids.in-between-grids-first {
   margin: 0 0 -2px;
 }
-/* line 448, platforms/common/scss/admin/_layout-manager.scss */
+/* line 449, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between-grids.in-between-grids-last {
   margin: -2px 0 0;
 }
-/* line 453, platforms/common/scss/admin/_layout-manager.scss */
+/* line 454, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .placeholder.in-between.in-between-sections {
   width: auto;
 }
-/* line 459, platforms/common/scss/admin/_layout-manager.scss */
+/* line 460, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .block-has-changes:not(.section):not(.atoms-section):not(.offcanvas-section) {
   box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
 }
-/* line 463, platforms/common/scss/admin/_layout-manager.scss */
+/* line 464, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .block-has-changes > span > .changes-indicator {
   position: absolute;
   left: -10px;
   top: 12px;
 }
-/* line 469, platforms/common/scss/admin/_layout-manager.scss */
+/* line 470, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-blocks .block-has-changes > span .title, #g5-container .lm-blocks .block-has-changes > span .font-small, #g5-container .lm-blocks .block-has-changes > span .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #g5-container .lm-blocks .block-has-changes > span li {
   margin-left: 15px;
 }
-/* line 475, platforms/common/scss/admin/_layout-manager.scss */
+/* line 476, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .particle-disabled, #g5-container [data-lm-disabled] {
   background: -webkit-linear-gradient(-315deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4) !important;
   background: linear-gradient(45deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4) !important;
   background-size: 50px 50px !important;
 }
-/* line 481, platforms/common/scss/admin/_layout-manager.scss */
+/* line 482, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container #history {
   display: inline-block;
   float: right;
 }
-/* line 484, platforms/common/scss/admin/_layout-manager.scss */
+/* line 485, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container #history span {
   display: inline-block;
   background: #eee;
@@ -2259,20 +2260,20 @@ a {
   color: #777;
   text-shadow: 0 1px #fff;
 }
-/* line 497, platforms/common/scss/admin/_layout-manager.scss */
+/* line 498, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container #history span.disabled {
   color: #ccc;
 }
-/* line 503, platforms/common/scss/admin/_layout-manager.scss */
+/* line 504, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .sidebar [data-lm-blocktype] {
   position: relative;
   z-index: 5;
 }
-/* line 509, platforms/common/scss/admin/_layout-manager.scss */
+/* line 510, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-newblocks {
   padding-bottom: 8px;
 }
-/* line 512, platforms/common/scss/admin/_layout-manager.scss */
+/* line 513, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-newblocks .g-block {
   display: inline-block;
   text-align: center;
@@ -2281,11 +2282,11 @@ a {
   border-radius: 3px;
   margin-right: 8px;
 }
-/* line 522, platforms/common/scss/admin/_layout-manager.scss */
+/* line 523, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .lm-newblocks .button i {
   line-height: 1.6;
 }
-/* line 529, platforms/common/scss/admin/_layout-manager.scss */
+/* line 530, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container #trash {
   position: fixed;
   top: -100px;
@@ -2298,7 +2299,7 @@ a {
   padding: 0.938rem;
   background: rgba(255, 255, 255, 0.8);
 }
-/* line 541, platforms/common/scss/admin/_layout-manager.scss */
+/* line 542, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container #trash .trash-zone {
   background-color: #ed5565;
   font-size: 2rem;
@@ -2309,69 +2310,69 @@ a {
   margin: 0 auto;
   font-weight: 300;
 }
-/* line 551, platforms/common/scss/admin/_layout-manager.scss */
+/* line 552, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container #trash span {
   font-size: 0.8rem;
   color: #666;
   text-shadow: 0 0 1px #fff;
 }
 
-/* line 560, platforms/common/scss/admin/_layout-manager.scss */
+/* line 561, platforms/common/scss/admin/_layout-manager.scss */
 .g5-dialog .g-tabs, .g5-popover-content .g-tabs {
   margin-right: 0 !important;
 }
-/* line 565, platforms/common/scss/admin/_layout-manager.scss */
+/* line 566, platforms/common/scss/admin/_layout-manager.scss */
 .g5-dialog .g-tabs ul, .g5-popover-content .g-tabs ul {
   background-color: #DADADA;
   margin: -1rem -1rem 1rem !important;
   border-radius: 0.1875rem 0.1875rem 0 0;
 }
-/* line 570, platforms/common/scss/admin/_layout-manager.scss */
+/* line 571, platforms/common/scss/admin/_layout-manager.scss */
 .g5-dialog .g-tabs ul li:first-child, .g5-popover-content .g-tabs ul li:first-child {
   border-radius: 0.1875rem 0 0 0;
 }
 
-/* line 577, platforms/common/scss/admin/_layout-manager.scss */
+/* line 578, platforms/common/scss/admin/_layout-manager.scss */
 .g5-popover-content .g-tabs ul {
   margin: -0.55rem -0.9rem 1rem !important;
   background-color: #eee;
 }
-/* line 581, platforms/common/scss/admin/_layout-manager.scss */
+/* line 582, platforms/common/scss/admin/_layout-manager.scss */
 .g5-popover-content .g-tabs ul li.active {
   background-color: #fff !important;
 }
-/* line 585, platforms/common/scss/admin/_layout-manager.scss */
+/* line 586, platforms/common/scss/admin/_layout-manager.scss */
 .g5-popover-content .g-tabs ul li:hover:not(.active) {
   background-color: #e1e1e1 !important;
 }
 
-/* line 591, platforms/common/scss/admin/_layout-manager.scss */
+/* line 592, platforms/common/scss/admin/_layout-manager.scss */
 .g5-dialog .g-pane, .g5-popover-content .g-pane {
   display: none;
 }
-/* line 594, platforms/common/scss/admin/_layout-manager.scss */
+/* line 595, platforms/common/scss/admin/_layout-manager.scss */
 .g5-dialog .g-pane.active, .g5-popover-content .g-pane.active {
   display: block;
 }
-/* line 598, platforms/common/scss/admin/_layout-manager.scss */
+/* line 599, platforms/common/scss/admin/_layout-manager.scss */
 .g5-dialog .g-pane li[data-switch], .g5-popover-content .g-pane li[data-switch] {
   padding: 0.4rem;
 }
-/* line 601, platforms/common/scss/admin/_layout-manager.scss */
+/* line 602, platforms/common/scss/admin/_layout-manager.scss */
 .g5-dialog .g-pane li[data-switch] i, .g5-popover-content .g-pane li[data-switch] i {
   color: #aaa;
 }
-/* line 605, platforms/common/scss/admin/_layout-manager.scss */
+/* line 606, platforms/common/scss/admin/_layout-manager.scss */
 .g5-dialog .g-pane li[data-switch]:not(.g-switch-title), .g5-popover-content .g-pane li[data-switch]:not(.g-switch-title) {
   cursor: pointer;
 }
-/* line 609, platforms/common/scss/admin/_layout-manager.scss */
+/* line 610, platforms/common/scss/admin/_layout-manager.scss */
 .g5-dialog .g-pane li[data-switch]:hover:not(.g-switch-title), .g5-popover-content .g-pane li[data-switch]:hover:not(.g-switch-title) {
   background-color: #eee;
   border-radius: 0.1875rem;
 }
 
-/* line 617, platforms/common/scss/admin/_layout-manager.scss */
+/* line 618, platforms/common/scss/admin/_layout-manager.scss */
 .g5-popover-content .g-pane .g-switch-title {
   padding-bottom: 7px;
   font-weight: bold;
@@ -2379,13 +2380,13 @@ a {
   color: #ccc;
   text-transform: uppercase;
 }
-/* line 625, platforms/common/scss/admin/_layout-manager.scss */
+/* line 626, platforms/common/scss/admin/_layout-manager.scss */
 .g5-popover-content .g-pane ul {
   word-wrap: break-word;
   width: 50%;
 }
 
-/* line 633, platforms/common/scss/admin/_layout-manager.scss */
+/* line 634, platforms/common/scss/admin/_layout-manager.scss */
 .sidebar-block {
   margin: -1.563rem 1.563rem -1.563rem -1.563rem;
   padding: 1.563rem 0.938rem;
@@ -2393,12 +2394,12 @@ a {
   border-right: 1px solid #e3e3e3;
 }
 
-/* line 647, platforms/common/scss/admin/_layout-manager.scss */
+/* line 648, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker ul, .g5-mm-particles-picker ul, .g5-mm-modules-picker ul {
   padding: 1px;
   margin-bottom: 1em;
 }
-/* line 652, platforms/common/scss/admin/_layout-manager.scss */
+/* line 653, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li, .g5-mm-particles-picker li, .g5-mm-modules-picker li {
   padding: 0.469rem;
   margin: 1px 0;
@@ -2406,64 +2407,64 @@ a {
   border-radius: 0.1875rem;
   cursor: move;
 }
-/* line 659, platforms/common/scss/admin/_layout-manager.scss */
+/* line 660, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-nodrag], .g5-lm-particles-picker li[data-mm-nodrag], .g5-mm-particles-picker li[data-lm-nodrag], .g5-mm-particles-picker li[data-mm-nodrag], .g5-mm-modules-picker li[data-lm-nodrag], .g5-mm-modules-picker li[data-mm-nodrag] {
   cursor: default;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-  /* line 652, platforms/common/scss/admin/_layout-manager.scss */
+  /* line 653, platforms/common/scss/admin/_layout-manager.scss */
   .g5-lm-particles-picker li, .g5-mm-particles-picker li, .g5-mm-modules-picker li {
     font-size: 0.8rem;
   }
 }
-/* line 667, platforms/common/scss/admin/_layout-manager.scss */
+/* line 668, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li:first-child, .g5-mm-particles-picker li:first-child, .g5-mm-modules-picker li:first-child {
   margin-top: 0;
 }
-/* line 671, platforms/common/scss/admin/_layout-manager.scss */
+/* line 672, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li:last-child, .g5-mm-particles-picker li:last-child, .g5-mm-modules-picker li:last-child {
   margin-bottom: 0;
 }
-/* line 675, platforms/common/scss/admin/_layout-manager.scss */
+/* line 676, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="spacer"], .g5-lm-particles-picker li[data-mm-blocktype="spacer"], .g5-mm-particles-picker li[data-lm-blocktype="spacer"], .g5-mm-particles-picker li[data-mm-blocktype="spacer"], .g5-mm-modules-picker li[data-lm-blocktype="spacer"], .g5-mm-modules-picker li[data-mm-blocktype="spacer"] {
   background-color: #eee;
   color: #666;
   border: 1px solid #d0d0d0;
 }
-/* line 681, platforms/common/scss/admin/_layout-manager.scss */
+/* line 682, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], .g5-lm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], .g5-mm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], .g5-mm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], .g5-mm-modules-picker li.g5-lm-particle-spacer[data-lm-disabled], .g5-mm-modules-picker li.g5-mm-particle-spacer[data-mm-disabled] {
   color: #fff;
 }
-/* line 685, platforms/common/scss/admin/_layout-manager.scss */
+/* line 686, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="position"], .g5-lm-particles-picker li[data-mm-blocktype="position"], .g5-lm-particles-picker li[data-lm-blocktype="module"], .g5-lm-particles-picker li[data-mm-blocktype="module"], .g5-mm-particles-picker li[data-lm-blocktype="position"], .g5-mm-particles-picker li[data-mm-blocktype="position"], .g5-mm-particles-picker li[data-lm-blocktype="module"], .g5-mm-particles-picker li[data-mm-blocktype="module"], .g5-mm-modules-picker li[data-lm-blocktype="position"], .g5-mm-modules-picker li[data-mm-blocktype="position"], .g5-mm-modules-picker li[data-lm-blocktype="module"], .g5-mm-modules-picker li[data-mm-blocktype="module"] {
   color: #fff;
   background-color: #359AD9;
 }
-/* line 691, platforms/common/scss/admin/_layout-manager.scss */
+/* line 692, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="particle"], .g5-lm-particles-picker li[data-mm-blocktype="particle"], .g5-mm-particles-picker li[data-lm-blocktype="particle"], .g5-mm-particles-picker li[data-mm-blocktype="particle"], .g5-mm-modules-picker li[data-lm-blocktype="particle"], .g5-mm-modules-picker li[data-mm-blocktype="particle"] {
   color: #fff;
   background-color: #2A82B7;
 }
-/* line 696, platforms/common/scss/admin/_layout-manager.scss */
+/* line 697, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="pagecontent"], .g5-mm-particles-picker li[data-lm-blocktype="pagecontent"], .g5-mm-modules-picker li[data-lm-blocktype="pagecontent"] {
   color: #fff;
   background-color: #20A085;
 }
-/* line 701, platforms/common/scss/admin/_layout-manager.scss */
+/* line 702, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="atom"], .g5-mm-particles-picker li[data-lm-blocktype="atom"], .g5-mm-modules-picker li[data-lm-blocktype="atom"] {
   color: #fff;
   background-color: #9055AF;
 }
-/* line 707, platforms/common/scss/admin/_layout-manager.scss */
+/* line 708, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .settings-block, .g5-mm-particles-picker .settings-block, .g5-mm-modules-picker .settings-block {
   width: 100% !important;
 }
-/* line 711, platforms/common/scss/admin/_layout-manager.scss */
+/* line 712, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search, .g5-mm-particles-picker .search, .g5-mm-modules-picker .search {
   position: relative;
   margin-bottom: 10px;
 }
-/* line 715, platforms/common/scss/admin/_layout-manager.scss */
+/* line 716, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search i, .g5-mm-particles-picker .search i, .g5-mm-modules-picker .search i {
   position: absolute;
   right: 10px;
