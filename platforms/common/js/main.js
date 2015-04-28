@@ -446,6 +446,11 @@ var Map         = map,
         },
 
         treatLabel: function(event, element) {
+            if (event && event.stopPropagation && event.preventDefault) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+            
             if ($(event.target).matches('.knob, .toggle')) { return; }
             var input = element.find('input[type="hidden"]:not([disabled])');
             if (!input) { return; }
@@ -454,6 +459,8 @@ var Map         = map,
             value = !!+value;
             input.value(Number(!value)).emit('change');
             $('body').emit('change', { target: input });
+
+            return false;
         },
 
         globalToggleSection: function(e, element) {
