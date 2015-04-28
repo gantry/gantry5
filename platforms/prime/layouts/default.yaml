@@ -9,8 +9,6 @@ container:
       feature:
         - [position-feature-1 50, position-feature-2 50]
       main:
-        - position-breadcrumbs
-        - position-global_messages
         - pagecontent
       bottom:
         - position-bottom
