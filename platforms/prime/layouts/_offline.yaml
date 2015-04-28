@@ -1,9 +1,11 @@
 container:
   header:
-    - [particle-logo 20, particle-menu 80]
+    - [particle-logo]
 
   body:
     - pagecontent
 
   footer:
     - [spacer 25, particle-copyright 50, particle-branding 25]
+
+offcanvas:

@@ -7,3 +7,6 @@ container:
 
   footer:
     - [spacer 25, particle-copyright 50, particle-branding 25]
+
+offcanvas:
+  - particle-mobile-menu
