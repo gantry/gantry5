@@ -142,7 +142,7 @@ ready(function() {
     });
 
     // Sub-navigation links
-    body.delegate('statechangeAfter', '#navbar [data-g5-ajaxify]', function(event, element) {
+    body.on('statechangeAfter', function(event, element) {
         root = $('[data-lm-root]');
         if (!root) { return true; }
         data = JSON.parse(root.data('lm-root'));
