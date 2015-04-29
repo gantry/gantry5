@@ -1286,27 +1286,28 @@ th {
   -webkit-transition: opacity 0.2s ease-out, -webkit-transform 0.2s ease-out;
   -moz-transition: opacity 0.2s ease-out, -moz-transform 0.2s ease-out;
   transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  z-index: 1;
 }
-/* line 78, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 79, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li {
   -webkit-transition: background 0.2s ease-out, -webkit-transform 0.2s ease-out;
   -moz-transition: background 0.2s ease-out, -moz-transform 0.2s ease-out;
   transition: background 0.2s ease-out, transform 0.2s ease-out;
 }
-/* line 81, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 82, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li.g-menu-item-type-particle, .g-main-nav .g-sublevel > li.g-menu-item-type-module {
   cursor: initial;
 }
-/* line 85, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 86, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li .g-menu-item-content {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 91, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 92, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li.g-parent .g-menu-item-content {
   margin-right: 2rem;
 }
-/* line 94, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 95, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li.g-parent .g-menu-parent-indicator {
   position: absolute;
   right: 0.738rem;
@@ -1314,39 +1315,39 @@ th {
   width: auto;
   text-align: center;
 }
-/* line 101, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 102, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li.g-parent .g-menu-parent-indicator:after {
   content: "\f054";
 }
-/* line 108, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 109, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-sublevel > li.g-parent.g-selected > .g-menu-item-container > .g-menu-parent-indicator:after {
   content: "\f00d";
 }
 
-/* line 119, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 120, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-menu-item-container {
   display: block;
   position: relative;
 }
 
-/* line 126, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 127, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-standard {
   position: relative;
 }
-/* line 129, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 130, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-standard .g-sublevel > li {
   position: relative;
 }
-/* line 133, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 134, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-standard .g-dropdown {
   top: 100%;
 }
-/* line 135, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 136, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-standard .g-dropdown .g-dropdown {
   left: 100%;
   top: 0;
 }
-/* line 140, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 141, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-standard .g-dropdown .g-block {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
@@ -1356,17 +1357,16 @@ th {
   -ms-flex: 0 100%;
   flex: 0 100%;
 }
-/* line 148, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 149, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-standard .g-go-back {
   display: none;
 }
 
-/* line 157, engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 158, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-fullwidth .g-dropdown {
   position: absolute;
   left: 0;
   right: 0;
-  z-index: 1;
 }
 /* line 163, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-fullwidth .g-dropdown .g-block {

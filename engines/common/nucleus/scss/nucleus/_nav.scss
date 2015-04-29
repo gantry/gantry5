@@ -71,6 +71,7 @@
 	.g-dropdown {
 		@extend %inactive-dropdown;
 	    @include transition(opacity .2s ease-out, transform .2s ease-out);
+	    z-index: 1;
     }
 
 	// Sublevel Items
@@ -158,8 +159,7 @@
 			position: absolute;
 			left: 0;
 			right: 0;
-			z-index: 1;
-			
+
 			.g-block {
 				width: 50%;
 				position: relative;
