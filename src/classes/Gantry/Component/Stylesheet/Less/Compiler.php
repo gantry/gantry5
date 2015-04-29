@@ -32,24 +32,26 @@ class Compiler extends BaseCompiler
     public function libUrl(array $args, Compiler $compiler)
     {
         // Function has a single parameter.
-        $url = reset($args);
-
-        if (!$url) {
+        $parsed = reset($args);
+        if (!$parsed) {
             $this->throwError('url() is missing parameter');
         }
 
-        $value = trim($compiler->compileValue($url), '\'"');
-        $list = explode('?', $value, 2);
-        $url = array_shift($list);
-        $params = array_shift($list);
+        // Compile parsed value to string.
+        $url = trim($compiler->compileValue($parsed), '\'"');
 
+        // Handle ../ inside CSS files (points to current theme).
         $uri = strpos($url, '../') === 0 ? 'gantry-theme://' . substr($url, 3) : $url;
-        $url = (Document::url($uri) ?: $url) . ($params ? "?{$params}" : '');
 
+        // Generate URL, failed streams will be kept as they are to allow users to find issues.
+        $url = Document::url($uri) ?: $url;
+
+        // Changes absolute URIs to relative to make the path to work even if the site gets moved.
         if ($url[0] == '/' && $this->basePath) {
             $url = Folder::getRelativePathDotDot($url, $this->basePath);
         }
 
+        // Return valid CSS.
         return "url('{$url}')";
     }
 }
