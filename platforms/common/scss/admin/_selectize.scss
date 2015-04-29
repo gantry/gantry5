@@ -59,6 +59,8 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
 
 .selectize-control {
     position: relative;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .selectize-dropdown, .selectize-input, .selectize-input input {

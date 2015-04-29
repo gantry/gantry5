@@ -48,6 +48,12 @@
                                     {% if field.title is defined %} title="{{ field.title|e }}" {% endif %}
                                 {% endblock %}
                                 />
+
+                        {% block reset_field -%}
+                            {% if field.reset_field is not defined or field.reset_field in ['on', 'true', 1] %}
+                                <span class="g-reset-field" data-g-reset-field="{{ (scope ~ name)|fieldName|e }}"><i class="fa  fa-fw fa-times-circle"></i></span>
+                            {% endif %}
+                        {%- endblock %}
                     {% endblock %}
                 {% endblock %}
             </div>

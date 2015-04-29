@@ -18,7 +18,7 @@ ready(function() {
         var target = $(event.target);
         if (event && event.preventDefault) { event.preventDefault(); }
         if (target.hasClass('swatch-preview') || target.parent('.swatch-preview')) { return true; }
-        ;
+
         var data = JSON.parse(element.data('g-styles')), input, value, type, evt;
         forEach(data, function(preset, name) {
             input = $('[name="' + name + '"]');

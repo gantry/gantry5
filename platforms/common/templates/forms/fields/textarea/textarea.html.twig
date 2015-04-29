@@ -18,4 +18,6 @@
             {% if field.rows is defined %}rows="{{ field.rows|e }}"{% endif %}
             {% if field.wrap in ['hard', 'soft'] %}wrap="{{ field.wrap|e }}"{% endif %}
             >{{ value|join("\n")|e }}</textarea>
+
+    {% block reset_field %}{{ parent() }}{% endblock %}
 {% endblock %}
