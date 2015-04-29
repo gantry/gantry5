@@ -379,11 +379,12 @@ var ready   = require('elements/domready'),
     trim    = require('mout/string/trim'),
     $       = require('../utils/elements.utils');
 
-var eachAsync = function(array, fn) {
+var eachAsync = function(array, fn, cb) {
     var i = 0;
     (function tmp() {
-        fn(array[i]);
+        fn(array[i], i);
         if (++i < array.length) { window.requestAnimationFrame(tmp, 0); }
+        else if (cb) { cb(); }
     })();
 };
 
@@ -405,7 +406,8 @@ var Map         = map,
                 if (!toggles.inputs) { toggles = Map.set(card, merge(Map.get(card), { inputs: inputs })).get(card); }
             }
 
-            eachAsync(toggles.inputs, function(item) {
+            // if necessary we should move to eachAsync for an asynchronous loop
+            forEach(toggles.inputs, function(item) {
                 item = $(item);
 
                 if (item.parent('label').compute('display') == 'none') { return; }
@@ -469,7 +471,8 @@ var Map         = map,
 
             if (!search) { return; }
 
-            eachAsync(search, function(item){
+            // if necessary we should move to eachAsync for an asynchronous loop
+            forEach(search, function(item){
                 Assignments.toggleSection(e, $(item));
             });
         },
@@ -480,7 +483,7 @@ var Map         = map,
 
             if (!search) { return; }
 
-            forEach(search, function(item){
+            forEach(search, function(item) {
                 Assignments.filterSection(e, $(item), value);
             });
         }
