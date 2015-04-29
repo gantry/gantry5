@@ -160,40 +160,45 @@ img.pull-center {
 }
 
 /* line 139, engines/joomla/nucleus/scss/joomla/_typography.scss */
+img.pull-center {
+  display: block;
+}
+
+/* line 143, engines/joomla/nucleus/scss/joomla/_typography.scss */
 figcaption {
   display: table-caption;
   caption-side: bottom;
 }
 
-/* line 145, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 149, engines/joomla/nucleus/scss/joomla/_typography.scss */
 blockquote {
   padding: 0 0 0 0.938rem;
   margin: 0 0 1.5rem;
 }
 
-/* line 150, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 154, engines/joomla/nucleus/scss/joomla/_typography.scss */
 blockquote p {
   font-size: 1.2rem;
   line-height: 1.5;
 }
 
-/* line 155, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 159, engines/joomla/nucleus/scss/joomla/_typography.scss */
 blockquote small {
   line-height: 1.5;
 }
 
-/* line 160, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 164, engines/joomla/nucleus/scss/joomla/_typography.scss */
 blockquote.pull-right {
   padding-right: 1.5rem;
 }
 
-/* line 164, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 168, engines/joomla/nucleus/scss/joomla/_typography.scss */
 address {
   margin-bottom: 1.5rem;
   line-height: 1.5;
 }
 
-/* line 169, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 173, engines/joomla/nucleus/scss/joomla/_typography.scss */
 code,
 pre {
   font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
@@ -201,7 +206,7 @@ pre {
   border-radius: 0.1875rem;
 }
 
-/* line 176, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 180, engines/joomla/nucleus/scss/joomla/_typography.scss */
 pre {
   padding: 0.938rem;
   margin: 0 0 1.5rem;
@@ -210,7 +215,7 @@ pre {
   border-radius: 0.1875rem;
 }
 
-/* line 184, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 188, engines/joomla/nucleus/scss/joomla/_typography.scss */
 pre.prettyprint {
   margin-bottom: 1.5rem;
 }

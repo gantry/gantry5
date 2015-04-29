@@ -136,6 +136,10 @@ img.pull-center {
 	margin-right: auto;
 }
 
+img.pull-center {
+	display: block;
+}
+
 figcaption {
 	display: table-caption;
 	caption-side: bottom;
