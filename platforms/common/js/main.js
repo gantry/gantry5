@@ -4163,7 +4163,8 @@ ready(function() {
                     dataValue  = JSON.parse(data);
 
                 if (dataValue.length == 1) {
-                    content.elements.content.style({ width: 450 });
+                    // TODO: need to determine better how to handle single collections cards
+                    //content.elements.content.style({ width: 450 });
                 }
 
                 if (!form || !submit) {
