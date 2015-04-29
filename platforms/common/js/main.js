@@ -6649,9 +6649,15 @@ var DragDrop = new prime({
             $('body').on(event, this.bound('move'));
         }, this));
 
-        this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-            $('body').on(event, this.bound('stop'));
-        }, this));
+        var self = this;
+        this.DRAG_EVENTS.EVENTS.STOP.forEach(function(event) {
+            // Trackpads `tap` (mousedown + mouseup) happens too fast and the stop event
+            // won't get attached. We need to defer it to avoid issues
+            
+            $('body').on(event, function(e){
+                setTimeout(function(){ self.stop(e); }, 0);
+            });
+        });
 
         this.emit('dragdrop:start', event, this.element);
 
