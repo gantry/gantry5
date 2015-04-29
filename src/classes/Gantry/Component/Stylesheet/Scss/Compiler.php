@@ -46,9 +46,11 @@ class Compiler extends BaseCompiler
         $uri = strpos($url, '../') === 0 ? 'gantry-theme://' . substr($url, 3) : $url;
         $url = (Document::url($uri) ?: $url) . ($params ? "?{$params}" : '');
 
+        /* what's this for?
         if ($url[0] == '/' && $this->basePath) {
             $url = Folder::getRelativePathDotDot($url, $this->basePath);
         }
+        */
 
         return "url('{$url}')";
     }
