@@ -532,8 +532,8 @@ a {
 }
 /* line 69, platforms/common/scss/admin/_overview.scss */
 #g5-container .overview-list {
+  margin: 0 0 1em;
   list-style: none;
-  margin: 0;
   font-size: 1.1rem;
 }
 /* line 73, platforms/common/scss/admin/_overview.scss */
