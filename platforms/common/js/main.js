@@ -926,7 +926,8 @@ var Block = new prime({
             return;
         }
 
-        this.options.builder.get(child.data('lm-id')).emit('changed', state, this);
+        var mapped = this.options.builder.get(child.data('lm-id'));
+        if (mapped) { mapped.emit('changed', state, this); }
     }
 });
 
@@ -2559,7 +2560,7 @@ var LayoutManager = new prime({
         }, this));
 
         this.dragdrop.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-            $('body').off(event, this.dragdrop.bound('stop'));
+            $('body').off(event, this.dragdrop.bound('deferStop'));
         }, this));
 
         this.builder.remove(this.block.getId());
@@ -3816,7 +3817,7 @@ var MenuManager = new prime({
         }, this));
 
         this.dragdrop.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-            $('body').off(event, this.dragdrop.bound('stop'));
+            $('body').off(event, this.dragdrop.bound('deferStop'));
         }, this));
 
         var particle = this.block,
@@ -6653,19 +6654,23 @@ var DragDrop = new prime({
             $('body').on(event, this.bound('move'));
         }, this));
 
-        var self = this;
-        this.DRAG_EVENTS.EVENTS.STOP.forEach(function(event) {
+        this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
             // Trackpads `tap` (mousedown + mouseup) happens too fast and the stop event
             // won't get attached. We need to defer it to avoid issues
-            
-            $('body').on(event, function(e){
-                setTimeout(function(){ self.stop(e); }, 0);
-            });
-        });
+
+            $('body').on(event, this.bound('deferStop'));
+        }, this));
 
         this.emit('dragdrop:start', event, this.element);
 
         return this.element;
+    },
+
+    deferStop: function(event) {
+        var self = this;
+        setTimeout(function(){
+            self.stop(event);
+        }, 0);
     },
 
     stop: function(event) {
@@ -6686,7 +6691,7 @@ var DragDrop = new prime({
             }, this));
 
             this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-                $('body').off(event, this.bound('stop'));
+                $('body').off(event, this.bound('deferStop'));
             }, this));
 
             this.element = null;
@@ -6702,7 +6707,7 @@ var DragDrop = new prime({
             }, this));
 
             this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-                $('body').off(event, this.bound('stop'));
+                $('body').off(event, this.bound('deferStop'));
             }, this));
 
             return this.emit('dragdrop:stop:erase', event, this.element);
@@ -6749,7 +6754,7 @@ var DragDrop = new prime({
         }, this));
 
         this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-            $('body').off(event, this.bound('stop'));
+            $('body').off(event, this.bound('deferStop'));
         }, this));
 
         this.element = null;
