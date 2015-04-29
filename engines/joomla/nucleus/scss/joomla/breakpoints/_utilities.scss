@@ -1,0 +1,24 @@
+@include breakpoint(mobile-only) {
+	div.modal {
+		position: fixed;
+		top: 20px;
+		right: 20px;
+		left: 20px;
+		width: auto;
+		margin: 0;
+	}
+	div.modal.fade {
+		top: -100px;
+	}
+	div.modal.fade.in {
+		top: 20px;
+	}
+}
+
+@include breakpoint(small-mobile-range) {
+	div.modal {
+		top: 10px;
+		right: 10px;
+		left: 10px;
+	}
+}
