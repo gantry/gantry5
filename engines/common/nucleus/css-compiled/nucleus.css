@@ -1232,7 +1232,7 @@ th {
 }
 /* line 11, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav:not(.g-menu-hastouch) .g-dropdown.g-active {
-  top: 100%;
+  top: auto;
 }
 /* line 14, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav:not(.g-menu-hastouch) .g-dropdown .g-dropdown {
@@ -1367,7 +1367,6 @@ th {
   left: 0;
   right: 0;
   z-index: 1;
-  top: 100%;
 }
 /* line 163, engines/common/nucleus/scss/nucleus/_nav.scss */
 .g-main-nav .g-fullwidth .g-dropdown .g-block {
