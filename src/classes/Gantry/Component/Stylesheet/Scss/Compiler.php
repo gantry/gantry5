@@ -82,7 +82,7 @@ class Compiler extends BaseCompiler
             return "url('http://fonts.googleapis.com/css?{$value}')";
         }
 
-        return '';
+        return false;
     }
 
     /**
