@@ -89,6 +89,7 @@ ready(function() {
     };
 
     compare.blanks = function(event, element) {
+        if (!element) { return; }
         var field = element.find('[name]'),
             reset = element.find('.g-reset-field');
         if (!field || !reset) { return true; }
