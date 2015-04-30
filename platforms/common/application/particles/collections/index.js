@@ -12,7 +12,8 @@ var ready         = require('elements/domready'),
 
     trim          = require('mout/string/trim'),
 
-    getAjaxSuffix = require('../../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    validateField = require('../../utils/field-validation');
 
 require('elements/insertion');
 
@@ -176,6 +177,7 @@ ready(function() {
                 var form       = content.elements.content.find('form'),
                     submit     = content.elements.content.find('input[type="submit"], button[type="submit"]'),
                     dataString = [],
+                    invalid = [],
                     dataValue  = JSON.parse(data);
 
                 if (dataValue.length == 1) {
@@ -191,7 +193,9 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
                     dataString = [];
+                    invalid = [];
 
+                    submit.hideIndicator();
                     submit.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
@@ -202,6 +206,7 @@ ready(function() {
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (!validateField(input)) { invalid.push(input); }
                         dataString.push(name + '=' + encodeURIComponent(value));
                     });
 
@@ -212,6 +217,13 @@ ready(function() {
                             key = title.data('collection-key') || 'title';
                             dataString.push(key + '=' + encodeURIComponent(title.data('title-editable')));
                         });
+                    }
+
+                    if (invalid.length) {
+                        submit.hideIndicator();
+                        submit.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        return;
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {

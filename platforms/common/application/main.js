@@ -127,6 +127,8 @@ ready(function() {
     // Save
     body.delegate('click', '.button-save', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
+
+        element.hideIndicator();
         element.showIndicator();
 
         var data    = {},
@@ -175,6 +177,7 @@ ready(function() {
 
         if (invalid.length) {
             element.hideIndicator();
+            element.showIndicator('fa fa-fw fa-exclamation-triangle');
             toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
             return;
         }

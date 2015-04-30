@@ -15,6 +15,7 @@ var ready         = require('elements/domready'),
 
     Builder       = require('./builder'),
     History       = require('../utils/history'),
+    validateField = require('../utils/field-validation'),
     LMHistory     = require('./history'),
     LayoutManager = require('./layoutmanager'),
     SaveState     = require('../utils/save-state');
@@ -340,7 +341,7 @@ ready(function() {
             remoteLoaded: function(response, content) {
                 var form       = content.elements.content.find('form'),
                     submit     = content.elements.content.find('input[type="submit"], button[type="submit"]'),
-                    dataString = [];
+                    dataString = [], invalid = [];
 
                 if (!form || !submit) { return true; }
 
@@ -348,7 +349,9 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
                     dataString = [];
+                    invalid = [];
 
+                    submit.hideIndicator();
                     submit.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
@@ -359,12 +362,20 @@ ready(function() {
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (!validateField(input)) { invalid.push(input); }
                         dataString.push(name + '=' + encodeURIComponent(value));
                     });
 
                     var title = content.elements.content.find('[data-title-editable]');
                     if (title) {
                         dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
+                    }
+
+                    if (invalid.length) {
+                        submit.hideIndicator();
+                        submit.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        return;
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {

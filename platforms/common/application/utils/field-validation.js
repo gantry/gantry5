@@ -16,7 +16,7 @@ var fieldValidation = function(field) {
     if (typeof _field.willValidate !== 'undefined') {
         if (tag == 'input' && _field.type.toLowerCase() !== type) {
             // type not supported, fallback validation
-            _field.setCustomValidity(validate(field) ? '' : 'error');
+            _field.setCustomValidity(validate(field) ? '' : 'The field value is invalid');
         }
 
         // native validity check

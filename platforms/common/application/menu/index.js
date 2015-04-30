@@ -10,7 +10,8 @@ var ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
     clamp         = require('mout/math/clamp'),
     contains      = require('mout/array/contains'),
-    getAjaxSuffix = require('../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    validateField = require('../utils/field-validation');
 
 var menumanager, map;
 
@@ -187,7 +188,7 @@ ready(function() {
             remoteLoaded: function(response, content) {
                 var form = content.elements.content.find('form'),
                     submit = content.elements.content.find('input[type="submit"], button[type="submit"]'),
-                    dataString = [],
+                    dataString = [], invalid = [],
                     path;
 
                 if (!form || !submit) { return true; }
@@ -196,7 +197,9 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
                     dataString = [];
+                    invalid = []
 
+                    submit.hideIndicator();
                     submit.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
@@ -205,12 +208,20 @@ ready(function() {
                             value = input.value();
 
                         if (!name) { return; }
+                        if (!validateField(input)) { invalid.push(input); }
                         dataString.push(name + '=' + encodeURIComponent(value));
                     });
 
                     var title = content.elements.content.find('[data-title-editable]');
                     if (title) {
                         dataString.push((isRoot ? 'settings[title]' : 'title') + '=' + encodeURIComponent(title.data('title-editable')));
+                    }
+
+                    if (invalid.length) {
+                        submit.hideIndicator();
+                        submit.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        return;
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response) {

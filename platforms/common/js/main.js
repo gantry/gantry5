@@ -128,6 +128,8 @@ ready(function() {
     // Save
     body.delegate('click', '.button-save', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
+
+        element.hideIndicator();
         element.showIndicator();
 
         var data    = {},
@@ -176,6 +178,7 @@ ready(function() {
 
         if (invalid.length) {
             element.hideIndicator();
+            element.showIndicator('fa fa-fw fa-exclamation-triangle');
             toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
             return;
         }
@@ -1896,6 +1899,7 @@ var ready         = require('elements/domready'),
 
     Builder       = require('./builder'),
     History       = require('../utils/history'),
+    validateField = require('../utils/field-validation'),
     LMHistory     = require('./history'),
     LayoutManager = require('./layoutmanager'),
     SaveState     = require('../utils/save-state');
@@ -2221,7 +2225,7 @@ ready(function() {
             remoteLoaded: function(response, content) {
                 var form       = content.elements.content.find('form'),
                     submit     = content.elements.content.find('input[type="submit"], button[type="submit"]'),
-                    dataString = [];
+                    dataString = [], invalid = [];
 
                 if (!form || !submit) { return true; }
 
@@ -2229,7 +2233,9 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
                     dataString = [];
+                    invalid = [];
 
+                    submit.hideIndicator();
                     submit.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
@@ -2240,12 +2246,20 @@ ready(function() {
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (!validateField(input)) { invalid.push(input); }
                         dataString.push(name + '=' + encodeURIComponent(value));
                     });
 
                     var title = content.elements.content.find('[data-title-editable]');
                     if (title) {
                         dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
+                    }
+
+                    if (invalid.length) {
+                        submit.hideIndicator();
+                        submit.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        return;
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
@@ -2317,7 +2331,7 @@ module.exports = {
     history: lmhistory,
     savestate: savestate
 };
-},{"../ui":40,"../ui/popover":42,"../utils/get-ajax-suffix":53,"../utils/history":56,"../utils/save-state":58,"./builder":18,"./history":20,"./layoutmanager":22,"agent":59,"elements/attributes":81,"elements/domready":84,"elements/zen":113,"mout/array/contains":143,"mout/collection/forEach":163,"mout/collection/size":165,"mout/string/trim":235}],22:[function(require,module,exports){
+},{"../ui":40,"../ui/popover":42,"../utils/field-validation":51,"../utils/get-ajax-suffix":53,"../utils/history":56,"../utils/save-state":58,"./builder":18,"./history":20,"./layoutmanager":22,"agent":59,"elements/attributes":81,"elements/domready":84,"elements/zen":113,"mout/array/contains":143,"mout/collection/forEach":163,"mout/collection/size":165,"mout/string/trim":235}],22:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
@@ -3367,7 +3381,8 @@ var ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
     clamp         = require('mout/math/clamp'),
     contains      = require('mout/array/contains'),
-    getAjaxSuffix = require('../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    validateField = require('../utils/field-validation');
 
 var menumanager, map;
 
@@ -3544,7 +3559,7 @@ ready(function() {
             remoteLoaded: function(response, content) {
                 var form = content.elements.content.find('form'),
                     submit = content.elements.content.find('input[type="submit"], button[type="submit"]'),
-                    dataString = [],
+                    dataString = [], invalid = [],
                     path;
 
                 if (!form || !submit) { return true; }
@@ -3553,7 +3568,9 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
                     dataString = [];
+                    invalid = []
 
+                    submit.hideIndicator();
                     submit.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
@@ -3562,12 +3579,20 @@ ready(function() {
                             value = input.value();
 
                         if (!name) { return; }
+                        if (!validateField(input)) { invalid.push(input); }
                         dataString.push(name + '=' + encodeURIComponent(value));
                     });
 
                     var title = content.elements.content.find('[data-title-editable]');
                     if (title) {
                         dataString.push((isRoot ? 'settings[title]' : 'title') + '=' + encodeURIComponent(title.data('title-editable')));
+                    }
+
+                    if (invalid.length) {
+                        submit.hideIndicator();
+                        submit.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        return;
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response) {
@@ -3609,7 +3634,7 @@ ready(function() {
 module.exports = {
     menumanager: menumanager
 };
-},{"../ui":40,"../utils/get-ajax-suffix":53,"./extra-items":24,"./menumanager":26,"agent":59,"elements":86,"elements/domready":84,"elements/zen":113,"mout/array/contains":143,"mout/math/clamp":188,"mout/string/trim":235}],26:[function(require,module,exports){
+},{"../ui":40,"../utils/field-validation":51,"../utils/get-ajax-suffix":53,"./extra-items":24,"./menumanager":26,"agent":59,"elements":86,"elements/domready":84,"elements/zen":113,"mout/array/contains":143,"mout/math/clamp":188,"mout/string/trim":235}],26:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     $         = require('../utils/elements.utils'),
@@ -4098,7 +4123,8 @@ var ready         = require('elements/domready'),
 
     trim          = require('mout/string/trim'),
 
-    getAjaxSuffix = require('../../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    validateField = require('../../utils/field-validation');
 
 require('elements/insertion');
 
@@ -4262,6 +4288,7 @@ ready(function() {
                 var form       = content.elements.content.find('form'),
                     submit     = content.elements.content.find('input[type="submit"], button[type="submit"]'),
                     dataString = [],
+                    invalid = [],
                     dataValue  = JSON.parse(data);
 
                 if (dataValue.length == 1) {
@@ -4277,7 +4304,9 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
                     dataString = [];
+                    invalid = [];
 
+                    submit.hideIndicator();
                     submit.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
@@ -4288,6 +4317,7 @@ ready(function() {
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (!validateField(input)) { invalid.push(input); }
                         dataString.push(name + '=' + encodeURIComponent(value));
                     });
 
@@ -4298,6 +4328,13 @@ ready(function() {
                             key = title.data('collection-key') || 'title';
                             dataString.push(key + '=' + encodeURIComponent(title.data('title-editable')));
                         });
+                    }
+
+                    if (invalid.length) {
+                        submit.hideIndicator();
+                        submit.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        return;
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
@@ -4340,7 +4377,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":40,"../../utils/get-ajax-suffix":53,"agent":59,"elements":86,"elements/domready":84,"elements/insertion":87,"elements/zen":113,"mout/array/indexOf":152,"mout/array/last":155,"mout/string/trim":235,"sortablejs":271}],28:[function(require,module,exports){
+},{"../../ui":40,"../../utils/field-validation":51,"../../utils/get-ajax-suffix":53,"agent":59,"elements":86,"elements/domready":84,"elements/insertion":87,"elements/zen":113,"mout/array/indexOf":152,"mout/array/last":155,"mout/string/trim":235,"sortablejs":271}],28:[function(require,module,exports){
 "use strict";
 
 var prime      = require('prime'),
@@ -11161,7 +11198,7 @@ var fieldValidation = function(field) {
     if (typeof _field.willValidate !== 'undefined') {
         if (tag == 'input' && _field.type.toLowerCase() !== type) {
             // type not supported, fallback validation
-            _field.setCustomValidity(validate(field) ? '' : 'error');
+            _field.setCustomValidity(validate(field) ? '' : 'The field value is invalid');
         }
 
         // native validity check
