@@ -141,12 +141,7 @@ trait ThemeTrait
             $compiler
                 ->setTarget($details->get('configuration.css.target'))
                 ->setPaths($details->get('configuration.css.paths'))
-                ->setFiles($details->get('configuration.css.files'))
-                ->registerFunction('parse-font', function($args, $c){ // TODO
-                    $value = trim($c->compileValue(reset($args)), '\'"');
-                    var_dump($value);
-                    die;
-                });
+                ->setFiles($details->get('configuration.css.files'));
         }
 
         if ($this->preset) {

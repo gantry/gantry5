@@ -24,6 +24,12 @@ class Compiler extends BaseCompiler
 {
     protected $basePath;
 
+    public function __construct()
+    {
+        $this->registerFunction('get-font-url', [$this, 'userGetFontUrl']);
+        $this->registerFunction('get-font-family', [$this, 'userGetFontFamily']);
+    }
+
     public function setBasePath($basePath)
     {
         $this->basePath = '/' . Folder::getRelativePath($basePath);
@@ -59,5 +65,55 @@ class Compiler extends BaseCompiler
 
         // Return valid CSS.
         return "url('{$url}')";
+    }
+
+    /**
+     * get-font-url($my-font-variable);
+     *
+     * @param array $args
+     * @param Compiler $compiler
+     * @return string
+     */
+    public function userGetFontUrl($args, Compiler $compiler)
+    {
+        $value = trim($compiler->compileValue(reset($args)), '\'"');
+
+        if (substr($value, 0, 7) === 'family=') {
+            return "url('http://fonts.googleapis.com/css?{$value}')";
+        }
+
+        return '';
+    }
+
+    /**
+     * font-family: get-font-family($my-font-variable);
+     *
+     * @param array $args
+     * @param Compiler $compiler
+     * @return string
+     */
+    public function userGetFontFamily($args, Compiler $compiler)
+    {
+        $value = trim($compiler->compileValue(reset($args)), '\'"');
+
+        if (substr($value, 0, 7) === 'family=') {
+            // Google font.
+            preg_match('/family=(.*?)&/', $value, $matches);
+            return '"' . $matches[1] . '"';
+        }
+
+        // Filter list of fonts and quote them.
+        $list = explode(',', $value);
+        array_walk($list, function(&$val) {
+            $val = trim($val, "'\" \t\n\r\0\x0B");
+
+            // Check if font family is one of the 4 default ones, otherwise add quotes.
+            if (!in_array($val, ['cursive', 'serif', 'sans-serif', 'monospace'])) {
+                $val = '"' . $val . '"';
+            }
+        });
+        array_filter($list);
+
+        return implode(', ', $list);
     }
 }
