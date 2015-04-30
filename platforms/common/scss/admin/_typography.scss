@@ -30,4 +30,11 @@
         display: none;
     }
 
+    // invalid fields
+    input:invalid, textarea:invalid, select:invalid, .invalid-field {
+        color: $red;
+        text-decoration: underline;
+        border-bottom: 1px dotted $red;
+    }
+
 }//endwrapper

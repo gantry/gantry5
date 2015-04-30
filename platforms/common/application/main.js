@@ -1,3 +1,4 @@
+"use strict";
 var $             = require('elements'),
     zen           = require('elements/zen'),
     ready         = require('elements/domready'),
@@ -12,6 +13,7 @@ var $             = require('elements'),
     getAjaxSuffix = require('./utils/get-ajax-suffix'),
 
     flags         = require('./utils/flags-state'),
+    validateField = require('./utils/field-validation'),
     lm            = require('./lm'),
     mm            = require('./menu');
 
@@ -128,6 +130,7 @@ ready(function() {
         element.showIndicator();
 
         var data    = {},
+            invalid = [],
             type    = element.data('save'),
             extras  = '',
             page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
@@ -162,6 +165,7 @@ ready(function() {
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (!validateField(input)) { invalid.push(input); }
                         data[name] = value;
                     });
                 }
@@ -172,6 +176,12 @@ ready(function() {
         }
 
         body.emit('updateOriginalFields');
+
+        if (invalid.length) {
+            element.hideIndicator();
+            toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
+            return;
+        }
 
         request('post', saveURL, data, function(error, response) {
             if (!response.body.success) {

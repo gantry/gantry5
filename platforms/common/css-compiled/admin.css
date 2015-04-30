@@ -1688,6 +1688,12 @@ a {
 #g5-container .new {
   display: none;
 }
+/* line 34, platforms/common/scss/admin/_typography.scss */
+#g5-container input:invalid, #g5-container textarea:invalid, #g5-container select:invalid, #g5-container .invalid-field {
+  color: #ed5565;
+  text-decoration: underline;
+  border-bottom: 1px dotted #ed5565;
+}
 
 /* line 3, platforms/common/scss/admin/_buttons.scss */
 #g5-container .button {
@@ -3342,17 +3348,17 @@ a {
   color: #fff;
   border: 1px solid #723d8b;
 }
+/* line 106, platforms/common/scss/admin/_toastr.scss */
+#g-notifications-container .g-notifications-theme-error {
+  background: #ed5565;
+  border: 1px solid #e8273b;
+}
 
 /* line 3, platforms/common/scss/admin/_modal.scss */
 .g5-dialog, .g5-dialog *, .g5-dialog *:before, .g5-dialog *:after {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-}
-/* line 106, platforms/common/scss/admin/_toastr.scss */
-#g-notifications-container .g-notifications-theme-error {
-  background: #ed5565;
-  border: 1px solid #e8273b;
 }
 
 /* line 7, platforms/common/scss/admin/_modal.scss */
