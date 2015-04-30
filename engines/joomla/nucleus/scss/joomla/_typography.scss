@@ -62,7 +62,6 @@ ul.menu {
 .list-bordered,
 .row-bordered {
 	list-style: none;
-	line-height: $core-line-height;
 	text-align: left;
 	vertical-align: middle;
 	margin-left: 0;
@@ -151,37 +150,22 @@ blockquote {
 	margin: 0 0 $leading-margin;
 }
 
-blockquote p {
-	font-size: $core-font-size + .2;
-	line-height: $core-line-height;
-}
-
-blockquote small {
-	line-height: $core-line-height;
-}
-
-
 blockquote.pull-right {
 	padding-right: $leading-margin;
 }
 
 address {
 	margin-bottom: $leading-margin;
-	line-height: $core-line-height;
 }
 
 code,
 pre {
-	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
-	font-size: $core-font-size - .2;
 	border-radius: $core-border-radius;
 }
 
 pre {
 	padding: $content-padding;
 	margin: 0 0 $leading-margin;
-	font-size: $core-font-size - .2;
-	line-height: $core-line-height;
 	border-radius: $core-border-radius;
 }
 

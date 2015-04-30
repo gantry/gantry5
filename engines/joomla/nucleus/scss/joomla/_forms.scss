@@ -1,11 +1,5 @@
 legend {
 	margin-bottom: $leading-margin;
-	font-size: $core-font-size + .3;
-	line-height: $core-line-height;
-}
-
-legend small {
-	font-size: $core-font-size - .2;
 }
 
 textarea:focus,
@@ -48,7 +42,6 @@ input, textarea, .uneditable-input {
 .input-append > .add-on {
 	vertical-align: top;
 	height: auto;
-	line-height: $core-line-height;
 	padding: 5px;
 }
 

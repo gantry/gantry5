@@ -72,150 +72,133 @@ ul.menu ul {
 .list-bordered,
 .row-bordered {
   list-style: none;
-  line-height: 1.5;
   text-align: left;
   vertical-align: middle;
   margin-left: 0;
   border-radius: 4px;
 }
 
-/* line 72, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 71, engines/joomla/nucleus/scss/joomla/_typography.scss */
 .blog-row-rule,
 .blog-item-rule {
   border: 0;
 }
 
-/* line 77, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 76, engines/joomla/nucleus/scss/joomla/_typography.scss */
 .row-even,
 .row-odd {
   padding: 5px;
   width: 99%;
 }
 
-/* line 83, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 82, engines/joomla/nucleus/scss/joomla/_typography.scss */
 .row-odd {
   background-color: transparent;
 }
 
-/* line 87, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 86, engines/joomla/nucleus/scss/joomla/_typography.scss */
 .row-fluid .row-reveal {
   visibility: hidden;
 }
 
-/* line 91, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 90, engines/joomla/nucleus/scss/joomla/_typography.scss */
 .row-fluid:hover .row-reveal {
   visibility: visible;
 }
 
-/* line 95, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 94, engines/joomla/nucleus/scss/joomla/_typography.scss */
 hr.hr-condensed {
   margin: 10px 0;
 }
 
-/* line 100, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 99, engines/joomla/nucleus/scss/joomla/_typography.scss */
 .img_caption .left {
   float: left;
   margin-right: 1.5rem;
 }
 
-/* line 105, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 104, engines/joomla/nucleus/scss/joomla/_typography.scss */
 .img_caption .right {
   float: right;
   margin-left: 1.5rem;
 }
 
-/* line 110, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 109, engines/joomla/nucleus/scss/joomla/_typography.scss */
 .img_caption .left p {
   clear: left;
   text-align: center;
 }
 
-/* line 115, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 114, engines/joomla/nucleus/scss/joomla/_typography.scss */
 .img_caption .right p {
   clear: right;
   text-align: center;
 }
 
-/* line 120, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 119, engines/joomla/nucleus/scss/joomla/_typography.scss */
 .img_caption {
   text-align: center !important;
 }
 
-/* line 124, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 123, engines/joomla/nucleus/scss/joomla/_typography.scss */
 .img_caption.none {
   margin-left: auto;
   margin-right: auto;
 }
 
-/* line 129, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 128, engines/joomla/nucleus/scss/joomla/_typography.scss */
 figure {
   display: table;
 }
 
-/* line 133, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 132, engines/joomla/nucleus/scss/joomla/_typography.scss */
 figure.pull-center,
 img.pull-center {
   margin-left: auto;
   margin-right: auto;
 }
 
-/* line 139, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 138, engines/joomla/nucleus/scss/joomla/_typography.scss */
 img.pull-center {
   display: block;
 }
 
-/* line 143, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 142, engines/joomla/nucleus/scss/joomla/_typography.scss */
 figcaption {
   display: table-caption;
   caption-side: bottom;
 }
 
-/* line 149, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 148, engines/joomla/nucleus/scss/joomla/_typography.scss */
 blockquote {
   padding: 0 0 0 0.938rem;
   margin: 0 0 1.5rem;
 }
 
-/* line 154, engines/joomla/nucleus/scss/joomla/_typography.scss */
-blockquote p {
-  font-size: 1.2rem;
-  line-height: 1.5;
-}
-
-/* line 159, engines/joomla/nucleus/scss/joomla/_typography.scss */
-blockquote small {
-  line-height: 1.5;
-}
-
-/* line 164, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 153, engines/joomla/nucleus/scss/joomla/_typography.scss */
 blockquote.pull-right {
   padding-right: 1.5rem;
 }
 
-/* line 168, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 157, engines/joomla/nucleus/scss/joomla/_typography.scss */
 address {
   margin-bottom: 1.5rem;
-  line-height: 1.5;
 }
 
-/* line 173, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 161, engines/joomla/nucleus/scss/joomla/_typography.scss */
 code,
 pre {
-  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
-  font-size: 0.8rem;
   border-radius: 0.1875rem;
 }
 
-/* line 180, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 166, engines/joomla/nucleus/scss/joomla/_typography.scss */
 pre {
   padding: 0.938rem;
   margin: 0 0 1.5rem;
-  font-size: 0.8rem;
-  line-height: 1.5;
   border-radius: 0.1875rem;
 }
 
-/* line 188, engines/joomla/nucleus/scss/joomla/_typography.scss */
+/* line 172, engines/joomla/nucleus/scss/joomla/_typography.scss */
 pre.prettyprint {
   margin-bottom: 1.5rem;
 }
@@ -338,16 +321,9 @@ fieldset.radio.btn-group {
 /* line 1, engines/joomla/nucleus/scss/joomla/_forms.scss */
 legend {
   margin-bottom: 1.5rem;
-  font-size: 1.3rem;
-  line-height: 1.5;
 }
 
-/* line 7, engines/joomla/nucleus/scss/joomla/_forms.scss */
-legend small {
-  font-size: 0.8rem;
-}
-
-/* line 11, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 5, engines/joomla/nucleus/scss/joomla/_forms.scss */
 textarea:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -368,61 +344,60 @@ input[type="color"]:focus,
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
 }
 
-/* line 31, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 25, engines/joomla/nucleus/scss/joomla/_forms.scss */
 input, textarea, .uneditable-input {
   width: 90%;
 }
 
-/* line 35, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 29, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-block-level {
   display: block;
   width: 100%;
   min-height: 30px;
 }
 
-/* line 41, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 35, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-prepend .chzn-container-single .chzn-single,
 .input-append .chzn-container-single .chzn-single {
   height: 26px;
   box-shadow: none;
 }
 
-/* line 47, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 41, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-prepend > .add-on,
 .input-append > .add-on {
   vertical-align: top;
   height: auto;
-  line-height: 1.5;
   padding: 5px;
 }
 
-/* line 55, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 48, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-prepend .chzn-container-single .chzn-single {
   border-radius: 0 0.1875rem 0.1875rem 0;
 }
 
-/* line 59, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 52, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-prepend .chzn-container-single .chzn-single-with-drop {
   border-radius: 0 0.1875rem 0 0;
 }
 
-/* line 63, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 56, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-append .chzn-container-single .chzn-single {
   border-radius: 0.1875rem 0 0 0.1875rem;
 }
 
-/* line 67, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 60, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-append .chzn-container-single .chzn-single-with-drop {
   border-radius: 0.1875rem 0 0 0;
 }
 
-/* line 71, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 64, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-prepend.input-append .chzn-container-single .chzn-single,
 .input-prepend.input-append .chzn-container-single .chzn-single-with-drop {
   border-radius: 0;
 }
 
-/* line 76, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 69, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .element-invisible {
   position: absolute;
   padding: 0;
@@ -433,7 +408,7 @@ input, textarea, .uneditable-input {
   overflow: hidden;
 }
 
-/* line 86, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 79, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .form-vertical .control-label {
   float: none;
   width: auto;
@@ -442,26 +417,26 @@ input, textarea, .uneditable-input {
   text-align: left;
 }
 
-/* line 94, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 87, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .form-vertical .controls {
   margin-left: 0;
 }
 
-/* line 98, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 91, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .invalid {
   color: #9d261d;
 }
 
-/* line 102, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 95, engines/joomla/nucleus/scss/joomla/_forms.scss */
 input.invalid {
   border: 1px solid #9d261d;
 }
 
-/* line 108, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 101, engines/joomla/nucleus/scss/joomla/_forms.scss */
 #modules-form .btn-group {
   font-size: inherit;
 }
-/* line 111, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 104, engines/joomla/nucleus/scss/joomla/_forms.scss */
 #modules-form .radio.btn-group input[type=radio] {
   display: inherit;
   margin-left: inherit;
