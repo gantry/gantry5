@@ -10319,6 +10319,7 @@ var Toaster = new prime({
 
         if (options.type && options.title) {
             if (options.types[options.type]) {
+                element.addClass('g-notifications-theme-' + options.type);
                 icon.top(title).addClass(options.types[options.type]);
             }
         }

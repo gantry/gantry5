@@ -3349,6 +3349,11 @@ a {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+/* line 106, platforms/common/scss/admin/_toastr.scss */
+#g-notifications-container .g-notifications-theme-error {
+  background: #ed5565;
+  border: 1px solid #e8273b;
+}
 
 /* line 7, platforms/common/scss/admin/_modal.scss */
 .g5-dialog {
