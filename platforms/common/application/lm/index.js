@@ -178,8 +178,8 @@ ready(function() {
     body.delegate('click', '[data-g5-lm-add]', function(event, element) {
         event.preventDefault();
         modal.open({
-            content: 'Loading',
-            remote: $(element).attribute('href') + getAjaxSuffix()
+            content: '<h1 class="center">Configurations are still WIP!</h1>'/*,
+            remote: $(element).attribute('href') + getAjaxSuffix()*/
         });
     });
 
