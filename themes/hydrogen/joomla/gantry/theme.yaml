@@ -71,7 +71,8 @@ configuration:
       full-width: Full Width
       nomarginall: No Margin
       nopaddingall: No Padding
-  local-fonts:
+
+  fonts:
     Meriweather: gantry-theme://fonts/merriweather-regular-webfont
     Meriweather Bold: gantry-theme://fonts/merriweather-bold-webfont
 

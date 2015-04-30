@@ -31,6 +31,7 @@ class Compiler extends BaseCompiler
 
     public function compileValue($value)
     {
+        // Makes protected function public.
         return parent::compileValue($value);
     }
 

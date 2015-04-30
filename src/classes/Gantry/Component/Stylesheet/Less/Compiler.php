@@ -29,11 +29,6 @@ class Compiler extends BaseCompiler
         $this->basePath = '/' . Folder::getRelativePath($basePath);
     }
 
-    public function compileValue($value)
-    {
-        return parent::compileValue($value);
-    }
-
     public function libUrl(array $args, Compiler $compiler)
     {
         // Function has a single parameter.
