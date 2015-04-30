@@ -504,30 +504,57 @@ var ready      = require('elements/domready'),
     $          = require('elements/attributes'),
     storage    = require('prime/map'),
     deepEquals = require('mout/lang/deepEquals'),
+    forEach    = require('mout/collection/forEach'),
     invoke     = require('mout/array/invoke'),
     History    = require('../utils/history'),
     flags      = require('../utils/flags-state');
 
 
-var originals, collectFieldsValues = function() {
-    var map = new storage();
+var originals,
+    collectFieldsValues = function(keys) {
+        var map = new storage();
 
-    var fields = $('.settings-block [name]');
-    if (!fields) { return false; }
+        if (keys) {
+            var field;
+            keys.forEach(function(key) {
+                field = $('[name="' + key + '"]');
+                if (field) {
+                    map.set(key, field.value().toLowerCase());
+                }
+            });
 
-    fields.forEach(function(field) {
-        field = $(field);
-        map.set(field.attribute('name'), field.value());
-    }, this);
+            return map;
+        }
 
-    return map;
+        var fields = $('.settings-block [name]');
+        if (!fields) { return false; }
+
+        fields.forEach(function(field) {
+            field = $(field);
+            map.set(field.attribute('name'), field.value());
+        }, this);
+
+        return map;
+    },
+    createMapFrom       = function(data) {
+        var map = new storage();
+
+        forEach(data, function(value, key) {
+            map.set(key, value.toLowerCase());
+        });
+
+        return map;
+    };
+
+var compare = {
+    single: function() {},
+    whole: function() {},
+    blanks: function() {},
+    presets: function() {}
 };
 
 ready(function() {
-    var body = $('body'), compare = {
-        single: function() {},
-        whole: function() {}
-    };
+    var body = $('body'), presetsCache;
 
     originals = collectFieldsValues();
 
@@ -547,8 +574,9 @@ ready(function() {
             target.hideIndicator();
         }
 
-        compare.resets(event, parent.find('.settings-param-field'));
+        compare.blanks(event, parent.find('.settings-param-field'));
         compare.whole();
+        compare.presets();
     };
 
     compare.whole = function() {
@@ -561,7 +589,7 @@ ready(function() {
         save[equals ? 'hideIndicator' : 'showIndicator']('changes-indicator fa fa-circle-o fa-fw');
     };
 
-    compare.resets = function(event, element) {
+    compare.blanks = function(event, element) {
         var field = element.find('[name]'),
             reset = element.find('.g-reset-field');
         if (!field || !reset) { return true; }
@@ -569,6 +597,30 @@ ready(function() {
         var value = field.value();
         if (!value) { reset.style('display', 'none'); }
         else { reset.removeAttribute('style'); }
+    };
+
+    compare.presets = function() {
+        var presets = $('[data-g-styles]'), store;
+        if (!presets) { return; }
+
+        if (!presetsCache) {
+            presetsCache = new storage();
+            forEach(presets, function(preset, index) {
+                preset = $(preset);
+                store = {
+                    index: index,
+                    map: createMapFrom(JSON.parse(preset.data('g-styles')))
+                };
+                presetsCache.set(preset, store);
+            });
+        }
+
+        var fields, equals;
+        presetsCache.forEach(function(data, element) {
+            fields = collectFieldsValues(data.map.keys());
+            equals = deepEquals(fields, data.map, function(a, b) { return a == b; });
+            $($('[data-g-styles]')[data.index]).parent()[equals ? 'addClass' : 'removeClass']('g-preset-match');
+        });
     };
 
     body.delegate('input', '.settings-block input[name][type="text"], .settings-block textarea[name]', compare.single);
@@ -585,7 +637,7 @@ ready(function() {
     });
 
     // fields resets
-    body.delegate('mouseenter', '.settings-param-field', compare.resets, true);
+    body.delegate('mouseenter', '.settings-param-field', compare.blanks, true);
     body.delegate('click', '.g-reset-field', function(e, element) {
         var parent = element.parent('.settings-param-field'), field;
         if (!parent) { return; }
@@ -609,12 +661,19 @@ ready(function() {
 
     body.on('updateOriginalFields', function() {
         originals = collectFieldsValues();
+        compare.presets();
     });
+
+    // force a presets comparison check
+    compare.presets();
 });
 
-module.exports = {};
+module.exports = {
+    compare: compare,
+    collect: collectFieldsValues
+};
 
-},{"../utils/flags-state":51,"../utils/history":55,"elements/attributes":80,"elements/domready":83,"mout/array/invoke":153,"mout/lang/deepEquals":173,"prime/map":256}],5:[function(require,module,exports){
+},{"../utils/flags-state":51,"../utils/history":55,"elements/attributes":80,"elements/domready":83,"mout/array/invoke":153,"mout/collection/forEach":162,"mout/lang/deepEquals":173,"prime/map":256}],5:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('elements'),

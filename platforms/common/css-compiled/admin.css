@@ -1115,18 +1115,26 @@ a {
   opacity: 0;
 }
 
-/* line 2, platforms/common/scss/admin/_styles.scss */
+/* line 3, platforms/common/scss/admin/_styles.scss */
+#g5-container .g-preset-match .swatch-matched, #g5-container .g-preset-match .swatch-title-matched {
+  display: inline-block;
+}
+/* line 8, platforms/common/scss/admin/_styles.scss */
+#g5-container .swatch-matched, #g5-container .swatch-title-matched {
+  display: none;
+}
+/* line 12, platforms/common/scss/admin/_styles.scss */
 #g5-container .swatches-block {
   margin: 0 -1px;
   padding-bottom: 0.938rem;
 }
-/* line 5, platforms/common/scss/admin/_styles.scss */
+/* line 15, platforms/common/scss/admin/_styles.scss */
 #g5-container .swatches-block .g-block {
   text-align: center;
   margin: 0 1px;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 10, platforms/common/scss/admin/_styles.scss */
+  /* line 20, platforms/common/scss/admin/_styles.scss */
   #g5-container .swatches-block .g-block {
     -webkit-box-flex: 0;
     -moz-box-flex: 0;
@@ -1137,7 +1145,7 @@ a {
     flex: 0 25%;
   }
 }
-/* line 14, platforms/common/scss/admin/_styles.scss */
+/* line 24, platforms/common/scss/admin/_styles.scss */
 #g5-container .swatches-block .swatch {
   display: block;
   padding: 4px;
@@ -1148,18 +1156,18 @@ a {
   border: 1px solid #ddd;
   position: relative;
 }
-/* line 25, platforms/common/scss/admin/_styles.scss */
+/* line 35, platforms/common/scss/admin/_styles.scss */
 #g5-container .swatches-block .swatch-image {
   display: block;
   margin-bottom: 2px;
 }
-/* line 31, platforms/common/scss/admin/_styles.scss */
+/* line 41, platforms/common/scss/admin/_styles.scss */
 #g5-container .swatch-colors {
   display: block;
   height: 15px;
 }
-/* line 36, platforms/common/scss/admin/_styles.scss */
-#g5-container .swatch-preview {
+/* line 46, platforms/common/scss/admin/_styles.scss */
+#g5-container .swatch-preview, #g5-container .swatch-matched {
   position: absolute;
   top: 4px;
   right: 4px;
@@ -1171,15 +1179,29 @@ a {
   -moz-transition: background 0.2s;
   transition: background 0.2s;
 }
-/* line 45, platforms/common/scss/admin/_styles.scss */
-#g5-container .swatch-preview i {
+/* line 55, platforms/common/scss/admin/_styles.scss */
+#g5-container .swatch-preview i, #g5-container .swatch-matched i {
   font-size: 1.2rem;
 }
-/* line 48, platforms/common/scss/admin/_styles.scss */
-#g5-container .swatch-preview:hover {
+/* line 58, platforms/common/scss/admin/_styles.scss */
+#g5-container .swatch-preview:hover, #g5-container .swatch-matched:hover {
   background: rgba(0, 0, 0, 0.7);
 }
-/* line 53, platforms/common/scss/admin/_styles.scss */
+/* line 63, platforms/common/scss/admin/_styles.scss */
+#g5-container .swatch-matched {
+  right: inherit;
+  left: 4px;
+  cursor: default;
+  color: #ffce54;
+  -webkit-transition: none;
+  -moz-transition: none;
+  transition: none;
+}
+/* line 70, platforms/common/scss/admin/_styles.scss */
+#g5-container .swatch-matched:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+/* line 75, platforms/common/scss/admin/_styles.scss */
 #g5-container .swatch-description {
   display: inline-block;
   margin: 4px 0;

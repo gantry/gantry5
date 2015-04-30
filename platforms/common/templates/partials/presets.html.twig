@@ -17,9 +17,10 @@
                         {%- endfor %})">
                 </span>
                 {% endif %}
-                <span class="swatch-preview"><i class="fa fa-eye"></i></span>
+                <span class="swatch-preview"><i class="fa fa-fw fa-eye"></i></span>
+                <span class="swatch-matched"><i class="fa fa-fw fa-star"></i></span>
             </a>
-            <span class="swatch-description">{{ preset.description }}</span>
+            <span class="swatch-description"><span class="swatch-title-matched"><i class="fa fa-fw fa-star"></i></span> {{ preset.description }}</span>
         </li>
     {% endfor %}
  </ul>
