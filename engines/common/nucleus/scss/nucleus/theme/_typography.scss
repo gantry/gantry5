@@ -1,0 +1,52 @@
+// Body Base
+body {
+	font-size: $core-font-size;
+	line-height: $core-line-height;
+}
+
+// Headings
+h1 {
+	font-size: $h1-font-size;
+}
+
+h2 {
+	font-size: $h2-font-size;
+}
+
+h3 {
+	font-size: $h3-font-size;
+}
+
+h4 {
+	font-size: $h4-font-size;
+}
+
+h5 {
+	font-size: $h5-font-size;
+}
+
+h6 {
+	font-size: $h6-font-size;
+}
+
+// Extras
+small {
+	font-size: $core-font-size - 0.125;
+}
+
+cite {
+	font-size: $core-font-size - 0.125;
+}
+
+sub,
+sup {
+	font-size: $core-font-size - 0.250;
+}
+
+code,
+kbd,
+pre,
+samp {
+	font-size: $core-font-size;
+	font-family: $font-family-mono;
+}

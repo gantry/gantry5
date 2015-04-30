@@ -41,13 +41,6 @@ blockquote {
 }
 
 // Inline and Code
-code,
-kbd,
-pre,
-samp {
-	font-family: $font-family-mono;
-}
-
 code {
 	background: $code-bg;
 	color: darken($code-text,10%);

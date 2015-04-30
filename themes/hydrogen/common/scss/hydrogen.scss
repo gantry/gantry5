@@ -9,7 +9,10 @@
 // Load Nucleus Mixins and Functions
 @import "nucleus/functions/base";
 @import "nucleus/mixins/base";
-@import "nucleus/mixins/theme/base";
+
+// Load Theme Variable Driven Nucleus Elements
+@import "nucleus/theme/mixins/base";
+@import "nucleus/theme/base";
 
 // Load Theme Configuration
 @import "configuration/base";
@@ -72,6 +75,6 @@
 //-------------------------------------------
 
 // BREAKPOINTS
-@import "nucleus/breakpoints/base";
+@import "nucleus/theme/breakpoints/base";
 
 //-------------------------------------------
