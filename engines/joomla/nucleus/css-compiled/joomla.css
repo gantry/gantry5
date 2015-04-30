@@ -624,15 +624,16 @@ th .tooltip-inner {
 .add-on [class^="icon-"], .add-on [class*=" icon-"] {
   height: auto;
   line-height: 1.5;
+  margin-right: auto;
 }
 
-/* line 98, engines/joomla/nucleus/scss/joomla/_utilities.scss */
+/* line 99, engines/joomla/nucleus/scss/joomla/_utilities.scss */
 [class^="icon-"], [class*=" icon-"] {
   margin-right: .25em;
   line-height: 14px;
 }
 
-/* line 105, engines/joomla/nucleus/scss/joomla/_utilities.scss */
+/* line 106, engines/joomla/nucleus/scss/joomla/_utilities.scss */
 .calendar .button {
   display: table-cell;
   background: inherit;
