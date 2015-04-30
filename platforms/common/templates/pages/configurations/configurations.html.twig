@@ -12,7 +12,7 @@
                 <li class="card g-block size-1-4">
                     <div class="page">
                         <h4>
-                            {{ layout|replace('_', ' ')|trim|capitalize|e  }}
+                            {{ layout|replace('_', ' ')|trim|capitalize|title|e  }}
                         </h4>
                         <div class="inner-params">
                             <img src="http://www.placehold.it/200x250/f4f4f4" />
@@ -42,7 +42,7 @@
                 <li class="card g-block size-1-4">
                     <div class="page">
                         <h4>
-                            {{ layout|trim('_')|replace({'_': ' '})|capitalize }}
+                            {{ layout|trim('_')|replace({'_': ' '})|title|capitalize }}
                         </h4>
                         <div class="inner-params">
                             <img src="http://www.placehold.it/200x250/f4f4f4" />
