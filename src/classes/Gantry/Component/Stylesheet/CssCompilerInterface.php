@@ -17,6 +17,11 @@ namespace Gantry\Component\Stylesheet;
 interface CssCompilerInterface
 {
     /**
+     * @return string
+     */
+    public function getTarget();
+
+    /**
      * @param string $target
      * @return $this
      */

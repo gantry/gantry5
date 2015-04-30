@@ -152,6 +152,7 @@ class Menu extends AbstractMenu
                     break;
 
                 case 'url':
+                    $item->url($item->link);
                     break;
 
                 case 'alias':

@@ -51,8 +51,8 @@
         <div id="page">
             <div class="lm-blocks" data-lm-page="{{ page_id|e }}" data-lm-root="{{ layout|json_encode|e('html_attr') }}"></div>
             {% if layout is empty %}
-            <div id="lm-no-layout" class="cards-wrapper g-grid">
-                <div class="card settings-block">
+            <div id="lm-no-layout">
+                <div class="card full-width">
                     <h4>No layout specified!</h4>
                     <div class="inner-params">
                         <p>This configuration has no layout specified and will use layout defined in <i>Base Configuration</i>.</p>

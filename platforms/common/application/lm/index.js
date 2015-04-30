@@ -142,7 +142,7 @@ ready(function() {
     });
 
     // Sub-navigation links
-    body.delegate('statechangeAfter', '#navbar [data-g5-ajaxify]', function(event, element) {
+    body.on('statechangeAfter', function(event, element) {
         root = $('[data-lm-root]');
         if (!root) { return true; }
         data = JSON.parse(root.data('lm-root'));
@@ -178,8 +178,8 @@ ready(function() {
     body.delegate('click', '[data-g5-lm-add]', function(event, element) {
         event.preventDefault();
         modal.open({
-            content: 'Loading',
-            remote: $(element).attribute('href') + getAjaxSuffix()
+            content: '<h1 class="center">Configurations are still WIP!</h1>'/*,
+            remote: $(element).attribute('href') + getAjaxSuffix()*/
         });
     });
 
@@ -354,7 +354,7 @@ ready(function() {
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
                         var name     = input.attribute('name'),
-                            value    = input.value(),
+                            value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                             parent   = input.parent('.settings-param'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 

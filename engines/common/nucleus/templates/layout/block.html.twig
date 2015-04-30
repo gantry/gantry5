@@ -10,7 +10,11 @@
 {% set html %}
     {% if segment.children %}
         {% for segment in segments %}
-            {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
+            {% if segment.content %}
+                {{ segment.content }}
+            {% else %}
+                {% include ['@nucleus/content/' ~ segment.type ~ '.html.twig', '@nucleus/layout/' ~ segment.type ~ '.html.twig'] with { 'segments': segment.children } %}
+            {% endif %}
         {% endfor %}
     {% endif %}
 {% endset %}

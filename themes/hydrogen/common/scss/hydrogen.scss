@@ -6,15 +6,18 @@
 // Load Nucleus Configuration
 @import "configuration/nucleus/base";
 
-// Load Template Configuration
-@import "configuration/base";
-
 // Load Nucleus Mixins and Functions
 @import "nucleus/functions/base";
 @import "nucleus/mixins/base";
 
+// Load Theme Configuration
+@import "configuration/base";
 
-// TEMPLATE COMPONENTS
+// Load Theme Configuration
+@import "mixins/base";
+
+
+// THEME COMPONENTS
 
 // Core
 @import "hydrogen/core";

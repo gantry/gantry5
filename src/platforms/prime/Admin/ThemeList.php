@@ -36,7 +36,7 @@ class ThemeList
                 $details['name'] = $theme;
                 $details['title'] = $details['details.name'];
                 $details['preview_url'] = rtrim(PRIME_URI, '/') . '/' . $theme;
-                $details['admin_url'] = rtrim(PRIME_URI, '/') . '/' . $theme . '/admin';
+                $details['admin_url'] = rtrim(PRIME_URI, '/') . '/' . $theme . '/admin/configurations/styles';
                 $details['params'] = [];
 
                 $list[$details->name] = $details;

@@ -9,7 +9,7 @@
         	z-index: 10;
            	top: -9999px;
             &.g-active {
-                top: 100%;
+                top: auto;
             }
             .g-dropdown {
             	top: 0;
@@ -23,6 +23,10 @@
 			display: inline-block;
 			cursor: pointer;
 			@include transition(background .2s ease-out, transform .2s ease-out);
+
+			&.g-menu-item-type-particle, &.g-menu-item-type-module {
+				cursor: initial;
+			}
 
 			.g-menu-item-content {
 				display: inline-block;
@@ -67,12 +71,17 @@
 	.g-dropdown {
 		@extend %inactive-dropdown;
 	    @include transition(opacity .2s ease-out, transform .2s ease-out);
+	    z-index: 1;
     }
 
 	// Sublevel Items
 	.g-sublevel {
     	> li {
     		@include transition(background .2s ease-out, transform .2s ease-out);
+
+    		&.g-menu-item-type-particle, &.g-menu-item-type-module {
+				cursor: initial;
+			}
 
     		.g-menu-item-content {
 				display: inline-block;
@@ -150,8 +159,7 @@
 			position: absolute;
 			left: 0;
 			right: 0;
-			z-index: 1;
-			top: 100%;
+
 			.g-block {
 				width: 50%;
 				position: relative;
@@ -189,6 +197,12 @@
 	}
 }
 
+// Dropdown Side Offsets
+// @include dropdown-offset-x(5px, left);
+
+// Dropdown Top Offsets
+// @include dropdown-offset-y(5px);
+
 // Go Back Arrow
 .g-go-back {
 	&.g-level-1 {
@@ -211,8 +225,9 @@
 
 // Icons
 .g-menu-item-container {
-	i {
+	> i {
 		vertical-align: middle;
+		margin-right: 0.2rem;
 	}
 }
 
@@ -231,7 +246,7 @@
     left: 0;
     z-index: -1;
     opacity: 0;
-    position: fixed;
+    position: absolute;
     @include transition(opacity .3s ease-out, z-index .1s ease-out);
 }
 
@@ -282,6 +297,7 @@
 				}
 	    	}						
 		}
+
 		.g-dropdown {
 			top: 0;
 			background: transparent;

@@ -62,6 +62,6 @@ form:
           type: input.imagepicker
           label: Image
 
-#        .subtitle:
-#          type: input.text
-#          label: Subtitle
+        .subtitle:
+          type: input.text
+          label: Subtitle

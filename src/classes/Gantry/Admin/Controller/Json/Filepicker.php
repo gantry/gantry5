@@ -113,6 +113,7 @@ class Filepicker extends JsonController
                     $active[] = $folder;
                 }
 
+                /** @var \SplFileInfo $info */
                 foreach (new \DirectoryIterator($base . DS . ltrim($folder, DS)) as $info) {
                     // no dot files nor files beginning with dot
                     if ($info->isDot() || substr($info->getFilename(), 0, 1) == '.') { continue; }

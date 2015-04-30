@@ -102,7 +102,8 @@ var Block = new prime({
             return;
         }
 
-        this.options.builder.get(child.data('lm-id')).emit('changed', state, this);
+        var mapped = this.options.builder.get(child.data('lm-id'));
+        if (mapped) { mapped.emit('changed', state, this); }
     }
 });
 

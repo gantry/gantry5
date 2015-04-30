@@ -9,6 +9,10 @@ form:
       type: input.colorpicker
       label: Background
       default: "#354D59"
+    image:
+      type: input.imagepicker
+      label: Image
+      default: ""
     text-color:
       type: input.colorpicker
       label: Text

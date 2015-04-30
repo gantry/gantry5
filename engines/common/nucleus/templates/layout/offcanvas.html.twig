@@ -1,6 +1,6 @@
 {% set offcanvas %}
     {% for child in segment.children %}
-        {% include '@nucleus/' ~ child.type ~ '.html.twig' with { 'segments': child.children } %}
+        {% include '@nucleus/layout/' ~ child.type ~ '.html.twig' with { 'segments': child.children } %}
     {% endfor %}
 {% endset %}
 

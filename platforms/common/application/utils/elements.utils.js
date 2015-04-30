@@ -84,6 +84,8 @@ $.implement({
 
             var icon = node.find('i');
 
+            if (!icon) { return; }
+
             if (!node.gHadIcon) { icon.remove(); }
             else { icon.attribute('class', node.gIndicator); }
 

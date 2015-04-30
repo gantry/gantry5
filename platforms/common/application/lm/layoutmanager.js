@@ -9,6 +9,7 @@ var prime      = require('prime'),
     Blocks     = require('./blocks'),
     DragDrop   = require('../ui/drag.drop'),
     Eraser     = require('../ui/eraser'),
+    flags      = require('../utils/flags-state'),
     Resizer    = require('./drag.resizer'),
     get        = require('mout/object/get'),
     keys       = require('mout/object/keys'),
@@ -87,6 +88,7 @@ var LayoutManager = new prime({
 
         if (equals && indicator) { save.hideIndicator(); }
         if (!equals && !indicator) { save.showIndicator('changes-indicator fa fa-fw fa-circle-o') }
+        flags.set('pending', !equals);
 
         // Emits the changed event for all particles
         // Used for UI to show particles where there have been differences applied
@@ -336,7 +338,7 @@ var LayoutManager = new prime({
         }, this));
 
         this.dragdrop.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-            $('body').off(event, this.dragdrop.bound('stop'));
+            $('body').off(event, this.dragdrop.bound('deferStop'));
         }, this));
 
         this.builder.remove(this.block.getId());

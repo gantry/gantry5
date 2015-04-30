@@ -1,0 +1,26 @@
+header:
+  container:
+    - position-header
+
+navigation:
+  container:
+    - particle-menu
+
+container:
+  1:
+    - main 60:
+        - position-breadcrumbs
+        - position-global_messages
+        - pagecontent
+    - aside 20:
+       - position-aside
+    - sidebar 20:
+       - position-sidebar
+
+footer:
+  container:
+  - position-footer
+  - [particle-copyright 40, spacer 30, particle-branding 30]
+
+offcanvas:
+  - particle-mobile-menu

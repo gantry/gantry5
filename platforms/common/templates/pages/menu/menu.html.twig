@@ -29,7 +29,11 @@
          data-menu-ordering="{{ menu.ordering|json_encode|escape('html_attr') }}"
          data-menu-items="{{ menu.items|json_encode|escape('html_attr') }}"
          data-menu-settings="{{ menu.settings|json_encode|escape('html_attr') }}">
-        {% include 'menu/base.html.twig' with {'item': menu.root} %}
+        {% if menu.items|length %}
+            {% include 'menu/base.html.twig' with {'item': menu.root} %}
+        {% else %}
+            {% include 'menu/empty.html.twig' with {'item': menu.root} %}
+        {% endif %}
     </div>
 
     <div id="trash" data-mm-eraseparticle><div class="trash-zone">&times;</div><span>Drop here to delete</span></div>

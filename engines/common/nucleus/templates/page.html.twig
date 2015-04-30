@@ -13,7 +13,7 @@
 {%- set page_offcanvas %}
     {% block page_offcanvas %}
         {% if offcanvas %}
-            {% include '@nucleus/' ~ offcanvas.type ~ '.html.twig' with { 'segment': offcanvas } %}
+            {% include '@nucleus/layout/' ~ offcanvas.type ~ '.html.twig' with { 'segment': offcanvas } %}
         {% endif %}
     {% endblock %}
 {% endset %}
@@ -24,7 +24,7 @@
 {%- set page_layout %}
     {% block page_layout %}
     {% for segment in gantry.theme.segments if segment.type != 'offcanvas' %}
-        {% include '@nucleus/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
+        {% include '@nucleus/layout/' ~ segment.type ~ '.html.twig' with { 'segments': segment.children } %}
     {% endfor %}
     {% endblock %}
 {% endset %}
@@ -53,7 +53,7 @@
         {{ page_offcanvas }}
         <div id="g-page-surround">
             {% if page_offcanvas|trim %}
-            <div class="g-offcanvas-toggle" data-offcanvas-toggle><i class="fa fa-fw fa-bars"></i></div>
+            <div class="g-offcanvas-hide g-offcanvas-toggle" data-offcanvas-toggle><i class="fa fa-fw fa-bars"></i></div>
             {% endif %}
             {{ page_top }}
             {{ page_layout }}

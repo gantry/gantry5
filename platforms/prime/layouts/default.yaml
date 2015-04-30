@@ -9,8 +9,6 @@ container:
       feature:
         - [position-feature-1 50, position-feature-2 50]
       main:
-        - position-breadcrumbs
-        - position-global_messages
         - pagecontent
       bottom:
         - position-bottom
@@ -23,3 +21,6 @@ container:
   footer:
     - position-footer
     - [particle-date 25, particle-copyright 50, particle-branding 25]
+
+offcanvas:
+  - particle-mobile-menu

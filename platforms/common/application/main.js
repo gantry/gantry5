@@ -1,4 +1,6 @@
+"use strict";
 var $             = require('elements'),
+    zen           = require('elements/zen'),
     ready         = require('elements/domready'),
     request       = require('agent'),
     ui            = require('./ui'),
@@ -10,6 +12,8 @@ var $             = require('elements'),
 
     getAjaxSuffix = require('./utils/get-ajax-suffix'),
 
+    flags         = require('./utils/flags-state'),
+    validateField = require('./utils/field-validation'),
     lm            = require('./lm'),
     mm            = require('./menu');
 
@@ -21,6 +25,7 @@ require('elements/traversal');
 require('./fields');
 require('./ui/popover');
 require('./utils/ajaxify-links');
+require('./utils/rAF-polyfill');
 
 var createHandler = function(divisor,noun,restOfString){
     return function(diff){
@@ -62,6 +67,12 @@ var prettyDate = {
     }
 };
 
+window.onbeforeunload = function(){
+    if (flags.get('pending')) {
+        return 'You haven\'t saved your changes and by leaving the page they will be lost.\nDo you want to leave without saving?';
+    }
+};
+
 ready(function() {
     var body     = $('body'),
         sentence = 'The {{type}} {{verb}} been successfully saved! {{extras}}';
@@ -75,6 +86,22 @@ ready(function() {
         parent.slideUp(function() {
             parent.remove();
         });
+    });
+
+    // Extras
+    body.delegate('click', '[data-g-extras]', function(event, element){
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        if (!element.PopoverDefined) {
+            var content = element.find('[data-popover-content]') || element.siblings('[data-popover-content]'),
+                popover = element.getPopover({
+                    style: 'extras',
+                    width: 220,
+                    content: zen('ul').html(content.html())[0].outerHTML
+                });
+
+            element.getPopover().show();
+        }
     });
 
     // Platform Settings redirect
@@ -103,6 +130,7 @@ ready(function() {
         element.showIndicator();
 
         var data    = {},
+            invalid = [],
             type    = element.data('save'),
             extras  = '',
             page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
@@ -137,15 +165,21 @@ ready(function() {
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (!validateField(input)) { invalid.push(input); }
                         data[name] = value;
                     });
                 }
 
-                $('.settings-param-title, .card.settings-block > h4').hideIndicator();
-
                 if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
         }
 
+        if (invalid.length) {
+            element.hideIndicator();
+            toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
+            return;
+        }
+
+        if (page == 'other') { $('.settings-param-title, .card.settings-block > h4').hideIndicator(); }
         body.emit('updateOriginalFields');
 
         request('post', saveURL, data, function(error, response) {
@@ -169,6 +203,10 @@ ready(function() {
             element.lastSaved = new Date();
 
             if (page == 'layout') { lm.layoutmanager.updatePendingChanges(); }
+
+            // all good, disable 'pending' flag
+            flags.set('pending', false);
+            flags.emit('update:pending');
         });
     });
 
@@ -229,12 +267,13 @@ ready(function() {
     body.delegate('click', '[data-ajax-action]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
-        var href   = element.attribute('href') || element.data('ajax-action'),
-            method = element.data('ajax-action-method') || 'post';
+        var href      = element.attribute('href') || element.data('ajax-action'),
+            method    = element.data('ajax-action-method') || 'post',
+            indicator = $(element.data('ajax-action-indicator')) || element;
 
         if (!href) { return false; }
 
-        element.showIndicator();
+        indicator.showIndicator();
         request(method, href + getAjaxSuffix(), function(error, response) {
             if (!response.body.success) {
                 modal.open({
@@ -244,13 +283,13 @@ ready(function() {
                     }
                 });
 
-                element.hideIndicator();
+                indicator.hideIndicator();
                 return false;
             } else {
                 toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
             }
 
-            element.hideIndicator();
+            indicator.hideIndicator();
         })
     });
 
@@ -265,6 +304,7 @@ var modules = {
      agent   : require('agent'),*/
     lm: lm,
     mm: mm,
+    assingments: require('./assignments'),
     ui: require('./ui'),
     styles: require('./styles'),
     "$": $,

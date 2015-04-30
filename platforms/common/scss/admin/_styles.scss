@@ -1,5 +1,15 @@
 #g5-container {//wrapper
-	.swatches-block {
+    .g-preset-match {
+        .swatch-matched, .swatch-title-matched {
+            display: inline-block;
+        }
+    }
+
+    .swatch-matched, .swatch-title-matched {
+        display: none;
+    }
+
+    .swatches-block {
 		margin: 0 -1px;
 		padding-bottom: $content-padding;
 		.g-block {
@@ -33,7 +43,7 @@
       height: 15px;
     }
 
-    .swatch-preview {
+    .swatch-preview, .swatch-matched {
     	position: absolute;
     	top: 4px;
     	right: 4px;
@@ -48,6 +58,18 @@
     	&:hover {
     		background: rgba(0,0,0,0.7);
     	}
+    }
+
+    .swatch-matched {
+        right: inherit;
+        left: 4px;
+        cursor: default;
+        color: $yellow;
+        @include transition(none);
+
+        &:hover {
+            background: rgba(0,0,0,0.4);
+        }
     }
 
     .swatch-description {

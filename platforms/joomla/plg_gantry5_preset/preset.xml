@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension version="3.4" type="plugin" group="gantry5" method="upgrade">
+    <name>plg_gantry5_preset</name>
+    <version>@version@</version>
+    <creationDate>@versiondate@</creationDate>
+    <author>RocketTheme, LLC</author>
+    <authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <copyright>(C) 2005 - 2015 RocketTheme, LLC. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <description>PLG_GANTRY5_PRESET_DESCRIPTION</description>
+
+    <files>
+        <filename plugin="preset">preset.php</filename>
+        <folder>language</folder>
+    </files>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="preset"
+                       type="text"
+                       default="presets"
+                       description="PLG_GANTRY5_OPTION_PRESET_DESC"
+                       label="PLG_GANTRY5_OPTION_PRESET_LABEL"
+                        />
+                <field name="reset"
+                       type="text"
+                       default="reset-settings"
+                       description="PLG_GANTRY5_OPTION_RESET_DESC"
+                       label="PLG_GANTRY5_OPTION_RESET_LABEL"
+                        />
+            </fieldset>
+        </fields>
+    </config>
+</extension>

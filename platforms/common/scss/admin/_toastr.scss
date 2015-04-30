@@ -103,4 +103,9 @@
         border: 1px solid darken($update-header-bg, 10);
     }
 
+    .g-notifications-theme-error {
+        background: $red;
+        border: 1px solid darken($red, 10);
+    }
+
 }
