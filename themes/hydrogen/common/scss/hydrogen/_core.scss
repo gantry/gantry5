@@ -16,19 +16,8 @@ a {
 	}
 }
 
-/* FIXME: move elsewhere */
-@mixin import-font($font) {
-    $url: get-font-url($font);
-    @if $url {
-      @import $url;
-    }
-}
-@include import-font($base-heading-font);
-
 h1, h2, h3, h4, h5, h6, strong {
 	color: darken($base-text-color, 10%);
-    /* FIXME: move elsewhere */
-    font-family: get-font-family($base-heading-font);
 }
 
 .button {
