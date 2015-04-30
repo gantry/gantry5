@@ -170,18 +170,17 @@ ready(function() {
                     });
                 }
 
-                $('.settings-param-title, .card.settings-block > h4').hideIndicator();
-
                 if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
         }
-
-        body.emit('updateOriginalFields');
 
         if (invalid.length) {
             element.hideIndicator();
             toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
             return;
         }
+
+        if (page == 'other') { $('.settings-param-title, .card.settings-block > h4').hideIndicator(); }
+        body.emit('updateOriginalFields');
 
         request('post', saveURL, data, function(error, response) {
             if (!response.body.success) {
