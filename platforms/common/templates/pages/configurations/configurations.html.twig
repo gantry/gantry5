@@ -13,11 +13,12 @@
 
     <div id="configurations" class="cards-wrapper">
         <ul class="g-grid">
-            {% for layout in layouts.user %}
+            {# TODO: Need to inject the Base Configuration at the top of the list #}
+            {% for name, title in gantry.configurations.user %}
                 <li class="card g-block size-1-4">
                     <div class="page">
                         <h4>
-                            <span data-title-editable="{{ layout|replace('_', ' ')|trim|title|e  }}" class="title">{{ layout|replace('_', ' ')|trim|title|e  }}</span> <i class="fa fa-pencil font-small" data-title-edit=""></i>
+                            <span data-title-editable="{{ title|e  }}" class="title">{{ title|e  }}</span> <i class="fa fa-pencil font-small" data-title-edit=""></i>
                         </h4>
                         <div class="inner-params">
                             <img src="http://www.placehold.it/200x250/f4f4f4" />
@@ -30,9 +31,11 @@
                                 <a href="#" class="button button-secondary">
                                     <i class="fa fa-code-fork"></i> <span>Duplicate</span>
                                 </a>
+                                {% if name != 'default' %}
                                 <a href="#" class="button red">
                                     <i class="fa fa-trash-o"></i> <span>Remove</span>
                                 </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -47,12 +50,10 @@
 
         <h2>System Configurations</h2>
         <ul class="g-grid">
-            {% for layout in layouts.core %}
+            {% for name, title in gantry.configurations.system %}
                 <li class="card g-block size-1-4">
                     <div class="page">
-                        <h4>
-                            {{ layout|trim('_')|replace({'_': ' '})|title|capitalize }}
-                        </h4>
+                        <h4>{{ title }}</h4>
                         <div class="inner-params">
                             <img src="http://www.placehold.it/200x250/f4f4f4" />
                         </div>
