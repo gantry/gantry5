@@ -97,9 +97,9 @@ class Compiler extends BaseCompiler
         $value = trim($compiler->compileValue(reset($args)), '\'"');
 
         if (substr($value, 0, 7) === 'family=') {
-            // Google font.
-            preg_match('/family=(.*?)&/', $value, $matches);
-            return '"' . $matches[1] . '"';
+            // Matches google font family name
+            preg_match('/^family=([^&:]+).*$/ui', $value, $matches);
+            return '"' . urldecode($matches[1]) . '"';
         }
 
         // Filter list of fonts and quote them.
