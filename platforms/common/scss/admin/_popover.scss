@@ -26,7 +26,7 @@ $popover-arrow-color:                 #fff;
 //** Popover outer arrow width
 $popover-arrow-outer-width:           ($popover-arrow-width + 1);
 //** Popover outer arrow color
-$popover-arrow-outer-color:           fadein($popover-border-color, 5%);
+$popover-arrow-outer-color:           opacify($popover-border-color, 0.05);
 //** Popover outer arrow fallback color
 $popover-arrow-outer-fallback-color:  darken($popover-fallback-border-color, 20%);
 
@@ -65,6 +65,14 @@ $close-color:               #000;
     &.right,&.right-top,&.right-bottom   { margin-left: $popover-arrow-width; }
     &.bottom,&.bottom-left,&.bottom-right { margin-top: $popover-arrow-width; }
     &.left,&.left-top,&.left-bottom    { margin-left: -$popover-arrow-width; }
+
+
+
+    input[type="checkbox"], input[type="radio"] {
+        margin: 0 5px 0 0;
+        display: inline-block;
+        vertical-align: middle;
+    }
 
     // addons
     &.g5-popover-above-modal {
