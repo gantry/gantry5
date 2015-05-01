@@ -23,10 +23,16 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class Compiler extends BaseCompiler
 {
     protected $basePath;
+    protected $fonts;
 
     public function setBasePath($basePath)
     {
         $this->basePath = '/' . Folder::getRelativePath($basePath);
+    }
+
+    public function setFonts(array $fonts)
+    {
+        $this->fonts = $fonts;
     }
 
     public function libUrl(array $args, Compiler $compiler)

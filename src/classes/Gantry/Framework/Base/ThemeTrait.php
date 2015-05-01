@@ -141,7 +141,8 @@ trait ThemeTrait
             $compiler
                 ->setTarget($details->get('configuration.css.target'))
                 ->setPaths($details->get('configuration.css.paths'))
-                ->setFiles($details->get('configuration.css.files'));
+                ->setFiles($details->get('configuration.css.files'))
+                ->setFonts($details->get('configuration.fonts'));
         }
 
         if ($this->preset) {

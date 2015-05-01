@@ -44,6 +44,11 @@ class LessCompiler extends CssCompiler
         $this->compiler = new Compiler();
     }
 
+    public function setFonts(array $fonts)
+    {
+        $this->fonts = $fonts;
+    }
+
     public function compile($in)
     {
         return $this->compiler->compile($in);

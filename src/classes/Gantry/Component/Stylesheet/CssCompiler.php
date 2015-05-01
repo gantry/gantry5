@@ -31,6 +31,11 @@ abstract class CssCompiler implements CssCompilerInterface
     /**
      * @var array
      */
+    protected $fonts;
+
+    /**
+     * @var array
+     */
     protected $variables;
 
     /**
@@ -82,6 +87,32 @@ abstract class CssCompiler implements CssCompilerInterface
     {
         if ($configuration !== null) {
             $this->configuration = $configuration;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array $fonts
+     * @return $this
+     */
+    public function setFonts(array $fonts = null)
+    {
+        if ($fonts !== null) {
+            // Normalize font data.
+            $list = [];
+            foreach ($fonts as $family => $data) {
+                $family = strtolower($family);
+
+                if (is_array($data)) {
+                    // font: [400: url1, 500: url2, 700: url3]
+                    $list[$family] = $data;
+                } else {
+                    // font: url
+                    $list[$family] = [400 => (string) $data];
+                }
+            }
+            $this->compiler->setFonts($list);
         }
 
         return $this;

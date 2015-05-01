@@ -46,6 +46,12 @@ interface CssCompilerInterface
     public function setFiles(array $files = null);
 
     /**
+     * @param array $fonts
+     * @return $this
+     */
+    public function setFonts(array $fonts);
+
+    /**
      * @param string $name
      * @return string
      */
