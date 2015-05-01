@@ -140,7 +140,7 @@
     <!-- Initialize all project related files, at this point we are past any "location" setup work so its safe to proceed -->
     <target name="assets-prod">
         <echo message="Removing Sourcemaps and compressing Assets (CSS/JS)..." />
-        <exec command="gulp --prod" output="/dev/null" error ="./gulp-prod-error.txt" />
+        <exec command="gulp --prod" checkreturn="true" error="./gulp-prod-error.txt" />
     </target>
 
     <target name="build-installer">
@@ -390,7 +390,7 @@
 
     <target name="assets-dev">
         <echo message="Reverting Assets to Dev (CSS/JS)..." />
-        <exec command="gulp" output="/dev/null" error ="./gulp-dev-error.txt" />
+        <exec command="gulp" checkreturn="true" error="./gulp-dev-error.txt" />
     </target>
 
     <target name="package">
