@@ -44,6 +44,11 @@ class LessCompiler extends CssCompiler
         $this->compiler = new Compiler();
     }
 
+    public function setFonts(array $fonts)
+    {
+        $this->fonts = $fonts;
+    }
+
     public function compile($in)
     {
         return $this->compiler->compile($in);
@@ -95,5 +100,28 @@ class LessCompiler extends CssCompiler
         $file->unlock();
 
         return true;
+    }
+
+    /**
+     * @param string   $name       Name of function to register to the compiler.
+     * @param callable $callback   Function to run when called by the compiler.
+     * @return $this
+     */
+    public function registerFunction($name, callable $callback)
+    {
+        $this->compiler->registerFunction($name, $callback);
+
+        return $this;
+    }
+
+    /**
+     * @param string $name       Name of function to unregister.
+     * @return $this
+     */
+    public function unregisterFunction($name)
+    {
+        $this->compiler->unregisterFunction($name);
+
+        return $this;
     }
 }

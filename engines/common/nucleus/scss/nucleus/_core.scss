@@ -26,8 +26,6 @@ body {
 article,
 aside,
 details,
-figcaption,
-figure,
 footer,
 header,
 hgroup,
@@ -86,7 +84,6 @@ mark {
 
 sub,
 sup {
-	font-size: $core-font-size - 0.250;
 	line-height: 0;
 	position: relative;
 	vertical-align: baseline;
@@ -131,12 +128,8 @@ pre {
 	overflow: auto;
 }
 
-code,
-kbd,
-pre,
-samp {
-	font-family: $preformatted-font-family;
-	font-size: $core-font-size;
+code {
+	vertical-align: bottom;
 }
 
 button,

@@ -71,6 +71,11 @@ paths = {
         { // nucleus
             in: './engines/common/nucleus/scss/nucleus.scss',
             out: './engines/common/nucleus/css-compiled/nucleus.css'
+        },
+        { // nucleus - joomla
+            in: './engines/joomla/nucleus/scss/joomla.scss',
+            out: './engines/joomla/nucleus/css-compiled/joomla.css',
+            load: './engines/common/nucleus/scss'
         }
     ],
     minify: [

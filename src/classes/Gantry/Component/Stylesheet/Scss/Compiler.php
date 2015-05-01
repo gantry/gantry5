@@ -18,38 +18,239 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Document;
 use Gantry\Framework\Gantry;
 use Leafo\ScssPhp\Compiler as BaseCompiler;
+use Leafo\ScssPhp\Parser;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Compiler extends BaseCompiler
 {
     protected $basePath;
+    protected $fonts;
+
+    public function __construct()
+    {
+        $this->registerFunction('get-font-url', [$this, 'userGetFontUrl']);
+        $this->registerFunction('get-font-family', [$this, 'userGetFontFamily']);
+        $this->registerFunction('get-local-fonts', [$this, 'userGetLocalFonts']);
+        $this->registerFunction('get-local-font-weights', [$this, 'userGetLocalFontWeights']);
+        $this->registerFunction('get-local-font-url', [$this, 'userGetLocalFontUrl']);
+    }
 
     public function setBasePath($basePath)
     {
         $this->basePath = '/' . Folder::getRelativePath($basePath);
     }
 
+    public function setFonts(array $fonts)
+    {
+        $this->fonts = $fonts;
+    }
+
+    public function compileValue($value)
+    {
+        // Makes protected function public.
+        return parent::compileValue($value);
+    }
+
+    public function compileArgs($args)
+    {
+        foreach ($args as &$arg) {
+            $arg = $this->compileValue($arg);
+        }
+
+        return $args;
+    }
+
     public function libUrl(array $args, Compiler $compiler)
     {
         // Function has a single parameter.
-        $url = reset($args);
-
-        if (!$url) {
+        $parsed = reset($args);
+        if (!$parsed) {
             $this->throwError('url() is missing parameter');
         }
 
-        $value = trim($compiler->compileValue($url), '\'"');
-        $list = explode('?', $value, 2);
-        $url = array_shift($list);
-        $params = array_shift($list);
+        // Compile parsed value to string.
+        $url = trim($compiler->compileValue($parsed), '\'"');
 
+        // Handle ../ inside CSS files (points to current theme).
         $uri = strpos($url, '../') === 0 ? 'gantry-theme://' . substr($url, 3) : $url;
-        $url = (Document::url($uri) ?: $url) . ($params ? "?{$params}" : '');
 
+        // Generate URL, failed streams will be kept as they are to allow users to find issues.
+        $url = Document::url($uri) ?: $url;
+
+        // Changes absolute URIs to relative to make the path to work even if the site gets moved.
         if ($url[0] == '/' && $this->basePath) {
             $url = Folder::getRelativePathDotDot($url, $this->basePath);
         }
 
+        // Return valid CSS.
         return "url('{$url}')";
+    }
+
+    /**
+     * get-font-url($my-font-variable);
+     *
+     * @param array $args
+     * @param Compiler $compiler
+     * @return string
+     */
+    public function userGetFontUrl($args, Compiler $compiler)
+    {
+        $value = trim($compiler->compileValue(reset($args)), '\'"');
+
+        // It's a google font
+        if (substr($value, 0, 7) === 'family=') {
+            return "url('http://fonts.googleapis.com/css?{$value}')";
+        }
+
+        return false;
+    }
+
+    /**
+     * font-family: get-font-family($my-font-variable);
+     *
+     * @param array $args
+     * @param Compiler $compiler
+     * @return string
+     */
+    public function userGetFontFamily($args, Compiler $compiler)
+    {
+        $value = trim($compiler->compileValue(reset($args)), '\'"');
+
+        return $this->encodeFonts($this->decodeFonts($value));
+    }
+
+    /**
+     * get-local-fonts($my-font-variable, $my-font-variable2, ...);
+     *
+     * @param array $args
+     * @param Compiler $compiler
+     * @return string
+     */
+    public function userGetLocalFonts($args, Compiler $compiler)
+    {
+        $args = $this->compileArgs($args);
+
+        $fonts = [];
+        foreach ($args as $value) {
+            // It's a local font, we need to load any of the mapped fonts from the theme
+            $fonts = array_merge($fonts, $this->decodeFonts($value, true));
+        }
+
+        $fonts = $this->getLocalFonts($fonts);
+
+        // Create a basic list of strings so that SCSS parser can parse the list.
+        $list = [];
+        foreach ($fonts as $font => $data) {
+            $list[] = ['string', '"', [$font]];
+        }
+
+        return ['list', ',', $list];
+    }
+
+    /**
+     * get-local-font-weights(roboto);
+     *
+     * @param array $args
+     * @param Compiler $compiler
+     * @return string
+     */
+    public function userGetLocalFontWeights($args, Compiler $compiler)
+    {
+        $name = trim($compiler->compileValue(reset($args)), '\'"');
+
+        $weights = isset($this->fonts[$name]) ? array_keys($this->fonts[$name]) : [];
+
+        // Create a list of numbers so that SCSS parser can parse the list.
+        $list = [];
+        foreach ($weights as $weight) {
+            $list[] = ['number', $weight, ''];
+        }
+
+        return ['list', ',', $list];
+    }
+
+    /**
+     * get-local-font-url(roboto, 400);
+     *
+     * @param array $args
+     * @param Compiler $compiler
+     * @return string
+     */
+    public function userGetLocalFontUrl($args, Compiler $compiler)
+    {
+        $args = $this->compileArgs($args);
+
+        $name = isset($args[0]) ? trim($args[0], '\'"') : '';
+        $weight = isset($args[1]) ? $args[1] : 400;
+
+        return isset($this->fonts[$name][$weight]) ? $this->fonts[$name][$weight] : null;
+    }
+
+    /**
+     * Get local font data.
+     *
+     * @param array $fonts
+     * @return array
+     */
+    protected function getLocalFonts(array $fonts)
+    {
+        $list = [];
+        foreach ($fonts as $family) {
+            $family = strtolower($family);
+
+            if (isset($this->fonts[$family])) {
+                $list[$family] = $this->fonts[$family];
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Convert array of fonts into a CSS parameter string.
+     *
+     * @param array $fonts
+     * @return string
+     */
+    protected function encodeFonts(array $fonts)
+    {
+        array_walk($fonts, function(&$val) {
+            // Check if font family is one of the 4 default ones, otherwise add quotes.
+            if (!in_array($val, ['cursive', 'serif', 'sans-serif', 'monospace'])) {
+                $val = '"' . $val . '"';
+            }
+        });
+
+        return implode(', ', $fonts);
+    }
+
+    /**
+     * Convert string into array of fonts.
+     *
+     * @param  string $string
+     * @param  bool   $localOnly
+     * @return array
+     */
+    protected function decodeFonts($string, $localOnly = false)
+    {
+        if (substr($string, 0, 7) === 'family=') {
+            if ($localOnly) {
+                // Do not return external fonts.
+                return [];
+            }
+
+            // Matches google font family name
+            preg_match('/^family=([^&:]+).*$/ui', $string, $matches);
+            return [urldecode($matches[1])];
+        }
+
+        // Filter list of fonts and quote them.
+        $list = (array) explode(',', $string);
+        array_walk($list, function(&$val) {
+            $val = trim($val, "'\" \t\n\r\0\x0B");
+        });
+        array_filter($list);
+
+        return $list;
     }
 }

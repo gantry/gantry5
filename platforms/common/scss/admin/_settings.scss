@@ -86,6 +86,29 @@
 
     .settings-param-field {
         margin-left: 150px;
+
+        // fields reset
+        .g-reset-field {
+            display: inline-block;
+            opacity: 0;
+            cursor: pointer;
+
+            @include transition(opacity 0.2s ease-in-out);
+        }
+
+        .input-group .g-reset-field {
+            display: table-cell;
+            vertical-align: middle;
+            padding-left: 4px; // 4px is the display: inline-block gap
+        }
+
+        &:hover {
+            .g-reset-field {
+                opacity: 1;
+
+                @include transition(opacity 0.2s ease-in-out);
+            }
+        }
     }
 
     .settings-param-title {

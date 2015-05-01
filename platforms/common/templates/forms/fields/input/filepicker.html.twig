@@ -22,6 +22,7 @@
                     <i class="fa {{ field.icon|default('fa-file-o')|e }}" ></i>
                 </button>
             </span>
+            {% block reset_field %}{{ parent() }}{% endblock %}
         </div>
     </div>
 {% endblock %}

@@ -38,13 +38,14 @@ input[type="color"],
 	@include transition(border 0.2s linear, box-shadow 0.2s linear);
 }
 
-#g-header {
+#g-header, #g-navigation {
 	.search {
 		form {
 			margin-bottom: 0;
 		}
 		input {
 			margin-bottom: 0;
+			border: 0;
 		}
 	}
 }

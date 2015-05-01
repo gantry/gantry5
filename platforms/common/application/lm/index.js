@@ -15,6 +15,7 @@ var ready         = require('elements/domready'),
 
     Builder       = require('./builder'),
     History       = require('../utils/history'),
+    validateField = require('../utils/field-validation'),
     LMHistory     = require('./history'),
     LayoutManager = require('./layoutmanager'),
     SaveState     = require('../utils/save-state');
@@ -142,7 +143,7 @@ ready(function() {
     });
 
     // Sub-navigation links
-    body.delegate('statechangeAfter', '#navbar [data-g5-ajaxify]', function(event, element) {
+    body.on('statechangeAfter', function(event, element) {
         root = $('[data-lm-root]');
         if (!root) { return true; }
         data = JSON.parse(root.data('lm-root'));
@@ -178,8 +179,8 @@ ready(function() {
     body.delegate('click', '[data-g5-lm-add]', function(event, element) {
         event.preventDefault();
         modal.open({
-            content: 'Loading',
-            remote: $(element).attribute('href') + getAjaxSuffix()
+            content: '<h1 class="center">Configurations are still WIP!</h1>'/*,
+            remote: $(element).attribute('href') + getAjaxSuffix()*/
         });
     });
 
@@ -340,7 +341,7 @@ ready(function() {
             remoteLoaded: function(response, content) {
                 var form       = content.elements.content.find('form'),
                     submit     = content.elements.content.find('input[type="submit"], button[type="submit"]'),
-                    dataString = [];
+                    dataString = [], invalid = [];
 
                 if (!form || !submit) { return true; }
 
@@ -348,23 +349,33 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
                     dataString = [];
+                    invalid = [];
 
+                    submit.hideIndicator();
                     submit.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
                         var name     = input.attribute('name'),
-                            value    = input.value(),
+                            value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                             parent   = input.parent('.settings-param'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (!validateField(input)) { invalid.push(input); }
                         dataString.push(name + '=' + encodeURIComponent(value));
                     });
 
                     var title = content.elements.content.find('[data-title-editable]');
                     if (title) {
                         dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
+                    }
+
+                    if (invalid.length) {
+                        submit.hideIndicator();
+                        submit.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        return;
                     }
 
                     request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {

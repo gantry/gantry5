@@ -345,6 +345,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             > span {
                 position: relative;
                 z-index: 2;
+                display: inline-block;
 
                 span {
                     display: block;

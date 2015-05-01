@@ -17,6 +17,11 @@ namespace Gantry\Component\Stylesheet;
 interface CssCompilerInterface
 {
     /**
+     * @return string
+     */
+    public function getTarget();
+
+    /**
      * @param string $target
      * @return $this
      */
@@ -41,6 +46,12 @@ interface CssCompilerInterface
     public function setFiles(array $files = null);
 
     /**
+     * @param array $fonts
+     * @return $this
+     */
+    public function setFonts(array $fonts);
+
+    /**
      * @param string $name
      * @return string
      */
@@ -48,6 +59,8 @@ interface CssCompilerInterface
 
     public function getVariables();
     public function setVariables(array $variables);
+    public function registerFunction($name, callable $callback);
+    public function unregisterFunction($name);
     public function compileFile($in, $out = null);
 
     /**

@@ -20,6 +20,12 @@
 			@include flex-flow(row wrap);
 		}
 	}
-	
+
 	@include main-nav-indicators($header-background, $header-text-color);
+
+	.search {
+		input {
+			color: $main-text-color;
+		}
+	}
 }

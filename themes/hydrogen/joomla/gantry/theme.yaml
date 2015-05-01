@@ -1,8 +1,8 @@
 details:
   name: Hydrogen
-  version: "5.0.0-beta.4"
+  version: "5.0.0-beta.5"
   icon: paper-plane
-  date: April 24, 2015
+  date: May 1, 2015
   author:
     name: RocketTheme, LLC
     email: support@rockettheme.com
@@ -37,6 +37,12 @@ configuration:
     base: gantry-theme://common
     file: gantry-theme://include/theme.php
     class: \Gantry\Framework\Theme
+
+  fonts:
+    roboto:
+      400: 'gantry-theme://fonts/roboto_regular_macroman/Roboto-Regular-webfont'
+      500: 'gantry-theme://fonts/roboto_medium_macroman/Roboto-Medium-webfont'
+      700: 'gantry-theme://fonts/roboto_bold_macroman/Roboto-Bold-webfont'
 
   css:
     compiler: \Gantry\Component\Stylesheet\ScssCompiler

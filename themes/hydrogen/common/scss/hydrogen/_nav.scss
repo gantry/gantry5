@@ -5,6 +5,10 @@
 	position: relative;
 	z-index: 2;
 
+	.g-container {
+		position: relative;
+	}
+
 	a {
 		color: lighten($navigation-background, 40%);
 		&:hover {
@@ -38,12 +42,15 @@
 	}
 
 	@include main-nav-indicators($navigation-background, $navigation-text-color);
+
+	.search {
+		input {
+			color: $main-text-color;
+		}
+	}
 }
 
 .g-main-nav {
-	@include breakpoint(no-mobile) {
-		position: relative;
-	}
 	.g-standard {
 		.g-dropdown-column {
 	    	@extend %dropdown-column;

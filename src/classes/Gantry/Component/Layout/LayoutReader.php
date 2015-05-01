@@ -105,10 +105,13 @@ class LayoutReader
     {
         foreach ($items as &$item) {
             $item = (object) $item;
-            if (isset($item->attributes) && !is_object($item->attributes)) {
+            if (isset($item->attributes) && (is_array($item->attributes) || is_object($item->attributes))) {
                 $item->attributes = (object) $item->attributes;
+            } else {
+                $item->attributes = (object) [];
             }
-            if (!empty($item->children)) {
+
+            if (!empty($item->children) && is_array($item->children)) {
                 $item->children = self::object($item->children);
             }
         }
@@ -211,7 +214,7 @@ class LayoutReader
             }
         }
         if ($scope == 0) {
-            $result = (object) ['id' => static::id(), 'type' => 'grid', 'children' => [$result]];
+            $result = (object) ['id' => static::id(), 'type' => 'grid', 'children' => [$result], 'attributes' => new \stdClass];
         }
 
         return $result;

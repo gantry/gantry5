@@ -1,0 +1,28 @@
+blockquote p {
+	font-size: $core-font-size + .2;
+	line-height: $core-line-height;
+}
+
+blockquote small {
+	line-height: $core-line-height;
+}
+
+address {
+	line-height: $core-line-height;
+}
+
+code,
+pre {
+	font-family: $font-family-mono;
+	font-size: $core-font-size - .2;
+}
+
+pre {
+	font-size: $core-font-size - .2;
+	line-height: $core-line-height;
+}
+
+.list-bordered,
+.row-bordered {
+	line-height: $core-line-height;
+}

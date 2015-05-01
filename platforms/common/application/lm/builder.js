@@ -23,7 +23,8 @@ require('elements/traversal');
 
 
 // start Debug
-var rpad   = require('mout/string/rpad'),
+var DEBUG  = false,
+    rpad   = require('mout/string/rpad'),
     repeat = require('mout/string/repeat');
 // end   Debug
 
@@ -211,7 +212,7 @@ var Builder = new prime({
             }
 
             // debug (flat view of the structure)
-            if (console && console.log) {
+            if (console && console.log && DEBUG) {
                 console.log(rpad(repeat('    ', depth) + '' + value.type, 35) + ' (' + rpad(value.id, 36) + ') parent: ' + parent);
             }
 

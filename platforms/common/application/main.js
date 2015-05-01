@@ -1,4 +1,6 @@
+"use strict";
 var $             = require('elements'),
+    zen           = require('elements/zen'),
     ready         = require('elements/domready'),
     request       = require('agent'),
     ui            = require('./ui'),
@@ -11,6 +13,7 @@ var $             = require('elements'),
     getAjaxSuffix = require('./utils/get-ajax-suffix'),
 
     flags         = require('./utils/flags-state'),
+    validateField = require('./utils/field-validation'),
     lm            = require('./lm'),
     mm            = require('./menu');
 
@@ -85,6 +88,22 @@ ready(function() {
         });
     });
 
+    // Extras
+    body.delegate('click', '[data-g-extras]', function(event, element){
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        if (!element.PopoverDefined) {
+            var content = element.find('[data-popover-content]') || element.siblings('[data-popover-content]'),
+                popover = element.getPopover({
+                    style: 'extras',
+                    width: 220,
+                    content: zen('ul').html(content.html())[0].outerHTML
+                });
+
+            element.getPopover().show();
+        }
+    });
+
     // Platform Settings redirect
     body.delegate('mousedown', '[data-settings-key]', function(event, element){
         var key = element.data('settings-key');
@@ -108,9 +127,12 @@ ready(function() {
     // Save
     body.delegate('click', '.button-save', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
+
+        element.hideIndicator();
         element.showIndicator();
 
         var data    = {},
+            invalid = [],
             type    = element.data('save'),
             extras  = '',
             page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
@@ -145,15 +167,22 @@ ready(function() {
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (!validateField(input)) { invalid.push(input); }
                         data[name] = value;
                     });
                 }
 
-                $('.settings-param-title, .card.settings-block > h4').hideIndicator();
-
                 if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
         }
 
+        if (invalid.length) {
+            element.hideIndicator();
+            element.showIndicator('fa fa-fw fa-exclamation-triangle');
+            toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
+            return;
+        }
+
+        if (page == 'other') { $('.settings-param-title, .card.settings-block > h4').hideIndicator(); }
         body.emit('updateOriginalFields');
 
         request('post', saveURL, data, function(error, response) {
@@ -241,12 +270,13 @@ ready(function() {
     body.delegate('click', '[data-ajax-action]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
-        var href   = element.attribute('href') || element.data('ajax-action'),
-            method = element.data('ajax-action-method') || 'post';
+        var href      = element.attribute('href') || element.data('ajax-action'),
+            method    = element.data('ajax-action-method') || 'post',
+            indicator = $(element.data('ajax-action-indicator')) || element;
 
         if (!href) { return false; }
 
-        element.showIndicator();
+        indicator.showIndicator();
         request(method, href + getAjaxSuffix(), function(error, response) {
             if (!response.body.success) {
                 modal.open({
@@ -256,13 +286,13 @@ ready(function() {
                     }
                 });
 
-                element.hideIndicator();
+                indicator.hideIndicator();
                 return false;
             } else {
                 toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
             }
 
-            element.hideIndicator();
+            indicator.hideIndicator();
         })
     });
 

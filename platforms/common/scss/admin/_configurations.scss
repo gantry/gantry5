@@ -1,6 +1,11 @@
 #g5-container {//wrapper
 
-#page-picker {
+#configurations {
+
+    h4 > * {
+        vertical-align: middle;
+    }
+
     ul {
         @extend %list-reset;
         .size-1-4 {

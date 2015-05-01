@@ -21,3 +21,7 @@ form:
       append:
         type: "text"
         text: "rem"
+    toggle-color:
+      type: input.colorpicker
+      label: Toggle Color
+      default: "#ffffff"

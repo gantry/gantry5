@@ -10,6 +10,9 @@
 @import "nucleus/functions/base";
 @import "nucleus/mixins/base";
 
+// Load Theme Variable Driven Nucleus Elements
+@import "joomla/theme/base";
+
 // Load Template Configuration
 @import "configuration/base";
 
@@ -21,3 +24,10 @@
 @import "hydrogen-joomla/forms";
 @import "hydrogen-joomla/tabs";
 @import "hydrogen-joomla/utilities";
+
+//-------------------------------------------
+
+// BREAKPOINTS
+@import "joomla/theme/breakpoints/base";
+
+//-------------------------------------------

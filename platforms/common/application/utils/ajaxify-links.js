@@ -54,9 +54,10 @@ History.Adapter.bind(window, 'statechange', function() {
 
     URI = URI + getAjaxSuffix();
 
+    var lis;
     if (sidebar && Data.element) {
-        var lis = sidebar.search('li'), active = sidebar.search('li.active');
-        ConfNavIndex = indexOf(lis, active ? active[0] : lis[1]);
+        var active = sidebar.search('li.active');
+        lis = sidebar.search('li');
         lis.removeClass('active');
 
         if (Data.element.parent('#navbar')) {
@@ -64,8 +65,8 @@ History.Adapter.bind(window, 'statechange', function() {
         }
     }
 
-    if (mainheader && Data.element) {
-        var lis = mainheader.search('.float-right li');
+    if (mainheader && Data.element && (!Data.element.matches('a.menu-item') && !Data.element.matches('select.menu-select-wrap'))) {
+        lis = mainheader.search('.float-right li');
         lis.removeClass('active');
 
         if (Data.element.parent('#main-header')) {
@@ -258,6 +259,13 @@ domready(function() {
 
         body.emit('click', { target: item });
         navbar.slideDown();
+    });
+
+    body.delegate('click', '#navbar a[data-g5-ajaxify]', function(event, element){
+        var navbar = $('#navbar'),
+            lis = navbar.search('li a[data-g5-ajaxify]');
+
+        ConfNavIndex = indexOf(lis, element[0]) + 1;
     });
 
     // generic ajaxified links

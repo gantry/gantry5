@@ -1,36 +1,42 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-    <h2 class="page-title">
-        Configurations
-        <a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}" class="button button-primary"><i class="fa fa-plus"></i></a>
-    </h2>
+    <div class="menu-header">
+        <span class="float-right">
+            <button class="button button-back-to-conf"><i class="fa fa-fw fa-arrow-left"></i> <span>Back to Configuration</span></button>
+        </span>
+        <h2 class="page-title">
+            Configurations
+            <a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}" class="button button-primary"><i class="fa fa-plus"></i></a>
+        </h2>
+    </div>
 
-    <div id="page-picker" class="cards-wrapper">
+    <div id="configurations" class="cards-wrapper">
         <ul class="g-grid">
-            {% for layout in layouts.user %}
+            {# TODO: Need to inject the Base Configuration at the top of the list #}
+            {% for name, title in gantry.configurations.user %}
                 <li class="card g-block size-1-4">
                     <div class="page">
                         <h4>
-                            {{ layout|capitalize }}
-                            <label class="enabler" for="page-picker-{{ layout }}">
-                                <input type="radio" name="page-picker[]" id="page-picker-{{ layout }}" checked />
-                                <span class="toggle">
-                                    <span class="knob"></span>
-                                </span>
-                            </label>
+                            <span data-title-editable="{{ title|e  }}" class="title">{{ title|e  }}</span> <i class="fa fa-pencil font-small" data-title-edit=""></i>
                         </h4>
                         <div class="inner-params">
                             <img src="http://www.placehold.it/200x250/f4f4f4" />
                         </div>
                         <div class="inner-params">
-                    <span class="float-left">
-                        <a href="{{ gantry.route('configurations', layout)|e }}" class="button">
-                            <i class="fa fa-pencil-square-o"></i>
-                            <span>Edit</span>
-                        </a>
-                    </span>
-                            <span class="float-right">23 positions</span>
+                            <div class="center">
+                                <a href="#" class="button button-primary">
+                                    <i class="fa fa-pencil"></i> <span>Edit</span>
+                                </a>
+                                <a href="#" class="button button-secondary">
+                                    <i class="fa fa-code-fork"></i> <span>Duplicate</span>
+                                </a>
+                                {% if name != 'default' %}
+                                <a href="#" class="button red">
+                                    <i class="fa fa-trash-o"></i> <span>Remove</span>
+                                </a>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -44,23 +50,29 @@
 
         <h2>System Configurations</h2>
         <ul class="g-grid">
-            {% for layout in layouts.core %}
+            {% for name, title in gantry.configurations.system %}
                 <li class="card g-block size-1-4">
                     <div class="page">
-                        <h4>
-                            {{ layout|trim('_')|replace({'_': ' '})|capitalize }}
-                        </h4>
+                        <h4>{{ title }}</h4>
                         <div class="inner-params">
                             <img src="http://www.placehold.it/200x250/f4f4f4" />
                         </div>
                         <div class="inner-params">
-                    <span class="float-left">
-                        <a href="{{ gantry.route('configurations', layout)|e }}" class="button">
-                            <i class="fa fa-pencil-square-o"></i>
-                            <span>Edit</span>
-                        </a>
-                    </span>
-                            <span class="float-right">23 positions</span>
+                            {#<span class="float-left">
+                                <a href="{{ gantry.route('configurations', layout)|e }}" class="button">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                    <span>Edit</span>
+                                </a>
+                            </span>
+                            <span class="float-right">23 positions</span>#}
+                            <div class="center">
+                                <a href="#" class="button button-primary">
+                                    <i class="fa fa-pencil"></i> <span>Edit</span>
+                                </a>
+                                <a href="#" class="button button-secondary">
+                                    <i class="fa fa-code-fork"></i> <span>Duplicate</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </li>

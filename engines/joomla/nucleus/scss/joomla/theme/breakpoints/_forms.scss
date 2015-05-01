@@ -1,0 +1,13 @@
+@include breakpoint(mobile-only) {
+	.form-horizontal {
+	    .control-label {
+	        display: block;
+	        float: none;
+	        text-align: left;
+	    }
+
+	    .controls {
+	        margin: 0;
+	    }
+	}
+}

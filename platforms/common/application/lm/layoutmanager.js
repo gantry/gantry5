@@ -338,7 +338,7 @@ var LayoutManager = new prime({
         }, this));
 
         this.dragdrop.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-            $('body').off(event, this.dragdrop.bound('stop'));
+            $('body').off(event, this.dragdrop.bound('deferStop'));
         }, this));
 
         this.builder.remove(this.block.getId());

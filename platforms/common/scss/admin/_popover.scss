@@ -287,3 +287,22 @@ $close-color:               #000;
     left:50%;
     position: absolute;
 }
+
+// Extras
+.g5-popover-extras {
+    ul {
+        @extend %list-reset;
+    }
+
+    a {
+        display: block;
+        padding: 0.4rem;
+        color: $core-text;
+
+        &:hover {
+            color: $core-text;
+            background-color: #eee;
+            border-radius: $border-radius-base;
+        }
+    }
+}

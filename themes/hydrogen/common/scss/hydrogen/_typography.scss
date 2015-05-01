@@ -1,13 +1,21 @@
-@include font-face('roboto', 'gantry-theme://fonts/roboto_regular_macroman/Roboto-Regular-webfont', 400);
-@include font-face('roboto', 'gantry-theme://fonts/roboto_medium_macroman/Roboto-Medium-webfont', 500);
-@include font-face('roboto', 'gantry-theme://fonts/roboto_bold_macroman/Roboto-Bold-webfont', 700);
+// Define all local fonts.
+@each $font in get-local-fonts($base-body-font, $base-heading-font) {
+  @each $weight in get-local-font-weights($font) {
+    @include font-face($font, get-local-font-url($font, $weight), $weight);
+  }
+}
+
+// Font Import
+@include import-font($base-body-font);
+@include import-font($base-heading-font);
 
 body {
-	font-family: $font-family-default;
+	font-family: get-font-family($base-body-font);
 	font-weight: $font-weight-regular;
 }
 
 h1, h2, h3, h4, h5 {
+	font-family: get-font-family($base-heading-font);
 	font-weight: $font-weight-medium;
 }
 
@@ -35,13 +43,6 @@ blockquote {
 }
 
 // Inline and Code
-code,
-kbd,
-pre,
-samp {
-	font-family: $font-family-mono;
-}
-
 code {
 	background: $code-bg;
 	color: darken($code-text,10%);

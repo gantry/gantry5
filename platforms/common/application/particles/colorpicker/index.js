@@ -250,7 +250,7 @@ var ColorPicker = new prime({
         value = rgbstr2hex(value) || value;
         opacity = opacity ? clamp(opacity[1], 0, 1) : 1;
 
-        if (!(hex = parseHex(value))) { hex = '#ffff00'; }
+        if (!(hex = parseHex(value))) { hex = '#ffffff'; }
         hsb = hex2hsb(hex);
 
         if (this.built) {
@@ -412,7 +412,7 @@ var ColorPicker = new prime({
 
         var value = this.element.value();
         value = rgbstr2hex(value) || value;
-        if (!(hex = parseHex(value))) { hex = '#ffff00'; }
+        if (!(hex = parseHex(value))) { hex = '#ffffff'; }
 
         // Handle colors
         if (target.hasClass('cp-grid') || target.hasClass('cp-slider')) {

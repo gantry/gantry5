@@ -1,5 +1,5 @@
-name: Base Colors
-description: Base colors for the Hydrogen theme
+name: Base Styles
+description: Base styles for the Hydrogen theme
 type: core
 
 form:
@@ -13,3 +13,11 @@ form:
       type: input.colorpicker
       label: Base Text Color
       default: "#666666"
+    body-font:
+      type: input.fonts
+      label: Body Font
+      default: 'roboto, sans-serif'
+    heading-font:
+      type: input.fonts
+      label: Heading Font
+      default: 'roboto, sans-serif'

@@ -17,6 +17,7 @@
         {% if field.append %}
             {{ _self.pend(field.append) }}
         {% endif %}
+        {% block reset_field %}{{ parent() }}{% endblock %}
     </div>
 {% endblock %}
 
