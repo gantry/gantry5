@@ -3,7 +3,7 @@ defined('_JEXEC') or die;
 
 class G5_HydrogenInstallerScript
 {
-    public $requiredGantryVersion = '5.0.0-beta.5';
+    public $requiredGantryVersion = '5.0.0-beta.6-dev';
 
     public function preflight($type, $parent)
     {
