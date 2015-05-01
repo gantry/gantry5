@@ -1,0 +1,7 @@
+// Custom Font Importer
+@mixin import-font($font) {
+    $url: get-font-url($font);
+    @if $url {
+        @import $url;
+    }
+}
