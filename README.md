@@ -109,7 +109,7 @@ Because we have two sets of JS applications, one for admin and one for the site,
 
 At this point you have everything you need to run Gulp. Just type the command `gulp` and you should see the CSS and JS getting compiled.
 
-We provide a few handy tasks as well:
+We provide a few handy tasks as well: 
 
   1. `$ gulp` / `$ gulp all`: Compiles all of the CSS and JS in the project.
   2. `$ gulp watch`: Starts the compilers in `watch` mode. Any change applied to targeted **JS** or **SCSS** files will trigger an automatic recompilation.
