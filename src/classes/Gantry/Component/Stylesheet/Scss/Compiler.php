@@ -78,6 +78,43 @@ class Compiler extends BaseCompiler
     {
         $value = trim($compiler->compileValue(reset($args)), '\'"');
 
+        // It's a google font
+        if (substr($value, 0, 7) === 'family=') {
+            return "url('http://fonts.googleapis.com/css?{$value}')";
+        }
+
+        // It's a local font, we need to load any of the mapped fonts from the theme
+        $fonts = explode(', ', $this->userGetFontFamily($args, $compiler));
+        $list = [];
+        foreach ($fonts as $family) {
+            $family = trim($family, '"');
+
+            // FIXME: here we need to be checking against the actual fonts map in theme.yaml, right now is hardcoded
+            // Testing value: Roboto, Roboto Test, Verdana, sans-serif
+            if (substr($family, 1, 5) == 'oboto') { // FIXME: HARDCODED FOR TESTING ONLY
+                // It is a mapped font, we need to add it to the local map
+                $list[] = 'gantry-theme://fonts/the/font/path/' . $family; // we only need to load the path from theme.yaml
+            }
+        }
+
+        if (!count($list)) { return false; }
+
+        $list = "url('" . implode("');\n@import url('", $list) . "')";
+
+        return $list;
+    }
+
+    /**
+     * get-font-local($my-font-variable);
+     *
+     * @param array $args
+     * @param Compiler $compiler
+     * @return string
+     */
+    public function userGetFontLocal($args, Compiler $compiler)
+    {
+        $value = trim($compiler->compileValue(reset($args)), '\'"');
+
         if (substr($value, 0, 7) === 'family=') {
             return "url('http://fonts.googleapis.com/css?{$value}')";
         }
