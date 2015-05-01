@@ -16,14 +16,8 @@ form:
     body-font:
       type: input.fonts
       label: Body Font
-      default: 'family=Varela&subset=latin,latin-ext'
-      options:
-        - Meriweather Bold, Verdana, sans-serif
-        - Meriweather, Verdana, sans-serif
+      default: 'roboto, sans-serif'
     heading-font:
       type: input.fonts
       label: Heading Font
-      default: 'family=Varela&subset=latin,latin-ext'
-      options:
-        - Meriweather Bold, Verdana, sans-serif
-        - Meriweather, Verdana, sans-serif
+      default: 'roboto, sans-serif'
