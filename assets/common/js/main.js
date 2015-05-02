@@ -11,8 +11,7 @@ var ready     = require('domready'),
 ready(function() {
     instances = {
         offcanvas: new offcanvas(),
-        menu: new menu(),
-        $: $
+        menu: new menu()
     };
 
     module.exports = window.G5 = instances;
