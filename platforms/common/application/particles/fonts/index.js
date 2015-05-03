@@ -473,6 +473,11 @@ var Fonts = new prime({
                 }, this));
             }
 
+            // Workaround for Firefox in Windows. Need to rework this better and cleaner
+            // Probably should be decoupled and some of the layout logic should go to twig
+            // #175
+            callback();
+
             var variantContainer = zen('ul').bottom(li), variantFont, label;
             async.each(font.variants, bind(function(current) {
                 current = current + '';
@@ -489,7 +494,7 @@ var Fonts = new prime({
             }
 
             families.push(font.family + variant);
-            callback();
+            //callback();
         }, this));
 
         var catContainer = html.find('a.font-category'), subContainer = html.find('a.font-subsets');
