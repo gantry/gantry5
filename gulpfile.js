@@ -168,7 +168,7 @@ var bundleShare = function(bundle, _in, _out, _maps, _dest) {
         // sourcemaps start
         .pipe(gulpif(!prod, sourcemaps.init({ loadMaps: true })))
         .pipe(gulpif(prod, uglify()))
-        .pipe(gulpif(!prod, sourcemaps.write('.', { sourceRoot: _maps })))
+        .pipe(gulpif(!prod, sourcemaps.write('.')))
         // sourcemaps end
         .pipe(gulp.dest(_dest));
 };
