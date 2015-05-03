@@ -432,6 +432,7 @@ var Fonts = new prime({
 
             var variantContainer = zen('ul').bottom(li), variantFont, label;
             async.each(font.variants, bind(function(current) {
+                current = current + '';
                 variantFont = zen('li[data-font="' + font.family + '"][data-variant="' + current + '"]').bottom(variantContainer);
                 zen('input[type="checkbox"][value="' + current + '"]').bottom(variantFont);
                 zen('div.variant').html('<small>' + this.mapVariant(current) + '</small>').bottom(variantFont);
@@ -440,7 +441,7 @@ var Fonts = new prime({
                 if (':' + current !== variant && current !== (variant || 'regular')) { variantFont.addClass('g-variant-hide'); }
             }, this));
 
-            if (!contains(font.subsets, 'latin')) {
+            if (!contains(font.subsets, 'latin') && font.subsets.length) {
                 li.addClass('g-font-hide');
             }
 
