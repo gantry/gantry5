@@ -19,6 +19,7 @@ var prime       = require('prime'),
     split       = require('mout/array/split'),
     removeAll   = require('mout/array/removeAll'),
     insert      = require('mout/array/insert'),
+    append      = require('mout/array/append'),
     find        = require('mout/array/find'),
     combine     = require('mout/array/combine'),
     merge       = require('mout/object/merge'),
@@ -109,6 +110,8 @@ var Fonts = new prime({
         data = JSON.parse(data);
         this.field = $(data.field);
 
+        this.data = data.local;
+
         modal.open({
             content: 'Loading...',
             className: 'g5-dialog-theme-default g5-modal-fonts',
@@ -119,7 +122,7 @@ var Fonts = new prime({
                     return false;
                 }
 
-                this.data = response.body.items;
+                this.data = append(this.data, response.body.items);
 
                 this.open(null, element, instance.elements.content);
             }, this)

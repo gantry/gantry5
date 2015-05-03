@@ -5482,6 +5482,7 @@ var prime       = require('prime'),
     split       = require('mout/array/split'),
     removeAll   = require('mout/array/removeAll'),
     insert      = require('mout/array/insert'),
+    append      = require('mout/array/append'),
     find        = require('mout/array/find'),
     combine     = require('mout/array/combine'),
     merge       = require('mout/object/merge'),
@@ -5572,6 +5573,8 @@ var Fonts = new prime({
         data = JSON.parse(data);
         this.field = $(data.field);
 
+        this.data = data.local;
+
         modal.open({
             content: 'Loading...',
             className: 'g5-dialog-theme-default g5-modal-fonts',
@@ -5582,7 +5585,7 @@ var Fonts = new prime({
                     return false;
                 }
 
-                this.data = response.body.items;
+                this.data = append(this.data, response.body.items);
 
                 this.open(null, element, instance.elements.content);
             }, this)
@@ -6196,7 +6199,7 @@ domready(function() {
 });
 
 module.exports = Fonts;
-},{"../../ui":40,"../../utils/decouple":48,"../../utils/elements.utils":49,"../../utils/elements.viewport":50,"./webfont":31,"agent":59,"async":79,"elements/domready":84,"elements/zen":110,"mout/array/combine":139,"mout/array/contains":140,"mout/array/find":145,"mout/array/forEach":148,"mout/array/insert":150,"mout/array/last":152,"mout/array/map":153,"mout/array/removeAll":154,"mout/array/split":157,"mout/function/bind":163,"mout/object/merge":204,"mout/string/properCase":228,"mout/string/trim":232,"mout/string/unhyphenate":234,"prime":253,"prime-util/prime/bound":249,"prime-util/prime/options":250,"prime/emitter":252,"prime/map":254}],31:[function(require,module,exports){
+},{"../../ui":40,"../../utils/decouple":48,"../../utils/elements.utils":49,"../../utils/elements.viewport":50,"./webfont":31,"agent":59,"async":79,"elements/domready":84,"elements/zen":110,"mout/array/append":138,"mout/array/combine":139,"mout/array/contains":140,"mout/array/find":145,"mout/array/forEach":148,"mout/array/insert":150,"mout/array/last":152,"mout/array/map":153,"mout/array/removeAll":154,"mout/array/split":157,"mout/function/bind":163,"mout/object/merge":204,"mout/string/properCase":228,"mout/string/trim":232,"mout/string/unhyphenate":234,"prime":253,"prime-util/prime/bound":249,"prime-util/prime/options":250,"prime/emitter":252,"prime/map":254}],31:[function(require,module,exports){
 /* Web Font Loader v1.5.18 - (c) Adobe Systems, Google. License: Apache 2.0 */
 ;(function(window,document,undefined){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function k(a,b,c){k=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return k.apply(null,arguments)}var n=Date.now||function(){return+new Date};function q(a,b){this.K=a;this.w=b||a;this.G=this.w.document}q.prototype.createElement=function(a,b,c){a=this.G.createElement(a);if(b)for(var d in b)b.hasOwnProperty(d)&&("style"==d?a.style.cssText=b[d]:a.setAttribute(d,b[d]));c&&a.appendChild(this.G.createTextNode(c));return a};function r(a,b,c){a=a.G.getElementsByTagName(b)[0];a||(a=document.documentElement);a&&a.lastChild&&a.insertBefore(c,a.lastChild)}function ca(a,b){function c(){a.G.body?b():setTimeout(c,0)}c()}
     function s(a,b,c){b=b||[];c=c||[];for(var d=a.className.split(/\s+/),e=0;e<b.length;e+=1){for(var f=!1,g=0;g<d.length;g+=1)if(b[e]===d[g]){f=!0;break}f||d.push(b[e])}b=[];for(e=0;e<d.length;e+=1){f=!1;for(g=0;g<c.length;g+=1)if(d[e]===c[g]){f=!0;break}f||b.push(d[e])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function t(a,b){for(var c=a.className.split(/\s+/),d=0,e=c.length;d<e;d++)if(c[d]==b)return!0;return!1}
