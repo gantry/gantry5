@@ -62,12 +62,29 @@
             padding: 0;
         }
 
-        > li {
+        > li.g-font-heading {
+            text-transform: uppercase;
+            margin: 1rem 0 0.5rem;
+            font-size: 0.8rem;
+            color: #bbb;
+            text-shadow: 0 1px rgba(255, 255, 255, 0.8);
+        }
+
+        > li[data-font] {
             padding: 0.5em 1em;
             margin: 0.5em 0;
             border: 1px solid #dfdfdf;
             border-radius: 5px;
             cursor: pointer;
+            
+            &.g-local-font {
+                margin-right: 0.5em;
+                display: inline-block;
+                
+                .family {
+                    display: inline-block;
+                }
+            }
 
             background-color: #eaeaea;
 
@@ -101,7 +118,7 @@
                 margin-top: 0.5em;
             }
 
-            li {
+            li[data-font] {
                 padding: 0.5em 0;
                 border: 0;
                 border-top: 1px solid #ddd;
