@@ -340,12 +340,6 @@ var Offcanvas = new prime({
             mobileContainer = $('#g-mobilemenu-container'),
             blocks;
 
-        // if there is no mobile menu there's no need to check the offcanvas mutation
-        if (!mobileContainer) {
-            this.detachMutationEvent();
-            return;
-        }
-
         if (!togglers || (mutator && ((mutator.target || mutator.srcElement) !== mobileContainer[0]))) { return; }
         if (this.opened) { this.close(); }
 
