@@ -9,7 +9,7 @@
             {# global attribute structures #}
             {{ block('global_attributes') }}
             >
-        {{ value }}
+        {{ value|e }}
         {% if field.icon is defined %} }<span class="{{ field.icon|e }}"></span>{% endif %}
     </button>
 {% endblock %}
