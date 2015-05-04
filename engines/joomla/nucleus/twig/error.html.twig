@@ -6,5 +6,5 @@
 
 {% block content %}
     <h1>{{ errorcode|default(500) }} {{ error|default('Unknown Error') }}</h1>
-    {{ backtrace }}
+    {{ backtrace|raw }}
 {% endblock %}

@@ -37,7 +37,7 @@
 {%- set page_bottom %}
     {% block page_bottom %}
         {% for script in gantry.scripts(true) %}
-            {{ script }}
+            {{ script|raw }}
         {% endfor %}
     {% endblock %}
 {% endset %}
@@ -50,14 +50,14 @@
     {%- endblock %}
     {% block page_body -%}
     <body{{ gantry.page.bodyAttributes({'class': [offcanvas_position]}) }}>
-        {{ page_offcanvas }}
+        {{ page_offcanvas|raw }}
         <div id="g-page-surround">
             {% if page_offcanvas|trim %}
             <div class="g-offcanvas-hide g-offcanvas-toggle" data-offcanvas-toggle><i class="fa fa-fw fa-bars"></i></div>
             {% endif %}
-            {{ page_top }}
-            {{ page_layout }}
-            {{ page_bottom }}
+            {{ page_top|raw }}
+            {{ page_layout|raw }}
+            {{ page_bottom|raw }}
         </div>
         <script type="text/javascript" src="{{ url('gantry-assets://js/main.js') }}"></script>
     </body>

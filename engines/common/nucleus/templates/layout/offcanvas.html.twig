@@ -16,7 +16,7 @@
 {% endset %}
 
 {% if offcanvas|trim %}
-<div id="g-offcanvas" {{ attr_class }}{{ attr_extra }}>
-    {{ offcanvas }}
+<div id="g-offcanvas" {{ attr_class|raw }}{{ attr_extra|raw }}>
+    {{ offcanvas|raw }}
 </div>
 {% endif %}

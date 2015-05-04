@@ -8,7 +8,7 @@
 
 {% if html|trim %}
     <div class="g-grid{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
-      {{ html }}
+      {{ html|raw }}
     </div>
 {% endif %}
 

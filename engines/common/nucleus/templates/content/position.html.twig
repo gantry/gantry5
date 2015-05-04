@@ -11,7 +11,7 @@
 {% if html|trim %}
     <div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
     	<div class="platform-content">
-        	{{ html }}
+        	{{ html|raw }}
         </div>
     </div>
 {% endif %}

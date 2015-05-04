@@ -8,7 +8,7 @@
     {% set attr_id = segment.attributes.id ? ' id="' ~ segment.attributes.id|e ~ '"' %}
     {% set classes = segment.attributes.class ? ' ' ~ segment.attributes.class|e ~ '"' %}
 
-    <div{{ attr_id }} class="g-container{{ classes }}">
-        {{ html }}
+    <div{{ attr_id|raw }} class="g-container{{ classes }}">
+        {{ html|raw }}
     </div>
 {% endif %}
