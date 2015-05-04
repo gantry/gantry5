@@ -136,12 +136,12 @@ class Platform extends BasePlatform
     {
         $document = \JFactory::getDocument();
         if (!$document instanceof \JDocumentHTML) {
-            return '';
+            return $content;
         }
 
         $renderer = $document->loadRenderer('component');
 
-        return $renderer->render(null, $params, $content);
+        return $renderer->render(null, $params, $content ?: $document->getBuffer('component'));
     }
 
     protected function getModule($id)
