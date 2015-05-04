@@ -28,7 +28,7 @@
                                 <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary">
                                     <i class="fa fa-pencil"></i> <span>Edit</span>
                                 </a>
-                                <button data-href="{{ gantry.route('configurations', name, 'clone')|e }}" data-method="PUT" class="button button-secondary">
+                                <button data-href="{{ gantry.route('configurations', name, 'duplicate')|e }}" data-method="PUT" class="button button-secondary">
                                     <i class="fa fa-code-fork"></i> <span>Duplicate</span>
                                 </button>
                                 {% if name != 'default' %}
@@ -69,7 +69,7 @@
                                 <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary">
                                     <i class="fa fa-pencil"></i> <span>Edit</span>
                                 </a>
-                                <button data-href="{{ gantry.route('configurations', name, 'clone')|e }}" data-method="PUT" class="button button-secondary">
+                                <button data-href="{{ gantry.route('configurations', name, 'duplicate')|e }}" data-method="PUT" class="button button-secondary">
                                     <i class="fa fa-code-fork"></i> <span>Duplicate</span>
                                 </button>
                             </div>

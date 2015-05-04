@@ -27,15 +27,23 @@ class Configurations extends HtmlController
             '/**' => 'forward',
         ],
         'POST' => [
-            '/**' => 'forward',
+            '/'            => 'undefined',
+            '/*'           => 'undefined',
+            '/*/rename'    => 'rename',
+            '/*/duplicate' => 'duplicate',
+            '/**'          => 'forward',
         ],
         'PUT'    => [
+            '/'   => 'undefined',
             '/**' => 'forward'
         ],
         'PATCH'  => [
+            '/'   => 'undefined',
             '/**' => 'forward'
         ],
         'DELETE' => [
+            '/'   => 'undefined',
+            '/*'  => 'delete',
             '/**' => 'forward'
         ]
     ];
@@ -55,6 +63,21 @@ class Configurations extends HtmlController
         $this->params['layouts'] = ['user' => $layouts_user, 'core' => $layouts_core];
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/configurations.html.twig', $this->params);
+    }
+
+    public function rename()
+    {
+        throw new \RuntimeException('Not Implemented', 501);
+    }
+
+    public function duplicate()
+    {
+        throw new \RuntimeException('Not Implemented', 501);
+    }
+
+    public function delete()
+    {
+        throw new \RuntimeException('Not Implemented', 501);
     }
 
     public function forward()
