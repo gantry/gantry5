@@ -50,6 +50,16 @@
             position: relative;
         }
     }
+
+    .g-tooltip {
+        &:before {
+            bottom: 2.6rem;
+        }
+
+        &:after {
+            bottom: 3rem;
+        }
+    }
 }
 
 } //endwrapper

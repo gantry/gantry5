@@ -1,21 +1,22 @@
 "use strict";
-var $             = require('elements'),
-    zen           = require('elements/zen'),
-    ready         = require('elements/domready'),
-    request       = require('agent'),
-    ui            = require('./ui'),
-    interpolate   = require('mout/string/interpolate'),
-    trim          = require('mout/string/trim'),
-    setParam      = require('mout/queryString/setParam'),
-    modal         = ui.modal,
-    toastr        = ui.toastr,
+var $              = require('elements'),
+    zen            = require('elements/zen'),
+    ready          = require('elements/domready'),
+    request        = require('agent'),
+    ui             = require('./ui'),
+    interpolate    = require('mout/string/interpolate'),
+    trim           = require('mout/string/trim'),
+    setParam       = require('mout/queryString/setParam'),
+    modal          = ui.modal,
+    toastr         = ui.toastr,
 
-    getAjaxSuffix = require('./utils/get-ajax-suffix'),
+    getAjaxSuffix  = require('./utils/get-ajax-suffix'),
 
-    flags         = require('./utils/flags-state'),
-    validateField = require('./utils/field-validation'),
-    lm            = require('./lm'),
-    mm            = require('./menu');
+    flags          = require('./utils/flags-state'),
+    validateField  = require('./utils/field-validation'),
+    lm             = require('./lm'),
+    mm             = require('./menu'),
+    configurations = require('./configurations');
 
 require('elements/attributes');
 require('elements/events');
