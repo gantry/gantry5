@@ -1389,7 +1389,6 @@ var prime       = require('prime'),
 var SystemMessages = new prime({
     inherits: Pagecontent,
     options: {
-        type: 'system',
         title: 'System Message',
         attributes: {}
     }
