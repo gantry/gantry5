@@ -73,7 +73,7 @@ trait ThemeTrait
         foreach ($configurations as $configuration => $title) {
             $config = ConfigServiceProvider::load($gantry, $configuration);
 
-            $compiler->setConfiguration($configuration)->setVariables($config->flatten('styles', '-'));
+            $compiler->reset()->setConfiguration($configuration)->setVariables($config->flatten('styles', '-'));
             $compiler->compileAll();
         }
     }
@@ -152,7 +152,7 @@ trait ThemeTrait
             $compiler->setConfiguration(isset($gantry['configuration']) ? $gantry['configuration'] : 'default');
         }
 
-        return $compiler;
+        return $compiler->reset();
     }
 
     /**

@@ -66,6 +66,11 @@ interface CssCompilerInterface
     /**
      * @return $this
      */
+    public function reset();
+
+    /**
+     * @return $this
+     */
     public function compileAll();
 
     public function resetCache();

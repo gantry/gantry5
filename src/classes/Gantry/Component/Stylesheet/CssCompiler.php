@@ -195,4 +195,11 @@ abstract class CssCompiler implements CssCompilerInterface
     {
         return $this->variables;
     }
+
+    public function reset()
+    {
+        $this->compiler->reset();
+
+        return $this;
+    }
 }
