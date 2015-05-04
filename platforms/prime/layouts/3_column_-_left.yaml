@@ -13,6 +13,7 @@ container:
     - aside 20:
        - position-aside
     - main 60:
+        - system-messages
         - pagecontent
 
 footer:

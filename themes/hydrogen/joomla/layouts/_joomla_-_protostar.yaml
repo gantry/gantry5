@@ -206,11 +206,11 @@ children:
                             id: 2a27f7b3-bef7-9fd5-b7ba-ce799455f210
                             type: position
                             subtype: false
-                            title: Global_messages
+                            title: System_messages
                             attributes:
                               enabled: 1
-                              key: global_messages
-                              title: Global_messages
+                              key: system_messages
+                              title: System_messages
                             children: {  }
                   -
                     id: 01386cb3-a15b-9d5c-9abf-88918be41ada
