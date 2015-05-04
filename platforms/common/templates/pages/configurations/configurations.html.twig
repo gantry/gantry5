@@ -3,11 +3,11 @@
 {% block gantry %}
     <div class="menu-header">
         <span class="float-right">
-            <button class="button button-back-to-conf"><i class="fa fa-fw fa-arrow-left"></i> <span>Back to Configuration</span></button>
+            <button class="button button-back-to-conf"><i class="fa fa-fw fa-fw fa-arrow-left"></i> <span>Back to Configuration</span></button>
         </span>
         <h2 class="page-title">
             Configurations
-            <a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}" class="button button-primary"><i class="fa fa-plus"></i></a>
+            <a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}" class="button button-primary"><i class="fa fa-fw fa-plus"></i></a>
         </h2>
     </div>
 
@@ -18,22 +18,22 @@
                 <li class="card g-block size-1-4">
                     <div class="page">
                         <h4>
-                            <span data-href="{{ gantry.route('configurations', name, 'rename')|e }}" data-method="POST" data-title-editable="{{ title|e }}" class="title">{{ title|e }}</span> <i class="fa fa-pencil font-small" data-title-edit=""></i>
+                            <span data-g-config-href="{{ gantry.route('configurations', name, 'rename')|e }}" data-g-config-method="POST" data-title-editable="{{ title|e }}" class="title">{{ title|e }}</span> <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
                         </h4>
                         <div class="inner-params">
                             <img src="http://www.placehold.it/200x250/f4f4f4" />
                         </div>
                         <div class="inner-params">
                             <div class="center">
-                                <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary">
-                                    <i class="fa fa-pencil"></i> <span>Edit</span>
+                                <a data-title="Edit" data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary g-tooltip">
+                                    <i class="fa fa-fw fa-pencil"></i>
                                 </a>
-                                <button data-href="{{ gantry.route('configurations', name, 'duplicate')|e }}" data-method="POST" class="button button-secondary">
-                                    <i class="fa fa-code-fork"></i> <span>Duplicate</span>
+                                <button data-title="Duplicate" data-g-config="duplicate" data-g-config-href="{{ gantry.route('configurations', name, 'duplicate')|e }}" data-g-config-method="POST" class="button button-secondary g-tooltip">
+                                    <i class="fa fa-fw fa-code-fork"></i>
                                 </button>
                                 {% if name != 'default' %}
-                                <button data-href="{{ gantry.route('configurations', name)|e }}" data-method="DELETE" class="button red">
-                                    <i class="fa fa-trash-o"></i> <span>Remove</span>
+                                <button data-title="Delete" data-g-config="delete" data-g-config-href="{{ gantry.route('configurations', name)|e }}" data-g-config-method="DELETE" class="button red g-tooltip">
+                                    <i class="fa fa-fw fa-trash-o"></i>
                                 </button>
                                 {% endif %}
                             </div>
@@ -43,7 +43,7 @@
             {% endfor %}
             <li class="card g-block size-1-4 add-new">
                 <div class="page">
-                    <a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}"><i class="fa fa-plus"></i></a>
+                    <a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}"><i class="fa fa-fw fa-plus"></i></a>
                 </div>
             </li>
         </ul>
@@ -60,17 +60,17 @@
                         <div class="inner-params">
                             {#<span class="float-left">
                                 <a href="{{ gantry.route('configurations', layout)|e }}" class="button">
-                                    <i class="fa fa-pencil-square-o"></i>
-                                    <span>Edit</span>
+                                    <i class="fa fa-fw fa-pencil-square-o"></i>
+
                                 </a>
                             </span>
                             <span class="float-right">23 positions</span>#}
                             <div class="center">
-                                <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary">
-                                    <i class="fa fa-pencil"></i> <span>Edit</span>
+                                <a data-title="Edit" data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary g-tooltip">
+                                    <i class="fa fa-fw fa-pencil"></i>
                                 </a>
-                                <button data-href="{{ gantry.route('configurations', name, 'duplicate')|e }}" data-method="POST" class="button button-secondary">
-                                    <i class="fa fa-code-fork"></i> <span>Duplicate</span>
+                                <button data-title="Duplicate" data-g-config="duplicate" data-g-config-href="{{ gantry.route('configurations', name, 'duplicate')|e }}" data-g-config-method="POST" class="button button-secondary g-tooltip">
+                                    <i class="fa fa-fw fa-code-fork"></i>
                                 </button>
                             </div>
                         </div>

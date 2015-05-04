@@ -1356,6 +1356,14 @@ a {
   text-align: center;
   position: relative;
 }
+/* line 55, platforms/common/scss/admin/_configurations.scss */
+#g5-container #configurations .g-tooltip:before {
+  bottom: 2.6rem;
+}
+/* line 59, platforms/common/scss/admin/_configurations.scss */
+#g5-container #configurations .g-tooltip:after {
+  bottom: 3rem;
+}
 
 /* line 3, platforms/common/scss/admin/_headers.scss */
 #g5-container [data-mode-indicator="production"] {
