@@ -1325,7 +1325,11 @@ a {
   display: block;
   margin: 0 auto;
 }
-/* line 26, platforms/common/scss/admin/_configurations.scss */
+/* line 25, platforms/common/scss/admin/_configurations.scss */
+#g5-container #configurations .add-new {
+  cursor: pointer;
+}
+/* line 27, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .add-new a {
   display: block;
   position: absolute;
@@ -1334,7 +1338,7 @@ a {
   left: 0;
   bottom: 0;
 }
-/* line 35, platforms/common/scss/admin/_configurations.scss */
+/* line 36, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .add-new i {
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
@@ -1349,18 +1353,23 @@ a {
   display: block;
 }
 /* line 45, platforms/common/scss/admin/_configurations.scss */
+#g5-container #configurations .add-new i.fa-spinner {
+  margin-left: -0.642857145em;
+  margin-top: -0.642857145em;
+}
+/* line 51, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .add-new .page {
   vertical-align: middle;
-  height: 347px;
+  height: 357px;
   line-height: 378px;
   text-align: center;
   position: relative;
 }
-/* line 55, platforms/common/scss/admin/_configurations.scss */
+/* line 61, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .g-tooltip:before {
   bottom: 2.6rem;
 }
-/* line 59, platforms/common/scss/admin/_configurations.scss */
+/* line 65, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .g-tooltip:after {
   bottom: 3rem;
 }

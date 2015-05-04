@@ -589,13 +589,13 @@ ready(function() {
     });
 
     // TODO: this was the + handler for new layouts which is now gone in favor of Configurations
-    body.delegate('click', '[data-g5-lm-add]', function(event, element) {
+    /*body.delegate('click', '[data-g5-lm-add]', function(event, element) {
         event.preventDefault();
         modal.open({
-            content: '<h1 class="center">Configurations are still WIP!</h1>'/*,
-             remote: $(element).attribute('href') + getAjaxSuffix()*/
+            content: '<h1 class="center">Configurations are still WIP!</h1>'*//*,
+             remote: $(element).attribute('href') + getAjaxSuffix()*//*
         });
-    });
+    });*/
 });
 
 module.exports = Configurations;

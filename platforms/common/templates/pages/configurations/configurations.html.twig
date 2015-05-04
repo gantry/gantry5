@@ -7,7 +7,11 @@
         </span>
         <h2 class="page-title">
             Configurations
-            <a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}" class="button button-primary"><i class="fa fa-fw fa-plus"></i></a>
+            <button data-g-config="create" data-g-config-href="{{ gantry.route('configurations', name, 'create')|e }}" data-g-config-method="POST" class="button button-primary">
+                <i class="fa fa-fw fa-plus"></i>
+            </button>
+            {# TODO: Adding a new configuration should be a two step process: 1. you pick title and Layout, 2. creates it. #}
+            {#<a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}" class="button button-primary"><i class="fa fa-fw fa-plus"></i></a>#}
         </h2>
     </div>
 
@@ -43,7 +47,10 @@
             {% endfor %}
             <li class="card g-block size-1-4 add-new">
                 <div class="page">
-                    <a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}"><i class="fa fa-fw fa-plus"></i></a>
+                    <a data-g-config="create" data-g-config-href="{{ gantry.route('configurations', name, 'create')|e }}" data-g-config-method="POST" data-g5-lm-add>
+                        <i class="fa fa-fw fa-plus"></i>
+                    </a>
+                    {#<a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}"><i class="fa fa-fw fa-plus"></i></a>#}
                 </div>
             </li>
         </ul>
