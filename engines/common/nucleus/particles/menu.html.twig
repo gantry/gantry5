@@ -45,11 +45,10 @@
                     {% if item.type == 'particle' %}
                         {{ _self.displayParticle(item, gantry) }}
                     {% elseif item.type == 'heading' %}
-                        <span class="g-nav-header g-menu-item-content"{{ title|raw }}>{{ item.title|e }}
+                        <span class="g-nav-header g-menu-item-content"{{ title|raw }}>{{ item.title|e }}</span>
                     {% else %}
-                        <span class="g-separator g-menu-item-content"{{ title|raw }}>{{ _self.displayTitle(item) }}
+                        <span class="g-separator g-menu-item-content"{{ title|raw }}>{{ _self.displayTitle(item) }}</span>
                     {% endif %}
-                        </span>
                         {% if (item.children) -%}
                             <span class="g-menu-parent-indicator"></span>
                         {%- endif %}
