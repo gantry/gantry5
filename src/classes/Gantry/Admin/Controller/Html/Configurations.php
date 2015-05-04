@@ -31,7 +31,7 @@ class Configurations extends HtmlController
             '/*'           => 'undefined',
             '/*/rename'    => 'rename',
             '/*/duplicate' => 'duplicate',
-            '/**'          => 'forward',
+            '/*/**'          => 'forward',
         ],
         'PUT'    => [
             '/'   => 'undefined',
@@ -42,9 +42,9 @@ class Configurations extends HtmlController
             '/**' => 'forward'
         ],
         'DELETE' => [
-            '/'   => 'undefined',
-            '/*'  => 'delete',
-            '/**' => 'forward'
+            '/'     => 'undefined',
+            '/*'    => 'delete',
+            '/*/**' => 'forward'
         ]
     ];
 
