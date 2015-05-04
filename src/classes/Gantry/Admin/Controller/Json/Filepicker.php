@@ -34,6 +34,7 @@ class Filepicker extends JsonController
         ],
         'POST' => [
             '/'            => 'index',
+            '/*'           => 'index',
             '/subfolder'   => 'subfolder',
             '/subfolder/*' => 'subfolder',
             '/upload'   => 'undefined',

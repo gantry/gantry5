@@ -63,4 +63,10 @@ class Router extends BaseRouter
             'picker/particles' => '/particles'
         ];
     }
+
+    protected function checkSecurityToken()
+    {
+        // TODO: add CSRF check.
+        return true;
+    }
 }
