@@ -25,14 +25,14 @@
                         </div>
                         <div class="inner-params">
                             <div class="center">
-                                <a href="#" class="button button-primary">
+                                <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"  href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary">
                                     <i class="fa fa-pencil"></i> <span>Edit</span>
                                 </a>
-                                <a href="#" class="button button-secondary">
+                                <a href="{{ gantry.route('configurations', name, 'clone')|e }}" class="button button-secondary">
                                     <i class="fa fa-code-fork"></i> <span>Duplicate</span>
                                 </a>
                                 {% if name != 'default' %}
-                                <a href="#" class="button red">
+                                <a href="{{ gantry.route('configurations', name, 'delete')|e }}" class="button red">
                                     <i class="fa fa-trash-o"></i> <span>Remove</span>
                                 </a>
                                 {% endif %}
