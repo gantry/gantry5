@@ -197,9 +197,10 @@ class LayoutReader
 
         if ($subtype && $type == 'position') {
             $attributes->key = $subtype;
+            $subtype = null;
         }
 
-        if ($type == 'particle') {
+        if ($subtype) {
             $result = ['id' => static::id(), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => $attributes];
         } else {
             $result = ['id' => static::id(), 'title' => $title, 'type' => $type, 'attributes' => $attributes];
