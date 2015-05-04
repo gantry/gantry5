@@ -120,6 +120,30 @@ class Platform extends BasePlatform
         return $renderer->render($position, $params);
     }
 
+    public function displaySystemMessages($params = [])
+    {
+        $document = \JFactory::getDocument();
+        if (!$document instanceof \JDocumentHTML) {
+            return '';
+        }
+
+        $renderer = $document->loadRenderer('message');
+
+        return $renderer->render(null, $params);
+    }
+
+    public function displayContent($content, $params = [])
+    {
+        $document = \JFactory::getDocument();
+        if (!$document instanceof \JDocumentHTML) {
+            return '';
+        }
+
+        $renderer = $document->loadRenderer('component');
+
+        return $renderer->render(null, $params, $content);
+    }
+
     protected function getModule($id)
     {
         $modules = $this->getModuleList();

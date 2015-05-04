@@ -1,6 +1,5 @@
 {% extends "@nucleus/page.html.twig" %}
 
 {% block content %}
-    <jdoc:include type="message" />
-    <jdoc:include type="component" />
+    {{ gantry.platform.displayContent(content) }}
 {% endblock %}
