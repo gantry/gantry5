@@ -33,7 +33,7 @@ maintop:
 container:
   1:
     - mainbody 80:
-      - position-global_messages
+      - system-messages
       - [position-content-top-a 33.3,position-content-top-b 33.3,position-content-top-c 33.3]
       - pagecontent
       - [position-content-bottom-a 33.3,position-content-bottom-b 33.3,position-content-bottom-c 33.3]

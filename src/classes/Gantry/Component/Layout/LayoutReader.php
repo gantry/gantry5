@@ -189,6 +189,12 @@ class LayoutReader
 
         $attributes->enabled = 1;
 
+        if ($type === 'system' && $subtype = 'messages') {
+            $subtype = $type . '-' . $subtype;
+            $type = 'pagecontent';
+            $title = 'System Messages';
+        }
+
         if ($subtype && $type == 'position') {
             $attributes->key = $subtype;
         }

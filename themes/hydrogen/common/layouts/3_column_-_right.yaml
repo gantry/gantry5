@@ -10,7 +10,7 @@ container:
   1:
     - main 60:
         - position-breadcrumbs
-        - position-global_messages
+        - system-messages
         - pagecontent
     - aside 20:
        - position-aside

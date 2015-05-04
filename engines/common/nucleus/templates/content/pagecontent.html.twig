@@ -5,7 +5,7 @@
     {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
         {% if subtype == 'pagecontent' %}
             {{ content|raw }}
-        {% elseif subtype == 'system_messages' %}
+        {% elseif subtype == 'system-messages' %}
             {{ gantry.platform.displaySystemMessages()|raw }}
         {% endif %}
     {% endif %}

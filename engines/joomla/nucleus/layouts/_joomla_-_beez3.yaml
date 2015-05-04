@@ -15,7 +15,7 @@ container:
     - main 60:
       - position-position-2
       - position-position-12
-      - position-global_messages
+      - system-messages
       - pagecontent
     - aside 20:
       - position-position-6

@@ -12,7 +12,7 @@ container:
       - position-position-8
     - main 60:
       - position-position-3
-      - position-global_messages
+      - system-messages
       - pagecontent
       - position-position-2
     - aside 20:

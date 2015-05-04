@@ -14,7 +14,7 @@ container:
        - position-aside
     - main 60:
         - position-breadcrumbs
-        - position-global_messages
+        - system-messages
         - pagecontent
 
 footer:

@@ -12,7 +12,7 @@ container:
        - position-sidebar
     - main 80:
         - position-breadcrumbs
-        - position-global_messages
+        - system-messages
         - pagecontent
 
 footer:
