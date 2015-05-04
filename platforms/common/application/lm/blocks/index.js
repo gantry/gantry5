@@ -10,5 +10,6 @@ module.exports = {
     particle: require('./particle'),
     position: require('./position'),
     pagecontent: require('./pagecontent'),
+    systemmessages: require('./system-messages'),
     spacer: require('./spacer')
 };

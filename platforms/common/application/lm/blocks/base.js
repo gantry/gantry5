@@ -5,6 +5,7 @@ var prime   = require('prime'),
     Emitter = require('prime/emitter'),
     guid    = require('mout/random/guid'),
     zen     = require('elements/zen'),
+    trim    = require('mout/string/trim'),
     $       = require('elements'),
 
     get     = require('mout/object/get'),
@@ -51,11 +52,11 @@ var Base = new prime({
     },
 
     getTitle: function() {
-        return this.options.title || 'Untitled';
+        return trim(this.options.title || 'Untitled');
     },
 
     setTitle: function(title) {
-        this.options.title = title || 'Untitled';
+        this.options.title = trim(title || 'Untitled');
         return this;
     },
 

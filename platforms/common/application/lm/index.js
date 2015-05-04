@@ -368,7 +368,7 @@ ready(function() {
 
                     var title = content.elements.content.find('[data-title-editable]');
                     if (title) {
-                        dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
+                        dataString.push('title=' + encodeURIComponent(trim(title.data('title-editable'))));
                     }
 
                     if (invalid.length) {
