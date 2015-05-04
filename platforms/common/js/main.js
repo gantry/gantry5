@@ -5636,7 +5636,8 @@ var Fonts = new prime({
                 return;
             }
 
-            var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li:not(.g-font-hide)', 5000),
+            // 550 = container height, 5 = pages
+            var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li:not(.g-font-hide)', (550 * 5)),
                 list = [];
 
             if (!elements) { return; }
