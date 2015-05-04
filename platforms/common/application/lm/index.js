@@ -175,15 +175,6 @@ ready(function() {
         }, this);
     });
 
-    // TODO: this was the + handler for new layouts which is now gone in favor of Configurations
-    body.delegate('click', '[data-g5-lm-add]', function(event, element) {
-        event.preventDefault();
-        modal.open({
-            content: '<h1 class="center">Configurations are still WIP!</h1>'/*,
-            remote: $(element).attribute('href') + getAjaxSuffix()*/
-        });
-    });
-
     // Grid same widths button (evenize, equalize)
     body.delegate('click', '[data-lm-samewidth]:not(:empty)', function(event, element) {
         if (element.LMTooltip) { element.LMTooltip.remove(); }
