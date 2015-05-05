@@ -218,6 +218,8 @@ ready(function() {
     // Editable titles
     body.delegate('click', '[data-title-edit]', function(event, element) {
         element = $(element);
+        if (element.hasClass('disabled')) { return false; }
+
         var $title = element.siblings('[data-title-editable]') || element.previousSiblings().find('[data-title-editable]') || element.nextSiblings().find('[data-title-editable]'), title;
         if (!$title) { return true; }
 
@@ -265,7 +267,7 @@ ready(function() {
         element.attribute('contenteditable', null);
         element.data('title-editable', trim(element.text()));
         window.getSelection().removeAllRanges();
-        element.emit('title-edit-end', element.data('title-editable'));
+        element.emit('title-edit-end', element.data('title-editable'), element.storedTitle);
     }, true);
 
     // Quick Ajax Calls [data-ajax-action]
@@ -548,7 +550,7 @@ module.exports = {};
 
 var $             = require('elements'),
     ready         = require('elements/domready'),
-
+    trim          = require('mout/string/trim'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
     request       = require('agent'),
@@ -588,19 +590,61 @@ ready(function() {
 
     });
 
-    // TODO: this was the + handler for new layouts which is now gone in favor of Configurations
-    /*body.delegate('click', '[data-g5-lm-add]', function(event, element) {
-        event.preventDefault();
-        modal.open({
-            content: '<h1 class="center">Configurations are still WIP!</h1>'*//*,
-             remote: $(element).attribute('href') + getAjaxSuffix()*//*
+    // Handles Configurations Titles Rename
+    var updateTitle = function(title, original) {
+            var element = this,
+                href = element.data('g-config-href'),
+                method = (element.data('g-config-method') || 'post').toLowerCase(),
+                parent = element.parent();
+
+            parent.showIndicator();
+            parent.find('[data-title-edit]').addClass('disabled');
+
+            request(method, href + getAjaxSuffix(), { title: trim(title) }, function(error, response) {
+                if (!response.body.success) {
+                    modal.open({
+                        content: response.body.html || response.body,
+                        afterOpen: function(container) {
+                            if (!response.body.html) { container.style({ width: '90%' }); }
+                        }
+                    });
+
+                    element.data('title-editable', original).text(original);
+                } else {
+                    console.log(response);
+                }
+
+                parent.hideIndicator();
+                parent.find('[data-title-edit]').removeClass('disabled');
+            });
+        },
+
+        attachEditables = function(editables) {
+            if (!editables || !editables.length) { return; }
+            editables.forEach(function(editable) {
+                editable = $(editable);
+                editable.confWasAttached = true;
+                editable.on('title-edit-end', updateTitle);
+            });
+        };
+
+    body.on('statechangeAfter', function(event, element) {
+        var editables = $('#configurations [data-title-editable]');
+        if (!editables) { return true; }
+
+        editables = editables.filter(function(editable) {
+            return (typeof $(editable).confWasAttached) === 'undefined';
         });
-    });*/
+
+        attachEditables(editables);
+    });
+
+    attachEditables($('#configurations [data-title-editable]'));
 });
 
 module.exports = Configurations;
 
-},{"../ui":42,"../utils/get-ajax-suffix":55,"agent":61,"elements":88,"elements/domready":86}],5:[function(require,module,exports){
+},{"../ui":42,"../utils/get-ajax-suffix":55,"agent":61,"elements":88,"elements/domready":86,"mout/string/trim":236}],5:[function(require,module,exports){
 "use strict";
 var ready      = require('elements/domready'),
     $          = require('elements/attributes'),
