@@ -43,13 +43,13 @@
 {% endset %}
 
 {%- block page %}
-<!DOCTYPE {{ gantry.page.doctype|default('html') }}>
-<html{{ gantry.page.htmlAttributes }}>
+<!DOCTYPE {{ gantry.page.doctype|default('html')|raw }}>
+<html{{ gantry.page.htmlAttributes|raw }}>
     {% block page_head -%}
         {% include 'partials/page_head.html.twig' %}
     {%- endblock %}
     {% block page_body -%}
-    <body{{ gantry.page.bodyAttributes({'class': [offcanvas_position]}) }}>
+    <body{{ gantry.page.bodyAttributes({'class': [offcanvas_position]})|raw }}>
         {{ page_offcanvas|raw }}
         <div id="g-page-surround">
             {% if page_offcanvas|trim %}
