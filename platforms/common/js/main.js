@@ -3932,6 +3932,7 @@ var MenuManager = new prime({
             this.placeholder.style({ display: 'block' }).bottom(submenu_items);
             this.addNewItem = submenu_items;
             this.targetLevel = 2;
+            this.dragdrop.matched = false;
             return;
         }
 
@@ -4109,7 +4110,7 @@ var MenuManager = new prime({
         if (this.isParticle) {
             var id = last(this.itemID.split('/')),
                 targetItem = (target || this.itemTo),
-                base = targetItem[target ? 'parent' : 'find']('[data-mm-base]').data('mm-base');
+                base = targetItem[target && !target.hasClass('g-block') ? 'parent' : 'find']('[data-mm-base]').data('mm-base');
 
             this.itemID = base ? base + '/' + id : id;
             this.itemLevel = this.targetLevel;
