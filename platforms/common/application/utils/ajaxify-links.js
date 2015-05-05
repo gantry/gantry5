@@ -144,7 +144,10 @@ var selectorChangeEvent = function() {
         if (!selectize || selectize.HasChangeEvent) { return; }
 
         selectize.on('change', function() {
-            if (TMP_SELECTIZE_DISABLE) { TMP_SELECTIZE_DISABLE = false; return false; }
+            if (TMP_SELECTIZE_DISABLE) {
+                TMP_SELECTIZE_DISABLE = false;
+                return false;
+            }
             var value = selectize.getValue(),
                 options = selectize.Options,
                 flagCallback = function() {
@@ -171,31 +174,35 @@ var selectorChangeEvent = function() {
             if (!options[value]) { return; }
 
             if (flags.get('pending')) {
-                flags.warning(function(response, content) {
-                    var saveContinue = content.find('[data-g-unsaved-save]'),
-                        discardContinue = content.find('[data-g-unsaved-discard]');
+                flags.warning({
+                    callback: function(response, content) {
+                        var saveContinue = content.find('[data-g-unsaved-save]'),
+                            discardContinue = content.find('[data-g-unsaved-discard]');
 
-                    if (!saveContinue) { return; }
-                    saveContinue.on('click', function(e) {
-                        e.preventDefault();
-                        if (this.attribute('disabled')) { return false; }
+                        if (!saveContinue) { return; }
+                        saveContinue.on('click', function(e) {
+                            e.preventDefault();
+                            if (this.attribute('disabled')) { return false; }
 
-                        $([saveContinue, discardContinue]).attribute('disabled');
-                        flags.on('update:pending', flagCallback);
-                        $('body').emit('click', { target: $('.button-save') });
-                    });
+                            $([saveContinue, discardContinue]).attribute('disabled');
+                            flags.on('update:pending', flagCallback);
+                            $('body').emit('click', { target: $('.button-save') });
+                        });
 
-                    discardContinue.on('click', function(e) {
-                        e.preventDefault();
-                        if (this.attribute('disabled')) { return false; }
+                        discardContinue.on('click', function(e) {
+                            e.preventDefault();
+                            if (this.attribute('disabled')) { return false; }
 
-                        $([saveContinue, discardContinue]).attribute('disabled');
-                        flags.set('pending', false);
-                        flagCallback();
-                    });
-                }, function() {
-                    TMP_SELECTIZE_DISABLE = true;
-                    selectize.setValue(selectize.getPreviousValue());
+                            $([saveContinue, discardContinue]).attribute('disabled');
+                            flags.set('pending', false);
+                            flagCallback();
+                        });
+                    },
+
+                    afterclose: function() {
+                        TMP_SELECTIZE_DISABLE = true;
+                        selectize.setValue(selectize.getPreviousValue());
+                    }
                 });
 
                 return;
@@ -221,35 +228,37 @@ domready(function() {
             item = navbar.find('li:nth-child(' + (ConfNavIndex + 1) + ') [data-g5-ajaxify]');
 
         if (flags.get('pending')) {
-            flags.warning(function(response, content) {
-                var saveContinue = content.find('[data-g-unsaved-save]'),
-                    discardContinue = content.find('[data-g-unsaved-discard]'),
-                    flagCallback = function() {
-                        flags.off('update:pending', flagCallback);
-                        modal.close();
+            flags.warning({
+                callback: function(response, content) {
+                    var saveContinue = content.find('[data-g-unsaved-save]'),
+                        discardContinue = content.find('[data-g-unsaved-discard]'),
+                        flagCallback = function() {
+                            flags.off('update:pending', flagCallback);
+                            modal.close();
 
-                        body.emit('click', { target: item });
-                        navbar.slideDown();
-                    };
+                            body.emit('click', { target: item });
+                            navbar.slideDown();
+                        };
 
-                if (!saveContinue) { return; }
-                saveContinue.on('click', function(e) {
-                    e.preventDefault();
-                    if (this.attribute('disabled')) { return false; }
+                    if (!saveContinue) { return; }
+                    saveContinue.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
 
-                    $([saveContinue, discardContinue]).attribute('disabled');
-                    flags.on('update:pending', flagCallback);
-                    body.emit('click', { target: $('.button-save') });
-                });
+                        $([saveContinue, discardContinue]).attribute('disabled');
+                        flags.on('update:pending', flagCallback);
+                        body.emit('click', { target: $('.button-save') });
+                    });
 
-                discardContinue.on('click', function(e) {
-                    e.preventDefault();
-                    if (this.attribute('disabled')) { return false; }
+                    discardContinue.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
 
-                    $([saveContinue, discardContinue]).attribute('disabled');
-                    flags.set('pending', false);
-                    flagCallback();
-                });
+                        $([saveContinue, discardContinue]).attribute('disabled');
+                        flags.set('pending', false);
+                        flagCallback();
+                    });
+                }
             });
 
             return;
@@ -261,7 +270,7 @@ domready(function() {
         navbar.slideDown();
     });
 
-    body.delegate('click', '#navbar a[data-g5-ajaxify]', function(event, element){
+    body.delegate('click', '#navbar a[data-g5-ajaxify]', function(event, element) {
         var navbar = $('#navbar'),
             lis = navbar.search('li a[data-g5-ajaxify]');
 
@@ -279,33 +288,35 @@ domready(function() {
         }
 
         if (flags.get('pending') && (!element.matches('a.menu-item') && !element.parent('[data-menu-items]'))) {
-            flags.warning(function(response, content) {
-                var saveContinue = content.find('[data-g-unsaved-save]'),
-                    discardContinue = content.find('[data-g-unsaved-discard]'),
-                    flagCallback = function() {
-                        flags.off('update:pending', flagCallback);
-                        modal.close();
-                        body.emit('click', event);
-                    };
+            flags.warning({
+                callback: function(response, content) {
+                    var saveContinue = content.find('[data-g-unsaved-save]'),
+                        discardContinue = content.find('[data-g-unsaved-discard]'),
+                        flagCallback = function() {
+                            flags.off('update:pending', flagCallback);
+                            modal.close();
+                            body.emit('click', event);
+                        };
 
-                if (!saveContinue) { return; }
-                saveContinue.on('click', function(e) {
-                    e.preventDefault();
-                    if (this.attribute('disabled')) { return false; }
+                    if (!saveContinue) { return; }
+                    saveContinue.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
 
-                    $([saveContinue, discardContinue]).attribute('disabled');
-                    flags.on('update:pending', flagCallback);
-                    body.emit('click', { target: $('.button-save') });
-                });
+                        $([saveContinue, discardContinue]).attribute('disabled');
+                        flags.on('update:pending', flagCallback);
+                        body.emit('click', { target: $('.button-save') });
+                    });
 
-                discardContinue.on('click', function(e) {
-                    e.preventDefault();
-                    if (this.attribute('disabled')) { return false; }
+                    discardContinue.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
 
-                    $([saveContinue, discardContinue]).attribute('disabled');
-                    flags.set('pending', false);
-                    flagCallback();
-                });
+                        $([saveContinue, discardContinue]).attribute('disabled');
+                        flags.set('pending', false);
+                        flagCallback();
+                    });
+                }
             });
 
             return;
