@@ -38,6 +38,9 @@ class TemplateInstaller
 
     public function loadExtension($id)
     {
+        if ((string) intval($id) !== (string) $id) {
+            $id = ['type' => 'template', 'element' => (string) $id, 'client_id' => 0];
+        }
         $this->extension = \JTable::getInstance('extension');
         $this->extension->load($id);
     }
@@ -153,10 +156,12 @@ class TemplateInstaller
     }
 
     /**
-     * @param array $item [menutype, title, alias, link, template_style_id, params]
+     * @param  array $item       [menutype, title, alias, link, template_style_id, params]
+     * @param  int   $parent_id  Parent menu id.
+     * @return int
      * @throws \Exception
      */
-    public function addMenuItem(array $item)
+    public function addMenuItem(array $item, $parent_id = 1)
     {
         $component_id = $this->getComponent();
 
@@ -170,7 +175,7 @@ class TemplateInstaller
             'link'         => 'index.php?option=com_gantry5&view=custom',
             'type'         => 'component',
             'published'    => 1,
-            'parent_id'    => 1,
+            'parent_id'    => $parent_id,
             'component_id' => $component_id,
             'access'       => 1,
             'template_style_id' => 0,
@@ -180,7 +185,7 @@ class TemplateInstaller
             'client_id'    => 0
         ];
 
-        $table->setLocation(1, 'last-child');
+        $table->setLocation($parent_id, 'last-child');
 
         if (!$table->bind($item) || !$table->check() || !$table->store()) {
             throw new \Exception($table->getError());
@@ -266,6 +271,50 @@ class TemplateInstaller
         $cssPath = $path . '/custom/css-compiled';
         if (is_dir($cssPath)) {
             \JFolder::delete($cssPath);
+        }
+    }
+
+    public function installMenus(array $menus)
+    {
+        foreach ($menus as $menutype => $menu) {
+            $title = !empty($menu['title']) ? $menu['title'] : ucfirst($menutype);
+            $description = !empty($menu['description']) ? $menu['description'] : '';
+
+            $this->deleteMenu($menutype, true);
+            $this->createMenu($menutype, $title, $description);
+
+            if (!empty($menu['items'])) {
+                $this->addMenuItems($menutype, $menu['items']);
+            }
+        }
+    }
+
+    protected function addMenuItems($menutype, array $items, $parent = 1)
+    {
+        foreach ($items as $alias => $item) {
+            $item = (array) $item;
+            $item += [
+                'menutype' => $menutype,
+                'title' => ucfirst($alias),
+                'alias' => $alias
+            ];
+
+            if (isset($item['layout']) && $item['layout'][0] !== '_') {
+                $styleName = '%s - ' . ucwords(trim(strtr($item['layout'], ['_' => ' '])));
+                $styleName = $this->getStyleName($styleName);
+                $style = $this->getStyle($styleName);
+
+                if (!$style->id) {
+                    $style = $this->addStyle($styleName, ['configuration' => $item['layout']]);
+                }
+
+                $item['template_style_id'] = $style->id;
+            }
+
+            $itemId = $this->addMenuItem($item, $parent);
+            if (!empty($item['items'])) {
+                $this->addMenuItems($menutype, $item['items'], $itemId);
+            }
         }
     }
 }
