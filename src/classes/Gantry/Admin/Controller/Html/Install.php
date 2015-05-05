@@ -29,6 +29,7 @@ class Install extends HtmlController
             $installer = new TemplateInstaller;
             $installer->loadExtension($this->container['theme.name']);
             $installer->installMenus();
+            $installer->cleanup();
         }
 
         return new JsonResponse(['html' => 'Menus have been installed!', 'title' => 'Installed']);

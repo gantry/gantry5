@@ -234,9 +234,9 @@ class Menu extends AbstractMenu
                 if (!$link) {
                     $item->url(false);
                 } elseif (strcasecmp(substr($link, 0, 4), 'http') && (strpos($link, 'index.php?') !== false)) {
-                    $item->url(\JRoute::_($link, true, $menuItem->params->get('secure')));
+                    $item->url(\JRoute::_($link, false, $menuItem->params->get('secure')));
                 } else {
-                    $item->url(\JRoute::_($link));
+                    $item->url(\JRoute::_($link, false));
                 }
 
                 if ($item->type == 'url') {
