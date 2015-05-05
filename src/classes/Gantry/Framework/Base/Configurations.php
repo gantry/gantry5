@@ -61,6 +61,33 @@ class Configurations extends AbstractConfigurationCollection
     }
 
     /**
+     * @param $configuration
+     * @throws \RuntimeException
+     */
+    public function duplicate($configuration)
+    {
+        throw new \RuntimeException('Not Implemented', 501);
+    }
+
+    /**
+     * @param $configuration
+     * @throws \RuntimeException
+     */
+    public function rename($configuration)
+    {
+        throw new \RuntimeException('Not Implemented', 501);
+    }
+
+    /**
+     * @param $configuration
+     * @throws \RuntimeException
+     */
+    public function delete($configuration)
+    {
+        throw new \RuntimeException('Not Implemented', 501);
+    }
+
+    /**
      * @param array $configurations
      * @return array
      */

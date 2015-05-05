@@ -15,8 +15,11 @@
 namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
+use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
+use Gantry\Framework\Configurations as ConfigurationsObject;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Configurations extends HtmlController
@@ -65,19 +68,52 @@ class Configurations extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/configurations.html.twig', $this->params);
     }
 
-    public function rename()
+    public function rename($configuration)
     {
-        throw new \RuntimeException('Not Implemented', 501);
+        /** @var ConfigurationsObject $configurations */
+        $configurations = $this->container['configurations'];
+        $list = $configurations->user();
+
+        if (!isset($list[$configuration])) {
+            $this->forbidden();
+        }
+
+        /** @var Request $request */
+        $request = $this->container['request'];
+
+        $configurations->rename($configuration, $request->get('title'));
+
+        return new JsonResponse(['html' => 'Configuration renamed.']);
     }
 
-    public function duplicate()
+    public function duplicate($configuration)
     {
-        throw new \RuntimeException('Not Implemented', 501);
+        /** @var ConfigurationsObject $configurations */
+        $configurations = $this->container['configurations'];
+        $list = $configurations->user();
+
+        if (!isset($list[$configuration])) {
+            $this->forbidden();
+        }
+
+        $configurations->duplicate($configuration);
+
+        return new JsonResponse(['html' => 'Configuration duplicated.']);
     }
 
-    public function delete()
+    public function delete($configuration)
     {
-        throw new \RuntimeException('Not Implemented', 501);
+        /** @var ConfigurationsObject $configurations */
+        $configurations = $this->container['configurations'];
+        $list = $configurations->user();
+
+        if (!isset($list[$configuration])) {
+            $this->forbidden();
+        }
+
+        $configurations->delete($configuration);
+
+        return new JsonResponse(['html' => 'Configuration deleted.']);
     }
 
     public function forward()

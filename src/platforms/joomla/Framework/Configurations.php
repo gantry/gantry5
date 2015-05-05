@@ -45,4 +45,19 @@ class Configurations extends BaseConfigurations
 
         return $this;
     }
+
+    public function duplicate($configuration)
+    {
+
+    }
+
+    public function rename($configuration)
+    {
+
+    }
+
+    public function delete($configuration)
+    {
+
+    }
 }
