@@ -26,11 +26,9 @@ class Install extends HtmlController
     public function index()
     {
         if (class_exists('\Gantry\Joomla\TemplateInstaller')) {
-            $menus = (array) YamlFile::instance('gantry-theme://demo/menus.yaml')->content();
-
             $installer = new TemplateInstaller;
             $installer->loadExtension($this->container['theme.name']);
-            $installer->installMenus($menus);
+            $installer->installMenus();
         }
 
         return new JsonResponse(['html' => 'Menus have been installed!', 'title' => 'Installed']);

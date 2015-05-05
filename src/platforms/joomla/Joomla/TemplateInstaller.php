@@ -11,6 +11,8 @@
 
 namespace Gantry\Joomla;
 
+use RocketTheme\Toolbox\File\YamlFile;
+
 class TemplateInstaller
 {
     protected $extension;
@@ -274,8 +276,15 @@ class TemplateInstaller
         }
     }
 
-    public function installMenus(array $menus)
+    public function installMenus(array $menus = null)
     {
+        if ($menus === null) {
+            $name = $this->extension->name;
+            $path = JPATH_SITE . '/templates/' . $name;
+
+            $menus = (array) YamlFile::instance($path . '/demo/menus.yaml')->content();
+        }
+
         foreach ($menus as $menutype => $menu) {
             $title = !empty($menu['title']) ? $menu['title'] : ucfirst($menutype);
             $description = !empty($menu['description']) ? $menu['description'] : '';
