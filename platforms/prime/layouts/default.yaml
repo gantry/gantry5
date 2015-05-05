@@ -9,6 +9,7 @@ container:
       feature:
         - [position-feature-1 50, position-feature-2 50]
       main:
+        - system-messages
         - pagecontent
       bottom:
         - position-bottom

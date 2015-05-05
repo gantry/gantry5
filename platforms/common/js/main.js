@@ -218,6 +218,8 @@ ready(function() {
     // Editable titles
     body.delegate('click', '[data-title-edit]', function(event, element) {
         element = $(element);
+        if (element.hasClass('disabled')) { return false; }
+
         var $title = element.siblings('[data-title-editable]') || element.previousSiblings().find('[data-title-editable]') || element.nextSiblings().find('[data-title-editable]'), title;
         if (!$title) { return true; }
 
@@ -234,6 +236,7 @@ ready(function() {
         selection.addRange(range);
 
         $title.storedTitle = trim($title.text());
+        $title.titleEditCanceled = false;
         $title.emit('title-edit-start', $title.storedTitle);
     });
 
@@ -246,6 +249,7 @@ ready(function() {
                 if (event.keyCode == 27) {
                     if (typeof element.storedTitle !== 'undefined') {
                         element.text(element.storedTitle);
+                        element.titleEditCanceled = true;
                     }
                 }
 
@@ -265,7 +269,7 @@ ready(function() {
         element.attribute('contenteditable', null);
         element.data('title-editable', trim(element.text()));
         window.getSelection().removeAllRanges();
-        element.emit('title-edit-end', element.data('title-editable'));
+        element.emit('title-edit-end', element.data('title-editable'), element.storedTitle, element.titleEditCanceled);
     }, true);
 
     // Quick Ajax Calls [data-ajax-action]
@@ -548,11 +552,15 @@ module.exports = {};
 
 var $             = require('elements'),
     ready         = require('elements/domready'),
-
+    trim          = require('mout/string/trim'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
     request       = require('agent'),
-    getAjaxSuffix = require('../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    getAjaxURL    = require('../utils/get-ajax-url').global,
+
+    flags         = require('../utils/flags-state'),
+    warningURL    = getAjaxURL('confirmdeletion') + getAjaxSuffix();
 
 
 var Configurations = {};
@@ -564,9 +572,46 @@ ready(function() {
     body.delegate('click', '[data-g-config]', function(event, element) {
         var mode = element.data('g-config'),
             href = element.data('g-config-href'),
+            encode = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long
             method = (element.data('g-config-method') || 'post').toLowerCase();
 
-        event.preventDefault();
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        if (mode == 'delete' && !flags.get('free:to:delete:' + encode, false)) {
+            // confirm before proceeding
+            flags.warning({
+                url: warningURL,
+                callback: function(response, content) {
+                    var confirm = content.find('[data-g-delete-confirm]'),
+                        cancel  = content.find('[data-g-delete-cancel]');
+
+                    if (!confirm) { return; }
+
+                    confirm.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
+
+                        flags.get('free:to:delete:' + encode, true);
+                        $([confirm, cancel]).attribute('disabled');
+                        body.emit('click', { target: element });
+
+                        modal.close();
+                    });
+
+                    cancel.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
+
+                        $([confirm, cancel]).attribute('disabled');
+                        flags.get('free:to:delete:' + encode, false);
+
+                        modal.close();
+                    });
+                }
+            });
+
+            return false;
+        }
 
         element.hideIndicator();
         element.showIndicator();
@@ -588,19 +633,62 @@ ready(function() {
 
     });
 
-    // TODO: this was the + handler for new layouts which is now gone in favor of Configurations
-    body.delegate('click', '[data-g5-lm-add]', function(event, element) {
-        event.preventDefault();
-        modal.open({
-            content: '<h1 class="center">Configurations are still WIP!</h1>'/*,
-             remote: $(element).attribute('href') + getAjaxSuffix()*/
+    // Handles Configurations Titles Rename
+    var updateTitle = function(title, original, wasCanceled) {
+            if (wasCanceled) { return; }
+            var element = this,
+                href = element.data('g-config-href'),
+                method = (element.data('g-config-method') || 'post').toLowerCase(),
+                parent = element.parent();
+
+            parent.showIndicator();
+            parent.find('[data-title-edit]').addClass('disabled');
+
+            request(method, href + getAjaxSuffix(), { title: trim(title) }, function(error, response) {
+                if (!response.body.success) {
+                    modal.open({
+                        content: response.body.html || response.body,
+                        afterOpen: function(container) {
+                            if (!response.body.html) { container.style({ width: '90%' }); }
+                        }
+                    });
+
+                    element.data('title-editable', original).text(original);
+                } else {
+                    console.log(response);
+                }
+
+                parent.hideIndicator();
+                parent.find('[data-title-edit]').removeClass('disabled');
+            });
+        },
+
+        attachEditables = function(editables) {
+            if (!editables || !editables.length) { return; }
+            editables.forEach(function(editable) {
+                editable = $(editable);
+                editable.confWasAttached = true;
+                editable.on('title-edit-end', updateTitle);
+            });
+        };
+
+    body.on('statechangeAfter', function(event, element) {
+        var editables = $('#configurations [data-title-editable]');
+        if (!editables) { return true; }
+
+        editables = editables.filter(function(editable) {
+            return (typeof $(editable).confWasAttached) === 'undefined';
         });
+
+        attachEditables(editables);
     });
+
+    attachEditables($('#configurations [data-title-editable]'));
 });
 
 module.exports = Configurations;
 
-},{"../ui":42,"../utils/get-ajax-suffix":55,"agent":61,"elements":88,"elements/domready":86}],5:[function(require,module,exports){
+},{"../ui":42,"../utils/flags-state":54,"../utils/get-ajax-suffix":55,"../utils/get-ajax-url":56,"agent":61,"elements":88,"elements/domready":86,"mout/string/trim":236}],5:[function(require,module,exports){
 "use strict";
 var ready      = require('elements/domready'),
     $          = require('elements/attributes'),
@@ -3932,6 +4020,7 @@ var MenuManager = new prime({
             this.placeholder.style({ display: 'block' }).bottom(submenu_items);
             this.addNewItem = submenu_items;
             this.targetLevel = 2;
+            this.dragdrop.matched = false;
             return;
         }
 
@@ -4109,7 +4198,7 @@ var MenuManager = new prime({
         if (this.isParticle) {
             var id = last(this.itemID.split('/')),
                 targetItem = (target || this.itemTo),
-                base = targetItem[target ? 'parent' : 'find']('[data-mm-base]').data('mm-base');
+                base = targetItem[target && !target.hasClass('g-block') ? 'parent' : 'find']('[data-mm-base]').data('mm-base');
 
             this.itemID = base ? base + '/' + id : id;
             this.itemLevel = this.targetLevel;
@@ -10883,7 +10972,10 @@ var selectorChangeEvent = function() {
         if (!selectize || selectize.HasChangeEvent) { return; }
 
         selectize.on('change', function() {
-            if (TMP_SELECTIZE_DISABLE) { TMP_SELECTIZE_DISABLE = false; return false; }
+            if (TMP_SELECTIZE_DISABLE) {
+                TMP_SELECTIZE_DISABLE = false;
+                return false;
+            }
             var value = selectize.getValue(),
                 options = selectize.Options,
                 flagCallback = function() {
@@ -10910,31 +11002,35 @@ var selectorChangeEvent = function() {
             if (!options[value]) { return; }
 
             if (flags.get('pending')) {
-                flags.warning(function(response, content) {
-                    var saveContinue = content.find('[data-g-unsaved-save]'),
-                        discardContinue = content.find('[data-g-unsaved-discard]');
+                flags.warning({
+                    callback: function(response, content) {
+                        var saveContinue = content.find('[data-g-unsaved-save]'),
+                            discardContinue = content.find('[data-g-unsaved-discard]');
 
-                    if (!saveContinue) { return; }
-                    saveContinue.on('click', function(e) {
-                        e.preventDefault();
-                        if (this.attribute('disabled')) { return false; }
+                        if (!saveContinue) { return; }
+                        saveContinue.on('click', function(e) {
+                            e.preventDefault();
+                            if (this.attribute('disabled')) { return false; }
 
-                        $([saveContinue, discardContinue]).attribute('disabled');
-                        flags.on('update:pending', flagCallback);
-                        $('body').emit('click', { target: $('.button-save') });
-                    });
+                            $([saveContinue, discardContinue]).attribute('disabled');
+                            flags.on('update:pending', flagCallback);
+                            $('body').emit('click', { target: $('.button-save') });
+                        });
 
-                    discardContinue.on('click', function(e) {
-                        e.preventDefault();
-                        if (this.attribute('disabled')) { return false; }
+                        discardContinue.on('click', function(e) {
+                            e.preventDefault();
+                            if (this.attribute('disabled')) { return false; }
 
-                        $([saveContinue, discardContinue]).attribute('disabled');
-                        flags.set('pending', false);
-                        flagCallback();
-                    });
-                }, function() {
-                    TMP_SELECTIZE_DISABLE = true;
-                    selectize.setValue(selectize.getPreviousValue());
+                            $([saveContinue, discardContinue]).attribute('disabled');
+                            flags.set('pending', false);
+                            flagCallback();
+                        });
+                    },
+
+                    afterclose: function() {
+                        TMP_SELECTIZE_DISABLE = true;
+                        selectize.setValue(selectize.getPreviousValue());
+                    }
                 });
 
                 return;
@@ -10960,35 +11056,37 @@ domready(function() {
             item = navbar.find('li:nth-child(' + (ConfNavIndex + 1) + ') [data-g5-ajaxify]');
 
         if (flags.get('pending')) {
-            flags.warning(function(response, content) {
-                var saveContinue = content.find('[data-g-unsaved-save]'),
-                    discardContinue = content.find('[data-g-unsaved-discard]'),
-                    flagCallback = function() {
-                        flags.off('update:pending', flagCallback);
-                        modal.close();
+            flags.warning({
+                callback: function(response, content) {
+                    var saveContinue = content.find('[data-g-unsaved-save]'),
+                        discardContinue = content.find('[data-g-unsaved-discard]'),
+                        flagCallback = function() {
+                            flags.off('update:pending', flagCallback);
+                            modal.close();
 
-                        body.emit('click', { target: item });
-                        navbar.slideDown();
-                    };
+                            body.emit('click', { target: item });
+                            navbar.slideDown();
+                        };
 
-                if (!saveContinue) { return; }
-                saveContinue.on('click', function(e) {
-                    e.preventDefault();
-                    if (this.attribute('disabled')) { return false; }
+                    if (!saveContinue) { return; }
+                    saveContinue.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
 
-                    $([saveContinue, discardContinue]).attribute('disabled');
-                    flags.on('update:pending', flagCallback);
-                    body.emit('click', { target: $('.button-save') });
-                });
+                        $([saveContinue, discardContinue]).attribute('disabled');
+                        flags.on('update:pending', flagCallback);
+                        body.emit('click', { target: $('.button-save') });
+                    });
 
-                discardContinue.on('click', function(e) {
-                    e.preventDefault();
-                    if (this.attribute('disabled')) { return false; }
+                    discardContinue.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
 
-                    $([saveContinue, discardContinue]).attribute('disabled');
-                    flags.set('pending', false);
-                    flagCallback();
-                });
+                        $([saveContinue, discardContinue]).attribute('disabled');
+                        flags.set('pending', false);
+                        flagCallback();
+                    });
+                }
             });
 
             return;
@@ -11000,7 +11098,7 @@ domready(function() {
         navbar.slideDown();
     });
 
-    body.delegate('click', '#navbar a[data-g5-ajaxify]', function(event, element){
+    body.delegate('click', '#navbar a[data-g5-ajaxify]', function(event, element) {
         var navbar = $('#navbar'),
             lis = navbar.search('li a[data-g5-ajaxify]');
 
@@ -11018,33 +11116,35 @@ domready(function() {
         }
 
         if (flags.get('pending') && (!element.matches('a.menu-item') && !element.parent('[data-menu-items]'))) {
-            flags.warning(function(response, content) {
-                var saveContinue = content.find('[data-g-unsaved-save]'),
-                    discardContinue = content.find('[data-g-unsaved-discard]'),
-                    flagCallback = function() {
-                        flags.off('update:pending', flagCallback);
-                        modal.close();
-                        body.emit('click', event);
-                    };
+            flags.warning({
+                callback: function(response, content) {
+                    var saveContinue = content.find('[data-g-unsaved-save]'),
+                        discardContinue = content.find('[data-g-unsaved-discard]'),
+                        flagCallback = function() {
+                            flags.off('update:pending', flagCallback);
+                            modal.close();
+                            body.emit('click', event);
+                        };
 
-                if (!saveContinue) { return; }
-                saveContinue.on('click', function(e) {
-                    e.preventDefault();
-                    if (this.attribute('disabled')) { return false; }
+                    if (!saveContinue) { return; }
+                    saveContinue.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
 
-                    $([saveContinue, discardContinue]).attribute('disabled');
-                    flags.on('update:pending', flagCallback);
-                    body.emit('click', { target: $('.button-save') });
-                });
+                        $([saveContinue, discardContinue]).attribute('disabled');
+                        flags.on('update:pending', flagCallback);
+                        body.emit('click', { target: $('.button-save') });
+                    });
 
-                discardContinue.on('click', function(e) {
-                    e.preventDefault();
-                    if (this.attribute('disabled')) { return false; }
+                    discardContinue.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
 
-                    $([saveContinue, discardContinue]).attribute('disabled');
-                    flags.set('pending', false);
-                    flagCallback();
-                });
+                        $([saveContinue, discardContinue]).attribute('disabled');
+                        flags.set('pending', false);
+                        flagCallback();
+                    });
+                }
             });
 
             return;
@@ -11474,17 +11574,21 @@ var FlagsState = new prime({
         return this.flags.values();
     },
 
-    warning: function(callback, afterclose) {
+    warning: function(options){
+        var callback = options.callback || function() {},
+            afterclose = options.afterclose || function() {},
+            warningURL = options.url || getAjaxURL('unsaved') + getAjaxSuffix();
+
         modal.open({
             content: 'Loading...',
-            remote: getAjaxURL('unsaved') + getAjaxSuffix(),
-            remoteLoaded: function(response, modal){
-                var content = modal.elements.content
+            remote: warningURL,
+            remoteLoaded: function(response, modal) {
+                var content = modal.elements.content;
                 if (!callback) { return; }
 
                 callback.call(this, response, content, modal);
             },
-            afterClose: afterclose || function(){}
+            afterClose: afterclose || function() {}
         });
     }
 

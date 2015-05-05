@@ -11,6 +11,7 @@ container:
     - sidebar 20:
        - position-sidebar
     - main 80:
+        - system-messages
         - pagecontent
 
 footer:

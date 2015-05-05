@@ -281,11 +281,11 @@ children:
                             id: 7ab77d32-5a6d-3f1f-5ee7-a92cfc409582
                             type: position
                             subtype: false
-                            title: Global_messages
+                            title: System_messages
                             attributes:
                               enabled: 1
-                              key: global_messages
-                              title: Global_messages
+                              key: system_messages
+                              title: system_messages
                             children: {  }
                   -
                     id: 71987e8c-22b5-850c-2c20-1f0eb47fb4f5

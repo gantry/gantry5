@@ -33,17 +33,21 @@ var FlagsState = new prime({
         return this.flags.values();
     },
 
-    warning: function(callback, afterclose) {
+    warning: function(options){
+        var callback = options.callback || function() {},
+            afterclose = options.afterclose || function() {},
+            warningURL = options.url || getAjaxURL('unsaved') + getAjaxSuffix();
+
         modal.open({
             content: 'Loading...',
-            remote: getAjaxURL('unsaved') + getAjaxSuffix(),
-            remoteLoaded: function(response, modal){
-                var content = modal.elements.content
+            remote: warningURL,
+            remoteLoaded: function(response, modal) {
+                var content = modal.elements.content;
                 if (!callback) { return; }
 
                 callback.call(this, response, content, modal);
             },
-            afterClose: afterclose || function(){}
+            afterClose: afterclose || function() {}
         });
     }
 
