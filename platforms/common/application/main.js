@@ -217,6 +217,8 @@ ready(function() {
     // Editable titles
     body.delegate('click', '[data-title-edit]', function(event, element) {
         element = $(element);
+        if (element.hasClass('disabled')) { return false; }
+
         var $title = element.siblings('[data-title-editable]') || element.previousSiblings().find('[data-title-editable]') || element.nextSiblings().find('[data-title-editable]'), title;
         if (!$title) { return true; }
 
