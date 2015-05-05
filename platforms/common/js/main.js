@@ -556,7 +556,11 @@ var $             = require('elements'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
     request       = require('agent'),
-    getAjaxSuffix = require('../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    getAjaxURL    = require('../utils/get-ajax-url').global,
+
+    flags         = require('../utils/flags-state'),
+    warningURL    = getAjaxURL('confirmdeletion') + getAjaxSuffix();
 
 
 var Configurations = {};
@@ -568,9 +572,46 @@ ready(function() {
     body.delegate('click', '[data-g-config]', function(event, element) {
         var mode = element.data('g-config'),
             href = element.data('g-config-href'),
+            encode = window.btoa(href).substr(0, 12),
             method = (element.data('g-config-method') || 'post').toLowerCase();
 
-        event.preventDefault();
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        if (mode == 'delete' && !flags.get('free:to:delete:' + encode, false)) {
+            // confirm before proceeding
+            flags.warning({
+                url: warningURL,
+                callback: function(response, content) {
+                    var confirm = content.find('[data-g-delete-confirm]'),
+                        cancel  = content.find('[data-g-delete-cancel]');
+
+                    if (!confirm) { return; }
+
+                    confirm.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
+
+                        flags.get('free:to:delete:' + encode, true);
+                        $([confirm, cancel]).attribute('disabled');
+                        body.emit('click', { target: element });
+
+                        modal.close();
+                    });
+
+                    cancel.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
+
+                        $([confirm, cancel]).attribute('disabled');
+                        flags.get('free:to:delete:' + encode, false);
+
+                        modal.close();
+                    });
+                }
+            });
+
+            return false;
+        }
 
         element.hideIndicator();
         element.showIndicator();
@@ -647,7 +688,7 @@ ready(function() {
 
 module.exports = Configurations;
 
-},{"../ui":42,"../utils/get-ajax-suffix":55,"agent":61,"elements":88,"elements/domready":86,"mout/string/trim":236}],5:[function(require,module,exports){
+},{"../ui":42,"../utils/flags-state":54,"../utils/get-ajax-suffix":55,"../utils/get-ajax-url":56,"agent":61,"elements":88,"elements/domready":86,"mout/string/trim":236}],5:[function(require,module,exports){
 "use strict";
 var ready      = require('elements/domready'),
     $          = require('elements/attributes'),
