@@ -266,7 +266,7 @@ ready(function() {
         element.attribute('contenteditable', null);
         element.data('title-editable', trim(element.text()));
         window.getSelection().removeAllRanges();
-        element.emit('title-edit-end', element.data('title-editable'));
+        element.emit('title-edit-end', element.data('title-editable'), element.storedTitle);
     }, true);
 
     // Quick Ajax Calls [data-ajax-action]
