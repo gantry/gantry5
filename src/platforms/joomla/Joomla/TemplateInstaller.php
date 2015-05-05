@@ -19,6 +19,8 @@ class TemplateInstaller
 
     public function __construct($extension = null)
     {
+        jimport('joomla.filesystem.folder');
+
         \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
         if (is_numeric($extension)) {
             $this->loadExtension($extension);
