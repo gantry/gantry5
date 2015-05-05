@@ -43,7 +43,8 @@ ready(function() {
     });
 
     // Handles Configurations Titles Rename
-    var updateTitle = function(title, original) {
+    var updateTitle = function(title, original, wasCanceled) {
+            if (wasCanceled) { return; }
             var element = this,
                 href = element.data('g-config-href'),
                 method = (element.data('g-config-method') || 'post').toLowerCase(),

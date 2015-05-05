@@ -236,6 +236,7 @@ ready(function() {
         selection.addRange(range);
 
         $title.storedTitle = trim($title.text());
+        $title.titleEditCanceled = false;
         $title.emit('title-edit-start', $title.storedTitle);
     });
 
@@ -248,6 +249,7 @@ ready(function() {
                 if (event.keyCode == 27) {
                     if (typeof element.storedTitle !== 'undefined') {
                         element.text(element.storedTitle);
+                        element.titleEditCanceled = true;
                     }
                 }
 
@@ -267,7 +269,7 @@ ready(function() {
         element.attribute('contenteditable', null);
         element.data('title-editable', trim(element.text()));
         window.getSelection().removeAllRanges();
-        element.emit('title-edit-end', element.data('title-editable'), element.storedTitle);
+        element.emit('title-edit-end', element.data('title-editable'), element.storedTitle, element.titleEditCanceled);
     }, true);
 
     // Quick Ajax Calls [data-ajax-action]
@@ -591,7 +593,8 @@ ready(function() {
     });
 
     // Handles Configurations Titles Rename
-    var updateTitle = function(title, original) {
+    var updateTitle = function(title, original, wasCanceled) {
+            if (wasCanceled) { return; }
             var element = this,
                 href = element.data('g-config-href'),
                 method = (element.data('g-config-method') || 'post').toLowerCase(),
