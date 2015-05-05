@@ -46,18 +46,43 @@ class Configurations extends BaseConfigurations
         return $this;
     }
 
-    public function duplicate($configuration)
+    public function duplicate($id)
     {
+        $model = StyleHelper::loadModel();
 
+        if (!$model->duplicate($id)) {
+            throw new \RuntimeException($model->getError(), 400);
+        }
     }
 
-    public function rename($configuration)
+    public function rename($id, $title)
     {
+        $model = StyleHelper::loadModel();
 
+        $item = $model->getTable();
+        $item->load($id);
+
+        if (!$item->id) {
+            throw new \RuntimeException('Configuration not found', 404);
+        }
+
+        $item->title = $title;
+
+        if (!$item->check()) {
+            throw new \RuntimeException($item->getError(), 400);
+        }
+
+        if (!$item->store()) {
+            throw new \RuntimeException($item->getError(), 500);
+        }
     }
 
-    public function delete($configuration)
+    public function delete($id)
     {
+        $model = StyleHelper::loadModel();
 
+        if (!$model->delete($id)) {
+            throw new \RuntimeException($model->getError(), 400);
+        }
     }
 }

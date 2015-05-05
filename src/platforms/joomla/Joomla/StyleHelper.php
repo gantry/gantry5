@@ -50,4 +50,27 @@ class StyleHelper
         $installer = new TemplateInstaller($style->extension_id);
         $installer->updateStyle($new, ['configuration' => $new]);
     }
+
+    /**
+     * @return \TemplatesModelStyle
+     */
+    public static function loadModel()
+    {
+        static $model;
+
+        if (!$model) {
+            $path = JPATH_ADMINISTRATOR . '/components/com_templates/';
+
+            \JTable::addIncludePath("{$path}/tables");
+            require_once "{$path}/models/style.php";
+
+            // Load language strings.
+            $lang = \JFactory::getLanguage();
+            $lang->load('com_templates');
+
+            $model = new \TemplatesModelStyle;
+        }
+
+        return $model;
+    }
 }

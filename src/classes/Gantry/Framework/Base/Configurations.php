@@ -61,28 +61,29 @@ class Configurations extends AbstractConfigurationCollection
     }
 
     /**
-     * @param $configuration
+     * @param string $id
      * @throws \RuntimeException
      */
-    public function duplicate($configuration)
+    public function duplicate($id)
     {
         throw new \RuntimeException('Not Implemented', 501);
     }
 
     /**
-     * @param $configuration
+     * @param string $id
+     * @param string $title
      * @throws \RuntimeException
      */
-    public function rename($configuration)
+    public function rename($id, $title)
     {
         throw new \RuntimeException('Not Implemented', 501);
     }
 
     /**
-     * @param $configuration
+     * @param string $id
      * @throws \RuntimeException
      */
-    public function delete($configuration)
+    public function delete($id)
     {
         throw new \RuntimeException('Not Implemented', 501);
     }
