@@ -1912,17 +1912,25 @@ samp {
   border-radius: 0.1875rem;
   margin: -1px;
 }
-/* line 59, platforms/common/scss/admin/_input-groups.scss */
-#g5-container .input-group.append.prepend input:not(:first-child):not(:last-child), #g5-container .input-group-addon:not(:first-child):not(:last-child), #g5-container .input-group-btn:not(:first-child):not(:last-child) {
-  border-radius: 0;
+/* line 60, platforms/common/scss/admin/_input-groups.scss */
+#g5-container .input-group.append input {
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
-/* line 63, platforms/common/scss/admin/_input-groups.scss */
-#g5-container .input-group.append input:last-child, #g5-container .input-group.prepend input:last-child, #g5-container .input-group-addon:last-child, #g5-container .input-group-btn:first-child > .btn-group:not(:first-child) > .button, #g5-container .input-group-btn:first-child > .btn:not(:first-child), #g5-container .input-group-btn:last-child > .button, #g5-container .input-group-btn:last-child > .btn-group > .button, #g5-container .input-group-btn:last-child > .dropdown-toggle {
+/* line 65, platforms/common/scss/admin/_input-groups.scss */
+#g5-container .input-group.append .input-group-addon, #g5-container .input-group.append .button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-/* line 68, platforms/common/scss/admin/_input-groups.scss */
-#g5-container .input-group.append input:first-child, #g5-container .input-group.prepend input:first-child, #g5-container .input-group-addon:first-child, #g5-container .input-group-btn:first-child > .button, #g5-container .input-group-btn:first-child > .btn-group > .button, #g5-container .input-group-btn:first-child > .dropdown-toggle, #g5-container .input-group-btn:last-child > .btn-group:not(:last-child) > .button, #g5-container .input-group-btn:last-child > .button:not(:last-child):not(.dropdown-toggle) {
+/* line 72, platforms/common/scss/admin/_input-groups.scss */
+#g5-container .input-group.prepend input {
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+/* line 77, platforms/common/scss/admin/_input-groups.scss */
+#g5-container .input-group.prepend .input-group-addon, #g5-container .input-group.prepend .button {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -2986,7 +2994,6 @@ samp {
   left: 0;
   right: 0;
   height: 60px;
-  /*z-index: 15;*/
 }
 /* line 380, platforms/common/scss/admin/_menu.scss */
 #g5-container .submenu-ratio .percentage {
