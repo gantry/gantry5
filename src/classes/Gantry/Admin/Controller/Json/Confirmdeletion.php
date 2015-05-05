@@ -17,7 +17,7 @@ namespace Gantry\Admin\Controller\Json;
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\Response\JsonResponse;
 
-class ConfirmDeletion extends JsonController
+class Confirmdeletion extends JsonController
 {
     protected $httpVerbs = [
         'GET' => [
