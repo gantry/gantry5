@@ -572,7 +572,7 @@ ready(function() {
     body.delegate('click', '[data-g-config]', function(event, element) {
         var mode = element.data('g-config'),
             href = element.data('g-config-href'),
-            encode = window.btoa(href).substr(0, 12),
+            encode = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long
             method = (element.data('g-config-method') || 'post').toLowerCase();
 
         if (event && event.preventDefault) { event.preventDefault(); }
