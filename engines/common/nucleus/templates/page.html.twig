@@ -1,25 +1,25 @@
-{% do gantry.theme.setLayout() %}
+{%- do gantry.theme.setLayout() -%}
 
 {%- set content %}
     {% block content %}
     {% endblock %}
-{% endset %}
+{% endset -%}
 
-{% set offcanvas = null %}
+{%- set offcanvas = null -%}
 {%- for segment in gantry.theme.segments if segment.type == 'offcanvas' %}
-    {% set offcanvas = segment %}
-{% endfor %}
+    {%- set offcanvas = segment -%}
+{% endfor -%}
 
 {%- set page_offcanvas %}
     {% block page_offcanvas %}
         {% if offcanvas %}
-            {% include '@nucleus/layout/' ~ offcanvas.type ~ '.html.twig' with { 'segment': offcanvas } %}
+            {% include '@nucleus/layout/' ~ offcanvas.type ~ '.html.twig' with { 'segment': offcanvas } -%}
         {% endif %}
     {% endblock %}
 {% endset %}
 
-{% set page_offcanvas = page_offcanvas|trim ?: '' %}
-{% set offcanvas_position = page_offcanvas ? offcanvas.attributes.position|default('g-offcanvas-left') : '' %}
+{%- set page_offcanvas = page_offcanvas|trim ?: '' %}
+{%- set offcanvas_position = page_offcanvas ? offcanvas.attributes.position|default('g-offcanvas-left') : '' -%}
 
 {%- set page_layout %}
     {% block page_layout %}
@@ -27,12 +27,12 @@
         {% include '@nucleus/layout/' ~ segment.type ~ '.html.twig' with { 'segments': segment.children } %}
     {% endfor %}
     {% endblock %}
-{% endset %}
+{% endset -%}
 
 {%- set page_top %}
     {% block page_top %}
     {% endblock %}
-{% endset %}
+{% endset -%}
 
 {%- set page_bottom %}
     {% block page_bottom %}
@@ -40,9 +40,9 @@
             {{ script|raw }}
         {% endfor %}
     {% endblock %}
-{% endset %}
+{% endset -%}
 
-{%- block page %}
+{%- block page -%}
 <!DOCTYPE {{ gantry.page.doctype|default('html')|raw }}>
 <html{{ gantry.page.htmlAttributes|raw }}>
     {% block page_head -%}
