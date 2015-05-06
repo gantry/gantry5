@@ -16,11 +16,10 @@ $gantry = include __DIR__ . '/includes/gantry.php';
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
 
-// Get the template
-$template = \JFactory::getApplication()->getTemplate(true);
+/** @var \Gantry\Framework\Configurations $configurations */
+$configurations = $gantry['configurations'];
 
 // Render the page.
 echo $theme
-    ->setLayout($template->params->get('configuration', $template->id))
+    ->setLayout($configurations->current($template))
     ->render('index.html.twig');
-

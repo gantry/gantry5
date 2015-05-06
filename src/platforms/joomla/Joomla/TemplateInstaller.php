@@ -97,9 +97,10 @@ class TemplateInstaller
 
         if ($style->id) {
             $home = ($home !== null ? $home : $style->home);
+            $params = (array) json_decode($style->params, true);
 
             $data = array(
-                'params' => json_encode($configuration),
+                'params' => json_encode($configuration + $params),
                 'home' => $home
             );
 
@@ -316,7 +317,9 @@ class TemplateInstaller
                 $style = $this->getStyle($styleName);
 
                 if (!$style->id) {
-                    $style = $this->addStyle($styleName, ['configuration' => $item['layout']]);
+                    $style = $this->addStyle($styleName, ['preset' => $item['layout']]);
+                } else {
+                    $style = $this->updateStyle($styleName, ['preset' => $item['layout']]);
                 }
 
                 $item['template_style_id'] = $style->id;
