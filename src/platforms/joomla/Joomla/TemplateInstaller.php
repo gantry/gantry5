@@ -279,7 +279,7 @@ class TemplateInstaller
         }
     }
 
-    public function installMenus(array $menus = null)
+    public function installMenus(array $menus = null, $parent = 1)
     {
         if ($menus === null) {
             $name = $this->extension->name;
@@ -292,16 +292,19 @@ class TemplateInstaller
             $title = !empty($menu['title']) ? $menu['title'] : ucfirst($menutype);
             $description = !empty($menu['description']) ? $menu['description'] : '';
 
-            $this->deleteMenu($menutype, true);
-            $this->createMenu($menutype, $title, $description);
+            // If $parent = 0, do dry run.
+            if ((int) $parent) {
+                $this->deleteMenu($menutype, true);
+                $this->createMenu($menutype, $title, $description);
+            }
 
             if (!empty($menu['items'])) {
-                $this->addMenuItems($menutype, $menu['items']);
+                $this->addMenuItems($menutype, $menu['items'], (int) $parent);
             }
         }
     }
 
-    protected function addMenuItems($menutype, array $items, $parent = 1)
+    protected function addMenuItems($menutype, array $items, $parent)
     {
         foreach ($items as $alias => $item) {
             $item = (array) $item;
@@ -325,7 +328,8 @@ class TemplateInstaller
                 $item['template_style_id'] = $style->id;
             }
 
-            $itemId = $this->addMenuItem($item, $parent);
+            // If $parent = 0, do dry run.
+            $itemId = $parent ? $this->addMenuItem($item, $parent) : 0;
             if (!empty($item['items'])) {
                 $this->addMenuItems($menutype, $item['items'], $itemId);
             }

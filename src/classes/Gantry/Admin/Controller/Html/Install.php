@@ -28,6 +28,18 @@ class Install extends HtmlController
         if (class_exists('\Gantry\Joomla\TemplateInstaller')) {
             $installer = new TemplateInstaller;
             $installer->loadExtension($this->container['theme.name']);
+            $installer->installMenus(null, 0);
+            $installer->cleanup();
+        }
+
+        return new JsonResponse(['html' => 'Menus have been installed!', 'title' => 'Installed']);
+    }
+
+    public function display($id)
+    {
+        if (class_exists('\Gantry\Joomla\TemplateInstaller')) {
+            $installer = new TemplateInstaller;
+            $installer->loadExtension($this->container['theme.name']);
             $installer->installMenus();
             $installer->cleanup();
         }
