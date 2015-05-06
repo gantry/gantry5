@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package   Gantry 5 Theme
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @license   GNU/GPLv2 and later
+ *
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ */
+
 defined('_JEXEC') or die;
 
 use Gantry\Framework\Gantry;
@@ -9,7 +18,7 @@ try
     $template = $app->getTemplate(true);
 
     if (!class_exists('Gantry5\Loader')) {
-        throw new RuntimeException('Please install Gantry 5 Framework!');
+        throw new RuntimeException(JText::_('GANTRY5_THEME_INSTALL_GANTRY'));
     }
 
     // Setup Gantry 5 Framework or throw exception.
@@ -26,7 +35,7 @@ try
     }
 
     // Only a single template can be loaded at any time.
-    if (!isset($gantry['theme']))
+    if (!isset($gantry['theme']) && file_exists(__DIR__ . '/theme.php'))
     {
         include_once __DIR__ . '/theme.php';
     }
@@ -38,7 +47,7 @@ catch (Exception $e)
     // Oops, something went wrong!
     header("HTTP/1.0 500 Internal Server Error");
 
-    $message = sprintf("Failed to load '%s' template: %s", $template->template, $e->getMessage());
+    $message = JText::sprintf("GANTRY5_THEME_LOADING_FAILED", $template->template, $e->getMessage());
 
     echo <<<html
 <html>

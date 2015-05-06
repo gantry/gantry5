@@ -1,10 +1,12 @@
 <?php
 /**
- * @package     Joomla.Site
- * @subpackage  Layout
+ * @package   Gantry 5 Theme
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @license   GNU/GPLv2 and later
  *
- * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 defined('_JEXEC') or die;
