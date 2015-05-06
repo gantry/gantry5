@@ -10,3 +10,4 @@ form:
       label: Dropdown Width
       description: Specify the width of menu dropdowns for standard mode in rem, em or px units, does not apply to full width.
       default: "180px"
+      pattern: '\d+(\.\d+){0,1}(rem|em|px)'
