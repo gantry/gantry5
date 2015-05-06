@@ -20,6 +20,9 @@
         		&.g-active {
         			top: auto;
         		}
+        		.g-dropdown.g-active {
+        			top: 0;
+        		}
         	}
         }
     }
