@@ -48,7 +48,7 @@ class Configurations extends BaseConfigurations
         return $this;
     }
 
-    public function current($template)
+    public function current($template = null)
     {
         if (!$template) {
             // Get the template.

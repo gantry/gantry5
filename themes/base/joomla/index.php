@@ -21,5 +21,5 @@ $configurations = $gantry['configurations'];
 
 // Render the page.
 echo $theme
-    ->setLayout($configurations->current($template))
+    ->setLayout($configurations->current())
     ->render('index.html.twig');
