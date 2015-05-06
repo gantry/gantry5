@@ -65,19 +65,9 @@ class G5_HydrogenInstallerScript
                 // Update default style.
                 $installer->updateStyle('JLIB_INSTALLER_DEFAULT_STYLE', array('configuration' => $configuration), 1);
 
-                // Add second style for the main page and assign all home pages to it.
-                $style = $installer->addStyle('TPL_G5_HYDROGEN_HOME_STYLE', array('configuration' => 'home'));
+                // Install menus and styles from demo data.
+                $installer->installMenus();
 
-                // Create sample pages.
-                $installer->deleteMenu('hydrogen', true);
-                $installer->createMenu('hydrogen', 'Hydrogen Template', 'Sample menu.');
-                $installer->addMenuItem([
-                    'menutype' => 'hydrogen',
-                    'title' => 'Hydrogen Home',
-                    'alias' => 'hydrogen',
-                    'template_style_id' => $style->id,
-                    'home' => 1
-                ]);
             } catch (Exception $e) {
                 $app = JFactory::getApplication();
                 $app->enqueueMessage(JText::sprintf($e->getMessage()), 'error');
