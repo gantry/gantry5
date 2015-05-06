@@ -24,6 +24,14 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class StyleHelper
 {
+    public static function getStyle($id)
+    {
+        $style = \JTable::getInstance('Style', 'TemplatesTable');
+        $style->load($id);
+
+        return $style;
+    }
+
     public static function copy($style, $old, $new)
     {
         $gantry = Gantry::instance();

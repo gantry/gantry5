@@ -15,6 +15,7 @@
 namespace Gantry\Component\Layout;
 
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Framework\Configurations;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccess;
 use RocketTheme\Toolbox\ArrayTraits\Export;
@@ -222,11 +223,22 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      */
     protected static function load($name)
     {
+        $gantry = Gantry::instance();
+
         /** @var UniformResourceLocator $locator */
-        $locator = Gantry::instance()['locator'];
+        $locator = $gantry['locator'];
 
         $layout = null;
-        $filename = $locator("gantry-config://{$name}/layout.yaml") ?: $locator("gantry-layouts://{$name}.yaml");
+        $filename = $locator("gantry-config://{$name}/layout.yaml");
+
+        // If layout file doesn't exists, figure out what preset was used.
+        if (!$filename) {
+            /** @var Configurations $configurations */
+            $configurations = $gantry['configurations'];
+
+            $name = $configurations->preset($name);
+            $filename = $locator("gantry-layouts://{$name}.yaml");
+        }
 
         if ($filename) {
             $layout = LayoutReader::read($filename);

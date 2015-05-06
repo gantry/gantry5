@@ -61,6 +61,15 @@ class Configurations extends AbstractConfigurationCollection
     }
 
     /**
+     * @param int|string $id
+     * @return int|string
+     */
+    public function preset($id)
+    {
+        return $id;
+    }
+
+    /**
      * @param string $id
      * @throws \RuntimeException
      */

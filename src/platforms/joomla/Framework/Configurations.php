@@ -48,6 +48,16 @@ class Configurations extends BaseConfigurations
         return $this;
     }
 
+    public function preset($id)
+    {
+        if (is_numeric($id)) {
+            $style = StyleHelper::getStyle($id);
+            $id = isset($style->params['preset']) ? $style->params['preset'] : 'default';
+        }
+
+        return $id;
+    }
+
     public function current($template = null)
     {
         if (!$template) {
