@@ -20,7 +20,7 @@ function modChrome_gantry($module, &$params, &$attribs)
 	$moduleClass    = $bootstrapSize != 0 ? ' span' . $bootstrapSize : '';
 
 	// Temporarily store header class in variable
-	$headerClass    = $params->get('header_class');
+	$headerClass    = $params->get('header_class', 'g-title');
 	$headerClass    = ($headerClass) ? ' class="' . htmlspecialchars($headerClass) . '"' : '';
 
 	if (!empty ($module->content)) : ?>
@@ -32,5 +32,3 @@ function modChrome_gantry($module, &$params, &$attribs)
 		</<?php echo $moduleTag; ?>>
 	<?php endif;
 }
-
-?>
