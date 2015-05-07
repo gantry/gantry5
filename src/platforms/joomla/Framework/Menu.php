@@ -195,7 +195,13 @@ class Menu extends AbstractMenu
                 ];
 
                 // Rest of the items will come from saved configuration.
-                $itemParams += isset($itemMap[$menuItem->id]) ? $itemMap[$menuItem->id] : [];
+                if (isset($itemMap[$menuItem->id])) {
+                    // ID found, use it.
+                    $itemParams += $itemMap[$menuItem->id];
+                } elseif (isset($items[$menuItem->route])) {
+                    // ID not found, try to use route.
+                    $itemParams += $items[$menuItem->route];
+                }
 
                 // And if not available in configuration, default to Joomla.
                 $itemParams += [
