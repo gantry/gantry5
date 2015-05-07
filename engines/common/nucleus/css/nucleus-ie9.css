@@ -72,7 +72,7 @@ textarea {
 	vertical-align: top;
 }
 
-// OffCanvas
+/* OffCanvas */
 #g-offcanvas {
 	display: none !important;
 	visibility: hidden !important;
@@ -80,3 +80,5 @@ textarea {
 	height: 0 !important;
 	position: static !important;
 }
+
+[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close] { display: none; }
