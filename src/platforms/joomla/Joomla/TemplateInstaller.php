@@ -163,10 +163,11 @@ class TemplateInstaller
     /**
      * @param  array $item       [menutype, title, alias, link, template_style_id, params]
      * @param  int   $parent_id  Parent menu id.
+     * @param  bool  $load       True if updating existing items.
      * @return int
      * @throws \Exception
      */
-    public function addMenuItem(array $item, $parent_id = 1)
+    public function addMenuItem(array $item, $parent_id = 1, $load = false)
     {
         $component_id = $this->getComponent();
 
@@ -190,6 +191,13 @@ class TemplateInstaller
             'client_id'    => 0
         ];
 
+        if ($load) {
+            $table->load([
+                'menutype' => $item['menutype'],
+                'alias' => $item['alias'],
+                'parent_id' => $item['parent_id']
+            ]);
+        }
         $table->setLocation($parent_id, 'last-child');
 
         if (!$table->bind($item) || !$table->check() || !$table->store()) {
@@ -201,6 +209,19 @@ class TemplateInstaller
         $cache->clean('mod_menu');
 
         return $table->id;
+    }
+
+    /**
+     * @param string $type
+     * @return \JTableMenu
+     */
+    public function getMenu($type)
+    {
+         /** @var \JTableMenu $table */
+        $table = \JTable::getInstance('MenuType');
+        $table->load(['menutype' => $type]);
+
+        return $table;
     }
 
     /**
@@ -292,8 +313,10 @@ class TemplateInstaller
             $title = !empty($menu['title']) ? $menu['title'] : ucfirst($menutype);
             $description = !empty($menu['description']) ? $menu['description'] : '';
 
+            $exists = $this->getMenu($menutype)->id;
+
             // If $parent = 0, do dry run.
-            if ((int) $parent) {
+            if ((int) $parent && !$exists) {
                 $this->deleteMenu($menutype, true);
                 $this->createMenu($menutype, $title, $description);
             }
@@ -329,7 +352,7 @@ class TemplateInstaller
             }
 
             // If $parent = 0, do dry run.
-            $itemId = $parent ? $this->addMenuItem($item, $parent) : 0;
+            $itemId = $parent ? $this->addMenuItem($item, $parent, true) : 0;
             if (!empty($item['items'])) {
                 $this->addMenuItems($menutype, $item['items'], $itemId);
             }
