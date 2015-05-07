@@ -52,7 +52,9 @@ class Configurations extends BaseConfigurations
     {
         if (is_numeric($id)) {
             $style = StyleHelper::getStyle($id);
-            $id = isset($style->params['preset']) ? $style->params['preset'] : 'default';
+            $params = json_decode($style->params, true);
+
+            $id = isset($params['preset']) ? $params['preset'] : 'default';
         }
 
         return $id;
