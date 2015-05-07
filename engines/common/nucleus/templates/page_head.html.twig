@@ -1,16 +1,5 @@
-<head>
-    {%- block head_title -%}
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Title</title>
-    {%- endblock %}
-
-    {% block head_application %}{% endblock %}
-
-    {% block head_platform %}{% endblock %}
-
+{% set headStylesheets %}
     {% block head_stylesheets -%}
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{{ url('gantry-assets://css/font-awesome.min.css') }}" type="text/css"/>
         <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/nucleus.css') }}" type="text/css"/>
         {% for css in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
@@ -18,6 +7,26 @@
             <link rel="stylesheet" href="{{ url(gantry.theme.css(css)) }}" type="text/css"/>
         {% endif %}
         {%- endfor %}
+    {% endblock -%}
+
+    {% block head_platform %}{% endblock %}
+{% endset %}
+{% do parseHtmlHeader(headStylesheets) -%}
+
+<head>
+    {%- block head_meta -%}
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%- endblock %}
+
+    {%- block head_title -%}
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>Title</title>
+    {%- endblock %}
+
+    {% block head_application %}{% endblock %}
+
+    {% block head_ie_stylesheets -%}
         <!--[if (gte IE 8)&(lte IE 9)]>
         <script type="text/javascript" src="{{ url('gantry-assets://js/html5shiv-printshiv.min.js') }}"></script>
         <link rel="stylesheet" href="{{ url('gantry-engine://css/nucleus-ie9.css') }}" type="text/css"/>
