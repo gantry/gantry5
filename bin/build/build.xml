@@ -16,12 +16,12 @@
     -Dtmp_dir=tmp                          (= git/gantry5/build/tmp)
     -Dbuild_dir=package                    (= git/gantry5/build/package)
 -->
-<project name="gantry5" basedir="" description="Phing Build Script" default="dist">
+<project name="gantry5" basedir="." description="Phing Build Script" default="dist">
 
     <!-- Setup of any global settings that will apply to the entire build script -->
-    <property file="build.ini" />
+    <property file="${phing.dir}/build.ini" />
 
-    <condition property="project_dir" value="../../">
+    <condition property="project_dir" value="${phing.dir}/../../">
         <not><isset property="project_dir" /></not>
     </condition>
     <condition property="package_dir" value="${project_dir}/../builds/${phing.project.name}">
