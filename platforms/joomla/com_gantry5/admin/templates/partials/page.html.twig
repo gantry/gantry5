@@ -16,11 +16,10 @@
 
 {% do parseHtmlHeader(headerContent) %}
 
-
 {% block content %}
-
 {% endblock %}
 
 {% block footer_section %}
-
 {% endblock %}
+
+{% do gantry.platform.finalize() %}

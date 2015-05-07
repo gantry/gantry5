@@ -11,7 +11,7 @@
 
     {% block head_platform %}{% endblock %}
 {% endset %}
-{% do parseHtmlHeader(headStylesheets) -%}
+{% do parseHtmlHeader(headStylesheets, false, 10) -%}
 
 <head>
     {%- block head_meta -%}

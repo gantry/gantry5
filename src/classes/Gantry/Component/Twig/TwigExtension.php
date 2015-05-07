@@ -184,10 +184,12 @@ class TwigExtension extends \Twig_Extension
      * Move supported document head elements into platform document object, return all
      * unsupported tags in a string.
      *
-     * @param $input
+     * @param string $input
+     * @param bool $in_footer
+     * @param int $priority
      * @return string
      */
-    public function parseHtmlHeaderFunc($input, $in_footer = false)
+    public function parseHtmlHeaderFunc($input, $in_footer = false, $priority = 0)
     {
         $doc = new \DOMDocument();
         $doc->loadHTML('<html><head>' . $input . '</head><body></body></html>');
@@ -198,7 +200,7 @@ class TwigExtension extends \Twig_Extension
             foreach ($element->attributes as $attribute) {
                 $result[$attribute->name] = $attribute->value;
             }
-            $success = Document::addHeaderTag($result, $in_footer);
+            $success = Document::addHeaderTag($result, $in_footer, $priority);
             if (!$success) {
                 $raw[] = $doc->saveHTML($element);
             }
