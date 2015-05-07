@@ -94,7 +94,9 @@ class Document
         }
 
         // Add parameters back.
-        $uri .= '?' . $params;
+        if ($params) {
+            $uri .= '?' . $params;
+        }
 
         // Add fragment back.
         if ($fragment) {
