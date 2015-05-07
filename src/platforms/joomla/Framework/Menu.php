@@ -171,6 +171,13 @@ class Menu extends AbstractMenu
 
             $menuItems = $this->getItemsFromPlatform($params);
 
+            $itemMap = [];
+            foreach ($items as $path => &$item) {
+                if (isset($item['id']) && is_numeric($item['id'])) {
+                    $itemMap[$item['id']] = &$item;
+                }
+            }
+
             foreach ($menuItems as $menuItem) {
                 if (($start && $start > $menuItem->level)
                     || ($end && $menuItem->level > $end)
@@ -188,7 +195,7 @@ class Menu extends AbstractMenu
                 ];
 
                 // Rest of the items will come from saved configuration.
-                $itemParams += isset($items[$menuItem->route]) ? $items[$menuItem->route] : [];
+                $itemParams += isset($itemMap[$menuItem->id]) ? $itemMap[$menuItem->id] : [];
 
                 // And if not available in configuration, default to Joomla.
                 $itemParams += [
