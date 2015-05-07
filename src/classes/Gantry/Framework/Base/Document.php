@@ -84,17 +84,17 @@ class Document
             }
         }
 
-        if ($timestamp) {
+        if ($timestamp && $uri) {
             // We want to add timestamp to the URL: do it only for local files.
             $realPath = realpath(GANTRY5_ROOT . '/' . $uri);
             if ($realPath) {
-                $params = $params ? "?{$params}&" : '?';
+                $params = $params ? "{$params}&" : '';
                 $params .= sprintf('%x', filemtime($realPath));
             }
         }
 
         // Add parameters back.
-        $uri .= $params;
+        $uri .= '?' . $params;
 
         // Add fragment back.
         if ($fragment) {
