@@ -84,7 +84,7 @@ var Offcanvas = new prime({
         if (!this.options.padding) {
             this.offcanvas[0].style.display = 'block';
             var width = this.offcanvas[0].getBoundingClientRect().width;
-            this.offcanvas[0].style.display = null;
+            this.offcanvas[0].style.removeProperty('display');
 
             this.setOptions({ padding: width });
         }
