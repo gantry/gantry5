@@ -106,6 +106,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * @param string $name
      * @param array $items
+     * @param string $preset
      */
     public function __construct($name, array $items = null, $preset = null)
     {
@@ -113,6 +114,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $this->preset = $preset;
         $this->items = (array) $items;
         $this->exists = $items !== null;
+
+        // If items have preset, use it.
+        if (!empty($this->items['preset'])) {
+            $this->preset = $this->items['preset'];
+            unset($this->items['preset']);
+        }
     }
 
     /**

@@ -110,6 +110,8 @@ class Layout extends HtmlController
 
         $this->params['page_id'] = $id;
         $this->params['layout'] = $layout->toArray();
+        $this->params['preset'] = $layout->preset;
+        $this->params['preset_title'] = ucwords(trim(str_replace('_', ' ', $layout->preset)));
         $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($id, '_')));
         $this->params['particles'] = $groups;
         $this->params['switcher_url'] = str_replace('.', '/', "configurations.{$id}.layout.switch");
@@ -136,7 +138,7 @@ class Layout extends HtmlController
 
         $file = CompiledYamlFile::instance($filename);
         $file->settings(['inline' => 20]);
-        $file->save(['children' => $layout]);
+        $file->save(['preset' => $preset, 'children' => $layout]);
 
         // Fire save event.
         $event = new Event;

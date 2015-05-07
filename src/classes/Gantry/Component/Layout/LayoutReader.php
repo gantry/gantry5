@@ -33,6 +33,7 @@ class LayoutReader
     {
         // Check if we have pre-saved configuration.
         if (isset($data['children'])) {
+            $preset = isset($data['preset']) && is_string($data['preset']) ? $data['preset'] : null;
             $result = self::object($data['children']);
 
             $invisible = [
@@ -54,7 +55,7 @@ class LayoutReader
 
             $result += $invisible;
 
-            return array_values($result);
+            return ['preset' => $preset] + array_values($result);
         }
 
         // We have user entered file; let's build the layout.
