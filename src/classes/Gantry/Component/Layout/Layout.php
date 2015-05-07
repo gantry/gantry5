@@ -36,6 +36,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     public $name;
     public $preset;
+    public $meta;
     protected $exists;
     protected $items;
     protected $references;
@@ -118,8 +119,13 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         // If items have preset, use it.
         if (!empty($this->items['preset'])) {
             $this->preset = $this->items['preset'];
-            unset($this->items['preset']);
         }
+
+        // Set metadata.
+        $this->meta = !empty($this->items['meta']) ? $this->items['meta'] : [];
+        $this->meta += ['image' => 'gantry-admin://images/layouts/default.png'];
+
+        unset($this->items['preset'], $this->items['meta']);
     }
 
     /**

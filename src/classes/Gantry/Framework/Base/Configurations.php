@@ -16,6 +16,7 @@ namespace Gantry\Framework\Base;
 
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Configuration\AbstractConfigurationCollection;
+use Gantry\Component\Layout\Layout;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -24,6 +25,7 @@ class Configurations extends AbstractConfigurationCollection
     /**
      * @param string $path
      * @return $this
+     * @throws \RuntimeException
      */
     public function load($path = 'gantry-config://')
     {
@@ -67,6 +69,15 @@ class Configurations extends AbstractConfigurationCollection
     public function preset($id)
     {
         return $id;
+    }
+
+    /**
+     * @param int|string $id
+     * @return Layout
+     */
+    public function layout($id)
+    {
+        return Layout::instance($id);
     }
 
     /**

@@ -1,26 +1,30 @@
-header:
+meta:
+  image: gantry-admin://images/layouts/3-col-right.png
+
+layout:
+  header:
+    container:
+      - position-header
+
+  navigation:
+    container:
+      - particle-menu
+
   container:
-    - position-header
+    1:
+      - main 60:
+          - position-breadcrumbs
+          - system-messages
+          - pagecontent
+      - aside 20:
+         - position-aside
+      - sidebar 20:
+         - position-sidebar
 
-navigation:
-  container:
-    - particle-menu
+  footer:
+    container:
+    - position-footer
+    - [particle-copyright 40, spacer 30, particle-branding 30]
 
-container:
-  1:
-    - main 60:
-        - position-breadcrumbs
-        - system-messages
-        - pagecontent
-    - aside 20:
-       - position-aside
-    - sidebar 20:
-       - position-sidebar
-
-footer:
-  container:
-  - position-footer
-  - [particle-copyright 40, spacer 30, particle-branding 30]
-
-offcanvas:
-  - particle-mobile-menu
+  offcanvas:
+    - particle-mobile-menu

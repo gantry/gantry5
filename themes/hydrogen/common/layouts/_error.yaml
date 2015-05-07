@@ -1,3 +1,6 @@
+meta:
+  image: gantry-admin://images/layouts/error.png
+
 children:
   -
     id: f898588e-d2dc-56d3-44d7-2c33cc57c9af

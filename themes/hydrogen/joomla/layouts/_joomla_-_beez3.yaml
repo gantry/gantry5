@@ -1,3 +1,6 @@
+meta:
+  image: gantry-admin://images/layouts/3-col.png
+
 children:
   -
     id: d9857a6b-24e7-a5bb-fbab-4aab5a65015e
