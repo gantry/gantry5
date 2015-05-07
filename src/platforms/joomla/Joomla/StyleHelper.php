@@ -46,15 +46,6 @@ class StyleHelper
             Folder::copy($oldPath, $newPath);
         }
 
-        $layout = Layout::instance($old);
-
-        // Save layout into custom directory for the current theme.
-        $filename = "{$newPath}/layout.yaml";
-
-        $file = CompiledYamlFile::instance($filename);
-        $file->settings(['inline' => 20]);
-        $file->save(['children' => json_decode($layout->toJson(), true)]);
-
         $installer = new TemplateInstaller($style->extension_id);
         $installer->updateStyle($new, ['configuration' => $new]);
     }
