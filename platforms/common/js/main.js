@@ -142,8 +142,11 @@ ready(function() {
 
         switch (page) {
             case 'layout':
+                var preset = $('[data-lm-preset]');
                 lm.layoutmanager.singles('cleanup', lm.builder, true);
                 lm.savestate.setSession(lm.builder.serialize(null, true));
+
+                data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
                 data.layout = JSON.stringify(lm.builder.serialize());
 
                 break;
@@ -2358,10 +2361,12 @@ ready(function() {
                 return;
             }
 
-            var structure = response.body.data,
+            var preset    = response.body.preset || 'default',
+                structure = response.body.data,
                 notice    = $('#lm-no-layout');
 
             root.data('lm-root', JSON.stringify(structure)).empty();
+            root.data('lm-preset', preset);
             if (notice) { notice.style({ display: 'none' }); }
             builder.setStructure(structure);
             builder.load();

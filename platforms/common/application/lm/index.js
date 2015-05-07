@@ -273,10 +273,12 @@ ready(function() {
                 return;
             }
 
-            var structure = response.body.data,
+            var preset    = response.body.preset || 'default',
+                structure = response.body.data,
                 notice    = $('#lm-no-layout');
 
             root.data('lm-root', JSON.stringify(structure)).empty();
+            root.data('lm-preset', preset);
             if (notice) { notice.style({ display: 'none' }); }
             builder.setStructure(structure);
             builder.load();
