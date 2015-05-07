@@ -191,6 +191,13 @@ class TemplateInstaller
             'client_id'    => 0
         ];
 
+        if (in_array($item['type'], ['separator', 'heading'])) {
+            $item['link'] = '';
+        }
+        if ($item['type'] !== 'component') {
+            $item['component_id'] = 0;
+        }
+
         if ($load) {
             $table->load([
                 'menutype' => $item['menutype'],

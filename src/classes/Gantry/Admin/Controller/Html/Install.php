@@ -28,7 +28,7 @@ class Install extends HtmlController
         if (class_exists('\Gantry\Joomla\TemplateInstaller')) {
             $installer = new TemplateInstaller;
             $installer->loadExtension($this->container['theme.name']);
-            $installer->installMenus(null, 0);
+            $installer->installMenus();
             $installer->cleanup();
         }
 
