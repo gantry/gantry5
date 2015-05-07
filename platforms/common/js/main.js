@@ -11624,16 +11624,18 @@ var unescapeHtml = require('mout/string/unescapeHtml');
 
 var getAjaxURL = function(view, search) {
     if (!search) { search = '%ajax%'; }
-    var re = new RegExp(search, 'g');
+    var re = new RegExp(search, 'g'),
+        url = typeof GANTRY_AJAX_URL == 'undefined' ? '' : GANTRY_AJAX_URL;
 
-    return unescapeHtml(GANTRY_AJAX_URL.replace(re, view));
+    return unescapeHtml(url.replace(re, view));
 };
 
 var getConfAjaxURL = function(view, search) {
     if (!search) { search = '%ajax%'; }
-    var re = new RegExp(search, 'g');
+    var re = new RegExp(search, 'g'),
+        url = typeof GANTRY_AJAX_CONF_URL == 'undefined' ? '' : GANTRY_AJAX_CONF_URL;
 
-    return unescapeHtml(GANTRY_AJAX_CONF_URL.replace(re, view));
+    return unescapeHtml(url.replace(re, view));
 };
 
 module.exports = {
