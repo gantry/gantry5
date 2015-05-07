@@ -28,10 +28,10 @@
         <not><isset property="package_dir" /></not>
     </condition>
 
-    <condition property="tmp_dir" value="tmp">
+    <condition property="tmp_dir" value="${phing.dir}/tmp">
         <not><isset property="tmp_dir" /></not>
     </condition>
-    <condition property="build_dir" value="package">
+    <condition property="build_dir" value="${phing.dir}/package">
         <not><isset property="build_dir" /></not>
     </condition>
 
@@ -140,7 +140,7 @@
     <!-- Initialize all project related files, at this point we are past any "location" setup work so its safe to proceed -->
     <target name="assets-prod">
         <echo message="Removing Sourcemaps and compressing Assets (CSS/JS)..." />
-        <exec command="gulp --prod" checkreturn="true" error="./gulp-prod-error.txt" />
+        <exec command="gulp --prod" checkreturn="true" error="${phing.dir}/gulp-prod-error.txt" />
     </target>
 
     <target name="build-installer">
@@ -390,7 +390,7 @@
 
     <target name="assets-dev">
         <echo message="Reverting Assets to Dev (CSS/JS)..." />
-        <exec command="gulp" checkreturn="true" error="./gulp-dev-error.txt" />
+        <exec command="gulp" checkreturn="true" error="${phing.dir}/gulp-dev-error.txt" />
     </target>
 
     <target name="package">
