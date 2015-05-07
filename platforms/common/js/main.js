@@ -2203,7 +2203,8 @@ ready(function() {
 
     // attach events
     // Modal Tabs
-    body.delegate('mousedown', '.g-tabs a', function(event, element) {
+    body.delegate('click', '.g-tabs a', function(event, element) { event.preventDefault(); return false; });
+    body.delegate('mouseup', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
 
@@ -8099,6 +8100,7 @@ var Popover = new prime({
 
     targetClickHandler: function(e) {
         var target = $(e.target);
+        if (target.matches(this.options.allowElementsClick)) { e.preventDefault(); }
         if (!target.parent('[data-g-popover-follow]') && target.data('g-popover-follow') === null) { e.stopPropagation(); }
     },
 
