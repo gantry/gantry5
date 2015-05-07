@@ -16,7 +16,7 @@
                     {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
                     {% if field.list is defined %}list="{{ field.list|e }}"{% endif %}
                     />
-            {% set picker = {'field': 'input[name="' ~ ((scope ~ name)|fieldName|e) ~ '"]', 'root': (field.root|default(false))|e, 'filter': (field.filter|default(false))|e } %}
+            {% set picker = {'field': 'input[name="' ~ ((scope ~ name)|fieldName|e) ~ '"]', 'root': (field.root|default('gantry-media://'))|e, 'filter': (field.filter|default(false))|e } %}
             <span class="input-group-btn">
                 <button class="button" type="button" data-g5-filepicker="{{ picker|json_encode()|e('html_attr') }}">
                     <i class="fa {{ field.icon|default('fa-file-o')|e }}" ></i>
