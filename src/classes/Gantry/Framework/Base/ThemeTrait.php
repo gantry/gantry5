@@ -411,6 +411,9 @@ trait ThemeTrait
     protected function prepareLayout(array &$items)
     {
         foreach ($items as $i => &$item) {
+            if ((string)(int) $i !== (string) $i) {
+                continue;
+            }
             if (!empty($item->children)) {
                 $this->prepareLayout($item->children);
             }
