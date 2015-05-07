@@ -2,7 +2,7 @@
     <div class="g-block navbar-block">
         <nav id="gantry">
             {% set style = location in ['menu', 'about', 'configurations']  ? ' style="overflow: hidden; height: 0;"' : '' %}
-            <section id="navbar"{{ style }}>
+            <section id="navbar"{{ style|raw }}>
                 <ul>
                     {% include 'partials/configuration-selector.html.twig' %}
                     <li {{ (location == 'configurations/styles') ? 'class="active"' }}>

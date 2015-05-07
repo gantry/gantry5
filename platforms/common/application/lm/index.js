@@ -118,7 +118,8 @@ ready(function() {
 
     // attach events
     // Modal Tabs
-    body.delegate('mousedown', '.g-tabs a', function(event, element) {
+    body.delegate('click', '.g-tabs a', function(event, element) { event.preventDefault(); return false; });
+    body.delegate('mouseup', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
 

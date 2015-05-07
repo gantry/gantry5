@@ -625,7 +625,13 @@ ready(function() {
                     }
                 });
             } else {
-                console.log(response);
+                var reload = $('[href="' + getAjaxURL('configurations') + '"]');
+                if (!reload) { window.location = window.location; }
+                else {
+                    body.emit('click', {target: reload});
+                }
+
+                toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
             }
 
             element.hideIndicator();
@@ -2197,7 +2203,8 @@ ready(function() {
 
     // attach events
     // Modal Tabs
-    body.delegate('mousedown', '.g-tabs a', function(event, element) {
+    body.delegate('click', '.g-tabs a', function(event, element) { event.preventDefault(); return false; });
+    body.delegate('mouseup', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
 
@@ -8093,6 +8100,7 @@ var Popover = new prime({
 
     targetClickHandler: function(e) {
         var target = $(e.target);
+        if (target.matches(this.options.allowElementsClick)) { e.preventDefault(); }
         if (!target.parent('[data-g-popover-follow]') && target.data('g-popover-follow') === null) { e.stopPropagation(); }
     },
 
