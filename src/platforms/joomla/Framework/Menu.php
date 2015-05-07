@@ -178,15 +178,22 @@ class Menu extends AbstractMenu
                     continue;
                 }
 
-                $itemParams = isset($items[$menuItem->route]) ? $items[$menuItem->route] : [];
-                $itemParams += [
+                // These params always come from Joomla.
+                $itemParams = [
                     'id' => $menuItem->id,
                     'type' => $menuItem->type,
-                    'path' => $menuItem->route,
                     'alias' => $menuItem->alias,
+                    'path' => $menuItem->route,
+                    'link' => $menuItem->link,
+                ];
+
+                // Rest of the items will come from saved configuration.
+                $itemParams += isset($items[$menuItem->route]) ? $items[$menuItem->route] : [];
+
+                // And if not available in configuration, default to Joomla.
+                $itemParams += [
                     'title' => $menuItem->title,
                     'subtitle' => $menuItem->params->get('menu-anchor_title', ''),
-                    'link' => $menuItem->link,
                     'image' => $menuItem->params->get('menu_image', ''),
                     'icon_only' => !$menuItem->params->get('menu_text', 1)
                 ];
