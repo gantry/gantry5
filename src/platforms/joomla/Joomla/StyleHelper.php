@@ -26,6 +26,8 @@ class StyleHelper
 {
     public static function getStyle($id)
     {
+        \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
+
         $style = \JTable::getInstance('Style', 'TemplatesTable');
         $style->load($id);
 
