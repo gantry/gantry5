@@ -625,7 +625,13 @@ ready(function() {
                     }
                 });
             } else {
-                console.log(response);
+                var reload = $('[href="' + getAjaxURL('configurations') + '"]');
+                if (!reload) { window.location = window.location; }
+                else {
+                    body.emit('click', {target: reload});
+                }
+
+                toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
             }
 
             element.hideIndicator();
