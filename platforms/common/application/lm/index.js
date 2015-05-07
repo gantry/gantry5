@@ -273,13 +273,16 @@ ready(function() {
                 return;
             }
 
-            var preset    = response.body.preset || 'default',
-                structure = response.body.data,
-                notice    = $('#lm-no-layout');
+            var preset      = response.body.preset || 'default',
+                preset_name = response.body.title || 'Default',
+                structure   = response.body.data,
+                notice      = $('#lm-no-layout'),
+                title       = $('.layout-title .title small');
 
             root.data('lm-root', JSON.stringify(structure)).empty();
             root.data('lm-preset', preset);
             if (notice) { notice.style({ display: 'none' }); }
+            if (title) { title.text('(' + preset_name + ')'); }
             builder.setStructure(structure);
             builder.load();
 
