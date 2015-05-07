@@ -125,7 +125,7 @@ class Layout extends HtmlController
 
         $configuration = $this->params['configuration'];
         $layout = json_decode($_POST['layout'], true);
-        $title = isset($_POST['title']) ? $_POST['title'] : ucfirst($configuration);
+        $preset = isset($_POST['preset']) ? $_POST['preset'] : '';
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
@@ -229,8 +229,11 @@ class Layout extends HtmlController
             $layout = $this->getLayout('default');
         }
 
-        // FIXME: wrong preset
-        return new JsonResponse(['title' => 'Default', 'preset' => 'default', 'data' => $layout->toArray()]);
+        return new JsonResponse([
+            'title' => ucwords(trim(str_replace('_', ' ', $layout->preset))),
+            'preset' => $layout->preset,
+            'data' => $layout->toArray()
+    ]   );
     }
 
     public function preset($id)
@@ -245,7 +248,11 @@ class Layout extends HtmlController
             throw new \RuntimeException('Preset not found', 404);
         }
 
-        return new JsonResponse(['title' => ucwords(trim(str_replace('_', ' ', $id))), 'preset' => $id, 'data' => $preset]);
+        return new JsonResponse([
+            'title' => ucwords(trim(str_replace('_', ' ', $id))),
+            'preset' => $id,
+            'data' => $preset
+        ]);
     }
 
     public function validate($particle)

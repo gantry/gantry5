@@ -34,7 +34,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     protected static $instances = [];
 
-    protected $name;
+    public $name;
+    public $preset;
     protected $exists;
     protected $items;
     protected $references;
@@ -106,9 +107,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      * @param string $name
      * @param array $items
      */
-    public function __construct($name, array $items = null)
+    public function __construct($name, array $items = null, $preset = null)
     {
         $this->name = $name;
+        $this->preset = $preset;
         $this->items = (array) $items;
         $this->exists = $items !== null;
     }
@@ -229,6 +231,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $locator = $gantry['locator'];
 
         $layout = null;
+        $preset = null;
         $filename = $locator("gantry-config://{$name}/layout.yaml");
 
         // If layout file doesn't exists, figure out what preset was used.
@@ -236,14 +239,14 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             /** @var Configurations $configurations */
             $configurations = $gantry['configurations'];
 
-            $name = $configurations->preset($name);
-            $filename = $locator("gantry-layouts://{$name}.yaml");
+            $preset = $configurations->preset($name);
+            $filename = $locator("gantry-layouts://{$preset}.yaml");
         }
 
         if ($filename) {
             $layout = LayoutReader::read($filename);
         }
 
-        return new static($name, $layout);
+        return new static($name, $layout, $preset);
     }
 }
