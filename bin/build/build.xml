@@ -321,10 +321,6 @@
             <fileset dir="${path.platforms}/joomla/plg_system_gantry5"/>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/plg_quickicon_gantry5" overwrite="true">
-            <fileset dir="${path.platforms}/joomla/plg_quickicon_gantry5"/>
-        </copy>
-
         <!-- Add version information to all xml files -->
         <copy todir="${tmp_dir}/packages/plg_system_gantry5" overwrite="true">
             <filterchain refid="filter"/>
@@ -333,10 +329,26 @@
             </fileset>
         </copy>
 
+        <copy todir="${tmp_dir}/packages/plg_quickicon_gantry5" overwrite="true">
+            <fileset dir="${path.platforms}/joomla/plg_quickicon_gantry5"/>
+        </copy>
+
         <!-- Add version information to all xml files -->
         <copy todir="${tmp_dir}/packages/plg_quickicon_gantry5" overwrite="true">
             <filterchain refid="filter"/>
             <fileset dir="${path.platforms}/joomla/plg_quickicon_gantry5">
+                <include name="*.xml"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${tmp_dir}/packages/plg_gantry5_preset" overwrite="true">
+            <fileset dir="${path.platforms}/joomla/plg_gantry5_preset"/>
+        </copy>
+
+        <!-- Add version information to all xml files -->
+        <copy todir="${tmp_dir}/packages/plg_gantry5_preset" overwrite="true">
+            <filterchain refid="filter"/>
+            <fileset dir="${path.platforms}/joomla/plg_gantry5_preset">
                 <include name="*.xml"/>
             </fileset>
         </copy>
