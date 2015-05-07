@@ -49,7 +49,7 @@
             </span>
         </div>
         <div id="page">
-            <div class="lm-blocks" data-lm-page="{{ page_id|e }}" data-lm-root="{{ layout|json_encode|e('html_attr') }}"></div>
+            <div class="lm-blocks" data-lm-page="{{ page_id|e }}" data-lm-preset="{{ preset|default('default') }}" data-lm-root="{{ layout|json_encode|e('html_attr') }}"></div>
             {% if layout is empty %}
             <div id="lm-no-layout">
                 <div class="card full-width">
