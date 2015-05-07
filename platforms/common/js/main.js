@@ -11614,7 +11614,7 @@ module.exports = new FlagsState();
 },{"../ui":42,"./get-ajax-suffix":55,"./get-ajax-url":56,"prime":257,"prime/emitter":256,"prime/map":258}],55:[function(require,module,exports){
 "use strict";
 var getAjaxSuffix = function() {
-    return GANTRY_AJAX_SUFFIX;
+    return typeof GANTRY_AJAX_SUFFIX == 'undefined' ? '' : GANTRY_AJAX_SUFFIX;
 };
 
 module.exports = getAjaxSuffix;
