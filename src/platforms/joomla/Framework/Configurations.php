@@ -101,7 +101,9 @@ class Configurations extends BaseConfigurations
             throw new \RuntimeException('Configuration not found', 404);
         }
 
-        if (!$model->duplicate($id)) {
+        $pks = [$id];
+
+        if (!$model->duplicate($pks)) {
             throw new \RuntimeException($model->getError(), 400);
         }
     }
