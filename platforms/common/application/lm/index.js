@@ -51,8 +51,8 @@ ready(function() {
             forward: $('[data-lm-forward]')
         };
 
-        if (index && HM.back.hasClass('disabled')) HM.back.removeClass('disabled');
-        if (reset && !HM.forward.hasClass('disabled')) HM.forward.addClass('disabled');
+        if (index && HM.back && HM.back.hasClass('disabled')) HM.back.removeClass('disabled');
+        if (reset && HM.forward && !HM.forward.hasClass('disabled')) HM.forward.addClass('disabled');
         layoutmanager.updatePendingChanges();
     });
 
@@ -118,7 +118,8 @@ ready(function() {
 
     // attach events
     // Modal Tabs
-    body.delegate('mousedown', '.g-tabs a', function(event, element) {
+    body.delegate('click', '.g-tabs a', function(event, element) { event.preventDefault(); return false; });
+    body.delegate('mouseup', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
 
@@ -173,15 +174,6 @@ ready(function() {
                 blocktype.style({ display: 'block' });
             }
         }, this);
-    });
-
-    // TODO: this was the + handler for new layouts which is now gone in favor of Configurations
-    body.delegate('click', '[data-g5-lm-add]', function(event, element) {
-        event.preventDefault();
-        modal.open({
-            content: '<h1 class="center">Configurations are still WIP!</h1>'/*,
-            remote: $(element).attribute('href') + getAjaxSuffix()*/
-        });
     });
 
     // Grid same widths button (evenize, equalize)
@@ -281,11 +273,16 @@ ready(function() {
                 return;
             }
 
-            var structure = response.body.data,
-                notice    = $('#lm-no-layout');
+            var preset      = response.body.preset || 'default',
+                preset_name = response.body.title || 'Default',
+                structure   = response.body.data,
+                notice      = $('#lm-no-layout'),
+                title       = $('.layout-title .title small');
 
             root.data('lm-root', JSON.stringify(structure)).empty();
+            root.data('lm-preset', preset);
             if (notice) { notice.style({ display: 'none' }); }
+            if (title) { title.text('(' + preset_name + ')'); }
             builder.setStructure(structure);
             builder.load();
 
@@ -368,7 +365,7 @@ ready(function() {
 
                     var title = content.elements.content.find('[data-title-editable]');
                     if (title) {
-                        dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
+                        dataString.push('title=' + encodeURIComponent(trim(title.data('title-editable'))));
                     }
 
                     if (invalid.length) {

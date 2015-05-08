@@ -23,6 +23,7 @@
     }
 
     .add-new {
+        cursor: pointer;
         a {
             display: block;
             position: absolute;
@@ -40,14 +41,29 @@
             font-size: 70px;
             color: #ddd;
             display: block;
+
+            &.fa-spinner {
+                margin-left: -0.642857145em;
+                margin-top: -0.642857145em;
+            }
         }
 
         .page {
             vertical-align: middle;
-            height: 347px;
+            height: 357px;
             line-height: 343px + 35px;
             text-align: center;
             position: relative;
+        }
+    }
+
+    .g-tooltip {
+        &:before {
+            bottom: 2.6rem;
+        }
+
+        &:after {
+            bottom: 3rem;
         }
     }
 }

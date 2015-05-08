@@ -9,6 +9,7 @@ navigation:
 container:
   1:
     - main 60:
+        - system-messages
         - pagecontent
     - aside 20:
        - position-aside

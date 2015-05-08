@@ -1,10 +1,3 @@
-// Define all local fonts.
-@each $font in get-local-fonts($base-body-font, $base-heading-font) {
-  @each $weight in get-local-font-weights($font) {
-    @include font-face($font, get-local-font-url($font, $weight), $weight);
-  }
-}
-
 // Font Import
 @include import-font($base-body-font);
 @include import-font($base-heading-font);

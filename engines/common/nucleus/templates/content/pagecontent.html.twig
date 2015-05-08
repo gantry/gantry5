@@ -1,16 +1,21 @@
-{% set enabled = gantry.config.get('particles.' ~ segment.subtype ~ '.enabled', 1) %}
+{% set subtype = segment.subtype|default(segment.type) %}
+{% set enabled = gantry.config.get('particles.' ~ subtype ~ '.enabled', 1) %}
 
 {% set html %}
     {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
-        {{ content }}
+        {% if subtype == 'pagecontent' %}
+            {{ content|raw }}
+        {% elseif subtype == 'system-messages' %}
+            {{ gantry.platform.displaySystemMessages()|raw }}
+        {% endif %}
     {% endif %}
 {% endset %}
 
 {% if html|trim %}
     {% do gantry.theme.joomla(true) %}
     <div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
-    	<div class="platform-content">
-        	{{ html }}
+        <div class="platform-content">
+            {{ html|raw }}
         </div>
     </div>
 {% endif %}

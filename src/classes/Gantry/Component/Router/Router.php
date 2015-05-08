@@ -68,6 +68,11 @@ abstract class Router implements RouterInterface
     {
         $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . strtr(ucwords(strtr($resource, '/', ' ')), ' ', '\\');
 
+        // Protect against CSRF Attacks.
+        if (!in_array($method, ['GET', 'HEAD'], true) && !$this->checkSecurityToken()) {
+            throw new \RuntimeException('Invalid security token; please reload the page and try again.', 403);
+        }
+
         if (!class_exists($class)) {
             if ($format == 'json') {
                 // Special case: All HTML requests can be returned also as JSON.
@@ -92,6 +97,8 @@ abstract class Router implements RouterInterface
     }
 
     abstract protected function boot();
+
+    abstract protected function checkSecurityToken();
 
     protected function load()
     {

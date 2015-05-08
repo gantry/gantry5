@@ -1,3 +1,7 @@
-main:
-  container:
-    - pagecontent
+preset:
+  image: gantry-admin://images/layouts/body-only.png
+
+layout:
+  main:
+    container:
+      - pagecontent

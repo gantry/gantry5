@@ -71,3 +71,14 @@ textarea {
 	zoom: 1;
 	vertical-align: top;
 }
+
+/* OffCanvas */
+#g-offcanvas {
+	display: none !important;
+	visibility: hidden !important;
+	width: 0 !important;
+	height: 0 !important;
+	position: static !important;
+}
+
+[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close] { display: none; }

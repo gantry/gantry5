@@ -171,6 +171,13 @@ class Menu extends AbstractMenu
 
             $menuItems = $this->getItemsFromPlatform($params);
 
+            $itemMap = [];
+            foreach ($items as $path => &$item) {
+                if (isset($item['id']) && is_numeric($item['id'])) {
+                    $itemMap[$item['id']] = &$item;
+                }
+            }
+
             foreach ($menuItems as $menuItem) {
                 if (($start && $start > $menuItem->level)
                     || ($end && $menuItem->level > $end)
@@ -178,15 +185,28 @@ class Menu extends AbstractMenu
                     continue;
                 }
 
-                $itemParams = isset($items[$menuItem->route]) ? $items[$menuItem->route] : [];
-                $itemParams += [
+                // These params always come from Joomla.
+                $itemParams = [
                     'id' => $menuItem->id,
                     'type' => $menuItem->type,
-                    'path' => $menuItem->route,
                     'alias' => $menuItem->alias,
+                    'path' => $menuItem->route,
+                    'link' => $menuItem->link,
+                ];
+
+                // Rest of the items will come from saved configuration.
+                if (isset($itemMap[$menuItem->id])) {
+                    // ID found, use it.
+                    $itemParams += $itemMap[$menuItem->id];
+                } elseif (isset($items[$menuItem->route])) {
+                    // ID not found, try to use route.
+                    $itemParams += $items[$menuItem->route];
+                }
+
+                // And if not available in configuration, default to Joomla.
+                $itemParams += [
                     'title' => $menuItem->title,
                     'subtitle' => $menuItem->params->get('menu-anchor_title', ''),
-                    'link' => $menuItem->link,
                     'image' => $menuItem->params->get('menu_image', ''),
                     'icon_only' => !$menuItem->params->get('menu_text', 1)
                 ];
@@ -234,9 +254,9 @@ class Menu extends AbstractMenu
                 if (!$link) {
                     $item->url(false);
                 } elseif (strcasecmp(substr($link, 0, 4), 'http') && (strpos($link, 'index.php?') !== false)) {
-                    $item->url(\JRoute::_($link, true, $menuItem->params->get('secure')));
+                    $item->url(\JRoute::_($link, false, $menuItem->params->get('secure')));
                 } else {
-                    $item->url(\JRoute::_($link));
+                    $item->url(\JRoute::_($link, false));
                 }
 
                 if ($item->type == 'url') {

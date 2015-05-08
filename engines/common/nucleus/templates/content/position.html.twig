@@ -1,17 +1,23 @@
-{% set enabled = gantry.config.get('particles.' ~ segment.type ~ '.enabled', 1) %}
-{% set particle = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
+{% try %}
 
-{% set html %}
-    {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
-        {% include ['particles/' ~ segment.subtype|default('position') ~ '.html.twig',
-        '@particles/' ~ segment.subtype|default('position') ~ '.html.twig'] with { gantry: gantry, site: site, page: gantry.page, particle: particle } only %}
-    {% endif %}
-{% endset %}
+    {% set enabled = gantry.config.get('particles.' ~ segment.type ~ '.enabled', 1) %}
+    {% set particle = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
 
-{% if html|trim %}
-    <div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
-    	<div class="platform-content">
-        	{{ html }}
+    {% set html %}
+        {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
+            {% include ['particles/' ~ segment.subtype|default('position') ~ '.html.twig',
+            '@particles/' ~ segment.subtype|default('position') ~ '.html.twig'] with { gantry: gantry, site: site, page: gantry.page, particle: particle } only %}
+        {% endif %}
+    {% endset %}
+
+    {% if html|trim %}
+        <div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
+            <div class="platform-content">
+                {{ html|raw }}
+            </div>
         </div>
-    </div>
-{% endif %}
+    {% endif %}
+
+{% catch %}
+    <div class="alert alert-error"><strong>Error</strong> while rendering {{ segment.subtype|default('position') }}.</div>
+{% endtry %}

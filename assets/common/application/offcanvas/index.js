@@ -84,7 +84,7 @@ var Offcanvas = new prime({
         if (!this.options.padding) {
             this.offcanvas[0].style.display = 'block';
             var width = this.offcanvas[0].getBoundingClientRect().width;
-            this.offcanvas[0].style.display = null;
+            this.offcanvas[0].style.removeProperty('display');
 
             this.setOptions({ padding: width });
         }
@@ -338,22 +338,18 @@ var Offcanvas = new prime({
     _checkTogglers: function(mutator) {
         var togglers = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
             mobileContainer = $('#g-mobilemenu-container'),
-            blocks;
-
-        // if there is no mobile menu there's no need to check the offcanvas mutation
-        if (!mobileContainer) {
-            this.detachMutationEvent();
-            return;
-        }
+            blocks, mCtext;
 
         if (!togglers || (mutator && ((mutator.target || mutator.srcElement) !== mobileContainer[0]))) { return; }
         if (this.opened) { this.close(); }
 
         timeout(function(){
             blocks = this.offcanvas.search('.g-block');
+            mCtext = mobileContainer.text().length;
             var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
 
             togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
+            mobileContainer.parent('.g-content')[!mCtext ? 'addClass' : 'removeClass']('nomarginall')[!mCtext ? 'addClass' : 'removeClass']('nopaddingall');
 
             if (!shouldCollapse && !this.attached) { this.attach(); }
             else if (shouldCollapse && this.attached) {

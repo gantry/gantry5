@@ -16,6 +16,7 @@ namespace Gantry\Framework\Base;
 
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Configuration\AbstractConfigurationCollection;
+use Gantry\Component\Layout\Layout;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -24,6 +25,7 @@ class Configurations extends AbstractConfigurationCollection
     /**
      * @param string $path
      * @return $this
+     * @throws \RuntimeException
      */
     public function load($path = 'gantry-config://')
     {
@@ -58,6 +60,66 @@ class Configurations extends AbstractConfigurationCollection
         $this->items = $this->addDefaults($files);
 
         return $this;
+    }
+
+    /**
+     * @param int|string $id
+     * @return int|string
+     */
+    public function preset($id)
+    {
+        return $id;
+    }
+
+    /**
+     * @param int|string $id
+     * @return Layout
+     */
+    public function layout($id)
+    {
+        return Layout::load($id);
+    }
+
+    /**
+     * @param int|string $id
+     * @return Layout
+     */
+    public function layoutPreset($id)
+    {
+        $layout = Layout::load($id);
+        $preset = $layout->preset;
+
+        unset($layout);
+
+        return $preset;
+    }
+
+    /**
+     * @param string $id
+     * @throws \RuntimeException
+     */
+    public function duplicate($id)
+    {
+        throw new \RuntimeException('Not Implemented', 501);
+    }
+
+    /**
+     * @param string $id
+     * @param string $title
+     * @throws \RuntimeException
+     */
+    public function rename($id, $title)
+    {
+        throw new \RuntimeException('Not Implemented', 501);
+    }
+
+    /**
+     * @param string $id
+     * @throws \RuntimeException
+     */
+    public function delete($id)
+    {
+        throw new \RuntimeException('Not Implemented', 501);
     }
 
     /**

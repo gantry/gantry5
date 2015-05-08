@@ -3,16 +3,6 @@ namespace Gantry\Framework;
 
 class Gantry extends Base\Gantry
 {
-    public function styles()
-    {
-        return Document::$styles;
-    }
-
-    public function scripts($inFooter = false)
-    {
-        return Document::$scripts[$inFooter ? 'footer' : 'header'];
-    }
-
     /**
      * @throws \LogicException
      */

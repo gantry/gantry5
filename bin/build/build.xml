@@ -16,22 +16,22 @@
     -Dtmp_dir=tmp                          (= git/gantry5/build/tmp)
     -Dbuild_dir=package                    (= git/gantry5/build/package)
 -->
-<project name="gantry5" basedir="" description="Phing Build Script" default="dist">
+<project name="gantry5" basedir="." description="Phing Build Script" default="dist">
 
     <!-- Setup of any global settings that will apply to the entire build script -->
-    <property file="build.ini" />
+    <property file="${phing.dir}/build.ini" />
 
-    <condition property="project_dir" value="../../">
+    <condition property="project_dir" value="${phing.dir}/../../">
         <not><isset property="project_dir" /></not>
     </condition>
     <condition property="package_dir" value="${project_dir}/../builds/${phing.project.name}">
         <not><isset property="package_dir" /></not>
     </condition>
 
-    <condition property="tmp_dir" value="tmp">
+    <condition property="tmp_dir" value="${phing.dir}/tmp">
         <not><isset property="tmp_dir" /></not>
     </condition>
-    <condition property="build_dir" value="package">
+    <condition property="build_dir" value="${phing.dir}/package">
         <not><isset property="build_dir" /></not>
     </condition>
 
@@ -140,7 +140,7 @@
     <!-- Initialize all project related files, at this point we are past any "location" setup work so its safe to proceed -->
     <target name="assets-prod">
         <echo message="Removing Sourcemaps and compressing Assets (CSS/JS)..." />
-        <exec command="gulp --prod" output="/dev/null" error ="./gulp-prod-error.txt" />
+        <exec command="gulp --prod" checkreturn="true" error="${phing.dir}/gulp-prod-error.txt" />
     </target>
 
     <target name="build-installer">
@@ -321,10 +321,6 @@
             <fileset dir="${path.platforms}/joomla/plg_system_gantry5"/>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/plg_quickicon_gantry5" overwrite="true">
-            <fileset dir="${path.platforms}/joomla/plg_quickicon_gantry5"/>
-        </copy>
-
         <!-- Add version information to all xml files -->
         <copy todir="${tmp_dir}/packages/plg_system_gantry5" overwrite="true">
             <filterchain refid="filter"/>
@@ -333,10 +329,26 @@
             </fileset>
         </copy>
 
+        <copy todir="${tmp_dir}/packages/plg_quickicon_gantry5" overwrite="true">
+            <fileset dir="${path.platforms}/joomla/plg_quickicon_gantry5"/>
+        </copy>
+
         <!-- Add version information to all xml files -->
         <copy todir="${tmp_dir}/packages/plg_quickicon_gantry5" overwrite="true">
             <filterchain refid="filter"/>
             <fileset dir="${path.platforms}/joomla/plg_quickicon_gantry5">
+                <include name="*.xml"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${tmp_dir}/packages/plg_gantry5_preset" overwrite="true">
+            <fileset dir="${path.platforms}/joomla/plg_gantry5_preset"/>
+        </copy>
+
+        <!-- Add version information to all xml files -->
+        <copy todir="${tmp_dir}/packages/plg_gantry5_preset" overwrite="true">
+            <filterchain refid="filter"/>
+            <fileset dir="${path.platforms}/joomla/plg_gantry5_preset">
                 <include name="*.xml"/>
             </fileset>
         </copy>
@@ -390,7 +402,7 @@
 
     <target name="assets-dev">
         <echo message="Reverting Assets to Dev (CSS/JS)..." />
-        <exec command="gulp" output="/dev/null" error ="./gulp-dev-error.txt" />
+        <exec command="gulp" checkreturn="true" error="${phing.dir}/gulp-dev-error.txt" />
     </target>
 
     <target name="package">

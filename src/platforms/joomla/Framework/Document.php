@@ -15,58 +15,58 @@ use Gantry\Framework\Base\Document as BaseDocument;
 
 class Document extends BaseDocument
 {
-    public static $scripts = ['header' => [], 'footer' => []];
-
-    public static function addHeaderTag(array $element, $in_footer = false)
+    public static function registerAssets()
     {
-        $doc = \JFactory::getDocument();
-        switch ($element['tag']) {
-            case 'link':
-                if (!empty($element['href']) && !empty($element['rel']) && $element['rel'] == 'stylesheet') {
-                    $href = $element['href'];
-                    $type = !empty($element['type']) ? $element['type'] : 'text/css';
-                    $media = !empty($element['media']) ? $element['media'] : null;
-                    unset($element['tag'], $element['rel'], $element['content'], $element['href'], $element['type'], $element['media']);
-                    $doc->AddStyleSheet($href, $type, $media, $element);
-                    return true;
-                }
-                break;
+        static::registerStyles();
+        static::registerScripts();
+    }
 
-            case 'style':
-                if (!empty($element['content'])) {
-                    $content = $element['content'];
-                    $type = !empty($element['type']) ? $element['type'] : 'text/css';
-                    $doc->addStyleDeclaration($content, $type);
-                    return true;
-                }
-                break;
-
-            case 'script':
-                if (!empty($element['src'])) {
-                    $src = $element['src'];
-                    $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
-                    $defer = isset($element['defer']) ? true : false;
-                    $async = isset($element['async']) ? true : false;
-                    if ($in_footer) {
-                       self::$scripts['footer'][$src] = "<script type=\"{$type}\" src=\"{$src}\"></script>";
-                    } else {
-                        $doc->addScript($src, $type, $defer, $async);
-                    }
-                    return true;
-
-                } elseif (!empty($element['content'])) {
-                    $content = $element['content'];
-                    $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
-                    if ($in_footer) {
-                       self::$scripts['footer'][md5($content).sha1($content)] = "<script type=\"{$type}\">{$content}</script>";
-                    } else {
-                        $doc->addScriptDeclaration($content, $type);
-                    }
-                    return true;
-                }
-                break;
+    protected static function registerStyles()
+    {
+        if (empty(self::$styles['head'])) {
+            return;
         }
-        return false;
+
+        krsort(self::$styles['head'], SORT_NUMERIC);
+
+        $doc = \JFactory::getDocument();
+
+        foreach (self::$styles['head'] as $styles) {
+            foreach ($styles as $style) {
+                switch ($style[':type']) {
+                    case 'file':
+                        $doc->AddStyleSheet($style['href'], $style['type'], $style['media'], $style['element']);
+                        break;
+                    case 'inline':
+                        $doc->addStyleDeclaration($style['content'], $style['type']);
+                        break;
+                }
+            }
+        }
+    }
+
+    protected static function registerScripts()
+    {
+        if (empty(self::$scripts['head'])) {
+            return;
+        }
+
+        krsort(self::$scripts['head'], SORT_NUMERIC);
+
+        $doc = \JFactory::getDocument();
+
+        foreach (self::$scripts['head'] as $scripts) {
+            foreach ($scripts as $script) {
+                switch ($script[':type']) {
+                    case 'file':
+                        $doc->addScript($script['src'], $script['type'], $script['defer'], $script['async']);
+                        break;
+                    case 'inline':
+                        $doc->addScriptDeclaration($script['content'], $script['type']);
+                        break;
+                }
+            }
+        }
     }
 
     public static function rootUri()

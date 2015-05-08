@@ -9,11 +9,21 @@
         	z-index: 10;
            	top: -9999px;
             &.g-active {
-                top: auto;
+                top: 100%;
             }
             .g-dropdown {
             	top: 0;
             }
+        }
+        .g-fullwidth {
+        	.g-dropdown {
+        		&.g-active {
+        			top: auto;
+        		}
+        		.g-dropdown.g-active {
+        			top: 0;
+        		}
+        	}
         }
     }
 
@@ -161,9 +171,8 @@
 			right: 0;
 
 			.g-block {
-				width: 50%;
 				position: relative;
-				overflow: hidden; 
+				overflow: hidden;
 			}
 			// Dropdown is Active When Its Parent is Clicked
 			&.g-active {

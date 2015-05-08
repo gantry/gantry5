@@ -73,7 +73,7 @@ trait ThemeTrait
         foreach ($configurations as $configuration => $title) {
             $config = ConfigServiceProvider::load($gantry, $configuration);
 
-            $compiler->setConfiguration($configuration)->setVariables($config->flatten('styles', '-'));
+            $compiler->reset()->setConfiguration($configuration)->setVariables($config->flatten('styles', '-'));
             $compiler->compileAll();
         }
     }
@@ -152,7 +152,7 @@ trait ThemeTrait
             $compiler->setConfiguration(isset($gantry['configuration']) ? $gantry['configuration'] : 'default');
         }
 
-        return $compiler;
+        return $compiler->reset();
     }
 
     /**
@@ -411,6 +411,10 @@ trait ThemeTrait
     protected function prepareLayout(array &$items)
     {
         foreach ($items as $i => &$item) {
+            // Non-numeric items are meta-data which should be ignored.
+            if (((string)(int) $i !== (string) $i) || !is_object($item)) {
+                continue;
+            }
             if (!empty($item->children)) {
                 $this->prepareLayout($item->children);
             }

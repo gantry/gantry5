@@ -110,6 +110,8 @@ class Layout extends HtmlController
 
         $this->params['page_id'] = $id;
         $this->params['layout'] = $layout->toArray();
+        $this->params['preset'] = $layout->preset;
+        $this->params['preset_title'] = ucwords(trim(str_replace('_', ' ', $layout->preset['name'])));
         $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($id, '_')));
         $this->params['particles'] = $groups;
         $this->params['switcher_url'] = str_replace('.', '/', "configurations.{$id}.layout.switch");
@@ -125,7 +127,7 @@ class Layout extends HtmlController
 
         $configuration = $this->params['configuration'];
         $layout = json_decode($_POST['layout'], true);
-        $title = isset($_POST['title']) ? $_POST['title'] : ucfirst($configuration);
+        $preset = isset($_POST['preset']) ? json_decode($_POST['preset'], true) : '';
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
@@ -136,7 +138,7 @@ class Layout extends HtmlController
 
         $file = CompiledYamlFile::instance($filename);
         $file->settings(['inline' => 20]);
-        $file->save(['children' => $layout]);
+        $file->save(['preset' => $preset, 'children' => $layout]);
 
         // Fire save event.
         $event = new Event;
@@ -229,7 +231,11 @@ class Layout extends HtmlController
             $layout = $this->getLayout('default');
         }
 
-        return new JsonResponse(['data' => $layout->toArray()]);
+        return new JsonResponse([
+            'title' => ucwords(trim(str_replace('_', ' ', $layout->preset['name']))),
+            'preset' => json_encode($layout->preset),
+            'data' => $layout->toArray()
+    ]   );
     }
 
     public function preset($id)
@@ -244,7 +250,11 @@ class Layout extends HtmlController
             throw new \RuntimeException('Preset not found', 404);
         }
 
-        return new JsonResponse(['data' => $preset]);
+        return new JsonResponse([
+            'title' => ucwords(trim(str_replace('_', ' ', $id))),
+            'preset' => json_encode($preset['preset']),
+            'data' => $preset
+        ]);
     }
 
     public function validate($particle)

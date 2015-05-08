@@ -1,0 +1,9 @@
+hydrogen-theme:
+  title: 'Hydrogen Theme'
+  description: 'Sample menu for Hydrogen theme.'
+
+  items:
+    hydrogen:
+      title: 'Home'
+      layout: home
+      home: 1

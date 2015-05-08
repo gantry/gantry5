@@ -329,6 +329,7 @@ var Popover = new prime({
 
     targetClickHandler: function(e) {
         var target = $(e.target);
+        if (target.matches(this.options.allowElementsClick)) { e.preventDefault(); }
         if (!target.parent('[data-g-popover-follow]') && target.data('g-popover-follow') === null) { e.stopPropagation(); }
     },
 

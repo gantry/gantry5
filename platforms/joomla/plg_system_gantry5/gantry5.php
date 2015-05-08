@@ -132,7 +132,8 @@ class plgSystemGantry5 extends JPlugin
                     $id = (int) array_shift($cid);
 
                     if (isset($styles[$id])) {
-                        $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&style={$id}");
+                        $token = JSession::getFormToken();
+                        $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&style={$id}&{$token}=1");
                     }
                 }
             }

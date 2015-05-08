@@ -1,28 +1,32 @@
-header:
-  container:
-    - [particle-logo 50, position-position-0 50]
+preset:
+  image: gantry-admin://images/layouts/3-col.png
 
-navigation:
-  container:
-    - [particle-menu]
+layout:
+  header:
+    container:
+      - [particle-logo 50, position-position-0 50]
 
-container:
-  1:
-    - sidebar 20:
-      - position-position-8
-    - main 60:
-      - position-position-3
-      - position-global_messages
-      - pagecontent
-      - position-position-2
-    - aside 20:
-      - position-position-7
+  navigation:
+    container:
+      - [particle-menu]
 
-footer:
   container:
-    - position-footer
-    - [particle-copyright 40, spacer 30, particle-branding 30]
+    1:
+      - sidebar 20:
+        - position-position-8
+      - main 60:
+        - position-position-3
+        - system-messages
+        - pagecontent
+        - position-position-2
+      - aside 20:
+        - position-position-7
 
-debug:
-  container:
-    - position-debug
+  footer:
+    container:
+      - position-footer
+      - [particle-copyright 40, spacer 30, particle-branding 30]
+
+  debug:
+    container:
+      - position-debug

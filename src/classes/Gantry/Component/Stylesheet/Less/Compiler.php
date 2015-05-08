@@ -24,6 +24,7 @@ class Compiler extends BaseCompiler
 {
     protected $basePath;
     protected $fonts;
+    protected $usedFonts;
 
     public function setBasePath($basePath)
     {
@@ -59,5 +60,12 @@ class Compiler extends BaseCompiler
 
         // Return valid CSS.
         return "url('{$url}')";
+    }
+
+    public function reset()
+    {
+        $this->usedFonts = [];
+
+        return $this;
     }
 }

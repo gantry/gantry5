@@ -1,16 +1,22 @@
-{% set enabled = gantry.config.get('particles.' ~ segment.subtype ~ '.enabled', 1) %}
-{% set particle = gantry.config.getJoined('particles.' ~ segment.subtype, segment.attributes) %}
+{% try %}
 
-{% set html %}
-    {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
-    {% include ['particles/' ~ segment.subtype ~ '.html.twig',
-    '@particles/' ~ segment.subtype ~ '.html.twig']
-    ignore missing with {gantry: gantry, site: site, page: gantry.page, particle: particle } only %}
+    {% set enabled = gantry.config.get('particles.' ~ segment.subtype ~ '.enabled', 1) %}
+    {% set particle = gantry.config.getJoined('particles.' ~ segment.subtype, segment.attributes) %}
+
+    {% set html %}
+        {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
+            {% include ['particles/' ~ segment.subtype ~ '.html.twig',
+            '@particles/' ~ segment.subtype ~ '.html.twig']
+            ignore missing with {gantry: gantry, site: site, page: gantry.page, particle: particle } only %}
+        {% endif %}
+    {% endset %}
+
+    {% if html|trim %}
+    <div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
+        {{ html|raw }}
+    </div>
     {% endif %}
-{% endset %}
 
-{% if html|trim %}
-<div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
-    {{ html }}
-</div>
-{% endif %}
+{% catch %}
+    <div class="alert alert-error"><strong>Error</strong> while rendering {{ segment.subtype }} particle.</div>
+{% endtry %}

@@ -11,7 +11,7 @@
             {% endfor %}
         {% endif %}
 
-        <link rel="stylesheet" href="{{ url(css.location) }}" type="text/css"{{ attr_extra }} />
+        <link rel="stylesheet" href="{{ url(css.location) }}" type="text/css"{{ attr_extra|raw }} />
     {% endfor %}
 {% endblock %}
 
@@ -26,6 +26,6 @@
             {% endfor %}
         {% endif %}
 
-        <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra }}></script>
+        <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
     {% endfor %}
 {% endblock %}

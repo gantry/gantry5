@@ -50,6 +50,10 @@ body.com_gantry5 nav.navbar * {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
 }
+/* line 57, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
+body.com_gantry5 > div:last-child[style^="position: absolute; z-index: -1; top: 0px; left: 0px; right: 0px; height: "] {
+  display: none;
+}
 
 /* line 11, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_buttons.scss */
 #g5-container .button-primary {

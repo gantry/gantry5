@@ -1,3 +1,6 @@
+preset:
+  image: gantry-admin://images/layouts/default.png
+
 children:
   -
     id: 964d594b-7daa-c1dc-ecce-5f41293c6a3b
@@ -133,11 +136,11 @@ children:
                     id: 5e3e4188-26d6-3f78-9617-8fe6df77f84f
                     type: position
                     subtype: false
-                    title: Global_messages
+                    title: System_messages
                     attributes:
                       enabled: 1
-                      key: global_messages
-                      title: Global_messages
+                      key: system-messages
+                      title: System_messages
                     children: {  }
           -
             id: 1900441b-5657-94b5-2561-ca3ea5974ec8

@@ -72,13 +72,20 @@ class Router extends BaseRouter
 
         $this->container['ajax_suffix'] = '&format=json';
 
+        $token = \JSession::getFormToken();
+
         $this->container['routes'] = [
-            '1' => '&view=%s&style=' . $style,
+            '1' => "&view=%s&style={$style}&{$token}=1",
 
             'themes' => '&view=themes',
-            'picker/layouts' => '&view=layouts&style=' . $style,
-            'picker/particles' => '&view=particles&style=' . $style
+            'picker/layouts' => "&view=layouts&style={$style}&{$token}=1",
+            'picker/particles' => "&view=particles&style={$style}&{$token}=1"
         ];
+    }
+
+    protected function checkSecurityToken()
+    {
+        return \JSession::checkToken('get');
     }
 
     /**

@@ -25,6 +25,7 @@ class Compiler extends BaseCompiler
 {
     protected $basePath;
     protected $fonts;
+    protected $usedFonts;
 
     public function __construct()
     {
@@ -99,7 +100,14 @@ class Compiler extends BaseCompiler
 
         // It's a google font
         if (substr($value, 0, 7) === 'family=') {
-            return "url('http://fonts.googleapis.com/css?{$value}')";
+            $fonts = $this->decodeFonts($value);
+            $font = reset($fonts);
+
+            // Only return url once per font.
+            if ($font && !isset($this->usedFonts[$font])) {
+                $this->usedFonts[$font] = true;
+                return "url('http://fonts.googleapis.com/css?{$value}')";
+            }
         }
 
         return false;
@@ -183,7 +191,14 @@ class Compiler extends BaseCompiler
         $name = isset($args[0]) ? trim($args[0], '\'"') : '';
         $weight = isset($args[1]) ? $args[1] : 400;
 
-        return isset($this->fonts[$name][$weight]) ? $this->fonts[$name][$weight] : null;
+        // Only return url once per font.
+        if (isset($this->fonts[$name][$weight]) && !isset($this->usedFonts[$name . '-' . $weight])) {
+            $this->usedFonts[$name . '-' . $weight] = true;
+
+            return $this->fonts[$name][$weight];
+        }
+
+        return false;
     }
 
     /**
@@ -252,5 +267,12 @@ class Compiler extends BaseCompiler
         array_filter($list);
 
         return $list;
+    }
+
+    public function reset()
+    {
+        $this->usedFonts = [];
+
+        return $this;
     }
 }

@@ -1,3 +1,14 @@
+{% set attr_class = segment.attributes.class ? ' class="' ~ segment.attributes.class|e ~ '"' %}
+{% set attr_extra = '' %}
+
+{% if segment.attributes.extra %}
+    {% for attributes in segment.attributes.extra %}
+        {% for key, value in attributes %}
+            {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
 {% set offcanvas %}
     {% for child in segment.children %}
         {% include '@nucleus/layout/' ~ child.type ~ '.html.twig' with { 'segments': child.children } %}
@@ -5,7 +16,7 @@
 {% endset %}
 
 {% if offcanvas|trim %}
-<div id="g-offcanvas">
-    {{ offcanvas }}
+<div id="g-offcanvas" {{ attr_class|raw }}{{ attr_extra|raw }}>
+    {{ offcanvas|raw }}
 </div>
 {% endif %}

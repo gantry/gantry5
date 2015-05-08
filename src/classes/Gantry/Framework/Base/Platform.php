@@ -155,4 +155,8 @@ abstract class Platform
     {
         return $this->name;
     }
+
+    public function finalize()
+    {
+    }
 }

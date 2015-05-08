@@ -11,8 +11,7 @@ var ready     = require('domready'),
 ready(function() {
     instances = {
         offcanvas: new offcanvas(),
-        menu: new menu(),
-        $: $
+        menu: new menu()
     };
 
     module.exports = window.G5 = instances;
@@ -297,7 +296,7 @@ var Menu = new prime({
 });
 
 module.exports = Menu;
-},{"../utils/dollar-extras":5,"domready":6,"elements/zen":38,"mout/function/bind":42,"mout/function/timeout":46,"prime":80,"prime-util/prime/bound":76,"prime-util/prime/options":77}],3:[function(require,module,exports){
+},{"../utils/dollar-extras":5,"domready":6,"elements/zen":35,"mout/function/bind":39,"mout/function/timeout":43,"prime":77,"prime-util/prime/bound":73,"prime-util/prime/options":74}],3:[function(require,module,exports){
 // Offcanvas slide with desktop, touch and all-in-one touch devices support that supports both left and right placement.
 // Fast and optimized using CSS3 transitions
 // Based on the awesome Slideout.js <https://mango.github.io/slideout/>
@@ -384,7 +383,7 @@ var Offcanvas = new prime({
         if (!this.options.padding) {
             this.offcanvas[0].style.display = 'block';
             var width = this.offcanvas[0].getBoundingClientRect().width;
-            this.offcanvas[0].style.display = null;
+            this.offcanvas[0].style.removeProperty('display');
 
             this.setOptions({ padding: width });
         }
@@ -638,22 +637,18 @@ var Offcanvas = new prime({
     _checkTogglers: function(mutator) {
         var togglers = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
             mobileContainer = $('#g-mobilemenu-container'),
-            blocks;
-
-        // if there is no mobile menu there's no need to check the offcanvas mutation
-        if (!mobileContainer) {
-            this.detachMutationEvent();
-            return;
-        }
+            blocks, mCtext;
 
         if (!togglers || (mutator && ((mutator.target || mutator.srcElement) !== mobileContainer[0]))) { return; }
         if (this.opened) { this.close(); }
 
         timeout(function(){
             blocks = this.offcanvas.search('.g-block');
+            mCtext = mobileContainer.text().length;
             var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
 
             togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
+            mobileContainer.parent('.g-content')[!mCtext ? 'addClass' : 'removeClass']('nomarginall')[!mCtext ? 'addClass' : 'removeClass']('nopaddingall');
 
             if (!shouldCollapse && !this.attached) { this.attach(); }
             else if (shouldCollapse && this.attached) {
@@ -665,7 +660,7 @@ var Offcanvas = new prime({
 });
 
 module.exports = Offcanvas;
-},{"../utils/decouple":4,"domready":6,"elements":11,"elements/zen":38,"mout/array/forEach":39,"mout/function/bind":42,"mout/function/timeout":46,"mout/math/clamp":51,"mout/math/map":53,"mout/string/trim":62,"prime":80,"prime-util/prime/bound":76,"prime-util/prime/options":77}],4:[function(require,module,exports){
+},{"../utils/decouple":4,"domready":6,"elements":11,"elements/zen":35,"mout/array/forEach":36,"mout/function/bind":39,"mout/function/timeout":43,"mout/math/clamp":48,"mout/math/map":50,"mout/string/trim":59,"prime":77,"prime-util/prime/bound":73,"prime-util/prime/options":74}],4:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
@@ -730,7 +725,7 @@ $.implement({
 
 module.exports = $;
 
-},{"elements":11,"mout/array/map":40,"slick":92}],6:[function(require,module,exports){
+},{"elements":11,"mout/array/map":37,"slick":89}],6:[function(require,module,exports){
 /*!
   * domready (c) Dustin Diaz 2014 - License MIT
   */
@@ -757,7 +752,7 @@ module.exports = $;
   })
 
   return function (fn) {
-    loaded ? fn() : fns.push(fn)
+    loaded ? setTimeout(fn, 0) : fns.push(fn)
   }
 
 });
@@ -1112,7 +1107,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":13,"mout/array/filter":14,"mout/array/forEach":15,"mout/array/map":17,"mout/array/some":18,"prime":80}],9:[function(require,module,exports){
+},{"mout/array/every":13,"mout/array/filter":14,"mout/array/forEach":15,"mout/array/map":17,"mout/array/some":18,"prime":77}],9:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -1195,7 +1190,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":10,"./traversal":37,"prime/map":81}],10:[function(require,module,exports){
+},{"./events":10,"./traversal":34,"prime/map":78}],10:[function(require,module,exports){
 /*
 events
 */"use strict"
@@ -1275,7 +1270,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":8,"prime/emitter":79}],11:[function(require,module,exports){
+},{"./base":8,"prime/emitter":76}],11:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -1289,7 +1284,7 @@ var $ = require("./base")
 
 module.exports = $
 
-},{"./attributes":7,"./base":8,"./delegation":9,"./events":10,"./insertion":12,"./traversal":37}],12:[function(require,module,exports){
+},{"./attributes":7,"./base":8,"./delegation":9,"./events":10,"./insertion":12,"./traversal":34}],12:[function(require,module,exports){
 /*
 insertion
 */"use strict"
@@ -1946,6 +1941,1040 @@ var rtrim = require('./rtrim');
 
 },{"../lang/toString":25,"./WHITE_SPACES":30,"./ltrim":31,"./rtrim":32}],34:[function(require,module,exports){
 /*
+traversal
+*/"use strict"
+
+var map = require("mout/array/map")
+
+var slick = require("slick")
+
+var $ = require("./base")
+
+var gen = function(combinator, expression){
+    return map(slick.parse(expression || "*"), function(part){
+        return combinator + " " + part
+    }).join(", ")
+}
+
+var push_ = Array.prototype.push
+
+$.implement({
+
+    search: function(expression){
+        if (this.length === 1) return $(slick.search(expression, this[0], new $))
+
+        var buffer = []
+        for (var i = 0, node; node = this[i]; i++) push_.apply(buffer, slick.search(expression, node))
+        buffer = $(buffer)
+        return buffer && buffer.sort()
+    },
+
+    find: function(expression){
+        if (this.length === 1) return $(slick.find(expression, this[0]))
+
+        for (var i = 0, node; node = this[i]; i++) {
+            var found = slick.find(expression, node)
+            if (found) return $(found)
+        }
+
+        return null
+    },
+
+    sort: function(){
+        return slick.sort(this)
+    },
+
+    matches: function(expression){
+        return slick.matches(this[0], expression)
+    },
+
+    contains: function(node){
+        return slick.contains(this[0], node)
+    },
+
+    nextSiblings: function(expression){
+        return this.search(gen('~', expression))
+    },
+
+    nextSibling: function(expression){
+        return this.find(gen('+', expression))
+    },
+
+    previousSiblings: function(expression){
+        return this.search(gen('!~', expression))
+    },
+
+    previousSibling: function(expression){
+        return this.find(gen('!+', expression))
+    },
+
+    children: function(expression){
+        return this.search(gen('>', expression))
+    },
+
+    firstChild: function(expression){
+        return this.find(gen('^', expression))
+    },
+
+    lastChild: function(expression){
+        return this.find(gen('!^', expression))
+    },
+
+    parent: function(expression){
+        var buffer = []
+        loop: for (var i = 0, node; node = this[i]; i++) while ((node = node.parentNode) && (node !== document)){
+            if (!expression || slick.matches(node, expression)){
+                buffer.push(node)
+                break loop
+                break
+            }
+        }
+        return $(buffer)
+    },
+
+    parents: function(expression){
+        var buffer = []
+        for (var i = 0, node; node = this[i]; i++) while ((node = node.parentNode) && (node !== document)){
+            if (!expression || slick.matches(node, expression)) buffer.push(node)
+        }
+        return $(buffer)
+    }
+
+})
+
+module.exports = $
+
+},{"./base":8,"mout/array/map":17,"slick":89}],35:[function(require,module,exports){
+/*
+zen
+*/"use strict"
+
+var forEach = require("mout/array/forEach"),
+    map     = require("mout/array/map")
+
+var parse = require("slick/parser")
+
+var $ = require("./base")
+
+module.exports = function(expression, doc){
+
+    return $(map(parse(expression), function(expression){
+
+        var previous, result
+
+        forEach(expression, function(part, i){
+
+            var node = (doc || document).createElement(part.tag)
+
+            if (part.id) node.id = part.id
+
+            if (part.classList) node.className = part.classList.join(" ")
+
+            if (part.attributes) forEach(part.attributes, function(attribute){
+                node.setAttribute(attribute.name, attribute.value || "")
+            })
+
+            if (part.pseudos) forEach(part.pseudos, function(pseudo){
+                var n = $(node), method = n[pseudo.name]
+                if (method) method.call(n, pseudo.value)
+            })
+
+            if (i === 0){
+
+                result = node
+
+            } else if (part.combinator === " "){
+
+                previous.appendChild(node)
+
+            } else if (part.combinator === "+"){
+                var parentNode = previous.parentNode
+                if (parentNode) parentNode.appendChild(node)
+            }
+
+            previous = node
+
+        })
+
+        return result
+
+    }))
+
+}
+
+},{"./base":8,"mout/array/forEach":15,"mout/array/map":17,"slick/parser":90}],36:[function(require,module,exports){
+arguments[4][15][0].apply(exports,arguments)
+},{"dup":15}],37:[function(require,module,exports){
+arguments[4][17][0].apply(exports,arguments)
+},{"../function/makeIterator_":41,"dup":17}],38:[function(require,module,exports){
+
+
+    /**
+     * Create slice of source array or array-like object
+     */
+    function slice(arr, start, end){
+        var len = arr.length;
+
+        if (start == null) {
+            start = 0;
+        } else if (start < 0) {
+            start = Math.max(len + start, 0);
+        } else {
+            start = Math.min(start, len);
+        }
+
+        if (end == null) {
+            end = len;
+        } else if (end < 0) {
+            end = Math.max(len + end, 0);
+        } else {
+            end = Math.min(end, len);
+        }
+
+        var result = [];
+        while (start < end) {
+            result.push(arr[start++]);
+        }
+
+        return result;
+    }
+
+    module.exports = slice;
+
+
+
+},{}],39:[function(require,module,exports){
+var slice = require('../array/slice');
+
+    /**
+     * Return a function that will execute in the given context, optionally adding any additional supplied parameters to the beginning of the arguments collection.
+     * @param {Function} fn  Function.
+     * @param {object} context   Execution context.
+     * @param {rest} args    Arguments (0...n arguments).
+     * @return {Function} Wrapped Function.
+     */
+    function bind(fn, context, args){
+        var argsArr = slice(arguments, 2); //curried args
+        return function(){
+            return fn.apply(context, argsArr.concat(slice(arguments)));
+        };
+    }
+
+    module.exports = bind;
+
+
+
+},{"../array/slice":38}],40:[function(require,module,exports){
+arguments[4][19][0].apply(exports,arguments)
+},{"dup":19}],41:[function(require,module,exports){
+arguments[4][20][0].apply(exports,arguments)
+},{"../object/deepMatches":52,"./identity":40,"./prop":42,"dup":20}],42:[function(require,module,exports){
+arguments[4][21][0].apply(exports,arguments)
+},{"dup":21}],43:[function(require,module,exports){
+var slice = require('../array/slice');
+
+    /**
+     * Delays the call of a function within a given context.
+     */
+    function timeout(fn, millis, context){
+
+        var args = slice(arguments, 3);
+
+        return setTimeout(function() {
+            fn.apply(context, args);
+        }, millis);
+    }
+
+    module.exports = timeout;
+
+
+
+},{"../array/slice":38}],44:[function(require,module,exports){
+arguments[4][22][0].apply(exports,arguments)
+},{"./isKind":45,"dup":22}],45:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"./kindOf":46,"dup":23}],46:[function(require,module,exports){
+arguments[4][24][0].apply(exports,arguments)
+},{"dup":24}],47:[function(require,module,exports){
+arguments[4][25][0].apply(exports,arguments)
+},{"dup":25}],48:[function(require,module,exports){
+
+    /**
+     * Clamps value inside range.
+     */
+    function clamp(val, min, max){
+        return val < min? min : (val > max? max : val);
+    }
+    module.exports = clamp;
+
+
+},{}],49:[function(require,module,exports){
+
+    /**
+    * Linear interpolation.
+    * IMPORTANT:will return `Infinity` if numbers overflow Number.MAX_VALUE
+    */
+    function lerp(ratio, start, end){
+        return start + (end - start) * ratio;
+    }
+
+    module.exports = lerp;
+
+
+},{}],50:[function(require,module,exports){
+var lerp = require('./lerp');
+var norm = require('./norm');
+    /**
+    * Maps a number from one scale to another.
+    * @example map(3, 0, 4, -1, 1) -> 0.5
+    */
+    function map(val, min1, max1, min2, max2){
+        return lerp( norm(val, min1, max1), min2, max2 );
+    }
+    module.exports = map;
+
+
+},{"./lerp":49,"./norm":51}],51:[function(require,module,exports){
+
+    /**
+    * Gets normalized ratio of value inside range.
+    */
+    function norm(val, min, max){
+        if (val < min || val > max) {
+            throw new RangeError('value (' + val + ') must be between ' + min + ' and ' + max);
+        }
+
+        return val === max ? 1 : (val - min) / (max - min);
+    }
+    module.exports = norm;
+
+
+},{}],52:[function(require,module,exports){
+arguments[4][26][0].apply(exports,arguments)
+},{"../lang/isArray":44,"./forOwn":54,"dup":26}],53:[function(require,module,exports){
+arguments[4][27][0].apply(exports,arguments)
+},{"./hasOwn":55,"dup":27}],54:[function(require,module,exports){
+arguments[4][28][0].apply(exports,arguments)
+},{"./forIn":53,"./hasOwn":55,"dup":28}],55:[function(require,module,exports){
+arguments[4][29][0].apply(exports,arguments)
+},{"dup":29}],56:[function(require,module,exports){
+arguments[4][30][0].apply(exports,arguments)
+},{"dup":30}],57:[function(require,module,exports){
+arguments[4][31][0].apply(exports,arguments)
+},{"../lang/toString":47,"./WHITE_SPACES":56,"dup":31}],58:[function(require,module,exports){
+arguments[4][32][0].apply(exports,arguments)
+},{"../lang/toString":47,"./WHITE_SPACES":56,"dup":32}],59:[function(require,module,exports){
+arguments[4][33][0].apply(exports,arguments)
+},{"../lang/toString":47,"./WHITE_SPACES":56,"./ltrim":57,"./rtrim":58,"dup":33}],60:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"dup":38}],61:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"../array/slice":60,"dup":39}],62:[function(require,module,exports){
+var kindOf = require('./kindOf');
+var isPlainObject = require('./isPlainObject');
+var mixIn = require('../object/mixIn');
+
+    /**
+     * Clone native types.
+     */
+    function clone(val){
+        switch (kindOf(val)) {
+            case 'Object':
+                return cloneObject(val);
+            case 'Array':
+                return cloneArray(val);
+            case 'RegExp':
+                return cloneRegExp(val);
+            case 'Date':
+                return cloneDate(val);
+            default:
+                return val;
+        }
+    }
+
+    function cloneObject(source) {
+        if (isPlainObject(source)) {
+            return mixIn({}, source);
+        } else {
+            return source;
+        }
+    }
+
+    function cloneRegExp(r) {
+        var flags = '';
+        flags += r.multiline ? 'm' : '';
+        flags += r.global ? 'g' : '';
+        flags += r.ignorecase ? 'i' : '';
+        return new RegExp(r.source, flags);
+    }
+
+    function cloneDate(date) {
+        return new Date(+date);
+    }
+
+    function cloneArray(arr) {
+        return arr.slice();
+    }
+
+    module.exports = clone;
+
+
+
+},{"../object/mixIn":72,"./isPlainObject":66,"./kindOf":67}],63:[function(require,module,exports){
+var clone = require('./clone');
+var forOwn = require('../object/forOwn');
+var kindOf = require('./kindOf');
+var isPlainObject = require('./isPlainObject');
+
+    /**
+     * Recursively clone native types.
+     */
+    function deepClone(val, instanceClone) {
+        switch ( kindOf(val) ) {
+            case 'Object':
+                return cloneObject(val, instanceClone);
+            case 'Array':
+                return cloneArray(val, instanceClone);
+            default:
+                return clone(val);
+        }
+    }
+
+    function cloneObject(source, instanceClone) {
+        if (isPlainObject(source)) {
+            var out = {};
+            forOwn(source, function(val, key) {
+                this[key] = deepClone(val, instanceClone);
+            }, out);
+            return out;
+        } else if (instanceClone) {
+            return instanceClone(source);
+        } else {
+            return source;
+        }
+    }
+
+    function cloneArray(arr, instanceClone) {
+        var out = [],
+            i = -1,
+            n = arr.length,
+            val;
+        while (++i < n) {
+            out[i] = deepClone(arr[i], instanceClone);
+        }
+        return out;
+    }
+
+    module.exports = deepClone;
+
+
+
+
+},{"../object/forOwn":69,"./clone":62,"./isPlainObject":66,"./kindOf":67}],64:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"./kindOf":67,"dup":23}],65:[function(require,module,exports){
+var isKind = require('./isKind');
+    /**
+     */
+    function isObject(val) {
+        return isKind(val, 'Object');
+    }
+    module.exports = isObject;
+
+
+},{"./isKind":64}],66:[function(require,module,exports){
+
+
+    /**
+     * Checks if the value is created by the `Object` constructor.
+     */
+    function isPlainObject(value) {
+        return (!!value && typeof value === 'object' &&
+            value.constructor === Object);
+    }
+
+    module.exports = isPlainObject;
+
+
+
+},{}],67:[function(require,module,exports){
+arguments[4][24][0].apply(exports,arguments)
+},{"dup":24}],68:[function(require,module,exports){
+arguments[4][27][0].apply(exports,arguments)
+},{"./hasOwn":70,"dup":27}],69:[function(require,module,exports){
+arguments[4][28][0].apply(exports,arguments)
+},{"./forIn":68,"./hasOwn":70,"dup":28}],70:[function(require,module,exports){
+arguments[4][29][0].apply(exports,arguments)
+},{"dup":29}],71:[function(require,module,exports){
+var hasOwn = require('./hasOwn');
+var deepClone = require('../lang/deepClone');
+var isObject = require('../lang/isObject');
+
+    /**
+     * Deep merge objects.
+     */
+    function merge() {
+        var i = 1,
+            key, val, obj, target;
+
+        // make sure we don't modify source element and it's properties
+        // objects are passed by reference
+        target = deepClone( arguments[0] );
+
+        while (obj = arguments[i++]) {
+            for (key in obj) {
+                if ( ! hasOwn(obj, key) ) {
+                    continue;
+                }
+
+                val = obj[key];
+
+                if ( isObject(val) && isObject(target[key]) ){
+                    // inception, deep merge objects
+                    target[key] = merge(target[key], val);
+                } else {
+                    // make sure arrays, regexp, date, objects are cloned
+                    target[key] = deepClone(val);
+                }
+
+            }
+        }
+
+        return target;
+    }
+
+    module.exports = merge;
+
+
+
+},{"../lang/deepClone":63,"../lang/isObject":65,"./hasOwn":70}],72:[function(require,module,exports){
+var forOwn = require('./forOwn');
+
+    /**
+    * Combine properties from all the objects into first one.
+    * - This method affects target object in place, if you want to create a new Object pass an empty object as first param.
+    * @param {object} target    Target Object
+    * @param {...object} objects    Objects to be combined (0...n objects).
+    * @return {object} Target Object.
+    */
+    function mixIn(target, objects){
+        var i = 0,
+            n = arguments.length,
+            obj;
+        while(++i < n){
+            obj = arguments[i];
+            if (obj != null) {
+                forOwn(obj, copyProp, target);
+            }
+        }
+        return target;
+    }
+
+    function copyProp(val, key){
+        this[key] = val;
+    }
+
+    module.exports = mixIn;
+
+
+},{"./forOwn":69}],73:[function(require,module,exports){
+"use strict";
+
+// credits to @cpojer's Class.Binds, released under the MIT license
+// https://github.com/cpojer/mootools-class-extras/blob/master/Source/Class.Binds.js
+
+var prime = require("prime")
+var bind = require("mout/function/bind")
+
+var bound = prime({
+
+    bound: function(name){
+        var bound = this._bound || (this._bound = {})
+        return bound[name] || (bound[name] = bind(this[name], this))
+    }
+
+})
+
+module.exports = bound
+
+},{"mout/function/bind":61,"prime":77}],74:[function(require,module,exports){
+"use strict";
+
+var prime = require("prime")
+var merge = require("mout/object/merge")
+
+var Options = prime({
+
+    setOptions: function(options){
+        var args = [{}, this.options]
+        args.push.apply(args, arguments)
+        this.options = merge.apply(null, args)
+        return this
+    }
+
+})
+
+module.exports = Options
+
+},{"mout/object/merge":71,"prime":77}],75:[function(require,module,exports){
+(function (process,global){
+/*
+defer
+*/"use strict"
+
+var kindOf  = require("mout/lang/kindOf"),
+    now     = require("mout/time/now"),
+    forEach = require("mout/array/forEach"),
+    indexOf = require("mout/array/indexOf")
+
+var callbacks = {
+    timeout: {},
+    frame: [],
+    immediate: []
+}
+
+var push = function(collection, callback, context, defer){
+
+    var iterator = function(){
+        iterate(collection)
+    }
+
+    if (!collection.length) defer(iterator)
+
+    var entry = {
+        callback: callback,
+        context: context
+    }
+
+    collection.push(entry)
+
+    return function(){
+        var io = indexOf(collection, entry)
+        if (io > -1) collection.splice(io, 1)
+    }
+}
+
+var iterate = function(collection){
+    var time = now()
+
+    forEach(collection.splice(0), function(entry) {
+        entry.callback.call(entry.context, time)
+    })
+}
+
+var defer = function(callback, argument, context){
+    return (kindOf(argument) === "Number") ? defer.timeout(callback, argument, context) : defer.immediate(callback, argument)
+}
+
+if (global.process && process.nextTick){
+
+    defer.immediate = function(callback, context){
+        return push(callbacks.immediate, callback, context, process.nextTick)
+    }
+
+} else if (global.setImmediate){
+
+    defer.immediate = function(callback, context){
+        return push(callbacks.immediate, callback, context, setImmediate)
+    }
+
+} else if (global.postMessage && global.addEventListener){
+
+    addEventListener("message", function(event){
+        if (event.source === global && event.data === "@deferred"){
+            event.stopPropagation()
+            iterate(callbacks.immediate)
+        }
+    }, true)
+
+    defer.immediate = function(callback, context){
+        return push(callbacks.immediate, callback, context, function(){
+            postMessage("@deferred", "*")
+        })
+    }
+
+} else {
+
+    defer.immediate = function(callback, context){
+        return push(callbacks.immediate, callback, context, function(iterator){
+            setTimeout(iterator, 0)
+        })
+    }
+
+}
+
+var requestAnimationFrame = global.requestAnimationFrame ||
+    global.webkitRequestAnimationFrame ||
+    global.mozRequestAnimationFrame ||
+    global.oRequestAnimationFrame ||
+    global.msRequestAnimationFrame ||
+    function(callback) {
+        setTimeout(callback, 1e3 / 60)
+    }
+
+defer.frame = function(callback, context){
+    return push(callbacks.frame, callback, context, requestAnimationFrame)
+}
+
+var clear
+
+defer.timeout = function(callback, ms, context){
+    var ct = callbacks.timeout
+
+    if (!clear) clear = defer.immediate(function(){
+        clear = null
+        callbacks.timeout = {}
+    })
+
+    return push(ct[ms] || (ct[ms] = []), callback, context, function(iterator){
+        setTimeout(iterator, ms)
+    })
+}
+
+module.exports = defer
+
+}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+
+},{"_process":91,"mout/array/forEach":79,"mout/array/indexOf":80,"mout/lang/kindOf":82,"mout/time/now":87}],76:[function(require,module,exports){
+/*
+Emitter
+*/"use strict"
+
+var indexOf = require("mout/array/indexOf"),
+    forEach = require("mout/array/forEach")
+
+var prime = require("./index"),
+    defer = require("./defer")
+
+var slice = Array.prototype.slice;
+
+var Emitter = prime({
+
+    on: function(event, fn){
+        var listeners = this._listeners || (this._listeners = {}),
+            events = listeners[event] || (listeners[event] = [])
+
+        if (indexOf(events, fn) === -1) events.push(fn)
+
+        return this
+    },
+
+    off: function(event, fn){
+        var listeners = this._listeners, events, key, length = 0
+        if (listeners && (events = listeners[event])){
+
+            var io = indexOf(events, fn)
+            if (io > -1) events.splice(io, 1)
+            if (!events.length) delete listeners[event];
+            for (var l in listeners) return this
+            delete this._listeners
+        }
+        return this
+    },
+
+    emit: function(event){
+        var self = this,
+            args = slice.call(arguments, 1)
+
+        var emit = function(){
+            var listeners = self._listeners, events
+            if (listeners && (events = listeners[event])){
+                forEach(events.slice(0), function(event){
+                    return event.apply(self, args)
+                })
+            }
+        }
+
+        if (args[args.length - 1] === Emitter.EMIT_SYNC){
+            args.pop()
+            emit()
+        } else {
+            defer(emit)
+        }
+
+        return this
+    }
+
+})
+
+Emitter.EMIT_SYNC = {}
+
+module.exports = Emitter
+
+},{"./defer":75,"./index":77,"mout/array/forEach":79,"mout/array/indexOf":80}],77:[function(require,module,exports){
+/*
+prime
+ - prototypal inheritance
+*/"use strict"
+
+var hasOwn = require("mout/object/hasOwn"),
+    mixIn  = require("mout/object/mixIn"),
+    create = require("mout/lang/createObject"),
+    kindOf = require("mout/lang/kindOf")
+
+var hasDescriptors = true
+
+try {
+    Object.defineProperty({}, "~", {})
+    Object.getOwnPropertyDescriptor({}, "~")
+} catch (e){
+    hasDescriptors = false
+}
+
+// we only need to be able to implement "toString" and "valueOf" in IE < 9
+var hasEnumBug = !({valueOf: 0}).propertyIsEnumerable("valueOf"),
+    buggy      = ["toString", "valueOf"]
+
+var verbs = /^constructor|inherits|mixin$/
+
+var implement = function(proto){
+    var prototype = this.prototype
+
+    for (var key in proto){
+        if (key.match(verbs)) continue
+        if (hasDescriptors){
+            var descriptor = Object.getOwnPropertyDescriptor(proto, key)
+            if (descriptor){
+                Object.defineProperty(prototype, key, descriptor)
+                continue
+            }
+        }
+        prototype[key] = proto[key]
+    }
+
+    if (hasEnumBug) for (var i = 0; (key = buggy[i]); i++){
+        var value = proto[key]
+        if (value !== Object.prototype[key]) prototype[key] = value
+    }
+
+    return this
+}
+
+var prime = function(proto){
+
+    if (kindOf(proto) === "Function") proto = {constructor: proto}
+
+    var superprime = proto.inherits
+
+    // if our nice proto object has no own constructor property
+    // then we proceed using a ghosting constructor that all it does is
+    // call the parent's constructor if it has a superprime, else an empty constructor
+    // proto.constructor becomes the effective constructor
+    var constructor = (hasOwn(proto, "constructor")) ? proto.constructor : (superprime) ? function(){
+        return superprime.apply(this, arguments)
+    } : function(){}
+
+    if (superprime){
+
+        mixIn(constructor, superprime)
+
+        var superproto = superprime.prototype
+        // inherit from superprime
+        var cproto = constructor.prototype = create(superproto)
+
+        // setting constructor.parent to superprime.prototype
+        // because it's the shortest possible absolute reference
+        constructor.parent = superproto
+        cproto.constructor = constructor
+    }
+
+    if (!constructor.implement) constructor.implement = implement
+
+    var mixins = proto.mixin
+    if (mixins){
+        if (kindOf(mixins) !== "Array") mixins = [mixins]
+        for (var i = 0; i < mixins.length; i++) constructor.implement(create(mixins[i].prototype))
+    }
+
+    // implement proto and return constructor
+    return constructor.implement(proto)
+
+}
+
+module.exports = prime
+
+},{"mout/lang/createObject":81,"mout/lang/kindOf":82,"mout/object/hasOwn":85,"mout/object/mixIn":86}],78:[function(require,module,exports){
+/*
+Map
+*/"use strict"
+
+var indexOf = require("mout/array/indexOf")
+
+var prime = require("./index")
+
+var Map = prime({
+
+    constructor: function Map(){
+        this.length = 0
+        this._values = []
+        this._keys = []
+    },
+
+    set: function(key, value){
+        var index = indexOf(this._keys, key)
+
+        if (index === -1){
+            this._keys.push(key)
+            this._values.push(value)
+            this.length++
+        } else {
+            this._values[index] = value
+        }
+
+        return this
+    },
+
+    get: function(key){
+        var index = indexOf(this._keys, key)
+        return (index === -1) ? null : this._values[index]
+    },
+
+    count: function(){
+        return this.length
+    },
+
+    forEach: function(method, context){
+        for (var i = 0, l = this.length; i < l; i++){
+            if (method.call(context, this._values[i], this._keys[i], this) === false) break
+        }
+        return this
+    },
+
+    map: function(method, context){
+        var results = new Map
+        this.forEach(function(value, key){
+            results.set(key, method.call(context, value, key, this))
+        }, this)
+        return results
+    },
+
+    filter: function(method, context){
+        var results = new Map
+        this.forEach(function(value, key){
+            if (method.call(context, value, key, this)) results.set(key, value)
+        }, this)
+        return results
+    },
+
+    every: function(method, context){
+        var every = true
+        this.forEach(function(value, key){
+            if (!method.call(context, value, key, this)) return (every = false)
+        }, this)
+        return every
+    },
+
+    some: function(method, context){
+        var some = false
+        this.forEach(function(value, key){
+            if (method.call(context, value, key, this)) return !(some = true)
+        }, this)
+        return some
+    },
+
+    indexOf: function(value){
+        var index = indexOf(this._values, value)
+        return (index > -1) ? this._keys[index] : null
+    },
+
+    remove: function(value){
+        var index = indexOf(this._values, value)
+
+        if (index !== -1){
+            this._values.splice(index, 1)
+            this.length--
+            return this._keys.splice(index, 1)[0]
+        }
+
+        return null
+    },
+
+    unset: function(key){
+        var index = indexOf(this._keys, key)
+
+        if (index !== -1){
+            this._keys.splice(index, 1)
+            this.length--
+            return this._values.splice(index, 1)[0]
+        }
+
+        return null
+    },
+
+    keys: function(){
+        return this._keys.slice()
+    },
+
+    values: function(){
+        return this._values.slice()
+    }
+
+})
+
+var map = function(){
+    return new Map
+}
+
+map.prototype = Map.prototype
+
+module.exports = map
+
+},{"./index":77,"mout/array/indexOf":80}],79:[function(require,module,exports){
+arguments[4][15][0].apply(exports,arguments)
+},{"dup":15}],80:[function(require,module,exports){
+arguments[4][16][0].apply(exports,arguments)
+},{"dup":16}],81:[function(require,module,exports){
+var mixIn = require('../object/mixIn');
+
+    /**
+     * Create Object using prototypal inheritance and setting custom properties.
+     * - Mix between Douglas Crockford Prototypal Inheritance <http://javascript.crockford.com/prototypal.html> and the EcmaScript 5 `Object.create()` method.
+     * @param {object} parent    Parent Object.
+     * @param {object} [props] Object properties.
+     * @return {object} Created object.
+     */
+    function createObject(parent, props){
+        function F(){}
+        F.prototype = parent;
+        return mixIn(new F(), props);
+
+    }
+    module.exports = createObject;
+
+
+
+},{"../object/mixIn":86}],82:[function(require,module,exports){
+arguments[4][24][0].apply(exports,arguments)
+},{"dup":24}],83:[function(require,module,exports){
+arguments[4][27][0].apply(exports,arguments)
+},{"./hasOwn":85,"dup":27}],84:[function(require,module,exports){
+arguments[4][28][0].apply(exports,arguments)
+},{"./forIn":83,"./hasOwn":85,"dup":28}],85:[function(require,module,exports){
+arguments[4][29][0].apply(exports,arguments)
+},{"dup":29}],86:[function(require,module,exports){
+arguments[4][72][0].apply(exports,arguments)
+},{"./forOwn":84,"dup":72}],87:[function(require,module,exports){
+
+
+    /**
+     * Get current time in miliseconds
+     */
+    function now(){
+        // yes, we defer the work to another function to allow mocking it
+        // during the tests
+        return now.get();
+    }
+
+    now.get = (typeof Date.now === 'function')? Date.now : function(){
+        return +(new Date());
+    };
+
+    module.exports = now;
+
+
+
+},{}],88:[function(require,module,exports){
+/*
 Slick Finder
 */"use strict"
 
@@ -2536,7 +3565,7 @@ var pseudos = {
     },
 
     'not': function(expression){
-        return !slick.match(this, expression)
+        return !slick.matches(this, expression)
     },
 
     'contains': function(text){
@@ -2775,7 +3804,7 @@ slick.parse = parse;
 
 module.exports = slick
 
-},{"./parser":36}],35:[function(require,module,exports){
+},{"./parser":90}],89:[function(require,module,exports){
 (function (global){
 /*
 slick
@@ -2785,7 +3814,7 @@ module.exports = "document" in global ? require("./finder") : { parse: require("
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./finder":34,"./parser":36}],36:[function(require,module,exports){
+},{"./finder":88,"./parser":90}],90:[function(require,module,exports){
 /*
 Slick Parser
  - originally created by the almighty Thomas Aylott <@subtlegradient> (http://subtlegradient.com)
@@ -3037,1086 +4066,70 @@ var parse = function(expression){
 
 module.exports = parse
 
-},{}],37:[function(require,module,exports){
-/*
-traversal
-*/"use strict"
-
-var map = require("mout/array/map")
-
-var slick = require("slick")
-
-var $ = require("./base")
-
-var gen = function(combinator, expression){
-    return map(slick.parse(expression || "*"), function(part){
-        return combinator + " " + part
-    }).join(", ")
-}
-
-var push_ = Array.prototype.push
-
-$.implement({
-
-    search: function(expression){
-        if (this.length === 1) return $(slick.search(expression, this[0], new $))
-
-        var buffer = []
-        for (var i = 0, node; node = this[i]; i++) push_.apply(buffer, slick.search(expression, node))
-        buffer = $(buffer)
-        return buffer && buffer.sort()
-    },
-
-    find: function(expression){
-        if (this.length === 1) return $(slick.find(expression, this[0]))
-
-        for (var i = 0, node; node = this[i]; i++) {
-            var found = slick.find(expression, node)
-            if (found) return $(found)
-        }
-
-        return null
-    },
-
-    sort: function(){
-        return slick.sort(this)
-    },
-
-    matches: function(expression){
-        return slick.matches(this[0], expression)
-    },
-
-    contains: function(node){
-        return slick.contains(this[0], node)
-    },
-
-    nextSiblings: function(expression){
-        return this.search(gen('~', expression))
-    },
-
-    nextSibling: function(expression){
-        return this.find(gen('+', expression))
-    },
-
-    previousSiblings: function(expression){
-        return this.search(gen('!~', expression))
-    },
-
-    previousSibling: function(expression){
-        return this.find(gen('!+', expression))
-    },
-
-    children: function(expression){
-        return this.search(gen('>', expression))
-    },
-
-    firstChild: function(expression){
-        return this.find(gen('^', expression))
-    },
-
-    lastChild: function(expression){
-        return this.find(gen('!^', expression))
-    },
-
-    parent: function(expression){
-        var buffer = []
-        loop: for (var i = 0, node; node = this[i]; i++) while ((node = node.parentNode) && (node !== document)){
-            if (!expression || slick.matches(node, expression)){
-                buffer.push(node)
-                break loop
-                break
-            }
-        }
-        return $(buffer)
-    },
-
-    parents: function(expression){
-        var buffer = []
-        for (var i = 0, node; node = this[i]; i++) while ((node = node.parentNode) && (node !== document)){
-            if (!expression || slick.matches(node, expression)) buffer.push(node)
-        }
-        return $(buffer)
-    }
-
-})
-
-module.exports = $
-
-},{"./base":8,"mout/array/map":17,"slick":35}],38:[function(require,module,exports){
-/*
-zen
-*/"use strict"
-
-var forEach = require("mout/array/forEach"),
-    map     = require("mout/array/map")
-
-var parse = require("slick/parser")
-
-var $ = require("./base")
-
-module.exports = function(expression, doc){
-
-    return $(map(parse(expression), function(expression){
-
-        var previous, result
-
-        forEach(expression, function(part, i){
-
-            var node = (doc || document).createElement(part.tag)
-
-            if (part.id) node.id = part.id
-
-            if (part.classList) node.className = part.classList.join(" ")
-
-            if (part.attributes) forEach(part.attributes, function(attribute){
-                node.setAttribute(attribute.name, attribute.value || "")
-            })
-
-            if (part.pseudos) forEach(part.pseudos, function(pseudo){
-                var n = $(node), method = n[pseudo.name]
-                if (method) method.call(n, pseudo.value)
-            })
-
-            if (i === 0){
-
-                result = node
-
-            } else if (part.combinator === " "){
-
-                previous.appendChild(node)
-
-            } else if (part.combinator === "+"){
-                var parentNode = previous.parentNode
-                if (parentNode) parentNode.appendChild(node)
-            }
-
-            previous = node
-
-        })
-
-        return result
-
-    }))
-
-}
-
-},{"./base":8,"mout/array/forEach":15,"mout/array/map":17,"slick/parser":36}],39:[function(require,module,exports){
-arguments[4][15][0].apply(exports,arguments)
-},{"dup":15}],40:[function(require,module,exports){
-arguments[4][17][0].apply(exports,arguments)
-},{"../function/makeIterator_":44,"dup":17}],41:[function(require,module,exports){
-
-
-    /**
-     * Create slice of source array or array-like object
-     */
-    function slice(arr, start, end){
-        var len = arr.length;
-
-        if (start == null) {
-            start = 0;
-        } else if (start < 0) {
-            start = Math.max(len + start, 0);
-        } else {
-            start = Math.min(start, len);
-        }
-
-        if (end == null) {
-            end = len;
-        } else if (end < 0) {
-            end = Math.max(len + end, 0);
-        } else {
-            end = Math.min(end, len);
-        }
-
-        var result = [];
-        while (start < end) {
-            result.push(arr[start++]);
-        }
-
-        return result;
-    }
-
-    module.exports = slice;
-
-
-
-},{}],42:[function(require,module,exports){
-var slice = require('../array/slice');
-
-    /**
-     * Return a function that will execute in the given context, optionally adding any additional supplied parameters to the beginning of the arguments collection.
-     * @param {Function} fn  Function.
-     * @param {object} context   Execution context.
-     * @param {rest} args    Arguments (0...n arguments).
-     * @return {Function} Wrapped Function.
-     */
-    function bind(fn, context, args){
-        var argsArr = slice(arguments, 2); //curried args
-        return function(){
-            return fn.apply(context, argsArr.concat(slice(arguments)));
-        };
-    }
-
-    module.exports = bind;
-
-
-
-},{"../array/slice":41}],43:[function(require,module,exports){
-arguments[4][19][0].apply(exports,arguments)
-},{"dup":19}],44:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"../object/deepMatches":55,"./identity":43,"./prop":45,"dup":20}],45:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"dup":21}],46:[function(require,module,exports){
-var slice = require('../array/slice');
-
-    /**
-     * Delays the call of a function within a given context.
-     */
-    function timeout(fn, millis, context){
-
-        var args = slice(arguments, 3);
-
-        return setTimeout(function() {
-            fn.apply(context, args);
-        }, millis);
-    }
-
-    module.exports = timeout;
-
-
-
-},{"../array/slice":41}],47:[function(require,module,exports){
-arguments[4][22][0].apply(exports,arguments)
-},{"./isKind":48,"dup":22}],48:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"./kindOf":49,"dup":23}],49:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"dup":24}],50:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"dup":25}],51:[function(require,module,exports){
-
-    /**
-     * Clamps value inside range.
-     */
-    function clamp(val, min, max){
-        return val < min? min : (val > max? max : val);
-    }
-    module.exports = clamp;
-
-
-},{}],52:[function(require,module,exports){
-
-    /**
-    * Linear interpolation.
-    * IMPORTANT:will return `Infinity` if numbers overflow Number.MAX_VALUE
-    */
-    function lerp(ratio, start, end){
-        return start + (end - start) * ratio;
-    }
-
-    module.exports = lerp;
-
-
-},{}],53:[function(require,module,exports){
-var lerp = require('./lerp');
-var norm = require('./norm');
-    /**
-    * Maps a number from one scale to another.
-    * @example map(3, 0, 4, -1, 1) -> 0.5
-    */
-    function map(val, min1, max1, min2, max2){
-        return lerp( norm(val, min1, max1), min2, max2 );
-    }
-    module.exports = map;
-
-
-},{"./lerp":52,"./norm":54}],54:[function(require,module,exports){
-
-    /**
-    * Gets normalized ratio of value inside range.
-    */
-    function norm(val, min, max){
-        if (val < min || val > max) {
-            throw new RangeError('value (' + val + ') must be between ' + min + ' and ' + max);
-        }
-
-        return val === max ? 1 : (val - min) / (max - min);
-    }
-    module.exports = norm;
-
-
-},{}],55:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"../lang/isArray":47,"./forOwn":57,"dup":26}],56:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./hasOwn":58,"dup":27}],57:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"./forIn":56,"./hasOwn":58,"dup":28}],58:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"dup":29}],59:[function(require,module,exports){
-arguments[4][30][0].apply(exports,arguments)
-},{"dup":30}],60:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"../lang/toString":50,"./WHITE_SPACES":59,"dup":31}],61:[function(require,module,exports){
-arguments[4][32][0].apply(exports,arguments)
-},{"../lang/toString":50,"./WHITE_SPACES":59,"dup":32}],62:[function(require,module,exports){
-arguments[4][33][0].apply(exports,arguments)
-},{"../lang/toString":50,"./WHITE_SPACES":59,"./ltrim":60,"./rtrim":61,"dup":33}],63:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"dup":41}],64:[function(require,module,exports){
-arguments[4][42][0].apply(exports,arguments)
-},{"../array/slice":63,"dup":42}],65:[function(require,module,exports){
-var kindOf = require('./kindOf');
-var isPlainObject = require('./isPlainObject');
-var mixIn = require('../object/mixIn');
-
-    /**
-     * Clone native types.
-     */
-    function clone(val){
-        switch (kindOf(val)) {
-            case 'Object':
-                return cloneObject(val);
-            case 'Array':
-                return cloneArray(val);
-            case 'RegExp':
-                return cloneRegExp(val);
-            case 'Date':
-                return cloneDate(val);
-            default:
-                return val;
-        }
-    }
-
-    function cloneObject(source) {
-        if (isPlainObject(source)) {
-            return mixIn({}, source);
-        } else {
-            return source;
-        }
-    }
-
-    function cloneRegExp(r) {
-        var flags = '';
-        flags += r.multiline ? 'm' : '';
-        flags += r.global ? 'g' : '';
-        flags += r.ignorecase ? 'i' : '';
-        return new RegExp(r.source, flags);
-    }
-
-    function cloneDate(date) {
-        return new Date(+date);
-    }
-
-    function cloneArray(arr) {
-        return arr.slice();
-    }
-
-    module.exports = clone;
-
-
-
-},{"../object/mixIn":75,"./isPlainObject":69,"./kindOf":70}],66:[function(require,module,exports){
-var clone = require('./clone');
-var forOwn = require('../object/forOwn');
-var kindOf = require('./kindOf');
-var isPlainObject = require('./isPlainObject');
-
-    /**
-     * Recursively clone native types.
-     */
-    function deepClone(val, instanceClone) {
-        switch ( kindOf(val) ) {
-            case 'Object':
-                return cloneObject(val, instanceClone);
-            case 'Array':
-                return cloneArray(val, instanceClone);
-            default:
-                return clone(val);
-        }
-    }
-
-    function cloneObject(source, instanceClone) {
-        if (isPlainObject(source)) {
-            var out = {};
-            forOwn(source, function(val, key) {
-                this[key] = deepClone(val, instanceClone);
-            }, out);
-            return out;
-        } else if (instanceClone) {
-            return instanceClone(source);
-        } else {
-            return source;
-        }
-    }
-
-    function cloneArray(arr, instanceClone) {
-        var out = [],
-            i = -1,
-            n = arr.length,
-            val;
-        while (++i < n) {
-            out[i] = deepClone(arr[i], instanceClone);
-        }
-        return out;
-    }
-
-    module.exports = deepClone;
-
-
-
-
-},{"../object/forOwn":72,"./clone":65,"./isPlainObject":69,"./kindOf":70}],67:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"./kindOf":70,"dup":23}],68:[function(require,module,exports){
-var isKind = require('./isKind');
-    /**
-     */
-    function isObject(val) {
-        return isKind(val, 'Object');
-    }
-    module.exports = isObject;
-
-
-},{"./isKind":67}],69:[function(require,module,exports){
-
-
-    /**
-     * Checks if the value is created by the `Object` constructor.
-     */
-    function isPlainObject(value) {
-        return (!!value && typeof value === 'object' &&
-            value.constructor === Object);
-    }
-
-    module.exports = isPlainObject;
-
-
-
-},{}],70:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"dup":24}],71:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./hasOwn":73,"dup":27}],72:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"./forIn":71,"./hasOwn":73,"dup":28}],73:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"dup":29}],74:[function(require,module,exports){
-var hasOwn = require('./hasOwn');
-var deepClone = require('../lang/deepClone');
-var isObject = require('../lang/isObject');
-
-    /**
-     * Deep merge objects.
-     */
-    function merge() {
-        var i = 1,
-            key, val, obj, target;
-
-        // make sure we don't modify source element and it's properties
-        // objects are passed by reference
-        target = deepClone( arguments[0] );
-
-        while (obj = arguments[i++]) {
-            for (key in obj) {
-                if ( ! hasOwn(obj, key) ) {
-                    continue;
-                }
-
-                val = obj[key];
-
-                if ( isObject(val) && isObject(target[key]) ){
-                    // inception, deep merge objects
-                    target[key] = merge(target[key], val);
-                } else {
-                    // make sure arrays, regexp, date, objects are cloned
-                    target[key] = deepClone(val);
-                }
-
-            }
-        }
-
-        return target;
-    }
-
-    module.exports = merge;
-
-
-
-},{"../lang/deepClone":66,"../lang/isObject":68,"./hasOwn":73}],75:[function(require,module,exports){
-var forOwn = require('./forOwn');
-
-    /**
-    * Combine properties from all the objects into first one.
-    * - This method affects target object in place, if you want to create a new Object pass an empty object as first param.
-    * @param {object} target    Target Object
-    * @param {...object} objects    Objects to be combined (0...n objects).
-    * @return {object} Target Object.
-    */
-    function mixIn(target, objects){
-        var i = 0,
-            n = arguments.length,
-            obj;
-        while(++i < n){
-            obj = arguments[i];
-            if (obj != null) {
-                forOwn(obj, copyProp, target);
-            }
-        }
-        return target;
-    }
-
-    function copyProp(val, key){
-        this[key] = val;
-    }
-
-    module.exports = mixIn;
-
-
-},{"./forOwn":72}],76:[function(require,module,exports){
-"use strict";
-
-// credits to @cpojer's Class.Binds, released under the MIT license
-// https://github.com/cpojer/mootools-class-extras/blob/master/Source/Class.Binds.js
-
-var prime = require("prime")
-var bind = require("mout/function/bind")
-
-var bound = prime({
-
-    bound: function(name){
-        var bound = this._bound || (this._bound = {})
-        return bound[name] || (bound[name] = bind(this[name], this))
-    }
-
-})
-
-module.exports = bound
-
-},{"mout/function/bind":64,"prime":80}],77:[function(require,module,exports){
-"use strict";
-
-var prime = require("prime")
-var merge = require("mout/object/merge")
-
-var Options = prime({
-
-    setOptions: function(options){
-        var args = [{}, this.options]
-        args.push.apply(args, arguments)
-        this.options = merge.apply(null, args)
-        return this
-    }
-
-})
-
-module.exports = Options
-
-},{"mout/object/merge":74,"prime":80}],78:[function(require,module,exports){
-(function (process,global){
-/*
-defer
-*/"use strict"
-
-var kindOf  = require("mout/lang/kindOf"),
-    now     = require("mout/time/now"),
-    forEach = require("mout/array/forEach"),
-    indexOf = require("mout/array/indexOf")
-
-var callbacks = {
-    timeout: {},
-    frame: [],
-    immediate: []
-}
-
-var push = function(collection, callback, context, defer){
-
-    var iterator = function(){
-        iterate(collection)
-    }
-
-    if (!collection.length) defer(iterator)
-
-    var entry = {
-        callback: callback,
-        context: context
-    }
-
-    collection.push(entry)
-
-    return function(){
-        var io = indexOf(collection, entry)
-        if (io > -1) collection.splice(io, 1)
-    }
-}
-
-var iterate = function(collection){
-    var time = now()
-
-    forEach(collection.splice(0), function(entry) {
-        entry.callback.call(entry.context, time)
-    })
-}
-
-var defer = function(callback, argument, context){
-    return (kindOf(argument) === "Number") ? defer.timeout(callback, argument, context) : defer.immediate(callback, argument)
-}
-
-if (global.process && process.nextTick){
-
-    defer.immediate = function(callback, context){
-        return push(callbacks.immediate, callback, context, process.nextTick)
-    }
-
-} else if (global.setImmediate){
-
-    defer.immediate = function(callback, context){
-        return push(callbacks.immediate, callback, context, setImmediate)
-    }
-
-} else if (global.postMessage && global.addEventListener){
-
-    addEventListener("message", function(event){
-        if (event.source === global && event.data === "@deferred"){
-            event.stopPropagation()
-            iterate(callbacks.immediate)
-        }
-    }, true)
-
-    defer.immediate = function(callback, context){
-        return push(callbacks.immediate, callback, context, function(){
-            postMessage("@deferred", "*")
-        })
-    }
-
-} else {
-
-    defer.immediate = function(callback, context){
-        return push(callbacks.immediate, callback, context, function(iterator){
-            setTimeout(iterator, 0)
-        })
-    }
-
-}
-
-var requestAnimationFrame = global.requestAnimationFrame ||
-    global.webkitRequestAnimationFrame ||
-    global.mozRequestAnimationFrame ||
-    global.oRequestAnimationFrame ||
-    global.msRequestAnimationFrame ||
-    function(callback) {
-        setTimeout(callback, 1e3 / 60)
-    }
-
-defer.frame = function(callback, context){
-    return push(callbacks.frame, callback, context, requestAnimationFrame)
-}
-
-var clear
-
-defer.timeout = function(callback, ms, context){
-    var ct = callbacks.timeout
-
-    if (!clear) clear = defer.immediate(function(){
-        clear = null
-        callbacks.timeout = {}
-    })
-
-    return push(ct[ms] || (ct[ms] = []), callback, context, function(iterator){
-        setTimeout(iterator, ms)
-    })
-}
-
-module.exports = defer
-
-}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-
-},{"_process":94,"mout/array/forEach":82,"mout/array/indexOf":83,"mout/lang/kindOf":85,"mout/time/now":90}],79:[function(require,module,exports){
-/*
-Emitter
-*/"use strict"
-
-var indexOf = require("mout/array/indexOf"),
-    forEach = require("mout/array/forEach")
-
-var prime = require("./index"),
-    defer = require("./defer")
-
-var slice = Array.prototype.slice;
-
-var Emitter = prime({
-
-    on: function(event, fn){
-        var listeners = this._listeners || (this._listeners = {}),
-            events = listeners[event] || (listeners[event] = [])
-
-        if (indexOf(events, fn) === -1) events.push(fn)
-
-        return this
-    },
-
-    off: function(event, fn){
-        var listeners = this._listeners, events, key, length = 0
-        if (listeners && (events = listeners[event])){
-
-            var io = indexOf(events, fn)
-            if (io > -1) events.splice(io, 1)
-            if (!events.length) delete listeners[event];
-            for (var l in listeners) return this
-            delete this._listeners
-        }
-        return this
-    },
-
-    emit: function(event){
-        var self = this,
-            args = slice.call(arguments, 1)
-
-        var emit = function(){
-            var listeners = self._listeners, events
-            if (listeners && (events = listeners[event])){
-                forEach(events.slice(0), function(event){
-                    return event.apply(self, args)
-                })
-            }
-        }
-
-        if (args[args.length - 1] === Emitter.EMIT_SYNC){
-            args.pop()
-            emit()
-        } else {
-            defer(emit)
-        }
-
-        return this
-    }
-
-})
-
-Emitter.EMIT_SYNC = {}
-
-module.exports = Emitter
-
-},{"./defer":78,"./index":80,"mout/array/forEach":82,"mout/array/indexOf":83}],80:[function(require,module,exports){
-/*
-prime
- - prototypal inheritance
-*/"use strict"
-
-var hasOwn = require("mout/object/hasOwn"),
-    mixIn  = require("mout/object/mixIn"),
-    create = require("mout/lang/createObject"),
-    kindOf = require("mout/lang/kindOf")
-
-var hasDescriptors = true
-
-try {
-    Object.defineProperty({}, "~", {})
-    Object.getOwnPropertyDescriptor({}, "~")
-} catch (e){
-    hasDescriptors = false
-}
-
-// we only need to be able to implement "toString" and "valueOf" in IE < 9
-var hasEnumBug = !({valueOf: 0}).propertyIsEnumerable("valueOf"),
-    buggy      = ["toString", "valueOf"]
-
-var verbs = /^constructor|inherits|mixin$/
-
-var implement = function(proto){
-    var prototype = this.prototype
-
-    for (var key in proto){
-        if (key.match(verbs)) continue
-        if (hasDescriptors){
-            var descriptor = Object.getOwnPropertyDescriptor(proto, key)
-            if (descriptor){
-                Object.defineProperty(prototype, key, descriptor)
-                continue
-            }
-        }
-        prototype[key] = proto[key]
-    }
-
-    if (hasEnumBug) for (var i = 0; (key = buggy[i]); i++){
-        var value = proto[key]
-        if (value !== Object.prototype[key]) prototype[key] = value
-    }
-
-    return this
-}
-
-var prime = function(proto){
-
-    if (kindOf(proto) === "Function") proto = {constructor: proto}
-
-    var superprime = proto.inherits
-
-    // if our nice proto object has no own constructor property
-    // then we proceed using a ghosting constructor that all it does is
-    // call the parent's constructor if it has a superprime, else an empty constructor
-    // proto.constructor becomes the effective constructor
-    var constructor = (hasOwn(proto, "constructor")) ? proto.constructor : (superprime) ? function(){
-        return superprime.apply(this, arguments)
-    } : function(){}
-
-    if (superprime){
-
-        mixIn(constructor, superprime)
-
-        var superproto = superprime.prototype
-        // inherit from superprime
-        var cproto = constructor.prototype = create(superproto)
-
-        // setting constructor.parent to superprime.prototype
-        // because it's the shortest possible absolute reference
-        constructor.parent = superproto
-        cproto.constructor = constructor
-    }
-
-    if (!constructor.implement) constructor.implement = implement
-
-    var mixins = proto.mixin
-    if (mixins){
-        if (kindOf(mixins) !== "Array") mixins = [mixins]
-        for (var i = 0; i < mixins.length; i++) constructor.implement(create(mixins[i].prototype))
-    }
-
-    // implement proto and return constructor
-    return constructor.implement(proto)
-
-}
-
-module.exports = prime
-
-},{"mout/lang/createObject":84,"mout/lang/kindOf":85,"mout/object/hasOwn":88,"mout/object/mixIn":89}],81:[function(require,module,exports){
-/*
-Map
-*/"use strict"
-
-var indexOf = require("mout/array/indexOf")
-
-var prime = require("./index")
-
-var Map = prime({
-
-    constructor: function Map(){
-        this.length = 0
-        this._values = []
-        this._keys = []
-    },
-
-    set: function(key, value){
-        var index = indexOf(this._keys, key)
-
-        if (index === -1){
-            this._keys.push(key)
-            this._values.push(value)
-            this.length++
-        } else {
-            this._values[index] = value
-        }
-
-        return this
-    },
-
-    get: function(key){
-        var index = indexOf(this._keys, key)
-        return (index === -1) ? null : this._values[index]
-    },
-
-    count: function(){
-        return this.length
-    },
-
-    forEach: function(method, context){
-        for (var i = 0, l = this.length; i < l; i++){
-            if (method.call(context, this._values[i], this._keys[i], this) === false) break
-        }
-        return this
-    },
-
-    map: function(method, context){
-        var results = new Map
-        this.forEach(function(value, key){
-            results.set(key, method.call(context, value, key, this))
-        }, this)
-        return results
-    },
-
-    filter: function(method, context){
-        var results = new Map
-        this.forEach(function(value, key){
-            if (method.call(context, value, key, this)) results.set(key, value)
-        }, this)
-        return results
-    },
-
-    every: function(method, context){
-        var every = true
-        this.forEach(function(value, key){
-            if (!method.call(context, value, key, this)) return (every = false)
-        }, this)
-        return every
-    },
-
-    some: function(method, context){
-        var some = false
-        this.forEach(function(value, key){
-            if (method.call(context, value, key, this)) return !(some = true)
-        }, this)
-        return some
-    },
-
-    indexOf: function(value){
-        var index = indexOf(this._values, value)
-        return (index > -1) ? this._keys[index] : null
-    },
-
-    remove: function(value){
-        var index = indexOf(this._values, value)
-
-        if (index !== -1){
-            this._values.splice(index, 1)
-            this.length--
-            return this._keys.splice(index, 1)[0]
-        }
-
-        return null
-    },
-
-    unset: function(key){
-        var index = indexOf(this._keys, key)
-
-        if (index !== -1){
-            this._keys.splice(index, 1)
-            this.length--
-            return this._values.splice(index, 1)[0]
-        }
-
-        return null
-    },
-
-    keys: function(){
-        return this._keys.slice()
-    },
-
-    values: function(){
-        return this._values.slice()
-    }
-
-})
-
-var map = function(){
-    return new Map
-}
-
-map.prototype = Map.prototype
-
-module.exports = map
-
-},{"./index":80,"mout/array/indexOf":83}],82:[function(require,module,exports){
-arguments[4][15][0].apply(exports,arguments)
-},{"dup":15}],83:[function(require,module,exports){
-arguments[4][16][0].apply(exports,arguments)
-},{"dup":16}],84:[function(require,module,exports){
-var mixIn = require('../object/mixIn');
-
-    /**
-     * Create Object using prototypal inheritance and setting custom properties.
-     * - Mix between Douglas Crockford Prototypal Inheritance <http://javascript.crockford.com/prototypal.html> and the EcmaScript 5 `Object.create()` method.
-     * @param {object} parent    Parent Object.
-     * @param {object} [props] Object properties.
-     * @return {object} Created object.
-     */
-    function createObject(parent, props){
-        function F(){}
-        F.prototype = parent;
-        return mixIn(new F(), props);
-
-    }
-    module.exports = createObject;
-
-
-
-},{"../object/mixIn":89}],85:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"dup":24}],86:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./hasOwn":88,"dup":27}],87:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"./forIn":86,"./hasOwn":88,"dup":28}],88:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"dup":29}],89:[function(require,module,exports){
-arguments[4][75][0].apply(exports,arguments)
-},{"./forOwn":87,"dup":75}],90:[function(require,module,exports){
-
-
-    /**
-     * Get current time in miliseconds
-     */
-    function now(){
-        // yes, we defer the work to another function to allow mocking it
-        // during the tests
-        return now.get();
-    }
-
-    now.get = (typeof Date.now === 'function')? Date.now : function(){
-        return +(new Date());
-    };
-
-    module.exports = now;
-
-
-
 },{}],91:[function(require,module,exports){
-arguments[4][34][0].apply(exports,arguments)
-},{"./parser":93,"dup":34}],92:[function(require,module,exports){
-(function (global){
-/*
-slick
-*/"use strict"
-
-module.exports = "document" in global ? require("./finder") : { parse: require("./parser") }
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-
-},{"./finder":91,"./parser":93}],93:[function(require,module,exports){
-arguments[4][36][0].apply(exports,arguments)
-},{"dup":36}],94:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
 var queue = [];
 var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
 
 function drainQueue() {
     if (draining) {
         return;
     }
+    var timeout = setTimeout(cleanUpNextTick);
     draining = true;
-    var currentQueue;
+
     var len = queue.length;
     while(len) {
         currentQueue = queue;
         queue = [];
-        var i = -1;
-        while (++i < len) {
-            currentQueue[i]();
+        while (++queueIndex < len) {
+            currentQueue[queueIndex].run();
         }
+        queueIndex = -1;
         len = queue.length;
     }
+    currentQueue = null;
     draining = false;
+    clearTimeout(timeout);
 }
+
 process.nextTick = function (fun) {
-    queue.push(fun);
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
     if (!draining) {
         setTimeout(drainQueue, 0);
     }
 };
 
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
 process.title = 'browser';
 process.browser = true;
 process.env = {};

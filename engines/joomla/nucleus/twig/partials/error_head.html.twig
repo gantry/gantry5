@@ -1,4 +1,6 @@
 {% extends "partials/page_head.html.twig" %}
 
 {% block head_application -%}
+    {{ gantry.styles('head', true)|join("\n    ")|raw }}
+    {{ gantry.scripts('head', true)|join("\n    ")|raw }}
 {%- endblock %}

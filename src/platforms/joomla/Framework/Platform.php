@@ -42,7 +42,7 @@ class Platform extends BasePlatform
 
     public function getMediaPaths()
     {
-        return ['' => ['gantry-theme://images', 'media/gantry5']];
+        return ['' => ['gantry-theme://images', 'images', 'media/gantry5']];
     }
 
     public function getEnginesPaths()
@@ -62,6 +62,11 @@ class Platform extends BasePlatform
         }
 
         return ['' => ['gantry-theme://', 'media/gantry5/assets']];
+    }
+
+    public function finalize()
+    {
+        Document::registerAssets();
     }
 
     public function countModules($position)
@@ -118,6 +123,30 @@ class Platform extends BasePlatform
         $renderer = $document->loadRenderer('modules');
 
         return $renderer->render($position, $params);
+    }
+
+    public function displaySystemMessages($params = [])
+    {
+        $document = \JFactory::getDocument();
+        if (!$document instanceof \JDocumentHTML) {
+            return '';
+        }
+
+        $renderer = $document->loadRenderer('message');
+
+        return $renderer->render(null, $params);
+    }
+
+    public function displayContent($content, $params = [])
+    {
+        $document = \JFactory::getDocument();
+        if (!$document instanceof \JDocumentHTML) {
+            return $content;
+        }
+
+        $renderer = $document->loadRenderer('component');
+
+        return $renderer->render(null, $params, $content ?: $document->getBuffer('component'));
     }
 
     protected function getModule($id)

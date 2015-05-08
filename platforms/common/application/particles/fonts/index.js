@@ -1,38 +1,41 @@
 "use strict";
 // fonts list: https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB2yJM8DBwt66u2MVRgb6M4t9CqkW7_IRY
-var prime       = require('prime'),
-    $           = require('../../utils/elements.utils'),
-    zen         = require('elements/zen'),
-    storage     = require('prime/map')(),
-    Emitter     = require('prime/emitter'),
-    Bound       = require('prime-util/prime/bound'),
-    Options     = require('prime-util/prime/options'),
-    domready    = require('elements/domready'),
+var prime        = require('prime'),
+    $            = require('../../utils/elements.utils'),
+    zen          = require('elements/zen'),
+    storage      = require('prime/map')(),
+    Emitter      = require('prime/emitter'),
+    Bound        = require('prime-util/prime/bound'),
+    Options      = require('prime-util/prime/options'),
+    domready     = require('elements/domready'),
 
-    decouple    = require('../../utils/decouple'),
+    decouple     = require('../../utils/decouple'),
 
-    bind        = require('mout/function/bind'),
-    map         = require('mout/array/map'),
-    forEach     = require('mout/array/forEach'),
-    contains    = require('mout/array/contains'),
-    last        = require('mout/array/last'),
-    split       = require('mout/array/split'),
-    removeAll   = require('mout/array/removeAll'),
-    insert      = require('mout/array/insert'),
-    find        = require('mout/array/find'),
-    combine     = require('mout/array/combine'),
-    merge       = require('mout/object/merge'),
+    bind         = require('mout/function/bind'),
+    map          = require('mout/array/map'),
+    forEach      = require('mout/array/forEach'),
+    contains     = require('mout/array/contains'),
+    last         = require('mout/array/last'),
+    split        = require('mout/array/split'),
+    removeAll    = require('mout/array/removeAll'),
+    insert       = require('mout/array/insert'),
+    append       = require('mout/array/append'),
+    find         = require('mout/array/find'),
+    pluck        = require('mout/array/pluck'),
+    combine      = require('mout/array/combine'),
+    intersection = require('mout/array/intersection'),
+    merge        = require('mout/object/merge'),
 
-    unhyphenate = require('mout/string/unhyphenate'),
-    properCase  = require('mout/string/properCase'),
-    trim        = require('mout/string/trim'),
+    unhyphenate  = require('mout/string/unhyphenate'),
+    properCase   = require('mout/string/properCase'),
+    trim         = require('mout/string/trim'),
 
-    modal       = require('../../ui').modal,
-    async       = require('async'),
+    modal        = require('../../ui').modal,
+    async        = require('async'),
 
-    request     = require('agent'),
+    request      = require('agent'),
 
-    wf          = require('./webfont');
+    wf           = require('./webfont');
 
 require('../../utils/elements.viewport');
 
@@ -58,6 +61,7 @@ var Fonts = new prime({
     constructor: function() {
         this.wf = wf;
         this.data = null;
+        this.dataLocal = null;
         this.field = null;
         this.element = null;
         this.throttle = false;
@@ -109,6 +113,9 @@ var Fonts = new prime({
         data = JSON.parse(data);
         this.field = $(data.field);
 
+        this.dataLocal = data.local || [];
+        this.data = append([], this.dataLocal);
+
         modal.open({
             content: 'Loading...',
             className: 'g5-dialog-theme-default g5-modal-fonts',
@@ -119,7 +126,7 @@ var Fonts = new prime({
                     return false;
                 }
 
-                this.data = response.body.items;
+                this.data = append(this.data, response.body.items);
 
                 this.open(null, element, instance.elements.content);
             }, this)
@@ -134,7 +141,8 @@ var Fonts = new prime({
                 return;
             }
 
-            var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li:not(.g-font-hide)', 5000),
+            // 550 = container height, 5 = pages
+            var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li:not(.g-font-hide)', (550 * 5)),
                 list = [];
 
             if (!elements) { return; }
@@ -144,12 +152,16 @@ var Fonts = new prime({
                 var dataFont = element.data('font'),
                     variant = element.data('variant');
 
-                if (!contains(this.loadedFonts, dataFont)) { list.push(dataFont + (variant != 'regular' ? ':' + variant : '')); }
+                if (!contains(this.loadedFonts, dataFont) && variant) {
+                    list.push(dataFont + (variant != 'regular' ? ':' + variant : ''));
+                }
                 else {
-                    element.find('[data-variant="' + variant + '"] .preview').style({
-                        fontFamily: dataFont,
-                        fontWeight: variant == 'regular' ? 'normal' : variant
-                    });
+                    if (variant) {
+                        element.find('[data-variant="' + variant + '"] .preview').style({
+                            fontFamily: dataFont,
+                            fontWeight: variant == 'regular' ? 'normal' : variant
+                        });
+                    }
                 }
             }, this);
 
@@ -185,27 +197,38 @@ var Fonts = new prime({
     },
 
     selectFromValue: function() {
-        var value = this.field.value();
+        var value = this.field.value(), name, variants, subset, isLocal = false;
 
-        if (!value.match('family=')) { return false; }
+        if (!value.match('family=')) {
+            var locals = pluck(this.dataLocal, 'family'), intersect;
+            value = value.replace(/(\s{1,})?,(\s{1,})?/gi, ',').split(',');
+            intersect = intersection(locals, value);
+            if (!intersect.length) { return false; }
 
-        var split = value.split('&'),
-            family = split[0],
-            split2 = family.split(':'),
-            name = split2[0].replace('family=', '').replace(/\+/g, ' '),
-            variants = split2[1] ? split2[1].split(',') : ['regular'],
+            isLocal = true;
+            name = intersect.shift();
+        } else {
+            var split = value.split('&'),
+                family = split[0],
+                split2 = family.split(':');
+
+            name = split2[0].replace('family=', '').replace(/\+/g, ' ');
+            variants = split2[1] ? split2[1].split(',') : ['regular'];
             subset = split[1] ? split[1].replace('subset=', '').split(',') : ['latin'];
+        }
+
+        var element = $('ul.g-fonts-list > [data-font="' + name + '"]');
+        variants = variants || element.data('variants').split(',') || ['regular'];
 
         if (contains(variants, '400')) {
             removeAll(variants, '400');
             insert(variants, 'regular');
         }
+
         if (contains(variants, '400italic')) {
             removeAll(variants, '400italic');
             insert(variants, 'italic');
         }
-
-        var element = $('ul.g-fonts-list > [data-font="' + name + '"]');
 
         this.selected = {
             font: name,
@@ -213,29 +236,32 @@ var Fonts = new prime({
             element: element,
             variants: variants,
             selected: [],
+            local: isLocal,
             charsets: subset,
             availableVariants: element.data('variants').split(','),
-            expanded: false,
-            loaded: false
+            expanded: isLocal,
+            loaded: isLocal
         };
 
-        variants.forEach(function(variant) {
+        (isLocal ? [name] : variants).forEach(function(variant) {
             this.select(element, variant);
-            element.find('> ul > [data-variant="' + variant + '"]').removeClass('g-variant-hide');
+            variant = element.find('> ul > [data-variant="' + variant + '"]');
+            if (variant) { variant.removeClass('g-variant-hide'); }
         }, this);
 
         var charsetSelected = element.find('.font-charsets-selected');
         if (charsetSelected) { charsetSelected.text('(' + subset.length + ' selected)'); }
 
-        $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop;
+        if (!isLocal) { $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop; }
 
         this.toggleExpansion();
         setTimeout(bind(function() { this.toggleExpansion(); }, this), 50);
-        setTimeout(bind(function() { $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop; }, this, 250));
+        if (!isLocal) { setTimeout(bind(function() { $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop; }, this, 250)); }
     },
 
     select: function(element, variant/*, target*/) {
-        var baseVariant = element.data('variant');
+        var baseVariant = element.data('variant'),
+            isLocal = !baseVariant;
 
         if (!this.selected || this.selected.element != element) {
             if (variant && this.selected) {
@@ -248,10 +274,11 @@ var Fonts = new prime({
                 element: element,
                 variants: [baseVariant],
                 selected: [],
+                local: isLocal,
                 charsets: ['latin'],
                 availableVariants: element.data('variants').split(','),
-                expanded: false,
-                loaded: false
+                expanded: isLocal,
+                loaded: isLocal
             };
         }
 
@@ -260,13 +287,13 @@ var Fonts = new prime({
         }
 
 
-        if (variant) {
+        if (variant || isLocal) {
             var selected = ($('ul.g-fonts-list > [data-font]:not([data-font="' + this.selected.font + '"]) input[type="checkbox"]:checked'));
             if (selected) {
                 selected.checked(false);
                 selected.parent('[data-variants]').removeClass('font-selected');
             }
-            var checkbox = this.selected.element.find('input[type="checkbox"][value="' + variant + '"]'),
+            var checkbox = this.selected.element.find('input[type="checkbox"][value="' + (isLocal ? this.selected.font : variant) + '"]'),
                 checked = checkbox.checked();
             if (checkbox) {
                 checkbox.checked(!checked);
@@ -286,6 +313,11 @@ var Fonts = new prime({
 
     toggleExpansion: function() {
         if (this.selected.availableVariants.length <= 1) { return; }
+        if (this.selected.local) {
+            this.selected.expanded = true;
+            return;
+        }
+
         if (!this.selected.expanded) {
             var variants = this.selected.element.data('variants'), variant;
             if (variants.split(',').length > 1) {
@@ -350,7 +382,7 @@ var Fonts = new prime({
     },
 
     updateSelection: function() {
-        var preview = $('.g-particles-footer .font-selected'), selected;
+        var preview = $('.g-particles-footer .font-selected'), selected, variants;
         if (!preview) { return; }
 
         if (!this.selected.selected.length) {
@@ -360,8 +392,9 @@ var Fonts = new prime({
         }
 
         selected = this.selected.selected.sort();
+        variants = this.selected.local ? '(<small>local</small>)' : '(<small>' + selected.join(', ').replace('regular', 'normal') + '</small>)';
         this.selected.element.addClass('font-selected');
-        preview.html('<strong>' + this.selected.font + '</strong> (<small>' + selected.join(', ').replace('regular', 'normal') + '</small>)');
+        preview.html('<strong>' + this.selected.font + '</strong> ' + variants);
     },
 
     updateTotal: function() {
@@ -387,7 +420,18 @@ var Fonts = new prime({
 
         html.delegate('click', '.g-fonts-list li[data-font]', bind(this.toggle, this));
 
+        if (this.dataLocal.length) {
+            //insert(categories, 'local');
+            //this.filters.categories.push('local');
+            this.buildLocalFonts(ul);
+        }
+
         async.eachSeries(this.data, bind(function(font, callback) {
+            font.subsets = font.subsets || [];
+            font.category = font.category || [];
+
+            if (!font.category.length) { callback(); return; }
+
             combine(subsets, font.subsets);
             insert(categories, font.category);
             this.filters.categories.push(font.category);
@@ -430,8 +474,14 @@ var Fonts = new prime({
                 }, this));
             }
 
+            // Workaround for Firefox in Windows. Need to rework this better and cleaner
+            // Probably should be decoupled and some of the layout logic should go to twig
+            // #175
+            callback();
+
             var variantContainer = zen('ul').bottom(li), variantFont, label;
             async.each(font.variants, bind(function(current) {
+                current = current + '';
                 variantFont = zen('li[data-font="' + font.family + '"][data-variant="' + current + '"]').bottom(variantContainer);
                 zen('input[type="checkbox"][value="' + current + '"]').bottom(variantFont);
                 zen('div.variant').html('<small>' + this.mapVariant(current) + '</small>').bottom(variantFont);
@@ -440,12 +490,12 @@ var Fonts = new prime({
                 if (':' + current !== variant && current !== (variant || 'regular')) { variantFont.addClass('g-variant-hide'); }
             }, this));
 
-            if (!contains(font.subsets, 'latin')) {
+            if (!contains(font.subsets, 'latin') && font.subsets.length) {
                 li.addClass('g-font-hide');
             }
 
             families.push(font.family + variant);
-            callback();
+            //callback();
         }, this));
 
         var catContainer = html.find('a.font-category'), subContainer = html.find('a.font-subsets');
@@ -454,6 +504,46 @@ var Fonts = new prime({
         subContainer.data('font-subsets', subsets.join(',')).html('Subsets (<small>' + properCase(unhyphenate(this.filters.script.replace('ext', 'extended'))) + '</small>) <i class="fa fa-caret-down"></i>');
 
         return html;
+    },
+
+    buildLocalFonts: function(ul) {
+        var variant, variants, li, total, family;
+
+        zen('li.g-font-heading').text('Local Fonts').top(ul);
+
+        async.eachSeries(this.dataLocal, bind(function(font, callback) {
+            variants = font.variants.join(',');
+
+            li = zen('li.g-local-font[data-font="' + font.family + '"][data-variant=""][data-variants="' + variants + '"]')
+                .html('<input type="checkbox" value="' + font.family + '"/>')
+                .bottom(ul);
+            total = font.variants.length + ' style' + (font.variants.length > 1 ? 's' : '');
+            family = zen('div.family').html('<strong>' + font.family + '</strong>, <span class="g-font-variants-list">' + total + '</span>').bottom(li);
+
+            if (variants) {
+                family.find('.g-font-variants-list').popover({
+                    placement: 'auto',
+                    width: '200',
+                    trigger: 'mouse',
+                    style: 'font-categories, above-modal'
+                }).on('beforeshow.popover', bind(function(popover) {
+                    var content = popover.$target.find('.g5-popover-content');
+
+                    content.empty();
+
+                    async.each(font.variants, bind(function(variant) {
+                        variant = variant == '400' ? 'regular' : (variant == '400italic' ? 'italic' : variant + '');
+                        zen('div').text(this.mapVariant(variant)).bottom(content);
+                    }, this));
+
+                    popover.displayContent();
+                }, this));
+            }
+
+            callback();
+        }, this));
+
+        zen('li.g-font-heading').text('Remote Fonts').bottom(ul);
     },
 
     buildHeader: function(html) {
@@ -505,7 +595,11 @@ var Fonts = new prime({
                 insert(variation, '400italic');
             }
 
-            this.field.value('family=' + name + (variation.length ? ':' + variation.join(',') : '') + (charset.length ? '&subset=' + charset.join(',') : ''));
+            if (!this.selected.local) {
+                this.field.value('family=' + name + (variation.length ? ':' + variation.join(',') : '') + (charset.length ? '&subset=' + charset.join(',') : ''));
+            } else {
+                this.field.value(name);
+            }
 
             this.field.emit('input');
             $('body').emit('input', { target: this.field });

@@ -223,11 +223,9 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
     {
         $this->items[$item->path] = $item;
 
-        // Assign menu item to its parent.
+        // If parent exists, assign menu item to its parent; otherwise ignore menu item.
         if (isset($this->items[$item->parent_id])) {
             $this->items[$item->parent_id]->addChild($item);
-        } else {
-            throw new \RuntimeException(sprintf("Internal menu structure error: Parent '%s' not in menu.", $item->parent_id));
         }
 
         return $this;

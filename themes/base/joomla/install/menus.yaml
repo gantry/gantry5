@@ -1,0 +1,9 @@
+base-theme:
+  title: 'Base Theme'
+  description: 'Sample menu for Base theme.'
+
+  items:
+    base-theme:
+      title: 'Home'
+      layout: home
+      home: 1

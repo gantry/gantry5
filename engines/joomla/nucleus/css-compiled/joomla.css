@@ -1,3 +1,8 @@
+/* line 8, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+.size-100 {
+  width: 100%;
+}
+
 /* line 2, engines/joomla/nucleus/scss/joomla/_typography.scss */
 p {
   margin: 1.5rem 0;
@@ -345,25 +350,30 @@ input[type="color"]:focus,
 }
 
 /* line 25, engines/joomla/nucleus/scss/joomla/_forms.scss */
-input, textarea, .uneditable-input {
-  width: 90%;
+input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"] {
+  padding: 0.375rem 0.375rem;
 }
 
 /* line 29, engines/joomla/nucleus/scss/joomla/_forms.scss */
+input, textarea, .uneditable-input {
+  width: 100%;
+}
+
+/* line 33, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-block-level {
   display: block;
   width: 100%;
   min-height: 30px;
 }
 
-/* line 35, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 39, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-prepend .chzn-container-single .chzn-single,
 .input-append .chzn-container-single .chzn-single {
   height: 26px;
   box-shadow: none;
 }
 
-/* line 41, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 45, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-prepend > .add-on,
 .input-append > .add-on {
   vertical-align: top;
@@ -371,33 +381,33 @@ input, textarea, .uneditable-input {
   padding: 5px;
 }
 
-/* line 48, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 52, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-prepend .chzn-container-single .chzn-single {
   border-radius: 0 0.1875rem 0.1875rem 0;
 }
 
-/* line 52, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 56, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-prepend .chzn-container-single .chzn-single-with-drop {
   border-radius: 0 0.1875rem 0 0;
 }
 
-/* line 56, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 60, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-append .chzn-container-single .chzn-single {
   border-radius: 0.1875rem 0 0 0.1875rem;
 }
 
-/* line 60, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 64, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-append .chzn-container-single .chzn-single-with-drop {
   border-radius: 0.1875rem 0 0 0;
 }
 
-/* line 64, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 68, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .input-prepend.input-append .chzn-container-single .chzn-single,
 .input-prepend.input-append .chzn-container-single .chzn-single-with-drop {
   border-radius: 0;
 }
 
-/* line 69, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 73, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .element-invisible {
   position: absolute;
   padding: 0;
@@ -408,7 +418,7 @@ input, textarea, .uneditable-input {
   overflow: hidden;
 }
 
-/* line 79, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 83, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .form-vertical .control-label {
   float: none;
   width: auto;
@@ -417,26 +427,26 @@ input, textarea, .uneditable-input {
   text-align: left;
 }
 
-/* line 87, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 91, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .form-vertical .controls {
   margin-left: 0;
 }
 
-/* line 91, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 95, engines/joomla/nucleus/scss/joomla/_forms.scss */
 .invalid {
   color: #9d261d;
 }
 
-/* line 95, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 99, engines/joomla/nucleus/scss/joomla/_forms.scss */
 input.invalid {
   border: 1px solid #9d261d;
 }
 
-/* line 101, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 105, engines/joomla/nucleus/scss/joomla/_forms.scss */
 #modules-form .btn-group {
   font-size: inherit;
 }
-/* line 104, engines/joomla/nucleus/scss/joomla/_forms.scss */
+/* line 108, engines/joomla/nucleus/scss/joomla/_forms.scss */
 #modules-form .radio.btn-group input[type=radio] {
   display: inherit;
   margin-left: inherit;

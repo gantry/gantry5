@@ -1,21 +1,22 @@
 "use strict";
-var $             = require('elements'),
-    zen           = require('elements/zen'),
-    ready         = require('elements/domready'),
-    request       = require('agent'),
-    ui            = require('./ui'),
-    interpolate   = require('mout/string/interpolate'),
-    trim          = require('mout/string/trim'),
-    setParam      = require('mout/queryString/setParam'),
-    modal         = ui.modal,
-    toastr        = ui.toastr,
+var $              = require('elements'),
+    zen            = require('elements/zen'),
+    ready          = require('elements/domready'),
+    request        = require('agent'),
+    ui             = require('./ui'),
+    interpolate    = require('mout/string/interpolate'),
+    trim           = require('mout/string/trim'),
+    setParam       = require('mout/queryString/setParam'),
+    modal          = ui.modal,
+    toastr         = ui.toastr,
 
-    getAjaxSuffix = require('./utils/get-ajax-suffix'),
+    getAjaxSuffix  = require('./utils/get-ajax-suffix'),
 
-    flags         = require('./utils/flags-state'),
-    validateField = require('./utils/field-validation'),
-    lm            = require('./lm'),
-    mm            = require('./menu');
+    flags          = require('./utils/flags-state'),
+    validateField  = require('./utils/field-validation'),
+    lm             = require('./lm'),
+    mm             = require('./menu'),
+    configurations = require('./configurations');
 
 require('elements/attributes');
 require('elements/events');
@@ -140,8 +141,11 @@ ready(function() {
 
         switch (page) {
             case 'layout':
+                var preset = $('[data-lm-preset]');
                 lm.layoutmanager.singles('cleanup', lm.builder, true);
                 lm.savestate.setSession(lm.builder.serialize(null, true));
+
+                data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
                 data.layout = JSON.stringify(lm.builder.serialize());
 
                 break;
@@ -216,6 +220,8 @@ ready(function() {
     // Editable titles
     body.delegate('click', '[data-title-edit]', function(event, element) {
         element = $(element);
+        if (element.hasClass('disabled')) { return false; }
+
         var $title = element.siblings('[data-title-editable]') || element.previousSiblings().find('[data-title-editable]') || element.nextSiblings().find('[data-title-editable]'), title;
         if (!$title) { return true; }
 
@@ -232,6 +238,7 @@ ready(function() {
         selection.addRange(range);
 
         $title.storedTitle = trim($title.text());
+        $title.titleEditCanceled = false;
         $title.emit('title-edit-start', $title.storedTitle);
     });
 
@@ -244,6 +251,7 @@ ready(function() {
                 if (event.keyCode == 27) {
                     if (typeof element.storedTitle !== 'undefined') {
                         element.text(element.storedTitle);
+                        element.titleEditCanceled = true;
                     }
                 }
 
@@ -263,7 +271,7 @@ ready(function() {
         element.attribute('contenteditable', null);
         element.data('title-editable', trim(element.text()));
         window.getSelection().removeAllRanges();
-        element.emit('title-edit-end', element.data('title-editable'));
+        element.emit('title-edit-end', element.data('title-editable'), element.storedTitle, element.titleEditCanceled);
     }, true);
 
     // Quick Ajax Calls [data-ajax-action]

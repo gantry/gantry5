@@ -42,12 +42,41 @@
 	}
 }
 
+.nomargintop {
+	margin-top: 0 !important;
+	.content {
+		margin-top: 0 !important;
+	}
+}
+
+.nomarginbottom {
+	margin-bottom: 0 !important;
+	.content {
+		margin-bottom: 0 !important;
+	}
+}
+
 .nopaddingall {
 	padding: 0 !important;
 	.content {
 		padding: 0 !important;
 	}
 }
+
+.nopaddingtop {
+	padding-top: 0 !important;
+	.content {
+		padding-top: 0 !important;
+	}
+}
+
+.nopaddingbottom {
+	padding-bottom: 0 !important;
+	.content {
+		padding-bottom: 0 !important;
+	}
+}
+
 
 // Size Adjustment
 .full-width {

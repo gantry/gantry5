@@ -15,8 +15,11 @@
 namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
+use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
+use Gantry\Framework\Configurations as ConfigurationsObject;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Configurations extends HtmlController
@@ -27,16 +30,25 @@ class Configurations extends HtmlController
             '/**' => 'forward',
         ],
         'POST' => [
-            '/**' => 'forward',
+            '/'            => 'undefined',
+            '/*'           => 'undefined',
+            '/create'      => 'create',
+            '/*/rename'    => 'rename',
+            '/*/duplicate' => 'duplicate',
+            '/*/**'        => 'forward',
         ],
         'PUT'    => [
+            '/'   => 'undefined',
             '/**' => 'forward'
         ],
         'PATCH'  => [
+            '/'   => 'undefined',
             '/**' => 'forward'
         ],
         'DELETE' => [
-            '/**' => 'forward'
+            '/'     => 'undefined',
+            '/*'    => 'delete',
+            '/*/**' => 'forward'
         ]
     ];
 
@@ -55,6 +67,79 @@ class Configurations extends HtmlController
         $this->params['layouts'] = ['user' => $layouts_user, 'core' => $layouts_core];
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/configurations.html.twig', $this->params);
+    }
+
+    public function create()
+    {
+        /** @var ConfigurationsObject $configurations */
+        $configurations = $this->container['configurations'];
+
+        /** @var Request $request */
+        $request = $this->container['request'];
+
+        $configurations->create($request->get('title'), $request->get('preset'));
+
+        return new JsonResponse(['html' => 'Configuration created.']);
+    }
+
+    public function rename($configuration)
+    {
+        /** @var ConfigurationsObject $configurations */
+        $configurations = $this->container['configurations'];
+        $list = $configurations->user();
+
+        if (!isset($list[$configuration])) {
+            $this->forbidden();
+        }
+
+        /** @var Request $request */
+        $request = $this->container['request'];
+
+        $configurations->rename($configuration, $request->get('title'));
+
+        return new JsonResponse(['html' => 'Configuration renamed.']);
+    }
+
+    public function duplicate($configuration)
+    {
+        /** @var ConfigurationsObject $configurations */
+        $configurations = $this->container['configurations'];
+
+        // Handle special case on duplicating a preset.
+        if ($configuration && $configuration[0] == '_') {
+            $preset = $configurations->preset($configuration);
+            if (empty($preset)) {
+                throw new \RuntimeException('Preset not found');
+            }
+            $configurations->create(ucwords(trim(str_replace('_', ' ', $configuration))), $configuration);
+
+            return new JsonResponse(['html' => 'System configuration duplicated.']);
+        }
+
+        $list = $configurations->user();
+
+        if (!isset($list[$configuration])) {
+            $this->forbidden();
+        }
+
+        $configurations->duplicate($configuration);
+
+        return new JsonResponse(['html' => 'Configuration duplicated.']);
+    }
+
+    public function delete($configuration)
+    {
+        /** @var ConfigurationsObject $configurations */
+        $configurations = $this->container['configurations'];
+        $list = $configurations->user();
+
+        if (!isset($list[$configuration])) {
+            $this->forbidden();
+        }
+
+        $configurations->delete($configuration);
+
+        return new JsonResponse(['html' => 'Configuration deleted.']);
     }
 
     public function forward()

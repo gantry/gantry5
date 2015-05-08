@@ -42,6 +42,24 @@ class Gantry extends Container
     }
 
     /**
+     * @param string $location
+     * @return array
+     */
+    public function styles($location = 'head')
+    {
+        return Document::getStyles($location);
+    }
+
+    /**
+     * @param string $location
+     * @return array
+     */
+    public function scripts($location = 'head')
+    {
+        return Document::getScripts($location);
+    }
+
+    /**
      * Lock the variable against modification and return the value.
      *
      * @param string $id

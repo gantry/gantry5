@@ -45,6 +45,7 @@ class TwigExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
             new \Twig_SimpleFilter('html', [$this, 'htmlFilter']),
+            new \Twig_SimpleFilter('url', [$this, 'urlFunc']),
             new \Twig_SimpleFilter('trans', [$this, 'transFilter']),
             new \Twig_SimpleFilter('repeat', [$this, 'repeatFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode'),
@@ -61,9 +62,17 @@ class TwigExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('nested', [$this, 'nestedFunc']),
             new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
-            new \Twig_SimpleFunction('parseHtmlHeader', [$this, 'parseHtmlHeaderFunc']),
+            new \Twig_SimpleFunction('parse_assets', [$this, 'parseAssetsFunc']),
             new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc'])
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getTokenParsers()
+    {
+        return array(new TokenParserTry());
     }
 
     /**
@@ -184,10 +193,12 @@ class TwigExtension extends \Twig_Extension
      * Move supported document head elements into platform document object, return all
      * unsupported tags in a string.
      *
-     * @param $input
+     * @param string $input
+     * @param string $location
+     * @param int $priority
      * @return string
      */
-    public function parseHtmlHeaderFunc($input, $in_footer = false)
+    public function parseAssetsFunc($input, $location = 'head', $priority = 0)
     {
         $doc = new \DOMDocument();
         $doc->loadHTML('<html><head>' . $input . '</head><body></body></html>');
@@ -198,7 +209,7 @@ class TwigExtension extends \Twig_Extension
             foreach ($element->attributes as $attribute) {
                 $result[$attribute->name] = $attribute->value;
             }
-            $success = Document::addHeaderTag($result, $in_footer);
+            $success = Document::addHeaderTag($result, $location, $priority);
             if (!$success) {
                 $raw[] = $doc->saveHTML($element);
             }

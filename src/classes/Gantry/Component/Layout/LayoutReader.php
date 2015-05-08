@@ -33,6 +33,8 @@ class LayoutReader
     {
         // Check if we have pre-saved configuration.
         if (isset($data['children'])) {
+            $preset = isset($data['preset']) && is_array($data['preset']) ? $data['preset'] : [];
+
             $result = self::object($data['children']);
 
             $invisible = [
@@ -54,7 +56,20 @@ class LayoutReader
 
             $result += $invisible;
 
-            return array_values($result);
+            // Make sure that all preset values are set by defining defaults.
+            $preset += [
+                'name' => '',
+                'image' => 'gantry-admin://images/layouts/default.png'
+            ];
+
+            return ['preset' => $preset] + array_values($result);
+        }
+
+        // Check if we have preset.
+        $preset = [];
+        if (isset($data['preset']) && is_array($data['preset']) && isset($data['layout']) && is_array($data['layout'])) {
+            $preset = $data['preset'];
+            $data = $data['layout'];
         }
 
         // We have user entered file; let's build the layout.
@@ -81,7 +96,12 @@ class LayoutReader
             $result[] = $child;
         }
 
-        return $result;
+        // Make sure that all values are set by defining defaults.
+        $preset += [
+            'name' => '',
+            'image' => 'gantry-admin://images/layouts/default.png'
+        ];
+        return ['preset' => $preset] + $result;
     }
 
     /**
@@ -97,8 +117,10 @@ class LayoutReader
         }
 
         $file = CompiledYamlFile::instance($file);
+        $content = (array) $file->content();
+        $file->free();
 
-        return self::data((array) $file->content());
+        return self::data($content);
     }
 
     protected static function object(array $items)
@@ -189,11 +211,18 @@ class LayoutReader
 
         $attributes->enabled = 1;
 
-        if ($subtype && $type == 'position') {
-            $attributes->key = $subtype;
+        if ($type === 'system' && $subtype = 'messages') {
+            $subtype = $type . '-' . $subtype;
+            $type = 'pagecontent';
+            $title = 'System Messages';
         }
 
-        if ($type == 'particle') {
+        if ($subtype && $type == 'position') {
+            $attributes->key = $subtype;
+            $subtype = null;
+        }
+
+        if ($subtype) {
             $result = ['id' => static::id(), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => $attributes];
         } else {
             $result = ['id' => static::id(), 'title' => $title, 'type' => $type, 'attributes' => $attributes];

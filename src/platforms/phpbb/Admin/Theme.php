@@ -82,7 +82,7 @@ class Theme extends BaseTheme
             'cache' => $locator->findResource('gantry-cache://twig', true, true),
             'debug' => true,
             'auto_reload' => true,
-            'autoescape' => false
+            'autoescape' => 'html'
         );
 
         $twig = new \Twig_Environment($loader, $params);

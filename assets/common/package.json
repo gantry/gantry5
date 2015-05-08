@@ -7,10 +7,10 @@
     "mout": "^0.11.0",
     "prime": "^0.4.2",
     "prime-util": "^0.5.0",
-    "slick": "^1.12.1"
+    "slick": "git://github.com/kamicane/slick.git#master"
   },
   "devDependencies": {
-    "browserify": "^9.0.8",
+    "browserify": "^10.0.0",
     "gulp": "^3.8.11",
     "gulp-if": "^1.2.5",
     "gulp-ruby-sass": "^1.0.5",
@@ -20,7 +20,7 @@
     "merge-stream": "^0.1.7",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.2.0",
+    "watchify": "^3.2.1",
     "yargs": "^3.8.0"
   }
 }

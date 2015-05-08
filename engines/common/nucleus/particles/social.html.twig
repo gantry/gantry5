@@ -3,9 +3,9 @@
 {% block particle %}
     <div class="g-social">
         {% for item in particle.items %}
-            <a target="{{ particle.target }}" href="{{ item.link|e }}" title="{{ item.text }}">
-                <span class="{{ item.icon }}"></span>
-                <span class="g-social-text">{{ item.text }}</span>
+            <a target="{{ particle.target|default('_blank')|e }}" href="{{ item.link|e }}" title="{{ item.text|e }}">
+                <span class="{{ item.icon|e }}"></span>
+                <span class="g-social-text">{{ item.text|e }}</span>
             </a>
         {% endfor %}
     </div>

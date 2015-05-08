@@ -41,7 +41,7 @@ class Theme extends BaseTheme
         $nucleus = $patform->getEnginePaths('nucleus')[''];
         $patform->set(
             'streams.gantry-admin.prefixes', [
-                ''        => [$relpath, $relpath . '/common', 'gantry-theme://admin', 'gantry-engine://admin'],
+                ''        => ['gantry-theme://admin', $relpath, $relpath . '/common', 'gantry-engine://admin'],
                 'assets/' => array_merge([$relpath, $relpath . '/common'], $nucleus, ['gantry-assets://'])
             ]
         );
@@ -122,7 +122,7 @@ class Theme extends BaseTheme
             'cache' => $locator->findResource('gantry-cache://twig', true, true),
             'debug' => true,
             'auto_reload' => true,
-            'autoescape' => false
+            'autoescape' => 'html'
         );
 
         $twig = new \Twig_Environment($loader, $params);

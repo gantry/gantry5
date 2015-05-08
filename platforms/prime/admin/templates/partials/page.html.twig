@@ -14,9 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         {% block stylesheets %}
-            {% for style in gantry.styles %}
-                {{ style }}
-            {% endfor %}
+            {{ gantry.styles('head')|join("\n    ")|raw }}
         {% endblock %}
 
         {% block javascript %}
@@ -25,18 +23,14 @@
                 var GANTRY_AJAX_URL = '{{ gantry.route('%ajax%')|e }}';
                 var GANTRY_AJAX_CONF_URL = '{{ gantry.route('configurations/%ajax%')|e }}';
             </script>
-            {% for script in gantry.scripts %}
-                {{ script }}
-            {% endfor %}
+            {{ gantry.scripts('head')|join("\n    ")|raw }}
         {% endblock %}
     </head>
     <body>
         {{ htmlContent }}
 
         {% block footer_section %}
-            {% for script in gantry.scripts(true) %}
-                {{ script }}
-            {% endfor %}
+            {{ gantry.scripts('footer')|join("\n    ")|raw }}
         {% endblock %}
     </body>
 </html>
