@@ -104,6 +104,18 @@ class Configurations extends HtmlController
     {
         /** @var ConfigurationsObject $configurations */
         $configurations = $this->container['configurations'];
+
+        // Handle special case on duplicating a preset.
+        if ($configuration && $configuration[0] == '_') {
+            $preset = $configurations->preset($configuration);
+            if (empty($preset)) {
+                throw new \RuntimeException('Preset not found');
+            }
+            $configurations->create(ucwords(trim(str_replace('_', ' ', $configuration))), $configuration);
+
+            return new JsonResponse(['html' => 'System configuration duplicated.']);
+        }
+
         $list = $configurations->user();
 
         if (!isset($list[$configuration])) {
