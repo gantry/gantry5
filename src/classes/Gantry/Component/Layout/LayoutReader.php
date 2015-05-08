@@ -117,8 +117,10 @@ class LayoutReader
         }
 
         $file = CompiledYamlFile::instance($file);
+        $content = (array) $file->content();
+        $file->free();
 
-        return self::data((array) $file->content());
+        return self::data($content);
     }
 
     protected static function object(array $items)
