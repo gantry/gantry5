@@ -112,7 +112,13 @@ class Configurations extends BaseConfigurations
         $model = StyleHelper::loadModel();
 
         if (!$model->delete($id)) {
-            throw new \RuntimeException($model->getError(), 400);
+            $error = $model->getError();
+            if (!$error) {
+                $messages = \JFactory::getApplication()->getMessageQueue();
+                $message = reset($messages);
+                $error = $message ? $message['message'] : 'Unknown error';
+            }
+            throw new \RuntimeException($error, 400);
         }
     }
 }
