@@ -22,6 +22,10 @@ input[type="color"]:focus,
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
 }
 
+#{$all-text-inputs} {
+	padding: ($leading-margin / 4) ($leading-margin / 4);
+}
+
 input, textarea, .uneditable-input {
 	width: 90%;
 }
