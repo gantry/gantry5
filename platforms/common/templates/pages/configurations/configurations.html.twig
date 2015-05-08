@@ -26,7 +26,7 @@
                             <span data-g-config-href="{{ gantry.route('configurations', name, 'rename')|e }}" data-g-config-method="POST" data-title-editable="{{ title|e }}" class="title">{{ title|e }}</span> <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
                         </h4>
                         <div class="inner-params">
-                            <img src="{{ url(layout.meta.image) }}" />
+                            <img src="{{ url(layout.preset.image) }}" />
                         </div>
                         <div class="inner-params">
                             <div class="center">
@@ -64,7 +64,7 @@
                     <div class="page">
                         <h4>{{ title }}</h4>
                         <div class="inner-params">
-                            <img src="{{ url(layout.meta.image) }}" />
+                            <img src="{{ url(layout.preset.image) }}" />
                         </div>
                         <div class="inner-params">
                             {#<span class="float-left">

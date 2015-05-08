@@ -1,4 +1,4 @@
-meta:
+preset:
   image: gantry-admin://images/layouts/3-col.png
 
 children:

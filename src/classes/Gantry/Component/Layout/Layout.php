@@ -35,8 +35,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     protected static $instances = [];
 
     public $name;
-    public $preset;
-    public $meta;
+    public $preset = [];
     protected $exists;
     protected $items;
     protected $references;
@@ -88,7 +87,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             throw new \RuntimeException('Preset not found', 404);
         }
 
-        return LayoutReader::read($filename);
+        $layout = LayoutReader::read($filename);
+        $layout['preset']['name'] = $name;
+
+        return $layout;
     }
 
     /**
@@ -107,25 +109,22 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * @param string $name
      * @param array $items
-     * @param string $preset
      */
     public function __construct($name, array $items = null, $preset = null)
     {
         $this->name = $name;
-        $this->preset = $preset;
         $this->items = (array) $items;
         $this->exists = $items !== null;
 
-        // If items have preset, use it.
-        if (!empty($this->items['preset'])) {
-            $this->preset = $this->items['preset'];
+        // Add preset data from the layout.
+        if (isset($this->items['preset'])) {
+            $this->preset = (array) $this->items['preset'];
+            unset($this->items['preset']);
         }
-
-        // Set metadata.
-        $this->meta = !empty($this->items['meta']) ? $this->items['meta'] : [];
-        $this->meta += ['image' => 'gantry-admin://images/layouts/default.png'];
-
-        unset($this->items['preset'], $this->items['meta']);
+        $this->preset = [
+            'name' => '',
+            'image' => 'gantry-admin://images/layouts/default.png'
+        ];
     }
 
     /**
@@ -253,13 +252,15 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             $configurations = $gantry['configurations'];
 
             $preset = $configurations->preset($name);
-            $filename = $locator("gantry-layouts://{$preset}.yaml");
-        }
-
-        if ($filename) {
+            try {
+                $layout = self::preset($preset);
+            } catch (\Exception $e) {
+                // Layout doesn't exist, do nothing.
+            }
+        } else {
             $layout = LayoutReader::read($filename);
         }
 
-        return new static($name, $layout, $preset);
+        return new static($name, $layout);
     }
 }

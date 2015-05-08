@@ -111,7 +111,7 @@ class Layout extends HtmlController
         $this->params['page_id'] = $id;
         $this->params['layout'] = $layout->toArray();
         $this->params['preset'] = $layout->preset;
-        $this->params['preset_title'] = ucwords(trim(str_replace('_', ' ', $layout->preset)));
+        $this->params['preset_title'] = ucwords(trim(str_replace('_', ' ', $layout->preset['name'])));
         $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($id, '_')));
         $this->params['particles'] = $groups;
         $this->params['switcher_url'] = str_replace('.', '/', "configurations.{$id}.layout.switch");
@@ -127,7 +127,7 @@ class Layout extends HtmlController
 
         $configuration = $this->params['configuration'];
         $layout = json_decode($_POST['layout'], true);
-        $preset = isset($_POST['preset']) ? $_POST['preset'] : '';
+        $preset = isset($_POST['preset']) ? json_decode($_POST['preset'], true) : '';
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
@@ -232,8 +232,8 @@ class Layout extends HtmlController
         }
 
         return new JsonResponse([
-            'title' => ucwords(trim(str_replace('_', ' ', $layout->preset))),
-            'preset' => $layout->preset,
+            'title' => ucwords(trim(str_replace('_', ' ', $layout->preset['name']))),
+            'preset' => json_encode($layout->preset),
             'data' => $layout->toArray()
     ]   );
     }
@@ -252,7 +252,7 @@ class Layout extends HtmlController
 
         return new JsonResponse([
             'title' => ucwords(trim(str_replace('_', ' ', $id))),
-            'preset' => $id,
+            'preset' => json_encode($preset['preset']),
             'data' => $preset
         ]);
     }

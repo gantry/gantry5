@@ -33,8 +33,8 @@ class LayoutReader
     {
         // Check if we have pre-saved configuration.
         if (isset($data['children'])) {
-            $preset = isset($data['preset']) && is_string($data['preset']) ? $data['preset'] : null;
-            $meta = isset($data['meta']) && is_array($data['meta']) ? $data['meta'] : null;
+            $preset = isset($data['preset']) && is_array($data['preset']) ? $data['preset'] : [];
+
             $result = self::object($data['children']);
 
             $invisible = [
@@ -56,13 +56,19 @@ class LayoutReader
 
             $result += $invisible;
 
-            return ['preset' => $preset, 'meta' => $meta] + array_values($result);
+            // Make sure that all preset values are set by defining defaults.
+            $preset += [
+                'name' => '',
+                'image' => 'gantry-admin://images/layouts/default.png'
+            ];
+
+            return ['preset' => $preset] + array_values($result);
         }
 
         // Check if we have preset.
-        $meta = null;
-        if (isset($data['meta']) && isset($data['layout']) && is_array($data['layout'])) {
-            $meta = $data['meta'];
+        $preset = [];
+        if (isset($data['preset']) && is_array($data['preset']) && isset($data['layout']) && is_array($data['layout'])) {
+            $preset = $data['preset'];
             $data = $data['layout'];
         }
 
@@ -90,7 +96,12 @@ class LayoutReader
             $result[] = $child;
         }
 
-        return ['meta' => $meta] + $result;
+        // Make sure that all values are set by defining defaults.
+        $preset += [
+            'name' => '',
+            'image' => 'gantry-admin://images/layouts/default.png'
+        ];
+        return ['preset' => $preset] + $result;
     }
 
     /**
