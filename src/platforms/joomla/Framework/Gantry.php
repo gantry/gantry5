@@ -13,17 +13,26 @@ namespace Gantry\Framework;
 
 class Gantry extends Base\Gantry
 {
-    public function styles()
+    /**
+     * @param string $location
+     * @param bool   $force
+     * @return array
+     */
+    public function styles($location = 'head', $force = false)
     {
-        return [];
+        // Do not display head, Joomla will take care of it (most of the time).
+        return (!$force && $location == 'head') ? [] : parent::styles($location);
     }
 
-    public function scripts($inFooter = false)
+    /**
+     * @param string $location
+     * @param bool $force
+     * @return array
+     */
+    public function scripts($location = 'head', $force = false)
     {
-        if ($inFooter) {
-            return Document::$scripts['footer'];
-        }
-        return [];
+        // Do not display head, Joomla will take care of it (most of the time).
+        return (!$force && $location == 'head') ? [] : parent::scripts($location);
     }
 
     /**

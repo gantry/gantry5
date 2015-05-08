@@ -45,6 +45,7 @@ class TwigExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
             new \Twig_SimpleFilter('html', [$this, 'htmlFilter']),
+            new \Twig_SimpleFilter('url', [$this, 'urlFunc']),
             new \Twig_SimpleFilter('trans', [$this, 'transFilter']),
             new \Twig_SimpleFilter('repeat', [$this, 'repeatFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode'),
@@ -185,11 +186,11 @@ class TwigExtension extends \Twig_Extension
      * unsupported tags in a string.
      *
      * @param string $input
-     * @param bool $in_footer
+     * @param string $location
      * @param int $priority
      * @return string
      */
-    public function parseHtmlHeaderFunc($input, $in_footer = false, $priority = 0)
+    public function parseHtmlHeaderFunc($input, $location = 'head', $priority = 0)
     {
         $doc = new \DOMDocument();
         $doc->loadHTML('<html><head>' . $input . '</head><body></body></html>');
@@ -200,7 +201,7 @@ class TwigExtension extends \Twig_Extension
             foreach ($element->attributes as $attribute) {
                 $result[$attribute->name] = $attribute->value;
             }
-            $success = Document::addHeaderTag($result, $in_footer, $priority);
+            $success = Document::addHeaderTag($result, $location, $priority);
             if (!$success) {
                 $raw[] = $doc->saveHTML($element);
             }

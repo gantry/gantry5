@@ -1,5 +1,4 @@
 {% set headerContent %}
-
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/joomla-admin.css')|e }}" type="text/css" />
     {% endblock %}
@@ -11,10 +10,8 @@
             var GANTRY_AJAX_CONF_URL = '{{ gantry.route('configurations/%ajax%')|e }}';
         </script>
     {% endblock %}
-
 {% endset %}
-
-{% do parseHtmlHeader(headerContent) %}
+{% do parseHtmlHeader(headerContent, 'head', 10) %}
 
 {% block content %}
 {% endblock %}

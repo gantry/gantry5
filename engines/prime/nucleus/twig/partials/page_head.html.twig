@@ -4,16 +4,4 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>{{ site.title|e }}</title>
     <meta name="description" content="{{ site.description|e }}">
-
-    {% block stylesheets %}
-        {% for style in gantry.styles %}
-            {{ style|raw }}
-        {% endfor %}
-    {% endblock %}
-
-    {% block javascript %}
-        {% for script in gantry.scripts %}
-            {{ script|raw }}
-        {% endfor %}
-    {% endblock %}
 {% endblock %}

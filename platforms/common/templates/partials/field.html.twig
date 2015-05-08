@@ -10,7 +10,7 @@
 {% block javascript_footer %}
 {% endblock %}
 {% endset %}
-{% do parseHtmlHeader(footerContent, true) %}
+{% do parseHtmlHeader(footerContent, 'footer') %}
 
 {% set name = (name is null ? field.name : name) %}
 {% set value = (value is null ? field.default : value) %}

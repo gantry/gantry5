@@ -36,9 +36,7 @@
 
 {%- set page_bottom %}
     {% block page_bottom %}
-        {% for script in gantry.scripts(true) %}
-            {{ script|raw }}
-        {% endfor %}
+        {{ gantry.scripts('footer')|join("\n    ")|raw }}
     {% endblock %}
 {% endset -%}
 
