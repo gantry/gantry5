@@ -664,7 +664,7 @@ ready(function() {
 
                     element.data('title-editable', original).text(original);
                 } else {
-                    console.log(response);
+                    //console.log(response);
                 }
 
                 parent.hideIndicator();
