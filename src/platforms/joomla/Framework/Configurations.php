@@ -15,6 +15,7 @@ use Gantry\Admin\ThemeList;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Configurations as BaseConfigurations;
 use Gantry\Joomla\StyleHelper;
+use Gantry\Joomla\TemplateInstaller;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Configurations extends BaseConfigurations
@@ -74,6 +75,19 @@ class Configurations extends BaseConfigurations
         $configuration = $template->params->get('configuration', $template->id);
 
         return is_dir($locator("gantry-config://{$configuration}")) ? $configuration : $preset;
+    }
+
+    public function create($title = 'Untitled', $preset = 'default')
+    {
+        $installer = new TemplateInstaller($this->container['theme.name']);
+        $title = $installer->getStyleName($title ? "%s - {$title}" : '%s - Untitled');
+        $style = $installer->addStyle($title, ['preset' => $preset ?: 'default']);
+
+        $error = $style->getError();
+
+        if ($error) {
+            throw new \RuntimeException($error, 400);
+        }
     }
 
     public function duplicate($id)

@@ -22,10 +22,10 @@ class TemplateInstaller
         jimport('joomla.filesystem.folder');
 
         \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
-        if (is_numeric($extension)) {
-            $this->loadExtension($extension);
-        } elseif ($extension instanceof \JInstallerAdapterTemplate) {
+        if ($extension instanceof \JInstallerAdapterTemplate) {
             $this->setInstaller($extension);
+        } elseif ($extension) {
+            $this->loadExtension($extension);
         }
     }
 

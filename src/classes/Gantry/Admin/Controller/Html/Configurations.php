@@ -32,9 +32,10 @@ class Configurations extends HtmlController
         'POST' => [
             '/'            => 'undefined',
             '/*'           => 'undefined',
+            '/create'      => 'create',
             '/*/rename'    => 'rename',
             '/*/duplicate' => 'duplicate',
-            '/*/**'          => 'forward',
+            '/*/**'        => 'forward',
         ],
         'PUT'    => [
             '/'   => 'undefined',
@@ -66,6 +67,19 @@ class Configurations extends HtmlController
         $this->params['layouts'] = ['user' => $layouts_user, 'core' => $layouts_core];
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/configurations.html.twig', $this->params);
+    }
+
+    public function create()
+    {
+        /** @var ConfigurationsObject $configurations */
+        $configurations = $this->container['configurations'];
+
+        /** @var Request $request */
+        $request = $this->container['request'];
+
+        $configurations->create($request->get('title'), $request->get('preset'));
+
+        return new JsonResponse(['html' => 'Configuration created.']);
     }
 
     public function rename($configuration)
