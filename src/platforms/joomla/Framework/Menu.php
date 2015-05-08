@@ -172,9 +172,9 @@ class Menu extends AbstractMenu
             $menuItems = $this->getItemsFromPlatform($params);
 
             $itemMap = [];
-            foreach ($items as $path => &$item) {
-                if (isset($item['id']) && is_numeric($item['id'])) {
-                    $itemMap[$item['id']] = &$item;
+            foreach ($items as $path => &$itemRef) {
+                if (isset($itemRef['id']) && is_numeric($itemRef['id'])) {
+                    $itemMap[$itemRef['id']] = &$itemRef;
                 }
             }
 
