@@ -68,6 +68,14 @@ class TwigExtension extends \Twig_Extension
     }
 
     /**
+     * @return array
+     */
+    public function getTokenParsers()
+    {
+        return array(new TokenParserTry());
+    }
+
+    /**
      * Filters field name by changing dot notation into array notation.
      *
      * @param  string  $str
