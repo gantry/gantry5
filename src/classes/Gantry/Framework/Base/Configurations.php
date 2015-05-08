@@ -77,7 +77,21 @@ class Configurations extends AbstractConfigurationCollection
      */
     public function layout($id)
     {
-        return Layout::instance($id);
+        return Layout::load($id);
+    }
+
+    /**
+     * @param int|string $id
+     * @return Layout
+     */
+    public function layoutPreset($id)
+    {
+        $layout = Layout::load($id);
+        $preset = $layout->preset;
+
+        unset($layout);
+
+        return $preset;
     }
 
     /**

@@ -235,7 +235,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      * @param  string $name
      * @return static
      */
-    protected static function load($name)
+    public static function load($name)
     {
         $gantry = Gantry::instance();
 
