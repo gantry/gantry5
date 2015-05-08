@@ -356,7 +356,7 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
 
 /* line 29, engines/joomla/nucleus/scss/joomla/_forms.scss */
 input, textarea, .uneditable-input {
-  width: 90%;
+  width: 100%;
 }
 
 /* line 33, engines/joomla/nucleus/scss/joomla/_forms.scss */
