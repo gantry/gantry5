@@ -80,6 +80,13 @@ class Configurations extends BaseConfigurations
     {
         $model = StyleHelper::loadModel();
 
+        $item = $model->getTable();
+        $item->load($id);
+
+        if (!$item->id) {
+            throw new \RuntimeException('Configuration not found', 404);
+        }
+
         if (!$model->duplicate($id)) {
             throw new \RuntimeException($model->getError(), 400);
         }
@@ -111,14 +118,34 @@ class Configurations extends BaseConfigurations
     {
         $model = StyleHelper::loadModel();
 
-        if (!$model->delete($id)) {
-            $error = $model->getError();
-            if (!$error) {
-                $messages = \JFactory::getApplication()->getMessageQueue();
-                $message = reset($messages);
-                $error = $message ? $message['message'] : 'Unknown error';
+        $item = $model->getTable();
+        $item->load($id);
+
+        if (!$item->id) {
+            throw new \RuntimeException('Configuration not found', 404);
+        }
+
+        try {
+            if (!$model->delete($id)) {
+                $error = $model->getError();
+                // Well, Joomla can always send enqueue message instead!
+                if (!$error) {
+                    $messages = \JFactory::getApplication()->getMessageQueue();
+                    $message = reset($messages);
+                    $error = $message ? $message['message'] : 'Unknown error';
+                }
+                throw new \RuntimeException($error);
             }
-            throw new \RuntimeException($error, 400);
+        } catch (\Exception $e) {
+            throw new \RuntimeException('Deleting configuration failed: ' . $e->getMessage(), 400, $e);
+        }
+
+        // Remove configuration directory.
+        $gantry = $this->container;
+        $locator = $gantry['locator'];
+        $path = $locator("gantry-config://{$item->id}", true, true);
+        if ($path) {
+            Folder::delete($path);
         }
     }
 }
