@@ -62,7 +62,7 @@ class TwigExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('nested', [$this, 'nestedFunc']),
             new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
-            new \Twig_SimpleFunction('parseHtmlHeader', [$this, 'parseHtmlHeaderFunc']),
+            new \Twig_SimpleFunction('parse_assets', [$this, 'parseAssetsFunc']),
             new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc'])
         );
     }
@@ -190,7 +190,7 @@ class TwigExtension extends \Twig_Extension
      * @param int $priority
      * @return string
      */
-    public function parseHtmlHeaderFunc($input, $location = 'head', $priority = 0)
+    public function parseAssetsFunc($input, $location = 'head', $priority = 0)
     {
         $doc = new \DOMDocument();
         $doc->loadHTML('<html><head>' . $input . '</head><body></body></html>');

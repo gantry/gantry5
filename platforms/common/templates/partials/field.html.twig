@@ -4,13 +4,13 @@
 {% block javascript %}
 {% endblock %}
 {% endset %}
-{% do parseHtmlHeader(headerContent) %}
+{% do parse_assets(headerContent) %}
 
 {% set footerContent %}
 {% block javascript_footer %}
 {% endblock %}
 {% endset %}
-{% do parseHtmlHeader(footerContent, 'footer') %}
+{% do parse_assets(footerContent, 'footer') %}
 
 {% set name = (name is null ? field.name : name) %}
 {% set value = (value is null ? field.default : value) %}
