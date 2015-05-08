@@ -16,7 +16,7 @@ $gantry = include __DIR__ . '/includes/gantry.php';
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
 
-$raw = JRequest::getString('type') == 'raw';
+$raw = JFactory::getApplication()->input->getString('type') == 'raw';
 
 // Render the component.
 echo $theme
