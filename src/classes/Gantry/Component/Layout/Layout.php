@@ -121,7 +121,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             $this->preset = (array) $this->items['preset'];
             unset($this->items['preset']);
         }
-        $this->preset = [
+        $this->preset += [
             'name' => '',
             'image' => 'gantry-admin://images/layouts/default.png'
         ];
