@@ -2139,8 +2139,8 @@ ready(function() {
             forward: $('[data-lm-forward]')
         };
 
-        if (index && HM.back.hasClass('disabled')) HM.back.removeClass('disabled');
-        if (reset && !HM.forward.hasClass('disabled')) HM.forward.addClass('disabled');
+        if (index && HM.back && HM.back.hasClass('disabled')) HM.back.removeClass('disabled');
+        if (reset && HM.forward && !HM.forward.hasClass('disabled')) HM.forward.addClass('disabled');
         layoutmanager.updatePendingChanges();
     });
 
