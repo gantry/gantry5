@@ -52,4 +52,10 @@ body.com_gantry5 {
         -moz-box-sizing: content-box;
         box-sizing: content-box;
     }
+
+    // fixes weird tall element in the page
+    > div:last-child[style^="position: absolute; z-index: -1; top: 0px; left: 0px; right: 0px; height: "] {
+        display: none;
+    }
 }
+
