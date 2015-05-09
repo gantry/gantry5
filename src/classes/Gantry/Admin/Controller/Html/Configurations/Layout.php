@@ -245,15 +245,19 @@ class Layout extends HtmlController
             $this->undefined();
         }
 
-        $preset = LayoutObject::preset($id);
-        if (!$preset) {
+        $layout = LayoutObject::preset($id);
+        if (!$layout) {
             throw new \RuntimeException('Preset not found', 404);
         }
 
+        $preset = json_encode($layout['preset']);
+        unset($layout['preset']);
+        $data = $layout;
+
         return new JsonResponse([
             'title' => ucwords(trim(str_replace('_', ' ', $id))),
-            'preset' => json_encode($preset['preset']),
-            'data' => $preset
+            'preset' => $preset,
+            'data' => $data
         ]);
     }
 
