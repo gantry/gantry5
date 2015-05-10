@@ -58,7 +58,7 @@ ready(function() {
 
     lmhistory.on('undo', function(session, index) {
         var notice = $('#lm-no-layout'),
-            HM     = {
+            HM = {
                 back: $('[data-lm-back]'),
                 forward: $('[data-lm-forward]')
             };
@@ -73,7 +73,7 @@ ready(function() {
     });
     lmhistory.on('redo', function(session, index) {
         var notice = $('#lm-no-layout'),
-            HM     = {
+            HM = {
                 back: $('[data-lm-back]'),
                 forward: $('[data-lm-forward]')
             };
@@ -118,15 +118,18 @@ ready(function() {
 
     // attach events
     // Modal Tabs
-    body.delegate('click', '.g-tabs a', function(event, element) { event.preventDefault(); return false; });
+    body.delegate('click', '.g-tabs a', function(event, element) {
+        event.preventDefault();
+        return false;
+    });
     body.delegate('mouseup', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
 
-        var index  = 0,
+        var index = 0,
             parent = element.parent('.g-tabs'),
-            panes  = parent.siblings('.g-panes'),
-            links  = parent.search('a');
+            panes = parent.siblings('.g-panes'),
+            links = parent.search('a');
 
         links.forEach(function(link, i) {
             if (link == element[0]) { index = i + 1; }
@@ -162,7 +165,7 @@ ready(function() {
     // Particles filtering
     body.delegate('input', '.sidebar-block .search input', function(event, element) {
         var value = $(element).value().toLowerCase(),
-            list  = $('.sidebar-block [data-lm-blocktype]'),
+            list = $('.sidebar-block [data-lm-blocktype]'),
             text, type;
         if (!list) { return false; }
 
@@ -207,7 +210,10 @@ ready(function() {
             tooltip = zen('span.g-tooltip.g-tooltip-force[data-title="' + msg + '"]').top(element);
 
         if (tooltips.equalize) { tooltip.addClass('g-tooltip-right'); }
-        tooltip.style({position: 'absolute', top: 26 }).style(tooltips.equalize ? 'right' : 'left', -30);
+        tooltip.style({
+            position: 'absolute',
+            top: 26
+        }).style(tooltips.equalize ? 'right' : 'left', -30);
 
         element.LMTooltip = tooltip;
     });
@@ -273,11 +279,11 @@ ready(function() {
                 return;
             }
 
-            var preset      = response.body.preset || 'default',
+            var preset = response.body.preset || 'default',
                 preset_name = response.body.title || 'Default',
-                structure   = response.body.data,
-                notice      = $('#lm-no-layout'),
-                title       = $('.layout-title .title small');
+                structure = response.body.data,
+                notice = $('#lm-no-layout'),
+                title = $('.layout-title .title small');
 
             root.data('lm-root', JSON.stringify(structure)).empty();
             root.data('lm-preset', preset);
@@ -296,14 +302,14 @@ ready(function() {
     body.delegate('click', '[data-lm-settings]', function(event, element) {
         element = $(element);
 
-        var blocktype   = element.data('lm-blocktype'),
+        var blocktype = element.data('lm-blocktype'),
             settingsURL = element.data('lm-settings'),
-            data        = null, parent;
+            data = null, parent;
 
         // grid is a special case, since relies on pseudo elements for sorting and same width (evenize)
         // we need to check where the user clicked.
         if (blocktype === 'grid') {
-            var clientX   = event.clientX || (event.touches && event.touches[0].clientX) || 0,
+            var clientX = event.clientX || (event.touches && event.touches[0].clientX) || 0,
                 boundings = element[0].getBoundingClientRect();
 
             if (clientX + 4 - boundings.left < boundings.width) {
@@ -315,7 +321,7 @@ ready(function() {
         parent = element.parent('[data-lm-blocktype]');
         blocktype = element.data('lm-blocktype');
 
-        var ID       = element.data('lm-id'),
+        var ID = element.data('lm-id'),
             parentID = parent ? parent.data('lm-id') : false;
 
         if (!contains(['block', 'grid'], blocktype)) {
@@ -336,8 +342,8 @@ ready(function() {
             data: data,
             remote: settingsURL + getAjaxSuffix(),
             remoteLoaded: function(response, content) {
-                var form       = content.elements.content.find('form'),
-                    submit     = content.elements.content.find('input[type="submit"], button[type="submit"]'),
+                var form = content.elements.content.find('form'),
+                    submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
                     dataString = [], invalid = [];
 
                 if (!form || !submit) { return true; }
@@ -345,6 +351,9 @@ ready(function() {
                 // Particle Settings apply
                 submit.on('click', function(e) {
                     e.preventDefault();
+
+                    var target = $(e.target);
+
                     dataString = [];
                     invalid = [];
 
@@ -353,9 +362,9 @@ ready(function() {
 
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name     = input.attribute('name'),
-                            value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                            parent   = input.parent('.settings-param'),
+                        var name = input.attribute('name'),
+                            value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
+                            parent = input.parent('.settings-param'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
@@ -385,7 +394,7 @@ ready(function() {
                             });
                         } else {
                             var particle = builder.get(ID),
-                                block    = null;
+                                block = null;
 
                             // particle attributes
                             particle.setAttributes(response.body.data.options);
@@ -405,7 +414,7 @@ ready(function() {
                             if (response.body.data.block && size(response.body.data.block)) {
                                 block = builder.get(parentID);
 
-                                var sibling     = block.block.nextSibling() || block.block.previousSibling(),
+                                var sibling = block.block.nextSibling() || block.block.previousSibling(),
                                     currentSize = block.getSize(),
                                     diffSize;
 
@@ -422,6 +431,13 @@ ready(function() {
                             }
 
                             lmhistory.push(builder.serialize());
+
+                            // if it's apply and save we also save the panel
+                            if (target.data('apply-and-save') !== null) {
+                                var save = $('body').find('.button-save');
+                                if (save) { body.emit('click', { target: save }); }
+                            }
+
                             modal.close();
 
                             toastr.success('The particle "' + particle.getTitle() + '" settings have been applied to the Layout. <br />Remember to click the Save button to store them.', 'Settings Applied');

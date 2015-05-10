@@ -187,7 +187,7 @@ ready(function() {
             remote: $(element).attribute('href') + getAjaxSuffix(),
             remoteLoaded: function(response, content) {
                 var form = content.elements.content.find('form'),
-                    submit = content.elements.content.find('input[type="submit"], button[type="submit"]'),
+                    submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
                     dataString = [], invalid = [],
                     path;
 
@@ -196,8 +196,11 @@ ready(function() {
                 // Menuitems Settings apply
                 submit.on('click', function(e) {
                     e.preventDefault();
+
+                    var target = $(e.target);
+
                     dataString = [];
-                    invalid = []
+                    invalid = [];
 
                     submit.hideIndicator();
                     submit.showIndicator();
@@ -248,6 +251,13 @@ ready(function() {
                             }
 
                             menumanager.emit('dragEnd', menumanager.map);
+
+                            // if it's apply and save we also save the panel
+                            if (target.data('apply-and-save') !== null) {
+                                var save = $('body').find('.button-save');
+                                if (save) { body.emit('click', { target: save }); }
+                            }
+
                             modal.close();
                             toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
                         }
