@@ -2445,8 +2445,8 @@ ready(function() {
                     dataString = [];
                     invalid = [];
 
-                    submit.hideIndicator();
-                    submit.showIndicator();
+                    target.hideIndicator();
+                    target.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
@@ -2466,8 +2466,8 @@ ready(function() {
                     }
 
                     if (invalid.length) {
-                        submit.hideIndicator();
-                        submit.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        target.hideIndicator();
+                        target.showIndicator('fa fa-fw fa-exclamation-triangle');
                         toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
                         return;
                     }
@@ -2531,7 +2531,7 @@ ready(function() {
                             toastr.success('The particle "' + particle.getTitle() + '" settings have been applied to the Layout. <br />Remember to click the Save button to store them.', 'Settings Applied');
                         }
 
-                        submit.hideIndicator();
+                        target.hideIndicator();
                     });
                 });
             }
@@ -3790,8 +3790,8 @@ ready(function() {
                     dataString = [];
                     invalid = [];
 
-                    submit.hideIndicator();
-                    submit.showIndicator();
+                    target.hideIndicator();
+                    target.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
@@ -3809,8 +3809,8 @@ ready(function() {
                     }
 
                     if (invalid.length) {
-                        submit.hideIndicator();
-                        submit.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        target.hideIndicator();
+                        target.showIndicator('fa fa-fw fa-exclamation-triangle');
                         toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
                         return;
                     }
@@ -3850,7 +3850,7 @@ ready(function() {
                             toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
                         }
 
-                        submit.hideIndicator();
+                        target.hideIndicator();
                     });
                 });
             }
@@ -4537,8 +4537,8 @@ ready(function() {
                     dataString = [];
                     invalid = [];
 
-                    submit.hideIndicator();
-                    submit.showIndicator();
+                    target.hideIndicator();
+                    target.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
@@ -4562,8 +4562,8 @@ ready(function() {
                     }
 
                     if (invalid.length) {
-                        submit.hideIndicator();
-                        submit.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        target.hideIndicator();
+                        target.showIndicator('fa fa-fw fa-exclamation-triangle');
                         toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
                         return;
                     }
@@ -4604,7 +4604,7 @@ ready(function() {
                             toastr.success('Collection Item updated', 'Item Updated');
                         }
 
-                        submit.hideIndicator();
+                        target.hideIndicator();
                     });
                 });
             }

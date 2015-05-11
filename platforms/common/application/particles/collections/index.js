@@ -198,8 +198,8 @@ ready(function() {
                     dataString = [];
                     invalid = [];
 
-                    submit.hideIndicator();
-                    submit.showIndicator();
+                    target.hideIndicator();
+                    target.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
@@ -223,8 +223,8 @@ ready(function() {
                     }
 
                     if (invalid.length) {
-                        submit.hideIndicator();
-                        submit.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        target.hideIndicator();
+                        target.showIndicator('fa fa-fw fa-exclamation-triangle');
                         toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
                         return;
                     }
@@ -265,7 +265,7 @@ ready(function() {
                             toastr.success('Collection Item updated', 'Item Updated');
                         }
 
-                        submit.hideIndicator();
+                        target.hideIndicator();
                     });
                 });
             }
