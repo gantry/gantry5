@@ -59,6 +59,11 @@ form:
             standard: Standard
             fullwidth: Full Width
 
+        .class:
+          type: input.selectize
+          label: CSS Classes
+          description: Enter CSS class names.
+
         .icon:
           type: input.icon
           label: Icon

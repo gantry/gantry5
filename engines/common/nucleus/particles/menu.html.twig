@@ -26,7 +26,7 @@
         {% set dropdown = item.level == 1 ? ' g-' ~ item.dropdown|e %}
         {% set parent = item.children ? ' g-parent' %}
         {% set target = item.target != '_self' ? ' target="' ~ item.target|e ~ '"' %}
-        <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{{ parent|raw }}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}g-menu-item-link-parent{% endif %}">
+        <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{{ parent|raw }}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}g-menu-item-link-parent{% endif %}{{ item.class|e|default('') }}">
             {% if item.url %}<a class="g-menu-item-container" href="{{ item.url|e }}"{{ (title ~ target)|raw }}>
             {% else %}<div class="g-menu-item-container" data-g-menuparent="">{% endif %}
                 {% if item.image %}
