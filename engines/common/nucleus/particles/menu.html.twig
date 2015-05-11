@@ -92,7 +92,7 @@
     </ul>
 {% endmacro %}
 
-<nav class="g-main-nav" role="navigation">
+<nav class="g-main-nav" role="navigation"{{ particle.mobileTarget ? ' data-g-mobile-target' : '' }}>
     <ul class="g-toplevel">
         {{ _self.displayItems(menu.root, menu, gantry) }}
     </ul>

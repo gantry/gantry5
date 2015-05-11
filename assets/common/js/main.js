@@ -48,7 +48,8 @@ var Menu = new prime({
             dropdown: '.g-dropdown',
             overlay: '.g-menu-overlay',
             touchIndicator: '.g-menu-parent-indicator',
-            linkedParent: '[data-g-menuparent]'
+            linkedParent: '[data-g-menuparent]',
+            mobileTarget: '[data-g-mobile-target]'
         },
 
         states: {
@@ -278,7 +279,7 @@ var Menu = new prime({
     _checkQuery: function(mq) {
         var selectors = this.options.selectors,
             mobileContainer = $(selectors.mobileContainer),
-            mainContainer = $(selectors.mainContainer),
+            mainContainer = $(selectors.mainContainer + selectors.mobileTarget) || $(selectors.mainContainer),
             find;
 
         if (mq.matches) {
