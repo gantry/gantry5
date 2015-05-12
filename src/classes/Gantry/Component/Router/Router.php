@@ -96,11 +96,17 @@ abstract class Router implements RouterInterface
         return $response;
     }
 
+    /**
+     * @return $this
+     */
     abstract protected function boot();
 
     abstract protected function checkSecurityToken();
 
-    protected function load()
+    /**
+     * @return $this
+     */
+    public function load()
     {
         static $loaded = false;
 
@@ -129,6 +135,8 @@ abstract class Router implements RouterInterface
             $events = $this->container['events'];
             $events->addSubscriber($listener);
         }
+
+        return $this;
     }
 
     protected function getErrorResponse(\Exception $e, $json = false)

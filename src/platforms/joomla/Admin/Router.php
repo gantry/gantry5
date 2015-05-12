@@ -49,6 +49,14 @@ class Router extends BaseRouter
 
         // If style is set, resolve the template and load it.
         $style = $input->getInt('style', 0);
+
+        $this->setStyle($style);
+
+        return $this;
+    }
+
+    public function setStyle($style)
+    {
         if ($style) {
             \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
             $table = \JTable::getInstance('Style', 'TemplatesTable');
@@ -81,6 +89,8 @@ class Router extends BaseRouter
             'picker/layouts' => "&view=layouts&style={$style}&{$token}=1",
             'picker/particles' => "&view=particles&style={$style}&{$token}=1"
         ];
+
+        return $this;
     }
 
     protected function checkSecurityToken()
