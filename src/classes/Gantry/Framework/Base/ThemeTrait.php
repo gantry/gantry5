@@ -102,6 +102,29 @@ trait ThemeTrait
     }
 
     /**
+     * Get preset.
+     *
+     * @param  bool $forced     If true, return only forced preset or null.
+     * @return string|null $preset
+     */
+    public function preset($forced = false)
+    {
+        $presets = $this->presets()->toArray();
+
+        $preset = $this->preset;
+        if (!$forced) {
+            $preset = static::gantry()['config']->get('styles.preset');
+        }
+
+        if (!isset($presets[$preset])) {
+            $keys = array_keys($presets);
+            $preset = reset($keys);
+        }
+
+        return $preset;
+    }
+
+    /**
      * Set preset to be used.
      *
      * @param string $name
@@ -145,8 +168,9 @@ trait ThemeTrait
                 ->setFonts($details->get('configuration.fonts'));
         }
 
-        if ($this->preset) {
-            $compiler->setConfiguration($this->preset);
+        $preset = $this->preset(true);
+        if ($preset) {
+            $compiler->setConfiguration($preset);
         } else {
             $gantry = static::gantry();
             $compiler->setConfiguration(isset($gantry['configuration']) ? $gantry['configuration'] : 'default');
