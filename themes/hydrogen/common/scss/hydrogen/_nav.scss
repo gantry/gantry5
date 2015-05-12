@@ -98,3 +98,10 @@
 .g-nav-overlay, .g-menu-overlay {
 	background: $navigation-overlay;
 }
+
+@media print {
+	#g-navigation {
+		background: #fff !important;
+		color: #000 !important;
+	}
+}

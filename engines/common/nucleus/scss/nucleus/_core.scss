@@ -223,3 +223,10 @@ th, td {
 th {
 	text-align: left;
 }
+
+@media print {
+	body {
+		background: #fff !important;
+		color: #000 !important;
+	}
+}

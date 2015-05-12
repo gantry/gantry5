@@ -29,3 +29,10 @@
 		}
 	}
 }
+
+@media print {
+	#g-header {
+		background: #fff !important;
+		color: #000 !important;
+	}
+}

@@ -306,6 +306,13 @@ th {
   text-align: left;
 }
 
+@media print {
+  /* line 228, engines/common/nucleus/scss/nucleus/_core.scss */
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+}
 /* line 2, engines/common/nucleus/scss/nucleus/_flex.scss */
 .g-container {
   margin: 0 auto;
