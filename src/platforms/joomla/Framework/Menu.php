@@ -264,7 +264,8 @@ class Menu extends AbstractMenu
                     $item->url(\JFilterOutput::ampReplace(htmlspecialchars($item->link)));
                 }
 
-                switch ($menuItem->params->get('browserNav', 0))
+                // FIXME: This overrides G5 target navigation, it should merge
+                /*switch ($menuItem->params->get('browserNav', 0))
                 {
                     default:
                     case 0:
@@ -276,7 +277,7 @@ class Menu extends AbstractMenu
                         // Target window: New with navigation.
                         $item->target = '_blank';
                         break;
-                }
+                }*/
             }
             // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
             // $cache->store($this->items, $key);
