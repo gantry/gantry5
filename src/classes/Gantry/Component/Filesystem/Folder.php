@@ -213,7 +213,7 @@ abstract class Folder
 
             if (is_dir($src)) {
                 // Create current directory.
-                $success &= @mkdir($dst);
+                $success &= @mkdir($dst, 0777, true);
             } else {
                 // Or copy current file.
                 $success &= @copy($src, $dst);
