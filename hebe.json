@@ -68,6 +68,12 @@
                         "destination":"/plugins/quickicon/gantry5"
                     }
                 ],
+                "modules":[
+                    {
+                        "source":"/platforms/joomla/mod_gantry5_particle",
+                        "destination":"/modules/mod_gantry5_particle"
+                    }
+                ],
                 "media":[
                     {
                         "source":"/assets",
