@@ -170,28 +170,31 @@ class Layout extends HtmlController
 
         $name = isset($item->subtype) ? $item->subtype : $type;
 
+        $attributes = isset($_POST['options']) && is_array($_POST['options']) ? $_POST['options'] : [];
+
         if ($type == 'section' || $type == 'grid' || $type == 'offcanvas') {
             $prefix = "particles.{$type}";
             $defaults = [];
+            $attributes += (array) $item->attributes + $defaults;
             $extra = null;
             $blueprints = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
         } else {
             $prefix = "particles.{$name}";
             $defaults = (array) $this->container['config']->get($prefix);
+            $attributes += $defaults;
             $extra = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
             $blueprints = new BlueprintsForm($this->container['particles']->get($name));
         }
 
-        $attributes = isset($_POST['options']) && is_array($_POST['options']) ? $_POST['options'] : [];
-
         // TODO: Use blueprints to merge configuration.
-        $item->attributes = (object) ($attributes + (array) $item->attributes + $defaults);
+        $item->attributes = (object) $attributes;
 
         $this->params['id'] = $name;
         $this->params += [
             'extra'         => $extra,
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
+            'defaults'      => ['particles' => [$name => $defaults]],
             'prefix'        => "particles.{$name}.",
             'particle'      => $blueprints,
             'parent'        => 'settings',
