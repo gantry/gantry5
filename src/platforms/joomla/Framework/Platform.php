@@ -194,6 +194,17 @@ class Platform extends BasePlatform
         return $result;
     }
 
+    public function getEditor($name, $content = '', $width = null, $height = null)
+    {
+        $conf = \JFactory::getConfig();
+        $editor = \JEditor::getInstance($conf->get('editor'));
+        if (!$height) {
+            $height = 250;
+        }
+
+        return $editor->display($name, $content, $width, $height, 50, 8, false, null, null, null, ['html_height' => $height]);
+    }
+
     public function errorHandlerPaths()
     {
         return ['|gantry5|'];

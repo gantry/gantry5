@@ -156,6 +156,11 @@ abstract class Platform
         return $this->name;
     }
 
+    public function getEditor($name, $content = '', $width = null, $height = null)
+    {
+        return null;
+    }
+
     public function finalize()
     {
     }
