@@ -43,15 +43,12 @@ class plgGantry5Preset extends JPlugin
 
 
             if ($preset !== null) {
-                $cookie_path   = $app->get('cookie_path', '/');
-                $cookie_domain = $app->get('cookie_domain');
-
                 if ($preset === false) {
-                    // Remove the cookie.
-                    $input->cookie->set($cookie, false, time() - 42000, $cookie_path, $cookie_domain);
+                    // Invalidate the cookie.
+                    $this->updateCookie($cookie, false, time() - 42000);
                 } else {
-                    // Create the cookie.
-                    $input->cookie->set($cookie, $preset, 0, $cookie_path, $cookie_domain);
+                    // Update the cookie.
+                    $this->updateCookie($cookie, $preset, 0);
                 }
             } else {
                 $preset = $input->cookie->getString($cookie);
@@ -59,5 +56,22 @@ class plgGantry5Preset extends JPlugin
 
             $theme->setPreset($preset);
         }
+    }
+
+    public function onGantry5UpdateCss($theme)
+    {
+        $cookie = md5($theme->name);
+
+        $this->updateCookie($cookie, false, time() - 42000);
+    }
+
+    protected function updateCookie($name, $value, $expire = 0)
+    {
+        $app = JFactory::getApplication();
+        $path   = $app->get('cookie_path', '/');
+        $domain = $app->get('cookie_domain');
+
+        $input = $app->input;
+        $input->cookie->set($name, $value, $expire, $path, $domain);
     }
 }

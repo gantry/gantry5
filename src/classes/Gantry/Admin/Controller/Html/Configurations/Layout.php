@@ -142,6 +142,8 @@ class Layout extends HtmlController
 
         // Fire save event.
         $event = new Event;
+        $event->gantry = $this->container;
+        $event->theme = $this->container['theme'];
         $event->controller = $this;
         $event->layout = $layout;
         $this->container->fireEvent('admin.layout.save', $event);
