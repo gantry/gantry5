@@ -346,9 +346,6 @@ children:
                     title: Branding
                     attributes:
                       enabled: 1
-                      content: 'Powered by <a href="http://www.gantry-framework.org/" title="Gantry Framework" class="g-powered-by">Gantry Framework</a>'
-                      css:
-                        class: particle_gantry_branding
                     children: {  }
   -
     id: b81f55bf-64d5-7b6f-2018-ed3f22daea4f

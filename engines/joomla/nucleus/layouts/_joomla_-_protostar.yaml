@@ -30,3 +30,6 @@ layout:
   debug:
     container:
       - position-debug
+
+  offcanvas:
+    - particle-mobile-menu

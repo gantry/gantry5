@@ -2,6 +2,10 @@ preset:
   image: gantry-admin://images/layouts/offline.png
 
 layout:
+  header:
+    container:
+      - [particle-logo 30, spacer 70]
+
   main:
     container:
       - system-messages

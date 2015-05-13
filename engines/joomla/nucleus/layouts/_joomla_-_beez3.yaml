@@ -28,9 +28,12 @@ layout:
 
   footer:
     container:
-      - [position-9, position-10, position-11]
-      - position-14
+      - [position-position-9, position-position-10, position-position-11]
+      - position-position-14
 
   debug:
     container:
       - position-debug
+
+  offcanvas:
+    - particle-mobile-menu
