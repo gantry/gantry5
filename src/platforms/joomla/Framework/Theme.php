@@ -54,7 +54,11 @@ class Theme extends BaseTheme
                 'autoescape' => 'html'
             );
 
+            // Get user timezone and if not set, use Joomla default.
+            $timezone = \JFactory::getUser()->getParam('timezone', \JFactory::getConfig()->get('offset', 'UTC'));
+
             $twig = new \Twig_Environment($loader, $params);
+            $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
 
             $this->add_to_twig($twig);
 
