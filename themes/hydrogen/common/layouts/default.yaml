@@ -134,13 +134,11 @@ children:
                 children:
                   -
                     id: 5e3e4188-26d6-3f78-9617-8fe6df77f84f
-                    type: position
-                    subtype: false
-                    title: System_messages
+                    type: pagecontent
+                    subtype: system-messages
+                    title: System Messages
                     attributes:
                       enabled: 1
-                      key: system-messages
-                      title: System_messages
                     children: {  }
           -
             id: 1900441b-5657-94b5-2561-ca3ea5974ec8

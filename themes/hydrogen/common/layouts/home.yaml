@@ -140,13 +140,11 @@ children:
                 children:
                   -
                     id: 25209651-b804-8bd4-6bca-d6daa7ed3d61
-                    type: position
-                    subtype: false
-                    title: System_messages
+                    type: pagecontent
+                    subtype: system-messages
+                    title: System Messages
                     attributes:
                       enabled: 1
-                      key: system_messages
-                      title: System_messages
                     children: {  }
           -
             id: e750084d-4086-49ca-a3c5-fce2a6e98c88

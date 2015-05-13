@@ -4,6 +4,7 @@ preset:
 layout:
   main:
     container:
+      - system-messages
       - pagecontent
 
   footer:
