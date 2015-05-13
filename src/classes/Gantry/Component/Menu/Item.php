@@ -51,15 +51,8 @@ class Item implements \ArrayAccess, \Iterator, \Serializable
         $parent = dirname($name);
         $alias = basename($name);
 
-        // TODO: Backwards compatibility with beta1, remove after betas..
-        if (isset($item['menu_icon'])) {
-            $item['icon'] = $item['menu_icon'];
-            unset($item['menu_icon']);
-        }
-        if (isset($item['menu_image'])) {
-            $item['image'] = $item['menu_image'];
-            unset($item['menu_image']);
-        }
+        // As we always calculate parent (it can change), prevent old one from being inserted.
+        unset($item['parent_id']);
 
         $this->items = $item + [
             'id' => preg_replace('|[^a-z0-9]|i', '-', $name) ?: 'root',

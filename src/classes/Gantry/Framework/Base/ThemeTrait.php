@@ -102,7 +102,7 @@ trait ThemeTrait
     }
 
     /**
-     * Get preset.
+     * Get current preset.
      *
      * @param  bool $forced     If true, return only forced preset or null.
      * @return string|null $preset
@@ -112,11 +112,12 @@ trait ThemeTrait
         $presets = $this->presets()->toArray();
 
         $preset = $this->preset;
-        if (!$forced) {
+
+        if (!$preset && !$forced) {
             $preset = static::gantry()['config']->get('styles.preset');
         }
 
-        if (!isset($presets[$preset])) {
+        if ($preset && !isset($presets[$preset])) {
             $keys = array_keys($presets);
             $preset = reset($keys);
         }

@@ -38,8 +38,6 @@ children:
                     title: Logo
                     attributes:
                       enabled: 1
-                      image: 'gantry-assets://images/gantry5-logo.png'
-                      class: gantry-logo
                     children: {  }
               -
                 id: 4c879e1f-5b46-c2fd-401c-b0392c0d1860
@@ -282,13 +280,11 @@ children:
                         children:
                           -
                             id: 7ab77d32-5a6d-3f1f-5ee7-a92cfc409582
-                            type: position
-                            subtype: false
-                            title: System_messages
+                            type: pagecontent
+                            subtype: system-messages
+                            title: 'System Messages'
                             attributes:
                               enabled: 1
-                              key: system_messages
-                              title: system_messages
                             children: {  }
                   -
                     id: 71987e8c-22b5-850c-2c20-1f0eb47fb4f5
@@ -436,11 +432,11 @@ children:
                     id: 5ddbd658-045c-5852-0e9d-06e63b094323
                     type: position
                     subtype: false
-                    title: 'Position-9'
+                    title: Position-9
                     attributes:
                       enabled: 1
-                      key: 'position-9'
-                      title: 'position-9'
+                      key: position-9
+                      title: Position-9
                     children: {  }
               -
                 id: d37feef7-0a29-6d49-f549-4291432cb840
@@ -454,11 +450,11 @@ children:
                     id: 481e01f9-68ac-d1c8-d5e4-3c3002fed362
                     type: position
                     subtype: false
-                    title: 'Position-10'
+                    title: Position-10
                     attributes:
                       enabled: 1
-                      key: 'position-10'
-                      title: 'position-10'
+                      key: position-10
+                      title: Position-10
                     children: {  }
               -
                 id: 1f4d8205-6b0f-1851-2d4a-e3de27a023b2
@@ -472,11 +468,11 @@ children:
                     id: 77ad7fc6-ba9c-9a81-63ee-5ae8dff42b8f
                     type: position
                     subtype: false
-                    title: 'Position-11'
+                    title: Position-11
                     attributes:
                       enabled: 1
-                      key: 'position-11'
-                      title: 'position-11'
+                      key: position-11
+                      title: Position-11
                     children: {  }
           -
             id: 8f4c9aa2-f866-ebaa-5372-3cf043ef2fc6
@@ -497,11 +493,11 @@ children:
                     id: 54e494e3-889e-c6e0-c2a1-363837988c39
                     type: position
                     subtype: false
-                    title: 'Position-14'
+                    title: Position-14
                     attributes:
                       enabled: 1
-                      key: 'position-14'
-                      title: 'position-14'
+                      key: position-14
+                      title: Position-14
                     children: {  }
   -
     id: 838edc20-2112-1305-bf30-5f6ed496705d
@@ -564,13 +560,12 @@ children:
             title: Untitled
             attributes:
               size: 100
-              extra: {  }
             children:
               -
                 id: dcbf7c39-89a1-41bf-8878-92020f172dbc
                 type: particle
                 subtype: mobile-menu
-                title: "Mobile Menu"
+                title: Mobile-menu
                 attributes:
                   enabled: 1
                 children: {  }
