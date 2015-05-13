@@ -27,20 +27,6 @@
 		}
 	}
 
-	.align-left {
-		.g-toplevel {
-			justify-content: flex-start;
-			-webkit-justify-content: flex-start;
-		}
-	}
-
-	.align-right {
-		.g-toplevel {
-			justify-content: flex-end;
-			-webkit-justify-content: flex-end;
-		}
-	}
-
 	@include main-nav-indicators($navigation-background, $navigation-text-color);
 
 	.search {
@@ -85,6 +71,22 @@
 			> .g-menu-item-container {
 				padding: ($content-padding + $content-margin)/2 1rem;
 			}
+		}
+	}
+}
+
+#g-navigation, #g-header {
+	.align-left {
+		.g-toplevel {
+			justify-content: flex-start;
+			-webkit-justify-content: flex-start;
+		}
+	}
+
+	.align-right {
+		.g-toplevel {
+			justify-content: flex-end;
+			-webkit-justify-content: flex-end;
 		}
 	}
 }
