@@ -1911,30 +1911,34 @@ samp {
   }
 }
 /* line 51, platforms/common/scss/admin/_input-groups.scss */
+#g5-container .input-group-btn button {
+  outline: 0;
+}
+/* line 55, platforms/common/scss/admin/_input-groups.scss */
 #g5-container .input-group-btn .button {
   position: relative;
   border: 1px solid #ddd;
   border-radius: 0.1875rem;
   margin: -1px;
 }
-/* line 60, platforms/common/scss/admin/_input-groups.scss */
+/* line 64, platforms/common/scss/admin/_input-groups.scss */
 #g5-container .input-group.append input {
   border-right: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-/* line 65, platforms/common/scss/admin/_input-groups.scss */
+/* line 69, platforms/common/scss/admin/_input-groups.scss */
 #g5-container .input-group.append .input-group-addon, #g5-container .input-group.append .button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-/* line 72, platforms/common/scss/admin/_input-groups.scss */
+/* line 76, platforms/common/scss/admin/_input-groups.scss */
 #g5-container .input-group.prepend input {
   border-left: 0;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-/* line 77, platforms/common/scss/admin/_input-groups.scss */
+/* line 81, platforms/common/scss/admin/_input-groups.scss */
 #g5-container .input-group.prepend .input-group-addon, #g5-container .input-group.prepend .button {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;

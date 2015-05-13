@@ -48,6 +48,10 @@
             width: 42px;
         }
 
+        button {
+            outline: 0;
+        }
+
         .button {
             position: relative;
             border: 1px solid $medium-gray;
