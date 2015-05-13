@@ -1,2 +1,4 @@
 # Linguist Normalizer
-*.html.twig linguistic-language=PHP
+*.twig linguistic-language=PHP
+platforms/common/js/main.js linguist-vendored=true
+assets/common/js/main.js linguist-vendored=true
