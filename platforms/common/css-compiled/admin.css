@@ -4228,27 +4228,35 @@ html.g5-dialog-open {
   display: inline-block;
 }
 /* line 27, platforms/common/scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-search {
+  width: 10rem !important;
+}
+/* line 31, platforms/common/scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-preview {
+  width: 25rem !important;
+}
+/* line 35, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content input {
   font-size: 0.8em;
 }
-/* line 30, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 38, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-preview {
   width: 400px;
 }
-/* line 35, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 43, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-particles-footer .font-selected {
   font-size: 0.8em;
   margin-right: 10px;
 }
-/* line 40, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 48, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-particles-footer .font-category {
   font-size: 0.85em;
 }
-/* line 44, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 52, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-particles-footer .font-subsets {
   margin-left: 0.85em !important;
 }
-/* line 49, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 57, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list {
   margin: 0;
   padding: 0;
@@ -4259,13 +4267,13 @@ html.g5-dialog-open {
   overflow: auto;
   position: relative;
 }
-/* line 59, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 67, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list ul, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list li {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-/* line 65, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 73, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li.g-font-heading {
   text-transform: uppercase;
   margin: 1rem 0 0.5rem;
@@ -4273,7 +4281,7 @@ html.g5-dialog-open {
   color: #bbb;
   text-shadow: 0 1px rgba(255, 255, 255, 0.8);
 }
-/* line 73, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 81, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] {
   padding: 0.5em 1em;
   margin: 0.5em 0;
@@ -4282,46 +4290,46 @@ html.g5-dialog-open {
   cursor: pointer;
   background-color: #eaeaea;
 }
-/* line 80, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 88, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font].g-local-font {
   margin-right: 0.5em;
   display: inline-block;
 }
-/* line 84, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 92, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font].g-local-font .family {
   display: inline-block;
 }
-/* line 91, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 99, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font]:nth-child(odd) {
   background-color: #f7f7f7;
 }
-/* line 95, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 103, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font].selected {
   border-color: #48B0D7;
 }
-/* line 99, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 107, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] strong {
   font-weight: bold !important;
 }
-/* line 103, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 111, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] input[type="checkbox"], .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] .variant {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 108, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 116, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] .variant, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] .family {
   color: #999;
 }
-/* line 112, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 120, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] .preview {
   font-size: 24px;
   line-height: 1.3em;
 }
-/* line 117, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 125, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] ul {
   margin-top: 0.5em;
 }
-/* line 121, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 129, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] li[data-font] {
   padding: 0.5em 0;
   border: 0;
