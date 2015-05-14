@@ -104,6 +104,8 @@ var Fonts = new prime({
                 this.scroll(container.find('ul.g-fonts-list'));
                 this.updateTotal();
                 this.selectFromValue();
+
+                container.find('.particle-search-wrapper input')[0].focus();
             }, this)
         });
     },
