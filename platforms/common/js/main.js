@@ -7528,7 +7528,13 @@ var Modal = new prime({
             agent.method(options.method);
             agent.url(options.remote);
             if (options.data) { agent.data(options.data); }
+
             agent.send(bind(function(error, response) {
+                if (elements.container.hasClass(options.baseClassNames.closing)) {
+                    this.hideLoading();
+                    return;
+                }
+
                 elements.content.html(response.body.html || response.body);
 
                 if (!response.body.success) {
@@ -7536,7 +7542,7 @@ var Modal = new prime({
                 }
 
                 this.hideLoading();
-                if (options.remoteLoaded) {
+                if (options.remoteLoaded && !elements.container.hasClass(options.baseClassNames.closing)) {
                     options.remoteLoaded(response, options);
                 }
 
@@ -7643,12 +7649,14 @@ var Modal = new prime({
                 }
             },
             close = bind(function() {
+                if (options.remoteLoaded) { options.remoteLoaded = function(){}; }
                 content.emit('dialogClose', options);
                 container.remove();
                 this.emit('dialogAfterClose', options);
                 if (options.afterClose) {
                     return options.afterClose(content, options);
                 }
+
             }, this);
 
         if (animationEndSupport) {
