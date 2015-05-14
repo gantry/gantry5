@@ -54,11 +54,13 @@ var Fonts = new prime({
     previewSentence: {
         'latin': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
         'latin-ext': 'Wizard boy Jack loves the grumpy Queen\'s fox.',
+        'arabic': 'نص حكيم له سر قاطع وذو شأن عظيم مكتوب على ثوب أخضر ومغلف بجلد أزرق',
         'cyrillic': 'В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!',
         'cyrillic-ext': 'В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!',
         'devanagari': 'एक पल का क्रोध आपका भविष्य बिगाड सकता है',
         'greek': 'Τάχιστη αλώπηξ βαφής ψημένη γη, δρασκελίζει υπέρ νωθρού κυνός',
         'greek-ext': 'Τάχιστη αλώπηξ βαφής ψημένη γη, δρασκελίζει υπέρ νωθρού κυνός',
+        'hebrew': 'דג סקרן שט בים מאוכזב ולפתע מצא חברה',
         'khmer': 'ខ្ញុំអាចញ៉ាំកញ្ចក់បាន ដោយគ្មានបញ្ហា',
         'telugu': 'దేశ భాషలందు తెలుగు లెస్స',
         'vietnamese': 'Tôi có thể ăn thủy tinh mà không hại gì.'
