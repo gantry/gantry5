@@ -28,7 +28,9 @@ class Configurations extends BaseConfigurations
     {
         $gantry = $this->container;
 
-        $styles = ThemeList::getStyles($gantry['theme.name']);
+        $theme = isset($gantry['theme.name']) ? $gantry['theme.name'] : null;
+
+        $styles = ThemeList::getStyles($theme);
 
         $configurations = [];
         foreach ($styles as $style) {
