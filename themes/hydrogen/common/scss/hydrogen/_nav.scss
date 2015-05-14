@@ -16,6 +16,18 @@
 		}
 	}
 
+	.g-social {
+		a {
+			background: darken($navigation-background, 6%);
+			border: none;
+			color: $navigation-text-color;
+			@include transition(background 0.2s);
+			&:hover {
+				background: lighten($navigation-background, 6%);
+			}
+		}
+	}
+
 	.g-main-nav {
 		margin: -($content-padding + $content-margin);
 		@include main-nav-colors($navigation-background, $navigation-text-color, $main-background, $main-text-color);

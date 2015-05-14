@@ -27,6 +27,18 @@
 			background: darken($accent-color-2, 5%);
 		}
 	}
+
+	.g-social {
+		a {
+			background: darken($showcase-background, 6%);
+			border: none;
+			color: $showcase-text-color;
+			@include transition(background 0.2s);
+			&:hover {
+				background: lighten($showcase-background, 6%);
+			}
+		}
+	}
 }
 
 @media print {
