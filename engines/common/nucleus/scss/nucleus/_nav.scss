@@ -61,7 +61,7 @@
 						opacity: 0.5;
 						font-family: FontAwesome;
 						content: "\f078";
-						text-align: center;
+						text-align: right;
 					}
 				}
 				&.g-selected {
@@ -112,6 +112,7 @@
 
 	    			&:after {
 						content: "\f054";
+						text-align: center;
 					}			
 				}
 				&.g-selected {
