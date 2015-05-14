@@ -114,7 +114,7 @@ trait ThemeTrait
         $preset = $this->preset;
 
         if (!$preset && !$forced) {
-            $preset = static::gantry()['config']->get('styles.preset');
+            $preset = static::gantry()['config']->get('styles.preset', '-undefined-');
         }
 
         if ($preset && !isset($presets[$preset])) {
