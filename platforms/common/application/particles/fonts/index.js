@@ -1,41 +1,42 @@
 "use strict";
 // fonts list: https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB2yJM8DBwt66u2MVRgb6M4t9CqkW7_IRY
-var prime        = require('prime'),
-    $            = require('../../utils/elements.utils'),
-    zen          = require('elements/zen'),
-    storage      = require('prime/map')(),
-    Emitter      = require('prime/emitter'),
-    Bound        = require('prime-util/prime/bound'),
-    Options      = require('prime-util/prime/options'),
-    domready     = require('elements/domready'),
+var prime         = require('prime'),
+    $             = require('../../utils/elements.utils'),
+    zen           = require('elements/zen'),
+    storage       = require('prime/map')(),
+    Emitter       = require('prime/emitter'),
+    Bound         = require('prime-util/prime/bound'),
+    Options       = require('prime-util/prime/options'),
+    domready      = require('elements/domready'),
 
-    decouple     = require('../../utils/decouple'),
+    decouple      = require('../../utils/decouple'),
 
-    bind         = require('mout/function/bind'),
-    map          = require('mout/array/map'),
-    forEach      = require('mout/array/forEach'),
-    contains     = require('mout/array/contains'),
-    last         = require('mout/array/last'),
-    split        = require('mout/array/split'),
-    removeAll    = require('mout/array/removeAll'),
-    insert       = require('mout/array/insert'),
-    append       = require('mout/array/append'),
-    find         = require('mout/array/find'),
-    pluck        = require('mout/array/pluck'),
-    combine      = require('mout/array/combine'),
-    intersection = require('mout/array/intersection'),
-    merge        = require('mout/object/merge'),
+    bind          = require('mout/function/bind'),
+    map           = require('mout/array/map'),
+    forEach       = require('mout/array/forEach'),
+    contains      = require('mout/array/contains'),
+    last          = require('mout/array/last'),
+    split         = require('mout/array/split'),
+    removeAll     = require('mout/array/removeAll'),
+    insert        = require('mout/array/insert'),
+    append        = require('mout/array/append'),
+    find          = require('mout/array/find'),
+    combine       = require('mout/array/combine'),
+    intersection  = require('mout/array/intersection'),
+    merge         = require('mout/object/merge'),
 
-    unhyphenate  = require('mout/string/unhyphenate'),
-    properCase   = require('mout/string/properCase'),
-    trim         = require('mout/string/trim'),
+    unhyphenate   = require('mout/string/unhyphenate'),
+    properCase    = require('mout/string/properCase'),
+    trim          = require('mout/string/trim'),
+    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    getAjaxURL    = require('../../utils/get-ajax-url').global,
 
-    modal        = require('../../ui').modal,
-    async        = require('async'),
+    modal         = require('../../ui').modal,
+    async         = require('async'),
 
-    request      = require('agent'),
+    request       = require('agent'),
 
-    wf           = require('./webfont');
+    wf            = require('./webfont');
 
 require('../../utils/elements.viewport');
 
@@ -60,8 +61,6 @@ var Fonts = new prime({
 
     constructor: function() {
         this.wf = wf;
-        this.data = null;
-        this.dataLocal = null;
         this.field = null;
         this.element = null;
         this.throttle = false;
@@ -74,37 +73,7 @@ var Fonts = new prime({
         };
     },
 
-    open: function(event, element, container) {
-        if (!this.data || !this.field) { return this.getData(element); }
-
-        var list = [];
-        forEach(this.data, function(value) {
-            list.push(value.family);
-        });
-
-        if (container) {
-            container.empty().attribute('style', null).appendChild(this.buildLayout());
-            this.scroll(container.find('ul.g-fonts-list'));
-            this.updateTotal();
-            this.selectFromValue();
-            return;
-        }
-
-        modal.open({
-            content: 'Loading...',
-            className: 'g5-dialog-theme-default g5-modal-fonts',
-            afterOpen: bind(function(container) {
-                setTimeout(bind(function() {
-                    container.empty().appendChild(this.buildLayout());
-                    this.scroll(container.find('ul.g-fonts-list'));
-                    this.updateTotal();
-                    this.selectFromValue();
-                }, this), 1);
-            }, this)
-        });
-    },
-
-    getData: function(element) {
+    open: function(event, element) {
         var data = element.data('g5-fontpicker');
         if (!data) {
             throw new Error('No fontpicker data found');
@@ -113,22 +82,21 @@ var Fonts = new prime({
         data = JSON.parse(data);
         this.field = $(data.field);
 
-        this.dataLocal = data.local || [];
-        this.data = append([], this.dataLocal);
-
         modal.open({
             content: 'Loading...',
             className: 'g5-dialog-theme-default g5-modal-fonts',
-            remote: data.data,
-            remoteLoaded: bind(function(response, instance) {
-                if (response.error) {
-                    instance.elements.content.html(response.body.html + '[' + data.data + ']');
-                    return false;
-                }
+            remote: getAjaxURL('fontpicker') + getAjaxSuffix(),
+            remoteLoaded: bind(function(response, content) {
+                var container = content.elements.content;
 
-                this.data = append(this.data, response.body.items);
+                this.attachEvents(container);
+                this.updateCategories(container);
 
-                this.open(null, element, instance.elements.content);
+                this.search();
+
+                this.scroll(container.find('ul.g-fonts-list'));
+                this.updateTotal();
+                this.selectFromValue();
             }, this)
         });
     },
@@ -200,7 +168,8 @@ var Fonts = new prime({
         var value = this.field.value(), name, variants, subset, isLocal = false;
 
         if (!value.match('family=')) {
-            var locals = pluck(this.dataLocal, 'family'), intersect;
+            var locals = $('[data-category="local-fonts"][data-font]'), intersect;
+            locals = locals.map(function(l){ return $(l).data('font'); });
             value = value.replace(/(\s{1,})?,(\s{1,})?/gi, ',').split(',');
             intersect = intersection(locals, value);
             if (!intersect.length) { return false; }
@@ -404,54 +373,42 @@ var Fonts = new prime({
         totals.text(count ? count.length : 0);
     },
 
-    buildLayout: function() {
-        this.filters.script = 'latin';
-        var previewSentence = this.previewSentence[this.filters.script],
-            html = zen('div#g-fonts.g-grid'),
-            main = zen('div.g-particles-main').bottom(html),
-            ul = zen('ul.g-fonts-list').bottom(main),
-            families = [], list, categories = [], subsets = [];
+    updateCategories: function(container) {
+        var categories = container.find('[data-font-categories]');
+        if (!categories) { return; }
 
+        this.filters.categories = categories.data('font-categories').split(',');
+    },
 
-        this.buildHeader(html).top(html);
-        this.buildFooter(html).bottom(html);
+    attachEvents: function(container) {
+        var header = container.find('.g-particles-header'),
+            list = container.find('.g-fonts-list'),
+            search = header.find('input.font-search'),
+            preview = header.find('input.font-preview');
 
-        decouple(ul, 'scroll', bind(this.scroll, this, ul));
+        decouple(list, 'scroll', bind(this.scroll, this, list));
+        container.delegate('click', '.g-fonts-list li[data-font]', bind(this.toggle, this));
 
-        html.delegate('click', '.g-fonts-list li[data-font]', bind(this.toggle, this));
+        if (search) { search.on('keyup', bind(this.search, this, search)); }
+        if (preview) { preview.on('keyup', bind(this.updatePreview, this, preview)); }
 
-        if (this.dataLocal.length) {
-            //insert(categories, 'local');
-            //this.filters.categories.push('local');
-            this.buildLocalFonts(ul);
-        }
+        this.attachCharsets(container);
+        this.attachLocalVariants(container);
+        this.attachFooter(container);
+    },
 
-        async.eachSeries(this.data, bind(function(font, callback) {
-            font.subsets = font.subsets || [];
-            font.category = font.category || [];
-
-            if (!font.category.length) { callback(); return; }
-
-            combine(subsets, font.subsets);
-            insert(categories, font.category);
-            this.filters.categories.push(font.category);
-            var variants = font.variants.join(',').replace('regular', 'normal'),
-                variant = contains(font.variants, 'regular') ? '' : ':' + font.variants[0],
-                li = zen('li[data-font="' + font.family + '"][data-variant="' + (variant.replace(':', '') || 'regular') + '"][data-variants="' + variants + '"]').bottom(ul),
-                total = font.variants.length + ' style' + (font.variants.length > 1 ? 's' : ''),
-                charsets = font.subsets.length > 1 ? ', <span class="font-charsets">' + font.subsets.length + ' charsets <span class="font-charsets-selected">(1 selected)</span></span>' : '';
-
-            var family = zen('div.family').html('<strong>' + font.family + '</strong>, ' + total + charsets).bottom(li),
-                charset = family.find('.font-charsets-selected');
-
-            if (charset) {
-                charset.popover({
+    attachCharsets: function(container) {
+        container.delegate('mouseover', '.font-charsets-selected', bind(function(event, element) {
+            if (!element.PopoverDefined) {
+                var popover = element.getPopover({
                     placement: 'auto',
                     width: '200',
                     trigger: 'mouse',
                     style: 'font-categories, above-modal'
-                }).on('beforeshow.popover', bind(function(popover) {
-                    var subsets = font.subsets,
+                });
+
+                element.on('beforeshow.popover', bind(function(popover) {
+                    var subsets = element.parent('[data-subsets]').data('subsets').split(','),
                         content = popover.$target.find('.g5-popover-content'),
                         checked;
 
@@ -467,71 +424,34 @@ var Fonts = new prime({
                         input = $(input);
                         checked = content.search('input[type="checkbox"]:checked');
                         this.selected.charsets = checked ? checked.map('value') : [];
-                        charset.text('(' + this.selected.charsets.length + ' selected)');
+                        element.text('(' + this.selected.charsets.length + ' selected)');
                     }, this));
 
                     popover.displayContent();
                 }, this));
+
+                element.getPopover().show();
             }
-
-            // Workaround for Firefox in Windows. Need to rework this better and cleaner
-            // Probably should be decoupled and some of the layout logic should go to twig
-            // #175
-            callback();
-
-            var variantContainer = zen('ul').bottom(li), variantFont, label;
-            async.each(font.variants, bind(function(current) {
-                current = current + '';
-                variantFont = zen('li[data-font="' + font.family + '"][data-variant="' + current + '"]').bottom(variantContainer);
-                zen('input[type="checkbox"][value="' + current + '"]').bottom(variantFont);
-                zen('div.variant').html('<small>' + this.mapVariant(current) + '</small>').bottom(variantFont);
-                zen('div.preview').text(previewSentence).bottom(variantFont);
-
-                if (':' + current !== variant && current !== (variant || 'regular')) { variantFont.addClass('g-variant-hide'); }
-            }, this));
-
-            if (!contains(font.subsets, 'latin') && font.subsets.length) {
-                li.addClass('g-font-hide');
-            }
-
-            families.push(font.family + variant);
-            //callback();
         }, this));
-
-        var catContainer = html.find('a.font-category'), subContainer = html.find('a.font-subsets');
-
-        catContainer.data('font-categories', categories.join(',')).html('Categories (<small>' + categories.length + '</small>) <i class="fa fa-caret-down"></i>');
-        subContainer.data('font-subsets', subsets.join(',')).html('Subsets (<small>' + properCase(unhyphenate(this.filters.script.replace('ext', 'extended'))) + '</small>) <i class="fa fa-caret-down"></i>');
-
-        return html;
     },
 
-    buildLocalFonts: function(ul) {
-        var variant, variants, li, total, family;
-
-        zen('li.g-font-heading').text('Local Fonts').top(ul);
-
-        async.eachSeries(this.dataLocal, bind(function(font, callback) {
-            variants = font.variants.join(',');
-
-            li = zen('li.g-local-font[data-font="' + font.family + '"][data-variant=""][data-variants="' + variants + '"]')
-                .html('<input type="checkbox" value="' + font.family + '"/>')
-                .bottom(ul);
-            total = font.variants.length + ' style' + (font.variants.length > 1 ? 's' : '');
-            family = zen('div.family').html('<strong>' + font.family + '</strong>, <span class="g-font-variants-list">' + total + '</span>').bottom(li);
-
-            if (variants) {
-                family.find('.g-font-variants-list').popover({
+    attachLocalVariants: function(container) {
+        container.delegate('mouseover', '.g-font-variants-list', bind(function(event, element) {
+            if (!element.PopoverDefined) {
+                var popover = element.getPopover({
                     placement: 'auto',
                     width: '200',
                     trigger: 'mouse',
                     style: 'font-categories, above-modal'
-                }).on('beforeshow.popover', bind(function(popover) {
-                    var content = popover.$target.find('.g5-popover-content');
+                });
+
+                element.on('beforeshow.popover', bind(function(popover) {
+                    var content = popover.$target.find('.g5-popover-content'),
+                        variants = element.parent('[data-variants]').data('variants').split(',');
 
                     content.empty();
 
-                    async.each(font.variants, bind(function(variant) {
+                    async.each(variants, bind(function(variant) {
                         variant = variant == '400' ? 'regular' : (variant == '400italic' ? 'italic' : variant + '');
                         zen('div').text(this.mapVariant(variant)).bottom(content);
                     }, this));
@@ -539,38 +459,15 @@ var Fonts = new prime({
                     popover.displayContent();
                 }, this));
             }
-
-            callback();
         }, this));
-
-        zen('li.g-font-heading').text('Remote Fonts').bottom(ul);
     },
 
-    buildHeader: function(html) {
-        var container = zen('div.settings-block.g-particles-header').bottom(html),
-            preview = zen('input.float-left.font-preview[type="text"][data-font-preview][placeholder="Font Preview..."][value="' + this.previewSentence[this.filters.script] + '"]').bottom(container),
-            searchWrapper = zen('span.particle-search-wrapper.float-right').bottom(container),
-            search = zen('input.font-search[type="text"][data-font-search][placeholder="Search Font..."]').bottom(searchWrapper);
-        zen('span.particle-search-total').bottom(searchWrapper);
-
-        search.on('keyup', bind(this.search, this, search));
-        preview.on('keyup', bind(this.updatePreview, this, preview));
-
-        return container;
-    },
-
-    buildFooter: function(html) {
-        var container = zen('div.settings-block.g-particles-footer').bottom(html),
-            leftContainer = zen('div.float-left.font-left-container').bottom(container),
-            rightContainer = zen('div.float-right.font-right-container').bottom(container),
-            category = zen('a.font-category.button').bottom(leftContainer),
-            subsets = zen('a.font-subsets.button').bottom(leftContainer),
-            selected = zen('span.font-selected').bottom(rightContainer),
-            select = zen('button.button.button-primary').text('Select').bottom(rightContainer),
+    attachFooter: function(container) {
+        var footer = container.find('.g-particles-footer'),
+            select = footer.find('button.button-primary'),
+            categories = footer.find('.font-category'),
+            subsets = footer.find('.font-subsets'),
             current;
-
-        zen('span').html('&nbsp;').bottom(rightContainer);
-        zen('button.button.g5-dialog-close').text('Cancel').bottom(rightContainer);
 
         select.on('click', bind(function() {
             if (!$('ul.g-fonts-list > [data-font] input[type="checkbox"]:checked')) {
@@ -607,20 +504,20 @@ var Fonts = new prime({
             modal.close();
         }, this));
 
-        category.popover({
+        categories.popover({
             placement: 'top',
             width: '200',
             trigger: 'mouse',
             style: 'font-categories, above-modal'
         }).on('beforeshow.popover', bind(function(popover) {
-            var categories = category.data('font-categories').split(','),
+            var cats = categories.data('font-categories').split(','),
                 content = popover.$target.find('.g5-popover-content'),
                 checked;
 
             content.empty();
 
-            var div;
-            categories.forEach(function(category) {
+            cats.forEach(function(category) {
+                if (category == 'local-fonts') { return; }
                 current = contains(this.filters.categories, category) ? 'checked' : '';
                 zen('div').html('<label><input type="checkbox" ' + current + ' value="' + category + '"/> ' + properCase(unhyphenate(category)) + '</label>').bottom(content);
             }, this);
@@ -629,7 +526,7 @@ var Fonts = new prime({
                 input = $(input);
                 checked = content.search('input[type="checkbox"]:checked');
                 this.filters.categories = checked ? checked.map('value') : [];
-                category.find('small').text(this.filters.categories.length);
+                categories.find('small').text(this.filters.categories.length);
                 this.search();
             }, this));
 
@@ -672,25 +569,26 @@ var Fonts = new prime({
         input = input || $('.g-particles-header input.font-search');
         var list = $('.g-fonts-list'),
             value = input.value(),
-            name, data;
+            name, subsets, category, data;
 
         list.search('> [data-font]').forEach(function(font) {
             font = $(font);
             name = font.data('font');
-            data = find(this.data, { family: name });
+            subsets = font.data('subsets').split(',');
+            category = font.data('category');
             font.removeClass('g-font-hide');
 
             // We dont want to hide selected fonts
             if (this.selected && this.selected.font == name && this.selected.selected.length) { return; }
 
             // Filter by Subset
-            if (!contains(data.subsets, this.filters.script)) {
+            if (!contains(subsets, this.filters.script)) {
                 font.addClass('g-font-hide');
                 return;
             }
 
             // Filter by Category
-            if (!contains(this.filters.categories, data.category)) {
+            if (!contains(this.filters.categories, category)) {
                 font.addClass('g-font-hide');
                 return;
             }
