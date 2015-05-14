@@ -40,6 +40,11 @@ var prime         = require('prime'),
 
 require('../../utils/elements.viewport');
 
+var isIE = function() {
+    var ua = window.navigator.userAgent;
+    return ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/') > 0 || false;
+};
+
 var Fonts = new prime({
 
     mixin: Bound,
@@ -110,7 +115,7 @@ var Fonts = new prime({
             }
 
             // 550 = container height, 5 = pages
-            var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li:not(.g-font-hide)', (550 * 5)),
+            var elements = (container.find('ul.g-fonts-list') || container).inviewport(' > li:not(.g-font-hide)', (550 * (isIE() ? 2 : 7))),
                 list = [];
 
             if (!elements) { return; }
@@ -148,7 +153,7 @@ var Fonts = new prime({
                     this.loadedFonts.push(family);
                 }, this)
             });
-        }, this), 250);
+        }, this), 100);
     },
 
     unselect: function(selected) {
@@ -168,7 +173,7 @@ var Fonts = new prime({
         var value = this.field.value(), name, variants, subset, isLocal = false;
 
         if (!value.match('family=')) {
-            var locals = $('[data-category="local-fonts"][data-font]'), intersect;
+            var locals = $('[data-category="local-fonts"][data-font]') || [], intersect;
             locals = locals.map(function(l){ return $(l).data('font'); });
             value = value.replace(/(\s{1,})?,(\s{1,})?/gi, ',').split(',');
             intersect = intersection(locals, value);
