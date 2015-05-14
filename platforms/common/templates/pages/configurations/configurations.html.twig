@@ -3,21 +3,21 @@
 {% block gantry %}
     <div class="menu-header">
         <span class="float-right">
-            <button class="button button-back-to-conf"><i class="fa fa-fw fa-fw fa-arrow-left"></i> <span>Back to Configuration</span></button>
+            <button class="button button-back-to-conf"><i class="fa fa-fw fa-fw fa-arrow-left"></i> <span>Back to Setup</span></button>
         </span>
         <h2 class="page-title">
-            Configurations
+            Outlines
             <button data-g-config="create" data-g-config-href="{{ gantry.route('configurations', name, 'create')|e }}" data-g-config-method="POST" class="button button-primary">
                 <i class="fa fa-fw fa-plus"></i>
             </button>
-            {# TODO: Adding a new configuration should be a two step process: 1. you pick title and Layout, 2. creates it. #}
+            {# TODO: Adding a new outline should be a two step process: 1. you pick title and Layout, 2. creates it. #}
             {#<a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}" class="button button-primary"><i class="fa fa-fw fa-plus"></i></a>#}
         </h2>
     </div>
 
     <div id="configurations" class="cards-wrapper">
         <ul class="g-grid">
-            {# TODO: Need to inject the Base Configuration at the top of the list #}
+            {# TODO: Need to inject the Base Outline at the top of the list #}
             {% for name, title in gantry.configurations.user %}
                 {# set preset = gantry.configurations.layoutPreset(name) #}
                 <li class="card g-block size-1-4">
@@ -56,7 +56,7 @@
             </li>
         </ul>
 
-        <h2>System Configurations</h2>
+        <h2>System Outlines</h2>
         <ul class="g-grid">
             {% for name, title in gantry.configurations.system %}
                 {# set preset = gantry.configurations.layoutPreset(name) #}
