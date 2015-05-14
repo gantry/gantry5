@@ -14,7 +14,7 @@
 			<tag>stable</tag>
 		</tags>
 		<maintainer>RocketTheme, LLC</maintainer>
-		<maintainerurl>http://gantry-framework.org</maintainerurl>
+		<maintainerurl>http://gantry.org</maintainerurl>
 		<section>Updates</section>
 		<targetplatform name="joomla" version="3.4"/>
 		<client>site</client>
