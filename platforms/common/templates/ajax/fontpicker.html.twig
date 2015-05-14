@@ -11,26 +11,27 @@
             {% if fonts.local_families|length %}
                 <li class="g-font-heading">Local Fonts</li>
             {% for font in fonts.local_families %}
-                <li class="g-local-font" data-font="{{ font.family }}" data-variant data-variants="{{ font.variants|join(',') }}">
+                <li class="g-local-font" data-font="{{ font.family }}" data-variant data-variants="{{ font.variants|join(',') }}" data-subsets="{{ font.subsets|join(',') }}" data-category="{{ font.category }}">
                     <input type="checkbox" value="{{ font.family }}" />
                     <div class="family">
-                        <strong>{{ font.family }}</strong>, <span class="g-font-variants-list">{{ font.variants|length }} style{% if font.variants > 1 %}s{% endif %}</span>
+                        <strong>{{ font.family }}</strong>,
+                        <span class="g-font-variants-list">{{ font.variants|length }} style{% if font.variants > 1 %}s{% endif %}</span>
                     </div>
                 </li>
             {% endfor %}
                 <li class="g-font-heading">Remote Fonts</li>
             {% endif %}
             {% for font in fonts.families %}
-{#
-                {{ dump(font) }}
-#}
-                <li data-font="{{ font.family }}" data-variant="{{ font.variants|first }}" data-variants="{{ font.variants|join(',')|replace({ 'regular': 'normal' }) }}">
+                <li data-font="{{ font.family }}" data-variant="{{ font.variants|first }}" data-variants="{{ font.variants|join(',')|replace({ 'regular': 'normal' }) }}" data-subsets="{{ font.subsets|join(',') }}" data-category="{{ font.category }}">
                     <div class="family">
                         <strong>{{ font.family }}</strong>, {{ font.variants|length }} style{% if font.variants > 1 %}s{% endif %}
+                        {%- if font.subsets|length > 1 -%}
+                        , <span class="font-charsets">{{ font.subsets|length }} charsets <span class="font-charsets-selected">(1 selected)</span></span>
+                        {% endif %}
                     </div>
                     <ul>
                         {% for variant in font.variants %}
-                            <li data-font="{{ font.family }}" data-variant="{{ variant }}">
+                            <li data-font="{{ font.family }}" data-variant="{{ variant }}"{% if variant != font.variants|first %} class="g-variant-hide"{% endif %}>
                                 <input type="checkbox" value="{{ variant }}" />
                                 <div class="variant"><small>{{ variantsMap[variant] | default('Unknown Variant') }}</small></div>
                                 <div class="preview">Wizard boy Jack loves the grumpy Queen's fox.</div>
@@ -43,8 +44,8 @@
     </div>
     <div class="g-particles-footer settings-block">
         <div class="float-left font-left-container">
-            <a class="button font-category" data-font-categories="{{ fonts.categories|join(',') }}">Categories (<small>{{ fonts.categories|length }}</small>) <i class="fa fa-caret-down"></i></a>
-            <a class="button font-subsets" data-font-subsets="{{ fonts.subsets|join(',') }}">Subsets (<small>Latin</small>) <i class="fa fa-caret-down"></i></a>
+            <span class="button font-category" data-font-categories="{{ fonts.categories|join(',') }}">Categories (<small>{{ fonts.categories|length }}</small>) <i class="fa fa-caret-down"></i></span>
+            <span class="button font-subsets" data-font-subsets="{{ fonts.subsets|join(',') }}">Subsets (<small>Latin</small>) <i class="fa fa-caret-down"></i></span>
         </div>
         <div class="float-right font-right-container">
             <span class="font-selected"></span>
