@@ -2536,7 +2536,23 @@ samp {
   width: 50%;
 }
 
-/* line 634, platforms/common/scss/admin/_layout-manager.scss */
+/* line 633, platforms/common/scss/admin/_layout-manager.scss */
+.g-preserve-particles {
+  padding-bottom: 0.5rem;
+  font-size: 0.8rem;
+  color: #666;
+  border-bottom: 1px solid #f3f3f3;
+  margin-bottom: 0.5rem;
+}
+/* line 640, platforms/common/scss/admin/_layout-manager.scss */
+.g-preserve-particles label {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* line 645, platforms/common/scss/admin/_layout-manager.scss */
 .sidebar-block {
   margin: -1.563rem 1.563rem -1.563rem -1.563rem;
   padding: 1.563rem 0.938rem;
@@ -2544,12 +2560,12 @@ samp {
   border-right: 1px solid #e3e3e3;
 }
 
-/* line 648, platforms/common/scss/admin/_layout-manager.scss */
+/* line 660, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker ul, .g5-mm-particles-picker ul, .g5-mm-modules-picker ul {
   padding: 1px;
   margin-bottom: 1em;
 }
-/* line 653, platforms/common/scss/admin/_layout-manager.scss */
+/* line 665, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li, .g5-mm-particles-picker li, .g5-mm-modules-picker li {
   padding: 0.469rem;
   margin: 1px 0;
@@ -2557,64 +2573,64 @@ samp {
   border-radius: 0.1875rem;
   cursor: move;
 }
-/* line 660, platforms/common/scss/admin/_layout-manager.scss */
+/* line 672, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-nodrag], .g5-lm-particles-picker li[data-mm-nodrag], .g5-mm-particles-picker li[data-lm-nodrag], .g5-mm-particles-picker li[data-mm-nodrag], .g5-mm-modules-picker li[data-lm-nodrag], .g5-mm-modules-picker li[data-mm-nodrag] {
   cursor: default;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-  /* line 653, platforms/common/scss/admin/_layout-manager.scss */
+  /* line 665, platforms/common/scss/admin/_layout-manager.scss */
   .g5-lm-particles-picker li, .g5-mm-particles-picker li, .g5-mm-modules-picker li {
     font-size: 0.8rem;
   }
 }
-/* line 668, platforms/common/scss/admin/_layout-manager.scss */
+/* line 680, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li:first-child, .g5-mm-particles-picker li:first-child, .g5-mm-modules-picker li:first-child {
   margin-top: 0;
 }
-/* line 672, platforms/common/scss/admin/_layout-manager.scss */
+/* line 684, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li:last-child, .g5-mm-particles-picker li:last-child, .g5-mm-modules-picker li:last-child {
   margin-bottom: 0;
 }
-/* line 676, platforms/common/scss/admin/_layout-manager.scss */
+/* line 688, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="spacer"], .g5-lm-particles-picker li[data-mm-blocktype="spacer"], .g5-mm-particles-picker li[data-lm-blocktype="spacer"], .g5-mm-particles-picker li[data-mm-blocktype="spacer"], .g5-mm-modules-picker li[data-lm-blocktype="spacer"], .g5-mm-modules-picker li[data-mm-blocktype="spacer"] {
   background-color: #eee;
   color: #666;
   border: 1px solid #d0d0d0;
 }
-/* line 682, platforms/common/scss/admin/_layout-manager.scss */
+/* line 694, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], .g5-lm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], .g5-mm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], .g5-mm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], .g5-mm-modules-picker li.g5-lm-particle-spacer[data-lm-disabled], .g5-mm-modules-picker li.g5-mm-particle-spacer[data-mm-disabled] {
   color: #fff;
 }
-/* line 686, platforms/common/scss/admin/_layout-manager.scss */
+/* line 698, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="position"], .g5-lm-particles-picker li[data-mm-blocktype="position"], .g5-lm-particles-picker li[data-lm-blocktype="module"], .g5-lm-particles-picker li[data-mm-blocktype="module"], .g5-mm-particles-picker li[data-lm-blocktype="position"], .g5-mm-particles-picker li[data-mm-blocktype="position"], .g5-mm-particles-picker li[data-lm-blocktype="module"], .g5-mm-particles-picker li[data-mm-blocktype="module"], .g5-mm-modules-picker li[data-lm-blocktype="position"], .g5-mm-modules-picker li[data-mm-blocktype="position"], .g5-mm-modules-picker li[data-lm-blocktype="module"], .g5-mm-modules-picker li[data-mm-blocktype="module"] {
   color: #fff;
   background-color: #359AD9;
 }
-/* line 692, platforms/common/scss/admin/_layout-manager.scss */
+/* line 704, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="particle"], .g5-lm-particles-picker li[data-mm-blocktype="particle"], .g5-mm-particles-picker li[data-lm-blocktype="particle"], .g5-mm-particles-picker li[data-mm-blocktype="particle"], .g5-mm-modules-picker li[data-lm-blocktype="particle"], .g5-mm-modules-picker li[data-mm-blocktype="particle"] {
   color: #fff;
   background-color: #2A82B7;
 }
-/* line 697, platforms/common/scss/admin/_layout-manager.scss */
+/* line 709, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="pagecontent"], .g5-mm-particles-picker li[data-lm-blocktype="pagecontent"], .g5-mm-modules-picker li[data-lm-blocktype="pagecontent"] {
   color: #fff;
   background-color: #20A085;
 }
-/* line 702, platforms/common/scss/admin/_layout-manager.scss */
+/* line 714, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="atom"], .g5-mm-particles-picker li[data-lm-blocktype="atom"], .g5-mm-modules-picker li[data-lm-blocktype="atom"] {
   color: #fff;
   background-color: #9055AF;
 }
-/* line 708, platforms/common/scss/admin/_layout-manager.scss */
+/* line 720, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .settings-block, .g5-mm-particles-picker .settings-block, .g5-mm-modules-picker .settings-block {
   width: 100% !important;
 }
-/* line 712, platforms/common/scss/admin/_layout-manager.scss */
+/* line 724, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search, .g5-mm-particles-picker .search, .g5-mm-modules-picker .search {
   position: relative;
   margin-bottom: 10px;
 }
-/* line 716, platforms/common/scss/admin/_layout-manager.scss */
+/* line 728, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search i, .g5-mm-particles-picker .search i, .g5-mm-modules-picker .search i {
   position: absolute;
   right: 10px;

@@ -7,7 +7,14 @@
 </div>
 
 <div class="g-panes">
-    <div class="g-pane active">
+    <div class="g-pane clearfix active">
+        <div class="g-preserve-particles">
+            <label>
+                <input data-g-preserve="preset" type="checkbox" checked="checked" />
+                Keep the current Particles while changing Preset
+            </label>
+        </div>
+
         {% for name, group in presets %}
         <ul class="g-switch-presets{% if name == 'user' %} float-left{% else %} float-right{% endif %}">
             <li class="g-switch-title">{{ name == 'user' ? 'User' : 'Platform' }}</li>
@@ -18,10 +25,16 @@
         {% endfor %}
     </div>
 
-    <div class="g-pane">
+    <div class="g-pane clearfix">
         {% set user_conf = gantry.configurations.copy.user %}
         {% set system_conf = gantry.configurations.system %}
 
+        <div class="g-preserve-particles">
+            <label>
+                <input data-g-preserve="outline" type="checkbox" checked="checked" />
+                Keep the current Particles while changing Outline
+            </label>
+        </div>
         <ul class="g-switch-conf-user{% if system_conf.count %} float-left{% endif %}">
             <li class="g-switch-title">User</li>
             {% for key,current in user_conf %}
