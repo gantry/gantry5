@@ -61,10 +61,10 @@ class Fontpicker extends JsonController
         $data->local_families = $this->loadLocalFonts();
 
         if (count($data->local_families)) {
-            array_unshift($data->categories, 'local_fonts');
+            array_unshift($data->categories, 'local-fonts');
         }
 
-        $data->count = count($data->families) + count($data->local_families);
+        $data->count = count($data->families);
 
         return $data;
     }
@@ -81,7 +81,7 @@ class Fontpicker extends JsonController
                 $list = ['regular'];
             }
 
-            $map[] = ['family' => $name, 'variants' => $list, 'category' => 'local_fonts'];
+            $map[] = ['family' => $name, 'variants' => $list, 'category' => 'local-fonts'];
         }
 
         return $map;
