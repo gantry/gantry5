@@ -271,6 +271,7 @@
 		position: relative;
 		li {
 			display: block;
+			position: static !important;
 			margin-right: 0;
 			cursor: pointer;
 
