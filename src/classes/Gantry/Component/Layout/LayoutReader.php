@@ -166,7 +166,7 @@ class LayoutReader
                 'id' => static::id(),
                 // TODO: add offcanvas type..
                 'type' => (in_array($field, ['atoms', 'offcanvas']) ? $field : 'section'),
-                'subtype' => $field,
+                'subtype' => null,
                 'title' => ucfirst($field),
                 'attributes' => (object) [],
                 'children' => []
