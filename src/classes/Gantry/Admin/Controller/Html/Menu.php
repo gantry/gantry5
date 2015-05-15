@@ -282,12 +282,7 @@ class Menu extends HtmlController
 
     public function selectModule()
     {
-        /** @var Platform $platform */
-        $platform = $this->container['platform'];
-
-        $this->params['modules'] = $platform->listModules();
-
-        return $this->container['admin.theme']->render('@gantry-admin/menu/module.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/modals/module-picker.html.twig', $this->params);
     }
 
     public function selectParticle()
@@ -317,7 +312,7 @@ class Menu extends HtmlController
         }
 
         $this->params['particles'] = $groups;
-        return $this->container['admin.theme']->render('@gantry-admin/menu/particle.html.twig', $this->params);
+        return $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
     }
 
     public function validate($id)

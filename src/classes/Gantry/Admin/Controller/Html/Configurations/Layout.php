@@ -43,6 +43,10 @@ class Layout extends HtmlController
             '/'                     => 'save',
             '/*'                    => 'undefined',
             '/*/*'                  => 'particle',
+            '/switch'               => 'undefined',
+            '/switch/*'             => 'switchLayout',
+            '/preset'               => 'undefined',
+            '/preset/*'             => 'preset',
             '/particles'            => 'undefined',
             '/particles/*'          => 'undefined',
             '/particles/*/validate' => 'validate'
@@ -142,6 +146,8 @@ class Layout extends HtmlController
 
         // Fire save event.
         $event = new Event;
+        $event->gantry = $this->container;
+        $event->theme = $this->container['theme'];
         $event->controller = $this;
         $event->layout = $layout;
         $this->container->fireEvent('admin.layout.save', $event);
@@ -168,28 +174,31 @@ class Layout extends HtmlController
 
         $name = isset($item->subtype) ? $item->subtype : $type;
 
+        $attributes = isset($_POST['options']) && is_array($_POST['options']) ? $_POST['options'] : [];
+
         if ($type == 'section' || $type == 'grid' || $type == 'offcanvas') {
             $prefix = "particles.{$type}";
             $defaults = [];
+            $attributes += (array) $item->attributes + $defaults;
             $extra = null;
             $blueprints = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
         } else {
             $prefix = "particles.{$name}";
             $defaults = (array) $this->container['config']->get($prefix);
+            $attributes += $defaults;
             $extra = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
             $blueprints = new BlueprintsForm($this->container['particles']->get($name));
         }
 
-        $attributes = isset($_POST['options']) && is_array($_POST['options']) ? $_POST['options'] : [];
-
         // TODO: Use blueprints to merge configuration.
-        $item->attributes = (object) ($attributes + (array) $item->attributes + $defaults);
+        $item->attributes = (object) $attributes;
 
         $this->params['id'] = $name;
         $this->params += [
             'extra'         => $extra,
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
+            'defaults'      => ['particles' => [$name => $defaults]],
             'prefix'        => "particles.{$name}.",
             'particle'      => $blueprints,
             'parent'        => 'settings',
@@ -231,10 +240,17 @@ class Layout extends HtmlController
             $layout = $this->getLayout('default');
         }
 
+        $deleted = isset($_POST['layout']) ? $layout->clearSections()->copySections(json_decode($_POST['layout'])): [];
+        $message = $deleted
+            ? sprintf('Warning: Following sections could not be found from the new layout: %s.', implode(', ', $deleted))
+            : null;
+
         return new JsonResponse([
             'title' => ucwords(trim(str_replace('_', ' ', $layout->preset['name']))),
             'preset' => json_encode($layout->preset),
-            'data' => $layout->toArray()
+            'data' => $layout->toJson(),
+            'deleted' => $deleted,
+            'message' => $message
     ]   );
     }
 
@@ -245,15 +261,24 @@ class Layout extends HtmlController
             $this->undefined();
         }
 
-        $preset = LayoutObject::preset($id);
-        if (!$preset) {
+        $layout = LayoutObject::preset($id);
+        if (!$layout) {
             throw new \RuntimeException('Preset not found', 404);
         }
 
+        $layout = new LayoutObject($id, $layout);
+
+        $deleted = isset($_POST['layout']) ? $layout->clearSections()->copySections(json_decode($_POST['layout'])): [];
+        $message = $deleted
+            ? sprintf('Warning: Following sections could not be found from the new layout: %s.', implode(', ', $deleted))
+            : null;
+
         return new JsonResponse([
             'title' => ucwords(trim(str_replace('_', ' ', $id))),
-            'preset' => json_encode($preset['preset']),
-            'data' => $preset
+            'preset' => json_encode($layout->preset),
+            'data' => $layout->toJson(),
+            'deleted' => $deleted,
+            'message' => $message
         ]);
     }
 

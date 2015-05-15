@@ -175,7 +175,7 @@ ready(function() {
             remote: element.attribute('href') + getAjaxSuffix(),
             remoteLoaded: function(response, content) {
                 var form       = content.elements.content.find('form'),
-                    submit     = content.elements.content.find('input[type="submit"], button[type="submit"]'),
+                    submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
                     dataString = [],
                     invalid = [],
                     dataValue  = JSON.parse(data);
@@ -192,11 +192,14 @@ ready(function() {
                 // Collection Settings apply
                 submit.on('click', function(e) {
                     e.preventDefault();
+
+                    var target = $(e.target);
+
                     dataString = [];
                     invalid = [];
 
-                    submit.hideIndicator();
-                    submit.showIndicator();
+                    target.hideIndicator();
+                    target.showIndicator();
 
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
@@ -220,8 +223,8 @@ ready(function() {
                     }
 
                     if (invalid.length) {
-                        submit.hideIndicator();
-                        submit.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        target.hideIndicator();
+                        target.showIndicator('fa fa-fw fa-exclamation-triangle');
                         toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
                         return;
                     }
@@ -252,11 +255,17 @@ ready(function() {
                                 label.data('title-editable', text).text(text);
                             });
 
+                            // if it's apply and save we also save the panel
+                            if (target.data('apply-and-save') !== null) {
+                                var save = $('body').find('.button-save');
+                                if (save) { body.emit('click', { target: save }); }
+                            }
+
                             modal.close();
                             toastr.success('Collection Item updated', 'Item Updated');
                         }
 
-                        submit.hideIndicator();
+                        target.hideIndicator();
                     });
                 });
             }

@@ -168,7 +168,7 @@ class Configurations extends HtmlController
     {
         $class = '\\Gantry\\Admin\\Controller\\Html\\' . strtr(ucwords(strtr($resource, '/', ' ')), ' ', '\\');
         if (!class_exists($class)) {
-            throw new \RuntimeException('Configuration not found', 404);
+            throw new \RuntimeException('Outline not found', 404);
         }
 
         /** @var HtmlController $controller */

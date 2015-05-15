@@ -630,6 +630,17 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     }
 }
 
+.g-preserve-particles {
+    padding-bottom: 0.5rem;
+    font-size: 0.8rem;
+    color: $dark-gray;
+    border-bottom: 1px solid lighten($light-gray, 2%);
+    margin-bottom: 0.5rem;
+
+    label {
+        @include user-select(none);
+    }
+}
 
 .sidebar-block {
     $negate: -($content-padding + $content-margin);
@@ -641,6 +652,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
 }
 
 .g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker {
+
     ul, li {
         @extend %list-reset;
     }

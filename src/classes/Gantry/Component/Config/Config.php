@@ -57,6 +57,8 @@ class Config implements \ArrayAccess, \Iterator, ExportInterface
      * @param string  $name       Dot separated path to the requested value.
      * @param mixed   $value      Value to be joined.
      * @param string  $separator  Separator, defaults to '.'
+     * @return $this
+     * @throws \RuntimeException
      */
     public function join($name, $value, $separator = '.')
     {
@@ -74,6 +76,8 @@ class Config implements \ArrayAccess, \Iterator, ExportInterface
         }
 
         $this->set($name, $value, $separator);
+
+        return $this;
     }
 
     /**
@@ -82,6 +86,7 @@ class Config implements \ArrayAccess, \Iterator, ExportInterface
      * @param string  $name       Dot separated path to the requested value.
      * @param mixed   $value      Value to be joined.
      * @param string  $separator  Separator, defaults to '.'
+     * @return $this
      */
     public function joinDefaults($name, $value, $separator = '.')
     {
@@ -94,6 +99,8 @@ class Config implements \ArrayAccess, \Iterator, ExportInterface
         }
 
         $this->set($name, $value, $separator);
+
+        return $this;
     }
 
     /**
@@ -132,22 +139,26 @@ class Config implements \ArrayAccess, \Iterator, ExportInterface
      * Merge two configurations together.
      *
      * @param array $data
-     * @return void
+     * @return $this
      */
     public function merge(array $data)
     {
         $this->items = $this->blueprints()->mergeData($this->items, $data);
+
+        return $this;
     }
 
     /**
      * Set default values to the configuration if variables were not set.
      *
      * @param array $data
-     * @return void
+     * @return $this
      */
     public function setDefaults(array $data)
     {
         $this->items = $this->blueprints()->mergeData($data, $this->items);
+
+        return $this;
     }
 
     /**

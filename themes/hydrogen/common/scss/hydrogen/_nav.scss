@@ -16,6 +16,18 @@
 		}
 	}
 
+	.g-social {
+		a {
+			background: darken($navigation-background, 6%);
+			border: none;
+			color: $navigation-text-color;
+			@include transition(background 0.2s);
+			&:hover {
+				background: lighten($navigation-background, 6%);
+			}
+		}
+	}
+
 	.g-main-nav {
 		margin: -($content-padding + $content-margin);
 		@include main-nav-colors($navigation-background, $navigation-text-color, $main-background, $main-text-color);
@@ -24,20 +36,6 @@
 			@include flex-flow(row wrap);
 			justify-content: center;
 			-webkit-justify-content: center;
-		}
-	}
-
-	.align-left {
-		.g-toplevel {
-			justify-content: flex-start;
-			-webkit-justify-content: flex-start;
-		}
-	}
-
-	.align-right {
-		.g-toplevel {
-			justify-content: flex-end;
-			-webkit-justify-content: flex-end;
 		}
 	}
 
@@ -52,7 +50,7 @@
 
 .g-main-nav {
 	.g-standard {
-		.g-dropdown-column {
+		.g-dropdown {
 	    	@extend %dropdown-column;
 	    }
 	}
@@ -89,6 +87,22 @@
 	}
 }
 
+#g-navigation, #g-header {
+	.align-left {
+		.g-toplevel {
+			justify-content: flex-start;
+			-webkit-justify-content: flex-start;
+		}
+	}
+
+	.align-right {
+		.g-toplevel {
+			justify-content: flex-end;
+			-webkit-justify-content: flex-end;
+		}
+	}
+}
+
 // Subtitle
 .g-menu-item-subtitle {
 	opacity: 0.7;
@@ -97,4 +111,11 @@
 // Nav Overlay
 .g-nav-overlay, .g-menu-overlay {
 	background: $navigation-overlay;
+}
+
+@media print {
+	#g-navigation {
+		background: #fff !important;
+		color: #000 !important;
+	}
 }

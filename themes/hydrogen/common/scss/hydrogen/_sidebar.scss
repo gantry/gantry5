@@ -2,3 +2,10 @@
 	padding: $section-padding 0;
 	color: $main-text-color;
 }
+
+@media print {
+	#g-sidebar {
+		background: #fff !important;
+		color: #000 !important;
+	}
+}

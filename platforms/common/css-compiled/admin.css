@@ -258,24 +258,30 @@ a {
 #g5-container .themes .card {
   max-width: 300px;
 }
+/* line 130, platforms/common/scss/admin/_core.scss */
+#g5-container .g-footer-actions {
+  padding: 1rem 0;
+  margin-top: 1rem;
+  border-top: 1px solid #ddd;
+}
 
-/* line 133, platforms/common/scss/admin/_core.scss */
+/* line 139, platforms/common/scss/admin/_core.scss */
 #footer {
   margin-bottom: 3.5rem;
   text-align: center;
   font-weight: 500;
 }
-/* line 137, platforms/common/scss/admin/_core.scss */
+/* line 143, platforms/common/scss/admin/_core.scss */
 #footer a {
   color: #a0d6c9;
   text-decoration: none;
 }
-/* line 140, platforms/common/scss/admin/_core.scss */
+/* line 146, platforms/common/scss/admin/_core.scss */
 #footer a:hover {
   color: #fff;
 }
 
-/* line 147, platforms/common/scss/admin/_core.scss */
+/* line 153, platforms/common/scss/admin/_core.scss */
 .Whoops.container {
   position: inherit;
 }
@@ -343,24 +349,24 @@ a {
     opacity: 0;
   }
 }
-/* line 169, platforms/common/scss/admin/_core.scss */
+/* line 175, platforms/common/scss/admin/_core.scss */
 .g-tooltip {
   display: inline;
   position: relative;
 }
-/* line 173, platforms/common/scss/admin/_core.scss */
+/* line 179, platforms/common/scss/admin/_core.scss */
 .g-tooltip:before, .g-tooltip:after {
   font-size: 1rem;
   line-height: 1.5rem;
 }
 
-/* line 179, platforms/common/scss/admin/_core.scss */
+/* line 185, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover, .g-tooltip.g-tooltip-force {
   color: #439A86;
   text-decoration: none;
 }
 
-/* line 184, platforms/common/scss/admin/_core.scss */
+/* line 190, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover:after, .g-tooltip.g-tooltip-force:after {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 0.1875rem;
@@ -376,7 +382,7 @@ a {
   font-size: 0.8rem;
 }
 
-/* line 199, platforms/common/scss/admin/_core.scss */
+/* line 205, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover:before, .g-tooltip.g-tooltip-force:before {
   border: solid;
   border-color: rgba(0, 0, 0, 0.8) transparent;
@@ -389,46 +395,46 @@ a {
   z-index: 100;
 }
 
-/* line 211, platforms/common/scss/admin/_core.scss */
+/* line 217, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-right:hover:after, .g-tooltip.g-tooltip-right.g-tooltip-force:after {
   left: inherit;
   right: 0;
 }
 
-/* line 216, platforms/common/scss/admin/_core.scss */
+/* line 222, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-right:hover:before, .g-tooltip.g-tooltip-right.g-tooltip-force:before {
   left: inherit;
   right: 1rem;
 }
 
-/* line 221, platforms/common/scss/admin/_core.scss */
+/* line 227, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-bottom:hover:after, .g-tooltip.g-tooltip-bottom.g-tooltip-force:after {
   bottom: auto;
 }
 
-/* line 225, platforms/common/scss/admin/_core.scss */
+/* line 231, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-bottom:hover:before, .g-tooltip.g-tooltip-bottom.g-tooltip-force:before {
   border-width: 0 .4rem .4rem .4rem;
   bottom: -0.1rem;
 }
 
-/* line 232, platforms/common/scss/admin/_core.scss */
+/* line 238, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:after {
   bottom: 3rem;
 }
 
-/* line 236, platforms/common/scss/admin/_core.scss */
+/* line 242, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:before {
   bottom: 2.6rem;
 }
 
-/* line 241, platforms/common/scss/admin/_core.scss */
+/* line 247, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:before {
   right: 7px;
   bottom: 1.5rem;
 }
 
-/* line 245, platforms/common/scss/admin/_core.scss */
+/* line 251, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:after {
   bottom: 1.9rem;
 }
@@ -1911,30 +1917,34 @@ samp {
   }
 }
 /* line 51, platforms/common/scss/admin/_input-groups.scss */
+#g5-container .input-group-btn button {
+  outline: 0;
+}
+/* line 55, platforms/common/scss/admin/_input-groups.scss */
 #g5-container .input-group-btn .button {
   position: relative;
   border: 1px solid #ddd;
   border-radius: 0.1875rem;
   margin: -1px;
 }
-/* line 60, platforms/common/scss/admin/_input-groups.scss */
+/* line 64, platforms/common/scss/admin/_input-groups.scss */
 #g5-container .input-group.append input {
   border-right: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-/* line 65, platforms/common/scss/admin/_input-groups.scss */
+/* line 69, platforms/common/scss/admin/_input-groups.scss */
 #g5-container .input-group.append .input-group-addon, #g5-container .input-group.append .button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-/* line 72, platforms/common/scss/admin/_input-groups.scss */
+/* line 76, platforms/common/scss/admin/_input-groups.scss */
 #g5-container .input-group.prepend input {
   border-left: 0;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-/* line 77, platforms/common/scss/admin/_input-groups.scss */
+/* line 81, platforms/common/scss/admin/_input-groups.scss */
 #g5-container .input-group.prepend .input-group-addon, #g5-container .input-group.prepend .button {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -2532,7 +2542,23 @@ samp {
   width: 50%;
 }
 
-/* line 634, platforms/common/scss/admin/_layout-manager.scss */
+/* line 633, platforms/common/scss/admin/_layout-manager.scss */
+.g-preserve-particles {
+  padding-bottom: 0.5rem;
+  font-size: 0.8rem;
+  color: #666;
+  border-bottom: 1px solid #f3f3f3;
+  margin-bottom: 0.5rem;
+}
+/* line 640, platforms/common/scss/admin/_layout-manager.scss */
+.g-preserve-particles label {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* line 645, platforms/common/scss/admin/_layout-manager.scss */
 .sidebar-block {
   margin: -1.563rem 1.563rem -1.563rem -1.563rem;
   padding: 1.563rem 0.938rem;
@@ -2540,12 +2566,12 @@ samp {
   border-right: 1px solid #e3e3e3;
 }
 
-/* line 648, platforms/common/scss/admin/_layout-manager.scss */
+/* line 660, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker ul, .g5-mm-particles-picker ul, .g5-mm-modules-picker ul {
   padding: 1px;
   margin-bottom: 1em;
 }
-/* line 653, platforms/common/scss/admin/_layout-manager.scss */
+/* line 665, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li, .g5-mm-particles-picker li, .g5-mm-modules-picker li {
   padding: 0.469rem;
   margin: 1px 0;
@@ -2553,64 +2579,64 @@ samp {
   border-radius: 0.1875rem;
   cursor: move;
 }
-/* line 660, platforms/common/scss/admin/_layout-manager.scss */
+/* line 672, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-nodrag], .g5-lm-particles-picker li[data-mm-nodrag], .g5-mm-particles-picker li[data-lm-nodrag], .g5-mm-particles-picker li[data-mm-nodrag], .g5-mm-modules-picker li[data-lm-nodrag], .g5-mm-modules-picker li[data-mm-nodrag] {
   cursor: default;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-  /* line 653, platforms/common/scss/admin/_layout-manager.scss */
+  /* line 665, platforms/common/scss/admin/_layout-manager.scss */
   .g5-lm-particles-picker li, .g5-mm-particles-picker li, .g5-mm-modules-picker li {
     font-size: 0.8rem;
   }
 }
-/* line 668, platforms/common/scss/admin/_layout-manager.scss */
+/* line 680, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li:first-child, .g5-mm-particles-picker li:first-child, .g5-mm-modules-picker li:first-child {
   margin-top: 0;
 }
-/* line 672, platforms/common/scss/admin/_layout-manager.scss */
+/* line 684, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li:last-child, .g5-mm-particles-picker li:last-child, .g5-mm-modules-picker li:last-child {
   margin-bottom: 0;
 }
-/* line 676, platforms/common/scss/admin/_layout-manager.scss */
+/* line 688, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="spacer"], .g5-lm-particles-picker li[data-mm-blocktype="spacer"], .g5-mm-particles-picker li[data-lm-blocktype="spacer"], .g5-mm-particles-picker li[data-mm-blocktype="spacer"], .g5-mm-modules-picker li[data-lm-blocktype="spacer"], .g5-mm-modules-picker li[data-mm-blocktype="spacer"] {
   background-color: #eee;
   color: #666;
   border: 1px solid #d0d0d0;
 }
-/* line 682, platforms/common/scss/admin/_layout-manager.scss */
+/* line 694, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], .g5-lm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], .g5-mm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], .g5-mm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], .g5-mm-modules-picker li.g5-lm-particle-spacer[data-lm-disabled], .g5-mm-modules-picker li.g5-mm-particle-spacer[data-mm-disabled] {
   color: #fff;
 }
-/* line 686, platforms/common/scss/admin/_layout-manager.scss */
+/* line 698, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="position"], .g5-lm-particles-picker li[data-mm-blocktype="position"], .g5-lm-particles-picker li[data-lm-blocktype="module"], .g5-lm-particles-picker li[data-mm-blocktype="module"], .g5-mm-particles-picker li[data-lm-blocktype="position"], .g5-mm-particles-picker li[data-mm-blocktype="position"], .g5-mm-particles-picker li[data-lm-blocktype="module"], .g5-mm-particles-picker li[data-mm-blocktype="module"], .g5-mm-modules-picker li[data-lm-blocktype="position"], .g5-mm-modules-picker li[data-mm-blocktype="position"], .g5-mm-modules-picker li[data-lm-blocktype="module"], .g5-mm-modules-picker li[data-mm-blocktype="module"] {
   color: #fff;
   background-color: #359AD9;
 }
-/* line 692, platforms/common/scss/admin/_layout-manager.scss */
+/* line 704, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="particle"], .g5-lm-particles-picker li[data-mm-blocktype="particle"], .g5-mm-particles-picker li[data-lm-blocktype="particle"], .g5-mm-particles-picker li[data-mm-blocktype="particle"], .g5-mm-modules-picker li[data-lm-blocktype="particle"], .g5-mm-modules-picker li[data-mm-blocktype="particle"] {
   color: #fff;
   background-color: #2A82B7;
 }
-/* line 697, platforms/common/scss/admin/_layout-manager.scss */
+/* line 709, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="pagecontent"], .g5-mm-particles-picker li[data-lm-blocktype="pagecontent"], .g5-mm-modules-picker li[data-lm-blocktype="pagecontent"] {
   color: #fff;
   background-color: #20A085;
 }
-/* line 702, platforms/common/scss/admin/_layout-manager.scss */
+/* line 714, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker li[data-lm-blocktype="atom"], .g5-mm-particles-picker li[data-lm-blocktype="atom"], .g5-mm-modules-picker li[data-lm-blocktype="atom"] {
   color: #fff;
   background-color: #9055AF;
 }
-/* line 708, platforms/common/scss/admin/_layout-manager.scss */
+/* line 720, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .settings-block, .g5-mm-particles-picker .settings-block, .g5-mm-modules-picker .settings-block {
   width: 100% !important;
 }
-/* line 712, platforms/common/scss/admin/_layout-manager.scss */
+/* line 724, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search, .g5-mm-particles-picker .search, .g5-mm-modules-picker .search {
   position: relative;
   margin-bottom: 10px;
 }
-/* line 716, platforms/common/scss/admin/_layout-manager.scss */
+/* line 728, platforms/common/scss/admin/_layout-manager.scss */
 .g5-lm-particles-picker .search i, .g5-mm-particles-picker .search i, .g5-mm-modules-picker .search i {
   position: absolute;
   right: 10px;
@@ -4224,27 +4250,35 @@ html.g5-dialog-open {
   display: inline-block;
 }
 /* line 27, platforms/common/scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-search {
+  width: 10rem !important;
+}
+/* line 31, platforms/common/scss/admin/particles/_fonts.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-preview {
+  width: 25rem !important;
+}
+/* line 35, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content input {
   font-size: 0.8em;
 }
-/* line 30, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 38, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-preview {
   width: 400px;
 }
-/* line 35, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 43, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-particles-footer .font-selected {
   font-size: 0.8em;
   margin-right: 10px;
 }
-/* line 40, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 48, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-particles-footer .font-category {
   font-size: 0.85em;
 }
-/* line 44, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 52, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .g-particles-footer .font-subsets {
   margin-left: 0.85em !important;
 }
-/* line 49, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 57, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list {
   margin: 0;
   padding: 0;
@@ -4255,13 +4289,13 @@ html.g5-dialog-open {
   overflow: auto;
   position: relative;
 }
-/* line 59, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 67, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list ul, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list li {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-/* line 65, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 73, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li.g-font-heading {
   text-transform: uppercase;
   margin: 1rem 0 0.5rem;
@@ -4269,7 +4303,7 @@ html.g5-dialog-open {
   color: #bbb;
   text-shadow: 0 1px rgba(255, 255, 255, 0.8);
 }
-/* line 73, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 81, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] {
   padding: 0.5em 1em;
   margin: 0.5em 0;
@@ -4278,46 +4312,46 @@ html.g5-dialog-open {
   cursor: pointer;
   background-color: #eaeaea;
 }
-/* line 80, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 88, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font].g-local-font {
   margin-right: 0.5em;
   display: inline-block;
 }
-/* line 84, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 92, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font].g-local-font .family {
   display: inline-block;
 }
-/* line 91, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 99, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font]:nth-child(odd) {
   background-color: #f7f7f7;
 }
-/* line 95, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 103, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font].selected {
   border-color: #48B0D7;
 }
-/* line 99, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 107, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] strong {
   font-weight: bold !important;
 }
-/* line 103, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 111, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] input[type="checkbox"], .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] .variant {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 108, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 116, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] .variant, .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] .family {
   color: #999;
 }
-/* line 112, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 120, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] .preview {
   font-size: 24px;
   line-height: 1.3em;
 }
-/* line 117, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 125, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] ul {
   margin-top: 0.5em;
 }
-/* line 121, platforms/common/scss/admin/particles/_fonts.scss */
+/* line 129, platforms/common/scss/admin/particles/_fonts.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content ul.g-fonts-list > li[data-font] li[data-font] {
   padding: 0.5em 0;
   border: 0;

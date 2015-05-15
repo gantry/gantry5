@@ -32,6 +32,11 @@ class EventListener implements EventSubscriberInterface
 
     public function onStylesSave(Event $event)
     {
+        \JPluginHelper::importPlugin('gantry5');
+
+        // Trigger the onGantryThemeUpdateCss event.
+        $dispatcher = \JEventDispatcher::getInstance();
+        $dispatcher->trigger('onGantry5UpdateCss', ['theme' => $event->theme]);
     }
 
     public function onSettingsSave(Event $event)
@@ -40,17 +45,15 @@ class EventListener implements EventSubscriberInterface
 
     public function onLayoutSave(Event $event)
     {
-        $gantry = Gantry::instance();
-
         /** @var Configurations $configurations */
-        $configurations = $gantry['configurations'];
+        $configurations = $event->gantry['configurations'];
 
         $list = [];
         foreach ($configurations as $name => $title) {
             $list += Layout::instance($name)->positions();
         }
 
-        $manifest = new Manifest($gantry['theme.name']);
+        $manifest = new Manifest($event->gantry['theme.name']);
         $manifest->setPositions(array_keys($list));
         $manifest->save();
     }

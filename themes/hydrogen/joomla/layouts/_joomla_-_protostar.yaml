@@ -38,8 +38,6 @@ children:
                     title: Logo
                     attributes:
                       enabled: 1
-                      image: 'gantry-assets://images/gantry5-logo.png'
-                      class: gantry-logo
                     children: {  }
               -
                 id: 41fd922c-d81d-d7d3-c6c1-3034e05f29a2
@@ -207,13 +205,11 @@ children:
                         children:
                           -
                             id: 2a27f7b3-bef7-9fd5-b7ba-ce799455f210
-                            type: position
-                            subtype: false
-                            title: System_messages
+                            type: pagecontent
+                            subtype: system-messages
+                            title: 'System Messages'
                             attributes:
                               enabled: 1
-                              key: system_messages
-                              title: System_messages
                             children: {  }
                   -
                     id: 01386cb3-a15b-9d5c-9abf-88918be41ada
@@ -458,13 +454,12 @@ children:
             title: Untitled
             attributes:
               size: 100
-              extra: {  }
             children:
               -
                 id: dcbf7c39-89a1-41bf-8878-92020f172dbc
                 type: particle
                 subtype: mobile-menu
-                title: "Mobile Menu"
+                title: Mobile-menu
                 attributes:
                   enabled: 1
                 children: {  }

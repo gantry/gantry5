@@ -61,7 +61,7 @@
 						opacity: 0.5;
 						font-family: FontAwesome;
 						content: "\f078";
-						text-align: center;
+						text-align: right;
 					}
 				}
 				&.g-selected {
@@ -96,6 +96,7 @@
     		.g-menu-item-content {
 				display: inline-block;
 				vertical-align: middle;
+				word-break: break-word;
 			}
 
     		&.g-parent {
@@ -111,6 +112,7 @@
 
 	    			&:after {
 						content: "\f054";
+						text-align: center;
 					}			
 				}
 				&.g-selected {
@@ -269,6 +271,7 @@
 		position: relative;
 		li {
 			display: block;
+			position: static !important;
 			margin-right: 0;
 			cursor: pointer;
 

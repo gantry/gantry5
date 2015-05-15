@@ -110,7 +110,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      * @param string $name
      * @param array $items
      */
-    public function __construct($name, array $items = null, $preset = null)
+    public function __construct($name, array $items = null)
     {
         $this->name = $name;
         $this->items = (array) $items;
@@ -203,26 +203,81 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return $this->references[$id];
     }
 
+
+    public function clearSections()
+    {
+        $this->items = $this->clearChildren($this->items);
+
+        return $this;
+    }
+
+    protected function clearChildren(&$items)
+    {
+        foreach ($items as $key => &$item) {
+            if (!empty($item->children)) {
+                $this->children = $this->clearChildren($item->children);
+            }
+
+            if (empty($item->children) && in_array($item->type, ['grid', 'block', 'particle', 'position', 'spacer', 'pagecontent'])) {
+                unset($items[$key]);
+            }
+        }
+
+        return array_values($items);
+    }
+
+    public function copySections(array $old)
+    {
+        if (!isset($this->references)) {
+            $this->initReferences();
+        }
+
+        /** @var Layout $old */
+        $old = new static($this->name, $old);
+        $data = $old->referencesByType('section', 'section');
+
+        $leftover = [];
+        if (isset($this->types['section']['section'])) {
+            $sections = &$this->types['section']['section'];
+
+            foreach ($data as $item) {
+                $found = false;
+                foreach ($sections as &$section) {
+                    if ($section->title === $item->title) {
+                        $found = true;
+                        $section = $item;
+                        break;
+                    }
+                }
+                if (!$found && !empty($item->children)) {
+                    $leftover[] = $item->title;
+                }
+            }
+        }
+
+        return $leftover;
+    }
+
     /**
      * @param array $items
      */
-    protected function initReferences(array $items = null)
+    protected function initReferences(array &$items = null)
     {
         if ($items === null) {
-            $items = $this->items;
+            $items = &$this->items;
             $this->references = [];
             $this->types = [];
         }
 
-        foreach ($items as $item) {
+        foreach ($items as $key => &$item) {
             if (is_object($item)) {
                 if (isset($item->id)) {
-                    $this->references[$item->id] = $item;
+                    $this->references[$item->id] = &$item;
                 }
                 $type = $item->type;
                 $subtype = !empty($item->subtype) ? $item->subtype : $type;
 
-                $this->types[$type][$subtype][] = $item;
+                $this->types[$type][$subtype][] = &$item;
 
                 if (isset($item->children) && is_array($item->children)) {
                     $this->initReferences($item->children);

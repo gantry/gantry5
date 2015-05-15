@@ -58,6 +58,7 @@ class Page extends Base\Page
         $classes = ['site', $this->option, "view-{$this->view}"];
         $classes[] = $this->layout ? 'layout-' . $this->layout : 'no-layout';
         $classes[] = $this->task ? 'task-' . $this->task : 'no-task';
+        $classes[] = 'dir-' . $this->direction;
         if ($this->itemid) $classes[] = 'itemid-' . $this->itemid;
 
         $baseAttributes = (array) $this->config->get('page.body', []);

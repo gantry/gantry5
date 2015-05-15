@@ -102,8 +102,19 @@ class Menu extends AbstractMenu
      */
     protected function getItemsFromPlatform($params)
     {
-        // Items are already filtered by ViewLevels and user language.
-        return $this->menu->getItems('menutype', $params['menu'] ?: $this->default->menutype);
+        $attributes = ['menutype'];
+        $values = [$params['menu'] ?: $this->default->menutype];
+
+        // Items are already filtered by access and language, in admin we need to work around that.
+        if (\JFactory::getApplication()->isAdmin()) {
+            $attributes[] = 'access';
+            $values[] = null;
+
+            $attributes[] = 'language';
+            $values[] = null;
+        }
+
+        return $this->menu->getItems($attributes, $values);
     }
 
     /**
@@ -172,9 +183,9 @@ class Menu extends AbstractMenu
             $menuItems = $this->getItemsFromPlatform($params);
 
             $itemMap = [];
-            foreach ($items as $path => &$item) {
-                if (isset($item['id']) && is_numeric($item['id'])) {
-                    $itemMap[$item['id']] = &$item;
+            foreach ($items as $path => &$itemRef) {
+                if (isset($itemRef['id']) && is_numeric($itemRef['id'])) {
+                    $itemMap[$itemRef['id']] = &$itemRef;
                 }
             }
 
@@ -203,12 +214,28 @@ class Menu extends AbstractMenu
                     $itemParams += $items[$menuItem->route];
                 }
 
+                // Get default target from Joomla.
+                switch ($menuItem->params->get('browserNav', 0))
+                {
+                    default:
+                    case 0:
+                        // Target window: Parent.
+                        $target = '_self';
+                        break;
+                    case 1:
+                    case 2:
+                        // Target window: New with navigation.
+                        $target = '_blank';
+                        break;
+                }
+
                 // And if not available in configuration, default to Joomla.
                 $itemParams += [
                     'title' => $menuItem->title,
                     'subtitle' => $menuItem->params->get('menu-anchor_title', ''),
                     'image' => $menuItem->params->get('menu_image', ''),
-                    'icon_only' => !$menuItem->params->get('menu_text', 1)
+                    'icon_only' => !$menuItem->params->get('menu_text', 1),
+                    'target' => $target
                 ];
 
                 $item = new Item($this, $menuItem->route, $itemParams);
@@ -262,20 +289,6 @@ class Menu extends AbstractMenu
                 if ($item->type == 'url') {
                     // Moved from modules/mod_menu/tmpl/default_url.php, not sure why Joomla had application logic in there.
                     $item->url(\JFilterOutput::ampReplace(htmlspecialchars($item->link)));
-                }
-
-                switch ($menuItem->params->get('browserNav', 0))
-                {
-                    default:
-                    case 0:
-                        // Target window: Parent.
-                        $item->target = '_self';
-                        break;
-                    case 1:
-                    case 2:
-                        // Target window: New with navigation.
-                        $item->target = '_blank';
-                        break;
                 }
             }
             // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.

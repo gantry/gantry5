@@ -4,7 +4,7 @@ preset:
 layout:
   header:
     container:
-      - position-header
+      - [particle-logo 30, position-header 70]
 
   navigation:
     container:

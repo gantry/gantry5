@@ -41,3 +41,9 @@ form:
       label: Max Levels
       description: Set the maximum number of menu levels to display.
       default: 0
+
+    mobileTarget:
+      type: input.checkbox
+      label: Mobile Target
+      description: Check this field if you want this menu to become the target for Mobile Menu and to appear in Offcanvas
+      default: 0

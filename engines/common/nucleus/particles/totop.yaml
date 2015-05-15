@@ -15,3 +15,9 @@ form:
       label: CSS Classes
       description: CSS class name for the particle.
       default: totop
+
+    content:
+      type: intput.text
+      label: Text
+      description: The text to be displayed for the link. HTML is allowed.
+      default: To Top

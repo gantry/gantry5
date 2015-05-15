@@ -25,8 +25,10 @@ class ThemeList
             if (file_exists($locator('gantry-themes://' . $theme . '/default/gantry/theme.yaml'))) {
                 $details = new ThemeDetails($theme);
 
-                if (!$locator->schemeExists('gantry-theme-' . $theme)) {
-                    $locator->addPath('gantry-themes-' . $theme, '', $details->getPaths());
+                // Stream needs to be valid URL.
+                $streamName = 'gantry-themes-' . preg_replace('|[^a-z\d+.-]ui|', '-', $theme);
+                if (!$locator->schemeExists($streamName)) {
+                    $locator->addPath($streamName, '', $details->getPaths());
                 }
 
                 $details['name'] = $theme;
@@ -54,7 +56,10 @@ class ThemeList
 
         if (!strpos($image, '://')) {
             $name = $details['name'];
-            $image = "gantry-themes-{$name}://{$image}";
+
+            // Stream needs to be valid URL.
+            $streamName = 'gantry-themes-' . preg_replace('|[^a-z\d+.-]|ui', '-', $name);
+            $image = "{$streamName}://{$image}";
         }
 
         try {

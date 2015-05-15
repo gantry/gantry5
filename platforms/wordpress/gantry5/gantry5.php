@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Gantry 5 Framework
- * Plugin URI: //http://gantry-framework.org/
+ * Plugin URI: //http://gantry.org/
  * Description: Framework for Gantry 5 based templates.
  * Version: 5.0
  * Author: RocketTheme

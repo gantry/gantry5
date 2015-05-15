@@ -195,6 +195,8 @@ class Styles extends HtmlController
 
         // Fire save event.
         $event = new Event;
+        $event->gantry = $this->container;
+        $event->theme = $this->container['theme'];
         $event->controller = $this;
         $event->data = $data;
         $this->container->fireEvent('admin.styles.save', $event);

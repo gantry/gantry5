@@ -11,12 +11,13 @@
             <span class="g-menuitem-path font-small">/{{ path }}</span>
         </h4>
         <div class="inner-params">
-            {% include 'forms/fields.html.twig' with {'skip': ['enabled', 'title'] } %}
+            {% include 'forms/fields.html.twig' with {'skip': ['enabled', 'title', data.level > 1 ? 'dropdown' : '-noitem-'] } %}
         </div>
     </div>
     <div class="g-modal-actions">
         {#<a class="button float-left">Defaults</a>#}
         <button class="button button-primary" type="submit">Apply</button>
+        <button class="button button-primary" data-apply-and-save>Apply and Save</button>
         <a class="button g5-dialog-close">Cancel</a>
     </div>
 </form>
