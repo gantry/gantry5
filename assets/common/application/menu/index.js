@@ -259,7 +259,7 @@ var Menu = new prime({
         var selectors = this.options.selectors,
             mobileContainer = $(selectors.mobileContainer),
             mainContainer = $(selectors.mainContainer + selectors.mobileTarget) || $(selectors.mainContainer),
-            find;
+            find, dropdowns;
 
         if (mq.matches) {
             find = mainContainer.find(selectors.topLevel);
@@ -270,6 +270,16 @@ var Menu = new prime({
         }
 
         this.resetStates(find);
+
+        // we need to reintroduce fixed widths for those dropdowns that come with it
+        if (!mq.matches && (find && (dropdowns = find.search('[data-g-item-width]')))) {
+            console.log(dropdowns);
+            dropdowns.forEach(function(dropdown) {
+                dropdown = $(dropdown);
+                dropdown[0].style.width = dropdown.data('g-item-width');
+                console.log(dropdown, dropdown.data('g-item-width'));
+            });
+        }
     },
 
     _debug: function() {}
