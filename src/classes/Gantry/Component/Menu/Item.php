@@ -64,7 +64,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable
             'parent_id' => $parent != '.' ? $parent : '',
             'layout' => 'list',
             'target' => '_self',
-            'dropdown' => 'standard',
+            'dropdown' => '',
             'icon' => '',
             'image' => '',
             'subtitle' => '',
@@ -74,6 +74,15 @@ class Item implements \ArrayAccess, \Iterator, \Serializable
             'columns' => [],
             'level' => 0,
         ];
+    }
+
+    public function getDropdown()
+    {
+        if (!$this->items['dropdown']) {
+            return count($this->groups()) > 1 ? 'fullwidth' : 'standard';
+        }
+
+        return $this->items['dropdown'];
     }
 
     public function serialize()

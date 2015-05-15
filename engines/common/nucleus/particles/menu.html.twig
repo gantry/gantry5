@@ -23,14 +23,14 @@
     {% if item.visible %}
         {% set title = item.icon_only ? ' title="' ~ item.title|e ~ '"' %}
         {% set active = menu.isActive(item) ? ' active' %}
-        {% set dropdown = item.level == 1 ? ' g-' ~ item.dropdown|e %}
+        {% set dropdown = item.level == 1 ? ' g-' ~ item.getDropdown()|e %}
         {% set parent = item.children ? ' g-parent' %}
         {% set target = item.target != '_self' ? ' target="' ~ item.target|e ~ '"' %}
 
 
         {% set hasCustomWidth = item.width|default('auto') != 'auto' %}
         {% set customWidth = '' %}
-        {% if hasCustomWidth and not (root.dropdown == 'fullwidth' and item.level > 1) %}
+        {% if hasCustomWidth and not (root.getDropdown() == 'fullwidth' and item.level > 1) %}
             {% set customWidth = ' style="position: relative;"' %}
         {% endif %}
 
@@ -72,7 +72,7 @@
 
 {% macro displayContainers(item, root, menu, gantry) %}
     <div class="g-grid">
-        {% set groups = item.dropdown == 'standard' ? [item] : item.groups %}
+        {% set groups = item.getDropdown() == 'standard' ? [item] : item.groups %}
         {% for column, items in groups %}
         <div class="g-block {{ item.columnWidth(column)|toGrid|e }}">
             <ul class="g-sublevel">
@@ -94,7 +94,7 @@
 
 {% macro displaySubmenu(item, root, menu, gantry) %}
     {% set hasCustomWidth = item.width|default('auto') != 'auto' %}
-    {% if hasCustomWidth and not (root.dropdown == 'fullwidth' and item.level > 1) %}
+    {% if hasCustomWidth and not (root.getDropdown() == 'fullwidth' and item.level > 1) %}
         {% set customWidth = ' style="width: ' ~ item.width|raw ~ '" data-g-item-width="' ~ item.width|raw ~ '"' %}
     {% endif %}
     <ul class="g-dropdown g-inactive"{{ customWidth|raw }}>

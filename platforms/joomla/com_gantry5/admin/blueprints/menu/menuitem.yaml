@@ -49,10 +49,13 @@ form:
         .dropdown:
           type: select.selectize
           label: Dropdown Style
-          placeholder: 'Select...'
+          default: ''
+          selectize:
+            allowEmptyOption: true
           options:
-            standard: Standard
-            fullwidth: Full Width
+            '': - Use Default -
+            standard: Simple
+            fullwidth: Extended
 
         .width:
           type: input.text
