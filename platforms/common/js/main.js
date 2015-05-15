@@ -2335,7 +2335,7 @@ ready(function() {
         if (event && event.preventDefault) { event.preventDefault(); }
 
         if (!element.PopoverDefined) {
-            var popover = element.getPopover({
+            element.getPopover({
                 type: 'async',
                 url: element.data('lm-switcher') + getAjaxSuffix(),
                 allowElementsClick: '.g-tabs a'
@@ -2397,7 +2397,7 @@ ready(function() {
 
             lmhistory.push(builder.serialize());
 
-            $('[data-lm-switcher]').getPopover().hide();
+            $('[data-lm-switcher]').getPopover().hideAll().destroy();
         });
     });
 
