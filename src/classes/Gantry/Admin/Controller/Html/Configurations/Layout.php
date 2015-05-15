@@ -43,6 +43,8 @@ class Layout extends HtmlController
             '/'                     => 'save',
             '/*'                    => 'undefined',
             '/*/*'                  => 'particle',
+            '/preset'               => 'undefined',
+            '/preset/*'             => 'preset',
             '/particles'            => 'undefined',
             '/particles/*'          => 'undefined',
             '/particles/*/validate' => 'validate'
@@ -255,14 +257,19 @@ class Layout extends HtmlController
             throw new \RuntimeException('Preset not found', 404);
         }
 
-        $preset = json_encode($layout['preset']);
-        unset($layout['preset']);
-        $data = $layout;
+        $layout = new LayoutObject($id, $layout);
+
+        $deleted = isset($_POST['layout']) ? $layout->clearSections()->copySections(json_decode($_POST['layout'])): [];
+        $message = $deleted
+            ? sprintf('Warning: Following sections could not be found from the new layout: %s.', implode(', ', $deleted))
+            : null;
 
         return new JsonResponse([
             'title' => ucwords(trim(str_replace('_', ' ', $id))),
-            'preset' => $preset,
-            'data' => $data
+            'preset' => json_encode($layout->preset),
+            'data' => $layout->toJson(),
+            'deleted' => $deleted,
+            'message' => $message
         ]);
     }
 
