@@ -222,13 +222,8 @@ class Document
             return $url;
         }
 
-        if ('' === (string) $path) {
-            // Resource not found or no path was provided, return null to allow fallback value to be used.
-            return null;
-        }
-
         // At this point URL is either relative or absolute path; let us find if it is relative.
-        if ('/' !== $path[0]) {
+        if ($path && '/' !== $path[0]) {
             if ($timestamp_age > 0) {
                 // We want to add timestamp to the URI: do it only for existing files.
                 $realPath = realpath(GANTRY5_ROOT . '/' . $path);
