@@ -17,6 +17,9 @@
     {%- block head_meta -%}
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% if gantry.config.styles.base.favicon %}
+        <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.get('styles.base.favicon', false)) }}" />
+        {% endif %}
     {%- endblock %}
 
     {%- block head_title -%}
