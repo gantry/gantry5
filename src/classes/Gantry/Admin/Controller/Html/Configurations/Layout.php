@@ -43,6 +43,8 @@ class Layout extends HtmlController
             '/'                     => 'save',
             '/*'                    => 'undefined',
             '/*/*'                  => 'particle',
+            '/switch'               => 'undefined',
+            '/switch/*'             => 'switchLayout',
             '/preset'               => 'undefined',
             '/preset/*'             => 'preset',
             '/particles'            => 'undefined',
@@ -238,10 +240,17 @@ class Layout extends HtmlController
             $layout = $this->getLayout('default');
         }
 
+        $deleted = isset($_POST['layout']) ? $layout->clearSections()->copySections(json_decode($_POST['layout'])): [];
+        $message = $deleted
+            ? sprintf('Warning: Following sections could not be found from the new layout: %s.', implode(', ', $deleted))
+            : null;
+
         return new JsonResponse([
             'title' => ucwords(trim(str_replace('_', ' ', $layout->preset['name']))),
             'preset' => json_encode($layout->preset),
-            'data' => $layout->toArray()
+            'data' => $layout->toJson(),
+            'deleted' => $deleted,
+            'message' => $message
     ]   );
     }
 
