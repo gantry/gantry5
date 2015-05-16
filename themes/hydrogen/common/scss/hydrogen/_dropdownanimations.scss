@@ -1,0 +1,41 @@
+#g-navigation, #g-header {
+	.g-dropdown {
+	    @include transition(none);
+    }
+	
+	.fade.g-dropdown {
+		@include transition(opacity .3s ease-out, transform .3s ease-out);
+	}
+}
+
+.zoom.g-active {
+	@include animation-duration(.3s);
+	@include animation-name(DropDownZoom);
+}
+
+.fadeInUp.g-active {
+	@include animation-duration(.3s);
+	@include animation-name(DropDownFadeInUp);
+}
+
+@include keyframes(DropDownZoom) {
+  0% {
+    opacity: 0;
+    @include transform(scale3d(.8, .8, .8));
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@include keyframes(DropDownFadeInUp) {
+  0% {
+    opacity: 0;
+    @include transform(translate3d(0,30px,0));
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
