@@ -165,6 +165,8 @@ domready(function() {
                         updatePreview();
                     }
                 });
+
+                container.find('.particle-search-wrapper input')[0].focus();
             }
         });
     });

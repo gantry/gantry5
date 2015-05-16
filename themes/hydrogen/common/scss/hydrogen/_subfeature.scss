@@ -5,3 +5,10 @@
 	border-top: 1px solid rgba(0,0,0,0.05);
 	border-bottom: 1px solid rgba(0,0,0,0.05);
 }
+
+@media print {
+	#g-subfeature {
+		background: #fff !important;
+		color: #000 !important;
+	}
+}

@@ -18,7 +18,7 @@ form:
 
     date.formats:
       type: select.date
-      label: Target
+      label: Format
       description: Select preferred date format.
       default: l, F d, Y
       placeholder: 'Select...'

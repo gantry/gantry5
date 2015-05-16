@@ -73,7 +73,7 @@ layout:
       - position-debug
 
   offcanvas:
-      - [particle-mobile-menu]
+    - particle-mobile-menu
 
   atoms:
-      - [atom-google-analytics]
+    - atom-google-analytics

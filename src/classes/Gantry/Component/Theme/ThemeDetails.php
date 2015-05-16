@@ -49,7 +49,9 @@ class ThemeDetails implements \ArrayAccess
 
         $parent = $this->getParent();
         if ($parent) {
-            $paths[] = "gantry-themes-{$parent}://";
+            // Stream needs to be valid URL.
+            $streamName = 'gantry-themes-' . preg_replace('|[^a-z\d+.-]|ui', '-', $parent);
+            $paths[] = "{$streamName}://";
         }
 
         return $this->parsePaths($paths);
@@ -64,7 +66,10 @@ class ThemeDetails implements \ArrayAccess
         }
         if (!strpos($uri, '://')) {
             $name = $this->offsetGet('name');
-            $uri = "gantry-themes-{$name}://{$uri}";
+
+            // Stream needs to be valid URL.
+            $streamName = 'gantry-themes-' . preg_replace('|[^a-z\d+.-]|ui', '-', $name);
+            $uri = "{$streamName}://{$uri}";
         }
 
         return $uri;

@@ -5,13 +5,13 @@
             <option value="default"
                 {% if configuration == 'default' %}selected="selected"{% endif %}
                 data-data="{{ {params: {navbar: true}, url: gantry.route('configurations/default', configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
-                {{ 'Base Configuration' }}
+                {{ 'Base Outline' }}
             </option>
         </optgroup>
 
         {% set user_conf = gantry.configurations.user %}
         {% if user_conf.count %}
-        <optgroup label="Theme Pages">
+        <optgroup label="Theme Outlines">
             {% for name, title in user_conf %}
                 <option value="{{ name|e }}"
                         {% if name == configuration %}selected="selected"{% endif %}
@@ -24,7 +24,7 @@
 
         {% set system_conf = gantry.configurations.system %}
         {% if system_conf.count %}
-        <optgroup label="System Pages">
+        <optgroup label="System Outlines">
             {% for name, title in system_conf %}
                 <option value="{{ name|e }}"
                         {% if name == configuration %}selected="selected"{% endif %}

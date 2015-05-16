@@ -9,6 +9,13 @@ body {
 	background: $base-background;
 }
 
+@media print {
+	#g-page-surround {
+		background: #fff !important;
+		color: #000 !important;
+	}
+}
+
 a {
 	color: $accent-color-1;
 	&:hover {

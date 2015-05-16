@@ -59,6 +59,13 @@
             {% endfor %}
         </div>
         {% endfor %}
+
+        <div class="g-footer-actions">
+            <span class="float-right">
+                <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}" class="button button-secondary" data-ajax-action><i class="fa fa-fw fa-tasks"></i> <span>Recompile CSS</span></a>
+                <button type="submit" class="button button-primary button-save" data-save="Styles"><i class="fa fa-fw fa-check"></i> <span>Save Styles</span></button>
+            </span>
+        </div>
     </form>
 </div>
 {% endblock %}

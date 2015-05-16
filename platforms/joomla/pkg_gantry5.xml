@@ -2,7 +2,7 @@
 <extension version="3.4" type="package" method="upgrade">
     <name>pkg_gantry5</name>
     <packagename>gantry5</packagename>
-    <version>5.0.0-rc.1</version>
+    <version>5.0.0-rc.3-dev</version>
     <creationDate>@versiondate@</creationDate>
     <author>RocketTheme, LLC</author>
     <authorEmail>support@rockettheme.com</authorEmail>

@@ -72,7 +72,7 @@
         </replacetokens>
     </filterchain>
 
-    <target name="dist" depends="preflight,info,mkdir,backup,assets-prod,build-installer,build-component,build-library,build-nucleus,build-plugins,build-themes,assets-dev,package,postflight" />
+    <target name="dist" depends="preflight,info,mkdir,backup,assets-prod,build-installer,build-component,build-library,build-nucleus,build-plugins,build-themes,reset-git,package,postflight" />
 
     <!-- Preflight check to see if we can even run the build script -->
     <target name="preflight">
@@ -124,7 +124,7 @@
         <mkdir dir="${package_dir}" />
         <mkdir dir="${package_dir}/backup" />
         <touch file="${package_dir}/build"/>
-   </target>
+    </target>
 
 
     <target name="backup">
@@ -400,10 +400,15 @@
         </if>
     </target>
 
-    <target name="assets-dev">
+    <target name="reset-git">
+        <echo message="Restoring Git repository to HEAD..." />
+        <exec command="git fetch origin &amp;&amp; git reset --hard &amp;&amp; git clean -f" checkreturn="true" error="${phing.dir}/gulp-git-restore-error.txt" />
+    </target>
+
+    <!--<target name="assets-dev">
         <echo message="Reverting Assets to Dev (CSS/JS)..." />
         <exec command="gulp" checkreturn="true" error="${phing.dir}/gulp-dev-error.txt" />
-    </target>
+    </target>-->
 
     <target name="package">
         <!-- Process all prepared packages -->

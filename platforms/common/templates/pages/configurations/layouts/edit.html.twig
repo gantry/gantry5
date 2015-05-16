@@ -55,17 +55,25 @@
                 <div class="card full-width">
                     <h4>No layout specified!</h4>
                     <div class="inner-params">
-                        <p>This configuration has no layout specified and will use layout defined in <i>Base Configuration</i>.</p>
-                        <p>To use preset layout or copy layout from any existing configuration:</p>
+                        <p>This outline has no layout specified and will use layout defined in <i>Base Outline</i>.</p>
+                        <p>To use preset layout or copy layout from any existing outline:</p>
                         <ul>
                             <li>Click on <strong>Load</strong></li>
-                            <li>Select a new layout from either <strong>Presets</strong> or <strong>Configurations</strong></li>
+                            <li>Select a new layout from either <strong>Presets</strong> or <strong>Outlines</strong></li>
                             <li>Click on <strong>Save Layout</strong></li>
                         </ul>
                     </div>
                 </div>
             </div>
             {% endif %}
+
+            <div class="g-footer-actions">
+            <span class="float-right">
+                <a href="#" class="button" data-lm-switcher="{{ gantry.route(switcher_url)|e }}"><i class="fa fa-fw fa-code-fork"></i> <span>Load</span></a>
+                <a href="#" class="button" data-lm-clear><i class="fa fa-fw fa-trash-o"></i> <span>Clear</span></a>
+                <a href="#" class="button button-primary button-save" data-save="Layout"><i class="fa fa-fw fa-check"></i> <span>Save Layout</span></a>
+            </span>
+            </div>
         </div>
     </div>
 

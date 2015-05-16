@@ -102,8 +102,19 @@ class Menu extends AbstractMenu
      */
     protected function getItemsFromPlatform($params)
     {
-        // Items are already filtered by ViewLevels and user language.
-        return $this->menu->getItems('menutype', $params['menu'] ?: $this->default->menutype);
+        $attributes = ['menutype'];
+        $values = [$params['menu'] ?: $this->default->menutype];
+
+        // Items are already filtered by access and language, in admin we need to work around that.
+        if (\JFactory::getApplication()->isAdmin()) {
+            $attributes[] = 'access';
+            $values[] = null;
+
+            $attributes[] = 'language';
+            $values[] = null;
+        }
+
+        return $this->menu->getItems($attributes, $values);
     }
 
     /**

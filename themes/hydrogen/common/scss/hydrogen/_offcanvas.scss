@@ -73,3 +73,10 @@
 #g-mobilemenu-container {
 	margin: -($content-padding + $content-margin);
 }
+
+@media print {
+	#g-offcanvas {
+		background: #fff !important;
+		color: #000 !important;
+	}
+}

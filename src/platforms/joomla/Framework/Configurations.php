@@ -28,7 +28,9 @@ class Configurations extends BaseConfigurations
     {
         $gantry = $this->container;
 
-        $styles = ThemeList::getStyles($gantry['theme.name']);
+        $theme = isset($gantry['theme.name']) ? $gantry['theme.name'] : null;
+
+        $styles = ThemeList::getStyles($theme);
 
         $configurations = [];
         foreach ($styles as $style) {
@@ -98,7 +100,7 @@ class Configurations extends BaseConfigurations
         $item->load($id);
 
         if (!$item->id) {
-            throw new \RuntimeException('Configuration not found', 404);
+            throw new \RuntimeException('Outline not found', 404);
         }
 
         $pks = [$id];
@@ -116,7 +118,7 @@ class Configurations extends BaseConfigurations
         $item->load($id);
 
         if (!$item->id) {
-            throw new \RuntimeException('Configuration not found', 404);
+            throw new \RuntimeException('Outline not found', 404);
         }
 
         $item->title = $title;
@@ -138,7 +140,7 @@ class Configurations extends BaseConfigurations
         $item->load($id);
 
         if (!$item->id) {
-            throw new \RuntimeException('Configuration not found', 404);
+            throw new \RuntimeException('Outline not found', 404);
         }
 
         try {

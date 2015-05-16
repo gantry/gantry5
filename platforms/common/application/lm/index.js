@@ -247,7 +247,7 @@ ready(function() {
         if (event && event.preventDefault) { event.preventDefault(); }
 
         if (!element.PopoverDefined) {
-            var popover = element.getPopover({
+            element.getPopover({
                 type: 'async',
                 url: element.data('lm-switcher') + getAjaxSuffix(),
                 allowElementsClick: '.g-tabs a'
@@ -266,7 +266,22 @@ ready(function() {
 
         element.showIndicator();
 
-        request('get', element.data('switch') + getAjaxSuffix(), function(error, response) {
+        var preset = $('[data-lm-preset]'),
+            checkbox = element.parent('.g-pane').find('input[type="checkbox"][data-g-preserve]'),
+            preserve = checkbox && checkbox.checked(),
+            method = !preserve ? 'get' : 'post',
+            data = {};
+
+        if (preserve) {
+            var lm = layoutmanager;
+            lm.singles('cleanup', lm.builder, true);
+            lm.savestate.setSession(lm.builder.serialize(null, true));
+
+            data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
+            data.layout = JSON.stringify(lm.builder.serialize());
+        }
+
+        request(method, element.data('switch') + getAjaxSuffix(), data, function(error, response) {
             element.hideIndicator();
 
             if (!response.body.success) {
@@ -294,7 +309,7 @@ ready(function() {
 
             lmhistory.push(builder.serialize());
 
-            $('[data-lm-switcher]').getPopover().hide();
+            $('[data-lm-switcher]').getPopover().hideAll().destroy();
         });
     });
 
