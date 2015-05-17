@@ -64,7 +64,7 @@ var DragDrop = new prime({
     },
 
     start: function(event, element) {
-        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+        //if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
 
         clearTimeout(this.scrollInterval);
         if (element.LMTooltip) { element.LMTooltip.remove(); }
@@ -165,7 +165,7 @@ var DragDrop = new prime({
     },
 
     stop: function(event) {
-        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+        //if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
 
         clearTimeout(this.scrollInterval);
         $('html').attribute('style', null);
@@ -252,7 +252,7 @@ var DragDrop = new prime({
     },
 
     move: function(event) {
-        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+        //if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
 
         if (this.options.catchClick) {
             var didItMove = {

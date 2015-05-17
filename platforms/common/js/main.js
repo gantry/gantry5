@@ -2686,8 +2686,9 @@ var LayoutManager = new prime({
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]'); }
         this.placeholder.style({ display: 'none' });
 
-        this.original = $(clone).after(element).style({
-            display: 'block',
+        clone = $(clone);
+        this.original = clone.after(element).style({
+            display: clone.hasClass('g-grid') ? 'flex' : 'block',
             opacity: 0.5
         }).addClass('original-placeholder').data('lm-dropzone', null);
 
@@ -6963,7 +6964,7 @@ var DragDrop = new prime({
     },
 
     start: function(event, element) {
-        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+        //if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
 
         clearTimeout(this.scrollInterval);
         if (element.LMTooltip) { element.LMTooltip.remove(); }
@@ -7064,7 +7065,7 @@ var DragDrop = new prime({
     },
 
     stop: function(event) {
-        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+        //if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
 
         clearTimeout(this.scrollInterval);
         $('html').attribute('style', null);
@@ -7151,7 +7152,7 @@ var DragDrop = new prime({
     },
 
     move: function(event) {
-        if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
+        //if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
 
         if (this.options.catchClick) {
             var didItMove = {
