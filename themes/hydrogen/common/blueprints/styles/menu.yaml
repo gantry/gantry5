@@ -15,8 +15,9 @@ form:
       type: select.selectize
       label: Dropdown Animation
       description: Select the dropdown animation.
+      default: fade
       options:
-        noanimation: No Animation
-        fade: Fade
-        zoom: Zoom
-        fadeInUp: Fade In Up
+        g-no-animation: No Animation
+        g-fade: Fade
+        g-zoom: Zoom
+        g-fade-in-up: Fade In Up
