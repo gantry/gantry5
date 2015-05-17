@@ -97,7 +97,7 @@
     {% if hasCustomWidth and not (root.getDropdown() == 'fullwidth' and item.level > 1) %}
         {% set customWidth = ' style="width: ' ~ item.width|raw ~ '" data-g-item-width="' ~ item.width|raw ~ '"' %}
     {% endif %}
-    <ul class="g-dropdown g-inactive"{{ customWidth|raw }}>
+    <ul class="g-dropdown g-inactive {{ gantry.config.get('styles.menu.animation')|default('fade') }}"{{ customWidth|raw }}>
         <li class="g-dropdown-column">
             {{ _self.displayContainers(item, root, menu, gantry) }}
         </li>
