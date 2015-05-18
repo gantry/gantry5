@@ -25,3 +25,11 @@ form:
        type: input.imagepicker 
        label: Favicon 
        filter: '.(jpe?g|gif|png|svg|ico)$'
+    layout:
+      type: select.selectize
+      label: Layout
+      description: Select between a Fullwidth and Boxed.
+      default: g-fullwidth
+      options:
+        g-fullwidth: Fullwidth
+        g-container: Boxed
