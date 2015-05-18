@@ -1923,7 +1923,7 @@ input[type="submit"] {
 }
 /* line 34, engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 .g-offcanvas-open .g-nav-overlay {
-  z-index: 5;
+  z-index: 15;
   position: absolute;
   opacity: 1;
   height: 100%;
