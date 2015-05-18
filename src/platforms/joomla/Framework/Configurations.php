@@ -66,9 +66,19 @@ class Configurations extends BaseConfigurations
     public function current($template = null)
     {
         if (!$template) {
+            $app = \JFactory::getApplication();
+
             // Get the template.
-            $template = \JFactory::getApplication()->getTemplate(true);
+            $template = $app->getTemplate(true);
+
+            if (empty($template->id)) {
+                if (JDEBUG || \JFactory::getUser()->authorise('core.admin')) {
+                    $app->enqueueMessage(sprintf('Gantry 5: Object returned by JFactory::getApplication()->getTemplate(true) is not compatible with Joomla %s API, guessing style Id.', JVERSION), 'notice');
+                }
+                $template->id = $template->params->get('configuration');
+            }
         }
+
 
         $gantry = $this->container;
         $locator = $gantry['locator'];
