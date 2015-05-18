@@ -60,7 +60,7 @@ class Assignments
                     'field' => ['id', 'link' . $link->value],
                     'value' => $link->template_style_id == $this->style_id,
                     'disabled' => $link->type != 'component' || $link->checked_out && $link->checked_out != $userid,
-                    'label' => str_repeat('—', $link->level-1) . ' ' . $link->text
+                    'label' => str_repeat('—', max(0, $link->level-1)) . ' ' . $link->text
                 ];
             }
             $group = [
