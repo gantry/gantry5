@@ -638,6 +638,9 @@ ready(function() {
                 }
 
                 toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+                if (response.body.outline) {
+                    body.outlineDeleted = response.body.outline;
+                }
             }
 
             element.hideIndicator();
@@ -11047,6 +11050,9 @@ domready(function() {
     body.delegate('click', '.button-back-to-conf', function(event, element) {
         event.preventDefault();
 
+        var outlineDeleted = body.outlineDeleted,
+            currentOutline = $('#configuration-selector').value();
+
         ConfNavIndex = ConfNavIndex == -1 ? 1 : ConfNavIndex;
         var navbar = $('#navbar'),
             item = navbar.find('li:nth-child(' + (ConfNavIndex + 1) + ') [data-g5-ajaxify]');
@@ -11089,6 +11095,11 @@ domready(function() {
         }
 
         element.showIndicator();
+
+        if (outlineDeleted == currentOutline) {
+            body.outlineDeleted = null;
+            item.href(item.href().replace(new RegExp('/' + outlineDeleted + '/',"g"), '/default/'));
+        }
 
         body.emit('click', { target: item });
         navbar.slideDown();

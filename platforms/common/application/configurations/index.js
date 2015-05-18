@@ -82,6 +82,9 @@ ready(function() {
                 }
 
                 toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+                if (response.body.outline) {
+                    body.outlineDeleted = response.body.outline;
+                }
             }
 
             element.hideIndicator();
