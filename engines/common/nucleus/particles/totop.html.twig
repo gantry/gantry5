@@ -3,7 +3,7 @@
 {% block particle %}
 <div class="{{ particle.css.class|e }} g-particle">
     <div class="g-totop">
-        <a href="#" id="g-totop" rel="nofollow">{{ particle.content|raw }}</a>
+        <a href="#" id="g-totop" rel="nofollow">{{ particle.content|default('To Top')|raw }}</a>
     </div>
 </div>
 {% endblock %}
