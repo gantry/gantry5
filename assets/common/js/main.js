@@ -655,11 +655,13 @@ var Offcanvas = new prime({
 
         timeout(function(){
             blocks = this.offcanvas.search('.g-block');
-            mCtext = mobileContainer.text().length;
+            mCtext = mobileContainer ? mobileContainer.text().length : 0;
             var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
 
             togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
-            mobileContainer.parent('.g-content')[!mCtext ? 'addClass' : 'removeClass']('nomarginall')[!mCtext ? 'addClass' : 'removeClass']('nopaddingall');
+            if (mobileContainer) {
+                mobileContainer.parent('.g-content')[!mCtext ? 'addClass' : 'removeClass']('nomarginall')[!mCtext ? 'addClass' : 'removeClass']('nopaddingall');
+            }
 
             if (!shouldCollapse && !this.attached) { this.attach(); }
             else if (shouldCollapse && this.attached) {
