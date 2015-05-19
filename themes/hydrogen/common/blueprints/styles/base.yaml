@@ -21,3 +21,9 @@ form:
       type: input.fonts
       label: Heading Font
       default: 'roboto, sans-serif'
+    width:
+      type: input.text
+      label: Boxed Width
+      description: Set width size in rem or % values
+      default: "75rem"
+      pattern: '\d+(\.\d+){0,1}(rem|%)'
