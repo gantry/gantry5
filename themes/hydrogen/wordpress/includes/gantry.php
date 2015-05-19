@@ -32,7 +32,7 @@ try {
     if ( is_admin() ) {
         // In admin display an useful error.
         add_action( 'admin_notices', function() use ( $e ) {
-            echo '<div class="error"><p>Failed to load theme: ' . $e->getMessage(). '</p></div>';
+            echo '<div class="error"><p>Failed to load theme: ' , $e->getMessage(), '</p></div>';
         } );
         return;
     }
