@@ -23,13 +23,13 @@ function gantry_admin_scripts() {
 function gantry_admin_print_styles() {
     $styles = \Gantry\Framework\Document::$styles;
     if ( $styles ) {
-        echo implode( "\n", $styles ) . "\n";
+        echo implode( "\n", $styles ) , "\n";
     }
 }
 function gantry_admin_print_scripts() {
     $scripts = \Gantry\Framework\Document::$scripts;
     if ( $scripts ) {
-        echo implode( "\n", $scripts ) . "\n";
+        echo implode( "\n", $scripts ) , "\n";
     }
 }
 

@@ -36,6 +36,6 @@ try
 catch (Exception $e)
 {
     // Oops, something went wrong!
-    echo '500 Failed to load admin: ' . $e->getMessage();
+    echo '500 Failed to load admin: ' , $e->getMessage();
     die();
 }
