@@ -7,6 +7,52 @@ body {
 
 #g-page-surround {
 	background: $base-background;
+	
+	/* Smartphones */
+	@media (max-width: 480px) {
+		@if $base-width {
+		margin: 0 auto;
+		} @else {
+		margin: 0 0 0 1.54rem;
+		width: 100%;
+	}}
+	
+	/* Smartphones to Tablets */
+	@media (min-width: 481px) and (max-width: 767px) {
+		@if $base-width {
+		margin: 0 auto;
+		} @else {
+		margin: 0 0 0 1.54rem;
+		width: 100%;
+	}}
+	
+	/* Tablets */
+	@media (min-width: 768px) and (max-width: 959px) {
+		@if $base-width {
+		margin: 0 auto;
+		} @else {
+		margin: 0 0 0 1.54rem;
+		width: 100%;
+	}}
+	
+	/* Desktop */
+	@media (min-width: 960px) and (max-width: 1199px) { 
+		@if $base-width {
+		margin: 0 auto;
+		} @else {
+		margin: 0 0 0 1.54rem;
+		width: 100%;
+	}}
+	
+	/* Large Display */
+	@media (min-width: 1200px) {
+		@if $base-width {
+		width: $base-width;
+		margin: 0 auto;
+		} @else {
+		margin: 0 0 0 1.54rem;
+		width: 100%;
+	}}
 }
 
 @media print {
