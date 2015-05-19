@@ -23,3 +23,11 @@ form:
       type: input.colorpicker
       label: Toggle Color
       default: "#ffffff"
+    position:
+      type: select.selectize
+      label: Position
+      description: Select the position where you would like to see this section.
+      default: g-offcanvas-left
+      options:
+        g-offcanvas-left: Left
+        g-offcanvas-right: Right

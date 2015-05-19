@@ -19,7 +19,7 @@
 {% endset %}
 
 {%- set page_offcanvas = page_offcanvas|trim ?: '' %}
-{%- set offcanvas_position = page_offcanvas ? offcanvas.attributes.position|default('g-offcanvas-left') : '' -%}
+{%- set offcanvas_position = page_offcanvas ? gantry.config.get('styles.offcanvas.position')|default('g-offcanvas-left') : '' -%}
 
 {%- set page_layout %}
     {% block page_layout %}
