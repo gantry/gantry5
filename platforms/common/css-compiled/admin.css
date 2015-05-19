@@ -720,9 +720,7 @@ a {
 }
 /* line 186, platforms/common/scss/admin/_selectize.scss */
 .selectize-dropdown [data-selectable] {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  word-break: break-all;
+  word-wrap: normal;
   cursor: pointer;
   overflow: hidden;
 }
