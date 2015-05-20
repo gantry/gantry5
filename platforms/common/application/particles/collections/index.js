@@ -180,6 +180,11 @@ ready(function() {
                     invalid = [],
                     dataValue  = JSON.parse(data);
 
+                if (modal.getAll().length > 1) {
+                    var applyAndSave = content.elements.content.search('[data-apply-and-save]');
+                    if (applyAndSave) { applyAndSave.remove(); }
+                }
+
                 if (dataValue.length == 1) {
                     // TODO: need to determine better how to handle single collections cards
                     //content.elements.content.style({ width: 450 });

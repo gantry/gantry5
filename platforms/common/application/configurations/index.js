@@ -3,6 +3,7 @@
 var $             = require('elements'),
     ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
+    keys          = require('mout/object/keys'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
     request       = require('agent'),
@@ -75,13 +76,29 @@ ready(function() {
                     }
                 });
             } else {
-                var reload = $('[href="' + getAjaxURL('configurations') + '"]');
+                var confSelector = $('#configuration-selector'),
+                    currentOutline = confSelector.value(),
+                    outlineDeleted = response.body.outline,
+                    reload = $('[href="' + getAjaxURL('configurations') + '"]');
+
+                // if the current outline is the one that's been deleted,
+                // fallback to default
+                if (outlineDeleted && currentOutline == outlineDeleted) {
+                    var ids = keys(confSelector.selectizeInstance.Options);
+                    if (ids.length) {
+                        reload.href(reload.href().replace('style=' + outlineDeleted, 'style=' + ids.shift()));
+                    }
+                }
+                
                 if (!reload) { window.location = window.location; }
                 else {
                     body.emit('click', {target: reload});
                 }
 
                 toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+                if (outlineDeleted) {
+                    body.outlineDeleted = outlineDeleted;
+                }
             }
 
             element.hideIndicator();

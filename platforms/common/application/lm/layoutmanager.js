@@ -120,8 +120,9 @@ var LayoutManager = new prime({
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]'); }
         this.placeholder.style({ display: 'none' });
 
-        this.original = $(clone).after(element).style({
-            display: 'block',
+        clone = $(clone);
+        this.original = clone.after(element).style({
+            display: clone.hasClass('g-grid') ? 'flex' : 'block',
             opacity: 0.5
         }).addClass('original-placeholder').data('lm-dropzone', null);
 

@@ -32,6 +32,25 @@ class Page extends Base\Page
         $this->task     = $input->getCmd('task', '');
         $this->itemid   = $input->getCmd('Itemid', '');
 
+        if ($this->itemid) {
+            $menu     = $app->getMenu();
+            $template = $app->getTemplate(true)->params;
+
+            $alias = [];
+            $item = $menu->getItem($this->itemid);
+
+            foreach($item->tree as $parent_id) {
+                $parent = $menu->getItem($parent_id);
+                $alias[] = $parent->alias;
+            }
+
+            array_reverse($alias);
+
+            $this->menualias = implode('-', $alias);
+            $this->outline = $template->get('preset');
+
+        }
+
         $this->sitename = $app->get('sitename');
         $this->theme = $document->template;
         $this->baseUrl = $document->baseurl;
@@ -60,6 +79,8 @@ class Page extends Base\Page
         $classes[] = $this->task ? 'task-' . $this->task : 'no-task';
         $classes[] = 'dir-' . $this->direction;
         if ($this->itemid) $classes[] = 'itemid-' . $this->itemid;
+        if ($this->menualias) $classes[] = 'menualias-' . $this->menualias;
+        if ($this->outline) $classes[] = 'outline-' . $this->outline;
 
         $baseAttributes = (array) $this->config->get('page.body', []);
         if (!empty($baseAttributes['class'])) {

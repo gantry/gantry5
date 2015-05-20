@@ -121,6 +121,9 @@ var StepTwo = function(data, content, button) {
 
         if (!form || !submit) { return true; }
 
+        var applyAndSave = content.search('[data-apply-and-save]');
+        if (applyAndSave) { applyAndSave.remove(); }
+
         // Module / Particle Settings apply
         submit.on('click', function(e) {
             e.preventDefault();

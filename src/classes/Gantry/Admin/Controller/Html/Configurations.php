@@ -139,7 +139,7 @@ class Configurations extends HtmlController
 
         $configurations->delete($configuration);
 
-        return new JsonResponse(['html' => 'Configuration deleted.']);
+        return new JsonResponse(['html' => 'Configuration deleted.', 'outline' => $configuration]);
     }
 
     public function forward()

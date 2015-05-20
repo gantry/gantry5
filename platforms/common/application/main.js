@@ -128,9 +128,10 @@ ready(function() {
     // Save
     body.delegate('click', '.button-save', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
+        var saves = $('.button-save');
 
-        element.hideIndicator();
-        element.showIndicator();
+        saves.hideIndicator();
+        saves.showIndicator();
 
         var data    = {},
             invalid = [],
@@ -180,8 +181,8 @@ ready(function() {
         }
 
         if (invalid.length) {
-            element.hideIndicator();
-            element.showIndicator('fa fa-fw fa-exclamation-triangle');
+            saves.hideIndicator();
+            saves.showIndicator('fa fa-fw fa-exclamation-triangle');
             toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
             return;
         }
@@ -206,9 +207,11 @@ ready(function() {
                 }), type + ' Saved');
             }
 
-            element.hideIndicator();
-            element.lastSaved = new Date();
-
+            saves.hideIndicator();
+            saves.forEach(function(save) {
+                $(save).lastSaved = new Date();
+            });
+            
             if (page == 'layout') { lm.layoutmanager.updatePendingChanges(); }
 
             // all good, disable 'pending' flag

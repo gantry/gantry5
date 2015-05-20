@@ -38,6 +38,11 @@
         position: relative;
         border-bottom: 1px solid #f4f4f4;
 
+        &.input-hidden {
+            display: none;
+            @extend %list-reset;
+        }
+
         &:last-child {
             border-bottom: 0;
         }

@@ -180,20 +180,22 @@ ready(function() {
     });
 
     // Grid same widths button (evenize, equalize)
-    body.delegate('click', '[data-lm-samewidth]:not(:empty)', function(event, element) {
-        if (element.LMTooltip) { element.LMTooltip.remove(); }
-        var clientRect = element[0].getBoundingClientRect();
-        if (event.clientX < clientRect.width + clientRect.left) { return; }
+    ['click', 'touchend'].forEach(function(evt){
+        body.delegate(evt, '[data-lm-samewidth]:not(:empty)', function(event, element) {
+            if (element.LMTooltip) { element.LMTooltip.remove(); }
+            var clientRect = element[0].getBoundingClientRect();
+            if ((event.clientX || event.pageX || event.changedTouches[0].pageX || 0) < clientRect.width + clientRect.left) { return; }
 
-        var blocks = element.search('> [data-lm-blocktype="block"]'), id;
-        if (!blocks || blocks.length == 1) { return; }
+            var blocks = element.search('> [data-lm-blocktype="block"]'), id;
+            if (!blocks || blocks.length == 1) { return; }
 
-        blocks.forEach(function(block) {
-            id = $(block).data('lm-id');
-            builder.get(id).setSize(100 / blocks.length, true);
+            blocks.forEach(function(block) {
+                id = $(block).data('lm-id');
+                builder.get(id).setSize(100 / blocks.length, true);
+            });
+
+            lmhistory.push(builder.serialize());
         });
-
-        lmhistory.push(builder.serialize());
     });
 
     body.delegate('mouseover', '[data-lm-samewidth]:not(:empty)', function(event, element) {

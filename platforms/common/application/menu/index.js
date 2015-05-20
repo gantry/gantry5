@@ -147,25 +147,27 @@ ready(function() {
     });
 
     // Attach events to pseudo (x) for deleting a column
-    body.delegate('click', '[data-g5-menu-columns] .submenu-items:empty', function(event, element) {
-        var bounding = element[0].getBoundingClientRect(),
-            x = event.pageX, y = event.pageY,
-            deleter = {
-                width: 36,
-                height: 36
-            };
+    ['click', 'touchend'].forEach(function(evt){
+        body.delegate(evt, '[data-g5-menu-columns] .submenu-items:empty', function(event, element) {
+            var bounding = element[0].getBoundingClientRect(),
+                x = event.pageX || event.changedTouches[0].pageX || 0, y = event.pageY || event.changedTouches[0].pageY || 0,
+                deleter = {
+                    width: 36,
+                    height: 36
+                };
 
-        if (x >= bounding.left + bounding.width - deleter.width && x <= bounding.left + bounding.width &&
-            Math.abs(window.scrollY - y) - bounding.top < deleter.height) {
-            var parent = element.parent('[data-mm-id]'),
-                index = parent.data('mm-id').match(/\d+$/)[0],
-                active = $('.menu-selector .active'),
-                path = active ? active.data('mm-id') : null;
+            if (x >= bounding.left + bounding.width - deleter.width && x <= bounding.left + bounding.width &&
+                Math.abs(window.scrollY - y) - bounding.top < deleter.height) {
+                var parent = element.parent('[data-mm-id]'),
+                    index = parent.data('mm-id').match(/\d+$/)[0],
+                    active = $('.menu-selector .active'),
+                    path = active ? active.data('mm-id') : null;
 
-            parent.remove();
-            menumanager.ordering[path].splice(index, 1);
-            menumanager.resizer.evenResize($('.submenu-selector > [data-mm-id]'));
-        }
+                parent.remove();
+                menumanager.ordering[path].splice(index, 1);
+                menumanager.resizer.evenResize($('.submenu-selector > [data-mm-id]'));
+            }
+        });
     });
 
     // Menu Items settings
