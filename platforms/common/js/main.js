@@ -559,6 +559,7 @@ module.exports = {};
 var $             = require('elements'),
     ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
+    keys          = require('mout/object/keys'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
     request       = require('agent'),
@@ -631,15 +632,28 @@ ready(function() {
                     }
                 });
             } else {
-                var reload = $('[href="' + getAjaxURL('configurations') + '"]');
+                var confSelector = $('#configuration-selector'),
+                    currentOutline = confSelector.value(),
+                    outlineDeleted = response.body.outline,
+                    reload = $('[href="' + getAjaxURL('configurations') + '"]');
+
+                // if the current outline is the one that's been deleted,
+                // fallback to default
+                if (outlineDeleted && currentOutline == outlineDeleted) {
+                    var ids = keys(confSelector.selectizeInstance.Options);
+                    if (ids.length) {
+                        reload.href(reload.href().replace('style=' + outlineDeleted, 'style=' + ids.shift()));
+                    }
+                }
+                
                 if (!reload) { window.location = window.location; }
                 else {
                     body.emit('click', {target: reload});
                 }
 
                 toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
-                if (response.body.outline) {
-                    body.outlineDeleted = response.body.outline;
+                if (outlineDeleted) {
+                    body.outlineDeleted = outlineDeleted;
                 }
             }
 
@@ -703,7 +717,7 @@ ready(function() {
 
 module.exports = Configurations;
 
-},{"../ui":42,"../utils/flags-state":54,"../utils/get-ajax-suffix":55,"../utils/get-ajax-url":56,"agent":61,"elements":88,"elements/domready":86,"mout/string/trim":235}],5:[function(require,module,exports){
+},{"../ui":42,"../utils/flags-state":54,"../utils/get-ajax-suffix":55,"../utils/get-ajax-url":56,"agent":61,"elements":88,"elements/domready":86,"mout/object/keys":206,"mout/string/trim":235}],5:[function(require,module,exports){
 "use strict";
 var ready      = require('elements/domready'),
     $          = require('elements/attributes'),
@@ -11086,6 +11100,7 @@ var prime         = require('prime'),
     size          = require('mout/collection/size'),
     indexOf       = require('mout/array/indexOf'),
     merge         = require('mout/object/merge'),
+    keys          = require('mout/object/keys'),
     guid          = require('mout/random/guid'),
     toQueryString = require('mout/queryString/encode'),
     contains      = require('mout/string/contains'),
@@ -11299,8 +11314,9 @@ domready(function() {
     body.delegate('click', '.button-back-to-conf', function(event, element) {
         event.preventDefault();
 
-        var outlineDeleted = body.outlineDeleted,
-            currentOutline = $('#configuration-selector').value();
+        var confSelector = $('#configuration-selector'),
+            outlineDeleted = body.outlineDeleted,
+            currentOutline = confSelector.value();
 
         ConfNavIndex = ConfNavIndex == -1 ? 1 : ConfNavIndex;
         var navbar = $('#navbar'),
@@ -11346,8 +11362,10 @@ domready(function() {
         element.showIndicator();
 
         if (outlineDeleted == currentOutline) {
+            var ids = keys(confSelector.selectizeInstance.Options),
+                id = ids.shift();
             body.outlineDeleted = null;
-            item.href(item.href().replace(new RegExp('/' + outlineDeleted + '/',"g"), '/default/'));
+            item.href(item.href().replace('/' + outlineDeleted + '/', '/' + id + '/').replace('style=' + outlineDeleted, 'style=' + id));
         }
 
         body.emit('click', { target: item });
@@ -11458,7 +11476,7 @@ domready(function() {
 
 
 module.exports = {};
-},{"../menu":27,"../ui":42,"../ui/popover":44,"../utils/elements.utils":51,"./flags-state":54,"./get-ajax-suffix":55,"./history":58,"agent":61,"elements/domready":86,"elements/zen":112,"mout/array/indexOf":151,"mout/collection/size":165,"mout/object/merge":207,"mout/queryString/encode":216,"mout/random/guid":219,"mout/string/contains":225,"prime":256,"prime/map":257}],50:[function(require,module,exports){
+},{"../menu":27,"../ui":42,"../ui/popover":44,"../utils/elements.utils":51,"./flags-state":54,"./get-ajax-suffix":55,"./history":58,"agent":61,"elements/domready":86,"elements/zen":112,"mout/array/indexOf":151,"mout/collection/size":165,"mout/object/keys":206,"mout/object/merge":207,"mout/queryString/encode":216,"mout/random/guid":219,"mout/string/contains":225,"prime":256,"prime/map":257}],50:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {

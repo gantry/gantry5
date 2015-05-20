@@ -10,6 +10,7 @@ var prime         = require('prime'),
     size          = require('mout/collection/size'),
     indexOf       = require('mout/array/indexOf'),
     merge         = require('mout/object/merge'),
+    keys          = require('mout/object/keys'),
     guid          = require('mout/random/guid'),
     toQueryString = require('mout/queryString/encode'),
     contains      = require('mout/string/contains'),
@@ -223,8 +224,9 @@ domready(function() {
     body.delegate('click', '.button-back-to-conf', function(event, element) {
         event.preventDefault();
 
-        var outlineDeleted = body.outlineDeleted,
-            currentOutline = $('#configuration-selector').value();
+        var confSelector = $('#configuration-selector'),
+            outlineDeleted = body.outlineDeleted,
+            currentOutline = confSelector.value();
 
         ConfNavIndex = ConfNavIndex == -1 ? 1 : ConfNavIndex;
         var navbar = $('#navbar'),
@@ -270,8 +272,10 @@ domready(function() {
         element.showIndicator();
 
         if (outlineDeleted == currentOutline) {
+            var ids = keys(confSelector.selectizeInstance.Options),
+                id = ids.shift();
             body.outlineDeleted = null;
-            item.href(item.href().replace(new RegExp('/' + outlineDeleted + '/',"g"), '/default/'));
+            item.href(item.href().replace('/' + outlineDeleted + '/', '/' + id + '/').replace('style=' + outlineDeleted, 'style=' + id));
         }
 
         body.emit('click', { target: item });
