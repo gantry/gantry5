@@ -350,7 +350,7 @@ var Offcanvas = new prime({
 
             togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
             if (mobileContainer) {
-                mobileContainer.parent('.g-content')[!mCtext ? 'addClass' : 'removeClass']('nomarginall')[!mCtext ? 'addClass' : 'removeClass']('nopaddingall');
+                mobileContainer.parent('.g-block')[!mCtext ? 'addClass' : 'removeClass']('hidden');
             }
 
             if (!shouldCollapse && !this.attached) { this.attach(); }

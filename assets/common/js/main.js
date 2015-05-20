@@ -283,22 +283,30 @@ var Menu = new prime({
             find, dropdowns;
 
         if (mq.matches) {
+            // move to Mobile Container
             find = mainContainer.find(selectors.topLevel);
-            if (find) { find.top(mobileContainer); }
+            if (find) {
+                mainContainer.parent('.g-block').addClass('hidden');
+                mobileContainer.parent('.g-block').removeClass('hidden');
+                find.top(mobileContainer);
+            }
         } else {
+            // move back to Original Location
             find = mobileContainer.find(selectors.topLevel);
-            if (find) { find.top(mainContainer); }
+            if (find) {
+                mobileContainer.parent('.g-block').addClass('hidden');
+                mainContainer.parent('.g-block').removeClass('hidden');
+                find.top(mainContainer);
+            }
         }
 
         this.resetStates(find);
 
         // we need to reintroduce fixed widths for those dropdowns that come with it
         if (!mq.matches && (find && (dropdowns = find.search('[data-g-item-width]')))) {
-            console.log(dropdowns);
             dropdowns.forEach(function(dropdown) {
                 dropdown = $(dropdown);
                 dropdown[0].style.width = dropdown.data('g-item-width');
-                console.log(dropdown, dropdown.data('g-item-width'));
             });
         }
     },
@@ -660,7 +668,7 @@ var Offcanvas = new prime({
 
             togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
             if (mobileContainer) {
-                mobileContainer.parent('.g-content')[!mCtext ? 'addClass' : 'removeClass']('nomarginall')[!mCtext ? 'addClass' : 'removeClass']('nopaddingall');
+                mobileContainer.parent('.g-block')[!mCtext ? 'addClass' : 'removeClass']('hidden');
             }
 
             if (!shouldCollapse && !this.attached) { this.attach(); }
