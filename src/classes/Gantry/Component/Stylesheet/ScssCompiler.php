@@ -14,9 +14,12 @@
 
 namespace Gantry\Component\Stylesheet;
 
+use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Stylesheet\Scss\CompiledScssFile;
 use Gantry\Component\Stylesheet\Scss\Compiler;
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\File\File;
+use RocketTheme\Toolbox\File\PhpFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class ScssCompiler extends CssCompiler
@@ -55,25 +58,21 @@ class ScssCompiler extends CssCompiler
 
     /**
      * @param string $in    Filename without path or extension.
-     * @param string $out   Full path to the file to be written.
      * @return bool         True if the output file was saved.
      */
-    public function compileFile($in, $out = null)
+    public function compileFile($in)
     {
         $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        if (!$out) {
-            $out = $locator->findResource($this->getCssUrl($in), true, true);
-        }
-
-        $paths = $locator->mergeResources($this->paths);
+        $out = $this->getCssUrl($in);
+        $path = $locator->findResource($out, true, true);
 
         // Set the lookup paths.
-        $this->compiler->setBasePath($out);
-        $this->compiler->setImportPaths($paths);
+        $this->compiler->setBasePath($path);
+        $this->compiler->setImportPaths([[$this, 'findImport']]);
         $this->compiler->setFormatter('scss_formatter_nested');
 
         // Run the compiler.
@@ -84,7 +83,7 @@ class ScssCompiler extends CssCompiler
             $css = '/* ' . $scss . ' */';
         }
 
-        $file = File::instance($out);
+        $file = File::instance($path);
 
         // Attempt to lock the file for writing.
         $file->lock(false);
@@ -97,6 +96,8 @@ class ScssCompiler extends CssCompiler
 
         $file->save($css);
         $file->unlock();
+
+        $this->createMeta($out, md5($css));
 
         return true;
     }
@@ -122,5 +123,38 @@ class ScssCompiler extends CssCompiler
         $this->compiler->unregisterFunction($name);
 
         return $this;
+    }
+
+
+    /**
+     * @internal
+     */
+    public function findImport($url)
+    {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        // Ignore vanilla css and external requests.
+        if (preg_match('/\.css$|^https?:\/\//', $url)) {
+            return null;
+        }
+
+        // Try both normal and the _partial filename.
+        $files = array($url, preg_replace('/[^\/]+$/', '_\0', $url));
+
+        foreach ($this->paths as $base) {
+            foreach ($files as $file) {
+                if (!preg_match('|\.scss$|', $file)) {
+                    $file .= '.scss';
+                }
+                if ($locator->findResource($base . '/' . $file)) {
+                    return $base . '/' . $file;
+                }
+            }
+        }
+
+        return null;
     }
 }

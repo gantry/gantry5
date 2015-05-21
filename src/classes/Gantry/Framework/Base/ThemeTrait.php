@@ -47,7 +47,7 @@ trait ThemeTrait
     public function init()
     {
         $gantry = static::gantry();
-        $gantry['streams'];
+        $gantry['streams']->register();
         $gantry->register(new ErrorServiceProvider);
     }
 
@@ -190,27 +190,25 @@ trait ThemeTrait
      */
     public function css($name)
     {
-        $gantry = self::gantry();
-
         $compiler = $this->compiler();
 
-        $url = $compiler->getCssUrl($name);
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-        $path = $locator->findResource($url, true, true);
-
-        if (!is_file($path)) {
-            if ($this->preset) {
-                $variables = $this->presets()->flatten($this->preset . '.styles', '-');
-            } else {
-                $variables = $gantry['config']->flatten('styles', '-');
-            }
-            $compiler->setVariables($variables);
+        if ($compiler->needsCompile($name, [$this, 'getCssVariables'])) {
             $compiler->compileFile($name);
         }
 
-        return $url;
+        return $compiler->getCssUrl($name);
+    }
+
+    public function getCssVariables()
+    {
+        if ($this->preset) {
+            $variables = $this->presets()->flatten($this->preset . '.styles', '-');
+        } else {
+            $gantry = self::gantry();
+            $variables = $gantry['config']->flatten('styles', '-');
+        }
+
+        return $variables;
     }
 
     /**

@@ -36,7 +36,15 @@ class plgSystemGantry5 extends JPlugin
         }
 
         parent::__construct($subject, $config);
-}
+    }
+
+    /**
+     * Return global configuration for Gantry5.
+     */
+    public function onGantryGlobalConfig(&$global)
+    {
+        $global = new \Gantry\Component\Config\Config($this->params->toArray());
+    }
 
     /**
      * Re-route Gantry templates to Gantry Administration component.
@@ -108,7 +116,6 @@ class plgSystemGantry5 extends JPlugin
 
         $themePath = $gantry['theme.path'] . '/includes/theme.php';
 
-        //if (is_file($themePath)) {
         include_once $themePath;
     }
 

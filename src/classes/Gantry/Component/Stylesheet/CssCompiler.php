@@ -14,8 +14,11 @@
 
 namespace Gantry\Component\Stylesheet;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\Gantry\GantryTrait;
+use Gantry\Framework\Gantry;
 use Leafo\ScssPhp\Colors;
+use RocketTheme\Toolbox\File\PhpFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 abstract class CssCompiler implements CssCompilerInterface
@@ -168,6 +171,65 @@ abstract class CssCompiler implements CssCompilerInterface
         return $this;
     }
 
+    public function needsCompile($in, $variables)
+    {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $out = $this->getCssUrl($in);
+        $path = $locator->findResource($out);
+
+        if (!$path) {
+            $this->setVariables($variables());
+            return true;
+        }
+
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        if ($global->get('production')) {
+            return false;
+        }
+
+        $uri = basename($out);
+        $metaFile = PhpFile::instance($locator->findResource("gantry-cache://scss/{$uri}.php", true, true));
+
+        if (!$metaFile->exists()) {
+            $this->setVariables($variables());
+            return true;
+        }
+
+        $content = $metaFile->content();
+
+        if (empty($content['file']) || $content['file'] != $out) {
+            $this->setVariables($variables());
+            return true;
+        }
+
+        if (filemtime($path) != $content['timestamp']) {
+            $this->setVariables($variables());
+            return true;
+        }
+
+        $this->setVariables($variables());
+
+        $oldVariables = isset($content['variables']) ? $content['variables'] : [];
+        if ($oldVariables != $this->getVariables()) {
+            return true;
+        }
+
+        $imports = isset($content['imports']) ? $content['imports'] : [];
+        foreach ($imports as $resource => $timestamp) {
+            $import = $locator->findResource($resource);
+            if (!$import || filemtime($import) != $timestamp) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public function setVariables(array $variables)
     {
@@ -214,5 +276,31 @@ abstract class CssCompiler implements CssCompilerInterface
         $this->compiler->reset();
 
         return $this;
+    }
+
+    protected function createMeta($out, $md5)
+    {
+        $gantry = Gantry::instance();
+
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        if ($global->get('production')) {
+            return;
+        }
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $uri = basename($out);
+        $metaFile = PhpFile::instance($locator->findResource("gantry-cache://scss/{$uri}.php", true, true));
+        $metaFile->save([
+            'file' => $out,
+            'timestamp' => filemtime($locator->findResource($out)),
+            'md5' => $md5,
+            'variables' => $this->getVariables(),
+            'imports' => $this->compiler->getParsedFiles()
+        ]);
+        $metaFile->free();
     }
 }
