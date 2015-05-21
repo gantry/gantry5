@@ -25,3 +25,8 @@ form:
        type: input.imagepicker 
        label: Favicon 
        filter: '.(jpe?g|gif|png|svg|ico)$'
+    width:
+      type: input.text
+      label: Boxed Width
+      description: Set width size in rem, px or % values
+      pattern: '\d+(\.\d+){0,1}(rem|%|px)'
