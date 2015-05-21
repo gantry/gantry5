@@ -21,6 +21,11 @@
   transform: translateY(-50%);
 }
 
+/* line 7, platforms/common/scss/admin/mixins/_background.scss */
+.colorpicker, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-thumb.g-image {
+  background-image: url(data:image/jpeg;base64,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);
+}
+
 /* line 1, platforms/common/scss/admin/modules/_toggle-ui.scss */
 #g5-container .card .enabler [type="hidden"] + .toggle, #g5-container .card .enabler [type="radio"] + .toggle {
   display: inline-block;
@@ -3964,7 +3969,6 @@ html.g5-dialog-open {
 /* line 1, platforms/common/scss/admin/particles/_colorpicker.scss */
 .colorpicker {
   position: relative;
-  background-image: url(data:image/jpeg;base64,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);
   border-radius: 0.1875rem;
   max-width: 100%;
 }
@@ -4634,10 +4638,24 @@ html.g5-dialog-open {
   width: 100px;
   height: 100px;
   background-position: 50% 50%;
+  /*&.g-image-png, &.g-image-gif, &.g-image-ico, &.g-image-svg {
+      background-size: inherit;
+      background-repeat: repeat;
+  }*/
+}
+/* line 181, platforms/common/scss/admin/particles/_filepicker.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-thumb.g-image > div {
+  background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 0.1875rem;
 }
-/* line 177, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 195, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-name {
   font-size: 0.7rem;
   margin: 0.5em -6px 0;
@@ -4646,16 +4664,16 @@ html.g5-dialog-open {
   max-width: 100px;
   white-space: nowrap;
 }
-/* line 186, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 204, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-size, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-mtime {
   display: none;
 }
-/* line 189, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 207, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-size strong, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-size b, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-mtime strong, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-mtime b {
   color: inherit !important;
   font-weight: inherit !important;
 }
-/* line 195, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 213, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-progress {
   display: none;
   position: absolute;
@@ -4667,7 +4685,7 @@ html.g5-dialog-open {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 50px;
 }
-/* line 206, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 224, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-progress .g-file-progress-text {
   position: absolute;
   line-height: 50px;
@@ -4676,87 +4694,87 @@ html.g5-dialog-open {
   width: 100%;
   left: 0;
 }
-/* line 214, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 232, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-progress .g-file-progress-text i {
   line-height: 50px;
   color: #fff;
 }
-/* line 222, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 240, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.g-file-uploading .g-thumb {
   opacity: 0.1;
 }
-/* line 225, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 243, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.g-file-uploading .g-file-progress {
   display: block;
 }
-/* line 230, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 248, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span {
   background-color: #439A86 !important;
   color: #fff !important;
   padding: 0 6px !important;
 }
-/* line 239, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 257, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list {
   margin-top: 0;
 }
-/* line 241, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 259, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li {
   display: block;
   padding: 6px 4px;
 }
-/* line 245, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 263, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li > span:not(.g-file-name) {
   color: #aaa;
   text-align: center;
 }
-/* line 250, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 268, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-thumb {
   display: none;
 }
-/* line 254, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 272, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-name {
   width: 60%;
 }
-/* line 258, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 276, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-size {
   width: 20%;
 }
-/* line 261, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 279, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-size strong, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-size b {
   color: inherit !important;
   font-weight: inherit !important;
 }
-/* line 267, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 285, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li:nth-child(odd) {
   background-color: #f5f5f5;
 }
-/* line 271, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 289, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.selected {
   background-color: #439A86 !important;
   color: #fff !important;
 }
-/* line 275, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 293, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.selected > span:not(.g-file-name) {
   color: #6bbfab;
 }
-/* line 281, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 299, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-uploading .g-file-mtime, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-uploading .g-file-progress-text {
   display: none;
 }
-/* line 285, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 303, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-uploading .g-file-mtime.g-file-progress {
   display: block;
 }
-/* line 289, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 307, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-uploading .g-file-progress {
   width: 20%;
 }
-/* line 295, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 313, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-error .g-file-progress-text {
   display: block !important;
   position: relative;
 }
-/* line 299, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 317, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-error .g-file-progress-text i {
   position: absolute;
   text-align: center;
@@ -4766,16 +4784,16 @@ html.g5-dialog-open {
   color: white;
   font-size: 0.8rem;
 }
-/* line 313, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 331, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list .g-list-labels {
   margin: 0 0 -6px;
   display: block;
 }
-/* line 317, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 335, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list .g-list-labels li {
   background-color: #e9e9e9;
 }
-/* line 319, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 337, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list .g-list-labels li > span {
   color: #888;
 }

@@ -127,7 +127,7 @@ class Filepicker extends JsonController
                         if ($method == 'getPathname') {
                             $file->{$keyMethod} = Folder::getRelativePath($file->{$keyMethod});
                         } else if ($method == 'getExtension') {
-                            $file->isImage = in_array($file->{$keyMethod}, ['jpg', 'jpeg', 'png', 'gif', 'bmp']);
+                            $file->isImage = in_array($file->{$keyMethod}, ['jpg', 'jpeg', 'png', 'gif', 'ico', 'svg', 'bmp']);
                         }
                     }
 
