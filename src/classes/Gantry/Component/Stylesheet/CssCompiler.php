@@ -175,7 +175,20 @@ abstract class CssCompiler implements CssCompilerInterface
 
         foreach($this->variables as &$value) {
             // Check variable against colors and units.
-            if (preg_match("/(^(#|rgba?|hsla?)|(%|rem|vh|vw|em|px|cm|mm|ch|vmin|vmax|in|pt|pc|ex)$)/i", $value)) {
+            /* Test regex against these:
+             * Should only match the ones marked as +
+             *      - family=Aguafina+Script
+             *      - #zzzzzz
+             *      - #fff
+             *      + #ffaaff
+             *      + 33em
+             *      + 0.5px
+             *      - 50 rem
+             *      - rgba(323,323,2323)
+             *      + rgba(125,200,100,0.3)
+             *      - rgb(120,12,12)
+             */
+            if (preg_match("/(^(#([a-fA-F0-9]{6})|(rgba\(\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*((0.[0-9]+)|[01])\s*\)))|(\d+(\.\d+){0,1}(rem|em|ex|ch|vw|vh|vmin|vmax|%|px|cm|mm|in|pt|pc))$)/i", $value)) {
                 continue;
             }
 
