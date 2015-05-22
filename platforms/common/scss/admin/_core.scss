@@ -137,14 +137,23 @@ a {
 
 // Footer
 #footer {
-    margin-bottom: 3.5rem;
+    background-color: #e7e7e7;
+    padding: 1em 0 3rem;
+    margin-bottom: 0;
+    color: #aaa;
     text-align: center;
     font-weight: $font-weight-medium;
+    border-top: 1px solid #dedede;
+
+    .g-version, .g-version-date {
+        color: $update-header-bg;
+    }
+
     a {
-        color: lighten($core-accent, 30%);
+        color: $core-accent !important;
         text-decoration: none;
         &:hover {
-            color: $white;
+            color: darken($core-accent, 20%) !important;
         }
     }
 }
