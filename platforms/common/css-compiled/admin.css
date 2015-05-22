@@ -3692,18 +3692,22 @@ html.g5-dialog-open {
     width: 100% !important;
   }
 }
+/* line 163, platforms/common/scss/admin/_modal.scss */
+#g5-container .g5-dialog .input-small {
+  width: 120px !important;
+}
 
-/* line 165, platforms/common/scss/admin/_modal.scss */
+/* line 169, platforms/common/scss/admin/_modal.scss */
 .g5-dialog.g5-modal-collection-editall .g5-content {
   width: 90%;
 }
-/* line 168, platforms/common/scss/admin/_modal.scss */
+/* line 172, platforms/common/scss/admin/_modal.scss */
 .g5-dialog.g5-modal-collection-editall .g5-content .settings-block:not(:only-child) {
   width: 48% !important;
   margin: 10px 1% !important;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 174, platforms/common/scss/admin/_modal.scss */
+  /* line 178, platforms/common/scss/admin/_modal.scss */
   .g5-dialog.g5-modal-collection-editall .g5-content .settings-block {
     width: 100% !important;
   }

@@ -208,8 +208,9 @@ ready(function() {
 
         var container = element.parent('.menu-editor-extras'),
             selected = container.find('[data-lm-blocktype].selected, [data-mm-module].selected'),
-            type = selected.data('mm-type'),
-            data = { type: 'particle' };
+            type = selected.data('mm-type');
+
+        data = { type: 'particle' };
 
         switch (type) {
             case 'particle':
@@ -225,7 +226,24 @@ ready(function() {
 
         element.showIndicator();
 
-        StepTwo({ item: JSON.stringify(data) }, element.parent('.g5-content'), element);
+
+        var data, instancepicker = element.data('g-instancepicker');
+
+        if (instancepicker && type == 'module') {
+            data = JSON.parse(instancepicker);
+            var field = $('[name="' + data.field + '"]');
+            if (field) {
+                field.value(selected.data('mm-module'));
+                body.emit('input', {target: field});
+            }
+
+            element.hideIndicator();
+            modal.close();
+
+            return false;
+        } else {
+            StepTwo({ item: JSON.stringify(data) }, element.parent('.g5-content'), element);
+        }
     });
 });
 

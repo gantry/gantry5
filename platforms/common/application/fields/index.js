@@ -127,7 +127,7 @@ ready(function() {
     body.delegate('change', '.settings-block input[name][type="hidden"], .settings-block input[name][type="checkbox"], .settings-block select[name]', compare.single);
 
     body.delegate('input', '.g-urltemplate', function(event, element) {
-        var previous = element.parent('.settings-param').previousSibling();
+        var previous = element.parent('.settings-param').siblings();
         if (!previous) { return; }
 
         previous = previous.find('[data-g-urltemplate]');
