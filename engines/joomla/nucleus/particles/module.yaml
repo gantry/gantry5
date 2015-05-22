@@ -16,6 +16,11 @@ form:
       class: alert alert-info
       content: To edit the Module please use the <a href="index.php?option=com_modules" target="_blank" data-g-urltemplate="index.php?option=com_modules&view=module&layout=edit&id=#ID#" href="#">Joomla's Module Manager <i class="fa fa-fw fa-external-link"></i></a>
 
+    module:
+      type: gantry.module
+      label: Select Module
+      overridable: false
+
     module_id:
       type: input.text
       label: Module Id

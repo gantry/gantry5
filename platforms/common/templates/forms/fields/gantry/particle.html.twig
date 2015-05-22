@@ -1,0 +1,15 @@
+{% extends default ? "partials/field.html.twig" : "forms/field.html.twig" %}
+
+{% block input %}
+    <button class="button">Select Particle</button>
+    <input
+            type="hidden"
+            name="{{ (scope ~ name)|fieldName|e }}"
+            value="{{ value|join(', ')|e }}"
+            {# global attribute structures #}
+            {{ block('global_attributes') }}
+            {# non-gloval attribute structures #}
+            {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
+            {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
+            />
+{% endblock %}
