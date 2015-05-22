@@ -1,14 +1,14 @@
 .btn-primary {
-	background: $accent-color-1;
+	background: $accent-color-1 !important;
 	color: $white;
 	text-shadow: none;
 	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
 	&:hover {
-		background: lighten($accent-color-1, 5%);
+		background: lighten($accent-color-1, 5%) !important;
 		color: $white;
 	}
 	&:active, &:focus {
-		background: darken($accent-color-1, 5%);
+		background: darken($accent-color-1, 5%) !important;
 		box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
 		color: $white;
 	}
@@ -19,7 +19,7 @@
 }
 
 .btn-group.open .btn-primary.dropdown-toggle {
-	background: darken($accent-color-1, 5%);
+	background: darken($accent-color-1, 5%) !important;
 	color: $white;
 	box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
 }
@@ -30,5 +30,5 @@
 }
 
 .btn-link {
-	color: $accent-color-1;
+	color: $accent-color-1 !important;
 }
