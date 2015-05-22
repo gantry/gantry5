@@ -78,7 +78,7 @@ class Particle extends JsonController
         }
 
         $this->params['particles'] = $groups;
-        return $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
+        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $this->params)]);
     }
 
     /**
@@ -88,7 +88,7 @@ class Particle extends JsonController
      */
     public function selectModule()
     {
-        return $this->container['admin.theme']->render('@gantry-admin/modals/module-picker.html.twig', $this->params);
+        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/module-picker.html.twig', $this->params)]);
     }
 
     /**
@@ -137,7 +137,7 @@ class Particle extends JsonController
             'action'        => "menu/particle/{$name}"
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params);
+        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params)]);
     }
 
     /**
