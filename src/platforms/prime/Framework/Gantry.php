@@ -1,6 +1,8 @@
 <?php
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\Config;
+
 class Gantry extends Base\Gantry
 {
     /**
@@ -16,6 +18,10 @@ class Gantry extends Base\Gantry
 
         $container['menu'] = function ($c) {
             return new Menu;
+        };
+
+        $container['global'] = function ($c) {
+            return new Config([]);
         };
 
         return $container;
