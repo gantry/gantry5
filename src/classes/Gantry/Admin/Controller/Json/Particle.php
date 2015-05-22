@@ -31,8 +31,9 @@ class Particle extends JsonController
             '/module'            => 'selectModule'
         ],
         'POST'   => [
-            '/'                  => 'particle',
-            '/*'                 => 'validate',
+            '/'                  => 'undefined',
+            '/*'                 => 'particle',
+            '/*/validate'        => 'validate',
         ],
         'PUT'    => [
             '/*' => 'replace'
@@ -45,7 +46,7 @@ class Particle extends JsonController
         ]
     ];
 
-    public function particle()
+    public function particle($name)
     {
         /** @var Request $request */
         $request = $this->container['request'];
@@ -56,8 +57,6 @@ class Particle extends JsonController
         } else {
             $data = $request->getArray();
         }
-
-        $name = isset($data['particle']) ? $data['particle'] : null;
 
         $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml")->content());
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));
