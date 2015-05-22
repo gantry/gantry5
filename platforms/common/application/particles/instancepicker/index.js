@@ -25,14 +25,21 @@ ready(function(){
 
         value = field.value();
 
+        if (data.type == 'particle' && value) {
+            value = JSON.parse(value || {});
+            uri = value.type + '/' + value[data.type];
+        }
+
         modal.open({
             content: 'Loading',
             method: !value || data.type == 'module' ? 'get' : 'post',
-            data: !value ? {} : {},
+            data: !value || data.type == 'module' ? {} : value,
             remote: getAjaxURL(uri) + getAjaxSuffix(),
             remoteLoaded: function(response, modal) {
-                var content = modal.elements.content;
-                content.find('[data-mm-select]').data('g-instancepicker', element.data('g-instancepicker'));
+                var content = modal.elements.content,
+                    select = content.find('[data-mm-select]');
+
+                if (select) { select.data('g-instancepicker', element.data('g-instancepicker')); }
             }
         });
     });
