@@ -359,10 +359,11 @@ ready(function() {
             remote: settingsURL + getAjaxSuffix(),
             remoteLoaded: function(response, content) {
                 var form = content.elements.content.find('form'),
+                    fakeDOM = zen('div').html(response.body.html).find('form'),
                     submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
                     dataString = [], invalid = [];
 
-                if (!form || !submit) { return true; }
+                if ((!form && !fakeDOM) || !submit) { return true; }
 
                 // Particle Settings apply
                 submit.on('click', function(e) {
@@ -376,14 +377,17 @@ ready(function() {
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(form[0].elements).forEach(function(input) {
+                    $(fakeDOM[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name = input.attribute('name'),
-                            value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
+                        var name = input.attribute('name');
+                        if (!name || input.disabled()) { return; }
+
+                        input = content.elements.content.find('[name="' + name + '"]');
+                        var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                             parent = input.parent('.settings-param'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
-                        if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (override && !override.checked()) { return; }
                         if (!validateField(input)) { invalid.push(input); }
                         dataString.push(name + '=' + encodeURIComponent(value));
                     });
@@ -400,7 +404,7 @@ ready(function() {
                         return;
                     }
 
-                    request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
+                    request(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,

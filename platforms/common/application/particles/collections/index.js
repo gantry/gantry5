@@ -52,7 +52,7 @@ ready(function() {
                     if (evt.oldIndex === evt.newIndex) { return; }
 
                     var dataField = element.parent('.settings-param').find('[data-collection-data]'),
-                        data      = dataField.value();
+                        data = dataField.value();
 
                     data = JSON.parse(data);
 
@@ -73,13 +73,13 @@ ready(function() {
 
     // Add new item
     body.delegate('click', '[data-collection-addnew]', function(event, element) {
-        var param     = element.parent('.settings-param'),
-            list      = param.find('ul'),
-            editall   = list.parent().find('[data-collection-editall]'),
+        var param = element.parent('.settings-param'),
+            list = param.find('ul'),
+            editall = list.parent().find('[data-collection-editall]'),
             dataField = param.find('[data-collection-data]'),
-            tmpl      = param.find('[data-collection-template]'),
-            items     = list.search('> [data-collection-item]') || [],
-            last      = $(lastItem(items));
+            tmpl = param.find('[data-collection-template]'),
+            items = list.search('> [data-collection-item]') || [],
+            last = $(lastItem(items));
 
         var clone = $(tmpl[0].cloneNode(true)), title, editable;
 
@@ -106,13 +106,13 @@ ready(function() {
 
     // Edit Title
     body.delegate('blur', '[data-collection-item] [data-title-editable]', function(event, element) {
-        var text      = trim(element.text()),
-            item      = element.parent('[data-collection-item]'),
-            key       = item.data('collection-item'),
-            items     = element.parent('ul').search('> [data-collection-item]'),
+        var text = trim(element.text()),
+            item = element.parent('[data-collection-item]'),
+            key = item.data('collection-item'),
+            items = element.parent('ul').search('> [data-collection-item]'),
             dataField = element.parent('.settings-param').find('[data-collection-data]'),
-            data      = dataField.value(),
-            index     = indexOf(items, item[0]);
+            data = dataField.value(),
+            index = indexOf(items, item[0]);
 
         if (index == -1) { return; }
 
@@ -126,12 +126,12 @@ ready(function() {
     // Remove item
     body.delegate('click', '[data-collection-remove]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
-        var item      = element.parent('[data-collection-item]'),
-            list      = element.parent('ul'),
-            items     = list.search('> [data-collection-item]'),
-            index     = indexOf(items, item[0]),
+        var item = element.parent('[data-collection-item]'),
+            list = element.parent('ul'),
+            items = list.search('> [data-collection-item]'),
+            index = indexOf(items, item[0]),
             dataField = element.parent('.settings-param').find('[data-collection-data]'),
-            data      = dataField.value();
+            data = dataField.value();
 
         data = JSON.parse(data);
         data.splice(index, 1);
@@ -160,11 +160,11 @@ ready(function() {
         }
 
         var isEditAll = element.data('collection-editall') !== null,
-            parent    = element.parent('.settings-param'),
+            parent = element.parent('.settings-param'),
             dataField = parent.find('[data-collection-data]'),
-            data      = dataField.value(),
-            item      = element.parent('[data-collection-item]'),
-            items     = parent.search('ul > [data-collection-item]');
+            data = dataField.value(),
+            item = element.parent('[data-collection-item]'),
+            items = parent.search('ul > [data-collection-item]');
 
         var dataPost = { data: isEditAll ? data : JSON.stringify(JSON.parse(data)[indexOf(items, item[0])]) };
         modal.open({
@@ -174,11 +174,12 @@ ready(function() {
             data: dataPost,
             remote: element.attribute('href') + getAjaxSuffix(),
             remoteLoaded: function(response, content) {
-                var form       = content.elements.content.find('form'),
-                    submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
+                var form = content.elements.content.find('form'),
+                    fakeDOM = zen('div').html(response.body.html).find('form'),
+                    submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
                     dataString = [],
                     invalid = [],
-                    dataValue  = JSON.parse(data);
+                    dataValue = JSON.parse(data);
 
                 if (modal.getAll().length > 1) {
                     var applyAndSave = content.elements.content.search('[data-apply-and-save]');
@@ -190,7 +191,7 @@ ready(function() {
                     //content.elements.content.style({ width: 450 });
                 }
 
-                if (!form || !submit) {
+                if ((!form && !fakeDOM) || !submit) {
                     return true;
                 }
 
@@ -206,14 +207,17 @@ ready(function() {
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(form[0].elements).forEach(function(input) {
+                    $(fakeDOM[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name     = input.attribute('name'),
-                            value    = input.value(),
-                            parent   = input.parent('.settings-param'),
+                        var name = input.attribute('name');
+                        if (!name || input.disabled()) { return; }
+
+                        input = content.elements.content.find('[name="' + name + '"]');
+                        var value = input.value(),
+                            parent = input.parent('.settings-param'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
-                        if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (override && !override.checked()) { return; }
                         if (!validateField(input)) { invalid.push(input); }
                         dataString.push(name + '=' + encodeURIComponent(value));
                     });
@@ -234,7 +238,7 @@ ready(function() {
                         return;
                     }
 
-                    request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
+                    request(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,
@@ -252,7 +256,7 @@ ready(function() {
                             dataField.value(JSON.stringify(dataValue));
                             body.emit('change', { target: dataField });
 
-                            element.parent('.settings-param-field').search('ul > [data-collection-item]').forEach(function(item, index){
+                            element.parent('.settings-param-field').search('ul > [data-collection-item]').forEach(function(item, index) {
                                 item = $(item);
                                 var label = item.find('[data-title-editable]'),
                                     text = dataValue[index][item.data('collection-item')];

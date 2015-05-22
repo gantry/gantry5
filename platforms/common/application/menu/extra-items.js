@@ -126,9 +126,10 @@ var StepTwo = function(data, content, button) {
 
         var form = content.find('form'),
             submit = content.find('input[type="submit"], button[type="submit"]'),
+            fakeDOM = zen('div').html(response.body.html).find('form'),
             dataString = [];
 
-        if (!form || !submit) { return true; }
+        if ((!form && !fakeDOM) || !submit) { return true; }
 
         var applyAndSave = content.search('[data-apply-and-save]');
         if (applyAndSave) { applyAndSave.remove(); }
@@ -140,14 +141,17 @@ var StepTwo = function(data, content, button) {
 
             submit.showIndicator();
 
-            $(form[0].elements).forEach(function(input) {
+            $(fakeDOM[0].elements).forEach(function(input) {
                 input = $(input);
-                var name = input.attribute('name'),
-                    value = input.value(),
+                var name = input.attribute('name');
+                if (!name || input.disabled()) { return; }
+
+                input = content.find('[name="' + name + '"]');
+                var value = input.value(),
                     parent = input.parent('.settings-param'),
                     override = parent ? parent.find('> input[type="checkbox"]') : null;
 
-                if (!name || input.disabled() || (override && !override.checked())) { return; }
+                if (override && !override.checked()) { return; }
                 dataString.push(name + '=' + encodeURIComponent(value));
             });
 
@@ -156,7 +160,7 @@ var StepTwo = function(data, content, button) {
                 dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
             }
 
-            request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
+            request(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
                         content: response.body.html || response.body,
