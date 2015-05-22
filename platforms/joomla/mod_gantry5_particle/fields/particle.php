@@ -57,62 +57,28 @@ class JFormFieldParticle extends JFormField
             return '';
         }
 
-        // Dispatch to the controller.
-        // FIXME:
-        $this->container['router']->setStyle(128)->load();
+        // FIXME: Better style detection.
+        $style = \Gantry\Joomla\StyleHelper::getStyle(['home' => 1]);
 
-        return $this->selectParticle();
-    }
+        $this->container['router']->setStyle($style->id)->load();
 
-    protected function selectParticle()
-    {
-        $groups = [
-            'Particles' => ['particle' => []],
-        ];
-
-        $particles = [
-            'position'    => [],
-            'spacer'      => [],
-            'pagecontent' => [],
-            'particle' => [],
-        ];
-
-        $particles = array_replace($particles, $this->getParticles());
-        unset($particles['atom'], $particles['position']);
-
-        foreach ($particles as &$group) {
-            asort($group);
-        }
-
-        foreach ($groups as $section => $children) {
-            foreach ($children as $key => $child) {
-                $groups[$section][$key] = $particles[$key];
-            }
-        }
-
-        $params = [
-            'particles' => $groups
+        $field = [
+            'scope' => '',
+            'name' => 'particle',
+            'field' => [
+                'type' => 'gantry.particle',
+                'label' => 'Particle',
+                'class' => 'input-small',
+                'picker_label' => 'Pick a Particle',
+                'overridable' => false
+            ],
+            'value' => ''
         ];
 
         $params = [
-            'content' => $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $params)
+            'content' => $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particle.html.twig', $field)
         ];
 
         return $this->container['admin.theme']->render('@gantry-admin/partials/layout.html.twig', $params);
-    }
-
-
-    protected function getParticles()
-    {
-        $particles = $this->container['particles']->all();
-
-        $list = [];
-        foreach ($particles as $name => $particle) {
-            $type = isset($particle['type']) ? $particle['type'] : 'particle';
-            $particleName = isset($particle['name']) ? $particle['name'] : $name;
-            $list[$type][$name] = $particleName;
-        }
-
-        return $list;
     }
 }
