@@ -918,6 +918,19 @@ a {
   color: #6e6e6e;
 }
 /* line 62, platforms/common/scss/admin/_settings.scss */
+#g5-container .settings-block .g-instancepicker-title {
+  margin-right: 0.5rem;
+  font-style: italic;
+}
+/* line 65, platforms/common/scss/admin/_settings.scss */
+#g5-container .settings-block .g-instancepicker-title:empty {
+  margin: 0;
+}
+/* line 70, platforms/common/scss/admin/_settings.scss */
+#g5-container .settings-block .input-small {
+  width: 120px !important;
+}
+/* line 74, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block input.settings-param-toggle {
   position: absolute;
   top: 50%;
@@ -925,12 +938,12 @@ a {
   margin: -7px 15px 0 0;
   z-index: 5;
 }
-/* line 70, platforms/common/scss/admin/_settings.scss */
+/* line 82, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block input.settings-param-toggle:checked + .settings-param-override {
   opacity: 0;
   z-index: -1;
 }
-/* line 77, platforms/common/scss/admin/_settings.scss */
+/* line 89, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-override {
   position: absolute;
   top: 0;
@@ -947,11 +960,11 @@ a {
   transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
   /*@include linear-gradient(90deg, transparentize($white, 0.7) 0%, transparentize($white, 0.7) 150px, transparentize($white, 0.4) 150px, transparentize($white, 0.4) 100%);*/
 }
-/* line 92, platforms/common/scss/admin/_settings.scss */
+/* line 104, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-field {
   margin-left: 150px;
 }
-/* line 96, platforms/common/scss/admin/_settings.scss */
+/* line 108, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-field .g-reset-field {
   display: inline-block;
   opacity: 0;
@@ -960,39 +973,39 @@ a {
   -moz-transition: opacity 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out;
 }
-/* line 104, platforms/common/scss/admin/_settings.scss */
+/* line 116, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-field .input-group .g-reset-field {
   display: table-cell;
   vertical-align: middle;
   padding-left: 4px;
 }
-/* line 111, platforms/common/scss/admin/_settings.scss */
+/* line 123, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-field:hover .g-reset-field {
   opacity: 1;
   -webkit-transition: opacity 0.2s ease-in-out;
   -moz-transition: opacity 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out;
 }
-/* line 119, platforms/common/scss/admin/_settings.scss */
+/* line 131, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-title {
   max-width: 150px;
   margin: 5px;
 }
-/* line 125, platforms/common/scss/admin/_settings.scss */
+/* line 137, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block i {
   line-height: inherit;
 }
-/* line 129, platforms/common/scss/admin/_settings.scss */
+/* line 141, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .fa {
   width: 1rem;
   text-align: center;
 }
-/* line 134, platforms/common/scss/admin/_settings.scss */
+/* line 146, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .fa-lg {
   font-size: inherit;
   vertical-align: inherit;
 }
-/* line 139, platforms/common/scss/admin/_settings.scss */
+/* line 151, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block input, #g5-container .settings-block textarea {
   padding: 6px 12px;
   border: 1px solid #ddd;
@@ -1003,95 +1016,95 @@ a {
   line-height: 1.5;
   border-radius: 0.1875rem;
 }
-/* line 150, platforms/common/scss/admin/_settings.scss */
+/* line 162, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block select {
   margin: 0 0 10px;
   display: inline-block;
 }
-/* line 155, platforms/common/scss/admin/_settings.scss */
+/* line 167, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block input:not(.settings-param-toggle), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker, #g5-container .settings-block .multi.selectize-control {
   width: 250px;
 }
 @media only all and (max-width: 59.938rem) {
-  /* line 155, platforms/common/scss/admin/_settings.scss */
+  /* line 167, platforms/common/scss/admin/_settings.scss */
   #g5-container .settings-block input:not(.settings-param-toggle), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker, #g5-container .settings-block .multi.selectize-control {
     width: 100%;
   }
 }
-/* line 162, platforms/common/scss/admin/_settings.scss */
+/* line 174, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block textarea {
   width: 90%;
   min-height: 150px;
 }
-/* line 169, platforms/common/scss/admin/_settings.scss */
+/* line 181, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
   width: 209px;
 }
 @media only all and (max-width: 59.938rem) {
-  /* line 169, platforms/common/scss/admin/_settings.scss */
+  /* line 181, platforms/common/scss/admin/_settings.scss */
   #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
     width: 100%;
   }
 }
-/* line 178, platforms/common/scss/admin/_settings.scss */
+/* line 190, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .selectize-control.single {
   width: 250px !important;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-  /* line 178, platforms/common/scss/admin/_settings.scss */
+  /* line 190, platforms/common/scss/admin/_settings.scss */
   #g5-container .settings-block .selectize-control.single {
     width: 100% !important;
   }
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 178, platforms/common/scss/admin/_settings.scss */
+  /* line 190, platforms/common/scss/admin/_settings.scss */
   #g5-container .settings-block .selectize-control.single {
     width: 92% !important;
   }
 }
-/* line 188, platforms/common/scss/admin/_settings.scss */
+/* line 200, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block img {
   display: block;
 }
-/* line 192, platforms/common/scss/admin/_settings.scss */
+/* line 204, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block.search {
   position: relative;
   margin-bottom: 10px;
 }
-/* line 196, platforms/common/scss/admin/_settings.scss */
+/* line 208, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block.search i {
   position: absolute;
   right: 10px;
   top: 50%;
   margin-top: -12px;
 }
-/* line 208, platforms/common/scss/admin/_settings.scss */
+/* line 220, platforms/common/scss/admin/_settings.scss */
 #g5-container .g5-dialog .settings-block {
   width: 100%;
   margin: 0 0 15px;
 }
-/* line 213, platforms/common/scss/admin/_settings.scss */
+/* line 225, platforms/common/scss/admin/_settings.scss */
 #g5-container .g5-dialog .g-modal-body {
   overflow-x: hidden;
   overflow-y: scroll;
   max-height: 650px;
 }
-/* line 219, platforms/common/scss/admin/_settings.scss */
+/* line 231, platforms/common/scss/admin/_settings.scss */
 #g5-container .g5-dialog .settings-param {
   padding: 5px;
 }
 @media only all and (max-width: 59.938rem) {
-  /* line 219, platforms/common/scss/admin/_settings.scss */
+  /* line 231, platforms/common/scss/admin/_settings.scss */
   #g5-container .g5-dialog .settings-param {
     padding: 2px 5px;
     border: 0;
   }
 }
-/* line 229, platforms/common/scss/admin/_settings.scss */
+/* line 241, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker {
   position: relative;
 }
-/* line 232, platforms/common/scss/admin/_settings.scss */
+/* line 244, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker .settings-param-field-colorpicker-preview {
   position: absolute;
   top: 2px;
@@ -1100,44 +1113,44 @@ a {
   width: 1.5625em;
   border-radius: 3px;
 }
-/* line 244, platforms/common/scss/admin/_settings.scss */
+/* line 256, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul {
   margin: 5px 0;
 }
-/* line 248, platforms/common/scss/admin/_settings.scss */
+/* line 260, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul li, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li {
   padding: 0.1rem 0;
   position: relative;
 }
-/* line 253, platforms/common/scss/admin/_settings.scss */
+/* line 265, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul li:only-child .fa-reorder, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li:only-child .fa-reorder {
   display: none;
 }
-/* line 257, platforms/common/scss/admin/_settings.scss */
+/* line 269, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul li:only-child a, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li:only-child a {
   margin-left: 0;
 }
-/* line 264, platforms/common/scss/admin/_settings.scss */
+/* line 276, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field .item-reorder, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field .item-reorder {
   cursor: row-resize;
   color: #999999;
 }
-/* line 272, platforms/common/scss/admin/_settings.scss */
+/* line 284, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-title-edit], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-remove] {
   color: #666;
   opacity: 1;
 }
-/* line 277, platforms/common/scss/admin/_settings.scss */
+/* line 289, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li[data-collection-item]:hover a {
   color: #439A86;
 }
-/* line 282, platforms/common/scss/admin/_settings.scss */
+/* line 294, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field [data-collection-item] a {
   color: #666;
   margin-left: 5px;
   vertical-align: middle;
 }
-/* line 288, platforms/common/scss/admin/_settings.scss */
+/* line 300, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field [data-title-edit], #g5-container .collection-list .settings-param-field [data-collection-remove] {
   cursor: pointer;
   color: #cccccc;
@@ -3692,22 +3705,18 @@ html.g5-dialog-open {
     width: 100% !important;
   }
 }
-/* line 163, platforms/common/scss/admin/_modal.scss */
-#g5-container .g5-dialog .input-small {
-  width: 120px !important;
-}
 
-/* line 169, platforms/common/scss/admin/_modal.scss */
+/* line 165, platforms/common/scss/admin/_modal.scss */
 .g5-dialog.g5-modal-collection-editall .g5-content {
   width: 90%;
 }
-/* line 172, platforms/common/scss/admin/_modal.scss */
+/* line 168, platforms/common/scss/admin/_modal.scss */
 .g5-dialog.g5-modal-collection-editall .g5-content .settings-block:not(:only-child) {
   width: 48% !important;
   margin: 10px 1% !important;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 178, platforms/common/scss/admin/_modal.scss */
+  /* line 174, platforms/common/scss/admin/_modal.scss */
   .g5-dialog.g5-modal-collection-editall .g5-content .settings-block {
     width: 100% !important;
   }

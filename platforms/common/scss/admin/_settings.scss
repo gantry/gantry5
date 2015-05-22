@@ -59,6 +59,18 @@
         }
     }
 
+    .g-instancepicker-title {
+        margin-right: 0.5rem;
+        font-style: italic;
+        &:empty {
+            margin: 0;
+        }
+    }
+
+    .input-small {
+        width: 120px !important;
+    }
+
     input.settings-param-toggle {
         position: absolute;
         top: 50%;

@@ -134,7 +134,7 @@ class Particle extends JsonController
             'parent'        => 'settings',
             'prefix'        => "particles.{$name}.",
             'route'         => "configurations.default.settings",
-            'action'        => "menu/particle/{$name}"
+            'action'        => "particle/{$name}/validate"
         ];
 
         return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params)]);

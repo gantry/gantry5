@@ -3402,6 +3402,7 @@ var $             = require('elements'),
     request       = require('agent'),
     indexOf       = require('mout/array/indexOf'),
     trim          = require('mout/string/trim'),
+    getAjaxURL    = require('../utils/get-ajax-url').global,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     flags         = require('../utils/flags-state'),
     deepEquals    = require('mout/lang/deepEquals');
@@ -3486,7 +3487,15 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
 };
 
 var StepTwo = function(data, content, button) {
-    var uri = content.find('[data-mm-particle-stepone]').data('mm-particle-stepone');
+    var uri = content.find('[data-mm-particle-stepone]').data('mm-particle-stepone'),
+        picker = data.instancepicker;
+
+    if (picker) {
+        var item = JSON.parse(data.item);
+        picker = JSON.parse(picker);
+        delete(data.instancepicker);
+        uri = getAjaxURL(item.type + '/' + item.particle);
+    }
 
     request('post', uri + getAjaxSuffix(), data, function(error, response) {
         if (!response.body.success) {
@@ -3551,29 +3560,38 @@ var StepTwo = function(data, content, button) {
                         }
                     });
                 } else {
-                    var element = menumanager.element,
-                        path = element.data('mm-id') + '-',
-                        id = randomID(5),
-                        base = element.parent('[data-mm-base]').data('mm-base'),
-                        col = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
-                        index = indexOf(element.parent().children('[data-mm-id]'), element[0]);
+                    // it's menu
+                    if (!picker) {
+                        var element = menumanager.element,
+                            path = element.data('mm-id') + '-',
+                            id = randomID(5),
+                            base = element.parent('[data-mm-base]').data('mm-base'),
+                            col = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
+                            index = indexOf(element.parent().children('[data-mm-id]'), element[0]);
 
-                    while (menumanager.items[path + id]) { id = randomID(5); }
+                        while (menumanager.items[path + id]) { id = randomID(5); }
 
-                    menumanager.items[path + id] = response.body.item;
-                    menumanager.ordering[base][col].splice(index, 1, path + id);
-                    element.data('mm-id', path + id);
+                        menumanager.items[path + id] = response.body.item;
+                        menumanager.ordering[base][col].splice(index, 1, path + id);
+                        element.data('mm-id', path + id);
 
-                    if (response.body.html) {
-                        element.html(response.body.html);
+                        if (response.body.html) {
+                            element.html(response.body.html);
+                        }
+
+                        menumanager.isNewParticle = false;
+                        menumanager.emit('dragEnd', menumanager.map);
+                        toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
+                    } else { // it's field picker
+                        var field = $('[name="' + picker.field + '"]'),
+                            label = field.siblings('.g-instancepicker-title');
+
+                        if (field) { field.value(JSON.stringify(response.body.item)); }
+                        if (label) { label.text(response.body.item.title); }
                     }
-
-                    menumanager.isNewParticle = false;
-                    menumanager.emit('dragEnd', menumanager.map);
-                    modal.close();
-                    toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
                 }
 
+                modal.close();
                 submit.hideIndicator();
             });
         });
@@ -3629,7 +3647,7 @@ ready(function() {
             var field = $('[name="' + data.field + '"]');
             if (field) {
                 field.value(selected.data('mm-module'));
-                body.emit('input', {target: field});
+                body.emit('input', { target: field });
             }
 
             element.hideIndicator();
@@ -3637,13 +3655,18 @@ ready(function() {
 
             return false;
         } else {
-            StepTwo({ item: JSON.stringify(data) }, element.parent('.g5-content'), element);
+            var ip = instancepicker;
+            element.data('g-instancepicker', null);
+            StepTwo({
+                item: JSON.stringify(data),
+                instancepicker: ip ? ip : null
+            }, element.parent('.g5-content'), element);
         }
     });
 });
 
 module.exports = StepOne;
-},{"../ui":43,"../utils/flags-state":55,"../utils/get-ajax-suffix":56,"agent":62,"elements":89,"elements/domready":87,"elements/zen":113,"mout/array/indexOf":152,"mout/lang/deepEquals":175,"mout/string/trim":236}],27:[function(require,module,exports){
+},{"../ui":43,"../utils/flags-state":55,"../utils/get-ajax-suffix":56,"../utils/get-ajax-url":57,"agent":62,"elements":89,"elements/domready":87,"elements/zen":113,"mout/array/indexOf":152,"mout/lang/deepEquals":175,"mout/string/trim":236}],27:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     MenuManager   = require('./menumanager'),
