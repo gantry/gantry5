@@ -74,7 +74,7 @@ html {
 }
 
 /* line 6, platforms/common/scss/admin/_core.scss */
-body {
+body.com_gantry5 {
   color: #fff;
   background-color: #354D59 !important;
   font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
