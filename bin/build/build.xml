@@ -212,6 +212,7 @@
         <echo message="Building Library.." />
 
         <copy todir="${tmp_dir}/packages/lib_gantry5/library" overwrite="true">
+            <filterchain refid="filter" />
             <fileset dir="${path.src}">
                 <include name="*.php"/>
                 <include name="composer.*"/>
@@ -387,7 +388,9 @@
                 <copy todir="${tmp_dir}/templates/tpl_g5_${directory}" overwrite="true">
                     <filterchain refid="filter"/>
                     <fileset dir="${path.themes}/${directory}/joomla">
-                        <include name="*.xml"/>
+                        <include name="**/*.xml"/>
+                        <include name="gantry/theme.yaml"/>
+                        <include name="install.php"/>
                     </fileset>
                 </copy>
 

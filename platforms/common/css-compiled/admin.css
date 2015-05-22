@@ -272,21 +272,29 @@ a {
 
 /* line 139, platforms/common/scss/admin/_core.scss */
 #footer {
-  margin-bottom: 3.5rem;
+  background-color: #e7e7e7;
+  padding: 1em 0 3rem;
+  margin-bottom: 0;
+  color: #aaa;
   text-align: center;
   font-weight: 500;
+  border-top: 1px solid #dedede;
 }
-/* line 143, platforms/common/scss/admin/_core.scss */
+/* line 148, platforms/common/scss/admin/_core.scss */
+#footer .g-version, #footer .g-version-date {
+  color: #8F4DAE;
+}
+/* line 152, platforms/common/scss/admin/_core.scss */
 #footer a {
-  color: #a0d6c9;
+  color: #439A86 !important;
   text-decoration: none;
 }
-/* line 146, platforms/common/scss/admin/_core.scss */
+/* line 155, platforms/common/scss/admin/_core.scss */
 #footer a:hover {
-  color: #fff;
+  color: #245348 !important;
 }
 
-/* line 153, platforms/common/scss/admin/_core.scss */
+/* line 162, platforms/common/scss/admin/_core.scss */
 .Whoops.container {
   position: inherit;
 }
@@ -354,24 +362,24 @@ a {
     opacity: 0;
   }
 }
-/* line 175, platforms/common/scss/admin/_core.scss */
+/* line 184, platforms/common/scss/admin/_core.scss */
 .g-tooltip {
   display: inline;
   position: relative;
 }
-/* line 179, platforms/common/scss/admin/_core.scss */
+/* line 188, platforms/common/scss/admin/_core.scss */
 .g-tooltip:before, .g-tooltip:after {
   font-size: 1rem;
   line-height: 1.5rem;
 }
 
-/* line 185, platforms/common/scss/admin/_core.scss */
+/* line 194, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover, .g-tooltip.g-tooltip-force {
   color: #439A86;
   text-decoration: none;
 }
 
-/* line 190, platforms/common/scss/admin/_core.scss */
+/* line 199, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover:after, .g-tooltip.g-tooltip-force:after {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 0.1875rem;
@@ -387,7 +395,7 @@ a {
   font-size: 0.8rem;
 }
 
-/* line 205, platforms/common/scss/admin/_core.scss */
+/* line 214, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover:before, .g-tooltip.g-tooltip-force:before {
   border: solid;
   border-color: rgba(0, 0, 0, 0.8) transparent;
@@ -400,46 +408,46 @@ a {
   z-index: 100;
 }
 
-/* line 217, platforms/common/scss/admin/_core.scss */
+/* line 226, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-right:hover:after, .g-tooltip.g-tooltip-right.g-tooltip-force:after {
   left: inherit;
   right: 0;
 }
 
-/* line 222, platforms/common/scss/admin/_core.scss */
+/* line 231, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-right:hover:before, .g-tooltip.g-tooltip-right.g-tooltip-force:before {
   left: inherit;
   right: 1rem;
 }
 
-/* line 227, platforms/common/scss/admin/_core.scss */
+/* line 236, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-bottom:hover:after, .g-tooltip.g-tooltip-bottom.g-tooltip-force:after {
   bottom: auto;
 }
 
-/* line 231, platforms/common/scss/admin/_core.scss */
+/* line 240, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-bottom:hover:before, .g-tooltip.g-tooltip-bottom.g-tooltip-force:before {
   border-width: 0 .4rem .4rem .4rem;
   bottom: -0.1rem;
 }
 
-/* line 238, platforms/common/scss/admin/_core.scss */
+/* line 247, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:after {
   bottom: 3rem;
 }
 
-/* line 242, platforms/common/scss/admin/_core.scss */
+/* line 251, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:before {
   bottom: 2.6rem;
 }
 
-/* line 247, platforms/common/scss/admin/_core.scss */
+/* line 256, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:before {
   right: 7px;
   bottom: 1.5rem;
 }
 
-/* line 251, platforms/common/scss/admin/_core.scss */
+/* line 260, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:after {
   bottom: 1.9rem;
 }

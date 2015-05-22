@@ -738,7 +738,7 @@ var originals,
             keys.forEach(function(key) {
                 field = $('[name="' + key + '"]');
                 if (field) {
-                    map.set(key, field.value().toLowerCase());
+                    map.set(key, field.value());
                 }
             });
 
@@ -759,7 +759,7 @@ var originals,
         var map = new storage();
 
         forEach(data, function(value, key) {
-            map.set(key, value.toLowerCase());
+            map.set(key, value);
         });
 
         return map;
@@ -2108,7 +2108,6 @@ module.exports = History;
 },{"mout/array/slice":158,"mout/lang/deepEquals":174,"mout/object/merge":207,"prime":256,"prime/emitter":255}],23:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
-    //json          = require('./json_test'), // debug
     $             = require('elements/attributes'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,

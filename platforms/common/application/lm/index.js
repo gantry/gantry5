@@ -1,6 +1,5 @@
 "use strict";
 var ready         = require('elements/domready'),
-    //json          = require('./json_test'), // debug
     $             = require('elements/attributes'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
