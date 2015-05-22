@@ -46,6 +46,57 @@ class Particle extends JsonController
         ]
     ];
 
+    /**
+     * Return a modal for selecting a particle.
+     *
+     * @return string
+     */
+    public function selectParticle()
+    {
+        $groups = [
+            'Particles' => ['particle' => []],
+        ];
+
+        $particles = [
+            'position'    => [],
+            'spacer'      => [],
+            'pagecontent' => [],
+            'particle' => [],
+        ];
+
+        $particles = array_replace($particles, $this->getParticles());
+        unset($particles['atom'], $particles['position']);
+
+        foreach ($particles as &$group) {
+            asort($group);
+        }
+
+        foreach ($groups as $section => $children) {
+            foreach ($children as $key => $child) {
+                $groups[$section][$key] = $particles[$key];
+            }
+        }
+
+        $this->params['particles'] = $groups;
+        return $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
+    }
+
+    /**
+     * Return a modal content for selecting module.
+     *
+     * @return mixed
+     */
+    public function selectModule()
+    {
+        return $this->container['admin.theme']->render('@gantry-admin/modals/module-picker.html.twig', $this->params);
+    }
+
+    /**
+     * Return form for the particle (filled with data coming from POST).
+     *
+     * @param string $name
+     * @return mixed
+     */
     public function particle($name)
     {
         /** @var Request $request */
@@ -89,6 +140,12 @@ class Particle extends JsonController
         return $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params);
     }
 
+    /**
+     * Validate data for the particle.
+     *
+     * @param string $name
+     * @return JsonResponse
+     */
     public function validate($name)
     {
         /** @var Request $request */
@@ -128,41 +185,6 @@ class Particle extends JsonController
         $this->params['item'] = (object) $data->toArray();
 
         return new JsonResponse(['item' => $data->toArray()]);
-    }
-
-    public function selectModule()
-    {
-        return $this->container['admin.theme']->render('@gantry-admin/modals/module-picker.html.twig', $this->params);
-    }
-
-    public function selectParticle()
-    {
-        $groups = [
-            'Particles' => ['particle' => []],
-        ];
-
-        $particles = [
-            'position'    => [],
-            'spacer'      => [],
-            'pagecontent' => [],
-            'particle' => [],
-        ];
-
-        $particles = array_replace($particles, $this->getParticles());
-        unset($particles['atom'], $particles['position']);
-
-        foreach ($particles as &$group) {
-            asort($group);
-        }
-
-        foreach ($groups as $section => $children) {
-            foreach ($children as $key => $child) {
-                $groups[$section][$key] = $particles[$key];
-            }
-        }
-
-        $this->params['particles'] = $groups;
-        return $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
     }
 
     protected function getParticles()
