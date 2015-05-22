@@ -85,7 +85,11 @@ ready(function() {
 
                                 var label = field.siblings('.g-instancepicker-title');
 
-                                if (field) { field.value(JSON.stringify(response.body.item)); }
+                                if (field) {
+                                    field.value(JSON.stringify(response.body.item));
+                                    $('body').emit('change', { target: field });
+                                }
+
                                 if (label) { label.text(response.body.item.title); }
                             }
 

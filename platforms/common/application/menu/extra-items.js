@@ -189,10 +189,18 @@ var StepTwo = function(data, content, button) {
                         toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
                     } else { // it's field picker
                         var field = $('[name="' + picker.field + '"]'),
+                            btnPicker = field.siblings('[data-g-instancepicker]'),
                             label = field.siblings('.g-instancepicker-title');
 
-                        if (field) { field.value(JSON.stringify(response.body.item)); }
+                        if (field) {
+                            field.value(JSON.stringify(response.body.item));
+                            $('body').emit('change', { target: field });
+                        }
                         if (label) { label.text(response.body.item.title); }
+
+                        if (item.type == 'particle') {
+                            btnPicker.text(btnPicker.data('g-instancepicker-alttext'));
+                        }
                     }
                 }
 
