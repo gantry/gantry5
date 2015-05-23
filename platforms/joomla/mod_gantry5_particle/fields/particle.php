@@ -13,16 +13,6 @@ class JFormFieldParticle extends JFormField
     protected $type = 'Particle';
     protected $container;
 
-    public function renderField($options = array())
-    {
-        return $this->getInput();
-    }
-
-    protected function getLabel()
-    {
-        return '';
-    }
-
     protected function getInput()
     {
         $app = JFactory::getApplication();
