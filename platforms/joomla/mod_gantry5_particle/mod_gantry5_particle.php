@@ -19,17 +19,21 @@ if (!class_exists('Gantry\Framework\Gantry')) {
     return;
 }
 
-// Include the class only once
-require_once __DIR__ . '/class.php';
-
 $gantry = \Gantry\Framework\Gantry::instance();
 
 /** @var Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
 
-$params = [
-    'particle' => $gantry['config']->get('particles.copyright')
+/** @var object $params */
+$data = json_decode($params->get('particle'), true);
+
+$context = [
+    'gantry' => $gantry,
+    'segment' => [
+        'type' => $data['type'],
+        'subtype' => $data['particle'],
+        'attributes' =>  $data['options']['particle'],
+    ]
 ];
 
-/** @var object $params */
-return $theme->render('@particles/copyright.html.twig', $params);
+echo $theme->render("@nucleus/content/particle.html.twig", $context);
