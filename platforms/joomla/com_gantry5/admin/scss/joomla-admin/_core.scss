@@ -59,3 +59,37 @@ body.com_gantry5 {
     }
 }
 
+body.com_modules {
+    #g5-container {
+        font-size: inherit; // inherit from the platform
+
+        .inner-container {
+            color: inherit;
+            margin: 0;
+            box-shadow: none;
+        }
+
+        .main-block {
+            background-color: inherit;
+        }
+
+        .g-content {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .settings-param-title {
+            display: none;
+        }
+
+        .g-instancepicker-title {
+            font-size: $core-font-size;
+            font-style: italic;
+            margin-right: 0.5rem;
+
+            &:empty {
+                margin-right: 0;
+            }
+        }
+    }
+}
