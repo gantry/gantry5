@@ -53,8 +53,9 @@ class JFormFieldParticle extends JFormField
         $this->container['router']->setStyle($style->id)->load();
 
         $field = [
+            'default' => true,
             'scope' => '',
-            'name' => 'particle',
+            'name' => $this->name,
             'field' => [
                 'type' => 'gantry.particle',
                 'label' => 'Particle',
@@ -62,7 +63,7 @@ class JFormFieldParticle extends JFormField
                 'picker_label' => 'Pick a Particle',
                 'overridable' => false
             ],
-            'value' => ''
+            'value' => json_decode($this->value, true)
         ];
 
         $params = [

@@ -3,11 +3,11 @@
 {% block input %}
     {% set label = field.picker_label|default('Pick a Particle') %}
     {% set alt_label = field.picker_label_alt|default('Edit Particle') %}
-    <span class="g-instancepicker-title">{{ title_goes_here|default('') }}</span><button class="button" data-g-instancepicker="{{ { type: 'particle', field: (scope ~ name)|fieldName|e }|json_encode|e('html_attr') }}" data-g-instancepicker-alttext="{{ alt_label }}">{{ value ? alt_label : label }}</button>
+    <span class="g-instancepicker-title">{{ value.title|default('') }}</span><button class="button" data-g-instancepicker="{{ { type: 'particle', field: (scope ~ name)|fieldName|e }|json_encode|e('html_attr') }}" data-g-instancepicker-alttext="{{ alt_label }}">{{ value ? alt_label : label }}</button>
     <input
             type="hidden"
             name="{{ (scope ~ name)|fieldName|e }}"
-            value="{{ value|join(', ')|e }}"
+            value="{{ value|json_encode|e }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}
             {# non-gloval attribute structures #}
