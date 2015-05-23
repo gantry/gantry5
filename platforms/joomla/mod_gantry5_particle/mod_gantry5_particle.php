@@ -22,6 +22,14 @@ if (!class_exists('Gantry\Framework\Gantry')) {
 // Include the class only once
 require_once __DIR__ . '/class.php';
 
+$gantry = \Gantry\Framework\Gantry::instance();
+
+/** @var Gantry\Framework\Theme $theme */
+$theme = $gantry['theme'];
+
+$params = [
+    'particle' => $gantry['config']->get('particles.copyright')
+];
+
 /** @var object $params */
-$particle = new modGantry5Particle($params);
-echo $particle->display();
+return $theme->render('@particles/copyright.html.twig', $params);

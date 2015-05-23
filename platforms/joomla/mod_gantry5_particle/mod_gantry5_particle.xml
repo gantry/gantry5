@@ -13,7 +13,6 @@
     <files>
         <filename module="mod_gantry5_particle">mod_gantry5_particle.php</filename>
         <folder>language</folder>
-        <filename>class.php</filename>
     </files>
     <config>
         <fields name="params">
@@ -47,7 +46,6 @@
                         name="cachemode"
                         type="hidden"
                         default="static">
-                    <option value="static"></option>
                 </field>
             </fieldset>
         </fields>
