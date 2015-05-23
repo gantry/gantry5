@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 // Detect Gantry Framework or fail gracefully.
 if (!class_exists('Gantry\Framework\Gantry')) {
     $lang = JFactory::getLanguage();
-    $this->app->enqueueMessage(
+    JFactory::getApplication()->enqueueMessage(
         JText::sprintf('MOD_GANTRY5_PARTICLE_NOT_INITIALIZED', JText::_('MOD_GANTRY5_PARTICLE')),
         'warning'
     );
