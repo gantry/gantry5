@@ -78,7 +78,7 @@ class Compiler extends BaseCompiler
         $url = Document::url($uri) ?: $url;
 
         // Changes absolute URIs to relative to make the path to work even if the site gets moved.
-        if ($url[0] == '/' && $this->basePath) {
+        if ($url && $url[0] == '/' && $this->basePath) {
             $url = Folder::getRelativePathDotDot($url, $this->basePath);
         }
 
