@@ -15,8 +15,9 @@
     -Dpackage_dir=../../../builds/gantry5  (= builds/gantry5)
     -Dtmp_dir=tmp                          (= git/gantry5/build/tmp)
     -Dbuild_dir=package                    (= git/gantry5/build/package)
+    -Dupdate_versions=false                (= true / for CI and automated push)
 -->
-<project name="gantry5" basedir="." description="Phing Build Script" default="dist">
+<project name="gantry5" basedir="." description="Phing Build Script" default="prod">
 
     <!-- Setup of any global settings that will apply to the entire build script -->
     <property file="${phing.dir}/build.ini" />
@@ -33,6 +34,9 @@
     </condition>
     <condition property="build_dir" value="${phing.dir}/package">
         <not><isset property="build_dir" /></not>
+    </condition>
+    <condition property="update_versions" value="false">
+        <not><isset property="update_versions" /></not>
     </condition>
 
     <property name="path.assets" value="${project_dir}/assets" />
@@ -72,7 +76,8 @@
         </replacetokens>
     </filterchain>
 
-    <target name="dist" depends="preflight,info,mkdir,backup,assets-prod,build-installer,build-component,build-library,build-nucleus,build-plugins,build-themes,reset-git,package,postflight" />
+    <target name="prod" depends="preflight,info,mkdir,assets-prod,build-installer,build-component,build-library,build-nucleus,build-plugins,build-themes,reset-git,package,cleanup,postflight" />
+    <target name="dev" depends="preflight,info,mkdir,build-installer,build-component,build-library,build-nucleus,build-plugins,build-themes,package,cleanup,postflight" />
 
     <!-- Preflight check to see if we can even run the build script -->
     <target name="preflight">
@@ -97,7 +102,7 @@
                 <exec command="npm list -g gulp|grep gulp" checkreturn="true" passthru="true" output="/dev/null" />
             </try>
             <catch>
-                <fail message="Please install Gulp globally" />
+                <echo message="Please install Gulp globally" />
             </catch>
         </trycatch>
     </target>
@@ -123,7 +128,6 @@
         <mkdir dir="${build_dir}/distribution/packages" />
         <mkdir dir="${package_dir}" />
         <mkdir dir="${package_dir}/backup" />
-        <touch file="${package_dir}/build"/>
     </target>
 
 
@@ -436,9 +440,39 @@
         </phingcall>
     </target>
 
-    <target name="postflight">
+    <target name="prod-versions">
+        <if>
+            <istrue value="${update_versions}" />
+            <then>
+                <echo message="Updating versions in ${project_dir} ..." />
+                <reflexive>
+                    <fileset dir="${project_dir}">
+                        <include pattern="VERSION"/>
+                        <include pattern="**/*.xml"/>
+                        <include pattern="**/*.yaml"/>
+                        <include pattern="*.xml"/>
+                        <include pattern="*.yaml"/>
+                        <include pattern="**/RealLoader.php"/>
+                        <include pattern="**/install.php"/>
+                        <exclude pattern="bin/**"/>
+                        <exclude pattern="**/node_modules/**"/>
+                        <exclude pattern="**/vendor/**"/>
+                    </fileset>
+                    <filterchain refid="filter"/>
+                </reflexive>
+            </then>
+            <else>
+                <echo message="Skipping versions updates in ${project_dir} ..." />
+            </else>
+        </if>
+    </target>
+
+    <target name="cleanup">
         <delete dir="${tmp_dir}"/>
         <delete dir="${build_dir}"/>
+    </target>
+
+    <target name="postflight">
         <echo message="Congratulations, build finished without error!" />
     </target>
 
