@@ -61,14 +61,14 @@ class Router extends BaseRouter
 
         $this->container['ajax_suffix'] = '&format=json';
 
-        // FIXME: Add missing security token.
-        $token = 'token';
+        // Create nonce
+        $nonce = wp_create_nonce( 'gantry5-layout-manager' );
 
         $this->container['routes'] = [
-            '1' => "&view=%s&style={$style}&{$token}=1",
+            '1' => "&view=%s&style={$style}&{$nonce}=1",
 
             'themes' => '&view=themes',
-            'picker/layouts' => "&view=layouts&style={$style}&{$token}=1",
+            'picker/layouts' => "&view=layouts&style={$style}&{$nonce}=1",
         ];
 
         return $this;
@@ -76,8 +76,12 @@ class Router extends BaseRouter
 
     protected function checkSecurityToken()
     {
-        // FIXME: Check security token and return false on failure.
-        return true;
+        // Check security nonce and return false on failure.
+        if(check_admin_referer( 'gantry5-layout-manager' ) ) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
