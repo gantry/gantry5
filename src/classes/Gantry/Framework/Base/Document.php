@@ -166,6 +166,10 @@ class Document
         return $html;
     }
 
+    public static function registerAssets()
+    {
+    }
+
     public static function rootUri()
     {
         return '';

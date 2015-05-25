@@ -12,11 +12,16 @@ defined( 'ABSPATH' ) or die;
 
 require_once __DIR__ . '/src/Loader.php';
 
+if (!defined('GANTRY5_PATH')) {
+    // Works also with symlinks.
+    define('GANTRY5_PATH', rtrim(WP_PLUGIN_DIR, '/\\') . '/gantry5');
+}
+
 if ( !is_admin() ) {
     return;
 }
 
 if (!defined('GANTRYADMIN_PATH')) {
     // Works also with symlinks.
-    define('GANTRYADMIN_PATH', rtrim(WP_PLUGIN_DIR, '/\\') . '/gantry5');
+    define('GANTRYADMIN_PATH', GANTRY5_PATH);
 }

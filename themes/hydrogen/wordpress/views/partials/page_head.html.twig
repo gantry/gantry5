@@ -8,5 +8,6 @@
 {% endblock %}
 
 {% block head_application %}
+    {{ gantry.platform.finalize }}
     {{ function('wp_head') }}
 {% endblock %}

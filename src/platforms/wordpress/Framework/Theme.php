@@ -28,7 +28,7 @@ class Theme extends Base\Theme
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-theme://twig'));
+        $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-engine://twig'));
 
         $params = array(
             'cache' => $locator('gantry-cache://twig', true, true),
@@ -37,7 +37,11 @@ class Theme extends Base\Theme
             'autoescape' => 'html'
         );
 
+        // FIXME: Get timezone from WP.
+        $timezone = 'UTC';
+
         $twig = new \Twig_Environment($loader, $params);
+        $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
 
         $this->add_to_twig($twig);
 
