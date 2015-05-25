@@ -64,7 +64,7 @@ before_deploy:
         for file in ${FILES[@]}; do
             i=$(($i + 1));
             SIZE=`wc -c < $file | awk '{print $1}'`;
-            DATE=`stat -f \"%m\" $file`;
+            DATE=`stat --format=\"%m\" $file`;
             JSON+="{";
             JSON+="\"file\":\"${file##*/}\",";
             JSON+="\"size\":$SIZE,";
