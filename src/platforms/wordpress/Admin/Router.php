@@ -26,9 +26,9 @@ class Router extends BaseRouter
         $request = $this->container['request'];
 
         $this->method = $request->getMethod();
-        $this->path = explode('/', isset( $_GET['view'] ) ? sanitize_key( $_GET['view'] ) : 'about');
+        $this->path = explode('/', isset( $_GET['view'] ) ? $_GET['view'] : 'about');
         $this->resource = array_shift($this->path) ?: 'themes';
-        $this->format = isset( $_GET['format'] ) ? sanitize_key( $_GET['format'] ) : 'html';
+        $this->format = isset( $_GET['format'] ) ? preg_replace('/[^\w\d]/', '', $_GET['format']) : 'html';
         $ajax = ($this->format == 'json');
 
         $this->params = [
