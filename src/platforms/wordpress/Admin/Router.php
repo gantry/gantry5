@@ -76,7 +76,7 @@ class Router extends BaseRouter
 
     protected function checkSecurityToken()
     {
-        // Check security nonce and return false on failure.
+        // Check security nonce and die on failure.
         if(check_admin_referer( 'gantry5-layout-manager' ) ) {
             return true;
         }
