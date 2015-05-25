@@ -263,7 +263,7 @@ class Document
             $uri .= '#' . $parts['fragment'];
         }
 
-        return self::domain($domain) . $uri;
+        return static::domain($domain) . $uri;
     }
 
     /**
