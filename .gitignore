@@ -16,10 +16,12 @@ src/vendor/**
 platforms/joomla/com_gantry5/*/common
 platforms/*/*/common
 platforms/*/*/src
+platforms/*/*/assets
+platforms/*/*/engines
 
 # Symbolic links in themes
 themes/*/*/common
-themes/*/*/skeleton
+
 themes/*/*/src
 themes/*/*/cache
 themes/*/*/custom
