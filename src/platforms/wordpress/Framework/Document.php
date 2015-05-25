@@ -79,7 +79,7 @@ class Document extends BaseDocument
         self::$scripts[$pos] = [];
     }
 
-    public static function domain()
+    public static function domain($addDomain = false)
     {
         static $domain;
 
