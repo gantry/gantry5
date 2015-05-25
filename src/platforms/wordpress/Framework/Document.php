@@ -5,8 +5,8 @@ use Gantry\Framework\Base\Document as BaseDocument;
 
 class Document extends BaseDocument
 {
-    public $wp_styles;
-    public $wp_scripts;
+    public static $wp_styles = [];
+    public static $wp_scripts = [];
 
     public static function registerAssets()
     {

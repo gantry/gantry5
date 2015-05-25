@@ -1,48 +1,27 @@
 {% set headerContent %}
-{% block stylesheets %}
-<style>
-#wpcontent {
-    padding-left: 0;
-}
-</style>
-{% endblock %}
-{% block javascript %}
-{% endblock %}
-{% endset %}
-{% do parse_assets(headerContent) %}
+    {% block stylesheets %}
+        <style>
+            #wpcontent {
+                padding-left: 0;
+            }
+        </style>
+        <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/joomla-admin.css')|e }}" type="text/css" />
+    {% endblock %}
 
-{% set footerContent %}
-{% block javascript_footer %}
-{% endblock %}
+    {% block javascript %}
+        <script>
+            var GANTRY_AJAX_SUFFIX = '{{ gantry.ajax_suffix|raw }}';
+            var GANTRY_AJAX_URL = '{{ gantry.route('%ajax%')|e }}';
+            var GANTRY_AJAX_CONF_URL = '{{ gantry.route('configurations/%ajax%')|e }}';
+        </script>
+    {% endblock %}
 {% endset %}
-{% do parse_assets(footerContent, 'footer') %}
+{% do parse_assets(headerContent, 'head', 10) %}
 
 {% block content %}
-    <div id="g5-container" class="container">
-        <div class="grid">
-            <div class="block sidebar-block size-1-7">
-                <nav id="gantry" class="block sidebar-block">
-                    {% include "gantry/partials/navigation.html.twig" %}
-                </nav>
-            </div>
-            <div class="block">
-                <div data-mode-indicator="production"></div>
-                <section id="main">
-                    <div id="main-header">
-                        {% include "gantry/partials/header.html.twig" %}
-                    </div>
-                    <div class="content">
-                        {% block gantry %}
-                        {% endblock %}
-                    </div>
-                </section>
-            </div>
-        </div>
-    </div>
 {% endblock %}
 
 {% block footer_section %}
-    <footer id="footer">
-        <a href="http://gantry.org">Gantry Administration</a> by <a href="http://www.rockettheme.com">RocketTheme</a>.
-    </footer>
 {% endblock %}
+
+{% do gantry.platform.finalize() %}

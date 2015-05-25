@@ -93,13 +93,15 @@ class Router extends BaseRouter
             }
         }
 
-        // Output Gantry response.
-        echo $response;
-
         if ($response instanceof JsonResponse) {
+            // Output Gantry response.
+            echo $response;
+
             // It is much faster and safer to exit now than to let Joomla to send the response.
-            $app->sendHeaders();
-            $app->close();
+            //$app->sendHeaders();
+            //$app->close();
         }
+
+        return $response;
     }
 }

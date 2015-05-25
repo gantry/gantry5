@@ -65,6 +65,4 @@ function gantry_layout_manager() {
     } catch (Exception $e) {
         wp_die( $e->getMessage() );
     }
-
-    echo $output;
 }
