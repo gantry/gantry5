@@ -21,13 +21,13 @@ function gantry_admin_scripts() {
     }
 }
 function gantry_admin_print_styles() {
-    $styles = \Gantry\Framework\Document::$styles;
+    $styles = \Gantry\Framework\Gantry::instance()->styles();
     if ( $styles ) {
         echo implode( "\n", $styles ) . "\n";
     }
 }
 function gantry_admin_print_scripts() {
-    $scripts = \Gantry\Framework\Document::$scripts;
+    $scripts = \Gantry\Framework\Gantry::instance()->scripts();
     if ( $scripts ) {
         echo implode( "\n", $scripts ) . "\n";
     }
@@ -45,31 +45,26 @@ function gantry_layout_manager() {
         return;
     }
 
-    // Define Gantry Admin services.
-    $gantry = Gantry\Framework\Gantry::instance();
-    $gantry['admin.theme'] = function ( $c ) {
-        return new \Gantry\Admin\Theme( GANTRYADMIN_PATH );
-    };
-
-    // Boot the service.
-    $theme = $gantry['admin.theme'];
-    $gantry['base_url'] = \admin_url( 'themes.php?page=layout-manager' );
-    $gantry['routes'] = [
-        'overview' => '',
-        'settings' => '&view=settings',
-        'pages' => '&view=pages_index',
-        'pages/edit' => '&view=pages_edit',
-        'pages/create' => '&view=pages_create',
-        'assignments' => '&view=assignments',
-        'updates' => '&view=updates',
-    ];
-
-    $view = isset( $_GET['view'] ) ? sanitize_key( $_GET['view'] ) : 'overview';
-
-    // Render the page.
-    try {
-        $output = $theme->render( "{$view}.html.twig" );
-    } catch (Exception $e) {
-        wp_die($e->getMessage());
+    // Detect Gantry Framework or fail gracefully.
+    if (!class_exists('Gantry5\Loader')) {
+        wp_die( __( 'Gantry 5 Framework not found.' ) );
     }
+
+    // Initialize administrator or fail gracefully.
+    try {
+        Gantry5\Loader::setup();
+
+        $gantry = Gantry\Framework\Gantry::instance();
+        $gantry['router'] = function ($c) {
+            return new \Gantry\Admin\Router($c);
+        };
+
+        // Dispatch to the controller.
+        $output = $gantry['router']->dispatch();
+
+    } catch (Exception $e) {
+        wp_die( $e->getMessage() );
+    }
+
+    echo $output;
 }
