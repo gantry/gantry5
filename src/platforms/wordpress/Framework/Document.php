@@ -87,7 +87,13 @@ class Document extends BaseDocument
             $url = \get_site_url();
             $components = parse_url($url);
 
-            $domain = !empty($components['host']) ? $components['host'] : '';
+            $scheme = isset($components['scheme']) ? $components['scheme'] . '://' : '';
+            $host = isset($components['host']) ? $components['host'] : '';
+            $port = isset($components['port']) ? ':' . $components['port'] : '';
+            $user = isset($components['user']) ? $components['user'] : '';
+            $pass = isset($components['pass']) ? ':' . $components['pass']  : '';
+            $pass = ($user || $pass) ? "$pass@" : '';
+            $domain = $scheme . $user . $pass . $host . $port;
         }
 
         // Always append domain in WP.
