@@ -12,7 +12,7 @@ class Gantry extends Base\Gantry
      */
     public function styles($location = 'head', $force = false)
     {
-        // Do not display head, Joomla will take care of it (most of the time).
+        // Do not display head, WordPress will take care of it (most of the time).
         return (!$force && in_array($location, ['head', 'footer'])) ? [] : parent::styles($location);
     }
 
@@ -23,7 +23,7 @@ class Gantry extends Base\Gantry
      */
     public function scripts($location = 'head', $force = false)
     {
-        // Do not display head, Joomla will take care of it (most of the time).
+        // Do not display head, WordPress will take care of it (most of the time).
         return (!$force && in_array($location, ['head', 'footer'])) ? [] : parent::scripts($location);
     }
 
