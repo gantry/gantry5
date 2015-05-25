@@ -54,14 +54,13 @@ deploy:
   - provider: s3
     access_key_id: AKIAIGEIWVFNBMVSH2UA
     secret_access_key:
-      secure: "xIMfk6tg/VAwWmLDxuN7GAwUnvznKuBurlUZvoZM2fKWEIEFk6PcoVMxZwhdtYQQP2vNersF+3RWv2Havb1aZj62k+1T8cP+4WDvKgkO+ltkhAO7O3IcoyluWhLkpBrUT/0x2qmuL/jK6Rl65u3H0hs9MehEiWGQmLWcRbAVL2ZoPjwaYoalv7NjP4yffLfDMu0aNlAdaXsIE1ENw7TVU96xXEf1oWoZFeD3yfF4sJ7aJGxbqt7PbUuYwAtPWXnG6HgWuWpDZbTBFkeBux5fwItcmQ1Ynne6MyhKUp1hf2JvI5mLCpjf5hfIbY8IW/x5PDoPx/OY3SFoTWIDMUlbAFdWHEKC+bv5hpGaVetm1VV8uC3HhRBYaOOcoJNFIRFVmHDnkLMahTbFHs2Od7VMpmptTxxKr0jckeqFZWmcnG4L/8CnLJSCan702Av8PK4pdS3aluijWMqltV5Wmr8dI1lt/4+qNVGfuJxZcmE2N+rc0czIqacW11V8uvvDhPo366LU//RjNF3C8KebM6NnKWDUD2m7tDchXcRX1/FKOEoD578zmR8xibyczQ5qJ4aBMIAnRfpDzqPV+PNwv+sj56SF9UcNFeSL23mPZOoJlihKl+u2MYX6WayYZ17ZaENrP/x7lFu390M0aZPvJ/t944nLYpOnJn64XLA4nlx5CAg="
+      secure: GdgT5VmhK5JBC966psroCH3s8mQStdrQhhcSsnM1sVtT2xI0YgTDQvLJQMOLlas+fgN/3uvfaW4pPQYF+HpZ1arP8ByCprziTqY+F/zRSx9V45VMz96pZhHIcSOqibeqVKYV027Vfg3My4w/uY9zpR7eT7onyHp0CAouOfy3uBfoW1qAb4/V5kUXbxZx53hYj6bjAV8gbTy34Ood+H7zLtSv+jXmoQWzPUfsuAAXtB5NaUYg0uPXNbTCU2hsvA6Cb/v6twVGTCBToYpJgDm/I0aqvPUqxkO+fvjLgI/aWL8Dzqf9Y2tacW22mgTJO2fmaLJdhZmf5NZWQgqWWbjuC92GNouyCYctC6iqyc/WLB6GEqe+pUb2Vlrs3lLkUrLnn2ey2vcfK8P7Uj12ZU0Fri/X2X8kh1kN4pK8kGReMMxCMvz93tiNRRROz/rsy4SsLrAcohPHoO2lHmeMsgauUZxFPtu98UfDzG/AFld3uagCcadHe+7z0nVguLNqZh79XEIV4zUsWIvNk6Kw/dJZ34IZN8gU0Zz/jM+XSLMH8eMCNwKPY0KuOoUPtlJicxOgYSKz/mAITO9mHqPMf2Bc739DKDACljLjQGEk5cg0jqAtA7IFdZvGL1tlf+COTUokZ+XAJFkaFGNTmyuDi22Er3nQdbqx5zborhUYf4ixiPs=
     bucket: gantry5
-    local_dir: $PROJ_PKGS_PATH
+    local-dir: "$PROJ_PKGS_PATH"
     upload-dir: nightly
     skip_cleanup: true
     acl: public_read
     on:
-      repo: gantry/gantry5
       branch: develop
 after_deploy:
   - echo "Branch ($TRAVIS_BRANCH) - Tag ($TRAVIS_TAG)"
