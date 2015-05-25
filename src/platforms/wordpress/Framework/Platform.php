@@ -14,6 +14,8 @@ use Pimple\Container;
 
 class Platform extends BasePlatform
 {
+    protected $name = 'wordpress';
+
     public function __construct(Container $container)
     {
         $this->content_dir = Folder::getRelativePath(WP_CONTENT_DIR);
