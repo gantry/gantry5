@@ -1,4 +1,4 @@
-Gantry Framework
+Gantry Framework [![Build Status](https://travis-ci.org/gantry/gantry5.svg)](https://travis-ci.org/gantry/gantry5)
 ================
 
 [![Join the chat at https://gitter.im/gantry/gantry5](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gantry/gantry5?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
