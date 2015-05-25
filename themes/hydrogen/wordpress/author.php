@@ -12,6 +12,10 @@
  * The template for displaying Author Archive pages
  */
 
+/** @var \Gantry\Framework\Theme $theme */
+$theme = $gantry[ 'theme' ];
+$theme->setLayout( 'test' );
+
 global $wp_query;
 
 $data = Timber::get_context();

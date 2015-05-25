@@ -12,6 +12,9 @@
  * Search results page
  */
 
+/** @var \Gantry\Framework\Theme $theme */
+$theme = $gantry[ 'theme' ];
+$theme->setLayout( 'test' );
 
 $templates = array( 'search.twig', 'archive.twig', 'index.twig' );
 $context = Timber::get_context();

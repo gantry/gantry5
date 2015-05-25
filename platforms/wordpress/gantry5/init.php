@@ -63,6 +63,7 @@ function gantry_layout_manager() {
         $output = $gantry['router']->dispatch();
 
     } catch (Exception $e) {
-        wp_die( $e->getMessage() );
+        throw $e;
+//        wp_die( $e->getMessage() );
     }
 }

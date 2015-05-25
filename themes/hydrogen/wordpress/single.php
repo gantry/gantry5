@@ -12,6 +12,10 @@
  * The Template for displaying all single posts
  */
 
+/** @var \Gantry\Framework\Theme $theme */
+$theme = $gantry[ 'theme' ];
+$theme->setLayout( 'test' );
+
 $context = Timber::get_context();
 $post = Timber::query_post();
 

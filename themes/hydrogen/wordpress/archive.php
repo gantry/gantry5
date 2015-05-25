@@ -17,6 +17,10 @@
  * Learn more: http://codex.wordpress.org/Template_Hierarchy
  */
 
+/** @var \Gantry\Framework\Theme $theme */
+$theme = $gantry[ 'theme' ];
+$theme->setLayout( 'test' );
+
 $templates = array( 'archive.twig', 'index.twig' );
 
 $data = Timber::get_context();
