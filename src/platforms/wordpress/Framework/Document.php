@@ -59,7 +59,7 @@ class Document extends BaseDocument
             foreach ($scripts as $script) {
                 switch ($script[':type']) {
                     case 'file':
-                        $src = preg_replace('/(\?.*)$/', '', $style['src']);
+                        $src = preg_replace('/(\?.*)$/', '', $script['src']);
                         \wp_register_script(basename($src, '.js'), $src, array(), false, $in_footer);
                         \wp_enqueue_script(basename($src, '.js'));
                         break;
