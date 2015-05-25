@@ -44,9 +44,20 @@ class Router extends BaseRouter
         return $this;
     }
 
+    protected function makeUri($url)
+    {
+        $components = parse_url($url);
+
+        $path     = isset($components['path']) ? $components['path'] : '';
+        $query    = isset($components['query']) ? '?' . $components['query'] : '';
+        $fragment = isset($components['fragment']) ? '#' . $components['fragment'] : '';
+
+        return "{$path}{$query}{$fragment}";
+    }
+
     public function setTemplate()
     {
-        $this->container['base_url'] = \admin_url( 'themes.php?page=layout-manager' );
+        $this->container['base_url'] = $this->makeUri(\admin_url( 'themes.php?page=layout-manager' ));
 
         $this->container['ajax_suffix'] = '&format=json';
 

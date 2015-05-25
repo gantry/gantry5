@@ -80,6 +80,15 @@ class Document extends BaseDocument
 
     public static function rootUri()
     {
-        return \get_site_url();
+        static $path;
+
+        if (!isset($path)) {
+            $url = \get_site_url();
+            $components = parse_url($url);
+
+            $path = !empty($components['path']) ? $components['path'] : '/';
+        }
+
+        return $path;
     }
 }
