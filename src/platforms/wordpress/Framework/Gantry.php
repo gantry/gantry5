@@ -6,6 +6,28 @@ use Gantry\Component\Config\Config;
 class Gantry extends Base\Gantry
 {
     /**
+     * @param string $location
+     * @param bool   $force
+     * @return array
+     */
+    public function styles($location = 'head', $force = false)
+    {
+        // Do not display head, Joomla will take care of it (most of the time).
+        return (!$force && in_array($location, ['head', 'footer'])) ? [] : parent::styles($location);
+    }
+
+    /**
+     * @param string $location
+     * @param bool $force
+     * @return array
+     */
+    public function scripts($location = 'head', $force = false)
+    {
+        // Do not display head, Joomla will take care of it (most of the time).
+        return (!$force && in_array($location, ['head', 'footer'])) ? [] : parent::scripts($location);
+    }
+
+    /**
      * @throws \LogicException
      */
     protected static function load()

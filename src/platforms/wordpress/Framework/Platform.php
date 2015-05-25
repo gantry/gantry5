@@ -66,4 +66,9 @@ class Platform extends BasePlatform
     {
         Document::registerAssets();
     }
+
+    public function errorHandlerPaths()
+    {
+        return ['|gantry5|'];
+    }
 }
