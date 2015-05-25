@@ -49,7 +49,7 @@ class Platform extends BasePlatform
             return ['' => [$this->gantry_dir . "/engines/{$this->name}", $this->gantry_dir . '/engines/common']];
         }
 
-        return ['' => ['/engines']];
+        return ['' => [$this->gantry_dir . '/engines']];
     }
 
     public function getAssetsPaths()
