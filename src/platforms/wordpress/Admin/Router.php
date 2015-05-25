@@ -65,10 +65,10 @@ class Router extends BaseRouter
         $nonce = wp_create_nonce( 'gantry5-layout-manager' );
 
         $this->container['routes'] = [
-            '1' => "&view=%s&style={$style}&{$nonce}=1",
+            '1' => "&view=%s&_wpnonce={$nonce}",
 
             'themes' => '&view=themes',
-            'picker/layouts' => "&view=layouts&style={$style}&{$nonce}=1",
+            'picker/layouts' => "&view=layouts&_wpnonce={$nonce}",
         ];
 
         return $this;
