@@ -96,6 +96,54 @@
                 ]
             }
         },
+        "wordpress":{
+            "nodes":{
+                "plugin":[
+                    {
+                        "source":"/platforms/wordpress/gantry5",
+                        "destination":"/wp-content/plugins/gantry5"
+                    },
+                    {
+                        "source":"/platforms/common",
+                        "destination":"/wp-content/plugins/gantry5/common"
+                    }
+                ],
+                "library":[
+                    {
+                        "source":"/src/classes",
+                        "destination":"/wp-content/plugins/gantry5/src/classes"
+                    },
+                    {
+                        "source":"/src/vendor",
+                        "destination":"/wp-content/plugins/gantry5/src/vendor"
+                    },
+                    {
+                        "source":"/src/Loader.php",
+                        "destination":"/wp-content/plugins/gantry5/src/Loader.php"
+                    }
+                ],
+                "media":[
+                    {
+                        "source":"/assets",
+                        "destination":"/wp-content/plugins/gantry5/assets"
+                    },
+                    {
+                        "source":"/engines",
+                        "destination":"/wp-content/plugins/gantry5/engines"
+                    }
+                ],
+                "themes":[
+                    {
+                        "source":"/themes/hydrogen/wordpress",
+                        "destination":"/themes/hydrogen"
+                    },
+                    {
+                        "source":"/themes/hydrogen/common",
+                        "destination":"/themes/hydrogen/common"
+                    }
+                ]
+            }
+        },
         "prime":{
             "nodes":{
                 "admin":[
