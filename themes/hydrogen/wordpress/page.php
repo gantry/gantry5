@@ -1,5 +1,14 @@
 <?php
 /**
+ * @package   Gantry 5 Theme
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @license   GNU/GPLv2 and later
+ *
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ */
+
+/*
  * The template for displaying all pages.
  *
  * This is the template that displays all pages by default.
@@ -13,12 +22,6 @@
  * OR
  * /mytheme/page-mypage.php
  * (in which case you'll want to duplicate this file and save to the above path)
- *
- * Methods for TimberHelper can be found in the /functions sub-directory
- *
- * @package  WordPress
- * @subpackage  Timber
- * @since    Timber 0.1
  */
 
 $context = Timber::get_context();
