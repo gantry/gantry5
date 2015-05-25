@@ -175,6 +175,12 @@ class Document
         return '';
     }
 
+    public static function domain($addDomain = false)
+    {
+        return '';
+    }
+
+
     /**
      * Return URL to the resource.
      *
@@ -257,11 +263,7 @@ class Document
             $uri .= '#' . $parts['fragment'];
         }
 
-        if ($domain) {
-            // TODO: Append scheme, host and port to the URL.
-        }
-
-        return $uri;
+        return self::domain($domain) . $uri;
     }
 
     /**

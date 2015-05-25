@@ -1,6 +1,7 @@
 <?php
 namespace Gantry\Framework;
 
+use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Document as BaseDocument;
 
 class Document extends BaseDocument
@@ -76,6 +77,21 @@ class Document extends BaseDocument
         }
 
         self::$scripts[$pos] = [];
+    }
+
+    public static function domain()
+    {
+        static $domain;
+
+        if (!isset($domain)) {
+            $url = \get_site_url();
+            $components = parse_url($url);
+
+            $domain = !empty($components['host']) ? $components['host'] : '';
+        }
+
+        // Always append domain in WP.
+        return $domain;
     }
 
     public static function rootUri()
