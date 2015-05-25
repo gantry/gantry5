@@ -82,3 +82,37 @@ after_deploy:
       git commit -am "Release [$TRAVIS_TAG] - Automatic Version Number Updates";
       git push --force --quiet --set-upstream https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git master:master &>/dev/null;
     fi
+  - if [ "$TRAVIS_BRANCH" == 'develop' ]; then
+      FILES_PATH=$PROJ_PKGS_PATH;
+      JSON="{";
+      FILES=$FILES_PATH/*.zip;
+      COUNT=`ls $FILES 2>/dev/null | wc -l | awk '{print $1}'`;
+      COMMIT=$TRAVIS_COMMIT;
+      SHORT_COMMIT=$(echo $COMMIT | cut -c1-9)
+      CURRENT_DATE=`date +%s`
+
+      JSON+="\"count\":$COUNT,";
+      JSON+="\"commit\":\"$COMMIT\",";
+      JSON+="\"commit_short\":\"$SHORT_COMMIT\",";
+      JSON+="\"date\":\"$CURRENT_DATE\",";
+      JSON+="\"files\":[";
+
+      i=0;
+      for file in ${FILES[@]}; do
+          i=$(($i + 1));
+          SIZE=`wc -c < $file | awk '{print $1}'`;
+          DATE=`stat -f "%m" $file`;
+          JSON+="{";
+          JSON+="\"file\":\"${file##*/}\",";
+          JSON+="\"size\":$SIZE,";
+          JSON+="\"date\":$DATE";
+          JSON+="}";
+
+          if [ $i != $COUNT ]; then
+              JSON+=",";
+          fi
+      done;
+      JSON+="]}";
+
+      echo $JSON > "$FILES_PATH/map.json";
+    fi
