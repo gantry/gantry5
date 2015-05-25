@@ -357,6 +357,21 @@
                 <include name="*.xml"/>
             </fileset>
         </copy>
+
+        <echo message="Building Modules.." />
+
+        <copy todir="${tmp_dir}/packages/mod_gantry5_particle" overwrite="true">
+            <fileset dir="${path.platforms}/joomla/mod_gantry5_particle"/>
+        </copy>
+
+        <!-- Add version information to all xml files -->
+        <copy todir="${tmp_dir}/packages/mod_gantry5_particle" overwrite="true">
+            <filterchain refid="filter"/>
+            <fileset dir="${path.platforms}/joomla/mod_gantry5_particle">
+                <include name="*.xml"/>
+            </fileset>
+        </copy>
+
     </target>
 
     <target name="build-themes" depends="build-installer">
