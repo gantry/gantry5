@@ -19,7 +19,7 @@
         <ul class="g-grid">
             {# TODO: Need to inject the Base Outline at the top of the list #}
             {% for name, title in gantry.configurations.user %}
-                {# set preset = gantry.configurations.layoutPreset(name) #}
+                {%  set preset = gantry.configurations.layoutPreset(name) %}
                 <li class="card g-block size-1-4">
                     <div class="page">
                         <h4>
@@ -59,7 +59,7 @@
         <h2>System Outlines</h2>
         <ul class="g-grid">
             {% for name, title in gantry.configurations.system %}
-                {# set preset = gantry.configurations.layoutPreset(name) #}
+                {%  set preset = gantry.configurations.layoutPreset(name) %}
                 <li class="card g-block size-1-4">
                     <div class="page">
                         <h4>{{ title }}</h4>

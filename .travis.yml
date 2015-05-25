@@ -5,6 +5,10 @@ branches:
   except:
     - master
     - /^feature\//
+notifications:
+  email:
+    on_success: never
+    on_failure: always
 env:
   global:
     # GH_TOKEN
