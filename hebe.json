@@ -42,6 +42,10 @@
                         "destination":"/libraries/gantry5/classes"
                     },
                     {
+                        "source":"/src/platforms",
+                        "destination":"/libraries/gantry5/platforms"
+                    },
+                    {
                         "source":"/platforms/joomla/lib_gantry5/language",
                         "destination":"/libraries/gantry5/language"
                     },
@@ -50,8 +54,16 @@
                         "destination":"/libraries/gantry5/vendor"
                     },
                     {
+                        "source":"/src/bootstrap.php",
+                        "destination":"/libraries/gantry5/bootstrap.php"
+                    },
+                    {
                         "source":"/src/Loader.php",
                         "destination":"/libraries/gantry5/Loader.php"
+                    },
+                    {
+                        "source":"/src/RealLoader.php",
+                        "destination":"/libraries/gantry5/RealLoader.php"
                     }
                 ],
                 "plugins":[
@@ -110,16 +122,8 @@
                 ],
                 "library":[
                     {
-                        "source":"/src/classes",
-                        "destination":"/wp-content/plugins/gantry5/src/classes"
-                    },
-                    {
-                        "source":"/src/vendor",
-                        "destination":"/wp-content/plugins/gantry5/src/vendor"
-                    },
-                    {
-                        "source":"/src/Loader.php",
-                        "destination":"/wp-content/plugins/gantry5/src/Loader.php"
+                        "source":"/src",
+                        "destination":"/wp-content/plugins/gantry5/src"
                     }
                 ],
                 "media":[
