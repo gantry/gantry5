@@ -5,10 +5,6 @@ add_action( 'admin_enqueue_scripts', 'gantry_admin_scripts' );
 add_action( 'admin_print_styles', 'gantry_admin_print_styles', 200 );
 add_action( 'admin_print_scripts', 'gantry_admin_print_scripts', 200 );
 
-// FIXME Get current theme data
-//$gantry = Gantry\Framework\Gantry::instance();
-//$theme = $gantry['theme']->details();
-
 // Adjust menu to contain Gantry stuff.
 add_action(
     'admin_menu',

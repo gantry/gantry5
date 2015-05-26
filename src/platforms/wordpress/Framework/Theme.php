@@ -54,17 +54,16 @@ class Theme extends Base\Theme
     public function widgets_init()
     {
         $gantry = Gantry::instance();
-        $positions = (array) $gantry['config']->get( 'positions' );
 
-        foreach ( $positions as $name => $params ) {
+        $positions = $gantry['configurations']->positions();
+
+        foreach ( $positions as $name => $title ) {
             $params = (array) $params;
-            if ( !isset( $params['name'] ) ) {
-                $params['name'] = ucfirst($name);
-            }
+
             register_sidebar( array(
-                'name'          => __( $params['name'], 'gantry5' ),
+                'name'          => __( $title, 'gantry5' ),
                 'id'            => $name,
-                'description'   => __( $params['name'], 'gantry5' ),
+                'description'   => __( $title, 'gantry5' ),
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
                 'after_widget'  => '</aside>',
                 'before_title'  => '<h3 class="widget-title">',
