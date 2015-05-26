@@ -28,8 +28,10 @@ class Router extends BaseRouter
         $this->method = $request->getMethod();
         $this->path = explode('/', isset( $_GET['view'] ) ? $_GET['view'] : 'about');
         $this->resource = array_shift($this->path) ?: 'themes';
-        $this->format = isset( $_GET['format'] ) ? preg_replace('/[^\w\d]/', '', $_GET['format']) : 'html';
-        $ajax = ($this->format == 'json');
+
+        // FIXME: make it better by detecting admin-ajax.php..
+        $ajax = isset( $_GET['gantry5'] );
+        $this->format = $ajax ? 'json' : 'html';
 
         $this->params = [
             'ajax' => $ajax,
@@ -57,9 +59,9 @@ class Router extends BaseRouter
 
     public function setTemplate()
     {
-        $this->container['base_url'] = $this->makeUri(\admin_url( 'themes.php?page=layout-manager' ));
+        $this->container['base_url'] = $this->makeUri(\admin_url( 'admin-ajax.php?page=layout-manager' ));
 
-        $this->container['ajax_suffix'] = '&format=json';
+        $this->container['ajax_suffix'] = '&action=gantry5';
 
         // Create nonce
         $nonce = wp_create_nonce( 'gantry5-layout-manager' );
@@ -91,12 +93,6 @@ class Router extends BaseRouter
      */
     protected function send(Response $response)
     {
-/*
-        $app = \JFactory::getApplication();
-        $document = \JFactory::getDocument();
-        $document->setCharset($response->charset);
-        $document->setMimeEncoding($response->mimeType);
-*/
         // Output HTTP header.
         header("HTTP/1.1 {$response->getStatus()}", true, $response->getStatusCode());
         header("Content-Type: {$response->mimeType}; charset={$response->charset}");
@@ -111,10 +107,7 @@ class Router extends BaseRouter
         if ($response instanceof JsonResponse) {
             // Output Gantry response.
             echo $response;
-
-            // It is much faster and safer to exit now than to let Joomla to send the response.
-            //$app->sendHeaders();
-            //$app->close();
+            die();
         }
 
         return $response;

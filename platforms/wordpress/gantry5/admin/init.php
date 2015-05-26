@@ -4,6 +4,7 @@ defined('ABSPATH') or die;
 add_action( 'admin_enqueue_scripts', 'gantry_admin_scripts' );
 add_action( 'admin_print_styles', 'gantry_admin_print_styles', 200 );
 add_action( 'admin_print_scripts', 'gantry_admin_print_scripts', 200 );
+add_action( 'wp_ajax_gantry5', 'gantry_layout_manager' );
 
 // Adjust menu to contain Gantry stuff.
 add_action(
