@@ -53,9 +53,9 @@ You will notice the following menu items in the Gantry 5 Administrator:
 
 4. **Clear Cache**: This button clears the cache files related to Gantry. This includes all of the temporary files outside of CSS and configuration information.
 
-5. **Configuration Dropdown**: This dropdown makes it easy to quickly switch between Configurations without having to leave the Gantry Administrator.
+5. **Outlines Dropdown**: This dropdown makes it easy to quickly switch between Outlines without having to leave the Gantry Administrator.
 
-6. **Styles**: This administrative panel gives you access to style related configuration settings. This includes things like theme colors, fonts, style presets, and more.
+6. **Styles**: This administrative panel gives you access to style related outline settings. This includes things like theme colors, fonts, style presets, and more.
 
 7. **Settings**: This administrative panel offers you the ability to configure the functional settings of the theme. This includes setting defaults for Particles, as well as enabling/disabling individual Particles.
 
@@ -63,13 +63,13 @@ You will notice the following menu items in the Gantry 5 Administrator:
 
 [**Learn More**](http://docs.gantry.org/gantry5/configure/gantry-admin)
 
-## What are Configurations, Particles, Atoms, etc.?
+## What are Outlines, Particles, Atoms, etc.?
 
 Because Gantry 5 is so different from any version of Gantry before it, we came up with some terms to help make sense of the relationships Gantry's new features have with one-another. Here is a quick breakdown of commonly used terms related to Gantry 5.
 
 | Term          | Definition                                                                                                                                             |
 | :-----        | :-----                                                                                                                                                 |
-| Configuration | A configurable style used in one or more areas of your site. It serves as the container on which a page's style, settings, and layout are set.         |
+| Outline       | A configurable style used in one or more areas of your site. It serves as the container on which a page's style, settings, and layout are set.         |
 | Particle      | A typically small block of data used on the front end. It acts a lot like a widget/module, but can be easily configured in the Gantry 5 Administrator. |
 | Atom          | A type of Particle that contains non-rendered data, such as custom scripting (JS, CSS, etc.) or analytics scripts for traffic tracking.                |
 
