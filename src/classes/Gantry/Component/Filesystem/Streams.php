@@ -28,6 +28,11 @@ class Streams
     protected $schemes = [];
 
     /**
+     * @var array
+     */
+    protected $registered;
+
+    /**
      * @var UniformResourceLocator
      */
     protected $locator;
@@ -75,21 +80,30 @@ class Streams
                 $type = '\\Rockettheme\\Toolbox\\StreamWrapper\\' . $type;
             }
             $this->schemes[$scheme] = $type;
+
+            if (isset($this->registered)) {
+                $this->doRegister($scheme, $type);
+            }
         }
     }
 
     public function register()
     {
-        $registered = stream_get_wrappers();
+        $this->registered = stream_get_wrappers();
 
         foreach ($this->schemes as $scheme => $type) {
-            if (in_array($scheme, $registered)) {
-                stream_wrapper_unregister($scheme);
-            }
+            $this->doRegister($scheme, $type);
+        }
+    }
 
-            if (!stream_wrapper_register($scheme, $type)) {
-                throw new \InvalidArgumentException("Stream '{$type}' could not be initialized.");
-            }
+    protected function doRegister($scheme, $type)
+    {
+        if (in_array($scheme, $this->registered)) {
+            stream_wrapper_unregister($scheme);
+        }
+
+        if (!stream_wrapper_register($scheme, $type)) {
+            throw new \InvalidArgumentException("Stream '{$type}' could not be initialized.");
         }
     }
 }
