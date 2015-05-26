@@ -117,5 +117,5 @@ after_deploy:
       git push --force --quiet --set-upstream https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git master:master &>/dev/null;
     fi
   - if [ "$TRAVIS_BRANCH" == 'develop' ]; then
-      curl http://getgrav.org/cibuilds >/dev/null 2>&1;
+      curl -L http://gantry.org/cibuilds >/dev/null 2>&1;
     fi
