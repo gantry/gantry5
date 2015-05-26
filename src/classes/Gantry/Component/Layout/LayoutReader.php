@@ -33,10 +33,10 @@ class LayoutReader
     public static function data(array $data, $array = true)
     {
         // Check if we have pre-saved configuration.
-        if (isset($data['children'])) {
+        if (array_key_exists('children', $data)) {
             $preset = isset($data['preset']) && is_array($data['preset']) ? $data['preset'] : [];
 
-            $result = self::object($data['children']);
+            $result = is_array($data['children']) ? self::object($data['children']) : [];
 
             $invisible = [
                 'offcanvas' => self::parse('offcanvas', [], 0),
