@@ -59,6 +59,7 @@ class Router extends BaseRouter
 
     public function setTemplate()
     {
+        // FIXME: in here use pages.php, but in AJAX we need admin-ajax.php.
         $this->container['base_url'] = $this->makeUri(\admin_url( 'admin-ajax.php?page=layout-manager' ));
 
         $this->container['ajax_suffix'] = '&action=gantry5';

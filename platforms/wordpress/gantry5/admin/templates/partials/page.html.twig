@@ -5,7 +5,9 @@
                 padding-left: 0;
             }
         </style>
-        <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/wordpress-admin.css')|e }}" type="text/css" />
+        {% if 0 %}
+        <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/wordpress-admin.css') }}" type="text/css" />
+        {% endif %}
     {% endblock %}
 
     {% block javascript %}
