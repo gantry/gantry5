@@ -32,22 +32,10 @@ body.gantry5 #g5-container .main-block {
 body.gantry5 #wpbody-content {
   padding-bottom: 0;
 }
-/* line 38, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
-body.gantry5 #footer a {
-  color: #0073AA;
-}
-/* line 43, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
-body.gantry5 #wpfooter {
-  background-color: #e7e7e7;
-}
-/* line 45, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
-body.gantry5 #wpfooter a {
-  color: #0073AA;
-}
 
-/* line 2, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_sidebar.scss */
-#adminmenuwrap ul, #adminmenuwrap dl {
-  margin-left: auto;
+/* line 40, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+body.gantry5.auto-fold #wpcontent {
+  padding-left: 0;
 }
 
 /* line 11, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
@@ -65,6 +53,11 @@ body.gantry5 #wpfooter a {
 #g5-container .button-primary:not(.disabled):not([disabled]):hover {
   background: #005e8b;
   color: #fff;
+}
+
+/* line 2, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_sidebar.scss */
+#adminmenuwrap ul, #adminmenuwrap dl {
+  margin-left: auto;
 }
 
 /* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
@@ -139,6 +132,19 @@ body.gantry5 #g5-container .tooltip {
   opacity: 1;
   line-height: inherit;
   font-size: inherit;
+}
+
+/* line 3, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5 #footer a {
+  color: #0073AA;
+}
+/* line 8, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5 #wpfooter {
+  background-color: #e7e7e7;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5 #wpfooter a {
+  color: #0073AA;
 }
 
 /* line 3, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_overview.scss */

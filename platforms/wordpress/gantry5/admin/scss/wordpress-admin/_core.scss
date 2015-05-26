@@ -34,16 +34,10 @@ body.gantry5 {
         padding-bottom: 0;
     }
 
-    #footer {
-        a {
-            color: $core-accent;
-        }
-    }
+}
 
-    #wpfooter {
-        background-color: #e7e7e7;
-        a {
-            color: $core-accent;
-        }
+body.gantry5.auto-fold {
+    #wpcontent {
+        padding-left: 0;
     }
 }
