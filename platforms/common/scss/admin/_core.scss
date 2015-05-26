@@ -151,6 +151,8 @@ a {
     font-weight: $font-weight-medium;
     border-top: 1px solid #dedede;
     font-family: $font-family-default;
+    font-size: $core-font-size;
+    line-height: $core-line-height;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
