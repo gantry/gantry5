@@ -69,8 +69,8 @@ paths = {
             load: './engines/common/nucleus/scss'
         },
         { // admin - wordpress
-            in: './platforms/wordpress/gantry5/admin/scss/wordpress-admin.scss',
-            out: './platforms/wordpress/gantry5/admin/css-compiled/wordpress-admin.css',
+            in: './platforms/wordpress/gantry5/scss/wordpress-admin.scss',
+            out: './platforms/wordpress/gantry5/css-compiled/wordpress-admin.css',
             load: './engines/common/nucleus/scss'
         },
         { // nucleus
