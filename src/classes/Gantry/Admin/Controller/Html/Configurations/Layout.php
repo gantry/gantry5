@@ -19,6 +19,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Layout\Layout as LayoutObject;
+use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
@@ -133,16 +134,14 @@ class Layout extends HtmlController
         $layout = json_decode($_POST['layout'], true);
         $preset = isset($_POST['preset']) ? json_decode($_POST['preset'], true) : '';
 
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
+        // Create layout from the data.
+        $layout = new LayoutObject(
+            $configuration,
+            LayoutReader::data(['preset' => $preset, 'children' => $layout])
+        );
 
-        // Save layout into custom directory for the current theme.
-        $save_dir = $locator->findResource("gantry-config://{$configuration}", true, true);
-        $filename = "{$save_dir}/layout.yaml";
-
-        $file = CompiledYamlFile::instance($filename);
-        $file->settings(['inline' => 20]);
-        $file->save(['preset' => $preset, 'children' => $layout]);
+        // Save layout and its index.
+        $layout->save()->saveIndex();
 
         // Fire save event.
         $event = new Event;
