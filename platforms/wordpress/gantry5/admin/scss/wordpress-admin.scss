@@ -1,0 +1,23 @@
+// Load Admin Configuration
+@import "configuration/admin/base";
+
+// Core
+@import "wordpress-admin/core";
+
+// Sidebar
+@import "wordpress-admin/sidebar";
+
+// Buttons
+@import "wordpress-admin/buttons";
+
+// Headers
+@import "wordpress-admin/headers";
+
+// Overview
+@import "wordpress-admin/overview";
+
+// Typography
+@import "wordpress-admin/typography";
+
+// Assignments
+@import "wordpress-admin/navbar";

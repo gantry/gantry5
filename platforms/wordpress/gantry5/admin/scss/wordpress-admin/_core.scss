@@ -1,0 +1,44 @@
+body.gantry5 {
+    color: $light-gray;
+    background-color: $body-bg !important;
+
+    #g5-container {
+        .inner-container {
+            margin: 0;
+        }
+
+        li {
+            line-height: inherit;
+        }
+
+        textarea, input {
+            box-shadow: none;
+        }
+
+        input, button, select, textarea {
+            font-family: inherit;
+        }
+
+        .main-block {
+            min-height: 81.5vh;
+        }
+
+    }
+
+    #wpbody-content {
+        padding-bottom: 0;
+    }
+
+    #footer {
+        a {
+            color: $core-accent;
+        }
+    }
+
+    #wpfooter {
+        background-color: #e7e7e7;
+        a {
+            color: $core-accent;
+        }
+    }
+}

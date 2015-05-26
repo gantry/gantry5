@@ -81,6 +81,11 @@ paths = {
             in: './engines/joomla/nucleus/scss/joomla.scss',
             out: './engines/joomla/nucleus/css-compiled/joomla.css',
             load: './engines/common/nucleus/scss'
+        },
+        { // nucleus - wordpress
+            in: './engines/wordpress/nucleus/scss/wordpress.scss',
+            out: './engines/wordpress/nucleus/css-compiled/wordpress.css',
+            load: './engines/common/nucleus/scss'
         }
     ],
     minify: [
