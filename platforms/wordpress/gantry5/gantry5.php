@@ -23,5 +23,5 @@ if ( !is_admin() ) {
 
 if (!defined('GANTRYADMIN_PATH')) {
     // Works also with symlinks.
-    define('GANTRYADMIN_PATH', GANTRY5_PATH);
+    define('GANTRYADMIN_PATH', GANTRY5_PATH . '/admin');
 }
