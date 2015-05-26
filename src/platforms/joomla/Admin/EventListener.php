@@ -45,16 +45,10 @@ class EventListener implements EventSubscriberInterface
 
     public function onLayoutSave(Event $event)
     {
-        /** @var Configurations $configurations */
-        $configurations = $event->gantry['configurations'];
-
-        $list = [];
-        foreach ($configurations as $name => $title) {
-            $list += Layout::instance($name)->positions();
-        }
+        $positions = $event->gantry['configurations']->positions();
 
         $manifest = new Manifest($event->gantry['theme.name']);
-        $manifest->setPositions(array_keys($list));
+        $manifest->setPositions(array_keys($positions));
         $manifest->save();
     }
 
