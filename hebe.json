@@ -117,7 +117,7 @@
                     },
                     {
                         "source":"/platforms/common",
-                        "destination":"/wp-content/plugins/gantry5/common"
+                        "destination":"/wp-content/plugins/gantry5/admin/common"
                     }
                 ],
                 "library":[
