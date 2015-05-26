@@ -10,6 +10,7 @@ var $              = require('elements'),
     modal          = ui.modal,
     toastr         = ui.toastr,
 
+    parseAjaxURI   = require('./utils/get-ajax-url').parse,
     getAjaxSuffix  = require('./utils/get-ajax-suffix'),
 
     flags          = require('./utils/flags-state'),
@@ -138,7 +139,7 @@ ready(function() {
             type    = element.data('save'),
             extras  = '',
             page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
-            saveURL = trim(window.location.href, '#') + getAjaxSuffix();
+            saveURL = parseAjaxURI(trim(window.location.href, '#') + getAjaxSuffix());
 
         switch (page) {
             case 'layout':
@@ -156,7 +157,7 @@ ready(function() {
                 data.ordering = JSON.stringify(mm.menumanager.ordering);
                 data.items = JSON.stringify(mm.menumanager.items);
 
-                saveURL = element.parent('form').attribute('action') + getAjaxSuffix();
+                saveURL = parseAjaxURI(element.parent('form').attribute('action') + getAjaxSuffix());
                 break;
 
             case 'other':
@@ -288,7 +289,7 @@ ready(function() {
         if (!href) { return false; }
 
         indicator.showIndicator();
-        request(method, href + getAjaxSuffix(), function(error, response) {
+        request(method, parseAjaxURI(href + getAjaxSuffix()), function(error, response) {
             if (!response.body.success) {
                 modal.open({
                     content: response.body.html || response.body,

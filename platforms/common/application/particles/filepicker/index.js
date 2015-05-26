@@ -11,6 +11,7 @@ var $             = require('../../utils/elements.utils'),
     deepFillIn    = require('mout/object/deepFillIn'),
     modal         = require('../../ui').modal,
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
     dropzone      = require('dropzone');
 
@@ -85,7 +86,7 @@ var FilePicker = new prime({
                 thumbnailWidth: 100,
                 thumbnailHeight: 100,
                 url: bind(function(file) {
-                    return getAjaxURL('filepicker/upload/' + this.getPath() + file[0].name) + getAjaxSuffix();
+                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + this.getPath() + file[0].name) + getAjaxSuffix());
                 }, this)
             });
 
@@ -231,7 +232,7 @@ var FilePicker = new prime({
             fieldData.subfolder = true;
 
             element.showIndicator('fa fa-li fa-fw fa-spin-fast fa-spinner');
-            request(getAjaxURL('filepicker') + getAjaxSuffix(), fieldData).send(bind(function(error, response) {
+            request(parseAjaxURI(getAjaxURL('filepicker') + getAjaxSuffix()), fieldData).send(bind(function(error, response) {
                 element.hideIndicator();
                 this.addActiveState(element);
 

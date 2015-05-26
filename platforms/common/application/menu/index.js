@@ -10,6 +10,7 @@ var ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
     clamp         = require('mout/math/clamp'),
     contains      = require('mout/array/contains'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     validateField = require('../utils/field-validation');
 
@@ -231,7 +232,7 @@ ready(function() {
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&'), function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,

@@ -11,6 +11,7 @@ var $              = require('elements'),
     modal          = ui.modal,
     toastr         = ui.toastr,
 
+    parseAjaxURI   = require('./utils/get-ajax-url').parse,
     getAjaxSuffix  = require('./utils/get-ajax-suffix'),
 
     flags          = require('./utils/flags-state'),
@@ -139,7 +140,7 @@ ready(function() {
             type    = element.data('save'),
             extras  = '',
             page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
-            saveURL = trim(window.location.href, '#') + getAjaxSuffix();
+            saveURL = parseAjaxURI(trim(window.location.href, '#') + getAjaxSuffix());
 
         switch (page) {
             case 'layout':
@@ -157,7 +158,7 @@ ready(function() {
                 data.ordering = JSON.stringify(mm.menumanager.ordering);
                 data.items = JSON.stringify(mm.menumanager.items);
 
-                saveURL = element.parent('form').attribute('action') + getAjaxSuffix();
+                saveURL = parseAjaxURI(element.parent('form').attribute('action') + getAjaxSuffix());
                 break;
 
             case 'other':
@@ -289,7 +290,7 @@ ready(function() {
         if (!href) { return false; }
 
         indicator.showIndicator();
-        request(method, href + getAjaxSuffix(), function(error, response) {
+        request(method, parseAjaxURI(href + getAjaxSuffix()), function(error, response) {
             if (!response.body.success) {
                 modal.open({
                     content: response.body.html || response.body,
@@ -332,7 +333,7 @@ var modules = {
 window.G5 = modules;
 module.exports = modules;
 
-},{"./assignments":3,"./configurations":4,"./fields":5,"./lm":23,"./menu":27,"./particles":35,"./styles":39,"./ui":43,"./ui/popover":45,"./utils/ajaxify-links":50,"./utils/field-validation":54,"./utils/flags-state":55,"./utils/get-ajax-suffix":56,"./utils/rAF-polyfill":60,"agent":62,"elements":89,"elements/attributes":84,"elements/delegation":86,"elements/domready":87,"elements/events":88,"elements/insertion":90,"elements/traversal":112,"elements/zen":113,"moofx":114,"mout/queryString/setParam":218,"mout/string/interpolate":229,"mout/string/trim":236}],2:[function(require,module,exports){
+},{"./assignments":3,"./configurations":4,"./fields":5,"./lm":23,"./menu":27,"./particles":35,"./styles":39,"./ui":43,"./ui/popover":45,"./utils/ajaxify-links":50,"./utils/field-validation":54,"./utils/flags-state":55,"./utils/get-ajax-suffix":56,"./utils/get-ajax-url":57,"./utils/rAF-polyfill":60,"agent":62,"elements":89,"elements/attributes":84,"elements/delegation":86,"elements/domready":87,"elements/events":88,"elements/insertion":90,"elements/traversal":112,"elements/zen":113,"moofx":114,"mout/queryString/setParam":218,"mout/string/interpolate":229,"mout/string/trim":236}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -564,10 +565,11 @@ var $             = require('elements'),
     toastr        = require('../ui').toastr,
     request       = require('agent'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxURL    = require('../utils/get-ajax-url').global,
 
     flags         = require('../utils/flags-state'),
-    warningURL    = getAjaxURL('confirmdeletion') + getAjaxSuffix();
+    warningURL    = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
 
 
 var Configurations = {};
@@ -623,7 +625,7 @@ ready(function() {
         element.hideIndicator();
         element.showIndicator();
 
-        request(method, href + getAjaxSuffix(), {}, function(error, response) {
+        request(method, parseAjaxURI(href + getAjaxSuffix()), {}, function(error, response) {
             if (!response.body.success) {
                 modal.open({
                     content: response.body.html || response.body,
@@ -673,7 +675,7 @@ ready(function() {
             parent.showIndicator();
             parent.find('[data-title-edit]').addClass('disabled');
 
-            request(method, href + getAjaxSuffix(), { title: trim(title) }, function(error, response) {
+            request(method, parseAjaxURI(href + getAjaxSuffix()), { title: trim(title) }, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
                         content: response.body.html || response.body,
@@ -2118,6 +2120,7 @@ var ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
     forEach       = require('mout/collection/forEach'),
 
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
 
     Builder       = require('./builder'),
@@ -2358,7 +2361,7 @@ ready(function() {
         if (!element.PopoverDefined) {
             element.getPopover({
                 type: 'async',
-                url: element.data('lm-switcher') + getAjaxSuffix(),
+                url: parseAjaxURI(element.data('lm-switcher') + getAjaxSuffix()),
                 allowElementsClick: '.g-tabs a'
             });
         }
@@ -2390,7 +2393,7 @@ ready(function() {
             data.layout = JSON.stringify(lm.builder.serialize());
         }
 
-        request(method, element.data('switch') + getAjaxSuffix(), data, function(error, response) {
+        request(method, parseAjaxURI(element.data('switch') + getAjaxSuffix()), data, function(error, response) {
             element.hideIndicator();
 
             if (!response.body.success) {
@@ -2464,7 +2467,7 @@ ready(function() {
             content: 'Loading',
             method: 'post',
             data: data,
-            remote: settingsURL + getAjaxSuffix(),
+            remote: parseAjaxURI(settingsURL + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
@@ -2512,7 +2515,7 @@ ready(function() {
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,
@@ -2588,7 +2591,7 @@ module.exports = {
     history: lmhistory,
     savestate: savestate
 };
-},{"../ui":43,"../ui/popover":45,"../utils/field-validation":54,"../utils/get-ajax-suffix":56,"../utils/history":59,"../utils/save-state":61,"./builder":20,"./history":22,"./layoutmanager":24,"agent":62,"elements/attributes":84,"elements/domready":87,"elements/zen":113,"mout/array/contains":143,"mout/collection/forEach":164,"mout/collection/size":166,"mout/string/trim":236}],24:[function(require,module,exports){
+},{"../ui":43,"../ui/popover":45,"../utils/field-validation":54,"../utils/get-ajax-suffix":56,"../utils/get-ajax-url":57,"../utils/history":59,"../utils/save-state":61,"./builder":20,"./history":22,"./layoutmanager":24,"agent":62,"elements/attributes":84,"elements/domready":87,"elements/zen":113,"mout/array/contains":143,"mout/collection/forEach":164,"mout/collection/size":166,"mout/string/trim":236}],24:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
@@ -3406,6 +3409,7 @@ var $             = require('elements'),
     request       = require('agent'),
     indexOf       = require('mout/array/indexOf'),
     trim          = require('mout/string/trim'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxURL    = require('../utils/get-ajax-url').global,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     flags         = require('../utils/flags-state'),
@@ -3455,7 +3459,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
             content: 'Loading',
             method: 'post',
             //data: data,
-            remote: $(this.block).find('.config-cog').attribute('href') + getAjaxSuffix(),
+            remote: parseAjaxURI($(this.block).find('.config-cog').attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, modal) {
                 var search = modal.elements.content.find('.search input'),
                     blocks = modal.elements.content.search('[data-mm-type]'),
@@ -3501,7 +3505,7 @@ var StepTwo = function(data, content, button) {
         uri = getAjaxURL(item.type + '/' + item.particle);
     }
 
-    request('post', uri + getAjaxSuffix(), data, function(error, response) {
+    request('post', parseAjaxURI(uri + getAjaxSuffix()), data, function(error, response) {
         if (!response.body.success) {
             modal.open({
                 content: response.body.html || response.body,
@@ -3559,7 +3563,7 @@ var StepTwo = function(data, content, button) {
                 dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
             }
 
-            request(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
+            request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
                         content: response.body.html || response.body,
@@ -3695,6 +3699,7 @@ var ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
     clamp         = require('mout/math/clamp'),
     contains      = require('mout/array/contains'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     validateField = require('../utils/field-validation');
 
@@ -3916,7 +3921,7 @@ ready(function() {
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix(), dataString.join('&'), function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&'), function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,
@@ -3962,7 +3967,7 @@ ready(function() {
 module.exports = {
     menumanager: menumanager
 };
-},{"../ui":43,"../utils/field-validation":54,"../utils/get-ajax-suffix":56,"./extra-items":26,"./menumanager":28,"agent":62,"elements":89,"elements/domready":87,"elements/zen":113,"mout/array/contains":143,"mout/math/clamp":189,"mout/string/trim":236}],28:[function(require,module,exports){
+},{"../ui":43,"../utils/field-validation":54,"../utils/get-ajax-suffix":56,"../utils/get-ajax-url":57,"./extra-items":26,"./menumanager":28,"agent":62,"elements":89,"elements/domready":87,"elements/zen":113,"mout/array/contains":143,"mout/math/clamp":189,"mout/string/trim":236}],28:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     $         = require('../utils/elements.utils'),
@@ -4452,6 +4457,7 @@ var ready         = require('elements/domready'),
 
     trim          = require('mout/string/trim'),
 
+    parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
     validateField = require('../../utils/field-validation');
 
@@ -4678,7 +4684,7 @@ ready(function() {
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,
@@ -4724,7 +4730,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":43,"../../utils/field-validation":54,"../../utils/get-ajax-suffix":56,"agent":62,"elements":89,"elements/domready":87,"elements/insertion":90,"elements/zen":113,"mout/array/indexOf":152,"mout/array/last":156,"mout/string/trim":236,"sortablejs":272}],30:[function(require,module,exports){
+},{"../../ui":43,"../../utils/field-validation":54,"../../utils/get-ajax-suffix":56,"../../utils/get-ajax-url":57,"agent":62,"elements":89,"elements/domready":87,"elements/insertion":90,"elements/zen":113,"mout/array/indexOf":152,"mout/array/last":156,"mout/string/trim":236,"sortablejs":272}],30:[function(require,module,exports){
 "use strict";
 
 var prime      = require('prime'),
@@ -5461,6 +5467,7 @@ var $             = require('../../utils/elements.utils'),
     deepFillIn    = require('mout/object/deepFillIn'),
     modal         = require('../../ui').modal,
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
     dropzone      = require('dropzone');
 
@@ -5535,7 +5542,7 @@ var FilePicker = new prime({
                 thumbnailWidth: 100,
                 thumbnailHeight: 100,
                 url: bind(function(file) {
-                    return getAjaxURL('filepicker/upload/' + this.getPath() + file[0].name) + getAjaxSuffix();
+                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + this.getPath() + file[0].name) + getAjaxSuffix());
                 }, this)
             });
 
@@ -5681,7 +5688,7 @@ var FilePicker = new prime({
             fieldData.subfolder = true;
 
             element.showIndicator('fa fa-li fa-fw fa-spin-fast fa-spinner');
-            request(getAjaxURL('filepicker') + getAjaxSuffix(), fieldData).send(bind(function(error, response) {
+            request(parseAjaxURI(getAjaxURL('filepicker') + getAjaxSuffix()), fieldData).send(bind(function(error, response) {
                 element.hideIndicator();
                 this.addActiveState(element);
 
@@ -5845,6 +5852,7 @@ var prime         = require('prime'),
     properCase    = require('mout/string/properCase'),
     trim          = require('mout/string/trim'),
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
 
     modal         = require('../../ui').modal,
@@ -5908,7 +5916,7 @@ var Fonts = new prime({
         modal.open({
             content: 'Loading...',
             className: 'g5-dialog-theme-default g5-modal-fonts',
-            remote: getAjaxURL('fontpicker') + getAjaxSuffix(),
+            remote: parseAjaxURI(getAjaxURL('fontpicker') + getAjaxSuffix()),
             remoteLoaded: bind(function(response, content) {
                 var container = content.elements.content;
 
@@ -6588,6 +6596,7 @@ var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready'),
     modal         = require('../../ui').modal,
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
 
     trim          = require('mout/string/trim'),
@@ -6618,7 +6627,7 @@ domready(function() {
         modal.open({
             content: 'Loading',
             className: 'g5-dialog-theme-default g5-modal-icons',
-            remote: getAjaxURL('icons') + getAjaxSuffix(),
+            remote: parseAjaxURI(getAjaxURL('icons') + getAjaxSuffix()),
             afterClose: function() {
                 var popovers = $('.g5-popover');
                 if (popovers) { popovers.remove(); }
@@ -6780,6 +6789,7 @@ var $             = require('elements'),
     modal         = require('../../ui').modal,
     request       = require('agent'),
     trim          = require('mout/string/trim'),
+    parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
     getAjaxSuffix = require('../../utils/get-ajax-suffix');
 
@@ -6851,7 +6861,7 @@ ready(function() {
                             dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
                         }
 
-                        request(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
+                        request(parseAjaxURI(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                             if (!response.body.success) {
                                 modal.open({
                                     content: response.body.html || response.body,
@@ -11289,6 +11299,7 @@ var prime         = require('prime'),
     request       = require('agent')(),
     History       = require('./history'),
     flags         = require('./flags-state'),
+    parseAjaxURI  = require('./get-ajax-url').parse,
     getAjaxSuffix = require('./get-ajax-suffix'),
     mm            = require('../menu');
 
@@ -11324,7 +11335,7 @@ History.Adapter.bind(window, 'statechange', function() {
         Data.element = $('[href="' + url + '"]');
     }
 
-    URI = URI + getAjaxSuffix();
+    URI = parseAjaxURI(URI + getAjaxSuffix());
 
     var lis;
     if (sidebar && Data.element) {
@@ -11354,21 +11365,26 @@ History.Adapter.bind(window, 'statechange', function() {
     if (!ERROR) { modal.closeAll(); }
     request.url(URI + params).data(Data.extras || {}).method(Data.extras ? 'post' : 'get').send(function(error, response) {
         if (!response.body.success) {
-            ERROR = true;
-            modal.open({
-                content: response.body.html || response.body,
-                afterOpen: function(container) {
-                    if (!response.body.html) { container.style({ width: '90%' }); }
-                }
-            });
+            if (!ERROR) {
+                ERROR = true;
+                modal.open({
+                    content: response.body.html || response.body,
+                    afterOpen: function(container) {
+                        if (!response.body.html) { container.style({ width: '90%' }); }
+                    }
+                });
 
-            History.back();
+                History.back();
+            } else {
+                ERROR = false;
+            }
 
             if (Data.element) {
                 Data.element.hideIndicator();
             }
 
             return false;
+
         }
 
         var target = Data.parent ? Data.element.parent(Data.parent) : $(Data.target),
@@ -11657,7 +11673,7 @@ domready(function() {
 
 
 module.exports = {};
-},{"../menu":27,"../ui":43,"../ui/popover":45,"../utils/elements.utils":52,"./flags-state":55,"./get-ajax-suffix":56,"./history":59,"agent":62,"elements/domready":87,"elements/zen":113,"mout/array/indexOf":152,"mout/collection/size":166,"mout/object/keys":207,"mout/object/merge":208,"mout/queryString/encode":217,"mout/random/guid":220,"mout/string/contains":226,"prime":257,"prime/map":258}],51:[function(require,module,exports){
+},{"../menu":27,"../ui":43,"../ui/popover":45,"../utils/elements.utils":52,"./flags-state":55,"./get-ajax-suffix":56,"./get-ajax-url":57,"./history":59,"agent":62,"elements/domready":87,"elements/zen":113,"mout/array/indexOf":152,"mout/collection/size":166,"mout/object/keys":207,"mout/object/merge":208,"mout/queryString/encode":217,"mout/random/guid":220,"mout/string/contains":226,"prime":257,"prime/map":258}],51:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
@@ -12002,6 +12018,7 @@ var prime         = require('prime'),
     modal         = require('../ui').modal,
 
     getAjaxURL    = require('./get-ajax-url').global,
+    parseAjaxURI  = require('./get-ajax-url').parse,
     getAjaxSuffix = require('./get-ajax-suffix');
 
 var FlagsState = new prime({
@@ -12032,7 +12049,7 @@ var FlagsState = new prime({
     warning: function(options){
         var callback = options.callback || function() {},
             afterclose = options.afterclose || function() {},
-            warningURL = options.url || getAjaxURL('unsaved') + getAjaxSuffix();
+            warningURL = parseAjaxURI(options.url || getAjaxURL('unsaved') + getAjaxSuffix());
 
         modal.open({
             content: 'Loading...',
@@ -12077,9 +12094,22 @@ var getConfAjaxURL = function(view, search) {
     return unescapeHtml(url.replace(re, view));
 };
 
+var parseAjaxURI = function(uri) {
+    var platform = typeof GANTRY_PLATFORM == 'undefined' ? '' : GANTRY_PLATFORM
+    switch(platform){
+        case 'wordpress':
+            uri = uri.replace(/themes\.php/ig, 'admin-ajax.php');
+            break;
+        default:
+    }
+
+    return uri;
+};
+
 module.exports = {
     global: getAjaxURL,
-    config: getConfAjaxURL
+    config: getConfAjaxURL,
+    parse: parseAjaxURI
 };
 },{"mout/string/unescapeHtml":237}],58:[function(require,module,exports){
 "use strict";

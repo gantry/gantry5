@@ -6,6 +6,7 @@ var $             = require('elements'),
     modal         = require('../../ui').modal,
     request       = require('agent'),
     trim          = require('mout/string/trim'),
+    parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
     getAjaxSuffix = require('../../utils/get-ajax-suffix');
 
@@ -77,7 +78,7 @@ ready(function() {
                             dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
                         }
 
-                        request(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
+                        request(parseAjaxURI(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                             if (!response.body.success) {
                                 modal.open({
                                     content: response.body.html || response.body,

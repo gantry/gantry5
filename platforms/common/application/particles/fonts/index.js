@@ -29,6 +29,7 @@ var prime         = require('prime'),
     properCase    = require('mout/string/properCase'),
     trim          = require('mout/string/trim'),
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
 
     modal         = require('../../ui').modal,
@@ -92,7 +93,7 @@ var Fonts = new prime({
         modal.open({
             content: 'Loading...',
             className: 'g5-dialog-theme-default g5-modal-fonts',
-            remote: getAjaxURL('fontpicker') + getAjaxSuffix(),
+            remote: parseAjaxURI(getAjaxURL('fontpicker') + getAjaxSuffix()),
             remoteLoaded: bind(function(response, content) {
                 var container = content.elements.content;
 

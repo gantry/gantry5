@@ -3,6 +3,7 @@ var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready'),
     modal         = require('../../ui').modal,
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
 
     trim          = require('mout/string/trim'),
@@ -33,7 +34,7 @@ domready(function() {
         modal.open({
             content: 'Loading',
             className: 'g5-dialog-theme-default g5-modal-icons',
-            remote: getAjaxURL('icons') + getAjaxSuffix(),
+            remote: parseAjaxURI(getAjaxURL('icons') + getAjaxSuffix()),
             afterClose: function() {
                 var popovers = $('.g5-popover');
                 if (popovers) { popovers.remove(); }

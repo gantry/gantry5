@@ -10,6 +10,7 @@ var ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
     forEach       = require('mout/collection/forEach'),
 
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
 
     Builder       = require('./builder'),
@@ -250,7 +251,7 @@ ready(function() {
         if (!element.PopoverDefined) {
             element.getPopover({
                 type: 'async',
-                url: element.data('lm-switcher') + getAjaxSuffix(),
+                url: parseAjaxURI(element.data('lm-switcher') + getAjaxSuffix()),
                 allowElementsClick: '.g-tabs a'
             });
         }
@@ -282,7 +283,7 @@ ready(function() {
             data.layout = JSON.stringify(lm.builder.serialize());
         }
 
-        request(method, element.data('switch') + getAjaxSuffix(), data, function(error, response) {
+        request(method, parseAjaxURI(element.data('switch') + getAjaxSuffix()), data, function(error, response) {
             element.hideIndicator();
 
             if (!response.body.success) {
@@ -356,7 +357,7 @@ ready(function() {
             content: 'Loading',
             method: 'post',
             data: data,
-            remote: settingsURL + getAjaxSuffix(),
+            remote: parseAjaxURI(settingsURL + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
@@ -404,7 +405,7 @@ ready(function() {
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,

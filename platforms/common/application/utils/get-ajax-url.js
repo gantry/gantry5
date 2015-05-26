@@ -17,7 +17,20 @@ var getConfAjaxURL = function(view, search) {
     return unescapeHtml(url.replace(re, view));
 };
 
+var parseAjaxURI = function(uri) {
+    var platform = typeof GANTRY_PLATFORM == 'undefined' ? '' : GANTRY_PLATFORM
+    switch(platform){
+        case 'wordpress':
+            uri = uri.replace(/themes\.php/ig, 'admin-ajax.php');
+            break;
+        default:
+    }
+
+    return uri;
+};
+
 module.exports = {
     global: getAjaxURL,
-    config: getConfAjaxURL
+    config: getConfAjaxURL,
+    parse: parseAjaxURI
 };

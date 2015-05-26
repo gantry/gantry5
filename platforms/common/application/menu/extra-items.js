@@ -7,6 +7,7 @@ var $             = require('elements'),
     request       = require('agent'),
     indexOf       = require('mout/array/indexOf'),
     trim          = require('mout/string/trim'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxURL    = require('../utils/get-ajax-url').global,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     flags         = require('../utils/flags-state'),
@@ -56,7 +57,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
             content: 'Loading',
             method: 'post',
             //data: data,
-            remote: $(this.block).find('.config-cog').attribute('href') + getAjaxSuffix(),
+            remote: parseAjaxURI($(this.block).find('.config-cog').attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, modal) {
                 var search = modal.elements.content.find('.search input'),
                     blocks = modal.elements.content.search('[data-mm-type]'),
@@ -102,7 +103,7 @@ var StepTwo = function(data, content, button) {
         uri = getAjaxURL(item.type + '/' + item.particle);
     }
 
-    request('post', uri + getAjaxSuffix(), data, function(error, response) {
+    request('post', parseAjaxURI(uri + getAjaxSuffix()), data, function(error, response) {
         if (!response.body.success) {
             modal.open({
                 content: response.body.html || response.body,
@@ -160,7 +161,7 @@ var StepTwo = function(data, content, button) {
                 dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
             }
 
-            request(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
+            request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
                         content: response.body.html || response.body,
