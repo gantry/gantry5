@@ -60,8 +60,6 @@ class Theme extends Base\Theme
         $positions = $gantry['configurations']->positions();
 
         foreach ( $positions as $name => $title ) {
-            $params = (array) $params;
-
             // FIXME
             // This should be handled by theme so translation plugins could catch it as part of theme.
             // This stuff might also need take Joomla chromes into account for cross-compatibility reasons

@@ -99,7 +99,7 @@ class Router extends BaseRouter
         foreach ($response->getHeaders() as $key => $values) {
             $replace = true;
             foreach ($values as $value) {
-                $app->setHeader($key, $value, $replace);
+                header("{$key}: {$value}", $replace);
                 $replace = false;
             }
         }
