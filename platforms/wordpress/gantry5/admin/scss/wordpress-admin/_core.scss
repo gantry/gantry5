@@ -6,6 +6,11 @@ body.gantry5 {
         .inner-container {
             margin: 0;
         }
+        
+        p {
+            font-size: $core-font-size;
+            line-height: $core-line-height;
+        }
 
         li {
             line-height: inherit;

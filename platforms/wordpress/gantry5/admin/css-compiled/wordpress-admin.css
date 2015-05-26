@@ -8,34 +8,39 @@ body.gantry5 #g5-container .inner-container {
   margin: 0;
 }
 /* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+body.gantry5 #g5-container p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+/* line 15, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container li {
   line-height: inherit;
 }
-/* line 14, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 19, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container textarea, body.gantry5 #g5-container input {
   box-shadow: none;
 }
-/* line 18, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 23, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container input, body.gantry5 #g5-container button, body.gantry5 #g5-container select, body.gantry5 #g5-container textarea {
   font-family: inherit;
 }
-/* line 22, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 27, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .main-block {
   min-height: 81.5vh;
 }
-/* line 28, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 33, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #wpbody-content {
   padding-bottom: 0;
 }
-/* line 33, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 38, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #footer a {
   color: #0073AA;
 }
-/* line 38, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 43, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #wpfooter {
   background-color: #e7e7e7;
 }
-/* line 40, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 45, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #wpfooter a {
   color: #0073AA;
 }
