@@ -1,16 +1,16 @@
-/* line 8, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 8, ../../../../../../rt/workspace/gantry-playground/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 .size-100 {
   width: 100%;
 }
 
-/* line 2, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
+/* line 2, ../../../../../../rt/workspace/gantry-playground/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
 #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, .g5-dialog #g5-container .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, .g5-popover-content #g5-container .g-tabs ul, .g5-popover-content .g-pane ul, .g5-lm-particles-picker ul, .g5-lm-particles-picker li, .g5-mm-particles-picker ul, .g5-mm-particles-picker li, .g5-mm-modules-picker ul, .g5-mm-modules-picker li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li, .g5-popover-extras ul, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file] {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* line 9, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
+/* line 9, ../../../../../../rt/workspace/gantry-playground/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
 #g5-container .submenu-ratio i {
   position: relative;
   top: 50%;
@@ -68,37 +68,44 @@
 }
 
 /* line 1, platforms/common/scss/admin/_core.scss */
-footerhtml {
+html {
   width: 100vw;
   overflow-x: hidden;
 }
 
 /* line 6, platforms/common/scss/admin/_core.scss */
-body.com_gantry5 {
-  color: #fff;
-  background-color: #354D59 !important;
-  font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+body {
   margin: 0;
+}
+
+/* line 10, platforms/common/scss/admin/_core.scss */
+body.gantry5 {
+  color: #fff;
+  background-color: #354D59;
+  font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* line 15, platforms/common/scss/admin/_core.scss */
+/* line 18, platforms/common/scss/admin/_core.scss */
 a {
   color: #439A86;
 }
 
-/* line 19, platforms/common/scss/admin/_core.scss */
+/* line 22, platforms/common/scss/admin/_core.scss */
 #g5-container {
   font-size: 1rem;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
-/* line 23, platforms/common/scss/admin/_core.scss */
+/* line 29, platforms/common/scss/admin/_core.scss */
 #g5-container .g-block {
   position: relative;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 23, platforms/common/scss/admin/_core.scss */
+  /* line 29, platforms/common/scss/admin/_core.scss */
   #g5-container .g-block {
     -webkit-box-flex: 0;
     -moz-box-flex: 0;
@@ -109,37 +116,37 @@ a {
     flex: 0 100%;
   }
 }
-/* line 30, platforms/common/scss/admin/_core.scss */
+/* line 36, platforms/common/scss/admin/_core.scss */
 #g5-container .g-content {
   margin: 0.625rem;
   padding: 0.938rem;
 }
-/* line 35, platforms/common/scss/admin/_core.scss */
+/* line 41, platforms/common/scss/admin/_core.scss */
 #g5-container .inner-container {
   margin: 1.5rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   color: #666;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 35, platforms/common/scss/admin/_core.scss */
+  /* line 41, platforms/common/scss/admin/_core.scss */
   #g5-container .inner-container {
     margin: 0;
   }
 }
-/* line 46, platforms/common/scss/admin/_core.scss */
+/* line 52, platforms/common/scss/admin/_core.scss */
 #g5-container .fa-spin-fast {
   -webkit-animation: fa-spin 1s infinite linear;
   -moz-animation: fa-spin 1s infinite linear;
   animation: fa-spin 1s infinite linear;
 }
-/* line 51, platforms/common/scss/admin/_core.scss */
+/* line 57, platforms/common/scss/admin/_core.scss */
 #g5-container .changes-indicator {
   opacity: 0;
   -webkit-animation: pulsate 1s ease-out infinite;
   -moz-animation: pulsate 1s ease-out infinite;
   animation: pulsate 1s ease-out infinite;
 }
-/* line 57, platforms/common/scss/admin/_core.scss */
+/* line 63, platforms/common/scss/admin/_core.scss */
 #g5-container .badge, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected #g5-container span {
   border-radius: 100px;
   background-color: #eee;
@@ -147,11 +154,11 @@ a {
   padding: 3px 6px;
   text-shadow: none;
 }
-/* line 66, platforms/common/scss/admin/_core.scss */
+/* line 72, platforms/common/scss/admin/_core.scss */
 #g5-container .cards-wrapper {
   margin: -10px -1%;
 }
-/* line 70, platforms/common/scss/admin/_core.scss */
+/* line 76, platforms/common/scss/admin/_core.scss */
 #g5-container .card {
   display: inline-block;
   background: #fff;
@@ -162,16 +169,16 @@ a {
   vertical-align: top;
   margin: 10px 1%;
 }
-/* line 80, platforms/common/scss/admin/_core.scss */
+/* line 86, platforms/common/scss/admin/_core.scss */
 #g5-container .card.full-width {
   margin: 0;
   display: block;
 }
-/* line 85, platforms/common/scss/admin/_core.scss */
+/* line 91, platforms/common/scss/admin/_core.scss */
 #g5-container .card h4 {
   margin: 0;
 }
-/* line 88, platforms/common/scss/admin/_core.scss */
+/* line 94, platforms/common/scss/admin/_core.scss */
 #g5-container .card h4 .enabler {
   float: right;
 }
@@ -234,43 +241,43 @@ a {
 #g5-container .card .enabler [type="radio"]:checked + .toggle .knob {
   opacity: 1;
 }
-/* line 97, platforms/common/scss/admin/_core.scss */
+/* line 103, platforms/common/scss/admin/_core.scss */
 #g5-container .card .inner-params {
   margin: 0.625rem 0 0;
   padding-top: 0.625rem;
   border-top: 1px solid #eee;
 }
-/* line 103, platforms/common/scss/admin/_core.scss */
+/* line 109, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-id {
   text-align: center;
   margin-bottom: 10px;
   font-weight: 500;
 }
-/* line 109, platforms/common/scss/admin/_core.scss */
+/* line 115, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-name {
   text-align: center;
 }
-/* line 114, platforms/common/scss/admin/_core.scss */
+/* line 120, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-screenshot img {
   margin: 0 auto 10px auto;
   display: block;
 }
-/* line 119, platforms/common/scss/admin/_core.scss */
+/* line 125, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-screenshot a {
   display: block;
 }
-/* line 125, platforms/common/scss/admin/_core.scss */
+/* line 131, platforms/common/scss/admin/_core.scss */
 #g5-container .themes .card {
   max-width: 300px;
 }
-/* line 130, platforms/common/scss/admin/_core.scss */
+/* line 136, platforms/common/scss/admin/_core.scss */
 #g5-container .g-footer-actions {
   padding: 1rem 0;
   margin-top: 1rem;
   border-top: 1px solid #ddd;
 }
 
-/* line 139, platforms/common/scss/admin/_core.scss */
+/* line 145, platforms/common/scss/admin/_core.scss */
 #footer {
   background-color: #e7e7e7;
   padding: 1em 0 3rem;
@@ -279,22 +286,25 @@ a {
   text-align: center;
   font-weight: 500;
   border-top: 1px solid #dedede;
+  font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-/* line 148, platforms/common/scss/admin/_core.scss */
+/* line 157, platforms/common/scss/admin/_core.scss */
 #footer .g-version, #footer .g-version-date {
   color: #8F4DAE;
 }
-/* line 152, platforms/common/scss/admin/_core.scss */
+/* line 161, platforms/common/scss/admin/_core.scss */
 #footer a {
   color: #439A86 !important;
   text-decoration: none;
 }
-/* line 155, platforms/common/scss/admin/_core.scss */
+/* line 164, platforms/common/scss/admin/_core.scss */
 #footer a:hover {
   color: #245348 !important;
 }
 
-/* line 162, platforms/common/scss/admin/_core.scss */
+/* line 171, platforms/common/scss/admin/_core.scss */
 .Whoops.container {
   position: inherit;
 }
@@ -362,24 +372,24 @@ a {
     opacity: 0;
   }
 }
-/* line 184, platforms/common/scss/admin/_core.scss */
+/* line 193, platforms/common/scss/admin/_core.scss */
 .g-tooltip {
   display: inline;
   position: relative;
 }
-/* line 188, platforms/common/scss/admin/_core.scss */
+/* line 197, platforms/common/scss/admin/_core.scss */
 .g-tooltip:before, .g-tooltip:after {
   font-size: 1rem;
   line-height: 1.5rem;
 }
 
-/* line 194, platforms/common/scss/admin/_core.scss */
+/* line 203, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover, .g-tooltip.g-tooltip-force {
   color: #439A86;
   text-decoration: none;
 }
 
-/* line 199, platforms/common/scss/admin/_core.scss */
+/* line 208, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover:after, .g-tooltip.g-tooltip-force:after {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 0.1875rem;
@@ -395,7 +405,7 @@ a {
   font-size: 0.8rem;
 }
 
-/* line 214, platforms/common/scss/admin/_core.scss */
+/* line 223, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover:before, .g-tooltip.g-tooltip-force:before {
   border: solid;
   border-color: rgba(0, 0, 0, 0.8) transparent;
@@ -408,46 +418,46 @@ a {
   z-index: 100;
 }
 
-/* line 226, platforms/common/scss/admin/_core.scss */
+/* line 235, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-right:hover:after, .g-tooltip.g-tooltip-right.g-tooltip-force:after {
   left: inherit;
   right: 0;
 }
 
-/* line 231, platforms/common/scss/admin/_core.scss */
+/* line 240, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-right:hover:before, .g-tooltip.g-tooltip-right.g-tooltip-force:before {
   left: inherit;
   right: 1rem;
 }
 
-/* line 236, platforms/common/scss/admin/_core.scss */
+/* line 245, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-bottom:hover:after, .g-tooltip.g-tooltip-bottom.g-tooltip-force:after {
   bottom: auto;
 }
 
-/* line 240, platforms/common/scss/admin/_core.scss */
+/* line 249, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-bottom:hover:before, .g-tooltip.g-tooltip-bottom.g-tooltip-force:before {
   border-width: 0 .4rem .4rem .4rem;
   bottom: -0.1rem;
 }
 
-/* line 247, platforms/common/scss/admin/_core.scss */
+/* line 256, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:after {
   bottom: 3rem;
 }
 
-/* line 251, platforms/common/scss/admin/_core.scss */
+/* line 260, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:before {
   bottom: 2.6rem;
 }
 
-/* line 256, platforms/common/scss/admin/_core.scss */
+/* line 265, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:before {
   right: 7px;
   bottom: 1.5rem;
 }
 
-/* line 260, platforms/common/scss/admin/_core.scss */
+/* line 269, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:after {
   bottom: 1.9rem;
 }

@@ -1,13 +1,16 @@
-footerhtml {
+html {
     width:100vw;
     overflow-x:hidden;
 }
 
-body.com_gantry5 {
-    color: $white;
-    background-color: $body-bg !important;
-    font-family: $font-family-default;
+body {
     margin: 0;
+}
+
+body.gantry5 {
+    color: $white;
+    background-color: $body-bg;
+    font-family: $font-family-default;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -19,6 +22,9 @@ a {
 #g5-container { // wrapper
     font-size: $core-font-size;
     line-height: $core-line-height;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: $font-family-default;
 
     .g-block {
         position: relative;
@@ -144,6 +150,9 @@ a {
     text-align: center;
     font-weight: $font-weight-medium;
     border-top: 1px solid #dedede;
+    font-family: $font-family-default;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
     .g-version, .g-version-date {
         color: $update-header-bg;
