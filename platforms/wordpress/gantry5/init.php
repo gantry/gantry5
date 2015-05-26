@@ -5,12 +5,16 @@ add_action( 'admin_enqueue_scripts', 'gantry_admin_scripts' );
 add_action( 'admin_print_styles', 'gantry_admin_print_styles', 200 );
 add_action( 'admin_print_scripts', 'gantry_admin_print_scripts', 200 );
 
+// FIXME Get current theme data
+//$gantry = Gantry\Framework\Gantry::instance();
+//$theme = $gantry['theme']->details();
+
 // Adjust menu to contain Gantry stuff.
 add_action(
     'admin_menu',
     function () {
         remove_submenu_page( 'themes.php', 'theme-editor.php' );
-        add_theme_page( 'Layout Manager', 'Layout Manager', 'manage_options', 'layout-manager', 'gantry_layout_manager' );
+        add_theme_page( 'Gantry5 Options', 'Gantry5 Options', 'manage_options', 'layout-manager', 'gantry_layout_manager' );
     },
     102
 );
@@ -39,6 +43,10 @@ function gantry_layout_manager() {
     if ( !current_user_can( 'manage_options' ) ) {
         wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
     }
+
+    add_filter( 'admin_body_class', function () {
+        return 'gantry5 gantry5-wordpress';
+    } );
 
     if ( $output ) {
         echo $output;
