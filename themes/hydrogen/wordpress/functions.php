@@ -12,3 +12,6 @@ defined( 'ABSPATH' ) or die;
 
 // Bootstrap Gantry framework or fail gracefully.
 $gantry = include_once __DIR__ . '/includes/gantry.php';
+
+/** @var \Gantry\Framework\Theme $theme */
+$theme = $gantry[ 'theme' ];

@@ -83,6 +83,19 @@ class Theme extends BaseTheme
         /** @var Streams $streams */
         $streams = $gantry['streams'];
         $streams->register();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        // If theme was initialized before admin, we need to add Admin paths manually.
+        if (!$locator->getPaths('gantry-admin')) {
+            /** @var Platform $patform */
+            $patform = $gantry['platform'];
+
+            foreach ($patform->get('streams.gantry-admin.prefixes') as $prefix => $paths) {
+                $gantry['locator']->addPath('gantry-admin', $prefix, $paths);
+            }
+        }
     }
 
     public function add_to_context(array $context)
