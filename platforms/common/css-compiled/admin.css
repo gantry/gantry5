@@ -1322,10 +1322,6 @@ a {
 }
 
 /* line 3, platforms/common/scss/admin/_assignments.scss */
-#g5-container #assignments .card {
-  float: left;
-}
-/* line 6, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .enabler {
   float: right;
 }
