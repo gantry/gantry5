@@ -1,8 +1,16 @@
 body.gantry5 {
     color: $light-gray;
-    background-color: $body-bg !important;
+    background-color: $body-bg;
 
     #g5-container {
+        a:focus {
+            box-shadow: none;
+        }
+        
+        dd, li {
+            margin-bottom: 0;
+        }
+
         .inner-container {
             margin: 0;
         }
@@ -26,6 +34,11 @@ body.gantry5 {
 
         .main-block {
             min-height: 81.5vh;
+        }
+
+        .card {
+            max-width: none;
+            box-shadow: none;
         }
 
     }
