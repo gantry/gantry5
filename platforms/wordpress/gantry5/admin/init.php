@@ -11,7 +11,7 @@ add_action(
     'admin_menu',
     function () {
         remove_submenu_page( 'themes.php', 'theme-editor.php' );
-        add_theme_page( 'Gantry5 Options', 'Gantry5 Options', 'manage_options', 'layout-manager', 'gantry_layout_manager' );
+        add_theme_page( 'Gantry 5 Options', 'Gantry 5 Options', 'manage_options', 'layout-manager', 'gantry_layout_manager' );
     },
     102
 );

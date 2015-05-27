@@ -138,21 +138,17 @@ body.com_gantry5 #g5-container #main-header ul li.active a {
 body.com_gantry5 #g5-container #navbar {
   padding: 0 0.625rem;
 }
-/* line 49, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
-body.com_gantry5 #g5-container .navbar-block .gantry-logo {
-  right: 1.563rem;
-}
-/* line 54, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
+/* line 47, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container .inner-header {
   background-color: #222;
   color: #3180C2;
 }
-/* line 59, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
+/* line 52, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container .settings-state {
   background: #3180C2;
   color: #fff;
 }
-/* line 64, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
+/* line 57, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container .button.button-update {
   background: #633679;
   color: #fff;
@@ -162,7 +158,7 @@ body.com_gantry5 #g5-container .button.button-update:not(.disabled):not([disable
   background: #522c64;
   color: #fff;
 }
-/* line 68, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
+/* line 61, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container .tooltip {
   position: static;
   opacity: 1;
