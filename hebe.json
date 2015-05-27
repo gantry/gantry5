@@ -42,6 +42,10 @@
                         "destination":"/libraries/gantry5/classes"
                     },
                     {
+                        "source":"/src/platforms",
+                        "destination":"/libraries/gantry5/platforms"
+                    },
+                    {
                         "source":"/platforms/joomla/lib_gantry5/language",
                         "destination":"/libraries/gantry5/language"
                     },
@@ -50,8 +54,16 @@
                         "destination":"/libraries/gantry5/vendor"
                     },
                     {
+                        "source":"/src/bootstrap.php",
+                        "destination":"/libraries/gantry5/bootstrap.php"
+                    },
+                    {
                         "source":"/src/Loader.php",
                         "destination":"/libraries/gantry5/Loader.php"
+                    },
+                    {
+                        "source":"/src/RealLoader.php",
+                        "destination":"/libraries/gantry5/RealLoader.php"
                     }
                 ],
                 "plugins":[
@@ -92,6 +104,46 @@
                     {
                         "source":"/themes/hydrogen/common",
                         "destination":"/templates/g5_hydrogen/common"
+                    }
+                ]
+            }
+        },
+        "wordpress":{
+            "nodes":{
+                "plugin":[
+                    {
+                        "source":"/platforms/wordpress/gantry5",
+                        "destination":"/wp-content/plugins/gantry5"
+                    },
+                    {
+                        "source":"/platforms/common",
+                        "destination":"/wp-content/plugins/gantry5/admin/common"
+                    }
+                ],
+                "library":[
+                    {
+                        "source":"/src",
+                        "destination":"/wp-content/plugins/gantry5/src"
+                    }
+                ],
+                "media":[
+                    {
+                        "source":"/assets",
+                        "destination":"/wp-content/plugins/gantry5/assets"
+                    },
+                    {
+                        "source":"/engines",
+                        "destination":"/wp-content/plugins/gantry5/engines"
+                    }
+                ],
+                "themes":[
+                    {
+                        "source":"/themes/hydrogen/wordpress",
+                        "destination":"/wp-content/themes/hydrogen"
+                    },
+                    {
+                        "source":"/themes/hydrogen/common",
+                        "destination":"/wp-content/themes/hydrogen/common"
                     }
                 ]
             }

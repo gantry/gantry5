@@ -222,6 +222,8 @@ class Platform extends BasePlatform
 
     public function updates()
     {
+        if (defined('GANTRY5_VERSION') && (GANTRY5_VERSION == '@version@' || substr(GANTRY5_VERSION, 0, 4) == 'dev-')) { return []; }
+        
         $styles = ThemeList::getThemes();
         $extension_ids = array_unique(array_map(
             function($item) {

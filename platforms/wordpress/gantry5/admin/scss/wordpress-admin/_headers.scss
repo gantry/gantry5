@@ -1,0 +1,68 @@
+body.gantry5 {
+	#g5-container {
+
+	    [data-mode-indicator="production"] {
+	        background-color: $core-accent;
+	    }
+
+	    #main-header {
+            dd, li {
+              margin-bottom: 0;
+            }
+
+	    	.g-content {
+	            padding: 0 1.563rem;
+	        }
+
+	    	.dev-mode-toggle {
+	    		background: darken($core-accent, 10%);
+
+	    		a {
+	    			background: lighten($core-accent, 15%);
+	    		}
+	    	}
+
+	    	.button-save {
+	            @include button-color(lighten($core-accent, 15%), $white);
+	        }
+
+	        ul {
+	            li {
+	                &:hover {
+	                    a {
+	                        background: darken($core-accent, 5%);
+	                    }
+	                }
+	                &.active {
+	                    a {
+	                        background: darken($core-accent, 15%);
+	                    }
+	                }
+	            }
+	        }
+
+	    }
+	  
+	    .inner-header {
+	        background-color: $inner-header-bg;
+	        color: $inner-header-text;
+	    }
+
+	    .settings-state {
+	        background: $core-accent;
+	        color: $main-header-text;
+	    }
+
+	    .button.button-update {
+	        @include button-color(darken($update-header-bg, 15%), $white);
+	    }
+
+	    .tooltip {
+	    	position: static;
+	    	opacity: 1;
+	    	line-height: inherit;
+	    	font-size: inherit;
+	    }
+
+	}
+}

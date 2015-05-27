@@ -7,5 +7,6 @@ module.exports = {
     icons: require('./icons'),
     filepicker: require('./filepicker'),
     collections: require('./collections'),
-    keyvalue: require('./keyvalue')
+    keyvalue: require('./keyvalue'),
+    instancepicker: require('./instancepicker')
 };

@@ -1,6 +1,6 @@
 details:
   name: Hydrogen
-  version: "5.0.0-rc.3-dev"
+  version: "@version@"
   icon: paper-plane
   date: May 15, 2015
   author:
@@ -9,10 +9,10 @@ details:
     link: http://www.rockettheme.com
 
   documentation:
-    link: http://www.rockettheme.com/docs/joomla/templates/hydrogen
+    link: http://www.rockettheme.com/docs/wordpress/theme/hydrogen
 
   support:
-    link: http://www.rockettheme.com/forum/joomla-template-hydrogen
+    link: http://www.rockettheme.com/forum/wordpress-theme-hydrogen
 
   updates:
     link: http://updates.rockettheme.com/themes/hydrogen.yaml

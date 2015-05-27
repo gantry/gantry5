@@ -68,6 +68,11 @@ paths = {
             out: './platforms/joomla/com_gantry5/admin/css-compiled/joomla-admin.css',
             load: './engines/common/nucleus/scss'
         },
+        { // admin - wordpress
+            in: './platforms/wordpress/gantry5/admin/scss/wordpress-admin.scss',
+            out: './platforms/wordpress/gantry5/admin/css-compiled/wordpress-admin.css',
+            load: './engines/common/nucleus/scss'
+        },
         { // nucleus
             in: './engines/common/nucleus/scss/nucleus.scss',
             out: './engines/common/nucleus/css-compiled/nucleus.css'
@@ -75,6 +80,11 @@ paths = {
         { // nucleus - joomla
             in: './engines/joomla/nucleus/scss/joomla.scss',
             out: './engines/joomla/nucleus/css-compiled/joomla.css',
+            load: './engines/common/nucleus/scss'
+        },
+        { // nucleus - wordpress
+            in: './engines/wordpress/nucleus/scss/wordpress.scss',
+            out: './engines/wordpress/nucleus/css-compiled/wordpress.css',
             load: './engines/common/nucleus/scss'
         }
     ],

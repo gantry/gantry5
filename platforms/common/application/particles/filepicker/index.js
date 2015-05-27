@@ -11,6 +11,7 @@ var $             = require('../../utils/elements.utils'),
     deepFillIn    = require('mout/object/deepFillIn'),
     modal         = require('../../ui').modal,
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
     dropzone      = require('dropzone');
 
@@ -60,6 +61,7 @@ var FilePicker = new prime({
             mtime = zen('span.g-file-mtime[data-dz-mtime]').bottom(li);
 
         zen('span.g-file-progress[data-file-uploadprogress]').html('<span class="g-file-progress-text"></span>').bottom(li);
+        zen('div').bottom(thumb);
 
         li.bottom('body');
         var html = li[0].outerHTML;
@@ -84,13 +86,15 @@ var FilePicker = new prime({
                 thumbnailWidth: 100,
                 thumbnailHeight: 100,
                 url: bind(function(file) {
-                    return getAjaxURL('filepicker/upload/' + this.getPath() + file[0].name) + getAjaxSuffix();
+                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + this.getPath() + file[0].name) + getAjaxSuffix());
                 }, this)
             });
 
 
             this.dropzone.on('thumbnail', function(file, dataUrl) {
-                $(file.previewElement).find('[data-dz-thumbnail]').attribute('style', 'background-image: url(' + dataUrl + ');');
+                var ext = file.name.split('.');
+                ext = (!ext.length || ext.length == 1) ? '-' : ext.reverse()[0];
+                $(file.previewElement).addClass('g-image g-image-' + ext.toLowerCase()).find('[data-dz-thumbnail] > div').attribute('style', 'background-image: url(' + dataUrl + ');');
             });
 
             this.dropzone.on('addedfile', function(file) {
@@ -103,10 +107,13 @@ var FilePicker = new prime({
                         insertLocation: 'bottom'
                     };
 
+                var ext = file.name.split('.');
+                ext = (!ext.length || ext.length == 1) ? '-' : ext.reverse()[0];
+
                 if (!file.type.match(/image.*/)) {
-                    var ext = file.name.split('.');
-                    ext = (!ext.length || ext.length == 1) ? '-' : ext.reverse()[0];
                     element.find('.g-thumb').text(ext);
+                } else {
+                    element.find('.g-thumb').addClass('g-image g-image-' + ext.toLowerCase());
                 }
 
                 progressConf = deepFillIn((isList ? {
@@ -225,7 +232,7 @@ var FilePicker = new prime({
             fieldData.subfolder = true;
 
             element.showIndicator('fa fa-li fa-fw fa-spin-fast fa-spinner');
-            request(getAjaxURL('filepicker') + getAjaxSuffix(), fieldData).send(bind(function(error, response) {
+            request(parseAjaxURI(getAjaxURL('filepicker') + getAjaxSuffix()), fieldData).send(bind(function(error, response) {
                 element.hideIndicator();
                 this.addActiveState(element);
 

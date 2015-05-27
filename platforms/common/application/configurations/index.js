@@ -8,10 +8,11 @@ var $             = require('elements'),
     toastr        = require('../ui').toastr,
     request       = require('agent'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxURL    = require('../utils/get-ajax-url').global,
 
     flags         = require('../utils/flags-state'),
-    warningURL    = getAjaxURL('confirmdeletion') + getAjaxSuffix();
+    warningURL    = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
 
 
 var Configurations = {};
@@ -67,7 +68,7 @@ ready(function() {
         element.hideIndicator();
         element.showIndicator();
 
-        request(method, href + getAjaxSuffix(), {}, function(error, response) {
+        request(method, parseAjaxURI(href + getAjaxSuffix()), {}, function(error, response) {
             if (!response.body.success) {
                 modal.open({
                     content: response.body.html || response.body,
@@ -117,7 +118,7 @@ ready(function() {
             parent.showIndicator();
             parent.find('[data-title-edit]').addClass('disabled');
 
-            request(method, href + getAjaxSuffix(), { title: trim(title) }, function(error, response) {
+            request(method, parseAjaxURI(href + getAjaxSuffix()), { title: trim(title) }, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
                         content: response.body.html || response.body,

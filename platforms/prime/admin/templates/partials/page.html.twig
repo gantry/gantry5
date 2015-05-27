@@ -22,11 +22,12 @@
                 var GANTRY_AJAX_SUFFIX = '{{ gantry.ajax_suffix }}';
                 var GANTRY_AJAX_URL = '{{ gantry.route('%ajax%')|e }}';
                 var GANTRY_AJAX_CONF_URL = '{{ gantry.route('configurations/%ajax%')|e }}';
+                var GANTRY_PLATFORM = 'prime';
             </script>
             {{ gantry.scripts('head')|join("\n    ")|raw }}
         {% endblock %}
     </head>
-    <body>
+    <body class="g5-prime">
         {{ htmlContent }}
 
         {% block footer_section %}

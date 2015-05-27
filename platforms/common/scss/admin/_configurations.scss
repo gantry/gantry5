@@ -1,6 +1,11 @@
 #g5-container {//wrapper
 
 #configurations {
+    margin: -10px -1%;
+
+    .card {
+        margin: 10px 1%;
+    }
 
     h4 > * {
         vertical-align: middle;
@@ -54,6 +59,18 @@
             line-height: 343px + 35px;
             text-align: center;
             position: relative;
+        }
+    }
+
+    .card .inner-params {
+        margin: $content-margin 0 0;
+        padding-top: $content-margin;
+        border-top: 1px solid $light-gray;
+
+        & > :first-child {
+            border-top: 0;
+            padding-top: 0;
+            margin: 0 auto;
         }
     }
 

@@ -166,10 +166,20 @@ class Document
         return $html;
     }
 
+    public static function registerAssets()
+    {
+    }
+
     public static function rootUri()
     {
         return '';
     }
+
+    public static function domain($addDomain = false)
+    {
+        return '';
+    }
+
 
     /**
      * Return URL to the resource.
@@ -253,11 +263,7 @@ class Document
             $uri .= '#' . $parts['fragment'];
         }
 
-        if ($domain) {
-            // TODO: Append scheme, host and port to the URL.
-        }
-
-        return $uri;
+        return static::domain($domain) . $uri;
     }
 
     /**

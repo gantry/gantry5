@@ -1,0 +1,19 @@
+body.gantry5 {
+    #g5-container {
+        .navbar-block {
+            #navbar {
+                padding: 0 0.625rem;
+            }
+
+            #gantry-logo {
+                right: 2.1rem;
+            }
+        }
+
+        nav.navbar * {
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+    }
+}

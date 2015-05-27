@@ -11,12 +11,9 @@
 }
 
 .settings-block {
-    width: 48%;
+    width: 100%;
+
     min-width: inherit;
-    @include breakpoint(mobile-only) {
-        margin: 1% 0;
-        width: 100%;
-    }
 
     &.card {
         .badge {
@@ -30,6 +27,10 @@
 
     .advanced {
         color: $orange;
+    }
+
+    .alert {
+        margin: $content-margin 0;
     }
 
     .settings-param {
@@ -57,6 +58,18 @@
                 color: darken($light-gray, 50%);
             }
         }
+    }
+
+    .g-instancepicker-title {
+        margin-right: 0.5rem;
+        font-style: italic;
+        &:empty {
+            margin: 0;
+        }
+    }
+
+    .input-small {
+        width: 120px !important;
     }
 
     input.settings-param-toggle {

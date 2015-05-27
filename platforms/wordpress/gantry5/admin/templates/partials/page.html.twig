@@ -1,0 +1,28 @@
+{% set headerContent %}
+    {% block stylesheets %}
+        <style>
+            #wpcontent {
+                padding-left: 0;
+            }
+        </style>
+        <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/wordpress-admin.css') }}" type="text/css" />
+    {% endblock %}
+
+    {% block javascript %}
+        <script>
+            var GANTRY_AJAX_SUFFIX = '{{ gantry.ajax_suffix|raw }}';
+            var GANTRY_AJAX_URL = '{{ gantry.route('%ajax%')|e }}';
+            var GANTRY_AJAX_CONF_URL = '{{ gantry.route('configurations/%ajax%')|e }}';
+            var GANTRY_PLATFORM = 'wordpress';
+        </script>
+    {% endblock %}
+{% endset %}
+{% do parse_assets(headerContent, 'head', 10) %}
+
+{% block content %}
+{% endblock %}
+
+{% block footer_section %}
+{% endblock %}
+
+{% do gantry.platform.finalize() %}

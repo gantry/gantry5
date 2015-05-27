@@ -7,6 +7,8 @@ var $             = require('elements'),
     request       = require('agent'),
     indexOf       = require('mout/array/indexOf'),
     trim          = require('mout/string/trim'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
+    getAjaxURL    = require('../utils/get-ajax-url').global,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     flags         = require('../utils/flags-state'),
     deepEquals    = require('mout/lang/deepEquals');
@@ -55,7 +57,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
             content: 'Loading',
             method: 'post',
             //data: data,
-            remote: $(this.block).find('.config-cog').attribute('href') + getAjaxSuffix(),
+            remote: parseAjaxURI($(this.block).find('.config-cog').attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, modal) {
                 var search = modal.elements.content.find('.search input'),
                     blocks = modal.elements.content.search('[data-mm-type]'),
@@ -91,9 +93,17 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
 };
 
 var StepTwo = function(data, content, button) {
-    var uri = content.find('[data-mm-particle-stepone]').data('mm-particle-stepone');
+    var uri = content.find('[data-mm-particle-stepone]').data('mm-particle-stepone'),
+        picker = data.instancepicker;
 
-    request('post', uri + getAjaxSuffix(), data, function(error, response) {
+    if (picker) {
+        var item = JSON.parse(data.item);
+        picker = JSON.parse(picker);
+        delete(data.instancepicker);
+        uri = getAjaxURL(item.type + '/' + item.particle);
+    }
+
+    request('post', parseAjaxURI(uri + getAjaxSuffix()), data, function(error, response) {
         if (!response.body.success) {
             modal.open({
                 content: response.body.html || response.body,
@@ -117,9 +127,10 @@ var StepTwo = function(data, content, button) {
 
         var form = content.find('form'),
             submit = content.find('input[type="submit"], button[type="submit"]'),
+            fakeDOM = zen('div').html(response.body.html).find('form'),
             dataString = [];
 
-        if (!form || !submit) { return true; }
+        if ((!form && !fakeDOM) || !submit) { return true; }
 
         var applyAndSave = content.search('[data-apply-and-save]');
         if (applyAndSave) { applyAndSave.remove(); }
@@ -131,14 +142,17 @@ var StepTwo = function(data, content, button) {
 
             submit.showIndicator();
 
-            $(form[0].elements).forEach(function(input) {
+            $(fakeDOM[0].elements).forEach(function(input) {
                 input = $(input);
-                var name = input.attribute('name'),
-                    value = input.value(),
+                var name = input.attribute('name');
+                if (!name || input.disabled()) { return; }
+
+                input = content.find('[name="' + name + '"]');
+                var value = input.value(),
                     parent = input.parent('.settings-param'),
                     override = parent ? parent.find('> input[type="checkbox"]') : null;
 
-                if (!name || input.disabled() || (override && !override.checked())) { return; }
+                if (override && !override.checked()) { return; }
                 dataString.push(name + '=' + encodeURIComponent(value));
             });
 
@@ -147,7 +161,7 @@ var StepTwo = function(data, content, button) {
                 dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
             }
 
-            request(form.attribute('method'), form.attribute('action') + getAjaxSuffix(), dataString.join('&') || {}, function(error, response) {
+            request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
                         content: response.body.html || response.body,
@@ -156,29 +170,46 @@ var StepTwo = function(data, content, button) {
                         }
                     });
                 } else {
-                    var element = menumanager.element,
-                        path = element.data('mm-id') + '-',
-                        id = randomID(5),
-                        base = element.parent('[data-mm-base]').data('mm-base'),
-                        col = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
-                        index = indexOf(element.parent().children('[data-mm-id]'), element[0]);
+                    // it's menu
+                    if (!picker) {
+                        var element = menumanager.element,
+                            path = element.data('mm-id') + '-',
+                            id = randomID(5),
+                            base = element.parent('[data-mm-base]').data('mm-base'),
+                            col = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
+                            index = indexOf(element.parent().children('[data-mm-id]'), element[0]);
 
-                    while (menumanager.items[path + id]) { id = randomID(5); }
+                        while (menumanager.items[path + id]) { id = randomID(5); }
 
-                    menumanager.items[path + id] = response.body.item;
-                    menumanager.ordering[base][col].splice(index, 1, path + id);
-                    element.data('mm-id', path + id);
+                        menumanager.items[path + id] = response.body.item;
+                        menumanager.ordering[base][col].splice(index, 1, path + id);
+                        element.data('mm-id', path + id);
 
-                    if (response.body.html) {
-                        element.html(response.body.html);
+                        if (response.body.html) {
+                            element.html(response.body.html);
+                        }
+
+                        menumanager.isNewParticle = false;
+                        menumanager.emit('dragEnd', menumanager.map);
+                        toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
+                    } else { // it's field picker
+                        var field = $('[name="' + picker.field + '"]'),
+                            btnPicker = field.siblings('[data-g-instancepicker]'),
+                            label = field.siblings('.g-instancepicker-title');
+
+                        if (field) {
+                            field.value(JSON.stringify(response.body.item));
+                            $('body').emit('change', { target: field });
+                        }
+                        if (label) { label.text(response.body.item.title); }
+
+                        if (item.type == 'particle') {
+                            btnPicker.text(btnPicker.data('g-instancepicker-alttext'));
+                        }
                     }
-
-                    menumanager.isNewParticle = false;
-                    menumanager.emit('dragEnd', menumanager.map);
-                    modal.close();
-                    toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
                 }
 
+                modal.close();
                 submit.hideIndicator();
             });
         });
@@ -208,8 +239,9 @@ ready(function() {
 
         var container = element.parent('.menu-editor-extras'),
             selected = container.find('[data-lm-blocktype].selected, [data-mm-module].selected'),
-            type = selected.data('mm-type'),
-            data = { type: 'particle' };
+            type = selected.data('mm-type');
+
+        data = { type: 'particle' };
 
         switch (type) {
             case 'particle':
@@ -225,7 +257,29 @@ ready(function() {
 
         element.showIndicator();
 
-        StepTwo({ item: JSON.stringify(data) }, element.parent('.g5-content'), element);
+
+        var data, instancepicker = element.data('g-instancepicker');
+
+        if (instancepicker && type == 'module') {
+            data = JSON.parse(instancepicker);
+            var field = $('[name="' + data.field + '"]');
+            if (field) {
+                field.value(selected.data('mm-module'));
+                body.emit('input', { target: field });
+            }
+
+            element.hideIndicator();
+            modal.close();
+
+            return false;
+        } else {
+            var ip = instancepicker;
+            element.data('g-instancepicker', null);
+            StepTwo({
+                item: JSON.stringify(data),
+                instancepicker: ip ? ip : null
+            }, element.parent('.g5-content'), element);
+        }
     });
 });
 

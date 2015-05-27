@@ -13,13 +13,16 @@ src/composer.lock
 src/vendor/**
 
 # Symbolic links in admin
-platforms/joomla/com_gantry5/*/common
+platforms/joomla/com_gantry5/admin/common
+platforms/wordpress/gantry5/admin/common
 platforms/*/*/common
 platforms/*/*/src
+platforms/*/*/assets
+platforms/*/*/engines
 
 # Symbolic links in themes
 themes/*/*/common
-themes/*/*/skeleton
+
 themes/*/*/src
 themes/*/*/cache
 themes/*/*/custom

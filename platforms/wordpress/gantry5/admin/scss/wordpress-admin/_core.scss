@@ -1,0 +1,70 @@
+body.gantry5 {
+    &.auto-fold {
+        #wpcontent {
+            padding-left: 0;
+        }
+    }
+
+    color: $light-gray;
+    background-color: $body-bg;
+
+    #g5-container {
+        a:focus {
+            box-shadow: none;
+        }
+
+        dd, li {
+            margin-bottom: 0;
+        }
+
+        li {
+            line-height: inherit;
+        }
+
+        textarea, input {
+            box-shadow: none;
+            color: $form-input-text;
+        }
+
+        input, button, select, textarea {
+            font-family: inherit;
+        }
+
+        .main-block {
+            min-height: 81.5vh;
+        }
+
+        .inner-container {
+            margin: 0;
+        }
+
+        .card {
+            max-width: none;
+            box-shadow: none;
+        }
+
+        .preview {
+            float: none;
+        }
+
+        .search {
+            background: none;
+            color: inherit;
+            font-size: inherit;
+        }
+
+    }
+
+    form {
+        margin-bottom: 1em;
+    }
+
+    .g5-dialog-loading-spinner.g5-dialog-theme-default {
+        top: 3em;
+    }
+
+    #wpbody-content {
+        padding-bottom: 0;
+    }
+
+}

@@ -1,4 +1,7 @@
 # Linguist Normalizer
+*.yaml linguistic-language=PHP
 *.twig linguistic-language=PHP
-**/js/main.js linguist-vendored=true
-**/css-compiled/*.css linguist-vendored=true
+**/gulpfile.js linguist-vendored
+**/js/*.js linguist-vendored
+**/js/*.json linguist-vendored
+**/css-compiled/*.css linguist-vendored

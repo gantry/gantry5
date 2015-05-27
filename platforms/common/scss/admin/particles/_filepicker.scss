@@ -164,13 +164,31 @@
                     border-radius: $core-border-radius;
 
                     &.g-image {
+                        @extend %g-transparent-bg;
                         position: relative;
                         float: left;
                         width: $max-width;
                         height: $max-width;
                         background-position: 50% 50%;
-                        background-repeat: no-repeat;
-                        background-size: cover;
+                        //background-repeat: no-repeat;
+                        //background-size: cover;
+
+                        /*&.g-image-png, &.g-image-gif, &.g-image-ico, &.g-image-svg {
+                            background-size: inherit;
+                            background-repeat: repeat;
+                        }*/
+
+                        > div {
+                            background-position: 50% 50%;
+                            background-repeat: no-repeat;
+                            background-size: cover;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            border-radius: $core-border-radius;
+                        }
                     }
                 }
 
@@ -240,7 +258,7 @@
             margin-top: 0;
             li {
                 display: block;
-                padding: 6px 4px;
+                padding: 4px;
 
                 > span:not(.g-file-name) {
                     color: #aaa;
@@ -252,7 +270,7 @@
                 }
 
                 .g-file-name {
-                    width: 60%;
+                    width: 50%;
                 }
 
                 .g-file-size {

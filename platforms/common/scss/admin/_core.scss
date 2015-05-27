@@ -4,10 +4,13 @@ html {
 }
 
 body {
-    color: $white;
-    background-color: $body-bg !important;
-    font-family: $font-family-default;
     margin: 0;
+}
+
+body.g5-prime {
+    color: $white;
+    background-color: $body-bg;
+    font-family: $font-family-default;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -19,6 +22,9 @@ a {
 #g5-container { // wrapper
     font-size: $core-font-size;
     line-height: $core-line-height;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: $font-family-default;
 
     .g-block {
         position: relative;
@@ -53,6 +59,20 @@ a {
         @include animation(pulsate 1s ease-out infinite);
     }
 
+    // collapse
+    .g-collapsed {
+        .g-collapse {
+            i {
+                @include transform(rotate(180deg));
+            }
+        }
+
+        .inner-params {
+            overflow: hidden;
+            height: 0;
+        }
+    }
+
     // badges
     .badge {
         border-radius: 100px;
@@ -64,7 +84,14 @@ a {
 
     // cards
     .cards-wrapper {
-        margin: -10px -1%;
+        margin: -10px 0;
+        display: block;
+        width: 100%;
+        @include column-count(2);
+
+        @include breakpoint(mobile-only) {
+            @include column-count(1);
+        }
     }
 
     .card {
@@ -75,7 +102,8 @@ a {
         padding: 10px;
         min-width: 250px;
         vertical-align: top;
-        margin: 10px 1%;
+        margin: 10px 0;
+        //@include transform(translateZ(0)); // FIXME : Causes z-index issue in selectize but fixes WebKit rendering issues with Columns
 
         &.full-width {
             margin: 0;
@@ -84,6 +112,34 @@ a {
 
         h4 {
             margin: 0;
+
+            > * {
+                vertical-align: middle;
+            }
+
+            &[data-g-collapse] {
+                .g-collapse {
+                    @extend .font-small;
+                    cursor: pointer;
+                    display: inline-block;
+                    border: 1px solid #ddd;
+                    color: #bbb;
+                    border-radius: 3px;
+                    line-height: 1rem;
+                    padding: 2px;
+                    margin-right: 5px;
+
+                    &:hover:before {
+                        bottom: 1.65rem;
+                        left: 0.25rem;
+                    }
+
+                    &:hover:after {
+                        left: -0.5rem;
+                        bottom: 2rem;
+                    }
+                }
+            }
 
             .enabler {
                 float: right;
@@ -94,9 +150,9 @@ a {
             @include enabler($green, $red);
         }
 
-        .inner-params {
+        .inner-params > :first-child:not(.alert) {
             margin: $content-margin 0 0;
-            padding-top: $content-margin;
+            padding-top: $content-margin * 2;
             border-top: 1px solid $light-gray;
         }
 
@@ -137,14 +193,28 @@ a {
 
 // Footer
 #footer {
-    margin-bottom: 3.5rem;
+    background-color: #e7e7e7;
+    padding: 1em 0 3rem;
+    margin-bottom: 0;
+    color: #aaa;
     text-align: center;
     font-weight: $font-weight-medium;
+    border-top: 1px solid #dedede;
+    font-family: $font-family-default;
+    font-size: $core-font-size;
+    line-height: $core-line-height;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    .g-version, .g-version-date {
+        color: $update-header-bg;
+    }
+
     a {
-        color: lighten($core-accent, 30%);
+        color: $core-accent !important;
         text-decoration: none;
         &:hover {
-            color: $white;
+            color: darken($core-accent, 20%) !important;
         }
     }
 }

@@ -40,6 +40,11 @@
 
 {% block footer_section %}
     <footer id="footer">
-        <a href="http://gantry.org">Gantry Administration</a> by <a href="http://www.rockettheme.com">RocketTheme</a>.
+        <div>
+            <a href="http://gantry.org">Gantry Administration</a> by <a href="http://www.rockettheme.com">RocketTheme</a>
+        </div>
+        {% set version = constant('GANTRY5_VERSION') %}
+        {% set version_date = constant('GANTRY5_VERSION_DATE') %}
+        <div>Version: <span class="g-version">{{ version }}</span> / Released: <span class="g-version-date">{{ version_date}}</span></div>
     </footer>
 {% endblock %}

@@ -6,6 +6,7 @@ var prime         = require('prime'),
     modal         = require('../ui').modal,
 
     getAjaxURL    = require('./get-ajax-url').global,
+    parseAjaxURI  = require('./get-ajax-url').parse,
     getAjaxSuffix = require('./get-ajax-suffix');
 
 var FlagsState = new prime({
@@ -36,7 +37,7 @@ var FlagsState = new prime({
     warning: function(options){
         var callback = options.callback || function() {},
             afterclose = options.afterclose || function() {},
-            warningURL = options.url || getAjaxURL('unsaved') + getAjaxSuffix();
+            warningURL = parseAjaxURI(options.url || getAjaxURL('unsaved') + getAjaxSuffix());
 
         modal.open({
             content: 'Loading...',

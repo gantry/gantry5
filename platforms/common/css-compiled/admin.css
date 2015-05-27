@@ -1,16 +1,16 @@
-/* line 8, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 8, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 .size-100 {
   width: 100%;
 }
 
-/* line 2, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
+/* line 2, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
 #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, .g5-dialog #g5-container .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, .g5-popover-content #g5-container .g-tabs ul, .g5-popover-content .g-pane ul, .g5-lm-particles-picker ul, .g5-lm-particles-picker li, .g5-mm-particles-picker ul, .g5-mm-particles-picker li, .g5-mm-modules-picker ul, .g5-mm-modules-picker li, .g5-popover.g5-popover-font-preview ul, .g5-popover.g5-popover-font-preview li, .g5-popover-extras ul, .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file] {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* line 9, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
+/* line 9, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
 #g5-container .submenu-ratio i {
   position: relative;
   top: 50%;
@@ -19,6 +19,11 @@
   -ms-transform: translateY(-50%);
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+
+/* line 7, platforms/common/scss/admin/mixins/_background.scss */
+.colorpicker, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-thumb.g-image {
+  background-image: url(data:image/jpeg;base64,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);
 }
 
 /* line 1, platforms/common/scss/admin/modules/_toggle-ui.scss */
@@ -70,30 +75,37 @@ html {
 
 /* line 6, platforms/common/scss/admin/_core.scss */
 body {
-  color: #fff;
-  background-color: #354D59 !important;
-  font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   margin: 0;
+}
+
+/* line 10, platforms/common/scss/admin/_core.scss */
+body.g5-prime {
+  color: #fff;
+  background-color: #354D59;
+  font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* line 15, platforms/common/scss/admin/_core.scss */
+/* line 18, platforms/common/scss/admin/_core.scss */
 a {
   color: #439A86;
 }
 
-/* line 19, platforms/common/scss/admin/_core.scss */
+/* line 22, platforms/common/scss/admin/_core.scss */
 #g5-container {
   font-size: 1rem;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
-/* line 23, platforms/common/scss/admin/_core.scss */
+/* line 29, platforms/common/scss/admin/_core.scss */
 #g5-container .g-block {
   position: relative;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 23, platforms/common/scss/admin/_core.scss */
+  /* line 29, platforms/common/scss/admin/_core.scss */
   #g5-container .g-block {
     -webkit-box-flex: 0;
     -moz-box-flex: 0;
@@ -104,37 +116,50 @@ a {
     flex: 0 100%;
   }
 }
-/* line 30, platforms/common/scss/admin/_core.scss */
+/* line 36, platforms/common/scss/admin/_core.scss */
 #g5-container .g-content {
   margin: 0.625rem;
   padding: 0.938rem;
 }
-/* line 35, platforms/common/scss/admin/_core.scss */
+/* line 41, platforms/common/scss/admin/_core.scss */
 #g5-container .inner-container {
   margin: 1.5rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   color: #666;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 35, platforms/common/scss/admin/_core.scss */
+  /* line 41, platforms/common/scss/admin/_core.scss */
   #g5-container .inner-container {
     margin: 0;
   }
 }
-/* line 46, platforms/common/scss/admin/_core.scss */
+/* line 52, platforms/common/scss/admin/_core.scss */
 #g5-container .fa-spin-fast {
   -webkit-animation: fa-spin 1s infinite linear;
   -moz-animation: fa-spin 1s infinite linear;
   animation: fa-spin 1s infinite linear;
 }
-/* line 51, platforms/common/scss/admin/_core.scss */
+/* line 57, platforms/common/scss/admin/_core.scss */
 #g5-container .changes-indicator {
   opacity: 0;
   -webkit-animation: pulsate 1s ease-out infinite;
   -moz-animation: pulsate 1s ease-out infinite;
   animation: pulsate 1s ease-out infinite;
 }
-/* line 57, platforms/common/scss/admin/_core.scss */
+/* line 65, platforms/common/scss/admin/_core.scss */
+#g5-container .g-collapsed .g-collapse i {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+/* line 70, platforms/common/scss/admin/_core.scss */
+#g5-container .g-collapsed .inner-params {
+  overflow: hidden;
+  height: 0;
+}
+/* line 77, platforms/common/scss/admin/_core.scss */
 #g5-container .badge, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected #g5-container span {
   border-radius: 100px;
   background-color: #eee;
@@ -142,11 +167,24 @@ a {
   padding: 3px 6px;
   text-shadow: none;
 }
-/* line 66, platforms/common/scss/admin/_core.scss */
+/* line 86, platforms/common/scss/admin/_core.scss */
 #g5-container .cards-wrapper {
-  margin: -10px -1%;
+  margin: -10px 0;
+  display: block;
+  width: 100%;
+  -webkit-column-count: 2;
+  -moz-column-count: 2;
+  column-count: 2;
 }
-/* line 70, platforms/common/scss/admin/_core.scss */
+@media only all and (max-width: 47.938rem) {
+  /* line 86, platforms/common/scss/admin/_core.scss */
+  #g5-container .cards-wrapper {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1;
+  }
+}
+/* line 97, platforms/common/scss/admin/_core.scss */
 #g5-container .card {
   display: inline-block;
   background: #fff;
@@ -155,18 +193,43 @@ a {
   padding: 10px;
   min-width: 250px;
   vertical-align: top;
-  margin: 10px 1%;
+  margin: 10px 0;
 }
-/* line 80, platforms/common/scss/admin/_core.scss */
+/* line 108, platforms/common/scss/admin/_core.scss */
 #g5-container .card.full-width {
   margin: 0;
   display: block;
 }
-/* line 85, platforms/common/scss/admin/_core.scss */
+/* line 113, platforms/common/scss/admin/_core.scss */
 #g5-container .card h4 {
   margin: 0;
 }
-/* line 88, platforms/common/scss/admin/_core.scss */
+/* line 116, platforms/common/scss/admin/_core.scss */
+#g5-container .card h4 > * {
+  vertical-align: middle;
+}
+/* line 121, platforms/common/scss/admin/_core.scss */
+#g5-container .card h4[data-g-collapse] .g-collapse {
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid #ddd;
+  color: #bbb;
+  border-radius: 3px;
+  line-height: 1rem;
+  padding: 2px;
+  margin-right: 5px;
+}
+/* line 132, platforms/common/scss/admin/_core.scss */
+#g5-container .card h4[data-g-collapse] .g-collapse:hover:before {
+  bottom: 1.65rem;
+  left: 0.25rem;
+}
+/* line 137, platforms/common/scss/admin/_core.scss */
+#g5-container .card h4[data-g-collapse] .g-collapse:hover:after {
+  left: -0.5rem;
+  bottom: 2rem;
+}
+/* line 144, platforms/common/scss/admin/_core.scss */
 #g5-container .card h4 .enabler {
   float: right;
 }
@@ -229,59 +292,72 @@ a {
 #g5-container .card .enabler [type="radio"]:checked + .toggle .knob {
   opacity: 1;
 }
-/* line 97, platforms/common/scss/admin/_core.scss */
-#g5-container .card .inner-params {
+/* line 153, platforms/common/scss/admin/_core.scss */
+#g5-container .card .inner-params > :first-child:not(.alert) {
   margin: 0.625rem 0 0;
-  padding-top: 0.625rem;
+  padding-top: 1.25rem;
   border-top: 1px solid #eee;
 }
-/* line 103, platforms/common/scss/admin/_core.scss */
+/* line 159, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-id {
   text-align: center;
   margin-bottom: 10px;
   font-weight: 500;
 }
-/* line 109, platforms/common/scss/admin/_core.scss */
+/* line 165, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-name {
   text-align: center;
 }
-/* line 114, platforms/common/scss/admin/_core.scss */
+/* line 170, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-screenshot img {
   margin: 0 auto 10px auto;
   display: block;
 }
-/* line 119, platforms/common/scss/admin/_core.scss */
+/* line 175, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-screenshot a {
   display: block;
 }
-/* line 125, platforms/common/scss/admin/_core.scss */
+/* line 181, platforms/common/scss/admin/_core.scss */
 #g5-container .themes .card {
   max-width: 300px;
 }
-/* line 130, platforms/common/scss/admin/_core.scss */
+/* line 186, platforms/common/scss/admin/_core.scss */
 #g5-container .g-footer-actions {
   padding: 1rem 0;
   margin-top: 1rem;
   border-top: 1px solid #ddd;
 }
 
-/* line 139, platforms/common/scss/admin/_core.scss */
+/* line 195, platforms/common/scss/admin/_core.scss */
 #footer {
-  margin-bottom: 3.5rem;
+  background-color: #e7e7e7;
+  padding: 1em 0 3rem;
+  margin-bottom: 0;
+  color: #aaa;
   text-align: center;
   font-weight: 500;
+  border-top: 1px solid #dedede;
+  font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-/* line 143, platforms/common/scss/admin/_core.scss */
+/* line 209, platforms/common/scss/admin/_core.scss */
+#footer .g-version, #footer .g-version-date {
+  color: #8F4DAE;
+}
+/* line 213, platforms/common/scss/admin/_core.scss */
 #footer a {
-  color: #a0d6c9;
+  color: #439A86 !important;
   text-decoration: none;
 }
-/* line 146, platforms/common/scss/admin/_core.scss */
+/* line 216, platforms/common/scss/admin/_core.scss */
 #footer a:hover {
-  color: #fff;
+  color: #245348 !important;
 }
 
-/* line 153, platforms/common/scss/admin/_core.scss */
+/* line 223, platforms/common/scss/admin/_core.scss */
 .Whoops.container {
   position: inherit;
 }
@@ -349,24 +425,24 @@ a {
     opacity: 0;
   }
 }
-/* line 175, platforms/common/scss/admin/_core.scss */
+/* line 245, platforms/common/scss/admin/_core.scss */
 .g-tooltip {
   display: inline;
   position: relative;
 }
-/* line 179, platforms/common/scss/admin/_core.scss */
+/* line 249, platforms/common/scss/admin/_core.scss */
 .g-tooltip:before, .g-tooltip:after {
   font-size: 1rem;
   line-height: 1.5rem;
 }
 
-/* line 185, platforms/common/scss/admin/_core.scss */
+/* line 255, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover, .g-tooltip.g-tooltip-force {
   color: #439A86;
   text-decoration: none;
 }
 
-/* line 190, platforms/common/scss/admin/_core.scss */
+/* line 260, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover:after, .g-tooltip.g-tooltip-force:after {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 0.1875rem;
@@ -382,7 +458,7 @@ a {
   font-size: 0.8rem;
 }
 
-/* line 205, platforms/common/scss/admin/_core.scss */
+/* line 275, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover:before, .g-tooltip.g-tooltip-force:before {
   border: solid;
   border-color: rgba(0, 0, 0, 0.8) transparent;
@@ -395,46 +471,46 @@ a {
   z-index: 100;
 }
 
-/* line 217, platforms/common/scss/admin/_core.scss */
+/* line 287, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-right:hover:after, .g-tooltip.g-tooltip-right.g-tooltip-force:after {
   left: inherit;
   right: 0;
 }
 
-/* line 222, platforms/common/scss/admin/_core.scss */
+/* line 292, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-right:hover:before, .g-tooltip.g-tooltip-right.g-tooltip-force:before {
   left: inherit;
   right: 1rem;
 }
 
-/* line 227, platforms/common/scss/admin/_core.scss */
+/* line 297, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-bottom:hover:after, .g-tooltip.g-tooltip-bottom.g-tooltip-force:after {
   bottom: auto;
 }
 
-/* line 231, platforms/common/scss/admin/_core.scss */
+/* line 301, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-bottom:hover:before, .g-tooltip.g-tooltip-bottom.g-tooltip-force:before {
   border-width: 0 .4rem .4rem .4rem;
   bottom: -0.1rem;
 }
 
-/* line 238, platforms/common/scss/admin/_core.scss */
+/* line 308, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:after {
   bottom: 3rem;
 }
 
-/* line 242, platforms/common/scss/admin/_core.scss */
+/* line 312, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:before {
   bottom: 2.6rem;
 }
 
-/* line 247, platforms/common/scss/admin/_core.scss */
+/* line 317, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:before {
   right: 7px;
   bottom: 1.5rem;
 }
 
-/* line 251, platforms/common/scss/admin/_core.scss */
+/* line 321, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:after {
   bottom: 1.9rem;
 }
@@ -461,7 +537,7 @@ a {
   src: url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.woff") format("woff"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.ttf") format("truetype"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.svg#roboto") format("svg");
 }
 /* line 5, platforms/common/scss/admin/_fonts.scss */
-.font-small, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .fa.font-small, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.fa {
+.font-small, #g5-container .card h4[data-g-collapse] .g-collapse, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .fa.font-small, #g5-container .card h4[data-g-collapse] .fa.g-collapse, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.fa {
   font-size: 0.8rem;
   vertical-align: middle;
 }
@@ -856,55 +932,65 @@ a {
 }
 /* line 13, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block {
-  width: 48%;
+  width: 100%;
   min-width: inherit;
 }
-@media only all and (max-width: 47.938rem) {
-  /* line 13, platforms/common/scss/admin/_settings.scss */
-  #g5-container .settings-block {
-    margin: 1% 0;
-    width: 100%;
-  }
-}
-/* line 22, platforms/common/scss/admin/_settings.scss */
+/* line 19, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block.card .badge, #g5-container .settings-block.card .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected #g5-container .settings-block.card span {
   margin-left: 4px;
 }
-/* line 27, platforms/common/scss/admin/_settings.scss */
+/* line 24, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block.disabled {
   opacity: 0.6;
 }
-/* line 31, platforms/common/scss/admin/_settings.scss */
+/* line 28, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .advanced {
   color: #fc6e51;
 }
-/* line 35, platforms/common/scss/admin/_settings.scss */
+/* line 32, platforms/common/scss/admin/_settings.scss */
+#g5-container .settings-block .alert {
+  margin: 0.625rem 0;
+}
+/* line 36, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param {
   padding: 10px 5px;
   clear: both;
   position: relative;
   border-bottom: 1px solid #f4f4f4;
 }
-/* line 41, platforms/common/scss/admin/_settings.scss */
+/* line 42, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param.input-hidden {
   display: none;
 }
-/* line 46, platforms/common/scss/admin/_settings.scss */
+/* line 47, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param:last-child {
   border-bottom: 0;
 }
-/* line 50, platforms/common/scss/admin/_settings.scss */
+/* line 51, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param .button.button-simple {
   background-color: #eee;
   color: #a2a2a2;
   padding: 6px 8px;
 }
-/* line 55, platforms/common/scss/admin/_settings.scss */
+/* line 56, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param .button.button-simple:hover {
   background-color: #d4d4d4;
   color: #6e6e6e;
 }
-/* line 62, platforms/common/scss/admin/_settings.scss */
+/* line 63, platforms/common/scss/admin/_settings.scss */
+#g5-container .settings-block .g-instancepicker-title {
+  margin-right: 0.5rem;
+  font-style: italic;
+}
+/* line 66, platforms/common/scss/admin/_settings.scss */
+#g5-container .settings-block .g-instancepicker-title:empty {
+  margin: 0;
+}
+/* line 71, platforms/common/scss/admin/_settings.scss */
+#g5-container .settings-block .input-small {
+  width: 120px !important;
+}
+/* line 75, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block input.settings-param-toggle {
   position: absolute;
   top: 50%;
@@ -912,12 +998,12 @@ a {
   margin: -7px 15px 0 0;
   z-index: 5;
 }
-/* line 70, platforms/common/scss/admin/_settings.scss */
+/* line 83, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block input.settings-param-toggle:checked + .settings-param-override {
   opacity: 0;
   z-index: -1;
 }
-/* line 77, platforms/common/scss/admin/_settings.scss */
+/* line 90, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-override {
   position: absolute;
   top: 0;
@@ -934,11 +1020,11 @@ a {
   transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
   /*@include linear-gradient(90deg, transparentize($white, 0.7) 0%, transparentize($white, 0.7) 150px, transparentize($white, 0.4) 150px, transparentize($white, 0.4) 100%);*/
 }
-/* line 92, platforms/common/scss/admin/_settings.scss */
+/* line 105, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-field {
   margin-left: 150px;
 }
-/* line 96, platforms/common/scss/admin/_settings.scss */
+/* line 109, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-field .g-reset-field {
   display: inline-block;
   opacity: 0;
@@ -947,39 +1033,39 @@ a {
   -moz-transition: opacity 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out;
 }
-/* line 104, platforms/common/scss/admin/_settings.scss */
+/* line 117, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-field .input-group .g-reset-field {
   display: table-cell;
   vertical-align: middle;
   padding-left: 4px;
 }
-/* line 111, platforms/common/scss/admin/_settings.scss */
+/* line 124, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-field:hover .g-reset-field {
   opacity: 1;
   -webkit-transition: opacity 0.2s ease-in-out;
   -moz-transition: opacity 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out;
 }
-/* line 119, platforms/common/scss/admin/_settings.scss */
+/* line 132, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param-title {
   max-width: 150px;
   margin: 5px;
 }
-/* line 125, platforms/common/scss/admin/_settings.scss */
+/* line 138, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block i {
   line-height: inherit;
 }
-/* line 129, platforms/common/scss/admin/_settings.scss */
+/* line 142, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .fa {
   width: 1rem;
   text-align: center;
 }
-/* line 134, platforms/common/scss/admin/_settings.scss */
+/* line 147, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .fa-lg {
   font-size: inherit;
   vertical-align: inherit;
 }
-/* line 139, platforms/common/scss/admin/_settings.scss */
+/* line 152, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block input, #g5-container .settings-block textarea {
   padding: 6px 12px;
   border: 1px solid #ddd;
@@ -990,95 +1076,95 @@ a {
   line-height: 1.5;
   border-radius: 0.1875rem;
 }
-/* line 150, platforms/common/scss/admin/_settings.scss */
+/* line 163, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block select {
   margin: 0 0 10px;
   display: inline-block;
 }
-/* line 155, platforms/common/scss/admin/_settings.scss */
+/* line 168, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block input:not(.settings-param-toggle), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker, #g5-container .settings-block .multi.selectize-control {
   width: 250px;
 }
 @media only all and (max-width: 59.938rem) {
-  /* line 155, platforms/common/scss/admin/_settings.scss */
+  /* line 168, platforms/common/scss/admin/_settings.scss */
   #g5-container .settings-block input:not(.settings-param-toggle), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker, #g5-container .settings-block .multi.selectize-control {
     width: 100%;
   }
 }
-/* line 162, platforms/common/scss/admin/_settings.scss */
+/* line 175, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block textarea {
   width: 90%;
   min-height: 150px;
 }
-/* line 169, platforms/common/scss/admin/_settings.scss */
+/* line 182, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
   width: 209px;
 }
 @media only all and (max-width: 59.938rem) {
-  /* line 169, platforms/common/scss/admin/_settings.scss */
+  /* line 182, platforms/common/scss/admin/_settings.scss */
   #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
     width: 100%;
   }
 }
-/* line 178, platforms/common/scss/admin/_settings.scss */
+/* line 191, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .selectize-control.single {
   width: 250px !important;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-  /* line 178, platforms/common/scss/admin/_settings.scss */
+  /* line 191, platforms/common/scss/admin/_settings.scss */
   #g5-container .settings-block .selectize-control.single {
     width: 100% !important;
   }
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 178, platforms/common/scss/admin/_settings.scss */
+  /* line 191, platforms/common/scss/admin/_settings.scss */
   #g5-container .settings-block .selectize-control.single {
     width: 92% !important;
   }
 }
-/* line 188, platforms/common/scss/admin/_settings.scss */
+/* line 201, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block img {
   display: block;
 }
-/* line 192, platforms/common/scss/admin/_settings.scss */
+/* line 205, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block.search {
   position: relative;
   margin-bottom: 10px;
 }
-/* line 196, platforms/common/scss/admin/_settings.scss */
+/* line 209, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block.search i {
   position: absolute;
   right: 10px;
   top: 50%;
   margin-top: -12px;
 }
-/* line 208, platforms/common/scss/admin/_settings.scss */
+/* line 221, platforms/common/scss/admin/_settings.scss */
 #g5-container .g5-dialog .settings-block {
   width: 100%;
   margin: 0 0 15px;
 }
-/* line 213, platforms/common/scss/admin/_settings.scss */
+/* line 226, platforms/common/scss/admin/_settings.scss */
 #g5-container .g5-dialog .g-modal-body {
   overflow-x: hidden;
   overflow-y: scroll;
   max-height: 650px;
 }
-/* line 219, platforms/common/scss/admin/_settings.scss */
+/* line 232, platforms/common/scss/admin/_settings.scss */
 #g5-container .g5-dialog .settings-param {
   padding: 5px;
 }
 @media only all and (max-width: 59.938rem) {
-  /* line 219, platforms/common/scss/admin/_settings.scss */
+  /* line 232, platforms/common/scss/admin/_settings.scss */
   #g5-container .g5-dialog .settings-param {
     padding: 2px 5px;
     border: 0;
   }
 }
-/* line 229, platforms/common/scss/admin/_settings.scss */
+/* line 242, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker {
   position: relative;
 }
-/* line 232, platforms/common/scss/admin/_settings.scss */
+/* line 245, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-param-field-colorpicker .settings-param-field-colorpicker-preview {
   position: absolute;
   top: 2px;
@@ -1087,44 +1173,44 @@ a {
   width: 1.5625em;
   border-radius: 3px;
 }
-/* line 244, platforms/common/scss/admin/_settings.scss */
+/* line 257, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul {
   margin: 5px 0;
 }
-/* line 248, platforms/common/scss/admin/_settings.scss */
+/* line 261, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul li, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li {
   padding: 0.1rem 0;
   position: relative;
 }
-/* line 253, platforms/common/scss/admin/_settings.scss */
+/* line 266, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul li:only-child .fa-reorder, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li:only-child .fa-reorder {
   display: none;
 }
-/* line 257, platforms/common/scss/admin/_settings.scss */
+/* line 270, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul li:only-child a, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li:only-child a {
   margin-left: 0;
 }
-/* line 264, platforms/common/scss/admin/_settings.scss */
+/* line 277, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field .item-reorder, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field .item-reorder {
   cursor: row-resize;
   color: #999999;
 }
-/* line 272, platforms/common/scss/admin/_settings.scss */
+/* line 285, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-title-edit], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-remove] {
   color: #666;
   opacity: 1;
 }
-/* line 277, platforms/common/scss/admin/_settings.scss */
+/* line 290, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li[data-collection-item]:hover a {
   color: #439A86;
 }
-/* line 282, platforms/common/scss/admin/_settings.scss */
+/* line 295, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field [data-collection-item] a {
   color: #666;
   margin-left: 5px;
   vertical-align: middle;
 }
-/* line 288, platforms/common/scss/admin/_settings.scss */
+/* line 301, platforms/common/scss/admin/_settings.scss */
 #g5-container .collection-list .settings-param-field [data-title-edit], #g5-container .collection-list .settings-param-field [data-collection-remove] {
   cursor: pointer;
   color: #cccccc;
@@ -1231,47 +1317,43 @@ a {
 }
 
 /* line 3, platforms/common/scss/admin/_assignments.scss */
-#g5-container #assignments .card {
-  float: left;
-}
-/* line 6, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .enabler {
   float: right;
 }
-/* line 10, platforms/common/scss/admin/_assignments.scss */
+/* line 7, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .settings-param {
   display: block;
   border-bottom: 0;
   border-top: 1px solid #f4f4f4;
   margin: 5px 0;
 }
-/* line 16, platforms/common/scss/admin/_assignments.scss */
+/* line 13, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .settings-param .settings-param-title {
   line-height: 1em;
   vertical-align: middle;
 }
-/* line 20, platforms/common/scss/admin/_assignments.scss */
+/* line 17, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .settings-param .settings-param-title .changes-indicator {
   margin-left: -1em;
 }
-/* line 26, platforms/common/scss/admin/_assignments.scss */
+/* line 23, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters {
   position: relative;
   margin-bottom: 1rem;
   display: inline-block;
 }
-/* line 31, platforms/common/scss/admin/_assignments.scss */
+/* line 28, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters .search.settings-block {
   width: 90%;
   display: inline-block;
   margin-bottom: 0;
   margin-right: 25px;
 }
-/* line 37, platforms/common/scss/admin/_assignments.scss */
+/* line 34, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters .search.settings-block, #g5-container #assignments .g-assignments-filters .search.settings-block input {
   font-size: 0.85rem;
 }
-/* line 42, platforms/common/scss/admin/_assignments.scss */
+/* line 39, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters [data-g-assignments-check], #g5-container #assignments .g-assignments-filters [data-g-assignments-uncheck] {
   background-color: transparent;
   padding: 0;
@@ -1281,37 +1363,45 @@ a {
   line-height: 1;
   right: 0;
 }
-/* line 52, platforms/common/scss/admin/_assignments.scss */
+/* line 49, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters [data-g-assignments-check] {
   top: 4px;
 }
-/* line 56, platforms/common/scss/admin/_assignments.scss */
+/* line 53, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters [data-g-assignments-uncheck] {
   bottom: 0;
 }
-/* line 60, platforms/common/scss/admin/_assignments.scss */
+/* line 57, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .g-assignments-filters .g-tooltip:hover:before {
   left: 2px;
 }
-/* line 65, platforms/common/scss/admin/_assignments.scss */
+/* line 62, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .card .g-assignments-filters .search {
   width: 65%;
 }
-/* line 68, platforms/common/scss/admin/_assignments.scss */
+/* line 65, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments .card .g-assignments-filters .search i {
   margin-top: -15px;
 }
-/* line 73, platforms/common/scss/admin/_assignments.scss */
+/* line 70, platforms/common/scss/admin/_assignments.scss */
 #g5-container #assignments h4 {
   padding: 12px 6px;
   line-height: 2;
 }
 
-/* line 5, platforms/common/scss/admin/_configurations.scss */
+/* line 3, platforms/common/scss/admin/_configurations.scss */
+#g5-container #configurations {
+  margin: -10px -1%;
+}
+/* line 6, platforms/common/scss/admin/_configurations.scss */
+#g5-container #configurations .card {
+  margin: 10px 1%;
+}
+/* line 10, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations h4 > * {
   vertical-align: middle;
 }
-/* line 11, platforms/common/scss/admin/_configurations.scss */
+/* line 16, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations ul .size-1-4 {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
@@ -1322,7 +1412,7 @@ a {
   flex: 0 23%;
 }
 @media only all and (max-width: 30rem) {
-  /* line 11, platforms/common/scss/admin/_configurations.scss */
+  /* line 16, platforms/common/scss/admin/_configurations.scss */
   #g5-container #configurations ul .size-1-4 {
     -webkit-box-flex: 0;
     -moz-box-flex: 0;
@@ -1333,16 +1423,16 @@ a {
     flex: 0 100%;
   }
 }
-/* line 20, platforms/common/scss/admin/_configurations.scss */
+/* line 25, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations img {
   display: block;
   margin: 0 auto;
 }
-/* line 25, platforms/common/scss/admin/_configurations.scss */
+/* line 30, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .add-new {
   cursor: pointer;
 }
-/* line 27, platforms/common/scss/admin/_configurations.scss */
+/* line 32, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .add-new a {
   display: block;
   position: absolute;
@@ -1351,7 +1441,7 @@ a {
   left: 0;
   bottom: 0;
 }
-/* line 36, platforms/common/scss/admin/_configurations.scss */
+/* line 41, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .add-new i {
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
@@ -1365,12 +1455,12 @@ a {
   color: #ddd;
   display: block;
 }
-/* line 45, platforms/common/scss/admin/_configurations.scss */
+/* line 50, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .add-new i.fa-spinner {
   margin-left: -0.642857145em;
   margin-top: -0.642857145em;
 }
-/* line 51, platforms/common/scss/admin/_configurations.scss */
+/* line 56, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .add-new .page {
   vertical-align: middle;
   height: 357px;
@@ -1378,11 +1468,23 @@ a {
   text-align: center;
   position: relative;
 }
-/* line 61, platforms/common/scss/admin/_configurations.scss */
+/* line 65, platforms/common/scss/admin/_configurations.scss */
+#g5-container #configurations .card .inner-params {
+  margin: 0.625rem 0 0;
+  padding-top: 0.625rem;
+  border-top: 1px solid #eee;
+}
+/* line 70, platforms/common/scss/admin/_configurations.scss */
+#g5-container #configurations .card .inner-params > :first-child {
+  border-top: 0;
+  padding-top: 0;
+  margin: 0 auto;
+}
+/* line 78, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .g-tooltip:before {
   bottom: 2.6rem;
 }
-/* line 65, platforms/common/scss/admin/_configurations.scss */
+/* line 82, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .g-tooltip:after {
   bottom: 3rem;
 }
@@ -2390,7 +2492,7 @@ samp {
   top: 12px;
 }
 /* line 470, platforms/common/scss/admin/_layout-manager.scss */
-#g5-container .lm-blocks .block-has-changes > span .title, #g5-container .lm-blocks .block-has-changes > span .font-small, #g5-container .lm-blocks .block-has-changes > span .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #g5-container .lm-blocks .block-has-changes > span li {
+#g5-container .lm-blocks .block-has-changes > span .title, #g5-container .lm-blocks .block-has-changes > span .font-small, #g5-container .lm-blocks .block-has-changes > span .card h4[data-g-collapse] .g-collapse, #g5-container .card h4[data-g-collapse] .lm-blocks .block-has-changes > span .g-collapse, #g5-container .lm-blocks .block-has-changes > span .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #g5-container .lm-blocks .block-has-changes > span li {
   margin-left: 15px;
 }
 /* line 476, platforms/common/scss/admin/_layout-manager.scss */
@@ -3964,7 +4066,6 @@ html.g5-dialog-open {
 /* line 1, platforms/common/scss/admin/particles/_colorpicker.scss */
 .colorpicker {
   position: relative;
-  background-image: url(data:image/jpeg;base64,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);
   border-radius: 0.1875rem;
   max-width: 100%;
 }
@@ -4634,10 +4735,24 @@ html.g5-dialog-open {
   width: 100px;
   height: 100px;
   background-position: 50% 50%;
+  /*&.g-image-png, &.g-image-gif, &.g-image-ico, &.g-image-svg {
+      background-size: inherit;
+      background-repeat: repeat;
+  }*/
+}
+/* line 181, platforms/common/scss/admin/particles/_filepicker.scss */
+.g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-thumb.g-image > div {
+  background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 0.1875rem;
 }
-/* line 177, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 195, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-name {
   font-size: 0.7rem;
   margin: 0.5em -6px 0;
@@ -4646,16 +4761,16 @@ html.g5-dialog-open {
   max-width: 100px;
   white-space: nowrap;
 }
-/* line 186, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 204, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-size, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-mtime {
   display: none;
 }
-/* line 189, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 207, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-size strong, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-size b, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-mtime strong, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-mtime b {
   color: inherit !important;
   font-weight: inherit !important;
 }
-/* line 195, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 213, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-progress {
   display: none;
   position: absolute;
@@ -4667,7 +4782,7 @@ html.g5-dialog-open {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 50px;
 }
-/* line 206, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 224, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-progress .g-file-progress-text {
   position: absolute;
   line-height: 50px;
@@ -4676,87 +4791,87 @@ html.g5-dialog-open {
   width: 100%;
   left: 0;
 }
-/* line 214, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 232, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-progress .g-file-progress-text i {
   line-height: 50px;
   color: #fff;
 }
-/* line 222, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 240, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.g-file-uploading .g-thumb {
   opacity: 0.1;
 }
-/* line 225, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 243, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.g-file-uploading .g-file-progress {
   display: block;
 }
-/* line 230, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 248, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span {
   background-color: #439A86 !important;
   color: #fff !important;
   padding: 0 6px !important;
 }
-/* line 239, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 257, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list {
   margin-top: 0;
 }
-/* line 241, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 259, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li {
   display: block;
-  padding: 6px 4px;
+  padding: 4px;
 }
-/* line 245, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 263, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li > span:not(.g-file-name) {
   color: #aaa;
   text-align: center;
 }
-/* line 250, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 268, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-thumb {
   display: none;
 }
-/* line 254, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 272, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-name {
-  width: 60%;
+  width: 50%;
 }
-/* line 258, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 276, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-size {
   width: 20%;
 }
-/* line 261, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 279, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-size strong, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-size b {
   color: inherit !important;
   font-weight: inherit !important;
 }
-/* line 267, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 285, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li:nth-child(odd) {
   background-color: #f5f5f5;
 }
-/* line 271, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 289, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.selected {
   background-color: #439A86 !important;
   color: #fff !important;
 }
-/* line 275, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 293, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.selected > span:not(.g-file-name) {
   color: #6bbfab;
 }
-/* line 281, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 299, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-uploading .g-file-mtime, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-uploading .g-file-progress-text {
   display: none;
 }
-/* line 285, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 303, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-uploading .g-file-mtime.g-file-progress {
   display: block;
 }
-/* line 289, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 307, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-uploading .g-file-progress {
   width: 20%;
 }
-/* line 295, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 313, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-error .g-file-progress-text {
   display: block !important;
   position: relative;
 }
-/* line 299, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 317, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-error .g-file-progress-text i {
   position: absolute;
   text-align: center;
@@ -4766,16 +4881,16 @@ html.g5-dialog-open {
   color: white;
   font-size: 0.8rem;
 }
-/* line 313, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 331, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list .g-list-labels {
   margin: 0 0 -6px;
   display: block;
 }
-/* line 317, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 335, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list .g-list-labels li {
   background-color: #e9e9e9;
 }
-/* line 319, platforms/common/scss/admin/particles/_filepicker.scss */
+/* line 337, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list .g-list-labels li > span {
   color: #888;
 }

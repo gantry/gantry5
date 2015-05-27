@@ -27,27 +27,22 @@ class LayoutReader
      * Make layout from array data.
      *
      * @param array $data
+     * @param bool $array
      * @return array
      */
-    public static function data(array $data)
+    public static function data(array $data, $array = true)
     {
         // Check if we have pre-saved configuration.
-        if (isset($data['children'])) {
+        if (array_key_exists('children', $data)) {
             $preset = isset($data['preset']) && is_array($data['preset']) ? $data['preset'] : [];
 
-            $result = self::object($data['children']);
+            $result = is_array($data['children']) ? self::object($data['children']) : [];
 
             $invisible = [
                 'offcanvas' => self::parse('offcanvas', [], 0),
                 'atoms' => self::parse('atoms', [], 0)
             ];
             foreach ($result as $key => &$item) {
-                // FIXME: remove before release
-                if ($item->type == 'non-visible') {
-                    $item->type = 'atoms';
-                    $item->attributes->name = 'Atoms Section';
-                }
-
                 if (isset($invisible[$item->type])) {
                     $invisible[$item->type] = $item;
                     unset($result[$key]);
@@ -62,45 +57,42 @@ class LayoutReader
                 'image' => 'gantry-admin://images/layouts/default.png'
             ];
 
-            return ['preset' => $preset] + array_values($result);
+            $result = array_values($result);
+
+        } else {
+
+            // Check if we have preset.
+            $preset = [];
+            if (isset($data['preset']) && is_array($data['preset']) && isset($data['layout']) && is_array($data['layout'])) {
+                $preset = $data['preset'];
+                $data = $data['layout'];
+            }
+
+            // We have user entered file; let's build the layout.
+
+            // Two last items are always offcanvas and atoms.
+            $invisible = [
+                'offcanvas' => isset($data['offcanvas']) ? $data['offcanvas'] : [],
+                'atoms' => isset($data['atoms']) ? $data['atoms'] : []
+            ];
+            unset($data['offcanvas'], $data['atoms']);
+            $data += $invisible;
+
+            $result = [];
+            foreach ($data as $field => $params) {
+                $child = self::parse($field, (array) $params, 0);
+                unset($child->size);
+
+                $result[] = $child;
+            }
+
+            // Make sure that all values are set by defining defaults.
+            $preset += [
+                'name' => '',
+                'image' => 'gantry-admin://images/layouts/default.png'
+            ];
         }
 
-        // Check if we have preset.
-        $preset = [];
-        if (isset($data['preset']) && is_array($data['preset']) && isset($data['layout']) && is_array($data['layout'])) {
-            $preset = $data['preset'];
-            $data = $data['layout'];
-        }
-
-        // We have user entered file; let's build the layout.
-
-        // FIXME: remove before release
-        if (isset($data['non-visible'])) {
-            $data['offcanvas'] = [];
-            unset ($data['non-visible']);
-        }
-
-        // Two last items are always offcanvas and atoms.
-        $invisible = [
-            'offcanvas' => isset($data['offcanvas']) ? $data['offcanvas'] : [],
-            'atoms' => isset($data['atoms']) ? $data['atoms'] : []
-        ];
-        unset($data['offcanvas'], $data['atoms']);
-        $data += $invisible;
-
-        $result = [];
-        foreach ($data as $field => $params) {
-            $child = self::parse($field, $params, 0);
-            unset($child->size);
-
-            $result[] = $child;
-        }
-
-        // Make sure that all values are set by defining defaults.
-        $preset += [
-            'name' => '',
-            'image' => 'gantry-admin://images/layouts/default.png'
-        ];
         return ['preset' => $preset] + $result;
     }
 
@@ -147,7 +139,7 @@ class LayoutReader
      * @param int $scope
      * @return array
      */
-    protected static function parse($field, $content, $scope)
+    protected static function parse($field, array $content, $scope)
     {
         if (is_numeric($field))  {
             // Row or block

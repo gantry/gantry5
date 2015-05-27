@@ -17,10 +17,12 @@ form:
       content: To edit the Module please use the <a href="index.php?option=com_modules" target="_blank" data-g-urltemplate="index.php?option=com_modules&view=module&layout=edit&id=#ID#" href="#">Joomla's Module Manager <i class="fa fa-fw fa-external-link"></i></a>
 
     module_id:
-      type: input.text
+      type: gantry.module
       label: Module Id
-      class: g-urltemplate
+      class: g-urltemplate input-small
+      picker_label: Pick a Module
       description: Enter module Id.
+      pattern: '\d+'
       overridable: false
 
     chrome:

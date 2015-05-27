@@ -6,6 +6,7 @@ var prime         = require('prime'),
     domready      = require('elements/domready'),
     storage       = require('prime/map')(),
     modal         = require('../ui').modal,
+    collapsers    = require('../ui/collapse'),
 
     size          = require('mout/collection/size'),
     indexOf       = require('mout/array/indexOf'),
@@ -18,6 +19,7 @@ var prime         = require('prime'),
     request       = require('agent')(),
     History       = require('./history'),
     flags         = require('./flags-state'),
+    parseAjaxURI  = require('./get-ajax-url').parse,
     getAjaxSuffix = require('./get-ajax-suffix'),
     mm            = require('../menu');
 
@@ -53,7 +55,7 @@ History.Adapter.bind(window, 'statechange', function() {
         Data.element = $('[href="' + url + '"]');
     }
 
-    URI = URI + getAjaxSuffix();
+    URI = parseAjaxURI(URI + getAjaxSuffix());
 
     var lis;
     if (sidebar && Data.element) {
@@ -83,21 +85,26 @@ History.Adapter.bind(window, 'statechange', function() {
     if (!ERROR) { modal.closeAll(); }
     request.url(URI + params).data(Data.extras || {}).method(Data.extras ? 'post' : 'get').send(function(error, response) {
         if (!response.body.success) {
-            ERROR = true;
-            modal.open({
-                content: response.body.html || response.body,
-                afterOpen: function(container) {
-                    if (!response.body.html) { container.style({ width: '90%' }); }
-                }
-            });
+            if (!ERROR) {
+                ERROR = true;
+                modal.open({
+                    content: response.body.html || response.body,
+                    afterOpen: function(container) {
+                        if (!response.body.html) { container.style({ width: '90%' }); }
+                    }
+                });
 
-            History.back();
+                History.back();
+            } else {
+                ERROR = false;
+            }
 
             if (Data.element) {
                 Data.element.hideIndicator();
             }
 
             return false;
+
         }
 
         var target = Data.parent ? Data.element.parent(Data.parent) : $(Data.target),
@@ -130,6 +137,7 @@ History.Adapter.bind(window, 'statechange', function() {
         var selects = $('[data-selectize]');
         if (selects) { selects.selectize(); }
         selectorChangeEvent();
+        collapsers();
 
         body.emit('statechangeEnd');
     });

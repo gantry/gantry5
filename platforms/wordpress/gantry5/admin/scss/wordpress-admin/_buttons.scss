@@ -1,0 +1,20 @@
+@mixin button-color($color, $text: $white) {
+    background: $color;
+    color: $text;
+    &:not(.disabled):not([disabled]):hover {
+        background: darken($color, 6%);
+        color: $text;
+    }
+}
+
+#g5-container {
+    .button {
+        height: auto;
+        box-shadow: none;
+        border: none;
+    }
+    
+    .button-primary {
+	    @include button-color($core-accent);
+	}
+}
