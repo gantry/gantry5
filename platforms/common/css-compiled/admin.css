@@ -146,7 +146,20 @@ a {
   -moz-animation: pulsate 1s ease-out infinite;
   animation: pulsate 1s ease-out infinite;
 }
-/* line 63, platforms/common/scss/admin/_core.scss */
+/* line 65, platforms/common/scss/admin/_core.scss */
+#g5-container .g-collapsed .g-collapse i {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+/* line 70, platforms/common/scss/admin/_core.scss */
+#g5-container .g-collapsed .inner-params {
+  overflow: hidden;
+  height: 0px;
+}
+/* line 77, platforms/common/scss/admin/_core.scss */
 #g5-container .badge, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected #g5-container span {
   border-radius: 100px;
   background-color: #eee;
@@ -154,7 +167,7 @@ a {
   padding: 3px 6px;
   text-shadow: none;
 }
-/* line 72, platforms/common/scss/admin/_core.scss */
+/* line 86, platforms/common/scss/admin/_core.scss */
 #g5-container .cards-wrapper {
   margin: -10px 0;
   display: block;
@@ -164,14 +177,14 @@ a {
   column-count: 2;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 72, platforms/common/scss/admin/_core.scss */
+  /* line 86, platforms/common/scss/admin/_core.scss */
   #g5-container .cards-wrapper {
     -webkit-column-count: 1;
     -moz-column-count: 1;
     column-count: 1;
   }
 }
-/* line 83, platforms/common/scss/admin/_core.scss */
+/* line 97, platforms/common/scss/admin/_core.scss */
 #g5-container .card {
   display: inline-block;
   background: #fff;
@@ -187,16 +200,41 @@ a {
   -o-transform: translateZ(0);
   transform: translateZ(0);
 }
-/* line 94, platforms/common/scss/admin/_core.scss */
+/* line 108, platforms/common/scss/admin/_core.scss */
 #g5-container .card.full-width {
   margin: 0;
   display: block;
 }
-/* line 99, platforms/common/scss/admin/_core.scss */
+/* line 113, platforms/common/scss/admin/_core.scss */
 #g5-container .card h4 {
   margin: 0;
 }
-/* line 94, platforms/common/scss/admin/_core.scss */
+/* line 116, platforms/common/scss/admin/_core.scss */
+#g5-container .card h4 > * {
+  vertical-align: middle;
+}
+/* line 121, platforms/common/scss/admin/_core.scss */
+#g5-container .card h4[data-g-collapse] .g-collapse {
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid #ddd;
+  color: #bbb;
+  border-radius: 3px;
+  line-height: 1rem;
+  padding: 2px;
+  margin-right: 5px;
+}
+/* line 132, platforms/common/scss/admin/_core.scss */
+#g5-container .card h4[data-g-collapse] .g-collapse:hover:before {
+  bottom: 1.6rem;
+  left: 0.25rem;
+}
+/* line 137, platforms/common/scss/admin/_core.scss */
+#g5-container .card h4[data-g-collapse] .g-collapse:hover:after {
+  left: -0.5rem;
+  bottom: 2rem;
+}
+/* line 144, platforms/common/scss/admin/_core.scss */
 #g5-container .card h4 .enabler {
   float: right;
 }
@@ -259,43 +297,43 @@ a {
 #g5-container .card .enabler [type="radio"]:checked + .toggle .knob {
   opacity: 1;
 }
-/* line 129, platforms/common/scss/admin/_core.scss */
-#g5-container .card .inner-params {
+/* line 153, platforms/common/scss/admin/_core.scss */
+#g5-container .card .inner-params > :first-child {
   margin: 0.625rem 0 0;
-  padding-top: 0.625rem;
+  padding-top: 1.25rem;
   border-top: 1px solid #eee;
 }
-/* line 135, platforms/common/scss/admin/_core.scss */
+/* line 159, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-id {
   text-align: center;
   margin-bottom: 10px;
   font-weight: 500;
 }
-/* line 141, platforms/common/scss/admin/_core.scss */
+/* line 165, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-name {
   text-align: center;
 }
-/* line 146, platforms/common/scss/admin/_core.scss */
+/* line 170, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-screenshot img {
   margin: 0 auto 10px auto;
   display: block;
 }
-/* line 151, platforms/common/scss/admin/_core.scss */
+/* line 175, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-screenshot a {
   display: block;
 }
-/* line 157, platforms/common/scss/admin/_core.scss */
+/* line 181, platforms/common/scss/admin/_core.scss */
 #g5-container .themes .card {
   max-width: 300px;
 }
-/* line 162, platforms/common/scss/admin/_core.scss */
+/* line 186, platforms/common/scss/admin/_core.scss */
 #g5-container .g-footer-actions {
   padding: 1rem 0;
   margin-top: 1rem;
   border-top: 1px solid #ddd;
 }
 
-/* line 171, platforms/common/scss/admin/_core.scss */
+/* line 195, platforms/common/scss/admin/_core.scss */
 #footer {
   background-color: #e7e7e7;
   padding: 1em 0 3rem;
@@ -310,21 +348,21 @@ a {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* line 185, platforms/common/scss/admin/_core.scss */
+/* line 209, platforms/common/scss/admin/_core.scss */
 #footer .g-version, #footer .g-version-date {
   color: #8F4DAE;
 }
-/* line 189, platforms/common/scss/admin/_core.scss */
+/* line 213, platforms/common/scss/admin/_core.scss */
 #footer a {
   color: #439A86 !important;
   text-decoration: none;
 }
-/* line 192, platforms/common/scss/admin/_core.scss */
+/* line 216, platforms/common/scss/admin/_core.scss */
 #footer a:hover {
   color: #245348 !important;
 }
 
-/* line 199, platforms/common/scss/admin/_core.scss */
+/* line 223, platforms/common/scss/admin/_core.scss */
 .Whoops.container {
   position: inherit;
 }
@@ -392,24 +430,24 @@ a {
     opacity: 0;
   }
 }
-/* line 221, platforms/common/scss/admin/_core.scss */
+/* line 245, platforms/common/scss/admin/_core.scss */
 .g-tooltip {
   display: inline;
   position: relative;
 }
-/* line 225, platforms/common/scss/admin/_core.scss */
+/* line 249, platforms/common/scss/admin/_core.scss */
 .g-tooltip:before, .g-tooltip:after {
   font-size: 1rem;
   line-height: 1.5rem;
 }
 
-/* line 231, platforms/common/scss/admin/_core.scss */
+/* line 255, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover, .g-tooltip.g-tooltip-force {
   color: #439A86;
   text-decoration: none;
 }
 
-/* line 236, platforms/common/scss/admin/_core.scss */
+/* line 260, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover:after, .g-tooltip.g-tooltip-force:after {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 0.1875rem;
@@ -425,7 +463,7 @@ a {
   font-size: 0.8rem;
 }
 
-/* line 251, platforms/common/scss/admin/_core.scss */
+/* line 275, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover:before, .g-tooltip.g-tooltip-force:before {
   border: solid;
   border-color: rgba(0, 0, 0, 0.8) transparent;
@@ -438,46 +476,46 @@ a {
   z-index: 100;
 }
 
-/* line 263, platforms/common/scss/admin/_core.scss */
+/* line 287, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-right:hover:after, .g-tooltip.g-tooltip-right.g-tooltip-force:after {
   left: inherit;
   right: 0;
 }
 
-/* line 268, platforms/common/scss/admin/_core.scss */
+/* line 292, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-right:hover:before, .g-tooltip.g-tooltip-right.g-tooltip-force:before {
   left: inherit;
   right: 1rem;
 }
 
-/* line 273, platforms/common/scss/admin/_core.scss */
+/* line 297, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-bottom:hover:after, .g-tooltip.g-tooltip-bottom.g-tooltip-force:after {
   bottom: auto;
 }
 
-/* line 277, platforms/common/scss/admin/_core.scss */
+/* line 301, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-bottom:hover:before, .g-tooltip.g-tooltip-bottom.g-tooltip-force:before {
   border-width: 0 .4rem .4rem .4rem;
   bottom: -0.1rem;
 }
 
-/* line 284, platforms/common/scss/admin/_core.scss */
+/* line 308, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:after {
   bottom: 3rem;
 }
 
-/* line 288, platforms/common/scss/admin/_core.scss */
+/* line 312, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:before {
   bottom: 2.6rem;
 }
 
-/* line 293, platforms/common/scss/admin/_core.scss */
+/* line 317, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:before {
   right: 7px;
   bottom: 1.5rem;
 }
 
-/* line 297, platforms/common/scss/admin/_core.scss */
+/* line 321, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:after {
   bottom: 1.9rem;
 }
@@ -504,7 +542,7 @@ a {
   src: url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.woff") format("woff"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.ttf") format("truetype"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.svg#roboto") format("svg");
 }
 /* line 5, platforms/common/scss/admin/_fonts.scss */
-.font-small, #g5-container .card h4[data-g-card] .g-collapse, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .fa.font-small, #g5-container .card h4[data-g-card] .fa.g-collapse, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.fa {
+.font-small, #g5-container .card h4[data-g-collapse] .g-collapse, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .fa.font-small, #g5-container .card h4[data-g-collapse] .fa.g-collapse, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.fa {
   font-size: 0.8rem;
   vertical-align: middle;
 }
@@ -1435,11 +1473,23 @@ a {
   text-align: center;
   position: relative;
 }
-/* line 66, platforms/common/scss/admin/_configurations.scss */
+/* line 65, platforms/common/scss/admin/_configurations.scss */
+#g5-container #configurations .card .inner-params {
+  margin: 0.625rem 0 0;
+  padding-top: 0.625rem;
+  border-top: 1px solid #eee;
+}
+/* line 70, platforms/common/scss/admin/_configurations.scss */
+#g5-container #configurations .card .inner-params > :first-child {
+  border-top: 0;
+  padding-top: 0;
+  margin: 0 auto;
+}
+/* line 78, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .g-tooltip:before {
   bottom: 2.6rem;
 }
-/* line 70, platforms/common/scss/admin/_configurations.scss */
+/* line 82, platforms/common/scss/admin/_configurations.scss */
 #g5-container #configurations .g-tooltip:after {
   bottom: 3rem;
 }
@@ -2447,7 +2497,7 @@ samp {
   top: 12px;
 }
 /* line 470, platforms/common/scss/admin/_layout-manager.scss */
-#g5-container .lm-blocks .block-has-changes > span .title, #g5-container .lm-blocks .block-has-changes > span .font-small, #g5-container .lm-blocks .block-has-changes > span .card h4[data-g-card] .g-collapse, #g5-container .card h4[data-g-card] .lm-blocks .block-has-changes > span .g-collapse, #g5-container .lm-blocks .block-has-changes > span .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #g5-container .lm-blocks .block-has-changes > span li {
+#g5-container .lm-blocks .block-has-changes > span .title, #g5-container .lm-blocks .block-has-changes > span .font-small, #g5-container .lm-blocks .block-has-changes > span .card h4[data-g-collapse] .g-collapse, #g5-container .card h4[data-g-collapse] .lm-blocks .block-has-changes > span .g-collapse, #g5-container .lm-blocks .block-has-changes > span .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #g5-container .lm-blocks .block-has-changes > span li {
   margin-left: 15px;
 }
 /* line 476, platforms/common/scss/admin/_layout-manager.scss */

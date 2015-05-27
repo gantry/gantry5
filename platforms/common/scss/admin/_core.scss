@@ -59,6 +59,20 @@ a {
         @include animation(pulsate 1s ease-out infinite);
     }
 
+    // collapse
+    .g-collapsed {
+        .g-collapse {
+            i {
+                @include transform(rotate(180deg));
+            }
+        }
+
+        .inner-params {
+            overflow: hidden;
+            height: 0px;
+        }
+    }
+
     // badges
     .badge {
         border-radius: 100px;
@@ -99,6 +113,34 @@ a {
         h4 {
             margin: 0;
 
+            > * {
+                vertical-align: middle;
+            }
+
+            &[data-g-collapse] {
+                .g-collapse {
+                    @extend .font-small;
+                    cursor: pointer;
+                    display: inline-block;
+                    border: 1px solid #ddd;
+                    color: #bbb;
+                    border-radius: 3px;
+                    line-height: 1rem;
+                    padding: 2px;
+                    margin-right: 5px;
+
+                    &:hover:before {
+                        bottom: 1.6rem;
+                        left: 0.25rem;
+                    }
+
+                    &:hover:after {
+                        left: -0.5rem;
+                        bottom: 2rem;
+                    }
+                }
+            }
+
             .enabler {
                 float: right;
             }
@@ -108,9 +150,9 @@ a {
             @include enabler($green, $red);
         }
 
-        .inner-params {
+        .inner-params > :first-child {
             margin: $content-margin 0 0;
-            padding-top: $content-margin;
+            padding-top: $content-margin * 2;
             border-top: 1px solid $light-gray;
         }
 
