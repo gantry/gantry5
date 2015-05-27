@@ -2425,32 +2425,36 @@ body.g-prime {
   opacity: 0.8;
 }
 
-/* line 58, platforms/common/scss/admin/_selectize.scss */
-#g5-container [data-selectize] {
+/* line 56, platforms/common/scss/admin/_selectize.scss */
+[data-selectize] {
   visibility: hidden;
 }
-/* line 62, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-control {
+
+/* line 60, platforms/common/scss/admin/_selectize.scss */
+.selectize-control {
   position: relative;
   display: inline-block;
   vertical-align: middle;
 }
-/* line 68, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown, #g5-container .selectize-input, #g5-container .selectize-input input {
+
+/* line 66, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown, .selectize-input, .selectize-input input {
   color: #666;
   font-family: inherit;
   font-size: inherit;
   line-height: normal;
   -webkit-font-smoothing: inherit;
 }
-/* line 76, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-input, #g5-container .selectize-control.single .selectize-input.input-active {
+
+/* line 74, platforms/common/scss/admin/_selectize.scss */
+.selectize-input, .selectize-control.single .selectize-input.input-active {
   background: #fff;
   cursor: text;
   display: inline-block;
 }
-/* line 82, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-input {
+
+/* line 80, platforms/common/scss/admin/_selectize.scss */
+.selectize-input {
   border: 1px solid #ddd;
   padding: 6px 12px;
   display: inline-block;
@@ -2464,28 +2468,28 @@ body.g-prime {
   box-shadow: none;
   border-radius: 3px;
 }
-/* line 94, platforms/common/scss/admin/_selectize.scss */
-.selectize-control.multi #g5-container .selectize-input.has-items {
+/* line 92, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input.has-items {
   padding: 4px 0 1px;
 }
-/* line 98, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-input.full {
+/* line 96, platforms/common/scss/admin/_selectize.scss */
+.selectize-input.full {
   background-color: #fff;
 }
-/* line 101, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-input.disabled, #g5-container .selectize-input.disabled * {
+/* line 99, platforms/common/scss/admin/_selectize.scss */
+.selectize-input.disabled, .selectize-input.disabled * {
   cursor: default !important;
 }
-/* line 104, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-input.focus {
+/* line 102, platforms/common/scss/admin/_selectize.scss */
+.selectize-input.focus {
   box-shadow: none;
 }
-/* line 107, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-input.dropdown-active {
+/* line 105, platforms/common/scss/admin/_selectize.scss */
+.selectize-input.dropdown-active {
   border-radius: 3px 3px 0 0;
 }
-/* line 111, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-input > * {
+/* line 109, platforms/common/scss/admin/_selectize.scss */
+.selectize-input > * {
   vertical-align: top;
   display: -moz-inline-stack;
   display: inline-block;
@@ -2497,8 +2501,8 @@ body.g-prime {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 119, platforms/common/scss/admin/_selectize.scss */
-.selectize-control.multi #g5-container .selectize-input > div {
+/* line 117, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input > div {
   cursor: pointer;
   margin: 0 3px 3px 0;
   padding: 2px 6px;
@@ -2506,20 +2510,20 @@ body.g-prime {
   color: #fff;
   border: 1px solid transparent;
 }
-/* line 127, platforms/common/scss/admin/_selectize.scss */
-.selectize-control.multi #g5-container .selectize-input > div.active {
+/* line 125, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input > div.active {
   background: #92c836;
   color: #fff;
   border: 1px solid transparent;
 }
-/* line 134, platforms/common/scss/admin/_selectize.scss */
-.selectize-control.multi #g5-container .selectize-input.disabled > div, .selectize-control.multi #g5-container .selectize-input.disabled > div.active {
+/* line 132, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input.disabled > div, .selectize-control.multi .selectize-input.disabled > div.active {
   color: white;
   background: gainsboro;
   border: 1px solid rgba(77, 77, 77, 0);
 }
-/* line 140, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-input > input {
+/* line 138, platforms/common/scss/admin/_selectize.scss */
+.selectize-input > input {
   display: inline-block !important;
   padding: 0 !important;
   min-height: 0 !important;
@@ -2533,22 +2537,24 @@ body.g-prime {
   -webkit-user-select: auto !important;
   box-shadow: none !important;
 }
-/* line 141, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-input > input::-ms-clear {
+/* line 139, platforms/common/scss/admin/_selectize.scss */
+.selectize-input > input::-ms-clear {
   display: none;
 }
-/* line 156, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-input > input:focus {
+/* line 154, platforms/common/scss/admin/_selectize.scss */
+.selectize-input > input:focus {
   outline: none !important;
 }
-/* line 160, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-input::after {
+
+/* line 158, platforms/common/scss/admin/_selectize.scss */
+.selectize-input::after {
   content: ' ';
   display: block;
   clear: left;
 }
-/* line 166, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-input.dropdown-active::before {
+
+/* line 164, platforms/common/scss/admin/_selectize.scss */
+.selectize-input.dropdown-active::before {
   content: ' ';
   display: block;
   position: absolute;
@@ -2558,8 +2564,9 @@ body.g-prime {
   left: 0;
   right: 0;
 }
-/* line 177, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown {
+
+/* line 175, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown {
   position: absolute;
   z-index: 10;
   border: 1px solid #ddd;
@@ -2572,60 +2579,62 @@ body.g-prime {
   box-sizing: border-box;
   border-radius: 0 0 3px 3px;
 }
-/* line 188, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown [data-selectable] {
+/* line 186, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown [data-selectable] {
   word-wrap: normal;
   cursor: pointer;
   overflow: hidden;
 }
-/* line 192, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown [data-selectable] .highlight {
+/* line 190, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown [data-selectable] .highlight {
   background: rgba(72, 176, 215, 0.5);
   border-radius: 1px;
 }
-/* line 197, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown [data-selectable], #g5-container .selectize-dropdown .optgroup-header {
+/* line 195, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown [data-selectable], .selectize-dropdown .optgroup-header {
   padding: 5px 12px;
 }
-/* line 200, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown .optgroup:first-child .optgroup-header {
+/* line 198, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown .optgroup:first-child .optgroup-header {
   border-top: 0 none;
 }
-/* line 203, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown .optgroup-header {
+/* line 201, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown .optgroup-header {
   color: #666;
   background: #fff;
   cursor: default;
 }
-/* line 208, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown .active {
+/* line 206, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown .active {
   background-color: rgba(72, 176, 215, 0.3);
   color: #495c68;
 }
-/* line 211, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown .active.create {
+/* line 209, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown .active.create {
   color: #495c68;
 }
-/* line 215, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown .create {
+/* line 213, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown .create {
   color: rgba(102, 102, 102, 0.6);
 }
-/* line 220, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown-content {
+
+/* line 218, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown-content {
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 200px;
 }
-/* line 227, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-control.single .selectize-input, #g5-container .selectize-control.single .selectize-input input {
+
+/* line 225, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.single .selectize-input, .selectize-control.single .selectize-input input {
   cursor: pointer;
 }
-/* line 228, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-control.single .selectize-input.input-active, #g5-container .selectize-control.single .selectize-input.input-active input {
+/* line 226, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.single .selectize-input.input-active, .selectize-control.single .selectize-input.input-active input {
   cursor: text;
 }
-/* line 230, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-control.single .selectize-input:after {
+/* line 228, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.single .selectize-input:after {
   content: "\f078";
   font-family: FontAwesome;
   display: block;
@@ -2638,63 +2647,67 @@ body.g-prime {
   color: #808080;
   font-size: 0.8em;
 }
-/* line 244, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-control.single .selectize-input.dropdown-active:after {
+/* line 242, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.single .selectize-input.dropdown-active:after {
   content: "\f077";
   font-family: FontAwesome;
 }
-/* line 250, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-control .selectize-input.disabled {
+
+/* line 248, platforms/common/scss/admin/_selectize.scss */
+.selectize-control .selectize-input.disabled {
   opacity: 0.5;
   background-color: #fafafa;
 }
-/* line 258, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-control.multi .selectize-input.has-items {
+
+/* line 256, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input.has-items {
   padding-left: 5px;
   padding-right: 5px;
 }
-/* line 263, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-control.multi .selectize-input.disabled [data-value] {
+/* line 261, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input.disabled [data-value] {
   color: #999;
   text-shadow: none;
   background: none;
   box-shadow: none;
 }
-/* line 269, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-control.multi .selectize-input.disabled [data-value], #g5-container .selectize-control.multi .selectize-input.disabled [data-value] .remove {
+/* line 267, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input.disabled [data-value], .selectize-control.multi .selectize-input.disabled [data-value] .remove {
   border-color: #e6e6e6;
 }
-/* line 272, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-control.multi .selectize-input.disabled [data-value] .remove {
+/* line 270, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input.disabled [data-value] .remove {
   background: none;
 }
-/* line 276, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-control.multi .selectize-input [data-value] {
+/* line 274, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input [data-value] {
   text-shadow: 0 1px 0 #2a98c2;
   border-radius: 3px;
 }
-/* line 279, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-control.multi .selectize-input [data-value].active {
+/* line 277, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.multi .selectize-input [data-value].active {
   background-color: #2a98c2;
 }
-/* line 293, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-control.single .selectize-input, #g5-container .selectize-dropdown.single {
+
+/* line 291, platforms/common/scss/admin/_selectize.scss */
+.selectize-control.single .selectize-input, .selectize-dropdown.single {
   border-color: #ddd;
 }
-/* line 298, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown .optgroup-header {
+
+/* line 296, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown .optgroup-header {
   padding-top: 7px;
   font-weight: bold;
   font-size: 0.85em;
   color: #ddd;
   text-transform: uppercase;
 }
-/* line 305, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown .optgroup {
+/* line 303, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown .optgroup {
   border-top: 1px solid #f0f0f0;
 }
-/* line 307, platforms/common/scss/admin/_selectize.scss */
-#g5-container .selectize-dropdown .optgroup:first-child {
+/* line 305, platforms/common/scss/admin/_selectize.scss */
+.selectize-dropdown .optgroup:first-child {
   border-top: 0 none;
 }
 
@@ -5443,7 +5456,7 @@ body.g-prime {
   line-height: 1.5;
 }
 /* line 86, platforms/common/scss/admin/_modal.scss */
-#g5-container .g5-dialog.g5-dialog-theme-default .g5-content h1, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content h2, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content h3, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content h4, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content h5, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content h6, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content p, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content ul, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content li {
+#g5-container .g5-dialog.g5-dialog-theme-default .g5-content h1, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content h2, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content h3, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content h4, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content h5, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content h6, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content p, #g5-container .g5-dialog.g5-dialog-theme-default .g5-content ul {
   color: inherit;
 }
 /* line 90, platforms/common/scss/admin/_modal.scss */
