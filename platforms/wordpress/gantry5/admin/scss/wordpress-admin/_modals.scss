@@ -1,7 +1,7 @@
 body.gantry5 {
     #g5-container {
         .g5-dialog {
-            @include breakpoint(desktop-range) {
+            @include breakpoint(desktop-only) {
                 padding-left: 160px;
             }
             @include breakpoint(tablet-range) {

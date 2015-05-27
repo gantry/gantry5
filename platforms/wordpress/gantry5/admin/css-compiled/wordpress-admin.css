@@ -170,7 +170,7 @@ body.gantry5 #wpfooter a {
   color: #0073AA;
 }
 
-@media only all and (min-width: 60rem) and (max-width: 74.938rem) {
+@media only all and (min-width: 60rem) {
   /* line 3, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_modals.scss */
   body.gantry5 #g5-container .g5-dialog {
     padding-left: 160px;
