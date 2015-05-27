@@ -7,7 +7,7 @@
     <input
             type="hidden"
             name="{{ (scope ~ name)|fieldName|e }}"
-            value="{{ value|json_encode|e }}"
+            value="{{ value ? value|json_encode|e }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}
             {# non-gloval attribute structures #}
