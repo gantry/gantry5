@@ -194,8 +194,10 @@ a {
   min-width: 250px;
   vertical-align: top;
   margin: 10px 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
-/* line 108, platforms/common/scss/admin/_core.scss */
+/* line 110, platforms/common/scss/admin/_core.scss */
 #g5-container .card.full-width {
   margin: 0;
   display: block;
