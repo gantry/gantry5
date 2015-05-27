@@ -1,3 +1,8 @@
+/* line 8, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+.size-100 {
+  width: 100%;
+}
+
 /* line 1, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 {
   color: #ddd;
@@ -55,11 +60,11 @@ body.gantry5 #g5-container .search {
 body.gantry5 form {
   margin-bottom: 1em;
 }
-/* line 62, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 63, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 .g5-dialog-loading-spinner.g5-dialog-theme-default {
   top: 3em;
 }
-/* line 66, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 67, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #wpbody-content {
   padding-bottom: 0;
 }
@@ -163,6 +168,19 @@ body.gantry5 #wpfooter {
 /* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
 body.gantry5 #wpfooter a {
   color: #0073AA;
+}
+
+@media only all and (min-width: 60rem) and (max-width: 74.938rem) {
+  /* line 3, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_modals.scss */
+  body.gantry5 #g5-container .g5-dialog {
+    padding-left: 160px;
+  }
+}
+@media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+  /* line 3, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_modals.scss */
+  body.gantry5 #g5-container .g5-dialog {
+    padding-left: 36px;
+  }
 }
 
 /* line 3, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_overview.scss */
