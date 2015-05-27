@@ -4822,7 +4822,7 @@ html.g5-dialog-open {
 /* line 259, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li {
   display: block;
-  padding: 6px 4px;
+  padding: 4px;
 }
 /* line 263, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li > span:not(.g-file-name) {
@@ -4835,7 +4835,7 @@ html.g5-dialog-open {
 }
 /* line 272, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-name {
-  width: 60%;
+  width: 50%;
 }
 /* line 276, platforms/common/scss/admin/particles/_filepicker.scss */
 .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-size {
