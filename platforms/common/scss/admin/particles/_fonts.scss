@@ -1,15 +1,15 @@
-#g5-container {    
-    .g-fonts {
-        > * {
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        i {
-            cursor: pointer;
-        }
+.g-fonts {
+    > * {
+        display: inline-block;
+        vertical-align: middle;
     }
 
+    i {
+        cursor: pointer;
+    }
+}
+
+#g5-container {
     .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content {
         width: 650px;
 
