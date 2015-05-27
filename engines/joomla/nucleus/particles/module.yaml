@@ -25,14 +25,6 @@ form:
       pattern: '\d+'
       overridable: false
 
-
-    p_id:
-      type: gantry.particle
-      label: Particle
-      class: input-small
-      picker_label: Pick a Particle
-      overridable: false
-
     chrome:
       type: input.text
       label: Chrome
