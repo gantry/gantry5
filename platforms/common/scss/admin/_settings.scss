@@ -11,12 +11,9 @@
 }
 
 .settings-block {
-    width: 48%;
+    width: 100%;
+
     min-width: inherit;
-    @include breakpoint(mobile-only) {
-        margin: 1% 0;
-        width: 100%;
-    }
 
     &.card {
         .badge {

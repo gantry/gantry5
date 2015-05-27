@@ -1,6 +1,11 @@
 #g5-container {//wrapper
 
 #configurations {
+    margin: -10px -1%;
+
+    .card {
+        margin: 10px 1%;
+    }
 
     h4 > * {
         vertical-align: middle;

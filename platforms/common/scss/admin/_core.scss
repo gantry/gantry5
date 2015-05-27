@@ -70,7 +70,14 @@ a {
 
     // cards
     .cards-wrapper {
-        margin: -10px -1%;
+        margin: -10px 0;
+        display: block;
+        width: 100%;
+        @include column-count(2);
+
+        @include breakpoint(mobile-only) {
+            @include column-count(1);
+        }
     }
 
     .card {
@@ -81,7 +88,8 @@ a {
         padding: 10px;
         min-width: 250px;
         vertical-align: top;
-        margin: 10px 1%;
+        margin: 10px 0;
+        @include transform(translateZ(0)); // fixes WebKit rendering issues with Columns
 
         &.full-width {
             margin: 0;
