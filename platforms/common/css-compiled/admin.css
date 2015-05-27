@@ -194,11 +194,6 @@ a {
   min-width: 250px;
   vertical-align: top;
   margin: 10px 0;
-  -webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  -o-transform: translateZ(0);
-  transform: translateZ(0);
 }
 /* line 108, platforms/common/scss/admin/_core.scss */
 #g5-container .card.full-width {

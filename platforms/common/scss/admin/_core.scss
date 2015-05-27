@@ -103,7 +103,7 @@ a {
         min-width: 250px;
         vertical-align: top;
         margin: 10px 0;
-        @include transform(translateZ(0)); // fixes WebKit rendering issues with Columns
+        //@include transform(translateZ(0)); // FIXME : Causes z-index issue in selectize but fixes WebKit rendering issues with Columns
 
         &.full-width {
             margin: 0;
