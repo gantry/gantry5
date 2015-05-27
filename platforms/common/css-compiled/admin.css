@@ -157,7 +157,7 @@ a {
 /* line 70, platforms/common/scss/admin/_core.scss */
 #g5-container .g-collapsed .inner-params {
   overflow: hidden;
-  height: 0px;
+  height: 0;
 }
 /* line 77, platforms/common/scss/admin/_core.scss */
 #g5-container .badge, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span, .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected #g5-container span {
@@ -298,7 +298,7 @@ a {
   opacity: 1;
 }
 /* line 153, platforms/common/scss/admin/_core.scss */
-#g5-container .card .inner-params > :first-child {
+#g5-container .card .inner-params > :first-child:not(.alert) {
   margin: 0.625rem 0 0;
   padding-top: 1.25rem;
   border-top: 1px solid #eee;
@@ -953,6 +953,10 @@ a {
   color: #fc6e51;
 }
 /* line 32, platforms/common/scss/admin/_settings.scss */
+#g5-container .settings-block .alert {
+  margin: 0.625rem 0;
+}
+/* line 36, platforms/common/scss/admin/_settings.scss */
 #g5-container .settings-block .settings-param {
   padding: 10px 5px;
   clear: both;

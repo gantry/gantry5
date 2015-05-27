@@ -69,7 +69,7 @@ a {
 
         .inner-params {
             overflow: hidden;
-            height: 0px;
+            height: 0;
         }
     }
 
@@ -150,7 +150,7 @@ a {
             @include enabler($green, $red);
         }
 
-        .inner-params > :first-child {
+        .inner-params > :first-child:not(.alert) {
             margin: $content-margin 0 0;
             padding-top: $content-margin * 2;
             border-top: 1px solid $light-gray;
