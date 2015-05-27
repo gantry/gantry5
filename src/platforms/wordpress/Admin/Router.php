@@ -30,7 +30,7 @@ class Router extends BaseRouter
         $this->resource = array_shift($this->path) ?: 'themes';
 
         // FIXME: make it better by detecting admin-ajax.php..
-        $ajax = isset( $_GET['gantry5'] );
+        $ajax = isset( $_GET['action'] ) && $_GET['action'] == 'gantry5';
         $this->format = $ajax ? 'json' : 'html';
 
         $this->params = [
