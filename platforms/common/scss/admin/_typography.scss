@@ -1,53 +1,50 @@
-body {
+#g5-container {//wrapper
     font-size: $core-font-size;
     line-height: $core-line-height;
-}
 
-h1 {
-    font-size: $h1-font-size;
-}
+    h1 {
+        font-size: $h1-font-size;
+    }
 
-h2 {
-    font-size: $h2-font-size;
-}
+    h2 {
+        font-size: $h2-font-size;
+    }
 
-h3 {
-    font-size: $h3-font-size;
-}
+    h3 {
+        font-size: $h3-font-size;
+    }
 
-h4 {
-    font-size: $h4-font-size;
-}
+    h4 {
+        font-size: $h4-font-size;
+    }
 
-h5 {
-    font-size: $h5-font-size;
-}
+    h5 {
+        font-size: $h5-font-size;
+    }
 
-h6 {
-    font-size: $h6-font-size;
-}
+    h6 {
+        font-size: $h6-font-size;
+    }
 
-small {
-    font-size: $core-font-size - 0.125;
-}
+    small {
+        font-size: $core-font-size - 0.125;
+    }
 
-cite {
-    font-size: $core-font-size - 0.125;
-}
+    cite {
+        font-size: $core-font-size - 0.125;
+    }
 
-sub,
-sup {
-    font-size: $core-font-size - 0.250;
-}
+    sub,
+    sup {
+        font-size: $core-font-size - 0.250;
+    }
 
-code,
-kbd,
-pre,
-samp {
-    font-size: $core-font-size;
-}
-
-#g5-container {//wrapper
+    code,
+    kbd,
+    pre,
+    samp {
+        font-size: $core-font-size;
+    }
 
     font-weight: 300;
     font-family: $font-family-default;

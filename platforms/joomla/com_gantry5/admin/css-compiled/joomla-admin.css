@@ -74,13 +74,13 @@ body.com_modules #g5-container .g-content {
   margin: 0;
   padding: 0;
 }
-/* line 85, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
+/* line 81, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_modules #g5-container .g-instancepicker-title {
   font-size: 1rem;
   font-style: italic;
   margin-right: 0.5rem;
 }
-/* line 90, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
+/* line 86, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_modules #g5-container .g-instancepicker-title:empty {
   margin-right: 0;
 }

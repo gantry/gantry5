@@ -19,10 +19,12 @@
 {% endset %}
 {% do parse_assets(headerContent, 'head', 10) %}
 
-{% block content %}
-{% endblock %}
+<div id="g5-container">
+    {% block content %}
+    {% endblock %}
 
-{% block footer_section %}
-{% endblock %}
+    {% block footer_section %}
+    {% endblock %}
+</div>
 
 {% do gantry.platform.finalize() %}

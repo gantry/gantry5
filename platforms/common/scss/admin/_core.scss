@@ -7,16 +7,12 @@ body {
     margin: 0;
 }
 
-body.g5-prime {
+body.g-prime {
     color: $white;
     background-color: $body-bg;
     font-family: $font-family-default;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-    color: $core-accent;
 }
 
 #g5-container { // wrapper
@@ -25,6 +21,10 @@ a {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: $font-family-default;
+
+    a {
+        color: $core-accent;
+    }
 
     .g-block {
         position: relative;

@@ -1,111 +1,113 @@
-#g-notifications-container {
-    font-family: $font-family-default;
-    font-size: $core-font-size;
-    line-height: $core-line-height;
+#g5-container {
+    #g-notifications-container {
+        font-family: $font-family-default;
+        font-size: $core-font-size;
+        line-height: $core-line-height;
 
-    position: fixed;
-    z-index: 999999;
+        position: fixed;
+        z-index: 999999;
 
-    * {
-        @include box-sizing(border-box);
-    }
+        * {
+            @include box-sizing(border-box);
+        }
 
-    > div {
-        margin: 0 0 $content-margin;
-        padding: $content-padding;
-        width: 300px;
-        border-radius: $core-border-radius;
-        color: $white;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        opacity: 0.8;
-        position: relative;
+        > div {
+            margin: 0 0 $content-margin;
+            padding: $content-padding;
+            width: 300px;
+            border-radius: $core-border-radius;
+            color: $white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            opacity: 0.8;
+            position: relative;
 
-        &:hover {
-            opacity: 1;
+            &:hover {
+                opacity: 1;
+                cursor: pointer;
+            }
+        }
+
+        .g-notifications-title {
+            font-weight: bold;
+            text-transform: uppercase;
+
+            .fa {
+                margin-right: 10px;
+            }
+        }
+
+        .g-notifications-message {
+            //@include word-wrap(break-word);
+        }
+
+        .g-notifications-progress {
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            height: 4px;
+            background-color: $black;
+            opacity: 0.4;
+            border-radius: 0 0 0 3px;
+        }
+
+        .fa-close {
+            position: relative;
+            right: -0.3em;
+            top: -0.3em;
+            float: right;
+            font-weight: bold;
             cursor: pointer;
+            color: $white;
         }
-    }
 
-    .g-notifications-title {
-        font-weight: bold;
-        text-transform: uppercase;
-
-        .fa {
-            margin-right: 10px;
+        &.top-full-width {
+            top: 0;
+            right: 0;
+            width: 100%;
         }
-    }
 
-    .g-notifications-message {
-        //@include word-wrap(break-word);
-    }
+        &.bottom-full-width {
+            bottom: 0;
+            right: 0;
+            width: 100%;
+        }
 
-    .g-notifications-progress {
-        position: absolute;
-        left: 0;
-        bottom: -1px;
-        height: 4px;
-        background-color: $black;
-        opacity: 0.4;
-        border-radius: 0 0 0 3px;
-    }
+        &.top-left {
+            top: 12px;
+            left: 12px;
+        }
 
-    .fa-close {
-        position: relative;
-        right: -0.3em;
-        top: -0.3em;
-        float: right;
-        font-weight: bold;
-        cursor: pointer;
-        color: $white;
-    }
+        &.top-right {
+            top: 12px;
+            right: 12px;
+        }
 
-    &.top-full-width {
-        top: 0;
-        right: 0;
-        width: 100%;
-    }
+        &.bottom-right {
+            right: 12px;
+            bottom: 12px;
+        }
 
-    &.bottom-full-width {
-        bottom: 0;
-        right: 0;
-        width: 100%;
-    }
+        &.bottom-left {
+            bottom: 12px;
+            left: 12px;
+        }
 
-    &.top-left {
-        top: 12px;
-        left: 12px;
-    }
+        &.top-full-width > div,
+        &.bottom-full-width > div {
+            width: 96%;
+            margin: auto;
+        }
 
-    &.top-right {
-        top: 12px;
-        right: 12px;
-    }
+        > div { // base
+            background: $update-header-bg;
+            color: $white;
+            border: 1px solid darken($update-header-bg, 10);
+        }
 
-    &.bottom-right {
-        right: 12px;
-        bottom: 12px;
-    }
+        .g-notifications-theme-error {
+            background: $red;
+            border: 1px solid darken($red, 10);
+        }
 
-    &.bottom-left {
-        bottom: 12px;
-        left: 12px;
     }
-
-    &.top-full-width > div,
-    &.bottom-full-width > div {
-        width: 96%;
-        margin: auto;
-    }
-
-    > div { // base
-        background: $update-header-bg;
-        color: $white;
-        border: 1px solid darken($update-header-bg, 10);
-    }
-
-    .g-notifications-theme-error {
-        background: $red;
-        border: 1px solid darken($red, 10);
-    }
-
 }

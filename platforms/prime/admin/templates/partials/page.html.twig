@@ -27,11 +27,13 @@
             {{ gantry.scripts('head')|join("\n    ")|raw }}
         {% endblock %}
     </head>
-    <body class="g5-prime">
-        {{ htmlContent }}
+    <body class="g-prime">
+        <div id="g5-container">
+            {{ htmlContent }}
 
-        {% block footer_section %}
-            {{ gantry.scripts('footer')|join("\n    ")|raw }}
-        {% endblock %}
+            {% block footer_section %}
+                {{ gantry.scripts('footer')|join("\n    ")|raw }}
+            {% endblock %}
+        </div>
     </body>
 </html>

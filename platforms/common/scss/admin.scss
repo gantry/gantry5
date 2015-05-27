@@ -6,12 +6,16 @@
 // Load Nucleus Configuration
 @import "configuration/nucleus/base";
 
-// Load Template Configuration
-@import "configuration/admin/base";
-
 // Load Nucleus Mixins and Functions
 @import "nucleus/functions/base";
 @import "nucleus/mixins/base";
+
+#g5-container {
+	@import "nucleus";
+}
+
+// Load Template Configuration
+@import "configuration/admin/base";
 
 // Load Admin Mixins
 @import "admin/mixins/base";
