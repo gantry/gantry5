@@ -4,6 +4,15 @@ type: offcanvas
 
 form:
   fields:
+    position:
+      type: select.selectize
+      label: Position
+      description: Enter position where you would like see the section.
+      default: g-offcanvas-left
+      options:
+        g-offcanvas-left: Left
+        g-offcanvas-right: Right
+
 
     class:
       type: input.selectize
