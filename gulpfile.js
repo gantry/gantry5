@@ -81,12 +81,12 @@ paths = {
             in: './engines/joomla/nucleus/scss/joomla.scss',
             out: './engines/joomla/nucleus/css-compiled/joomla.css',
             load: './engines/common/nucleus/scss'
-        },
+        }/* not used right now,
         { // nucleus - wordpress
             in: './engines/wordpress/nucleus/scss/wordpress.scss',
             out: './engines/wordpress/nucleus/css-compiled/wordpress.css',
             load: './engines/common/nucleus/scss'
-        }
+        }*/
     ],
     minify: [
         { // google fonts
@@ -116,7 +116,7 @@ var compileCSS = function(app) {
         sourcemap: !prod,
         loadPath: _load,
         style: prod ? 'compact' : 'expanded',
-        lineNumbers: !prod,
+        lineNumbers: false,
         trace: !prod
     };
 
