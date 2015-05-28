@@ -84,13 +84,13 @@
 .g-offcanvas-open {
     .g-offcanvas-left {
         #g-page-surround {
-            margin-left: $offcanvas-width;
+            left: $offcanvas-width;
         }
     }
 
     .g-offcanvas-right {
         #g-page-surround {
-            margin-right: $offcanvas-width;
+            right: $offcanvas-width;
         }
     }
 }
