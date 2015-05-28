@@ -36,7 +36,6 @@ body.gantry5 {
 
 				    .settings-state {
 					    background: $core-accent;
-					    color: $main-header-text;
 				    }
 				}
 			}
@@ -52,6 +51,10 @@ body.gantry5 {
 	    	.g-content {
 	            padding: 0 1.563rem;
 	        }
+
+		    .settings-state {
+			    color: $main-header-text;
+		    }
 	    }
 
 	    .button.button-update {
