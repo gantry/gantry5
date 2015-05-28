@@ -315,7 +315,7 @@ var Menu = new prime({
 });
 
 module.exports = Menu;
-},{"../utils/dollar-extras":5,"domready":6,"elements/zen":35,"mout/function/bind":39,"mout/function/timeout":43,"prime":84,"prime-util/prime/bound":80,"prime-util/prime/options":81}],3:[function(require,module,exports){
+},{"../utils/dollar-extras":5,"domready":6,"elements/zen":35,"mout/function/bind":39,"mout/function/timeout":43,"prime":77,"prime-util/prime/bound":73,"prime-util/prime/options":74}],3:[function(require,module,exports){
 // Offcanvas slide with desktop, touch and all-in-one touch devices support that supports both left and right placement.
 // Fast and optimized using CSS3 transitions
 // Based on the awesome Slideout.js <https://mango.github.io/slideout/>
@@ -467,7 +467,6 @@ var Offcanvas = new prime({
         }, this));
 
         this.detachMutationEvent();
-
         this.overlay.remove();
 
         return this;
@@ -555,14 +554,15 @@ var Offcanvas = new prime({
     _setTransition: function() {
         var panel = this.panel[0];
 
-        //panel.style[prefix.css + 'transition'] = panel.style.transition = prefix.css + 'transform ' + this.options.duration + 'ms ' + this.options.effect;
+        panel.style[prefix.css + 'transition'] = panel.style.transition = 'left ' + this.options.duration + 'ms ' + this.options.effect + ', right ' + this.options.duration + 'ms ' + this.options.effect;
     },
 
     _translateXTo: function(x) {
-        var panel = this.panel[0];
-        this.offset.x.current = x;
+        var panel = this.panel[0],
+            placement = (this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left');
 
-        //panel.style[prefix.css + 'transform'] = panel.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+        this.offset.x.current = x;
+        panel.style[placement] = Math.abs(x) + 'px';
     },
 
     _bodyScroll: function() {
@@ -601,8 +601,7 @@ var Offcanvas = new prime({
     _touchMove: function(event) {
         if (isScrolling || this.preventOpen || !event.touches) { return; }
 
-        var placement = (this.bodyEl.hasClass('g-offcanvas-right') ? -1 : 1), // 1: left, -1: right
-            place = placement < 0 ? 'right' : 'left',
+        var placement = (this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left'),
             diffX = clamp(event.touches[0].clientX - this.offset.x.start, -this.options.padding, this.options.padding),
             translateX = this.offset.x.current = diffX,
             diffY = Math.abs(event.touches[0].pageY - this.offset.y.start),
@@ -610,27 +609,29 @@ var Offcanvas = new prime({
 
         if (Math.abs(translateX) > this.options.padding) { return; }
         if (diffY > 5 && !this.moved) { return; }
+
         if (Math.abs(diffX) > 0) {
             this.opening = true;
 
             // offcanvas on left
-            if (place == 'left' && (this.opened && diffX > 0 || !this.opened && diffX < 0)) { return; }
+            if (placement == 'left' && (this.opened && diffX > 0 || !this.opened && diffX < 0)) { return; }
 
             // offcanvas on right
-            if (place == 'right' && (this.opened && diffX < 0 || !this.opened && diffX > 0)) { return; }
+            if (placement == 'right' && (this.opened && diffX < 0 || !this.opened && diffX > 0)) { return; }
 
             if (!this.moved && !this.htmlEl.hasClass(this.options.openClass)) {
                 this.htmlEl.addClass(this.options.openClass);
             }
 
-            if ((place == 'left' && diffX <= 0) || (place == 'right' && diffX >= 0)) {
-                translateX = diffX + (placement * this.options.padding);
+            if ((placement == 'left' && diffX <= 0) || (placement == 'right' && diffX >= 0)) {
+                var norm = placement == 'left' ? 1 : -1;
+                translateX = diffX + (norm * this.options.padding);
                 this.opening = false;
             }
 
             overlayOpacity = mapNumber(Math.abs(translateX), 0, this.options.padding, 0, 1);
 
-            //this.panel[0].style[prefix.css + 'transform'] = this.panel[0].style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+            this.panel[0].style[placement] = Math.abs(translateX) + 'px';
             this.overlay[0].style.opacity = overlayOpacity;
 
             this.moved = true;
@@ -682,7 +683,7 @@ var Offcanvas = new prime({
 
 module.exports = Offcanvas;
 
-},{"../utils/decouple":4,"domready":6,"elements":11,"elements/zen":35,"mout/array/forEach":36,"mout/function/bind":39,"mout/function/timeout":43,"mout/math/clamp":48,"mout/math/map":50,"mout/string/trim":59,"prime":84,"prime-util/prime/bound":80,"prime-util/prime/options":81}],4:[function(require,module,exports){
+},{"../utils/decouple":4,"domready":6,"elements":11,"elements/zen":35,"mout/array/forEach":36,"mout/function/bind":39,"mout/function/timeout":43,"mout/math/clamp":48,"mout/math/map":50,"mout/string/trim":59,"prime":77,"prime-util/prime/bound":73,"prime-util/prime/options":74}],4:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
@@ -747,7 +748,7 @@ $.implement({
 
 module.exports = $;
 
-},{"elements":11,"mout/array/map":37,"slick":96}],6:[function(require,module,exports){
+},{"elements":11,"mout/array/map":37,"slick":89}],6:[function(require,module,exports){
 /*!
   * domready (c) Dustin Diaz 2014 - License MIT
   */
@@ -1129,7 +1130,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":13,"mout/array/filter":14,"mout/array/forEach":15,"mout/array/map":17,"mout/array/some":18,"prime":84}],9:[function(require,module,exports){
+},{"mout/array/every":13,"mout/array/filter":14,"mout/array/forEach":15,"mout/array/map":17,"mout/array/some":18,"prime":77}],9:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -1212,7 +1213,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":10,"./traversal":34,"prime/map":85}],10:[function(require,module,exports){
+},{"./events":10,"./traversal":34,"prime/map":78}],10:[function(require,module,exports){
 /*
 events
 */"use strict"
@@ -1292,7 +1293,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":8,"prime/emitter":83}],11:[function(require,module,exports){
+},{"./base":8,"prime/emitter":76}],11:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -2066,7 +2067,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":8,"mout/array/map":17,"slick":96}],35:[function(require,module,exports){
+},{"./base":8,"mout/array/map":17,"slick":89}],35:[function(require,module,exports){
 /*
 zen
 */"use strict"
@@ -2124,7 +2125,7 @@ module.exports = function(expression, doc){
 
 }
 
-},{"./base":8,"mout/array/forEach":15,"mout/array/map":17,"slick/parser":97}],36:[function(require,module,exports){
+},{"./base":8,"mout/array/forEach":15,"mout/array/map":17,"slick/parser":90}],36:[function(require,module,exports){
 arguments[4][15][0].apply(exports,arguments)
 },{"dup":15}],37:[function(require,module,exports){
 arguments[4][17][0].apply(exports,arguments)
@@ -2500,128 +2501,6 @@ var forOwn = require('./forOwn');
 
 
 },{"./forOwn":69}],73:[function(require,module,exports){
-/*
-prime
- - prototypal inheritance
-*/"use strict"
-
-var hasOwn = require("mout/object/hasOwn"),
-    mixIn  = require("mout/object/mixIn"),
-    create = require("mout/lang/createObject"),
-    kindOf = require("mout/lang/kindOf")
-
-var hasDescriptors = true
-
-try {
-    Object.defineProperty({}, "~", {})
-    Object.getOwnPropertyDescriptor({}, "~")
-} catch (e){
-    hasDescriptors = false
-}
-
-// we only need to be able to implement "toString" and "valueOf" in IE < 9
-var hasEnumBug = !({valueOf: 0}).propertyIsEnumerable("valueOf"),
-    buggy      = ["toString", "valueOf"]
-
-var verbs = /^constructor|inherits|mixin$/
-
-var implement = function(proto){
-    var prototype = this.prototype
-
-    for (var key in proto){
-        if (key.match(verbs)) continue
-        if (hasDescriptors){
-            var descriptor = Object.getOwnPropertyDescriptor(proto, key)
-            if (descriptor){
-                Object.defineProperty(prototype, key, descriptor)
-                continue
-            }
-        }
-        prototype[key] = proto[key]
-    }
-
-    if (hasEnumBug) for (var i = 0; (key = buggy[i]); i++){
-        var value = proto[key]
-        if (value !== Object.prototype[key]) prototype[key] = value
-    }
-
-    return this
-}
-
-var prime = function(proto){
-
-    if (kindOf(proto) === "Function") proto = {constructor: proto}
-
-    var superprime = proto.inherits
-
-    // if our nice proto object has no own constructor property
-    // then we proceed using a ghosting constructor that all it does is
-    // call the parent's constructor if it has a superprime, else an empty constructor
-    // proto.constructor becomes the effective constructor
-    var constructor = (hasOwn(proto, "constructor")) ? proto.constructor : (superprime) ? function(){
-        return superprime.apply(this, arguments)
-    } : function(){}
-
-    if (superprime){
-
-        mixIn(constructor, superprime)
-
-        var superproto = superprime.prototype
-        // inherit from superprime
-        var cproto = constructor.prototype = create(superproto)
-
-        // setting constructor.parent to superprime.prototype
-        // because it's the shortest possible absolute reference
-        constructor.parent = superproto
-        cproto.constructor = constructor
-    }
-
-    if (!constructor.implement) constructor.implement = implement
-
-    var mixins = proto.mixin
-    if (mixins){
-        if (kindOf(mixins) !== "Array") mixins = [mixins]
-        for (var i = 0; i < mixins.length; i++) constructor.implement(create(mixins[i].prototype))
-    }
-
-    // implement proto and return constructor
-    return constructor.implement(proto)
-
-}
-
-module.exports = prime
-
-},{"mout/lang/createObject":74,"mout/lang/kindOf":75,"mout/object/hasOwn":78,"mout/object/mixIn":79}],74:[function(require,module,exports){
-var mixIn = require('../object/mixIn');
-
-    /**
-     * Create Object using prototypal inheritance and setting custom properties.
-     * - Mix between Douglas Crockford Prototypal Inheritance <http://javascript.crockford.com/prototypal.html> and the EcmaScript 5 `Object.create()` method.
-     * @param {object} parent    Parent Object.
-     * @param {object} [props] Object properties.
-     * @return {object} Created object.
-     */
-    function createObject(parent, props){
-        function F(){}
-        F.prototype = parent;
-        return mixIn(new F(), props);
-
-    }
-    module.exports = createObject;
-
-
-
-},{"../object/mixIn":79}],75:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"dup":24}],76:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./hasOwn":78,"dup":27}],77:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"./forIn":76,"./hasOwn":78,"dup":28}],78:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"dup":29}],79:[function(require,module,exports){
-arguments[4][72][0].apply(exports,arguments)
-},{"./forOwn":77,"dup":72}],80:[function(require,module,exports){
 "use strict";
 
 // credits to @cpojer's Class.Binds, released under the MIT license
@@ -2641,7 +2520,7 @@ var bound = prime({
 
 module.exports = bound
 
-},{"mout/function/bind":61,"prime":73}],81:[function(require,module,exports){
+},{"mout/function/bind":61,"prime":77}],74:[function(require,module,exports){
 "use strict";
 
 var prime = require("prime")
@@ -2660,7 +2539,7 @@ var Options = prime({
 
 module.exports = Options
 
-},{"mout/object/merge":71,"prime":73}],82:[function(require,module,exports){
+},{"mout/object/merge":71,"prime":77}],75:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -2779,7 +2658,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":98,"mout/array/forEach":86,"mout/array/indexOf":87,"mout/lang/kindOf":89,"mout/time/now":94}],83:[function(require,module,exports){
+},{"_process":91,"mout/array/forEach":79,"mout/array/indexOf":80,"mout/lang/kindOf":82,"mout/time/now":87}],76:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -2845,9 +2724,99 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":82,"./index":84,"mout/array/forEach":86,"mout/array/indexOf":87}],84:[function(require,module,exports){
-arguments[4][73][0].apply(exports,arguments)
-},{"dup":73,"mout/lang/createObject":88,"mout/lang/kindOf":89,"mout/object/hasOwn":92,"mout/object/mixIn":93}],85:[function(require,module,exports){
+},{"./defer":75,"./index":77,"mout/array/forEach":79,"mout/array/indexOf":80}],77:[function(require,module,exports){
+/*
+prime
+ - prototypal inheritance
+*/"use strict"
+
+var hasOwn = require("mout/object/hasOwn"),
+    mixIn  = require("mout/object/mixIn"),
+    create = require("mout/lang/createObject"),
+    kindOf = require("mout/lang/kindOf")
+
+var hasDescriptors = true
+
+try {
+    Object.defineProperty({}, "~", {})
+    Object.getOwnPropertyDescriptor({}, "~")
+} catch (e){
+    hasDescriptors = false
+}
+
+// we only need to be able to implement "toString" and "valueOf" in IE < 9
+var hasEnumBug = !({valueOf: 0}).propertyIsEnumerable("valueOf"),
+    buggy      = ["toString", "valueOf"]
+
+var verbs = /^constructor|inherits|mixin$/
+
+var implement = function(proto){
+    var prototype = this.prototype
+
+    for (var key in proto){
+        if (key.match(verbs)) continue
+        if (hasDescriptors){
+            var descriptor = Object.getOwnPropertyDescriptor(proto, key)
+            if (descriptor){
+                Object.defineProperty(prototype, key, descriptor)
+                continue
+            }
+        }
+        prototype[key] = proto[key]
+    }
+
+    if (hasEnumBug) for (var i = 0; (key = buggy[i]); i++){
+        var value = proto[key]
+        if (value !== Object.prototype[key]) prototype[key] = value
+    }
+
+    return this
+}
+
+var prime = function(proto){
+
+    if (kindOf(proto) === "Function") proto = {constructor: proto}
+
+    var superprime = proto.inherits
+
+    // if our nice proto object has no own constructor property
+    // then we proceed using a ghosting constructor that all it does is
+    // call the parent's constructor if it has a superprime, else an empty constructor
+    // proto.constructor becomes the effective constructor
+    var constructor = (hasOwn(proto, "constructor")) ? proto.constructor : (superprime) ? function(){
+        return superprime.apply(this, arguments)
+    } : function(){}
+
+    if (superprime){
+
+        mixIn(constructor, superprime)
+
+        var superproto = superprime.prototype
+        // inherit from superprime
+        var cproto = constructor.prototype = create(superproto)
+
+        // setting constructor.parent to superprime.prototype
+        // because it's the shortest possible absolute reference
+        constructor.parent = superproto
+        cproto.constructor = constructor
+    }
+
+    if (!constructor.implement) constructor.implement = implement
+
+    var mixins = proto.mixin
+    if (mixins){
+        if (kindOf(mixins) !== "Array") mixins = [mixins]
+        for (var i = 0; i < mixins.length; i++) constructor.implement(create(mixins[i].prototype))
+    }
+
+    // implement proto and return constructor
+    return constructor.implement(proto)
+
+}
+
+module.exports = prime
+
+},{"mout/lang/createObject":81,"mout/lang/kindOf":82,"mout/object/hasOwn":85,"mout/object/mixIn":86}],78:[function(require,module,exports){
 /*
 Map
 */"use strict"
@@ -2973,23 +2942,41 @@ map.prototype = Map.prototype
 
 module.exports = map
 
-},{"./index":84,"mout/array/indexOf":87}],86:[function(require,module,exports){
+},{"./index":77,"mout/array/indexOf":80}],79:[function(require,module,exports){
 arguments[4][15][0].apply(exports,arguments)
-},{"dup":15}],87:[function(require,module,exports){
+},{"dup":15}],80:[function(require,module,exports){
 arguments[4][16][0].apply(exports,arguments)
-},{"dup":16}],88:[function(require,module,exports){
-arguments[4][74][0].apply(exports,arguments)
-},{"../object/mixIn":93,"dup":74}],89:[function(require,module,exports){
+},{"dup":16}],81:[function(require,module,exports){
+var mixIn = require('../object/mixIn');
+
+    /**
+     * Create Object using prototypal inheritance and setting custom properties.
+     * - Mix between Douglas Crockford Prototypal Inheritance <http://javascript.crockford.com/prototypal.html> and the EcmaScript 5 `Object.create()` method.
+     * @param {object} parent    Parent Object.
+     * @param {object} [props] Object properties.
+     * @return {object} Created object.
+     */
+    function createObject(parent, props){
+        function F(){}
+        F.prototype = parent;
+        return mixIn(new F(), props);
+
+    }
+    module.exports = createObject;
+
+
+
+},{"../object/mixIn":86}],82:[function(require,module,exports){
 arguments[4][24][0].apply(exports,arguments)
-},{"dup":24}],90:[function(require,module,exports){
+},{"dup":24}],83:[function(require,module,exports){
 arguments[4][27][0].apply(exports,arguments)
-},{"./hasOwn":92,"dup":27}],91:[function(require,module,exports){
+},{"./hasOwn":85,"dup":27}],84:[function(require,module,exports){
 arguments[4][28][0].apply(exports,arguments)
-},{"./forIn":90,"./hasOwn":92,"dup":28}],92:[function(require,module,exports){
+},{"./forIn":83,"./hasOwn":85,"dup":28}],85:[function(require,module,exports){
 arguments[4][29][0].apply(exports,arguments)
-},{"dup":29}],93:[function(require,module,exports){
+},{"dup":29}],86:[function(require,module,exports){
 arguments[4][72][0].apply(exports,arguments)
-},{"./forOwn":91,"dup":72}],94:[function(require,module,exports){
+},{"./forOwn":84,"dup":72}],87:[function(require,module,exports){
 
 
     /**
@@ -3009,7 +2996,7 @@ arguments[4][72][0].apply(exports,arguments)
 
 
 
-},{}],95:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 /*
 Slick Finder
 */"use strict"
@@ -3840,7 +3827,7 @@ slick.parse = parse;
 
 module.exports = slick
 
-},{"./parser":97}],96:[function(require,module,exports){
+},{"./parser":90}],89:[function(require,module,exports){
 (function (global){
 /*
 slick
@@ -3850,7 +3837,7 @@ module.exports = "document" in global ? require("./finder") : { parse: require("
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./finder":95,"./parser":97}],97:[function(require,module,exports){
+},{"./finder":88,"./parser":90}],90:[function(require,module,exports){
 /*
 Slick Parser
  - originally created by the almighty Thomas Aylott <@subtlegradient> (http://subtlegradient.com)
@@ -4102,7 +4089,7 @@ var parse = function(expression){
 
 module.exports = parse
 
-},{}],98:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
