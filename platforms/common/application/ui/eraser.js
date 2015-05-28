@@ -22,7 +22,7 @@ var Eraser = new prime({
     },
 
     setTop: function() {
-        if (this.top) { return; }
+        if (typeof this.top !== 'undefined') { return; }
         this.top = parseInt(this.element.compute('top'), 10);
     },
 
