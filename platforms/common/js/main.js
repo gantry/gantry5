@@ -7730,7 +7730,6 @@ var Eraser = new prime({
         if (!this.element) { return; }
 
         this.top = parseInt(this.element.compute('top'), 10);
-        this.element.style('display', 'block');
         this.hide(true);
     },
 
@@ -7742,6 +7741,7 @@ var Eraser = new prime({
 
     hide: function(fast){
         if (!this.element) { return; }
+        this.element.style('display', 'block');
         var top = {top: -(this.element[0].offsetHeight)};
         this.out();
         this.element[fast ? 'style' : 'animate'](top, {duration: '150ms'});
