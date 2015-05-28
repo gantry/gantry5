@@ -79,7 +79,7 @@
         right: 0;
         margin: -7px 15px 0 0;
         z-index: 5;
-        
+
         &:checked {
             + .settings-param-override {
                 opacity: 0;
@@ -166,7 +166,7 @@
         display: inline-block;
     }
 
-    input:not(.settings-param-toggle), select, .collection-list ul, .colorpicker, .multi.selectize-control {
+    input:not(.settings-param-toggle):not([type="checkbox"]), select, .collection-list ul, .colorpicker, .multi.selectize-control {
         width: 250px;
         @include breakpoint(no-desktop) {
             width: 100%;
