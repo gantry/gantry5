@@ -18,18 +18,24 @@ var Eraser = new prime({
 
         if (!this.element) { return; }
 
-        this.top = parseInt(this.element.compute('top'), 10);
         this.hide(true);
+    },
+
+    setTop: function() {
+        if (this.top) { return; }
+        this.top = parseInt(this.element.compute('top'), 10);
     },
 
     show: function(fast){
         if (!this.element) { return; }
+        this.setTop();
         this.out();
         this.element[fast ? 'style' : 'animate']({top: this.top}, {duration: '150ms'});
     },
 
     hide: function(fast){
         if (!this.element) { return; }
+        this.setTop();
         this.element.style('display', 'block');
         var top = {top: -(this.element[0].offsetHeight)};
         this.out();
