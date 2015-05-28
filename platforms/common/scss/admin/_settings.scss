@@ -34,6 +34,7 @@
     }
 
     .settings-param {
+        @extend .clearfix;
         padding: 10px 5px;
         clear: both;
         position: relative;
@@ -212,6 +213,23 @@
             top: 50%;
             margin-top: -12px;
         }
+    }
+}
+
+.g-panel-filters {
+    position: relative;
+    margin-bottom: 1rem;
+    display: inline-block;
+
+    .search.settings-block {
+        width: auto;
+        display: inline-block;
+        margin-bottom: 0;
+        margin-right: 5px;
+    }
+
+    .search, input, .button {
+        font-size: 0.85rem;
     }
 }
 

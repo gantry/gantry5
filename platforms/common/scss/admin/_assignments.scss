@@ -20,20 +20,10 @@
             }
         }
 
-        .g-assignments-filters {
-            position: relative;
-            margin-bottom: 1rem;
-            display: inline-block;
+        .g-panel-filters {
 
             .search.settings-block {
-                width: 90%;
-                display: inline-block;
-                margin-bottom: 0;
                 margin-right: 25px;
-
-                &, input {
-                    font-size: 0.85rem;
-                }
             }
 
             [data-g-assignments-check], [data-g-assignments-uncheck] {
@@ -59,7 +49,7 @@
             }
         }
 
-        .card .g-assignments-filters .search {
+        .card .g-panel-filters .search {
             width: 65%;
 
             i {

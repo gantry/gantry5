@@ -67,7 +67,7 @@ body.g-prime {
             }
         }
 
-        .inner-params {
+        &.card .inner-params, &:not(.card) {
             overflow: hidden;
             height: 0;
         }

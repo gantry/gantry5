@@ -7122,8 +7122,10 @@ module.exports = {};
 
 },{"../ui":44,"../ui/popover":46,"elements/attributes":85,"elements/domready":88,"mout/array/contains":144,"mout/collection/forEach":165}],40:[function(require,module,exports){
 "use strict";
-var ready = require('elements/domready'),
-    $     = require('elements');
+var ready  = require('elements/domready'),
+    trim   = require('mout/string/trim'),
+    forOwn = require('mout/object/forOwn'),
+    $      = require('elements');
 
 var refreshCards = function() {
     var collapsers = $('[data-g-collapse]'), data, handle;
@@ -7134,13 +7136,40 @@ var refreshCards = function() {
         data = JSON.parse(collapser.data('g-collapse'));
         handle = data.handle ? collapser.find(data.handle) : collapser.find('.g-collapse');
         collapser.gFastCollapse = true;
-        $('body').emit('click', { target: handle, element: collapser });
+        $('body').emit('click', {
+            target: handle,
+            element: collapser
+        });
+    });
+};
+
+var loadFromStorage = function() {
+    var storage = JSON.parse(localStorage.getItem('g5-collapsed') || '{}'),
+        collapsers = $('[data-g-collapse]');
+    if (!collapsers) { return false; }
+
+    var item, data, handle, panel, card;
+    forOwn(storage, function(value, key) {
+        item = $('[data-g-collapse-id="' + key + '"]');
+        if (!item) { return; }
+
+        data = JSON.parse(item.data('g-collapse'));
+        handle = data.handle ? item.find(data.handle) : item.find('.g-collapse');
+        panel = data.target ? item.find(data.target) : item;
+        card = item.parent('.card') || panel;
+        handle.data('title', value ? data.expand : data.collapse);
+
+        panel.attribute('style', null);
+        card[!value ? 'removeClass' : 'addClass']('g-collapsed');
+        item[!value ? 'removeClass' : 'addClass']('g-collapsed-main');
     });
 };
 
 ready(function() {
-    var data, target, storage;
-    $('body').delegate('click', '[data-g-collapse]', function(event, element) {
+    var body = $('body'), data, target, storage;
+
+    // single collapser
+    body.delegate('click', '[data-g-collapse]', function(event, element) {
         element = event.element || element;
 
         data = JSON.parse(element.data('g-collapse'));
@@ -7157,10 +7186,11 @@ ready(function() {
 
         var collapsed = storage[data.id],
             panel = data.target ? element.find(data.target) : element,
-            card = panel.parent('.card');
+            card = panel.parent('.card') || panel;
 
         if (card && card.hasClass('g-collapsed')) {
             card.removeClass('g-collapsed');
+            element.removeClass('g-collapsed-main');
             panel.style({
                 overflow: 'hidden',
                 height: 0
@@ -7171,6 +7201,7 @@ ready(function() {
             collapsed = typeof override != 'number' ? override : collapsed;
             if (!collapsed) {
                 card.addClass('g-collapsed');
+                element.addClass('g-collapsed-main');
                 element.attribute('style', null);
             }
 
@@ -7181,19 +7212,69 @@ ready(function() {
 
         if (element.gFastCollapse) {
             panel[collapsed ? 'removeClass' : 'addClass']('g-collapsed');
-            slide(!collapsed);
+            element[collapsed ? 'removeClass' : 'addClass']('g-collapsed-main');
+            slide(collapsed);
         } else {
+            element.removeClass('g-collapsed-main');
             panel.removeClass('g-collapsed')[collapsed ? 'slideDown' : 'slideUp'](slide);
         }
 
         element.gFastCollapse = false;
     });
 
-    refreshCards();
+    // global collapse togglers
+    body.delegate('click', '[data-g-collapse-all]', function(event, element) {
+        var mode = element.data('g-collapse-all') == 'true',
+            parent = element.parent('.g-filter-actions'),
+            container = parent.nextSibling(),
+            collapsers = container.search('[data-g-collapse]'),
+            storage = JSON.parse(localStorage.getItem('g5-collapsed') || '{}'),
+            panel, data, handle, card;
+
+        if (!collapsers) { return; }
+
+        collapsers.forEach(function(collapser) {
+            collapser = $(collapser);
+            card = collapser.parent('.card');
+            data = JSON.parse(collapser.data('g-collapse'));
+            handle = data.handle ? collapser.find(data.handle) : collapser.find('.g-collapse');
+            panel = data.target ? collapser.find(data.target) : collapser;
+
+            storage[data.id] = mode;
+            localStorage.setItem('g5-collapsed', JSON.stringify(storage));
+
+
+            panel.attribute('style', null);
+            collapser[!mode ? 'removeClass' : 'addClass']('g-collapsed-main');
+            card[!mode ? 'removeClass' : 'addClass']('g-collapsed');
+        });
+    });
+
+    // filter by card title
+    body.delegate('input', '[data-g-collapse-filter]', function(event, element) {
+        var parent = element.parent('.g-filter-actions'),
+            container = parent.nextSibling(),
+            cards = container.search('.card'),
+            value = element.value();
+
+        if (!cards) { return; }
+
+        if (!value) { cards.attribute('style', null); }
+        cards.forEach(function(element, index) {
+            element = $(element);
+            var title = trim(element.find('h4 .g-title').text()),
+                matches = title.match(new RegExp("^" + value + '|\\s' + value, 'gi'));
+
+            if (matches) { element.attribute('style', null); }
+            else { element.style('display', 'none'); }
+        });
+    });
+
+    loadFromStorage();
 });
 
-module.exports = refreshCards;
-},{"elements":90,"elements/domready":88}],41:[function(require,module,exports){
+module.exports = loadFromStorage;
+},{"elements":90,"elements/domready":88,"mout/object/forOwn":204,"mout/string/trim":237}],41:[function(require,module,exports){
 "use strict";
 
 var prime      = require('prime'),

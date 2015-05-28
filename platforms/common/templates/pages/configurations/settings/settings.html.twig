@@ -13,6 +13,17 @@
                         <span class="title">{{ group|capitalize }} Settings</span>
                     </h2>
 
+                    <div class="g-filter-actions">
+                        <div class="g-panel-filters" data-g-global-filter="">
+                            <div class="search settings-block">
+                                <input type="text" data-g-collapse-filter placeholder="Filter {{ group|capitalize }}...">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                            <div class="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> Collapse All</div>
+                            <div class="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> Expand All</div>
+                        </div>
+                    </div>
+
                     <div class="cards-wrapper g-grid">
                         {% for id, particle in list %}
                             {% if not particle.hidden %}
