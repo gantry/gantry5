@@ -1,9 +1,9 @@
-/* line 8, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 8, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 .size-100 {
   width: 100%;
 }
 
-/* line 2, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_nav.scss */
+/* line 2, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_nav.scss */
 #g5-container .g-main-nav .g-dropdown, #g5-container .g-main-nav .g-standard .g-dropdown .g-dropdown {
   position: absolute;
   top: auto;
@@ -13,21 +13,21 @@
   overflow: hidden;
 }
 
-/* line 12, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_nav.scss */
+/* line 12, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_nav.scss */
 #g5-container .g-main-nav .g-standard .g-dropdown.g-active, #g5-container .g-main-nav .g-fullwidth .g-dropdown.g-active {
   opacity: 1;
   visibility: visible;
   overflow: visible;
 }
 
-/* line 2, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
+/* line 2, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
 #g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file] {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* line 9, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
+/* line 9, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
 #g5-container .submenu-ratio i {
   position: relative;
   top: 50%;
@@ -38,11 +38,11 @@
   transform: translateY(-50%);
 }
 
-/* line 8, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 8, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-100 {
   width: 100%;
 }
-/* line 2, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_nav.scss */
+/* line 2, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_nav.scss */
 #g5-container .g-main-nav .g-dropdown, #g5-container .g-main-nav .g-standard .g-dropdown .g-dropdown {
   position: absolute;
   top: auto;
@@ -51,19 +51,19 @@
   visibility: hidden;
   overflow: hidden;
 }
-/* line 12, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_nav.scss */
+/* line 12, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_nav.scss */
 #g5-container .g-main-nav .g-standard .g-dropdown.g-active, #g5-container .g-main-nav .g-fullwidth .g-dropdown.g-active {
   opacity: 1;
   visibility: visible;
   overflow: visible;
 }
-/* line 2, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
+/* line 2, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
 #g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file] {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-/* line 9, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
+/* line 9, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_utilities.scss */
 #g5-container .submenu-ratio i {
   position: relative;
   top: 50%;
@@ -73,7 +73,7 @@
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-/* line 1, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 1, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container *, #g5-container *::before, #g5-container *::after {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -109,22 +109,22 @@
     width: device-width;
   }
 }
-/* line 11, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 11, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container html {
   height: 100%;
   font-size: 100%;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
-/* line 18, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 18, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container body {
   margin: 0;
 }
-/* line 22, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 22, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container #g-page-surround {
   min-height: 100vh;
 }
-/* line 26, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 26, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container article,
 #g5-container aside,
 #g5-container details,
@@ -137,7 +137,7 @@
 #g5-container summary {
   display: block;
 }
-/* line 39, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 39, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container audio,
 #g5-container canvas,
 #g5-container progress,
@@ -145,60 +145,60 @@
   display: inline-block;
   vertical-align: baseline;
 }
-/* line 47, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 47, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container audio:not([controls]) {
   display: none;
   height: 0;
 }
-/* line 52, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 52, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container [hidden],
 #g5-container template {
   display: none;
 }
-/* line 57, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 57, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container a {
   background: transparent;
   text-decoration: none;
 }
-/* line 62, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 62, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container a:active,
 #g5-container a:hover {
   outline: 0;
 }
-/* line 67, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 67, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container abbr[title] {
   border-bottom: 1px dotted;
 }
-/* line 71, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 71, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container b,
 #g5-container strong {
   font-weight: bold;
 }
-/* line 76, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 76, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container dfn {
   font-style: italic;
 }
-/* line 80, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 80, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container mark {
   background: #ff0;
   color: #000;
 }
-/* line 85, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 85, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container sub,
 #g5-container sup {
   line-height: 0;
   position: relative;
   vertical-align: baseline;
 }
-/* line 92, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 92, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container sup {
   top: -0.5em;
 }
-/* line 96, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 96, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container sub {
   bottom: -0.25em;
 }
-/* line 100, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 100, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container img {
   width: auto\9;
   height: auto;
@@ -208,32 +208,32 @@
   border: 0;
   -ms-interpolation-mode: bicubic;
 }
-/* line 110, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 110, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container iframe,
 #g5-container svg {
   max-width: 100%;
 }
-/* line 115, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 115, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container svg:not(:root) {
   overflow: hidden;
 }
-/* line 119, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 119, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container figure {
   margin: 1em 40px;
 }
-/* line 123, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 123, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container hr {
   height: 0;
 }
-/* line 127, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 127, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container pre {
   overflow: auto;
 }
-/* line 131, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 131, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container code {
   vertical-align: bottom;
 }
-/* line 135, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 135, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container button,
 #g5-container input,
 #g5-container optgroup,
@@ -243,16 +243,16 @@
   font: inherit;
   margin: 0;
 }
-/* line 145, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 145, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container button {
   overflow: visible;
 }
-/* line 149, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 149, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container button,
 #g5-container select {
   text-transform: none;
 }
-/* line 154, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 154, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container button,
 #g5-container html input[type="button"],
 #g5-container input[type="reset"],
@@ -260,84 +260,84 @@
   -webkit-appearance: button;
   cursor: pointer;
 }
-/* line 162, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 162, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container button[disabled],
 #g5-container html input[disabled] {
   cursor: default;
 }
-/* line 167, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 167, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container button::-moz-focus-inner,
 #g5-container input::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
-/* line 173, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 173, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container input {
   line-height: normal;
 }
-/* line 177, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 177, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container input[type="checkbox"],
 #g5-container input[type="radio"] {
   padding: 0;
 }
-/* line 182, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 182, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container input[type="number"]::-webkit-inner-spin-button,
 #g5-container input[type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
-/* line 187, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 187, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container input[type="search"] {
   -webkit-appearance: textfield;
 }
-/* line 191, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 191, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container input[type="search"]::-webkit-search-cancel-button,
 #g5-container input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
-/* line 196, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 196, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container legend {
   border: 0;
   padding: 0;
 }
-/* line 201, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 201, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container textarea {
   overflow: auto;
 }
-/* line 205, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 205, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container optgroup {
   font-weight: bold;
 }
-/* line 209, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 209, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container table {
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
 }
-/* line 215, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 215, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container tr, #g5-container td, #g5-container th {
   vertical-align: middle;
 }
-/* line 219, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 219, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container th, #g5-container td {
   padding: 0.375rem 0;
 }
-/* line 223, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+/* line 223, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
 #g5-container th {
   text-align: left;
 }
 @media print {
-  /* line 228, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
+  /* line 228, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_core.scss */
   #g5-container body {
     background: #fff !important;
     color: #000 !important;
   }
 }
-/* line 2, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_flex.scss */
+/* line 2, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_flex.scss */
 #g5-container .g-container {
   margin: 0 auto;
   padding: 0;
 }
-/* line 8, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_flex.scss */
+/* line 8, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_flex.scss */
 #g5-container .g-grid {
   display: -webkit-box;
   display: -moz-box;
@@ -354,13 +354,13 @@
   padding: 0;
   text-rendering: optimizespeed;
 }
-/* line 15, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_flex.scss */
+/* line 15, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_flex.scss */
 #g5-container .g-grid.nowrap {
   -webkit-flex-flow: row;
   -moz-flex-flow: row;
   flex-flow: row;
 }
-/* line 20, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_flex.scss */
+/* line 20, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_flex.scss */
 #g5-container .g-block {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
@@ -372,21 +372,21 @@
   min-width: 0;
   min-height: 0;
 }
-/* line 27, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_flex.scss */
+/* line 27, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_flex.scss */
 #g5-container .first-block {
   -webkit-box-ordinal-group: 0;
   -webkit-order: -1;
   -ms-flex-order: -1;
   order: -1;
 }
-/* line 34, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_flex.scss */
+/* line 34, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_flex.scss */
 #g5-container .last-block {
   -webkit-box-ordinal-group: 2;
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-5 {
   -webkit-flex: 0 1 5%;
   -moz-flex: 0 1 5%;
@@ -394,7 +394,7 @@
   flex: 0 5%;
   width: 5%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-6 {
   -webkit-flex: 0 1 6%;
   -moz-flex: 0 1 6%;
@@ -402,7 +402,7 @@
   flex: 0 6%;
   width: 6%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-7 {
   -webkit-flex: 0 1 7%;
   -moz-flex: 0 1 7%;
@@ -410,7 +410,7 @@
   flex: 0 7%;
   width: 7%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-8 {
   -webkit-flex: 0 1 8%;
   -moz-flex: 0 1 8%;
@@ -418,7 +418,7 @@
   flex: 0 8%;
   width: 8%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-9 {
   -webkit-flex: 0 1 9%;
   -moz-flex: 0 1 9%;
@@ -426,7 +426,7 @@
   flex: 0 9%;
   width: 9%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-10 {
   -webkit-flex: 0 1 10%;
   -moz-flex: 0 1 10%;
@@ -434,7 +434,7 @@
   flex: 0 10%;
   width: 10%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-11 {
   -webkit-flex: 0 1 11%;
   -moz-flex: 0 1 11%;
@@ -442,7 +442,7 @@
   flex: 0 11%;
   width: 11%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-12 {
   -webkit-flex: 0 1 12%;
   -moz-flex: 0 1 12%;
@@ -450,7 +450,7 @@
   flex: 0 12%;
   width: 12%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-13 {
   -webkit-flex: 0 1 13%;
   -moz-flex: 0 1 13%;
@@ -458,7 +458,7 @@
   flex: 0 13%;
   width: 13%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-14 {
   -webkit-flex: 0 1 14%;
   -moz-flex: 0 1 14%;
@@ -466,7 +466,7 @@
   flex: 0 14%;
   width: 14%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-15 {
   -webkit-flex: 0 1 15%;
   -moz-flex: 0 1 15%;
@@ -474,7 +474,7 @@
   flex: 0 15%;
   width: 15%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-16 {
   -webkit-flex: 0 1 16%;
   -moz-flex: 0 1 16%;
@@ -482,7 +482,7 @@
   flex: 0 16%;
   width: 16%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-17 {
   -webkit-flex: 0 1 17%;
   -moz-flex: 0 1 17%;
@@ -490,7 +490,7 @@
   flex: 0 17%;
   width: 17%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-18 {
   -webkit-flex: 0 1 18%;
   -moz-flex: 0 1 18%;
@@ -498,7 +498,7 @@
   flex: 0 18%;
   width: 18%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-19 {
   -webkit-flex: 0 1 19%;
   -moz-flex: 0 1 19%;
@@ -506,7 +506,7 @@
   flex: 0 19%;
   width: 19%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-20 {
   -webkit-flex: 0 1 20%;
   -moz-flex: 0 1 20%;
@@ -514,7 +514,7 @@
   flex: 0 20%;
   width: 20%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-21 {
   -webkit-flex: 0 1 21%;
   -moz-flex: 0 1 21%;
@@ -522,7 +522,7 @@
   flex: 0 21%;
   width: 21%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-22 {
   -webkit-flex: 0 1 22%;
   -moz-flex: 0 1 22%;
@@ -530,7 +530,7 @@
   flex: 0 22%;
   width: 22%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-23 {
   -webkit-flex: 0 1 23%;
   -moz-flex: 0 1 23%;
@@ -538,7 +538,7 @@
   flex: 0 23%;
   width: 23%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-24 {
   -webkit-flex: 0 1 24%;
   -moz-flex: 0 1 24%;
@@ -546,7 +546,7 @@
   flex: 0 24%;
   width: 24%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-25 {
   -webkit-flex: 0 1 25%;
   -moz-flex: 0 1 25%;
@@ -554,7 +554,7 @@
   flex: 0 25%;
   width: 25%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-26 {
   -webkit-flex: 0 1 26%;
   -moz-flex: 0 1 26%;
@@ -562,7 +562,7 @@
   flex: 0 26%;
   width: 26%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-27 {
   -webkit-flex: 0 1 27%;
   -moz-flex: 0 1 27%;
@@ -570,7 +570,7 @@
   flex: 0 27%;
   width: 27%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-28 {
   -webkit-flex: 0 1 28%;
   -moz-flex: 0 1 28%;
@@ -578,7 +578,7 @@
   flex: 0 28%;
   width: 28%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-29 {
   -webkit-flex: 0 1 29%;
   -moz-flex: 0 1 29%;
@@ -586,7 +586,7 @@
   flex: 0 29%;
   width: 29%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-30 {
   -webkit-flex: 0 1 30%;
   -moz-flex: 0 1 30%;
@@ -594,7 +594,7 @@
   flex: 0 30%;
   width: 30%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-31 {
   -webkit-flex: 0 1 31%;
   -moz-flex: 0 1 31%;
@@ -602,7 +602,7 @@
   flex: 0 31%;
   width: 31%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-32 {
   -webkit-flex: 0 1 32%;
   -moz-flex: 0 1 32%;
@@ -610,7 +610,7 @@
   flex: 0 32%;
   width: 32%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-33 {
   -webkit-flex: 0 1 33%;
   -moz-flex: 0 1 33%;
@@ -618,7 +618,7 @@
   flex: 0 33%;
   width: 33%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-34 {
   -webkit-flex: 0 1 34%;
   -moz-flex: 0 1 34%;
@@ -626,7 +626,7 @@
   flex: 0 34%;
   width: 34%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-35 {
   -webkit-flex: 0 1 35%;
   -moz-flex: 0 1 35%;
@@ -634,7 +634,7 @@
   flex: 0 35%;
   width: 35%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-36 {
   -webkit-flex: 0 1 36%;
   -moz-flex: 0 1 36%;
@@ -642,7 +642,7 @@
   flex: 0 36%;
   width: 36%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-37 {
   -webkit-flex: 0 1 37%;
   -moz-flex: 0 1 37%;
@@ -650,7 +650,7 @@
   flex: 0 37%;
   width: 37%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-38 {
   -webkit-flex: 0 1 38%;
   -moz-flex: 0 1 38%;
@@ -658,7 +658,7 @@
   flex: 0 38%;
   width: 38%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-39 {
   -webkit-flex: 0 1 39%;
   -moz-flex: 0 1 39%;
@@ -666,7 +666,7 @@
   flex: 0 39%;
   width: 39%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-40 {
   -webkit-flex: 0 1 40%;
   -moz-flex: 0 1 40%;
@@ -674,7 +674,7 @@
   flex: 0 40%;
   width: 40%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-41 {
   -webkit-flex: 0 1 41%;
   -moz-flex: 0 1 41%;
@@ -682,7 +682,7 @@
   flex: 0 41%;
   width: 41%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-42 {
   -webkit-flex: 0 1 42%;
   -moz-flex: 0 1 42%;
@@ -690,7 +690,7 @@
   flex: 0 42%;
   width: 42%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-43 {
   -webkit-flex: 0 1 43%;
   -moz-flex: 0 1 43%;
@@ -698,7 +698,7 @@
   flex: 0 43%;
   width: 43%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-44 {
   -webkit-flex: 0 1 44%;
   -moz-flex: 0 1 44%;
@@ -706,7 +706,7 @@
   flex: 0 44%;
   width: 44%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-45 {
   -webkit-flex: 0 1 45%;
   -moz-flex: 0 1 45%;
@@ -714,7 +714,7 @@
   flex: 0 45%;
   width: 45%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-46 {
   -webkit-flex: 0 1 46%;
   -moz-flex: 0 1 46%;
@@ -722,7 +722,7 @@
   flex: 0 46%;
   width: 46%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-47 {
   -webkit-flex: 0 1 47%;
   -moz-flex: 0 1 47%;
@@ -730,7 +730,7 @@
   flex: 0 47%;
   width: 47%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-48 {
   -webkit-flex: 0 1 48%;
   -moz-flex: 0 1 48%;
@@ -738,7 +738,7 @@
   flex: 0 48%;
   width: 48%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-49 {
   -webkit-flex: 0 1 49%;
   -moz-flex: 0 1 49%;
@@ -746,7 +746,7 @@
   flex: 0 49%;
   width: 49%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-50 {
   -webkit-flex: 0 1 50%;
   -moz-flex: 0 1 50%;
@@ -754,7 +754,7 @@
   flex: 0 50%;
   width: 50%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-51 {
   -webkit-flex: 0 1 51%;
   -moz-flex: 0 1 51%;
@@ -762,7 +762,7 @@
   flex: 0 51%;
   width: 51%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-52 {
   -webkit-flex: 0 1 52%;
   -moz-flex: 0 1 52%;
@@ -770,7 +770,7 @@
   flex: 0 52%;
   width: 52%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-53 {
   -webkit-flex: 0 1 53%;
   -moz-flex: 0 1 53%;
@@ -778,7 +778,7 @@
   flex: 0 53%;
   width: 53%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-54 {
   -webkit-flex: 0 1 54%;
   -moz-flex: 0 1 54%;
@@ -786,7 +786,7 @@
   flex: 0 54%;
   width: 54%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-55 {
   -webkit-flex: 0 1 55%;
   -moz-flex: 0 1 55%;
@@ -794,7 +794,7 @@
   flex: 0 55%;
   width: 55%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-56 {
   -webkit-flex: 0 1 56%;
   -moz-flex: 0 1 56%;
@@ -802,7 +802,7 @@
   flex: 0 56%;
   width: 56%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-57 {
   -webkit-flex: 0 1 57%;
   -moz-flex: 0 1 57%;
@@ -810,7 +810,7 @@
   flex: 0 57%;
   width: 57%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-58 {
   -webkit-flex: 0 1 58%;
   -moz-flex: 0 1 58%;
@@ -818,7 +818,7 @@
   flex: 0 58%;
   width: 58%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-59 {
   -webkit-flex: 0 1 59%;
   -moz-flex: 0 1 59%;
@@ -826,7 +826,7 @@
   flex: 0 59%;
   width: 59%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-60 {
   -webkit-flex: 0 1 60%;
   -moz-flex: 0 1 60%;
@@ -834,7 +834,7 @@
   flex: 0 60%;
   width: 60%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-61 {
   -webkit-flex: 0 1 61%;
   -moz-flex: 0 1 61%;
@@ -842,7 +842,7 @@
   flex: 0 61%;
   width: 61%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-62 {
   -webkit-flex: 0 1 62%;
   -moz-flex: 0 1 62%;
@@ -850,7 +850,7 @@
   flex: 0 62%;
   width: 62%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-63 {
   -webkit-flex: 0 1 63%;
   -moz-flex: 0 1 63%;
@@ -858,7 +858,7 @@
   flex: 0 63%;
   width: 63%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-64 {
   -webkit-flex: 0 1 64%;
   -moz-flex: 0 1 64%;
@@ -866,7 +866,7 @@
   flex: 0 64%;
   width: 64%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-65 {
   -webkit-flex: 0 1 65%;
   -moz-flex: 0 1 65%;
@@ -874,7 +874,7 @@
   flex: 0 65%;
   width: 65%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-66 {
   -webkit-flex: 0 1 66%;
   -moz-flex: 0 1 66%;
@@ -882,7 +882,7 @@
   flex: 0 66%;
   width: 66%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-67 {
   -webkit-flex: 0 1 67%;
   -moz-flex: 0 1 67%;
@@ -890,7 +890,7 @@
   flex: 0 67%;
   width: 67%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-68 {
   -webkit-flex: 0 1 68%;
   -moz-flex: 0 1 68%;
@@ -898,7 +898,7 @@
   flex: 0 68%;
   width: 68%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-69 {
   -webkit-flex: 0 1 69%;
   -moz-flex: 0 1 69%;
@@ -906,7 +906,7 @@
   flex: 0 69%;
   width: 69%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-70 {
   -webkit-flex: 0 1 70%;
   -moz-flex: 0 1 70%;
@@ -914,7 +914,7 @@
   flex: 0 70%;
   width: 70%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-71 {
   -webkit-flex: 0 1 71%;
   -moz-flex: 0 1 71%;
@@ -922,7 +922,7 @@
   flex: 0 71%;
   width: 71%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-72 {
   -webkit-flex: 0 1 72%;
   -moz-flex: 0 1 72%;
@@ -930,7 +930,7 @@
   flex: 0 72%;
   width: 72%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-73 {
   -webkit-flex: 0 1 73%;
   -moz-flex: 0 1 73%;
@@ -938,7 +938,7 @@
   flex: 0 73%;
   width: 73%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-74 {
   -webkit-flex: 0 1 74%;
   -moz-flex: 0 1 74%;
@@ -946,7 +946,7 @@
   flex: 0 74%;
   width: 74%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-75 {
   -webkit-flex: 0 1 75%;
   -moz-flex: 0 1 75%;
@@ -954,7 +954,7 @@
   flex: 0 75%;
   width: 75%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-76 {
   -webkit-flex: 0 1 76%;
   -moz-flex: 0 1 76%;
@@ -962,7 +962,7 @@
   flex: 0 76%;
   width: 76%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-77 {
   -webkit-flex: 0 1 77%;
   -moz-flex: 0 1 77%;
@@ -970,7 +970,7 @@
   flex: 0 77%;
   width: 77%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-78 {
   -webkit-flex: 0 1 78%;
   -moz-flex: 0 1 78%;
@@ -978,7 +978,7 @@
   flex: 0 78%;
   width: 78%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-79 {
   -webkit-flex: 0 1 79%;
   -moz-flex: 0 1 79%;
@@ -986,7 +986,7 @@
   flex: 0 79%;
   width: 79%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-80 {
   -webkit-flex: 0 1 80%;
   -moz-flex: 0 1 80%;
@@ -994,7 +994,7 @@
   flex: 0 80%;
   width: 80%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-81 {
   -webkit-flex: 0 1 81%;
   -moz-flex: 0 1 81%;
@@ -1002,7 +1002,7 @@
   flex: 0 81%;
   width: 81%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-82 {
   -webkit-flex: 0 1 82%;
   -moz-flex: 0 1 82%;
@@ -1010,7 +1010,7 @@
   flex: 0 82%;
   width: 82%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-83 {
   -webkit-flex: 0 1 83%;
   -moz-flex: 0 1 83%;
@@ -1018,7 +1018,7 @@
   flex: 0 83%;
   width: 83%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-84 {
   -webkit-flex: 0 1 84%;
   -moz-flex: 0 1 84%;
@@ -1026,7 +1026,7 @@
   flex: 0 84%;
   width: 84%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-85 {
   -webkit-flex: 0 1 85%;
   -moz-flex: 0 1 85%;
@@ -1034,7 +1034,7 @@
   flex: 0 85%;
   width: 85%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-86 {
   -webkit-flex: 0 1 86%;
   -moz-flex: 0 1 86%;
@@ -1042,7 +1042,7 @@
   flex: 0 86%;
   width: 86%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-87 {
   -webkit-flex: 0 1 87%;
   -moz-flex: 0 1 87%;
@@ -1050,7 +1050,7 @@
   flex: 0 87%;
   width: 87%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-88 {
   -webkit-flex: 0 1 88%;
   -moz-flex: 0 1 88%;
@@ -1058,7 +1058,7 @@
   flex: 0 88%;
   width: 88%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-89 {
   -webkit-flex: 0 1 89%;
   -moz-flex: 0 1 89%;
@@ -1066,7 +1066,7 @@
   flex: 0 89%;
   width: 89%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-90 {
   -webkit-flex: 0 1 90%;
   -moz-flex: 0 1 90%;
@@ -1074,7 +1074,7 @@
   flex: 0 90%;
   width: 90%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-91 {
   -webkit-flex: 0 1 91%;
   -moz-flex: 0 1 91%;
@@ -1082,7 +1082,7 @@
   flex: 0 91%;
   width: 91%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-92 {
   -webkit-flex: 0 1 92%;
   -moz-flex: 0 1 92%;
@@ -1090,7 +1090,7 @@
   flex: 0 92%;
   width: 92%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-93 {
   -webkit-flex: 0 1 93%;
   -moz-flex: 0 1 93%;
@@ -1098,7 +1098,7 @@
   flex: 0 93%;
   width: 93%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-94 {
   -webkit-flex: 0 1 94%;
   -moz-flex: 0 1 94%;
@@ -1106,7 +1106,7 @@
   flex: 0 94%;
   width: 94%;
 }
-/* line 3, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
+/* line 3, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/mixins/_sizes.scss */
 #g5-container .size-95 {
   -webkit-flex: 0 1 95%;
   -moz-flex: 0 1 95%;
@@ -1114,56 +1114,56 @@
   flex: 0 95%;
   width: 95%;
 }
-/* line 5, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
+/* line 5, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
 #g5-container .size-33-3 {
   width: 33.33333%;
 }
-/* line 9, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
+/* line 9, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
 #g5-container .size-16-7 {
   width: 16.66667%;
 }
-/* line 13, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
+/* line 13, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
 #g5-container .size-14-3 {
   width: 14.28571%;
 }
-/* line 17, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
+/* line 17, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
 #g5-container .size-12-5 {
   width: 12.5%;
 }
-/* line 21, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
+/* line 21, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
 #g5-container .size-11-1 {
   width: 11.11111%;
 }
-/* line 25, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
+/* line 25, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
 #g5-container .size-9-1 {
   width: 9.09091%;
 }
-/* line 29, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
+/* line 29, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_sizes.scss */
 #g5-container .size-8-3 {
   width: 8.33333%;
 }
-/* line 8, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 8, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav:not(.g-menu-hastouch) .g-dropdown {
   z-index: 10;
   top: -9999px;
 }
-/* line 11, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 11, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav:not(.g-menu-hastouch) .g-dropdown.g-active {
   top: 100%;
 }
-/* line 14, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 14, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav:not(.g-menu-hastouch) .g-dropdown .g-dropdown {
   top: 0;
 }
-/* line 20, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 20, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav:not(.g-menu-hastouch) .g-fullwidth .g-dropdown.g-active {
   top: auto;
 }
-/* line 23, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 23, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav:not(.g-menu-hastouch) .g-fullwidth .g-dropdown .g-dropdown.g-active {
   top: 0;
 }
-/* line 32, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 32, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-toplevel > li {
   display: inline-block;
   cursor: pointer;
@@ -1171,28 +1171,28 @@
   -moz-transition: background 0.2s ease-out, -moz-transform 0.2s ease-out;
   transition: background 0.2s ease-out, transform 0.2s ease-out;
 }
-/* line 37, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 37, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-toplevel > li.g-menu-item-type-particle, #g5-container .g-main-nav .g-toplevel > li.g-menu-item-type-module {
   cursor: initial;
 }
-/* line 41, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 41, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-toplevel > li .g-menu-item-content {
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
 }
-/* line 47, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 47, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-toplevel > li .g-menu-item-container {
   -webkit-transition: -webkit-transform 0.2s ease-out;
   -moz-transition: -moz-transform 0.2s ease-out;
   transition: transform 0.2s ease-out;
 }
-/* line 53, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 53, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 57, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 57, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator:after {
   display: inline-block;
   cursor: pointer;
@@ -1202,38 +1202,38 @@
   content: "\f078";
   text-align: right;
 }
-/* line 70, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 70, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-toplevel > li.g-parent.g-selected > .g-menu-item-container > .g-menu-parent-indicator:after {
   content: "\f00d";
 }
-/* line 81, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 81, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-dropdown {
   -webkit-transition: opacity 0.2s ease-out, -webkit-transform 0.2s ease-out;
   -moz-transition: opacity 0.2s ease-out, -moz-transform 0.2s ease-out;
   transition: opacity 0.2s ease-out, transform 0.2s ease-out;
   z-index: 1;
 }
-/* line 89, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 89, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-sublevel > li {
   -webkit-transition: background 0.2s ease-out, -webkit-transform 0.2s ease-out;
   -moz-transition: background 0.2s ease-out, -moz-transform 0.2s ease-out;
   transition: background 0.2s ease-out, transform 0.2s ease-out;
 }
-/* line 92, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 92, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-sublevel > li.g-menu-item-type-particle, #g5-container .g-main-nav .g-sublevel > li.g-menu-item-type-module {
   cursor: initial;
 }
-/* line 96, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 96, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-sublevel > li .g-menu-item-content {
   display: inline-block;
   vertical-align: middle;
   word-break: break-word;
 }
-/* line 103, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 103, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-sublevel > li.g-parent .g-menu-item-content {
   margin-right: 2rem;
 }
-/* line 106, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 106, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-sublevel > li.g-parent .g-menu-parent-indicator {
   position: absolute;
   right: 0.738rem;
@@ -1241,38 +1241,38 @@
   width: auto;
   text-align: center;
 }
-/* line 113, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 113, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-sublevel > li.g-parent .g-menu-parent-indicator:after {
   content: "\f054";
   text-align: center;
 }
-/* line 121, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 121, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-sublevel > li.g-parent.g-selected > .g-menu-item-container > .g-menu-parent-indicator:after {
   content: "\f00d";
 }
-/* line 132, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 132, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-menu-item-container {
   display: block;
   position: relative;
 }
-/* line 139, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 139, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-standard {
   position: relative;
 }
-/* line 142, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 142, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-standard .g-sublevel > li {
   position: relative;
 }
-/* line 146, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 146, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-standard .g-dropdown {
   top: 100%;
 }
-/* line 148, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 148, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-standard .g-dropdown .g-dropdown {
   left: 100%;
   top: 0;
 }
-/* line 153, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 153, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-standard .g-dropdown .g-block {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
@@ -1282,30 +1282,30 @@
   -ms-flex: 0 100%;
   flex: 0 100%;
 }
-/* line 161, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 161, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-standard .g-go-back {
   display: none;
 }
-/* line 170, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 170, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-fullwidth .g-dropdown {
   position: absolute;
   left: 0;
   right: 0;
 }
-/* line 175, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 175, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-fullwidth .g-dropdown .g-block {
   position: relative;
   overflow: hidden;
 }
-/* line 185, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 185, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-fullwidth .g-dropdown .g-go-back {
   display: block;
 }
-/* line 186, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 186, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-fullwidth .g-dropdown .g-go-back.g-level-1 {
   display: none;
 }
-/* line 193, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 193, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-fullwidth .g-sublevel .g-dropdown {
   top: 0;
   -webkit-transform: translateX(100%);
@@ -1314,7 +1314,7 @@
   -o-transform: translateX(100%);
   transform: translateX(100%);
 }
-/* line 196, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 196, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-fullwidth .g-sublevel .g-dropdown.g-active {
   -webkit-transform: translateX(0);
   -moz-transform: translateX(0);
@@ -1322,7 +1322,7 @@
   -o-transform: translateX(0);
   transform: translateX(0);
 }
-/* line 202, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 202, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-main-nav .g-fullwidth .g-sublevel.g-slide-out > .g-menu-item > .g-menu-item-container {
   -webkit-transform: translateX(-100%);
   -moz-transform: translateX(-100%);
@@ -1330,15 +1330,15 @@
   -o-transform: translateX(-100%);
   transform: translateX(-100%);
 }
-/* line 219, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 219, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-go-back.g-level-1 {
   display: none;
 }
-/* line 223, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 223, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-go-back a span {
   display: none;
 }
-/* line 226, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 226, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-go-back a:before {
   display: block;
   text-align: center;
@@ -1347,18 +1347,18 @@
   content: "\f053";
   opacity: 0.5;
 }
-/* line 239, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 239, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-menu-item-container > i {
   vertical-align: middle;
   margin-right: 0.2rem;
 }
-/* line 246, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 246, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-menu-item-subtitle {
   display: block;
   font-size: 0.8rem;
   line-height: 1.1;
 }
-/* line 253, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 253, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-nav-overlay, #g5-container .g-menu-overlay {
   top: 0;
   right: 0;
@@ -1371,37 +1371,37 @@
   -moz-transition: opacity 0.3s ease-out, z-index 0.1s ease-out;
   transition: opacity 0.3s ease-out, z-index 0.1s ease-out;
 }
-/* line 270, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 270, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel {
   position: relative;
 }
-/* line 272, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 272, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel li {
   display: block;
   position: static !important;
   margin-right: 0;
   cursor: pointer;
 }
-/* line 278, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 278, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel li .g-menu-item-container {
   padding: 0.938rem 1rem;
 }
-/* line 282, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 282, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel li .g-menu-item-content {
   display: inline-block;
   line-height: 1rem;
 }
-/* line 290, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 290, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel li.g-parent > .g-menu-item-container > .g-menu-item-content {
   position: relative;
 }
-/* line 295, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 295, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel li.g-parent .g-menu-parent-indicator {
   position: absolute;
   right: 0.938rem;
   text-align: center;
 }
-/* line 300, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 300, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel li.g-parent .g-menu-parent-indicator:after {
   display: inline-block;
   text-align: center;
@@ -1411,7 +1411,7 @@
   font-family: FontAwesome;
   content: "\f054";
 }
-/* line 313, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 313, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel .g-dropdown {
   top: 0;
   background: transparent;
@@ -1428,7 +1428,7 @@
   -o-transform: translateX(100%);
   transform: translateX(100%);
 }
-/* line 322, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 322, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel .g-dropdown.g-active {
   -webkit-transform: translateX(0);
   -moz-transform: translateX(0);
@@ -1436,47 +1436,47 @@
   -o-transform: translateX(0);
   transform: translateX(0);
 }
-/* line 325, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 325, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel .g-dropdown .g-go-back {
   display: block;
 }
-/* line 328, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 328, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel .g-dropdown .g-block {
   width: 100%;
   overflow: visible;
 }
-/* line 331, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 331, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel .g-dropdown .g-block .g-go-back {
   display: none;
 }
-/* line 335, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 335, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel .g-dropdown .g-block:first-child .g-go-back {
   display: block;
 }
-/* line 341, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 341, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel .g-dropdown-column {
   float: none;
   padding: 0;
 }
-/* line 346, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 346, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-sublevel {
   cursor: default;
 }
-/* line 348, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 348, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-sublevel li {
   position: static;
 }
-/* line 351, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 351, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-sublevel .g-dropdown {
   top: 0;
 }
-/* line 356, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 356, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-menu-item-container {
   -webkit-transition: -webkit-transform 0.2s ease-out;
   -moz-transition: -moz-transform 0.2s ease-out;
   transition: transform 0.2s ease-out;
 }
-/* line 363, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 363, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-toplevel.g-slide-out > .g-menu-item > .g-menu-item-container, #g5-container #g-mobilemenu-container .g-toplevel.g-slide-out > .g-go-back > .g-menu-item-container, #g5-container #g-mobilemenu-container .g-sublevel.g-slide-out > .g-menu-item > .g-menu-item-container, #g5-container #g-mobilemenu-container .g-sublevel.g-slide-out > .g-go-back > .g-menu-item-container {
   -webkit-transform: translateX(-100%);
   -moz-transform: translateX(-100%);
@@ -1484,131 +1484,131 @@
   -o-transform: translateX(-100%);
   transform: translateX(-100%);
 }
-/* line 370, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 370, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container .g-menu-item-subtitle {
   line-height: 1.5;
 }
-/* line 373, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 373, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container #g-mobilemenu-container i {
   float: left;
   line-height: 1.4rem;
   margin-right: 0.3rem;
 }
-/* line 380, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
+/* line 380, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_nav.scss */
 #g5-container .g-menu-overlay.g-menu-overlay-open {
   z-index: 2;
   position: fixed;
   opacity: 1;
   height: 100vh;
 }
-/* line 2, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
+/* line 2, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
 #g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
   margin: 0.75rem 0 1.5rem 0;
   text-rendering: optimizeLegibility;
 }
-/* line 8, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
+/* line 8, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
 #g5-container p {
   margin: 1.5rem 0;
 }
-/* line 13, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
+/* line 13, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
 #g5-container ul, #g5-container ol, #g5-container dl {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
 }
-/* line 16, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
+/* line 16, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
 #g5-container ul ul, #g5-container ul ol, #g5-container ul dl, #g5-container ol ul, #g5-container ol ol, #g5-container ol dl, #g5-container dl ul, #g5-container dl ol, #g5-container dl dl {
   margin-top: 0;
   margin-bottom: 0;
 }
-/* line 22, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
+/* line 22, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
 #g5-container ul, #g5-container dl {
   margin-left: 1.5rem;
   padding: 0;
 }
-/* line 27, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
+/* line 27, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
 #g5-container ol {
   padding-left: 1.5rem;
 }
-/* line 32, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
+/* line 32, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
 #g5-container blockquote {
   margin: 1.5rem 0;
   padding-left: 0.75rem;
 }
-/* line 37, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
+/* line 37, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
 #g5-container cite {
   display: block;
 }
-/* line 39, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
+/* line 39, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
 #g5-container cite:before {
   content: "\2014 \0020";
 }
-/* line 45, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
+/* line 45, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
 #g5-container pre {
   margin: 1.5rem 0;
   padding: 0.938rem;
 }
-/* line 50, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
+/* line 50, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_typography.scss */
 #g5-container hr {
   border-left: none;
   border-right: none;
   border-top: none;
   margin: 1.5rem 0;
 }
-/* line 1, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 1, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
 #g5-container fieldset {
   border: 0;
   padding: 0.938rem;
   margin: 0 0 1.5rem 0;
 }
-/* line 7, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 7, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
 #g5-container label {
   margin-bottom: 0.375rem;
 }
-/* line 9, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 9, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
 #g5-container label abbr {
   display: none;
 }
-/* line 14, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 14, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
 #g5-container textarea, #g5-container select[multiple=multiple] {
   -webkit-transition: border-color;
   -moz-transition: border-color;
   transition: border-color;
   padding: 0.375rem 0.375rem;
 }
-/* line 18, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 18, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
 #g5-container textarea:focus, #g5-container select[multiple=multiple]:focus {
   outline: none;
 }
-/* line 23, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 23, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
 #g5-container input[type="email"], #g5-container input[type="number"], #g5-container input[type="password"], #g5-container input[type="search"], #g5-container input[type="tel"], #g5-container input[type="text"], #g5-container input[type="url"], #g5-container input[type="color"], #g5-container input[type="date"], #g5-container input[type="datetime"], #g5-container input[type="datetime-local"], #g5-container input[type="month"], #g5-container input[type="time"], #g5-container input[type="week"] {
   -webkit-transition: border-color;
   -moz-transition: border-color;
   transition: border-color;
   padding: 0.375rem 0.375rem;
 }
-/* line 28, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 28, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
 #g5-container input[type="email"]:focus, #g5-container input[type="number"]:focus, #g5-container input[type="password"]:focus, #g5-container input[type="search"]:focus, #g5-container input[type="tel"]:focus, #g5-container input[type="text"]:focus, #g5-container input[type="url"]:focus, #g5-container input[type="color"]:focus, #g5-container input[type="date"]:focus, #g5-container input[type="datetime"]:focus, #g5-container input[type="datetime-local"]:focus, #g5-container input[type="month"]:focus, #g5-container input[type="time"]:focus, #g5-container input[type="week"]:focus {
   outline: none;
 }
-/* line 32, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 32, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
 #g5-container textarea {
   resize: vertical;
 }
-/* line 36, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 36, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
 #g5-container input[type="checkbox"], #g5-container input[type="radio"] {
   display: inline;
   margin-right: 0.375rem;
 }
-/* line 41, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 41, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
 #g5-container input[type="file"] {
   width: 100%;
 }
-/* line 45, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 45, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
 #g5-container select {
   max-width: 100%;
   margin-bottom: 1.5rem;
 }
-/* line 51, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
+/* line 51, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_forms.scss */
 #g5-container button,
 #g5-container input[type="submit"] {
   cursor: pointer;
@@ -1617,89 +1617,89 @@
   white-space: nowrap;
   border: inherit;
 }
-/* line 2, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 2, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .float-left {
   float: left !important;
 }
-/* line 6, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 6, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .float-right {
   float: right !important;
 }
-/* line 10, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 10, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .hide, #g5-container body .g-offcanvas-hide {
   display: none;
 }
-/* line 15, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/vendor/bourbon/addons/_clearfix.scss */
+/* line 15, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/vendor/bourbon/addons/_clearfix.scss */
 #g5-container .clearfix:after, #g5-container .settings-block .settings-param:after {
   content: "";
   display: table;
   clear: both;
 }
-/* line 20, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 20, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .center {
   text-align: center !important;
 }
-/* line 24, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 24, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .align-right {
   text-align: right !important;
 }
-/* line 28, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 28, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .align-left {
   text-align: left !important;
 }
-/* line 33, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 33, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .full-height {
   min-height: 100vh;
 }
-/* line 38, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 38, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .nomarginall {
   margin: 0 !important;
 }
-/* line 40, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 40, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .nomarginall .content {
   margin: 0 !important;
 }
-/* line 45, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 45, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .nomargintop {
   margin-top: 0 !important;
 }
-/* line 47, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 47, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .nomargintop .content {
   margin-top: 0 !important;
 }
-/* line 52, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 52, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .nomarginbottom {
   margin-bottom: 0 !important;
 }
-/* line 54, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 54, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .nomarginbottom .content {
   margin-bottom: 0 !important;
 }
-/* line 59, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 59, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .nopaddingall {
   padding: 0 !important;
 }
-/* line 61, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 61, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .nopaddingall .content {
   padding: 0 !important;
 }
-/* line 66, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 66, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .nopaddingtop {
   padding-top: 0 !important;
 }
-/* line 68, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 68, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .nopaddingtop .content {
   padding-top: 0 !important;
 }
-/* line 73, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 73, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .nopaddingbottom {
   padding-bottom: 0 !important;
 }
-/* line 75, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 75, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .nopaddingbottom .content {
   padding-bottom: 0 !important;
 }
-/* line 82, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 82, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .full-width {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
@@ -1709,7 +1709,7 @@
   -ms-flex: 0 100%;
   flex: 0 100%;
 }
-/* line 84, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 84, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .full-width .g-block {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
@@ -1719,38 +1719,38 @@
   -ms-flex: 0 100%;
   flex: 0 100%;
 }
-/* line 90, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 90, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .hidden {
   display: none;
   visibility: hidden;
 }
-/* line 95, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 95, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .visible-phone {
   display: none !important;
 }
-/* line 99, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 99, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .visible-tablet {
   display: none !important;
 }
-/* line 103, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 103, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .hidden-desktop {
   display: none !important;
 }
-/* line 107, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+/* line 107, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
 #g5-container .visible-desktop {
   display: inherit !important;
 }
 @media print {
-  /* line 112, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+  /* line 112, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
   #g5-container .visible-print {
     display: inherit !important;
   }
-  /* line 115, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
+  /* line 115, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_utilities.scss */
   #g5-container .hidden-print {
     display: none !important;
   }
 }
-/* line 1, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 1, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 #g5-container #g-offcanvas {
   position: fixed;
   top: 0;
@@ -1762,7 +1762,7 @@
   text-align: left;
   display: none;
 }
-/* line 13, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 13, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 #g5-container .g-offcanvas-toggle {
   display: block;
   position: absolute;
@@ -1772,34 +1772,34 @@
   line-height: 1;
   cursor: pointer;
 }
-/* line 23, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 23, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 #g5-container .g-offcanvas-active {
   overflow-x: hidden;
 }
-/* line 27, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 27, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 #g5-container .g-offcanvas-open {
   overflow: hidden;
 }
-/* line 30, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 30, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 #g5-container .g-offcanvas-open body, #g5-container .g-offcanvas-open #g-page-surround {
   overflow: hidden;
 }
-/* line 34, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 34, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 #g5-container .g-offcanvas-open .g-nav-overlay {
   z-index: 15;
   position: absolute;
   opacity: 1;
   height: 100%;
 }
-/* line 41, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 41, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 #g5-container .g-offcanvas-open #g-offcanvas {
   display: block;
 }
-/* line 52, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 52, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 #g5-container .g-offcanvas-right #g-offcanvas {
   left: inherit;
 }
-/* line 55, ../../../../../../Users/w00fz/Projects/git/gantry/gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
+/* line 55, ../../../../../../Users/newkind/Firmy/RocketTheme/Gantry5/engines/common/nucleus/scss/nucleus/_offcanvas.scss */
 #g5-container .g-offcanvas-right .g-offcanvas-toggle {
   left: inherit;
   right: 0.7rem;

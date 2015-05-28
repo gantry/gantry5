@@ -12,82 +12,153 @@ body.gantry5 {
 body.gantry5.auto-fold #wpcontent {
   padding-left: 0;
 }
-/* line 13, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 12, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container a:focus {
   box-shadow: none;
 }
-/* line 17, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 16, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container dd, body.gantry5 #g5-container li {
   margin-bottom: 0;
 }
-/* line 21, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 20, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container li {
   line-height: inherit;
 }
-/* line 25, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 24, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container textarea, body.gantry5 #g5-container input {
   box-shadow: none;
   color: #666;
 }
-/* line 30, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 29, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container input, body.gantry5 #g5-container button, body.gantry5 #g5-container select, body.gantry5 #g5-container textarea {
   font-family: inherit;
 }
-/* line 34, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 33, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container input[type="checkbox"] {
   height: 16px;
 }
-/* line 38, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 37, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .main-block {
   min-height: 81.5vh;
 }
-/* line 42, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 41, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .inner-container {
   margin: 0;
 }
-/* line 46, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 45, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .card {
   max-width: none;
   box-shadow: none;
 }
-/* line 51, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 50, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .preview {
   float: none;
 }
-/* line 55, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 54, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .search {
   background: none;
   color: inherit;
   font-size: inherit;
 }
-/* line 63, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 62, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 form {
   margin-bottom: 1em;
 }
-/* line 68, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 67, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 .g5-dialog-loading-spinner.g5-dialog-theme-default {
   top: 3em;
 }
-/* line 72, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 71, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #wpbody-content {
   padding-bottom: 0;
 }
 
-/* line 11, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
-#g5-container .button {
-  height: auto;
-  box-shadow: none;
-  border: none;
-}
-/* line 17, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
-#g5-container .button-primary {
+/* line 14, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-fresh #g5-container .button-primary {
   background: #0073AA;
   color: #fff;
 }
 /* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
-#g5-container .button-primary:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-fresh #g5-container .button-primary:not(.disabled):not([disabled]):hover {
   background: #005e8b;
   color: #fff;
+}
+/* line 14, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-light #g5-container .button-primary {
+  background: #888888;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-light #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #797979;
+  color: #fff;
+}
+/* line 14, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-blue #g5-container .button-primary {
+  background: #096484;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-blue #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #074e67;
+  color: #fff;
+}
+/* line 14, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-coffee #g5-container .button-primary {
+  background: #C7A589;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-coffee #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #bd9574;
+  color: #fff;
+}
+/* line 14, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-ectoplasm #g5-container .button-primary {
+  background: #A3B745;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-ectoplasm #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #8fa13d;
+  color: #fff;
+}
+/* line 14, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-midnight #g5-container .button-primary {
+  background: #E14D43;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-midnight #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #dd3429;
+  color: #fff;
+}
+/* line 14, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-ocean #g5-container .button-primary {
+  background: #9EBAA0;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-ocean #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #8cad8e;
+  color: #fff;
+}
+/* line 14, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-sunrise #g5-container .button-primary {
+  background: #DD823B;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-sunrise #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #d57225;
+  color: #fff;
+}
+
+/* line 23, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+#g5-container .button {
+  height: auto;
+  box-shadow: none;
+  border: none;
 }
 
 /* line 2, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_sidebar.scss */
@@ -95,55 +166,295 @@ body.gantry5 #wpbody-content {
   margin-left: auto;
 }
 
-/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container [data-mode-indicator="production"] {
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-fresh #g5-container [data-mode-indicator="production"] {
   background-color: #0073AA;
 }
-/* line 9, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header dd, body.gantry5 #g5-container #main-header li {
-  margin-bottom: 0;
-}
-/* line 13, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header .g-content {
-  padding: 0 1.563rem;
-}
-/* line 17, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header .dev-mode-toggle {
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-fresh #g5-container #main-header .dev-mode-toggle {
   background: #005077;
 }
-/* line 20, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header .dev-mode-toggle a {
+/* line 13, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-fresh #g5-container #main-header .dev-mode-toggle a {
   background: #00a7f6;
 }
-/* line 25, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header .button-save {
+/* line 18, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-fresh #g5-container #main-header .button-save {
   background: #00a7f6;
   color: #fff;
 }
 /* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
-body.gantry5 #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-fresh #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
   background: #0092d8;
   color: #fff;
 }
-/* line 32, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header ul li:hover a {
+/* line 25, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-fresh #g5-container #main-header ul li:hover a {
   background: #006290;
 }
-/* line 37, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header ul li.active a {
+/* line 30, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-fresh #g5-container #main-header ul li.active a {
   background: #003f5d;
 }
-/* line 46, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container .inner-header {
-  background-color: #222;
-  color: #0073AA;
-}
-/* line 51, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container .settings-state {
+/* line 37, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-fresh #g5-container #main-header .settings-state {
   background: #0073AA;
   color: #fff;
 }
-/* line 56, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-light #g5-container [data-mode-indicator="production"] {
+  background-color: #888888;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-light #g5-container #main-header .dev-mode-toggle {
+  background: #6f6f6f;
+}
+/* line 13, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-light #g5-container #main-header .dev-mode-toggle a {
+  background: #aeaeae;
+}
+/* line 18, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-light #g5-container #main-header .button-save {
+  background: #aeaeae;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-light #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #9f9f9f;
+  color: #fff;
+}
+/* line 25, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-light #g5-container #main-header ul li:hover a {
+  background: #7b7b7b;
+}
+/* line 30, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-light #g5-container #main-header ul li.active a {
+  background: #626262;
+}
+/* line 37, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-light #g5-container #main-header .settings-state {
+  background: #888888;
+  color: #fff;
+}
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-blue #g5-container [data-mode-indicator="production"] {
+  background-color: #096484;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-blue #g5-container #main-header .dev-mode-toggle {
+  background: #064054;
+}
+/* line 13, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-blue #g5-container #main-header .dev-mode-toggle a {
+  background: #0e9acc;
+}
+/* line 18, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-blue #g5-container #main-header .button-save {
+  background: #0e9acc;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-blue #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #0c85af;
+  color: #fff;
+}
+/* line 25, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-blue #g5-container #main-header ul li:hover a {
+  background: #07526c;
+}
+/* line 30, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-blue #g5-container #main-header ul li.active a {
+  background: #042e3c;
+}
+/* line 37, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-blue #g5-container #main-header .settings-state {
+  background: #096484;
+  color: #fff;
+}
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-coffee #g5-container [data-mode-indicator="production"] {
+  background-color: #C7A589;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-coffee #g5-container #main-header .dev-mode-toggle {
+  background: #b78b66;
+}
+/* line 13, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-coffee #g5-container #main-header .dev-mode-toggle a {
+  background: #e0cdbd;
+}
+/* line 18, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-coffee #g5-container #main-header .button-save {
+  background: #e0cdbd;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-coffee #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #d6bda8;
+  color: #fff;
+}
+/* line 25, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-coffee #g5-container #main-header ul li:hover a {
+  background: #bf9878;
+}
+/* line 30, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-coffee #g5-container #main-header ul li.active a {
+  background: #ae7d55;
+}
+/* line 37, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-coffee #g5-container #main-header .settings-state {
+  background: #C7A589;
+  color: #fff;
+}
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ectoplasm #g5-container [data-mode-indicator="production"] {
+  background-color: #A3B745;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .dev-mode-toggle {
+  background: #829237;
+}
+/* line 13, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .dev-mode-toggle a {
+  background: #bfcd7b;
+}
+/* line 18, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .button-save {
+  background: #bfcd7b;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #b4c565;
+  color: #fff;
+}
+/* line 25, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ectoplasm #g5-container #main-header ul li:hover a {
+  background: #93a43e;
+}
+/* line 30, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ectoplasm #g5-container #main-header ul li.active a {
+  background: #727f30;
+}
+/* line 37, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .settings-state {
+  background: #A3B745;
+  color: #fff;
+}
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-midnight #g5-container [data-mode-indicator="production"] {
+  background-color: #E14D43;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-midnight #g5-container #main-header .dev-mode-toggle {
+  background: #d02c21;
+}
+/* line 13, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-midnight #g5-container #main-header .dev-mode-toggle a {
+  background: #ec8b85;
+}
+/* line 18, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-midnight #g5-container #main-header .button-save {
+  background: #ec8b85;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-midnight #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #e7726b;
+  color: #fff;
+}
+/* line 25, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-midnight #g5-container #main-header ul li:hover a {
+  background: #dd382d;
+}
+/* line 30, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-midnight #g5-container #main-header ul li.active a {
+  background: #ba281e;
+}
+/* line 37, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-midnight #g5-container #main-header .settings-state {
+  background: #E14D43;
+  color: #fff;
+}
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ocean #g5-container [data-mode-indicator="production"] {
+  background-color: #9EBAA0;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ocean #g5-container #main-header .dev-mode-toggle {
+  background: #80a583;
+}
+/* line 13, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ocean #g5-container #main-header .dev-mode-toggle a {
+  background: #cbdacc;
+}
+/* line 18, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ocean #g5-container #main-header .button-save {
+  background: #cbdacc;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-ocean #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #b9cdba;
+  color: #fff;
+}
+/* line 25, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ocean #g5-container #main-header ul li:hover a {
+  background: #8faf91;
+}
+/* line 30, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ocean #g5-container #main-header ul li.active a {
+  background: #719a74;
+}
+/* line 37, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-ocean #g5-container #main-header .settings-state {
+  background: #9EBAA0;
+  color: #fff;
+}
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-sunrise #g5-container [data-mode-indicator="production"] {
+  background-color: #DD823B;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-sunrise #g5-container #main-header .dev-mode-toggle {
+  background: #c36922;
+}
+/* line 13, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-sunrise #g5-container #main-header .dev-mode-toggle a {
+  background: #e8ac7c;
+}
+/* line 18, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-sunrise #g5-container #main-header .button-save {
+  background: #e8ac7c;
+  color: #fff;
+}
+/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-sunrise #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #e49b62;
+  color: #fff;
+}
+/* line 25, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-sunrise #g5-container #main-header ul li:hover a {
+  background: #d97426;
+}
+/* line 30, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-sunrise #g5-container #main-header ul li.active a {
+  background: #ad5d1e;
+}
+/* line 37, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-sunrise #g5-container #main-header .settings-state {
+  background: #DD823B;
+  color: #fff;
+}
+/* line 48, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5 #g5-container #main-header dd, body.gantry5 #g5-container #main-header li {
+  margin-bottom: 0;
+}
+/* line 52, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5 #g5-container #main-header .g-content {
+  padding: 0 1.563rem;
+}
+/* line 57, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
 body.gantry5 #g5-container .button.button-update {
   background: #633679;
   color: #fff;
@@ -153,7 +464,7 @@ body.gantry5 #g5-container .button.button-update:not(.disabled):not([disabled]):
   background: #522c64;
   color: #fff;
 }
-/* line 60, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+/* line 61, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
 body.gantry5 #g5-container .tooltip {
   position: static;
   opacity: 1;
@@ -161,17 +472,101 @@ body.gantry5 #g5-container .tooltip {
   font-size: inherit;
 }
 
-/* line 3, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
-body.gantry5 #footer a {
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-fresh #footer a {
   color: #0073AA;
-}
-/* line 8, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
-body.gantry5 #wpfooter {
-  background-color: #e7e7e7;
 }
 /* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
-body.gantry5 #wpfooter a {
+body.gantry5.admin-color-fresh #wpfooter {
+  background-color: #e7e7e7;
+}
+/* line 12, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-fresh #wpfooter a {
   color: #0073AA;
+}
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-light #footer a {
+  color: #888888;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-light #wpfooter {
+  background-color: #e7e7e7;
+}
+/* line 12, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-light #wpfooter a {
+  color: #888888;
+}
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-blue #footer a {
+  color: #096484;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-blue #wpfooter {
+  background-color: #e7e7e7;
+}
+/* line 12, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-blue #wpfooter a {
+  color: #096484;
+}
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-coffee #footer a {
+  color: #C7A589;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-coffee #wpfooter {
+  background-color: #e7e7e7;
+}
+/* line 12, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-coffee #wpfooter a {
+  color: #C7A589;
+}
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-ectoplasm #footer a {
+  color: #A3B745;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-ectoplasm #wpfooter {
+  background-color: #e7e7e7;
+}
+/* line 12, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-ectoplasm #wpfooter a {
+  color: #A3B745;
+}
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-midnight #footer a {
+  color: #E14D43;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-midnight #wpfooter {
+  background-color: #e7e7e7;
+}
+/* line 12, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-midnight #wpfooter a {
+  color: #E14D43;
+}
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-ocean #footer a {
+  color: #9EBAA0;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-ocean #wpfooter {
+  background-color: #e7e7e7;
+}
+/* line 12, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-ocean #wpfooter a {
+  color: #9EBAA0;
+}
+/* line 5, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-sunrise #footer a {
+  color: #DD823B;
+}
+/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-sunrise #wpfooter {
+  background-color: #e7e7e7;
+}
+/* line 12, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
+body.gantry5.admin-color-sunrise #wpfooter a {
+  color: #DD823B;
 }
 
 @media only all and (min-width: 60rem) {
@@ -187,9 +582,37 @@ body.gantry5 #wpfooter a {
   }
 }
 
-/* line 3, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_overview.scss */
-#g5-container .overview-header .theme-title {
+/* line 6, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_overview.scss */
+body.gantry5.admin-color-fresh #g5-container .overview-header .theme-title {
   color: #0073AA;
+}
+/* line 6, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_overview.scss */
+body.gantry5.admin-color-light #g5-container .overview-header .theme-title {
+  color: #888888;
+}
+/* line 6, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_overview.scss */
+body.gantry5.admin-color-blue #g5-container .overview-header .theme-title {
+  color: #096484;
+}
+/* line 6, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_overview.scss */
+body.gantry5.admin-color-coffee #g5-container .overview-header .theme-title {
+  color: #C7A589;
+}
+/* line 6, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_overview.scss */
+body.gantry5.admin-color-ectoplasm #g5-container .overview-header .theme-title {
+  color: #A3B745;
+}
+/* line 6, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_overview.scss */
+body.gantry5.admin-color-midnight #g5-container .overview-header .theme-title {
+  color: #E14D43;
+}
+/* line 6, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_overview.scss */
+body.gantry5.admin-color-ocean #g5-container .overview-header .theme-title {
+  color: #9EBAA0;
+}
+/* line 6, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_overview.scss */
+body.gantry5.admin-color-sunrise #g5-container .overview-header .theme-title {
+  color: #DD823B;
 }
 
 /* line 3, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_typography.scss */

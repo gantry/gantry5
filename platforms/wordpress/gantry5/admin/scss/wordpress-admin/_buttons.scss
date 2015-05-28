@@ -7,14 +7,22 @@
     }
 }
 
+body.gantry5 {
+    @each $preset, $core-accent in $wp-admin-presets {
+        &.admin-color-#{$preset} {
+            #g5-container {
+                .button-primary {
+                    @include button-color($core-accent);
+                }
+            }
+        }
+    }
+}
+
 #g5-container {
     .button {
         height: auto;
         box-shadow: none;
         border: none;
     }
-    
-    .button-primary {
-	    @include button-color($core-accent);
-	}
 }

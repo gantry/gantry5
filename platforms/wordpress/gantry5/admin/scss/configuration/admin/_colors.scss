@@ -1,5 +1,5 @@
 // Core
-$core-accent:                   #0073AA;
+$wp-admin-presets:              (fresh: #0073AA, light: #888888, "blue": #096484, coffee: #C7A589, ectoplasm: #A3B745, midnight: #E14D43, ocean: #9EBAA0, sunrise: #DD823B);
 $white:							#fff;
 $light-gray:					#ddd;
 
@@ -9,7 +9,6 @@ $body-bg:                       #F1F1F1;
 // Headers
 $main-header-text:				#fff;
 $inner-header-bg:				#222;
-$inner-header-text:				$core-accent;
 $update-header-bg:				#8F4DAE;
 
 // Inputs
