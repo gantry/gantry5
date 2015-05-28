@@ -2361,6 +2361,7 @@ ready(function() {
         if (!element.PopoverDefined) {
             element.getPopover({
                 type: 'async',
+                width: '500',
                 url: parseAjaxURI(element.data('lm-switcher') + getAjaxSuffix()),
                 allowElementsClick: '.g-tabs a'
             });
@@ -2591,6 +2592,7 @@ module.exports = {
     history: lmhistory,
     savestate: savestate
 };
+
 },{"../ui":44,"../ui/popover":46,"../utils/field-validation":55,"../utils/get-ajax-suffix":57,"../utils/get-ajax-url":58,"../utils/history":60,"../utils/save-state":62,"./builder":20,"./history":22,"./layoutmanager":24,"agent":63,"elements/attributes":85,"elements/domready":88,"elements/zen":114,"mout/array/contains":144,"mout/collection/forEach":165,"mout/collection/size":167,"mout/string/trim":237}],24:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),

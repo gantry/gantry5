@@ -104,6 +104,7 @@
 }
 #g5-container #g-page-surround {
   min-height: 100vh;
+  position: relative;
 }
 #g5-container article,
 #g5-container aside,
@@ -1512,12 +1513,18 @@
 #g5-container .g-offcanvas-open #g-offcanvas {
   display: block;
 }
+#g5-container .g-offcanvas-left #g-page-surround {
+  left: 0;
+}
 #g5-container .g-offcanvas-right #g-offcanvas {
   left: inherit;
 }
 #g5-container .g-offcanvas-right .g-offcanvas-toggle {
   left: inherit;
   right: 0.7rem;
+}
+#g5-container .g-offcanvas-right #g-page-surround {
+  right: 0;
 }
 
 #g5-container .colorpicker, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-thumb.g-image {
