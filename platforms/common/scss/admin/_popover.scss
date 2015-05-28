@@ -49,7 +49,7 @@ $close-color:               #000;
         left: 0;
         z-index: 1020;
         display: none;
-        width: $popover-width;
+        //width: $popover-width; // this is not accurate when using auto width
         min-height:$popover-min-height;
         padding: 1px;
         text-align: left;
@@ -91,7 +91,7 @@ $close-color:               #000;
             ul, li {
                 @extend %list-reset;
             }
-            
+
             li {
                 padding: 4px;
                 text-overflow: ellipsis;

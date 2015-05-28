@@ -145,19 +145,12 @@ var Popover = new prime({
     },
 
     displayContent: function() {
-        var elementPos    = {},
-            target        = this.getTarget().attribute('class', null).addClass(this.options.mainClass),
+        var elementPos = this.element.position(),
+            target = this.getTarget().attribute('class', null).addClass(this.options.mainClass),
             targetContent = this.getContentElement(),
             targetWidth, targetHeight, placement;
 
         this.element.emit('show.popover', this);
-
-        elementPos = {
-            top: this.element[0].offsetTop,
-            left: this.element[0].offsetLeft,
-            width: this.element[0].offsetWidth,
-            height: this.element[0].offsetHeight
-        };
 
         if (this.options.width !== 'auto') {
             target.style({ width: this.options.width });
@@ -179,7 +172,7 @@ var Popover = new prime({
         targetHeight = target[0].offsetHeight;
         placement = this.getPlacement(elementPos, targetHeight);
         if (this.options.targetEvents) { this.initTargetEvents(); }
-        var positionInfo = this.getTargetPositin(elementPos, placement, targetWidth, targetHeight);
+        var positionInfo = this.getTargetPosition(elementPos, placement, targetWidth, targetHeight);
         this.$target.style(positionInfo.position).addClass(placement).addClass('in');
 
         if (this.options.type === 'iframe') {
@@ -361,15 +354,15 @@ var Popover = new prime({
     getPlacement: function(pos, targetHeight) {
         var
             placement,
-            de           = document.documentElement,
-            db           = document.body,
-            clientWidth  = de.clientWidth,
+            de = document.documentElement,
+            db = document.body,
+            clientWidth = de.clientWidth,
             clientHeight = de.clientHeight,
-            scrollTop    = Math.max(db.scrollTop, de.scrollTop),
-            scrollLeft   = Math.max(db.scrollLeft, de.scrollLeft),
-            pageX        = Math.max(0, pos.left - scrollLeft),
-            pageY        = Math.max(0, pos.top - scrollTop),
-            arrowSize    = 20;
+            scrollTop = Math.max(db.scrollTop, de.scrollTop),
+            scrollLeft = Math.max(db.scrollLeft, de.scrollLeft),
+            pageX = Math.max(0, pos.left - scrollLeft),
+            pageY = Math.max(0, pos.top - scrollTop),
+            arrowSize = 20;
 
         // if placement equals auto，caculate the placement by element information;
         if (typeof(this.options.placement) === 'function') {
@@ -410,15 +403,16 @@ var Popover = new prime({
         return placement;
     },
 
-    getTargetPositin: function(elementPos, placement, targetWidth, targetHeight) {
-        var pos         = elementPos,
-            elementW    = this.element[0].offsetWidth,
-            elementH    = this.element[0].offsetHeight,
-            position    = {},
+    getTargetPosition: function(elementPos, placement, targetWidth, targetHeight) {
+        var pos = elementPos,
+            elementW = this.element[0].offsetWidth,
+            elementH = this.element[0].offsetHeight,
+            position = {},
             arrowOffset = null,
-            arrowSize   = this.options.arrow ? 28 : 0,
-            fixedW      = elementW < arrowSize + 10 ? arrowSize : 0,
-            fixedH      = elementH < arrowSize + 10 ? arrowSize : 0;
+            arrowSize = this.options.arrow ? 28 : 0,
+            fixedW = elementW < arrowSize + 10 ? arrowSize : 0,
+            fixedH = elementH < arrowSize + 10 ? arrowSize : 0;
+
         switch (placement) {
             case 'bottom':
                 position = {
@@ -538,34 +532,26 @@ $.implement({
     },
 
     position: function() {
-        var node    = this[0], box = {
+        var node = this[0],
+            ct = $('#g5-container')[0].getBoundingClientRect(),
+            box = {
                 left: 0,
                 right: 0,
                 top: 0,
                 bottom: 0
-            },
-            win     = window, doc = node.ownerDocument,
-            docElem = doc.documentElement,
-            body    = doc.body;
+            };
 
         if (typeof node.getBoundingClientRect !== "undefined") {
             box = node.getBoundingClientRect();
         }
 
-        var clientTop  = docElem.clientTop || body.clientTop || 0,
-            clientLeft = docElem.clientLeft || body.clientLeft || 0,
-            scrollTop  = win.pageYOffset || docElem.scrollTop,
-            scrollLeft = win.pageXOffset || docElem.scrollLeft,
-            dx         = scrollLeft - clientLeft,
-            dy         = scrollTop - clientTop;
-
         return {
-            x: box.left + dx,
-            left: box.left + dx,
-            y: box.top + dy,
-            top: box.top + dy,
-            right: box.right + dx,
-            bottom: box.bottom + dy,
+            x: box.left - ct.left,
+            left: box.left - ct.left,
+            y: box.top - ct.top,
+            top: box.top - ct.top,
+            right: box.right - ct.right,
+            bottom: box.bottom - ct.bottom,
             width: box.right - box.left,
             height: box.bottom - box.top
         };
