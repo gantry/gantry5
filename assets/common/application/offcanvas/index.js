@@ -237,14 +237,14 @@ var Offcanvas = new prime({
     _setTransition: function() {
         var panel = this.panel[0];
 
-        panel.style[prefix.css + 'transition'] = panel.style.transition = prefix.css + 'transform ' + this.options.duration + 'ms ' + this.options.effect;
+        //panel.style[prefix.css + 'transition'] = panel.style.transition = prefix.css + 'transform ' + this.options.duration + 'ms ' + this.options.effect;
     },
 
     _translateXTo: function(x) {
         var panel = this.panel[0];
         this.offset.x.current = x;
 
-        panel.style[prefix.css + 'transform'] = panel.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+        //panel.style[prefix.css + 'transform'] = panel.style.transform = 'translate3d(' + x + 'px, 0, 0)';
     },
 
     _bodyScroll: function() {
@@ -312,7 +312,7 @@ var Offcanvas = new prime({
 
             overlayOpacity = mapNumber(Math.abs(translateX), 0, this.options.padding, 0, 1);
 
-            this.panel[0].style[prefix.css + 'transform'] = this.panel[0].style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+            //this.panel[0].style[prefix.css + 'transform'] = this.panel[0].style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
             this.overlay[0].style.opacity = overlayOpacity;
 
             this.moved = true;

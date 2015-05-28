@@ -57,6 +57,8 @@ body {
 
 #g-page-surround {
   min-height: 100vh;
+  position: relative;
+  margin: 0;
 }
 
 article,
