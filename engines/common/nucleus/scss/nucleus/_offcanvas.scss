@@ -47,6 +47,12 @@ body .g-offcanvas-hide {
     @extend .hide;
 }
 
+.g-offcanvas-left {
+    #g-page-surround {
+        left: 0;
+    }
+}
+
 // Right Positioning
 .g-offcanvas-right {
 	#g-offcanvas {
@@ -56,4 +62,7 @@ body .g-offcanvas-hide {
 		left: inherit;
 		right: 0.7rem;
 	}
+    #g-page-surround {
+        right: 0;
+    }
 }
