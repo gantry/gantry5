@@ -162,19 +162,19 @@
             }
         }
     }
-}
 
-.g5-dialog-loading-spinner {
-    @include animation(rotate 0.7s linear infinite);
-    box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
-    position: fixed;
-    z-index: 1112;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 2em;
-    width: 2em;
-    background: white;
+    .g5-dialog-loading-spinner {
+        @include animation(rotate 0.7s linear infinite);
+        box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
+        position: fixed;
+        z-index: 100000;
+        margin: auto;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 2em;
+        width: 2em;
+        background: white;
+    }
 }

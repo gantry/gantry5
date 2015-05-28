@@ -8108,7 +8108,7 @@ var Modal = new prime({
 
     showLoading: function() {
         this.hideLoading();
-        return $('body').appendChild(zen('div.g5-dialog-loading-spinner.' + this.options.className));
+        return $('#g5-container').appendChild(zen('div.g5-dialog-loading-spinner.' + this.options.className));
     },
 
     hideLoading: function() {
@@ -8131,6 +8131,7 @@ var Modal = new prime({
 });
 
 module.exports = Modal;
+
 },{"../utils/elements.utils":53,"agent":63,"elements/domready":88,"elements/zen":114,"mout/array/forEach":152,"mout/array/last":157,"mout/array/map":158,"mout/function/bind":168,"mout/object/merge":209,"prime":258,"prime-util/prime/bound":254,"prime-util/prime/options":255,"prime/emitter":257,"prime/map":259}],46:[function(require,module,exports){
 "use strict";
 
