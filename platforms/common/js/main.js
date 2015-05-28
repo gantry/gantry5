@@ -7191,10 +7191,11 @@ ready(function() {
         if (card && card.hasClass('g-collapsed')) {
             card.removeClass('g-collapsed');
             element.removeClass('g-collapsed-main');
+            /* for animations
             panel.style({
                 overflow: 'hidden',
                 height: 0
-            });
+            });*/
         }
 
         var slide = function(override) {
@@ -7216,7 +7217,10 @@ ready(function() {
             slide(collapsed);
         } else {
             element.removeClass('g-collapsed-main');
-            panel.removeClass('g-collapsed')[collapsed ? 'slideDown' : 'slideUp'](slide);
+            // for animations
+            // panel.removeClass('g-collapsed')[collapsed ? 'slideDown' : 'slideUp'](slide);
+            panel.removeClass('g-collapsed')[collapsed ? 'removeClass' : 'addClass']('g-collapsed');
+            slide(collapsed);
         }
 
         element.gFastCollapse = false;
@@ -7274,6 +7278,7 @@ ready(function() {
 });
 
 module.exports = loadFromStorage;
+
 },{"elements":90,"elements/domready":88,"mout/object/forOwn":204,"mout/string/trim":237}],41:[function(require,module,exports){
 "use strict";
 
