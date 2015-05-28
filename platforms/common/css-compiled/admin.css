@@ -2373,6 +2373,8 @@ body.g-prime {
   -webkit-transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
   -moz-transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
   transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   /*@include linear-gradient(90deg, transparentize($white, 0.7) 0%, transparentize($white, 0.7) 150px, transparentize($white, 0.4) 150px, transparentize($white, 0.4) 100%);*/
 }
 #g5-container .settings-block .settings-param-field {
