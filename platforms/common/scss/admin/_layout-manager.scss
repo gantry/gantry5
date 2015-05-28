@@ -529,7 +529,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     /* deletion */
     #trash {
         position: fixed;
-        top: -100px;
+        top: 0; // 0 = flushed to the top of viewport, use + px for offset, ie. 30px
         right: 0;
         left: 0;
         z-index: 1200;
@@ -538,6 +538,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         color: $white;
         padding: $content-padding;
         background: rgba(255,255,255,0.8);
+        display: none;
 
         .trash-zone {
             background-color: $red;

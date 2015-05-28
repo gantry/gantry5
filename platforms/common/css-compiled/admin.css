@@ -1878,17 +1878,18 @@ body.g-prime {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  position: relative;
 }
-/* line 25, platforms/common/scss/admin/_core.scss */
+/* line 26, platforms/common/scss/admin/_core.scss */
 #g5-container a {
   color: #439A86;
 }
-/* line 29, platforms/common/scss/admin/_core.scss */
+/* line 30, platforms/common/scss/admin/_core.scss */
 #g5-container .g-block {
   position: relative;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 29, platforms/common/scss/admin/_core.scss */
+  /* line 30, platforms/common/scss/admin/_core.scss */
   #g5-container .g-block {
     -webkit-box-flex: 0;
     -moz-box-flex: 0;
@@ -1899,37 +1900,37 @@ body.g-prime {
     flex: 0 100%;
   }
 }
-/* line 36, platforms/common/scss/admin/_core.scss */
+/* line 37, platforms/common/scss/admin/_core.scss */
 #g5-container .g-content {
   margin: 0.625rem;
   padding: 0.938rem;
 }
-/* line 41, platforms/common/scss/admin/_core.scss */
+/* line 42, platforms/common/scss/admin/_core.scss */
 #g5-container .inner-container {
   margin: 1.5rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   color: #666;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 41, platforms/common/scss/admin/_core.scss */
+  /* line 42, platforms/common/scss/admin/_core.scss */
   #g5-container .inner-container {
     margin: 0;
   }
 }
-/* line 52, platforms/common/scss/admin/_core.scss */
+/* line 53, platforms/common/scss/admin/_core.scss */
 #g5-container .fa-spin-fast {
   -webkit-animation: fa-spin 1s infinite linear;
   -moz-animation: fa-spin 1s infinite linear;
   animation: fa-spin 1s infinite linear;
 }
-/* line 57, platforms/common/scss/admin/_core.scss */
+/* line 58, platforms/common/scss/admin/_core.scss */
 #g5-container .changes-indicator {
   opacity: 0;
   -webkit-animation: pulsate 1s ease-out infinite;
   -moz-animation: pulsate 1s ease-out infinite;
   animation: pulsate 1s ease-out infinite;
 }
-/* line 65, platforms/common/scss/admin/_core.scss */
+/* line 66, platforms/common/scss/admin/_core.scss */
 #g5-container .g-collapsed .g-collapse i {
   -webkit-transform: rotate(180deg);
   -moz-transform: rotate(180deg);
@@ -1937,12 +1938,12 @@ body.g-prime {
   -o-transform: rotate(180deg);
   transform: rotate(180deg);
 }
-/* line 70, platforms/common/scss/admin/_core.scss */
+/* line 71, platforms/common/scss/admin/_core.scss */
 #g5-container .g-collapsed.card .inner-params, #g5-container .g-collapsed:not(.card) {
   overflow: hidden;
   height: 0;
 }
-/* line 77, platforms/common/scss/admin/_core.scss */
+/* line 78, platforms/common/scss/admin/_core.scss */
 #g5-container .badge, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span {
   border-radius: 100px;
   background-color: #eee;
@@ -1950,7 +1951,7 @@ body.g-prime {
   padding: 3px 6px;
   text-shadow: none;
 }
-/* line 86, platforms/common/scss/admin/_core.scss */
+/* line 87, platforms/common/scss/admin/_core.scss */
 #g5-container .cards-wrapper {
   margin: -10px 0;
   display: block;
@@ -1960,14 +1961,14 @@ body.g-prime {
   column-count: 2;
 }
 @media only all and (max-width: 47.938rem) {
-  /* line 86, platforms/common/scss/admin/_core.scss */
+  /* line 87, platforms/common/scss/admin/_core.scss */
   #g5-container .cards-wrapper {
     -webkit-column-count: 1;
     -moz-column-count: 1;
     column-count: 1;
   }
 }
-/* line 97, platforms/common/scss/admin/_core.scss */
+/* line 98, platforms/common/scss/admin/_core.scss */
 #g5-container .card {
   display: inline-block;
   background: #fff;
@@ -1980,20 +1981,20 @@ body.g-prime {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
-/* line 110, platforms/common/scss/admin/_core.scss */
+/* line 111, platforms/common/scss/admin/_core.scss */
 #g5-container .card.full-width {
   margin: 0;
   display: block;
 }
-/* line 115, platforms/common/scss/admin/_core.scss */
+/* line 116, platforms/common/scss/admin/_core.scss */
 #g5-container .card h4 {
   margin: 0;
 }
-/* line 118, platforms/common/scss/admin/_core.scss */
+/* line 119, platforms/common/scss/admin/_core.scss */
 #g5-container .card h4 > * {
   vertical-align: middle;
 }
-/* line 123, platforms/common/scss/admin/_core.scss */
+/* line 124, platforms/common/scss/admin/_core.scss */
 #g5-container .card h4[data-g-collapse] .g-collapse {
   cursor: pointer;
   display: inline-block;
@@ -2004,17 +2005,17 @@ body.g-prime {
   padding: 2px;
   margin-right: 5px;
 }
-/* line 134, platforms/common/scss/admin/_core.scss */
+/* line 135, platforms/common/scss/admin/_core.scss */
 #g5-container .card h4[data-g-collapse] .g-collapse:hover:before {
   bottom: 1.65rem;
   left: 0.25rem;
 }
-/* line 139, platforms/common/scss/admin/_core.scss */
+/* line 140, platforms/common/scss/admin/_core.scss */
 #g5-container .card h4[data-g-collapse] .g-collapse:hover:after {
   left: -0.5rem;
   bottom: 2rem;
 }
-/* line 146, platforms/common/scss/admin/_core.scss */
+/* line 147, platforms/common/scss/admin/_core.scss */
 #g5-container .card h4 .enabler {
   float: right;
 }
@@ -2077,43 +2078,43 @@ body.g-prime {
 #g5-container .card .enabler [type="radio"]:checked + .toggle .knob {
   opacity: 1;
 }
-/* line 155, platforms/common/scss/admin/_core.scss */
+/* line 156, platforms/common/scss/admin/_core.scss */
 #g5-container .card .inner-params > :first-child:not(.alert) {
   margin: 0.625rem 0 0;
   padding-top: 1.25rem;
   border-top: 1px solid #eee;
 }
-/* line 161, platforms/common/scss/admin/_core.scss */
+/* line 162, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-id {
   text-align: center;
   margin-bottom: 10px;
   font-weight: 500;
 }
-/* line 167, platforms/common/scss/admin/_core.scss */
+/* line 168, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-name {
   text-align: center;
 }
-/* line 172, platforms/common/scss/admin/_core.scss */
+/* line 173, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-screenshot img {
   margin: 0 auto 10px auto;
   display: block;
 }
-/* line 177, platforms/common/scss/admin/_core.scss */
+/* line 178, platforms/common/scss/admin/_core.scss */
 #g5-container .card .theme-screenshot a {
   display: block;
 }
-/* line 183, platforms/common/scss/admin/_core.scss */
+/* line 184, platforms/common/scss/admin/_core.scss */
 #g5-container .themes .card {
   max-width: 300px;
 }
-/* line 188, platforms/common/scss/admin/_core.scss */
+/* line 189, platforms/common/scss/admin/_core.scss */
 #g5-container .g-footer-actions {
   padding: 1rem 0;
   margin-top: 1rem;
   border-top: 1px solid #ddd;
 }
 
-/* line 197, platforms/common/scss/admin/_core.scss */
+/* line 198, platforms/common/scss/admin/_core.scss */
 #footer {
   background-color: #e7e7e7;
   padding: 1em 0 3rem;
@@ -2128,21 +2129,21 @@ body.g-prime {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* line 211, platforms/common/scss/admin/_core.scss */
+/* line 212, platforms/common/scss/admin/_core.scss */
 #footer .g-version, #footer .g-version-date {
   color: #8F4DAE;
 }
-/* line 215, platforms/common/scss/admin/_core.scss */
+/* line 216, platforms/common/scss/admin/_core.scss */
 #footer a {
   color: #439A86 !important;
   text-decoration: none;
 }
-/* line 218, platforms/common/scss/admin/_core.scss */
+/* line 219, platforms/common/scss/admin/_core.scss */
 #footer a:hover {
   color: #245348 !important;
 }
 
-/* line 225, platforms/common/scss/admin/_core.scss */
+/* line 226, platforms/common/scss/admin/_core.scss */
 .Whoops.container {
   position: inherit;
 }
@@ -2210,24 +2211,24 @@ body.g-prime {
     opacity: 0;
   }
 }
-/* line 247, platforms/common/scss/admin/_core.scss */
+/* line 248, platforms/common/scss/admin/_core.scss */
 .g-tooltip {
   display: inline;
   position: relative;
 }
-/* line 251, platforms/common/scss/admin/_core.scss */
+/* line 252, platforms/common/scss/admin/_core.scss */
 .g-tooltip:before, .g-tooltip:after {
   font-size: 1rem;
   line-height: 1.5rem;
 }
 
-/* line 257, platforms/common/scss/admin/_core.scss */
+/* line 258, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover, .g-tooltip.g-tooltip-force {
   color: #439A86;
   text-decoration: none;
 }
 
-/* line 262, platforms/common/scss/admin/_core.scss */
+/* line 263, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover:after, .g-tooltip.g-tooltip-force:after {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 0.1875rem;
@@ -2243,7 +2244,7 @@ body.g-prime {
   font-size: 0.8rem;
 }
 
-/* line 277, platforms/common/scss/admin/_core.scss */
+/* line 278, platforms/common/scss/admin/_core.scss */
 .g-tooltip:hover:before, .g-tooltip.g-tooltip-force:before {
   border: solid;
   border-color: rgba(0, 0, 0, 0.8) transparent;
@@ -2256,46 +2257,46 @@ body.g-prime {
   z-index: 100;
 }
 
-/* line 289, platforms/common/scss/admin/_core.scss */
+/* line 290, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-right:hover:after, .g-tooltip.g-tooltip-right.g-tooltip-force:after {
   left: inherit;
   right: 0;
 }
 
-/* line 294, platforms/common/scss/admin/_core.scss */
+/* line 295, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-right:hover:before, .g-tooltip.g-tooltip-right.g-tooltip-force:before {
   left: inherit;
   right: 1rem;
 }
 
-/* line 299, platforms/common/scss/admin/_core.scss */
+/* line 300, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-bottom:hover:after, .g-tooltip.g-tooltip-bottom.g-tooltip-force:after {
   bottom: auto;
 }
 
-/* line 303, platforms/common/scss/admin/_core.scss */
+/* line 304, platforms/common/scss/admin/_core.scss */
 .g-tooltip.g-tooltip-bottom:hover:before, .g-tooltip.g-tooltip-bottom.g-tooltip-force:before {
   border-width: 0 .4rem .4rem .4rem;
   bottom: -0.1rem;
 }
 
-/* line 310, platforms/common/scss/admin/_core.scss */
+/* line 311, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:after {
   bottom: 3rem;
 }
 
-/* line 314, platforms/common/scss/admin/_core.scss */
+/* line 315, platforms/common/scss/admin/_core.scss */
 .button-save.g-tooltip:hover:before {
   bottom: 2.6rem;
 }
 
-/* line 319, platforms/common/scss/admin/_core.scss */
+/* line 320, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:before {
   right: 7px;
   bottom: 1.5rem;
 }
 
-/* line 323, platforms/common/scss/admin/_core.scss */
+/* line 324, platforms/common/scss/admin/_core.scss */
 .section-actions .g-tooltip:hover:after {
   bottom: 1.9rem;
 }
@@ -4364,7 +4365,7 @@ body.g-prime {
 /* line 530, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container #trash {
   position: fixed;
-  top: -100px;
+  top: 0;
   right: 0;
   left: 0;
   z-index: 1200;
@@ -4373,8 +4374,9 @@ body.g-prime {
   color: #fff;
   padding: 0.938rem;
   background: rgba(255, 255, 255, 0.8);
+  display: none;
 }
-/* line 542, platforms/common/scss/admin/_layout-manager.scss */
+/* line 543, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container #trash .trash-zone {
   background-color: #ed5565;
   font-size: 2rem;
@@ -4385,65 +4387,65 @@ body.g-prime {
   margin: 0 auto;
   font-weight: 300;
 }
-/* line 552, platforms/common/scss/admin/_layout-manager.scss */
+/* line 553, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container #trash span {
   font-size: 0.8rem;
   color: #666;
   text-shadow: 0 0 1px #fff;
 }
-/* line 559, platforms/common/scss/admin/_layout-manager.scss */
+/* line 560, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-dialog .g-tabs, #g5-container .g5-popover-content .g-tabs {
   margin-right: 0 !important;
 }
-/* line 564, platforms/common/scss/admin/_layout-manager.scss */
+/* line 565, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul {
   background-color: #DADADA;
   margin: -1rem -1rem 1rem !important;
   border-radius: 0.1875rem 0.1875rem 0 0;
 }
-/* line 569, platforms/common/scss/admin/_layout-manager.scss */
+/* line 570, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-dialog .g-tabs ul li:first-child, #g5-container .g5-popover-content .g-tabs ul li:first-child {
   border-radius: 0.1875rem 0 0 0;
 }
-/* line 576, platforms/common/scss/admin/_layout-manager.scss */
+/* line 577, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-popover-content .g-tabs ul {
   margin: -0.55rem -0.9rem 1rem !important;
   background-color: #eee;
 }
-/* line 580, platforms/common/scss/admin/_layout-manager.scss */
+/* line 581, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-popover-content .g-tabs ul li.active {
   background-color: #fff !important;
 }
-/* line 584, platforms/common/scss/admin/_layout-manager.scss */
+/* line 585, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-popover-content .g-tabs ul li:hover:not(.active) {
   background-color: #e1e1e1 !important;
 }
-/* line 590, platforms/common/scss/admin/_layout-manager.scss */
+/* line 591, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-dialog .g-pane, #g5-container .g5-popover-content .g-pane {
   display: none;
 }
-/* line 593, platforms/common/scss/admin/_layout-manager.scss */
+/* line 594, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-dialog .g-pane.active, #g5-container .g5-popover-content .g-pane.active {
   display: block;
 }
-/* line 597, platforms/common/scss/admin/_layout-manager.scss */
+/* line 598, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-dialog .g-pane li[data-switch], #g5-container .g5-popover-content .g-pane li[data-switch] {
   padding: 0.4rem;
 }
-/* line 600, platforms/common/scss/admin/_layout-manager.scss */
+/* line 601, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-dialog .g-pane li[data-switch] i, #g5-container .g5-popover-content .g-pane li[data-switch] i {
   color: #aaa;
 }
-/* line 604, platforms/common/scss/admin/_layout-manager.scss */
+/* line 605, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-dialog .g-pane li[data-switch]:not(.g-switch-title), #g5-container .g5-popover-content .g-pane li[data-switch]:not(.g-switch-title) {
   cursor: pointer;
 }
-/* line 608, platforms/common/scss/admin/_layout-manager.scss */
+/* line 609, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-dialog .g-pane li[data-switch]:hover:not(.g-switch-title), #g5-container .g5-popover-content .g-pane li[data-switch]:hover:not(.g-switch-title) {
   background-color: #eee;
   border-radius: 0.1875rem;
 }
-/* line 616, platforms/common/scss/admin/_layout-manager.scss */
+/* line 617, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-popover-content .g-pane .g-switch-title {
   padding-bottom: 7px;
   font-weight: bold;
@@ -4451,12 +4453,12 @@ body.g-prime {
   color: #ccc;
   text-transform: uppercase;
 }
-/* line 624, platforms/common/scss/admin/_layout-manager.scss */
+/* line 625, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-popover-content .g-pane ul {
   word-wrap: break-word;
   width: 50%;
 }
-/* line 631, platforms/common/scss/admin/_layout-manager.scss */
+/* line 632, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g-preserve-particles {
   padding-bottom: 0.5rem;
   font-size: 0.8rem;
@@ -4464,26 +4466,26 @@ body.g-prime {
   border-bottom: 1px solid #f3f3f3;
   margin-bottom: 0.5rem;
 }
-/* line 638, platforms/common/scss/admin/_layout-manager.scss */
+/* line 639, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g-preserve-particles label {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-/* line 643, platforms/common/scss/admin/_layout-manager.scss */
+/* line 644, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .sidebar-block {
   margin: -1.563rem 1.563rem -1.563rem -1.563rem;
   padding: 1.563rem 0.938rem;
   background-color: #ebebeb;
   border-right: 1px solid #e3e3e3;
 }
-/* line 658, platforms/common/scss/admin/_layout-manager.scss */
+/* line 659, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker ul, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-modules-picker ul {
   padding: 1px;
   margin-bottom: 1em;
 }
-/* line 663, platforms/common/scss/admin/_layout-manager.scss */
+/* line 664, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker li {
   padding: 0.469rem;
   margin: 1px 0;
@@ -4491,64 +4493,64 @@ body.g-prime {
   border-radius: 0.1875rem;
   cursor: move;
 }
-/* line 670, platforms/common/scss/admin/_layout-manager.scss */
+/* line 671, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker li[data-lm-nodrag], #g5-container .g5-lm-particles-picker li[data-mm-nodrag], #g5-container .g5-mm-particles-picker li[data-lm-nodrag], #g5-container .g5-mm-particles-picker li[data-mm-nodrag], #g5-container .g5-mm-modules-picker li[data-lm-nodrag], #g5-container .g5-mm-modules-picker li[data-mm-nodrag] {
   cursor: default;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-  /* line 663, platforms/common/scss/admin/_layout-manager.scss */
+  /* line 664, platforms/common/scss/admin/_layout-manager.scss */
   #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker li {
     font-size: 0.8rem;
   }
 }
-/* line 678, platforms/common/scss/admin/_layout-manager.scss */
+/* line 679, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker li:first-child, #g5-container .g5-mm-particles-picker li:first-child, #g5-container .g5-mm-modules-picker li:first-child {
   margin-top: 0;
 }
-/* line 682, platforms/common/scss/admin/_layout-manager.scss */
+/* line 683, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker li:last-child, #g5-container .g5-mm-particles-picker li:last-child, #g5-container .g5-mm-modules-picker li:last-child {
   margin-bottom: 0;
 }
-/* line 686, platforms/common/scss/admin/_layout-manager.scss */
+/* line 687, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker li[data-lm-blocktype="spacer"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="spacer"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="spacer"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="spacer"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="spacer"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="spacer"] {
   background-color: #eee;
   color: #666;
   border: 1px solid #d0d0d0;
 }
-/* line 692, platforms/common/scss/admin/_layout-manager.scss */
+/* line 693, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-lm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], #g5-container .g5-mm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-mm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], #g5-container .g5-mm-modules-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-mm-modules-picker li.g5-mm-particle-spacer[data-mm-disabled] {
   color: #fff;
 }
-/* line 696, platforms/common/scss/admin/_layout-manager.scss */
+/* line 697, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker li[data-lm-blocktype="position"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="position"], #g5-container .g5-lm-particles-picker li[data-lm-blocktype="module"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="module"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="position"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="position"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="module"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="module"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="position"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="position"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="module"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="module"] {
   color: #fff;
   background-color: #359AD9;
 }
-/* line 702, platforms/common/scss/admin/_layout-manager.scss */
+/* line 703, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker li[data-lm-blocktype="particle"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="particle"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="particle"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="particle"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="particle"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="particle"] {
   color: #fff;
   background-color: #2A82B7;
 }
-/* line 707, platforms/common/scss/admin/_layout-manager.scss */
+/* line 708, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker li[data-lm-blocktype="pagecontent"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="pagecontent"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="pagecontent"] {
   color: #fff;
   background-color: #20A085;
 }
-/* line 712, platforms/common/scss/admin/_layout-manager.scss */
+/* line 713, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker li[data-lm-blocktype="atom"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="atom"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="atom"] {
   color: #fff;
   background-color: #9055AF;
 }
-/* line 718, platforms/common/scss/admin/_layout-manager.scss */
+/* line 719, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker .settings-block, #g5-container .g5-mm-particles-picker .settings-block, #g5-container .g5-mm-modules-picker .settings-block {
   width: 100% !important;
 }
-/* line 722, platforms/common/scss/admin/_layout-manager.scss */
+/* line 723, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker .search, #g5-container .g5-mm-particles-picker .search, #g5-container .g5-mm-modules-picker .search {
   position: relative;
   margin-bottom: 10px;
 }
-/* line 726, platforms/common/scss/admin/_layout-manager.scss */
+/* line 727, platforms/common/scss/admin/_layout-manager.scss */
 #g5-container .g5-lm-particles-picker .search i, #g5-container .g5-mm-particles-picker .search i, #g5-container .g5-mm-modules-picker .search i {
   position: absolute;
   right: 10px;
@@ -5720,7 +5722,7 @@ body.g-prime {
   border-bottom: 0;
 }
 /* line 164, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover > .arrow, #g5-container .g5-popover > .arrow:after {
+#g5-container .g5-popover > .g-arrow, #g5-container .g5-popover > .g-arrow:after {
   position: absolute;
   display: block;
   width: 0;
@@ -5729,16 +5731,16 @@ body.g-prime {
   border-style: solid;
 }
 /* line 174, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover > .arrow {
+#g5-container .g5-popover > .g-arrow {
   border-width: 11px;
 }
 /* line 177, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover > .arrow:after {
+#g5-container .g5-popover > .g-arrow:after {
   border-width: 10px;
   content: "";
 }
 /* line 183, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover.top > .arrow, #g5-container .g5-popover.top-right > .arrow, #g5-container .g5-popover.top-left > .arrow {
+#g5-container .g5-popover.top > .g-arrow, #g5-container .g5-popover.top-right > .g-arrow, #g5-container .g5-popover.top-left > .g-arrow {
   bottom: -11px;
   left: 50%;
   margin-left: -11px;
@@ -5747,7 +5749,7 @@ body.g-prime {
   border-bottom-width: 0;
 }
 /* line 193, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover.top > .arrow:after, #g5-container .g5-popover.top-right > .arrow:after, #g5-container .g5-popover.top-left > .arrow:after {
+#g5-container .g5-popover.top > .g-arrow:after, #g5-container .g5-popover.top-right > .g-arrow:after, #g5-container .g5-popover.top-left > .g-arrow:after {
   content: " ";
   bottom: 1px;
   margin-left: -10px;
@@ -5755,7 +5757,7 @@ body.g-prime {
   border-bottom-width: 0;
 }
 /* line 201, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover.right > .arrow, #g5-container .g5-popover.right-top > .arrow, #g5-container .g5-popover.right-bottom > .arrow {
+#g5-container .g5-popover.right > .g-arrow, #g5-container .g5-popover.right-top > .g-arrow, #g5-container .g5-popover.right-bottom > .g-arrow {
   top: 50%;
   left: -11px;
   margin-top: -11px;
@@ -5764,7 +5766,7 @@ body.g-prime {
   border-right-color: rgba(0, 0, 0, 0.15);
 }
 /* line 210, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover.right > .arrow:after, #g5-container .g5-popover.right-top > .arrow:after, #g5-container .g5-popover.right-bottom > .arrow:after {
+#g5-container .g5-popover.right > .g-arrow:after, #g5-container .g5-popover.right-top > .g-arrow:after, #g5-container .g5-popover.right-bottom > .g-arrow:after {
   content: " ";
   left: 1px;
   bottom: -10px;
@@ -5772,7 +5774,7 @@ body.g-prime {
   border-right-color: #fff;
 }
 /* line 218, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover.bottom > .arrow, #g5-container .g5-popover.bottom-right > .arrow, #g5-container .g5-popover.bottom-left > .arrow {
+#g5-container .g5-popover.bottom > .g-arrow, #g5-container .g5-popover.bottom-right > .g-arrow, #g5-container .g5-popover.bottom-left > .g-arrow {
   top: -11px;
   left: 50%;
   margin-left: -11px;
@@ -5781,7 +5783,7 @@ body.g-prime {
   border-top-width: 0;
 }
 /* line 228, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover.bottom > .arrow:after, #g5-container .g5-popover.bottom-right > .arrow:after, #g5-container .g5-popover.bottom-left > .arrow:after {
+#g5-container .g5-popover.bottom > .g-arrow:after, #g5-container .g5-popover.bottom-right > .g-arrow:after, #g5-container .g5-popover.bottom-left > .g-arrow:after {
   content: " ";
   top: 1px;
   margin-left: -10px;
@@ -5789,7 +5791,7 @@ body.g-prime {
   border-top-width: 0;
 }
 /* line 236, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover.left > .arrow, #g5-container .g5-popover.left-top > .arrow, #g5-container .g5-popover.left-bottom > .arrow {
+#g5-container .g5-popover.left > .g-arrow, #g5-container .g5-popover.left-top > .g-arrow, #g5-container .g5-popover.left-bottom > .g-arrow {
   top: 50%;
   right: -11px;
   margin-top: -11px;
@@ -5798,7 +5800,7 @@ body.g-prime {
   border-left-color: rgba(0, 0, 0, 0.15);
 }
 /* line 245, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover.left > .arrow:after, #g5-container .g5-popover.left-top > .arrow:after, #g5-container .g5-popover.left-bottom > .arrow:after {
+#g5-container .g5-popover.left > .g-arrow:after, #g5-container .g5-popover.left-top > .g-arrow:after, #g5-container .g5-popover.left-bottom > .g-arrow:after {
   content: " ";
   right: 1px;
   border-right-width: 0;
@@ -5806,19 +5808,19 @@ body.g-prime {
   bottom: -10px;
 }
 /* line 259, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover-inverse.top > .arrow, #g5-container .g5-popover-inverse.top > .arrow:after, #g5-container .g5-popover-inverse.top-left > .arrow, #g5-container .g5-popover-inverse.top-left > .arrow:after, #g5-container .g5-popover-inverse.top-right > .arrow, #g5-container .g5-popover-inverse.top-right > .arrow:after {
+#g5-container .g5-popover-inverse.top > .g-arrow, #g5-container .g5-popover-inverse.top > .g-arrow:after, #g5-container .g5-popover-inverse.top-left > .g-arrow, #g5-container .g5-popover-inverse.top-left > .g-arrow:after, #g5-container .g5-popover-inverse.top-right > .g-arrow, #g5-container .g5-popover-inverse.top-right > .g-arrow:after {
   border-top-color: #777;
 }
 /* line 266, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover-inverse.right > .arrow, #g5-container .g5-popover-inverse.right > .arrow:after, #g5-container .g5-popover-inverse.right-top > .arrow, #g5-container .g5-popover-inverse.right-top > .arrow:after, #g5-container .g5-popover-inverse.right-bottom > .arrow, #g5-container .g5-popover-inverse.right-bottom > .arrow:after {
+#g5-container .g5-popover-inverse.right > .g-arrow, #g5-container .g5-popover-inverse.right > .g-arrow:after, #g5-container .g5-popover-inverse.right-top > .g-arrow, #g5-container .g5-popover-inverse.right-top > .g-arrow:after, #g5-container .g5-popover-inverse.right-bottom > .g-arrow, #g5-container .g5-popover-inverse.right-bottom > .g-arrow:after {
   border-right-color: #777;
 }
 /* line 273, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover-inverse.bottom > .arrow, #g5-container .g5-popover-inverse.bottom > .arrow:after, #g5-container .g5-popover-inverse.bottom-left > .arrow, #g5-container .g5-popover-inverse.bottom-left > .arrow:after, #g5-container .g5-popover-inverse.bottom-right > .arrow, #g5-container .g5-popover-inverse.bottom-right > .arrow:after {
+#g5-container .g5-popover-inverse.bottom > .g-arrow, #g5-container .g5-popover-inverse.bottom > .g-arrow:after, #g5-container .g5-popover-inverse.bottom-left > .g-arrow, #g5-container .g5-popover-inverse.bottom-left > .g-arrow:after, #g5-container .g5-popover-inverse.bottom-right > .g-arrow, #g5-container .g5-popover-inverse.bottom-right > .g-arrow:after {
   border-bottom-color: #777;
 }
 /* line 280, platforms/common/scss/admin/_popover.scss */
-#g5-container .g5-popover-inverse.left > .arrow, #g5-container .g5-popover-inverse.left > .arrow:after, #g5-container .g5-popover-inverse.left-top > .arrow, #g5-container .g5-popover-inverse.left-top > .arrow:after, #g5-container .g5-popover-inverse.left-bottom > .arrow, #g5-container .g5-popover-inverse.left-bottom > .arrow:after {
+#g5-container .g5-popover-inverse.left > .g-arrow, #g5-container .g5-popover-inverse.left > .g-arrow:after, #g5-container .g5-popover-inverse.left-top > .g-arrow, #g5-container .g5-popover-inverse.left-top > .g-arrow:after, #g5-container .g5-popover-inverse.left-bottom > .g-arrow, #g5-container .g5-popover-inverse.left-bottom > .g-arrow:after {
   border-left-color: #777;
 }
 /* line 286, platforms/common/scss/admin/_popover.scss */

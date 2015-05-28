@@ -7728,13 +7728,16 @@ var Eraser = new prime({
         this.element = $(element);
 
         if (!this.element) { return; }
+
+        this.top = parseInt(this.element.compute('top'), 10);
+        this.element.style('display', 'block');
         this.hide(true);
     },
 
     show: function(fast){
         if (!this.element) { return; }
         this.out();
-        this.element[fast ? 'style' : 'animate']({top: 0}, {duration: '150ms'});
+        this.element[fast ? 'style' : 'animate']({top: this.top}, {duration: '150ms'});
     },
 
     hide: function(fast){
@@ -8169,7 +8172,7 @@ var Popover = new prime({
         type: 'html',
         where: '#g5-container',
         template: '<div class="g5-popover">' +
-        '<div class="arrow"></div>' +
+        '<div class="g-arrow"></div>' +
         '<div class="g5-popover-inner">' +
         '<a href="#" class="close">x</a>' +
         '<h3 class="g5-popover-title"></h3>' +
@@ -8270,12 +8273,19 @@ var Popover = new prime({
     },
 
     displayContent: function() {
-        var elementPos    = this.element.position(),
+        var elementPos    = {},
             target        = this.getTarget().attribute('class', null).addClass(this.options.mainClass),
             targetContent = this.getContentElement(),
             targetWidth, targetHeight, placement;
 
         this.element.emit('show.popover', this);
+
+        elementPos = {
+            top: this.element[0].offsetTop,
+            left: this.element[0].offsetLeft,
+            width: this.element[0].offsetWidth,
+            height: this.element[0].offsetHeight
+        };
 
         if (this.options.width !== 'auto') {
             target.style({ width: this.options.width });
@@ -8285,8 +8295,8 @@ var Popover = new prime({
         }
 
         // init the popover and insert into the document body
-        if (!this.options.arrow && target.find('.arrow')) {
-            target.find('.arrow').remove();
+        if (!this.options.arrow && target.find('.g-arrow')) {
+            target.find('.g-arrow').remove();
         }
         target.remove().style({
             top: -1000,
@@ -8326,7 +8336,7 @@ var Popover = new prime({
             this.$target.style({ 'margin': 0 });
         }
         if (this.options.arrow) {
-            var arrow = this.$target.find('.arrow');
+            var arrow = this.$target.find('.g-arrow');
             arrow.attribute('style', null);
             if (positionInfo.arrowOffset) {
                 arrow.style(positionInfo.arrowOffset);
@@ -8530,8 +8540,8 @@ var Popover = new prime({
 
     getTargetPositin: function(elementPos, placement, targetWidth, targetHeight) {
         var pos         = elementPos,
-            elementW    = this.element.position().width,
-            elementH    = this.element.position().height,
+            elementW    = this.element[0].offsetWidth,
+            elementH    = this.element[0].offsetHeight,
             position    = {},
             arrowOffset = null,
             arrowSize   = this.options.arrow ? 28 : 0,

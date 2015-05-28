@@ -21,6 +21,7 @@ body.g-prime {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: $font-family-default;
+    position: relative;
 
     a {
         color: $core-accent;

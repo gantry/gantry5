@@ -12,59 +12,63 @@ body.gantry5 {
 body.gantry5.auto-fold #wpcontent {
   padding-left: 0;
 }
-/* line 12, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 13, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container a:focus {
   box-shadow: none;
 }
-/* line 16, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 17, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container dd, body.gantry5 #g5-container li {
   margin-bottom: 0;
 }
-/* line 20, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 21, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container li {
   line-height: inherit;
 }
-/* line 24, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 25, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container textarea, body.gantry5 #g5-container input {
   box-shadow: none;
   color: #666;
 }
-/* line 29, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 30, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container input, body.gantry5 #g5-container button, body.gantry5 #g5-container select, body.gantry5 #g5-container textarea {
   font-family: inherit;
 }
-/* line 33, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 34, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+body.gantry5 #g5-container input[type="checkbox"] {
+  height: 16px;
+}
+/* line 38, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .main-block {
   min-height: 81.5vh;
 }
-/* line 37, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 42, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .inner-container {
   margin: 0;
 }
-/* line 41, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 46, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .card {
   max-width: none;
   box-shadow: none;
 }
-/* line 46, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 51, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .preview {
   float: none;
 }
-/* line 50, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 55, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .search {
   background: none;
   color: inherit;
   font-size: inherit;
 }
-/* line 58, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 63, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 form {
   margin-bottom: 1em;
 }
-/* line 63, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 68, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 .g5-dialog-loading-spinner.g5-dialog-theme-default {
   top: 3em;
 }
-/* line 67, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+/* line 72, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #wpbody-content {
   padding-bottom: 0;
 }
@@ -226,6 +230,11 @@ body.gantry5 #wpfooter a {
   color: inherit;
   text-shadow: none;
   line-height: inherit;
+}
+
+/* line 2, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_layout-manager.scss */
+#g5-container #trash {
+  top: 30px;
 }
 
 /* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_navbar.scss */

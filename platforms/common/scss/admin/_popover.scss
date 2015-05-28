@@ -160,7 +160,7 @@ $close-color:               #000;
         }
     }
 
-    .g5-popover > .arrow{
+    .g5-popover > .g-arrow{
         &,&:after{
             position: absolute;
             display: block;
@@ -171,18 +171,18 @@ $close-color:               #000;
         }
     }
 
-    .g5-popover > .arrow {
+    .g5-popover > .g-arrow {
         border-width: $popover-arrow-outer-width;
     }
-    .g5-popover > .arrow:after {
+    .g5-popover > .g-arrow:after {
         border-width: $popover-arrow-width;
         content: "";
     }
 
     .g5-popover{
-        &.top >.arrow,
-        &.top-right >.arrow,
-        &.top-left >.arrow
+        &.top >.g-arrow,
+        &.top-right >.g-arrow,
+        &.top-left >.g-arrow
         {
             bottom: -$popover-arrow-outer-width;
             left: 50%;
@@ -198,9 +198,9 @@ $close-color:               #000;
                 border-bottom-width: 0;
             }
         }
-        &.right > .arrow,
-        &.right-top > .arrow,
-        &.right-bottom > .arrow {
+        &.right > .g-arrow,
+        &.right-top > .g-arrow,
+        &.right-bottom > .g-arrow {
             top: 50%;
             left: -$popover-arrow-outer-width;
             margin-top: -$popover-arrow-outer-width;
@@ -215,9 +215,9 @@ $close-color:               #000;
                 border-right-color: $popover-arrow-color;
             }
         }
-        &.bottom >.arrow,
-        &.bottom-right >.arrow,
-        &.bottom-left >.arrow
+        &.bottom >.g-arrow,
+        &.bottom-right >.g-arrow,
+        &.bottom-left >.g-arrow
         {
             top: -$popover-arrow-outer-width;
             left: 50%;
@@ -233,9 +233,9 @@ $close-color:               #000;
                 border-top-width: 0;
             }
         }
-        &.left > .arrow,
-        &.left-top > .arrow,
-        &.left-bottom > .arrow {
+        &.left > .g-arrow,
+        &.left-top > .g-arrow,
+        &.left-bottom > .g-arrow {
             top: 50%;
             right: -$popover-arrow-outer-width;
             margin-top: -$popover-arrow-outer-width;
@@ -253,30 +253,30 @@ $close-color:               #000;
     }
 
     .g5-popover-inverse{
-        &.top > .arrow,
-        &.top-left > .arrow,
-        &.top-right > .arrow{
+        &.top > .g-arrow,
+        &.top-left > .g-arrow,
+        &.top-right > .g-arrow{
             &,&:after{
                 border-top-color: $popover-inverse-bg;
             }
         }
-        &.right > .arrow,
-        &.right-top > .arrow,
-        &.right-bottom > .arrow{
+        &.right > .g-arrow,
+        &.right-top > .g-arrow,
+        &.right-bottom > .g-arrow{
             &,&:after{
                 border-right-color: $popover-inverse-bg;
             }
         }
-        &.bottom > .arrow,
-        &.bottom-left > .arrow,
-        &.bottom-right > .arrow{
+        &.bottom > .g-arrow,
+        &.bottom-left > .g-arrow,
+        &.bottom-right > .g-arrow{
             &,&:after{
                 border-bottom-color: $popover-inverse-bg;
             }
         }
-        &.left > .arrow,
-        &.left-top > .arrow,
-        &.left-bottom > .arrow{
+        &.left > .g-arrow,
+        &.left-top > .g-arrow,
+        &.left-bottom > .g-arrow{
             &,&:after{
                 border-left-color: $popover-inverse-bg;
             }

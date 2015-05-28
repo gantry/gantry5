@@ -17,13 +17,16 @@ var Eraser = new prime({
         this.element = $(element);
 
         if (!this.element) { return; }
+
+        this.top = parseInt(this.element.compute('top'), 10);
+        this.element.style('display', 'block');
         this.hide(true);
     },
 
     show: function(fast){
         if (!this.element) { return; }
         this.out();
-        this.element[fast ? 'style' : 'animate']({top: 0}, {duration: '150ms'});
+        this.element[fast ? 'style' : 'animate']({top: this.top}, {duration: '150ms'});
     },
 
     hide: function(fast){

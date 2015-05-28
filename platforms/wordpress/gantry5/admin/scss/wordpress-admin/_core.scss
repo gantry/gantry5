@@ -5,6 +5,7 @@ body.gantry5 {
         }
     }
 
+
     color: $light-gray;
     background-color: $body-bg;
 
@@ -28,6 +29,10 @@ body.gantry5 {
 
         input, button, select, textarea {
             font-family: inherit;
+        }
+
+        input[type="checkbox"] {
+            height: 16px;
         }
 
         .main-block {
