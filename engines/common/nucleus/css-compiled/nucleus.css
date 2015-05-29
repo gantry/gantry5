@@ -1630,6 +1630,7 @@ input[type="submit"] {
   overflow-y: auto;
   text-align: left;
   display: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .g-offcanvas-toggle {
