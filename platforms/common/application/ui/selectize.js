@@ -1617,11 +1617,11 @@ var Selectize = new prime({
         // update the item if it's selected
         if (this.items.indexOf(value_new) !== -1) {
             $item = this.getItem(value);
-            $item_new = $(this.render('item', data));
+            var dummy = zen('div').html(this.render('item', data));
+            $item_new = dummy.firstChild();
             if ($item.hasClass('active')) $item_new.addClass('active');
 
-            dummy = zen('div').html($item_new);
-            dummy.firstChild().after($item);
+            $item_new.after($item);
             $item.remove();
         }
 
