@@ -1485,6 +1485,7 @@
   overflow-y: auto;
   text-align: left;
   display: none;
+  -webkit-overflow-scrolling: touch;
 }
 #g5-container .g-offcanvas-toggle {
   display: block;
@@ -2074,6 +2075,7 @@ body.g-prime {
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  line-height: 1rem;
 }
 
 .selectize-dropdown, .selectize-input, .selectize-input input {
@@ -2306,6 +2308,21 @@ body.g-prime {
 }
 .selectize-dropdown .optgroup:first-child {
   border-top: 0 none;
+}
+
+.g-conf-title-edit {
+  padding: 5px 14px;
+  background-color: #fff;
+  border-radius: 3px;
+  vertical-align: middle;
+  top: 1px;
+  position: relative;
+  display: none;
+  margin-bottom: 2px;
+}
+.g-conf-title-edit[contenteditable] {
+  outline: none;
+  padding: 5px 14px !important;
 }
 
 #g5-container #settings h2:first-child {

@@ -61,6 +61,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     position: relative;
     display: inline-block;
     vertical-align: middle;
+    line-height: 1rem;
 }
 
 .selectize-dropdown, .selectize-input, .selectize-input input {
@@ -151,7 +152,9 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
         line-height: inherit !important;
         -webkit-user-select: auto !important;
         box-shadow: none !important;
-        &:focus { outline: none !important; }
+        &:focus {
+            outline: none !important;
+        }
     }
 }
 
@@ -222,8 +225,12 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
 }
 
 .selectize-control.single .selectize-input {
-    &, input { cursor: pointer; }
-    &.input-active, &.input-active input { cursor: text; }
+    &, input {
+        cursor: pointer;
+    }
+    &.input-active, &.input-active input {
+        cursor: text;
+    }
 
     &:after {
         content: "\f078";
@@ -272,7 +279,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
                 }
             }
             [data-value] {
-                text-shadow: 0 1px 0 opacify(darken($selectize-color-item, 10) ,0.3);
+                text-shadow: 0 1px 0 opacify(darken($selectize-color-item, 10), 0.3);
                 border-radius: 3px;
                 &.active {
                     background-color: darken($selectize-color-item, 10);
@@ -305,5 +312,22 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
         &:first-child {
             border-top: 0 none;
         }
+    }
+}
+
+// specific to the Outlines title edit
+.g-conf-title-edit {
+    padding: ($selectize-padding-y - 1px) ($selectize-padding-x + 2px);
+    background-color: $selectize-color-input-full;
+    border-radius: $selectize-border-radius;
+    vertical-align: middle;
+    top: 1px;
+    position: relative;
+    display: none;
+    margin-bottom: 2px;
+
+    &[contenteditable] {
+        outline: none;
+        padding: ($selectize-padding-y - 1px) ($selectize-padding-x + 2px) !important;
     }
 }
