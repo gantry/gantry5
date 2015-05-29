@@ -149,7 +149,6 @@ var Offcanvas = new prime({
         }, this));
 
         this.detachMutationEvent();
-
         this.overlay.remove();
 
         return this;
@@ -237,14 +236,15 @@ var Offcanvas = new prime({
     _setTransition: function() {
         var panel = this.panel[0];
 
-        panel.style[prefix.css + 'transition'] = panel.style.transition = prefix.css + 'transform ' + this.options.duration + 'ms ' + this.options.effect;
+        panel.style[prefix.css + 'transition'] = panel.style.transition = 'left ' + this.options.duration + 'ms ' + this.options.effect + ', right ' + this.options.duration + 'ms ' + this.options.effect;
     },
 
     _translateXTo: function(x) {
-        var panel = this.panel[0];
-        this.offset.x.current = x;
+        var panel = this.panel[0],
+            placement = (this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left');
 
-        panel.style[prefix.css + 'transform'] = panel.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+        this.offset.x.current = x;
+        panel.style[placement] = Math.abs(x) + 'px';
     },
 
     _bodyScroll: function() {
@@ -283,8 +283,7 @@ var Offcanvas = new prime({
     _touchMove: function(event) {
         if (isScrolling || this.preventOpen || !event.touches) { return; }
 
-        var placement = (this.bodyEl.hasClass('g-offcanvas-right') ? -1 : 1), // 1: left, -1: right
-            place = placement < 0 ? 'right' : 'left',
+        var placement = (this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left'),
             diffX = clamp(event.touches[0].clientX - this.offset.x.start, -this.options.padding, this.options.padding),
             translateX = this.offset.x.current = diffX,
             diffY = Math.abs(event.touches[0].pageY - this.offset.y.start),
@@ -292,27 +291,29 @@ var Offcanvas = new prime({
 
         if (Math.abs(translateX) > this.options.padding) { return; }
         if (diffY > 5 && !this.moved) { return; }
+
         if (Math.abs(diffX) > 0) {
             this.opening = true;
 
             // offcanvas on left
-            if (place == 'left' && (this.opened && diffX > 0 || !this.opened && diffX < 0)) { return; }
+            if (placement == 'left' && (this.opened && diffX > 0 || !this.opened && diffX < 0)) { return; }
 
             // offcanvas on right
-            if (place == 'right' && (this.opened && diffX < 0 || !this.opened && diffX > 0)) { return; }
+            if (placement == 'right' && (this.opened && diffX < 0 || !this.opened && diffX > 0)) { return; }
 
             if (!this.moved && !this.htmlEl.hasClass(this.options.openClass)) {
                 this.htmlEl.addClass(this.options.openClass);
             }
 
-            if ((place == 'left' && diffX <= 0) || (place == 'right' && diffX >= 0)) {
-                translateX = diffX + (placement * this.options.padding);
+            if ((placement == 'left' && diffX <= 0) || (placement == 'right' && diffX >= 0)) {
+                var norm = placement == 'left' ? 1 : -1;
+                translateX = diffX + (norm * this.options.padding);
                 this.opening = false;
             }
 
             overlayOpacity = mapNumber(Math.abs(translateX), 0, this.options.padding, 0, 1);
 
-            this.panel[0].style[prefix.css + 'transform'] = this.panel[0].style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+            this.panel[0].style[placement] = Math.abs(translateX) + 'px';
             this.overlay[0].style.opacity = overlayOpacity;
 
             this.moved = true;

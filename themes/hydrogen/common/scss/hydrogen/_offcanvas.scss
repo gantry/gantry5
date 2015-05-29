@@ -30,7 +30,7 @@
 	color: $offcanvas-toggle-color;
 }
 
-// Mobile Menu 
+// Mobile Menu
 #g-offcanvas {
 	#g-mobilemenu-container {
 		ul {
@@ -42,7 +42,7 @@
 				&:not(.g-menu-item-type-particle):not(.g-menu-item-type-module) {
 					&:hover, &.active {
 						background: darken($accent-color-1, 4%);
-						
+
 						> .g-menu-item-container {
 							color: $offcanvas-text-color;
 						}
@@ -65,7 +65,7 @@
 			}
 			.g-dropdown-column {
 				width: $offcanvas-width;
-			}			
+			}
 		}
 	}
 }
@@ -79,4 +79,18 @@
 		background: #fff !important;
 		color: #000 !important;
 	}
+}
+
+.g-offcanvas-open {
+    .g-offcanvas-left {
+        #g-page-surround {
+            left: $offcanvas-width;
+        }
+    }
+
+    .g-offcanvas-right {
+        #g-page-surround {
+            right: $offcanvas-width;
+        }
+    }
 }

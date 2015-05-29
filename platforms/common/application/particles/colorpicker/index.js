@@ -235,7 +235,7 @@ var ColorPicker = new prime({
             this.updateFromInput();
         }, this));
 
-        this.wrapper.bottom('body');
+        this.wrapper.bottom('#g5-container');
 
         this.built = true;
         this.mode = 'hue';
@@ -532,10 +532,11 @@ var ColorPicker = new prime({
     },
 
     reposition: function() {
-        var offset = this.element[0].getBoundingClientRect();
+        var offset = this.element[0].getBoundingClientRect(),
+            ct = $('#g5-container')[0].getBoundingClientRect();
         this.wrapper.style({
-            top: offset.top + offset.height + window.scrollY,
-            left: offset.left + window.scrollX
+            top: offset.top + offset.height - ct.top,
+            left: offset.left - ct.left
         });
     },
 

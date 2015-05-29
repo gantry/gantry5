@@ -57,6 +57,7 @@ body {
 
 #g-page-surround {
   min-height: 100vh;
+  position: relative;
 }
 
 article,
@@ -1629,6 +1630,7 @@ input[type="submit"] {
   overflow-y: auto;
   text-align: left;
   display: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .g-offcanvas-toggle {
@@ -1661,12 +1663,19 @@ input[type="submit"] {
   display: block;
 }
 
+.g-offcanvas-left #g-page-surround {
+  left: 0;
+}
+
 .g-offcanvas-right #g-offcanvas {
   left: inherit;
 }
 .g-offcanvas-right .g-offcanvas-toggle {
   left: inherit;
   right: 0.7rem;
+}
+.g-offcanvas-right #g-page-surround {
+  right: 0;
 }
 
 

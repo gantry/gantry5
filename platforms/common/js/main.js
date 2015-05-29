@@ -2361,6 +2361,7 @@ ready(function() {
         if (!element.PopoverDefined) {
             element.getPopover({
                 type: 'async',
+                width: '500',
                 url: parseAjaxURI(element.data('lm-switcher') + getAjaxSuffix()),
                 allowElementsClick: '.g-tabs a'
             });
@@ -2591,6 +2592,7 @@ module.exports = {
     history: lmhistory,
     savestate: savestate
 };
+
 },{"../ui":44,"../ui/popover":46,"../utils/field-validation":55,"../utils/get-ajax-suffix":57,"../utils/get-ajax-url":58,"../utils/history":60,"../utils/save-state":62,"./builder":20,"./history":22,"./layoutmanager":24,"agent":63,"elements/attributes":85,"elements/domready":88,"elements/zen":114,"mout/array/contains":144,"mout/collection/forEach":165,"mout/collection/size":167,"mout/string/trim":237}],24:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
@@ -4968,7 +4970,7 @@ var ColorPicker = new prime({
             this.updateFromInput();
         }, this));
 
-        this.wrapper.bottom('body');
+        this.wrapper.bottom('#g5-container');
 
         this.built = true;
         this.mode = 'hue';
@@ -5265,10 +5267,11 @@ var ColorPicker = new prime({
     },
 
     reposition: function() {
-        var offset = this.element[0].getBoundingClientRect();
+        var offset = this.element[0].getBoundingClientRect(),
+            ct = $('#g5-container')[0].getBoundingClientRect();
         this.wrapper.style({
-            top: offset.top + offset.height + window.scrollY,
-            left: offset.left + window.scrollX
+            top: offset.top + offset.height - ct.top,
+            left: offset.left - ct.left
         });
     },
 
@@ -7738,7 +7741,7 @@ var Eraser = new prime({
     },
 
     setTop: function() {
-        if (this.top) { return; }
+        if (typeof this.top !== 'undefined') { return; }
         this.top = parseInt(this.element.compute('top'), 10);
     },
 
