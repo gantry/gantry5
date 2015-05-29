@@ -10502,7 +10502,7 @@ var Selectize = new prime({
 
     registerOption: function(data) {
         var key = hash_key(data[this.options.valueField]);
-        if (!key || this.options.hasOwnProperty(key)) return false;
+        if ((!key || this.options.hasOwnProperty(key)) && !this.options.allowEmptyOption) return false;
         data.$order = data.$order || ++this.order;
         this.Options[key] = data;
 
