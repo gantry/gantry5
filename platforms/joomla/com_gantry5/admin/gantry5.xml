@@ -13,6 +13,7 @@
     <files folder="site">
         <filename>gantry5.php</filename>
         <filename>router.php</filename>
+        <filename>MD5SUM</filename>
         <folder>views</folder>
     </files>
 
@@ -21,6 +22,7 @@
             <filename>access.xml</filename>
             <filename>config.xml</filename>
             <filename>gantry5.php</filename>
+            <filename>MD5SUM</filename>
             <folder>blueprints</folder>
             <folder>css-compiled</folder>
             <folder>fonts</folder>

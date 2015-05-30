@@ -210,6 +210,14 @@
                 <include name="gantry5.xml"/>
             </fileset>
         </move>
+
+        <!-- Generate Manifest files -->
+        <phingcall target="checksum">
+            <property name="source" value="${tmp_dir}/packages/com_gantry5/site" />
+        </phingcall>
+        <phingcall target="checksum">
+            <property name="source" value="${tmp_dir}/packages/com_gantry5/admin" />
+        </phingcall>
     </target>
 
     <target name="build-library" depends="build-installer">
@@ -288,6 +296,11 @@
                 <exclude name="package.json"/>
             </fileset>
         </copy>
+
+        <!-- Generate Manifest files -->
+        <phingcall target="checksum">
+            <property name="source" value="${tmp_dir}/packages/lib_gantry5/library" />
+        </phingcall>
     </target>
 
     <target name="build-nucleus" depends="build-installer">
@@ -317,6 +330,11 @@
                 <include name="*.xml"/>
             </fileset>
         </copy>
+
+        <!-- Generate Manifest files -->
+        <phingcall target="checksum">
+            <property name="source" value="${tmp_dir}/packages/gantry5_nucleus/nucleus" />
+        </phingcall>
     </target>
 
     <target name="build-plugins" depends="build-installer">
@@ -372,6 +390,19 @@
             </fileset>
         </copy>
 
+        <!-- Generate Manifest files -->
+        <phingcall target="checksum">
+            <property name="source" value="${tmp_dir}/packages/plg_system_gantry5" />
+        </phingcall>
+        <phingcall target="checksum">
+            <property name="source" value="${tmp_dir}/packages/plg_quickicon_gantry5" />
+        </phingcall>
+        <phingcall target="checksum">
+            <property name="source" value="${tmp_dir}/packages/plg_gantry5_preset" />
+        </phingcall>
+        <phingcall target="checksum">
+            <property name="source" value="${tmp_dir}/packages/mod_gantry5_particle" />
+        </phingcall>
     </target>
 
     <target name="build-themes" depends="build-installer">
@@ -413,6 +444,11 @@
                     </fileset>
                 </copy>
 
+                <!-- Generate Manifest files -->
+                <phingcall target="checksum">
+                    <property name="source" value="${tmp_dir}/templates/tpl_g5_${directory}" />
+                </phingcall>
+
                 <!-- Zip the created Zips for packages -->
                 <phingcall target="archive">
                     <property name="destination.file" value="${package_dir}/joomla-tpl_g5_${directory}${str.fileversion}" />
@@ -446,6 +482,7 @@
             <property name="destination.file" value="${package_dir}/joomla-${cfg.prefix}${cfg.name}${str.fileversion}" />
             <property name="base.directory" value="${build_dir}/distribution" />
         </phingcall>
+
     </target>
 
     <target name="package-process">
@@ -495,5 +532,11 @@
         <zip destfile="${destination.file}.zip">
             <fileset dir="${base.directory}"/>
         </zip>
+    </target>
+
+    <target name="checksum">
+        <manifest file="${source}/MD5SUM" checksum="md5">
+            <fileset dir="${source}" />
+        </manifest>
     </target>
 </project>
