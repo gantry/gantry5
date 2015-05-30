@@ -50,6 +50,8 @@ var Offcanvas = new prime({
         touch: true,
 
         openClass: 'g-offcanvas-open',
+        openingClass: 'g-offcanvas-opening',
+        closingClass: 'g-offcanvas-closing',
         overlayClass: 'g-nav-overlay'
     },
 
@@ -181,9 +183,8 @@ var Offcanvas = new prime({
 
         if (this.opened) { return this; }
 
-        if (!this.htmlEl.hasClass(this.options.openClass)) {
-            this.htmlEl.addClass(this.options.openClass);
-        }
+        this.htmlEl.addClass(this.options.openClass);
+        this.htmlEl.addClass(this.options.openingClass);
 
         this.overlay[0].style.opacity = 1;
 
@@ -194,6 +195,7 @@ var Offcanvas = new prime({
         setTimeout(bind(function() {
             var panel = this.panel[0];
 
+            this.htmlEl.removeClass(this.options.openingClass);
             panel.style.transition = panel.style['-webkit-transition'] = '';
         }, this), this.options.duration);
 
@@ -209,6 +211,8 @@ var Offcanvas = new prime({
         if (!this.opened && !this.opening) { return this; }
         if (this.panel !== element && this.dragging) { return false; }
 
+        this.htmlEl.addClass(this.options.closingClass);
+
         this.overlay[0].style.opacity = 0;
 
         this._setTransition();
@@ -219,6 +223,7 @@ var Offcanvas = new prime({
             var panel = this.panel[0];
 
             this.htmlEl.removeClass(this.options.openClass);
+            this.htmlEl.removeClass(this.options.closingClass);
             panel.style.transition = panel.style['-webkit-transition'] = '';
         }, this), this.options.duration);
 
