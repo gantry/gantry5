@@ -1545,7 +1545,7 @@ var Selectize = new prime({
 
     registerOptionGroup: function(data) {
         var key = hash_key(data[this.options.optgroupValueField]);
-        if (!key) return false;
+        if (!key && !this.options.allowEmptyOption) return false;
 
         data.$order = data.$order || ++this.order;
         this.Optgroups[key] = data;
