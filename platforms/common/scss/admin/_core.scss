@@ -89,6 +89,7 @@ body.g-prime {
         display: block;
         width: 100%;
         @include column-count(2);
+        @include column-gap(20px);
 
         @include breakpoint(mobile-only) {
             @include column-count(1);
@@ -105,7 +106,7 @@ body.g-prime {
         vertical-align: top;
         margin: 10px 0;
         @include backface-visibility(hidden);
-        
+
         //@include transform(translateZ(0)); // FIXME : Causes z-index issue in selectize but fixes WebKit rendering issues with Columns
 
         &.full-width {

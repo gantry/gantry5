@@ -17,6 +17,7 @@
         <filename>RealLoader.php</filename>
         <filename>composer.json</filename>
         <filename>composer.lock</filename>
+        <filename>MD5SUM</filename>
         <folder>classes</folder>
         <folder>vendor</folder>
     </files>

@@ -14,8 +14,7 @@ var $             = require('elements'),
     flags         = require('../utils/flags-state'),
     warningURL    = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
 
-
-var Configurations = {};
+require('./dropdown-edit');
 
 ready(function() {
     var body = $('body');
@@ -90,7 +89,7 @@ ready(function() {
                         reload.href(reload.href().replace('style=' + outlineDeleted, 'style=' + ids.shift()));
                     }
                 }
-                
+
                 if (!reload) { window.location = window.location; }
                 else {
                     body.emit('click', {target: reload});
@@ -160,4 +159,4 @@ ready(function() {
     attachEditables($('#configurations [data-title-editable]'));
 });
 
-module.exports = Configurations;
+module.exports = {};

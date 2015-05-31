@@ -5,5 +5,3 @@
 **/js/*.js linguist-vendored
 **/js/*.json linguist-vendored
 **/css-compiled/*.css linguist-vendored
-
-**/js/main.js -diff
