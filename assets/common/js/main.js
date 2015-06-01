@@ -85,6 +85,7 @@ var Menu = new prime({
             mobileContainer = $(selectors.mobileContainer),
             body = $('body');
 
+        if (!main) { return; }
         main.on('mouseenter', this.bound('mouseenter'));
         main.on('mouseleave', this.bound('mouseleave'));
         body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
@@ -150,10 +151,13 @@ var Menu = new prime({
         }
 
         if (!isSelected) {
-            var currentlyOpen = parent.siblings().search(selectors.touchIndicator + ' !> * !> ' + selectors.item + '.' + states.selected);
-            (currentlyOpen || []).forEach(bind(function(open) {
-                this.closeDropdown(open);
-            }, this));
+            var siblings = parent.siblings();
+            if (siblings) {
+                var currentlyOpen = siblings.search(selectors.touchIndicator + ' !> * !> ' + selectors.item + '.' + states.selected);
+                (currentlyOpen || []).forEach(bind(function(open) {
+                    this.closeDropdown(open);
+                }, this));
+            }
         }
 
         if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown + ', > * > ' + selectors.dropdown) || isGoingBack)) {
@@ -315,6 +319,7 @@ var Menu = new prime({
 });
 
 module.exports = Menu;
+
 },{"../utils/dollar-extras":5,"domready":6,"elements/zen":35,"mout/function/bind":39,"mout/function/timeout":43,"prime":77,"prime-util/prime/bound":73,"prime-util/prime/options":74}],3:[function(require,module,exports){
 // Offcanvas slide with desktop, touch and all-in-one touch devices support that supports both left and right placement.
 // Fast and optimized using CSS3 transitions
