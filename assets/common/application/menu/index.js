@@ -64,6 +64,7 @@ var Menu = new prime({
             mobileContainer = $(selectors.mobileContainer),
             body = $('body');
 
+        if (!main) { return; }
         main.on('mouseenter', this.bound('mouseenter'));
         main.on('mouseleave', this.bound('mouseleave'));
         body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
@@ -129,10 +130,13 @@ var Menu = new prime({
         }
 
         if (!isSelected) {
-            var currentlyOpen = parent.siblings().search(selectors.touchIndicator + ' !> * !> ' + selectors.item + '.' + states.selected);
-            (currentlyOpen || []).forEach(bind(function(open) {
-                this.closeDropdown(open);
-            }, this));
+            var siblings = parent.siblings();
+            if (siblings) {
+                var currentlyOpen = siblings.search(selectors.touchIndicator + ' !> * !> ' + selectors.item + '.' + states.selected);
+                (currentlyOpen || []).forEach(bind(function(open) {
+                    this.closeDropdown(open);
+                }, this));
+            }
         }
 
         if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown + ', > * > ' + selectors.dropdown) || isGoingBack)) {
