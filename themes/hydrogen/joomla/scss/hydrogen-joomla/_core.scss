@@ -1,34 +1,36 @@
-.btn-primary {
-	background: $accent-color-1;
-	color: $white;
-	text-shadow: none;
-	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
-	&:hover {
-		background: lighten($accent-color-1, 5%);
-		color: $white;
-	}
-	&:active, &:focus {
-		background: darken($accent-color-1, 5%);
-		box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
-		color: $white;
-	}
-}
+body {
+    .btn-primary {
+    	background: $accent-color-1;
+    	color: $white;
+    	text-shadow: none;
+    	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+    	&:hover {
+    		background: lighten($accent-color-1, 5%);
+    		color: $white;
+    	}
+    	&:active, &:focus {
+    		background: darken($accent-color-1, 5%);
+    		box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
+    		color: $white;
+    	}
+    }
 
-.btn-group > .btn + .dropdown-toggle {
-	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
-}
+    .btn-group > .btn + .dropdown-toggle {
+    	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+    }
 
-.btn-group.open .btn-primary.dropdown-toggle {
-	background: darken($accent-color-1, 5%);
-	color: $white;
-	box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
-}
+    .btn-group.open .btn-primary.dropdown-toggle {
+    	background: darken($accent-color-1, 5%);
+    	color: $white;
+    	box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
+    }
 
-.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-submenu:hover > a, .dropdown-submenu:focus > a {
-	background-image: none;
-	background-color: $accent-color-1;
-}
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-submenu:hover > a, .dropdown-submenu:focus > a {
+    	background-image: none;
+    	background-color: $accent-color-1;
+    }
 
-.btn-link {
-	color: $accent-color-1;
+    .btn-link {
+    	color: $accent-color-1;
+    }
 }
