@@ -31,7 +31,6 @@ ready(function() {
             uri = value.type + '/' + value[data.type];
         }
 
-
         modal.open({
             content: 'Loading',
             method: !value || data.type == 'module' ? 'get' : 'post',
@@ -78,7 +77,7 @@ ready(function() {
                             dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
                         }
 
-                        request(parseAjaxURI(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                        request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                             if (!response.body.success) {
                                 modal.open({
                                     content: response.body.html || response.body,
