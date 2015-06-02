@@ -109,7 +109,8 @@ class Particle extends JsonController
             $data = $request->getArray();
         }
 
-        $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml")->content());
+        // TODO: add support for other block types as well, like menu.
+        $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));
 
         // Load particle blueprints and default settings.
@@ -137,7 +138,7 @@ class Particle extends JsonController
             'action'        => "particle/{$name}/validate"
         ];
 
-        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params)]);
+        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/particle.html.twig', $this->params)]);
     }
 
     /**
