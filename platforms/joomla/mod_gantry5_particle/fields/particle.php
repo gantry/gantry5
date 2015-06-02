@@ -48,7 +48,7 @@ class JFormFieldParticle extends JFormField
         }
 
         // FIXME: Better style detection.
-        $style = \Gantry\Joomla\StyleHelper::getStyle(['home' => 1]);
+        $style = \Gantry\Joomla\StyleHelper::getStyle(['home' => 1, 'client_id' => 0]);
 
         $this->container['router']->setStyle($style->id)->load();
 
