@@ -1,5 +1,9 @@
 @import "toastr";
 
+html.g5-dialog-open {
+    overflow: hidden;
+}
+
 #g5-container {
     .g5-dialog, .g5-dialog *, .g5-dialog *:before, .g5-dialog *:after {
         @include box-sizing(border-box);
@@ -14,6 +18,23 @@
         overflow: auto;
         -webkit-overflow-scrolling: touch;
         z-index: 1111;
+
+        .settings-block input:not(.settings-param-toggle), .settings-block select, .settings-block .collection-list ul, .settings-block .colorpicker, .settings-block .selectize-input {
+            width: 250px;
+            @include breakpoint(mobile-only) {
+                width: 90% !important;
+            }
+        }
+        .input-group {
+            &.append, &.prepend {
+                input {
+                    width: 209px;
+                    @include breakpoint(mobile-only) {
+                        width: 100% !important;
+                    }
+                }
+            }
+        }
     }
 
     .g5-overlay {
@@ -26,26 +47,20 @@
         left: 0;
         pointer-events: none;
         background: rgba(0, 0, 0, 0.4);
-        .g5-dialog.g5-closing & {
-            @include animation(fadeOut 0.5s);
-        }
     }
 
     .g5-content {
         @include animation(fadeIn 0.5s);
         background: $white;
-        .g5-dialog.g5-closing & {
-            @include animation(fadeOut 0.5s);
-        }
+    }
+
+    .g5-dialog.g5-closing .g5-content,.g5-dialog.g5-closing .g5-overlay {
+        @include animation(fadeOut 0.5s);
     }
 
     .g5-close:before {
         font-family: Arial, sans-serif;
         content: "\00D7";
-    }
-
-    html.g5-dialog-open {
-        overflow: hidden;
     }
 
     .g5-dialog.g5-dialog-theme-default {
@@ -126,25 +141,6 @@
         border-top-color: #bbbbbb;
         top: 1em;
         bottom: auto;
-    }
-
-    #g5-container .g5-dialog {
-        .settings-block input:not(.settings-param-toggle), .settings-block select, .settings-block .collection-list ul, .settings-block .colorpicker, .settings-block .selectize-input {
-            width: 250px;
-            @include breakpoint(mobile-only) {
-                width: 90% !important;
-            }
-        }
-        .input-group {
-            &.append, &.prepend {
-                input {
-                    width: 209px;
-                    @include breakpoint(mobile-only) {
-                        width: 100% !important;
-                    }
-                }
-            }
-        }
     }
 
     // collections

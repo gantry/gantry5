@@ -4595,6 +4595,10 @@ body.g-prime {
   border: 1px solid #e8273b;
 }
 
+html.g5-dialog-open {
+  overflow: hidden;
+}
+
 #g5-container .g5-dialog, #g5-container .g5-dialog *, #g5-container .g5-dialog *:before, #g5-container .g5-dialog *:after {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -4609,6 +4613,22 @@ body.g-prime {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   z-index: 1111;
+}
+#g5-container .g5-dialog .settings-block input:not(.settings-param-toggle), #g5-container .g5-dialog .settings-block select, #g5-container .g5-dialog .settings-block .collection-list ul, #g5-container .g5-dialog .settings-block .colorpicker, #g5-container .g5-dialog .settings-block .selectize-input {
+  width: 250px;
+}
+@media only all and (max-width: 47.938rem) {
+  #g5-container .g5-dialog .settings-block input:not(.settings-param-toggle), #g5-container .g5-dialog .settings-block select, #g5-container .g5-dialog .settings-block .collection-list ul, #g5-container .g5-dialog .settings-block .colorpicker, #g5-container .g5-dialog .settings-block .selectize-input {
+    width: 90% !important;
+  }
+}
+#g5-container .g5-dialog .input-group.append input, #g5-container .g5-dialog .input-group.prepend input {
+  width: 209px;
+}
+@media only all and (max-width: 47.938rem) {
+  #g5-container .g5-dialog .input-group.append input, #g5-container .g5-dialog .input-group.prepend input {
+    width: 100% !important;
+  }
 }
 #g5-container .g5-overlay {
   -webkit-animation: fadeIn 0.5s;
@@ -4627,18 +4647,13 @@ body.g-prime {
   pointer-events: none;
   background: rgba(0, 0, 0, 0.4);
 }
-.g5-dialog.g5-closing #g5-container .g5-overlay {
-  -webkit-animation: fadeOut 0.5s;
-  -moz-animation: fadeOut 0.5s;
-  animation: fadeOut 0.5s;
-}
 #g5-container .g5-content {
   -webkit-animation: fadeIn 0.5s;
   -moz-animation: fadeIn 0.5s;
   animation: fadeIn 0.5s;
   background: #fff;
 }
-.g5-dialog.g5-closing #g5-container .g5-content {
+#g5-container .g5-dialog.g5-closing .g5-content, #g5-container .g5-dialog.g5-closing .g5-overlay {
   -webkit-animation: fadeOut 0.5s;
   -moz-animation: fadeOut 0.5s;
   animation: fadeOut 0.5s;
@@ -4646,9 +4661,6 @@ body.g-prime {
 #g5-container .g5-close:before {
   font-family: Arial, sans-serif;
   content: "\00D7";
-}
-#g5-container html.g5-dialog-open {
-  overflow: hidden;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default {
   padding-top: 10vh;
@@ -4728,22 +4740,6 @@ body.g-prime {
   border-top-color: #bbbbbb;
   top: 1em;
   bottom: auto;
-}
-#g5-container #g5-container .g5-dialog .settings-block input:not(.settings-param-toggle), #g5-container #g5-container .g5-dialog .settings-block select, #g5-container #g5-container .g5-dialog .settings-block .collection-list ul, #g5-container #g5-container .g5-dialog .settings-block .colorpicker, #g5-container #g5-container .g5-dialog .settings-block .selectize-input {
-  width: 250px;
-}
-@media only all and (max-width: 47.938rem) {
-  #g5-container #g5-container .g5-dialog .settings-block input:not(.settings-param-toggle), #g5-container #g5-container .g5-dialog .settings-block select, #g5-container #g5-container .g5-dialog .settings-block .collection-list ul, #g5-container #g5-container .g5-dialog .settings-block .colorpicker, #g5-container #g5-container .g5-dialog .settings-block .selectize-input {
-    width: 90% !important;
-  }
-}
-#g5-container #g5-container .g5-dialog .input-group.append input, #g5-container #g5-container .g5-dialog .input-group.prepend input {
-  width: 209px;
-}
-@media only all and (max-width: 47.938rem) {
-  #g5-container #g5-container .g5-dialog .input-group.append input, #g5-container #g5-container .g5-dialog .input-group.prepend input {
-    width: 100% !important;
-  }
 }
 #g5-container .g5-dialog.g5-modal-collection-editall .g5-content {
   width: 90%;
