@@ -1,4 +1,4 @@
-#g5-container {    
+#g5-container {
     .colorpicker {
         @extend %g-transparent-bg;
         position: relative;
@@ -31,7 +31,7 @@
     .cp-wrapper {
         position: absolute;
         width: 173px;
-        height: 175px;
+        height: 205px;
         background: white;
         border: solid 1px #CCC;
         box-shadow: 0 0 20px rgba(0, 0, 0, .2);
@@ -193,7 +193,7 @@
 
         > div {
             display: inline-block;
-            padding: 5px 0 2px;
+            padding: 6px 0 4px;
             font-family: Helvetica, sans-serif;
             font-size: 11px;
             border-left: 1px solid #ddd;
@@ -205,9 +205,14 @@
             &:first-child {
                 border-left: 0;
             }
-            
+
             &.active {
                 background-color: #fff;
+            }
+
+            &.cp-tab-transp {
+                width: 100%;
+                border-top: 1px solid #ddd;
             }
         }
     }

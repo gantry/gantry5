@@ -5048,7 +5048,7 @@ html.g5-dialog-open {
 #g5-container .cp-wrapper {
   position: absolute;
   width: 173px;
-  height: 175px;
+  height: 205px;
   background: white;
   border: solid 1px #CCC;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -5184,7 +5184,7 @@ html.g5-dialog-open {
 }
 #g5-container .cp-tabs > div {
   display: inline-block;
-  padding: 5px 0 2px;
+  padding: 6px 0 4px;
   font-family: Helvetica, sans-serif;
   font-size: 11px;
   border-left: 1px solid #ddd;
@@ -5198,6 +5198,10 @@ html.g5-dialog-open {
 }
 #g5-container .cp-tabs > div.active {
   background-color: #fff;
+}
+#g5-container .cp-tabs > div.cp-tab-transp {
+  width: 100%;
+  border-top: 1px solid #ddd;
 }
 #g5-container .cp-theme-default.cp-wrapper {
   width: auto;
