@@ -28,7 +28,6 @@ input[type="color"]:focus,
 
 input:not(.input-mini):not(.input-small):not(.input-medium):not(.input-large):not(.input-xlarge):not(.input-xxlarge), textarea, .uneditable-input {
     width: calc(100% - 0.750rem);
-	max-width: 206px;
 }
 
 .input-prepend input:not(.input-mini):not(.input-small):not(.input-medium):not(.input-large):not(.input-xlarge):not(.input-xxlarge) {
