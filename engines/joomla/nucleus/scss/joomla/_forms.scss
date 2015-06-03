@@ -30,6 +30,10 @@ input, textarea, .uneditable-input {
 	width: 100%;
 }
 
+.input-prepend input {
+    width: calc(100% - 2.5rem);
+}
+
 .input-block-level {
 	display: block;
 	width: 100%;
