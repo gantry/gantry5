@@ -6791,15 +6791,15 @@ domready(function() {
     var body = $('body');
     body.delegate('keyup', '.g-icons input[type="text"]', function(event, element){
         element = $(element);
-        var preview = element.sibling('[data-g5-iconpicker]'),
+        var preview = element.sibling('[data-g5-iconpicker]') || element.siblings().find('[data-g5-iconpicker]'),
             value = element.value(),
             size;
 
-        preview.attribute('class', value || 'fa fa-hand-o-up picker');
+        preview.find('i').attribute('class', value || 'fa fa-hand-o-up picker');
 
         size = preview[0].offsetWidth;
 
-        if (!size) { preview.attribute('class', 'fa fa-hand-o-up picker'); }
+        if (!size) { preview.find('i').attribute('class', 'fa fa-hand-o-up picker'); }
     });
 
     body.delegate('click', '[data-g5-iconpicker]', function(event, element) {
@@ -6952,6 +6952,7 @@ domready(function() {
 });
 
 module.exports = {};
+
 },{"../../ui":45,"../../utils/elements.utils":54,"../../utils/get-ajax-suffix":58,"../../utils/get-ajax-url":59,"elements/domready":89,"mout/array/contains":145,"mout/string/trim":238}],36:[function(require,module,exports){
 "use strict";
 

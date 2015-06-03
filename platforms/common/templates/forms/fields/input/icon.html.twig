@@ -22,6 +22,7 @@
                     <i class="{{ value|default('fa fa-hand-o-up picker')|e('html_attr') }}"></i>
                 </button>
             </span>
+            {% block reset_field %}{{ parent() }}{% endblock %}
         </div>
     </div>
 {% endblock %}
