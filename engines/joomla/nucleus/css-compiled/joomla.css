@@ -307,10 +307,10 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
   width: 100%;
 }
 
-.platform-content .input-block-level {
+.platform-content .input-block-level, .platform-content .input-large, .platform-content .input-xlarge, .platform-content .input-xxlarge, .platform-content .uneditable-input {
   display: block;
   width: 100%;
-  min-height: 30px;
+  min-height: 28px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;

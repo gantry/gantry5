@@ -37,10 +37,10 @@ input[type="color"]:focus,
 }
 
 .platform-content {
-    .input-block-level {
+    .input-block-level, .input-large, .input-xlarge, .input-xxlarge, .uneditable-input {
     	display: block;
     	width: 100%;
-    	min-height: 30px;
+    	min-height: 28px;
         @include box-sizing(border-box);
     }
 }
