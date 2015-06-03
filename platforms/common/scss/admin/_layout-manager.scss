@@ -55,7 +55,38 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             display: none;
         }
 
-        /* THIS IS FOR PAGES */
+        > [data-lm-blocktype="container"] {
+            position: relative;
+            padding: 8px;
+            background: #e0e0e0;
+
+            .container-wrapper {
+                padding: 0 4px 8px;
+                color: #888;
+
+                .container-title {
+                    @extend .float-left;
+                    text-transform: capitalize;
+                    font-size: 0.95rem;
+
+                    .changes-indicator {
+                        margin-right: 5px;
+                    }
+                }
+
+                .container-actions {
+                    @extend .float-right;
+
+                    .g-tooltip, i {
+                        cursor: pointer;
+                        @include transition(color 0.2s);
+                        &:hover {
+                            color: darken($core-text, 10%);
+                        }
+                    }
+                }
+            }
+        }
 
         .g-grid .g-block {
             .section:first-child {
@@ -95,7 +126,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             .section-actions {
                 opacity: 0;
                 @include transition(opacity 0.2s ease-out);
-                
+
                 i {
                     cursor: pointer;
                     @include transition(color 0.2s);
@@ -341,7 +372,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 font-weight: bold;
                 color: $white;
             }
-            
+
             > span {
                 position: relative;
                 z-index: 2;
@@ -457,8 +488,12 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
 
         .block-has-changes {
-            &:not(.section):not(.atoms-section):not(.offcanvas-section) {
+            &:not(.section):not(.atoms-section):not(.offcanvas-section):not(.g-lm-container) {
                 box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
+            }
+
+            &.g-lm-container {
+                box-shadow: inset 0 2px rgba(0, 0, 0, 0.2);
             }
 
             > span > .changes-indicator {
@@ -590,7 +625,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
 
     .g5-dialog .g-pane, .g5-popover-content .g-pane {
         display: none;
-        
+
         &.active {
             display: block;
         }
@@ -679,7 +714,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             &:first-child {
                 margin-top: 0;
             }
-            
+
             &:last-child {
                 margin-bottom: 0;
             }

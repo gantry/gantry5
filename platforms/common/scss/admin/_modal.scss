@@ -54,8 +54,12 @@ html.g5-dialog-open {
         background: $white;
     }
 
-    .g5-dialog.g5-closing .g5-content,.g5-dialog.g5-closing .g5-overlay {
-        @include animation(fadeOut 0.5s);
+    .g5-dialog.g5-closing .g5-content {
+        @include animation(fadeOut 0.3s);
+    }
+
+    .g5-dialog.g5-closing .g5-overlay {
+        @include animation(fadeOut 0.3s);
     }
 
     .g5-close:before {

@@ -175,7 +175,7 @@ class Layout extends HtmlController
 
         $attributes = isset($_POST['options']) && is_array($_POST['options']) ? $_POST['options'] : [];
 
-        if ($type == 'section' || $type == 'grid' || $type == 'offcanvas') {
+        if ($type == 'section' || $type == 'container' || $type == 'grid' || $type == 'offcanvas') {
             $prefix = "particles.{$type}";
             $defaults = [];
             $attributes += (array) $item->attributes + $defaults;
@@ -211,7 +211,8 @@ class Layout extends HtmlController
             $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
                 $this->params);
         } else {
-            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section.html.twig',
+            $typeLayout = $type == 'container' ? 'container' : 'section';
+            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
                 $this->params);
         }
 
@@ -292,7 +293,7 @@ class Layout extends HtmlController
         $validator = new Blueprints();
 
         $name = $particle;
-        if ($particle == 'section' || $particle == 'grid' || $particle == 'offcanvas') {
+        if ($particle == 'section' || $particle == 'container' || $particle == 'grid' || $particle == 'offcanvas') {
             $type = $particle;
             $particle = null;
             $validator->embed('options', CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());

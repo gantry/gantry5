@@ -1324,7 +1324,9 @@ module.exports = Block;
 "use strict";
 var prime      = require('prime'),
     Base       = require('./base'),
-    $          = require('elements');
+    zen        = require('elements/zen'),
+    $          = require('elements'),
+    getAjaxURL = require('../../utils/get-ajax-url').config;
 
 var Container = new prime({
     inherits: Base,
@@ -1334,16 +1336,45 @@ var Container = new prime({
 
     constructor: function(options) {
         Base.call(this, options);
+        this.on('changed', this.hasChanged);
     },
 
     layout: function() {
         return '<div class="g-lm-container" data-lm-id="' + this.getId() + '" data-lm-blocktype="container"></div>';
+    },
+
+    onRendered: function(element, parent) {
+        if (!parent) {
+            this.addSettings(element);
+        }
+    },
+
+    hasChanged: function(state, child) {
+        var icon = this.block.find('span.title > i:first-child');
+
+        // if the the event is triggered from a grid we need to be cautious not to override the proper state
+        if (icon && child && !child.changeState) { return; }
+
+        this.block[state ? 'addClass' : 'removeClass']('block-has-changes');
+
+        if (!state && icon) { icon.remove(); }
+        if (state && !icon) { zen('i.fa.fa-circle-o.changes-indicator').top(this.block.find('span.title')); }
+    },
+
+    addSettings: function(container) {
+        var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
+            wrapper = zen('div.container-wrapper.clearfix').top(container.block),
+            title = zen('div.container-title').bottom(wrapper),
+            actions = zen('div.container-actions').bottom(wrapper);
+
+        title.html('<span class="title">' + this.getType() + '</span>');
+        actions.html('<span class="g-tooltip g-tooltip-right" data-title="Container settings"><i class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span>');
     }
 });
 
 module.exports = Container;
 
-},{"./base":9,"elements":91,"prime":259}],12:[function(require,module,exports){
+},{"../../utils/get-ajax-url":59,"./base":9,"elements":91,"elements/zen":115,"prime":259}],12:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     Base       = require('./base'),

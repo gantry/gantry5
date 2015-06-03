@@ -5,10 +5,18 @@
 {% endset %}
 
 {% if html|trim %}
-    {% set attr_id = segment.attributes.id ? ' id="' ~ segment.attributes.id|e ~ '"' %}
-    {% set classes = segment.attributes.class ? ' ' ~ segment.attributes.class|e ~ '"' %}
+    {% set classes = segment.attributes.class ? ' ' ~ segment.attributes.class|e %}
+    {% set attr_extra = '' %}
 
-    <div{{ attr_id|raw }} class="g-container{{ classes }}">
+    {% if segment.attributes.extra %}
+        {% for attributes in segment.attributes.extra %}
+            {% for key, value in attributes %}
+                {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+    <div{{ attr_extra|raw }} class="g-container{{ classes }}">
         {{ html|raw }}
     </div>
 {% endif %}
