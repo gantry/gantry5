@@ -297,12 +297,23 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
   padding: 0.375rem 0.375rem;
 }
 
-input, textarea, .uneditable-input {
-  width: 100%;
+input:not(.input-mini):not(.input-small):not(.input-medium):not(.input-large):not(.input-xlarge):not(.input-xxlarge), textarea, .uneditable-input {
+  width: calc(100% - 0.750rem);
+  max-width: 206px;
 }
 
-.input-prepend input {
+.input-prepend input:not(.input-mini):not(.input-small):not(.input-medium):not(.input-large):not(.input-xlarge):not(.input-xxlarge) {
   width: calc(100% - 2.5rem);
+}
+
+input[type="file"],
+input[type="image"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="radio"],
+input[type="checkbox"] {
+  width: auto !important;
 }
 
 .input-block-level {
