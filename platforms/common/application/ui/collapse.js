@@ -4,24 +4,27 @@ var ready  = require('elements/domready'),
     forOwn = require('mout/object/forOwn'),
     $      = require('elements');
 
-var refreshCards = function() {
-    var collapsers = $('[data-g-collapse]'), data, handle;
-    if (!collapsers) { return false; }
+var Cookie = {
+    write: function(name, value) {
+        var date = new Date();
+        date.setTime(date.getTime() + 3600 * 1000 * 24 * 365 * 10); // 10 years
 
-    collapsers.forEach(function(collapser) {
-        collapser = $(collapser);
-        data = JSON.parse(collapser.data('g-collapse'));
-        handle = data.handle ? collapser.find(data.handle) : collapser.find('.g-collapse');
-        collapser.gFastCollapse = true;
-        $('body').emit('click', {
-            target: handle,
-            element: collapser
-        });
-    });
+        var host = window.location.host.toString(),
+            domain = host.substring(host.lastIndexOf(".", host.lastIndexOf(".") - 1) + 1),
+            cookie = [name, '=', JSON.stringify(value), '; expires=', date.toGMTString(), '; domain=.', domain, '; path=/;'];
+
+        document.cookie = cookie.join('');
+    },
+
+    read: function(name) {
+        name = name.replace(/([-.*+?^${}()|[\]\/\\])/g, '\\$1');
+        var value = document.cookie.match('(?:^|;)\\s*' + name + '=([^;]*)');
+        return (value) ? JSON.parse(decodeURIComponent(value[1])) : null;
+    }
 };
 
 var loadFromStorage = function() {
-    var storage = JSON.parse(localStorage.getItem('g5-collapsed') || '{}'),
+    var storage = Cookie.read('g5-collapsed') || {},
         collapsers = $('[data-g-collapse]');
     if (!collapsers) { return false; }
 
@@ -51,14 +54,14 @@ ready(function() {
 
         data = JSON.parse(element.data('g-collapse'));
         target = $(event.target);
-        storage = JSON.parse(localStorage.getItem('g5-collapsed') || '{}');
+        storage = Cookie.read('g5-collapsed') || {};
         if (!data.handle) { data.handle = element.find('.g-collapse'); }
 
         if (!target.matches(data.handle) && !target.parent(data.handle)) { return false; }
 
         if (storage[data.id] === undefined) {
             storage[data.id] = data.collapsed;
-            localStorage.setItem('g5-collapsed', JSON.stringify(storage));
+            Cookie.write('g5-collapsed', storage);
         }
 
         var collapsed = storage[data.id],
@@ -69,10 +72,10 @@ ready(function() {
             card.removeClass('g-collapsed');
             element.removeClass('g-collapsed-main');
             /* for animations
-            panel.style({
-                overflow: 'hidden',
-                height: 0
-            });*/
+             panel.style({
+             overflow: 'hidden',
+             height: 0
+             });*/
         }
 
         var slide = function(override) {
@@ -85,7 +88,7 @@ ready(function() {
 
             data.handle.data('title', !collapsed ? data.expand : data.collapse);
             storage[data.id] = !collapsed;
-            localStorage.setItem('g5-collapsed', JSON.stringify(storage));
+            Cookie.write('g5-collapsed', storage);
         };
 
         if (element.gFastCollapse) {
@@ -109,7 +112,7 @@ ready(function() {
             parent = element.parent('.g-filter-actions'),
             container = parent.nextSibling(),
             collapsers = container.search('[data-g-collapse]'),
-            storage = JSON.parse(localStorage.getItem('g5-collapsed') || '{}'),
+            storage = Cookie.read('g5-collapsed') || {},
             panel, data, handle, card;
 
         if (!collapsers) { return; }
@@ -122,7 +125,7 @@ ready(function() {
             panel = data.target ? collapser.find(data.target) : collapser;
 
             storage[data.id] = mode;
-            localStorage.setItem('g5-collapsed', JSON.stringify(storage));
+            Cookie.write('g5-collapsed', storage);
 
 
             panel.attribute('style', null);
@@ -151,7 +154,9 @@ ready(function() {
         });
     });
 
-    loadFromStorage();
+    // this is now handled from the twig files
+    // no need to run on domready
+    //loadFromStorage();
 });
 
 module.exports = loadFromStorage;

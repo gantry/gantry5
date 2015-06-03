@@ -4,17 +4,20 @@
 {% set labels = {collapse: 'Collapse', expand: 'Expand'} %}
 
 <div id="styles">
+    {% set stored_data = get_cookie('g5-collapsed')|default('{}')|json_decode %}
     <form method="post">
         <span class="float-right">
             <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}" class="button button-secondary" data-ajax-action><i class="fa fa-fw fa-tasks"></i> <span>Recompile CSS</span></a>
             <button type="submit" class="button button-primary button-save" data-save="Styles"><i class="fa fa-fw fa-check"></i> <span>Save Styles</span></button>
         </span>
-        <h2 class="page-title" data-g-collapse="{{ labels|merge({collapsed: false, id: 'swatches', target: '~ .swatches-container' })|json_encode|e('html_attr') }}" data-g-collapse-id="swatches">
+
+        {% set collapsed = attribute(stored_data, 'swatches') %}
+        <h2 class="page-title{{ collapsed ? ' g-collapsed-main' : '' }}" data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: 'swatches', target: '~ .swatches-container' })|json_encode|e('html_attr') }}" data-g-collapse-id="swatches">
             <span class="title">Styles</span>
-            <span class="g-collapse g-tooltip" data-title="Collapse"><i class="fa fa-fw  fa-caret-up"></i></span>
+            <span class="g-collapse g-tooltip" data-title="{{ collapsed ? labels.expand : labels.collapse }}"><i class="fa fa-fw  fa-caret-up"></i></span>
         </h2>
 
-        <div class="swatches-container">
+        <div class="swatches-container{{ collapsed ? ' g-collapsed' : '' }}">
             <div class="swatches-block">
                 {% set presets = gantry.theme.presets %}
                 {% set presetKey = gantry.config.get('styles.preset') %}
@@ -66,7 +69,7 @@
 
             {% for id, block in list %}
                 {% set prefix = 'styles.' ~ id ~ '.' %}
-                {% set collapsed = block.form.collapsed %}
+                {% set collapsed = block.form.collapsed or attribute(stored_data, prefix) %}
                 <div class="card settings-block{{ collapsed ? ' g-collapsed' : '' }}">
                     <h4 data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: prefix, target: '~ .inner-params' })|json_encode|e('html_attr') }}" data-g-collapse-id="{{ prefix }}">
                         <span class="g-collapse g-tooltip" data-title="{{ collapsed ? labels.expand : labels.collapse }}"><i class="fa fa-fw  fa-caret-up"></i></span>
