@@ -1,4 +1,7 @@
 field:
+  deletion: true
+  reorder: true
+  add_new: true
   array:
     node: array
     key: name
