@@ -297,28 +297,23 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
   padding: 0.375rem 0.375rem;
 }
 
-input:not(.input-mini):not(.input-small):not(.input-medium):not(.input-large):not(.input-xlarge):not(.input-xxlarge), textarea, .uneditable-input {
-  width: calc(100% - 0.750rem);
+.platform-content input, .platform-content textarea, .platform-content select, .platform-content .uneditable-input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.input-prepend input:not(.input-mini):not(.input-small):not(.input-medium):not(.input-large):not(.input-xlarge):not(.input-xxlarge) {
-  width: calc(100% - 2.5rem);
+.uneditable-input {
+  width: 100%;
 }
 
-input[type="file"],
-input[type="image"],
-input[type="submit"],
-input[type="reset"],
-input[type="button"],
-input[type="radio"],
-input[type="checkbox"] {
-  width: auto !important;
-}
-
-.input-block-level {
+.platform-content .input-block-level {
   display: block;
   width: 100%;
   min-height: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .input-prepend .chzn-container-single .chzn-single,
