@@ -77,6 +77,16 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 .container-actions {
                     @extend .float-right;
 
+                    .g-tooltip {
+                        &:before {
+                            right: 0.1rem;
+                        }
+
+                        &:after {
+                            right: -0.2rem;
+                        }
+                    }
+
                     .g-tooltip, i {
                         cursor: pointer;
                         @include transition(color 0.2s);

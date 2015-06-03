@@ -3341,6 +3341,12 @@ body.g-prime {
 #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-title .changes-indicator {
   margin-right: 5px;
 }
+#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:before {
+  right: 0.1rem;
+}
+#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:after {
+  right: -0.2rem;
+}
 #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions i {
   cursor: pointer;
   -webkit-transition: color 0.2s;
