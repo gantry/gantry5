@@ -49,6 +49,9 @@ body.gantry5 #g5-container .search {
 body.gantry5 #g5-container .g5-dialog {
   z-index: 99999;
 }
+body.gantry5 #g5-container #assignments .settings-param-title {
+  font-size: 0.8rem;
+}
 body.gantry5 form {
   margin-bottom: 1em;
 }
