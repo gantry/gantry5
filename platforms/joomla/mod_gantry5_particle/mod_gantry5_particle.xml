@@ -12,12 +12,11 @@
 
     <files>
         <filename module="mod_gantry5_particle">mod_gantry5_particle.php</filename>
-        <folder>fields</folder>
         <folder>language</folder>
     </files>
     <config>
         <fields name="params">
-            <fieldset name="basic" addfieldpath="/modules/mod_gantry5_particle/fields">
+            <fieldset name="basic" addfieldpath="/components/com_gantry5/fields">
                 <field
                         name="particle"
                         type="particle"

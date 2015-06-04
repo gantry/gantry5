@@ -93,8 +93,10 @@ trait ThemeTrait
             $name = 'default';
         }
 
+        $configuration = isset($gantry['configuration']) ? $gantry['configuration'] : null;
+
         // Set configuration if given.
-        if ($name) {
+        if ($name && $name != $configuration) {
             $gantry['configuration'] = $name;
         }
 
