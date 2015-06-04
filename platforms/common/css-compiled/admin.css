@@ -2698,6 +2698,10 @@ body.g-prime {
   font-weight: 500;
 }
 
+#g5-container #assignments .card {
+  max-height: 540px;
+  overflow-y: auto;
+}
 #g5-container #assignments .enabler {
   float: right;
 }

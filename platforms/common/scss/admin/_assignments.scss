@@ -1,5 +1,10 @@
 #g5-container {
     #assignments {
+        .card {
+            max-height: 540px;
+            overflow-y: auto;
+        }
+
         .enabler {
             float: right;
         }
