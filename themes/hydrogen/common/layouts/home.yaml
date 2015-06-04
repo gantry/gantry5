@@ -322,7 +322,7 @@ children:
                         -
                           icon: 'fa fa-google'
                           text: Google
-                          link: 'http://plus.google.com/ rockettheme'
+                          link: 'http://plus.google.com/+rockettheme'
                           name: Google
                         -
                           icon: 'fa fa-rss'
