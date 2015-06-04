@@ -2698,18 +2698,21 @@ body.g-prime {
   font-weight: 500;
 }
 
-#g5-container #assignments .card {
-  max-height: 540px;
-  overflow-y: auto;
-}
 #g5-container #assignments .enabler {
   float: right;
+}
+#g5-container #assignments .settings-param-wrapper {
+  min-width: 100%;
+  max-height: 455px;
+  overflow-y: auto;
+  margin: 0 -10px -10px;
 }
 #g5-container #assignments .settings-param {
   display: block;
   border-bottom: 0;
   border-top: 1px solid #f4f4f4;
   margin: 0;
+  padding: 10px 15px;
 }
 #g5-container #assignments .settings-param .settings-param-title {
   line-height: 1em;

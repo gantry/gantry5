@@ -38,7 +38,7 @@
 
                     <div class="settings-param-wrapper">
                         {% for link in type.items %}
-                        <label class="settings-param">
+                        <label class="settings-param{% if link.parent %} settings-param-parent{% endif %}">
                             {% include 'forms/fields/enable/enable.html.twig' with {
                             'default': true,
                             'name': link.name,
@@ -46,7 +46,7 @@
                             'value': link.value,
                             'disabled': link.disabled
                             } %}
-                            <span class="settings-param-title">
+                            <span class="settings-param-title{% if link.parent %} settings-param-title-parent{% endif %}">
                                 {{- link.label -}}
                             </span>
                         </label>

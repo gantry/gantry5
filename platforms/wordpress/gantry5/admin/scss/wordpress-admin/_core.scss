@@ -62,8 +62,23 @@ body.gantry5 {
         }
 
         #assignments {
-            .settings-param-title {
-                font-size: 0.8rem;
+            .settings-param-wrapper {
+                .settings-param-parent {
+                    background-color: #fafafa;
+                    .enabler {
+                        display: none;
+                    }
+
+                    .settings-param-title-parent {
+                        font-weight: bold;
+                        color: #b2b2b2;
+                        text-transform: uppercase;
+                    }
+                }
+
+                .settings-param-title {
+                    font-size: 0.8rem;
+                }
             }
         }
 

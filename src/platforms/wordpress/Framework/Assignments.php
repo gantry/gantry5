@@ -239,7 +239,8 @@ class Assignments
 
                                     $items[] = [
                                         'name'     => $taxonomy->name,
-                                        'label'    => $taxonomy->label . ' :',
+                                        'label'    => $taxonomy->label,
+                                        'parent'   => true,
                                         'disabled' => true
                                     ];
 
