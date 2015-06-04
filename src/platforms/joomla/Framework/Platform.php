@@ -91,7 +91,7 @@ class Platform extends BasePlatform
         $module = is_object($id) ? $id : $this->getModule($id);
 
         $renderer = $document->loadRenderer('module');
-        $html = $renderer->render($module, $attribs);
+        $html = trim($renderer->render($module, $attribs));
 
         // Add frontend editing feature as it has only been defined for module positions.
         $app = \JFactory::getApplication();
@@ -100,8 +100,7 @@ class Platform extends BasePlatform
         $frontEditing = ($app->isSite() && $app->get('frontediting', 1) && !$user->guest);
         $menusEditing = ($app->get('frontediting', 1) == 2) && $user->authorise('core.edit', 'com_menus');
 
-        if ($frontEditing && trim($html) != ''
-            && $user->authorise('module.edit.frontend', 'com_modules.module.' . $module->id)) {
+        if ($frontEditing && $html && $user->authorise('module.edit.frontend', 'com_modules.module.' . $module->id)) {
             $displayData = [
                 'moduleHtml' => &$html,
                 'module' => $module,
@@ -111,7 +110,11 @@ class Platform extends BasePlatform
             \JLayoutHelper::render('joomla.edit.frontediting_modules', $displayData);
         }
 
-        return $html;
+        if ($html) {
+            $this->container['theme']->joomla(true);
+        }
+
+        return $html ? '<div class="platform-content">' . $html . '</div>' : $html;
     }
 
     public function displayModules($position, $attribs = [])
@@ -150,7 +153,13 @@ class Platform extends BasePlatform
 
         $renderer = $document->loadRenderer('component');
 
-        return $renderer->render(null, $params, $content ?: $document->getBuffer('component'));
+        $html = trim($renderer->render(null, $params, $content ?: $document->getBuffer('component')));
+
+        if ($html) {
+            $this->container['theme']->joomla(true);
+        }
+
+        return $html ? '<div class="platform-content">' . $html . '</div>' : $html;
     }
 
     protected function getModule($id)

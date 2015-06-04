@@ -12,7 +12,7 @@
     {% endset %}
 
     {% if html|trim %}
-    <div class="{{ not isModule ? 'g-content ' : '' }}{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
+    <div class="{{ not isModule ? 'g-content' : '' }}{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
         {{ html|raw }}
     </div>
     {% endif %}
