@@ -213,7 +213,7 @@ ready(function() {
             saves.forEach(function(save) {
                 $(save).lastSaved = new Date();
             });
-            
+
             if (page == 'layout') { lm.layoutmanager.updatePendingChanges(); }
 
             // all good, disable 'pending' flag
@@ -253,6 +253,7 @@ ready(function() {
             case 13: // return
             case 27: // esc
                 event.stopPropagation();
+
                 if (event.keyCode == 27) {
                     if (typeof element.storedTitle !== 'undefined') {
                         element.text(element.storedTitle);
@@ -261,7 +262,6 @@ ready(function() {
                 }
 
                 element.attribute('contenteditable', null);
-                window.getSelection().removeAllRanges();
                 element[0].blur();
 
                 element.emit('title-edit-exit', element.data('title-editable'), event.keyCode == 13 ? 'enter' : 'esc');
@@ -273,6 +273,7 @@ ready(function() {
 
     body.delegate('blur', '[data-title-editable]', function(event, element) {
         element = $(element);
+        element[0].scrollLeft = 0;
         element.attribute('contenteditable', null);
         element.data('title-editable', trim(element.text()));
         window.getSelection().removeAllRanges();
@@ -802,6 +803,7 @@ ready(function() {
 
     // Handles Configurations Titles Rename
     var updateTitle = function(title, original, wasCanceled) {
+            this.style('text-overflow', 'ellipsis');
             if (wasCanceled || title == original) { return; }
             var element = this,
                 href = element.data('g-config-href'),
@@ -822,7 +824,7 @@ ready(function() {
 
                     element.data('title-editable', original).text(original);
                 } else {
-                    //console.log(response);
+                    element.parent('h4').data('title', title);
                 }
 
                 parent.hideIndicator();
@@ -835,6 +837,9 @@ ready(function() {
             editables.forEach(function(editable) {
                 editable = $(editable);
                 editable.confWasAttached = true;
+                editable.on('title-edit-start', function(){
+                    editable.style('text-overflow', 'inherit');
+                });
                 editable.on('title-edit-end', updateTitle);
             });
         };

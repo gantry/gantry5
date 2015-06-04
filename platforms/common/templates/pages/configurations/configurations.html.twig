@@ -22,8 +22,9 @@
                 {%  set preset = gantry.configurations.layoutPreset(name) %}
                 <li class="card g-block size-1-4">
                     <div class="page">
-                        <h4>
-                            <span data-g-config-href="{{ gantry.route('configurations', name, 'rename')|e }}" data-g-config-method="POST" data-title-editable="{{ title|e }}" class="title">{{ title|e }}</span> <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
+                        <h4 class="g-tooltip" data-title="{{ title|e }}">
+                            <span data-g-config-href="{{ gantry.route('configurations', name, 'rename')|e }}" data-g-config-method="post" data-title-editable="{{ title|e }}" class="title">{{ title|e }}</span> <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
+                            <span class="float-right font-small">(id: {{ name }})</span>
                         </h4>
                         <div class="inner-params">
                             <img src="{{ url(preset.image|default('gantry-admin://images/layouts/default.png')) }}" />
