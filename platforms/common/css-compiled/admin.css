@@ -2705,6 +2705,7 @@ body.g-prime {
   min-width: 100%;
   max-height: 455px;
   overflow-y: auto;
+  overflow-x: hidden;
   margin: 0 -10px -10px;
 }
 #g5-container #assignments .settings-param {

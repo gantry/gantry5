@@ -49,18 +49,18 @@ body.gantry5 #g5-container .search {
 body.gantry5 #g5-container .g5-dialog {
   z-index: 99999;
 }
-body.gantry5 #g5-container #assignments .settings-param-wrapper .settings-param-parent {
+body.gantry5 #g5-container #assignments .settings-param-parent {
   background-color: #fafafa;
 }
-body.gantry5 #g5-container #assignments .settings-param-wrapper .settings-param-parent .enabler {
+body.gantry5 #g5-container #assignments .settings-param-parent .enabler {
   display: none;
 }
-body.gantry5 #g5-container #assignments .settings-param-wrapper .settings-param-parent .settings-param-title-parent {
+body.gantry5 #g5-container #assignments .settings-param-parent .settings-param-title-parent {
   font-weight: bold;
   color: #b2b2b2;
   text-transform: uppercase;
 }
-body.gantry5 #g5-container #assignments .settings-param-wrapper .settings-param-title {
+body.gantry5 #g5-container #assignments .settings-param-title {
   font-size: 0.8rem;
 }
 body.gantry5 form {
