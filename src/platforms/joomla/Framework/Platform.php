@@ -88,7 +88,8 @@ class Platform extends BasePlatform
             return '';
         }
 
-        $module = $this->getModule($id);
+        $module = is_object($id) ? $id : $this->getModule($id);
+
         $renderer = $document->loadRenderer('module');
         $html = $renderer->render($module, $attribs);
 
@@ -113,16 +114,19 @@ class Platform extends BasePlatform
         return $html;
     }
 
-    public function displayModules($position, $params = [])
+    public function displayModules($position, $attribs = [])
     {
         $document = \JFactory::getDocument();
         if (!$document instanceof \JDocumentHTML) {
             return '';
         }
 
-        $renderer = $document->loadRenderer('modules');
+        $html = '';
+        foreach (\JModuleHelper::getModules($position) as $module) {
+            $html .= $this->displayModule($module, $attribs);
+        }
 
-        return $renderer->render($position, $params);
+        return $html;
     }
 
     public function displaySystemMessages($params = [])
@@ -223,7 +227,7 @@ class Platform extends BasePlatform
     public function updates()
     {
         if (defined('GANTRY5_VERSION') && (GANTRY5_VERSION == '@version@' || substr(GANTRY5_VERSION, 0, 4) == 'dev-')) { return []; }
-        
+
         $styles = ThemeList::getThemes();
         $extension_ids = array_unique(array_map(
             function($item) {
