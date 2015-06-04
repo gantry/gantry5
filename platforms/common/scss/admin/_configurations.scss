@@ -7,8 +7,20 @@
         margin: 10px 1%;
     }
 
-    h4 > * {
-        vertical-align: middle;
+    h4 {
+        display: block;
+        > * {
+            vertical-align: middle;
+
+            &[data-g-config-href] {
+                @include ellipsis(70%);
+            }
+
+            &.float-right {
+                margin-top: 5px;
+                color: lighten($dark-gray, 20%);
+            }
+        }
     }
 
     ul {

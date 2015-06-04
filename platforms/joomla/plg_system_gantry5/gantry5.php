@@ -117,6 +117,13 @@ class plgSystemGantry5 extends JPlugin
         $themePath = $gantry['theme.path'] . '/includes/theme.php';
 
         include_once $themePath;
+
+        /** @var \Gantry\Framework\Configurations $configurations */
+        $configurations = $gantry['configurations'];
+
+        /** @var Gantry\Framework\Theme $theme */
+        $theme = $gantry['theme'];
+        $theme->setLayout($configurations->current());
     }
 
     /**

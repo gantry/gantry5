@@ -29,7 +29,7 @@ $data = json_decode($params->get('particle'), true);
 
 $context = [
     'gantry' => $gantry,
-    'isModule' => true,
+    'inContent' => true,
     'segment' => [
         'type' => $data['type'],
         'subtype' => $data['particle'],
