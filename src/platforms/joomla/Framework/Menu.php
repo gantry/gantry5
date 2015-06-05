@@ -233,6 +233,7 @@ class Menu extends AbstractMenu
                 $itemParams += [
                     'title' => $menuItem->title,
                     'subtitle' => $menuItem->params->get('menu-anchor_title', ''),
+                    'anchor_class' => $menuItem->params->get('menu-anchor_css', ''),
                     'image' => $menuItem->params->get('menu_image', ''),
                     'icon_only' => !$menuItem->params->get('menu_text', 1),
                     'target' => $target
