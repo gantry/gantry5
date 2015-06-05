@@ -49,13 +49,13 @@ body.gantry5 #g5-container .search {
 body.gantry5 #g5-container .g5-dialog {
   z-index: 99999;
 }
-body.gantry5 #g5-container #assignments .settings-param-parent {
+body.gantry5 #g5-container #assignments .settings-param-section {
   background-color: #fafafa;
 }
-body.gantry5 #g5-container #assignments .settings-param-parent .enabler {
+body.gantry5 #g5-container #assignments .settings-param-section .enabler {
   display: none;
 }
-body.gantry5 #g5-container #assignments .settings-param-parent .settings-param-title-parent {
+body.gantry5 #g5-container #assignments .settings-param-section .settings-param-section-title {
   font-weight: bold;
   color: #b2b2b2;
   text-transform: uppercase;
