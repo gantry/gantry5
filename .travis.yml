@@ -33,9 +33,6 @@ script:
   - echo "Branch ($TRAVIS_BRANCH)"
   - cd $TRAVIS_BUILD_DIR/bin/build
   - if [ "$TRAVIS_BRANCH" == "develop" ]; then
-      cd $TRAVIS_BUILD_DIR/platforms/joomla;
-      sed -i -e "s/<version>.*<\/version>/<version>dev-$SHORT_COMMIT<\/version>/g" pkg_gantry5.xml;
-      cd $TRAVIS_BUILD_DIR/bin/build;
       php build.php dev -propertyfile release.ini -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dstr.fileversion=_develop;
     elif [ ! -z "$TRAVIS_TAG" ]; then
       php build.php prod -propertyfile release.ini -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dxml.version=$TRAVIS_TAG;
