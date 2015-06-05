@@ -89,6 +89,7 @@ class Platform extends BasePlatform
         }
 
         $module = is_object($id) ? $id : $this->getModule($id);
+        $isGantry = \strpos($module->module, 'gantry5') !== false;
 
         $renderer = $document->loadRenderer('module');
         $html = trim($renderer->render($module, $attribs));
@@ -110,11 +111,12 @@ class Platform extends BasePlatform
             \JLayoutHelper::render('joomla.edit.frontediting_modules', $displayData);
         }
 
-        if ($html) {
+        if ($html && !$isGantry) {
             $this->container['theme']->joomla(true);
+            return '<div class="platform-content">' . $html . '</div>';
         }
 
-        return $html ? '<div class="platform-content">' . $html . '</div>' : $html;
+        return $html;
     }
 
     public function displayModules($position, $attribs = [])
@@ -155,11 +157,14 @@ class Platform extends BasePlatform
 
         $html = trim($renderer->render(null, $params, $content ?: $document->getBuffer('component')));
 
-        if ($html) {
+        $isGantry = \strpos(\JFactory::getApplication()->input->getCmd('option'), 'gantry5') !== false;
+
+        if ($html && !$isGantry) {
             $this->container['theme']->joomla(true);
+            return '<div class="platform-content">' . $html . '</div>';
         }
 
-        return $html ? '<div class="platform-content">' . $html . '</div>' : $html;
+        return $html;
     }
 
     protected function getModule($id)
