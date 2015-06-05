@@ -1,131 +1,130 @@
-body {
-    // Tooltips
-    .tip-wrap {
-    	color: #fff;
-    	background-color: #000;
-    }
 
-    // Search Highlight
-    .search span.highlight {
-    	background-color: lighten($off-white, 2%);
-    }
+// Tooltips
+.tip-wrap {
+	color: #fff;
+	background-color: #000;
+}
 
-    // Images
-    .img-polaroid {
-    	background-color: $white;
-    	border: 1px solid rgba(0, 0, 0, 0.2);
-    	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
+// Search Highlight
+.search span.highlight {
+	background-color: lighten($off-white, 2%);
+}
 
-    // System Messages and Alerts
-    .muted {
-    	color: #999999;
-    }
+// Images
+.img-polaroid {
+	background-color: $white;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
 
-    a.muted:hover,
-    a.muted:focus {
-    	color: #808080;
-    }
+// System Messages and Alerts
+.muted {
+	color: #999999;
+}
 
-    .alert {
-    	background-color: lighten($warning-color, 41%);
-    	border-color: lighten($warning-color, 34%);
+a.muted:hover,
+a.muted:focus {
+	color: #808080;
+}
 
-    	a, a:hover, .alert-link, .alert-link:hover {
-    		color: darken($warning-color, 10%);
-    		font-weight: bold;
+.alert {
+	background-color: lighten($warning-color, 41%);
+	border-color: lighten($warning-color, 34%);
 
-    		&:hover {
-    			text-decoration: underline;
-    		}
-    	}
-    }
+	a, a:hover, .alert-link, .alert-link:hover {
+		color: darken($warning-color, 10%);
+		font-weight: bold;
 
-    .alert,
-    .alert h4,
-    .text-warning {
-    	color: $warning-color;
-    }
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
 
-    a.text-warning:hover,
-    a.text-warning:focus {
-    	color: darken($warning-color, 5%);
-    }
+.alert,
+.alert h4,
+.text-warning {
+	color: $warning-color;
+}
 
-    .alert-success {
-    	color: $success-color;
-    	background-color: lighten($success-color, 50%);
-    	border-color: lighten($success-color, 42%);
+a.text-warning:hover,
+a.text-warning:focus {
+	color: darken($warning-color, 5%);
+}
 
-    	a, a:hover, .alert-link, .alert-link:hover {
-    		color: darken($success-color, 10%);
-    		font-weight: bold;
+.alert-success {
+	color: $success-color;
+	background-color: lighten($success-color, 50%);
+	border-color: lighten($success-color, 42%);
 
-    		&:hover {
-    			text-decoration: underline;
-    		}
-    	}
-    }
+	a, a:hover, .alert-link, .alert-link:hover {
+		color: darken($success-color, 10%);
+		font-weight: bold;
 
-    .alert-success h4,
-    .text-success {
-    	color: $success-color;
-    }
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
 
-    a.text-success:hover,
-    a.text-success:focus {
-    	color: darken($success-color, 5%);
-    }
+.alert-success h4,
+.text-success {
+	color: $success-color;
+}
 
-    .alert-danger,
-    .alert-error {
-    	color: $error-color;
-    	background-color: lighten($error-color, 43%);
-    	border-color: lighten($error-color, 37%);
+a.text-success:hover,
+a.text-success:focus {
+	color: darken($success-color, 5%);
+}
 
-    	a, a:hover, .alert-link, .alert-link:hover {
-    		color: darken($error-color, 10%);
-    		font-weight: bold;
+.alert-danger,
+.alert-error {
+	color: $error-color;
+	background-color: lighten($error-color, 43%);
+	border-color: lighten($error-color, 37%);
 
-    		&:hover {
-    			text-decoration: underline;
-    		}
-    	}
-    }
+	a, a:hover, .alert-link, .alert-link:hover {
+		color: darken($error-color, 10%);
+		font-weight: bold;
 
-    .alert-danger h4,
-    .alert-error h4,
-    .text-error {
-    	color: $error-color;
-    }
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
 
-    a.text-error:hover,
-    a.text-error:focus {
-    	color: darken($error-color, 5%);
-    }
+.alert-danger h4,
+.alert-error h4,
+.text-error {
+	color: $error-color;
+}
 
-    .alert-info {
-    	color: $info-color;
-    	background-color: lighten($info-color, 47%);
-    	border-color: lighten($info-color, 40%);
+a.text-error:hover,
+a.text-error:focus {
+	color: darken($error-color, 5%);
+}
 
-    	a, a:hover, .alert-link, .alert-link:hover {
-    		color: darken($info-color, 10%);
-    		font-weight: bold;
+.alert-info {
+	color: $info-color;
+	background-color: lighten($info-color, 47%);
+	border-color: lighten($info-color, 40%);
 
-    		&:hover {
-    			text-decoration: underline;
-    		}
-    	}
-    }
+	a, a:hover, .alert-link, .alert-link:hover {
+		color: darken($info-color, 10%);
+		font-weight: bold;
 
-    .alert-info h4,
-    .text-info {
-    	color: $info-color;
-    }
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
 
-    a.text-info:hover,
-    a.text-info:focus {
-    	color: darken($info-color, 5%);
-    }
+.alert-info h4,
+.text-info {
+	color: $info-color;
+}
+
+a.text-info:hover,
+a.text-info:focus {
+	color: darken($info-color, 5%);
 }
