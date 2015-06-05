@@ -55,6 +55,7 @@ configuration:
       - custom
     persistent:
       - hydrogen
+    overrides:
       - hydrogen-joomla
       - custom
 

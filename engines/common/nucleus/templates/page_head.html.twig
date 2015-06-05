@@ -10,6 +10,14 @@
     {% endblock -%}
 
     {% block head_platform %}{% endblock %}
+
+     {% block head_overrides -%}
+         {% for css in gantry.theme.configuration.css.overrides %}
+             {%- set url = url(gantry.theme.css(css)) %}{% if url %}
+             <link rel="stylesheet" href="{{ url(gantry.theme.css(css)) }}" type="text/css"/>
+         {% endif %}
+         {%- endfor %}
+     {% endblock -%}
 {% endset %}
 {% do parse_assets(headStylesheets, 'head', 10) -%}
 

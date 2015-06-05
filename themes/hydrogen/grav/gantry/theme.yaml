@@ -54,6 +54,7 @@ configuration:
       - custom
     persistent:
       - hydrogen
+    overrides:
       - custom
 
   dependencies:
