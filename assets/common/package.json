@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "dependencies": {
     "domready": "^1.0.8",
-    "elements": "git://github.com/w00fz/elements.git",
+    "elements": "^0.6.0",
     "mout": "^0.11.0",
-    "prime": "^0.4.2",
+    "prime": "^0.5.0",
     "prime-util": "^0.5.0",
-    "slick": "git://github.com/kamicane/slick.git#master"
+    "slick": "^1.12.2"
   },
   "devDependencies": {
     "browserify": "^10.2.3",
-    "gulp": "^3.8.11",
+    "gulp": "^3.9.0",
     "gulp-if": "^1.2.5",
     "gulp-ruby-sass": "^1.0.5",
     "gulp-sourcemaps": "^1.5.2",

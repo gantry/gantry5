@@ -101,9 +101,13 @@ Once that’s done, you can install **Gulp**. We recommend installing Gulp globa
 
 Now that you have the required pieces, the next step is to install all of the JS module dependencies. To do so, make sure you are at the root of the Gantry 5 project, and run the command `npm install`.
 
-Because we have two sets of JS applications, one for admin and one for the site, you will also need to install the JS modules for those. Still, from the root of your project you can run this command:
+Because we have different sets of JS and SCSS applications for admin, site, nucleus, you will also need to install the node modules for all of them. Still, from the root of your project you can run the command `gulp -up` which will take care of all the sub projects.
 
-`cd platforms/common/ && npm install && cd ../../assets/common/ && npm install && cd ../../`
+> Along with the `-up` command, you can alternatively use `-update`, `--update`, `-up`, `--up`, `-install`,
+> `--install`, `-inst`, `--inst`, `-go`, `--go`, `-deps`, `--deps`.
+> Whichever is easier for you to remember. The code will understand on its own if it needs to install for the first time or just update the node modules.
+>
+> Note that this might take a few moments.
 
 At this point you have everything you need to run Gulp. Just type the command `gulp` and you should see the CSS and JS getting compiled.
 
@@ -111,5 +115,6 @@ We provide a few handy tasks as well:
 
   1. `$ gulp` / `$ gulp all`: Compiles all of the CSS and JS in the project.
   2. `$ gulp watch`: Starts the compilers in `watch` mode. Any change applied to targeted **JS** or **SCSS** files will trigger an automatic recompilation.
-  3. `$ gulp css` / `$ gulp js`: Compiles all of either CSS or JS files, in case you are only working on one and not the other.
-  4. `$ gulp —prod`: Compiles every CSS and JS in production mode. The compiled files won’t have source maps and will be compressed (this usually takes slightly longer than normal mode).
+  3. `$ gulp watch --css` / `$ gulp watch --js`: Starts the compilers in `watch` mode and listens to only **SCSS** or **JS** changes. Useful if you are only focusing on one and not the other.
+  4. `$ gulp css` / `$ gulp js`: Compiles all of either CSS or JS files, in case you are only working on one and not the other.
+  5. `$ gulp —prod`: Compiles every CSS and JS in production mode. The compiled files won’t have source maps and will be compressed (this usually takes slightly longer than normal mode).

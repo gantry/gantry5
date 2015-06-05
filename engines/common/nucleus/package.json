@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "dependencies": {},
   "devDependencies": {
-    "browserify": "^9.0.8",
-    "gulp": "^3.8.11",
+    "browserify": "^10.2.3",
+    "gulp": "^3.9.0",
     "gulp-if": "^1.2.5",
     "gulp-ruby-sass": "^1.0.5",
     "gulp-sourcemaps": "^1.5.2",
