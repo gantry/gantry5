@@ -38,7 +38,7 @@ $gantry = \Gantry\Framework\Gantry::instance();
 /** @var Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
 
-$params = $menu->getParams($menuItem->id);
+$params = $app->getParams();
 
 /** @var object $params */
 $data = json_decode($params->get('particle'), true);
@@ -52,8 +52,9 @@ $context = [
     'inContent' => true,
     'segment' => [
         'type' => $data['type'],
+        'classes' => $params->get('pageclass_sfx'),
         'subtype' => $data['particle'],
-        'attributes' =>  $data['options']['particle'],
+        'attributes' => $data['options']['particle'],
     ]
 ];
 
