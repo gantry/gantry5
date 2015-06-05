@@ -1387,10 +1387,10 @@ module.exports = Block;
 
 },{"../../utils/elements.utils":54,"./base":9,"elements/zen":115,"mout/function/bind":169,"mout/number/enforcePrecision":197,"prime":259}],11:[function(require,module,exports){
 "use strict";
-var prime      = require('prime'),
-    Base       = require('./base'),
-    zen        = require('elements/zen'),
-    $          = require('elements'),
+var prime = require('prime'),
+    Base = require('./base'),
+    zen = require('elements/zen'),
+    $ = require('elements'),
     getAjaxURL = require('../../utils/get-ajax-url').config;
 
 var Container = new prime({
@@ -1423,14 +1423,17 @@ var Container = new prime({
         this.block[state ? 'addClass' : 'removeClass']('block-has-changes');
 
         if (!state && icon) { icon.remove(); }
-        if (state && !icon) { zen('i.fa.fa-circle-o.changes-indicator').top(this.block.find('span.title')); }
+        if (state && !icon) {
+            var title = this.block.find('span.title');
+            if (title) { zen('i.fa.fa-circle-o.changes-indicator').top(title); }
+        }
     },
 
     addSettings: function(container) {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
-            wrapper = zen('div.container-wrapper.clearfix').top(container.block),
-            title = zen('div.container-title').bottom(wrapper),
-            actions = zen('div.container-actions').bottom(wrapper);
+            wrapper      = zen('div.container-wrapper.clearfix').top(container.block),
+            title        = zen('div.container-title').bottom(wrapper),
+            actions      = zen('div.container-actions').bottom(wrapper);
 
         title.html('<span class="title">' + this.getType() + '</span>');
         actions.html('<span class="g-tooltip g-tooltip-right" data-title="Container settings"><i class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span>');
