@@ -334,7 +334,7 @@ var modules = {
 window.G5 = modules;
 module.exports = modules;
 
-},{"./assignments":3,"./configurations":5,"./fields":6,"./lm":24,"./menu":28,"./particles":36,"./styles":40,"./ui":45,"./ui/popover":47,"./utils/ajaxify-links":52,"./utils/field-validation":56,"./utils/flags-state":57,"./utils/get-ajax-suffix":58,"./utils/get-ajax-url":59,"./utils/rAF-polyfill":62,"agent":64,"elements":91,"elements/attributes":86,"elements/delegation":88,"elements/domready":89,"elements/events":90,"elements/insertion":92,"elements/traversal":114,"elements/zen":115,"moofx":116,"mout/queryString/setParam":220,"mout/string/interpolate":231,"mout/string/trim":238}],2:[function(require,module,exports){
+},{"./assignments":3,"./configurations":5,"./fields":6,"./lm":24,"./menu":28,"./particles":36,"./styles":40,"./ui":45,"./ui/popover":47,"./utils/ajaxify-links":52,"./utils/field-validation":56,"./utils/flags-state":57,"./utils/get-ajax-suffix":58,"./utils/get-ajax-url":59,"./utils/rAF-polyfill":62,"agent":64,"elements":91,"elements/attributes":86,"elements/delegation":88,"elements/domready":89,"elements/events":90,"elements/insertion":92,"elements/traversal":97,"elements/zen":98,"moofx":99,"mout/queryString/setParam":204,"mout/string/interpolate":215,"mout/string/trim":222}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -615,7 +615,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../utils/elements.utils":54,"elements/domready":89,"mout/array/forEach":153,"mout/object/merge":210,"mout/string/trim":238,"prime/map":260}],4:[function(require,module,exports){
+},{"../utils/elements.utils":54,"elements/domready":89,"mout/array/forEach":136,"mout/object/merge":194,"mout/string/trim":222,"prime/map":245}],4:[function(require,module,exports){
 "use strict";
 
 var $             = require('elements'),
@@ -692,7 +692,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":45,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"agent":64,"elements":91,"elements/domready":89,"mout/string/trim":238}],5:[function(require,module,exports){
+},{"../ui":45,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"agent":64,"elements":91,"elements/domready":89,"mout/string/trim":222}],5:[function(require,module,exports){
 "use strict";
 
 var $             = require('elements'),
@@ -860,7 +860,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":45,"../utils/flags-state":57,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"./dropdown-edit":4,"agent":64,"elements":91,"elements/domready":89,"mout/object/keys":209,"mout/string/trim":238}],6:[function(require,module,exports){
+},{"../ui":45,"../utils/flags-state":57,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"./dropdown-edit":4,"agent":64,"elements":91,"elements/domready":89,"mout/object/keys":193,"mout/string/trim":222}],6:[function(require,module,exports){
 "use strict";
 var ready      = require('elements/domready'),
     $          = require('elements/attributes'),
@@ -1036,7 +1036,7 @@ module.exports = {
     collect: collectFieldsValues
 };
 
-},{"../utils/flags-state":57,"../utils/history":61,"elements/attributes":86,"elements/domready":89,"mout/array/invoke":157,"mout/collection/forEach":166,"mout/lang/deepEquals":177,"prime/map":260}],7:[function(require,module,exports){
+},{"../utils/flags-state":57,"../utils/history":61,"elements/attributes":86,"elements/domready":89,"mout/array/invoke":140,"mout/collection/forEach":149,"mout/lang/deepEquals":161,"prime/map":245}],7:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('elements'),
@@ -1089,7 +1089,7 @@ var Atom = new prime({
 
 module.exports = Atom;
 
-},{"../../utils/get-ajax-url":59,"./base":9,"elements":91,"elements/zen":115,"prime":259}],8:[function(require,module,exports){
+},{"../../utils/get-ajax-url":59,"./base":9,"elements":91,"elements/zen":98,"prime":244}],8:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     Section = require('./section');
@@ -1121,7 +1121,7 @@ var Atoms = new prime({
 
 module.exports = Atoms;
 
-},{"./section":18,"prime":259}],9:[function(require,module,exports){
+},{"./section":18,"prime":244}],9:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     Options = require('prime-util/prime/options'),
@@ -1273,7 +1273,7 @@ var Base = new prime({
 
 module.exports = Base;
 
-},{"elements":91,"elements/traversal":114,"elements/zen":115,"mout/object/get":206,"mout/object/has":207,"mout/object/set":214,"mout/random/guid":222,"mout/string/trim":238,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258}],10:[function(require,module,exports){
+},{"elements":91,"elements/traversal":97,"elements/zen":98,"mout/object/get":190,"mout/object/has":191,"mout/object/set":198,"mout/random/guid":206,"mout/string/trim":222,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],10:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     Base      = require('./base'),
@@ -1385,7 +1385,7 @@ var Block = new prime({
 
 module.exports = Block;
 
-},{"../../utils/elements.utils":54,"./base":9,"elements/zen":115,"mout/function/bind":169,"mout/number/enforcePrecision":197,"prime":259}],11:[function(require,module,exports){
+},{"../../utils/elements.utils":54,"./base":9,"elements/zen":98,"mout/function/bind":152,"mout/number/enforcePrecision":181,"prime":244}],11:[function(require,module,exports){
 "use strict";
 var prime = require('prime'),
     Base = require('./base'),
@@ -1442,7 +1442,7 @@ var Container = new prime({
 
 module.exports = Container;
 
-},{"../../utils/get-ajax-url":59,"./base":9,"elements":91,"elements/zen":115,"prime":259}],12:[function(require,module,exports){
+},{"../../utils/get-ajax-url":59,"./base":9,"elements":91,"elements/zen":98,"prime":244}],12:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     Base       = require('./base'),
@@ -1487,7 +1487,7 @@ var Grid = new prime({
 
 module.exports = Grid;
 
-},{"../../utils/get-ajax-url":59,"./base":9,"elements":91,"prime":259}],13:[function(require,module,exports){
+},{"../../utils/get-ajax-url":59,"./base":9,"elements":91,"prime":244}],13:[function(require,module,exports){
 module.exports = {
     base: require('./base'),
     atom: require('./atom'),
@@ -1532,7 +1532,7 @@ var Offcanvas = new prime({
 
 module.exports = Offcanvas;
 
-},{"../../utils/get-ajax-url":59,"./section":18,"prime":259}],15:[function(require,module,exports){
+},{"../../utils/get-ajax-url":59,"./section":18,"prime":244}],15:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     Particle = require('./particle');
@@ -1548,7 +1548,7 @@ var Pagecontent = new prime({
 
 module.exports = Pagecontent;
 
-},{"./particle":16,"prime":259}],16:[function(require,module,exports){
+},{"./particle":16,"prime":244}],16:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('elements'),
@@ -1601,7 +1601,7 @@ var Particle = new prime({
 
 module.exports = Particle;
 
-},{"../../utils/get-ajax-url":59,"./atom":7,"elements":91,"mout/function/bind":169,"mout/number/enforcePrecision":197,"prime":259}],17:[function(require,module,exports){
+},{"../../utils/get-ajax-url":59,"./atom":7,"elements":91,"mout/function/bind":152,"mout/number/enforcePrecision":181,"prime":244}],17:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     trim     = require('mout/string/trim'),
@@ -1641,7 +1641,7 @@ var Position = new prime({
 
 module.exports = Position;
 
-},{"./particle":16,"mout/string/trim":238,"prime":259}],18:[function(require,module,exports){
+},{"./particle":16,"mout/string/trim":222,"prime":244}],18:[function(require,module,exports){
 "use strict";
 var prime = require('prime'),
     Base  = require('./base'),
@@ -1715,7 +1715,7 @@ var Section = new prime({
 
 module.exports = Section;
 
-},{"../../utils/get-ajax-url":59,"./base":9,"./grid":12,"elements":91,"elements/insertion":92,"elements/zen":115,"mout/function/bind":169,"prime":259,"prime-util/prime/bound":255}],19:[function(require,module,exports){
+},{"../../utils/get-ajax-url":59,"./base":9,"./grid":12,"elements":91,"elements/insertion":92,"elements/zen":98,"mout/function/bind":152,"prime":244,"prime-util/prime/bound":240}],19:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     Particle = require('./particle');
@@ -1733,7 +1733,7 @@ var Spacer = new prime({
 
 module.exports = Spacer;
 
-},{"./particle":16,"prime":259}],20:[function(require,module,exports){
+},{"./particle":16,"prime":244}],20:[function(require,module,exports){
 "use strict";
 var prime       = require('prime'),
     Pagecontent = require('./pagecontent');
@@ -1748,7 +1748,7 @@ var SystemMessages = new prime({
 
 module.exports = SystemMessages;
 
-},{"./pagecontent":15,"prime":259}],21:[function(require,module,exports){
+},{"./pagecontent":15,"prime":244}],21:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     $       = require('elements'),
@@ -1985,7 +1985,7 @@ var Builder = new prime({
 
 module.exports = Builder;
 
-},{"./blocks/":13,"elements":91,"elements/attributes":86,"elements/traversal":114,"mout/array/flatten":152,"mout/collection/forEach":166,"mout/collection/size":168,"mout/lang/isArray":179,"mout/object/deepFillIn":199,"mout/object/forOwn":205,"mout/object/get":206,"mout/object/omit":213,"mout/object/set":214,"mout/object/unset":217,"mout/random/guid":222,"mout/string/repeat":235,"mout/string/rpad":236,"prime":259,"prime/emitter":258}],22:[function(require,module,exports){
+},{"./blocks/":13,"elements":91,"elements/attributes":86,"elements/traversal":97,"mout/array/flatten":135,"mout/collection/forEach":149,"mout/collection/size":151,"mout/lang/isArray":163,"mout/object/deepFillIn":183,"mout/object/forOwn":189,"mout/object/get":190,"mout/object/omit":197,"mout/object/set":198,"mout/object/unset":201,"mout/random/guid":206,"mout/string/repeat":219,"mout/string/rpad":220,"prime":244,"prime/emitter":243}],22:[function(require,module,exports){
 "use strict";
 var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
@@ -2193,7 +2193,7 @@ var Resizer = new prime({
 
 module.exports = Resizer;
 
-},{"../ui/drag.events":43,"../utils/elements.utils":54,"elements/delegation":88,"elements/events":90,"mout/function/bind":169,"mout/lang/isString":187,"mout/math/clamp":191,"mout/math/map":193,"mout/number/enforcePrecision":197,"mout/object/get":206,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258}],23:[function(require,module,exports){
+},{"../ui/drag.events":43,"../utils/elements.utils":54,"elements/delegation":88,"elements/events":90,"mout/function/bind":152,"mout/lang/isString":171,"mout/math/clamp":175,"mout/math/map":177,"mout/number/enforcePrecision":181,"mout/object/get":190,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],23:[function(require,module,exports){
 var prime      = require('prime'),
     Emitter    = require('prime/emitter'),
     slice      = require('mout/array/slice'),
@@ -2282,7 +2282,7 @@ var History = new prime({
 
 module.exports = History;
 
-},{"mout/array/slice":161,"mout/lang/deepEquals":177,"mout/object/merge":210,"prime":259,"prime/emitter":258}],24:[function(require,module,exports){
+},{"mout/array/slice":144,"mout/lang/deepEquals":161,"mout/object/merge":194,"prime":244,"prime/emitter":243}],24:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     $             = require('elements/attributes'),
@@ -2768,7 +2768,7 @@ module.exports = {
     savestate: savestate
 };
 
-},{"../ui":45,"../ui/popover":47,"../utils/field-validation":56,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"../utils/history":61,"../utils/save-state":63,"./builder":21,"./history":23,"./layoutmanager":25,"agent":64,"elements/attributes":86,"elements/domready":89,"elements/zen":115,"mout/array/contains":145,"mout/collection/forEach":166,"mout/collection/size":168,"mout/string/trim":238}],25:[function(require,module,exports){
+},{"../ui":45,"../ui/popover":47,"../utils/field-validation":56,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"../utils/history":61,"../utils/save-state":63,"./builder":21,"./history":23,"./layoutmanager":25,"agent":64,"elements/attributes":86,"elements/domready":89,"elements/zen":98,"mout/array/contains":128,"mout/collection/forEach":149,"mout/collection/size":151,"mout/string/trim":222}],25:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
@@ -3303,7 +3303,7 @@ var LayoutManager = new prime({
 
 module.exports = LayoutManager;
 
-},{"../ui/drag.drop":42,"../ui/eraser":44,"../utils/elements.utils":54,"../utils/flags-state":57,"./blocks":13,"./drag.resizer":22,"elements/zen":115,"mout/array/every":148,"mout/collection/find":165,"mout/function/bind":169,"mout/lang/deepEquals":177,"mout/lang/isArray":179,"mout/lang/isObject":184,"mout/number/enforcePrecision":197,"mout/object/get":206,"mout/object/keys":209,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258}],26:[function(require,module,exports){
+},{"../ui/drag.drop":42,"../ui/eraser":44,"../utils/elements.utils":54,"../utils/flags-state":57,"./blocks":13,"./drag.resizer":22,"elements/zen":98,"mout/array/every":131,"mout/collection/find":148,"mout/function/bind":152,"mout/lang/deepEquals":161,"mout/lang/isArray":163,"mout/lang/isObject":168,"mout/number/enforcePrecision":181,"mout/object/get":190,"mout/object/keys":193,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],26:[function(require,module,exports){
 "use strict";
 var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
@@ -3576,7 +3576,7 @@ var Resizer = new prime({
 
 module.exports = Resizer;
 
-},{"../ui/drag.events":43,"../utils/elements.utils":54,"elements/delegation":88,"elements/events":90,"mout/function/bind":169,"mout/lang/isString":187,"mout/math/clamp":191,"mout/math/map":193,"mout/number/enforcePrecision":197,"mout/object/get":206,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258}],27:[function(require,module,exports){
+},{"../ui/drag.events":43,"../utils/elements.utils":54,"elements/delegation":88,"elements/events":90,"mout/function/bind":152,"mout/lang/isString":171,"mout/math/clamp":175,"mout/math/map":177,"mout/number/enforcePrecision":181,"mout/object/get":190,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],27:[function(require,module,exports){
 "use strict";
 var $             = require('elements'),
     zen           = require('elements/zen'),
@@ -3863,7 +3863,7 @@ ready(function() {
 });
 
 module.exports = StepOne;
-},{"../ui":45,"../utils/flags-state":57,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"agent":64,"elements":91,"elements/domready":89,"elements/zen":115,"mout/array/indexOf":154,"mout/lang/deepEquals":177,"mout/string/trim":238}],28:[function(require,module,exports){
+},{"../ui":45,"../utils/flags-state":57,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"agent":64,"elements":91,"elements/domready":89,"elements/zen":98,"mout/array/indexOf":137,"mout/lang/deepEquals":161,"mout/string/trim":222}],28:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     MenuManager   = require('./menumanager'),
@@ -4144,7 +4144,7 @@ ready(function() {
 module.exports = {
     menumanager: menumanager
 };
-},{"../ui":45,"../utils/field-validation":56,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"./extra-items":27,"./menumanager":29,"agent":64,"elements":91,"elements/domready":89,"elements/zen":115,"mout/array/contains":145,"mout/math/clamp":191,"mout/string/trim":238}],29:[function(require,module,exports){
+},{"../ui":45,"../utils/field-validation":56,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"./extra-items":27,"./menumanager":29,"agent":64,"elements":91,"elements/domready":89,"elements/zen":98,"mout/array/contains":128,"mout/math/clamp":175,"mout/string/trim":222}],29:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     $         = require('../utils/elements.utils'),
@@ -4619,7 +4619,7 @@ var MenuManager = new prime({
 
 module.exports = MenuManager;
 
-},{"../ui/drag.drop":42,"../ui/eraser":44,"../utils/elements.utils":54,"./drag.resizer":26,"elements/zen":115,"mout/array/every":148,"mout/array/indexOf":154,"mout/array/last":158,"mout/function/bind":169,"mout/lang/deepClone":176,"mout/lang/isArray":179,"mout/lang/isObject":184,"mout/object/equals":201,"mout/object/get":206,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258}],30:[function(require,module,exports){
+},{"../ui/drag.drop":42,"../ui/eraser":44,"../utils/elements.utils":54,"./drag.resizer":26,"elements/zen":98,"mout/array/every":131,"mout/array/indexOf":137,"mout/array/last":141,"mout/function/bind":152,"mout/lang/deepClone":160,"mout/lang/isArray":163,"mout/lang/isObject":168,"mout/object/equals":185,"mout/object/get":190,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],30:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),
@@ -4907,7 +4907,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":45,"../../utils/field-validation":56,"../../utils/get-ajax-suffix":58,"../../utils/get-ajax-url":59,"agent":64,"elements":91,"elements/domready":89,"elements/insertion":92,"elements/zen":115,"mout/array/indexOf":154,"mout/array/last":158,"mout/string/trim":238,"sortablejs":274}],31:[function(require,module,exports){
+},{"../../ui":45,"../../utils/field-validation":56,"../../utils/get-ajax-suffix":58,"../../utils/get-ajax-url":59,"agent":64,"elements":91,"elements/domready":89,"elements/insertion":92,"elements/zen":98,"mout/array/indexOf":137,"mout/array/last":141,"mout/string/trim":222,"sortablejs":250}],31:[function(require,module,exports){
 "use strict";
 
 var prime      = require('prime'),
@@ -5646,7 +5646,7 @@ ready(function() {
 
 module.exports = ColorPicker;
 
-},{"../../ui/drag.events":43,"elements":91,"elements/domready":89,"elements/zen":115,"mout/collection/forEach":166,"mout/function/bind":169,"mout/math/clamp":191,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258}],32:[function(require,module,exports){
+},{"../../ui/drag.events":43,"elements":91,"elements/domready":89,"elements/zen":98,"mout/collection/forEach":149,"mout/function/bind":152,"mout/math/clamp":175,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],32:[function(require,module,exports){
 "use strict";
 
 var $             = require('../../utils/elements.utils'),
@@ -6013,7 +6013,7 @@ domready(function() {
 
 
 module.exports = FilePicker;
-},{"../../ui":45,"../../utils/elements.utils":54,"../../utils/get-ajax-suffix":58,"../../utils/get-ajax-url":59,"agent":64,"dropzone":85,"elements/domready":89,"elements/zen":115,"mout/function/bind":169,"mout/lang/deepClone":176,"mout/object/deepFillIn":199,"mout/string/rtrim":237,"prime":259}],33:[function(require,module,exports){
+},{"../../ui":45,"../../utils/elements.utils":54,"../../utils/get-ajax-suffix":58,"../../utils/get-ajax-url":59,"agent":64,"dropzone":85,"elements/domready":89,"elements/zen":98,"mout/function/bind":152,"mout/lang/deepClone":160,"mout/object/deepFillIn":183,"mout/string/rtrim":221,"prime":244}],33:[function(require,module,exports){
 "use strict";
 // fonts list: https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB2yJM8DBwt66u2MVRgb6M4t9CqkW7_IRY
 var prime         = require('prime'),
@@ -6750,7 +6750,7 @@ domready(function() {
 });
 
 module.exports = Fonts;
-},{"../../ui":45,"../../utils/decouple":53,"../../utils/elements.utils":54,"../../utils/elements.viewport":55,"../../utils/get-ajax-suffix":58,"../../utils/get-ajax-url":59,"./webfont":34,"agent":64,"async":84,"elements/domready":89,"elements/zen":115,"mout/array/append":143,"mout/array/combine":144,"mout/array/contains":145,"mout/array/find":150,"mout/array/forEach":153,"mout/array/insert":155,"mout/array/intersection":156,"mout/array/last":158,"mout/array/map":159,"mout/array/removeAll":160,"mout/array/split":163,"mout/function/bind":169,"mout/object/merge":210,"mout/string/properCase":234,"mout/string/trim":238,"mout/string/unhyphenate":240,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258,"prime/map":260}],34:[function(require,module,exports){
+},{"../../ui":45,"../../utils/decouple":53,"../../utils/elements.utils":54,"../../utils/elements.viewport":55,"../../utils/get-ajax-suffix":58,"../../utils/get-ajax-url":59,"./webfont":34,"agent":64,"async":84,"elements/domready":89,"elements/zen":98,"mout/array/append":126,"mout/array/combine":127,"mout/array/contains":128,"mout/array/find":133,"mout/array/forEach":136,"mout/array/insert":138,"mout/array/intersection":139,"mout/array/last":141,"mout/array/map":142,"mout/array/removeAll":143,"mout/array/split":146,"mout/function/bind":152,"mout/object/merge":194,"mout/string/properCase":218,"mout/string/trim":222,"mout/string/unhyphenate":224,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243,"prime/map":245}],34:[function(require,module,exports){
 /* Web Font Loader v1.5.18 - (c) Adobe Systems, Google. License: Apache 2.0 */
 ;(function(window,document,undefined){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function k(a,b,c){k=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return k.apply(null,arguments)}var n=Date.now||function(){return+new Date};function q(a,b){this.K=a;this.w=b||a;this.G=this.w.document}q.prototype.createElement=function(a,b,c){a=this.G.createElement(a);if(b)for(var d in b)b.hasOwnProperty(d)&&("style"==d?a.style.cssText=b[d]:a.setAttribute(d,b[d]));c&&a.appendChild(this.G.createTextNode(c));return a};function r(a,b,c){a=a.G.getElementsByTagName(b)[0];a||(a=document.documentElement);a&&a.lastChild&&a.insertBefore(c,a.lastChild)}function ca(a,b){function c(){a.G.body?b():setTimeout(c,0)}c()}
     function s(a,b,c){b=b||[];c=c||[];for(var d=a.className.split(/\s+/),e=0;e<b.length;e+=1){for(var f=!1,g=0;g<d.length;g+=1)if(b[e]===d[g]){f=!0;break}f||d.push(b[e])}b=[];for(e=0;e<d.length;e+=1){f=!1;for(g=0;g<c.length;g+=1)if(d[e]===c[g]){f=!0;break}f||b.push(d[e])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function t(a,b){for(var c=a.className.split(/\s+/),d=0,e=c.length;d<e;d++)if(c[d]==b)return!0;return!1}
@@ -6961,7 +6961,7 @@ domready(function() {
 
 module.exports = {};
 
-},{"../../ui":45,"../../utils/elements.utils":54,"../../utils/get-ajax-suffix":58,"../../utils/get-ajax-url":59,"elements/domready":89,"mout/array/contains":145,"mout/string/trim":238}],36:[function(require,module,exports){
+},{"../../ui":45,"../../utils/elements.utils":54,"../../utils/get-ajax-suffix":58,"../../utils/get-ajax-url":59,"elements/domready":89,"mout/array/contains":128,"mout/string/trim":222}],36:[function(require,module,exports){
 "use strict";
 
 module.exports = {
@@ -7087,7 +7087,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":45,"../../utils/get-ajax-suffix":58,"../../utils/get-ajax-url":59,"agent":64,"elements":91,"elements/domready":89,"elements/zen":115,"mout/string/trim":238}],38:[function(require,module,exports){
+},{"../../ui":45,"../../utils/get-ajax-suffix":58,"../../utils/get-ajax-url":59,"agent":64,"elements":91,"elements/domready":89,"elements/zen":98,"mout/string/trim":222}],38:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),
@@ -7236,7 +7236,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":45,"../../utils/get-ajax-suffix":58,"agent":64,"elements":91,"elements/domready":89,"elements/insertion":92,"elements/zen":115,"mout/array/contains":145,"mout/array/indexOf":154,"mout/array/last":158,"mout/array/some":162,"mout/object/has":207,"mout/string/escapeUnicode":230,"mout/string/trim":238,"sortablejs":274}],39:[function(require,module,exports){
+},{"../../ui":45,"../../utils/get-ajax-suffix":58,"agent":64,"elements":91,"elements/domready":89,"elements/insertion":92,"elements/zen":98,"mout/array/contains":128,"mout/array/indexOf":137,"mout/array/last":141,"mout/array/some":145,"mout/object/has":191,"mout/string/escapeUnicode":214,"mout/string/trim":222,"sortablejs":250}],39:[function(require,module,exports){
 "use strict";
 var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready');
@@ -7314,7 +7314,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":45,"../ui/popover":47,"elements/attributes":86,"elements/domready":89,"mout/array/contains":145,"mout/collection/forEach":166}],41:[function(require,module,exports){
+},{"../ui":45,"../ui/popover":47,"elements/attributes":86,"elements/domready":89,"mout/array/contains":128,"mout/collection/forEach":149}],41:[function(require,module,exports){
 "use strict";
 var ready  = require('elements/domready'),
     trim   = require('mout/string/trim'),
@@ -7478,7 +7478,7 @@ ready(function() {
 
 module.exports = loadFromStorage;
 
-},{"elements":91,"elements/domready":89,"mout/object/forOwn":205,"mout/string/trim":238}],42:[function(require,module,exports){
+},{"elements":91,"elements/domready":89,"mout/object/forOwn":189,"mout/string/trim":222}],42:[function(require,module,exports){
 "use strict";
 
 var prime      = require('prime'),
@@ -7856,7 +7856,7 @@ var DragDrop = new prime({
 
 module.exports = DragDrop;
 
-},{"../utils/elements.utils":54,"./drag.events":43,"elements/delegation":88,"elements/events":90,"mout/array/contains":145,"mout/function/bind":169,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258}],43:[function(require,module,exports){
+},{"../utils/elements.utils":54,"./drag.events":43,"elements/delegation":88,"elements/events":90,"mout/array/contains":128,"mout/function/bind":152,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],43:[function(require,module,exports){
 "use strict";
 var getSupportedEvent = function(events) {
     events = events.split(' ');
@@ -7968,7 +7968,7 @@ var Eraser = new prime({
 
 module.exports = Eraser;
 
-},{"../utils/elements.utils":54,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258}],45:[function(require,module,exports){
+},{"../utils/elements.utils":54,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],45:[function(require,module,exports){
 "use strict";
 
 var Modal = require('./modal'),
@@ -8336,7 +8336,7 @@ var Modal = new prime({
 
 module.exports = Modal;
 
-},{"../utils/elements.utils":54,"agent":64,"elements/domready":89,"elements/zen":115,"mout/array/forEach":153,"mout/array/last":158,"mout/array/map":159,"mout/function/bind":169,"mout/object/merge":210,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258,"prime/map":260}],47:[function(require,module,exports){
+},{"../utils/elements.utils":54,"agent":64,"elements/domready":89,"elements/zen":98,"mout/array/forEach":136,"mout/array/last":141,"mout/array/map":142,"mout/function/bind":152,"mout/object/merge":194,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243,"prime/map":245}],47:[function(require,module,exports){
 "use strict";
 
 var prime    = require('prime'),
@@ -8899,7 +8899,7 @@ $.implement({
 
 module.exports = $;
 
-},{"../utils/elements.utils":54,"agent":64,"elements/domready":89,"elements/zen":115,"mout/array/forEach":153,"mout/array/last":158,"mout/array/map":159,"mout/function/bind":169,"mout/lang/isFunction":181,"mout/object/merge":210,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258,"prime/map":260}],48:[function(require,module,exports){
+},{"../utils/elements.utils":54,"agent":64,"elements/domready":89,"elements/zen":98,"mout/array/forEach":136,"mout/array/last":141,"mout/array/map":142,"mout/function/bind":152,"mout/lang/isFunction":165,"mout/object/merge":194,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243,"prime/map":245}],48:[function(require,module,exports){
 "use strict";
 
 var $        = require('elements'),
@@ -9083,7 +9083,7 @@ var Progresser = new prime({
 
 module.exports = Progresser;
 
-},{"elements":91,"elements/zen":115,"moofx":116,"mout/function/bind":169,"mout/lang/isArray":179,"mout/lang/isNumber":183,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258}],49:[function(require,module,exports){
+},{"elements":91,"elements/zen":98,"moofx":99,"mout/function/bind":152,"mout/lang/isArray":163,"mout/lang/isNumber":167,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],49:[function(require,module,exports){
 "use strict";
 // selectize (v0.12.1)
 
@@ -11293,7 +11293,7 @@ ready(function() {
 
 module.exports = Selectize;
 
-},{"../utils/elements.utils":54,"elements/domready":89,"elements/zen":115,"moofx":116,"mout/array/indexOf":154,"mout/array/last":158,"mout/collection/forEach":166,"mout/function/bind":169,"mout/function/debounce":170,"mout/lang/isArray":179,"mout/lang/isBoolean":180,"mout/object/merge":210,"mout/object/size":215,"mout/object/unset":217,"mout/object/values":218,"mout/string/escapeHtml":229,"mout/string/trim":238,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258,"sifter":270}],50:[function(require,module,exports){
+},{"../utils/elements.utils":54,"elements/domready":89,"elements/zen":98,"moofx":99,"mout/array/indexOf":137,"mout/array/last":141,"mout/collection/forEach":149,"mout/function/bind":152,"mout/function/debounce":153,"mout/lang/isArray":163,"mout/lang/isBoolean":164,"mout/object/merge":194,"mout/object/size":199,"mout/object/unset":201,"mout/object/values":202,"mout/string/escapeHtml":213,"mout/string/trim":222,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243,"sifter":246}],50:[function(require,module,exports){
 "use strict";
 
 var prime   = require('prime'),
@@ -11617,7 +11617,7 @@ var Toaster = new prime({
 var toaster = new Toaster();
 
 module.exports = toaster;
-},{"../utils/elements.utils.js":54,"elements/zen":115,"mout/function/bind":169,"mout/object/merge":210,"prime":259,"prime-util/prime/bound":255,"prime-util/prime/options":256,"prime/emitter":258,"prime/map":260}],51:[function(require,module,exports){
+},{"../utils/elements.utils.js":54,"elements/zen":98,"mout/function/bind":152,"mout/object/merge":194,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243,"prime/map":245}],51:[function(require,module,exports){
 "use strict";
 var ready = require('elements/domready'),
     $     = require('elements');
@@ -12039,7 +12039,7 @@ domready(function() {
 
 
 module.exports = {};
-},{"../menu":28,"../ui":45,"../ui/collapse":41,"../ui/popover":47,"../utils/elements.utils":54,"./flags-state":57,"./get-ajax-suffix":58,"./get-ajax-url":59,"./history":61,"agent":64,"elements/domready":89,"elements/zen":115,"mout/array/indexOf":154,"mout/collection/size":168,"mout/object/keys":209,"mout/object/merge":210,"mout/queryString/encode":219,"mout/random/guid":222,"mout/string/contains":228,"prime":259,"prime/map":260}],53:[function(require,module,exports){
+},{"../menu":28,"../ui":45,"../ui/collapse":41,"../ui/popover":47,"../utils/elements.utils":54,"./flags-state":57,"./get-ajax-suffix":58,"./get-ajax-url":59,"./history":61,"agent":64,"elements/domready":89,"elements/zen":98,"mout/array/indexOf":137,"mout/collection/size":151,"mout/object/keys":193,"mout/object/merge":194,"mout/queryString/encode":203,"mout/random/guid":206,"mout/string/contains":212,"prime":244,"prime/map":245}],53:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
@@ -12243,7 +12243,7 @@ $.implement({
 
 module.exports = $;
 
-},{"../ui/progresser":48,"elements":91,"elements/zen":115,"moofx":116,"mout/array/map":159,"mout/function/series":174,"slick":272}],55:[function(require,module,exports){
+},{"../ui/progresser":48,"elements":91,"elements/zen":98,"moofx":99,"mout/array/map":142,"mout/function/series":157,"slick":248}],55:[function(require,module,exports){
 "use strict";
 var $     = require('elements');
 
@@ -12433,7 +12433,7 @@ var FlagsState = new prime({
 });
 
 module.exports = new FlagsState();
-},{"../ui":45,"./get-ajax-suffix":58,"./get-ajax-url":59,"prime":259,"prime/emitter":258,"prime/map":260}],58:[function(require,module,exports){
+},{"../ui":45,"./get-ajax-suffix":58,"./get-ajax-url":59,"prime":244,"prime/emitter":243,"prime/map":245}],58:[function(require,module,exports){
 "use strict";
 var getAjaxSuffix = function() {
     return typeof GANTRY_AJAX_SUFFIX == 'undefined' ? '' : GANTRY_AJAX_SUFFIX;
@@ -12477,7 +12477,7 @@ module.exports = {
     config: getConfAjaxURL,
     parse: parseAjaxURI
 };
-},{"mout/string/unescapeHtml":239}],60:[function(require,module,exports){
+},{"mout/string/unescapeHtml":223}],60:[function(require,module,exports){
 "use strict";
 
 var $        = require('elements'),
@@ -14660,7 +14660,7 @@ var SaveState = new prime({
 
 module.exports = SaveState;
 
-},{"mout/lang/deepClone":176,"prime":259}],64:[function(require,module,exports){
+},{"mout/lang/deepClone":160,"prime":244}],64:[function(require,module,exports){
 /*
 Agent
 - heavily inspired by superagent by visionmedia https://github.com/visionmedia/superagent, released under the MIT license
@@ -15067,7 +15067,7 @@ agent.Response = Response
 
 module.exports = agent
 
-},{"mout/array/forEach":65,"mout/array/remove":67,"mout/lang/isArray":68,"mout/lang/isFunction":69,"mout/lang/isObject":71,"mout/lang/isString":72,"mout/object/forIn":75,"mout/object/mixIn":78,"mout/string/trim":82,"mout/string/upperCase":83,"prime":259,"prime/emitter":258}],65:[function(require,module,exports){
+},{"mout/array/forEach":65,"mout/array/remove":67,"mout/lang/isArray":68,"mout/lang/isFunction":69,"mout/lang/isObject":71,"mout/lang/isString":72,"mout/object/forIn":75,"mout/object/mixIn":78,"mout/string/trim":82,"mout/string/upperCase":83,"prime":244,"prime/emitter":243}],65:[function(require,module,exports){
 
 
     /**
@@ -15483,7 +15483,7 @@ var toString = require('../lang/toString');
 
 
 },{"../lang/toString":74}],84:[function(require,module,exports){
-(function (process){
+(function (process,global){
 /*!
  * async
  * https://github.com/caolan/async
@@ -15491,16 +15491,24 @@ var toString = require('../lang/toString');
  * Copyright 2010-2014 Caolan McMahon
  * Released under the MIT license
  */
-/*jshint onevar: false, indent:4 */
-/*global setImmediate: false, setTimeout: false, console: false */
 (function () {
 
     var async = {};
+    function noop() {}
 
     // global on the server, window in the browser
     var root, previous_async;
 
-    root = this;
+    if (typeof window == 'object' && this === window) {
+        root = window;
+    }
+    else if (typeof global == 'object' && this === global) {
+        root = global;
+    }
+    else {
+        root = this;
+    }
+
     if (root != null) {
       previous_async = root.async;
     }
@@ -15515,8 +15523,17 @@ var toString = require('../lang/toString');
         return function() {
             if (called) throw new Error("Callback was already called.");
             called = true;
-            fn.apply(root, arguments);
-        }
+            fn.apply(this, arguments);
+        };
+    }
+
+    function _once(fn) {
+        var called = false;
+        return function() {
+            if (called) return;
+            called = true;
+            fn.apply(this, arguments);
+        };
     }
 
     //// cross-browser compatiblity functions ////
@@ -15527,37 +15544,59 @@ var toString = require('../lang/toString');
         return _toString.call(obj) === '[object Array]';
     };
 
-    var _each = function (arr, iterator) {
-        for (var i = 0; i < arr.length; i += 1) {
-            iterator(arr[i], i, arr);
-        }
-    };
+    function _isArrayLike(arr) {
+        return _isArray(arr) || (
+            // has a positive integer length property
+            typeof arr.length === "number" &&
+            arr.length >= 0 &&
+            arr.length % 1 === 0
+        );
+    }
 
-    var _map = function (arr, iterator) {
-        if (arr.map) {
-            return arr.map(iterator);
-        }
-        var results = [];
-        _each(arr, function (x, i, a) {
-            results.push(iterator(x, i, a));
-        });
-        return results;
-    };
+    function _each(coll, iterator) {
+        return _isArrayLike(coll) ?
+            _arrayEach(coll, iterator) :
+            _forEachOf(coll, iterator);
+    }
 
-    var _reduce = function (arr, iterator, memo) {
-        if (arr.reduce) {
-            return arr.reduce(iterator, memo);
-        }
-        _each(arr, function (x, i, a) {
+    function _arrayEach(arr, iterator) {
+      var index = -1,
+          length = arr.length;
+
+      while (++index < length) {
+        iterator(arr[index], index, arr);
+      }
+    }
+
+    function _map(arr, iterator) {
+      var index = -1,
+          length = arr.length,
+          result = Array(length);
+
+      while (++index < length) {
+        result[index] = iterator(arr[index], index, arr);
+      }
+      return result;
+    }
+
+    function _range(count) {
+        return _map(Array(count), function (v, i) { return i; });
+    }
+
+    function _reduce(arr, iterator, memo) {
+        _arrayEach(arr, function (x, i, a) {
             memo = iterator(memo, x, i, a);
         });
         return memo;
-    };
+    }
 
-    var _keys = function (obj) {
-        if (Object.keys) {
-            return Object.keys(obj);
-        }
+    function _forEachOf(object, iterator) {
+        _arrayEach(_keys(object), function (key) {
+            iterator(object[key], key);
+        });
+    }
+
+    var _keys = Object.keys || function (obj) {
         var keys = [];
         for (var k in obj) {
             if (obj.hasOwnProperty(k)) {
@@ -15567,14 +15606,64 @@ var toString = require('../lang/toString');
         return keys;
     };
 
+    function _keyIterator(coll) {
+        var i = -1;
+        var len;
+        var keys;
+        if (_isArrayLike(coll)) {
+            len = coll.length;
+            return function next() {
+                i++;
+                return i < len ? i : null;
+            };
+        } else {
+            keys = _keys(coll);
+            len = keys.length;
+            return function next() {
+                i++;
+                return i < len ? keys[i] : null;
+            };
+        }
+    }
+
+    function _baseSlice(arr, start) {
+        start = start || 0;
+        var index = -1;
+        var length = arr.length;
+
+        if (start) {
+          length -= start;
+          length = length < 0 ? 0 : length;
+        }
+        var result = Array(length);
+
+        while (++index < length) {
+          result[index] = arr[index + start];
+        }
+        return result;
+    }
+
+    function _withoutIndex(iterator) {
+        return function (value, index, callback) {
+            return iterator(value, callback);
+        };
+    }
+
     //// exported async module functions ////
 
     //// nextTick implementation with browser-compatible fallback ////
+
+    // capture the global reference to guard against fakeTimer mocks
+    var _setImmediate;
+    if (typeof setImmediate === 'function') {
+        _setImmediate = setImmediate;
+    }
+
     if (typeof process === 'undefined' || !(process.nextTick)) {
-        if (typeof setImmediate === 'function') {
+        if (_setImmediate) {
             async.nextTick = function (fn) {
                 // not a direct alias for IE10 compatibility
-                setImmediate(fn);
+                _setImmediate(fn);
             };
             async.setImmediate = async.nextTick;
         }
@@ -15587,10 +15676,10 @@ var toString = require('../lang/toString');
     }
     else {
         async.nextTick = process.nextTick;
-        if (typeof setImmediate !== 'undefined') {
+        if (_setImmediate) {
             async.setImmediate = function (fn) {
               // not a direct alias for IE10 compatibility
-              setImmediate(fn);
+              _setImmediate(fn);
             };
         }
         else {
@@ -15598,280 +15687,286 @@ var toString = require('../lang/toString');
         }
     }
 
+    async.forEach =
     async.each = function (arr, iterator, callback) {
-        callback = callback || function () {};
-        if (!arr.length) {
-            return callback();
-        }
+        return async.eachOf(arr, _withoutIndex(iterator), callback);
+    };
+
+    async.forEachSeries =
+    async.eachSeries = function (arr, iterator, callback) {
+        return async.eachOfSeries(arr, _withoutIndex(iterator), callback);
+    };
+
+
+    async.forEachLimit =
+    async.eachLimit = function (arr, limit, iterator, callback) {
+        return _eachOfLimit(limit)(arr, _withoutIndex(iterator), callback);
+    };
+
+    async.forEachOf =
+    async.eachOf = function (object, iterator, callback) {
+        callback = _once(callback || noop);
+        object = object || [];
+        var size = _isArrayLike(object) ? object.length : _keys(object).length;
         var completed = 0;
-        _each(arr, function (x) {
-            iterator(x, only_once(done) );
+        if (!size) {
+            return callback(null);
+        }
+        _each(object, function (value, key) {
+            iterator(object[key], key, only_once(done));
         });
         function done(err) {
           if (err) {
               callback(err);
-              callback = function () {};
           }
           else {
               completed += 1;
-              if (completed >= arr.length) {
-                  callback();
+              if (completed >= size) {
+                  callback(null);
               }
           }
         }
     };
-    async.forEach = async.each;
 
-    async.eachSeries = function (arr, iterator, callback) {
-        callback = callback || function () {};
-        if (!arr.length) {
-            return callback();
-        }
-        var completed = 0;
-        var iterate = function () {
-            iterator(arr[completed], function (err) {
+    async.forEachOfSeries =
+    async.eachOfSeries = function (obj, iterator, callback) {
+        callback = _once(callback || noop);
+        obj = obj || [];
+        var nextKey = _keyIterator(obj);
+        function iterate() {
+            var sync = true;
+            var key = nextKey();
+            if (key === null) {
+                return callback(null);
+            }
+            iterator(obj[key], key, function (err) {
                 if (err) {
                     callback(err);
-                    callback = function () {};
                 }
                 else {
-                    completed += 1;
-                    if (completed >= arr.length) {
-                        callback();
+                    if (sync) {
+                        async.nextTick(iterate);
                     }
                     else {
                         iterate();
                     }
                 }
             });
-        };
+            sync = false;
+        }
         iterate();
     };
-    async.forEachSeries = async.eachSeries;
 
-    async.eachLimit = function (arr, limit, iterator, callback) {
-        var fn = _eachLimit(limit);
-        fn.apply(null, [arr, iterator, callback]);
+
+
+    async.forEachOfLimit =
+    async.eachOfLimit = function (obj, limit, iterator, callback) {
+        _eachOfLimit(limit)(obj, iterator, callback);
     };
-    async.forEachLimit = async.eachLimit;
 
-    var _eachLimit = function (limit) {
+    function _eachOfLimit(limit) {
 
-        return function (arr, iterator, callback) {
-            callback = callback || function () {};
-            if (!arr.length || limit <= 0) {
-                return callback();
+        return function (obj, iterator, callback) {
+            callback = _once(callback || noop);
+            obj = obj || [];
+            var nextKey = _keyIterator(obj);
+            if (limit <= 0) {
+                return callback(null);
             }
-            var completed = 0;
-            var started = 0;
+            var done = false;
             var running = 0;
+            var errored = false;
 
             (function replenish () {
-                if (completed >= arr.length) {
-                    return callback();
+                if (done && running <= 0) {
+                    return callback(null);
                 }
 
-                while (running < limit && started < arr.length) {
-                    started += 1;
+                while (running < limit && !errored) {
+                    var key = nextKey();
+                    if (key === null) {
+                        done = true;
+                        if (running <= 0) {
+                            callback(null);
+                        }
+                        return;
+                    }
                     running += 1;
-                    iterator(arr[started - 1], function (err) {
+                    iterator(obj[key], key, function (err) {
+                        running -= 1;
                         if (err) {
                             callback(err);
-                            callback = function () {};
+                            errored = true;
                         }
                         else {
-                            completed += 1;
-                            running -= 1;
-                            if (completed >= arr.length) {
-                                callback();
-                            }
-                            else {
-                                replenish();
-                            }
+                            replenish();
                         }
                     });
                 }
             })();
         };
-    };
+    }
 
 
-    var doParallel = function (fn) {
-        return function () {
-            var args = Array.prototype.slice.call(arguments);
-            return fn.apply(null, [async.each].concat(args));
+    function doParallel(fn) {
+        return function (obj, iterator, callback) {
+            return fn(async.eachOf, obj, iterator, callback);
         };
-    };
-    var doParallelLimit = function(limit, fn) {
-        return function () {
-            var args = Array.prototype.slice.call(arguments);
-            return fn.apply(null, [_eachLimit(limit)].concat(args));
+    }
+    function doParallelLimit(limit, fn) {
+        return function (obj, iterator, callback) {
+            return fn(_eachOfLimit(limit), obj, iterator, callback);
         };
-    };
-    var doSeries = function (fn) {
-        return function () {
-            var args = Array.prototype.slice.call(arguments);
-            return fn.apply(null, [async.eachSeries].concat(args));
+    }
+    function doSeries(fn) {
+        return function (obj, iterator, callback) {
+            return fn(async.eachOfSeries, obj, iterator, callback);
         };
-    };
+    }
 
-
-    var _asyncMap = function (eachfn, arr, iterator, callback) {
-        arr = _map(arr, function (x, i) {
-            return {index: i, value: x};
+    function _asyncMap(eachfn, arr, iterator, callback) {
+        callback = _once(callback || noop);
+        var results = [];
+        eachfn(arr, function (value, index, callback) {
+            iterator(value, function (err, v) {
+                results[index] = v;
+                callback(err);
+            });
+        }, function (err) {
+            callback(err, results);
         });
-        if (!callback) {
-            eachfn(arr, function (x, callback) {
-                iterator(x.value, function (err) {
-                    callback(err);
-                });
-            });
-        } else {
-            var results = [];
-            eachfn(arr, function (x, callback) {
-                iterator(x.value, function (err, v) {
-                    results[x.index] = v;
-                    callback(err);
-                });
-            }, function (err) {
-                callback(err, results);
-            });
-        }
-    };
+    }
+
     async.map = doParallel(_asyncMap);
     async.mapSeries = doSeries(_asyncMap);
     async.mapLimit = function (arr, limit, iterator, callback) {
         return _mapLimit(limit)(arr, iterator, callback);
     };
 
-    var _mapLimit = function(limit) {
+    function _mapLimit(limit) {
         return doParallelLimit(limit, _asyncMap);
-    };
+    }
 
     // reduce only has a series version, as doing reduce in parallel won't
     // work in many situations.
+    async.inject =
+    async.foldl =
     async.reduce = function (arr, memo, iterator, callback) {
-        async.eachSeries(arr, function (x, callback) {
+        async.eachOfSeries(arr, function (x, i, callback) {
             iterator(memo, x, function (err, v) {
                 memo = v;
                 callback(err);
             });
         }, function (err) {
-            callback(err, memo);
+            callback(err || null, memo);
         });
     };
-    // inject alias
-    async.inject = async.reduce;
-    // foldl alias
-    async.foldl = async.reduce;
 
+    async.foldr =
     async.reduceRight = function (arr, memo, iterator, callback) {
         var reversed = _map(arr, function (x) {
             return x;
         }).reverse();
         async.reduce(reversed, memo, iterator, callback);
     };
-    // foldr alias
-    async.foldr = async.reduceRight;
 
-    var _filter = function (eachfn, arr, iterator, callback) {
+    function _filter(eachfn, arr, iterator, callback) {
         var results = [];
         arr = _map(arr, function (x, i) {
             return {index: i, value: x};
         });
-        eachfn(arr, function (x, callback) {
+        eachfn(arr, function (x, index, callback) {
             iterator(x.value, function (v) {
                 if (v) {
                     results.push(x);
                 }
                 callback();
             });
-        }, function (err) {
+        }, function () {
             callback(_map(results.sort(function (a, b) {
                 return a.index - b.index;
             }), function (x) {
                 return x.value;
             }));
         });
-    };
-    async.filter = doParallel(_filter);
-    async.filterSeries = doSeries(_filter);
-    // select alias
-    async.select = async.filter;
-    async.selectSeries = async.filterSeries;
+    }
 
-    var _reject = function (eachfn, arr, iterator, callback) {
+    async.select =
+    async.filter = doParallel(_filter);
+
+    async.selectSeries =
+    async.filterSeries = doSeries(_filter);
+
+    function _reject(eachfn, arr, iterator, callback) {
         var results = [];
         arr = _map(arr, function (x, i) {
             return {index: i, value: x};
         });
-        eachfn(arr, function (x, callback) {
+        eachfn(arr, function (x, index, callback) {
             iterator(x.value, function (v) {
                 if (!v) {
                     results.push(x);
                 }
                 callback();
             });
-        }, function (err) {
+        }, function () {
             callback(_map(results.sort(function (a, b) {
                 return a.index - b.index;
             }), function (x) {
                 return x.value;
             }));
         });
-    };
+    }
     async.reject = doParallel(_reject);
     async.rejectSeries = doSeries(_reject);
 
-    var _detect = function (eachfn, arr, iterator, main_callback) {
-        eachfn(arr, function (x, callback) {
+    function _detect(eachfn, arr, iterator, main_callback) {
+        eachfn(arr, function (x, index, callback) {
             iterator(x, function (result) {
                 if (result) {
                     main_callback(x);
-                    main_callback = function () {};
+                    main_callback = noop;
                 }
                 else {
                     callback();
                 }
             });
-        }, function (err) {
+        }, function () {
             main_callback();
         });
-    };
+    }
     async.detect = doParallel(_detect);
     async.detectSeries = doSeries(_detect);
 
+    async.any =
     async.some = function (arr, iterator, main_callback) {
-        async.each(arr, function (x, callback) {
+        async.eachOf(arr, function (x, _, callback) {
             iterator(x, function (v) {
                 if (v) {
                     main_callback(true);
-                    main_callback = function () {};
+                    main_callback = noop;
                 }
                 callback();
             });
-        }, function (err) {
+        }, function () {
             main_callback(false);
         });
     };
-    // any alias
-    async.any = async.some;
 
+    async.all =
     async.every = function (arr, iterator, main_callback) {
-        async.each(arr, function (x, callback) {
+        async.eachOf(arr, function (x, _, callback) {
             iterator(x, function (v) {
                 if (!v) {
                     main_callback(false);
-                    main_callback = function () {};
+                    main_callback = noop;
                 }
                 callback();
             });
-        }, function (err) {
+        }, function () {
             main_callback(true);
         });
     };
-    // all alias
-    async.all = async.every;
 
     async.sortBy = function (arr, iterator, callback) {
         async.map(arr, function (x, callback) {
@@ -15888,95 +15983,102 @@ var toString = require('../lang/toString');
                 return callback(err);
             }
             else {
-                var fn = function (left, right) {
-                    var a = left.criteria, b = right.criteria;
-                    return a < b ? -1 : a > b ? 1 : 0;
-                };
-                callback(null, _map(results.sort(fn), function (x) {
+                callback(null, _map(results.sort(comparator), function (x) {
                     return x.value;
                 }));
             }
+
         });
+
+        function comparator(left, right) {
+            var a = left.criteria, b = right.criteria;
+            return a < b ? -1 : a > b ? 1 : 0;
+        }
     };
 
     async.auto = function (tasks, callback) {
-        callback = callback || function () {};
+        callback = _once(callback || noop);
         var keys = _keys(tasks);
-        var remainingTasks = keys.length
+        var remainingTasks = keys.length;
         if (!remainingTasks) {
-            return callback();
+            return callback(null);
         }
 
         var results = {};
 
         var listeners = [];
-        var addListener = function (fn) {
+        function addListener(fn) {
             listeners.unshift(fn);
-        };
-        var removeListener = function (fn) {
+        }
+        function removeListener(fn) {
             for (var i = 0; i < listeners.length; i += 1) {
                 if (listeners[i] === fn) {
                     listeners.splice(i, 1);
                     return;
                 }
             }
-        };
-        var taskComplete = function () {
-            remainingTasks--
-            _each(listeners.slice(0), function (fn) {
+        }
+        function taskComplete() {
+            remainingTasks--;
+            _arrayEach(listeners.slice(0), function (fn) {
                 fn();
             });
-        };
+        }
 
         addListener(function () {
             if (!remainingTasks) {
-                var theCallback = callback;
-                // prevent final callback from calling itself if it errors
-                callback = function () {};
-
-                theCallback(null, results);
+                callback(null, results);
             }
         });
 
-        _each(keys, function (k) {
+        _arrayEach(keys, function (k) {
             var task = _isArray(tasks[k]) ? tasks[k]: [tasks[k]];
-            var taskCallback = function (err) {
-                var args = Array.prototype.slice.call(arguments, 1);
+            function taskCallback(err) {
+                var args = _baseSlice(arguments, 1);
                 if (args.length <= 1) {
                     args = args[0];
                 }
                 if (err) {
                     var safeResults = {};
-                    _each(_keys(results), function(rkey) {
+                    _arrayEach(_keys(results), function(rkey) {
                         safeResults[rkey] = results[rkey];
                     });
                     safeResults[k] = args;
                     callback(err, safeResults);
-                    // stop subsequent errors hitting callback multiple times
-                    callback = function () {};
                 }
                 else {
                     results[k] = args;
                     async.setImmediate(taskComplete);
                 }
-            };
+            }
             var requires = task.slice(0, Math.abs(task.length - 1)) || [];
-            var ready = function () {
+            // prevent dead-locks
+            var len = requires.length;
+            var dep;
+            while (len--) {
+                if (!(dep = tasks[requires[len]])) {
+                    throw new Error('Has inexistant dependency');
+                }
+                if (_isArray(dep) && !!~dep.indexOf(k)) {
+                    throw new Error('Has cyclic dependencies');
+                }
+            }
+            function ready() {
                 return _reduce(requires, function (a, x) {
                     return (a && results.hasOwnProperty(x));
                 }, true) && !results.hasOwnProperty(k);
-            };
+            }
             if (ready()) {
                 task[task.length - 1](taskCallback, results);
             }
             else {
-                var listener = function () {
-                    if (ready()) {
-                        removeListener(listener);
-                        task[task.length - 1](taskCallback, results);
-                    }
-                };
                 addListener(listener);
+            }
+            function listener() {
+                if (ready()) {
+                    removeListener(listener);
+                    task[task.length - 1](taskCallback, results);
+                }
             }
         });
     };
@@ -15992,14 +16094,16 @@ var toString = require('../lang/toString');
         }
         // Make sure times is a number
         times = parseInt(times, 10) || DEFAULT_TIMES;
-        var wrappedTask = function(wrappedCallback, wrappedResults) {
-            var retryAttempt = function(task, finalAttempt) {
+
+        function wrappedTask(wrappedCallback, wrappedResults) {
+            function retryAttempt(task, finalAttempt) {
                 return function(seriesCallback) {
                     task(function(err, result){
                         seriesCallback(!err || finalAttempt, {err: err, result: result});
                     }, wrappedResults);
                 };
-            };
+            }
+
             while (times) {
                 attempts.push(retryAttempt(task, !(times-=1)));
             }
@@ -16008,12 +16112,13 @@ var toString = require('../lang/toString');
                 (wrappedCallback || callback)(data.err, data.result);
             });
         }
+
         // If a callback is passed, run this as a controll flow
-        return callback ? wrappedTask() : wrappedTask
+        return callback ? wrappedTask() : wrappedTask;
     };
 
     async.waterfall = function (tasks, callback) {
-        callback = callback || function () {};
+        callback = _once(callback || noop);
         if (!_isArray(tasks)) {
           var err = new Error('First argument to waterfall must be an array of functions');
           return callback(err);
@@ -16021,14 +16126,13 @@ var toString = require('../lang/toString');
         if (!tasks.length) {
             return callback();
         }
-        var wrapIterator = function (iterator) {
+        function wrapIterator(iterator) {
             return function (err) {
                 if (err) {
                     callback.apply(null, arguments);
-                    callback = function () {};
                 }
                 else {
-                    var args = Array.prototype.slice.call(arguments, 1);
+                    var args = _baseSlice(arguments, 1);
                     var next = iterator.next();
                     if (next) {
                         args.push(wrapIterator(next));
@@ -16036,123 +16140,93 @@ var toString = require('../lang/toString');
                     else {
                         args.push(callback);
                     }
-                    async.setImmediate(function () {
-                        iterator.apply(null, args);
-                    });
+                    ensureAsync(iterator).apply(null, args);
                 }
             };
-        };
+        }
         wrapIterator(async.iterator(tasks))();
     };
 
-    var _parallel = function(eachfn, tasks, callback) {
-        callback = callback || function () {};
-        if (_isArray(tasks)) {
-            eachfn.map(tasks, function (fn, callback) {
-                if (fn) {
-                    fn(function (err) {
-                        var args = Array.prototype.slice.call(arguments, 1);
-                        if (args.length <= 1) {
-                            args = args[0];
-                        }
-                        callback.call(null, err, args);
-                    });
+    function _parallel(eachfn, tasks, callback) {
+        callback = callback || noop;
+        var results = _isArrayLike(tasks) ? [] : {};
+
+        eachfn(tasks, function (task, key, callback) {
+            task(function (err) {
+                var args = _baseSlice(arguments, 1);
+                if (args.length <= 1) {
+                    args = args[0];
                 }
-            }, callback);
-        }
-        else {
-            var results = {};
-            eachfn.each(_keys(tasks), function (k, callback) {
-                tasks[k](function (err) {
-                    var args = Array.prototype.slice.call(arguments, 1);
-                    if (args.length <= 1) {
-                        args = args[0];
-                    }
-                    results[k] = args;
-                    callback(err);
-                });
-            }, function (err) {
-                callback(err, results);
+                results[key] = args;
+                callback(err);
             });
-        }
-    };
+        }, function (err) {
+            callback(err, results);
+        });
+    }
 
     async.parallel = function (tasks, callback) {
-        _parallel({ map: async.map, each: async.each }, tasks, callback);
+        _parallel(async.eachOf, tasks, callback);
     };
 
     async.parallelLimit = function(tasks, limit, callback) {
-        _parallel({ map: _mapLimit(limit), each: _eachLimit(limit) }, tasks, callback);
+        _parallel(_eachOfLimit(limit), tasks, callback);
     };
 
     async.series = function (tasks, callback) {
-        callback = callback || function () {};
-        if (_isArray(tasks)) {
-            async.mapSeries(tasks, function (fn, callback) {
-                if (fn) {
-                    fn(function (err) {
-                        var args = Array.prototype.slice.call(arguments, 1);
-                        if (args.length <= 1) {
-                            args = args[0];
-                        }
-                        callback.call(null, err, args);
-                    });
+        callback = callback || noop;
+        var results = _isArrayLike(tasks) ? [] : {};
+
+        async.eachOfSeries(tasks, function (task, key, callback) {
+            task(function (err) {
+                var args = _baseSlice(arguments, 1);
+                if (args.length <= 1) {
+                    args = args[0];
                 }
-            }, callback);
-        }
-        else {
-            var results = {};
-            async.eachSeries(_keys(tasks), function (k, callback) {
-                tasks[k](function (err) {
-                    var args = Array.prototype.slice.call(arguments, 1);
-                    if (args.length <= 1) {
-                        args = args[0];
-                    }
-                    results[k] = args;
-                    callback(err);
-                });
-            }, function (err) {
-                callback(err, results);
+                results[key] = args;
+                callback(err);
             });
-        }
+        }, function (err) {
+            callback(err, results);
+        });
     };
 
     async.iterator = function (tasks) {
-        var makeCallback = function (index) {
-            var fn = function () {
+        function makeCallback(index) {
+            function fn() {
                 if (tasks.length) {
                     tasks[index].apply(null, arguments);
                 }
                 return fn.next();
-            };
+            }
             fn.next = function () {
                 return (index < tasks.length - 1) ? makeCallback(index + 1): null;
             };
             return fn;
-        };
+        }
         return makeCallback(0);
     };
 
     async.apply = function (fn) {
-        var args = Array.prototype.slice.call(arguments, 1);
+        var args = _baseSlice(arguments, 1);
         return function () {
             return fn.apply(
-                null, args.concat(Array.prototype.slice.call(arguments))
+                null, args.concat(_baseSlice(arguments))
             );
         };
     };
 
-    var _concat = function (eachfn, arr, fn, callback) {
-        var r = [];
-        eachfn(arr, function (x, cb) {
+    function _concat(eachfn, arr, fn, callback) {
+        var result = [];
+        eachfn(arr, function (x, index, cb) {
             fn(x, function (err, y) {
-                r = r.concat(y || []);
+                result = result.concat(y || []);
                 cb(err);
             });
         }, function (err) {
-            callback(err, r);
+            callback(err, result);
         });
-    };
+    }
     async.concat = doParallel(_concat);
     async.concatSeries = doSeries(_concat);
 
@@ -16166,7 +16240,7 @@ var toString = require('../lang/toString');
             });
         }
         else {
-            callback();
+            callback(null);
         }
     };
 
@@ -16175,12 +16249,12 @@ var toString = require('../lang/toString');
             if (err) {
                 return callback(err);
             }
-            var args = Array.prototype.slice.call(arguments, 1);
+            var args = _baseSlice(arguments, 1);
             if (test.apply(null, args)) {
                 async.doWhilst(iterator, test, callback);
             }
             else {
-                callback();
+                callback(null);
             }
         });
     };
@@ -16195,7 +16269,7 @@ var toString = require('../lang/toString');
             });
         }
         else {
-            callback();
+            callback(null);
         }
     };
 
@@ -16204,92 +16278,106 @@ var toString = require('../lang/toString');
             if (err) {
                 return callback(err);
             }
-            var args = Array.prototype.slice.call(arguments, 1);
+            var args = _baseSlice(arguments, 1);
             if (!test.apply(null, args)) {
                 async.doUntil(iterator, test, callback);
             }
             else {
-                callback();
+                callback(null);
             }
         });
     };
 
-    async.queue = function (worker, concurrency) {
-        if (concurrency === undefined) {
+    function _queue(worker, concurrency, payload) {
+        if (concurrency == null) {
             concurrency = 1;
         }
+        else if(concurrency === 0) {
+            throw new Error('Concurrency must not be zero');
+        }
         function _insert(q, data, pos, callback) {
-          if (!q.started){
+            if (callback != null && typeof callback !== "function") {
+                throw new Error("task callback must be a function");
+            }
             q.started = true;
-          }
-          if (!_isArray(data)) {
-              data = [data];
-          }
-          if(data.length == 0) {
-             // call drain immediately if there are no tasks
-             return async.setImmediate(function() {
-                 if (q.drain) {
-                     q.drain();
-                 }
-             });
-          }
-          _each(data, function(task) {
-              var item = {
-                  data: task,
-                  callback: typeof callback === 'function' ? callback : null
-              };
+            if (!_isArray(data)) {
+                data = [data];
+            }
+            if(data.length === 0 && q.idle()) {
+                // call drain immediately if there are no tasks
+                return async.setImmediate(function() {
+                   q.drain();
+                });
+            }
+            _arrayEach(data, function(task) {
+                var item = {
+                    data: task,
+                    callback: callback || noop
+                };
 
-              if (pos) {
-                q.tasks.unshift(item);
-              } else {
-                q.tasks.push(item);
-              }
+                if (pos) {
+                  q.tasks.unshift(item);
+                } else {
+                  q.tasks.push(item);
+                }
 
-              if (q.saturated && q.tasks.length === q.concurrency) {
-                  q.saturated();
-              }
-              async.setImmediate(q.process);
-          });
+                if (q.tasks.length === q.concurrency) {
+                    q.saturated();
+                }
+            });
+            async.setImmediate(q.process);
+        }
+        function _next(q, tasks) {
+            return function(){
+                workers -= 1;
+                var args = arguments;
+                _arrayEach(tasks, function (task) {
+                    task.callback.apply(task, args);
+                });
+                if (q.tasks.length + workers === 0) {
+                    q.drain();
+                }
+                q.process();
+            };
         }
 
         var workers = 0;
         var q = {
             tasks: [],
             concurrency: concurrency,
-            saturated: null,
-            empty: null,
-            drain: null,
+            saturated: noop,
+            empty: noop,
+            drain: noop,
             started: false,
             paused: false,
             push: function (data, callback) {
-              _insert(q, data, false, callback);
+                _insert(q, data, false, callback);
             },
             kill: function () {
-              q.drain = null;
-              q.tasks = [];
+                q.drain = noop;
+                q.tasks = [];
             },
             unshift: function (data, callback) {
-              _insert(q, data, true, callback);
+                _insert(q, data, true, callback);
             },
             process: function () {
                 if (!q.paused && workers < q.concurrency && q.tasks.length) {
-                    var task = q.tasks.shift();
-                    if (q.empty && q.tasks.length === 0) {
-                        q.empty();
+                    while(workers < q.concurrency && q.tasks.length){
+                        var tasks = payload ?
+                            q.tasks.splice(0, payload) :
+                            q.tasks.splice(0, q.tasks.length);
+    
+                        var data = _map(tasks, function (task) {
+                            return task.data;
+                        });
+    
+                        if (q.tasks.length === 0) {
+                            q.empty();
+                        }
+                        workers += 1;
+                        var cb = only_once(_next(q, tasks));
+                        worker(data, cb);
                     }
-                    workers += 1;
-                    var next = function () {
-                        workers -= 1;
-                        if (task.callback) {
-                            task.callback.apply(task, arguments);
-                        }
-                        if (q.drain && q.tasks.length + workers === 0) {
-                            q.drain();
-                        }
-                        q.process();
-                    };
-                    var cb = only_once(next);
-                    worker(task.data, cb);
                 }
             },
             length: function () {
@@ -16302,71 +16390,78 @@ var toString = require('../lang/toString');
                 return q.tasks.length + workers === 0;
             },
             pause: function () {
-                if (q.paused === true) { return; }
                 q.paused = true;
             },
             resume: function () {
                 if (q.paused === false) { return; }
                 q.paused = false;
+                var resumeCount = Math.min(q.concurrency, q.tasks.length);
                 // Need to call q.process once per concurrent
                 // worker to preserve full concurrency after pause
-                for (var w = 1; w <= q.concurrency; w++) {
+                for (var w = 1; w <= resumeCount; w++) {
                     async.setImmediate(q.process);
                 }
             }
         };
+        return q;
+    }
+
+    async.queue = function (worker, concurrency) {
+        var q = _queue(function (items, cb) {
+            worker(items[0], cb);
+        }, concurrency, 1);
+
         return q;
     };
 
     async.priorityQueue = function (worker, concurrency) {
 
         function _compareTasks(a, b){
-          return a.priority - b.priority;
-        };
+            return a.priority - b.priority;
+        }
 
         function _binarySearch(sequence, item, compare) {
           var beg = -1,
               end = sequence.length - 1;
           while (beg < end) {
-            var mid = beg + ((end - beg + 1) >>> 1);
-            if (compare(item, sequence[mid]) >= 0) {
-              beg = mid;
-            } else {
-              end = mid - 1;
-            }
+              var mid = beg + ((end - beg + 1) >>> 1);
+              if (compare(item, sequence[mid]) >= 0) {
+                  beg = mid;
+              } else {
+                  end = mid - 1;
+              }
           }
           return beg;
         }
 
         function _insert(q, data, priority, callback) {
-          if (!q.started){
+            if (callback != null && typeof callback !== "function") {
+                throw new Error("task callback must be a function");
+            }
             q.started = true;
-          }
-          if (!_isArray(data)) {
-              data = [data];
-          }
-          if(data.length == 0) {
-             // call drain immediately if there are no tasks
-             return async.setImmediate(function() {
-                 if (q.drain) {
-                     q.drain();
-                 }
-             });
-          }
-          _each(data, function(task) {
-              var item = {
-                  data: task,
-                  priority: priority,
-                  callback: typeof callback === 'function' ? callback : null
-              };
+            if (!_isArray(data)) {
+                data = [data];
+            }
+            if(data.length === 0) {
+                // call drain immediately if there are no tasks
+                return async.setImmediate(function() {
+                    q.drain();
+                });
+            }
+            _arrayEach(data, function(task) {
+                var item = {
+                    data: task,
+                    priority: priority,
+                    callback: typeof callback === 'function' ? callback : noop
+                };
 
-              q.tasks.splice(_binarySearch(q.tasks, item, _compareTasks) + 1, 0, item);
+                q.tasks.splice(_binarySearch(q.tasks, item, _compareTasks) + 1, 0, item);
 
-              if (q.saturated && q.tasks.length === q.concurrency) {
-                  q.saturated();
-              }
-              async.setImmediate(q.process);
-          });
+                if (q.tasks.length === q.concurrency) {
+                    q.saturated();
+                }
+                async.setImmediate(q.process);
+            });
         }
 
         // Start with a normal queue
@@ -16374,7 +16469,7 @@ var toString = require('../lang/toString');
 
         // Override push to accept second parameter representing priority
         q.push = function (data, priority, callback) {
-          _insert(q, data, priority, callback);
+            _insert(q, data, priority, callback);
         };
 
         // Remove unshift function
@@ -16384,78 +16479,14 @@ var toString = require('../lang/toString');
     };
 
     async.cargo = function (worker, payload) {
-        var working     = false,
-            tasks       = [];
-
-        var cargo = {
-            tasks: tasks,
-            payload: payload,
-            saturated: null,
-            empty: null,
-            drain: null,
-            drained: true,
-            push: function (data, callback) {
-                if (!_isArray(data)) {
-                    data = [data];
-                }
-                _each(data, function(task) {
-                    tasks.push({
-                        data: task,
-                        callback: typeof callback === 'function' ? callback : null
-                    });
-                    cargo.drained = false;
-                    if (cargo.saturated && tasks.length === payload) {
-                        cargo.saturated();
-                    }
-                });
-                async.setImmediate(cargo.process);
-            },
-            process: function process() {
-                if (working) return;
-                if (tasks.length === 0) {
-                    if(cargo.drain && !cargo.drained) cargo.drain();
-                    cargo.drained = true;
-                    return;
-                }
-
-                var ts = typeof payload === 'number'
-                            ? tasks.splice(0, payload)
-                            : tasks.splice(0, tasks.length);
-
-                var ds = _map(ts, function (task) {
-                    return task.data;
-                });
-
-                if(cargo.empty) cargo.empty();
-                working = true;
-                worker(ds, function () {
-                    working = false;
-
-                    var args = arguments;
-                    _each(ts, function (data) {
-                        if (data.callback) {
-                            data.callback.apply(null, args);
-                        }
-                    });
-
-                    process();
-                });
-            },
-            length: function () {
-                return tasks.length;
-            },
-            running: function () {
-                return working;
-            }
-        };
-        return cargo;
+        return _queue(worker, 1, payload);
     };
 
-    var _console_fn = function (name) {
+    function _console_fn(name) {
         return function (fn) {
-            var args = Array.prototype.slice.call(arguments, 1);
+            var args = _baseSlice(arguments, 1);
             fn.apply(null, args.concat([function (err) {
-                var args = Array.prototype.slice.call(arguments, 1);
+                var args = _baseSlice(arguments, 1);
                 if (typeof console !== 'undefined') {
                     if (err) {
                         if (console.error) {
@@ -16463,14 +16494,14 @@ var toString = require('../lang/toString');
                         }
                     }
                     else if (console[name]) {
-                        _each(args, function (x) {
+                        _arrayEach(args, function (x) {
                             console[name](x);
                         });
                     }
                 }
             }]));
         };
-    };
+    }
     async.log = _console_fn('log');
     async.dir = _console_fn('dir');
     /*async.info = _console_fn('info');
@@ -16483,8 +16514,8 @@ var toString = require('../lang/toString');
         hasher = hasher || function (x) {
             return x;
         };
-        var memoized = function () {
-            var args = Array.prototype.slice.call(arguments);
+        function memoized() {
+            var args = _baseSlice(arguments);
             var callback = args.pop();
             var key = hasher.apply(null, args);
             if (key in memo) {
@@ -16498,7 +16529,7 @@ var toString = require('../lang/toString');
             else {
                 queues[key] = [callback];
                 fn.apply(null, args.concat([function () {
-                    memo[key] = arguments;
+                    memo[key] = _baseSlice(arguments);
                     var q = queues[key];
                     delete queues[key];
                     for (var i = 0, l = q.length; i < l; i++) {
@@ -16506,7 +16537,7 @@ var toString = require('../lang/toString');
                     }
                 }]));
             }
-        };
+        }
         memoized.memo = memo;
         memoized.unmemoized = fn;
         return memoized;
@@ -16518,34 +16549,37 @@ var toString = require('../lang/toString');
       };
     };
 
-    async.times = function (count, iterator, callback) {
-        var counter = [];
-        for (var i = 0; i < count; i++) {
-            counter.push(i);
-        }
-        return async.map(counter, iterator, callback);
-    };
+    function _times(mapper) {
+        return function (count, iterator, callback) {
+            mapper(_range(count), iterator, callback);
+        };
+    }
 
-    async.timesSeries = function (count, iterator, callback) {
-        var counter = [];
-        for (var i = 0; i < count; i++) {
-            counter.push(i);
-        }
-        return async.mapSeries(counter, iterator, callback);
+    async.times = _times(async.map);
+    async.timesSeries = _times(async.mapSeries);
+    async.timesLimit = function (count, limit, iterator, callback) {
+        return async.mapLimit(_range(count), limit, iterator, callback);
     };
 
     async.seq = function (/* functions... */) {
         var fns = arguments;
         return function () {
             var that = this;
-            var args = Array.prototype.slice.call(arguments);
-            var callback = args.pop();
+            var args = _baseSlice(arguments);
+
+            var callback = args.slice(-1)[0];
+            if (typeof callback == 'function') {
+                args.pop();
+            } else {
+                callback = noop;
+            }
+
             async.reduce(fns, args, function (newargs, fn, cb) {
                 fn.apply(that, newargs.concat([function () {
                     var err = arguments[0];
-                    var nextargs = Array.prototype.slice.call(arguments, 1);
+                    var nextargs = _baseSlice(arguments, 1);
                     cb(err, nextargs);
-                }]))
+                }]));
             },
             function (err, results) {
                 callback.apply(that, [err].concat(results));
@@ -16557,39 +16591,69 @@ var toString = require('../lang/toString');
       return async.seq.apply(null, Array.prototype.reverse.call(arguments));
     };
 
-    var _applyEach = function (eachfn, fns /*args...*/) {
-        var go = function () {
+
+    function _applyEach(eachfn, fns /*args...*/) {
+        function go() {
             var that = this;
-            var args = Array.prototype.slice.call(arguments);
+            var args = _baseSlice(arguments);
             var callback = args.pop();
-            return eachfn(fns, function (fn, cb) {
+            return eachfn(fns, function (fn, _, cb) {
                 fn.apply(that, args.concat([cb]));
             },
             callback);
-        };
+        }
         if (arguments.length > 2) {
-            var args = Array.prototype.slice.call(arguments, 2);
+            var args = _baseSlice(arguments, 2);
             return go.apply(this, args);
         }
         else {
             return go;
         }
+    }
+
+    async.applyEach = function (/*fns, args...*/) {
+        var args = _baseSlice(arguments);
+        return _applyEach.apply(null, [async.eachOf].concat(args));
     };
-    async.applyEach = doParallel(_applyEach);
-    async.applyEachSeries = doSeries(_applyEach);
+    async.applyEachSeries = function (/*fns, args...*/) {
+        var args = _baseSlice(arguments);
+        return _applyEach.apply(null, [async.eachOfSeries].concat(args));
+    };
+
 
     async.forever = function (fn, callback) {
+        var done = only_once(callback || noop);
+        var task = ensureAsync(fn);
         function next(err) {
             if (err) {
-                if (callback) {
-                    return callback(err);
-                }
-                throw err;
+                return done(err);
             }
-            fn(next);
+            task(next);
         }
         next();
     };
+
+    function ensureAsync(fn) {
+        return function (/*...args, callback*/) {
+            var args = _baseSlice(arguments);
+            var callback = args.pop();
+            args.push(function () {
+                var innerArgs = arguments;
+                if (sync) {
+                    async.setImmediate(function () {
+                        callback.apply(null, innerArgs);
+                    });
+                } else {
+                    callback.apply(null, innerArgs);
+                }
+            });
+            var sync = true;
+            fn.apply(this, args);
+            sync = false;
+        };
+    }
+
+    async.ensureAsync = ensureAsync;
 
     // Node.js
     if (typeof module !== 'undefined' && module.exports) {
@@ -16608,7 +16672,7 @@ var toString = require('../lang/toString');
 
 }());
 
-}).call(this,require('_process'))
+}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
 },{"_process":2}],85:[function(require,module,exports){
 
@@ -18559,7 +18623,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":87,"mout/array/filter":94,"mout/array/forEach":95,"mout/array/indexOf":96,"mout/string/trim":113}],87:[function(require,module,exports){
+},{"./base":87,"mout/array/filter":132,"mout/array/forEach":136,"mout/array/indexOf":137,"mout/string/trim":222}],87:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -18690,7 +18754,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":93,"mout/array/filter":94,"mout/array/forEach":95,"mout/array/map":97,"mout/array/some":98,"prime":259}],88:[function(require,module,exports){
+},{"mout/array/every":131,"mout/array/filter":132,"mout/array/forEach":136,"mout/array/map":142,"mout/array/some":145,"prime":95}],88:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -18702,7 +18766,7 @@ var $ = require("./events")
 
 $.implement({
 
-    delegate: function(event, selector, handle, useCapture){
+    delegate: function(event, selector, handle){
 
         return this.forEach(function(node){
 
@@ -18727,13 +18791,13 @@ $.implement({
 
             map.set(handle, action)
 
-            self.on(event, action, useCapture)
+            self.on(event, action)
 
         })
 
     },
 
-    undelegate: function(event, selector, handle, useCapture){
+    undelegate: function(event, selector, handle){
 
         return this.forEach(function(node){
 
@@ -18744,7 +18808,7 @@ $.implement({
             var action = map.get(handle)
 
             if (action){
-                self.off(event, action, useCapture)
+                self.off(event, action)
                 map.remove(action)
 
                 // if there are no more handles in a given selector, delete it
@@ -18773,7 +18837,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":90,"./traversal":114,"prime/map":260}],89:[function(require,module,exports){
+},{"./events":90,"./traversal":97,"prime/map":96}],89:[function(require,module,exports){
 /*
 domready
 */"use strict"
@@ -18953,7 +19017,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":87,"prime/emitter":258}],91:[function(require,module,exports){
+},{"./base":87,"prime/emitter":94}],91:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -18967,7 +19031,7 @@ var $ = require("./base")
 
 module.exports = $
 
-},{"./attributes":86,"./base":87,"./delegation":88,"./events":90,"./insertion":92,"./traversal":114}],92:[function(require,module,exports){
+},{"./attributes":86,"./base":87,"./delegation":88,"./events":90,"./insertion":92,"./traversal":97}],92:[function(require,module,exports){
 /*
 insertion
 */"use strict"
@@ -19062,265 +19126,414 @@ $.implement({
 module.exports = $
 
 },{"./base":87}],93:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
+(function (process,global){
+/*
+defer
+*/"use strict"
 
-    /**
-     * Array every
-     */
-    function every(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var result = true;
-        if (arr == null) {
-            return result;
+var kindOf  = require("mout/lang/kindOf"),
+    now     = require("mout/time/now"),
+    forEach = require("mout/array/forEach"),
+    indexOf = require("mout/array/indexOf")
+
+var callbacks = {
+    timeout: {},
+    frame: [],
+    immediate: []
+}
+
+var push = function(collection, callback, context, defer){
+
+    var iterator = function(){
+        iterate(collection)
+    }
+
+    if (!collection.length) defer(iterator)
+
+    var entry = {
+        callback: callback,
+        context: context
+    }
+
+    collection.push(entry)
+
+    return function(){
+        var io = indexOf(collection, entry)
+        if (io > -1) collection.splice(io, 1)
+    }
+}
+
+var iterate = function(collection){
+    var time = now()
+
+    forEach(collection.splice(0), function(entry) {
+        entry.callback.call(entry.context, time)
+    })
+}
+
+var defer = function(callback, argument, context){
+    return (kindOf(argument) === "Number") ? defer.timeout(callback, argument, context) : defer.immediate(callback, argument)
+}
+
+if (global.process && process.nextTick){
+
+    defer.immediate = function(callback, context){
+        return push(callbacks.immediate, callback, context, process.nextTick)
+    }
+
+} else if (global.setImmediate){
+
+    defer.immediate = function(callback, context){
+        return push(callbacks.immediate, callback, context, setImmediate)
+    }
+
+} else if (global.postMessage && global.addEventListener){
+
+    addEventListener("message", function(event){
+        if (event.source === global && event.data === "@deferred"){
+            event.stopPropagation()
+            iterate(callbacks.immediate)
         }
+    }, true)
 
-        var i = -1, len = arr.length;
-        while (++i < len) {
-            // we iterate over sparse items since there is no way to make it
-            // work properly on IE 7-8. see #64
-            if (!callback(arr[i], i, arr) ) {
-                result = false;
-                break;
+    defer.immediate = function(callback, context){
+        return push(callbacks.immediate, callback, context, function(){
+            postMessage("@deferred", "*")
+        })
+    }
+
+} else {
+
+    defer.immediate = function(callback, context){
+        return push(callbacks.immediate, callback, context, function(iterator){
+            setTimeout(iterator, 0)
+        })
+    }
+
+}
+
+var requestAnimationFrame = global.requestAnimationFrame ||
+    global.webkitRequestAnimationFrame ||
+    global.mozRequestAnimationFrame ||
+    global.oRequestAnimationFrame ||
+    global.msRequestAnimationFrame ||
+    function(callback) {
+        setTimeout(callback, 1e3 / 60)
+    }
+
+defer.frame = function(callback, context){
+    return push(callbacks.frame, callback, context, requestAnimationFrame)
+}
+
+var clear
+
+defer.timeout = function(callback, ms, context){
+    var ct = callbacks.timeout
+
+    if (!clear) clear = defer.immediate(function(){
+        clear = null
+        callbacks.timeout = {}
+    })
+
+    return push(ct[ms] || (ct[ms] = []), callback, context, function(iterator){
+        setTimeout(iterator, ms)
+    })
+}
+
+module.exports = defer
+
+}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+
+},{"_process":2,"mout/array/forEach":136,"mout/array/indexOf":137,"mout/lang/kindOf":172,"mout/time/now":226}],94:[function(require,module,exports){
+/*
+Emitter
+*/"use strict"
+
+var indexOf = require("mout/array/indexOf"),
+    forEach = require("mout/array/forEach")
+
+var prime = require("./index"),
+    defer = require("./defer")
+
+var slice = Array.prototype.slice;
+
+var Emitter = prime({
+
+    constructor: function(stoppable){
+        this._stoppable = stoppable
+    },
+
+    on: function(event, fn){
+        var listeners = this._listeners || (this._listeners = {}),
+            events = listeners[event] || (listeners[event] = [])
+
+        if (indexOf(events, fn) === -1) events.push(fn)
+
+        return this
+    },
+
+    off: function(event, fn){
+        var listeners = this._listeners, events
+        if (listeners && (events = listeners[event])){
+
+            var io = indexOf(events, fn)
+            if (io > -1) events.splice(io, 1)
+            if (!events.length) delete listeners[event];
+            for (var l in listeners) return this
+            delete this._listeners
+        }
+        return this
+    },
+
+    emit: function(event){
+        var self = this,
+            args = slice.call(arguments, 1)
+
+        var emit = function(){
+            var listeners = self._listeners, events
+            if (listeners && (events = listeners[event])){
+                forEach(events.slice(0), function(event){
+                    var result = event.apply(self, args)
+                    if (self._stoppable) return result
+                })
             }
         }
 
-        return result;
-    }
-
-    module.exports = every;
-
-
-},{"../function/makeIterator_":100}],94:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array filter
-     */
-    function filter(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var results = [];
-        if (arr == null) {
-            return results;
-        }
-
-        var i = -1, len = arr.length, value;
-        while (++i < len) {
-            value = arr[i];
-            if (callback(value, i, arr)) {
-                results.push(value);
-            }
-        }
-
-        return results;
-    }
-
-    module.exports = filter;
-
-
-
-},{"../function/makeIterator_":100}],95:[function(require,module,exports){
-arguments[4][65][0].apply(exports,arguments)
-},{"dup":65}],96:[function(require,module,exports){
-arguments[4][66][0].apply(exports,arguments)
-},{"dup":66}],97:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array map
-     */
-    function map(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var results = [];
-        if (arr == null){
-            return results;
-        }
-
-        var i = -1, len = arr.length;
-        while (++i < len) {
-            results[i] = callback(arr[i], i, arr);
-        }
-
-        return results;
-    }
-
-     module.exports = map;
-
-
-},{"../function/makeIterator_":100}],98:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array some
-     */
-    function some(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var result = false;
-        if (arr == null) {
-            return result;
-        }
-
-        var i = -1, len = arr.length;
-        while (++i < len) {
-            // we iterate over sparse items since there is no way to make it
-            // work properly on IE 7-8. see #64
-            if ( callback(arr[i], i, arr) ) {
-                result = true;
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    module.exports = some;
-
-
-},{"../function/makeIterator_":100}],99:[function(require,module,exports){
-
-
-    /**
-     * Returns the first argument provided to it.
-     */
-    function identity(val){
-        return val;
-    }
-
-    module.exports = identity;
-
-
-
-},{}],100:[function(require,module,exports){
-var identity = require('./identity');
-var prop = require('./prop');
-var deepMatches = require('../object/deepMatches');
-
-    /**
-     * Converts argument into a valid iterator.
-     * Used internally on most array/object/collection methods that receives a
-     * callback/iterator providing a shortcut syntax.
-     */
-    function makeIterator(src, thisObj){
-        if (src == null) {
-            return identity;
-        }
-        switch(typeof src) {
-            case 'function':
-                // function is the first to improve perf (most common case)
-                // also avoid using `Function#call` if not needed, which boosts
-                // perf a lot in some cases
-                return (typeof thisObj !== 'undefined')? function(val, i, arr){
-                    return src.call(thisObj, val, i, arr);
-                } : src;
-            case 'object':
-                return function(val){
-                    return deepMatches(val, src);
-                };
-            case 'string':
-            case 'number':
-                return prop(src);
-        }
-    }
-
-    module.exports = makeIterator;
-
-
-
-},{"../object/deepMatches":106,"./identity":99,"./prop":101}],101:[function(require,module,exports){
-
-
-    /**
-     * Returns a function that gets a property of the passed object
-     */
-    function prop(name){
-        return function(obj){
-            return obj[name];
-        };
-    }
-
-    module.exports = prop;
-
-
-
-},{}],102:[function(require,module,exports){
-arguments[4][68][0].apply(exports,arguments)
-},{"./isKind":103,"dup":68}],103:[function(require,module,exports){
-arguments[4][70][0].apply(exports,arguments)
-},{"./kindOf":104,"dup":70}],104:[function(require,module,exports){
-arguments[4][73][0].apply(exports,arguments)
-},{"dup":73}],105:[function(require,module,exports){
-arguments[4][74][0].apply(exports,arguments)
-},{"dup":74}],106:[function(require,module,exports){
-var forOwn = require('./forOwn');
-var isArray = require('../lang/isArray');
-
-    function containsMatch(array, pattern) {
-        var i = -1, length = array.length;
-        while (++i < length) {
-            if (deepMatches(array[i], pattern)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    function matchArray(target, pattern) {
-        var i = -1, patternLength = pattern.length;
-        while (++i < patternLength) {
-            if (!containsMatch(target, pattern[i])) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    function matchObject(target, pattern) {
-        var result = true;
-        forOwn(pattern, function(val, key) {
-            if (!deepMatches(target[key], val)) {
-                // Return false to break out of forOwn early
-                return (result = false);
-            }
-        });
-
-        return result;
-    }
-
-    /**
-     * Recursively check if the objects match.
-     */
-    function deepMatches(target, pattern){
-        if (target && typeof target === 'object') {
-            if (isArray(target) && isArray(pattern)) {
-                return matchArray(target, pattern);
-            } else {
-                return matchObject(target, pattern);
-            }
+        if (args[args.length - 1] === Emitter.EMIT_SYNC){
+            args.pop()
+            emit()
         } else {
-            return target === pattern;
+            defer(emit)
         }
+
+        return this
     }
 
-    module.exports = deepMatches;
+})
 
+Emitter.EMIT_SYNC = {}
 
+module.exports = Emitter
 
-},{"../lang/isArray":102,"./forOwn":108}],107:[function(require,module,exports){
-arguments[4][75][0].apply(exports,arguments)
-},{"./hasOwn":109,"dup":75}],108:[function(require,module,exports){
-arguments[4][76][0].apply(exports,arguments)
-},{"./forIn":107,"./hasOwn":109,"dup":76}],109:[function(require,module,exports){
-arguments[4][77][0].apply(exports,arguments)
-},{"dup":77}],110:[function(require,module,exports){
-arguments[4][79][0].apply(exports,arguments)
-},{"dup":79}],111:[function(require,module,exports){
-arguments[4][80][0].apply(exports,arguments)
-},{"../lang/toString":105,"./WHITE_SPACES":110,"dup":80}],112:[function(require,module,exports){
-arguments[4][81][0].apply(exports,arguments)
-},{"../lang/toString":105,"./WHITE_SPACES":110,"dup":81}],113:[function(require,module,exports){
-arguments[4][82][0].apply(exports,arguments)
-},{"../lang/toString":105,"./WHITE_SPACES":110,"./ltrim":111,"./rtrim":112,"dup":82}],114:[function(require,module,exports){
+},{"./defer":93,"./index":95,"mout/array/forEach":136,"mout/array/indexOf":137}],95:[function(require,module,exports){
+/*
+prime
+ - prototypal inheritance
+*/"use strict"
+
+var hasOwn = require("mout/object/hasOwn"),
+    mixIn  = require("mout/object/mixIn"),
+    create = require("mout/lang/createObject"),
+    kindOf = require("mout/lang/kindOf")
+
+var hasDescriptors = true
+
+try {
+    Object.defineProperty({}, "~", {})
+    Object.getOwnPropertyDescriptor({}, "~")
+} catch (e){
+    hasDescriptors = false
+}
+
+// we only need to be able to implement "toString" and "valueOf" in IE < 9
+var hasEnumBug = !({valueOf: 0}).propertyIsEnumerable("valueOf"),
+    buggy      = ["toString", "valueOf"]
+
+var verbs = /^constructor|inherits|mixin$/
+
+var implement = function(proto){
+    var prototype = this.prototype
+
+    for (var key in proto){
+        if (key.match(verbs)) continue
+        if (hasDescriptors){
+            var descriptor = Object.getOwnPropertyDescriptor(proto, key)
+            if (descriptor){
+                Object.defineProperty(prototype, key, descriptor)
+                continue
+            }
+        }
+        prototype[key] = proto[key]
+    }
+
+    if (hasEnumBug) for (var i = 0; (key = buggy[i]); i++){
+        var value = proto[key]
+        if (value !== Object.prototype[key]) prototype[key] = value
+    }
+
+    return this
+}
+
+var prime = function(proto){
+
+    if (kindOf(proto) === "Function") proto = {constructor: proto}
+
+    var superprime = proto.inherits
+
+    // if our nice proto object has no own constructor property
+    // then we proceed using a ghosting constructor that all it does is
+    // call the parent's constructor if it has a superprime, else an empty constructor
+    // proto.constructor becomes the effective constructor
+    var constructor = (hasOwn(proto, "constructor")) ? proto.constructor : (superprime) ? function(){
+        return superprime.apply(this, arguments)
+    } : function(){}
+
+    if (superprime){
+
+        mixIn(constructor, superprime)
+
+        var superproto = superprime.prototype
+        // inherit from superprime
+        var cproto = constructor.prototype = create(superproto)
+
+        // setting constructor.parent to superprime.prototype
+        // because it's the shortest possible absolute reference
+        constructor.parent = superproto
+        cproto.constructor = constructor
+    }
+
+    if (!constructor.implement) constructor.implement = implement
+
+    var mixins = proto.mixin
+    if (mixins){
+        if (kindOf(mixins) !== "Array") mixins = [mixins]
+        for (var i = 0; i < mixins.length; i++) constructor.implement(create(mixins[i].prototype))
+    }
+
+    // implement proto and return constructor
+    return constructor.implement(proto)
+
+}
+
+module.exports = prime
+
+},{"mout/lang/createObject":159,"mout/lang/kindOf":172,"mout/object/hasOwn":192,"mout/object/mixIn":195}],96:[function(require,module,exports){
+/*
+Map
+*/"use strict"
+
+var indexOf = require("mout/array/indexOf")
+
+var prime = require("./index")
+
+var Map = prime({
+
+    constructor: function Map(){
+        this.length = 0
+        this._values = []
+        this._keys = []
+    },
+
+    set: function(key, value){
+        var index = indexOf(this._keys, key)
+
+        if (index === -1){
+            this._keys.push(key)
+            this._values.push(value)
+            this.length++
+        } else {
+            this._values[index] = value
+        }
+
+        return this
+    },
+
+    get: function(key){
+        var index = indexOf(this._keys, key)
+        return (index === -1) ? null : this._values[index]
+    },
+
+    count: function(){
+        return this.length
+    },
+
+    forEach: function(method, context){
+        for (var i = 0, l = this.length; i < l; i++){
+            if (method.call(context, this._values[i], this._keys[i], this) === false) break
+        }
+        return this
+    },
+
+    map: function(method, context){
+        var results = new Map
+        this.forEach(function(value, key){
+            results.set(key, method.call(context, value, key, this))
+        }, this)
+        return results
+    },
+
+    filter: function(method, context){
+        var results = new Map
+        this.forEach(function(value, key){
+            if (method.call(context, value, key, this)) results.set(key, value)
+        }, this)
+        return results
+    },
+
+    every: function(method, context){
+        var every = true
+        this.forEach(function(value, key){
+            if (!method.call(context, value, key, this)) return (every = false)
+        }, this)
+        return every
+    },
+
+    some: function(method, context){
+        var some = false
+        this.forEach(function(value, key){
+            if (method.call(context, value, key, this)) return !(some = true)
+        }, this)
+        return some
+    },
+
+    indexOf: function(value){
+        var index = indexOf(this._values, value)
+        return (index > -1) ? this._keys[index] : null
+    },
+
+    remove: function(value){
+        var index = indexOf(this._values, value)
+
+        if (index !== -1){
+            this._values.splice(index, 1)
+            this.length--
+            return this._keys.splice(index, 1)[0]
+        }
+
+        return null
+    },
+
+    unset: function(key){
+        var index = indexOf(this._keys, key)
+
+        if (index !== -1){
+            this._keys.splice(index, 1)
+            this.length--
+            return this._values.splice(index, 1)[0]
+        }
+
+        return null
+    },
+
+    keys: function(){
+        return this._keys.slice()
+    },
+
+    values: function(){
+        return this._values.slice()
+    }
+
+})
+
+var map = function(){
+    return new Map
+}
+
+map.prototype = Map.prototype
+
+module.exports = map
+
+},{"./index":95,"mout/array/indexOf":137}],97:[function(require,module,exports){
 /*
 traversal
 */"use strict"
@@ -19425,7 +19638,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":87,"mout/array/map":97,"slick":272}],115:[function(require,module,exports){
+},{"./base":87,"mout/array/map":142,"slick":248}],98:[function(require,module,exports){
 /*
 zen
 */"use strict"
@@ -19483,7 +19696,7 @@ module.exports = function(expression, doc){
 
 }
 
-},{"./base":87,"mout/array/forEach":95,"mout/array/map":97,"slick/parser":273}],116:[function(require,module,exports){
+},{"./base":87,"mout/array/forEach":136,"mout/array/map":142,"slick/parser":249}],99:[function(require,module,exports){
 /*          .-   3
 .-.-..-..-.-|-._.
 ' ' '`-'`-' ' ' '
@@ -19512,7 +19725,7 @@ moofx.color = color
 
 module.exports = moofx
 
-},{"./lib/browser":117,"./lib/color":118,"./lib/frame":119,"./lib/fx":120}],117:[function(require,module,exports){
+},{"./lib/browser":100,"./lib/color":101,"./lib/frame":102,"./lib/fx":103}],100:[function(require,module,exports){
 (function (global){
 /*
 MooFx
@@ -20450,7 +20663,7 @@ module.exports = moofx
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./color":118,"./frame":119,"./fx":120,"./unmatrix2d":121,"elements":123,"prime":130,"prime/array/forEach":126,"prime/array/indexOf":127,"prime/array/map":128,"prime/string/camelize":137,"prime/string/capitalize":138,"prime/string/clean":139,"prime/string/hyphenate":140}],118:[function(require,module,exports){
+},{"./color":101,"./frame":102,"./fx":103,"./unmatrix2d":104,"elements":106,"prime":113,"prime/array/forEach":109,"prime/array/indexOf":110,"prime/array/map":111,"prime/string/camelize":120,"prime/string/capitalize":121,"prime/string/clean":122,"prime/string/hyphenate":123}],101:[function(require,module,exports){
 /*
 color
 */"use strict"
@@ -20577,7 +20790,7 @@ color.x = RegExp([skeys, shex, srgb + slist, shsl + slist].join("|"), "gi")
 
 module.exports = color
 
-},{}],119:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 (function (global){
 /*
 requestFrame / cancelFrame
@@ -20621,7 +20834,7 @@ exports.cancel = cancel
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"prime/array/indexOf":127}],120:[function(require,module,exports){
+},{"prime/array/indexOf":110}],103:[function(require,module,exports){
 /*
 fx
 */"use strict"
@@ -20857,7 +21070,7 @@ fx.prototype = Fx.prototype
 
 module.exports = fx
 
-},{"./frame":119,"cubic-bezier":122,"prime":130,"prime/array/map":128}],121:[function(require,module,exports){
+},{"./frame":102,"cubic-bezier":105,"prime":113,"prime/array/map":111}],104:[function(require,module,exports){
 /*
 Unmatrix 2d
  - a crude implementation of the slightly bugged pseudo code in http://www.w3.org/TR/css3-2d-transforms/#matrix-decomposition
@@ -20933,7 +21146,7 @@ module.exports = function(a, b, c, d, tx, ty){
 
 }
 
-},{}],122:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 
 module.exports = function(x1, y1, x2, y2, epsilon){
 
@@ -20986,7 +21199,7 @@ module.exports = function(x1, y1, x2, y2, epsilon){
 
 };
 
-},{}],123:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 (function (global){
 /*
 elements
@@ -21111,7 +21324,7 @@ module.exports = $
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"prime":130,"prime/array/every":124,"prime/array/filter":125,"prime/array/forEach":126,"prime/array/map":128,"prime/array/some":129}],124:[function(require,module,exports){
+},{"prime":113,"prime/array/every":107,"prime/array/filter":108,"prime/array/forEach":109,"prime/array/map":111,"prime/array/some":112}],107:[function(require,module,exports){
 /*
 array:every
 */"use strict"
@@ -21125,7 +21338,7 @@ var every = function(self, method, context){
 
 module.exports = every
 
-},{}],125:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 /*
 array:filter
 */"use strict"
@@ -21141,7 +21354,7 @@ var filter = function(self, method, context){
 
 module.exports = filter
 
-},{}],126:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 /*
 array:forEach
 */"use strict"
@@ -21155,7 +21368,7 @@ var forEach = function(self, method, context){
 
 module.exports = forEach
 
-},{}],127:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 /*
 array:indexOf
 */"use strict"
@@ -21169,7 +21382,7 @@ var indexOf = function(self, item, from){
 
 module.exports = indexOf
 
-},{}],128:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 /*
 array:map
 */"use strict"
@@ -21184,7 +21397,7 @@ var map = function(self, method, context){
 
 module.exports = map
 
-},{}],129:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 /*
 array:some
 */"use strict"
@@ -21198,7 +21411,7 @@ var some = function(self, method, context){
 
 module.exports = some
 
-},{}],130:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -21287,7 +21500,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"./object/create":131,"./object/filter":132,"./object/forIn":133,"./object/hasOwn":135,"./object/mixIn":136,"./type":142}],131:[function(require,module,exports){
+},{"./object/create":114,"./object/filter":115,"./object/forIn":116,"./object/hasOwn":118,"./object/mixIn":119,"./type":125}],114:[function(require,module,exports){
 /*
 object:create
 */"use strict"
@@ -21300,7 +21513,7 @@ var create = function(self){
 
 module.exports = create
 
-},{}],132:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 /*
 object:filter
 */"use strict"
@@ -21317,7 +21530,7 @@ var filter = function(self, method, context){
 
 module.exports = filter
 
-},{"./forIn":133}],133:[function(require,module,exports){
+},{"./forIn":116}],116:[function(require,module,exports){
 /*
 object:forIn
 */"use strict"
@@ -21347,7 +21560,7 @@ if (!({valueOf: 0}).propertyIsEnumerable("valueOf")){ // fix for stupid IE enume
 
 module.exports = forIn
 
-},{"./hasOwn":135}],134:[function(require,module,exports){
+},{"./hasOwn":118}],117:[function(require,module,exports){
 /*
 object:forOwn
 */"use strict"
@@ -21364,7 +21577,7 @@ var forOwn = function(self, method, context){
 
 module.exports = forOwn
 
-},{"./forIn":133,"./hasOwn":135}],135:[function(require,module,exports){
+},{"./forIn":116,"./hasOwn":118}],118:[function(require,module,exports){
 /*
 object:hasOwn
 */"use strict"
@@ -21377,7 +21590,7 @@ var hasOwn = function(self, key){
 
 module.exports = hasOwn
 
-},{}],136:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 /*
 object:mixIn
 */"use strict"
@@ -21395,7 +21608,7 @@ var mixIn = function(self){
 
 module.exports = mixIn
 
-},{"./forOwn":134}],137:[function(require,module,exports){
+},{"./forOwn":117}],120:[function(require,module,exports){
 /*
 string:camelize
 */"use strict"
@@ -21408,7 +21621,7 @@ var camelize = function(self){
 
 module.exports = camelize
 
-},{}],138:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 /*
 string:capitalize
 */"use strict"
@@ -21421,7 +21634,7 @@ var capitalize = function(self){
 
 module.exports = capitalize
 
-},{}],139:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 /*
 string:clean
 */"use strict"
@@ -21434,7 +21647,7 @@ var clean = function(self){
 
 module.exports = clean
 
-},{"./trim":141}],140:[function(require,module,exports){
+},{"./trim":124}],123:[function(require,module,exports){
 /*
 string:hyphenate
 */"use strict"
@@ -21447,7 +21660,7 @@ var hyphenate = function(self){
 
 module.exports = hyphenate
 
-},{}],141:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 /*
 string:trim
 */"use strict"
@@ -21458,7 +21671,7 @@ var trim = function(self){
 
 module.exports = trim
 
-},{}],142:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 /*
 type
 */"use strict"
@@ -21476,7 +21689,7 @@ var type = function(object){
 
 module.exports = type
 
-},{}],143:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 
 
     /**
@@ -21499,7 +21712,7 @@ module.exports = type
     module.exports = append;
 
 
-},{}],144:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 var indexOf = require('./indexOf');
 
     /**
@@ -21523,7 +21736,7 @@ var indexOf = require('./indexOf');
     module.exports = combine;
 
 
-},{"./indexOf":154}],145:[function(require,module,exports){
+},{"./indexOf":137}],128:[function(require,module,exports){
 var indexOf = require('./indexOf');
 
     /**
@@ -21535,7 +21748,7 @@ var indexOf = require('./indexOf');
     module.exports = contains;
 
 
-},{"./indexOf":154}],146:[function(require,module,exports){
+},{"./indexOf":137}],129:[function(require,module,exports){
 var unique = require('./unique');
 var filter = require('./filter');
 var some = require('./some');
@@ -21560,7 +21773,7 @@ var slice = require('./slice');
 
 
 
-},{"./contains":145,"./filter":149,"./slice":161,"./some":162,"./unique":164}],147:[function(require,module,exports){
+},{"./contains":128,"./filter":132,"./slice":144,"./some":145,"./unique":147}],130:[function(require,module,exports){
 var is = require('../lang/is');
 var isArray = require('../lang/isArray');
 var every = require('./every');
@@ -21592,11 +21805,64 @@ var every = require('./every');
 
 
 
-},{"../lang/is":178,"../lang/isArray":179,"./every":148}],148:[function(require,module,exports){
-arguments[4][93][0].apply(exports,arguments)
-},{"../function/makeIterator_":172,"dup":93}],149:[function(require,module,exports){
-arguments[4][94][0].apply(exports,arguments)
-},{"../function/makeIterator_":172,"dup":94}],150:[function(require,module,exports){
+},{"../lang/is":162,"../lang/isArray":163,"./every":131}],131:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array every
+     */
+    function every(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var result = true;
+        if (arr == null) {
+            return result;
+        }
+
+        var i = -1, len = arr.length;
+        while (++i < len) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if (!callback(arr[i], i, arr) ) {
+                result = false;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    module.exports = every;
+
+
+},{"../function/makeIterator_":155}],132:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array filter
+     */
+    function filter(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var results = [];
+        if (arr == null) {
+            return results;
+        }
+
+        var i = -1, len = arr.length, value;
+        while (++i < len) {
+            value = arr[i];
+            if (callback(value, i, arr)) {
+                results.push(value);
+            }
+        }
+
+        return results;
+    }
+
+    module.exports = filter;
+
+
+
+},{"../function/makeIterator_":155}],133:[function(require,module,exports){
 var findIndex = require('./findIndex');
 
     /**
@@ -21611,7 +21877,7 @@ var findIndex = require('./findIndex');
 
 
 
-},{"./findIndex":151}],151:[function(require,module,exports){
+},{"./findIndex":134}],134:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -21636,7 +21902,7 @@ var makeIterator = require('../function/makeIterator_');
     module.exports = findIndex;
 
 
-},{"../function/makeIterator_":172}],152:[function(require,module,exports){
+},{"../function/makeIterator_":155}],135:[function(require,module,exports){
 var isArray = require('../lang/isArray');
 var append = require('./append');
 
@@ -21681,11 +21947,11 @@ var append = require('./append');
 
 
 
-},{"../lang/isArray":179,"./append":143}],153:[function(require,module,exports){
+},{"../lang/isArray":163,"./append":126}],136:[function(require,module,exports){
 arguments[4][65][0].apply(exports,arguments)
-},{"dup":65}],154:[function(require,module,exports){
+},{"dup":65}],137:[function(require,module,exports){
 arguments[4][66][0].apply(exports,arguments)
-},{"dup":66}],155:[function(require,module,exports){
+},{"dup":66}],138:[function(require,module,exports){
 var difference = require('./difference');
 var slice = require('./slice');
 
@@ -21702,7 +21968,7 @@ var slice = require('./slice');
     module.exports = insert;
 
 
-},{"./difference":146,"./slice":161}],156:[function(require,module,exports){
+},{"./difference":129,"./slice":144}],139:[function(require,module,exports){
 var unique = require('./unique');
 var filter = require('./filter');
 var every = require('./every');
@@ -21728,7 +21994,7 @@ var slice = require('./slice');
 
 
 
-},{"./contains":145,"./every":148,"./filter":149,"./slice":161,"./unique":164}],157:[function(require,module,exports){
+},{"./contains":128,"./every":131,"./filter":132,"./slice":144,"./unique":147}],140:[function(require,module,exports){
 var slice = require('./slice');
 
     /**
@@ -21753,7 +22019,7 @@ var slice = require('./slice');
     module.exports = invoke;
 
 
-},{"./slice":161}],158:[function(require,module,exports){
+},{"./slice":144}],141:[function(require,module,exports){
 
 
     /**
@@ -21771,9 +22037,31 @@ var slice = require('./slice');
 
 
 
-},{}],159:[function(require,module,exports){
-arguments[4][97][0].apply(exports,arguments)
-},{"../function/makeIterator_":172,"dup":97}],160:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array map
+     */
+    function map(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var results = [];
+        if (arr == null){
+            return results;
+        }
+
+        var i = -1, len = arr.length;
+        while (++i < len) {
+            results[i] = callback(arr[i], i, arr);
+        }
+
+        return results;
+    }
+
+     module.exports = map;
+
+
+},{"../function/makeIterator_":155}],143:[function(require,module,exports){
 var indexOf = require('./indexOf');
 
     /**
@@ -21790,7 +22078,7 @@ var indexOf = require('./indexOf');
     module.exports = removeAll;
 
 
-},{"./indexOf":154}],161:[function(require,module,exports){
+},{"./indexOf":137}],144:[function(require,module,exports){
 
 
     /**
@@ -21827,9 +22115,36 @@ var indexOf = require('./indexOf');
 
 
 
-},{}],162:[function(require,module,exports){
-arguments[4][98][0].apply(exports,arguments)
-},{"../function/makeIterator_":172,"dup":98}],163:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array some
+     */
+    function some(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var result = false;
+        if (arr == null) {
+            return result;
+        }
+
+        var i = -1, len = arr.length;
+        while (++i < len) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if ( callback(arr[i], i, arr) ) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    module.exports = some;
+
+
+},{"../function/makeIterator_":155}],146:[function(require,module,exports){
 
 
     /**
@@ -21866,7 +22181,7 @@ arguments[4][98][0].apply(exports,arguments)
     module.exports = split;
 
 
-},{}],164:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 var filter = require('./filter');
 
     /**
@@ -21893,7 +22208,7 @@ var filter = require('./filter');
 
 
 
-},{"./filter":149}],165:[function(require,module,exports){
+},{"./filter":132}],148:[function(require,module,exports){
 var make = require('./make_');
 var arrFind = require('../array/find');
 var objFind = require('../object/find');
@@ -21905,7 +22220,7 @@ var objFind = require('../object/find');
 
 
 
-},{"../array/find":150,"../object/find":203,"./make_":167}],166:[function(require,module,exports){
+},{"../array/find":133,"../object/find":187,"./make_":150}],149:[function(require,module,exports){
 var make = require('./make_');
 var arrForEach = require('../array/forEach');
 var objForEach = require('../object/forOwn');
@@ -21916,7 +22231,7 @@ var objForEach = require('../object/forOwn');
 
 
 
-},{"../array/forEach":153,"../object/forOwn":205,"./make_":167}],167:[function(require,module,exports){
+},{"../array/forEach":136,"../object/forOwn":189,"./make_":150}],150:[function(require,module,exports){
 var slice = require('../array/slice');
 
     /**
@@ -21937,7 +22252,7 @@ var slice = require('../array/slice');
 
 
 
-},{"../array/slice":161}],168:[function(require,module,exports){
+},{"../array/slice":144}],151:[function(require,module,exports){
 var isArray = require('../lang/isArray');
 var objSize = require('../object/size');
 
@@ -21958,7 +22273,7 @@ var objSize = require('../object/size');
 
 
 
-},{"../lang/isArray":179,"../object/size":215}],169:[function(require,module,exports){
+},{"../lang/isArray":163,"../object/size":199}],152:[function(require,module,exports){
 var slice = require('../array/slice');
 
     /**
@@ -21979,7 +22294,7 @@ var slice = require('../array/slice');
 
 
 
-},{"../array/slice":161}],170:[function(require,module,exports){
+},{"../array/slice":144}],153:[function(require,module,exports){
 
 
     /**
@@ -22013,13 +22328,73 @@ var slice = require('../array/slice');
 
 
 
-},{}],171:[function(require,module,exports){
-arguments[4][99][0].apply(exports,arguments)
-},{"dup":99}],172:[function(require,module,exports){
-arguments[4][100][0].apply(exports,arguments)
-},{"../object/deepMatches":200,"./identity":171,"./prop":173,"dup":100}],173:[function(require,module,exports){
-arguments[4][101][0].apply(exports,arguments)
-},{"dup":101}],174:[function(require,module,exports){
+},{}],154:[function(require,module,exports){
+
+
+    /**
+     * Returns the first argument provided to it.
+     */
+    function identity(val){
+        return val;
+    }
+
+    module.exports = identity;
+
+
+
+},{}],155:[function(require,module,exports){
+var identity = require('./identity');
+var prop = require('./prop');
+var deepMatches = require('../object/deepMatches');
+
+    /**
+     * Converts argument into a valid iterator.
+     * Used internally on most array/object/collection methods that receives a
+     * callback/iterator providing a shortcut syntax.
+     */
+    function makeIterator(src, thisObj){
+        if (src == null) {
+            return identity;
+        }
+        switch(typeof src) {
+            case 'function':
+                // function is the first to improve perf (most common case)
+                // also avoid using `Function#call` if not needed, which boosts
+                // perf a lot in some cases
+                return (typeof thisObj !== 'undefined')? function(val, i, arr){
+                    return src.call(thisObj, val, i, arr);
+                } : src;
+            case 'object':
+                return function(val){
+                    return deepMatches(val, src);
+                };
+            case 'string':
+            case 'number':
+                return prop(src);
+        }
+    }
+
+    module.exports = makeIterator;
+
+
+
+},{"../object/deepMatches":184,"./identity":154,"./prop":156}],156:[function(require,module,exports){
+
+
+    /**
+     * Returns a function that gets a property of the passed object
+     */
+    function prop(name){
+        return function(obj){
+            return obj[name];
+        };
+    }
+
+    module.exports = prop;
+
+
+
+},{}],157:[function(require,module,exports){
 
 
     /**
@@ -22043,7 +22418,7 @@ arguments[4][101][0].apply(exports,arguments)
 
 
 
-},{}],175:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -22094,7 +22469,27 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":211,"./isPlainObject":185,"./kindOf":188}],176:[function(require,module,exports){
+},{"../object/mixIn":195,"./isPlainObject":169,"./kindOf":172}],159:[function(require,module,exports){
+var mixIn = require('../object/mixIn');
+
+    /**
+     * Create Object using prototypal inheritance and setting custom properties.
+     * - Mix between Douglas Crockford Prototypal Inheritance <http://javascript.crockford.com/prototypal.html> and the EcmaScript 5 `Object.create()` method.
+     * @param {object} parent    Parent Object.
+     * @param {object} [props] Object properties.
+     * @return {object} Created object.
+     */
+    function createObject(parent, props){
+        function F(){}
+        F.prototype = parent;
+        return mixIn(new F(), props);
+
+    }
+    module.exports = createObject;
+
+
+
+},{"../object/mixIn":195}],160:[function(require,module,exports){
 var clone = require('./clone');
 var forOwn = require('../object/forOwn');
 var kindOf = require('./kindOf');
@@ -22144,7 +22539,7 @@ var isPlainObject = require('./isPlainObject');
 
 
 
-},{"../object/forOwn":205,"./clone":175,"./isPlainObject":185,"./kindOf":188}],177:[function(require,module,exports){
+},{"../object/forOwn":189,"./clone":158,"./isPlainObject":169,"./kindOf":172}],161:[function(require,module,exports){
 var is = require('./is');
 var isObject = require('./isObject');
 var isArray = require('./isArray');
@@ -22176,7 +22571,7 @@ var arrEquals = require('../array/equals');
 
 
 
-},{"../array/equals":147,"../object/equals":201,"./is":178,"./isArray":179,"./isObject":184}],178:[function(require,module,exports){
+},{"../array/equals":130,"../object/equals":185,"./is":162,"./isArray":163,"./isObject":168}],162:[function(require,module,exports){
 
 
     /**
@@ -22201,9 +22596,9 @@ var arrEquals = require('../array/equals');
 
 
 
-},{}],179:[function(require,module,exports){
+},{}],163:[function(require,module,exports){
 arguments[4][68][0].apply(exports,arguments)
-},{"./isKind":182,"dup":68}],180:[function(require,module,exports){
+},{"./isKind":166,"dup":68}],164:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -22213,11 +22608,11 @@ var isKind = require('./isKind');
     module.exports = isBoolean;
 
 
-},{"./isKind":182}],181:[function(require,module,exports){
+},{"./isKind":166}],165:[function(require,module,exports){
 arguments[4][69][0].apply(exports,arguments)
-},{"./isKind":182,"dup":69}],182:[function(require,module,exports){
+},{"./isKind":166,"dup":69}],166:[function(require,module,exports){
 arguments[4][70][0].apply(exports,arguments)
-},{"./kindOf":188,"dup":70}],183:[function(require,module,exports){
+},{"./kindOf":172,"dup":70}],167:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -22227,9 +22622,9 @@ var isKind = require('./isKind');
     module.exports = isNumber;
 
 
-},{"./isKind":182}],184:[function(require,module,exports){
+},{"./isKind":166}],168:[function(require,module,exports){
 arguments[4][71][0].apply(exports,arguments)
-},{"./isKind":182,"dup":71}],185:[function(require,module,exports){
+},{"./isKind":166,"dup":71}],169:[function(require,module,exports){
 
 
     /**
@@ -22244,7 +22639,7 @@ arguments[4][71][0].apply(exports,arguments)
 
 
 
-},{}],186:[function(require,module,exports){
+},{}],170:[function(require,module,exports){
 
 
     /**
@@ -22267,11 +22662,11 @@ arguments[4][71][0].apply(exports,arguments)
 
 
 
-},{}],187:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 arguments[4][72][0].apply(exports,arguments)
-},{"./isKind":182,"dup":72}],188:[function(require,module,exports){
+},{"./isKind":166,"dup":72}],172:[function(require,module,exports){
 arguments[4][73][0].apply(exports,arguments)
-},{"dup":73}],189:[function(require,module,exports){
+},{"dup":73}],173:[function(require,module,exports){
 var isArray = require('./isArray');
 
     /**
@@ -22293,9 +22688,9 @@ var isArray = require('./isArray');
 
 
 
-},{"./isArray":179}],190:[function(require,module,exports){
+},{"./isArray":163}],174:[function(require,module,exports){
 arguments[4][74][0].apply(exports,arguments)
-},{"dup":74}],191:[function(require,module,exports){
+},{"dup":74}],175:[function(require,module,exports){
 
     /**
      * Clamps value inside range.
@@ -22306,7 +22701,7 @@ arguments[4][74][0].apply(exports,arguments)
     module.exports = clamp;
 
 
-},{}],192:[function(require,module,exports){
+},{}],176:[function(require,module,exports){
 
     /**
     * Linear interpolation.
@@ -22319,7 +22714,7 @@ arguments[4][74][0].apply(exports,arguments)
     module.exports = lerp;
 
 
-},{}],193:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 var lerp = require('./lerp');
 var norm = require('./norm');
     /**
@@ -22332,7 +22727,7 @@ var norm = require('./norm');
     module.exports = map;
 
 
-},{"./lerp":192,"./norm":194}],194:[function(require,module,exports){
+},{"./lerp":176,"./norm":178}],178:[function(require,module,exports){
 
     /**
     * Gets normalized ratio of value inside range.
@@ -22347,7 +22742,7 @@ var norm = require('./norm');
     module.exports = norm;
 
 
-},{}],195:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 /**
  * @constant Maximum 32-bit signed integer value. (2^31 - 1)
  */
@@ -22355,7 +22750,7 @@ var norm = require('./norm');
     module.exports = 2147483647;
 
 
-},{}],196:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 /**
  * @constant Minimum 32-bit signed integer value (-2^31).
  */
@@ -22363,7 +22758,7 @@ var norm = require('./norm');
     module.exports = -2147483648;
 
 
-},{}],197:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 var toNumber = require('../lang/toNumber');
     /**
      * Enforce a specific amount of decimal digits and also fix floating
@@ -22377,7 +22772,7 @@ var toNumber = require('../lang/toNumber');
     module.exports = enforcePrecision;
 
 
-},{"../lang/toNumber":189}],198:[function(require,module,exports){
+},{"../lang/toNumber":173}],182:[function(require,module,exports){
 
 
     /**
@@ -22396,7 +22791,7 @@ var toNumber = require('../lang/toNumber');
 
 
 
-},{}],199:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var isPlainObject = require('../lang/isPlainObject');
 
@@ -22431,9 +22826,64 @@ var isPlainObject = require('../lang/isPlainObject');
 
 
 
-},{"../lang/isPlainObject":185,"./forOwn":205}],200:[function(require,module,exports){
-arguments[4][106][0].apply(exports,arguments)
-},{"../lang/isArray":179,"./forOwn":205,"dup":106}],201:[function(require,module,exports){
+},{"../lang/isPlainObject":169,"./forOwn":189}],184:[function(require,module,exports){
+var forOwn = require('./forOwn');
+var isArray = require('../lang/isArray');
+
+    function containsMatch(array, pattern) {
+        var i = -1, length = array.length;
+        while (++i < length) {
+            if (deepMatches(array[i], pattern)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function matchArray(target, pattern) {
+        var i = -1, patternLength = pattern.length;
+        while (++i < patternLength) {
+            if (!containsMatch(target, pattern[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    function matchObject(target, pattern) {
+        var result = true;
+        forOwn(pattern, function(val, key) {
+            if (!deepMatches(target[key], val)) {
+                // Return false to break out of forOwn early
+                return (result = false);
+            }
+        });
+
+        return result;
+    }
+
+    /**
+     * Recursively check if the objects match.
+     */
+    function deepMatches(target, pattern){
+        if (target && typeof target === 'object') {
+            if (isArray(target) && isArray(pattern)) {
+                return matchArray(target, pattern);
+            } else {
+                return matchObject(target, pattern);
+            }
+        } else {
+            return target === pattern;
+        }
+    }
+
+    module.exports = deepMatches;
+
+
+
+},{"../lang/isArray":163,"./forOwn":189}],185:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var every = require('./every');
 var isObject = require('../lang/isObject');
@@ -22468,7 +22918,7 @@ var is = require('../lang/is');
     module.exports = equals;
 
 
-},{"../lang/is":178,"../lang/isObject":184,"./every":202,"./hasOwn":208}],202:[function(require,module,exports){
+},{"../lang/is":162,"../lang/isObject":168,"./every":186,"./hasOwn":192}],186:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var makeIterator = require('../function/makeIterator_');
 
@@ -22493,7 +22943,7 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{"../function/makeIterator_":172,"./forOwn":205}],203:[function(require,module,exports){
+},{"../function/makeIterator_":155,"./forOwn":189}],187:[function(require,module,exports){
 var some = require('./some');
 var makeIterator = require('../function/makeIterator_');
 
@@ -22516,11 +22966,11 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{"../function/makeIterator_":172,"./some":216}],204:[function(require,module,exports){
+},{"../function/makeIterator_":155,"./some":200}],188:[function(require,module,exports){
 arguments[4][75][0].apply(exports,arguments)
-},{"./hasOwn":208,"dup":75}],205:[function(require,module,exports){
+},{"./hasOwn":192,"dup":75}],189:[function(require,module,exports){
 arguments[4][76][0].apply(exports,arguments)
-},{"./forIn":204,"./hasOwn":208,"dup":76}],206:[function(require,module,exports){
+},{"./forIn":188,"./hasOwn":192,"dup":76}],190:[function(require,module,exports){
 var isPrimitive = require('../lang/isPrimitive');
 
     /**
@@ -22542,7 +22992,7 @@ var isPrimitive = require('../lang/isPrimitive');
 
 
 
-},{"../lang/isPrimitive":186}],207:[function(require,module,exports){
+},{"../lang/isPrimitive":170}],191:[function(require,module,exports){
 var get = require('./get');
 
     var UNDEF;
@@ -22559,9 +23009,9 @@ var get = require('./get');
 
 
 
-},{"./get":206}],208:[function(require,module,exports){
+},{"./get":190}],192:[function(require,module,exports){
 arguments[4][77][0].apply(exports,arguments)
-},{"dup":77}],209:[function(require,module,exports){
+},{"dup":77}],193:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -22579,7 +23029,7 @@ var forOwn = require('./forOwn');
 
 
 
-},{"./forOwn":205}],210:[function(require,module,exports){
+},{"./forOwn":189}],194:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var deepClone = require('../lang/deepClone');
 var isObject = require('../lang/isObject');
@@ -22621,9 +23071,9 @@ var isObject = require('../lang/isObject');
 
 
 
-},{"../lang/deepClone":176,"../lang/isObject":184,"./hasOwn":208}],211:[function(require,module,exports){
+},{"../lang/deepClone":160,"../lang/isObject":168,"./hasOwn":192}],195:[function(require,module,exports){
 arguments[4][78][0].apply(exports,arguments)
-},{"./forOwn":205,"dup":78}],212:[function(require,module,exports){
+},{"./forOwn":189,"dup":78}],196:[function(require,module,exports){
 var forEach = require('../array/forEach');
 
     /**
@@ -22644,7 +23094,7 @@ var forEach = require('../array/forEach');
 
 
 
-},{"../array/forEach":153}],213:[function(require,module,exports){
+},{"../array/forEach":136}],197:[function(require,module,exports){
 var slice = require('../array/slice');
 var contains = require('../array/contains');
 
@@ -22667,7 +23117,7 @@ var contains = require('../array/contains');
 
 
 
-},{"../array/contains":145,"../array/slice":161}],214:[function(require,module,exports){
+},{"../array/contains":128,"../array/slice":144}],198:[function(require,module,exports){
 var namespace = require('./namespace');
 
     /**
@@ -22686,7 +23136,7 @@ var namespace = require('./namespace');
 
 
 
-},{"./namespace":212}],215:[function(require,module,exports){
+},{"./namespace":196}],199:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -22704,7 +23154,7 @@ var forOwn = require('./forOwn');
 
 
 
-},{"./forOwn":205}],216:[function(require,module,exports){
+},{"./forOwn":189}],200:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var makeIterator = require('../function/makeIterator_');
 
@@ -22727,7 +23177,7 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{"../function/makeIterator_":172,"./forOwn":205}],217:[function(require,module,exports){
+},{"../function/makeIterator_":155,"./forOwn":189}],201:[function(require,module,exports){
 var has = require('./has');
 
     /**
@@ -22752,7 +23202,7 @@ var has = require('./has');
 
 
 
-},{"./has":207}],218:[function(require,module,exports){
+},{"./has":191}],202:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -22770,7 +23220,7 @@ var forOwn = require('./forOwn');
 
 
 
-},{"./forOwn":205}],219:[function(require,module,exports){
+},{"./forOwn":189}],203:[function(require,module,exports){
 var forOwn = require('../object/forOwn');
 var isArray = require('../lang/isArray');
 var forEach = require('../array/forEach');
@@ -22799,7 +23249,7 @@ var forEach = require('../array/forEach');
     module.exports = encode;
 
 
-},{"../array/forEach":153,"../lang/isArray":179,"../object/forOwn":205}],220:[function(require,module,exports){
+},{"../array/forEach":136,"../lang/isArray":163,"../object/forOwn":189}],204:[function(require,module,exports){
 
 
     /**
@@ -22829,7 +23279,7 @@ var forEach = require('../array/forEach');
 
 
 
-},{}],221:[function(require,module,exports){
+},{}],205:[function(require,module,exports){
 var randInt = require('./randInt');
 var isArray = require('../lang/isArray');
 
@@ -22846,7 +23296,7 @@ var isArray = require('../lang/isArray');
 
 
 
-},{"../lang/isArray":179,"./randInt":225}],222:[function(require,module,exports){
+},{"../lang/isArray":163,"./randInt":209}],206:[function(require,module,exports){
 var randHex = require('./randHex');
 var choice = require('./choice');
 
@@ -22872,7 +23322,7 @@ var choice = require('./choice');
   module.exports = guid;
 
 
-},{"./choice":221,"./randHex":224}],223:[function(require,module,exports){
+},{"./choice":205,"./randHex":208}],207:[function(require,module,exports){
 var random = require('./random');
 var MIN_INT = require('../number/MIN_INT');
 var MAX_INT = require('../number/MAX_INT');
@@ -22889,7 +23339,7 @@ var MAX_INT = require('../number/MAX_INT');
     module.exports = rand;
 
 
-},{"../number/MAX_INT":195,"../number/MIN_INT":196,"./random":226}],224:[function(require,module,exports){
+},{"../number/MAX_INT":179,"../number/MIN_INT":180,"./random":210}],208:[function(require,module,exports){
 var choice = require('./choice');
 
     var _chars = '0123456789abcdef'.split('');
@@ -22910,7 +23360,7 @@ var choice = require('./choice');
 
 
 
-},{"./choice":221}],225:[function(require,module,exports){
+},{"./choice":205}],209:[function(require,module,exports){
 var MIN_INT = require('../number/MIN_INT');
 var MAX_INT = require('../number/MAX_INT');
 var rand = require('./rand');
@@ -22930,7 +23380,7 @@ var rand = require('./rand');
     module.exports = randInt;
 
 
-},{"../number/MAX_INT":195,"../number/MIN_INT":196,"./rand":223}],226:[function(require,module,exports){
+},{"../number/MAX_INT":179,"../number/MIN_INT":180,"./rand":207}],210:[function(require,module,exports){
 
 
     /**
@@ -22950,9 +23400,9 @@ var rand = require('./rand');
 
 
 
-},{}],227:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 arguments[4][79][0].apply(exports,arguments)
-},{"dup":79}],228:[function(require,module,exports){
+},{"dup":79}],212:[function(require,module,exports){
 var toString = require('../lang/toString');
 
     /**
@@ -22968,7 +23418,7 @@ var toString = require('../lang/toString');
 
 
 
-},{"../lang/toString":190}],229:[function(require,module,exports){
+},{"../lang/toString":174}],213:[function(require,module,exports){
 var toString = require('../lang/toString');
 
     /**
@@ -22988,7 +23438,7 @@ var toString = require('../lang/toString');
 
 
 
-},{"../lang/toString":190}],230:[function(require,module,exports){
+},{"../lang/toString":174}],214:[function(require,module,exports){
 var toString = require('../lang/toString');
 
     /**
@@ -23011,7 +23461,7 @@ var toString = require('../lang/toString');
 
 
 
-},{"../lang/toString":190}],231:[function(require,module,exports){
+},{"../lang/toString":174}],215:[function(require,module,exports){
 var toString = require('../lang/toString');
 var get = require('../object/get');
 
@@ -23032,7 +23482,7 @@ var get = require('../object/get');
 
 
 
-},{"../lang/toString":190,"../object/get":206}],232:[function(require,module,exports){
+},{"../lang/toString":174,"../object/get":190}],216:[function(require,module,exports){
 var toString = require('../lang/toString');
     /**
      * "Safer" String.toLowerCase()
@@ -23045,9 +23495,9 @@ var toString = require('../lang/toString');
     module.exports = lowerCase;
 
 
-},{"../lang/toString":190}],233:[function(require,module,exports){
+},{"../lang/toString":174}],217:[function(require,module,exports){
 arguments[4][80][0].apply(exports,arguments)
-},{"../lang/toString":190,"./WHITE_SPACES":227,"dup":80}],234:[function(require,module,exports){
+},{"../lang/toString":174,"./WHITE_SPACES":211,"dup":80}],218:[function(require,module,exports){
 var toString = require('../lang/toString');
 var lowerCase = require('./lowerCase');
 var upperCase = require('./upperCase');
@@ -23062,7 +23512,7 @@ var upperCase = require('./upperCase');
     module.exports = properCase;
 
 
-},{"../lang/toString":190,"./lowerCase":232,"./upperCase":241}],235:[function(require,module,exports){
+},{"../lang/toString":174,"./lowerCase":216,"./upperCase":225}],219:[function(require,module,exports){
 var toString = require('../lang/toString');
 var toInt = require('../number/toInt');
 
@@ -23090,7 +23540,7 @@ var toInt = require('../number/toInt');
 
 
 
-},{"../lang/toString":190,"../number/toInt":198}],236:[function(require,module,exports){
+},{"../lang/toString":174,"../number/toInt":182}],220:[function(require,module,exports){
 var toString = require('../lang/toString');
 var repeat = require('./repeat');
 
@@ -23107,11 +23557,11 @@ var repeat = require('./repeat');
 
 
 
-},{"../lang/toString":190,"./repeat":235}],237:[function(require,module,exports){
+},{"../lang/toString":174,"./repeat":219}],221:[function(require,module,exports){
 arguments[4][81][0].apply(exports,arguments)
-},{"../lang/toString":190,"./WHITE_SPACES":227,"dup":81}],238:[function(require,module,exports){
+},{"../lang/toString":174,"./WHITE_SPACES":211,"dup":81}],222:[function(require,module,exports){
 arguments[4][82][0].apply(exports,arguments)
-},{"../lang/toString":190,"./WHITE_SPACES":227,"./ltrim":233,"./rtrim":237,"dup":82}],239:[function(require,module,exports){
+},{"../lang/toString":174,"./WHITE_SPACES":211,"./ltrim":217,"./rtrim":221,"dup":82}],223:[function(require,module,exports){
 var toString = require('../lang/toString');
 
     /**
@@ -23131,7 +23581,7 @@ var toString = require('../lang/toString');
 
 
 
-},{"../lang/toString":190}],240:[function(require,module,exports){
+},{"../lang/toString":174}],224:[function(require,module,exports){
 var toString = require('../lang/toString');
     /**
      * Replaces hyphens with spaces. (only hyphens between word chars)
@@ -23143,13 +23593,33 @@ var toString = require('../lang/toString');
     module.exports = unhyphenate;
 
 
-},{"../lang/toString":190}],241:[function(require,module,exports){
+},{"../lang/toString":174}],225:[function(require,module,exports){
 arguments[4][83][0].apply(exports,arguments)
-},{"../lang/toString":190,"dup":83}],242:[function(require,module,exports){
-arguments[4][161][0].apply(exports,arguments)
-},{"dup":161}],243:[function(require,module,exports){
-arguments[4][169][0].apply(exports,arguments)
-},{"../array/slice":242,"dup":169}],244:[function(require,module,exports){
+},{"../lang/toString":174,"dup":83}],226:[function(require,module,exports){
+
+
+    /**
+     * Get current time in miliseconds
+     */
+    function now(){
+        // yes, we defer the work to another function to allow mocking it
+        // during the tests
+        return now.get();
+    }
+
+    now.get = (typeof Date.now === 'function')? Date.now : function(){
+        return +(new Date());
+    };
+
+    module.exports = now;
+
+
+
+},{}],227:[function(require,module,exports){
+arguments[4][144][0].apply(exports,arguments)
+},{"dup":144}],228:[function(require,module,exports){
+arguments[4][152][0].apply(exports,arguments)
+},{"../array/slice":227,"dup":152}],229:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -23200,27 +23670,27 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":254,"./isPlainObject":248,"./kindOf":249}],245:[function(require,module,exports){
-arguments[4][176][0].apply(exports,arguments)
-},{"../object/forOwn":251,"./clone":244,"./isPlainObject":248,"./kindOf":249,"dup":176}],246:[function(require,module,exports){
+},{"../object/mixIn":239,"./isPlainObject":233,"./kindOf":234}],230:[function(require,module,exports){
+arguments[4][160][0].apply(exports,arguments)
+},{"../object/forOwn":236,"./clone":229,"./isPlainObject":233,"./kindOf":234,"dup":160}],231:[function(require,module,exports){
 arguments[4][70][0].apply(exports,arguments)
-},{"./kindOf":249,"dup":70}],247:[function(require,module,exports){
+},{"./kindOf":234,"dup":70}],232:[function(require,module,exports){
 arguments[4][71][0].apply(exports,arguments)
-},{"./isKind":246,"dup":71}],248:[function(require,module,exports){
-arguments[4][185][0].apply(exports,arguments)
-},{"dup":185}],249:[function(require,module,exports){
+},{"./isKind":231,"dup":71}],233:[function(require,module,exports){
+arguments[4][169][0].apply(exports,arguments)
+},{"dup":169}],234:[function(require,module,exports){
 arguments[4][73][0].apply(exports,arguments)
-},{"dup":73}],250:[function(require,module,exports){
+},{"dup":73}],235:[function(require,module,exports){
 arguments[4][75][0].apply(exports,arguments)
-},{"./hasOwn":252,"dup":75}],251:[function(require,module,exports){
+},{"./hasOwn":237,"dup":75}],236:[function(require,module,exports){
 arguments[4][76][0].apply(exports,arguments)
-},{"./forIn":250,"./hasOwn":252,"dup":76}],252:[function(require,module,exports){
+},{"./forIn":235,"./hasOwn":237,"dup":76}],237:[function(require,module,exports){
 arguments[4][77][0].apply(exports,arguments)
-},{"dup":77}],253:[function(require,module,exports){
-arguments[4][210][0].apply(exports,arguments)
-},{"../lang/deepClone":245,"../lang/isObject":247,"./hasOwn":252,"dup":210}],254:[function(require,module,exports){
+},{"dup":77}],238:[function(require,module,exports){
+arguments[4][194][0].apply(exports,arguments)
+},{"../lang/deepClone":230,"../lang/isObject":232,"./hasOwn":237,"dup":194}],239:[function(require,module,exports){
 arguments[4][78][0].apply(exports,arguments)
-},{"./forOwn":251,"dup":78}],255:[function(require,module,exports){
+},{"./forOwn":236,"dup":78}],240:[function(require,module,exports){
 "use strict";
 
 // credits to @cpojer's Class.Binds, released under the MIT license
@@ -23240,7 +23710,7 @@ var bound = prime({
 
 module.exports = bound
 
-},{"mout/function/bind":243,"prime":259}],256:[function(require,module,exports){
+},{"mout/function/bind":228,"prime":244}],241:[function(require,module,exports){
 "use strict";
 
 var prime = require("prime")
@@ -23259,7 +23729,7 @@ var Options = prime({
 
 module.exports = Options
 
-},{"mout/object/merge":253,"prime":259}],257:[function(require,module,exports){
+},{"mout/object/merge":238,"prime":244}],242:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -23378,345 +23848,13 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":2,"mout/array/forEach":261,"mout/array/indexOf":262,"mout/lang/kindOf":264,"mout/time/now":269}],258:[function(require,module,exports){
-/*
-Emitter
-*/"use strict"
-
-var indexOf = require("mout/array/indexOf"),
-    forEach = require("mout/array/forEach")
-
-var prime = require("./index"),
-    defer = require("./defer")
-
-var slice = Array.prototype.slice;
-
-var Emitter = prime({
-
-    on: function(event, fn){
-        var listeners = this._listeners || (this._listeners = {}),
-            events = listeners[event] || (listeners[event] = [])
-
-        if (indexOf(events, fn) === -1) events.push(fn)
-
-        return this
-    },
-
-    off: function(event, fn){
-        var listeners = this._listeners, events, key, length = 0
-        if (listeners && (events = listeners[event])){
-
-            var io = indexOf(events, fn)
-            if (io > -1) events.splice(io, 1)
-            if (!events.length) delete listeners[event];
-            for (var l in listeners) return this
-            delete this._listeners
-        }
-        return this
-    },
-
-    emit: function(event){
-        var self = this,
-            args = slice.call(arguments, 1)
-
-        var emit = function(){
-            var listeners = self._listeners, events
-            if (listeners && (events = listeners[event])){
-                forEach(events.slice(0), function(event){
-                    return event.apply(self, args)
-                })
-            }
-        }
-
-        if (args[args.length - 1] === Emitter.EMIT_SYNC){
-            args.pop()
-            emit()
-        } else {
-            defer(emit)
-        }
-
-        return this
-    }
-
-})
-
-Emitter.EMIT_SYNC = {}
-
-module.exports = Emitter
-
-},{"./defer":257,"./index":259,"mout/array/forEach":261,"mout/array/indexOf":262}],259:[function(require,module,exports){
-/*
-prime
- - prototypal inheritance
-*/"use strict"
-
-var hasOwn = require("mout/object/hasOwn"),
-    mixIn  = require("mout/object/mixIn"),
-    create = require("mout/lang/createObject"),
-    kindOf = require("mout/lang/kindOf")
-
-var hasDescriptors = true
-
-try {
-    Object.defineProperty({}, "~", {})
-    Object.getOwnPropertyDescriptor({}, "~")
-} catch (e){
-    hasDescriptors = false
-}
-
-// we only need to be able to implement "toString" and "valueOf" in IE < 9
-var hasEnumBug = !({valueOf: 0}).propertyIsEnumerable("valueOf"),
-    buggy      = ["toString", "valueOf"]
-
-var verbs = /^constructor|inherits|mixin$/
-
-var implement = function(proto){
-    var prototype = this.prototype
-
-    for (var key in proto){
-        if (key.match(verbs)) continue
-        if (hasDescriptors){
-            var descriptor = Object.getOwnPropertyDescriptor(proto, key)
-            if (descriptor){
-                Object.defineProperty(prototype, key, descriptor)
-                continue
-            }
-        }
-        prototype[key] = proto[key]
-    }
-
-    if (hasEnumBug) for (var i = 0; (key = buggy[i]); i++){
-        var value = proto[key]
-        if (value !== Object.prototype[key]) prototype[key] = value
-    }
-
-    return this
-}
-
-var prime = function(proto){
-
-    if (kindOf(proto) === "Function") proto = {constructor: proto}
-
-    var superprime = proto.inherits
-
-    // if our nice proto object has no own constructor property
-    // then we proceed using a ghosting constructor that all it does is
-    // call the parent's constructor if it has a superprime, else an empty constructor
-    // proto.constructor becomes the effective constructor
-    var constructor = (hasOwn(proto, "constructor")) ? proto.constructor : (superprime) ? function(){
-        return superprime.apply(this, arguments)
-    } : function(){}
-
-    if (superprime){
-
-        mixIn(constructor, superprime)
-
-        var superproto = superprime.prototype
-        // inherit from superprime
-        var cproto = constructor.prototype = create(superproto)
-
-        // setting constructor.parent to superprime.prototype
-        // because it's the shortest possible absolute reference
-        constructor.parent = superproto
-        cproto.constructor = constructor
-    }
-
-    if (!constructor.implement) constructor.implement = implement
-
-    var mixins = proto.mixin
-    if (mixins){
-        if (kindOf(mixins) !== "Array") mixins = [mixins]
-        for (var i = 0; i < mixins.length; i++) constructor.implement(create(mixins[i].prototype))
-    }
-
-    // implement proto and return constructor
-    return constructor.implement(proto)
-
-}
-
-module.exports = prime
-
-},{"mout/lang/createObject":263,"mout/lang/kindOf":264,"mout/object/hasOwn":267,"mout/object/mixIn":268}],260:[function(require,module,exports){
-/*
-Map
-*/"use strict"
-
-var indexOf = require("mout/array/indexOf")
-
-var prime = require("./index")
-
-var Map = prime({
-
-    constructor: function Map(){
-        this.length = 0
-        this._values = []
-        this._keys = []
-    },
-
-    set: function(key, value){
-        var index = indexOf(this._keys, key)
-
-        if (index === -1){
-            this._keys.push(key)
-            this._values.push(value)
-            this.length++
-        } else {
-            this._values[index] = value
-        }
-
-        return this
-    },
-
-    get: function(key){
-        var index = indexOf(this._keys, key)
-        return (index === -1) ? null : this._values[index]
-    },
-
-    count: function(){
-        return this.length
-    },
-
-    forEach: function(method, context){
-        for (var i = 0, l = this.length; i < l; i++){
-            if (method.call(context, this._values[i], this._keys[i], this) === false) break
-        }
-        return this
-    },
-
-    map: function(method, context){
-        var results = new Map
-        this.forEach(function(value, key){
-            results.set(key, method.call(context, value, key, this))
-        }, this)
-        return results
-    },
-
-    filter: function(method, context){
-        var results = new Map
-        this.forEach(function(value, key){
-            if (method.call(context, value, key, this)) results.set(key, value)
-        }, this)
-        return results
-    },
-
-    every: function(method, context){
-        var every = true
-        this.forEach(function(value, key){
-            if (!method.call(context, value, key, this)) return (every = false)
-        }, this)
-        return every
-    },
-
-    some: function(method, context){
-        var some = false
-        this.forEach(function(value, key){
-            if (method.call(context, value, key, this)) return !(some = true)
-        }, this)
-        return some
-    },
-
-    indexOf: function(value){
-        var index = indexOf(this._values, value)
-        return (index > -1) ? this._keys[index] : null
-    },
-
-    remove: function(value){
-        var index = indexOf(this._values, value)
-
-        if (index !== -1){
-            this._values.splice(index, 1)
-            this.length--
-            return this._keys.splice(index, 1)[0]
-        }
-
-        return null
-    },
-
-    unset: function(key){
-        var index = indexOf(this._keys, key)
-
-        if (index !== -1){
-            this._keys.splice(index, 1)
-            this.length--
-            return this._values.splice(index, 1)[0]
-        }
-
-        return null
-    },
-
-    keys: function(){
-        return this._keys.slice()
-    },
-
-    values: function(){
-        return this._values.slice()
-    }
-
-})
-
-var map = function(){
-    return new Map
-}
-
-map.prototype = Map.prototype
-
-module.exports = map
-
-},{"./index":259,"mout/array/indexOf":262}],261:[function(require,module,exports){
-arguments[4][65][0].apply(exports,arguments)
-},{"dup":65}],262:[function(require,module,exports){
-arguments[4][66][0].apply(exports,arguments)
-},{"dup":66}],263:[function(require,module,exports){
-var mixIn = require('../object/mixIn');
-
-    /**
-     * Create Object using prototypal inheritance and setting custom properties.
-     * - Mix between Douglas Crockford Prototypal Inheritance <http://javascript.crockford.com/prototypal.html> and the EcmaScript 5 `Object.create()` method.
-     * @param {object} parent    Parent Object.
-     * @param {object} [props] Object properties.
-     * @return {object} Created object.
-     */
-    function createObject(parent, props){
-        function F(){}
-        F.prototype = parent;
-        return mixIn(new F(), props);
-
-    }
-    module.exports = createObject;
-
-
-
-},{"../object/mixIn":268}],264:[function(require,module,exports){
-arguments[4][73][0].apply(exports,arguments)
-},{"dup":73}],265:[function(require,module,exports){
-arguments[4][75][0].apply(exports,arguments)
-},{"./hasOwn":267,"dup":75}],266:[function(require,module,exports){
-arguments[4][76][0].apply(exports,arguments)
-},{"./forIn":265,"./hasOwn":267,"dup":76}],267:[function(require,module,exports){
-arguments[4][77][0].apply(exports,arguments)
-},{"dup":77}],268:[function(require,module,exports){
-arguments[4][78][0].apply(exports,arguments)
-},{"./forOwn":266,"dup":78}],269:[function(require,module,exports){
-
-
-    /**
-     * Get current time in miliseconds
-     */
-    function now(){
-        // yes, we defer the work to another function to allow mocking it
-        // during the tests
-        return now.get();
-    }
-
-    now.get = (typeof Date.now === 'function')? Date.now : function(){
-        return +(new Date());
-    };
-
-    module.exports = now;
-
-
-
-},{}],270:[function(require,module,exports){
+},{"_process":2,"mout/array/forEach":136,"mout/array/indexOf":137,"mout/lang/kindOf":172,"mout/time/now":226}],243:[function(require,module,exports){
+arguments[4][94][0].apply(exports,arguments)
+},{"./defer":242,"./index":244,"dup":94,"mout/array/forEach":136,"mout/array/indexOf":137}],244:[function(require,module,exports){
+arguments[4][95][0].apply(exports,arguments)
+},{"dup":95,"mout/lang/createObject":159,"mout/lang/kindOf":172,"mout/object/hasOwn":192,"mout/object/mixIn":195}],245:[function(require,module,exports){
+arguments[4][96][0].apply(exports,arguments)
+},{"./index":244,"dup":96,"mout/array/indexOf":137}],246:[function(require,module,exports){
 /**
  * sifter.js
  * Copyright (c) 2013 Brian Reavis & contributors
@@ -24189,7 +24327,7 @@ arguments[4][78][0].apply(exports,arguments)
 }));
 
 
-},{}],271:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 /*
 Slick Finder
 */"use strict"
@@ -25020,7 +25158,7 @@ slick.parse = parse;
 
 module.exports = slick
 
-},{"./parser":273}],272:[function(require,module,exports){
+},{"./parser":249}],248:[function(require,module,exports){
 (function (global){
 /*
 slick
@@ -25030,7 +25168,7 @@ module.exports = "document" in global ? require("./finder") : { parse: require("
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./finder":271,"./parser":273}],273:[function(require,module,exports){
+},{"./finder":247,"./parser":249}],249:[function(require,module,exports){
 /*
 Slick Parser
  - originally created by the almighty Thomas Aylott <@subtlegradient> (http://subtlegradient.com)
@@ -25282,7 +25420,7 @@ var parse = function(expression){
 
 module.exports = parse
 
-},{}],274:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
 /**!
  * Sortable
  * @author	RubaXa   <trash@rubaxa.org>
