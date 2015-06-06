@@ -50,8 +50,8 @@ input[type="color"],
 	}
 }
 
-// Mailto Window
-.view-mailto {
+// Mailto and Print Windows
+.view-mailto, .body-only {
     padding: 0 $leading-margin;
     #g-page-surround {
         box-shadow: none;
