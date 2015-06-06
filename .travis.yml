@@ -1,6 +1,5 @@
 language: php
-php:
-  - '5.6'
+php: 5.6
 branches:
   except:
     - master
@@ -22,9 +21,7 @@ before_install:
 install:
   - if [ ! -z "$TRAVIS_TAG" ]; then
       npm install &>/dev/null;
-      cd $TRAVIS_BUILD_DIR/platforms/common && npm install &>/dev/null;
-      cd $TRAVIS_BUILD_DIR/assets/common && npm install &>/dev/null;
-      cd $TRAVIS_BUILD_DIR/engines/common/nucleus && npm install &>/dev/null;
+      gulp -up &>/dev/null;
     fi
   - cd $TRAVIS_BUILD_DIR/src && composer install --no-dev;
   - cd $TRAVIS_BUILD_DIR/bin/build && composer install --no-dev
@@ -33,9 +30,9 @@ script:
   - echo "Branch ($TRAVIS_BRANCH)"
   - cd $TRAVIS_BUILD_DIR/bin/build
   - if [ "$TRAVIS_BRANCH" == "develop" ]; then
-      php build.php dev -propertyfile release.ini -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dxml.version=dev-$SHORT_COMMIT -Dstr.fileversion=_develop;
+      php build.php joomla-dev -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dxml.version=dev-$SHORT_COMMIT -Dstr.fileversion=_develop;
     elif [ ! -z "$TRAVIS_TAG" ]; then
-      php build.php prod -propertyfile release.ini -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dxml.version=$TRAVIS_TAG;
+      php build.php joomla-prod -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dxml.version=$TRAVIS_TAG;
     else
       echo "($TRAVIS_BRANCH) is not a supported branch for builds";
     fi
