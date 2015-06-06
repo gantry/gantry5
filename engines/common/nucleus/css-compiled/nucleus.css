@@ -1401,8 +1401,12 @@ ul ul, ul ol, ul dl, ol ul, ol ol, ol dl, dl ul, dl ol, dl dl {
   margin-bottom: 0;
 }
 
-ul, dl {
+ul {
   margin-left: 1.5rem;
+  padding: 0;
+}
+
+dl {
   padding: 0;
 }
 
