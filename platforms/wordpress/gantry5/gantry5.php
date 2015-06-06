@@ -1,12 +1,13 @@
 <?php
 /**
  * Plugin Name: Gantry 5 Framework
- * Plugin URI: //http://gantry.org/
+ * Plugin URI: http://gantry.org/
  * Description: Framework for Gantry 5 based templates.
- * Version: 5.0
- * Author: RocketTheme
- * Author URI: http://www.rockettheme.com/
- * License: GPL2
+ * Version: @version@
+ * Author: RocketTheme, LLC
+ * Author URI: http://rockettheme.com/
+ * License: GNU General Public License v2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
 defined( 'ABSPATH' ) or die;
 
