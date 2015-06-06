@@ -50,3 +50,11 @@ input[type="color"],
 	}
 }
 
+// Mailto Window
+.view-mailto {
+    padding: 0 $leading-margin;
+    #g-page-surround {
+        box-shadow: none;
+    }
+}
+
