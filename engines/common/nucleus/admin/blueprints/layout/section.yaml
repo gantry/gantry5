@@ -4,6 +4,12 @@ type: section
 
 form:
   fields:
+    boxed:
+      type: enable.enable
+      label: Boxed
+      description: Turn on to wrap section into a container box.
+      isset: true
+
     class:
       type: input.selectize
       label: CSS Classes
