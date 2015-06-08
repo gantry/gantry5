@@ -11651,7 +11651,6 @@ var prime         = require('prime'),
     domready      = require('elements/domready'),
     storage       = require('prime/map')(),
     modal         = require('../ui').modal,
-    collapsers    = require('../ui/collapse'),
 
     size          = require('mout/collection/size'),
     indexOf       = require('mout/array/indexOf'),
@@ -11782,7 +11781,6 @@ History.Adapter.bind(window, 'statechange', function() {
         var selects = $('[data-selectize]');
         if (selects) { selects.selectize(); }
         selectorChangeEvent();
-        collapsers();
 
         body.emit('statechangeEnd');
     });
@@ -12039,7 +12037,8 @@ domready(function() {
 
 
 module.exports = {};
-},{"../menu":28,"../ui":45,"../ui/collapse":41,"../ui/popover":47,"../utils/elements.utils":54,"./flags-state":57,"./get-ajax-suffix":58,"./get-ajax-url":59,"./history":61,"agent":64,"elements/domready":89,"elements/zen":98,"mout/array/indexOf":137,"mout/collection/size":151,"mout/object/keys":193,"mout/object/merge":194,"mout/queryString/encode":203,"mout/random/guid":206,"mout/string/contains":212,"prime":244,"prime/map":245}],53:[function(require,module,exports){
+
+},{"../menu":28,"../ui":45,"../ui/popover":47,"../utils/elements.utils":54,"./flags-state":57,"./get-ajax-suffix":58,"./get-ajax-url":59,"./history":61,"agent":64,"elements/domready":89,"elements/zen":98,"mout/array/indexOf":137,"mout/collection/size":151,"mout/object/keys":193,"mout/object/merge":194,"mout/queryString/encode":203,"mout/random/guid":206,"mout/string/contains":212,"prime":244,"prime/map":245}],53:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
