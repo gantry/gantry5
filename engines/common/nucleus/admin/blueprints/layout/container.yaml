@@ -5,10 +5,13 @@ type: container
 form:
   fields:
     boxed:
-      type: enable.enable
-      label: Boxed
-      description: Turn on to wrap section into a container box.
+      type: select.selectize
+      label: Layout
+      description: Select between a Fullwidth and Boxed.
       isset: true
+      options:
+        0: Fullwidth
+        1: Boxed
 
     class:
       type: input.selectize
