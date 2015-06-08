@@ -5,7 +5,9 @@
     <div class="g-tabs">
         <ul>
             <li class="active"><a href="#">Particle</a></li>
+            {% if block %}
             <li><a href="#">Block</a></li>
+            {% endif %}
         </ul>
     </div>
 
@@ -26,6 +28,7 @@
             </div>
         </div>
 
+        {% if block %}
         <div class="g-pane">
             <div class="card settings-block">
                 <h4>
@@ -36,6 +39,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 
     <div class="g-modal-actions">

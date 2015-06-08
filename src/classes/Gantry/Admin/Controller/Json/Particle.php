@@ -110,7 +110,7 @@ class Particle extends JsonController
         }
 
         // TODO: add support for other block types as well, like menu.
-        $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
+        // $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));
 
         // Load particle blueprints and default settings.
@@ -129,7 +129,7 @@ class Particle extends JsonController
 
         $this->params += [
             'item'          => $item,
-            'block'         => $block,
+            // 'block'         => $block,
             'data'          => ['particles' => [$name => $item->options['particle']]],
             'particle'      => $blueprints,
             'parent'        => 'settings',
