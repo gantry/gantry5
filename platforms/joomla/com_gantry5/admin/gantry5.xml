@@ -14,6 +14,7 @@
         <filename>gantry5.php</filename>
         <filename>router.php</filename>
         <filename>MD5SUM</filename>
+        <folder>fields</folder>
         <folder>views</folder>
     </files>
 
