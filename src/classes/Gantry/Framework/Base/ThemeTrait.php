@@ -461,7 +461,7 @@ trait ThemeTrait
                     break;
 
                 default:
-                    if (!$item->children) {
+                    if (empty($item->children)) {
                         unset($items[$i]);
                         break;
                     }
