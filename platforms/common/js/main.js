@@ -7039,7 +7039,7 @@ ready(function() {
         }
 
         if (data.modal_close) { return true; }
-        
+
         modal.open({
             content: 'Loading',
             method: !value || data.type == 'module' ? 'get' : 'post',
@@ -7389,8 +7389,10 @@ var Cookie = {
         date.setTime(date.getTime() + 3600 * 1000 * 24 * 365 * 10); // 10 years
 
         var host = window.location.host.toString(),
-            domain = host.substring(host.lastIndexOf(".", host.lastIndexOf(".") - 1) + 1),
-            cookie = [name, '=', JSON.stringify(value), '; expires=', date.toGMTString(), '; domain=.', domain, '; path=/;'];
+            domain = host.substring(host.lastIndexOf(".", host.lastIndexOf(".") - 1) + 1);
+
+        if (host.match(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/)) { domain = host; }
+        var cookie = [name, '=', JSON.stringify(value), '; expires=', date.toGMTString(), '; domain=.', domain, '; path=/;'];
 
         document.cookie = cookie.join('');
     },
@@ -7467,6 +7469,12 @@ ready(function() {
 
             data.handle.data('title', !collapsed ? data.expand : data.collapse);
             storage[data.id] = !collapsed;
+            data.collapsed = !collapsed;
+
+            var refreshData = JSON.parse(element.data('g-collapse'));
+            refreshData.collapsed = !collapsed;
+            element.data('g-collapse', JSON.stringify(refreshData));
+
             Cookie.write('g5-collapsed', storage);
         };
 

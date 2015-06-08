@@ -32,7 +32,7 @@ ready(function() {
         }
 
         if (data.modal_close) { return true; }
-        
+
         modal.open({
             content: 'Loading',
             method: !value || data.type == 'module' ? 'get' : 'post',
