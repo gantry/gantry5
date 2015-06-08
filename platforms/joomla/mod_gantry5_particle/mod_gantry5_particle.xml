@@ -13,12 +13,15 @@
     <files>
         <filename module="mod_gantry5_particle">mod_gantry5_particle.php</filename>
         <folder>language</folder>
-        <filename>class.php</filename>
     </files>
     <config>
         <fields name="params">
-            <fieldset name="basic" addfieldpath="/modules/mod_gantry5_particle/fields">
-                <field name="particle" type="particle" />
+            <fieldset name="basic" addfieldpath="/components/com_gantry5/fields">
+                <field
+                        name="particle"
+                        type="particle"
+                        label="MOD_GANTRY5_PARTICLE_FIELD_PARTICLE_LABEL"
+                        description="MOD_GANTRY5_PARTICLE_FIELD_PARTICLE_DESC" />
             </fieldset>
             <fieldset name="advanced">
                 <field
@@ -43,7 +46,6 @@
                         name="cachemode"
                         type="hidden"
                         default="static">
-                    <option value="static"></option>
                 </field>
             </fieldset>
         </fields>

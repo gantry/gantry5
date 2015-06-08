@@ -15,8 +15,9 @@
     -Dpackage_dir=../../../builds/gantry5  (= builds/gantry5)
     -Dtmp_dir=tmp                          (= git/gantry5/build/tmp)
     -Dbuild_dir=package                    (= git/gantry5/build/package)
+    -Dupdate_versions=false                (= true / for CI and automated push)
 -->
-<project name="gantry5" basedir="." description="Phing Build Script" default="dist">
+<project name="gantry5" basedir="." description="Phing Build Script" default="prod">
 
     <!-- Setup of any global settings that will apply to the entire build script -->
     <property file="${phing.dir}/build.ini" />
@@ -34,14 +35,15 @@
     <condition property="build_dir" value="${phing.dir}/package">
         <not><isset property="build_dir" /></not>
     </condition>
+    <condition property="update_versions" value="false">
+        <not><isset property="update_versions" /></not>
+    </condition>
 
     <property name="path.assets" value="${project_dir}/assets" />
     <property name="path.engines" value="${project_dir}/engines" />
     <property name="path.platforms" value="${project_dir}/platforms" />
     <property name="path.src" value="${project_dir}/src" />
     <property name="path.themes" value="${project_dir}/themes" />
-
-    <xmlproperty file="${path.platforms}/joomla/${cfg.prefix}${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
     <tstamp>
         <format property="str.datefmt" pattern="${cfg.datefmt}" />
     </tstamp>
@@ -64,7 +66,7 @@
         <istrue value="${cfg.joomla}" />
     </condition>
 
-    <!-- Add version information to all xml files and forum.php -->
+    <!-- Add version information to all xml files -->
     <filterchain id="filter">
         <replacetokens>
             <token key="version" value="${xml.version}"/>
@@ -72,7 +74,9 @@
         </replacetokens>
     </filterchain>
 
-    <target name="dist" depends="preflight,info,mkdir,backup,assets-prod,build-installer,build-component,build-library,build-nucleus,build-plugins,build-themes,assets-dev,package,postflight" />
+    <!-- Importing platforms targets -->
+    <import file="build-joomla.xml" />
+    <import file="build-wordpress.xml" />
 
     <!-- Preflight check to see if we can even run the build script -->
     <target name="preflight">
@@ -93,11 +97,11 @@
 
         <trycatch>
             <try>
-                <!-- Fail the build if npm is not installed -->
+                <!-- Fail the build if gulp is not installed -->
                 <exec command="npm list -g gulp|grep gulp" checkreturn="true" passthru="true" output="/dev/null" />
             </try>
             <catch>
-                <fail message="Please install Gulp globally" />
+                <echo message="Please install Gulp globally" />
             </catch>
         </trycatch>
     </target>
@@ -105,7 +109,6 @@
     <target name="info">
         <echo message="Phing Version:   ${phing.version}" />
         <echo message="Project:         ${cfg.name}" />
-        <echo message="XML Name:        ${xml.name}" />
         <echo message="XML Version:     ${xml.version}" />
         <echo message="XML Author:      ${xml.author}" />
         <echo message="XML Copyright:   ${xml.copyright}" />
@@ -122,19 +125,6 @@
         <mkdir dir="${build_dir}/distribution" />
         <mkdir dir="${build_dir}/distribution/packages" />
         <mkdir dir="${package_dir}" />
-        <mkdir dir="${package_dir}/backup" />
-        <touch file="${package_dir}/build"/>
-   </target>
-
-
-    <target name="backup">
-        <echo message="Backup last build..." />
-
-        <move todir="${package_dir}/backup" preservelastmodified="true">
-            <fileset dir="${package_dir}">
-                <exclude name="backup/**" />
-            </fileset>
-        </move>
     </target>
 
     <!-- Initialize all project related files, at this point we are past any "location" setup work so its safe to proceed -->
@@ -143,300 +133,94 @@
         <exec command="gulp --prod" checkreturn="true" error="${phing.dir}/gulp-prod-error.txt" />
     </target>
 
-    <target name="build-installer">
-        <echo message="Building Installer.." />
+    <target name="joomla">
+        <phingcall target="cleanup" />
+        <phingcall target="mkdir" />
 
-        <!-- Copy files needed by the installer -->
-        <copy file="${path.platforms}/joomla/pkg_gantry5.xml" todir="${build_dir}/distribution" overwrite="true">
-            <filterchain refid="filter"/>
-        </copy>
-
-        <copy file="${path.platforms}/joomla/install.php" todir="${build_dir}/distribution" overwrite="true">
-            <filterchain refid="filter"/>
-        </copy>
-
-        <copy todir="${build_dir}/distribution/language" overwrite="true">
-            <fileset dir="${path.platforms}/joomla/language"/>
-        </copy>
-
-        <copy file="${project_dir}/README.md" tofile="${build_dir}/distribution/README.txt" overwrite="true">
-            <filterchain refid="filter"/>
-        </copy>
+        <phingcall target="build-joomla-installer" />
+        <phingcall target="build-joomla-component" />
+        <phingcall target="build-joomla-library" />
+        <phingcall target="build-joomla-nucleus" />
+        <phingcall target="build-joomla-plugins" />
+        <phingcall target="build-joomla-themes" />
+        <phingcall target="joomla-package" />
     </target>
 
-    <target name="build-component" depends="build-installer">
-        <echo message="Building Component..." />
+    <target name="wordpress">
+        <phingcall target="cleanup" />
+        <phingcall target="mkdir" />
 
-        <copy todir="${tmp_dir}/packages/com_gantry5/site" overwrite="true">
-            <fileset dir="${path.platforms}/joomla/com_gantry5/site"/>
-        </copy>
-
-        <copy todir="${tmp_dir}/packages/com_gantry5/admin" overwrite="true">
-            <fileset dir="${path.platforms}/common">
-                <exclude name=".sass-cache/"/>
-                <exclude name="application/"/>
-                <exclude name="node_modules/"/>
-                <exclude name="gulpfile.js"/>
-                <exclude name="package.json"/>
-                <exclude name="scss.sh"/>
-                <exclude name="**/*.js.map"/>
-                <exclude name="**/*.css.map"/>
-            </fileset>
-            <fileset dir="${path.platforms}/joomla/com_gantry5/admin">
-                <exclude name=".sass-cache/"/>
-                <exclude name="common/"/>
-                <exclude name="gulpfile.js"/>
-                <exclude name="package.json"/>
-                <exclude name="scss.sh"/>
-                <exclude name="**/*.js.map"/>
-                <exclude name="**/*.css.map"/>
-            </fileset>
-        </copy>
-
-        <!-- Add version information to all xml files -->
-        <copy todir="${tmp_dir}/packages/com_gantry5/admin" overwrite="true">
-            <filterchain refid="filter"/>
-            <fileset dir="${path.platforms}/joomla/com_gantry5/admin">
-                <include name="*.xml"/>
-            </fileset>
-        </copy>
-
-        <move todir="${tmp_dir}/packages/com_gantry5" overwrite="true">
-            <fileset dir="${tmp_dir}/packages/com_gantry5/admin">
-                <include name="gantry5.xml"/>
-            </fileset>
-        </move>
+        <phingcall target="build-wordpress-plugin" />
+        <phingcall target="build-wordpress-themes" />
     </target>
 
-    <target name="build-library" depends="build-installer">
-        <echo message="Building Library.." />
-
-        <copy todir="${tmp_dir}/packages/lib_gantry5/library" overwrite="true">
-            <fileset dir="${path.src}">
-                <include name="*.php"/>
-                <include name="composer.*"/>
-            </fileset>
-        </copy>
-
-        <copy todir="${tmp_dir}/packages/lib_gantry5/library/vendor" overwrite="true">
-            <fileset dir="${path.src}/vendor">
-                <exclude name="**/test/"/>
-                <exclude name="**/tests/"/>
-                <exclude name="**/Tests/"/>
-                <exclude name="**/doc/"/>
-                <exclude name="**/docs/"/>
-                <exclude name="**/examples/"/>
-                <exclude name="**/ext/"/>
-                <exclude name="**/bin/"/>
-                <exclude name="**/site/"/>
-                <exclude name="**/.*.yml"/>
-                <exclude name="**/.editor*"/>
-                <exclude name="**/phpunit.xml*"/>
-                <exclude name="**/*.md"/>
-                <exclude name="**/*.rst"/>
-                <exclude name="**/*.sh"/>
-                <exclude name="**/CHANGELOG"/>
-                <exclude name="**/LICENSE"/>
-                <exclude name="**/Makefile"/>
-                <exclude name="**/todo"/>
-                <exclude name="filp/whoops/src/deprecated"/>
-            </fileset>
-        </copy>
-
-        <copy todir="${tmp_dir}/packages/lib_gantry5/library/classes" overwrite="true">
-            <fileset dir="${path.src}/classes"/>
-        </copy>
-
-        <copy todir="${tmp_dir}/packages/lib_gantry5/library/classes/Gantry" overwrite="true">
-            <fileset dir="${path.src}/platforms/joomla"/>
-        </copy>
-
-        <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
-            <fileset dir="${path.platforms}/joomla/lib_gantry5"/>
-        </copy>
-
-        <!-- Add version information to all xml files -->
-        <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
-            <filterchain refid="filter"/>
-            <fileset dir="${path.platforms}/joomla/lib_gantry5">
-                <include name="*.xml"/>
-            </fileset>
-        </copy>
-
-        <!-- Common assets -->
-        <copy todir="${tmp_dir}/packages/lib_gantry5/assets" overwrite="true">
-            <fileset dir="${path.assets}/common">
-                <exclude name="application/**"/>
-                <exclude name="**/*.js.map"/>
-                <exclude name="**/*.css.map"/>
-                <exclude name="**/*.sh"/>
-                <exclude name="node_modules/"/>
-                <exclude name="gulpfile.js"/>
-                <exclude name="package.json"/>
-            </fileset>
-            <fileset dir="${path.assets}/joomla">
-                <exclude name="**/*.js.map"/>
-                <exclude name="**/*.css.map"/>
-                <exclude name="**/*.sh"/>
-                <exclude name="node_modules/"/>
-                <exclude name="gulpfile.js"/>
-                <exclude name="package.json"/>
-            </fileset>
-        </copy>
-    </target>
-
-    <target name="build-nucleus" depends="build-installer">
-        <echo message="Building Nucleus.." />
-
-        <copy todir="${tmp_dir}/packages/gantry5_nucleus" overwrite="true">
-            <fileset dir="${path.engines}/common">
-                <exclude name="**/*.sh"/>
-                <exclude name="**/.sass-cache/"/>
-                <exclude name="**/node_modules/"/>
-                <exclude name="**/gulpfile.js"/>
-                <exclude name="**/package.json"/>
-                <exclude name="**/scss.sh"/>
-                <exclude name="**/*.js.map"/>
-                <exclude name="**/*.css.map"/>
-            </fileset>
-            <fileset dir="${path.engines}/joomla">
-                <exclude name="**/*.sh"/>
-            </fileset>
-            <fileset dir="${path.platforms}/joomla/gantry5_nucleus"/>
-        </copy>
-
-        <!-- Add version information to all xml files -->
-        <copy todir="${tmp_dir}/packages/gantry5_nucleus" overwrite="true">
-            <filterchain refid="filter"/>
-            <fileset dir="${path.platforms}/joomla/gantry5_nucleus">
-                <include name="*.xml"/>
-            </fileset>
-        </copy>
-    </target>
-
-    <target name="build-plugins" depends="build-installer">
-        <echo message="Building Plugins.." />
-
-        <copy todir="${tmp_dir}/packages/plg_system_gantry5" overwrite="true">
-            <fileset dir="${path.platforms}/joomla/plg_system_gantry5"/>
-        </copy>
-
-        <!-- Add version information to all xml files -->
-        <copy todir="${tmp_dir}/packages/plg_system_gantry5" overwrite="true">
-            <filterchain refid="filter"/>
-            <fileset dir="${path.platforms}/joomla/plg_system_gantry5">
-                <include name="*.xml"/>
-            </fileset>
-        </copy>
-
-        <copy todir="${tmp_dir}/packages/plg_quickicon_gantry5" overwrite="true">
-            <fileset dir="${path.platforms}/joomla/plg_quickicon_gantry5"/>
-        </copy>
-
-        <!-- Add version information to all xml files -->
-        <copy todir="${tmp_dir}/packages/plg_quickicon_gantry5" overwrite="true">
-            <filterchain refid="filter"/>
-            <fileset dir="${path.platforms}/joomla/plg_quickicon_gantry5">
-                <include name="*.xml"/>
-            </fileset>
-        </copy>
-
-        <copy todir="${tmp_dir}/packages/plg_gantry5_preset" overwrite="true">
-            <fileset dir="${path.platforms}/joomla/plg_gantry5_preset"/>
-        </copy>
-
-        <!-- Add version information to all xml files -->
-        <copy todir="${tmp_dir}/packages/plg_gantry5_preset" overwrite="true">
-            <filterchain refid="filter"/>
-            <fileset dir="${path.platforms}/joomla/plg_gantry5_preset">
-                <include name="*.xml"/>
-            </fileset>
-        </copy>
-    </target>
-
-    <target name="build-themes" depends="build-installer">
-        <echo message="Building Themes.." />
-
-        <!-- Process all themes -->
-        <foreach param="directory" target="build-theme">
-            <fileset dir="${path.themes}">
-                <type type="dir" />
-                <depth max="0" min="0" />
-            </fileset>
-        </foreach>
-    </target>
-
-    <target name="build-theme">
-        <echo message="Building Theme ${directory}.." />
-
-        <if>
-            <available file='${path.themes}/${directory}/joomla/gantry/theme.yaml' type='file' />
-            <then>
-                <copy todir="${tmp_dir}/templates/tpl_g5_${directory}" overwrite="true">
-                    <fileset dir="${path.themes}/${directory}/common"/>
-                </copy>
-
-                <copy todir="${tmp_dir}/templates/tpl_g5_${directory}" overwrite="true">
-                    <fileset dir="${path.themes}/${directory}/joomla">
-                        <exclude name="common"/>
-                        <exclude name="custom"/>
-                    </fileset>
-                </copy>
-
-                <!-- Add version information to all xml files -->
-                <copy todir="${tmp_dir}/templates/tpl_g5_${directory}" overwrite="true">
-                    <filterchain refid="filter"/>
-                    <fileset dir="${path.themes}/${directory}/joomla">
-                        <include name="*.xml"/>
-                    </fileset>
-                </copy>
-
-                <!-- Zip the created Zips for packages -->
-                <phingcall target="archive">
-                    <property name="destination.file" value="${package_dir}/joomla-tpl_g5_${directory}${str.fileversion}" />
-                    <property name="base.directory" value="${tmp_dir}/templates/tpl_g5_${directory}" />
-                </phingcall>
-            </then>
-        </if>
-    </target>
-
-    <target name="assets-dev">
-        <echo message="Reverting Assets to Dev (CSS/JS)..." />
-        <exec command="gulp" checkreturn="true" error="${phing.dir}/gulp-dev-error.txt" />
-    </target>
-
-    <target name="package">
-        <!-- Process all prepared packages -->
-        <foreach param="directory" target="package-process">
-            <fileset dir="${tmp_dir}/packages/">
-                <type type="dir" />
-                <depth max="0" min="0" />
-            </fileset>
-        </foreach>
-
-        <!-- Zip the created Zips for packages -->
-        <phingcall target="archive">
-            <property name="destination.file" value="${package_dir}/joomla-${cfg.prefix}${cfg.name}${str.fileversion}" />
-            <property name="base.directory" value="${build_dir}/distribution" />
-        </phingcall>
-    </target>
-
-    <target name="package-process">
-        <phingcall target="archive">
-            <property name="destination.file" value="${build_dir}/distribution/packages/${directory}${str.version}" />
-            <property name="base.directory" value="${tmp_dir}/packages/${directory}" />
-        </phingcall>
-    </target>
-
-    <target name="postflight">
-        <delete dir="${tmp_dir}"/>
-        <delete dir="${build_dir}"/>
-        <echo message="Congratulations, build finished without error!" />
+    <target name="reset-git">
+        <echo message="Restoring Git repository to HEAD..." />
+        <exec command="git fetch origin &amp;&amp; git reset --hard &amp;&amp; git clean -f" checkreturn="true" error="${phing.dir}/gulp-git-restore-error.txt" />
     </target>
 
     <target name="archive">
-        <zip destfile="${destination.file}.zip">
+
+        <condition property="prefix" value="">
+            <not><isset property="prefix" /></not>
+        </condition>
+
+        <zip destfile="${destination.file}.zip" prefix="${prefix}">
             <fileset dir="${base.directory}"/>
         </zip>
     </target>
+
+    <target name="cleanup">
+        <delete dir="${tmp_dir}"/>
+        <delete dir="${build_dir}"/>
+    </target>
+
+    <target name="postflight">
+        <echo message="Congratulations, build finished without error!" />
+    </target>
+
+    <target name="prod-versions">
+        <if>
+            <istrue value="${update_versions}" />
+            <then>
+                <echo message="Updating versions in ${project_dir} ..." />
+                <reflexive>
+                    <fileset dir="${project_dir}">
+                        <include pattern="VERSION"/>
+                        <include pattern="**/*.xml"/>
+                        <include pattern="**/*.yaml"/>
+                        <include pattern="*.xml"/>
+                        <include pattern="*.yaml"/>
+                        <include pattern="**/RealLoader.php"/>
+                        <include pattern="**/install.php"/>
+                        <exclude pattern="bin/**"/>
+                        <exclude pattern="**/node_modules/**"/>
+                        <exclude pattern="**/vendor/**"/>
+                    </fileset>
+                    <filterchain refid="filter"/>
+                </reflexive>
+            </then>
+            <else>
+                <echo message="Skipping versions updates in ${project_dir} ..." />
+            </else>
+        </if>
+    </target>
+
+    <target name="checksum">
+        <manifest file="${source}/MD5SUM" checksum="md5">
+            <fileset dir="${source}" />
+        </manifest>
+    </target>
+
+
+    <target name="dev" depends="preflight,info,mkdir,joomla,wordpress,cleanup,postflight" />
+    <target name="prod" depends="preflight,info,mkdir,assets-prod,joomla,wordpress,cleanup,postflight" />
+    <target name="joomla-dev" depends="preflight,info,mkdir,joomla,cleanup,postflight" />
+    <target name="wordpress-dev" depends="preflight,info,mkdir,wordpress,cleanup,postflight" />
+    <target name="joomla-prod" depends="preflight,info,mkdir,assets-prod,joomla,cleanup,postflight" />
+    <target name="wordpress-prod" depends="preflight,info,mkdir,assets-prod,wordpress,cleanup,postflight" />
+
+    <!--<target name="old_prod" depends="preflight,info,mkdir,assets-prod,build-installer,build-component,build-library,build-nucleus,build-plugins,build-themes,reset-git,package,cleanup,postflight" />
+    <target name="old_dev" depends="preflight,info,mkdir,build-installer,build-component,build-library,build-nucleus,build-plugins,build-themes,package,cleanup,postflight" />-->
+
 </project>

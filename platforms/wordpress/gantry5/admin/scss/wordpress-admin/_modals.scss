@@ -1,0 +1,12 @@
+body.gantry5 {
+    #g5-container {
+        .g5-dialog {
+            @include breakpoint(desktop-only) {
+                padding-left: 160px;
+            }
+            @include breakpoint(tablet-range) {
+                padding-left: 36px;
+            }
+        }
+    }
+}

@@ -34,9 +34,9 @@
             {% set customWidth = ' style="position: relative;"' %}
         {% endif %}
 
-        <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{{ parent|raw }}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}g-menu-item-link-parent{% endif %}{{ item.class|e|default('') }}"{{ customWidth|raw }}>
-            {% if item.url %}<a class="g-menu-item-container" href="{{ item.url|e }}"{{ (title ~ target)|raw }}>
-            {% else %}<div class="g-menu-item-container" data-g-menuparent="">{% endif %}
+        <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{{ parent|raw }}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}g-menu-item-link-parent{% endif %} {{ item.class|e|default('') }}"{{ customWidth|raw }}>
+            {% if item.url %}<a class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" href="{{ item.url|e }}"{{ (title ~ target)|raw }}>
+            {% else %}<div class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" data-g-menuparent="">{% endif %}
                 {% if item.image %}
                     <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
                 {% elseif item.icon %}
@@ -97,7 +97,7 @@
     {% if hasCustomWidth and not (root.getDropdown() == 'fullwidth' and item.level > 1) %}
         {% set customWidth = ' style="width: ' ~ item.width|raw ~ '" data-g-item-width="' ~ item.width|raw ~ '"' %}
     {% endif %}
-    <ul class="g-dropdown g-inactive"{{ customWidth|raw }}>
+    <ul class="g-dropdown g-inactive {{ gantry.config.get('styles.menu.animation')|default('g-fade') }}"{{ customWidth|raw }}>
         <li class="g-dropdown-column">
             {{ _self.displayContainers(item, root, menu, gantry) }}
         </li>

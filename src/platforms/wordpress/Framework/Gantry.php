@@ -1,8 +1,32 @@
 <?php
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\Config;
+
 class Gantry extends Base\Gantry
 {
+    /**
+     * @param string $location
+     * @param bool   $force
+     * @return array
+     */
+    public function styles($location = 'head', $force = false)
+    {
+        // Do not display head, WordPress will take care of it (most of the time).
+        return (!$force && in_array($location, ['head', 'footer'])) ? Document::$wp_styles : parent::styles($location);
+    }
+
+    /**
+     * @param string $location
+     * @param bool $force
+     * @return array
+     */
+    public function scripts($location = 'head', $force = false)
+    {
+        // Do not display head, WordPress will take care of it (most of the time).
+        return (!$force && in_array($location, ['head', 'footer'])) ? Document::$wp_scripts : parent::scripts($location);
+    }
+
     /**
      * @throws \LogicException
      */
@@ -21,6 +45,10 @@ class Gantry extends Base\Gantry
 
         $container['page'] = function ( $c ) {
             return new Page( $c );
+        };
+
+        $container['global'] = function ($c) {
+            return new Config([]);
         };
 
         return $container;

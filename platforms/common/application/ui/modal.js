@@ -327,7 +327,7 @@ var Modal = new prime({
 
     showLoading: function() {
         this.hideLoading();
-        return $('body').appendChild(zen('div.g5-dialog-loading-spinner.' + this.options.className));
+        return $('#g5-container').appendChild(zen('div.g5-dialog-loading-spinner.' + this.options.className));
     },
 
     hideLoading: function() {

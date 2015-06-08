@@ -1,4 +1,5 @@
 "use strict";
+// selectize (v0.12.1)
 
 var prime      = require('prime'),
     ready      = require('elements/domready'),
@@ -28,28 +29,31 @@ var prime      = require('prime'),
     trim       = require('mout/string/trim');
 
 
-var IS_MAC        = /Mac/.test(navigator.userAgent),
-    COUNT         = 0,
+var IS_MAC                = /Mac/.test(navigator.userAgent),
+    COUNT                 = 0,
 
-    KEY_A         = 65,
-    KEY_COMMA     = 188,
-    KEY_RETURN    = 13,
-    KEY_ESC       = 27,
-    KEY_LEFT      = 37,
-    KEY_UP        = 38,
-    KEY_P         = 80,
-    KEY_RIGHT     = 39,
-    KEY_DOWN      = 40,
-    KEY_N         = 78,
-    KEY_BACKSPACE = 8,
-    KEY_DELETE    = 46,
-    KEY_SHIFT     = 16,
-    KEY_CMD       = IS_MAC ? 91 : 17,
-    KEY_CTRL      = IS_MAC ? 18 : 17,
-    KEY_TAB       = 9,
+    KEY_A                 = 65,
+    KEY_COMMA             = 188,
+    KEY_RETURN            = 13,
+    KEY_ESC               = 27,
+    KEY_LEFT              = 37,
+    KEY_UP                = 38,
+    KEY_P                 = 80,
+    KEY_RIGHT             = 39,
+    KEY_DOWN              = 40,
+    KEY_N                 = 78,
+    KEY_BACKSPACE         = 8,
+    KEY_DELETE            = 46,
+    KEY_SHIFT             = 16,
+    KEY_CMD               = IS_MAC ? 91 : 17,
+    KEY_CTRL              = IS_MAC ? 18 : 17,
+    KEY_TAB               = 9,
 
-    TAG_SELECT    = 1,
-    TAG_INPUT     = 2;
+    TAG_SELECT            = 1,
+    TAG_INPUT             = 2,
+
+    // for now, android support in general is too spotty to support validity
+    SUPPORTS_VALIDITY_API = !/android/i.test(window.navigator.userAgent) && !!document.createElement('form').validity;
 
 var hash_key = function(value) {
     if (typeof value === 'undefined' || value === null) return null;
@@ -271,6 +275,7 @@ var Selectize = new prime({
     options: {
         plugins: [],
         delimiter: ' ',
+        splitOn: null, // regexp or string for splitting up values from a paste command
         persist: true,
         diacritics: true,
         create: false,
@@ -285,9 +290,11 @@ var Selectize = new prime({
         selectOnTab: false,
         preload: false,
         allowEmptyOption: false,
+        closeAfterSelect: false,
 
         scrollDuration: 60,
         loadThrottle: 300,
+        loadingClass: 'loading',
 
         dataAttr: 'data-data',
         optgroupField: 'optgroup',
@@ -295,7 +302,7 @@ var Selectize = new prime({
         labelField: 'text',
         optgroupLabelField: 'label',
         optgroupValueField: 'value',
-        optgroupOrder: null,
+        lockOptgroupOrder: false,
 
         sortField: '$order',
         searchField: ['text'],
@@ -322,6 +329,9 @@ var Selectize = new prime({
          onOptionAdd     : null, // function(value, data) { ... }
          onOptionRemove  : null, // function(value) { ... }
          onOptionClear   : null, // function() { ... }
+         onOptionGroupAdd     : null, // function(id, data) { ... }
+         onOptionGroupRemove  : null, // function(id) { ... }
+         onOptionGroupClear   : null, // function() { ... }
          onDropdownOpen  : null, // function($dropdown) { ... }
          onDropdownClose : null, // function($dropdown) { ... }
          onType          : null, // function(str) { ... }
@@ -346,6 +356,8 @@ var Selectize = new prime({
         this.input = input;
         this.input.selectizeInstance = this;
 
+        this.order = 0;
+        this.tabIndex = input.attribute('tabindex') || '';
         this.tagType = input.tag() == 'select' ? TAG_SELECT : TAG_INPUT;
         this.highlightedValue = null;
         this.isRequired = input.attribute('required');
@@ -368,14 +380,28 @@ var Selectize = new prime({
         this.renderCache = {};
         this.onSearchChange = this.options.loadThrottle === null ? this.onSearchChange : debounce(this.onSearchChange, this.options.loadThrottle);
 
-        this.Options = merge(this.Options, build_hash_table(this.options.valueField, this.options.Options));
-        this.Optgroups = merge(this.Optgroups, build_hash_table(this.options.optgroupValueField, this.options.Optgroups));
-
-        delete this.options.Options;
-        delete this.options.Optgroups;
-
+        // search system
         this.sifter = new sifter(this.Options, { diacritics: this.options.diacritics });
 
+        var i, n;
+
+        // build options table
+        if (this.options.Options) {
+            for (i = 0, n = this.options.Options.length; i < n; i++) {
+                this.registerOption(this.options.Options[i]);
+            }
+            delete this.options.Options;
+        }
+
+        // build optgroup table
+        if (this.options.Optgroups) {
+            for (i = 0, n = this.options.Optgroups.length; i < n; i++) {
+                this.registerOptionGroup(this.options.Optgroups[i]);
+            }
+            delete this.options.Optgroups;
+        }
+
+        // option-demand defaults
         this.options.mode = this.options.mode || (this.options.maxItems === 1 ? 'single' : 'multi');
         if (!isBoolean(this.options.hideSelected)) { this.options.hideSelected = (this.options.mode === 'multi'); }
 
@@ -403,18 +429,16 @@ var Selectize = new prime({
 
         $wrapper = zen('div').addClass(this.options.wrapperClass).addClass(classes).addClass(inputMode).after(this.input);
         $control = zen('div').addClass(this.options.inputClass).addClass('items').bottom($wrapper);
-        $control_input = zen('input[type="text"][autocomplete="off"]').bottom($control).attribute('tabindex', tab_index);
+        $control_input = zen('input[type="text"][autocomplete="off"]').bottom($control).attribute('tabindex', $input.disabled() ? '-1' : tab_index);
         $dropdown_parent = $(this.options.dropdownParent || $wrapper);
         $dropdown = zen('div').addClass(this.options.dropdownClass).addClass(inputMode).style({ display: 'none' }).bottom($dropdown_parent);
         $dropdown_content = zen('div').addClass(this.options.dropdownContentClass).bottom($dropdown);
 
         if (this.options.copyClassesToDropdown) {
-            forEach(classes.split(' '), function(cls) {
-                $dropdown.addClass(cls);
-            });
+            $dropdown.addClass(classes);
         }
 
-
+        // g5 custom
         if (inputMode == 'single') {
             $wrapper.style({
                 width: parseInt($input.compute('width')) + 12 + (24) // padding compensation
@@ -427,6 +451,12 @@ var Selectize = new prime({
 
         if (this.options.placeholder) {
             $control_input.attribute('placeholder', this.options.placeholder);
+        }
+
+        // if splitOn was not passed in, construct it from the delimiter to allow pasting universally
+        if (!this.options.splitOn && this.options.delimiter) {
+            var delimiterEscaped = this.options.delimiter.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+            this.options.splitOn = new RegExp('\\s*' + delimiterEscaped + '+\\s*');
         }
 
         if ($input.attribute('autocorrect')) {
@@ -445,6 +475,7 @@ var Selectize = new prime({
 
         $dropdown.delegate('mouseover', '[data-selectable]', bind(function() { return this.onOptionHover.apply(this, arguments); }, this));
         $dropdown.delegate('mousedown', '[data-selectable]', bind(function() { return this.onOptionSelect.apply(this, arguments); }, this));
+        $dropdown.delegate('click', '[data-selectable]', bind(function() { return this.onOptionSelect.apply(this, arguments); }, this));
 
         autoGrow($control_input);
 
@@ -488,7 +519,7 @@ var Selectize = new prime({
                 }
                 // blur on click outside
                 if (!this.$control.find($(e.target)) && e.target !== this.$control[0]) {
-                    this.blur();
+                    this.blur(e.target);
                 }
             }
         }, this));
@@ -522,7 +553,7 @@ var Selectize = new prime({
         }
 
         // feature detect for the validation API
-        if (this.input[0].validity) {
+        if (SUPPORTS_VALIDITY_API) {
             this.input.on('invalid', bind(function(e) {
                 e.preventDefault();
                 this.isInvalid = true;
@@ -588,10 +619,15 @@ var Selectize = new prime({
             'option_add': 'onOptionAdd',
             'option_remove': 'onOptionRemove',
             'option_clear': 'onOptionClear',
+            'optgroup_add': 'onOptionGroupAdd',
+            'optgroup_remove': 'onOptionGroupRemove',
+            'optgroup_clear': 'onOptionGroupClear',
             'dropdown_open': 'onDropdownOpen',
             'dropdown_close': 'onDropdownClose',
             'type': 'onType',
-            'load': 'onLoad'
+            'load': 'onLoad',
+            'focus': 'onFocus',
+            'blur': 'onBlur'
         };
 
         forEach(callbacks, function(value, key) {
@@ -600,13 +636,15 @@ var Selectize = new prime({
         }, this);
     },
 
-    updateOriginalInput: function() {
-        var options;
+    updateOriginalInput: function(opts) {
+        var options, label;
+        opts = opts || {};
 
         if (this.tagType === TAG_SELECT) {
             options = [];
             for (var i = 0, n = this.items.length; i < n; i++) {
-                options.push('<option value="' + escapeHTML(this.items[i]) + '" selected="selected"></option>');
+                label = this.Options[this.items[i]][this.options.labelField] || '';
+                options.push('<option value="' + escapeHTML(this.items[i]) + '" selected="selected">' + escapeHTML(label) + '</option>');
             }
             if (!options.length && !this.input.attribute('multiple')) {
                 options.push('<option value="" selected="selected"></option>');
@@ -617,7 +655,7 @@ var Selectize = new prime({
             this.input.attribute('value', this.input.value());
         }
 
-        if (this.isSetup) {
+        if (this.isSetup && !opts.silent) {
             this.emit('change', this.input.value());
         }
     },
@@ -651,29 +689,33 @@ var Selectize = new prime({
         return this.getElementWithValue(value, this.$control.children());
     },
 
-    addItems: function(values) {
+    addItems: function(values, silent) {
         var items = isArray(values) ? values : [values];
         for (var i = 0, n = items.length; i < n; i++) {
             this.isPending = (i < n - 1);
-            this.addItem(items[i]);
+            this.addItem(items[i], silent);
         }
     },
 
-    addItem: function(value) {
-        debounce_events(this, ['change'], function() {
+    addItem: function(value, silent) {
+        var events = silent ? [] : ['change'];
+
+        debounce_events(this, events, function() {
             var $item, $option, $options;
             var inputMode = this.options.mode;
             var i, active, value_next, wasFull;
             value = hash_key(value);
 
             if (this.items.indexOf(value) !== -1) {
-                if (inputMode === 'single' && this.isOpen) this.close();
+                // g5 custom [before: && this.isOpen]
+                if (inputMode === 'single') this.close();
                 return;
             }
 
             if (!this.Options.hasOwnProperty(value)) return;
-            if (inputMode === 'single') this.clear();
-            if (inputMode === 'multi' && (this.isFull() || !value)) return;
+            if (inputMode === 'single') this.clear(silent);
+            // g5 custom [before (this.isFull() || !value)
+            if (inputMode === 'multi' && this.isFull()) return;
 
             var dummy = zen('div').html(this.render('item', this.Options[value]));
             $item = dummy.firstChild();
@@ -707,12 +749,12 @@ var Selectize = new prime({
 
                 this.updatePlaceholder();
                 this.emit('item_add', value, $item);
-                this.updateOriginalInput();
+                this.updateOriginalInput({silent: silent});
             }
         });
     },
 
-    removeItem: function(value) {
+    removeItem: function(value, silent) {
         var $item, i, idx;
 
         $item = (typeof value === 'object') ? value : this.getItem(value);
@@ -729,7 +771,7 @@ var Selectize = new prime({
             this.items.splice(i, 1);
             this.lastQuery = null;
             if (!this.options.persist && this.UserOptions.hasOwnProperty(value)) {
-                this.removeOption(value);
+                this.removeOption(value, silent);
             }
 
             if (i < this.caretPos) {
@@ -738,21 +780,29 @@ var Selectize = new prime({
 
             this.refreshState();
             this.updatePlaceholder();
-            this.updateOriginalInput();
+            this.updateOriginalInput({silent: silent});
             this.positionDropdown();
-            this.emit('item_remove', value);
+            this.emit('item_remove', value, $item);
         }
     },
 
-    createItem: function(triggerDropdown) {
-        var input = trim(this.$control_input.value() || '');
+    createItem: function(input, triggerDropdown) {
         var caret = this.caretPos;
-        if (!this.canCreate(input)) return false;
-        this.lock();
+        input = input || trim(this.$control_input.value() || '');
 
-        if (typeof triggerDropdown === 'undefined') {
+        var callback = arguments[arguments.length - 1];
+        if (typeof callback !== 'function') callback = function() {};
+
+        if (!isBoolean(triggerDropdown)) {
             triggerDropdown = true;
         }
+
+        if (!this.canCreate(input)) {
+            callback();
+            return false;
+        }
+
+        this.lock();
 
         var setup = (typeof this.options.create === 'function') ? this.options.create : bind(function(input) {
             var data = {};
@@ -764,15 +814,16 @@ var Selectize = new prime({
         var create = once(bind(function(data) {
             this.unlock();
 
-            if (!data || typeof data !== 'object') return;
+            if (!data || typeof data !== 'object') return callback();
             var value = hash_key(data[this.options.valueField]);
-            if (typeof value !== 'string') return;
+            if (typeof value !== 'string') return callback();
 
             this.setTextboxValue('');
             this.addOption(data);
             this.setCaret(caret);
             this.addItem(value);
             this.refreshOptions(triggerDropdown && this.options.mode !== 'single');
+            callback(data);
         }, this));
 
         var output = setup.apply(this, [input, create]);
@@ -787,9 +838,7 @@ var Selectize = new prime({
         this.lastQuery = null;
 
         if (this.isSetup) {
-            for (var i = 0; i < this.items.length; i++) {
-                this.addItem(this.items);
-            }
+            this.addItem(this.items);
         }
 
         this.refreshState();
@@ -809,8 +858,7 @@ var Selectize = new prime({
         var isFull = this.isFull(),
             isLocked = this.isLocked;
 
-        /*self.$wrapper
-         .toggleClass('rtl', self.rtl);*/
+        this.$wrapper.toggleClass('rtl', this.rtl);
 
         this.$control.toggleClass('focus', this.isFocused);
         this.$control.toggleClass('disabled', this.isDisabled);
@@ -869,12 +917,13 @@ var Selectize = new prime({
         this.setActiveOption(null);
         this.refreshState();
 
-        if (this.options.mode === 'single' && !this.getValue()) {
+        // g5 custom
+        /*if (this.options.mode === 'single' && !this.getValue()) {
             this.lastQuery = null;
             this.setTextboxValue('');
             this.addItem(this.Options[Object.keys(this.Options)[0]][this.options.valueField]);
             //this.blur();
-        }
+        }*/
 
         if (trigger) this.emit('dropdown_close', this.$dropdown);
     },
@@ -891,7 +940,7 @@ var Selectize = new prime({
         });
     },
 
-    clear: function() {
+    clear: function(silent) {
         var non_input = this.$control.children(':not(input)');
         if (!this.items.length) return;
 
@@ -901,7 +950,7 @@ var Selectize = new prime({
         this.setCaret(0);
         this.setActiveItem(null);
         this.updatePlaceholder();
-        this.updateOriginalInput();
+        this.updateOriginalInput({silent: silent});
         this.refreshState();
         this.showInput();
         this.emit('clear');
@@ -948,19 +997,30 @@ var Selectize = new prime({
 
     onChange: function() {
         this.input.emit('change', this.input.value(), this);
-        $('body').emit('change', {target: this.input});
+        $('body').emit('change', { target: this.input });
     },
 
     onPaste: function(e) {
         if (this.isFull() || this.isInputHidden || this.isLocked) {
             e.preventDefault();
+        } else {
+            // If a regex or string is included, this will split the pasted
+            // input and create Items for each separate value
+            if (this.options.splitOn) {
+                setTimeout(bind(function() {
+                    var splitInput = trim(this.$control_input.value() || '').split(this.options.splitOn);
+                    for (var i = 0, n = splitInput.length; i < n; i++) {
+                        this.createItem(splitInput[i]);
+                    }
+                }, this), 0);
+            }
         }
     },
 
     onKeyPress: function(e) {
         if (this.isLocked) return e && e.preventDefault();
         var character = String.fromCharCode(e.keyCode || e.which);
-        if (this.options.create && character === this.options.delimiter) {
+        if (this.options.create && this.options.mode === 'multi' && character === this.options.delimiter) {
             this.createItem();
             e.preventDefault();
             return false;
@@ -985,11 +1045,13 @@ var Selectize = new prime({
                 }
                 break;
             case KEY_ESC:
-                this.close();
-                this.blur();
-                e.preventDefault();
-                e.stopPropagation();
-                return false;
+                if (this.isOpen){
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.close();
+                    //this.blur();
+                }
+                return;
             case KEY_N:
                 if (!e.ctrlKey || e.altKey) break;
             case KEY_DOWN:
@@ -1015,8 +1077,8 @@ var Selectize = new prime({
             case KEY_RETURN:
                 if (this.isOpen && this.$activeOption) {
                     this.onOptionSelect({ currentTarget: this.$activeOption });
+                    e.preventDefault();
                 }
-                e.preventDefault();
                 return;
             case KEY_LEFT:
                 this.advanceSelection(-1, e);
@@ -1027,7 +1089,12 @@ var Selectize = new prime({
             case KEY_TAB:
                 if (this.options.selectOnTab && this.isOpen && this.$activeOption) {
                     this.onOptionSelect({ currentTarget: this.$activeOption });
-                    e.preventDefault();
+
+                    // Default behaviour is to jump to the next field, we only want this
+                    // if the current field doesn't accept any more entries
+                    if (!self.isFull()) {
+                        e.preventDefault();
+                    }
                 }
                 if (this.options.create && this.createItem()) {
                     e.preventDefault();
@@ -1068,7 +1135,8 @@ var Selectize = new prime({
     },
 
     onFocus: function(e) {
-        this.isFocused = true;
+        var wasFocused = this.isFocused;
+
         if (this.isDisabled) {
             this.blur();
             e && e.preventDefault();
@@ -1076,7 +1144,10 @@ var Selectize = new prime({
         }
 
         if (this.ignoreFocus) return;
+        this.isFocused = true;
         if (this.options.preload === 'focus') this.onSearchChange('');
+
+        if (!wasFocused) this.emit('focus');
 
         if (!this.$activeItems.length) {
             this.showInput();
@@ -1087,28 +1158,42 @@ var Selectize = new prime({
         this.refreshState();
     },
 
-    onBlur: function(e) {
+    onBlur: function(e, dest) {
+        if (!this.isFocused) return;
         this.isFocused = false;
-        if (this.ignoreFocus) return;
 
-        // necessary to prevent IE closing the dropdown when the scrollbar is clicked
-        if (!this.ignoreBlur && document.activeElement === this.$dropdown_content[0]) {
+        if (this.ignoreFocus) {
+            return;
+        } else if (!this.ignoreBlur && (document.activeElement === this.$dropdown_content[0] || (e && this.$wrapper.find($(e.target))))) {
+            // ^- g5 custom [before: no e.target && ..]
+            // necessary to prevent IE closing the dropdown when the scrollbar is clicked
             this.ignoreBlur = true;
             this.onFocus(e);
-
             return;
         }
 
-        if (this.options.create && this.options.createOnBlur) {
-            this.createItem(false);
-        }
+        var deactivate = bind(function() {
+            this.close();
+            this.setTextboxValue('');
+            this.setActiveItem(null);
+            this.setActiveOption(null);
+            this.setCaret(this.items.length);
+            this.refreshState();
 
-        this.close();
-        this.setTextboxValue('');
-        this.setActiveItem(null);
-        this.setActiveOption(null);
-        this.setCaret(this.items.length);
-        this.refreshState();
+            // IE11 bug: element still marked as active
+            (dest || document.body).focus();
+
+            this.ignoreFocus = false;
+            this.emit('blur');
+
+        }, this);
+
+        this.ignoreFocus = true;
+        if (this.options.create && this.options.createOnBlur) {
+            this.createItem(null, false, deactivate);
+        } else {
+            deactivate();
+        }
     },
 
     onOptionHover: function(e, element) {
@@ -1127,14 +1212,20 @@ var Selectize = new prime({
 
         $target = $(element || e.currentTarget);
         if ($target.hasClass('create')) {
-            this.createItem();
+            this.createItem(null, bind(function() {
+                if (this.options.closeAfterSelect) {
+                    this.close();
+                }
+            }, this));
         } else {
             value = $target.attribute('data-value');
             if (typeof value !== 'undefined') {
                 this.lastQuery = null;
                 this.setTextboxValue('');
                 this.addItem(value);
-                if (!this.options.hideSelected && e.type && /mouse/.test(e.type)) {
+                if (this.options.closeAfterSelect) {
+                    this.close();
+                } else if (!this.options.hideSelected && e.type && /mouse/.test(e.type)) {
                     this.setActiveOption(this.getOption(value));
                 }
             }
@@ -1151,7 +1242,7 @@ var Selectize = new prime({
     },
 
     load: function(fn) {
-        var $wrapper = this.$wrapper.addClass('loading');
+        var $wrapper = this.$wrapper.addClass(this.options.loadingClass);
 
         this.loading++;
         fn.apply(this, [bind(function(results) {
@@ -1161,7 +1252,7 @@ var Selectize = new prime({
                 this.refreshOptions(this.isFocused && !this.isInputHidden);
             }
             if (!this.loading) {
-                $wrapper.removeClass('loading');
+                $wrapper.removeClass(this.options.loadingClass);
             }
             this.emit('load', results);
         }, this)]);
@@ -1177,6 +1268,7 @@ var Selectize = new prime({
     },
 
     getValue: function(value) {
+        // g5 custom
         if (this.tagType === TAG_SELECT && this.input.attribute('multiple')) {
             return value || this.items;
         } else {
@@ -1193,11 +1285,13 @@ var Selectize = new prime({
      *
      * @param {mixed} value
      */
-    setValue: function(value) {
-        debounce_events(this, ['change'], function() {
-            this.clear();
+    setValue: function(value, silent) {
+        var events = silent ? [] : ['change'];
+
+        debounce_events(this, events, function() {
+            this.clear(silent);
             this.previousValue = this.getValue() || value;
-            this.addItems(value);
+            this.addItems(value, silent);
         });
     },
 
@@ -1212,9 +1306,11 @@ var Selectize = new prime({
         }, this), 0);
     },
 
-    blur: function() {
+    blur: function(dest) {
         this.$control_input.emit('blur');
-        this.$control_input[0].blur();
+        this.onBlur(null, dest);
+        // g5 custom
+        //this.$control_input[0].blur();
     },
 
     showInput: function() {
@@ -1227,7 +1323,7 @@ var Selectize = new prime({
     },
 
     setActiveItem: function(item, e) {
-        var eventName, idx, begin, end, item, swap, $last;
+        var eventName, idx, begin, end, $item, swap, $last;
 
         if (this.options.mode === 'single') { return; }
         item = $(item);
@@ -1255,10 +1351,10 @@ var Selectize = new prime({
                 end = swap;
             }
             for (var i = begin; i <= end; i++) {
-                item = this.$control[0].childNodes[i];
-                if (this.$activeItems.indexOf(item) === -1) {
-                    $(item).addClass('active');
-                    this.$activeItems.push(item);
+                $item = this.$control[0].childNodes[i];
+                if (this.$activeItems.indexOf($item) === -1) {
+                    $($item).addClass('active');
+                    this.$activeItems.push($item);
                 }
             }
             e.preventDefault();
@@ -1293,7 +1389,7 @@ var Selectize = new prime({
         var query = trim(this.$control_input.value());
         var results = this.search(query);
         var $dropdown_content = this.$dropdown_content;
-        var active_before = this.$activeOption && hash_key(this.$activeOption.attribute('value'));
+        var active_before = this.$activeOption && hash_key(this.$activeOption.attribute('data-value')); // g5 custom [before: value]
 
         // build markup
         n = results.items.length;
@@ -1303,15 +1399,17 @@ var Selectize = new prime({
 
         // render and group available options individually
         groups = {};
+        groups_order = [];
 
-        if (this.options.optgroupOrder) {
-            groups_order = this.options.optgroupOrder;
-            for (i = 0; i < groups_order.length; i++) {
-                groups[groups_order[i]] = [];
-            }
-        } else {
-            groups_order = [];
-        }
+        // g5 custom
+        //if (this.options.optgroupOrder) {
+        //    groups_order = this.options.optgroupOrder;
+        //    for (i = 0; i < groups_order.length; i++) {
+        //        groups[groups_order[i]] = [];
+        //    }
+        //} else {
+        //    groups_order = [];
+        //}
 
         for (i = 0; i < n; i++) {
             option = this.Options[results.items[i].id];
@@ -1330,6 +1428,15 @@ var Selectize = new prime({
                 }
                 groups[optgroup].push(option_html);
             }
+        }
+
+        // sort optgroups
+        if (this.options.lockOptgroupOrder) {
+            groups_order.sort(function(a, b) {
+                var a_order = this.Optgroups[a].$order || 0;
+                var b_order = this.Optgroups[b].$order || 0;
+                return a_order - b_order;
+            });
         }
 
         // render optgroup headers & join groups
@@ -1411,13 +1518,120 @@ var Selectize = new prime({
             return;
         }
 
-        value = hash_key(data[this.options.valueField]);
+        if (value = this.registerOption(data)) {
+            this.UserOptions[value] = true;
+            this.lastQuery = null;
+            this.emit('option_add', value, data);
+        }
+
+        // g5 custom
+        /*value = hash_key(data[this.options.valueField]);
         if (typeof value !== 'string' || this.Options.hasOwnProperty(value)) return;
 
         this.UserOptions[value] = true;
         this.Options[value] = data;
         this.lastQuery = null;
-        this.emit('option_add', value, data);
+        this.emit('option_add', value, data);*/
+    },
+
+    registerOption: function(data) {
+        var key = hash_key(data[this.options.valueField]);
+        if ((!key || this.options.hasOwnProperty(key)) && !this.options.allowEmptyOption) return false;
+        data.$order = data.$order || ++this.order;
+        this.Options[key] = data;
+
+        return key;
+    },
+
+    registerOptionGroup: function(data) {
+        var key = hash_key(data[this.options.optgroupValueField]);
+        if (!key && !this.options.allowEmptyOption) return false;
+
+        data.$order = data.$order || ++this.order;
+        this.Optgroups[key] = data;
+
+        return key;
+    },
+
+
+    addOptionGroup: function(id, data) {
+        data[this.options.optgroupValueField] = id;
+        if (id = this.registerOptionGroup(data)) {
+            this.emit('optgroup_add', id, data);
+        }
+    },
+
+    removeOptionGroup: function(id) {
+        if (this.Optgroups.hasOwnProperty(id)) {
+            delete this.Optgroups[id];
+            this.renderCache = {};
+            this.emit('optgroup_remove', id);
+        }
+    },
+
+    clearOptionGroups: function() {
+        this.Optgroups = {};
+        this.renderCache = {};
+        this.emit('optgroup_clear');
+    },
+
+    updateOption: function(value, data) {
+        var self = this;
+        var $item, $item_new, dummy;
+        var value_new, index_item, cache_items, cache_options, order_old;
+
+        value     = hash_key(value);
+        value_new = hash_key(data[this.options.valueField]);
+
+        // sanity checks
+        if (value === null) return;
+        if (!this.Options.hasOwnProperty(value)) return;
+        if (typeof value_new !== 'string') throw new Error('Value must be set in option data');
+
+        order_old = this.Options[value].$order;
+
+        // update references
+        if (value_new !== value) {
+            delete this.Options[value];
+            index_item = this.items.indexOf(value);
+            if (index_item !== -1) {
+                this.items.splice(index_item, 1, value_new);
+            }
+        }
+        data.$order = data.$order || order_old;
+        this.Options[value_new] = data;
+
+        // invalidate render cache
+        cache_items = this.renderCache['item'];
+        cache_options = this.renderCache['option'];
+
+        if (cache_items) {
+            delete cache_items[value];
+            delete cache_items[value_new];
+        }
+        if (cache_options) {
+            delete cache_options[value];
+            delete cache_options[value_new];
+        }
+
+        // update the item if it's selected
+        if (this.items.indexOf(value_new) !== -1) {
+            $item = this.getItem(value);
+            var dummy = zen('div').html(this.render('item', data));
+            $item_new = dummy.firstChild();
+            if ($item.hasClass('active')) $item_new.addClass('active');
+
+            $item_new.after($item);
+            $item.remove();
+        }
+
+        // invalidate last query because we might have updated the sortField
+        this.lastQuery = null;
+
+        // update dropdown contents
+        if (this.isOpen) {
+            this.refreshOptions(false);
+        }
     },
 
     removeOption: function(value) {
@@ -1433,6 +1647,16 @@ var Selectize = new prime({
         this.lastQuery = null;
         this.emit('option_remove', value);
         this.removeItem(value);
+    },
+
+    clearOptions: function() {
+        this.loadedSearches = {};
+        this.UserOptions = {};
+        this.renderCache = {};
+        this.Options = this.sifter.items = {};
+        this.lastQuery = null;
+        this.emit('option_clear');
+        this.clear();
     },
 
     setActiveOption: function($option, scroll, animate) {
@@ -1496,7 +1720,7 @@ var Selectize = new prime({
         this.$control_input.style({
             opacity: 0,
             position: 'absolute',
-            left: -10000
+            left: this.rtl ? 10000 : -10000
         });
         this.isInputHidden = true;
     },
@@ -1534,10 +1758,14 @@ var Selectize = new prime({
         return result;
     },
 
+    getScoreFunction: function(query) {
+        return this.sifter.getScoreFunction(query, this.getSearchOptions());
+    },
+
     getSearchOptions: function() {
         var sort = this.options.sortField;
         if (typeof sort === 'string') {
-            sort = { field: sort };
+            sort = [{ field: sort }];
         }
 
         return {
@@ -1661,7 +1889,7 @@ var Selectize = new prime({
     },
 
     advanceCaret: function(direction, e) {
-        var self = this, fn, $adj;
+        var fn, $adj;
 
         if (direction === 0) return;
 
@@ -1718,12 +1946,14 @@ var Selectize = new prime({
 
     disable: function() {
         this.input.attribute('disabled', true);
+        this.$control_input.attribute('disabled', true).attribute('tabindex', -1);
         this.isDisabled = true;
         this.lock();
     },
 
     enable: function() {
         this.input.attribute('disabled', null);
+        this.$control_input.attribute('disabled', null).attribute('tabindex', this.tabIndex);
         this.isDisabled = false;
         this.unlock();
     },
@@ -1750,13 +1980,14 @@ var Selectize = new prime({
 
         delete this.$control_input.selectizeGrow;
         delete this.input.selectizeInstance;
+        delete this.input[0].selectize;
     },
 
     render: function(templateName, data) {
         var value, id, label;
         var html = '';
         var cache = false;
-        var regex_tag = /^[\t ]*<([a-z][a-z0-9\-_]*(?:\:[a-z][a-z0-9\-_]*)?)/i;
+        var regex_tag = /^[\t \r\n]*<([a-z][a-z0-9\-_]*(?:\:[a-z][a-z0-9\-_]*)?)/i;
 
         if (templateName === 'option' || templateName === 'item') {
             value = hash_key(data[this.options.valueField]);
@@ -1819,24 +2050,36 @@ $.implement({
 
         var init_textbox = function(input, settings_element) {
             input = $(input);
-            var i, n, values, option, value = trim(input.value() || '');
-            if (!settings.allowEmptyOption && !value.length) return;
+            var i, n, values, option;
 
-            values = value.split(settings.delimiter);
-            for (i = 0, n = values.length; i < n; i++) {
-                option = {};
-                option[field_label] = values[i];
-                option[field_value] = values[i];
+            var data_raw = input.attribute(attr_data);
 
-                settings_element.Options[values[i]] = option;
+            if (!data_raw) {
+                var value = trim(input.value() || '');
+                if (!settings.allowEmptyOption && !value.length) return;
+
+                values = value.split(settings.delimiter);
+                for (i = 0, n = values.length; i < n; i++) {
+                    option = {};
+                    option[field_label] = values[i];
+                    option[field_value] = values[i];
+
+                    settings_element.Options.push(option);
+                }
+
+                settings_element.items = values;
+            } else {
+                settings_element.Options = JSON.parse(data_raw);
+                for (i = 0, n = settings_element.Options.length; i < n; i++) {
+                    settings_element.items.push(settings_element.Options[i][field_value]);
+                }
             }
-
-            settings_element.items = values;
         };
 
         var init_select = function(input, settings_element) {
             var i, n, tagName, children, order = 0;
             var options = settings_element.Options;
+            var optionsMap = {};
 
             var readData = function(el) {
                 var data = attr_data && el.attribute(attr_data);
@@ -1851,21 +2094,22 @@ $.implement({
 
                 option = $(option);
 
-                value = option.attribute('value') || '';
+                value = hash_key(option.value());
                 if (!value.length && !settings.allowEmptyOption) return;
 
                 // if the option already exists, it's probably been
                 // duplicated in another optgroup. in this case, push
                 // the current group to the "optgroup" property on the
                 // existing option so that it's rendered in both places.
-                if (options.hasOwnProperty(value)) {
+                if (optionsMap.hasOwnProperty(value)) {
                     if (group) {
-                        if (!options[value].optgroup) {
-                            options[value].optgroup = group;
-                        } else if (!isArray(options[value].optgroup)) {
-                            options[value].optgroup = [options[value].optgroup, group];
+                        var arr = optionsMap[value][field_optgroup];
+                        if (!arr) {
+                            optionsMap[value][field_optgroup] = group;
+                        } else if (!isArray(arr)) {
+                            optionsMap[value][field_optgroup] = [arr, group];
                         } else {
-                            options[value].optgroup.push(group);
+                            arr.push(group);
                         }
                     }
                     return;
@@ -1876,8 +2120,8 @@ $.implement({
                 opt[field_value] = opt[field_value] || value;
                 opt[field_optgroup] = opt[field_optgroup] || group;
 
-                opt.$order = ++order;
-                options[value] = opt;
+                optionsMap[value] = opt;
+                options.push(opt);
 
                 if (option.matches(':selected')) {
                     settings_element.items.push(value);
@@ -1894,7 +2138,7 @@ $.implement({
                     optgrp = readData(optgroup) || {};
                     optgrp[field_optgroup_label] = id;
                     optgrp[field_optgroup_value] = id;
-                    settings_element.Optgroups[id] = optgrp;
+                    settings_element.Optgroups.push(optgrp);
                 }
 
                 options = optgroup.search('option');
@@ -1925,8 +2169,10 @@ $.implement({
                 tag_name = $input.tag().toLowerCase(),
                 placeholder = $input.attribute('placeholder') || $input.attribute('data-placeholder');
 
+            // g5 custom
             if (dataOptions) { dataOptions = JSON.parse(dataOptions); }
             settings = merge({}, settings, dataOptions);
+            // end g5 custom
 
             if (!placeholder && !settings.allowEmptyOption) {
                 var chlds = $input.children('option[value=""]');
@@ -1935,8 +2181,8 @@ $.implement({
 
             var settings_element = {
                 'placeholder': placeholder,
-                'Options': {},
-                'Optgroups': {},
+                'Options': [],
+                'Optgroups': [],
                 'items': []
             };
 

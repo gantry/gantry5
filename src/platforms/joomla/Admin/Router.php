@@ -87,7 +87,6 @@ class Router extends BaseRouter
 
             'themes' => '&view=themes',
             'picker/layouts' => "&view=layouts&style={$style}&{$token}=1",
-            'picker/particles' => "&view=particles&style={$style}&{$token}=1"
         ];
 
         return $this;

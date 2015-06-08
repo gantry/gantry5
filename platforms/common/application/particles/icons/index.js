@@ -3,6 +3,7 @@ var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready'),
     modal         = require('../../ui').modal,
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
 
     trim          = require('mout/string/trim'),
@@ -12,15 +13,15 @@ domready(function() {
     var body = $('body');
     body.delegate('keyup', '.g-icons input[type="text"]', function(event, element){
         element = $(element);
-        var preview = element.sibling('[data-g5-iconpicker]'),
+        var preview = element.sibling('[data-g5-iconpicker]') || element.siblings().find('[data-g5-iconpicker]'),
             value = element.value(),
             size;
 
-        preview.attribute('class', value || 'fa fa-hand-o-up picker');
+        preview.find('i').attribute('class', value || 'fa fa-hand-o-up picker');
 
         size = preview[0].offsetWidth;
 
-        if (!size) { preview.attribute('class', 'fa fa-hand-o-up picker'); }
+        if (!size) { preview.find('i').attribute('class', 'fa fa-hand-o-up picker'); }
     });
 
     body.delegate('click', '[data-g5-iconpicker]', function(event, element) {
@@ -33,7 +34,7 @@ domready(function() {
         modal.open({
             content: 'Loading',
             className: 'g5-dialog-theme-default g5-modal-icons',
-            remote: getAjaxURL('icons') + getAjaxSuffix(),
+            remote: parseAjaxURI(getAjaxURL('icons') + getAjaxSuffix()),
             afterClose: function() {
                 var popovers = $('.g5-popover');
                 if (popovers) { popovers.remove(); }

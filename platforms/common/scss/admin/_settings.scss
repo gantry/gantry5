@@ -11,12 +11,9 @@
 }
 
 .settings-block {
-    width: 48%;
+    width: 100%;
+
     min-width: inherit;
-    @include breakpoint(mobile-only) {
-        margin: 1% 0;
-        width: 100%;
-    }
 
     &.card {
         .badge {
@@ -32,11 +29,21 @@
         color: $orange;
     }
 
+    .alert {
+        margin: $content-margin 0;
+    }
+
     .settings-param {
+        @extend .clearfix;
         padding: 10px 5px;
         clear: both;
         position: relative;
         border-bottom: 1px solid #f4f4f4;
+
+        &.input-hidden {
+            display: none;
+            @extend %list-reset;
+        }
 
         &:last-child {
             border-bottom: 0;
@@ -54,13 +61,25 @@
         }
     }
 
+    .g-instancepicker-title {
+        margin-right: 0.5rem;
+        font-style: italic;
+        &:empty {
+            margin: 0;
+        }
+    }
+
+    .input-small {
+        width: 120px !important;
+    }
+
     input.settings-param-toggle {
         position: absolute;
         top: 50%;
         right: 0;
         margin: -7px 15px 0 0;
         z-index: 5;
-        
+
         &:checked {
             + .settings-param-override {
                 opacity: 0;
@@ -81,6 +100,7 @@
         z-index: 4;
         opacity: 1;
         @include transition(opacity 0.3s ease-in-out, z-index 0.3s ease-in-out);
+        @include backface-visibility(hidden);
         /*@include linear-gradient(90deg, transparentize($white, 0.7) 0%, transparentize($white, 0.7) 150px, transparentize($white, 0.4) 150px, transparentize($white, 0.4) 100%);*/
     }
 
@@ -147,7 +167,7 @@
         display: inline-block;
     }
 
-    input:not(.settings-param-toggle), select, .collection-list ul, .colorpicker, .multi.selectize-control {
+    input:not(.settings-param-toggle):not([type="checkbox"]), select, .collection-list ul, .colorpicker, .multi.selectize-control {
         width: 250px;
         @include breakpoint(no-desktop) {
             width: 100%;
@@ -194,6 +214,23 @@
             top: 50%;
             margin-top: -12px;
         }
+    }
+}
+
+.g-panel-filters {
+    position: relative;
+    margin-bottom: 1rem;
+    display: inline-block;
+
+    .search.settings-block {
+        width: auto;
+        display: inline-block;
+        margin-bottom: 0;
+        margin-right: 5px;
+    }
+
+    .search, input, .button {
+        font-size: 0.85rem;
     }
 }
 

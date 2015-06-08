@@ -6,6 +6,7 @@ var Modal = require('./modal'),
 module.exports = {
     modal: new Modal(),
     togglers: require('./togglers'),
+    collapse: require('./collapse'),
     selectize: Selectize,
     toastr: require('./toastr')
 };

@@ -4,13 +4,14 @@ defined('ABSPATH') or die;
 add_action( 'admin_enqueue_scripts', 'gantry_admin_scripts' );
 add_action( 'admin_print_styles', 'gantry_admin_print_styles', 200 );
 add_action( 'admin_print_scripts', 'gantry_admin_print_scripts', 200 );
+add_action( 'wp_ajax_gantry5', 'gantry_layout_manager' );
 
 // Adjust menu to contain Gantry stuff.
 add_action(
     'admin_menu',
     function () {
         remove_submenu_page( 'themes.php', 'theme-editor.php' );
-        add_theme_page( 'Layout Manager', 'Layout Manager', 'manage_options', 'layout-manager', 'gantry_layout_manager' );
+        add_theme_page( 'Gantry 5 Options', 'Gantry 5 Options', 'manage_options', 'layout-manager', 'gantry_layout_manager' );
     },
     102
 );
@@ -21,13 +22,13 @@ function gantry_admin_scripts() {
     }
 }
 function gantry_admin_print_styles() {
-    $styles = \Gantry\Framework\Document::$styles;
+    $styles = \Gantry\Framework\Gantry::instance()->styles();
     if ( $styles ) {
         echo implode( "\n", $styles ) . "\n";
     }
 }
 function gantry_admin_print_scripts() {
-    $scripts = \Gantry\Framework\Document::$scripts;
+    $scripts = \Gantry\Framework\Gantry::instance()->scripts();
     if ( $scripts ) {
         echo implode( "\n", $scripts ) . "\n";
     }
@@ -40,36 +41,34 @@ function gantry_layout_manager() {
         wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
     }
 
+    add_filter( 'admin_body_class', function () {
+        return 'gantry5 gantry5-wordpress';
+    } );
+
     if ( $output ) {
         echo $output;
         return;
     }
 
-    // Define Gantry Admin services.
-    $gantry = Gantry\Framework\Gantry::instance();
-    $gantry['admin.theme'] = function ( $c ) {
-        return new \Gantry\Admin\Theme( GANTRYADMIN_PATH );
-    };
+    // Detect Gantry Framework or fail gracefully.
+    if (!class_exists('Gantry5\Loader')) {
+        wp_die( __( 'Gantry 5 Framework not found.' ) );
+    }
 
-    // Boot the service.
-    $theme = $gantry['admin.theme'];
-    $gantry['base_url'] = \admin_url( 'themes.php?page=layout-manager' );
-    $gantry['routes'] = [
-        'overview' => '',
-        'settings' => '&view=settings',
-        'pages' => '&view=pages_index',
-        'pages/edit' => '&view=pages_edit',
-        'pages/create' => '&view=pages_create',
-        'assignments' => '&view=assignments',
-        'updates' => '&view=updates',
-    ];
-
-    $view = isset( $_GET['view'] ) ? sanitize_key( $_GET['view'] ) : 'overview';
-
-    // Render the page.
+    // Initialize administrator or fail gracefully.
     try {
-        $output = $theme->render( "{$view}.html.twig" );
+        Gantry5\Loader::setup();
+
+        $gantry = Gantry\Framework\Gantry::instance();
+        $gantry['router'] = function ($c) {
+            return new \Gantry\Admin\Router($c);
+        };
+
+        // Dispatch to the controller.
+        $output = $gantry['router']->dispatch();
+
     } catch (Exception $e) {
-        wp_die($e->getMessage());
+        throw $e;
+//        wp_die( $e->getMessage() );
     }
 }

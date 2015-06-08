@@ -61,7 +61,8 @@ interface CssCompilerInterface
     public function setVariables(array $variables);
     public function registerFunction($name, callable $callback);
     public function unregisterFunction($name);
-    public function compileFile($in, $out = null);
+    public function needsCompile($in, $variables);
+    public function compileFile($in);
 
     /**
      * @return $this

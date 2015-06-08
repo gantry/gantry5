@@ -26,14 +26,23 @@ input[type="color"]:focus,
 	padding: ($leading-margin / 4) ($leading-margin / 4);
 }
 
-input, textarea, .uneditable-input {
-	width: 100%;
+.platform-content {
+    input, textarea, select, .uneditable-input {
+        @include box-sizing(border-box);
+    }
 }
 
-.input-block-level {
-	display: block;
-	width: 100%;
-	min-height: 30px;
+.uneditable-input {
+    width: 100%;
+}
+
+.platform-content {
+    .input-block-level, .input-large, .input-xlarge, .input-xxlarge, .uneditable-input {
+    	display: block;
+    	width: 100%;
+    	min-height: 28px;
+        @include box-sizing(border-box);
+    }
 }
 
 .input-prepend .chzn-container-single .chzn-single,

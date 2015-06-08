@@ -1,0 +1,18 @@
+body.gantry5 {
+    @each $preset, $core-accent in $wp-admin-presets {
+        &.admin-color-#{$preset} {
+            #footer {
+                a {
+                    color: $core-accent;
+                }
+            }
+
+            #wpfooter {
+                background-color: #e7e7e7;
+                a {
+                    color: $core-accent;
+                }
+            }
+        }
+    }
+}

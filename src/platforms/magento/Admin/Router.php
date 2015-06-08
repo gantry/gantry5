@@ -38,7 +38,6 @@ class Router extends BaseRouter
             'themes' => '',
 
             'picker/layouts' => '/layouts',
-            'picker/particles' => '/particles'
         ];
     }
 }

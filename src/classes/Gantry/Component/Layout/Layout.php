@@ -14,6 +14,7 @@
 
 namespace Gantry\Component\Layout;
 
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Configurations;
 use Gantry\Framework\Gantry;
@@ -33,14 +34,19 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     use ArrayAccess, Iterator, Export;
 
     protected static $instances = [];
+    protected static $indexes = [];
 
     public $name;
+    public $timestamp = 0;
     public $preset = [];
     protected $exists;
     protected $items;
     protected $references;
     protected $types;
 
+    /**
+     * @return array
+     */
     public static function presets()
     {
         $gantry = Gantry::instance();
@@ -75,6 +81,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return $results;
     }
 
+    /**
+     * @param string $name
+     * @return array
+     * @throws \RuntimeException
+     */
     public static function preset($name)
     {
         $gantry = Gantry::instance();
@@ -89,6 +100,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         $layout = LayoutReader::read($filename);
         $layout['preset']['name'] = $name;
+        $layout['preset']['timestamp'] = filemtime($filename);
 
         return $layout;
     }
@@ -107,22 +119,40 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
+     * @param  string $name
+     * @return Layout
+     */
+    public static function index($name)
+    {
+        if (!isset(static::$indexes[$name])) {
+            static::$indexes[$name] = static::loadIndex($name, true);
+        }
+
+        return static::$indexes[$name];
+    }
+
+    /**
      * @param string $name
      * @param array $items
      */
-    public function __construct($name, array $items = null)
+    public function __construct($name, array $items = null, array $preset = null)
     {
         $this->name = $name;
         $this->items = (array) $items;
         $this->exists = $items !== null;
 
         // Add preset data from the layout.
-        if (isset($this->items['preset'])) {
+        if ($preset) {
+            $this->preset = $preset;
+        } elseif (isset($this->items['preset'])) {
             $this->preset = (array) $this->items['preset'];
-            unset($this->items['preset']);
         }
+
+        unset($this->items['preset']);
+
         $this->preset += [
             'name' => '',
+            'timestamp' => 0,
             'image' => 'gantry-admin://images/layouts/default.png'
         ];
     }
@@ -133,6 +163,75 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     public function exists()
     {
         return $this->exists;
+    }
+
+    /**
+     * Build separate meta-information from the layout.
+     *
+     * @return array
+     */
+    public function buildIndex()
+    {
+        $positions = $this->positions();
+
+        return [
+            'name' => $this->name,
+            'timestamp' => $this->timestamp,
+            'preset' => $this->preset,
+            'positions' => $positions
+        ];
+    }
+
+    /**
+     * Save layout.
+     *
+     * @return $this
+     */
+    public function save()
+    {
+        if (!$this->name) {
+            throw new \LogicException('Cannot save unnamed layout');
+        }
+
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $filename = $locator->findResource("gantry-config://{$this->name}/layout.yaml", true, true);
+        $file = CompiledYamlFile::instance($filename);
+        $file->settings(['inline' => 20]);
+        $file->save(['preset' => $this->preset, 'children' => json_decode(json_encode($this->items), true)]);
+
+        $this->exists = true;
+
+        return $this;
+    }
+
+    /**
+     * Save index.
+     *
+     * @return $this
+     */
+    public function saveIndex()
+    {
+        if (!$this->name) {
+            throw new \LogicException('Cannot save unnamed layout');
+        }
+
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+        $filename = $locator->findResource("gantry-config://{$this->name}/index.yaml", true, true);
+        $file = CompiledYamlFile::instance($filename);
+        $file->settings(['inline' => 20]);
+        $index = $this->buildIndex();
+        $file->save($index);
+
+        static::$indexes['name'] = $index;
+
+        return $this;
     }
 
     /**
@@ -234,28 +333,51 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         /** @var Layout $old */
         $old = new static($this->name, $old);
-        $data = $old->referencesByType('section', 'section');
 
         $leftover = [];
+
+        // Copy normal sections.
+        $data = $old->referencesByType('section', 'section');
         if (isset($this->types['section']['section'])) {
             $sections = &$this->types['section']['section'];
 
-            foreach ($data as $item) {
-                $found = false;
-                foreach ($sections as &$section) {
-                    if ($section->title === $item->title) {
-                        $found = true;
-                        $section = $item;
-                        break;
-                    }
-                }
-                if (!$found && !empty($item->children)) {
-                    $leftover[] = $item->title;
-                }
-            }
+            $this->copyData($data, $sections, $leftover);
+        }
+
+        // Copy offcanvas.
+        $data = $old->referencesByType('offcanvas', 'offcanvas');
+        if (isset($this->types['offcanvas']['offcanvas'])) {
+            $offcanvas = &$this->types['offcanvas']['offcanvas'];
+
+            $this->copyData($data, $offcanvas, $leftover);
+        }
+
+        // Copy atoms.
+        $data = $old->referencesByType('atoms', 'atoms');
+        if (isset($this->types['atoms']['atoms'])) {
+            $atoms = &$this->types['atoms']['atoms'];
+
+            $this->copyData($data, $atoms, $leftover);
         }
 
         return $leftover;
+    }
+
+    protected function copyData(array $data, array &$sections, array &$leftover)
+    {
+        foreach ($data as $item) {
+            $found = false;
+            foreach ($sections as &$section) {
+                if ($section->title === $item->title) {
+                    $found = true;
+                    $section = $item;
+                    break;
+                }
+            }
+            if (!$found && !empty($item->children)) {
+                $leftover[] = $item->title;
+            }
+        }
     }
 
     /**
@@ -317,5 +439,59 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         }
 
         return new static($name, $layout);
+    }
+
+    /**
+     * @param  string $name
+     * @return static
+     */
+    public static function loadIndex($name, $autoSave = false)
+    {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        // Find out the currently used layout file.
+        $layoutFile = $locator("gantry-config://{$name}/layout.yaml");
+        if (!$layoutFile) {
+            /** @var Configurations $configurations */
+            $configurations = $gantry['configurations'];
+
+            $preset = $configurations->preset($name);
+
+            $layoutFile = $locator("gantry-layouts://{$preset}.yaml");
+        }
+
+        // Get timestamp for the layout file.
+        $timestamp = $layoutFile ? filemtime($layoutFile) : 0;
+
+        // Attempt to load the index file.
+        $indexFile = $locator("gantry-config://{$name}/index.yaml");
+        if ($indexFile) {
+            $index = CompiledYamlFile::instance($indexFile)->content();
+        }
+
+        // If layout index file doesn't exist or is not up to date, build it.
+        if (!isset($index['timestamp']) || $index['timestamp'] != $timestamp) {
+            $layout = static::instance($name);
+            $index = $layout->buildIndex();
+        }
+
+        if ($autoSave && isset($layout)) {
+            $layout->saveIndex();
+        }
+
+        $index += [
+            'name' => $name,
+            'timestamp' => $timestamp,
+            'preset' => [
+                'name' => '',
+                'image' => 'gantry-admin://images/layouts/default.png'
+            ],
+            'positions' => []
+        ];
+
+        return $index;
     }
 }

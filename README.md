@@ -1,4 +1,4 @@
-Gantry Framework
+Gantry Framework [![Build Status](https://travis-ci.org/gantry/gantry5.svg)](https://travis-ci.org/gantry/gantry5)
 ================
 
 [![Join the chat at https://gitter.im/gantry/gantry5](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gantry/gantry5?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -25,10 +25,8 @@ Gantry 5 is a framework by which Gantry-powered themes are made. In order for a 
 
 The first thing you need to do is download the latest build of Gantry 5 and Hydrogen. You can do so by clicking the links below, or via [GitHub](http://github.com/gantry/gantry5/).
 
-* [Download Gantry 5](https://github.com/gantry/gantry5/releases/download/5.0.0-rc.2/joomla-pkg_gantry5_v5.0.0-rc.2.zip)
-* [Download Hydrogen Theme](https://github.com/gantry/gantry5/releases/download/5.0.0-rc.2/joomla-tpl_g5_hydrogen_v5.0.0-rc.2.zip)
-
->>> During the initial beta, the **Framework** and **Template** are being distributed in different installable packages. A bundled package is planned, but will likely be available after the initial beta launch.
+| [Download Stable](http://www.gantry.org/downloads#gantry5) | [Download CI Builds](http://gantry.org/downloads#ci-builds) |
+|:---------------------------------------------------:|:---------------------------------------------------------:|
 
 Once you have the latest packages, installation is simple. We have provided a step-by-step guide in the **Installation** portion of this documentation.
 
@@ -55,9 +53,9 @@ You will notice the following menu items in the Gantry 5 Administrator:
 
 4. **Clear Cache**: This button clears the cache files related to Gantry. This includes all of the temporary files outside of CSS and configuration information.
 
-5. **Configuration Dropdown**: This dropdown makes it easy to quickly switch between Configurations without having to leave the Gantry Administrator.
+5. **Outlines Dropdown**: This dropdown makes it easy to quickly switch between Outlines without having to leave the Gantry Administrator.
 
-6. **Styles**: This administrative panel gives you access to style related configuration settings. This includes things like theme colors, fonts, style presets, and more.
+6. **Styles**: This administrative panel gives you access to style related outline settings. This includes things like theme colors, fonts, style presets, and more.
 
 7. **Settings**: This administrative panel offers you the ability to configure the functional settings of the theme. This includes setting defaults for Particles, as well as enabling/disabling individual Particles.
 
@@ -65,13 +63,13 @@ You will notice the following menu items in the Gantry 5 Administrator:
 
 [**Learn More**](http://docs.gantry.org/gantry5/configure/gantry-admin)
 
-## What are Configurations, Particles, Atoms, etc.?
+## What are Outlines, Particles, Atoms, etc.?
 
 Because Gantry 5 is so different from any version of Gantry before it, we came up with some terms to help make sense of the relationships Gantry's new features have with one-another. Here is a quick breakdown of commonly used terms related to Gantry 5.
 
 | Term          | Definition                                                                                                                                             |
 | :-----        | :-----                                                                                                                                                 |
-| Configuration | A configurable style used in one or more areas of your site. It serves as the container on which a page's style, settings, and layout are set.         |
+| Outline       | A configurable style used in one or more areas of your site. It serves as the container on which a page's style, settings, and layout are set.         |
 | Particle      | A typically small block of data used on the front end. It acts a lot like a widget/module, but can be easily configured in the Gantry 5 Administrator. |
 | Atom          | A type of Particle that contains non-rendered data, such as custom scripting (JS, CSS, etc.) or analytics scripts for traffic tracking.                |
 
@@ -103,9 +101,13 @@ Once that’s done, you can install **Gulp**. We recommend installing Gulp globa
 
 Now that you have the required pieces, the next step is to install all of the JS module dependencies. To do so, make sure you are at the root of the Gantry 5 project, and run the command `npm install`.
 
-Because we have two sets of JS applications, one for admin and one for the site, you will also need to install the JS modules for those. Still, from the root of your project you can run this command:
+Because we have different sets of JS and SCSS applications for admin, site, nucleus, you will also need to install the node modules for all of them. Still, from the root of your project you can run the command `gulp -up` which will take care of all the sub projects.
 
-`cd platforms/common/ && npm install && cd ../../assets/common/ && npm install && cd ../../`
+> Along with the `-up` command, you can alternatively use `-update`, `--update`, `-up`, `--up`, `-install`,
+> `--install`, `-inst`, `--inst`, `-go`, `--go`, `-deps`, `--deps`.
+> Whichever is easier for you to remember. The code will understand on its own if it needs to install for the first time or just update the node modules.
+>
+> Note that this might take a few moments.
 
 At this point you have everything you need to run Gulp. Just type the command `gulp` and you should see the CSS and JS getting compiled.
 
@@ -113,5 +115,6 @@ We provide a few handy tasks as well:
 
   1. `$ gulp` / `$ gulp all`: Compiles all of the CSS and JS in the project.
   2. `$ gulp watch`: Starts the compilers in `watch` mode. Any change applied to targeted **JS** or **SCSS** files will trigger an automatic recompilation.
-  3. `$ gulp css` / `$ gulp js`: Compiles all of either CSS or JS files, in case you are only working on one and not the other.
-  4. `$ gulp —prod`: Compiles every CSS and JS in production mode. The compiled files won’t have source maps and will be compressed (this usually takes slightly longer than normal mode).
+  3. `$ gulp watch --css` / `$ gulp watch --js`: Starts the compilers in `watch` mode and listens to only **SCSS** or **JS** changes. Useful if you are only focusing on one and not the other.
+  4. `$ gulp css` / `$ gulp js`: Compiles all of either CSS or JS files, in case you are only working on one and not the other.
+  5. `$ gulp —prod`: Compiles every CSS and JS in production mode. The compiled files won’t have source maps and will be compressed (this usually takes slightly longer than normal mode).

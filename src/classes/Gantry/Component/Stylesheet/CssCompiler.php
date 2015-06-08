@@ -14,8 +14,11 @@
 
 namespace Gantry\Component\Stylesheet;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\Gantry\GantryTrait;
+use Gantry\Framework\Gantry;
 use Leafo\ScssPhp\Colors;
+use RocketTheme\Toolbox\File\PhpFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 abstract class CssCompiler implements CssCompilerInterface
@@ -168,6 +171,65 @@ abstract class CssCompiler implements CssCompilerInterface
         return $this;
     }
 
+    public function needsCompile($in, $variables)
+    {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $out = $this->getCssUrl($in);
+        $path = $locator->findResource($out);
+
+        if (!$path) {
+            $this->setVariables($variables());
+            return true;
+        }
+
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        if ($global->get('production')) {
+            return false;
+        }
+
+        $uri = basename($out);
+        $metaFile = PhpFile::instance($locator->findResource("gantry-cache://scss/{$uri}.php", true, true));
+
+        if (!$metaFile->exists()) {
+            $this->setVariables($variables());
+            return true;
+        }
+
+        $content = $metaFile->content();
+
+        if (empty($content['file']) || $content['file'] != $out) {
+            $this->setVariables($variables());
+            return true;
+        }
+
+        if (filemtime($path) != $content['timestamp']) {
+            $this->setVariables($variables());
+            return true;
+        }
+
+        $this->setVariables($variables());
+
+        $oldVariables = isset($content['variables']) ? $content['variables'] : [];
+        if ($oldVariables != $this->getVariables()) {
+            return true;
+        }
+
+        $imports = isset($content['imports']) ? $content['imports'] : [];
+        foreach ($imports as $resource => $timestamp) {
+            $import = $locator->findResource($resource);
+            if (!$import || filemtime($import) != $timestamp) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public function setVariables(array $variables)
     {
@@ -175,7 +237,20 @@ abstract class CssCompiler implements CssCompilerInterface
 
         foreach($this->variables as &$value) {
             // Check variable against colors and units.
-            if (preg_match("/(^(#|rgba?|hsla?)|(%|rem|vh|vw|em|px|cm|mm|ch|vmin|vmax|in|pt|pc|ex)$)/i", $value)) {
+            /* Test regex against these:
+             * Should only match the ones marked as +
+             *      - family=Aguafina+Script
+             *      - #zzzzzz
+             *      - #fff
+             *      + #ffaaff
+             *      + 33em
+             *      + 0.5px
+             *      - 50 rem
+             *      - rgba(323,323,2323)
+             *      + rgba(125,200,100,0.3)
+             *      - rgb(120,12,12)
+             */
+            if (preg_match("/(^(#([a-fA-F0-9]{6})|(rgba\(\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*((0.[0-9]+)|[01])\s*\)))|(\d+(\.\d+){0,1}(rem|em|ex|ch|vw|vh|vmin|vmax|%|px|cm|mm|in|pt|pc))$)/i", $value)) {
                 continue;
             }
 
@@ -201,5 +276,31 @@ abstract class CssCompiler implements CssCompilerInterface
         $this->compiler->reset();
 
         return $this;
+    }
+
+    protected function createMeta($out, $md5)
+    {
+        $gantry = Gantry::instance();
+
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        if ($global->get('production')) {
+            return;
+        }
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $uri = basename($out);
+        $metaFile = PhpFile::instance($locator->findResource("gantry-cache://scss/{$uri}.php", true, true));
+        $metaFile->save([
+            'file' => $out,
+            'timestamp' => filemtime($locator->findResource($out)),
+            'md5' => $md5,
+            'variables' => $this->getVariables(),
+            'imports' => $this->compiler->getParsedFiles()
+        ]);
+        $metaFile->free();
     }
 }

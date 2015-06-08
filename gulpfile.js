@@ -2,6 +2,7 @@
 
 var paths,
     gulp         = require('gulp'),
+    fs           = require('fs'),
     convertBytes = function(bytes) {
         var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
         if (bytes == 0) return '0 Byte';
@@ -9,15 +10,24 @@ var paths,
         return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
     };
 
-// if we call `up` or `update`, we just need to run through projs and update all NPM deps
-if (process.argv.slice(2).join(',').match(/(update|up|--update|-up)/)) {
+// You can install or update NPM dependencies across the whole project via the supported commands:
+//      -update, --update, -up, --up, -install, --install, -inst, --inst, -go, --go, -deps, --deps
+// They all execute the same command and it will be smart enough to know whether to install or update the deps
+if (process.argv.slice(2).join(',').match(/(-{1,2}update|-{1,2}up|-{1,2}install|-{1,2}inst|-{1,2}go|-{1,2}deps)/)) {
     gulp.task('default', function() {
         paths = ['./', 'platforms/common', 'assets/common', 'engines/common/nucleus'];
-
-        var exec = require('child_process').exec, child;
+        var exec = require('child_process').exec, child, stat;
         paths.forEach(function(path) {
-            console.log("Updating JS dependencies in: " + path);
-            child = exec('cd ' + path + ' && npm update --save --save-dev',
+            var nodes = path.replace(/(\/$)/g, '') + '/' + 'node_modules',
+                method = 'install',
+                exists = false;
+
+            try { exists = fs.lstatSync(nodes).isDirectory(); }
+            catch(e) {}
+            if (exists) { method = 'update --save --save-dev'; }
+
+            console.log((exists ? 'Updating' : "Installing") + " JS dependencies in: " + path);
+            child = exec('cd ' + path + ' && npm ' + method + ' --silent',
                 function(error, stdout, stderr) {
                     if (stdout) { console.log('Completed `' + path + '`:', "\n", stdout); }
                     if (stderr) { console.log('Error `' + path + '`:' + stderr); }
@@ -68,6 +78,11 @@ paths = {
             out: './platforms/joomla/com_gantry5/admin/css-compiled/joomla-admin.css',
             load: './engines/common/nucleus/scss'
         },
+        { // admin - wordpress
+            in: './platforms/wordpress/gantry5/admin/scss/wordpress-admin.scss',
+            out: './platforms/wordpress/gantry5/admin/css-compiled/wordpress-admin.css',
+            load: './engines/common/nucleus/scss'
+        },
         { // nucleus
             in: './engines/common/nucleus/scss/nucleus.scss',
             out: './engines/common/nucleus/css-compiled/nucleus.css'
@@ -76,7 +91,12 @@ paths = {
             in: './engines/joomla/nucleus/scss/joomla.scss',
             out: './engines/joomla/nucleus/css-compiled/joomla.css',
             load: './engines/common/nucleus/scss'
-        }
+        }/* not used right now,
+        { // nucleus - wordpress
+            in: './engines/wordpress/nucleus/scss/wordpress.scss',
+            out: './engines/wordpress/nucleus/css-compiled/wordpress.css',
+            load: './engines/common/nucleus/scss'
+        }*/
     ],
     minify: [
         { // google fonts
@@ -106,7 +126,7 @@ var compileCSS = function(app) {
         sourcemap: !prod,
         loadPath: _load,
         style: prod ? 'compact' : 'expanded',
-        lineNumbers: !prod,
+        lineNumbers: false,
         trace: !prod
     };
 

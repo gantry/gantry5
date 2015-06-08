@@ -54,6 +54,16 @@ class Gantry extends Base\Gantry
             return new Page($c);
         };
 
+        $container['global'] = function ($c) {
+            $global = null;
+
+            // Trigger the event.
+            $dispatcher = \JEventDispatcher::getInstance();
+            $dispatcher->trigger('onGantryGlobalConfig', ['global' => &$global]);
+
+            return $global;
+        };
+
         return $container;
     }
 }

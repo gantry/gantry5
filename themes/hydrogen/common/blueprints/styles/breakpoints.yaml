@@ -29,3 +29,9 @@ form:
       description: Set breakpoint size in rem, em, or px unit values
       default: "30rem"
       pattern: '\d+(\.\d+){0,1}(rem|em|ex|ch|vw|vh|vmin|vmax|%|px|cm|mm|in|pt|pc)'
+    mobile-menu-breakpoint:
+      type: input.text
+      label: Mobile Menu
+      description: Set breakpoint size in rem, em, or px unit values
+      default: "48rem"
+      pattern: '\d+(\.\d+){0,1}(rem|em|ex|ch|vw|vh|vmin|vmax|%|px|cm|mm|in|pt|pc)'

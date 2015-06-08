@@ -72,7 +72,7 @@ class Menu extends HtmlController
     public function item($id = null)
     {
         // Load the menu.
-        $resource = $this->loadResource($id, !empty($_POST) ? $this->build($_POST) : null);
+        $resource = $this->loadResource($id, isset($_POST['items']) ? $this->build($_POST) : null);
 
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
@@ -86,6 +86,7 @@ class Menu extends HtmlController
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $resource->name();
         $this->params['menus'] = $resource->getMenus();
+        $this->params['default_menu'] = $resource->getDefaultMenuName();
         $this->params['menu'] = $resource;
         $this->params['path'] = implode('/', $path);
 
@@ -230,7 +231,6 @@ class Menu extends HtmlController
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params);
     }
-
 
     public function validateParticle($name)
     {
@@ -426,16 +426,16 @@ class Menu extends HtmlController
 
     public function build($raw)
     {
-        $settings = isset($raw['settings']) ? json_decode($raw['settings'], true) : [];
-        $order = isset($raw['ordering']) ? json_decode($raw['ordering'], true) : null;
-        $items = isset($raw['items']) ? json_decode($raw['items'], true) : null;
+        $settings = isset($raw['settings']) ? (array) json_decode($raw['settings'], true) : [];
+        $order = isset($raw['ordering']) ? json_decode($raw['ordering'], true) : [];
+        $items = isset($raw['items']) ? json_decode($raw['items'], true) : [];
 
         if (!is_array($order) || !is_array($items)) {
             throw new \RuntimeException('Invalid menu structure', 400);
         }
 
         krsort($order);
-        $ordering = [];
+        $ordering = ['' => []];
         foreach ($order as $path => $columns) {
             foreach ($columns as $column => $colitems) {
                 $list = [];

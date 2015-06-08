@@ -30,7 +30,7 @@ body.com_gantry5 {
 
     #g5-container {
         .inner-container {
-            margin: 0 0 1.5rem 0;
+            margin: 0;
         }
 
         li {
@@ -59,3 +59,33 @@ body.com_gantry5 {
     }
 }
 
+body.com_modules, body.com_menus {
+    #g5-container {
+        font-size: inherit; // inherit from the platform
+
+        .inner-container {
+            color: inherit;
+            margin: 0;
+            box-shadow: none;
+        }
+
+        .main-block {
+            background-color: inherit;
+        }
+
+        .g-content {
+            margin: 0;
+            padding: 0;
+        }
+
+        .g-instancepicker-title {
+            font-size: $core-font-size;
+            font-style: italic;
+            margin-right: 0.5rem;
+
+            &:empty {
+                margin-right: 0;
+            }
+        }
+    }
+}

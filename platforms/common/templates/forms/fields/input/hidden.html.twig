@@ -1,4 +1,7 @@
-{% extends "forms/fields/input/group/group.html.twig" %}
+{% extends default ? "partials/field.html.twig" : "forms/field.html.twig" %}
+
+{% block label %}
+{% endblock %}
 
 {% block input %}
     <input

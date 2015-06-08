@@ -10,17 +10,28 @@
     {% endblock -%}
 
     {% block head_platform %}{% endblock %}
+
+     {% block head_overrides -%}
+         {% for css in gantry.theme.configuration.css.overrides %}
+             {%- set url = url(gantry.theme.css(css)) %}{% if url %}
+             <link rel="stylesheet" href="{{ url(gantry.theme.css(css)) }}" type="text/css"/>
+         {% endif %}
+         {%- endfor %}
+     {% endblock -%}
 {% endset %}
 {% do parse_assets(headStylesheets, 'head', 10) -%}
 
 <head>
     {%- block head_meta -%}
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% if gantry.config.styles.base.favicon %}
+        <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.styles.base.favicon) }}" />
+        {% endif %}
     {%- endblock %}
 
     {%- block head_title -%}
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Title</title>
     {%- endblock %}
 

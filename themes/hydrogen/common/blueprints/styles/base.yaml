@@ -21,3 +21,7 @@ form:
       type: input.fonts
       label: Heading Font
       default: 'roboto, sans-serif'
+    favicon:
+       type: input.imagepicker 
+       label: Favicon 
+       filter: '.(jpe?g|gif|png|svg|ico)$'

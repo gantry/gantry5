@@ -5,9 +5,10 @@
 	right: 0;
 	bottom: 0;
 	overflow-x: hidden;
-	overflow-y: auto; 
+	overflow-y: auto;
 	text-align: left;
     display: none;
+    -webkit-overflow-scrolling: touch
 }
 
 .g-offcanvas-toggle {
@@ -32,12 +33,12 @@
     }
 
     .g-nav-overlay {
-        z-index: 5;
+        z-index: 15;
         position: absolute;
         opacity: 1;
         height: 100%;
     }
-    
+
     #g-offcanvas {
         display: block;
     }
@@ -45,6 +46,12 @@
 
 body .g-offcanvas-hide {
     @extend .hide;
+}
+
+.g-offcanvas-left {
+    #g-page-surround {
+        left: 0;
+    }
 }
 
 // Right Positioning
@@ -56,4 +63,7 @@ body .g-offcanvas-hide {
 		left: inherit;
 		right: 0.7rem;
 	}
+    #g-page-surround {
+        right: 0;
+    }
 }

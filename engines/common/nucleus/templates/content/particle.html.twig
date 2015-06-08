@@ -1,18 +1,22 @@
 {% try %}
-
-    {% set enabled = gantry.config.get('particles.' ~ segment.subtype ~ '.enabled', 1) %}
-    {% set particle = gantry.config.getJoined('particles.' ~ segment.subtype, segment.attributes) %}
+    {% if noConfig %}
+        {% set enabled = true %}
+        {% set particle = segment.attributes %}
+    {% else %}
+        {% set enabled = gantry.config.get('particles.' ~ segment.subtype ~ '.enabled', 1) %}
+        {% set particle = gantry.config.getJoined('particles.' ~ segment.subtype, segment.attributes) %}
+    {% endif %}
 
     {% set html %}
         {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
             {% include ['particles/' ~ segment.subtype ~ '.html.twig',
             '@particles/' ~ segment.subtype ~ '.html.twig']
-            ignore missing with {gantry: gantry, site: site, page: gantry.page, particle: particle } only %}
+            ignore missing with {gantry: gantry, particle: particle } only %}
         {% endif %}
     {% endset %}
 
     {% if html|trim %}
-    <div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
+    <div class="{{ not inContent ? 'g-content' : '' }}{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
         {{ html|raw }}
     </div>
     {% endif %}

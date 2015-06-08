@@ -10,6 +10,7 @@ var $              = require('elements'),
     modal          = ui.modal,
     toastr         = ui.toastr,
 
+    parseAjaxURI   = require('./utils/get-ajax-url').parse,
     getAjaxSuffix  = require('./utils/get-ajax-suffix'),
 
     flags          = require('./utils/flags-state'),
@@ -128,16 +129,17 @@ ready(function() {
     // Save
     body.delegate('click', '.button-save', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
+        var saves = $('.button-save');
 
-        element.hideIndicator();
-        element.showIndicator();
+        saves.hideIndicator();
+        saves.showIndicator();
 
         var data    = {},
             invalid = [],
             type    = element.data('save'),
             extras  = '',
             page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
-            saveURL = trim(window.location.href, '#') + getAjaxSuffix();
+            saveURL = parseAjaxURI(trim(window.location.href, '#') + getAjaxSuffix());
 
         switch (page) {
             case 'layout':
@@ -155,7 +157,7 @@ ready(function() {
                 data.ordering = JSON.stringify(mm.menumanager.ordering);
                 data.items = JSON.stringify(mm.menumanager.items);
 
-                saveURL = element.parent('form').attribute('action') + getAjaxSuffix();
+                saveURL = parseAjaxURI(element.parent('form').attribute('action') + getAjaxSuffix());
                 break;
 
             case 'other':
@@ -180,8 +182,8 @@ ready(function() {
         }
 
         if (invalid.length) {
-            element.hideIndicator();
-            element.showIndicator('fa fa-fw fa-exclamation-triangle');
+            saves.hideIndicator();
+            saves.showIndicator('fa fa-fw fa-exclamation-triangle');
             toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
             return;
         }
@@ -206,8 +208,10 @@ ready(function() {
                 }), type + ' Saved');
             }
 
-            element.hideIndicator();
-            element.lastSaved = new Date();
+            saves.hideIndicator();
+            saves.forEach(function(save) {
+                $(save).lastSaved = new Date();
+            });
 
             if (page == 'layout') { lm.layoutmanager.updatePendingChanges(); }
 
@@ -248,6 +252,7 @@ ready(function() {
             case 13: // return
             case 27: // esc
                 event.stopPropagation();
+
                 if (event.keyCode == 27) {
                     if (typeof element.storedTitle !== 'undefined') {
                         element.text(element.storedTitle);
@@ -256,7 +261,6 @@ ready(function() {
                 }
 
                 element.attribute('contenteditable', null);
-                window.getSelection().removeAllRanges();
                 element[0].blur();
 
                 element.emit('title-edit-exit', element.data('title-editable'), event.keyCode == 13 ? 'enter' : 'esc');
@@ -268,6 +272,7 @@ ready(function() {
 
     body.delegate('blur', '[data-title-editable]', function(event, element) {
         element = $(element);
+        element[0].scrollLeft = 0;
         element.attribute('contenteditable', null);
         element.data('title-editable', trim(element.text()));
         window.getSelection().removeAllRanges();
@@ -285,7 +290,7 @@ ready(function() {
         if (!href) { return false; }
 
         indicator.showIndicator();
-        request(method, href + getAjaxSuffix(), function(error, response) {
+        request(method, parseAjaxURI(href + getAjaxSuffix()), function(error, response) {
             if (!response.body.success) {
                 modal.open({
                     content: response.body.html || response.body,

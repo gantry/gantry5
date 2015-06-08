@@ -85,6 +85,9 @@ th .tooltip-inner {
 // System Messages and Alerts
 .alert {
 	border-radius: $core-border-radius;
+    padding: $content-padding;
+    margin-bottom: $leading-margin;
+    text-shadow: none;
 }
 
 // Icomoon Resets

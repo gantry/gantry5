@@ -19,6 +19,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Layout\Layout as LayoutObject;
+use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
@@ -133,16 +134,14 @@ class Layout extends HtmlController
         $layout = json_decode($_POST['layout'], true);
         $preset = isset($_POST['preset']) ? json_decode($_POST['preset'], true) : '';
 
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
+        // Create layout from the data.
+        $layout = new LayoutObject(
+            $configuration,
+            LayoutReader::data(['preset' => $preset, 'children' => $layout])
+        );
 
-        // Save layout into custom directory for the current theme.
-        $save_dir = $locator->findResource("gantry-config://{$configuration}", true, true);
-        $filename = "{$save_dir}/layout.yaml";
-
-        $file = CompiledYamlFile::instance($filename);
-        $file->settings(['inline' => 20]);
-        $file->save(['preset' => $preset, 'children' => $layout]);
+        // Save layout and its index.
+        $layout->save()->saveIndex();
 
         // Fire save event.
         $event = new Event;
@@ -176,7 +175,7 @@ class Layout extends HtmlController
 
         $attributes = isset($_POST['options']) && is_array($_POST['options']) ? $_POST['options'] : [];
 
-        if ($type == 'section' || $type == 'grid' || $type == 'offcanvas') {
+        if ($type == 'section' || $type == 'container' || $type == 'grid' || $type == 'offcanvas') {
             $prefix = "particles.{$type}";
             $defaults = [];
             $attributes += (array) $item->attributes + $defaults;
@@ -212,7 +211,8 @@ class Layout extends HtmlController
             $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
                 $this->params);
         } else {
-            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section.html.twig',
+            $typeLayout = $type == 'container' ? 'container' : 'section';
+            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
                 $this->params);
         }
 
@@ -293,7 +293,7 @@ class Layout extends HtmlController
         $validator = new Blueprints();
 
         $name = $particle;
-        if ($particle == 'section' || $particle == 'grid' || $particle == 'offcanvas') {
+        if ($particle == 'section' || $particle == 'container' || $particle == 'grid' || $particle == 'offcanvas') {
             $type = $particle;
             $particle = null;
             $validator->embed('options', CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());

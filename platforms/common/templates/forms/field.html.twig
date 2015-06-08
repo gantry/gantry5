@@ -17,10 +17,13 @@
 {% set default_value = (default_value is null ? field.default : default_value) %}
 
 {% block field %}
+{% if not field.isset or value is not null %}
     <div class="settings-param {{ field.type|replace('.', '-')|e }}">
-        {% if overrideable and (field.overridable is not defined or field.overridable == true) and field.type != 'container.set' %}
+        {% if overrideable and (field.overridable is not defined or field.overridable == true) and field.type != 'container.set' and field.type != 'input.hidden' %}
             <input type="checkbox" class="settings-param-toggle" id="of-{{ (scope ~ name)|e }}"{{ value != default_value ? ' checked="checked"' }} />
+            {% if field.type != 'input.hidden' %}
             <label class="settings-param-override" for="of-{{ (scope ~ name)|e }}"></label>
+            {% endif %}
         {% endif %}
         {% block contents %}
             <span class="settings-param-title float-left">
@@ -59,4 +62,5 @@
             </div>
         {% endblock %}
     </div>
+{% endif %}
 {% endblock %}

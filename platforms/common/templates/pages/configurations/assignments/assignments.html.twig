@@ -11,7 +11,7 @@
         <h2 class="page-title">Assignments</h2>
 
         <div>
-            <div class="g-assignments-filters" data-g-global-filter>
+            <div class="g-panel-filters" data-g-global-filter>
                 <div class="search settings-block">
                     <input type="text" placeholder="Global Filter...">
                     <i class="fa fa-fw fa-search"></i>
@@ -26,7 +26,7 @@
                 <div class="card settings-block">
                     <h4>
                         {{ type.label|e }}
-                        <div class="g-assignments-filters float-right align-right">
+                        <div class="g-panel-filters float-right align-right">
                             <div class="search settings-block">
                                 <input type="text" placeholder="Filter...">
                                 <i class="fa fa-fw fa-search"></i>
@@ -36,20 +36,22 @@
                         </div>
                     </h4>
 
-                    {% for link in type.items %}
-                    <label class="settings-param">
-                        {% include 'forms/fields/enable/enable.html.twig' with {
-                        'default': true,
-                        'name': link.name,
-                        'field': link.field,
-                        'value': link.value,
-                        'disabled': link.disabled
-                        } %}
-                        <span class="settings-param-title">
-                            {{- link.label -}}
-                        </span>
-                    </label>
-                    {% endfor %}
+                    <div class="settings-param-wrapper">
+                        {% for link in type.items %}
+                        <label class="settings-param">
+                            {% include 'forms/fields/enable/enable.html.twig' with {
+                            'default': true,
+                            'name': link.name,
+                            'field': link.field,
+                            'value': link.value,
+                            'disabled': link.disabled
+                            } %}
+                            <span class="settings-param-title">
+                                {{- link.label -}}
+                            </span>
+                        </label>
+                        {% endfor %}
+                    </div>
                 </div>
             {% endfor %}
          </div>

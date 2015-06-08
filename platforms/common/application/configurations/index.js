@@ -3,17 +3,18 @@
 var $             = require('elements'),
     ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
+    keys          = require('mout/object/keys'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
     request       = require('agent'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxURL    = require('../utils/get-ajax-url').global,
 
     flags         = require('../utils/flags-state'),
-    warningURL    = getAjaxURL('confirmdeletion') + getAjaxSuffix();
+    warningURL    = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
 
-
-var Configurations = {};
+require('./dropdown-edit');
 
 ready(function() {
     var body = $('body');
@@ -66,7 +67,7 @@ ready(function() {
         element.hideIndicator();
         element.showIndicator();
 
-        request(method, href + getAjaxSuffix(), {}, function(error, response) {
+        request(method, parseAjaxURI(href + getAjaxSuffix()), {}, function(error, response) {
             if (!response.body.success) {
                 modal.open({
                     content: response.body.html || response.body,
@@ -75,13 +76,29 @@ ready(function() {
                     }
                 });
             } else {
-                var reload = $('[href="' + getAjaxURL('configurations') + '"]');
+                var confSelector = $('#configuration-selector'),
+                    currentOutline = confSelector.value(),
+                    outlineDeleted = response.body.outline,
+                    reload = $('[href="' + getAjaxURL('configurations') + '"]');
+
+                // if the current outline is the one that's been deleted,
+                // fallback to default
+                if (outlineDeleted && currentOutline == outlineDeleted) {
+                    var ids = keys(confSelector.selectizeInstance.Options);
+                    if (ids.length) {
+                        reload.href(reload.href().replace('style=' + outlineDeleted, 'style=' + ids.shift()));
+                    }
+                }
+
                 if (!reload) { window.location = window.location; }
                 else {
                     body.emit('click', {target: reload});
                 }
 
                 toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+                if (outlineDeleted) {
+                    body.outlineDeleted = outlineDeleted;
+                }
             }
 
             element.hideIndicator();
@@ -91,6 +108,7 @@ ready(function() {
 
     // Handles Configurations Titles Rename
     var updateTitle = function(title, original, wasCanceled) {
+            this.style('text-overflow', 'ellipsis');
             if (wasCanceled || title == original) { return; }
             var element = this,
                 href = element.data('g-config-href'),
@@ -100,7 +118,7 @@ ready(function() {
             parent.showIndicator();
             parent.find('[data-title-edit]').addClass('disabled');
 
-            request(method, href + getAjaxSuffix(), { title: trim(title) }, function(error, response) {
+            request(method, parseAjaxURI(href + getAjaxSuffix()), { title: trim(title) }, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
                         content: response.body.html || response.body,
@@ -111,7 +129,7 @@ ready(function() {
 
                     element.data('title-editable', original).text(original);
                 } else {
-                    //console.log(response);
+                    element.parent('h4').data('title', title);
                 }
 
                 parent.hideIndicator();
@@ -124,6 +142,9 @@ ready(function() {
             editables.forEach(function(editable) {
                 editable = $(editable);
                 editable.confWasAttached = true;
+                editable.on('title-edit-start', function(){
+                    editable.style('text-overflow', 'inherit');
+                });
                 editable.on('title-edit-end', updateTitle);
             });
         };
@@ -142,4 +163,4 @@ ready(function() {
     attachEditables($('#configurations [data-title-editable]'));
 });
 
-module.exports = Configurations;
+module.exports = {};

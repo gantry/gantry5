@@ -60,24 +60,22 @@ class LessCompiler extends CssCompiler
 
     /**
      * @param string $in    Filename without path or extension.
-     * @param string $out   Full path to the file to be written.
      * @return bool         True if the output file was saved.
      */
-    public function compileFile($in, $out = null)
+    public function compileFile($in)
     {
         $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        if (!$out) {
-            $out = $locator->findResource($this->getCssUrl($in), true, true);
-        }
+        $out = $this->getCssUrl($in);
+        $path = $locator->findResource($out, true, true);
 
         $paths = $locator->mergeResources($this->paths);
 
         // Set the lookup paths.
-        $this->compiler->setBasePath($out);
+        $this->compiler->setBasePath($path);
         $this->compiler->setImportDir($paths);
         $this->compiler->setFormatter('lessjs');
 
@@ -85,7 +83,7 @@ class LessCompiler extends CssCompiler
         $this->compiler->setVariables($this->getVariables());
         $css = $this->compiler->compileFile($in . '.less"');
 
-        $file = File::instance($out);
+        $file = File::instance($path);
 
         // Attempt to lock the file for writing.
         $file->lock(false);
@@ -98,6 +96,8 @@ class LessCompiler extends CssCompiler
 
         $file->save($css);
         $file->unlock();
+
+        $this->createMeta($out, md5($css));
 
         return true;
     }

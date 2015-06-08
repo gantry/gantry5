@@ -1,9 +1,26 @@
 #g5-container {//wrapper
 
 #configurations {
+    margin: -10px -1%;
 
-    h4 > * {
-        vertical-align: middle;
+    .card {
+        margin: 10px 1%;
+    }
+
+    h4 {
+        display: block;
+        > * {
+            vertical-align: middle;
+
+            &[data-g-config-href] {
+                @include ellipsis(70%);
+            }
+
+            &.float-right {
+                margin-top: 5px;
+                color: lighten($dark-gray, 20%);
+            }
+        }
     }
 
     ul {
@@ -54,6 +71,18 @@
             line-height: 343px + 35px;
             text-align: center;
             position: relative;
+        }
+    }
+
+    .card .inner-params {
+        margin: $content-margin 0 0;
+        padding-top: $content-margin;
+        border-top: 1px solid $light-gray;
+
+        & > :first-child {
+            border-top: 0;
+            padding-top: 0;
+            margin: 0 auto;
         }
     }
 

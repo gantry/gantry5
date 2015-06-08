@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -79,7 +78,7 @@ class Compiler extends BaseCompiler
         $url = Document::url($uri) ?: $url;
 
         // Changes absolute URIs to relative to make the path to work even if the site gets moved.
-        if ($url[0] == '/' && $this->basePath) {
+        if ($url && $url[0] == '/' && $this->basePath) {
             $url = Folder::getRelativePathDotDot($url, $this->basePath);
         }
 
@@ -274,5 +273,46 @@ class Compiler extends BaseCompiler
         $this->usedFonts = [];
 
         return $this;
+    }
+
+    /**
+     * Override function to improve the logic.
+     *
+     * @param $path
+     * @param $out
+     */
+    protected function importFile($path, $out)
+    {
+        // see if tree is cached
+        if (!isset($this->importCache[$path])) {
+            $gantry = Gantry::instance();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+
+            $filename = $locator($path);
+
+            $file = ScssFile::instance($filename);
+            $this->importCache[$path] = $file->content();
+            $file->free();
+        }
+
+        if (!isset($this->parsedFiles[$path])) {
+            $gantry = Gantry::instance();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+
+            $filename = $locator($path);
+
+            $this->parsedFiles[$path] = filemtime($filename);
+        }
+
+        $tree = $this->importCache[$path];
+
+        $dirname = dirname($path);
+        array_unshift($this->importPaths, $dirname);
+        $this->compileChildren($tree->children, $out);
+        array_shift($this->importPaths);
     }
 }

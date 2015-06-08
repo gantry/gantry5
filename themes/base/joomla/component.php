@@ -18,6 +18,9 @@ $theme = $gantry['theme'];
 
 $raw = JFactory::getApplication()->input->getString('type') == 'raw';
 
+// Reset used outline configuration.
+unset($gantry['configuration']);
+
 // Render the component.
 echo $theme
     ->setLayout('_body_only')

@@ -1,0 +1,61 @@
+.g-main-nav {
+    .g-standard {
+        .g-dropdown {
+            @include transition(none);
+        }
+
+        .g-fade.g-dropdown {
+            @include transition(opacity .3s ease-out, transform .3s ease-out);
+        }
+
+        .g-zoom.g-active {
+            @include animation-duration(.3s);
+            @include animation-name(g-dropdown-zoom);
+        }
+
+        .g-fade-in-up.g-active {
+            @include animation-duration(.3s);
+            @include animation-name(g-dropdown-fade-in-up);
+        }
+    }
+
+    .g-fullwidth > {
+        .g-dropdown {
+            @include transition(none);
+        }
+
+        .g-fade.g-dropdown {
+            @include transition(opacity .3s ease-out, transform .3s ease-out);
+        }
+
+        .g-zoom.g-active {
+            @include animation-duration(.3s);
+            @include animation-name(g-dropdown-zoom);
+        }
+
+        .g-fade-in-up.g-active {
+            @include animation-duration(.3s);
+            @include animation-name(g-dropdown-fade-in-up);
+        }
+    }
+}
+
+@include keyframes(g-dropdown-zoom) {
+    0% {
+        opacity: 0;
+        @include transform(scale3d(.8, .8, .8));
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@include keyframes(g-dropdown-fade-in-up) {
+    0% {
+        opacity: 0;
+        @include transform(translate3d(0, 30px, 0));
+    }
+    100% {
+        opacity: 1;
+    }
+}

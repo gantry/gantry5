@@ -18,7 +18,7 @@ var originals,
             keys.forEach(function(key) {
                 field = $('[name="' + key + '"]');
                 if (field) {
-                    map.set(key, field.value().toLowerCase());
+                    map.set(key, field.value());
                 }
             });
 
@@ -39,7 +39,7 @@ var originals,
         var map = new storage();
 
         forEach(data, function(value, key) {
-            map.set(key, value.toLowerCase());
+            map.set(key, value);
         });
 
         return map;
@@ -127,7 +127,7 @@ ready(function() {
     body.delegate('change', '.settings-block input[name][type="hidden"], .settings-block input[name][type="checkbox"], .settings-block select[name]', compare.single);
 
     body.delegate('input', '.g-urltemplate', function(event, element) {
-        var previous = element.parent('.settings-param').previousSibling();
+        var previous = element.parent('.settings-param').siblings();
         if (!previous) { return; }
 
         previous = previous.find('[data-g-urltemplate]');

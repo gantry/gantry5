@@ -32,6 +32,8 @@ class Page extends Base\Page
         $this->task     = $input->getCmd('task', '');
         $this->itemid   = $input->getCmd('Itemid', '');
 
+        $templateParams = $app->getTemplate(true);
+        $this->outline = $templateParams->id;
         $this->sitename = $app->get('sitename');
         $this->theme = $document->template;
         $this->baseUrl = $document->baseurl;
@@ -60,6 +62,7 @@ class Page extends Base\Page
         $classes[] = $this->task ? 'task-' . $this->task : 'no-task';
         $classes[] = 'dir-' . $this->direction;
         if ($this->itemid) $classes[] = 'itemid-' . $this->itemid;
+        if ($this->outline) $classes[] = 'outline-' . $this->outline;
 
         $baseAttributes = (array) $this->config->get('page.body', []);
         if (!empty($baseAttributes['class'])) {

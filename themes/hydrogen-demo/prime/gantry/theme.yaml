@@ -48,6 +48,7 @@ configuration:
       - custom
     persistent:
       - hydrogen
+    overrides:
       - custom
 
   block-variations:

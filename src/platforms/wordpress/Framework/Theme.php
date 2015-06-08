@@ -11,6 +11,8 @@ class Theme extends Base\Theme
     {
         parent::__construct($path, $name);
 
+        add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'widgets' ) );
+        add_theme_support( 'title-tag' );
         add_theme_support( 'post-formats' );
         add_theme_support( 'post-thumbnails' );
         add_theme_support( 'menus' );
@@ -28,7 +30,7 @@ class Theme extends Base\Theme
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-theme://twig'));
+        $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-engine://twig'));
 
         $params = array(
             'cache' => $locator('gantry-cache://twig', true, true),
@@ -37,7 +39,11 @@ class Theme extends Base\Theme
             'autoescape' => 'html'
         );
 
+        // FIXME: Get timezone from WP.
+        $timezone = 'UTC';
+
         $twig = new \Twig_Environment($loader, $params);
+        $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
 
         $this->add_to_twig($twig);
 
@@ -50,17 +56,17 @@ class Theme extends Base\Theme
     public function widgets_init()
     {
         $gantry = Gantry::instance();
-        $positions = (array) $gantry['config']->get( 'positions' );
 
-        foreach ( $positions as $name => $params ) {
-            $params = (array) $params;
-            if ( !isset( $params['name'] ) ) {
-                $params['name'] = ucfirst($name);
-            }
+        $positions = $gantry['configurations']->positions();
+
+        foreach ( $positions as $name => $title ) {
+            // FIXME
+            // This should be handled by theme so translation plugins could catch it as part of theme.
+            // This stuff might also need take Joomla chromes into account for cross-compatibility reasons
             register_sidebar( array(
-                'name'          => __( $params['name'], 'gantry5' ),
+                'name'          => __( $title, 'gantry5' ),
                 'id'            => $name,
-                'description'   => __( $params['name'], 'gantry5' ),
+                'description'   => __( $title, 'gantry5' ),
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
                 'after_widget'  => '</aside>',
                 'before_title'  => '<h3 class="widget-title">',

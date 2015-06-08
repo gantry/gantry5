@@ -64,6 +64,7 @@ var Menu = new prime({
             mobileContainer = $(selectors.mobileContainer),
             body = $('body');
 
+        if (!main) { return; }
         main.on('mouseenter', this.bound('mouseenter'));
         main.on('mouseleave', this.bound('mouseleave'));
         body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
@@ -129,10 +130,13 @@ var Menu = new prime({
         }
 
         if (!isSelected) {
-            var currentlyOpen = parent.siblings().search(selectors.touchIndicator + ' !> * !> ' + selectors.item + '.' + states.selected);
-            (currentlyOpen || []).forEach(bind(function(open) {
-                this.closeDropdown(open);
-            }, this));
+            var siblings = parent.siblings();
+            if (siblings) {
+                var currentlyOpen = siblings.search(selectors.touchIndicator + ' !> * !> ' + selectors.item + '.' + states.selected);
+                (currentlyOpen || []).forEach(bind(function(open) {
+                    this.closeDropdown(open);
+                }, this));
+            }
         }
 
         if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown + ', > * > ' + selectors.dropdown) || isGoingBack)) {
@@ -262,22 +266,30 @@ var Menu = new prime({
             find, dropdowns;
 
         if (mq.matches) {
+            // move to Mobile Container
             find = mainContainer.find(selectors.topLevel);
-            if (find) { find.top(mobileContainer); }
+            if (find) {
+                mainContainer.parent('.g-block').addClass('hidden');
+                mobileContainer.parent('.g-block').removeClass('hidden');
+                find.top(mobileContainer);
+            }
         } else {
+            // move back to Original Location
             find = mobileContainer.find(selectors.topLevel);
-            if (find) { find.top(mainContainer); }
+            if (find) {
+                mobileContainer.parent('.g-block').addClass('hidden');
+                mainContainer.parent('.g-block').removeClass('hidden');
+                find.top(mainContainer);
+            }
         }
 
         this.resetStates(find);
 
         // we need to reintroduce fixed widths for those dropdowns that come with it
         if (!mq.matches && (find && (dropdowns = find.search('[data-g-item-width]')))) {
-            console.log(dropdowns);
             dropdowns.forEach(function(dropdown) {
                 dropdown = $(dropdown);
                 dropdown[0].style.width = dropdown.data('g-item-width');
-                console.log(dropdown, dropdown.data('g-item-width'));
             });
         }
     },

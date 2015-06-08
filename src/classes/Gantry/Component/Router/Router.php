@@ -61,7 +61,7 @@ abstract class Router implements RouterInterface
             $response = $this->getErrorResponse($e, $this->format == 'json');
         }
 
-        $this->send($response);
+        return $this->send($response);
     }
 
     public function execute($resource, $method = 'GET', $path, $params = [], $format = 'html')
@@ -169,5 +169,7 @@ abstract class Router implements RouterInterface
         }
 
         echo $response;
+
+        return true;
     }
 }

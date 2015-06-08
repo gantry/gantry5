@@ -19,9 +19,13 @@ ul, ol, dl {
 	}
 }
 
-ul, dl {
+ul {
 	margin-left: $leading-margin;
 	padding: 0;
+}
+
+dl {
+    padding: 0;
 }
 
 ol {

@@ -63,6 +63,23 @@ class Configurations extends AbstractConfigurationCollection
     }
 
     /**
+     * Returns list of all positions defined in outsets.
+     *
+     * @return array
+     */
+    public function positions()
+    {
+        $list = [];
+        foreach ($this->items as $name => $title) {
+            $index = Layout::index($name);
+
+            $list += $index['positions'];
+        }
+
+        return $list;
+    }
+
+    /**
      * @param int|string $id
      * @return int|string
      */

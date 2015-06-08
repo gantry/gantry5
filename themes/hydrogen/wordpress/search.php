@@ -1,14 +1,20 @@
 <?php
 /**
- * Search results page
+ * @package   Gantry 5 Theme
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @license   GNU/GPLv2 and later
  *
- * Methods for TimberHelper can be found in the /functions sub-directory
- *
- * @package 	WordPress
- * @subpackage 	Timber
- * @since 		Timber 0.1
+ * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+/*
+ * Search results page
+ */
+
+/** @var \Gantry\Framework\Theme $theme */
+$theme = $gantry[ 'theme' ];
+$theme->setLayout( 'test' );
 
 $templates = array( 'search.twig', 'archive.twig', 'index.twig' );
 $context = Timber::get_context();

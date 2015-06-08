@@ -7,24 +7,66 @@ var ready   = require('elements/domready'),
     trim    = require('mout/string/trim'),
     $       = require('../utils/elements.utils');
 
-var eachAsync = function(array, fn, cb) {
-    var i = 0;
-    (function tmp() {
-        fn(array[i], i);
-        if (++i < array.length) { window.requestAnimationFrame(tmp, 0); }
-        else if (cb) { cb(); }
-    })();
+
+// credits: https://github.com/cowboy/javascript-sync-async-foreach
+var asyncForEach = function(arr, eachFn, doneFn) {
+    var i = -1;
+    // Resolve array length to a valid (ToUint32) number.
+    var len = arr.length >>> 0;
+
+    (function next(result) {
+        // This flag will be set to true if `this.async` is called inside the
+        // eachFn` callback.
+        var async;
+        // Was false returned from the `eachFn` callback or passed to the
+        // `this.async` done function?
+        var abort = result === false;
+
+        // Increment counter variable and skip any indices that don't exist. This
+        // allows sparse arrays to be iterated.
+        do { ++i; } while (!(i in arr) && i !== len);
+
+        // Exit if result passed to `this.async` done function or returned from
+        // the `eachFn` callback was false, or when done iterating.
+        if (abort || i === len) {
+            // If a `doneFn` callback was specified, invoke that now. Pass in a
+            // boolean value representing "not aborted" state along with the array.
+            if (doneFn) {
+                doneFn(!abort, arr);
+            }
+            return;
+        }
+
+        // Invoke the `eachFn` callback, setting `this` inside the callback to a
+        // custom object that contains one method, and passing in the array item,
+        // index, and the array.
+        result = eachFn.call({
+            // If `this.async` is called inside the `eachFn` callback, set the async
+            // flag and return a function that can be used to continue iterating.
+            async: function() {
+                async = true;
+                return next;
+            }
+        }, arr[i], i, arr);
+
+        // If the async flag wasn't set, continue by calling `next` synchronously,
+        // passing in the result of the `eachFn` callback.
+        if (!async) {
+            next(result);
+        }
+    }());
 };
 
 var Map         = map,
     Assignments = {
-        toggleSection: function(e, element) {
+        toggleSection: function(e, element, index, array) {
             if (e.type.match(/^touch/)) { e.preventDefault(); }
             if (element.parent('[data-g-global-filter]')) { return Assignments.globalToggleSection(e, element); }
             if (element.matches('label')) { return Assignments.treatLabel(e, element); }
 
             var card = element.parent('.card'),
                 toggles = Map.get(card),
+                save = $('[data-save]'),
                 mode = element.data('g-assignments-check') == null ? 0 : 1;
 
             if (!toggles || !toggles.inputs) {
@@ -34,14 +76,18 @@ var Map         = map,
                 if (!toggles.inputs) { toggles = Map.set(card, merge(Map.get(card), { inputs: inputs })).get(card); }
             }
 
-            // if necessary we should move to eachAsync for an asynchronous loop
-            forEach(toggles.inputs, function(item) {
+            // if necessary we should move to asyncForEach for an asynchronous loop, else forEach
+            asyncForEach(toggles.inputs, function(item) {
                 item = $(item);
 
                 if (item.parent('label').compute('display') == 'none') { return; }
 
                 item.value(mode).emit('change');
                 $('body').emit('change', { target: item });
+            }, function(){
+                if (typeof index !== 'undefined' && typeof array !== 'undefined' && (index + 1 == array.length)) {
+                    save.disabled(false);
+                }
             });
         },
 
@@ -62,15 +108,26 @@ var Map         = map,
 
             items = $(items.labels);
 
-            if (!value) { return items.search('!> label').style('display', 'block'); }
+            if (!value) {
+                card.style('display', 'inline-block');
+                return items.search('!> label').style('display', 'block');
+            }
 
-            forEach(items, function(item) {
+            var count = 0, off = 0, on = 0;
+            asyncForEach(items, function(item, i) {
                 item = $(item);
                 var text = trim(item.text());
                 if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
                     item.parent('label').style('display', 'block');
+                    on++;
                 } else {
                     item.parent('label').style('display', 'none');
+                    off++;
+                }
+
+                count++;
+                if (count == items.length) {
+                    card.style('display', !on ? 'none' : 'inline-block');
                 }
             });
         },
@@ -80,7 +137,7 @@ var Map         = map,
                 event.stopPropagation();
                 event.preventDefault();
             }
-            
+
             if ($(event.target).matches('.knob, .toggle')) { return; }
             var input = element.find('input[type="hidden"]:not([disabled])');
             if (!input) { return; }
@@ -95,13 +152,15 @@ var Map         = map,
 
         globalToggleSection: function(e, element) {
             var mode = element.data('g-assignments-check') == null ? '[data-g-assignments-uncheck]' : '[data-g-assignments-check]',
+                save = $('[data-save]'),
                 search = $('#assignments .card ' + mode);
 
             if (!search) { return; }
 
-            // if necessary we should move to eachAsync for an asynchronous loop
-            forEach(search, function(item){
-                Assignments.toggleSection(e, $(item));
+            save.disabled(true);
+            // if necessary we should move to asyncForEach for an asynchronous loop
+            asyncForEach(search, function(item, index, array) {
+                Assignments.toggleSection(e, $(item), index, array);
             });
         },
 
@@ -111,7 +170,7 @@ var Map         = map,
 
             if (!search) { return; }
 
-            forEach(search, function(item) {
+            asyncForEach(search, function(item) {
                 Assignments.filterSection(e, $(item), value);
             });
         }

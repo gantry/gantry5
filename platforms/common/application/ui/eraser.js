@@ -17,17 +17,26 @@ var Eraser = new prime({
         this.element = $(element);
 
         if (!this.element) { return; }
+
         this.hide(true);
+    },
+
+    setTop: function() {
+        if (typeof this.top !== 'undefined') { return; }
+        this.top = parseInt(this.element.compute('top'), 10);
     },
 
     show: function(fast){
         if (!this.element) { return; }
+        this.setTop();
         this.out();
-        this.element[fast ? 'style' : 'animate']({top: 0}, {duration: '150ms'});
+        this.element[fast ? 'style' : 'animate']({top: this.top}, {duration: '150ms'});
     },
 
     hide: function(fast){
         if (!this.element) { return; }
+        this.setTop();
+        this.element.style('display', 'block');
         var top = {top: -(this.element[0].offsetHeight)};
         this.out();
         this.element[fast ? 'style' : 'animate'](top, {duration: '150ms'});

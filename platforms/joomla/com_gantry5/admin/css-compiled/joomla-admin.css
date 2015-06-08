@@ -1,134 +1,125 @@
-/* line 1, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 html {
   height: inherit !important;
 }
 
-/* line 5, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_gantry5 {
   color: #ddd;
   background-color: #404040 !important;
 }
-/* line 9, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_gantry5 a {
   text-decoration: none;
 }
-/* line 13, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_gantry5 .subhead-collapse.collapse, body.com_gantry5 .header {
   display: none;
 }
-/* line 17, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_gantry5 .container-main {
   padding: 0;
 }
-/* line 21, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_gantry5 #status {
   box-shadow: none !important;
 }
-/* line 26, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_gantry5 #footer a {
   color: #3180C2;
 }
-/* line 32, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_gantry5 #g5-container .inner-container {
-  margin: 0 0 1.5rem 0;
+  margin: 0;
 }
-/* line 36, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_gantry5 #g5-container li {
   line-height: inherit;
 }
-/* line 40, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_gantry5 #g5-container textarea, body.com_gantry5 #g5-container input {
   box-shadow: none;
 }
-/* line 44, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_gantry5 #g5-container input, body.com_gantry5 #g5-container button, body.com_gantry5 #g5-container select, body.com_gantry5 #g5-container textarea {
   font-family: inherit;
 }
-/* line 50, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_gantry5 nav.navbar * {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
 }
-/* line 57, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_core.scss */
 body.com_gantry5 > div:last-child[style^="position: absolute; z-index: -1; top: 0px; left: 0px; right: 0px; height: "] {
   display: none;
 }
 
-/* line 11, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_buttons.scss */
+body.com_modules #g5-container, body.com_menus #g5-container {
+  font-size: inherit;
+}
+body.com_modules #g5-container .inner-container, body.com_menus #g5-container .inner-container {
+  color: inherit;
+  margin: 0;
+  box-shadow: none;
+}
+body.com_modules #g5-container .main-block, body.com_menus #g5-container .main-block {
+  background-color: inherit;
+}
+body.com_modules #g5-container .g-content, body.com_menus #g5-container .g-content {
+  margin: 0;
+  padding: 0;
+}
+body.com_modules #g5-container .g-instancepicker-title, body.com_menus #g5-container .g-instancepicker-title {
+  font-size: 1rem;
+  font-style: italic;
+  margin-right: 0.5rem;
+}
+body.com_modules #g5-container .g-instancepicker-title:empty, body.com_menus #g5-container .g-instancepicker-title:empty {
+  margin-right: 0;
+}
+
 #g5-container .button-primary {
   background: #3180C2;
   color: #fff;
 }
-/* line 4, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_buttons.scss */
 #g5-container .button-primary:not(.disabled):not([disabled]):hover {
   background: #2b70aa;
   color: #fff;
 }
 
-/* line 4, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container [data-mode-indicator="production"] {
   background-color: #3180C2;
 }
-/* line 10, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container #main-header .g-content {
   padding: 0 1.563rem;
 }
-/* line 14, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container #main-header .dev-mode-toggle {
   background: #276599;
 }
-/* line 17, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container #main-header .dev-mode-toggle a {
   background: #67a5d9;
 }
-/* line 22, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container #main-header .button-save {
   background: #67a5d9;
   color: #fff;
 }
-/* line 4, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_buttons.scss */
 body.com_gantry5 #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
   background: #4e96d2;
   color: #fff;
 }
-/* line 29, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container #main-header ul li:hover a {
   background: #2c73ae;
 }
-/* line 34, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container #main-header ul li.active a {
   background: #225885;
 }
-/* line 43, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container #navbar {
   padding: 0 0.625rem;
 }
-/* line 49, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
-body.com_gantry5 #g5-container .navbar-block .gantry-logo {
-  right: 1.563rem;
-}
-/* line 54, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container .inner-header {
   background-color: #222;
   color: #3180C2;
 }
-/* line 59, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container .settings-state {
   background: #3180C2;
   color: #fff;
 }
-/* line 64, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container .button.button-update {
   background: #633679;
   color: #fff;
 }
-/* line 4, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_buttons.scss */
 body.com_gantry5 #g5-container .button.button-update:not(.disabled):not([disabled]):hover {
   background: #522c64;
   color: #fff;
 }
-/* line 68, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_headers.scss */
 body.com_gantry5 #g5-container .tooltip {
   position: static;
   opacity: 1;
@@ -136,47 +127,37 @@ body.com_gantry5 #g5-container .tooltip {
   font-size: inherit;
 }
 
-/* line 3, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_overview.scss */
 #g5-container .overview-header .theme-title {
   color: #3180C2;
 }
 
-/* line 3, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_typography.scss */
 #g5-container h1 {
   font-size: 2.25rem;
 }
-/* line 7, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_typography.scss */
 #g5-container h2 {
   font-size: 1.9rem;
 }
-/* line 11, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_typography.scss */
 #g5-container h3 {
   font-size: 1.5rem;
 }
-/* line 15, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_typography.scss */
 #g5-container h4 {
   font-size: 1.15rem;
 }
-/* line 19, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_typography.scss */
 #g5-container h5 {
   font-size: 1rem;
 }
-/* line 23, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_typography.scss */
 #g5-container h6 {
   font-size: 0.85rem;
 }
-/* line 27, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_typography.scss */
 #g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
   line-height: inherit;
 }
-/* line 31, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_typography.scss */
 #g5-container .page-title {
   color: inherit;
   text-shadow: none;
   line-height: inherit;
 }
 
-/* line 4, platforms/joomla/com_gantry5/admin/scss/joomla-admin/_navbar.scss */
 body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   right: 2.1rem;
 }

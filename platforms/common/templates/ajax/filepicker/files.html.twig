@@ -30,7 +30,9 @@
     {% for index,file in files %}
         <li data-file="{{ file|json_encode()|e('html_attr') }}" data-file-url="{{ file.pathname|e }}">
             {% if file.isImage %}
-                <div class="g-thumb g-image" style="background-image:url({{ url(file.pathname) }})"></div>
+                <div class="g-thumb g-image g-image-{{ file.extension }}">
+                    <div style="background-image: url({{ url(file.pathname) }})"></div>
+                </div>
             {% else %}
                 <div class="g-thumb">{{ file.extension }}</div>
             {% endif %}

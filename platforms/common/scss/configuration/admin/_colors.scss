@@ -1,46 +1,46 @@
 // Core
-$core-text:                     #666;
-$secondary-text:				#314C59;
-$core-accent:                   #439A86;
-$secondary-accent:              #729DAE;
-$tertiary-accent:              	#48B0D7;
-$white:                         #fff;
-$black:                         #000;
-$light-gray:                    #eee;
-$medium-gray:                   #ddd;
-$dark-gray:                     #666;
+$core-text:                     #666 !default;
+$secondary-text:				#314C59 !default;
+$core-accent:                   #439A86 !default;
+$secondary-accent:              #729DAE !default;
+$tertiary-accent:              	#48B0D7 !default;
+$white:                         #fff !default;
+$black:                         #000 !default;
+$light-gray:                    #eee !default;
+$medium-gray:                   #ddd !default;
+$dark-gray:                     #666 !default;
 
-$blue-gray:                     #54606e;
-$aqua:                          #4fc1e9;
-$yellow:                        #ffce54;
-$green:                         #a0d468;
-$orange:                        #fc6e51;
-$red:                           #ed5565;
-$lavender:                      #ac92ec;
-$pink:                          #ec87c0;
-$blue: 							#3288e6;
+$blue-gray:                     #54606e !default;
+$aqua:                          #4fc1e9 !default;
+$yellow:                        #ffce54 !default;
+$green:                         #a0d468 !default;
+$orange:                        #fc6e51 !default;
+$red:                           #ed5565 !default;
+$lavender:                      #ac92ec !default;
+$pink:                          #ec87c0 !default;
+$blue: 							#3288e6 !default;
 
 // Buttons
-$button-bg:						#999999;
+$button-bg:						#999999 !default;
 
 // Body
-$body-bg:                       #354D59;
+$body-bg:                       #354D59 !default;
 
 // Headers
-$main-header-text:				$white;
-$inner-header-bg:				#253A47;
-$inner-header-text:				$core-accent;
-$update-header-bg:				#8F4DAE;
+$main-header-text:				$white !default;
+$inner-header-bg:				#253A47 !default;
+$inner-header-text:				$core-accent !default;
+$update-header-bg:				#8F4DAE !default;
 
 // Main
-$main-bg:                       #f0f0f0;
+$main-bg:                       #f0f0f0 !default;
 
 // NavBar
-$navbar-bg:                    	#DADADA;
-$navbar-border:					#C6C6C6;
-$navbar-color:                 	#666;
-$navbar-active:                	$main-bg;
-$navbar-active-color:          	$secondary-text;
+$navbar-bg:                    	#DADADA !default;
+$navbar-border:					#C6C6C6 !default;
+$navbar-color:                 	#666 !default;
+$navbar-active:                	$main-bg !default;
+$navbar-active-color:          	$secondary-text !default;
 
 // Menu Editor
-$menu-editor-bg:				#b3b3b3;
+$menu-editor-bg:				#b3b3b3 !default;
