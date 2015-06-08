@@ -16,7 +16,21 @@
         {% endfor %}
     {% endif %}
 
-    <div{{ attr_extra|raw }} class="g-container{{ classes }}">
+    {% if (segment.attributes.boxed is defined and not segment.attributes.boxed) %}
+        {% set html %}
+        <div class="g-container">{{ html|raw }}</div>
+        {% endset %}
+    {% endif %}
+
+    {% set html %}
+    <section{{ attr_extra|raw }} class="g-wrapper{{ classes }}">
         {{ html|raw }}
-    </div>
+    </section>
+    {% endset %}
+
+    {% if (segment.attributes.boxed) %}
+        <div class="g-container">{{ html|raw }}</div>
+    {% else %}
+        {{ html|raw }}
+    {% endif %}
 {% endif %}

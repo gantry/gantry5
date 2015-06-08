@@ -20,7 +20,21 @@
 {% endset %}
 
 {% if html|trim %}
+    {% if (segment.attributes.boxed is defined and not segment.attributes.boxed) %}
+        {% set html %}
+        <div class="g-container">{{ html|raw }}</div>
+        {% endset %}
+    {% endif %}
+
+    {% set html %}
     <{{ tag_type }} id="g-{{ attr_id }}" {{ attr_class|raw }}{{ attr_extra|raw }}>
         {{ html|raw }}
     </{{ tag_type }}>
+    {% endset %}
+
+    {% if (segment.attributes.boxed) %}
+    <div class="g-container">{{ html|raw }}</div>
+    {% else %}
+    {{ html|raw }}
+    {% endif %}
 {% endif %}
