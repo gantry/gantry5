@@ -105,7 +105,7 @@ after_deploy:
       git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*";
       git fetch --quiet;
       cd $TRAVIS_BUILD_DIR/bin/build;
-      php build.php prod-versions -propertyfile release.ini -Dupdate_versions=true -Dxml.version=$TRAVIS_TAG;
+      php build.php prod-versions -Dupdate_versions=true -Dxml.version=$TRAVIS_TAG;
       cd $TRAVIS_BUILD_DIR;
       git commit -am "Release [$TRAVIS_TAG] - Automatic Version Number Updates";
       git push --force --quiet --set-upstream https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git master:master &>/dev/null;
