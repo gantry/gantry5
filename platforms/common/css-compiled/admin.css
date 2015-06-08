@@ -1293,8 +1293,11 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-#g5-container ul, #g5-container dl {
+#g5-container ul {
   margin-left: 1.5rem;
+  padding: 0;
+}
+#g5-container dl {
   padding: 0;
 }
 #g5-container ol {

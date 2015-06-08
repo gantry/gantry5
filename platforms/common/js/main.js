@@ -1,340 +1,4 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-"use strict";
-var $              = require('elements'),
-    zen            = require('elements/zen'),
-    ready          = require('elements/domready'),
-    request        = require('agent'),
-    ui             = require('./ui'),
-    interpolate    = require('mout/string/interpolate'),
-    trim           = require('mout/string/trim'),
-    setParam       = require('mout/queryString/setParam'),
-    modal          = ui.modal,
-    toastr         = ui.toastr,
-
-    parseAjaxURI   = require('./utils/get-ajax-url').parse,
-    getAjaxSuffix  = require('./utils/get-ajax-suffix'),
-
-    flags          = require('./utils/flags-state'),
-    validateField  = require('./utils/field-validation'),
-    lm             = require('./lm'),
-    mm             = require('./menu'),
-    configurations = require('./configurations');
-
-require('elements/attributes');
-require('elements/events');
-require('elements/delegation');
-require('elements/insertion');
-require('elements/traversal');
-require('./fields');
-require('./ui/popover');
-require('./utils/ajaxify-links');
-require('./utils/rAF-polyfill');
-
-var createHandler = function(divisor,noun,restOfString){
-    return function(diff){
-        var n = Math.floor(diff/divisor);
-        var pluralizedNoun = noun + ( n > 1 ? 's' : '' );
-        return "" + n + " " + pluralizedNoun + " " + restOfString;
-    }
-};
-
-var formatters = [
-    { threshold: -31535999, handler: createHandler(-31536000,	"year",     "from now" ) },
-    { threshold: -2591999, 	handler: createHandler(-2592000,  	"month",    "from now" ) },
-    { threshold: -604799,  	handler: createHandler(-604800,   	"week",     "from now" ) },
-    { threshold: -172799,   handler: createHandler(-86400,    	"day",      "from now" ) },
-    { threshold: -86399,   	handler: function(){ return      	"tomorrow" } },
-    { threshold: -3599,    	handler: createHandler(-3600,     	"hour",     "from now" ) },
-    { threshold: -59,     	handler: createHandler(-60,       	"minute",   "from now" ) },
-    { threshold: -0.9999,   handler: createHandler(-1,			"second",   "from now" ) },
-    { threshold: 1,        	handler: function(){ return      	"just now" } },
-    { threshold: 60,       	handler: createHandler(1,        	"second",	"ago" ) },
-    { threshold: 3600,     	handler: createHandler(60,       	"minute",	"ago" ) },
-    { threshold: 86400,    	handler: createHandler(3600,     	"hour",     "ago" ) },
-    { threshold: 172800,   	handler: function(){ return      	"yesterday" } },
-    { threshold: 604800,   	handler: createHandler(86400,    	"day",      "ago" ) },
-    { threshold: 2592000,  	handler: createHandler(604800,   	"week",     "ago" ) },
-    { threshold: 31536000, 	handler: createHandler(2592000,  	"month",    "ago" ) },
-    { threshold: Infinity, 	handler: createHandler(31536000, 	"year",     "ago" ) }
-];
-
-var prettyDate = {
-    format: function (date) {
-        var diff = (((new Date()).getTime() - date.getTime()) / 1000);
-        for( var i=0; i<formatters.length; i++ ){
-            if( diff < formatters[i].threshold ){
-                return formatters[i].handler(diff);
-            }
-        }
-        throw new Error("exhausted all formatter options, none found"); //should never be reached
-    }
-};
-
-window.onbeforeunload = function(){
-    if (flags.get('pending')) {
-        return 'You haven\'t saved your changes and by leaving the page they will be lost.\nDo you want to leave without saving?';
-    }
-};
-
-ready(function() {
-    var body     = $('body'),
-        sentence = 'The {{type}} {{verb}} been successfully saved! {{extras}}';
-
-    // Close notification
-    body.delegate('click', '[data-g-close]', function(event, element) {
-        if (event && event.preventDefault) { event.preventDefault(); }
-        var parent = element.data('g-close');
-        parent = parent ? element.parent(parent) : element;
-
-        parent.slideUp(function() {
-            parent.remove();
-        });
-    });
-
-    // Extras
-    body.delegate('click', '[data-g-extras]', function(event, element){
-        if (event && event.preventDefault) { event.preventDefault(); }
-
-        if (!element.PopoverDefined) {
-            var content = element.find('[data-popover-content]') || element.siblings('[data-popover-content]'),
-                popover = element.getPopover({
-                    style: 'extras',
-                    width: 220,
-                    content: zen('ul').html(content.html())[0].outerHTML
-                });
-
-            element.getPopover().show();
-        }
-    });
-
-    // Platform Settings redirect
-    body.delegate('mousedown', '[data-settings-key]', function(event, element){
-        var key = element.data('settings-key');
-        if (!key) { return true; }
-
-        var redirect = window.location.search,
-            settings = element.attribute('href'),
-            uri = window.location.href.split('?');
-        if (uri.length > 1 && uri[0].match(/index.php$/)) { redirect = 'index.php' + redirect; }
-
-        redirect = setParam(settings, key, btoa(redirect));
-        element.href(redirect);
-    });
-
-    // Save Tooltip
-    body.delegate('mouseover', '.button-save', function(event, element){
-        if (!element.lastSaved) { return true; }
-        element.addClass('g-tooltip').addClass('g-tooltip-right').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
-    });
-
-    // Save
-    body.delegate('click', '.button-save', function(event, element) {
-        if (event && event.preventDefault) { event.preventDefault(); }
-        var saves = $('.button-save');
-
-        saves.hideIndicator();
-        saves.showIndicator();
-
-        var data    = {},
-            invalid = [],
-            type    = element.data('save'),
-            extras  = '',
-            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
-            saveURL = parseAjaxURI(trim(window.location.href, '#') + getAjaxSuffix());
-
-        switch (page) {
-            case 'layout':
-                var preset = $('[data-lm-preset]');
-                lm.layoutmanager.singles('cleanup', lm.builder, true);
-                lm.savestate.setSession(lm.builder.serialize(null, true));
-
-                data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
-                data.layout = JSON.stringify(lm.builder.serialize());
-
-                break;
-            case 'menu':
-                data.menutype = $('select.menu-select-wrap').value();
-                data.settings = JSON.stringify(mm.menumanager.settings);
-                data.ordering = JSON.stringify(mm.menumanager.ordering);
-                data.items = JSON.stringify(mm.menumanager.items);
-
-                saveURL = parseAjaxURI(element.parent('form').attribute('action') + getAjaxSuffix());
-                break;
-
-            case 'other':
-            default:
-                var form = element.parent('form');
-
-                if (form && element.attribute('type') == 'submit') {
-                    $(form[0].elements).forEach(function(input) {
-                        input = $(input);
-                        var name     = input.attribute('name'),
-                            value    = input.value(),
-                            parent   = input.parent('.settings-param'),
-                            override = parent ? parent.find('> input[type="checkbox"]') : null;
-
-                        if (!name || input.disabled() || (override && !override.checked())) { return; }
-                        if (!validateField(input)) { invalid.push(input); }
-                        data[name] = value;
-                    });
-                }
-
-                if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
-        }
-
-        if (invalid.length) {
-            saves.hideIndicator();
-            saves.showIndicator('fa fa-fw fa-exclamation-triangle');
-            toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
-            return;
-        }
-
-        if (page == 'other') { $('.settings-param-title, .card.settings-block > h4').hideIndicator(); }
-        body.emit('updateOriginalFields');
-
-        request('post', saveURL, data, function(error, response) {
-            if (!response.body.success) {
-                modal.open({
-                    content: response.body.html || response.body,
-                    afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
-                    }
-                });
-            } else {
-                modal.close();
-                toastr.success(interpolate(sentence, {
-                    verb: type.slice(-1) == 's' ? 'have' : 'has',
-                    type: type,
-                    extras: extras
-                }), type + ' Saved');
-            }
-
-            saves.hideIndicator();
-            saves.forEach(function(save) {
-                $(save).lastSaved = new Date();
-            });
-
-            if (page == 'layout') { lm.layoutmanager.updatePendingChanges(); }
-
-            // all good, disable 'pending' flag
-            flags.set('pending', false);
-            flags.emit('update:pending');
-        });
-    });
-
-    // Editable titles
-    body.delegate('click', '[data-title-edit]', function(event, element) {
-        element = $(element);
-        if (element.hasClass('disabled')) { return false; }
-
-        var $title = element.siblings('[data-title-editable]') || element.previousSiblings().find('[data-title-editable]') || element.nextSiblings().find('[data-title-editable]'), title;
-        if (!$title) { return true; }
-
-        title = $title[0];
-        $title.text(trim($title.text()));
-
-        $title.attribute('contenteditable', true);
-        title.focus();
-
-        var range = document.createRange(), selection;
-        range.selectNodeContents(title);
-        selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        $title.storedTitle = trim($title.text());
-        $title.titleEditCanceled = false;
-        $title.emit('title-edit-start', $title.storedTitle);
-    });
-
-    body.delegate('keydown', '[data-title-editable]', function(event, element) {
-        element = $(element);
-        switch (event.keyCode) {
-            case 13: // return
-            case 27: // esc
-                event.stopPropagation();
-
-                if (event.keyCode == 27) {
-                    if (typeof element.storedTitle !== 'undefined') {
-                        element.text(element.storedTitle);
-                        element.titleEditCanceled = true;
-                    }
-                }
-
-                element.attribute('contenteditable', null);
-                element[0].blur();
-
-                element.emit('title-edit-exit', element.data('title-editable'), event.keyCode == 13 ? 'enter' : 'esc');
-                return false;
-            default:
-                return true;
-        }
-    });
-
-    body.delegate('blur', '[data-title-editable]', function(event, element) {
-        element = $(element);
-        element[0].scrollLeft = 0;
-        element.attribute('contenteditable', null);
-        element.data('title-editable', trim(element.text()));
-        window.getSelection().removeAllRanges();
-        element.emit('title-edit-end', element.data('title-editable'), element.storedTitle, element.titleEditCanceled);
-    }, true);
-
-    // Quick Ajax Calls [data-ajax-action]
-    body.delegate('click', '[data-ajax-action]', function(event, element) {
-        if (event && event.preventDefault) { event.preventDefault(); }
-
-        var href      = element.attribute('href') || element.data('ajax-action'),
-            method    = element.data('ajax-action-method') || 'post',
-            indicator = $(element.data('ajax-action-indicator')) || element;
-
-        if (!href) { return false; }
-
-        indicator.showIndicator();
-        request(method, parseAjaxURI(href + getAjaxSuffix()), function(error, response) {
-            if (!response.body.success) {
-                modal.open({
-                    content: response.body.html || response.body,
-                    afterOpen: function(container) {
-                        if (!response.body.html) { container.style({ width: '90%' }); }
-                    }
-                });
-
-                indicator.hideIndicator();
-                return false;
-            } else {
-                toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
-            }
-
-            indicator.hideIndicator();
-        })
-    });
-
-});
-
-var modules = {
-    /*mout    : require('mout'),
-     prime   : require('prime'),
-     "$"     : elements,
-     zen     : zen,
-     domready: domready,
-     agent   : require('agent'),*/
-    lm: lm,
-    mm: mm,
-    assingments: require('./assignments'),
-    ui: require('./ui'),
-    styles: require('./styles'),
-    "$": $,
-    domready: require('elements/domready'),
-    particles: require('./particles'),
-    zen: require('elements/zen'),
-    moofx: require('moofx')
-};
-
-window.G5 = modules;
-module.exports = modules;
-
-},{"./assignments":3,"./configurations":5,"./fields":6,"./lm":24,"./menu":28,"./particles":36,"./styles":40,"./ui":45,"./ui/popover":47,"./utils/ajaxify-links":52,"./utils/field-validation":56,"./utils/flags-state":57,"./utils/get-ajax-suffix":58,"./utils/get-ajax-url":59,"./utils/rAF-polyfill":62,"agent":64,"elements":91,"elements/attributes":86,"elements/delegation":88,"elements/domready":89,"elements/events":90,"elements/insertion":92,"elements/traversal":97,"elements/zen":98,"moofx":99,"mout/queryString/setParam":204,"mout/string/interpolate":215,"mout/string/trim":222}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -426,7 +90,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 "use strict";
 
 var ready   = require('elements/domready'),
@@ -615,7 +279,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../utils/elements.utils":54,"elements/domready":89,"mout/array/forEach":136,"mout/object/merge":194,"mout/string/trim":222,"prime/map":245}],4:[function(require,module,exports){
+},{"../utils/elements.utils":54,"elements/domready":89,"mout/array/forEach":136,"mout/object/merge":194,"mout/string/trim":222,"prime/map":245}],3:[function(require,module,exports){
 "use strict";
 
 var $             = require('elements'),
@@ -692,7 +356,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":45,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"agent":64,"elements":91,"elements/domready":89,"mout/string/trim":222}],5:[function(require,module,exports){
+},{"../ui":45,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"agent":64,"elements":91,"elements/domready":89,"mout/string/trim":222}],4:[function(require,module,exports){
 "use strict";
 
 var $             = require('elements'),
@@ -860,7 +524,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":45,"../utils/flags-state":57,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"./dropdown-edit":4,"agent":64,"elements":91,"elements/domready":89,"mout/object/keys":193,"mout/string/trim":222}],6:[function(require,module,exports){
+},{"../ui":45,"../utils/flags-state":57,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"./dropdown-edit":3,"agent":64,"elements":91,"elements/domready":89,"mout/object/keys":193,"mout/string/trim":222}],5:[function(require,module,exports){
 "use strict";
 var ready      = require('elements/domready'),
     $          = require('elements/attributes'),
@@ -1036,7 +700,7 @@ module.exports = {
     collect: collectFieldsValues
 };
 
-},{"../utils/flags-state":57,"../utils/history":61,"elements/attributes":86,"elements/domready":89,"mout/array/invoke":140,"mout/collection/forEach":149,"mout/lang/deepEquals":161,"prime/map":245}],7:[function(require,module,exports){
+},{"../utils/flags-state":57,"../utils/history":61,"elements/attributes":86,"elements/domready":89,"mout/array/invoke":140,"mout/collection/forEach":149,"mout/lang/deepEquals":161,"prime/map":245}],6:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('elements'),
@@ -1089,7 +753,7 @@ var Atom = new prime({
 
 module.exports = Atom;
 
-},{"../../utils/get-ajax-url":59,"./base":9,"elements":91,"elements/zen":98,"prime":244}],8:[function(require,module,exports){
+},{"../../utils/get-ajax-url":59,"./base":8,"elements":91,"elements/zen":98,"prime":244}],7:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     Section = require('./section');
@@ -1121,7 +785,7 @@ var Atoms = new prime({
 
 module.exports = Atoms;
 
-},{"./section":18,"prime":244}],9:[function(require,module,exports){
+},{"./section":17,"prime":244}],8:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     Options = require('prime-util/prime/options'),
@@ -1273,7 +937,7 @@ var Base = new prime({
 
 module.exports = Base;
 
-},{"elements":91,"elements/traversal":97,"elements/zen":98,"mout/object/get":190,"mout/object/has":191,"mout/object/set":198,"mout/random/guid":206,"mout/string/trim":222,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],10:[function(require,module,exports){
+},{"elements":91,"elements/traversal":97,"elements/zen":98,"mout/object/get":190,"mout/object/has":191,"mout/object/set":198,"mout/random/guid":206,"mout/string/trim":222,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],9:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     Base      = require('./base'),
@@ -1385,7 +1049,7 @@ var Block = new prime({
 
 module.exports = Block;
 
-},{"../../utils/elements.utils":54,"./base":9,"elements/zen":98,"mout/function/bind":152,"mout/number/enforcePrecision":181,"prime":244}],11:[function(require,module,exports){
+},{"../../utils/elements.utils":54,"./base":8,"elements/zen":98,"mout/function/bind":152,"mout/number/enforcePrecision":181,"prime":244}],10:[function(require,module,exports){
 "use strict";
 var prime = require('prime'),
     Base = require('./base'),
@@ -1442,7 +1106,7 @@ var Container = new prime({
 
 module.exports = Container;
 
-},{"../../utils/get-ajax-url":59,"./base":9,"elements":91,"elements/zen":98,"prime":244}],12:[function(require,module,exports){
+},{"../../utils/get-ajax-url":59,"./base":8,"elements":91,"elements/zen":98,"prime":244}],11:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     Base       = require('./base'),
@@ -1487,7 +1151,7 @@ var Grid = new prime({
 
 module.exports = Grid;
 
-},{"../../utils/get-ajax-url":59,"./base":9,"elements":91,"prime":244}],13:[function(require,module,exports){
+},{"../../utils/get-ajax-url":59,"./base":8,"elements":91,"prime":244}],12:[function(require,module,exports){
 module.exports = {
     base: require('./base'),
     atom: require('./atom'),
@@ -1504,7 +1168,7 @@ module.exports = {
     spacer: require('./spacer')
 };
 
-},{"./atom":7,"./atoms":8,"./base":9,"./block":10,"./container":11,"./grid":12,"./offcanvas":14,"./pagecontent":15,"./particle":16,"./position":17,"./section":18,"./spacer":19,"./system-messages":20}],14:[function(require,module,exports){
+},{"./atom":6,"./atoms":7,"./base":8,"./block":9,"./container":10,"./grid":11,"./offcanvas":13,"./pagecontent":14,"./particle":15,"./position":16,"./section":17,"./spacer":18,"./system-messages":19}],13:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     Section = require('./section'),
@@ -1532,7 +1196,7 @@ var Offcanvas = new prime({
 
 module.exports = Offcanvas;
 
-},{"../../utils/get-ajax-url":59,"./section":18,"prime":244}],15:[function(require,module,exports){
+},{"../../utils/get-ajax-url":59,"./section":17,"prime":244}],14:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     Particle = require('./particle');
@@ -1548,7 +1212,7 @@ var Pagecontent = new prime({
 
 module.exports = Pagecontent;
 
-},{"./particle":16,"prime":244}],16:[function(require,module,exports){
+},{"./particle":15,"prime":244}],15:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('elements'),
@@ -1601,7 +1265,7 @@ var Particle = new prime({
 
 module.exports = Particle;
 
-},{"../../utils/get-ajax-url":59,"./atom":7,"elements":91,"mout/function/bind":152,"mout/number/enforcePrecision":181,"prime":244}],17:[function(require,module,exports){
+},{"../../utils/get-ajax-url":59,"./atom":6,"elements":91,"mout/function/bind":152,"mout/number/enforcePrecision":181,"prime":244}],16:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     trim     = require('mout/string/trim'),
@@ -1641,7 +1305,7 @@ var Position = new prime({
 
 module.exports = Position;
 
-},{"./particle":16,"mout/string/trim":222,"prime":244}],18:[function(require,module,exports){
+},{"./particle":15,"mout/string/trim":222,"prime":244}],17:[function(require,module,exports){
 "use strict";
 var prime = require('prime'),
     Base  = require('./base'),
@@ -1715,7 +1379,7 @@ var Section = new prime({
 
 module.exports = Section;
 
-},{"../../utils/get-ajax-url":59,"./base":9,"./grid":12,"elements":91,"elements/insertion":92,"elements/zen":98,"mout/function/bind":152,"prime":244,"prime-util/prime/bound":240}],19:[function(require,module,exports){
+},{"../../utils/get-ajax-url":59,"./base":8,"./grid":11,"elements":91,"elements/insertion":92,"elements/zen":98,"mout/function/bind":152,"prime":244,"prime-util/prime/bound":240}],18:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     Particle = require('./particle');
@@ -1733,7 +1397,7 @@ var Spacer = new prime({
 
 module.exports = Spacer;
 
-},{"./particle":16,"prime":244}],20:[function(require,module,exports){
+},{"./particle":15,"prime":244}],19:[function(require,module,exports){
 "use strict";
 var prime       = require('prime'),
     Pagecontent = require('./pagecontent');
@@ -1748,7 +1412,7 @@ var SystemMessages = new prime({
 
 module.exports = SystemMessages;
 
-},{"./pagecontent":15,"prime":244}],21:[function(require,module,exports){
+},{"./pagecontent":14,"prime":244}],20:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     $       = require('elements'),
@@ -1985,7 +1649,7 @@ var Builder = new prime({
 
 module.exports = Builder;
 
-},{"./blocks/":13,"elements":91,"elements/attributes":86,"elements/traversal":97,"mout/array/flatten":135,"mout/collection/forEach":149,"mout/collection/size":151,"mout/lang/isArray":163,"mout/object/deepFillIn":183,"mout/object/forOwn":189,"mout/object/get":190,"mout/object/omit":197,"mout/object/set":198,"mout/object/unset":201,"mout/random/guid":206,"mout/string/repeat":219,"mout/string/rpad":220,"prime":244,"prime/emitter":243}],22:[function(require,module,exports){
+},{"./blocks/":12,"elements":91,"elements/attributes":86,"elements/traversal":97,"mout/array/flatten":135,"mout/collection/forEach":149,"mout/collection/size":151,"mout/lang/isArray":163,"mout/object/deepFillIn":183,"mout/object/forOwn":189,"mout/object/get":190,"mout/object/omit":197,"mout/object/set":198,"mout/object/unset":201,"mout/random/guid":206,"mout/string/repeat":219,"mout/string/rpad":220,"prime":244,"prime/emitter":243}],21:[function(require,module,exports){
 "use strict";
 var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
@@ -2193,7 +1857,7 @@ var Resizer = new prime({
 
 module.exports = Resizer;
 
-},{"../ui/drag.events":43,"../utils/elements.utils":54,"elements/delegation":88,"elements/events":90,"mout/function/bind":152,"mout/lang/isString":171,"mout/math/clamp":175,"mout/math/map":177,"mout/number/enforcePrecision":181,"mout/object/get":190,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],23:[function(require,module,exports){
+},{"../ui/drag.events":43,"../utils/elements.utils":54,"elements/delegation":88,"elements/events":90,"mout/function/bind":152,"mout/lang/isString":171,"mout/math/clamp":175,"mout/math/map":177,"mout/number/enforcePrecision":181,"mout/object/get":190,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],22:[function(require,module,exports){
 var prime      = require('prime'),
     Emitter    = require('prime/emitter'),
     slice      = require('mout/array/slice'),
@@ -2282,7 +1946,7 @@ var History = new prime({
 
 module.exports = History;
 
-},{"mout/array/slice":144,"mout/lang/deepEquals":161,"mout/object/merge":194,"prime":244,"prime/emitter":243}],24:[function(require,module,exports){
+},{"mout/array/slice":144,"mout/lang/deepEquals":161,"mout/object/merge":194,"prime":244,"prime/emitter":243}],23:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     $             = require('elements/attributes'),
@@ -2768,7 +2432,7 @@ module.exports = {
     savestate: savestate
 };
 
-},{"../ui":45,"../ui/popover":47,"../utils/field-validation":56,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"../utils/history":61,"../utils/save-state":63,"./builder":21,"./history":23,"./layoutmanager":25,"agent":64,"elements/attributes":86,"elements/domready":89,"elements/zen":98,"mout/array/contains":128,"mout/collection/forEach":149,"mout/collection/size":151,"mout/string/trim":222}],25:[function(require,module,exports){
+},{"../ui":45,"../ui/popover":47,"../utils/field-validation":56,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"../utils/history":61,"../utils/save-state":63,"./builder":20,"./history":22,"./layoutmanager":24,"agent":64,"elements/attributes":86,"elements/domready":89,"elements/zen":98,"mout/array/contains":128,"mout/collection/forEach":149,"mout/collection/size":151,"mout/string/trim":222}],24:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
@@ -3303,7 +2967,343 @@ var LayoutManager = new prime({
 
 module.exports = LayoutManager;
 
-},{"../ui/drag.drop":42,"../ui/eraser":44,"../utils/elements.utils":54,"../utils/flags-state":57,"./blocks":13,"./drag.resizer":22,"elements/zen":98,"mout/array/every":131,"mout/collection/find":148,"mout/function/bind":152,"mout/lang/deepEquals":161,"mout/lang/isArray":163,"mout/lang/isObject":168,"mout/number/enforcePrecision":181,"mout/object/get":190,"mout/object/keys":193,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],26:[function(require,module,exports){
+},{"../ui/drag.drop":42,"../ui/eraser":44,"../utils/elements.utils":54,"../utils/flags-state":57,"./blocks":12,"./drag.resizer":21,"elements/zen":98,"mout/array/every":131,"mout/collection/find":148,"mout/function/bind":152,"mout/lang/deepEquals":161,"mout/lang/isArray":163,"mout/lang/isObject":168,"mout/number/enforcePrecision":181,"mout/object/get":190,"mout/object/keys":193,"prime":244,"prime-util/prime/bound":240,"prime-util/prime/options":241,"prime/emitter":243}],25:[function(require,module,exports){
+"use strict";
+var $              = require('elements'),
+    zen            = require('elements/zen'),
+    ready          = require('elements/domready'),
+    request        = require('agent'),
+    ui             = require('./ui'),
+    interpolate    = require('mout/string/interpolate'),
+    trim           = require('mout/string/trim'),
+    setParam       = require('mout/queryString/setParam'),
+    modal          = ui.modal,
+    toastr         = ui.toastr,
+
+    parseAjaxURI   = require('./utils/get-ajax-url').parse,
+    getAjaxSuffix  = require('./utils/get-ajax-suffix'),
+
+    flags          = require('./utils/flags-state'),
+    validateField  = require('./utils/field-validation'),
+    lm             = require('./lm'),
+    mm             = require('./menu'),
+    configurations = require('./configurations');
+
+require('elements/attributes');
+require('elements/events');
+require('elements/delegation');
+require('elements/insertion');
+require('elements/traversal');
+require('./fields');
+require('./ui/popover');
+require('./utils/ajaxify-links');
+require('./utils/rAF-polyfill');
+
+var createHandler = function(divisor,noun,restOfString){
+    return function(diff){
+        var n = Math.floor(diff/divisor);
+        var pluralizedNoun = noun + ( n > 1 ? 's' : '' );
+        return "" + n + " " + pluralizedNoun + " " + restOfString;
+    }
+};
+
+var formatters = [
+    { threshold: -31535999, handler: createHandler(-31536000,	"year",     "from now" ) },
+    { threshold: -2591999, 	handler: createHandler(-2592000,  	"month",    "from now" ) },
+    { threshold: -604799,  	handler: createHandler(-604800,   	"week",     "from now" ) },
+    { threshold: -172799,   handler: createHandler(-86400,    	"day",      "from now" ) },
+    { threshold: -86399,   	handler: function(){ return      	"tomorrow" } },
+    { threshold: -3599,    	handler: createHandler(-3600,     	"hour",     "from now" ) },
+    { threshold: -59,     	handler: createHandler(-60,       	"minute",   "from now" ) },
+    { threshold: -0.9999,   handler: createHandler(-1,			"second",   "from now" ) },
+    { threshold: 1,        	handler: function(){ return      	"just now" } },
+    { threshold: 60,       	handler: createHandler(1,        	"second",	"ago" ) },
+    { threshold: 3600,     	handler: createHandler(60,       	"minute",	"ago" ) },
+    { threshold: 86400,    	handler: createHandler(3600,     	"hour",     "ago" ) },
+    { threshold: 172800,   	handler: function(){ return      	"yesterday" } },
+    { threshold: 604800,   	handler: createHandler(86400,    	"day",      "ago" ) },
+    { threshold: 2592000,  	handler: createHandler(604800,   	"week",     "ago" ) },
+    { threshold: 31536000, 	handler: createHandler(2592000,  	"month",    "ago" ) },
+    { threshold: Infinity, 	handler: createHandler(31536000, 	"year",     "ago" ) }
+];
+
+var prettyDate = {
+    format: function (date) {
+        var diff = (((new Date()).getTime() - date.getTime()) / 1000);
+        for( var i=0; i<formatters.length; i++ ){
+            if( diff < formatters[i].threshold ){
+                return formatters[i].handler(diff);
+            }
+        }
+        throw new Error("exhausted all formatter options, none found"); //should never be reached
+    }
+};
+
+window.onbeforeunload = function(){
+    if (flags.get('pending')) {
+        return 'You haven\'t saved your changes and by leaving the page they will be lost.\nDo you want to leave without saving?';
+    }
+};
+
+ready(function() {
+    var body     = $('body'),
+        sentence = 'The {{type}} {{verb}} been successfully saved! {{extras}}';
+
+    // Close notification
+    body.delegate('click', '[data-g-close]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
+        var parent = element.data('g-close');
+        parent = parent ? element.parent(parent) : element;
+
+        parent.slideUp(function() {
+            parent.remove();
+        });
+    });
+
+    // Extras
+    body.delegate('click', '[data-g-extras]', function(event, element){
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        if (!element.PopoverDefined) {
+            var content = element.find('[data-popover-content]') || element.siblings('[data-popover-content]'),
+                popover = element.getPopover({
+                    style: 'extras',
+                    width: 220,
+                    content: zen('ul').html(content.html())[0].outerHTML
+                });
+
+            element.getPopover().show();
+        }
+    });
+
+    // Platform Settings redirect
+    body.delegate('mousedown', '[data-settings-key]', function(event, element){
+        var key = element.data('settings-key');
+        if (!key) { return true; }
+
+        var redirect = window.location.search,
+            settings = element.attribute('href'),
+            uri = window.location.href.split('?');
+        if (uri.length > 1 && uri[0].match(/index.php$/)) { redirect = 'index.php' + redirect; }
+
+        redirect = setParam(settings, key, btoa(redirect));
+        element.href(redirect);
+    });
+
+    // Save Tooltip
+    body.delegate('mouseover', '.button-save', function(event, element){
+        if (!element.lastSaved) { return true; }
+        element.addClass('g-tooltip').addClass('g-tooltip-right').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
+    });
+
+    // Save
+    body.delegate('click', '.button-save', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
+        var saves = $('.button-save');
+
+        saves.hideIndicator();
+        saves.showIndicator();
+
+        var data    = {},
+            invalid = [],
+            type    = element.data('save'),
+            extras  = '',
+            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
+            saveURL = parseAjaxURI(trim(window.location.href, '#') + getAjaxSuffix());
+
+        switch (page) {
+            case 'layout':
+                var preset = $('[data-lm-preset]');
+                lm.layoutmanager.singles('cleanup', lm.builder, true);
+                lm.savestate.setSession(lm.builder.serialize(null, true));
+
+                data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
+                data.layout = JSON.stringify(lm.builder.serialize());
+
+                break;
+            case 'menu':
+                data.menutype = $('select.menu-select-wrap').value();
+                data.settings = JSON.stringify(mm.menumanager.settings);
+                data.ordering = JSON.stringify(mm.menumanager.ordering);
+                data.items = JSON.stringify(mm.menumanager.items);
+
+                saveURL = parseAjaxURI(element.parent('form').attribute('action') + getAjaxSuffix());
+                break;
+
+            case 'other':
+            default:
+                var form = element.parent('form');
+
+                if (form && element.attribute('type') == 'submit') {
+                    $(form[0].elements).forEach(function(input) {
+                        input = $(input);
+                        var name     = input.attribute('name'),
+                            value    = input.value(),
+                            parent   = input.parent('.settings-param'),
+                            override = parent ? parent.find('> input[type="checkbox"]') : null;
+
+                        if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (!validateField(input)) { invalid.push(input); }
+                        data[name] = value;
+                    });
+                }
+
+                if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
+        }
+
+        if (invalid.length) {
+            saves.hideIndicator();
+            saves.showIndicator('fa fa-fw fa-exclamation-triangle');
+            toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
+            return;
+        }
+
+        if (page == 'other') { $('.settings-param-title, .card.settings-block > h4').hideIndicator(); }
+        body.emit('updateOriginalFields');
+
+        request('post', saveURL, data, function(error, response) {
+            if (!response.body.success) {
+                modal.open({
+                    content: response.body.html || response.body,
+                    afterOpen: function(container) {
+                        if (!response.body.html) { container.style({ width: '90%' }); }
+                    }
+                });
+            } else {
+                modal.close();
+                toastr.success(interpolate(sentence, {
+                    verb: type.slice(-1) == 's' ? 'have' : 'has',
+                    type: type,
+                    extras: extras
+                }), type + ' Saved');
+            }
+
+            saves.hideIndicator();
+            saves.forEach(function(save) {
+                $(save).lastSaved = new Date();
+            });
+
+            if (page == 'layout') { lm.layoutmanager.updatePendingChanges(); }
+
+            // all good, disable 'pending' flag
+            flags.set('pending', false);
+            flags.emit('update:pending');
+        });
+    });
+
+    // Editable titles
+    body.delegate('click', '[data-title-edit]', function(event, element) {
+        element = $(element);
+        if (element.hasClass('disabled')) { return false; }
+
+        var $title = element.siblings('[data-title-editable]') || element.previousSiblings().find('[data-title-editable]') || element.nextSiblings().find('[data-title-editable]'), title;
+        if (!$title) { return true; }
+
+        title = $title[0];
+        $title.text(trim($title.text()));
+
+        $title.attribute('contenteditable', true);
+        title.focus();
+
+        var range = document.createRange(), selection;
+        range.selectNodeContents(title);
+        selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        $title.storedTitle = trim($title.text());
+        $title.titleEditCanceled = false;
+        $title.emit('title-edit-start', $title.storedTitle);
+    });
+
+    body.delegate('keydown', '[data-title-editable]', function(event, element) {
+        element = $(element);
+        switch (event.keyCode) {
+            case 13: // return
+            case 27: // esc
+                event.stopPropagation();
+
+                if (event.keyCode == 27) {
+                    if (typeof element.storedTitle !== 'undefined') {
+                        element.text(element.storedTitle);
+                        element.titleEditCanceled = true;
+                    }
+                }
+
+                element.attribute('contenteditable', null);
+                element[0].blur();
+
+                element.emit('title-edit-exit', element.data('title-editable'), event.keyCode == 13 ? 'enter' : 'esc');
+                return false;
+            default:
+                return true;
+        }
+    });
+
+    body.delegate('blur', '[data-title-editable]', function(event, element) {
+        element = $(element);
+        element[0].scrollLeft = 0;
+        element.attribute('contenteditable', null);
+        element.data('title-editable', trim(element.text()));
+        window.getSelection().removeAllRanges();
+        element.emit('title-edit-end', element.data('title-editable'), element.storedTitle, element.titleEditCanceled);
+    }, true);
+
+    // Quick Ajax Calls [data-ajax-action]
+    body.delegate('click', '[data-ajax-action]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        var href      = element.attribute('href') || element.data('ajax-action'),
+            method    = element.data('ajax-action-method') || 'post',
+            indicator = $(element.data('ajax-action-indicator')) || element;
+
+        if (!href) { return false; }
+
+        indicator.showIndicator();
+        request(method, parseAjaxURI(href + getAjaxSuffix()), function(error, response) {
+            if (!response.body.success) {
+                modal.open({
+                    content: response.body.html || response.body,
+                    afterOpen: function(container) {
+                        if (!response.body.html) { container.style({ width: '90%' }); }
+                    }
+                });
+
+                indicator.hideIndicator();
+                return false;
+            } else {
+                toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+            }
+
+            indicator.hideIndicator();
+        })
+    });
+
+});
+
+var modules = {
+    /*mout    : require('mout'),
+     prime   : require('prime'),
+     "$"     : elements,
+     zen     : zen,
+     domready: domready,
+     agent   : require('agent'),*/
+    lm: lm,
+    mm: mm,
+    assingments: require('./assignments'),
+    ui: require('./ui'),
+    styles: require('./styles'),
+    "$": $,
+    domready: require('elements/domready'),
+    particles: require('./particles'),
+    zen: require('elements/zen'),
+    moofx: require('moofx')
+};
+
+window.G5 = modules;
+module.exports = modules;
+
+},{"./assignments":2,"./configurations":4,"./fields":5,"./lm":23,"./menu":28,"./particles":36,"./styles":40,"./ui":45,"./ui/popover":47,"./utils/ajaxify-links":52,"./utils/field-validation":56,"./utils/flags-state":57,"./utils/get-ajax-suffix":58,"./utils/get-ajax-url":59,"./utils/rAF-polyfill":62,"agent":64,"elements":91,"elements/attributes":86,"elements/delegation":88,"elements/domready":89,"elements/events":90,"elements/insertion":92,"elements/traversal":97,"elements/zen":98,"moofx":99,"mout/queryString/setParam":204,"mout/string/interpolate":215,"mout/string/trim":222}],26:[function(require,module,exports){
 "use strict";
 var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
@@ -16674,7 +16674,7 @@ var toString = require('../lang/toString');
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":2}],85:[function(require,module,exports){
+},{"_process":1}],85:[function(require,module,exports){
 
 /*
  *
@@ -19244,7 +19244,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":2,"mout/array/forEach":136,"mout/array/indexOf":137,"mout/lang/kindOf":172,"mout/time/now":226}],94:[function(require,module,exports){
+},{"_process":1,"mout/array/forEach":136,"mout/array/indexOf":137,"mout/lang/kindOf":172,"mout/time/now":226}],94:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -23848,7 +23848,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":2,"mout/array/forEach":136,"mout/array/indexOf":137,"mout/lang/kindOf":172,"mout/time/now":226}],243:[function(require,module,exports){
+},{"_process":1,"mout/array/forEach":136,"mout/array/indexOf":137,"mout/lang/kindOf":172,"mout/time/now":226}],243:[function(require,module,exports){
 arguments[4][94][0].apply(exports,arguments)
 },{"./defer":242,"./index":244,"dup":94,"mout/array/forEach":136,"mout/array/indexOf":137}],244:[function(require,module,exports){
 arguments[4][95][0].apply(exports,arguments)
@@ -26528,7 +26528,7 @@ module.exports = parse
 	return Sortable;
 });
 
-},{}]},{},[1])
+},{}]},{},[25])
 
 
 //# sourceMappingURL=main.js.map

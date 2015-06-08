@@ -5,7 +5,7 @@
   "main": "gulpfile.js",
   "dependencies": {},
   "devDependencies": {
-    "browserify": "^10.2.3",
+    "browserify": "^10.2.4",
     "gulp": "^3.9.0",
     "gulp-if": "^1.2.5",
     "gulp-jsonminify": "1.0.0",
@@ -16,7 +16,7 @@
     "merge-stream": "^0.1.7",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.2.1",
+    "watchify": "^3.2.2",
     "yargs": "^3.10.0"
   },
   "scripts": {
