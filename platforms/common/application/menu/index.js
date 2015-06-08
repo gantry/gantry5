@@ -195,6 +195,33 @@ ready(function() {
                     dataString = [], invalid = [],
                     path;
 
+                var search = content.elements.content.find('.search input'),
+                    blocks = content.elements.content.search('[data-mm-type]'),
+                    filters = content.elements.content.search('[data-mm-filter]');
+
+                if (search && filters && blocks) {
+                    search.on('input', function() {
+                        if (!this.value()) {
+                            blocks.removeClass('hidden');
+                            return;
+                        }
+
+                        blocks.addClass('hidden');
+
+                        var found = [], value = this.value().toLowerCase(), text;
+
+                        filters.forEach(function(filter) {
+                            filter = $(filter);
+                            text = trim(filter.data('mm-filter')).toLowerCase();
+                            if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
+                                found.push(filter.matches('[data-mm-type]') ? filter : filter.parent('[data-mm-type]'));
+                            }
+                        }, this);
+
+                        if (found.length) { $(found).removeClass('hidden'); }
+                    });
+                }
+
                 if ((!form && !fakeDOM) || !submit) { return true; }
 
                 // Menuitems Settings apply

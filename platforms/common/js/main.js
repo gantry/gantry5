@@ -3632,6 +3632,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
         var blocktype = this.block.data('mm-blocktype');
         this.block.attribute('data-mm-blocktype', null).addClass('g-menu-item-' + blocktype).data('mm-original-type', blocktype);
         zen('span.menu-item-type.badge').text(blocktype).after(this.block.find('.menu-item .title'));
+
         modal.open({
             content: 'Loading',
             method: 'post',
@@ -3863,6 +3864,7 @@ ready(function() {
 });
 
 module.exports = StepOne;
+
 },{"../ui":45,"../utils/flags-state":57,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"agent":64,"elements":91,"elements/domready":89,"elements/zen":94,"mout/array/indexOf":133,"mout/lang/deepEquals":157,"mout/string/trim":218}],28:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
@@ -4061,6 +4063,33 @@ ready(function() {
                     dataString = [], invalid = [],
                     path;
 
+                var search = content.elements.content.find('.search input'),
+                    blocks = content.elements.content.search('[data-mm-type]'),
+                    filters = content.elements.content.search('[data-mm-filter]');
+
+                if (search && filters && blocks) {
+                    search.on('input', function() {
+                        if (!this.value()) {
+                            blocks.removeClass('hidden');
+                            return;
+                        }
+
+                        blocks.addClass('hidden');
+
+                        var found = [], value = this.value().toLowerCase(), text;
+
+                        filters.forEach(function(filter) {
+                            filter = $(filter);
+                            text = trim(filter.data('mm-filter')).toLowerCase();
+                            if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
+                                found.push(filter.matches('[data-mm-type]') ? filter : filter.parent('[data-mm-type]'));
+                            }
+                        }, this);
+
+                        if (found.length) { $(found).removeClass('hidden'); }
+                    });
+                }
+
                 if ((!form && !fakeDOM) || !submit) { return true; }
 
                 // Menuitems Settings apply
@@ -4144,6 +4173,7 @@ ready(function() {
 module.exports = {
     menumanager: menumanager
 };
+
 },{"../ui":45,"../utils/field-validation":56,"../utils/get-ajax-suffix":58,"../utils/get-ajax-url":59,"./extra-items":27,"./menumanager":29,"agent":64,"elements":91,"elements/domready":89,"elements/zen":94,"mout/array/contains":124,"mout/math/clamp":171,"mout/string/trim":218}],29:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
@@ -7016,6 +7046,33 @@ ready(function() {
             remoteLoaded: function(response, modalInstance) {
                 var content = modalInstance.elements.content,
                     select = content.find('[data-mm-select]');
+
+                var search = content.find('.search input'),
+                    blocks = content.search('[data-mm-type]'),
+                    filters = content.search('[data-mm-filter]');
+
+                if (search && filters && blocks) {
+                    search.on('input', function() {
+                        if (!this.value()) {
+                            blocks.removeClass('hidden');
+                            return;
+                        }
+
+                        blocks.addClass('hidden');
+
+                        var found = [], value = this.value().toLowerCase(), text;
+
+                        filters.forEach(function(filter) {
+                            filter = $(filter);
+                            text = trim(filter.data('mm-filter')).toLowerCase();
+                            if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
+                                found.push(filter.matches('[data-mm-type]') ? filter : filter.parent('[data-mm-type]'));
+                            }
+                        }, this);
+
+                        if (found.length) { $(found).removeClass('hidden'); }
+                    });
+                }
 
                 if (select) { select.data('g-instancepicker', element.data('g-instancepicker')); }
                 else {

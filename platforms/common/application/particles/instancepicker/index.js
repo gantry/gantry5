@@ -40,6 +40,33 @@ ready(function() {
                 var content = modalInstance.elements.content,
                     select = content.find('[data-mm-select]');
 
+                var search = content.find('.search input'),
+                    blocks = content.search('[data-mm-type]'),
+                    filters = content.search('[data-mm-filter]');
+
+                if (search && filters && blocks) {
+                    search.on('input', function() {
+                        if (!this.value()) {
+                            blocks.removeClass('hidden');
+                            return;
+                        }
+
+                        blocks.addClass('hidden');
+
+                        var found = [], value = this.value().toLowerCase(), text;
+
+                        filters.forEach(function(filter) {
+                            filter = $(filter);
+                            text = trim(filter.data('mm-filter')).toLowerCase();
+                            if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
+                                found.push(filter.matches('[data-mm-type]') ? filter : filter.parent('[data-mm-type]'));
+                            }
+                        }, this);
+
+                        if (found.length) { $(found).removeClass('hidden'); }
+                    });
+                }
+
                 if (select) { select.data('g-instancepicker', element.data('g-instancepicker')); }
                 else {
                     var form = content.find('form'),
