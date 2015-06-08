@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "domready": "^1.0.8",
-    "elements": "^0.6.0",
+    "elements": "git://github.com/w00fz/elements.git",
     "mout": "^0.11.0",
     "prime": "^0.5.0",
     "prime-util": "^0.5.0",

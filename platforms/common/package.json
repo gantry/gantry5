@@ -5,7 +5,7 @@
     "agent": "^0.2.1",
     "async": "^1.2.0",
     "dropzone": "^4.0.1",
-    "elements": "^0.6.0",
+    "elements": "git://github.com/w00fz/elements.git",
     "moofx": "^3.2.0",
     "mout": "~0.11.0",
     "objectdiff": "^1.1.0",
