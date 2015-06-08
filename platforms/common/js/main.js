@@ -7038,6 +7038,8 @@ ready(function() {
             uri = value.type + '/' + value[data.type];
         }
 
+        if (data.modal_close) { return true; }
+        
         modal.open({
             content: 'Loading',
             method: !value || data.type == 'module' ? 'get' : 'post',
@@ -7074,7 +7076,9 @@ ready(function() {
                     });
                 }
 
-                if (select) { select.data('g-instancepicker', element.data('g-instancepicker')); }
+                var elementData = JSON.parse(element.data('g-instancepicker'));
+                if (elementData.type == 'module') { elementData.modal_close = true; }
+                if (select) { select.data('g-instancepicker', JSON.stringify(elementData)); }
                 else {
                     var form = content.find('form'),
                         fakeDOM = zen('div').html(response.body.html).find('form'),
@@ -7103,6 +7107,7 @@ ready(function() {
                                 override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                             if (override && !override.checked()) { return; }
+
                             dataString.push(name + '=' + encodeURIComponent(value));
                         });
 
