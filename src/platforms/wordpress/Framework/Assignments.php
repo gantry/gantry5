@@ -13,10 +13,10 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\WordPress\AssignmentsWalker;
-use Gantry\Wordpress\AssignmentsContext;
-use Gantry\Wordpress\AssignmentsMenu;
-use Gantry\Wordpress\AssignmentsPost;
-use Gantry\Wordpress\AssignmentsArchive;
+use Gantry\WordPress\AssignmentsContext;
+use Gantry\WordPress\AssignmentsMenu;
+use Gantry\WordPress\AssignmentsPost;
+use Gantry\WordPress\AssignmentsArchive;
 
 class Assignments
 {

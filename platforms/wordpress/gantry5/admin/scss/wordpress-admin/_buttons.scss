@@ -25,4 +25,12 @@ body.gantry5 {
         box-shadow: none;
         border: none;
     }
+
+    .button.collection-addnew, .button.collection-editall {
+        height: 32px;
+        line-height: 16px;
+        &:active {
+            margin: 0;
+        }
+    }
 }

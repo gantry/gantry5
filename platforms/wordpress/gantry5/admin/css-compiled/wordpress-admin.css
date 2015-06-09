@@ -142,6 +142,13 @@ body.gantry5.admin-color-sunrise #g5-container .button-primary:not(.disabled):no
   box-shadow: none;
   border: none;
 }
+#g5-container .button.collection-addnew, #g5-container .button.collection-editall {
+  height: 32px;
+  line-height: 16px;
+}
+#g5-container .button.collection-addnew:active, #g5-container .button.collection-editall:active {
+  margin: 0;
+}
 
 #adminmenuwrap ul, #adminmenuwrap dl {
   margin-left: auto;
