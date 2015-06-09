@@ -44,7 +44,6 @@ body.gantry5 #g5-container .preview {
 body.gantry5 #g5-container .search {
   background: none;
   color: inherit;
-  font-size: inherit;
 }
 body.gantry5 #g5-container .g5-dialog {
   z-index: 99999;
