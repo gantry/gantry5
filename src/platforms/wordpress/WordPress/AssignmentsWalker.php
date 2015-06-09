@@ -103,11 +103,11 @@ class AssignmentsWalker {
         }
 
         /*
-		 * Need to display in hierarchical order.
-		 * Separate elements into two buckets: top level and children elements.
-		 * Children_elements is two dimensional array, eg.
-		 * Children_elements[10][] contains all sub-elements whose parent is 10.
-		 */
+         * Need to display in hierarchical order.
+         * Separate elements into two buckets: top level and children elements.
+         * Children_elements is two dimensional array, eg.
+         * Children_elements[10][] contains all sub-elements whose parent is 10.
+         */
         $top_level_elements = array();
         $children_elements  = array();
         foreach ( $elements as $e) {
@@ -118,9 +118,9 @@ class AssignmentsWalker {
         }
 
         /*
-		 * When none of the elements is top level.
-		 * Assume the first one must be root of the sub elements.
-		 */
+         * When none of the elements is top level.
+         * Assume the first one must be root of the sub elements.
+         */
         if ( empty($top_level_elements) ) {
 
             $first = array_slice( $elements, 0, 1 );
@@ -140,9 +140,9 @@ class AssignmentsWalker {
             $this->add_element( $e, $children_elements, $max_depth, 0, $args, $output );
 
         /*
-		 * If we are displaying all levels, and remaining children_elements is not empty,
-		 * then we got orphans, which should be displayed regardless.
-		 */
+         * If we are displaying all levels, and remaining children_elements is not empty,
+         * then we got orphans, which should be displayed regardless.
+         */
         if ( ( $max_depth == 0 ) && count( $children_elements ) > 0 ) {
             $empty_array = array();
             foreach ( $children_elements as $orphans )

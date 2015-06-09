@@ -6,14 +6,25 @@ add_action( 'admin_print_styles', 'gantry_admin_print_styles', 200 );
 add_action( 'admin_print_scripts', 'gantry_admin_print_scripts', 200 );
 add_action( 'wp_ajax_gantry5', 'gantry_layout_manager' );
 
+// Load Gantry 5 icon styling for the admin sidebar
+add_action( 'admin_enqueue_scripts',
+    function () {
+        if( is_admin() ) {
+            wp_enqueue_style( 'wordpress-admin-icon', Gantry\Framework\Document::url( 'gantry-assets://css/wordpress-admin-icon.css' ) );
+        }
+    }
+);
+
 // Adjust menu to contain Gantry stuff.
 add_action(
     'admin_menu',
     function () {
+        $gantry = Gantry\Framework\Gantry::instance();
+        $theme = $gantry['theme']->details()['details.name'];
         remove_submenu_page( 'themes.php', 'theme-editor.php' );
-        add_theme_page( 'Gantry 5 Options', 'Gantry 5 Options', 'manage_options', 'layout-manager', 'gantry_layout_manager' );
+        add_menu_page( $theme . ' Options', $theme . ' Options', 'manage_options', 'layout-manager', 'gantry_layout_manager' );
     },
-    102
+    100
 );
 
 function gantry_admin_scripts() {

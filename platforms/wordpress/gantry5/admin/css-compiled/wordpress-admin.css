@@ -65,9 +65,6 @@ body.gantry5 #g5-container #assignments .settings-param-title {
 body.gantry5 form {
   margin-bottom: 1em;
 }
-body.gantry5 .g5-dialog-loading-spinner.g5-dialog-theme-default {
-  top: 3em;
-}
 body.gantry5 #wpbody-content {
   padding-bottom: 0;
 }
@@ -141,10 +138,11 @@ body.gantry5.admin-color-sunrise #g5-container .button-primary:not(.disabled):no
   height: auto;
   box-shadow: none;
   border: none;
+  margin-bottom: 0;
 }
 #g5-container .button.collection-addnew, #g5-container .button.collection-editall {
   height: 32px;
-  line-height: 16px;
+  line-height: 18px;
 }
 #g5-container .button.collection-addnew:active, #g5-container .button.collection-editall:active {
   margin: 0;
@@ -467,6 +465,24 @@ body.gantry5.admin-color-sunrise #wpfooter a {
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
   body.gantry5 #g5-container .g5-dialog {
     padding-left: 36px;
+  }
+}
+body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
+  top: 3em;
+}
+@media only all and (min-width: 60rem) {
+  body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
+    left: 160px;
+  }
+}
+@media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+  body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
+    left: 36px;
+  }
+}
+@media only all and (max-width: 47.938rem) {
+  body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
+    top: 4em;
   }
 }
 

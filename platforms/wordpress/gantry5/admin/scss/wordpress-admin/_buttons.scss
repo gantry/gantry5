@@ -24,11 +24,12 @@ body.gantry5 {
         height: auto;
         box-shadow: none;
         border: none;
+        margin-bottom: 0;
     }
 
     .button.collection-addnew, .button.collection-editall {
         height: 32px;
-        line-height: 16px;
+        line-height: 18px;
         &:active {
             margin: 0;
         }

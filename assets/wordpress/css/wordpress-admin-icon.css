@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "Gantry-5";
+    font-weight: normal;
+    font-style: normal;
+    src: url("../fonts/Gantry-5.eot");
+    src: url("../fonts/Gantry-5.eot?#iefix") format("embedded-opentype"), url("../fonts/Gantry-5.woff") format("woff"), url("../fonts/Gantry-5.ttf") format("truetype"), url("../fonts/Gantry-5.svg#Gantry-5") format("svg");
+}
+
+#adminmenu #toplevel_page_layout-manager .menu-icon-generic div.wp-menu-image:before {
+    font-family: Gantry-5 !important;
+    content: "\e600";
+    font-size: 1.3em !important;
+}

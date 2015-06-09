@@ -44,8 +44,6 @@ class AssignmentsPost {
         $wp_query = new \WP_Query;
         $posts = $wp_query->query($args);
 
-        $items = [];
-
         // Check if there are any posts
         if(!$wp_query->post_count) {
 
