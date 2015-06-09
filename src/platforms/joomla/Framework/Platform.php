@@ -89,6 +89,12 @@ class Platform extends BasePlatform
         }
 
         $module = is_object($id) ? $id : $this->getModule($id);
+
+        // Make sure that module really exists.
+        if (!is_object($module)) {
+            return '';
+        }
+
         $isGantry = \strpos($module->module, 'gantry5') !== false;
 
         $renderer = $document->loadRenderer('module');
