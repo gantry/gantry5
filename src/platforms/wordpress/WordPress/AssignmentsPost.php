@@ -26,6 +26,65 @@ class AssignmentsPost {
         return $post_types;
     }
 
+    public function getItems($post_type, $args = []) {
+        $items = [];
+
+        $defaults = [
+            'order'                  => 'ASC',
+            'orderby'                => 'title',
+            'post_type'              => $post_type->name,
+            'suppress_filters'       => true,
+            'update_post_term_cache' => false,
+            'update_post_meta_cache' => false,
+            'posts_per_page'         => -1
+        ];
+
+        $args = wp_parse_args($args, $defaults);
+
+        $wp_query = new \WP_Query;
+        $posts = $wp_query->query($args);
+
+        $items = [];
+
+        // Check if there are any posts
+        if(!$wp_query->post_count) {
+
+            $items[] = [
+                'name'     => '',
+                'label'    => 'No items',
+                'disabled' => true
+            ];
+
+        } else {
+
+            $walker = new AssignmentsWalker;
+
+            $new_posts = [];
+            foreach($posts as $new_post) {
+                $new_post->id           = $new_post->ID;
+                $new_post->parent_id    = $new_post->post_parent;
+                $new_posts[] = $new_post;
+            }
+
+            $posts = $walker->walk($new_posts, 0);
+
+            foreach($posts as $post) {
+                $post->post_title != '' ? $post_title = $post->post_title : $post_title = $post_type->labels->singular_name . ' #' . $post->ID;
+
+                $items[] = [
+                    'name'     => $post->post_name,
+                    'id'       => $post->ID,
+                    'label'    => $post->level > 0 ? str_repeat('—', $post->level) . ' ' . $post_title : $post_title,
+                    'disabled' => false
+                ];
+            }
+
+        }
+
+        return apply_filters('g5_assignments_' . $post_type->name . '_list_items', $items, $post_type, $this->type);
+
+    }
+
     public function getTerms($taxonomies, $post_type, $args = []) {
         $items = [];
 
@@ -84,65 +143,6 @@ class AssignmentsPost {
         }
 
         return apply_filters('g5_assignments_' . $post_type->name . '_terms_list_items', $items, $taxonomies, $post_type, $this->type);
-    }
-
-    public function getItems($post_type, $args = []) {
-        $items = [];
-
-        $defaults = [
-            'order'                  => 'ASC',
-            'orderby'                => 'title',
-            'post_type'              => $post_type->name,
-            'suppress_filters'       => true,
-            'update_post_term_cache' => false,
-            'update_post_meta_cache' => false,
-            'posts_per_page'         => -1
-        ];
-
-        $args = wp_parse_args($args, $defaults);
-
-        $wp_query = new \WP_Query;
-        $posts = $wp_query->query($args);
-
-        $items = [];
-
-        // Check if there are any posts
-        if(!$wp_query->post_count) {
-
-            $items[] = [
-                'name'     => '',
-                'label'    => 'No items',
-                'disabled' => true
-            ];
-
-        } else {
-
-            $walker = new AssignmentsWalker;
-
-            $new_posts = [];
-            foreach($posts as $new_post) {
-                $new_post->id           = $new_post->ID;
-                $new_post->parent_id    = $new_post->post_parent;
-                $new_posts[] = $new_post;
-            }
-
-            $posts = $walker->walk($new_posts, 0);
-
-            foreach($posts as $post) {
-                $post->post_title != '' ? $post_title = $post->post_title : $post_title = $post_type->labels->singular_name . ' #' . $post->ID;
-
-                $items[] = [
-                    'name'     => $post->post_name,
-                    'id'       => $post->ID,
-                    'label'    => $post->level > 0 ? str_repeat('—', $post->level) . ' ' . $post_title : $post_title,
-                    'disabled' => false
-                ];
-            }
-
-        }
-
-        return apply_filters('g5_assignments_' . $post_type->name . '_list_items', $items, $post_type, $this->type);
-
     }
 
 }
