@@ -22,3 +22,17 @@
 		left: 10px;
 	}
 }
+
+@include breakpoint(mobile-only) {
+    .pull-right {
+        &.item-image {
+            margin-left: 0;
+        }
+    }
+
+    .pull-left {
+        &.item-image {
+            margin-right: 0;
+        }
+    }
+}

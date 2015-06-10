@@ -112,3 +112,16 @@ th .tooltip-inner {
 		color: inherit;
 	}
 }
+
+// Article Images
+.pull-right {
+    &.item-image {
+        margin: 0 0 $leading-margin $leading-margin;
+    }
+}
+
+.pull-left {
+    &.item-image {
+        margin: 0 $leading-margin $leading-margin 0;
+    }
+}

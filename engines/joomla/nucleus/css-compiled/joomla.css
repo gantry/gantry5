@@ -535,6 +535,14 @@ th .tooltip-inner {
   color: inherit;
 }
 
+.pull-right.item-image {
+  margin: 0 0 1.5rem 1.5rem;
+}
+
+.pull-left.item-image {
+  margin: 0 1.5rem 1.5rem 0;
+}
+
 #frame {
   margin: 20px auto;
   width: 400px;
