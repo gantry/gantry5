@@ -9,7 +9,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-namespace Gantry\WordPress;
+namespace Gantry\WordPress\Assignments;
 
 class AssignmentsMenu {
     var $type = 'menu';
@@ -59,8 +59,7 @@ class AssignmentsMenu {
 
             foreach($menu_items as $menu_item) {
                 $items[] = [
-                    'name'     => '',
-                    'id'       => $menu_item->ID,
+                    'name'     => $this->type . '[' . $menu_item->ID . ']',
                     'label'    => $menu_item->level > 0 ? str_repeat('—', $menu_item->level) . ' ' . $menu_item->title : $menu_item->title,
                     'disabled' => false
                 ];

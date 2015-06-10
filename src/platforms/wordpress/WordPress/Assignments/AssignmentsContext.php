@@ -9,15 +9,15 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-namespace Gantry\WordPress;
+namespace Gantry\WordPress\Assignments;
 
 class AssignmentsContext {
-    var $type = 'page-context';
+    var $type = 'context';
 
     public function getItems() {
         $items = [];
 
-        $page_context = [
+        $context = [
             'is_404'            => '404 Not Found Page',
             'is_search'         => 'Search Page',
             'is_tax'            => 'Taxonomy Archive',
@@ -34,12 +34,12 @@ class AssignmentsContext {
             'is_comments_popup' => 'Comments Popup Page'
         ];
 
-        $page_context = apply_filters('g5_assignments_page_context_array', $page_context, $this->type);
-        ksort($page_context);
+        $context = apply_filters('g5_assignments_page_context_array', $context, $this->type);
+        ksort($context);
 
-        foreach($page_context as $conditional => $label) {
+        foreach($context as $conditional => $label) {
             $items[] = [
-                'name'  => $conditional,
+                'name'  => $this->type . '[' . $conditional . ']',
                 'label' => $label
             ];
         }

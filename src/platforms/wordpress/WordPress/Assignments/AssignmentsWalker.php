@@ -10,7 +10,7 @@
  * Contains WordPress core code.
  */
 
-namespace Gantry\WordPress;
+namespace Gantry\WordPress\Assignments;
 
 class AssignmentsWalker {
     var $tree_type = ['post_type', 'taxonomy', 'custom'];

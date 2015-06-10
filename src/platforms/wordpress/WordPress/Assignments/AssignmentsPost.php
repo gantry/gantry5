@@ -9,7 +9,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-namespace Gantry\WordPress;
+namespace Gantry\WordPress\Assignments;
 
 class AssignmentsPost {
     var $type = 'post';
@@ -70,8 +70,7 @@ class AssignmentsPost {
                 $post->post_title != '' ? $post_title = $post->post_title : $post_title = $post_type->labels->singular_name . ' #' . $post->ID;
 
                 $items[] = [
-                    'name'     => $post->post_name,
-                    'id'       => $post->ID,
+                    'name'     => $post_type->name . '[' . $post->ID . ']',
                     'label'    => $post->level > 0 ? str_repeat('—', $post->level) . ' ' . $post_title : $post_title,
                     'disabled' => false
                 ];
@@ -131,8 +130,7 @@ class AssignmentsPost {
 
                 foreach($terms as $term) {
                     $items[] = [
-                        'name'     => $term->slug,
-                        'id'       => $term->term_id,
+                        'name'     => $term->taxonomy . '[' . $term->term_id . ']',
                         'label'    => $term->level > 0 ? str_repeat('—', $term->level + 1) . ' ' . $term->name : '— ' . $term->name,
                         'disabled' => false
                     ];

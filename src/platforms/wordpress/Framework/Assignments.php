@@ -12,11 +12,11 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Gantry\GantryTrait;
-use Gantry\WordPress\AssignmentsWalker;
-use Gantry\WordPress\AssignmentsContext;
-use Gantry\WordPress\AssignmentsMenu;
-use Gantry\WordPress\AssignmentsPost;
-use Gantry\WordPress\AssignmentsArchive;
+use Gantry\WordPress\Assignments\AssignmentsWalker;
+use Gantry\WordPress\Assignments\AssignmentsContext;
+use Gantry\WordPress\Assignments\AssignmentsMenu;
+use Gantry\WordPress\Assignments\AssignmentsPost;
+use Gantry\WordPress\Assignments\AssignmentsArchive;
 
 class Assignments
 {
@@ -45,7 +45,7 @@ class Assignments
     public function types()
     {
         $types = array(
-            'page-context',
+            'context',
             'menu',
             'post',
 //            'taxonomy',
@@ -61,8 +61,8 @@ class Assignments
 
         foreach($this->types() as $type) {
             switch( $type ) {
-                // Page Context
-                case 'page-context' :
+                // Context
+                case 'context' :
 
                     $instance = new AssignmentsContext;
 

@@ -9,7 +9,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-namespace Gantry\WordPress;
+namespace Gantry\WordPress\Assignments;
 
 class AssignmentsArchive {
     var $type = 'archive';
@@ -65,8 +65,7 @@ class AssignmentsArchive {
 
             foreach($terms as $term) {
                 $items[] = [
-                    'name'     => $term->slug,
-                    'id'       => $term->term_id,
+                    'name'     => $this->type . '[' . $term->term_id . ']',
                     'label'    => $term->level > 0 ? str_repeat('—', $term->level) . ' ' . $term->name : $term->name,
                     'disabled' => false
                 ];
