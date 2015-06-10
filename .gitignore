@@ -26,10 +26,6 @@ themes/*/*/common
 themes/*/*/src
 themes/*/*/cache
 themes/*/*/custom
-themes/*/magento/design/default/gantry/common
-themes/*/magento/design/default/gantry/src
-themes/*/magento/design/default/gantry/vendor
-themes/*/magento/skin/default/common
 
 # Compiled
 **/.sass-cache
