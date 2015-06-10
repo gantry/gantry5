@@ -11,10 +11,47 @@
 
 namespace Gantry\WordPress\Assignments;
 
-class AssignmentsMenu {
-    var $type = 'menu';
+class AssignmentsMenu
+{
+    public $type = 'menu';
 
-    public function getMenus($args = []) {
+    /**
+     * Returns list of rules which apply to the current page.
+     *
+     * @return array
+     */
+    public function getRules()
+    {
+        return [[]];
+    }
+
+    /**
+     * List all the rules available.
+     *
+     * @return array
+     */
+    public function listRules()
+    {
+        // Get all defined menus
+        $menus = $this->getMenus();
+
+        // Return if there are no menus.
+        if(!$menus) {
+            return [];
+        }
+
+        // Get label and items for each menu
+       $list = [];
+        foreach ($menus as $menu) {
+            $list[$menu->slug]['label'] = 'Menu - ' . $menu->name;
+            $list[$menu->slug]['items'] = $this->getItems($menu);
+        }
+
+        return $list;
+    }
+
+    protected function getMenus($args = [])
+    {
         $defaults = [
             'orderby' => 'name'
         ];
@@ -26,7 +63,8 @@ class AssignmentsMenu {
         return $menus;
     }
 
-    public function getItems($menu) {
+    protected function getItems($menu)
+    {
         $items = [];
 
         // Get all items for the current menu
@@ -59,7 +97,7 @@ class AssignmentsMenu {
 
             foreach($menu_items as $menu_item) {
                 $items[] = [
-                    'name'     => $this->type . '[' . $menu_item->ID . ']',
+                    'name'     => $menu_item->ID,
                     'label'    => $menu_item->level > 0 ? str_repeat('—', $menu_item->level) . ' ' . $menu_item->title : $menu_item->title,
                     'disabled' => false
                 ];

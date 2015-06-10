@@ -22,10 +22,11 @@
         </div>
 
         <div class="cards-wrapper clearfix">
-            {% for type in assignments %}
+            {% for type, types in assignments %}
+                {% for name, list in types %}
                 <div class="card settings-block">
                     <h4>
-                        {{ type.label|e }}
+                        {{ list.label|e }}
                         <div class="g-panel-filters float-right align-right">
                             <div class="search settings-block">
                                 <input type="text" placeholder="Filter...">
@@ -37,11 +38,11 @@
                     </h4>
 
                     <div class="settings-param-wrapper">
-                        {% for link in type.items %}
+                        {% for link in list.items %}
                         <label class="settings-param{% if link.section %} settings-param-section{% endif %}">
                             {% include 'forms/fields/enable/enable.html.twig' with {
                             'default': true,
-                            'name': link.name,
+                            'name': (type ~ '.' ~ name ~ '.' ~ link.name)|fieldName,
                             'field': link.field,
                             'value': link.value,
                             'disabled': link.disabled
@@ -53,6 +54,7 @@
                         {% endfor %}
                     </div>
                 </div>
+                {% endfor %}
             {% endfor %}
          </div>
     </form>

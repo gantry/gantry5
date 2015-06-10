@@ -11,10 +11,39 @@
 
 namespace Gantry\WordPress\Assignments;
 
-class AssignmentsContext {
-    var $type = 'context';
+class AssignmentsContext extends AbstractAssignments
+{
+    public $type = 'context';
 
-    public function getItems() {
+    /**
+     * Returns list of rules which apply to the current page.
+     *
+     * @return array
+     */
+    public function getRules()
+    {
+        return [[]];
+    }
+
+    /**
+     * List all the rules available.
+     *
+     * @return array
+     */
+    public function listRules()
+    {
+
+        // Get label and items for each menu
+        $list = [
+            'label' => 'Page Context',
+            'items' => $this->getItems()
+        ];
+
+        return [$list];
+    }
+
+    protected function getItems()
+    {
         $items = [];
 
         $context = [
@@ -39,7 +68,7 @@ class AssignmentsContext {
 
         foreach($context as $conditional => $label) {
             $items[] = [
-                'name'  => $this->type . '[' . $conditional . ']',
+                'name'  => $conditional,
                 'label' => $label
             ];
         }

@@ -34,14 +34,7 @@ class Assignments
         return $this->getTypes();
     }
 
-    public function set($data)
-    {
-//        if (isset($data['menu'])) {
-//            $this->setMenu($data['menu']);
-//        }
-    }
-
-    // FIXME Is this necessary ?
+    // TODO: We might want to make this list more dynamic.
     public function types()
     {
         $types = array(
@@ -60,104 +53,19 @@ class Assignments
         $list = [];
 
         foreach($this->types() as $type) {
-            switch( $type ) {
-                // Context
-                case 'context' :
+            $class = '\Gantry\WordPress\Assignments\Assignments' . ucfirst($type);
 
-                    $instance = new AssignmentsContext;
-
-                    // Get label and items for each menu
-                    $list[$type]['label'] = 'Page Context';
-                    $list[$type]['items'] = $instance->getItems();
-
-                    unset($instance);
-
-                    break;
-
-                // Menu
-                case 'menu' :
-
-                    $instance = new AssignmentsMenu;
-
-                    // Get all defined menus
-                    $menus = $instance->getMenus();
-
-                    // Break if there are no menus
-                    if(!$menus) break;
-
-                    // Get label and items for each menu
-                    foreach ($menus as $menu) {
-                        $list[$type . '-' . $menu->slug]['label'] = 'Menu - ' . $menu->name;
-                        $list[$type . '-' . $menu->slug]['items'] = $instance->getItems($menu);
-                    }
-
-                    unset($instance);
-
-                    break;
-
-                // Posts & Pages (including their types and taxonomies)
-                case 'post' :
-
-                    $instance = new AssignmentsPost;
-
-                    // Get all defined post types
-                    $post_types = $instance->getPostTypes();
-
-                    // Break if there are no post types defined
-                    if (!$post_types) break;
-
-                    // Get label and items for each post types
-                    foreach($post_types as $post_type) {
-                        $post_type = apply_filters('g5_assignments_' . $post_type->name . '_object', $post_type);
-
-                        if($post_type) {
-                            $list[$post_type->name]['label'] = $post_type->labels->name;
-                            $list[$post_type->name]['items'] = $instance->getItems($post_type);
-
-                            // Get current post type taxonomies and its terms
-                            $taxonomies = get_object_taxonomies($post_type->name);
-                            if(!empty($taxonomies)) {
-                                $list[$post_type->name . '-terms']['label'] = $post_type->labels->name . ': Terms';
-                                $list[$post_type->name . '-terms']['items'] = $instance->getTerms($taxonomies, $post_type);
-                            }
-                        }
-                    }
-
-                    unset($instance);
-
-                    break;
-
-                // Taxonomy and Taxonomy Archives
-                case 'taxonomy' :
-                case 'archive' :
-
-                    $instance = new AssignmentsArchive;
-
-                    $taxonomies = $instance->getTaxonomies();
-                    if(empty($taxonomies)) break;
-
-                    foreach($taxonomies as $tax) {
-                        $tax = apply_filters('g5_assignments_' . $type . '_' . $tax->name . '_taxonomy_object', $tax);
-
-                        $type == 'taxonomy' ? $type_label = 'Taxonomies: ' : $type_label = 'Archives: ';
-
-                        $list[$type . '-' . $tax->name]['label'] = $type_label . $tax->labels->name;
-                        $list[$type . '-' . $tax->name]['items'] = $instance->getItems($tax);
-                    }
-
-                    unset($instance);
-
-                    break;
+            if (!class_exists($class)) {
+                throw new \RuntimeException("Assignment type {$type} is missing");
             }
+
+            $instance = new $class;
+            $list[$type] = $instance->listRules();
+            unset($instance);
         }
 
         do_action('g5_assignments_list', $list);
 
         return $list;
-    }
-
-    public function setMenu($data)
-    {
-        return true;
     }
 }

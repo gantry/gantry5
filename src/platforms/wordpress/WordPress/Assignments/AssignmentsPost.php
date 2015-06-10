@@ -11,10 +11,59 @@
 
 namespace Gantry\WordPress\Assignments;
 
-class AssignmentsPost {
-    var $type = 'post';
+class AssignmentsPost
+{
+    public $type = 'post';
 
-    public function getPostTypes($args = []) {
+
+    /**
+     * Returns list of rules which apply to the current page.
+     *
+     * @return array
+     */
+    public function getRules()
+    {
+        return [[]];
+    }
+
+    /**
+     * List all the rules available.
+     *
+     * @return array
+     */
+    public function listRules()
+    {
+        // Get all defined post types
+        $post_types = $this->getPostTypes();
+
+        // Break if there are no post types defined
+        if (!$post_types) {
+            return [];
+        }
+
+        // Get label and items for each post types
+        $list = [];
+        foreach($post_types as $post_type) {
+            $post_type = apply_filters('g5_assignments_' . $post_type->name . '_object', $post_type);
+
+            if($post_type) {
+                $list[$post_type->name]['label'] = $post_type->labels->name;
+                $list[$post_type->name]['items'] = $this->getItems($post_type);
+
+                // Get current post type taxonomies and its terms
+                $taxonomies = get_object_taxonomies($post_type->name);
+                if(!empty($taxonomies)) {
+                    $list[$post_type->name . '-terms']['label'] = $post_type->labels->name . ': Terms';
+                    $list[$post_type->name . '-terms']['items'] = $this->getTerms($taxonomies, $post_type);
+                }
+            }
+        }
+
+        return $list;
+    }
+
+    protected function getPostTypes($args = [])
+    {
         $defaults = [
             'show_ui' => true
         ];
@@ -26,7 +75,8 @@ class AssignmentsPost {
         return $post_types;
     }
 
-    public function getItems($post_type, $args = []) {
+    protected function getItems($post_type, $args = [])
+    {
         $items = [];
 
         $defaults = [
@@ -70,7 +120,7 @@ class AssignmentsPost {
                 $post->post_title != '' ? $post_title = $post->post_title : $post_title = $post_type->labels->singular_name . ' #' . $post->ID;
 
                 $items[] = [
-                    'name'     => $post_type->name . '[' . $post->ID . ']',
+                    'name'     => $post->ID,
                     'label'    => $post->level > 0 ? str_repeat('—', $post->level) . ' ' . $post_title : $post_title,
                     'disabled' => false
                 ];
@@ -82,7 +132,8 @@ class AssignmentsPost {
 
     }
 
-    public function getTerms($taxonomies, $post_type, $args = []) {
+    protected function getTerms($taxonomies, $post_type, $args = [])
+    {
         $items = [];
 
         $defaults = [
@@ -130,7 +181,7 @@ class AssignmentsPost {
 
                 foreach($terms as $term) {
                     $items[] = [
-                        'name'     => $term->taxonomy . '[' . $term->term_id . ']',
+                        'name'     => $term->taxonomy . '-' . $term->term_id,
                         'label'    => $term->level > 0 ? str_repeat('—', $term->level + 1) . ' ' . $term->name : '— ' . $term->name,
                         'disabled' => false
                     ];
@@ -140,5 +191,4 @@ class AssignmentsPost {
 
         return apply_filters('g5_assignments_' . $post_type->name . '_terms_list_items', $items, $taxonomies, $post_type, $this->type);
     }
-
 }
