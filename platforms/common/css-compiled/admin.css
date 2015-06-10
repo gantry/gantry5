@@ -105,6 +105,7 @@
 #g5-container #g-page-surround {
   min-height: 100vh;
   position: relative;
+  overflow: hidden;
 }
 #g5-container article,
 #g5-container aside,

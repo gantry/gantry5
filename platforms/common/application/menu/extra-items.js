@@ -149,7 +149,7 @@ var StepTwo = function(data, content, button) {
                 if (!name || input.disabled()) { return; }
 
                 input = content.find('[name="' + name + '"]');
-                var value = input.value(),
+                var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                     parent = input.parent('.settings-param'),
                     override = parent ? parent.find('> input[type="checkbox"]') : null;
 
