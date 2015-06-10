@@ -15,6 +15,23 @@ class AssignmentsContext extends AbstractAssignments
 {
     public $type = 'context';
 
+    protected $context = [
+        'is_404'            => '404 Not Found Page',
+        'is_search'         => 'Search Page',
+        'is_tax'            => 'Taxonomy Archive',
+        'is_front_page'     => 'Front Page',
+        'is_home'           => 'Home Page',
+        'is_attachment'     => 'Attachment Page',
+        'is_single'         => 'Single Post',
+        'is_page'           => 'Single Page',
+        'is_category'       => 'Category Archive Page',
+        'is_tag'            => 'Tag Archive Page',
+        'is_author'         => 'Author Page',
+        'is_date'           => 'Date Archive Page',
+        'is_preview'        => 'Preview Page',
+        'is_comments_popup' => 'Comments Popup Page'
+    ];
+
     /**
      * Returns list of rules which apply to the current page.
      *
@@ -22,7 +39,16 @@ class AssignmentsContext extends AbstractAssignments
      */
     public function getRules()
     {
-        return [[]];
+        global $wp_query;
+
+        $rules = [];
+        foreach($this->context as $var => $label) {
+            if (isset($wp_query->$var) && $wp_query->$var === true) {
+                $rules[$var] = 1;
+            }
+        }
+
+        return [$rules];
     }
 
     /**
@@ -32,7 +58,6 @@ class AssignmentsContext extends AbstractAssignments
      */
     public function listRules()
     {
-
         // Get label and items for each menu
         $list = [
             'label' => 'Page Context',
@@ -45,23 +70,6 @@ class AssignmentsContext extends AbstractAssignments
     protected function getItems()
     {
         $items = [];
-
-        $context = [
-            'is_404'            => '404 Not Found Page',
-            'is_search'         => 'Search Page',
-            'is_tax'            => 'Taxonomy Archive',
-            'is_front_page'     => 'Front Page',
-            'is_home'           => 'Home Page',
-            'is_attachment'     => 'Attachment Page',
-            'is_single'         => 'Single Post',
-            'is_page'           => 'Single Page',
-            'is_category'       => 'Category Archive Page',
-            'is_tag'            => 'Tag Archive Page',
-            'is_author'         => 'Author Page',
-            'is_date'           => 'Date Archive Page',
-            'is_preview'        => 'Preview Page',
-            'is_comments_popup' => 'Comments Popup Page'
-        ];
 
         $context = apply_filters('g5_assignments_page_context_array', $context, $this->type);
         ksort($context);
