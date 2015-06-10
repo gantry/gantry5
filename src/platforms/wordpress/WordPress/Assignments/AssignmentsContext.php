@@ -71,7 +71,7 @@ class AssignmentsContext extends AbstractAssignments
     {
         $items = [];
 
-        $context = apply_filters('g5_assignments_page_context_array', $context, $this->type);
+        $context = apply_filters('g5_assignments_page_context_array', $this->context, $this->type);
         ksort($context);
 
         foreach($context as $conditional => $label) {
