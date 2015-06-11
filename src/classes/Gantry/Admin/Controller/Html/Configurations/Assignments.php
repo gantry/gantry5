@@ -41,11 +41,8 @@ class Assignments extends HtmlController
             $this->undefined();
         }
 
-        /** @var Request $request */
-        $request = $this->container['request'];
-
         $assignments = new AssignmentsObject($configuration);
-        $assignments->set($request->getArray());
+        $assignments->set($this->request->post->getArray());
 
         // Fire save event.
         $event = new Event;

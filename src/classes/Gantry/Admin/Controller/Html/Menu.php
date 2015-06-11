@@ -189,14 +189,11 @@ class Menu extends HtmlController
 
     public function particle()
     {
-        /** @var Request $request */
-        $request = $this->container['request'];
-
-        $data = $request->get('item');
+        $data = $this->request->post['item'];
         if ($data) {
             $data = json_decode($data, true);
         } else {
-            $data = $request->getArray();
+            $data = $this->request->post->getArray();
         }
 
         $name = isset($data['particle']) ? $data['particle'] : null;
@@ -239,9 +236,6 @@ class Menu extends HtmlController
             $this->undefined();
         }
 
-        /** @var Request $request */
-        $request = $this->container['request'];
-
         // Load particle blueprints and default settings.
         $validator = new Blueprints();
         $validator->embed('options', $this->container['particles']->get($name));
@@ -257,11 +251,11 @@ class Menu extends HtmlController
 
         $data->set('type', 'particle');
         $data->set('particle', $name);
-        $data->set('title', $request->get('title') ?: $blueprints->get('name'));
-        $data->set('options.particle', $request->getArray("particles.{$name}"));
+        $data->set('title', $this->request->post['title'] ?: $blueprints->post['name']);
+        $data->set('options.particle', $this->request->post->getArray("particles.{$name}"));
         $data->def('options.particle.enabled', 1);
 
-        $block = $request->getArray('block');
+        $block = $this->request->post->getArray('block');
         foreach ($block as $key => $param) {
             if ($param === '') {
                 unset($block[$key]);
@@ -328,11 +322,8 @@ class Menu extends HtmlController
             return $validator;
         };
 
-        /** @var Request $request */
-        $request = $this->container['request'];
-
         // Create configuration from the defaults.
-        $data = new Config($request->getArray(), $callable);
+        $data = new Config($this->request->post->getArray(), $callable);
 
         // TODO: validate
 
@@ -358,11 +349,8 @@ class Menu extends HtmlController
             return $validator;
         };
 
-        /** @var Request $request */
-        $request = $this->container['request'];
-
         // Create configuration from the defaults.
-        $data = new Config($request->getArray(), $callable);
+        $data = new Config($this->request->post->getArray(), $callable);
 
         // TODO: validate
 

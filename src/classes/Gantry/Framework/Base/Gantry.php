@@ -124,6 +124,10 @@ class Gantry extends Container
         $instance->register(new ConfigServiceProvider);
         $instance->register(new StreamsServiceProvider);
 
+        $instance['request'] = function ($c) {
+            return new Request;
+        };
+
         $instance['events'] = function ($c) {
             return new EventDispatcher;
         };

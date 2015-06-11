@@ -268,7 +268,8 @@ class Layout extends HtmlController
 
         $layout = new LayoutObject($id, $layout);
 
-        $deleted = isset($_POST['layout']) ? $layout->clearSections()->copySections(json_decode($_POST['layout'])): [];
+        $input = isset($_POST['layout']) ? json_decode($_POST['layout'], true): null;
+        $deleted = is_array($input) ? $layout->clearSections()->copySections($input): [];
         $message = $deleted
             ? sprintf('Warning: Following sections could not be found from the new layout: %s.', implode(', ', $deleted))
             : null;
@@ -314,11 +315,8 @@ class Layout extends HtmlController
             }
         );
 
-        /** @var Request $request */
-        $request = $this->container['request'];
-
         // Join POST data.
-        $data->join('options', $request->getArray("particles." . $name));
+        $data->join('options', $this->request->post->getArray("particles." . $name));
         if ($particle) {
             $data->set('options.enabled', (int) $data->get('options.enabled', 1));
         }
@@ -331,7 +329,7 @@ class Layout extends HtmlController
             $data->join('title', isset($_POST['title']) ? $_POST['title'] : ucfirst($particle));
             if (isset($_POST['block'])) {
                 // TODO: remove empty items in some other way:
-                $block = $request->getArray('block');
+                $block = $this->request->post->getArray('block');
                 foreach ($block as $key => $param) {
                     if ($param === '') {
                         unset($block[$key]);

@@ -170,16 +170,14 @@ class Styles extends HtmlController
 
     public function save($id = null)
     {
-        /** @var Request $request */
-        $request = $this->container['request'];
         /** @var Config $config */
         $config = $this->container['config'];
 
         if ($id) {
             $data = (array) $config->get('styles');
-            $data[$id] = $request->getArray();
+            $data[$id] = $this->request->post->getArray();
         } else {
-            $data = $request->getArray('styles');
+            $data = $this->request->post->getArray('styles');
         }
 
         /** @var UniformResourceLocator $locator */

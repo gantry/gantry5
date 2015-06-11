@@ -184,9 +184,7 @@ class Settings extends HtmlController
             }
         );
 
-        /** @var Request $request */
-        $request = $this->container['request'];
-        $data->join($path, $request->getArray('data'));
+        $data->join($path, $this->request->post->getArray('data'));
 
         // TODO: validate
 
@@ -195,10 +193,7 @@ class Settings extends HtmlController
 
     public function save($id = null)
     {
-        /** @var Request $request */
-        $request = $this->container['request'];
-
-        $data = $id ? [$id => $request->getArray()] : $request->getArray('particles');
+        $data = $id ? [$id => $this->request->post->getArray()] : $this->request->post->getArray('particles');
 
         foreach ($data as $name => $values) {
             $this->saveItem($name, $values);

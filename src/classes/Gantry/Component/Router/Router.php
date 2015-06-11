@@ -40,7 +40,6 @@ abstract class Router implements RouterInterface
     public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->container['request'] = new Request();
     }
 
     public function dispatch()

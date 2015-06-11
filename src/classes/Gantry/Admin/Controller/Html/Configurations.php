@@ -74,10 +74,7 @@ class Configurations extends HtmlController
         /** @var ConfigurationsObject $configurations */
         $configurations = $this->container['configurations'];
 
-        /** @var Request $request */
-        $request = $this->container['request'];
-
-        $configurations->create($request->get('title'), $request->get('preset'));
+        $configurations->create($this->request->post['title'], $this->request->post['preset']);
 
         return new JsonResponse(['html' => 'Configuration created.']);
     }
@@ -92,10 +89,7 @@ class Configurations extends HtmlController
             $this->forbidden();
         }
 
-        /** @var Request $request */
-        $request = $this->container['request'];
-
-        $configurations->rename($configuration, $request->get('title'));
+        $configurations->rename($configuration, $this->request->post['title']);
 
         return new JsonResponse(['html' => 'Configuration renamed.']);
     }
