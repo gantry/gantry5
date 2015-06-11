@@ -119,3 +119,9 @@ input.invalid {
 		margin-left: inherit;
 	}
 }
+
+.controls {
+    input[type="radio"] {
+        margin-right: 5px;
+    }
+}
