@@ -48,6 +48,24 @@ class Assignments
      */
     public function save(array $data)
     {
+        foreach ($data as $tname => &$type) {
+            foreach ($type as $gname => &$group) {
+                foreach ($group as $key => $value) {
+                    if (!$value) {
+                        unset($group[$key]);
+                    } else {
+                        $group[$key] = (bool) $value;
+                    }
+                }
+                if (empty($group)) {
+                    unset($type[$gname]);
+                }
+            }
+            if (empty($type)) {
+                unset($data[$tname]);
+            }
+        }
+
         $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */
