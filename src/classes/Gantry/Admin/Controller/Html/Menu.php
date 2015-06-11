@@ -91,15 +91,15 @@ class Menu extends HtmlController
         $this->params['path'] = implode('/', $path);
 
         // Detect special case to fetch only single column group.
-        $group = isset($_GET['group']) ? intval($_GET['group']) : null;
+        $group = $this->request->get['group'];
 
-        if (empty($this->params['ajax']) || empty($_GET['inline'])) {
+        if (empty($this->params['ajax']) || empty($this->request->get['inline'])) {
             // Handle special case to fetch only one column group.
             if (count($path) > 0) {
                 $this->params['columns'] = $resource[$path[0]];
             }
             if (count($path) > 1) {
-                $this->params['column'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
+                $this->params['column'] = isset($group) ? (int) $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
                 $this->params['override'] = $item;
             }
 
@@ -110,7 +110,7 @@ class Menu extends HtmlController
             $layout = $this->layoutName(count($path) + (int) isset($group));
 
             $this->params['item'] = $item;
-            $this->params['group'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
+            $this->params['group'] = isset($group) ? (int) $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
 
             return $this->container['admin.theme']->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params) ?: '&nbsp;';
         }
