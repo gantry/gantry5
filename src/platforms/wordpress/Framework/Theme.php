@@ -23,6 +23,11 @@ class Theme extends Base\Theme
         add_action( 'widgets_init', array( $this, 'widgets_init' ) );
     }
 
+    public function debug()
+    {
+        return WP_DEBUG;
+    }
+
     public function render($file, array $context = array())
     {
         $gantry = \Gantry\Framework\Gantry::instance();
