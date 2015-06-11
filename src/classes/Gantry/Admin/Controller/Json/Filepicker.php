@@ -271,8 +271,8 @@ class Filepicker extends JsonController
         $hash = md5_file($path);
 
         // Handle 304 Not Modified
-        if (isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
-            $etag = stripslashes($_SERVER['HTTP_IF_NONE_MATCH']);
+        if (isset($this->request->server['HTTP_IF_NONE_MATCH'])) {
+            $etag = stripslashes($this->request->server['HTTP_IF_NONE_MATCH']);
 
             if ($etag == $hash) {
                 header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT', true, 304);
