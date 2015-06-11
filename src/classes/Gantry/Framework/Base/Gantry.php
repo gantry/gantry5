@@ -16,6 +16,7 @@ namespace Gantry\Framework\Base;
 
 use Gantry\Framework\Configurations;
 use Gantry\Framework\Platform;
+use Gantry\Framework\Request;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Services\StreamsServiceProvider;
 use Gantry\Framework\Translator;
