@@ -17,21 +17,48 @@ use Gantry\WordPress\Assignments\AssignmentsContext;
 use Gantry\WordPress\Assignments\AssignmentsMenu;
 use Gantry\WordPress\Assignments\AssignmentsPost;
 use Gantry\WordPress\Assignments\AssignmentsArchive;
+use RocketTheme\Toolbox\File\YamlFile;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Assignments
 {
     use GantryTrait;
 
-    protected $style_id;
+    protected $configuration;
 
-    public function __construct($style_id)
+    public function __construct($configuration)
     {
-        $this->style_id = $style_id;
+        $this->configuration = $configuration;
     }
 
     public function get()
     {
         return $this->getTypes();
+    }
+
+    public function set(array $data)
+    {
+        $this->save($data);
+    }
+
+    /**
+     * Save assignments for the configuration.
+     *
+     * @param array $data
+     */
+    public function save(array $data)
+    {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        // Save layout into custom directory for the current theme.
+        $save_dir = $locator->findResource("gantry-config://{$this->configuration}", true, true);
+        $filename = "{$save_dir}/assignments.yaml";
+
+        $file = YamlFile::instance($filename);
+        $file->save($data);
     }
 
     // TODO: We might want to make this list more dynamic.
@@ -46,6 +73,11 @@ class Assignments
         );
 
         return apply_filters('g5_assignments_types', $types);
+    }
+
+    public function getMatches()
+    {
+
     }
 
     public function getTypes()

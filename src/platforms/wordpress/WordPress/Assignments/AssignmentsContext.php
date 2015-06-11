@@ -58,7 +58,7 @@ class AssignmentsContext extends AbstractAssignments
      */
     public function listRules()
     {
-        // Get label and items for each menu
+        // Get label and items for the context.
         $list = [
             'label' => 'Page Context',
             'items' => $this->getItems()
