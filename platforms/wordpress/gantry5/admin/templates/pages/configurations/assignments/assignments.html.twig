@@ -39,12 +39,13 @@
 
                     <div class="settings-param-wrapper">
                         {% for link in list.items %}
+                            {% set path = type ~ '.' ~ name ~ '.' ~ link.name %}
                         <label class="settings-param{% if link.section %} settings-param-section{% endif %}">
                             {% include 'forms/fields/enable/enable.html.twig' with {
                             'default': true,
-                            'name': (type ~ '.' ~ name ~ '.' ~ link.name)|fieldName,
+                            'name': path|fieldName,
                             'field': link.field,
-                            'value': link.value,
+                            'value': link.value is defined ? link.value : gantry.config.get('assignments.' ~ path),
                             'disabled': link.disabled
                             } %}
                             <span class="settings-param-title{% if link.section %} settings-param-section-title{% endif %}">
