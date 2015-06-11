@@ -26,11 +26,11 @@ class Router extends BaseRouter
         $request = $this->container['request'];
 
         $this->method = $request->getMethod();
-        $this->path = explode('/', $this->request->get->get('view', 'about'));
+        $this->path = explode('/', $request->get->get('view', 'about'));
         $this->resource = array_shift($this->path) ?: 'themes';
 
         // FIXME: make it better by detecting admin-ajax.php..
-        $ajax = ($this->request->get['action'] == 'gantry5');
+        $ajax = ($request->get['action'] == 'gantry5');
         $this->format = $ajax ? 'json' : 'html';
 
         $this->params = [
