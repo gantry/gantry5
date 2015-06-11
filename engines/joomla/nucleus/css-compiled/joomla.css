@@ -388,6 +388,10 @@ input.invalid {
   margin-left: inherit;
 }
 
+.controls input[type="radio"] {
+  margin-right: 5px;
+}
+
 .nav-list > li.offset > a {
   padding-left: 30px;
   font-size: 12px;
