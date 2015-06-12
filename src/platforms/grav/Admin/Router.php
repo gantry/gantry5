@@ -46,7 +46,7 @@ class Router extends BaseRouter
             'location' => $this->resource,
             'method' => $this->method,
             'format' => $this->format,
-            'params' => isset($_POST['params']) && is_string($_POST['params']) ? json_decode($_POST['params'], true) : []
+            'params' => $request->post->getJsonArray('params');
         ];
 
         $this->container['ajax_suffix'] = '.json';
