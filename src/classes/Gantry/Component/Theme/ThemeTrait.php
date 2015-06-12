@@ -12,7 +12,7 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Framework\Base;
+namespace Gantry\Component\Theme;
 
 use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;

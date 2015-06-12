@@ -28,34 +28,44 @@ class Theme extends Base\Theme
         return WP_DEBUG;
     }
 
+    public function renderer()
+    {
+        if (!$this->renderer) {
+            $gantry = \Gantry\Framework\Gantry::instance();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+
+            $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-engine://twig'));
+
+            $params = array(
+                'cache' => $locator('gantry-cache://twig', true, true),
+                'debug' => true,
+                'auto_reload' => true,
+                'autoescape' => 'html'
+            );
+
+            // FIXME: Get timezone from WP.
+            $timezone = 'UTC';
+
+            $twig = new \Twig_Environment($loader, $params);
+            $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
+
+            $this->add_to_twig($twig);
+
+            $this->renderer = $twig;
+        }
+
+        return $this->renderer;
+    }
+
+
     public function render($file, array $context = array())
     {
-        $gantry = \Gantry\Framework\Gantry::instance();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-engine://twig'));
-
-        $params = array(
-            'cache' => $locator('gantry-cache://twig', true, true),
-            'debug' => true,
-            'auto_reload' => true,
-            'autoescape' => 'html'
-        );
-
-        // FIXME: Get timezone from WP.
-        $timezone = 'UTC';
-
-        $twig = new \Twig_Environment($loader, $params);
-        $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
-
-        $this->add_to_twig($twig);
-
         // Include Gantry specific things to the context.
         $context = $this->add_to_context($context);
 
-        return $twig->render($file, $context);
+        return $this->renderer()->render($file, $context);
     }
 
     public function widgets_init()
