@@ -49,7 +49,8 @@ class Input implements \ArrayAccess, \Iterator, ExportInterface
      */
     public function getArray($path = null, $default = null, $separator = '.')
     {
-        $data = $this->get($path, $default, $separator);
+        $data = $path ? $this->get($path, $default, $separator) : $this->items;
+
         return (array) $this->getChildren($data);
     }
 
