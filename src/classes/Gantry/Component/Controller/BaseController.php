@@ -82,6 +82,7 @@ abstract class BaseController implements RestfulControllerInterface
      */
     public function execute($method, array $path, array $params)
     {
+        $this->method = $method;
         $this->setParams($params);
         list($action, $path) = $this->resolveHttpVerb($method, $path);
 
