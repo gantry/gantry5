@@ -122,29 +122,39 @@ class Theme extends BaseTheme
         return $twig;
     }
 
+
+    public function renderer()
+    {
+        if (!$this->renderer) {
+            $gantry = \Gantry\Framework\Gantry::instance();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+
+            $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-admin://templates'));
+
+            $params = array(
+                'cache' => $locator->findResource('gantry-cache://twig', true, true),
+                'debug' => true,
+                'auto_reload' => true,
+                'autoescape' => 'html'
+            );
+
+            $twig = new \Twig_Environment($loader, $params);
+
+            $this->add_to_twig($twig);
+
+            $this->renderer = $twig;
+        }
+
+        return $this->renderer;
+    }
+
     public function render($file, array $context = array())
     {
-        $gantry = \Gantry\Framework\Gantry::instance();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-admin://templates'));
-
-        $params = array(
-            'cache' => $locator->findResource('gantry-cache://twig', true, true),
-            'debug' => true,
-            'auto_reload' => true,
-            'autoescape' => 'html'
-        );
-
-        $twig = new \Twig_Environment($loader, $params);
-
-        $this->add_to_twig($twig);
-
         // Include Gantry specific things to the context.
         $context = $this->add_to_context($context);
 
-        return $twig->render($file, $context);
+        return $this->renderer()->render($file, $context);
     }
 }
