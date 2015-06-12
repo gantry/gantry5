@@ -126,13 +126,13 @@ class Layout extends HtmlController
 
     public function save()
     {
-        if (!isset($_POST['layout'])) {
+        $layout = $this->request->post->getJsonArray('layout');
+        if (!isset($layout)) {
             throw new \RuntimeException('Error while saving layout: Structure missing', 400);
         }
 
         $configuration = $this->params['configuration'];
-        $layout = json_decode($_POST['layout'], true);
-        $preset = isset($_POST['preset']) ? json_decode($_POST['preset'], true) : '';
+        $preset = $this->request->post->getJsonArray('preset');
 
         // Create layout from the data.
         $layout = new LayoutObject(
@@ -161,19 +161,21 @@ class Layout extends HtmlController
         }
 
         $item = $layout->find($id);
-        $item->type    = isset($_POST['type']) ? $_POST['type'] : $type;
-        $item->subtype = isset($_POST['subtype']) ? $_POST['subtype'] : null;
-        $item->title   = isset($_POST['title']) ? $_POST['title'] : 'Untitled';
+        $item->type    = $this->request->post['type'] ?: $type;
+        $item->subtype = $this->request->post['subtype'] ?: false;
+        $item->title   = $this->request->post['title'] ?: ucfirst($type);
         if (!isset($item->attributes)) {
             $item->attributes = new \stdClass;
         }
-        if (isset($_POST['block'])) {
-            $item->block = (object) $_POST['block'];
+
+        $block = $this->request->post->getArray('block');
+        if (isset($block)) {
+            $item->block = (object) $block;
         }
 
         $name = isset($item->subtype) ? $item->subtype : $type;
 
-        $attributes = isset($_POST['options']) && is_array($_POST['options']) ? $_POST['options'] : [];
+        $attributes = $this->request->post->getArray('options');
 
         if ($type == 'section' || $type == 'container' || $type == 'grid' || $type == 'offcanvas') {
             $prefix = "particles.{$type}";
@@ -240,7 +242,8 @@ class Layout extends HtmlController
             $layout = $this->getLayout('default');
         }
 
-        $deleted = isset($_POST['layout']) ? $layout->clearSections()->copySections(json_decode($_POST['layout'])): [];
+        $input = $this->request->post->getJson('layout');
+        $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];
         $message = $deleted
             ? sprintf('Warning: Following sections could not be found from the new layout: %s.', implode(', ', $deleted))
             : null;
@@ -268,8 +271,8 @@ class Layout extends HtmlController
 
         $layout = new LayoutObject($id, $layout);
 
-        $input = isset($_POST['layout']) ? json_decode($_POST['layout'], true): null;
-        $deleted = is_array($input) ? $layout->clearSections()->copySections($input): [];
+        $input = $this->request->post->getJson('layout');
+        $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];
         $message = $deleted
             ? sprintf('Warning: Following sections could not be found from the new layout: %s.', implode(', ', $deleted))
             : null;
@@ -326,10 +329,10 @@ class Layout extends HtmlController
                 $data->set('subtype', $particle);
             }
 
-            $data->join('title', isset($_POST['title']) ? $_POST['title'] : ucfirst($particle));
-            if (isset($_POST['block'])) {
+            $data->join('title', $this->request->post['title'] ?: ucfirst($particle));
+            $block = $this->request->post->getArray('block');
+            if ($block) {
                 // TODO: remove empty items in some other way:
-                $block = $this->request->post->getArray('block');
                 foreach ($block as $key => $param) {
                     if ($param === '') {
                         unset($block[$key]);

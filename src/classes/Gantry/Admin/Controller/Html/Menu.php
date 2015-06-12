@@ -19,6 +19,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Menu\Item;
+use Gantry\Component\Request\Input;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
@@ -72,7 +73,7 @@ class Menu extends HtmlController
     public function item($id = null)
     {
         // Load the menu.
-        $resource = $this->loadResource($id, isset($_POST['items']) ? $this->build($_POST) : null);
+        $resource = $this->loadResource($id, $this->build($this->request->post));
 
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
@@ -118,10 +119,10 @@ class Menu extends HtmlController
 
     public function edit($id)
     {
-        // Load the menu.
         $resource = $this->loadResource($id);
-        if (!empty($_POST['settings'])) {
-            $resource->config()->merge(['settings' => json_decode($_POST['settings'], true)]);
+        $input = $this->build($this->request->post);
+        if ($input) {
+            $resource->config()->merge(['settings' => $input['settings']]);
         }
 
         // Fill parameters to be passed to the template file.
@@ -136,7 +137,7 @@ class Menu extends HtmlController
     {
         $resource = $this->loadResource($id);
 
-        $data = $this->build($_POST);
+        $data = $this->build($this->request->post);
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
@@ -154,7 +155,7 @@ class Menu extends HtmlController
         $keyword = end($path);
 
         // Special case: validate instead of fetching menu item.
-        if (!empty($_POST) && $keyword == 'validate') {
+        if ($this->method == 'POST' && $keyword == 'validate') {
             $params = array_slice(func_get_args(), 0, -1);
             return call_user_func_array([$this, 'validateitem'], $params);
         }
@@ -170,8 +171,9 @@ class Menu extends HtmlController
         if (!$item) {
             throw new \RuntimeException('Menu item not found', 404);
         }
-        if (!empty($_POST['item'])) {
-            $item->update(json_decode($_POST['item'], true));
+        $data = $this->request->post->getJsonArray('item');
+        if ($data) {
+            $item->update($data);
         }
 
         // Load blueprints for the menu item.
@@ -412,15 +414,20 @@ class Menu extends HtmlController
     }
 
 
-    public function build($raw)
+    public function build(Input $input)
     {
-        $settings = isset($raw['settings']) ? (array) json_decode($raw['settings'], true) : [];
-        $order = isset($raw['ordering']) ? json_decode($raw['ordering'], true) : [];
-        $items = isset($raw['items']) ? json_decode($raw['items'], true) : [];
-
-        if (!is_array($order) || !is_array($items)) {
+        try {
+            $items = $input->getJsonArray('items');
+            $settings = $input->getJsonArray('settings');
+            $order = $input->getJsonArray('ordering');
+        } catch (\Exception $e) {
             throw new \RuntimeException('Invalid menu structure', 400);
         }
+
+        if (!$items && !$settings && !$order) {
+            return null;
+        }
+
 
         krsort($order);
         $ordering = ['' => []];
