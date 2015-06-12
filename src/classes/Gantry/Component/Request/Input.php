@@ -60,11 +60,11 @@ class Input implements \ArrayAccess, \Iterator, ExportInterface
      * @param string  $name       Dot separated path to the requested value.
      * @param mixed   $default    Default value (or null).
      * @param string  $separator  Separator, defaults to '.'
-     * @return mixed
+     * @return array
      */
     public function getJsonArray($path = null, $default = null, $separator = '.')
     {
-        return $this->getJson($path, $default, $separator, true);
+        return (array) $this->getJson($path, $default, $separator, true);
     }
 
     /**
@@ -78,8 +78,22 @@ class Input implements \ArrayAccess, \Iterator, ExportInterface
      */
     public function getJson($path = null, $default = null, $separator = '.', $assoc = false)
     {
-        $data = $this->get($path, $default, $separator);
-        return json_decode($data, $assoc);
+        $data = $this->get($path, null, $separator);
+
+        if (!isset($data)) {
+            return $default;
+        }
+
+        if (!is_string($data)) {
+            throw new \RuntimeException(sprintf('%s::%s(%s) expects input to be JSON encoded string', __CLASS__, __FUNCTION__, $path));
+        }
+
+        $data = json_decode($data, $assoc);
+        if (!isset($data)) {
+            throw new \RuntimeException(sprintf('%s::%s(): %s', __CLASS__, __FUNCTION__, json_last_error_msg()));
+        }
+
+        return $data;
     }
 
     /**
