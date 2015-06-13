@@ -100,7 +100,7 @@ class Menu extends AbstractMenu
     protected function calcBase($itemid = null)
     {
         // Use active menu item or fall back to default menu item.
-//        $base = $this->active ?: $this->default;
+        $base = $this->active ?: $this->default;
 
         // Return base menu item.
         return $base;
