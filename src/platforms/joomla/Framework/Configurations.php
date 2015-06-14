@@ -165,7 +165,7 @@ class Configurations extends BaseConfigurations
                 throw new \RuntimeException($error);
             }
         } catch (\Exception $e) {
-            throw new \RuntimeException('Deleting configuration failed: ' . $e->getMessage(), 400, $e);
+            throw new \RuntimeException('Deleting outline failed: ' . $e->getMessage(), 400, $e);
         }
 
         // Remove configuration directory.
