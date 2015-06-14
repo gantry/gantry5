@@ -176,4 +176,22 @@ class Configurations extends BaseConfigurations
             Folder::delete($path);
         }
     }
+
+    /**
+     * @param string $id
+     * @return boolean
+     */
+    public function canDelete($id)
+    {
+        $model = StyleHelper::loadModel();
+
+        $item = $model->getTable();
+        $item->load($id);
+
+        if (!$item->id) {
+            throw new \RuntimeException('Outline not found', 404);
+        }
+
+        return $item->home ? false : true;
+    }
 }
