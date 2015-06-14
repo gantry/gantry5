@@ -37,7 +37,7 @@
                                 <button data-title="Duplicate" data-g-config="duplicate" data-g-config-href="{{ gantry.route('configurations', name, 'duplicate')|e }}" data-g-config-method="POST" class="button button-secondary g-tooltip">
                                     <i class="fa fa-fw fa-copy"></i>
                                 </button>
-                                {% if name != 'default' %}
+                                {% if name != 'default' and gantry.configurations.canDelete(name) %}
                                 <button data-title="Delete" data-g-config="delete" data-g-config-href="{{ gantry.route('configurations', name)|e }}" data-g-config-method="DELETE" class="button red g-tooltip">
                                     <i class="fa fa-fw fa-trash-o"></i>
                                 </button>
