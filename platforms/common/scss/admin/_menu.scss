@@ -74,7 +74,7 @@ $submenu-ratio:                 60px;
     }
 
 }
-	
+
 .g5-mm-particles-picker {
 	li {
 		display: inline-block;
@@ -82,7 +82,7 @@ $submenu-ratio:                 60px;
 		i {
 			opacity: 0.5;
 		}
-		
+
 		.config-cog {
 			display: none;
 		}
@@ -156,7 +156,7 @@ $submenu-ratio:                 60px;
             border-color: $black;
         }
 	}
-	span {
+	span.parent-indicator {
 		font-size: $core-font-size - 0.4;
 		margin-left: 0.2rem;
 		display: inline-block;
@@ -223,6 +223,7 @@ $submenu-ratio:                 60px;
 		&:last-child {
 			.submenu-column {
 				margin-right: 0;
+                min-height: 55px;
 				&:after {
 					display: none;
 				}
@@ -354,7 +355,7 @@ $submenu-ratio:                 60px;
             }
         }
 	}
-    
+
     &.moving {
         .submenu-column:after {
             background-color: $white;
@@ -376,7 +377,7 @@ $submenu-ratio:                 60px;
 	left: 0;
 	right: 0;
 	height: $submenu-ratio;
-	
+
 	.percentage {
 		font-size: 20px;
 		font-weight: 300;
@@ -426,7 +427,7 @@ $submenu-ratio:                 60px;
 		display: inline-block;
 		margin: 0.3em;
 		cursor: pointer;
-        
+
         &.hidden {
             display: none;
         }
@@ -454,7 +455,7 @@ $submenu-ratio:                 60px;
 		min-height: 100px;
 		vertical-align: middle;
 		position: relative;
-		
+
 		.module-wrapper {
 			top: 50%;
 			position: absolute;

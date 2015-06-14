@@ -4040,7 +4040,7 @@ body.g-prime {
   margin: 3px -1px;
   border-color: #000;
 }
-#g5-container .menu-selector span {
+#g5-container .menu-selector span.parent-indicator {
   font-size: 0.6rem;
   margin-left: 0.2rem;
   display: inline-block;
@@ -4101,6 +4101,7 @@ body.g-prime {
 }
 #g5-container .submenu-selector .g-block:last-child .submenu-column {
   margin-right: 0;
+  min-height: 55px;
 }
 #g5-container .submenu-selector .g-block:last-child .submenu-column:after {
   display: none;

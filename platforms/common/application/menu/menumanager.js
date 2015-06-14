@@ -72,12 +72,6 @@ var MenuManager = new prime({
             return true;
         }
 
-        var menuItem = element.find('> .menu-item');
-        if (menuItem && menuItem.tag() == 'span') {
-            this.stopAnimation();
-            return true;
-        }
-
         var siblings = element.siblings();
         element.addClass('active');
         if (siblings) { siblings.removeClass('active'); }
@@ -319,6 +313,10 @@ var MenuManager = new prime({
         this.original.remove();
         this.root.removeClass('moving');
 
+        if (!this.root.find('.submenu-items').children()) {
+            this.root.find('.submenu-items').text('');
+        }
+
         this.emit('dragEnd', this.map, 'reorder');
     },
 
@@ -406,6 +404,7 @@ var MenuManager = new prime({
                     return $(element).data('mm-id');
                 });
 
+                if (!this.ordering[path]) { this.ordering[path] = []; }
                 this.ordering[path][column] = items;
             }, this);
 

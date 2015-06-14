@@ -4020,10 +4020,15 @@ ready(function() {
         body.delegate(evt, '[data-g5-menu-columns] .submenu-items:empty', function(event, element) {
             var bounding = element[0].getBoundingClientRect(),
                 x = event.pageX || event.changedTouches[0].pageX || 0, y = event.pageY || event.changedTouches[0].pageY || 0,
+                siblings = $('.submenu-selector > [data-mm-id]'),
                 deleter = {
                     width: 36,
                     height: 36
                 };
+
+            if (siblings.length <= 1) {
+                return false;
+            }
 
             if (x >= bounding.left + bounding.width - deleter.width && x <= bounding.left + bounding.width &&
                 Math.abs(window.scrollY - y) - bounding.top < deleter.height) {
@@ -4033,8 +4038,9 @@ ready(function() {
                     path = active ? active.data('mm-id') : null;
 
                 parent.remove();
+                siblings = $('.submenu-selector > [data-mm-id]');
                 menumanager.ordering[path].splice(index, 1);
-                menumanager.resizer.evenResize($('.submenu-selector > [data-mm-id]'));
+                menumanager.resizer.evenResize(siblings);
             }
         });
     });
@@ -4245,12 +4251,6 @@ var MenuManager = new prime({
 
     click: function(event, element) {
         if (element.hasClass('g-block')) {
-            this.stopAnimation();
-            return true;
-        }
-
-        var menuItem = element.find('> .menu-item');
-        if (menuItem && menuItem.tag() == 'span') {
             this.stopAnimation();
             return true;
         }
@@ -4496,6 +4496,10 @@ var MenuManager = new prime({
         this.original.remove();
         this.root.removeClass('moving');
 
+        if (!this.root.find('.submenu-items').children()) {
+            this.root.find('.submenu-items').text('');
+        }
+
         this.emit('dragEnd', this.map, 'reorder');
     },
 
@@ -4583,6 +4587,7 @@ var MenuManager = new prime({
                     return $(element).data('mm-id');
                 });
 
+                if (!this.ordering[path]) { this.ordering[path] = []; }
                 this.ordering[path][column] = items;
             }, this);
 
