@@ -3929,6 +3929,9 @@ body.g-prime {
 #g5-container #menu-editor li:hover .config-cog {
   opacity: 1;
 }
+#g5-container #menu-editor li .menu-item {
+  display: inline-block;
+}
 #g5-container #menu-editor li .menu-item .title {
   font-size: 1rem;
 }
@@ -4040,7 +4043,7 @@ body.g-prime {
   margin: 3px -1px;
   border-color: #000;
 }
-#g5-container .menu-selector span.parent-indicator {
+#g5-container .menu-selector .parent-indicator {
   font-size: 0.6rem;
   margin-left: 0.2rem;
   display: inline-block;
