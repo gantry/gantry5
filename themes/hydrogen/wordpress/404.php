@@ -14,7 +14,7 @@
 
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry[ 'theme' ];
-$theme->setLayout( 'test' );
+$theme->setLayout( '_error' );
 
 $context = Timber::get_context();
 Timber::render( '404.twig', $context, 404);

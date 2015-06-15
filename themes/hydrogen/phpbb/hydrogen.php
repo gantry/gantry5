@@ -30,7 +30,7 @@ $gantry['theme'] = function ($c) {
 
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
-$theme->setLayout('test');
+$theme->setLayout('default');
 
 // Return the service.
 return $gantry;

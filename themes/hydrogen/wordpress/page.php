@@ -26,7 +26,7 @@
 
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry[ 'theme' ];
-$theme->setLayout( 'test' );
+$theme->setLayout( 'default' );
 
 $context = Timber::get_context();
 $post = new TimberPost();

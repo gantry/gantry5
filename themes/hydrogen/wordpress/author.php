@@ -14,7 +14,7 @@
 
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry[ 'theme' ];
-$theme->setLayout( 'test' );
+$theme->setLayout( 'default' );
 
 global $wp_query;
 

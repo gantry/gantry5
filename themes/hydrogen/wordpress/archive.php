@@ -19,7 +19,7 @@
 
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry[ 'theme' ];
-$theme->setLayout( 'test' );
+$theme->setLayout( 'default' );
 
 $templates = array( 'archive.twig', 'index.twig' );
 
