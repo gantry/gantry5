@@ -22,7 +22,7 @@ add_action(
         $gantry = Gantry\Framework\Gantry::instance();
         $theme = $gantry['theme']->details()['details.name'];
         remove_submenu_page( 'themes.php', 'theme-editor.php' );
-        add_menu_page( $theme . ' Options', $theme . ' Options', 'manage_options', 'layout-manager', 'gantry_layout_manager' );
+        add_menu_page( $theme . ' Theme', $theme . ' Theme', 'manage_options', 'layout-manager', 'gantry_layout_manager' );
     },
     100
 );
