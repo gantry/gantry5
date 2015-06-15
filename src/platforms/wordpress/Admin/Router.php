@@ -30,7 +30,7 @@ class Router extends BaseRouter
         };
 
         $this->method = $request->getMethod();
-        $this->path = explode('/', $request->get->get('view', 'about'));
+        $this->path = explode('/', $request->get->get('view', 'configurations/styles'));
         $this->resource = array_shift($this->path) ?: 'themes';
 
         // FIXME: make it better by detecting admin-ajax.php..
