@@ -24,7 +24,11 @@
  * (in which case you'll want to duplicate this file and save to the above path)
  */
 
+/** @var \Gantry\Framework\Theme $theme */
+$theme = $gantry[ 'theme' ];
+$theme->setLayout( 'default' );
+
 $context = Timber::get_context();
 $post = new TimberPost();
-$context[ 'post' ] = $post;
+$context['post'] = $post;
 Timber::render( array( 'page-' . $post->post_name . '.twig', 'page.twig' ), $context );

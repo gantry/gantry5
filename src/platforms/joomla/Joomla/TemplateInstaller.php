@@ -86,7 +86,7 @@ class TemplateInstaller
     public function getDefaultStyle()
     {
         $style = \JTable::getInstance('Style', 'TemplatesTable');
-        $style->load(['home' => 1]);
+        $style->load(['home' => 1, 'client_id' => 0]);
 
         return $style;
     }

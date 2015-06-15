@@ -22,7 +22,7 @@ $gantry['theme'] = function ($c) use ($grav, $config, $name) {
 
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
-$theme->setLayout('test');
+$theme->setLayout('default');
 
 // Boot the service.
 return $theme;

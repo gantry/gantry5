@@ -12,5 +12,9 @@
  * The template for displaying 404 pages (Not Found)
  */
 
+/** @var \Gantry\Framework\Theme $theme */
+$theme = $gantry[ 'theme' ];
+$theme->setLayout( '_error' );
+
 $context = Timber::get_context();
-Timber::render( '404.twig', $context);
+Timber::render( '404.twig', $context, 404);

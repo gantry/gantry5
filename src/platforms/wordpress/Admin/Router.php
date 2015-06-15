@@ -25,6 +25,10 @@ class Router extends BaseRouter
         /** @var Request $request */
         $request = $this->container['request'];
 
+        $this->container['content'] = function ($c) {
+            return new Content($c);
+        };
+
         $this->method = $request->getMethod();
         $this->path = explode('/', $request->get->get('view', 'about'));
         $this->resource = array_shift($this->path) ?: 'themes';

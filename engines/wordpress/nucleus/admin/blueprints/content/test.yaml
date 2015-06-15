@@ -1,0 +1,15 @@
+name: Test Page
+description: Test content
+
+form:
+  fields:
+    content:
+      type: textarea.textarea
+      label: Content
+      description: Custom content.
+
+    css.class:
+      type: input.selectize
+      label: CSS Classes
+      description: CSS class name.
+      default: test

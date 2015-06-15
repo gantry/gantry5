@@ -34,6 +34,11 @@ class StyleHelper
         return $style;
     }
 
+    public static function getDefaultStyle()
+    {
+        return static::getStyle(['home' => 1, 'client_id' => 0]);
+    }
+
     public static function copy($style, $old, $new)
     {
         $gantry = Gantry::instance();
