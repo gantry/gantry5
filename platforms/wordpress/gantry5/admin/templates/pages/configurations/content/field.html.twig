@@ -1,0 +1,31 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+{% set action = gantry.route(configuration ~ '/' ~ route|replace('.', '/') ~ '/validate') %}
+<form method="post" action="{{ action|e }}">
+    {% if blueprints.type == 'collection.list' %}
+        {% include 'forms/fields.html.twig' %}
+    {% else %}
+        <div class="card settings-block">
+            <h4>
+                {% if title %}
+                    <span data-title-editable="{{ data.data[title]|trim|e }}" data-collection-key="{{ (prefix ~ title)|fieldName }}" class="title">
+                        {{ data.data[title]|e }}
+                    </span>
+                    <i class="fa fa-pencil font-small" data-title-edit=""></i>
+                {% else %}
+                Edit
+                {% endif %}
+            </h4>
+            <div class="inner-params">
+                {% include 'forms/fields.html.twig' with {'skip': [title]} %}
+            </div>
+        </div>
+    {% endif %}
+    <div class="g-modal-actions">
+        <button class="button button-primary" type="submit">Apply</button>
+        <button class="button button-primary" data-apply-and-save>Apply and Save</button>
+        <a class="button g5-dialog-close">Cancel</a>
+    </div>
+</form>
+{% endblock %}
