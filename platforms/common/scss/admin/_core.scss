@@ -94,6 +94,10 @@ body.g-prime {
         @include breakpoint(mobile-only) {
             @include column-count(1);
         }
+
+        .card {
+            @include transform(translateX(0));
+        }
     }
 
     .card {

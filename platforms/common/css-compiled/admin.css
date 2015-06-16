@@ -1675,6 +1675,13 @@ body.g-prime {
     column-count: 1;
   }
 }
+#g5-container .cards-wrapper .card {
+  -webkit-transform: translateX(0);
+  -moz-transform: translateX(0);
+  -ms-transform: translateX(0);
+  -o-transform: translateX(0);
+  transform: translateX(0);
+}
 #g5-container .card {
   display: inline-block;
   background: #fff;
