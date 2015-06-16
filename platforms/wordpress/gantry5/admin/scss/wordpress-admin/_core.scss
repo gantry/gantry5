@@ -32,6 +32,12 @@ body.gantry5 {
 
         input[type="checkbox"] {
             height: 16px;
+            position: inherit;
+            top: 8px;
+        }
+
+        input[type="checkbox"]:checked:before {
+            height: 16px;
         }
 
         .main-block {

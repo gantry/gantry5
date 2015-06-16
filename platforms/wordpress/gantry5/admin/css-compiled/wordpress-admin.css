@@ -27,6 +27,11 @@ body.gantry5 #g5-container input, body.gantry5 #g5-container button, body.gantry
 }
 body.gantry5 #g5-container input[type="checkbox"] {
   height: 16px;
+  position: inherit;
+  top: 8px;
+}
+body.gantry5 #g5-container input[type="checkbox"]:checked:before {
+  height: 16px;
 }
 body.gantry5 #g5-container .main-block {
   min-height: 81.5vh;
