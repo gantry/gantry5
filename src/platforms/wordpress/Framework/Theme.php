@@ -6,6 +6,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class Theme extends Base\Theme
 {
     public $path;
+    protected $menu;
+    protected $user;
 
     public function __construct( $path, $name = '' )
     {
@@ -102,12 +104,20 @@ class Theme extends Base\Theme
 
     public function add_to_context( array $context )
     {
+        if (!$this->menu) {
+            $this->menu = new \TimberMenu;
+        }
+
+        if (!$this->user) {
+            $this->user = new \TimberUser;
+        }
+
         $context = parent::add_to_context( $context );
 
         $this->url = $context['site']->theme->link;
 
-        $context['menu'] = new \TimberMenu;
-        $context['my'] = new \TimberUser;
+        $context['menu'] = $this->menu;
+        $context['my'] = $this->user;
 
         return $context;
     }
