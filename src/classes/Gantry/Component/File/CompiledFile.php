@@ -40,6 +40,7 @@ trait CompiledFile
      *
      * @param mixed $var
      * @return string
+     * @throws \BadMethodCallException
      */
     public function content($var = null)
     {

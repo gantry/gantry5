@@ -22,8 +22,6 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Assignments
 {
-    use GantryTrait;
-
     protected $configuration;
 
     public function __construct($configuration)
@@ -91,11 +89,6 @@ class Assignments
         );
 
         return apply_filters('g5_assignments_types', $types);
-    }
-
-    public function getMatches()
-    {
-
     }
 
     public function getTypes()

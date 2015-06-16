@@ -77,6 +77,24 @@ class ConfigFileFinder
     }
 
     /**
+     * Find filename from a list of folders.
+     *
+     * Note: Only finds the last override.
+     *
+     * @param string $filename
+     * @param array $folders
+     * @return array
+     */
+    public function locateFileInFolder($filename, array $folders)
+    {
+        $list = [];
+        foreach ($folders as $folder) {
+            $list += $this->detectInFolder($folder, $filename);
+        }
+        return $list;
+    }
+
+    /**
      * Return all existing locations for a single file with a timestamp.
      *
      * @param  array  $paths   Filesystem paths to look up from.
@@ -104,7 +122,7 @@ class ConfigFileFinder
     }
 
     /**
-     * Detects all plugins with a configuration file and returns them with last modification time.
+     * Detects all directories with a configuration file and returns them with last modification time.
      *
      * @param  string $folder   Location to look up from.
      * @param  string $pattern  Pattern to match the file. Pattern will also be removed from the key.
@@ -139,6 +157,42 @@ class ConfigFileFinder
         }
 
         return [$path => $list];
+    }
+
+    /**
+     * Detects all directories with the lookup file and returns them with last modification time.
+     *
+     * @param  string $folder Location to look up from.
+     * @param  string $lookup Filename to be located (defaults to directory name).
+     * @return array
+     * @internal
+     */
+    protected function detectInFolder($folder, $lookup = null)
+    {
+        $path = trim(Folder::getRelativePath($folder), '/');
+
+        $list = [];
+
+        if (is_dir($folder)) {
+            $iterator = new \DirectoryIterator($folder);
+
+            /** @var \DirectoryIterator $directory */
+            foreach ($iterator as $directory) {
+                if (!$directory->isDir() || $directory->isDot()) {
+                    continue;
+                }
+
+                $name = $directory->getBasename();
+                $find = ($lookup ?: $name) . '.yaml';
+                $filename = "{$path}/{$name}/$find";
+
+                if (file_exists($filename)) {
+                    $list[$name] = ['file' => $filename, 'modified' => filemtime($filename)];
+                }
+            }
+        }
+
+        return $list;
     }
 
     /**

@@ -17,9 +17,11 @@
  * Learn more: http://codex.wordpress.org/Template_Hierarchy
  */
 
+$chooser = new \Gantry\Framework\OutlineChooser;
+
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry[ 'theme' ];
-$theme->setLayout( 'default' );
+$theme->setLayout( $chooser->select() );
 
 $templates = array( 'archive.twig', 'index.twig' );
 

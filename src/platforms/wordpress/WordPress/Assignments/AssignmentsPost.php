@@ -11,7 +11,7 @@
 
 namespace Gantry\WordPress\Assignments;
 
-class AssignmentsPost
+class AssignmentsPost implements AssignmentsInterface
 {
     public $type = 'post';
 

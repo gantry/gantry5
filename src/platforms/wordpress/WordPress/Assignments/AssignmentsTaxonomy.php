@@ -11,7 +11,7 @@
 
 namespace Gantry\WordPress\Assignments;
 
-class AssignmentsTaxonomy extends AbstractAssignments
+class AssignmentsTaxonomy implements AssignmentsInterface
 {
     public $type = 'taxonomy';
     public $label = 'Taxonomies: %s';

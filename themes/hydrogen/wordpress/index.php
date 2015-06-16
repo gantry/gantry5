@@ -16,9 +16,11 @@
  * E.g., it puts together the home page when no home.php file exists
  */
 
+$chooser = new \Gantry\Framework\OutlineChooser;
+
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry[ 'theme' ];
-$theme->setLayout( 'default' );
+$theme->setLayout( $chooser->select() );
 
 if ( !class_exists( 'Timber' ) ) {
 	echo 'Timber not activated. Make sure you activate the plugin in <a href="/wp-admin/plugins.php#timber">/wp-admin/plugins.php</a>';

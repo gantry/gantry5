@@ -21,24 +21,6 @@ interface AssignmentsInterface
     public function getRules();
 
     /**
-     * Returns assignment rules that apply to the current page.
-     *
-     * @param array $assignments
-     * @param array $rules
-     * @return array
-     */
-    public function getMatches(array &$assignments, array &$rules);
-
-    /**
-     * Returns the calculated score for the assignment.
-     *
-     * @param array $matches
-     * @param string $method
-     * @return int
-     */
-    public function getScore(array &$matches, $method = 'max');
-
-    /**
      * List all the rules available.
      *
      * @return array

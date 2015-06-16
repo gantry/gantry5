@@ -11,7 +11,7 @@
 
 namespace Gantry\WordPress\Assignments;
 
-class AssignmentsMenu
+class AssignmentsMenu implements AssignmentsInterface
 {
     public $type = 'menu';
 

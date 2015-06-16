@@ -39,9 +39,11 @@ class CompiledConfig extends CompiledBase
      */
     public function __construct($cacheFolder, array $files, callable $blueprints = null)
     {
-        if (!$blueprints) {
+        /*
+        if (is_null($blueprints)) {
             throw new \BadMethodCallException('You cannot instantiate configuration without blueprints.');
         }
+        */
         parent::__construct($cacheFolder, $files);
 
         $this->callable = $blueprints;

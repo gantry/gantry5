@@ -11,7 +11,7 @@
 
 namespace Gantry\WordPress\Assignments;
 
-class AssignmentsContext extends AbstractAssignments
+class AssignmentsContext implements AssignmentsInterface
 {
     public $type = 'context';
 

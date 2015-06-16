@@ -12,9 +12,11 @@
  * Search results page
  */
 
+$chooser = new \Gantry\Framework\OutlineChooser;
+
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry[ 'theme' ];
-$theme->setLayout( 'default' );
+$theme->setLayout( $chooser->select() );
 
 $templates = array( 'search.twig', 'archive.twig', 'index.twig' );
 $context = Timber::get_context();
