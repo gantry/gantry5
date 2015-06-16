@@ -11,7 +11,7 @@
 
 namespace Gantry\WordPress\Assignments;
 
-class AssignmentsArchive implements AssignmentsInterface
+class AssignmentsArchive extends AssignmentsTaxonomy
 {
     public $type = 'archive';
     public $label = 'Archives: %s';
