@@ -9,6 +9,8 @@ class Menu extends AbstractMenu
 {
     use GantryTrait;
 
+    protected $menu;
+
     public function __construct()
     {
         $menu = new \TimberMenu;
@@ -64,7 +66,7 @@ class Menu extends AbstractMenu
      */
     protected function getItemsFromPlatform($params)
     {
-        $menu = new \TimberMenu($params['menu']);
+        $menu = (!$params['menu'] || $params['menu'] == $this->menu->id) ? $this->menu : new \TimberMenu($params['menu']);
 
         if($menu) {
             return $menu->items;
