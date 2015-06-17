@@ -1,6 +1,6 @@
-name: Single Post Heading
+name: Archive Page Heading
 description: Options for displaying Heading
-type: post
+type: archive
 
 form:
   fields:

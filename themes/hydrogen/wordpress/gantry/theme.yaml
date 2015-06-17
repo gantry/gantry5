@@ -75,6 +75,7 @@ admin:
     blog:
       - query
       - heading
+      - featured-image
       - title
       - meta-date
       - meta-author

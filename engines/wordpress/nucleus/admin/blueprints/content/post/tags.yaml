@@ -1,0 +1,12 @@
+name: Tags
+description: Options for displaying tags on the single post page
+type: post
+
+form:
+  fields:
+
+    meta.tags:
+     type: input.checkbox
+     label: Display Tags
+     description: Display post tags.
+     default: 0

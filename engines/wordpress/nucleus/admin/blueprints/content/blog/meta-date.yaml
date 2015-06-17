@@ -14,13 +14,8 @@ form:
     meta.date.link:
       type: input.checkbox
       label: Link Date
-      description: Link date to the page.
+      description: Link date to the post.
       default: 1
-
-    meta.date.prefix:
-     type: input.text
-     label: Date Prefix
-     description: Display text directly before the publish date.
 
     meta.date.format:
       type: select.date
@@ -43,3 +38,8 @@ form:
           'l': Date10
           'l j F Y': Date11
           'j F Y': Date12
+
+    meta.date.prefix:
+     type: input.text
+     label: Date Prefix
+     description: Display text directly before the publish date.

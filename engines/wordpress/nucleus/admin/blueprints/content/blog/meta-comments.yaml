@@ -14,5 +14,5 @@ form:
     meta.comments.link:
      type: input.checkbox
      label: Link Comments
-     description: Link comment meta to the list of comments.
+     description: Link comment meta to the comments list.
      default: 0

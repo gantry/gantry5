@@ -1,6 +1,6 @@
-name: Single Post Heading
+name: Page Heading
 description: Options for displaying Heading
-type: post
+type: page
 
 form:
   fields:

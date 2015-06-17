@@ -1,6 +1,6 @@
 name: Publish Date Meta
 description: Options for displaying date meta
-type: post
+type: archive
 
 form:
   fields:
