@@ -98,7 +98,7 @@ class OutlineChooser
     {
         $list = [];
 
-        foreach($this->types() as $type) {
+        foreach(self::types() as $type) {
             $class = '\Gantry\WordPress\Assignments\Assignments' . ucfirst($type);
 
             if (!class_exists($class)) {
