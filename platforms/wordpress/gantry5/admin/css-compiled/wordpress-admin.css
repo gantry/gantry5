@@ -27,11 +27,13 @@ body.gantry5 #g5-container input, body.gantry5 #g5-container button, body.gantry
 }
 body.gantry5 #g5-container input[type="checkbox"] {
   height: 16px;
-  position: inherit;
-  top: 8px;
 }
 body.gantry5 #g5-container input[type="checkbox"]:checked:before {
   height: 16px;
+}
+body.gantry5 #g5-container input[type="checkbox"]:not(.settings-param-toggle) {
+  position: inherit;
+  top: 8px;
 }
 body.gantry5 #g5-container .main-block {
   min-height: 81.5vh;
@@ -144,13 +146,6 @@ body.gantry5.admin-color-sunrise #g5-container .button-primary:not(.disabled):no
   box-shadow: none;
   border: none;
   margin-bottom: 0;
-}
-#g5-container .button.collection-addnew, #g5-container .button.collection-editall {
-  height: 32px;
-  line-height: 18px;
-}
-#g5-container .button.collection-addnew:active, #g5-container .button.collection-editall:active {
-  margin: 0;
 }
 
 #adminmenuwrap ul, #adminmenuwrap dl {
