@@ -18,11 +18,33 @@ class AssignmentsMenu implements AssignmentsInterface
     /**
      * Returns list of rules which apply to the current page.
      *
+     * TODO: Make it smarter and not just recognize menu items by URL
+     *
      * @return array
      */
     public function getRules()
     {
-        return [[]];
+        $rules = [];
+
+        // FIXME Get active menu slug
+        $menu = 'testing-menu';
+        $menu_object = wp_get_nav_menu_object($menu);
+
+        if ($menu_object && !is_wp_error($menu_object)) {
+            $menu_items = wp_get_nav_menu_items($menu_object);
+        }
+
+        if($menu_items) {
+            $current_url = $this->_curPageURL();
+
+            foreach($menu_items as $menu_item) {
+                if($menu_item->url == $current_url) {
+                    $rules[$menu][$menu_item->ID] = 1;
+                }
+            }
+        }
+
+        return $rules;
     }
 
     /**
@@ -106,6 +128,21 @@ class AssignmentsMenu implements AssignmentsInterface
         }
 
         return apply_filters('g5_assignments_' . $menu->slug . '_menu_list_items', $items, $menu->slug, $this->type);
+    }
+
+    function _curPageURL()
+    {
+        $pageURL = 'http';
+        if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
+            $pageURL .= "s";
+        }
+        $pageURL .= "://";
+        if ($_SERVER["SERVER_PORT"] != "80") {
+            $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+        } else {
+            $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+        }
+        return $pageURL;
     }
 
 }
