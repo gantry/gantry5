@@ -23,7 +23,38 @@ class AssignmentsPost implements AssignmentsInterface
      */
     public function getRules()
     {
-        return [[]];
+        global $wp_query;
+
+        $rules = [];
+
+        $queried_object = get_queried_object();
+
+        if(is_single() && $queried_object !== null) {
+            $post_type = $queried_object->post_type;
+            $id = $queried_object->ID;
+
+            $rules[$post_type][$id] = 1;
+
+            // Get current post type taxonomies and its terms
+            $taxonomies = get_object_taxonomies($queried_object);
+            if(!empty($taxonomies)) {
+                foreach($taxonomies as $tax) {
+                    $args = [
+                        'orderby' => 'name',
+                        'order' => 'ASC',
+                        'fields' => 'all'
+                    ];
+
+                    $terms = wp_get_post_terms($id, $tax, $args);
+
+                    foreach($terms as $term) {
+                        $rules[$post_type . '-terms'][$tax . '-' . $term->term_id] = 1;
+                    }
+                }
+            }
+        }
+
+        return $rules;
     }
 
     /**

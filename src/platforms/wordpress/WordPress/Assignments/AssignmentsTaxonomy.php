@@ -29,7 +29,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
 
         $queried_object = get_queried_object();
 
-        if($queried_object !== null) {
+        if((is_archive() || is_tax()) && $queried_object !== null) {
             $taxonomy = $queried_object->taxonomy;
             $id = $queried_object->term_id;
 
