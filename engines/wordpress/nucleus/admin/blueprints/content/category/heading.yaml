@@ -1,6 +1,6 @@
-name: Archive Page Heading
+name: Category Page Heading
 description: Options for displaying Heading
-type: archive
+type: category
 
 form:
   fields:

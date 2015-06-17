@@ -1,6 +1,6 @@
 name: Post Content
-description: Options for the post content display on the archive page
-type: archive
+description: Options for the post content display on the category page
+type: category
 
 form:
   fields:
@@ -8,7 +8,7 @@ form:
     content.type:
       type: select.selectize
       label: Content Type
-      description: Choose if the archive page should display full content or excerpt of the post.
+      description: Choose if the category page should display full content or excerpt of the post.
       default: content
       options:
         content: Full Content

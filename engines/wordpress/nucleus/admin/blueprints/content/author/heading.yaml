@@ -1,6 +1,6 @@
-name: Archive Page Heading
+name: Author Page Heading
 description: Options for displaying Heading
-type: archive
+type: author
 
 form:
   fields:
