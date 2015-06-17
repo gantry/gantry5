@@ -9,14 +9,13 @@ class Menu extends AbstractMenu
 {
     use GantryTrait;
 
-    protected $menu;
+    protected $menus;
 
     public function __construct()
     {
-        $menu = new \TimberMenu;
+        $this->menus = $this->getMenus();
 
-        $this->menu = $menu;
-        $this->default = $menu->slug;
+        $this->default = reset($this->menus);
 //        $this->active  = $this->getActive();
     }
 
@@ -66,7 +65,7 @@ class Menu extends AbstractMenu
      */
     protected function getItemsFromPlatform($params)
     {
-        $menu = (!$params['menu'] || $params['menu'] == $this->menu->id) ? $this->menu : new \TimberMenu($params['menu']);
+        $menu = new \TimberMenu($params['menu']);
 
         if($menu) {
             return $menu->items;
@@ -138,10 +137,9 @@ class Menu extends AbstractMenu
 
         foreach ($menuItems as $menuItem) {
             $parent = $menuItem->menu_item_parent;
-            $menuItem->level = $menuItem->level + 1;
 
-//            if (($start && $start > $menuItem->level)
-//                || ($end && $menuItem->level > $end)
+//            if (($start && $start > $menuItem->level+1)
+//                || ($end && $menuItem->level+1 > $end)
 //                || ($start > 1 && !in_array($tree[$start - 2], $path))) {
 //                continue;
 //            }
@@ -164,24 +162,10 @@ class Menu extends AbstractMenu
                 $itemParams += $itemMap[$menuItem->id];
             }
 
-            // Get default target from WordPress.
-            switch ($menuItem->target)
-            {
-                default:
-                case '':
-                    // Target window: Parent.
-                    $target = '_self';
-                    break;
-                case '_blank':
-                    // Target window: New with navigation.
-                    $target = '_blank';
-                    break;
-            }
-
             // And if not available in configuration, default to WordPress.
             $itemParams += [
                 'title' => $menuItem->title(),
-                'target' => $target
+                'target' => $menuItem->target ?: '_self'
             ];
 
             $item = new Item($this, $menuItem->id, $itemParams);
