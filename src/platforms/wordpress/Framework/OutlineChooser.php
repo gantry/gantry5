@@ -62,6 +62,20 @@ class OutlineChooser
         return $matches;
     }
 
+    // TODO: We might want to make this list more dynamic.
+    public static function types()
+    {
+        $types = [
+            'context',
+            'menu',
+            'post',
+            // 'taxonomy',
+            'archive'
+        ];
+
+        return apply_filters('g5_assignments_types', $types);
+    }
+
     public function loadAssignments()
     {
         $gantry = Gantry::instance();
@@ -84,7 +98,7 @@ class OutlineChooser
     {
         $list = [];
 
-        foreach(['context'] as $type) {
+        foreach($this->types() as $type) {
             $class = '\Gantry\WordPress\Assignments\Assignments' . ucfirst($type);
 
             if (!class_exists($class)) {

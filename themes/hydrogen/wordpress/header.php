@@ -13,9 +13,5 @@
  * We use this to start our output buffer and render into the views/page-plugin.twig template in footer.php
  */
 
-/** @var \Gantry\Framework\Theme $theme */
-$theme = $gantry[ 'theme' ];
-$theme->setLayout( 'default' );
-
 $GLOBALS[ 'timberContext' ] = Timber::get_context();
 ob_start();

@@ -23,7 +23,20 @@ class AssignmentsTaxonomy implements AssignmentsInterface
      */
     public function getRules()
     {
-        return [];
+        global $wp_query;
+
+        $rules = [];
+
+        $queried_object = get_queried_object();
+
+        if($queried_object !== null) {
+            $taxonomy = $queried_object->taxonomy;
+            $id = $queried_object->term_id;
+
+            $rules[$taxonomy][$id] = 1;
+        }
+
+        return $rules;
     }
 
     /**

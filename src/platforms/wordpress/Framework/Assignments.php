@@ -77,18 +77,9 @@ class Assignments
         $file->save($data);
     }
 
-    // TODO: We might want to make this list more dynamic.
     public function types()
     {
-        $types = array(
-            'context',
-            'menu',
-            'post',
-//            'taxonomy',
-            'archive'
-        );
-
-        return apply_filters('g5_assignments_types', $types);
+        return OutlineChooser::types();
     }
 
     public function getTypes()
