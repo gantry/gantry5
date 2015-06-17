@@ -16,7 +16,7 @@ $chooser = new \Gantry\Framework\OutlineChooser;
 
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry[ 'theme' ];
-$theme->setLayout( $chooser->select('_error') );
+$theme->setLayout( $chooser->select( '_error' ) );
 
 $context = Timber::get_context();
 Timber::render( '404.twig', $context );
