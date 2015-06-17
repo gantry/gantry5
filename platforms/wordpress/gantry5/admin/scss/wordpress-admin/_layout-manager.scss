@@ -2,4 +2,16 @@
     #trash {
         top: 30px;
     }
+
+    .g5-lm-particles-picker {
+        .settings-block {
+            input:not(.settings-param-toggle):not([type="checkbox"]) {
+                width: 250px;
+            }
+
+            &.search {
+                font-size: inherit;
+            }
+        }
+    }
 }

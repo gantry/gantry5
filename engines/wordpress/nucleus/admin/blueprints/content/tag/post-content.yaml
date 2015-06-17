@@ -1,0 +1,21 @@
+name: Post Content
+description: Options for the post content display on the tag page
+type: tag
+
+form:
+  fields:
+
+    content.type:
+      type: select.selectize
+      label: Content Type
+      description: Choose if the tag page should display full content or excerpt of the post.
+      default: content
+      options:
+        content: Full Content
+        excerpt: Excerpt
+
+    content.excerpt.length:
+      type: input.text
+      label: Excerpt Length
+      description: Number of words that post excerpts should display.
+      default: 55

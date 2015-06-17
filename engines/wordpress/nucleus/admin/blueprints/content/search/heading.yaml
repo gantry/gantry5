@@ -1,6 +1,6 @@
-name: Archive Page Heading
+name: Search Page Heading
 description: Options for displaying Heading
-type: archive
+type: search
 
 form:
   fields:

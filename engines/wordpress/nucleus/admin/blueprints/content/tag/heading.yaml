@@ -1,6 +1,6 @@
-name: Archive Page Heading
+name: Tag Page Heading
 description: Options for displaying Heading
-type: archive
+type: tag
 
 form:
   fields:

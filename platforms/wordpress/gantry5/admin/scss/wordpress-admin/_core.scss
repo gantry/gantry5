@@ -32,10 +32,12 @@ body.gantry5 {
 
         input[type="checkbox"] {
             height: 16px;
-            position: inherit;
-            top: 8px;
             &:checked:before {
                 height: 16px;
+            }
+            &:not(.settings-param-toggle) {
+                position: inherit;
+                top: 8px;
             }
         }
 
