@@ -105,7 +105,7 @@
     }
 
     .settings-param-field {
-        margin-left: 150px;
+        margin-left: 175px;
 
         // fields reset
         .g-reset-field {
@@ -132,7 +132,7 @@
     }
 
     .settings-param-title {
-        max-width: 150px;
+        max-width: 175px;
         margin: 5px;
     }
 
@@ -168,7 +168,7 @@
     }
 
     input:not(.settings-param-toggle):not([type="checkbox"]), select, .collection-list ul, .colorpicker, .multi.selectize-control {
-        width: 250px;
+        width: 275px;
         @include breakpoint(no-desktop) {
             width: 100%;
         }
@@ -182,7 +182,7 @@
     .input-group {
         &.append, &.prepend {
             input {
-                width: 209px;
+                width: 234px;
                 @include breakpoint(no-desktop) {
                     width: 100%;
                 }
@@ -191,7 +191,7 @@
     }
 
     .selectize-control.single {
-        width: 250px !important;
+        width: 275px !important;
         @include breakpoint(tablet-range) {
             width: 100% !important;
         }

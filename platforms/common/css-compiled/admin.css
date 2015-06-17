@@ -2416,7 +2416,7 @@ body.g-prime {
   /*@include linear-gradient(90deg, transparentize($white, 0.7) 0%, transparentize($white, 0.7) 150px, transparentize($white, 0.4) 150px, transparentize($white, 0.4) 100%);*/
 }
 #g5-container .settings-block .settings-param-field {
-  margin-left: 150px;
+  margin-left: 175px;
 }
 #g5-container .settings-block .settings-param-field .g-reset-field {
   display: inline-block;
@@ -2438,7 +2438,7 @@ body.g-prime {
   transition: opacity 0.2s ease-in-out;
 }
 #g5-container .settings-block .settings-param-title {
-  max-width: 150px;
+  max-width: 175px;
   margin: 5px;
 }
 #g5-container .settings-block i {
@@ -2467,7 +2467,7 @@ body.g-prime {
   display: inline-block;
 }
 #g5-container .settings-block input:not(.settings-param-toggle):not([type="checkbox"]), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker, #g5-container .settings-block .multi.selectize-control {
-  width: 250px;
+  width: 275px;
 }
 @media only all and (max-width: 59.938rem) {
   #g5-container .settings-block input:not(.settings-param-toggle):not([type="checkbox"]), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker, #g5-container .settings-block .multi.selectize-control {
@@ -2479,7 +2479,7 @@ body.g-prime {
   min-height: 150px;
 }
 #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
-  width: 209px;
+  width: 234px;
 }
 @media only all and (max-width: 59.938rem) {
   #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
@@ -2487,7 +2487,7 @@ body.g-prime {
   }
 }
 #g5-container .settings-block .selectize-control.single {
-  width: 250px !important;
+  width: 275px !important;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
   #g5-container .settings-block .selectize-control.single {

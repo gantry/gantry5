@@ -71,3 +71,14 @@ admin:
       - subfeature
     core:
       - base
+  content:
+    blog:
+      - query
+      - heading
+      - title
+      - meta-date
+      - meta-author
+      - meta-comments
+      - meta-categories
+      - meta-tags
+      - read-more
