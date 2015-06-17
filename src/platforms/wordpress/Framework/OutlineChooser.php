@@ -19,11 +19,11 @@ class OutlineChooser
 {
     protected $method;
 
-    public function select()
+    public function select($default = 'default')
     {
         $scores = $this->scores();
 
-        return key($scores) ?: 'default';
+        return key($scores) ?: $default;
     }
 
     public function scores()
