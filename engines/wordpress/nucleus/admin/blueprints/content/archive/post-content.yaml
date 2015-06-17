@@ -1,5 +1,5 @@
-name: Query
-description: Options for the query in the archive page
+name: Post Content
+description: Options for the post content display in the archive page
 type: archive
 
 form:

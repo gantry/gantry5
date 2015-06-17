@@ -74,6 +74,7 @@ admin:
   content:
     blog:
       - query
+      - post-content
       - heading
       - featured-image
       - title
