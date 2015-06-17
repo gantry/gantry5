@@ -51,7 +51,9 @@ class Content
 
         $list = [];
         foreach ($content as $name => $item) {
-            $type = isset($item['type']) ? $item['type'] : 'content';
+            $type = dirname($name);
+            $name = basename($name);
+            $type = isset($item['type']) ? $item['type'] : ($type !== '.' ? $type : 'content');
             $list[$type][$name] = $item;
         }
 
