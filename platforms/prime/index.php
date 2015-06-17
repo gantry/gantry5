@@ -4,6 +4,8 @@ use Gantry\Component\Filesystem\Folder;
 define('PRIME_ROOT', dirname($_SERVER['SCRIPT_FILENAME']));
 define('PRIME_URI', dirname($_SERVER['SCRIPT_NAME']));
 
+date_default_timezone_set('UTC');
+
 // Bootstrap Gantry framework or fail gracefully (inside included file).
 $gantry = include_once PRIME_ROOT . '/includes/gantry.php';
 
