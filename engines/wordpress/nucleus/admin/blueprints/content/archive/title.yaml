@@ -1,6 +1,6 @@
 name: Post Title
 description: Options for displaying title
-type: post
+type: archive
 
 form:
   fields:
@@ -8,11 +8,11 @@ form:
     title:
      type: input.checkbox
      label: Display Title
-     description: Display post title.
+     description: Display post titles.
      default: 1
 
     title.link:
      type: input.checkbox
      label: Link Title
-     description: Link title to the post.
+     description: Link titles to the posts.
      default: 0

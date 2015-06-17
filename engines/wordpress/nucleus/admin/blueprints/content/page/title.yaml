@@ -1,6 +1,6 @@
-name: Post Title
+name: Page Title
 description: Options for displaying title
-type: post
+type: page
 
 form:
   fields:
@@ -8,11 +8,11 @@ form:
     title:
      type: input.checkbox
      label: Display Title
-     description: Display post title.
+     description: Display page title.
      default: 1
 
     title.link:
      type: input.checkbox
      label: Link Title
-     description: Link title to the post.
+     description: Link title to the page.
      default: 0

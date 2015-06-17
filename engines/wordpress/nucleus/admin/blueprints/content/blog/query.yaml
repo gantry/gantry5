@@ -33,11 +33,10 @@ form:
       description:
       default: 1
 
-    # Content Display
     content.type:
       type: select.selectize
       label: Content Type
-      description: Choose if the Blog Page should display full content or excerpt of the post.
+      description: Choose if the Blog page should display full content or excerpt of the post.
       default: content
       options:
         content: Full Content

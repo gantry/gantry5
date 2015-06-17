@@ -1,6 +1,6 @@
 name: Read More Button
 description: Options for displaying Read More button
-type: post
+type: archive
 
 form:
   fields:
