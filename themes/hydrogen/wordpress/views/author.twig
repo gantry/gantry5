@@ -4,7 +4,7 @@
 {% block content %}
 
 {% for post in posts %}
-	{% include ["patrials/tease-"~post.post_type~".twig", "patrials/tease.twig"] %}
+	{% include ["partials/tease-"~post.post_type~".twig", "partials/tease.twig"] %}
 {% endfor %}
 
 {% endblock %}
