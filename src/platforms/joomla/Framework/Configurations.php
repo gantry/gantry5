@@ -170,8 +170,10 @@ class Configurations extends BaseConfigurations
 
         // Remove configuration directory.
         $gantry = $this->container;
+
+        /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
-        $path = $locator("gantry-config://{$item->id}", true, true);
+        $path = $locator->findResource("gantry-config://{$item->id}", true, true);
         if ($path) {
             Folder::delete($path);
         }
