@@ -1675,12 +1675,12 @@ body.g-prime {
     column-count: 1;
   }
 }
-#g5-container .cards-wrapper .card {
-  -webkit-transform: translateX(0);
-  -moz-transform: translateX(0);
-  -ms-transform: translateX(0);
-  -o-transform: translateX(0);
-  transform: translateX(0);
+#g5-container .cards-wrapper .card h4 {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
 }
 #g5-container .card {
   display: inline-block;

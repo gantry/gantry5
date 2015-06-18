@@ -591,6 +591,10 @@ ready(function() {
 
         if (!parent) { return; }
 
+        if (element.type() == 'checkbox') {
+            element.value(Number(element.checked()).toString());
+        }
+
         if (!target || !originals || originals.get(element.attribute('name')) == null) { return; }
         if (originals.get(element.attribute('name')) !== element.value()) {
             if (isOverride && event.forceOverride && !isOverride.checked()) { isOverride[0].click(); }

@@ -95,8 +95,8 @@ body.g-prime {
             @include column-count(1);
         }
 
-        .card {
-            @include transform(translateX(0));
+        .card h4 {
+            @include transform(translateZ(0));
         }
     }
 
