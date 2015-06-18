@@ -11,13 +11,13 @@ var $             = require('elements'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxURL    = require('../utils/get-ajax-url').global,
 
-    flags         = require('../utils/flags-state'),
-    warningURL    = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
+    flags         = require('../utils/flags-state');
 
 require('./dropdown-edit');
 
 ready(function() {
-    var body = $('body');
+    var body = $('body'),
+        warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
 
     // Handles Configurations Duplicate / Remove
     body.delegate('click', '[data-g-config]', function(event, element) {
