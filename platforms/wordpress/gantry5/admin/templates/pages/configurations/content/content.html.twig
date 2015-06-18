@@ -2,11 +2,11 @@
 
 {% block gantry %}
     {% set stored_data = get_cookie('g5-collapsed')|default('{}')|json_decode %}
-    <div id="content">
+    <div id="content-settings">
         <form method="post">
             <div data-set-page="{{ page_id }}" data-set-root="">
                 <span class="float-right">
-                    <button type="submit" class="button button-primary button-save" data-save="Settings">
+                    <button type="submit" class="button button-primary button-save" data-save="Content Settings">
                     <i class="fa fa-fw fa-check"></i> <span>Save Content Settings</span></button>
                 </span>
                 {% for group, list in content %}
@@ -28,7 +28,7 @@
                     <div class="cards-wrapper g-grid">
                         {% for id, item in list %}
                             {% if not item.hidden %}
-                                {% set prefix = 'content.' ~ id ~ '.' %}
+                                {% set prefix = 'content.' ~ group ~ '.' ~ id ~ '.' %}
                                 {% set collapsed = item.form.collapsed or attribute(stored_data, prefix) %}
                                 {% set labels = {collapse: 'Collapse', expand: 'Expand'} %}
                                 <div class="card settings-block{{ collapsed ? ' g-collapsed' : '' }}">
@@ -48,7 +48,7 @@
 
                 <div class="g-footer-actions">
                     <span class="float-right">
-                        <button type="submit" class="button button-primary button-save" data-save="Settings">
+                        <button type="submit" class="button button-primary button-save" data-save="Content Settings">
                             <i class="fa fa-fw fa-check"></i> <span>Save Content Settings</span></button>
                     </span>
                 </div>
