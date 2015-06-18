@@ -95,6 +95,7 @@ var Map         = map,
             if (element.parent('[data-g-global-filter]')) { return Assignments.globalFilterSection(e, element); }
 
             var card = element.parent('.card'),
+                onlyEnabled = $('[data-assignments-enabledonly]'),
                 items = Map.get(card) || Map.set(card, { labels: card.search('label .settings-param-title') }).get(card);
 
             value = value || element.value();
@@ -108,16 +109,22 @@ var Map         = map,
 
             items = $(items.labels);
 
-            if (!value) {
+            if (!value && !onlyEnabled.checked()) {
                 card.style('display', 'inline-block');
                 return items.search('!> label').style('display', 'block');
             }
 
-            var count = 0, off = 0, on = 0;
+            var count = 0, off = 0, on = 0, text, match;
             asyncForEach(items, function(item, i) {
                 item = $(item);
-                var text = trim(item.text());
-                if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
+                text = trim(item.text());
+                match = text.match(new RegExp("^" + value + '|\\s' + value, 'gi'));
+
+                if (onlyEnabled.checked()) {
+                    match = Number(!!match) & Number(item.parent('label').find('.enabler input[type="hidden"]').value());
+                }
+
+                if (match) {
                     item.parent('label').style('display', 'block');
                     on++;
                 } else {
@@ -130,6 +137,11 @@ var Map         = map,
                     card.style('display', !on ? 'none' : 'inline-block');
                 }
             });
+        },
+
+        filterEnabledOnly: function(e, element) {
+            var global = $('[data-g-global-filter] input[type="text"]');
+            Assignments.globalFilterSection(e, global, element);
         },
 
         treatLabel: function(event, element) {
@@ -166,9 +178,10 @@ var Map         = map,
 
         globalFilterSection: function(e, element) {
             var value = element.value(),
+                onlyEnabled = $('[data-assignments-enabledonly]'),
                 search = $('#assignments .card .search input[type="text"]');
 
-            if (!search) { return; }
+            if (!search && !onlyEnabled.checked()) { return; }
 
             asyncForEach(search, function(item) {
                 Assignments.filterSection(e, $(item), value);
@@ -182,6 +195,7 @@ ready(function() {
     body.delegate('input', '#assignments .search input[type="text"]', Assignments.filterSection);
     body.delegate('click', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
     body.delegate('touchend', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
+    body.delegate('change', '[data-assignments-enabledonly]', Assignments.filterEnabledOnly);
 });
 
 module.exports = {};

@@ -1991,7 +1991,7 @@ body.g-prime {
   src: url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.eot");
   src: url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.woff") format("woff"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.ttf") format("truetype"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.svg#roboto") format("svg");
 }
-.font-small, #g5-container .card h4[data-g-collapse] .g-collapse, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .fa.font-small, #g5-container .card h4[data-g-collapse] .fa.g-collapse, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.fa {
+.font-small, #g5-container .card h4[data-g-collapse] .g-collapse, #g5-container .g-filters-bar label, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .fa.font-small, #g5-container .card h4[data-g-collapse] .fa.g-collapse, #g5-container .g-filters-bar label.fa, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.fa {
   font-size: 0.8rem;
   vertical-align: middle;
 }
@@ -2525,6 +2525,16 @@ body.g-prime {
 }
 #g5-container .g-panel-filters .search, #g5-container .g-panel-filters input, #g5-container .g-panel-filters .button {
   font-size: 0.85rem;
+}
+#g5-container .g-filters-bar label {
+  display: inline-block;
+  margin: 0 0 0 1rem;
+  border-left: 1px solid #ddd;
+  line-height: 30px;
+  padding-left: 1rem;
+}
+#g5-container .g-filters-bar label input {
+  display: inline-block;
 }
 #g5-container .g5-dialog .settings-block {
   width: 100%;
@@ -3714,7 +3724,7 @@ body.g-prime {
   left: -10px;
   top: 12px;
 }
-#g5-container .lm-blocks .block-has-changes > span .title, #g5-container .lm-blocks .block-has-changes > span .font-small, #g5-container .lm-blocks .block-has-changes > span .card h4[data-g-collapse] .g-collapse, #g5-container .card h4[data-g-collapse] .lm-blocks .block-has-changes > span .g-collapse, #g5-container .lm-blocks .block-has-changes > span .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks .block-has-changes > span li {
+#g5-container .lm-blocks .block-has-changes > span .title, #g5-container .lm-blocks .block-has-changes > span .font-small, #g5-container .lm-blocks .block-has-changes > span .card h4[data-g-collapse] .g-collapse, #g5-container .card h4[data-g-collapse] .lm-blocks .block-has-changes > span .g-collapse, #g5-container .lm-blocks .block-has-changes > span .g-filters-bar label, #g5-container .g-filters-bar .lm-blocks .block-has-changes > span label, #g5-container .lm-blocks .block-has-changes > span .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks .block-has-changes > span li {
   margin-left: 15px;
 }
 #g5-container .particle-disabled, #g5-container [data-lm-disabled] {

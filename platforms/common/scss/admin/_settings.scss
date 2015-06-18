@@ -234,6 +234,21 @@
     }
 }
 
+.g-filters-bar {
+    label {
+        @extend .font-small;
+        display: inline-block;
+        margin: 0 0 0 1rem;
+        border-left: 1px solid $medium-gray;
+        line-height: 30px;
+        padding-left: 1rem;
+        
+        input {
+            display: inline-block;
+        }
+    }
+}
+
 // modal
 .g5-dialog {
 
