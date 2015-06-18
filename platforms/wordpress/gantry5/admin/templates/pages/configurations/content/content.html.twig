@@ -2,7 +2,7 @@
 
 {% block gantry %}
     {% set stored_data = get_cookie('g5-collapsed')|default('{}')|json_decode %}
-    <div id="settings">
+    <div id="content">
         <form method="post">
             <div data-set-page="{{ page_id }}" data-set-root="">
                 <span class="float-right">
