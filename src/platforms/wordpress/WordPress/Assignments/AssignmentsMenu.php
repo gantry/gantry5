@@ -26,20 +26,22 @@ class AssignmentsMenu implements AssignmentsInterface
     {
         $rules = [];
 
-        // FIXME Get active menu slug
-        $menu = 'testing-menu';
-        $menu_object = wp_get_nav_menu_object($menu);
+        $menus = $this->getMenus();
 
-        if ($menu_object && !is_wp_error($menu_object)) {
-            $menu_items = wp_get_nav_menu_items($menu_object);
-        }
+        if(!$menus) return [];
 
-        if($menu_items) {
-            $current_url = $this->_curPageURL();
+        foreach($menus as $menu) {
+            if($menu && !is_wp_error($menu)) {
+                $menu_items = wp_get_nav_menu_items($menu->term_id);
+            }
 
-            foreach($menu_items as $menu_item) {
-                if($menu_item->url == $current_url) {
-                    $rules[$menu][$menu_item->ID] = 1;
+            if($menu_items) {
+                $current_url = $this->_curPageURL();
+
+                foreach($menu_items as $menu_item) {
+                    if($menu_item->url == $current_url) {
+                        $rules[$menu->slug][$menu_item->ID] = 1;
+                    }
                 }
             }
         }
