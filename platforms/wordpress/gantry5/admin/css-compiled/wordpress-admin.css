@@ -52,7 +52,7 @@ body.gantry5 #g5-container .search {
   background: none;
   color: inherit;
 }
-body.gantry5 #g5-container .g5-dialog {
+body.gantry5 #g5-container .g5-dialog, body.gantry5 #g5-container .g5-popover.g5-popover-above-modal {
   z-index: 99999;
 }
 body.gantry5 #g5-container #assignments .settings-param-section {

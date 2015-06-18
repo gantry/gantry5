@@ -63,7 +63,7 @@ body.gantry5 {
             color: inherit;
         }
 
-        .g5-dialog {
+        .g5-dialog, .g5-popover.g5-popover-above-modal {
             z-index: 99999;
         }
 
