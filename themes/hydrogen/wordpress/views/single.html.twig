@@ -1,5 +1,5 @@
 {% extends "partials/page.html.twig" %}
-{% set twigTemplate = 'single.twig' %}
+{% set twigTemplate = 'single.html.twig' %}
 
 {% block content %}
 
@@ -25,7 +25,7 @@
 					<div class="responses">
 
 						{% for cmt in post.get_comments() %}
-							{% include "comment.twig" with {comment:cmt} %}
+							{% include "comment.html.twig" with {comment:cmt} %}
 						{% endfor %}
 					</div>
 

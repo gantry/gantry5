@@ -14,7 +14,7 @@ namespace Gantry\WordPress\Assignments;
 class AssignmentsPost implements AssignmentsInterface
 {
     public $type = 'post';
-    
+
     /**
      * Returns list of rules which apply to the current page.
      *

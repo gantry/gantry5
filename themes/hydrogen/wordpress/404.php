@@ -19,4 +19,4 @@ $theme = $gantry[ 'theme' ];
 $theme->setLayout( $chooser->select( '_error' ) );
 
 $context = Timber::get_context();
-Timber::render( '404.twig', $context );
+Timber::render( '404.html.twig', $context );

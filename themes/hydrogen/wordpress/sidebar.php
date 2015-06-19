@@ -12,4 +12,4 @@
  * The Template for displaying all single posts
  */
 
-Timber::render( array( 'partials/sidebar.twig' ), isset($data) ? $data : [] );
+Timber::render( array( 'partials/sidebar.html.twig' ), isset($data) ? $data : [] );

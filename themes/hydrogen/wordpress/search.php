@@ -18,7 +18,7 @@ $chooser = new \Gantry\Framework\OutlineChooser;
 $theme = $gantry[ 'theme' ];
 $theme->setLayout( $chooser->select() );
 
-$templates = array( 'search.twig', 'archive.twig', 'index.twig' );
+$templates = array( 'search.html.twig', 'archive.html.twig', 'index.html.twig' );
 $context = Timber::get_context();
 
 $context[ 'title' ] = 'Search results for '. get_search_query();

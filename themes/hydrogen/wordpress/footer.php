@@ -10,7 +10,7 @@
 
 /*
  * Third party plugins that hijack the theme will call wp_footer() to get the footer template.
- * We use this to end our output buffer (started in header.php) and render into the views/page-plugin.twig template.
+ * We use this to end our output buffer (started in header.php) and render into the views/page-plugin.html.twig template.
  */
 
 $timberContext = $GLOBALS[ 'timberContext' ];
@@ -22,5 +22,5 @@ if ( !isset( $timberContext ) ) {
 $timberContext[ 'content' ] = ob_get_contents();
 ob_end_clean();
 
-$templates = array( 'page-plugin.twig' );
+$templates = array( 'page-plugin.html.twig' );
 Timber::render( $templates, $timberContext );

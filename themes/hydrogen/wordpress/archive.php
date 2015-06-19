@@ -23,7 +23,7 @@ $chooser = new \Gantry\Framework\OutlineChooser;
 $theme = $gantry[ 'theme' ];
 $theme->setLayout( $chooser->select() );
 
-$templates = array( 'archive.twig', 'index.twig' );
+$templates = array( 'archive.html.twig', 'index.html.twig' );
 
 $data = Timber::get_context();
 
@@ -38,10 +38,10 @@ if( is_day() ) {
     $data[ 'title' ] = single_tag_title( '', false );
 } else if( is_category() ) {
     $data[ 'title' ] = single_cat_title( '', false );
-    array_unshift( $templates, 'archive-' . get_query_var( 'cat' ) . '.twig' );
+    array_unshift( $templates, 'archive-' . get_query_var( 'cat' ) . '.html.twig' );
 } else if( is_post_type_archive() ) {
     $data[ 'title' ] = post_type_archive_title( '', false );
-    array_unshift( $templates, 'archive-' . get_post_type() . '.twig' );
+    array_unshift( $templates, 'archive-' . get_post_type() . '.html.twig' );
 }
 
 $data[ 'posts' ] = Timber::get_posts();

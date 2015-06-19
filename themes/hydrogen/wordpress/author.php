@@ -29,4 +29,4 @@ if( isset( $query_vars[ 'author' ] ) ) {
 	$data[ 'title' ] = 'Author Archives: ' . $author->name();
 }
 
-Timber::render( array( 'author.twig', 'archive.twig' ), $data );
+Timber::render( array( 'author.html.twig', 'archive.html.twig' ), $data );
