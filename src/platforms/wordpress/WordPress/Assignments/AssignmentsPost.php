@@ -14,8 +14,7 @@ namespace Gantry\WordPress\Assignments;
 class AssignmentsPost implements AssignmentsInterface
 {
     public $type = 'post';
-
-
+    
     /**
      * Returns list of rules which apply to the current page.
      *
@@ -29,7 +28,7 @@ class AssignmentsPost implements AssignmentsInterface
 
         $queried_object = get_queried_object();
 
-        if(is_single() && $queried_object !== null) {
+        if(is_singular() && $queried_object !== null) {
             $post_type = $queried_object->post_type;
             $id = $queried_object->ID;
 
