@@ -23,9 +23,8 @@
 						{{ comment_form }}
 					</div>
 					<div class="responses">
-
 						{% for cmt in post.get_comments() %}
-							{% include "comment.html.twig" with {comment:cmt} %}
+							{% include "partials/comment.html.twig" with {comment:cmt} %}
 						{% endfor %}
 					</div>
 
