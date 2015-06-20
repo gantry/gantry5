@@ -218,6 +218,12 @@ var Map         = map,
                 }
 
                 if (match) {
+                    var group = item.parent('[data-g-assignments-parent]');
+                    if (group && (group = group.data('g-assignments-parent'))) {
+                        var parentGroup = item.parent('.card').find('[data-g-assignments-group="' + group + '"]');
+                        if (parentGroup) { parentGroup.style('display', 'block'); }
+                    }
+
                     item.parent('label').style('display', 'block');
                     on++;
                 } else {
@@ -3039,7 +3045,7 @@ ready(function() {
     initSizes();
 
     decouple(window, 'scroll', function() {
-        if (!container && !sidebar) { return; }
+        if (!container || !sidebar) { return; }
 
         var scrollTop       = this.scrollY,
             containerBounds = container[0].getBoundingClientRect(),
