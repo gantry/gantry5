@@ -41,6 +41,9 @@ $submenu-ratio:                 60px;
             display: none;
         }
     }
+    .card.full-width {
+        margin: $content-margin 0;
+    }
 }
 
 .menu-header {

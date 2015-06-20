@@ -4004,6 +4004,9 @@ body.g-prime {
 #g5-container #menu-editor li[data-mm-original-type] .fa-arrows-alt {
   display: none;
 }
+#g5-container #menu-editor .card.full-width {
+  margin: 0.625rem 0;
+}
 #g5-container .menu-header h2 {
   display: inline-block;
   margin-right: 1rem;
