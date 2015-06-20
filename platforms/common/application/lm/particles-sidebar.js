@@ -52,7 +52,7 @@ ready(function() {
     initSizes();
 
     decouple(window, 'scroll', function() {
-        if (!container && !sidebar) { return; }
+        if (!container || !sidebar) { return; }
 
         var scrollTop       = this.scrollY,
             containerBounds = container[0].getBoundingClientRect(),
