@@ -213,6 +213,7 @@ class AssignmentsPost implements AssignmentsInterface
                     $items[] = [
                         'name'     => $term->taxonomy . '-' . $term->term_id,
                         'label'    => $term->level > 0 ? str_repeat('—', $term->level + 1) . ' ' . $term->name : '— ' . $term->name,
+                        'taxonomy' => $term->taxonomy,
                         'disabled' => false
                     ];
                 }

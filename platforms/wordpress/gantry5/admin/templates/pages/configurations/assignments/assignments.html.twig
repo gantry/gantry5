@@ -43,7 +43,8 @@
                     <div class="settings-param-wrapper">
                         {% for link in list.items %}
                             {% set path = type ~ '.' ~ name ~ '.' ~ link.name %}
-                        <label class="settings-param{% if link.section %} settings-param-section{% endif %}">
+                            {% set group = link.section ? 'data-g-assignments-group=' ~ link.name : 'data-g-assignments-parent=' ~ link.taxonomy %}
+                        <label class="settings-param{% if link.section %} settings-param-section{% endif %}"{{ group }}>
                             {% include 'forms/fields/enable/enable.html.twig' with {
                             'default': true,
                             'name': path|fieldName,
