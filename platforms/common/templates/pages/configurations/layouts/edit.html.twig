@@ -2,7 +2,7 @@
 
 {% block gantry %}
 <div class="g-grid">
-    <div class="g-block sidebar-block size-14">
+    <div class="g-block sidebar-block particles-sidebar-block">
         <h2 class="page-title">
             <span class="title">Particles</span>
         </h2>
@@ -11,6 +11,7 @@
                 <input type="text" placeholder="Filter..." />
                 <i class="fa fa-fw fa-search"></i>
             </div>
+            <div class="particles-container">
                 {% for key, list in particles %}
                     {{ key|capitalize|e }}
                     <ul>
@@ -26,6 +27,7 @@
                     {% endfor %}
                     </ul>
                 {% endfor %}
+            </div>
         </div>
     </div>
     <div class="g-block main-block">

@@ -156,17 +156,13 @@ var LayoutManager = new prime({
             this.placeholder.before(element);
             this.eraser.show();
         } else {
-            var position = element.position(),
-                parentOffset = {
-                    top: element.parent()[0].scrollTop,
-                    left: element.parent()[0].scrollLeft
-                };
+            var position = element.position();
             this.original.style({
-                position: 'absolute',
+                position: 'fixed',
                 opacity: 0.5
             }).style({
-                left: element[0].offsetLeft - parentOffset.left,
-                top: element[0].offsetTop - parentOffset.top,
+                left: element[0].getBoundingClientRect().left,
+                top: element[0].getBoundingClientRect().top,
                 width: position.width,
                 height: position.height
             });

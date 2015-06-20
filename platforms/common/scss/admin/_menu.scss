@@ -77,15 +77,20 @@ $submenu-ratio:                 60px;
 }
 
 .g5-mm-particles-picker {
-    li {
-        display: inline-block;
+    ul {
+        margin-bottom: 0;
 
-        i {
-            opacity: 0.5;
-        }
+        li {
+            display: inline-block;
+            margin: 0;
 
-        .config-cog {
-            display: none;
+            i {
+                opacity: 0.5;
+            }
+
+            .config-cog {
+                display: none;
+            }
         }
     }
 }

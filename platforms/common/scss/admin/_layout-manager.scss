@@ -469,13 +469,12 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
 
             &.in-between {
                 display: block;
-                flex: 0 0 0px;
                 margin: 0 2px 0 -4px;
-                width: 0px;
+                width: 0;
                 padding: 1px;
                 text-indent: -10000px;
-                font-size: 0px;
-                flex: 0 1 0%;
+                font-size: 0;
+                flex: 0 1 0;
                 background-color: #555;
             }
 
@@ -693,6 +692,33 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         padding: $compensate $content-padding;
         background-color: darken($main-bg, 2);
         border-right: 1px solid darken($main-bg, 5);
+        position: relative;
+    }
+
+    .particles-sidebar-block {
+        flex: 0 170px;
+        width: 170px;
+
+        @include breakpoint(mobile-only) {
+            flex: 0 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: inherit;
+            border: 0;
+
+            .particles-container {
+                max-height: 300px;
+                overflow: auto;
+                margin-bottom: 1rem;
+            }
+        }
+    }
+
+    @include breakpoint(no-mobile) {
+        .particles-container.has-scrollbar {
+            padding-right: $content-padding / 2;
+        }
     }
 
     .g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker {
@@ -707,8 +733,9 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
 
         li {
-            padding: $content-padding / 2;
-            margin: 1px 0;
+            @extend .font-small;
+            padding: $content-padding / 3;
+            margin: ($content-padding / 3) 0;
             text-align: center;
             border-radius: $core-border-radius;
             cursor: move;
@@ -775,6 +802,26 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 top: 50%;
                 margin-top: -12px;
             }
+        }
+    }
+
+    @include breakpoint(no-mobile) {
+        // fixed sidebar in LM
+        .g5-lm-particles-picker.particles-fixed, .g5-lm-particles-picker.particles-absolute {
+            z-index: 5;
+
+            .search input {
+                width: inherit;
+                margin-right: -($content-padding + ($content-padding / 2) + $content-margin + rem(1px));
+            }
+        }
+
+        .g5-lm-particles-picker.particles-fixed {
+            position: fixed;
+        }
+
+        .g5-lm-particles-picker.particles-absolute {
+            position: absolute;
         }
     }
 }
