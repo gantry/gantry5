@@ -24,13 +24,14 @@ var Eraser = new prime({
     setTop: function() {
         if (typeof this.top !== 'undefined') { return; }
         this.top = parseInt(this.element.compute('top'), 10);
+        this.left = $('#g5-container')[0].getBoundingClientRect().left;
     },
 
     show: function(fast){
         if (!this.element) { return; }
         this.setTop();
         this.out();
-        this.element[fast ? 'style' : 'animate']({top: this.top}, {duration: '150ms'});
+        this.element[fast ? 'style' : 'animate']({top: this.top, left: this.left}, {duration: '150ms'});
     },
 
     hide: function(fast){
