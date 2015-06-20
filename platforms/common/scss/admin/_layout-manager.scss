@@ -732,8 +732,18 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             margin-bottom: 1em;
         }
 
-        li {
+        &:not(.menu-editor-particles) {
             @extend .font-small;
+        }
+
+        &.menu-editor-particles {
+            li {
+                margin: 0.3rem 0.15rem;
+                cursor: pointer !important;
+            }
+        }
+
+        li {
             padding: $content-padding / 3;
             margin: ($content-padding / 3) 0;
             text-align: center;
