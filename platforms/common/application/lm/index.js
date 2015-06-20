@@ -1,24 +1,25 @@
 "use strict";
-var ready         = require('elements/domready'),
-    $             = require('elements/attributes'),
-    modal         = require('../ui').modal,
-    toastr        = require('../ui').toastr,
-    request       = require('agent'),
-    zen           = require('elements/zen'),
-    contains      = require('mout/array/contains'),
-    size          = require('mout/collection/size'),
-    trim          = require('mout/string/trim'),
-    forEach       = require('mout/collection/forEach'),
+var ready          = require('elements/domready'),
+    $              = require('elements/attributes'),
+    modal          = require('../ui').modal,
+    toastr         = require('../ui').toastr,
+    sidebar        = require('./particles-sidebar'),
+    request        = require('agent'),
+    zen            = require('elements/zen'),
+    contains       = require('mout/array/contains'),
+    size           = require('mout/collection/size'),
+    trim           = require('mout/string/trim'),
+    forEach        = require('mout/collection/forEach'),
 
-    parseAjaxURI  = require('../utils/get-ajax-url').parse,
-    getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    parseAjaxURI   = require('../utils/get-ajax-url').parse,
+    getAjaxSuffix  = require('../utils/get-ajax-suffix'),
 
-    Builder       = require('./builder'),
-    History       = require('../utils/history'),
-    validateField = require('../utils/field-validation'),
-    LMHistory     = require('./history'),
-    LayoutManager = require('./layoutmanager'),
-    SaveState     = require('../utils/save-state');
+    Builder        = require('./builder'),
+    History        = require('../utils/history'),
+    validateField  = require('../utils/field-validation'),
+    LMHistory      = require('./history'),
+    LayoutManager  = require('./layoutmanager'),
+    SaveState      = require('../utils/save-state');
 
 require('../ui/popover');
 
@@ -159,7 +160,7 @@ ready(function() {
 
         // refresh LM eraser
         layoutmanager.eraser.element = $('[data-lm-eraseblock]');
-        layoutmanager.eraser.hide();
+        layoutmanager.eraser.hide(true);
     });
 
     // Particles filtering
