@@ -101,7 +101,7 @@ ready(function() {
         if (!field || !reset) { return true; }
 
         var value = field.value();
-        if (!value) { reset.style('display', 'none'); }
+        if (!value || field.disabled()) { reset.style('display', 'none'); }
         else { reset.removeAttribute('style'); }
     };
 
@@ -149,7 +149,7 @@ ready(function() {
         if (!parent) { return; }
 
         field = parent.find('[name]');
-        if (field) {
+        if (field && !field.disabled()) {
             var selectize = field.selectizeInstance;
             if (selectize) { selectize.setValue(''); }
             else { field.value(''); }
