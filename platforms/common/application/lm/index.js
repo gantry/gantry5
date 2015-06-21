@@ -11,9 +11,11 @@ var ready          = require('elements/domready'),
     trim           = require('mout/string/trim'),
     forEach        = require('mout/collection/forEach'),
 
-    parseAjaxURI   = require('../utils/get-ajax-url').parse,
-    getAjaxSuffix  = require('../utils/get-ajax-suffix'),
+    getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
+    getAjaxURL    = require('../utils/get-ajax-url').global,
 
+    flags         = require('../utils/flags-state'),
     Builder        = require('./builder'),
     History        = require('../utils/history'),
     validateField  = require('../utils/field-validation'),
@@ -246,9 +248,11 @@ ready(function() {
     });
 
     // Switcher
+    var SWITCHER_HIT = false;
     body.delegate('mouseover', '[data-lm-switcher]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
+        SWITCHER_HIT = element;
         if (!element.PopoverDefined) {
             element.getPopover({
                 type: 'async',
@@ -259,7 +263,7 @@ ready(function() {
         }
     });
 
-    // Clear Layout
+    // Switch Layout
     body.delegate('mousedown', '[data-switch]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
@@ -285,7 +289,8 @@ ready(function() {
             data.layout = JSON.stringify(lm.builder.serialize());
         }
 
-        request(method, parseAjaxURI(element.data('switch') + getAjaxSuffix()), data, function(error, response) {
+        var uri = parseAjaxURI(element.data('switch') + getAjaxSuffix());
+        request(method, uri, data, function(error, response) {
             element.hideIndicator();
 
             if (!response.body.success) {
@@ -296,6 +301,47 @@ ready(function() {
                     }
                 });
                 return;
+            }
+
+            if (response.body.message && !flags.get('lm:switcher:' + window.btoa(uri), false)) {
+                // confirm before proceeding
+                flags.warning({
+                    message: response.body.message,
+                    callback: function(response, content) {
+                        var confirm = content.find('[data-g-delete-confirm]'),
+                            cancel  = content.find('[data-g-delete-cancel]');
+
+                        if (!confirm) { return; }
+
+                        confirm.on('click', function(e) {
+                            e.preventDefault();
+                            if (this.attribute('disabled')) { return false; }
+
+                            flags.get('lm:switcher:' + window.btoa(uri), true);
+                            $([confirm, cancel]).attribute('disabled');
+                            body.emit('mousedown', { target: element });
+
+                            modal.close();
+                        });
+
+                        cancel.on('click', function(e) {
+                            e.preventDefault();
+                            if (this.attribute('disabled')) { return false; }
+
+                            $([confirm, cancel]).attribute('disabled');
+                            flags.get('lm:switcher:' + window.btoa(uri), false);
+
+                            modal.close();
+                            if (SWITCHER_HIT) {
+                                setTimeout(function(){
+                                    SWITCHER_HIT.getPopover().show();
+                                }, 5);
+                            }
+                        });
+                    }
+                });
+
+                return false;
             }
 
             var preset = response.body.preset || 'default',

@@ -1986,9 +1986,11 @@ var ready          = require('elements/domready'),
     trim           = require('mout/string/trim'),
     forEach        = require('mout/collection/forEach'),
 
-    parseAjaxURI   = require('../utils/get-ajax-url').parse,
-    getAjaxSuffix  = require('../utils/get-ajax-suffix'),
+    getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
+    getAjaxURL    = require('../utils/get-ajax-url').global,
 
+    flags         = require('../utils/flags-state'),
     Builder        = require('./builder'),
     History        = require('../utils/history'),
     validateField  = require('../utils/field-validation'),
@@ -2221,9 +2223,11 @@ ready(function() {
     });
 
     // Switcher
+    var SWITCHER_HIT = false;
     body.delegate('mouseover', '[data-lm-switcher]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
+        SWITCHER_HIT = element;
         if (!element.PopoverDefined) {
             element.getPopover({
                 type: 'async',
@@ -2234,7 +2238,7 @@ ready(function() {
         }
     });
 
-    // Clear Layout
+    // Switch Layout
     body.delegate('mousedown', '[data-switch]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
@@ -2260,7 +2264,8 @@ ready(function() {
             data.layout = JSON.stringify(lm.builder.serialize());
         }
 
-        request(method, parseAjaxURI(element.data('switch') + getAjaxSuffix()), data, function(error, response) {
+        var uri = parseAjaxURI(element.data('switch') + getAjaxSuffix());
+        request(method, uri, data, function(error, response) {
             element.hideIndicator();
 
             if (!response.body.success) {
@@ -2271,6 +2276,47 @@ ready(function() {
                     }
                 });
                 return;
+            }
+
+            if (response.body.message && !flags.get('lm:switcher:' + window.btoa(uri), false)) {
+                // confirm before proceeding
+                flags.warning({
+                    message: response.body.message,
+                    callback: function(response, content) {
+                        var confirm = content.find('[data-g-delete-confirm]'),
+                            cancel  = content.find('[data-g-delete-cancel]');
+
+                        if (!confirm) { return; }
+
+                        confirm.on('click', function(e) {
+                            e.preventDefault();
+                            if (this.attribute('disabled')) { return false; }
+
+                            flags.get('lm:switcher:' + window.btoa(uri), true);
+                            $([confirm, cancel]).attribute('disabled');
+                            body.emit('mousedown', { target: element });
+
+                            modal.close();
+                        });
+
+                        cancel.on('click', function(e) {
+                            e.preventDefault();
+                            if (this.attribute('disabled')) { return false; }
+
+                            $([confirm, cancel]).attribute('disabled');
+                            flags.get('lm:switcher:' + window.btoa(uri), false);
+
+                            modal.close();
+                            if (SWITCHER_HIT) {
+                                setTimeout(function(){
+                                    SWITCHER_HIT.getPopover().show();
+                                }, 5);
+                            }
+                        });
+                    }
+                });
+
+                return false;
             }
 
             var preset = response.body.preset || 'default',
@@ -2459,7 +2505,7 @@ module.exports = {
     savestate: savestate
 };
 
-},{"../ui":46,"../ui/popover":48,"../utils/field-validation":57,"../utils/get-ajax-suffix":59,"../utils/get-ajax-url":60,"../utils/history":63,"../utils/save-state":65,"./builder":20,"./history":22,"./layoutmanager":24,"./particles-sidebar":25,"agent":66,"elements/attributes":88,"elements/domready":91,"elements/zen":96,"mout/array/contains":126,"mout/collection/forEach":147,"mout/collection/size":149,"mout/string/trim":220}],24:[function(require,module,exports){
+},{"../ui":46,"../ui/popover":48,"../utils/field-validation":57,"../utils/flags-state":58,"../utils/get-ajax-suffix":59,"../utils/get-ajax-url":60,"../utils/history":63,"../utils/save-state":65,"./builder":20,"./history":22,"./layoutmanager":24,"./particles-sidebar":25,"agent":66,"elements/attributes":88,"elements/domready":91,"elements/zen":96,"mout/array/contains":126,"mout/collection/forEach":147,"mout/collection/size":149,"mout/string/trim":220}],24:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
@@ -12626,22 +12672,36 @@ var FlagsState = new prime({
             afterclose = options.afterclose || function() {},
             warningURL = parseAjaxURI(options.url || getAjaxURL('unsaved') + getAjaxSuffix());
 
-        modal.open({
-            content: 'Loading...',
-            remote: warningURL,
-            remoteLoaded: function(response, modal) {
-                var content = modal.elements.content;
-                if (!callback) { return; }
+        if (options.url) {
+            modal.open({
+                content: 'Loading...',
+                remote: warningURL,
+                remoteLoaded: function(response, modal) {
+                    var content = modal.elements.content;
+                    if (!callback) { return; }
 
-                callback.call(this, response, content, modal);
-            },
-            afterClose: afterclose || function() {}
-        });
+                    callback.call(this, response, content, modal);
+                },
+                afterClose: afterclose || function() {}
+            });
+        } else {
+            modal.open({
+                content: options.message,
+                afterOpen: function(response, modal) {
+                    var content = modal.elements.content;
+                    if (!callback) { return; }
+
+                    callback.call(this, response, content, modal);
+                },
+                afterClose: afterclose || function() {}
+            });
+        }
     }
 
 });
 
 module.exports = new FlagsState();
+
 },{"../ui":46,"./get-ajax-suffix":59,"./get-ajax-url":60,"prime":242,"prime/emitter":241,"prime/map":243}],59:[function(require,module,exports){
 "use strict";
 var getAjaxSuffix = function() {
