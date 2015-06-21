@@ -12672,6 +12672,7 @@ var FlagsState = new prime({
             afterclose = options.afterclose || function() {},
             warningURL = parseAjaxURI(options.url || getAjaxURL('unsaved') + getAjaxSuffix());
 
+        if (!options.url && !options.message) { options.url = true; }
         if (options.url) {
             modal.open({
                 content: 'Loading...',
