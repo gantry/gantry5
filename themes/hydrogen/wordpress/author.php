@@ -20,13 +20,13 @@ $theme->setLayout( $chooser->select() );
 
 global $wp_query;
 
-$data = Timber::get_context();
-$data[ 'posts' ] = Timber::get_posts();
+$context = Timber::get_context();
+$context[ 'posts' ] = Timber::get_posts();
 
 if( isset( $query_vars[ 'author' ] ) ) {
 	$author = new TimberUser( $wp_query->query_vars[ 'author' ] );
-	$data[ 'author' ] = $author;
-	$data[ 'title' ] = 'Author Archives: ' . $author->name();
+	$context[ 'author' ] = $author;
+	$context[ 'title' ] = 'Author Archives: ' . $author->name();
 }
 
-Timber::render( array( 'author.html.twig', 'archive.html.twig' ), $data );
+Timber::render( array( 'author.html.twig', 'archive.html.twig' ), $context );

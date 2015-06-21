@@ -9,7 +9,7 @@
  */
 
 /*
- * The Template for displaying all single posts
+ * The Template for displaying sidebar
  */
 
-Timber::render( array( 'partials/sidebar.html.twig' ), isset($data) ? $data : [] );
+Timber::render( array( 'partials/sidebar.html.twig' ), isset( $context ) ? $context : [] );
