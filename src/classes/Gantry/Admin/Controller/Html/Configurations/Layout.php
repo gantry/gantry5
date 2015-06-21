@@ -245,7 +245,7 @@ class Layout extends HtmlController
         $input = $this->request->post->getJson('layout');
         $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];
         $message = $deleted
-            ? sprintf('Warning: Following sections could not be found from the new layout: %s.', implode(', ', $deleted))
+            ? $this->container['admin.theme']->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
             : null;
 
         return new JsonResponse([
@@ -274,7 +274,7 @@ class Layout extends HtmlController
         $input = $this->request->post->getJson('layout');
         $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];
         $message = $deleted
-            ? sprintf('Warning: Following sections could not be found from the new layout: %s.', implode(', ', $deleted))
+            ? $this->container['admin.theme']->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
             : null;
 
         return new JsonResponse([
