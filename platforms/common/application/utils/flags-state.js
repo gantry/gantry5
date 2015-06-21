@@ -39,17 +39,30 @@ var FlagsState = new prime({
             afterclose = options.afterclose || function() {},
             warningURL = parseAjaxURI(options.url || getAjaxURL('unsaved') + getAjaxSuffix());
 
-        modal.open({
-            content: 'Loading...',
-            remote: warningURL,
-            remoteLoaded: function(response, modal) {
-                var content = modal.elements.content;
-                if (!callback) { return; }
+        if (options.url) {
+            modal.open({
+                content: 'Loading...',
+                remote: warningURL,
+                remoteLoaded: function(response, modal) {
+                    var content = modal.elements.content;
+                    if (!callback) { return; }
 
-                callback.call(this, response, content, modal);
-            },
-            afterClose: afterclose || function() {}
-        });
+                    callback.call(this, response, content, modal);
+                },
+                afterClose: afterclose || function() {}
+            });
+        } else {
+            modal.open({
+                content: options.message,
+                afterOpen: function(response, modal) {
+                    var content = modal.elements.content;
+                    if (!callback) { return; }
+
+                    callback.call(this, response, content, modal);
+                },
+                afterClose: afterclose || function() {}
+            });
+        }
     }
 
 });
