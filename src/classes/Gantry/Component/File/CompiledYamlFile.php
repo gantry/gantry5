@@ -14,11 +14,21 @@
 
 namespace Gantry\Component\File;
 
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\YamlFile;
 
 class CompiledYamlFile extends YamlFile
 {
-    protected static $cachePath;
-
     use CompiledFile;
+
+    protected $cachePath;
+
+    protected function __construct()
+    {
+        parent::__construct();
+
+        $gantry = Gantry::instance();
+
+        $this->cachePath = $gantry['file.yaml.cache.path'];
+    }
 }

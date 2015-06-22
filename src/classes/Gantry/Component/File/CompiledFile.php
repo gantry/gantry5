@@ -28,14 +28,6 @@ use RocketTheme\Toolbox\File\PhpFile;
 trait CompiledFile
 {
     /**
-     * @param string $path
-     */
-    public static function setCachePath($path)
-    {
-        static::$cachePath = $path;
-    }
-
-    /**
      * Get/set parsed file contents.
      *
      * @param mixed $var
@@ -44,14 +36,14 @@ trait CompiledFile
      */
     public function content($var = null)
     {
-        if (!static::$cachePath) {
+        if (!isset($this->cachePath)) {
             throw new \BadMethodCallException('Cache path not defined for compiled files!');
         }
 
         // If nothing has been loaded, attempt to get pre-compiled version of the file first.
         if ($var === null && $this->raw === null && $this->content === null) {
             $key = md5($this->filename);
-            $file = PhpFile::instance(static::$cachePath . "/{$key}{$this->extension}.php");
+            $file = PhpFile::instance($this->cachePath . "/{$key}{$this->extension}.php");
             $modified = $this->modified();
 
             if (!$modified) {
