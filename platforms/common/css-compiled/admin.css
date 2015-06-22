@@ -5142,12 +5142,12 @@ html.g5-dialog-open {
   left: 50%;
   position: absolute;
 }
-#g5-container .g5-popover-extras a {
+#g5-container .g5-popover-extras a, #g5-container .g5-popover-extras [data-g-devprod] {
   display: block;
   padding: 0.4rem;
   color: #666;
 }
-#g5-container .g5-popover-extras a:hover {
+#g5-container .g5-popover-extras a:hover, #g5-container .g5-popover-extras [data-g-devprod]:hover {
   color: #666;
   background-color: #eee;
   border-radius: 4px;
