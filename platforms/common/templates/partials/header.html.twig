@@ -27,7 +27,7 @@
                     <ul data-popover-content class="hidden">
                         {% set prod_mode = 'Production' %}
                         {% set dev_mode = 'Development' %}
-                        <li data-g-devprod="{{ {prod: prod_mode, dev: dev_mode}|json_encode|e('html_attr') }}">
+                        <li data-g-devprod="{{ {0: dev_mode, 1: prod_mode}|json_encode|e('html_attr') }}">
                             <i class="fa fa-fw fa-wrench"></i> <span class="devprod-mode">{{ gantry.global.production ? prod_mode : dev_mode }}</span>
                             <div class="float-right">
                                 <span class="enabler">

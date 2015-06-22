@@ -307,7 +307,6 @@ var $             = require('elements'),
     request       = require('agent'),
 
     modal         = require('../ui').modal,
-    toastr        = require('../ui').toastr,
     trim          = require('mout/string/trim'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
@@ -11890,8 +11889,16 @@ var toaster = new Toaster();
 module.exports = toaster;
 },{"../utils/elements.utils.js":55,"elements/zen":96,"mout/function/bind":150,"mout/object/merge":194,"prime":245,"prime-util/prime/bound":241,"prime-util/prime/options":242,"prime/emitter":244,"prime/map":246}],52:[function(require,module,exports){
 "use strict";
-var ready = require('elements/domready'),
-    $     = require('elements');
+var ready         = require('elements/domready'),
+    $             = require('elements'),
+
+    modal         = require('./modal'),
+    toastr        = require('./toastr'),
+    request       = require('agent'),
+
+    getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
+    getAjaxURL    = require('../utils/get-ajax-url').global;
 
 var hiddens,
     toggles = function(event, element) {
@@ -11910,8 +11917,32 @@ var hiddens,
     };
 
 ready(function() {
+    var body = $('body');
     ['touchend', 'mouseup', 'click'].forEach(function(event) {
-        $('body').delegate(event, '.enabler .toggle', toggles);
+        body.delegate(event, '.enabler .toggle', toggles);
+    });
+
+    var URI = parseAjaxURI(getAjaxURL('devprod') + getAjaxSuffix());
+    body.delegate('change', '[data-g-devprod] input[type="hidden"]', function(event, element) {
+        var value = element.value(),
+            parent = element.parent('[data-g-devprod]'),
+            labels = JSON.parse(parent.data('g-devprod'));
+
+        request('post', URI, { mode: value }, function(error, response) {
+            if (!response.body.success) {
+                modal.open({
+                    content: response.body.html || response.body,
+                    afterOpen: function(container) {
+                        if (!response.body.html) { container.style({ width: '90%' }); }
+                    }
+                });
+
+                element.value(!value);
+            } else {
+                parent.find('.devprod-mode').text(labels[response.body.mode] || 'Unknown');
+                toastr.success(response.body.html, response.title);
+            }
+        });
     });
 });
 
