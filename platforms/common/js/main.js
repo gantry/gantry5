@@ -8241,11 +8241,10 @@ module.exports = Eraser;
 },{"../utils/elements.utils":55,"prime":245,"prime-util/prime/bound":241,"prime-util/prime/options":242,"prime/emitter":244}],46:[function(require,module,exports){
 "use strict";
 
-var Modal = require('./modal'),
-    Selectize = require('./selectize');
+var Selectize = require('./selectize');
 
 module.exports = {
-    modal: new Modal(),
+    modal: require('./modal'),
     togglers: require('./togglers'),
     collapse: require('./collapse'),
     selectize: Selectize,
@@ -8604,7 +8603,9 @@ var Modal = new prime({
     }
 });
 
-module.exports = Modal;
+var modal = new Modal();
+
+module.exports = modal;
 
 },{"../utils/elements.utils":55,"agent":66,"elements/domready":91,"elements/zen":96,"mout/array/forEach":134,"mout/array/last":139,"mout/array/map":140,"mout/function/bind":150,"mout/object/merge":194,"prime":245,"prime-util/prime/bound":241,"prime-util/prime/options":242,"prime/emitter":244,"prime/map":246}],48:[function(require,module,exports){
 "use strict";
@@ -11916,7 +11917,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"elements":93,"elements/domready":91}],53:[function(require,module,exports){
+},{"../utils/get-ajax-suffix":59,"../utils/get-ajax-url":60,"./modal":47,"./toastr":51,"agent":66,"elements":93,"elements/domready":91}],53:[function(require,module,exports){
 "use strict";
 
 var prime         = require('prime'),
