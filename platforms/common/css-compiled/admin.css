@@ -3127,9 +3127,21 @@ body.g-prime {
   color: #ddd;
 }
 #g5-container .g-block.navbar-icons {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 3%;
+  -moz-flex: 0 3%;
+  -ms-flex: 0 3%;
   flex: 0 3%;
 }
 #g5-container .g-block.navbar-closed {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0;
+  -moz-flex: 0;
+  -ms-flex: 0;
   flex: 0;
 }
 
@@ -3687,6 +3699,12 @@ body.g-prime {
   background-color: #ddd;
   border: 0;
   padding: 1px;
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 1 100%;
+  -moz-flex: 0 1 100%;
+  -ms-flex: 0 1 100%;
   flex: 0 1 100%;
 }
 #g5-container .lm-blocks .placeholder.in-between {
@@ -3696,6 +3714,12 @@ body.g-prime {
   padding: 1px;
   text-indent: -10000px;
   font-size: 0;
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 1 0;
+  -moz-flex: 0 1 0;
+  -ms-flex: 0 1 0;
   flex: 0 1 0;
   background-color: #555;
 }
@@ -3869,11 +3893,23 @@ body.g-prime {
   position: relative;
 }
 #g5-container .particles-sidebar-block {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 170px;
+  -moz-flex: 0 170px;
+  -ms-flex: 0 170px;
   flex: 0 170px;
   width: 170px;
 }
 @media only all and (max-width: 47.938rem) {
   #g5-container .particles-sidebar-block {
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    box-flex: 0;
+    -webkit-flex: 0 100%;
+    -moz-flex: 0 100%;
+    -ms-flex: 0 100%;
     flex: 0 100%;
     width: 100%;
     margin: 0;
