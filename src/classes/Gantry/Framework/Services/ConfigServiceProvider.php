@@ -74,6 +74,10 @@ class ConfigServiceProvider implements ServiceProviderInterface
 
         $cache = $locator->findResource('gantry-cache://compiled/config', true, true);
 
+        if (!$cache) {
+            throw new \RuntimeException('Who just removed Gantry 5 cache folder? Try reloading the page if it fixes the issue');
+        }
+
         $config = new CompiledConfig($cache, $files, function() use ($container) {
             return $container['blueprints'];
         });
