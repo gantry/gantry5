@@ -9,6 +9,8 @@ var ready          = require('elements/domready'),
     contains       = require('mout/array/contains'),
     size           = require('mout/collection/size'),
     trim           = require('mout/string/trim'),
+    strReplace     = require('mout/string/replace'),
+    properCase     = require('mout/string/properCase'),
     forEach        = require('mout/collection/forEach'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
@@ -61,12 +63,15 @@ ready(function() {
 
     lmhistory.on('undo', function(session, index) {
         var notice = $('#lm-no-layout'),
+            title = $('.layout-title .title small'),
+            preset_name = session.preset.name || 'Default',
             HM = {
                 back: $('[data-lm-back]'),
                 forward: $('[data-lm-forward]')
             };
 
         if (notice) { notice.style({ display: !size(session.data) ? 'block' : 'none' }); }
+        if (title) { title.text('(' + properCase(trim(strReplace(preset_name, [/_/g, /\//g], [' ', ' / ']))) + ')'); }
 
         builder.reset(session.data);
         HM.forward.removeClass('disabled');
@@ -76,12 +81,15 @@ ready(function() {
     });
     lmhistory.on('redo', function(session, index) {
         var notice = $('#lm-no-layout'),
+            title = $('.layout-title .title small'),
+            preset_name = session.preset.name || 'Default',
             HM = {
                 back: $('[data-lm-back]'),
                 forward: $('[data-lm-forward]')
             };
 
         if (notice) { notice.style({ display: !size(session.data) ? 'block' : 'none' }); }
+        if (title) { title.text('(' + properCase(trim(strReplace(preset_name, [/_/g, /\//g], [' ', ' / ']))) + ')'); }
 
         builder.reset(session.data);
         HM.back.removeClass('disabled');
