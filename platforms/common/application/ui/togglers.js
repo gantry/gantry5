@@ -4,7 +4,8 @@ var ready = require('elements/domready'),
 
 var hiddens,
     toggles = function(event, element) {
-        if (event.type.match(/^touch/)) { event.preventDefault(); }
+        if (event.type.match(/^touch/) || event.type == 'click') { event.preventDefault(); }
+        if (event.type == 'click') { return false; }
         element = $(element);
         hiddens = element.find('~~ [type=hidden]');
 
@@ -13,10 +14,12 @@ var hiddens,
 
         hiddens.emit('change');
         $('body').emit('change', { target: hiddens });
+
+        return false;
     };
 
 ready(function() {
-    ['touchend', 'click'].forEach(function(event) {
+    ['touchend', 'mouseup', 'click'].forEach(function(event) {
         $('body').delegate(event, '.enabler .toggle', toggles);
     });
 });
