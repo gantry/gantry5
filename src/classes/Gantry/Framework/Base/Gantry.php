@@ -70,10 +70,14 @@ class Gantry extends Container
     {
         $value = $this[$id];
 
-        // Create a dummy service.
-        $this[$id] = function () use ($value) {
-            return $value;
-        };
+        try {
+            // Create a dummy service.
+            $this[$id] = function () use ($value) {
+                return $value;
+            };
+        } catch (\RuntimeException $e) {
+            // Services are already locked, so ignore the error.
+        }
 
         // Lock the service and return value.
         return $this[$id];
