@@ -115,7 +115,7 @@ ready(function() {
         builder.setStructure(data);
         builder.load();
 
-        layoutmanager.history.setSession(builder.serialize());
+        layoutmanager.history.setSession(builder.serialize(), JSON.parse(root.data('lm-preset')));
         layoutmanager.savestate.setSession(builder.serialize(null, true));
     }
 
@@ -157,7 +157,7 @@ ready(function() {
         builder.setStructure(data);
         builder.load();
 
-        layoutmanager.history.setSession(builder.serialize());
+        layoutmanager.history.setSession(builder.serialize(), JSON.parse(root.data('lm-preset')));
         layoutmanager.savestate.setSession(builder.serialize(null, true));
 
         // refresh LM eraser
@@ -197,7 +197,7 @@ ready(function() {
                 builder.get(id).setSize(100 / blocks.length, true);
             });
 
-            lmhistory.push(builder.serialize());
+            lmhistory.push(builder.serialize(), lmhistory.get().preset);
         });
     });
 
@@ -244,7 +244,7 @@ ready(function() {
 
         layoutmanager.singles('cleanup', builder);
 
-        lmhistory.push(builder.serialize());
+        lmhistory.push(builder.serialize(), lmhistory.get().preset);
     });
 
     // Switcher
@@ -344,7 +344,7 @@ ready(function() {
                 return false;
             }
 
-            var preset = response.body.preset || 'default',
+            var preset = response.body.preset || { name: 'default' },
                 preset_name = response.body.title || 'Default',
                 structure = response.body.data,
                 notice = $('#lm-no-layout'),
@@ -357,7 +357,7 @@ ready(function() {
             builder.setStructure(structure);
             builder.load();
 
-            lmhistory.push(builder.serialize());
+            lmhistory.push(builder.serialize(), JSON.parse(preset));
 
             $('[data-lm-switcher]').getPopover().hideAll().destroy();
         });
@@ -499,7 +499,7 @@ ready(function() {
                                 }
                             }
 
-                            lmhistory.push(builder.serialize());
+                            lmhistory.push(builder.serialize(), lmhistory.get().preset);
 
                             // if it's apply and save we also save the panel
                             if (target.data('apply-and-save') !== null) {

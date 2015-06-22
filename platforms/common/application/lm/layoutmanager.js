@@ -356,7 +356,7 @@ var LayoutManager = new prime({
         singles.disable();
         singles.cleanup(this.builder);
 
-        this.history.push(this.builder.serialize());
+        this.history.push(this.builder.serialize(), this.history.get().preset);
         root.removeClass('moving');
 
     },
@@ -498,7 +498,7 @@ var LayoutManager = new prime({
         singles.disable();
         singles.cleanup(this.builder);
 
-        this.history.push(this.builder.serialize());
+        this.history.push(this.builder.serialize(), this.history.get().preset);
     },
 
     stopAnimation: function(element) {
