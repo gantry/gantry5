@@ -38,6 +38,8 @@ ready(function() {
             parent = element.parent('[data-g-devprod]'),
             labels = JSON.parse(parent.data('g-devprod'));
 
+        parent.showIndicator();
+
         request('post', URI, { mode: value }, function(error, response) {
             if (!response.body.success) {
                 modal.open({
@@ -52,6 +54,8 @@ ready(function() {
                 parent.find('.devprod-mode').text(labels[response.body.mode] || 'Unknown');
                 toastr.success(response.body.html, response.title);
             }
+
+            parent.hideIndicator();
         });
     });
 });
