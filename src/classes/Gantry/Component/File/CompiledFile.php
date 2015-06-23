@@ -27,6 +27,19 @@ use RocketTheme\Toolbox\File\PhpFile;
  */
 trait CompiledFile
 {
+    protected $cachePath;
+
+    /**
+     * @param string $path
+     * @return $this
+     */
+    public function setCachePath($path)
+    {
+        $this->cachePath = $path;
+
+        return $this;
+    }
+
     /**
      * Get/set parsed file contents.
      *
@@ -36,8 +49,8 @@ trait CompiledFile
      */
     public function content($var = null)
     {
-        if (!isset($this->cachePath)) {
-            throw new \BadMethodCallException('Cache path not defined for compiled files!');
+        if (!$this->cachePath) {
+            throw new \BadMethodCallException("Cache path not defined for compiled file ({$this->filename})!");
         }
 
         // If nothing has been loaded, attempt to get pre-compiled version of the file first.
