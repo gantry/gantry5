@@ -57,7 +57,7 @@ trait ThemeTrait
         // Initialize theme cache stream.
         $cachePath = $patform->getCachePath() . '/' . $this->name;
 
-        Folder::create(GANTRY5_ROOT . '/' . $cachePath);
+        Folder::create($cachePath);
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];

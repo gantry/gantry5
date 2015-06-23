@@ -40,7 +40,7 @@ abstract class Platform
 
         //Make sure that cache folder exists, otherwise it will be removed from the lookup.
         $cachePath = $this->getCachePath();
-        Folder::create(GANTRY5_ROOT . '/' . $cachePath);
+        Folder::create($cachePath);
 
         $this->items = [
             'streams' => [

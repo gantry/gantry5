@@ -23,7 +23,7 @@ class Platform extends BasePlatform {
     }
 
     public function getCachePath() {
-        return $this->content_dir . '/cache/gantry5';
+        return WP_CONTENT_DIR . '/cache/gantry5';
     }
 
     public function getThemesPaths() {

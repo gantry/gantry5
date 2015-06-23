@@ -15,7 +15,7 @@ class Platform extends BasePlatform
 {
     public function getCachePath()
     {
-        return 'cache/gantry5';
+        return GANTRY5_ROOT . '/cache/gantry5';
     }
 
     public function getThemesPaths()

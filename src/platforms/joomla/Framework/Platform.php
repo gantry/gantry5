@@ -36,7 +36,7 @@ class Platform extends BasePlatform
             throw new \RuntimeException('Joomla cache path does not exist!');
         }
 
-        return Folder::getRelativePath($path . '/gantry5');
+        return $path . '/gantry5';
     }
 
     public function getThemesPaths()
