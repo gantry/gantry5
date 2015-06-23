@@ -75,7 +75,7 @@ class plgSystemGantry5 extends JPlugin
         $view   = $this->app->input->getString('view', 'styles');
         $task   = $this->app->input->getString('task');
 
-        if (in_array($option, ['com_templates', 'com_advancedtemplates']) && $view == 'styles' && !$task && $type == 'html') {
+        if (in_array($option, array('com_templates', 'com_advancedtemplates')) && $view == 'styles' && !$task && $type == 'html') {
             $this->styles = $this->getStyles();
 
             $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', array($this, 'appendHtml'), $this->app->getBody());
@@ -137,7 +137,7 @@ class plgSystemGantry5 extends JPlugin
         $option = $input->getCmd('option');
         $task   = $input->getCmd('task');
 
-        if (in_array($option, ['com_templates', 'com_advancedtemplates']) && $task && strpos($task, 'style') === 0) {
+        if (in_array($option, array('com_templates', 'com_advancedtemplates')) && $task && strpos($task, 'style') === 0) {
             // Get all ids.
             $cid = $input->post->get('cid', (array) $input->getInt('id'), 'array');
 
@@ -248,7 +248,7 @@ class plgSystemGantry5 extends JPlugin
             $uri = new JUri($matches[2]);
             $id = (int) $uri->getVar('id');
 
-            if ($id && in_array($uri->getVar('option'), ['com_templates', 'com_advancedtemplates']) && isset($this->styles[$id])) {
+            if ($id && in_array($uri->getVar('option'), array('com_templates', 'com_advancedtemplates')) && isset($this->styles[$id])) {
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
                 $html .= ' <span class="label" style="background:#439a86;color:#fff;">Gantry 5</span>';
             }
