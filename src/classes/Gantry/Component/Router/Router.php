@@ -21,6 +21,7 @@ use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Router\RouterInterface;
+use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\Event\EventDispatcher;
 
