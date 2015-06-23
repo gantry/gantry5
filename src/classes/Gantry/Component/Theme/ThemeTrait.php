@@ -61,7 +61,7 @@ trait ThemeTrait
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
-        $path = $locator->addPath('gantry-cache', 'theme', [$cachePath]);
+        $locator->addPath('gantry-cache', 'theme', [$cachePath], true, true);
 
         $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
     }

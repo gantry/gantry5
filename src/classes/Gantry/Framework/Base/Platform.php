@@ -47,6 +47,7 @@ abstract class Platform
                 // Cached files.
                 'gantry-cache' => [
                     'type' => 'Stream',
+                    'force' => true,
                     'prefixes' => ['' => [$cachePath]]
                 ],
                 // Container for all frontend themes.
