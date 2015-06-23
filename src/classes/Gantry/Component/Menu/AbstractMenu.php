@@ -64,12 +64,22 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
      */
     abstract public function getDefaultMenuName();
 
+    /**
+     * Return default menu.
+     *
+     * @return string
+     */
+    abstract public function getActiveMenuName();
+
     public function instance(array $params = [], Config $menu = null)
     {
         $params = $params + $this->defaults;
 
         $menus = $this->getMenus();
 
+        if ($params['menu'] == '-active-') {
+            $params['menu'] = $this->getActiveMenuName();
+        }
         if (!$params['menu']) {
             $params['menu'] = $this->getDefaultMenuName();
         }

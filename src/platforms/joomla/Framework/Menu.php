@@ -69,6 +69,16 @@ class Menu extends AbstractMenu
         return $this->default->menutype;
     }
 
+    /**
+     * Return active menu.
+     *
+     * @return string
+     */
+    public function getActiveMenuName()
+    {
+        return $this->active ? $this->active->menutype : null;
+    }
+
     public function isActive($item)
     {
         $path = $this->base->tree;
@@ -103,7 +113,7 @@ class Menu extends AbstractMenu
     protected function getItemsFromPlatform($params)
     {
         $attributes = ['menutype'];
-        $values = [$params['menu'] ?: $this->default->menutype];
+        $values = [$params['menu']];
 
         // Items are already filtered by access and language, in admin we need to work around that.
         if (\JFactory::getApplication()->isAdmin()) {

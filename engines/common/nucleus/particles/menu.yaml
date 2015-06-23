@@ -31,6 +31,7 @@ form:
           allowEmptyOption: true
       options:
         '': Use Default Menu
+        '-active-': Use Active Menu
 
     startLevel:
       type: input.text
