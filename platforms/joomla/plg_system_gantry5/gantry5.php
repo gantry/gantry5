@@ -163,6 +163,79 @@ class plgSystemGantry5 extends JPlugin
     }
 
     /**
+     * Save plugin parameters and trigger the save events.
+     *
+     * @param array $data
+     * @return bool
+     * @see JModelAdmin::save()
+     */
+    public function onGantry5SaveConfig(array $data)
+    {
+        $name = 'plg_' . $this->_type . '_' . $this->_name;
+
+        // Initialise variables;
+        $dispatcher = JEventDispatcher::getInstance();
+        $table = JTable::getInstance('Extension');
+
+        // Include the content plugins for the on save events.
+        JPluginHelper::importPlugin('extension');
+
+        // Load the row if saving an existing record.
+        $table->load(array('type'=>'plugin', 'folder'=>$this->_type, 'element'=>$this->_name));
+
+        $params = new Joomla\Registry\Registry($table->params);
+        $params->loadArray($data);
+
+        $table->params = $params->toString();
+
+        // Check the data.
+        if (!$table->check()) {
+            throw new RuntimeException($table->getError());
+        }
+
+        // Trigger the onContentBeforeSave event.
+        $result = $dispatcher->trigger('onExtensionBeforeSave', array($name, &$table, false));
+        if (in_array(false, $result, true)) {
+            throw new RuntimeException($table->getError());
+        }
+
+        // Store the data.
+        if (!$table->store()) {
+            throw new RuntimeException($table->getError());
+        }
+
+        // Clean the cache.
+        $this->cleanCache();
+
+        // Trigger the onExtensionAfterSave event.
+        $dispatcher->trigger('onExtensionAfterSave', array($name, &$table, false));
+
+        return true;
+    }
+
+    /**
+     * Clean plugin cache just as if we were saving plugin from the plugin manager.
+     *
+     * @see JModelLegacy::cleanCache()
+     */
+    protected function cleanCache($group = 'com_plugins', $client_id = 0)
+    {
+        // Initialise variables;
+        $conf = JFactory::getConfig();
+        $dispatcher = JEventDispatcher::getInstance();
+
+        $options = array(
+            'defaultgroup' => $group,
+            'cachebase' => ($client_id) ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache'));
+
+        $cache = JCache::getInstance('callback', $options);
+        $cache->clean();
+
+        // Trigger the onContentCleanCache event.
+        $dispatcher->trigger('onContentCleanCache', $options);
+    }
+
+    /**
      * @param array $matches
      * @return string
      */

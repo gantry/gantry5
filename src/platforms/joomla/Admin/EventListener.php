@@ -23,11 +23,19 @@ class EventListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
+            'admin.global.save' => ['onGlobalSave', 0],
             'admin.styles.save' => ['onStylesSave', 0],
             'admin.settings.save' => ['onSettingsSave', 0],
             'admin.layout.save' => ['onLayoutSave', 0],
             'admin.assignments.save' => ['onAssignmentsSave', 0]
         ];
+    }
+
+    public function onGlobalSave(Event $event)
+    {
+        // Trigger the onGantryThemeUpdateCss event.
+        $dispatcher = \JEventDispatcher::getInstance();
+        $dispatcher->trigger('onGantry5SaveConfig', [$event->data]);
     }
 
     public function onStylesSave(Event $event)
