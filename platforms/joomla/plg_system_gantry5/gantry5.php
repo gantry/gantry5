@@ -95,34 +95,35 @@ class plgSystemGantry5 extends JPlugin
             return;
         }
 
-        $path = JPATH_THEMES . "/{$template->template}/includes/gantry.php";
+        $gantryPath = JPATH_THEMES . "/{$template->template}/includes/gantry.php";
 
-        if (is_file($path)) {
+        if (is_file($gantryPath)) {
             // Manually setup Gantry 5 Framework from the template.
-            include $path;
+            include_once $gantryPath;
 
-            return;
+        } else {
+
+            // Setup Gantry 5 Framework or throw exception.
+            Gantry5\Loader::setup();
+
+            // Get Gantry instance.
+            $gantry = Gantry\Framework\Gantry::instance();
+
+            // Initialize the template.
+            $gantry['theme.path'] = JPATH_THEMES . "/{$template->template}";
+            $gantry['theme.name'] = $template->template;
+
+            $themePath = $gantry['theme.path'] . '/includes/theme.php';
+
+            include_once $themePath;
         }
 
-        // Setup Gantry 5 Framework or throw exception.
-        Gantry5\Loader::setup();
-
-        // Get Gantry instance.
-        $gantry = Gantry\Framework\Gantry::instance();
-
-        // Initialize the template.
-        $gantry['theme.path'] = JPATH_THEMES . "/{$template->template}";
-        $gantry['theme.name'] = $template->template;
-
-        $themePath = $gantry['theme.path'] . '/includes/theme.php';
-
-        include_once $themePath;
+        /** @var Gantry\Framework\Theme $theme */
+        $theme = $gantry['theme'];
 
         /** @var \Gantry\Framework\Configurations $configurations */
         $configurations = $gantry['configurations'];
 
-        /** @var Gantry\Framework\Theme $theme */
-        $theme = $gantry['theme'];
         $theme->setLayout($configurations->current());
     }
 
