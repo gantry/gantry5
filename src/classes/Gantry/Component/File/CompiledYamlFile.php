@@ -27,6 +27,8 @@ class CompiledYamlFile extends YamlFile
 
         $gantry = Gantry::instance();
 
-        $this->setCachePath($gantry['file.yaml.cache.path']);
+        if (isset($gantry['file.yaml.cache.path'])) {
+            $this->setCachePath($gantry['file.yaml.cache.path']);
+        }
     }
 }

@@ -194,7 +194,7 @@ abstract class CssCompiler implements CssCompilerInterface
         }
 
         $uri = basename($out);
-        $metaFile = PhpFile::instance($locator->findResource("gantry-cache://scss/{$uri}.php", true, true));
+        $metaFile = PhpFile::instance($locator->findResource("gantry-cache://theme/scss/{$uri}.php", true, true));
 
         if (!$metaFile->exists()) {
             $this->setVariables($variables());
@@ -293,7 +293,7 @@ abstract class CssCompiler implements CssCompilerInterface
         $locator = $gantry['locator'];
 
         $uri = basename($out);
-        $metaFile = PhpFile::instance($locator->findResource("gantry-cache://scss/{$uri}.php", true, true));
+        $metaFile = PhpFile::instance($locator->findResource("gantry-cache://theme/scss/{$uri}.php", true, true));
         $metaFile->save([
             'file' => $out,
             'timestamp' => filemtime($locator->findResource($out)),

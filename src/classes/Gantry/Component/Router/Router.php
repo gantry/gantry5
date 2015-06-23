@@ -119,6 +119,15 @@ abstract class Router implements RouterInterface
             include $this->container['theme.path'] . '/includes/gantry.php';
         }
 
+        if (isset($this->container['theme'])) {
+            // Initialize current theme if it is set.
+            $this->container['theme'];
+        } else {
+            // Otherwise initialize streams and error handler manually.
+            $this->container['streams']->register();
+            $this->container->register(new ErrorServiceProvider);
+        }
+
         $this->container['admin.theme'] = function () {
             return new \Gantry\Admin\Theme(GANTRYADMIN_PATH);
         };

@@ -14,6 +14,7 @@
 
 namespace Gantry\Component\Theme;
 
+use Composer\Util\Filesystem;
 use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
@@ -49,6 +50,20 @@ trait ThemeTrait
         $gantry = static::gantry();
         $gantry['streams']->register();
         $gantry->register(new ErrorServiceProvider);
+
+        /** @var Platform $patform */
+        $patform = $gantry['platform'];
+
+        // Initialize theme cache stream.
+        $cachePath = $patform->getCachePath() . '/' . $this->name;
+
+        Folder::create(GANTRY5_ROOT . '/' . $cachePath);
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+        $path = $locator->addPath('gantry-cache', 'theme', [$cachePath]);
+
+        $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
     }
 
     /**
