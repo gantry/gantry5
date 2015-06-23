@@ -52,7 +52,7 @@ ready(function() {
                 element.value(!value);
             } else {
                 parent.find('.devprod-mode').text(labels[response.body.mode] || 'Unknown');
-                toastr.success(response.body.html, response.title);
+                toastr.success(response.body.html, response.body.title);
             }
 
             parent.hideIndicator();
