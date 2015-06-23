@@ -15,20 +15,22 @@
 namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
-use Gantry\Component\Filesystem\Folder;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Cache extends HtmlController
+class DevProd extends HtmlController
 {
-    public function index()
+    protected $httpVerbs = [
+        'POST' => [
+            '/'            => 'switchMode',
+        ],
+    ];
+
+    public function switchMode()
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
+        $mode = $this->request->post['mode']; // 0: dev | 1: prod
+        $title = !$mode ? 'Development' : 'Production';
 
-        Folder::delete($locator('gantry-cache://theme'), false);
-        Folder::delete($locator('gantry-cache://admin'), false);
-
-        return new JsonResponse(['html' => 'Cache was successfully cleared', 'title' => 'Cache Cleared']);
+        return new JsonResponse(['html' => 'Successfully changed Gantry into <strong>' . $title . '</strong> mode.', 'title' => $title . ' Mode', 'mode' => $mode]);
     }
 }

@@ -154,10 +154,6 @@ body.g-prime {
             }
         }
 
-        .enabler {
-            @include enabler($green, $red);
-        }
-
         .inner-params > :first-child:not(.alert) {
             margin: $content-margin 0 0;
             padding-top: $content-margin * 2;
@@ -185,6 +181,11 @@ body.g-prime {
             }
         }
     }
+
+    .enabler {
+        @include enabler($green, $red);
+    }
+
     .themes {
         .card {
             max-width: 300px;

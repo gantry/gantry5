@@ -1536,7 +1536,7 @@
   background-image: url(data:image/jpeg;base64,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);
 }
 
-#g5-container .card .enabler [type="hidden"] + .toggle, #g5-container .card .enabler [type="radio"] + .toggle {
+#g5-container .enabler [type="hidden"] + .toggle, #g5-container .enabler [type="radio"] + .toggle {
   display: inline-block;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -1546,7 +1546,7 @@
   transition: background-color 0.3s ease-in-out;
 }
 
-#g5-container .card .enabler [type="hidden"] + .toggle .knob, #g5-container .card .enabler [type="radio"] + .toggle .knob {
+#g5-container .enabler [type="hidden"] + .toggle .knob, #g5-container .enabler [type="radio"] + .toggle .knob {
   position: absolute;
   background: #fff;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
@@ -1725,53 +1725,6 @@ body.g-prime {
 #g5-container .card h4 .enabler {
   float: right;
 }
-#g5-container .card .enabler .toggle {
-  background-color: #ed5565;
-}
-#g5-container .card .enabler .toggle .knob {
-  top: 1px;
-  left: 1px;
-}
-#g5-container .card .enabler [type="hidden"] + .toggle {
-  border-radius: 18px;
-  width: 36px;
-  height: 18px;
-}
-#g5-container .card .enabler [type="hidden"] + .toggle .knob {
-  width: 20px;
-  height: 16px;
-  border-radius: 20px;
-}
-#g5-container .card .enabler [type="radio"] {
-  display: none;
-}
-#g5-container .card .enabler [type="radio"] + .toggle {
-  border-radius: 18px;
-  width: 18px;
-  height: 18px;
-}
-#g5-container .card .enabler [type="radio"] + .toggle .knob {
-  width: 12px;
-  height: 12px;
-  border-radius: 20px;
-}
-#g5-container .card .enabler [type="radio"] + .toggle .knob {
-  left: 3px;
-  top: 3px;
-  opacity: 0;
-}
-#g5-container .card .enabler [type="hidden"][value="1"] + .toggle {
-  background-color: #a0d468;
-}
-#g5-container .card .enabler [type="hidden"][value="1"] + .toggle .knob {
-  left: 15px;
-}
-#g5-container .card .enabler [type="radio"]:checked + .toggle {
-  background-color: #a0d468;
-}
-#g5-container .card .enabler [type="radio"]:checked + .toggle .knob {
-  opacity: 1;
-}
 #g5-container .card .inner-params > :first-child:not(.alert) {
   margin: 0.625rem 0 0;
   padding-top: 1.25rem;
@@ -1791,6 +1744,53 @@ body.g-prime {
 }
 #g5-container .card .theme-screenshot a {
   display: block;
+}
+#g5-container .enabler .toggle {
+  background-color: #ed5565;
+}
+#g5-container .enabler .toggle .knob {
+  top: 1px;
+  left: 1px;
+}
+#g5-container .enabler [type="hidden"] + .toggle {
+  border-radius: 18px;
+  width: 36px;
+  height: 18px;
+}
+#g5-container .enabler [type="hidden"] + .toggle .knob {
+  width: 20px;
+  height: 16px;
+  border-radius: 20px;
+}
+#g5-container .enabler [type="radio"] {
+  display: none;
+}
+#g5-container .enabler [type="radio"] + .toggle {
+  border-radius: 18px;
+  width: 18px;
+  height: 18px;
+}
+#g5-container .enabler [type="radio"] + .toggle .knob {
+  width: 12px;
+  height: 12px;
+  border-radius: 20px;
+}
+#g5-container .enabler [type="radio"] + .toggle .knob {
+  left: 3px;
+  top: 3px;
+  opacity: 0;
+}
+#g5-container .enabler [type="hidden"][value="1"] + .toggle {
+  background-color: #a0d468;
+}
+#g5-container .enabler [type="hidden"][value="1"] + .toggle .knob {
+  left: 15px;
+}
+#g5-container .enabler [type="radio"]:checked + .toggle {
+  background-color: #a0d468;
+}
+#g5-container .enabler [type="radio"]:checked + .toggle .knob {
+  opacity: 1;
 }
 #g5-container .themes .card {
   max-width: 300px;
@@ -3127,9 +3127,21 @@ body.g-prime {
   color: #ddd;
 }
 #g5-container .g-block.navbar-icons {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 3%;
+  -moz-flex: 0 3%;
+  -ms-flex: 0 3%;
   flex: 0 3%;
 }
 #g5-container .g-block.navbar-closed {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0;
+  -moz-flex: 0;
+  -ms-flex: 0;
   flex: 0;
 }
 
@@ -3687,6 +3699,12 @@ body.g-prime {
   background-color: #ddd;
   border: 0;
   padding: 1px;
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 1 100%;
+  -moz-flex: 0 1 100%;
+  -ms-flex: 0 1 100%;
   flex: 0 1 100%;
 }
 #g5-container .lm-blocks .placeholder.in-between {
@@ -3696,6 +3714,12 @@ body.g-prime {
   padding: 1px;
   text-indent: -10000px;
   font-size: 0;
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 1 0;
+  -moz-flex: 0 1 0;
+  -ms-flex: 0 1 0;
   flex: 0 1 0;
   background-color: #555;
 }
@@ -3869,11 +3893,23 @@ body.g-prime {
   position: relative;
 }
 #g5-container .particles-sidebar-block {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 170px;
+  -moz-flex: 0 170px;
+  -ms-flex: 0 170px;
   flex: 0 170px;
   width: 170px;
 }
 @media only all and (max-width: 47.938rem) {
   #g5-container .particles-sidebar-block {
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    box-flex: 0;
+    -webkit-flex: 0 100%;
+    -moz-flex: 0 100%;
+    -ms-flex: 0 100%;
     flex: 0 100%;
     width: 100%;
     margin: 0;
@@ -5106,12 +5142,12 @@ html.g5-dialog-open {
   left: 50%;
   position: absolute;
 }
-#g5-container .g5-popover-extras a {
+#g5-container .g5-popover-extras a, #g5-container .g5-popover-extras [data-g-devprod] {
   display: block;
   padding: 0.4rem;
   color: #666;
 }
-#g5-container .g5-popover-extras a:hover {
+#g5-container .g5-popover-extras a:hover, #g5-container .g5-popover-extras [data-g-devprod]:hover {
   color: #666;
   background-color: #eee;
   border-radius: 4px;

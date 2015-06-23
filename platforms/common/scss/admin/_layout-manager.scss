@@ -465,7 +465,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             background-color: #ddd;
             border: 0;
             padding: 1px;
-            flex: 0 1 100%;
+            @include flex(0 1 100%);
 
             &.in-between {
                 display: block;
@@ -474,7 +474,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 padding: 1px;
                 text-indent: -10000px;
                 font-size: 0;
-                flex: 0 1 0;
+                @include flex(0 1 0);
                 background-color: #555;
             }
 
@@ -696,11 +696,11 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     }
 
     .particles-sidebar-block {
-        flex: 0 170px;
+        @include flex(0 170px);
         width: 170px;
 
         @include breakpoint(mobile-only) {
-            flex: 0 100%;
+            @include flex(0 100%);
             width: 100%;
             margin: 0;
             padding: 0;

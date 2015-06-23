@@ -99,7 +99,8 @@ ready(function() {
                 popover = element.getPopover({
                     style: 'extras',
                     width: 220,
-                    content: zen('ul').html(content.html())[0].outerHTML
+                    content: zen('ul').html(content.html())[0].outerHTML,
+                    allowElementsClick: '.toggle'
                 });
 
             element.getPopover().show();

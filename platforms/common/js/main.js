@@ -307,7 +307,6 @@ var $             = require('elements'),
     request       = require('agent'),
 
     modal         = require('../ui').modal,
-    toastr        = require('../ui').toastr,
     trim          = require('mout/string/trim'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
@@ -3252,7 +3251,8 @@ ready(function() {
                 popover = element.getPopover({
                     style: 'extras',
                     width: 220,
-                    content: zen('ul').html(content.html())[0].outerHTML
+                    content: zen('ul').html(content.html())[0].outerHTML,
+                    allowElementsClick: '.toggle'
                 });
 
             element.getPopover().show();
@@ -8240,11 +8240,10 @@ module.exports = Eraser;
 },{"../utils/elements.utils":55,"prime":245,"prime-util/prime/bound":241,"prime-util/prime/options":242,"prime/emitter":244}],46:[function(require,module,exports){
 "use strict";
 
-var Modal = require('./modal'),
-    Selectize = require('./selectize');
+var Selectize = require('./selectize');
 
 module.exports = {
-    modal: new Modal(),
+    modal: require('./modal'),
     togglers: require('./togglers'),
     collapse: require('./collapse'),
     selectize: Selectize,
@@ -8603,7 +8602,9 @@ var Modal = new prime({
     }
 });
 
-module.exports = Modal;
+var modal = new Modal();
+
+module.exports = modal;
 
 },{"../utils/elements.utils":55,"agent":66,"elements/domready":91,"elements/zen":96,"mout/array/forEach":134,"mout/array/last":139,"mout/array/map":140,"mout/function/bind":150,"mout/object/merge":194,"prime":245,"prime-util/prime/bound":241,"prime-util/prime/options":242,"prime/emitter":244,"prime/map":246}],48:[function(require,module,exports){
 "use strict";
@@ -11888,12 +11889,21 @@ var toaster = new Toaster();
 module.exports = toaster;
 },{"../utils/elements.utils.js":55,"elements/zen":96,"mout/function/bind":150,"mout/object/merge":194,"prime":245,"prime-util/prime/bound":241,"prime-util/prime/options":242,"prime/emitter":244,"prime/map":246}],52:[function(require,module,exports){
 "use strict";
-var ready = require('elements/domready'),
-    $     = require('elements');
+var ready         = require('elements/domready'),
+    $             = require('elements'),
+
+    modal         = require('./modal'),
+    toastr        = require('./toastr'),
+    request       = require('agent'),
+
+    getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
+    getAjaxURL    = require('../utils/get-ajax-url').global;
 
 var hiddens,
     toggles = function(event, element) {
-        if (event.type.match(/^touch/)) { event.preventDefault(); }
+        if (event.type.match(/^touch/) || event.type == 'click') { event.preventDefault(); }
+        if (event.type == 'click') { return false; }
         element = $(element);
         hiddens = element.find('~~ [type=hidden]');
 
@@ -11902,16 +11912,47 @@ var hiddens,
 
         hiddens.emit('change');
         $('body').emit('change', { target: hiddens });
+
+        return false;
     };
 
 ready(function() {
-    ['touchend', 'click'].forEach(function(event) {
-        $('body').delegate(event, '.enabler .toggle', toggles);
+    var body = $('body');
+    ['touchend', 'mouseup', 'click'].forEach(function(event) {
+        body.delegate(event, '.enabler .toggle', toggles);
+    });
+
+    var URI = parseAjaxURI(getAjaxURL('devprod') + getAjaxSuffix());
+    body.delegate('change', '[data-g-devprod] input[type="hidden"]', function(event, element) {
+        var value = element.value(),
+            parent = element.parent('[data-g-devprod]'),
+            labels = JSON.parse(parent.data('g-devprod'));
+
+        parent.showIndicator();
+
+        request('post', URI, { mode: value }, function(error, response) {
+            if (!response.body.success) {
+                modal.open({
+                    content: response.body.html || response.body,
+                    afterOpen: function(container) {
+                        if (!response.body.html) { container.style({ width: '90%' }); }
+                    }
+                });
+
+                element.value(!value);
+            } else {
+                parent.find('.devprod-mode').text(labels[response.body.mode] || 'Unknown');
+                toastr.success(response.body.html, response.title);
+            }
+
+            parent.hideIndicator();
+        });
     });
 });
 
 module.exports = {};
-},{"elements":93,"elements/domready":91}],53:[function(require,module,exports){
+
+},{"../utils/get-ajax-suffix":59,"../utils/get-ajax-url":60,"./modal":47,"./toastr":51,"agent":66,"elements":93,"elements/domready":91}],53:[function(require,module,exports){
 "use strict";
 
 var prime         = require('prime'),

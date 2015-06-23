@@ -21,14 +21,14 @@ class CompiledYamlFile extends YamlFile
 {
     use CompiledFile;
 
-    protected $cachePath;
-
     protected function __construct()
     {
         parent::__construct();
 
         $gantry = Gantry::instance();
 
-        $this->cachePath = $gantry['file.yaml.cache.path'];
+        if (isset($gantry['file.yaml.cache.path'])) {
+            $this->setCachePath($gantry['file.yaml.cache.path']);
+        }
     }
 }

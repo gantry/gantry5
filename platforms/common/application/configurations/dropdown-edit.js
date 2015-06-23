@@ -5,7 +5,6 @@ var $             = require('elements'),
     request       = require('agent'),
 
     modal         = require('../ui').modal,
-    toastr        = require('../ui').toastr,
     trim          = require('mout/string/trim'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),

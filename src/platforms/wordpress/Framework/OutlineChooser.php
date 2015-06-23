@@ -87,7 +87,7 @@ class OutlineChooser
         $paths = $locator->findResources("gantry-config://");
         $files = (new ConfigFileFinder)->locateFileInFolder('assignments', $paths);
 
-        $cache = $locator->findResource('gantry-cache://compiled/config', true, true);
+        $cache = $locator->findResource('gantry-cache://theme/compiled/config', true, true);
 
         $config = new CompiledConfig($cache, [$files]);
 

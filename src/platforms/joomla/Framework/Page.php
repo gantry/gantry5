@@ -46,7 +46,6 @@ class Page extends Base\Page
     public function htmlAttributes()
     {
         $attributes = [
-                'xml:lang' => $this->language,
                 'lang' => $this->language,
                 'dir' => $this->direction
             ]
