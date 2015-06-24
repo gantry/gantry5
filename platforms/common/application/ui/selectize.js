@@ -136,7 +136,7 @@ var transferStyles = function($from, $to, properties) {
     var i, n, styles = {};
     if (properties) {
         for (i = 0, n = properties.length; i < n; i++) {
-            styles[properties[i]] = $from.compute(properties[i]);
+            styles[properties[i]] = $from[0].style[properties[i]];
         }
     } else {
         styles = $from.compute();
@@ -144,32 +144,41 @@ var transferStyles = function($from, $to, properties) {
     $to.style(styles);
 };
 
+var measured = null;
 var measureString = function(str, $parent) {
     if (!str) {
         return 0;
     }
 
-    var $test = zen('test').style({
-        position: 'absolute',
-        top: -99999,
-        left: -99999,
-        width: 'auto',
-        padding: 0,
-        whiteSpace: 'pre'
-    }).text(str).bottom('body');
+    var $test;
+    if (!measured) {
+        $test = zen('test').style({
+            position: 'absolute',
+            top: -99999,
+            left: -99999,
+            width: 'auto',
+            padding: 0,
+            whiteSpace: 'pre'
+        }).text(str).bottom('body');
 
-    transferStyles($parent, $test, [
-        'letterSpacing',
-        'fontSize',
-        'fontFamily',
-        'fontWeight',
-        'textTransform'
-    ]);
+        transferStyles($parent, $test, [
+            'letterSpacing',
+            'fontSize',
+            'fontFamily',
+            'fontWeight',
+            'textTransform'
+        ]);
 
-    var width = $test[0].offsetWidth;
-    $test.remove();
+        measured = $test;
+    } else {
+        $test = measured;
+        $test.text(str);
+    }
 
-    return width;
+    //var width = $test[0].offsetWidth;
+    //$test.remove();
+
+    return $test[0].offsetWidth;
 };
 
 var highlight = function($element, pattern) {
@@ -253,7 +262,7 @@ var autoGrow = function(input) {
         width = measureString(value, input) + 4;
         if (width !== currentWidth) {
             currentWidth = width;
-            input.style({ width: width });
+            input[0].style.width = width + 'px';
             input.emit('resize');
         }
     };
@@ -361,7 +370,7 @@ var Selectize = new prime({
         this.tagType = input.tag() == 'select' ? TAG_SELECT : TAG_INPUT;
         this.highlightedValue = null;
         this.isRequired = input.attribute('required');
-        forEach(['isOpen', 'isDisabled', 'isInvalid', 'isLocked', 'isFocused', 'isInputHidden', 'isSeup', 'isShiftDown', 'isCmdDown', 'isCtrlDown', 'ignoreFocus', 'ignoreBlur', 'ignoreHover', 'hasOptions'], function(option) {
+        forEach(['isOpen', 'isDisabled', 'isInvalid', 'isLocked', 'isFocused', 'isInputHidden', 'isSetup', 'isShiftDown', 'isCmdDown', 'isCtrlDown', 'ignoreFocus', 'ignoreBlur', 'ignoreHover', 'hasOptions'], function(option) {
             this[option] = false;
         }, this);
         this.currentResults = null;
@@ -441,7 +450,7 @@ var Selectize = new prime({
         // g5 custom
         if (inputMode == 'single') {
             $wrapper.style({
-                width: parseInt($input.compute('width')) + 12 + (24) // padding compensation
+                width: parseInt($input[0].offsetWidth) + 12 + (24) // padding compensation
             });
         }
 
@@ -2160,7 +2169,7 @@ $.implement({
             }
         };
 
-        return this.forEach(function($input) {
+        return this.forEach(function($input, i) {
             $input = $($input);
             if ($input.selectizeInstance) return;
 
@@ -2193,6 +2202,7 @@ $.implement({
             }
 
             instance = new Selectize($input, merge({}, defaults, settings_element, settings_user, dataOptions));
+            $input.selectizeInstance = instance;
         });
     }
 });
