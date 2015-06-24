@@ -4,9 +4,9 @@
 <form method="post" action="{{ gantry.route(action) }}">
     <div class="g-tabs">
         <ul>
-            <li class="active"><a href="#">{{ 'GANTRY5_PLATFORM_TEMPLATES_PARTICLE'|trans }}</a></li>
+            <li class="active"><a href="#">{{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}</a></li>
             {% if block %}
-            <li><a href="#">{{ 'GANTRY5_PLATFORM_TEMPLATES_BLOCK'|trans }}</a></li>
+            <li><a href="#">{{ 'GANTRY5_PLATFORM_BLOCK'|trans }}</a></li>
             {% endif %}
         </ul>
     </div>
@@ -32,7 +32,7 @@
         <div class="g-pane">
             <div class="card settings-block">
                 <h4>
-                    {{ 'GANTRY5_PLATFORM_TEMPLATES_BLOCK'|trans }}
+                    {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
                 </h4>
                 <div class="inner-params">
                     {% include 'forms/fields.html.twig' with {'blueprints': block.form, 'data': item.options, 'prefix': 'block.'} %}
@@ -43,9 +43,9 @@
     </div>
 
     <div class="g-modal-actions">
-        <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_TEMPLATES_APPLY'|trans }}</button>
-        <button class="button button-primary" data-apply-and-save>{{ 'GANTRY5_PLATFORM_TEMPLATES_APPLY_SAVE'|trans }}</button>
-        <a class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_TEMPLATES_CANCEL'|trans }}</a>
+        <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
+        <button class="button button-primary" data-apply-and-save>{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
+        <a class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</a>
     </div>
 </form>
 {% endblock %}
