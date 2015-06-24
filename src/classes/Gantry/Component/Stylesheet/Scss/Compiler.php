@@ -105,7 +105,7 @@ class Compiler extends BaseCompiler
             // Only return url once per font.
             if ($font && !isset($this->usedFonts[$font])) {
                 $this->usedFonts[$font] = true;
-                return "url('http://fonts.googleapis.com/css?{$value}')";
+                return "url('//fonts.googleapis.com/css?{$value}')";
             }
         }
 
