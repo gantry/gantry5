@@ -1,9 +1,9 @@
 <li class="config-select-wrap">
-    {% set selected_title = configuration == 'default' ? 'Base Outline' : '' %}
+    {% set selected_title = configuration == 'default' ? 'GANTRY5_PLATFORM_TEMPLATES_BASE_OUTLINE|trans' : '' %}
     {% set selected_value = configuration == 'default' ? 'default' : '' %}
     {% set selected_editable = true %}
     <select id="configuration-selector" class="config-select" data-selectize-ajaxify data-selectize="{{ {allowEmptyOption: true}|json_encode|e('html_attr') }}">
-        <optgroup label="Global Defaults">
+        <optgroup label="{{ 'GANTRY5_PLATFORM_TEMPLATES_GLOBAL_DEFAULTS'|trans }}">
             <option value="default"
                 {% if configuration == 'default' %}selected="selected"{% endif %}
                 data-data="{{ {params: {navbar: true}, url: gantry.route('configurations/default', configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
@@ -13,7 +13,7 @@
 
         {% set user_conf = gantry.configurations.user %}
         {% if user_conf.count %}
-        <optgroup label="Theme Outlines">
+        <optgroup label="{{ 'GANTRY5_PLATFORM_TEMPLATES_THEME_OUTLINES'|trans }}">
             {% for name, title in user_conf %}
                 {% if name == configuration %}
                     {% set selected_title = title|e %}
@@ -30,7 +30,7 @@
 
         {% set system_conf = gantry.configurations.system %}
         {% if system_conf.count %}
-        <optgroup label="System Outlines">
+        <optgroup label="{{ 'GANTRY5_PLATFORM_TEMPLATES_SYSTEM_OUTLINES'|trans }}">
             {% for name, title in system_conf %}
                 {% if name == configuration %}
                     {% set selected_title = title|e %}

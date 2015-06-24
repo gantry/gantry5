@@ -1,12 +1,12 @@
 <div data-mm-particle-stepone="{{ gantry.route('menu/particle') }}" class="menu-editor-extras">
     <div class="card settings-block">
         <h4>
-            Pick a Particle
+            {{ 'GANTRY5_PLATFORM_TEMPLATES_PICK_PARTICLE'|trans }}
         </h4>
         <div class="inner-params">
             <div class="g5-lm-particles-picker menu-editor-particles">
                 <div class="search">
-                    <input type="text" placeholder="Search..." />
+                    <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_TEMPLATES_SEARCH_ELI'|trans }}" />
                     <i class="fa fa-search"></i>
                 </div>
                 <ul>
@@ -32,8 +32,8 @@
         </div>
     </div>
     <div class="g-modal-actions">
-        {#<a class="button float-left">Defaults</a>#}
-        <button class="button button-primary" type="submit" data-mm-select disabled>Select <i class="fa fa-fw fa-chevron-right"></i></button>
-        <a class="button g5-dialog-close">Cancel</a>
+        {#<a class="button float-left">{{ 'GANTRY5_PLATFORM_TEMPLATES_DEFAULTS'|trans }}</a>#}
+        <button class="button button-primary" type="submit" data-mm-select disabled>{{ 'GANTRY5_PLATFORM_TEMPLATES_SELECT'|trans }} <i class="fa fa-fw fa-chevron-right"></i></button>
+        <a class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_TEMPLATES_CANCEL'|trans }}</a>
     </div>
 </div>

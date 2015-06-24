@@ -38,7 +38,7 @@
 {% block footer_section %}
     <footer id="footer">
         <div>
-            <a href="http://gantry.org">Gantry Administration</a> by <a href="http://www.rockettheme.com">RocketTheme</a>
+            {{ 'GANTRY5_PLATFORM_FOOTER'|trans|raw }}
         </div>
         {% set version = constant('GANTRY5_VERSION') %}
         {% set version_date = constant('GANTRY5_VERSION_DATE') %}

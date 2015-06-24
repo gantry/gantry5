@@ -1,19 +1,19 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-{% set labels = {collapse: 'Collapse', expand: 'Expand'} %}
+{% set labels = {collapse: 'GANTRY5_PLATFORM_COLLAPSE|trans', expand: 'GANTRY5_PLATFORM_EXPAND|trans'} %}
 
 <div id="styles">
     {% set stored_data = get_cookie('g5-collapsed')|default('{}')|json_decode %}
     <form method="post">
         <span class="float-right">
-            <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}" class="button button-secondary" data-ajax-action><i class="fa fa-fw fa-tasks"></i> <span>Recompile CSS</span></a>
-            <button type="submit" class="button button-primary button-save" data-save="Styles"><i class="fa fa-fw fa-check"></i> <span>Save Styles</span></button>
+            <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}" class="button button-secondary" data-ajax-action><i class="fa fa-fw fa-tasks"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span></a>
+            <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_STYLES'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_STYLES'|trans }}</span></button>
         </span>
 
         {% set collapsed = attribute(stored_data, 'swatches') %}
         <h2 class="page-title{{ collapsed ? ' g-collapsed-main' : '' }}" data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: 'swatches', target: '~ .swatches-container' })|json_encode|e('html_attr') }}" data-g-collapse-id="swatches">
-            <span class="title">Styles</span>
+            <span class="title">{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span>
             <span class="g-collapse g-tooltip" data-title="{{ collapsed ? labels.expand : labels.collapse }}"><i class="fa fa-fw  fa-caret-up"></i></span>
         </h2>
 
@@ -52,16 +52,16 @@
 
         <input type="hidden" name="styles[preset]" value="{{ presetKey }}" />
         {% for group, list in blocks %}
-        <h2>{{ group|capitalize }} Styles</h2>
+        <h2>{{ group|capitalize }} {{ 'GANTRY5_PLATFORM_STYLES'|trans }}</h2>
 
         <div class="g-filter-actions">
             <div class="g-panel-filters" data-g-global-filter="">
                 <div class="search settings-block">
-                    <input type="text" data-g-collapse-filter placeholder="Filter {{ group|capitalize }}...">
+                    <input type="text" data-g-collapse-filter placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}...">
                     <i class="fa fa-fw fa-search"></i>
                 </div>
-                <div class="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> Collapse All</div>
-                <div class="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> Expand All</div>
+                <div class="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</div>
+                <div class="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</div>
             </div>
         </div>
 
@@ -85,8 +85,8 @@
 
         <div class="g-footer-actions">
             <span class="float-right">
-                <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}" class="button button-secondary" data-ajax-action><i class="fa fa-fw fa-tasks"></i> <span>Recompile CSS</span></a>
-                <button type="submit" class="button button-primary button-save" data-save="Styles"><i class="fa fa-fw fa-check"></i> <span>Save Styles</span></button>
+                <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}" class="button button-secondary" data-ajax-action><i class="fa fa-fw fa-tasks"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span></a>
+                <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_STYLES'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_STYLES'|trans }}</span></button>
             </span>
         </div>
     </form>
