@@ -1,61 +1,12 @@
 "use strict";
 
-var ready   = require('elements/domready'),
-    map     = require('prime/map')(),
-    merge   = require('mout/object/merge'),
-    forEach = require('mout/array/forEach'),
-    trim    = require('mout/string/trim'),
-    $       = require('../utils/elements.utils');
-
-
-// credits: https://github.com/cowboy/javascript-sync-async-foreach
-var asyncForEach = function(arr, eachFn, doneFn) {
-    var i = -1;
-    // Resolve array length to a valid (ToUint32) number.
-    var len = arr.length >>> 0;
-
-    (function next(result) {
-        // This flag will be set to true if `this.async` is called inside the
-        // eachFn` callback.
-        var async;
-        // Was false returned from the `eachFn` callback or passed to the
-        // `this.async` done function?
-        var abort = result === false;
-
-        // Increment counter variable and skip any indices that don't exist. This
-        // allows sparse arrays to be iterated.
-        do { ++i; } while (!(i in arr) && i !== len);
-
-        // Exit if result passed to `this.async` done function or returned from
-        // the `eachFn` callback was false, or when done iterating.
-        if (abort || i === len) {
-            // If a `doneFn` callback was specified, invoke that now. Pass in a
-            // boolean value representing "not aborted" state along with the array.
-            if (doneFn) {
-                doneFn(!abort, arr);
-            }
-            return;
-        }
-
-        // Invoke the `eachFn` callback, setting `this` inside the callback to a
-        // custom object that contains one method, and passing in the array item,
-        // index, and the array.
-        result = eachFn.call({
-            // If `this.async` is called inside the `eachFn` callback, set the async
-            // flag and return a function that can be used to continue iterating.
-            async: function() {
-                async = true;
-                return next;
-            }
-        }, arr[i], i, arr);
-
-        // If the async flag wasn't set, continue by calling `next` synchronously,
-        // passing in the result of the `eachFn` callback.
-        if (!async) {
-            next(result);
-        }
-    }());
-};
+var ready        = require('elements/domready'),
+    map          = require('prime/map')(),
+    merge        = require('mout/object/merge'),
+    forEach      = require('mout/array/forEach'),
+    trim         = require('mout/string/trim'),
+    $            = require('../utils/elements.utils'),
+    asyncForEach = require('../utils/async-foreach');
 
 var Map         = map,
     Assignments = {
@@ -64,10 +15,10 @@ var Map         = map,
             if (element.parent('[data-g-global-filter]')) { return Assignments.globalToggleSection(e, element); }
             if (element.matches('label')) { return Assignments.treatLabel(e, element); }
 
-            var card = element.parent('.card'),
+            var card    = element.parent('.card'),
                 toggles = Map.get(card),
-                save = $('[data-save]'),
-                mode = element.data('g-assignments-check') == null ? 0 : 1;
+                save    = $('[data-save]'),
+                mode    = element.data('g-assignments-check') == null ? 0 : 1;
 
             if (!toggles || !toggles.inputs) {
                 var inputs = card.search('.enabler input[type=hidden]');
@@ -84,7 +35,7 @@ var Map         = map,
 
                 item.value(mode).emit('change');
                 $('body').emit('change', { target: item });
-            }, function(){
+            }, function() {
                 if (typeof index !== 'undefined' && typeof array !== 'undefined' && (index + 1 == array.length)) {
                     save.disabled(false);
                 }
@@ -94,9 +45,9 @@ var Map         = map,
         filterSection: function(e, element, value) {
             if (element.parent('[data-g-global-filter]')) { return Assignments.globalFilterSection(e, element); }
 
-            var card = element.parent('.card'),
+            var card        = element.parent('.card'),
                 onlyEnabled = $('[data-assignments-enabledonly]'),
-                items = Map.get(card) || Map.set(card, { labels: card.search('label .settings-param-title') }).get(card);
+                items       = Map.get(card) || Map.set(card, { labels: card.search('label .settings-param-title') }).get(card);
 
             value = value || element.value();
 
@@ -169,8 +120,8 @@ var Map         = map,
         },
 
         globalToggleSection: function(e, element) {
-            var mode = element.data('g-assignments-check') == null ? '[data-g-assignments-uncheck]' : '[data-g-assignments-check]',
-                save = $('[data-save]'),
+            var mode   = element.data('g-assignments-check') == null ? '[data-g-assignments-uncheck]' : '[data-g-assignments-check]',
+                save   = $('[data-save]'),
                 search = $('#assignments .card ' + mode);
 
             if (!search) { return; }
@@ -183,9 +134,9 @@ var Map         = map,
         },
 
         globalFilterSection: function(e, element) {
-            var value = element.value(),
+            var value       = element.value(),
                 onlyEnabled = $('[data-assignments-enabledonly]'),
-                search = $('#assignments .card .search input[type="text"]');
+                search      = $('#assignments .card .search input[type="text"]');
 
             if (!search && !onlyEnabled.checked()) { return; }
 
