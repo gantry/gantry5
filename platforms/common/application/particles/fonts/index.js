@@ -37,7 +37,7 @@ var prime         = require('prime'),
 
     request       = require('agent'),
 
-    wf            = require('./webfont');
+    wf            = require('webfontloader');
 
 require('../../utils/elements.viewport');
 

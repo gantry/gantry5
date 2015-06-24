@@ -12,7 +12,8 @@
     "prime-util": "^0.5.0",
     "sifter": "^0.4.1",
     "slick": "^1.12.2",
-    "sortablejs": "^1.2.0"
+    "sortablejs": "^1.2.0",
+    "webfontloader": "^1.6.3"
   },
   "devDependencies": {
     "browserify": "^10.2.4",
