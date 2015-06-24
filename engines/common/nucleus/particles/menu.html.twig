@@ -1,7 +1,7 @@
 {% set menu = gantry.menu.instance(particle) %}
 
 {% macro displayParticle(item, gantry) %}
-    {% if item.particle.enabled is null or item.particle.enabled %}
+    {% if item.options.particle.enabled is null or item.options.particle.enabled %}
         {% set classes = item.options.block.class %}
         <div class="menu-item-particle{{ classes ? ' ' ~ classes }}">
         {% include ['particles/' ~ item.particle ~ '.html.twig', '@particles/' ~ item.particle ~ '.html.twig']
