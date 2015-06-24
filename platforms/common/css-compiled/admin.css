@@ -5848,6 +5848,7 @@ html.g5-dialog-open {
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: 1;
   color: #ddd;
   margin: -12px 0 0 -8px;
 }
