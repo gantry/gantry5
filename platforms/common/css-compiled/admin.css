@@ -1404,37 +1404,37 @@
 #g5-container .nomarginall {
   margin: 0 !important;
 }
-#g5-container .nomarginall .content {
+#g5-container .nomarginall .g-content {
   margin: 0 !important;
 }
 #g5-container .nomargintop {
   margin-top: 0 !important;
 }
-#g5-container .nomargintop .content {
+#g5-container .nomargintop .g-content {
   margin-top: 0 !important;
 }
 #g5-container .nomarginbottom {
   margin-bottom: 0 !important;
 }
-#g5-container .nomarginbottom .content {
+#g5-container .nomarginbottom .g-content {
   margin-bottom: 0 !important;
 }
 #g5-container .nopaddingall {
   padding: 0 !important;
 }
-#g5-container .nopaddingall .content {
+#g5-container .nopaddingall .g-content {
   padding: 0 !important;
 }
 #g5-container .nopaddingtop {
   padding-top: 0 !important;
 }
-#g5-container .nopaddingtop .content {
+#g5-container .nopaddingtop .g-content {
   padding-top: 0 !important;
 }
 #g5-container .nopaddingbottom {
   padding-bottom: 0 !important;
 }
-#g5-container .nopaddingbottom .content {
+#g5-container .nopaddingbottom .g-content {
   padding-bottom: 0 !important;
 }
 #g5-container .full-width {
@@ -5729,6 +5729,7 @@ html.g5-dialog-open {
   padding: 4px;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 50px;
+  line-height: 1em;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-progress .g-file-progress-text {
   position: absolute;
