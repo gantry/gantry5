@@ -24,7 +24,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class Filepicker extends JsonController
 {
     protected $httpVerbs = [
-        'GET'  => [
+        'GET'    => [
             '/'            => 'index',
             '/*'           => 'index',
             '/display'     => 'undefined',
@@ -32,15 +32,15 @@ class Filepicker extends JsonController
             '/download'    => 'undefined',
             '/download/**' => 'downloadFile',
         ],
-        'POST' => [
+        'POST'   => [
             '/'            => 'index',
             '/*'           => 'index',
             '/subfolder'   => 'subfolder',
             '/subfolder/*' => 'subfolder',
-            '/upload'   => 'undefined',
+            '/upload'      => 'undefined',
             '/upload/**'   => 'upload'
         ],
-        'DELETE'  => [
+        'DELETE' => [
             '/**' => 'delete'
         ]
     ];
@@ -48,19 +48,19 @@ class Filepicker extends JsonController
     public function index()
     {
         /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-        $base = $locator->base;
+        $locator   = $this->container['locator'];
+        $base      = $locator->base;
         $bookmarks = [];
-        $drives = [DS];
+        $drives    = [DS];
         $subfolder = false;
-        $filter = false;
+        $filter    = false;
 
         if ($this->method == 'POST') {
-            $root = $this->request->post['root'];
-            $drives = isset($root) ? ($root !== 'false' ? $root : [DS]) : [DS];
-            $subfolder =  $this->request->post['subfolder'] ? true : false;
-            $filter = $this->request->post['filter'];
-            $filter = isset($filter) ? ($filter !== 'false' ? $filter : false) : false;
+            $root      = $this->request->post['root'];
+            $drives    = isset($root) ? ($root !== 'false' ? $root : [DS]) : [DS];
+            $subfolder = $this->request->post['subfolder'] ? true : false;
+            $filter    = $this->request->post['filter'];
+            $filter    = isset($filter) ? ($filter !== 'false' ? $filter : false) : false;
         }
 
         if (!is_array($drives)) {
@@ -69,39 +69,43 @@ class Filepicker extends JsonController
 
         foreach ($drives as $drive) {
             // cleanup of the path so it's chrooted.
-            $drive = str_replace('..', '', $drive);
+            $drive  = str_replace('..', '', $drive);
             $stream = explode('://', $drive);
             $scheme = $stream[0];
 
             $isStream = $locator->schemeExists($scheme);
-            $path = rtrim($base, DS) . DS . ltrim($scheme, DS);
+            $path     = rtrim($base, DS) . DS . ltrim($scheme, DS);
 
             // It's a stream but the scheme doesn't exist. we skip it.
             if (!$isStream && (count($stream) == 2 || !file_exists($path))) {
                 continue;
             }
 
-            if ($isStream && !count($resources = $locator->findResources($drive, false))) {
+            if ($isStream && !count($locator->findResources($drive, false))) {
                 continue;
             }
 
-            $key = $isStream ? $drive : preg_replace('#' . DS . '{2,}+#', DS, $drive);
+            $key = $isStream
+                ? $drive
+                : preg_replace('#' . DS . '{2,}+#', DS, $drive);
 
             if (!array_key_exists($key, $bookmarks)) {
-                $bookmarks[$key] = $isStream ? $resources : [rtrim(Folder::getRelativePath($path), DS) . DS];
+                $bookmarks[$key] = $isStream
+                    ? [$locator->getIterator($drive)]
+                    : [rtrim(Folder::getRelativePath($path), DS) . DS];
             }
         }
 
         if (!count($bookmarks)) {
-            throw new \RuntimeException((count($drives) > 1 ? 'directories' : 'directory') . ' "' . implode('", "',
-                    $drives) . '" not found', 404);
+            throw new \RuntimeException((count($drives) > 1 ? 'directories' : 'directory') . ' "' . implode('", "', $drives) . '" not found', 404);
         }
 
-        $files = new \ArrayObject();
+        $files   = new \ArrayObject();
         $folders = [];
-        $active = [];
+        $active  = [];
 
         $index = 0;
+
         // iterating the folder and collecting subfolders and files
         foreach ($bookmarks as $key => $bookmark) {
             $folders[$key] = [];
@@ -110,37 +114,61 @@ class Filepicker extends JsonController
                 $active[] = $key;
             }
 
-            foreach($bookmark as $folder) {
+            foreach ($bookmark as $folder) {
+                $isStream = $folder instanceof \RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
+
+                if ($isStream) {
+                    unset($bookmarks[$key]);
+                    $iterator = new \IteratorIterator($folder);
+                    $folder   = $key;
+                } else {
+                    $iterator = new \DirectoryIterator($base . DS . ltrim($folder, DS));
+                }
+
                 $folders[$key][$folder] = new \ArrayObject();
                 if (!$index) {
                     $active[] = $folder;
                 }
 
                 /** @var \SplFileInfo $info */
-                foreach (new \DirectoryIterator($base . DS . ltrim($folder, DS)) as $info) {
+                foreach ($iterator as $info) {
                     // no dot files nor files beginning with dot
-                    if ($info->isDot() || substr($info->getFilename(), 0, 1) == '.') { continue; }
+                    if ($info->isDot() || substr($info->getFilename(), 0, 1) == '.') {
+                        continue;
+                    }
 
                     $file = new \stdClass();
 
-                    foreach(['getFilename', 'getExtension', 'getPerms', 'getMTime', 'getBasename', 'getPathname', 'getSize', 'getType', 'isReadable', 'isWritable', 'isDir', 'isFile'] as $method){
-                        $keyMethod = strtolower(preg_replace("/^(is|get)/", '', $method));
+                    foreach (
+                        ['getFilename', 'getExtension', 'getPerms', 'getMTime', 'getBasename', 'getPathname', 'getSize', 'getType', 'isReadable', 'isWritable',
+                         'isDir', 'isFile'] as $method
+                    ) {
+                        $keyMethod          = strtolower(preg_replace("/^(is|get)/", '', $method));
                         $file->{$keyMethod} = $info->{$method}();
+
                         if ($method == 'getPathname') {
                             $file->{$keyMethod} = Folder::getRelativePath($file->{$keyMethod});
-                        } else if ($method == 'getExtension') {
-                            $file->isImage = in_array($file->{$keyMethod}, ['jpg', 'jpeg', 'png', 'gif', 'ico', 'svg', 'bmp']);
+                        } else {
+                            if ($method == 'getExtension') {
+                                $file->isImage = in_array($file->{$keyMethod}, ['jpg', 'jpeg', 'png', 'gif', 'ico', 'svg', 'bmp']);
+                            }
                         }
                     }
 
                     if ($file->dir) {
                         $folders[$key][$folder]->append($file);
                     } else {
-                        if ($filter && !preg_match("/".$filter."/i", $file->filename)) { continue; }
+                        if ($filter && !preg_match("/" . $filter . "/i", $file->filename)) {
+                            continue;
+                        }
                         if (!$index) {
                             $files->append($file);
                         }
                     }
+                }
+
+                if ($isStream) {
+                    $bookmarks[$key][] = $key;
                 }
 
                 $index++;
@@ -150,16 +178,28 @@ class Filepicker extends JsonController
         $response = [];
 
         if (!$subfolder) {
-            $response['html'] = $this->container['admin.theme']->render('@gantry-admin/ajax/filepicker.html.twig', [
-                'active'    => $active,
-                'base'      => $base,
-                'bookmarks' => $bookmarks,
-                'folders'   => $folders,
-                'files'     => $files
-            ]);
+            $response['html'] = $this->container['admin.theme']->render(
+                '@gantry-admin/ajax/filepicker.html.twig', [
+                    'active'    => $active,
+                    'base'      => $base,
+                    'bookmarks' => $bookmarks,
+                    'folders'   => $folders,
+                    'files'     => $files
+                ]
+            );
         } else {
-            $response['subfolder'] = !$folders[$key][$folder]->count() ? false : $this->container['admin.theme']->render('@gantry-admin/ajax/filepicker/subfolders.html.twig', ['folder' => $folders[$key][$folder]]);
-            $response['files'] = !$files->count() ? false : $this->container['admin.theme']->render('@gantry-admin/ajax/filepicker/files.html.twig', ['files' => $files]);
+            $response['subfolder'] = !$folders[$key][$folder]->count()
+                ? false
+                : $this->container['admin.theme']->render(
+                    '@gantry-admin/ajax/filepicker/subfolders.html.twig',
+                    ['folder' => $folders[$key][$folder]]
+                );
+            $response['files']     = !$files->count()
+                ? false
+                : $this->container['admin.theme']->render(
+                    '@gantry-admin/ajax/filepicker/files.html.twig',
+                    ['files' => $files]
+                );
         }
 
         return new JsonResponse($response);
@@ -167,7 +207,7 @@ class Filepicker extends JsonController
 
     public function subfolder()
     {
-        $response = [];
+        $response         = [];
         $response['html'] = 'subfolder';
 
         return new JsonResponse($response);
@@ -178,83 +218,6 @@ class Filepicker extends JsonController
         $path = implode('/', func_get_args());
 
         $this->doDownload($path, false);
-    }
-
-    public function downloadFile()
-    {
-        $path = implode('/', func_get_args());
-
-        $this->doDownload($path, true);
-    }
-
-    public function upload()
-    {
-        $path = implode('/', func_get_args());
-
-        // TODO: handle streams
-        $targetPath = dirname(GANTRY5_ROOT . '/' . $path);
-
-        if (!isset($_FILES['file']['error']) || is_array($_FILES['file']['error'])) {
-            throw new \RuntimeException('No file sent', 400);
-        }
-
-        // Check $_FILES['file']['error'] value.
-        switch ($_FILES['file']['error']) {
-            case UPLOAD_ERR_OK:
-                break;
-            case UPLOAD_ERR_NO_FILE:
-                throw new \RuntimeException('No file sent', 400);
-            case UPLOAD_ERR_INI_SIZE:
-            case UPLOAD_ERR_FORM_SIZE:
-            throw new \RuntimeException('Exceeded filesize limit.', 400);
-            default:
-                throw new \RuntimeException('Unkown errors', 400);
-        }
-
-        // You should also check filesize here.
-        $maxSize = $this->returnBytes(min(ini_get('post_max_size'), ini_get('upload_max_filesize')));
-        if ($_FILES['file']['size'] > $maxSize) {
-            throw new \RuntimeException('Exceeded filesize limit. File is ' . $_FILES['file']['size'] . ', maximum allowed is ' . $maxSize, 400);
-        }
-
-        // Check extension
-        $fileParts = pathinfo($_FILES['file']['name']);
-        $fileExt = strtolower($fileParts['extension']);
-
-        // TODO: check if download is of supported type.
-
-        // Upload it
-        if (!move_uploaded_file($_FILES['file']['tmp_name'], sprintf('%s/%s', $targetPath, $_FILES['file']['name']))) {
-            throw new \RuntimeException('Failed to move uploaded file.', 500);
-        }
-
-        return new JsonResponse(['success', 'File uploaded successfully']);
-    }
-
-    public function delete()
-    {
-        $path = implode('/', func_get_args());
-
-        if (!$path) {
-            throw new \RuntimeException('No file specified for delete', 400);
-        }
-
-        // TODO: handle streams
-        $targetPath = GANTRY5_ROOT . '/' . $path;
-
-        $file = File::instance($targetPath);
-
-        if (!$file->exists()) {
-            throw new \RuntimeException('File not found: ' . $path, 404);
-        }
-
-        try {
-            $file->delete();
-        } catch (\Exception $e) {
-            throw new \RuntimeException('File could not be deleted: ' . $path, 500);
-        }
-
-        return new JsonResponse(['success', 'File deleted: ' . $path]);
     }
 
     protected function doDownload($path, $download)
@@ -291,8 +254,8 @@ class Filepicker extends JsonController
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
 
         // Get the image file information.
-        $info = getimagesize($path);
-        $isImage = (bool) $info;
+        $info    = getimagesize($path);
+        $isImage = (bool)$info;
 
         if (!$download && $isImage) {
             $fileType = $info['mime'];
@@ -324,6 +287,59 @@ class Filepicker extends JsonController
         exit();
     }
 
+    public function downloadFile()
+    {
+        $path = implode('/', func_get_args());
+
+        $this->doDownload($path, true);
+    }
+
+    public function upload()
+    {
+        $path = implode('/', func_get_args());
+
+        // TODO: handle streams
+        $targetPath = dirname(GANTRY5_ROOT . '/' . $path);
+
+        if (!isset($_FILES['file']['error']) || is_array($_FILES['file']['error'])) {
+            throw new \RuntimeException('No file sent', 400);
+        }
+
+        // Check $_FILES['file']['error'] value.
+        switch ($_FILES['file']['error']) {
+            case UPLOAD_ERR_OK:
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                throw new \RuntimeException('No file sent', 400);
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                throw new \RuntimeException('Exceeded filesize limit.', 400);
+            default:
+                throw new \RuntimeException('Unkown errors', 400);
+        }
+
+        // You should also check filesize here.
+        $maxSize = $this->returnBytes(
+            min(ini_get('post_max_size'), ini_get('upload_max_filesize'))
+        );
+        if ($_FILES['file']['size'] > $maxSize) {
+            throw new \RuntimeException('Exceeded filesize limit. File is ' . $_FILES['file']['size'] . ', maximum allowed is ' . $maxSize, 400);
+        }
+
+        // Check extension
+        $fileParts = pathinfo($_FILES['file']['name']);
+        $fileExt   = strtolower($fileParts['extension']);
+
+        // TODO: check if download is of supported type.
+
+        // Upload it
+        if (!move_uploaded_file($_FILES['file']['tmp_name'], sprintf('%s/%s', $targetPath, $_FILES['file']['name']))) {
+            throw new \RuntimeException('Failed to move uploaded file.', 500);
+        }
+
+        return new JsonResponse(['success', 'File uploaded successfully']);
+    }
+
     protected function returnBytes($size_str)
     {
         switch (strtolower(substr($size_str, -1))) {
@@ -339,5 +355,31 @@ class Filepicker extends JsonController
             default:
                 return $size_str;
         }
+    }
+
+    public function delete()
+    {
+        $path = implode('/', func_get_args());
+
+        if (!$path) {
+            throw new \RuntimeException('No file specified for delete', 400);
+        }
+
+        // TODO: handle streams
+        $targetPath = GANTRY5_ROOT . '/' . $path;
+
+        $file = File::instance($targetPath);
+
+        if (!$file->exists()) {
+            throw new \RuntimeException('File not found: ' . $path, 404);
+        }
+
+        try {
+            $file->delete();
+        } catch (\Exception $e) {
+            throw new \RuntimeException('File could not be deleted: ' . $path, 500);
+        }
+
+        return new JsonResponse(['success', 'File deleted: ' . $path]);
     }
 }
