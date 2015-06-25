@@ -5868,7 +5868,7 @@ var FilePicker = new prime({
 
         active = $(actives[actives.length - 1]);
         path = JSON.parse(active.data('folder')).pathname;
-        return rtrim(path, '/') + '/';
+        return path.replace(/\/$/, '') + '/';
     },
 
     getPreviewTemplate: function() {
@@ -5904,7 +5904,7 @@ var FilePicker = new prime({
                 thumbnailWidth: 100,
                 thumbnailHeight: 100,
                 url: bind(function(file) {
-                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + this.getPath() + file[0].name) + getAjaxSuffix());
+                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + window.btoa(this.getPath() + file[0].name)) + getAjaxSuffix());
                 }, this)
             });
 
@@ -6182,6 +6182,7 @@ domready(function() {
 
 
 module.exports = FilePicker;
+
 },{"../../ui":45,"../../utils/elements.utils":55,"../../utils/get-ajax-suffix":59,"../../utils/get-ajax-url":60,"agent":66,"dropzone":86,"elements/domready":90,"elements/zen":95,"mout/function/bind":149,"mout/lang/deepClone":158,"mout/object/deepFillIn":182,"mout/string/rtrim":221,"prime":244}],34:[function(require,module,exports){
 "use strict";
 // fonts list: https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB2yJM8DBwt66u2MVRgb6M4t9CqkW7_IRY

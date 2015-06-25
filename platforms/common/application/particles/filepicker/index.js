@@ -50,7 +50,7 @@ var FilePicker = new prime({
 
         active = $(actives[actives.length - 1]);
         path = JSON.parse(active.data('folder')).pathname;
-        return rtrim(path, '/') + '/';
+        return path.replace(/\/$/, '') + '/';
     },
 
     getPreviewTemplate: function() {
@@ -86,7 +86,7 @@ var FilePicker = new prime({
                 thumbnailWidth: 100,
                 thumbnailHeight: 100,
                 url: bind(function(file) {
-                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + this.getPath() + file[0].name) + getAjaxSuffix());
+                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + window.btoa(this.getPath() + file[0].name)) + getAjaxSuffix());
                 }, this)
             });
 

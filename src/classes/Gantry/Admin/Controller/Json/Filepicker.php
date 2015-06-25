@@ -296,10 +296,20 @@ class Filepicker extends JsonController
 
     public function upload()
     {
-        $path = implode('/', func_get_args());
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+        $path    = implode('/', func_get_args());
 
-        // TODO: handle streams
-        $targetPath = dirname(GANTRY5_ROOT . '/' . $path);
+        if (base64_decode($path, true) !== false) {
+            $path = base64_decode($path);
+        }
+
+        $stream = explode('://', $path);
+        $scheme = $stream[0];
+
+        $isStream   = $locator->schemeExists($scheme);
+        $targetPath = $isStream ? $scheme . '://' . ltrim(dirname('/' . $stream[1]), '/') : dirname(GANTRY5_ROOT . '/' . $path);
+
 
         if (!isset($_FILES['file']['error']) || is_array($_FILES['file']['error'])) {
             throw new \RuntimeException('No file sent', 400);
@@ -318,10 +328,7 @@ class Filepicker extends JsonController
                 throw new \RuntimeException('Unkown errors', 400);
         }
 
-        // You should also check filesize here.
-        $maxSize = $this->returnBytes(
-            min(ini_get('post_max_size'), ini_get('upload_max_filesize'))
-        );
+        $maxSize = $this->returnBytes(min(ini_get('post_max_size'), ini_get('upload_max_filesize')));
         if ($_FILES['file']['size'] > $maxSize) {
             throw new \RuntimeException('Exceeded filesize limit. File is ' . $_FILES['file']['size'] . ', maximum allowed is ' . $maxSize, 400);
         }
@@ -333,7 +340,10 @@ class Filepicker extends JsonController
         // TODO: check if download is of supported type.
 
         // Upload it
-        if (!move_uploaded_file($_FILES['file']['tmp_name'], sprintf('%s/%s', $targetPath, $_FILES['file']['name']))) {
+        $destination = sprintf('%s/%s', $targetPath, $_FILES['file']['name']);
+        $destination = preg_replace('#///#', '//', $destination);
+
+        if (!move_uploaded_file($_FILES['file']['tmp_name'], $destination)) {
             throw new \RuntimeException('Failed to move uploaded file.', 500);
         }
 
