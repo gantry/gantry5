@@ -146,14 +146,8 @@ class Platform extends BasePlatform
 
     public function displaySystemMessages($params = [])
     {
-        $document = \JFactory::getDocument();
-        if (!$document instanceof \JDocumentHTML) {
-            return '';
-        }
-
-        $renderer = $document->loadRenderer('message');
-
-        return $renderer->render(null, $params);
+        // We cannot use JDocument renderer here as it fires too early to display any messages.
+        return '<jdoc:include type="message" />';
     }
 
     public function displayContent($content, $params = [])
