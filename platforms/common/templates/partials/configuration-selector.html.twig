@@ -1,5 +1,5 @@
 <li class="config-select-wrap">
-    {% set selected_title = configuration == 'default' ? 'GANTRY5_PLATFORM_BASE_OUTLINE|trans' : '' %}
+    {% set selected_title = configuration == 'default' ? 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans : '' %}
     {% set selected_value = configuration == 'default' ? 'default' : '' %}
     {% set selected_editable = true %}
     <select id="configuration-selector" class="config-select" data-selectize-ajaxify data-selectize="{{ {allowEmptyOption: true}|json_encode|e('html_attr') }}">
