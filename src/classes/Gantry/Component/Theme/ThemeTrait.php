@@ -41,6 +41,7 @@ trait ThemeTrait
 
     protected $segments;
     protected $preset;
+    protected $cssCache;
 
     /**
      * Initialize theme.
@@ -207,13 +208,17 @@ trait ThemeTrait
      */
     public function css($name)
     {
-        $compiler = $this->compiler();
+        if (!isset($this->cssCache[$name])) {
+            $compiler = $this->compiler();
 
-        if ($compiler->needsCompile($name, [$this, 'getCssVariables'])) {
-            $compiler->compileFile($name);
+            if ($compiler->needsCompile($name, [$this, 'getCssVariables'])) {
+                $compiler->compileFile($name);
+            }
+
+            $this->cssCache[$name] = $compiler->getCssUrl($name);
         }
 
-        return $compiler->getCssUrl($name);
+        return $this->cssCache[$name];
     }
 
     public function getCssVariables()

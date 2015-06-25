@@ -157,4 +157,66 @@ class Gantry extends Container
 
         return $instance;
     }
+
+    /**
+     * Check if Gantry is compatible with your theme / extension.
+     *
+     * This function can be used to make sure that user has installed Gantry version
+     * that has been tested to work with your extension. All existing functions should
+     * be backwards compatible, but each release can add some new functionality, which
+     * you may want to use.
+     *
+     * <code>
+     * if ($gantry->isCompatible('5.0.1')) {
+     *      // You can do it in the new way.
+     * } else {
+     *     // Revert to the old way to display an error message.
+     * }
+     * </code>
+     *
+     * @param string $version Minimum required version.
+     *
+     * @return boolean Yes, if it is safe to use Gantry Framework.
+     */
+    public function isCompatible($version)
+    {
+        // If requested version is smaller than 5.0-rc, it's not compatible.
+        if (version_compare($version, '5.0-rc', '<')) {
+            return false;
+        }
+
+        // Development version support.
+        if ($version === '5.0' || static::isDev()) {
+            return true;
+        }
+
+        // Check if future version is needed.
+        if (version_compare($version, GANTRY5_VERSION, '>')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if Gantry is running from a Git repository or is a CI build.
+     *
+     * Developers tend to do their work directly in the Git repositories instead of
+     * creating and installing new builds after every change. This function can be
+     * used to check the condition and make sure we do not break users repository
+     * by replacing files during upgrade.
+     *
+     * @return boolean True if Git repository or CI build is detected.
+     */
+    public function isDev()
+    {
+        if ('@version@' == GANTRY5_VERSION) {
+            return true;
+        }
+        if ('dev-' === substr(GANTRY5_VERSION, 0, 4)) {
+            return true;
+        }
+
+        return false;
+    }
 }

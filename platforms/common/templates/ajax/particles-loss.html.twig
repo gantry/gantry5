@@ -3,11 +3,11 @@
     <div class="inner-params">
         The section{{ particles|length > 1 ? 's' : '' }} <strong>{{ particles|join("</strong>, <strong>")|raw }}</strong> do{{ particles|length == 1 ? 'es' : '' }} not exist in the Layout that is about to get loaded. Any particles within those sections will be lost.
         <br /><br />
-        Do you want to continue?
+        {{ 'GANTRY5_PLATFORM_TO_CONTINUE'|trans }}
     </div>
 </div>
 
 <div class="g-modal-actions">
-    <a class="button button-primary" data-g-delete-confirm>Continue</a>
-    <a class="button g5-dialog-close" data-g-delete-cancel>Cancel</a>
+    <a class="button button-primary" data-g-delete-confirm>{{ 'GANTRY5_PLATFORM_CONTINUE'|trans }}</a>
+    <a class="button g5-dialog-close" data-g-delete-cancel>{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</a>
 </div>

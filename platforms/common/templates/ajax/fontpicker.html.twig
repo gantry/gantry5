@@ -2,7 +2,7 @@
     <div class="g-particles-header settings-block">
         <input class="float-left font-preview" type="text" data-font-preview="" placeholder="Font Preview..." value="Wizard boy Jack loves the grumpy Queen's fox.">
         <span class="float-right particle-search-wrapper">
-            <input class="font-search" type="text" data-font-search="" placeholder="Search Font...">
+            <input class="font-search" type="text" data-font-search="" placeholder="{{ 'GANTRY5_PLATFORM_SEARCH_FONT_ELI'|trans }}">
             <span class="particle-search-total">{{ fonts.count }}</span>
         </span>
     </div>
@@ -44,14 +44,14 @@
     </div>
     <div class="g-particles-footer settings-block">
         <div class="float-left font-left-container">
-            <span class="button font-category" data-font-categories="{{ fonts.categories|join(',') }}">Categories (<small>{{ fonts.categories|length }}</small>) <i class="fa fa-caret-down"></i></span>
-            <span class="button font-subsets" data-font-subsets="{{ fonts.subsets|join(',') }}">Subsets (<small>Latin</small>) <i class="fa fa-caret-down"></i></span>
+            <span class="button font-category" data-font-categories="{{ fonts.categories|join(',') }}">{{ 'GANTRY5_PLATFORM_CATEGORIES'|trans }} (<small>{{ fonts.categories|length }}</small>) <i class="fa fa-caret-down"></i></span>
+            <span class="button font-subsets" data-font-subsets="{{ fonts.subsets|join(',') }}">{{ 'GANTRY5_PLATFORM_SUBSETS'|trans }} (<small>{{ 'GANTRY5_PLATFORM_LATIN'|trans }}</small>) <i class="fa fa-caret-down"></i></span>
         </div>
         <div class="float-right font-right-container">
             <span class="font-selected"></span>
-            <button class="button button-primary">Select</button>
+            <button class="button button-primary">{{ 'GANTRY5_PLATFORM_SELECT'|trans }}</button>
             <span>&nbsp;</span>
-            <button class="button g5-dialog-close">Cancel</button>
+            <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
         </div>
     </div>
 </div>

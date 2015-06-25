@@ -14,11 +14,11 @@
                                 <div class="g-content" data-g5-content="">
                                     <div class="g-grid overview-header">
                                         <div class="g-block">
-                                            <h2 class="theme-title"><i class="fa fa-fw fa-plug"></i> Available Themes</h2>
+                                            <h2 class="theme-title"><i class="fa fa-fw fa-plug"></i> {{ 'GANTRY5_PLATFORM_AVAILABLE_THEMES'|trans }}</h2>
                                         </div>
                                     {% if settings_url %}
                                         <div class="g-block">
-                                            <a class="button button-primary float-right" href="{{ settings_url|e }}" data-settings-key="{{ settings_key|e }}"><i class="fa fa-cog"></i> Platform Settings</a>
+                                            <a class="button button-primary float-right" href="{{ settings_url|e }}" data-settings-key="{{ settings_key|e }}"><i class="fa fa-cog"></i> {{ 'GANTRY5_PLATFORM_PLATFORM_SETTINGS'|trans }}</a>
                                         </div>
                                     {% endif %}
                                     </div>

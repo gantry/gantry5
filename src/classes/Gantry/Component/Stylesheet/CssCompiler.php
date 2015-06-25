@@ -181,6 +181,7 @@ abstract class CssCompiler implements CssCompilerInterface
         $out = $this->getCssUrl($in);
         $path = $locator->findResource($out);
 
+        // Check if CSS file exists at all.
         if (!$path) {
             $this->setVariables($variables());
             return true;
@@ -189,6 +190,7 @@ abstract class CssCompiler implements CssCompilerInterface
         /** @var Config $global */
         $global = $gantry['global'];
 
+        // In production mode we do not need to do any other checks.
         if ($global->get('production')) {
             return false;
         }
@@ -196,6 +198,7 @@ abstract class CssCompiler implements CssCompilerInterface
         $uri = basename($out);
         $metaFile = PhpFile::instance($locator->findResource("gantry-cache://theme/scss/{$uri}.php", true, true));
 
+        // Check if meta file exists.
         if (!$metaFile->exists()) {
             $this->setVariables($variables());
             return true;
@@ -203,11 +206,13 @@ abstract class CssCompiler implements CssCompilerInterface
 
         $content = $metaFile->content();
 
+        // Check if filename in meta file matches.
         if (empty($content['file']) || $content['file'] != $out) {
             $this->setVariables($variables());
             return true;
         }
 
+        // Check if meta timestamp matches to CSS file.
         if (filemtime($path) != $content['timestamp']) {
             $this->setVariables($variables());
             return true;
@@ -215,11 +220,13 @@ abstract class CssCompiler implements CssCompilerInterface
 
         $this->setVariables($variables());
 
+        // Check if variables have been changed.
         $oldVariables = isset($content['variables']) ? $content['variables'] : [];
         if ($oldVariables != $this->getVariables()) {
             return true;
         }
 
+        // Check if any of the imported files have been changed.
         $imports = isset($content['imports']) ? $content['imports'] : [];
         foreach ($imports as $resource => $timestamp) {
             $import = $locator->findResource($resource);
