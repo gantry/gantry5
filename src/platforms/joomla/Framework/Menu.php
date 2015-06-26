@@ -206,7 +206,7 @@ class Menu extends AbstractMenu
                     continue;
                 }
 
-                // These params always come from Joomla.
+                // These params always come from Joomla and cannot be overridden.
                 $itemParams = [
                     'id' => $menuItem->id,
                     'type' => $menuItem->type,

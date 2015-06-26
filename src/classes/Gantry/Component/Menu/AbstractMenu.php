@@ -18,13 +18,14 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Gantry\GantryTrait;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
+use RocketTheme\Toolbox\ArrayTraits\Countable;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-abstract class AbstractMenu implements \ArrayAccess, \Iterator
+abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 {
-    use GantryTrait, ArrayAccessWithGetters, Iterator, Export;
+    use GantryTrait, ArrayAccessWithGetters, Iterator, Export, Countable;
 
     protected $default;
     protected $base;
