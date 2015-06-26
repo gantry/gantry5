@@ -396,7 +396,9 @@ class Filepicker extends JsonController
             throw new \RuntimeException('Failed to move uploaded file.', 500);
         }
 
-        return new JsonResponse(['success', 'File uploaded successfully']);
+        $finfo = new \stdClass();
+        $this->attachData($finfo, new \SplFileInfo($destination));
+        return new JsonResponse(['success' => 'File uploaded successfully', 'finfo' => $finfo, 'url' => $finfo->pathname]);
 
     }
 

@@ -221,7 +221,7 @@ var FilePicker = new prime({
                     thumb.animate({ opacity: 1 }, {
                         duration: 500,
                         callback: function() {
-                            element.removeClass('g-file-uploading');
+                            element.data('file', JSON.stringify(response.finfo)).data('file-url', response.url).removeClass('g-file-uploading');
                             uploader.remove();
                             mtime.text('just now');
                         }
