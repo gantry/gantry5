@@ -63,6 +63,7 @@ var FilePicker = new prime({
 
     getPreviewTemplate: function() {
         var li    = zen('li[data-file]'),
+            del   = zen('span.g-file-delete[data-g-file-delete][data-dz-remove]').html('<i class="fa fa-fw fa-trash-o"></i>').bottom(li),
             thumb = zen('div.g-thumb[data-dz-thumbnail]').bottom(li),
             name  = zen('span.g-file-name[data-dz-name]').bottom(li),
             size  = zen('span.g-file-size[data-dz-size]').bottom(li),
@@ -107,7 +108,7 @@ var FilePicker = new prime({
                 }, this)
             });
 
-
+            // dropzone events
             this.dropzone.on('thumbnail', function(file, dataUrl) {
                 var ext = file.name.split('.');
                 ext = (!ext.length || ext.length == 1) ? '-' : ext.reverse()[0];
@@ -222,6 +223,7 @@ var FilePicker = new prime({
                         duration: 500,
                         callback: function() {
                             element.data('file', JSON.stringify(response.finfo)).data('file-url', response.url).removeClass('g-file-uploading');
+                            element.dropzone = file;
                             uploader.remove();
                             mtime.text('just now');
                         }
@@ -230,6 +232,7 @@ var FilePicker = new prime({
             });
         }
 
+        // g5 events
         content.delegate('click', '.g-bookmark-title', function(e, element) {
             if (event && event.preventDefault) { event.preventDefault(); }
             var sibling = element.nextSibling('.g-folders'),
@@ -283,9 +286,37 @@ var FilePicker = new prime({
             }, this));
         }, this));
 
+        content.delegate('click', '[data-g-file-delete]', bind(function(event, element) {
+            event.preventDefault();
+            var parent = element.parent('[data-file]'),
+                data = JSON.parse(parent.data('file')),
+                deleteURI = parseAjaxURI(getAjaxURL('filepicker/' + window.btoa(data.pathname)) + getAjaxSuffix());
+
+            if (!data.isInCustom) { return false; }
+
+            request('delete', deleteURI, function(error, response) {
+                if (!response.body.success) {
+                    modal.open({
+                        content: response.body.html || response.body,
+                        afterOpen: function(container) {
+                            if (!response.body.html) { container.style({ width: '90%' }); }
+                        }
+                    });
+                } else {
+                    parent.addClass('g-file-deleted');
+                    setTimeout(function(){
+                        parent.remove();
+                    }, 210);
+                }
+            });
+        }, this));
+
         content.delegate('click', '[data-file]', bind(function(event, element) {
             if (event && event.preventDefault) { event.preventDefault(); }
-            if (element.hasClass('g-file-error') || element.hasClass('g-file-uploading')) { return; }
+            var target = $(event.target),
+                remove = target.data('g-file-delete') !== null || target.parent('[data-g-file-delete]');
+
+            if (element.hasClass('g-file-error') || element.hasClass('g-file-uploading') || remove) { return; }
             var data = JSON.parse(element.data('file'));
 
             files.search('[data-file]').removeClass('selected');
@@ -367,7 +398,7 @@ var FilePicker = new prime({
 
     acceptedFiles: function(filter) {
         var attr = '';
-        switch(filter) {
+        switch (filter) {
             case '.(jpe?g|gif|png|svg)$':
                 attr = '.jpg,.jpeg,.gif,.png,.svg';
                 break;

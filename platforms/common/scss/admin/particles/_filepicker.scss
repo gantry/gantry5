@@ -10,8 +10,6 @@
         }
     }
 
-
-
     .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content {
         width: 650px;
         @include transform(translateZ(0));
@@ -140,11 +138,33 @@
             li {
                 vertical-align: middle;
                 position: relative;
+                @include transition(transform 0.2s ease-out);
                 @extend .font-small;
+
+                .g-file-delete {
+                    position: absolute;
+                    z-index: 2;
+                    background-color: $red;
+                    border-radius: 16px;
+                    color: $white;
+                    right: 2px;
+                    top: 2px;
+                    line-height: 1rem;
+                    padding: 2px;
+                    opacity: 0;
+                }
+
+                &.g-file-deleted {
+                    @include transform(scale(0));
+                }
 
                 > span {
                     display: inline-block;
                     vertical-align: middle;
+                }
+
+                &:hover .g-file-delete {
+                    opacity: 1;
                 }
             }
 
@@ -259,7 +279,7 @@
                         }
                     }
 
-                    &.selected span {
+                    &.selected span:not(.g-file-delete) {
                         @extend .badge;
                         background-color: $core-accent !important;
                         color: $white !important;

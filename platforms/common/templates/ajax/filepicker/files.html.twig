@@ -29,6 +29,9 @@
 <ul>
     {% for index,file in files %}
         <li data-file="{{ file|json_encode()|e('html_attr') }}" data-file-url="{{ file.pathname|e }}"{{ file.pathname == value ? ' class="selected"' : '' }}>
+            {% if file.isInCustom %}
+                <span class="g-file-delete" data-g-file-delete data-dz-remove><i class="fa fa-fw fa-trash-o"></i></span>
+            {% endif %}
             {% if file.isImage %}
                 <div class="g-thumb g-image g-image-{{ file.extension }}">
                     <div style="background-image: url({{ url(file.pathname) }})"></div>
