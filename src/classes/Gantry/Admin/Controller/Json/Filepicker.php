@@ -242,6 +242,18 @@ class Filepicker extends JsonController
                     continue;
                 }
 
+                $file->isCustom = false;
+
+                if ($this->isStream) {
+                    $stream = explode('://', $folder);
+                    $stream = array_shift($stream) . '://';
+                    $customLocation = $locator->findResource($stream, true, true);
+                    if (substr($info->getPathname(), 0, strlen($customLocation)) === $customLocation) {
+                        $file->isCustom = true;
+                    }
+                }
+
+
                 $files->append($file);
             }
         }
