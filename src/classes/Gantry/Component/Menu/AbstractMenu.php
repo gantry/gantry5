@@ -238,6 +238,8 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         // If parent exists, assign menu item to its parent; otherwise ignore menu item.
         if (isset($this->items[$item->parent_id])) {
             $this->items[$item->parent_id]->addChild($item);
+        } elseif (!$this->items['']->count()) {
+            $this->items['']->addChild($item);
         }
 
         return $this;
