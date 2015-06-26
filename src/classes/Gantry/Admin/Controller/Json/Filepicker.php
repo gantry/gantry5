@@ -357,8 +357,11 @@ class Filepicker extends JsonController
         $scheme = $stream[0];
 
         $isStream   = $locator->schemeExists($scheme);
-        $targetPath = $isStream ? $scheme . '://' . ltrim(dirname('/' . $stream[1]), '/') : dirname(GANTRY5_ROOT . '/' . $path);
-
+        if ($isStream) {
+            $targetPath = dirname($locator->findResource($path, true, true));
+        } else {
+            $targetPath = dirname(GANTRY5_ROOT . '/' . $path);
+        }
 
         if (!isset($_FILES['file']['error']) || is_array($_FILES['file']['error'])) {
             throw new \RuntimeException('No file sent', 400);
@@ -390,7 +393,9 @@ class Filepicker extends JsonController
 
         // Upload it
         $destination = sprintf('%s/%s', $targetPath, $_FILES['file']['name']);
-        $destination = preg_replace('#///#', '//', $destination);
+        $destination = preg_replace('#//#', '/', $destination);
+
+        Folder::create($targetPath);
 
         if (!move_uploaded_file($_FILES['file']['tmp_name'], $destination)) {
             throw new \RuntimeException('Failed to move uploaded file.', 500);
