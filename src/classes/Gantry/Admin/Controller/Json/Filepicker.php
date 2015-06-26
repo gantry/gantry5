@@ -403,7 +403,7 @@ class Filepicker extends JsonController
 
         $finfo = new \stdClass();
         $this->attachData($finfo, new \SplFileInfo($destination));
-        return new JsonResponse(['success' => 'File uploaded successfully', 'finfo' => $finfo, 'url' => $finfo->pathname]);
+        return new JsonResponse(['success' => 'File uploaded successfully', 'finfo' => $finfo, 'url' => $path]);
 
     }
 
