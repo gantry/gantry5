@@ -5835,8 +5835,12 @@ var $             = require('../../utils/elements.utils'),
 
 var FilePicker = new prime({
     constructor: function(element) {
-        var data = element.data('g5-filepicker');
+        var data = element.data('g5-filepicker'), value;
         this.data = data ? JSON.parse(data) : false;
+
+        if (this.data && !this.data.value) {
+            this.data.value = $(this.data.field).value();
+        }
 
         this.colors = {
             error: '#D84747',
@@ -5849,6 +5853,10 @@ var FilePicker = new prime({
     },
 
     open: function() {
+        if (this.data) {
+            this.data.value = $(this.data.field).value();
+        }
+
         modal.open({
             method: 'post',
             data: this.data,
