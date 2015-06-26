@@ -168,20 +168,6 @@ var Popover = new prime({
             left: -1000,
             display: 'block'
         }).bottom(this.options.where);
-        targetWidth = target[0].offsetWidth;
-        targetHeight = target[0].offsetHeight;
-        placement = this.getPlacement(elementPos, targetHeight);
-        if (this.options.targetEvents) { this.initTargetEvents(); }
-        var positionInfo = this.getTargetPosition(elementPos, placement, targetWidth, targetHeight);
-        this.$target.style(positionInfo.position).addClass(placement).addClass('in');
-
-        if (this.options.type === 'iframe') {
-            var iframe = target.find('iframe');
-            iframe.style({
-                width: target.position().width,
-                height: iframe.parent().position.height
-            });
-        }
 
         if (this.options.style) {
             if (typeof this.options.style === 'string') {
@@ -197,6 +183,22 @@ var Popover = new prime({
             targetContent.css('height', targetContent.position().height);
             this.$target.addClass('g5-popover-no-padding');
         }
+
+        targetWidth = target[0].offsetWidth;
+        targetHeight = target[0].offsetHeight;
+        placement = this.getPlacement(elementPos, targetHeight);
+        if (this.options.targetEvents) { this.initTargetEvents(); }
+        var positionInfo = this.getTargetPosition(elementPos, placement, targetWidth, targetHeight);
+        this.$target.style(positionInfo.position).addClass(placement).addClass('in');
+
+        if (this.options.type === 'iframe') {
+            var iframe = target.find('iframe');
+            iframe.style({
+                width: target.position().width,
+                height: iframe.parent().position.height
+            });
+        }
+
         if (!this.options.arrow) {
             this.$target.style({ 'margin': 0 });
         }
@@ -207,6 +209,7 @@ var Popover = new prime({
                 arrow.style(positionInfo.arrowOffset);
             }
         }
+
         this._poped = true;
         this.element.emit('shown.popover', this);
 
