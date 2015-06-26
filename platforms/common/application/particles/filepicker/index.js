@@ -85,6 +85,15 @@ var FilePicker = new prime({
                 previewsContainer: files.find('ul:not(.g-list-labels)')[0],
                 thumbnailWidth: 100,
                 thumbnailHeight: 100,
+                clickable: '[data-upload]',
+                acceptedFiles: this.acceptedFiles(this.data.filter) || '',
+                accept: bind(function(file, done) {
+                    if (!this.data.filter) { done(); }
+                    else {
+                        if (file.name.match(this.data.filter)) { done(); }
+                        else { done('<code>' + file.name + '</code> does not match the filter: <br />  <code>' + this.data.filter + '</code>'); }
+                    }
+                }, this),
                 url: bind(function(file) {
                     return parseAjaxURI(getAjaxURL('filepicker/upload/' + window.btoa(this.getPath() + file[0].name)) + getAjaxSuffix());
                 }, this)
@@ -172,10 +181,10 @@ var FilePicker = new prime({
                 });
 
                 text.title('Error').html('<i class="fa fa-exclamation"></i>').parent('[data-file-uploadprogress]').popover({
-                    content: error.html ? error.html : error,
+                    content: error.html ? error.html : (error.error && error.error.message ? error.error.message : error),
                     placement: 'auto',
                     trigger: 'mouse',
-                    style: 'above-modal',
+                    style: 'filepicker, above-modal',
                     width: 'auto',
                     targetEvents: false
                 });
@@ -278,7 +287,7 @@ var FilePicker = new prime({
         content.delegate('click', '[data-select]', bind(function(event, element) {
             if (event && event.preventDefault) { event.preventDefault(); }
             var selected = files.find('[data-file].selected'),
-                value = selected ? selected.data('file-url') : '';
+                value    = selected ? selected.data('file-url') : '';
 
             $(this.data.field).value(value);
             modal.close();
@@ -346,6 +355,20 @@ var FilePicker = new prime({
             parent.previousSibling().addClass('active');
             parent = parent.parent();
         }
+    },
+
+    acceptedFiles: function(filter) {
+        var attr = '';
+        switch(filter) {
+            case '.(jpe?g|gif|png|svg)$':
+                attr = '.jpg,.jpeg,.gif,.png,.svg';
+                break;
+            case '.(mp4|webm|ogv|mov)$':
+                attr = '.mp4,.webm,.ogv,.mov';
+                break;
+        }
+
+        return attr;
     }
 });
 

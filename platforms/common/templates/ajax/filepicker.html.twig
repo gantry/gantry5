@@ -31,6 +31,10 @@
 </div>
 {#<div class="g-breadcrumbs">{{ base }}</div>#}
 <div class="g-particles-footer settings-block clearfix">
+    <div class="float-left footer-upload-info font-small">
+        Upload files by Drag & Drop or by <a href="#" data-upload>selecting them</a>. <br/>
+        Current filters: {{ filter ? ('<code>' ~ filter ~ '</code>')|raw : ('<strong>No Filter</strong>')|raw }}
+    </div>
     <div class="float-right">
         <a href="#" class="button button-primary" data-select>{{ 'GANTRY5_PLATFORM_SELECT'|trans }}</a>
         <a href="#" class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</a>

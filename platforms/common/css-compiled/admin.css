@@ -5640,6 +5640,14 @@ html.g5-dialog-open {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-particles-footer .footer-upload-info {
+  line-height: 1.1rem;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-particles-footer code {
+  font-size: 0.70rem;
+  padding-top: 0;
+  padding-bottom: 0;
+}
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-folders {
   margin: 0;
   padding-left: 2.14285714em;
@@ -5819,6 +5827,22 @@ html.g5-dialog-open {
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list .g-list-labels li > span {
   color: #888;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.no-files-found, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.no-files-found {
+  width: 100%;
+  max-width: inherit;
+  margin: 0;
+  position: absolute;
+  margin-top: -6px;
+  transform: translateY(-50%);
+  top: 50%;
+  color: #c9c9c9;
+  text-align: center;
+  background-color: inherit;
+}
+#g5-container .g5-popover-filepicker {
+  max-width: 400px;
+  word-wrap: break-word;
 }
 
 #g5-container .settings-block .g-keyvalue-field ul li {

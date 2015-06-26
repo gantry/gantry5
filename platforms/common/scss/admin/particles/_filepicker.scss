@@ -1,4 +1,4 @@
-#g5-container {    
+#g5-container {
     .g-filepicker {
         > *:not(div), label {
             display: inline-block;
@@ -106,6 +106,18 @@
                         }
                     }
                 }
+            }
+        }
+
+        .g-particles-footer {
+            .footer-upload-info {
+                line-height: 1.1rem;
+            }
+
+            code {
+                font-size: 0.70rem;
+                padding-top: 0;
+                padding-bottom: 0;
             }
         }
 
@@ -301,7 +313,7 @@
                         .g-file-mtime, .g-file-progress-text {
                             display: none;
                         }
-                        
+
                         .g-file-mtime.g-file-progress {
                             display: block;
                         }
@@ -310,7 +322,7 @@
                             width: 20%;
                         }
                     }
-                    
+
                     &.g-file-error {
                         .g-file-progress-text {
                             display: block !important;
@@ -341,6 +353,26 @@
                     }
                 }
             }
+
+            &.g-filemode-list, &.g-filemode-thumbnails {
+                li.no-files-found {
+                    width: 100%;
+                    max-width: inherit;
+                    margin: 0;
+                    position: absolute;
+                    margin-top: -6px;
+                    transform: translateY(-50%);
+                    top: 50%;
+                    color: #c9c9c9;
+                    text-align: center;
+                    background-color: inherit;
+                }
+            }
         }
+    }
+
+    .g5-popover-filepicker {
+        max-width: 400px;
+        word-wrap: break-word;
     }
 }

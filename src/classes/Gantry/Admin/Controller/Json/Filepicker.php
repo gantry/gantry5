@@ -184,7 +184,8 @@ class Filepicker extends JsonController
                     'base'      => $base,
                     'bookmarks' => $bookmarks,
                     'folders'   => $folders,
-                    'files'     => $files
+                    'files'     => $files,
+                    'filter'    => $filter
                 ]
             );
         } else {
@@ -194,12 +195,10 @@ class Filepicker extends JsonController
                     '@gantry-admin/ajax/filepicker/subfolders.html.twig',
                     ['folder' => $folders[$key][$folder]]
                 );
-            $response['files']     = !$files->count()
-                ? false
-                : $this->container['admin.theme']->render(
-                    '@gantry-admin/ajax/filepicker/files.html.twig',
-                    ['files' => $files]
-                );
+            $response['files']     = $this->container['admin.theme']->render(
+                '@gantry-admin/ajax/filepicker/files.html.twig',
+                ['files' => $files]
+            );
         }
 
         return new JsonResponse($response);

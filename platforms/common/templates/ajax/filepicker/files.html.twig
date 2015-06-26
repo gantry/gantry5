@@ -42,4 +42,8 @@
             <span class="g-file-mtime">{{ file.mtime|date('j M o') }}</span>
         </li>
     {% endfor %}
+
+    {% if files|length == 0 %}
+        <li class="no-files-found"><h2>Folder is Empty</h2></li>
+    {% endif %}
 </ul>
