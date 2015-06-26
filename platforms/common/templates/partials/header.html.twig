@@ -25,8 +25,8 @@
                 <li data-g-extras>
                     <a href="#"><i class="fa fa-fw fa-cog"></i> {{ 'GANTRY5_PLATFORM_EXTRAS'|trans }} <i class="small fa fa-fw fa-chevron-down"></i></a>
                     <ul data-popover-content class="hidden">
-                        {% set prod_mode = 'GANTRY5_PLATFORM_PRODUCTION|trans' %}
-                        {% set dev_mode = 'GANTRY5_PLATFORM_DEVELOPMENT|trans' %}
+                        {% set prod_mode = 'GANTRY5_PLATFORM_PRODUCTION'|trans %}
+                        {% set dev_mode = 'GANTRY5_PLATFORM_DEVELOPMENT'|trans %}
                         <li data-g-devprod="{{ {0: dev_mode, 1: prod_mode}|json_encode|e('html_attr') }}">
                             <i class="fa fa-fw fa-wrench"></i> <span class="devprod-mode">{{ gantry.global.production ? prod_mode : dev_mode }}</span>
                             <div class="float-right">

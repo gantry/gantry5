@@ -5835,8 +5835,12 @@ var $             = require('../../utils/elements.utils'),
 
 var FilePicker = new prime({
     constructor: function(element) {
-        var data = element.data('g5-filepicker');
+        var data = element.data('g5-filepicker'), value;
         this.data = data ? JSON.parse(data) : false;
+
+        if (this.data && !this.data.value) {
+            this.data.value = $(this.data.field).value();
+        }
 
         this.colors = {
             error: '#D84747',
@@ -5849,6 +5853,10 @@ var FilePicker = new prime({
     },
 
     open: function() {
+        if (this.data) {
+            this.data.value = $(this.data.field).value();
+        }
+
         modal.open({
             method: 'post',
             data: this.data,
@@ -5868,7 +5876,7 @@ var FilePicker = new prime({
 
         active = $(actives[actives.length - 1]);
         path = JSON.parse(active.data('folder')).pathname;
-        return rtrim(path, '/') + '/';
+        return path.replace(/\/$/, '') + '/';
     },
 
     getPreviewTemplate: function() {
@@ -5903,8 +5911,17 @@ var FilePicker = new prime({
                 previewsContainer: files.find('ul:not(.g-list-labels)')[0],
                 thumbnailWidth: 100,
                 thumbnailHeight: 100,
+                clickable: '[data-upload]',
+                acceptedFiles: this.acceptedFiles(this.data.filter) || '',
+                accept: bind(function(file, done) {
+                    if (!this.data.filter) { done(); }
+                    else {
+                        if (file.name.match(this.data.filter)) { done(); }
+                        else { done('<code>' + file.name + '</code> does not match the filter: <br />  <code>' + this.data.filter + '</code>'); }
+                    }
+                }, this),
                 url: bind(function(file) {
-                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + this.getPath() + file[0].name) + getAjaxSuffix());
+                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + window.btoa(this.getPath() + file[0].name)) + getAjaxSuffix());
                 }, this)
             });
 
@@ -5990,10 +6007,10 @@ var FilePicker = new prime({
                 });
 
                 text.title('Error').html('<i class="fa fa-exclamation"></i>').parent('[data-file-uploadprogress]').popover({
-                    content: error.html ? error.html : error,
+                    content: error.html ? error.html : (error.error && error.error.message ? error.error.message : error),
                     placement: 'auto',
                     trigger: 'mouse',
-                    style: 'above-modal',
+                    style: 'filepicker, above-modal',
                     width: 'auto',
                     targetEvents: false
                 });
@@ -6022,7 +6039,7 @@ var FilePicker = new prime({
                     thumb.animate({ opacity: 1 }, {
                         duration: 500,
                         callback: function() {
-                            element.removeClass('g-file-uploading');
+                            element.data('file', JSON.stringify(response.finfo)).data('file-url', response.url).removeClass('g-file-uploading');
                             uploader.remove();
                             mtime.text('just now');
                         }
@@ -6096,7 +6113,7 @@ var FilePicker = new prime({
         content.delegate('click', '[data-select]', bind(function(event, element) {
             if (event && event.preventDefault) { event.preventDefault(); }
             var selected = files.find('[data-file].selected'),
-                value = selected ? selected.data('file-url') : '';
+                value    = selected ? selected.data('file-url') : '';
 
             $(this.data.field).value(value);
             modal.close();
@@ -6164,6 +6181,20 @@ var FilePicker = new prime({
             parent.previousSibling().addClass('active');
             parent = parent.parent();
         }
+    },
+
+    acceptedFiles: function(filter) {
+        var attr = '';
+        switch(filter) {
+            case '.(jpe?g|gif|png|svg)$':
+                attr = '.jpg,.jpeg,.gif,.png,.svg';
+                break;
+            case '.(mp4|webm|ogv|mov)$':
+                attr = '.mp4,.webm,.ogv,.mov';
+                break;
+        }
+
+        return attr;
     }
 });
 
@@ -6182,6 +6213,7 @@ domready(function() {
 
 
 module.exports = FilePicker;
+
 },{"../../ui":45,"../../utils/elements.utils":55,"../../utils/get-ajax-suffix":59,"../../utils/get-ajax-url":60,"agent":66,"dropzone":86,"elements/domready":90,"elements/zen":95,"mout/function/bind":149,"mout/lang/deepClone":158,"mout/object/deepFillIn":182,"mout/string/rtrim":221,"prime":244}],34:[function(require,module,exports){
 "use strict";
 // fonts list: https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB2yJM8DBwt66u2MVRgb6M4t9CqkW7_IRY
@@ -8696,20 +8728,6 @@ var Popover = new prime({
             left: -1000,
             display: 'block'
         }).bottom(this.options.where);
-        targetWidth = target[0].offsetWidth;
-        targetHeight = target[0].offsetHeight;
-        placement = this.getPlacement(elementPos, targetHeight);
-        if (this.options.targetEvents) { this.initTargetEvents(); }
-        var positionInfo = this.getTargetPosition(elementPos, placement, targetWidth, targetHeight);
-        this.$target.style(positionInfo.position).addClass(placement).addClass('in');
-
-        if (this.options.type === 'iframe') {
-            var iframe = target.find('iframe');
-            iframe.style({
-                width: target.position().width,
-                height: iframe.parent().position.height
-            });
-        }
 
         if (this.options.style) {
             if (typeof this.options.style === 'string') {
@@ -8725,6 +8743,22 @@ var Popover = new prime({
             targetContent.css('height', targetContent.position().height);
             this.$target.addClass('g5-popover-no-padding');
         }
+
+        targetWidth = target[0].offsetWidth;
+        targetHeight = target[0].offsetHeight;
+        placement = this.getPlacement(elementPos, targetHeight);
+        if (this.options.targetEvents) { this.initTargetEvents(); }
+        var positionInfo = this.getTargetPosition(elementPos, placement, targetWidth, targetHeight);
+        this.$target.style(positionInfo.position).addClass(placement).addClass('in');
+
+        if (this.options.type === 'iframe') {
+            var iframe = target.find('iframe');
+            iframe.style({
+                width: target.position().width,
+                height: iframe.parent().position.height
+            });
+        }
+
         if (!this.options.arrow) {
             this.$target.style({ 'margin': 0 });
         }
@@ -8735,6 +8769,7 @@ var Popover = new prime({
                 arrow.style(positionInfo.arrowOffset);
             }
         }
+
         this._poped = true;
         this.element.emit('shown.popover', this);
 

@@ -28,7 +28,7 @@
 </ul>
 <ul>
     {% for index,file in files %}
-        <li data-file="{{ file|json_encode()|e('html_attr') }}" data-file-url="{{ file.pathname|e }}">
+        <li data-file="{{ file|json_encode()|e('html_attr') }}" data-file-url="{{ file.pathname|e }}"{{ file.pathname == value ? ' class="selected"' : '' }}>
             {% if file.isImage %}
                 <div class="g-thumb g-image g-image-{{ file.extension }}">
                     <div style="background-image: url({{ url(file.pathname) }})"></div>
@@ -42,4 +42,8 @@
             <span class="g-file-mtime">{{ file.mtime|date('j M o') }}</span>
         </li>
     {% endfor %}
+
+    {% if files|length == 0 %}
+        <li class="no-files-found"><h2>Folder is Empty</h2></li>
+    {% endif %}
 </ul>
