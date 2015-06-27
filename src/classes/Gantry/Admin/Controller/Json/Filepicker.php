@@ -195,7 +195,7 @@ class Filepicker extends JsonController
                 );
             $response['files']     = $this->container['admin.theme']->render(
                 '@gantry-admin/ajax/filepicker/files.html.twig',
-                ['files' => $files]
+                ['files' => $files, 'value' => $this->value]
             );
         }
 

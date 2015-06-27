@@ -5902,7 +5902,8 @@ var FilePicker = new prime({
             bookmarks = content.search('.g-bookmark'),
             files     = content.find('.g-files'),
             fieldData = deepClone(this.data),
-            colors    = this.colors;
+            colors    = this.colors,
+            self      = this;
 
         this.content = content;
 
@@ -5989,7 +5990,7 @@ var FilePicker = new prime({
                 element.attribute('title', Math.round(progress) + '%').find('.g-file-progress-text').text(Math.round(progress) + '%').attribute('title', Math.round(progress) + '%');
 
             }).on('complete', function(file) {
-
+                self.refreshFiles(content);
             }).on('error', function(file, error) {
                 var element  = $(file.previewElement),
                     uploader = element.find('[data-file-uploadprogress]'),
@@ -6064,9 +6065,11 @@ var FilePicker = new prime({
 
         content.delegate('click', '[data-folder]', bind(function(event, element) {
             if (event && event.preventDefault) { event.preventDefault(); }
-            var data = JSON.parse(element.data('folder'));
+            var data     = JSON.parse(element.data('folder')),
+                selected = $('[data-file].selected');
 
             fieldData.root = data.pathname;
+            fieldData.value = selected ? selected.data('file-url') : false;
             fieldData.subfolder = true;
 
             element.showIndicator('fa fa-li fa-fw fa-spin-fast fa-spinner');
@@ -6106,8 +6109,8 @@ var FilePicker = new prime({
 
         content.delegate('click', '[data-g-file-delete]', bind(function(event, element) {
             event.preventDefault();
-            var parent = element.parent('[data-file]'),
-                data = JSON.parse(parent.data('file')),
+            var parent    = element.parent('[data-file]'),
+                data      = JSON.parse(parent.data('file')),
                 deleteURI = parseAjaxURI(getAjaxURL('filepicker/' + window.btoa(data.pathname)) + getAjaxSuffix());
 
             if (!data.isInCustom) { return false; }
@@ -6122,8 +6125,10 @@ var FilePicker = new prime({
                     });
                 } else {
                     parent.addClass('g-file-deleted');
-                    setTimeout(function(){
+                    setTimeout(function() {
                         parent.remove();
+
+                        self.refreshFiles(content);
                     }, 210);
                 }
             });
@@ -6226,6 +6231,14 @@ var FilePicker = new prime({
         }
 
         return attr;
+    },
+
+    refreshFiles: function(content) {
+        var active = $('[data-folder].active'),
+            folder = active[active.length - 1];
+        if (folder) {
+            content.emit('click', { target: $(folder) });
+        }
     }
 });
 
