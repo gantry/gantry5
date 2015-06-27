@@ -35,6 +35,17 @@ $submenu-ratio:                 60px;
                 margin-left: 0.5em;
                 font-size: 0.6rem;
             }
+
+            .menu-item-content {
+                display: inline-block;
+                vertical-align: top;
+
+                .menu-item-subtitle {
+                    @extend .font-small;
+                    display: block;
+                    opacity: 0.8;
+                }
+            }
         }
 
         &[data-mm-original-type] .fa-arrows-alt {
@@ -122,7 +133,8 @@ $submenu-ratio:                 60px;
         background: lighten($navbar-bg, 8%);
         border: 1px solid #ddd;
         color: $navbar-color;
-        display: inline-block;
+        display: flex;
+        align-items: center;
         cursor: move;
         @include transition(background-color 0.1s ease-out);
 
