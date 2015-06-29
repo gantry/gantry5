@@ -45,6 +45,7 @@ class Filepicker extends JsonController
             '/upload/**'   => 'upload'
         ],
         'DELETE' => [
+            '/'   => 'undefined',
             '/**' => 'delete'
         ]
     ];
@@ -169,7 +170,7 @@ class Filepicker extends JsonController
         }
 
         $lastItem = reset($active);
-        $files = $this->listFiles($lastItem);
+        $files    = $this->listFiles($lastItem);
         $response = [];
 
         reset($active);
@@ -194,7 +195,7 @@ class Filepicker extends JsonController
                 );
             $response['files']     = $this->container['admin.theme']->render(
                 '@gantry-admin/ajax/filepicker/files.html.twig',
-                ['files' => $files]
+                ['files' => $files, 'value' => $this->value]
             );
         }
 
@@ -223,7 +224,7 @@ class Filepicker extends JsonController
 
     protected function listFiles($folder)
     {
-        $locator = $this->container['locator'];
+        $locator  = $this->container['locator'];
         $iterator = $this->isStream ? new \IteratorIterator($locator->getIterator($folder)) : new \DirectoryIterator($this->base . DS . ltrim($folder, DS));
         $files    = new \ArrayObject();
 
@@ -241,6 +242,18 @@ class Filepicker extends JsonController
                 if ($this->filter && !preg_match("/" . $this->filter . "/i", $file->filename)) {
                     continue;
                 }
+
+                $file->isInCustom = false;
+
+                if ($this->isStream) {
+                    $stream         = explode('://', $folder);
+                    $stream         = array_shift($stream) . '://';
+                    $customLocation = $locator->findResource($stream, true, true);
+                    if (substr($info->getPathname(), 0, strlen($customLocation)) === $customLocation) {
+                        $file->isInCustom = true;
+                    }
+                }
+
 
                 $files->append($file);
             }
@@ -356,7 +369,7 @@ class Filepicker extends JsonController
         $stream = explode('://', $path);
         $scheme = $stream[0];
 
-        $isStream   = $locator->schemeExists($scheme);
+        $isStream = $locator->schemeExists($scheme);
         if ($isStream) {
             $targetPath = dirname($locator->findResource($path, true, true));
         } else {
@@ -403,7 +416,7 @@ class Filepicker extends JsonController
 
         $finfo = new \stdClass();
         $this->attachData($finfo, new \SplFileInfo($destination));
-        return new JsonResponse(['success' => 'File uploaded successfully', 'finfo' => $finfo, 'url' => $finfo->pathname]);
+        return new JsonResponse(['success' => 'File uploaded successfully', 'finfo' => $finfo, 'url' => $path]);
 
     }
 
@@ -427,27 +440,40 @@ class Filepicker extends JsonController
 
     public function delete()
     {
-        $path = implode('/', func_get_args());
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+        $path    = implode('/', func_get_args());
+
+        if (base64_decode($path, true) !== false) {
+            $path = base64_decode($path);
+        }
+
+        $stream = explode('://', $path);
+        $scheme = $stream[0];
 
         if (!$path) {
             throw new \RuntimeException('No file specified for delete', 400);
         }
 
-        // TODO: handle streams
-        $targetPath = GANTRY5_ROOT . '/' . $path;
+        $isStream = $locator->schemeExists($scheme);
+        if ($isStream) {
+            $targetPath = $locator->findResource($path, true, true);
+        } else {
+            $targetPath = GANTRY5_ROOT . '/' . $path;
+        }
 
         $file = File::instance($targetPath);
 
         if (!$file->exists()) {
-            throw new \RuntimeException('File not found: ' . $path, 404);
+            throw new \RuntimeException('File not found: ' . $targetPath, 404);
         }
 
         try {
             $file->delete();
         } catch (\Exception $e) {
-            throw new \RuntimeException('File could not be deleted: ' . $path, 500);
+            throw new \RuntimeException('File could not be deleted: ' . $targetPath, 500);
         }
 
-        return new JsonResponse(['success', 'File deleted: ' . $path]);
+        return new JsonResponse(['success', 'File deleted: ' . $targetPath]);
     }
 }

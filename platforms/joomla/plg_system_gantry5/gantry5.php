@@ -16,6 +16,7 @@ class plgSystemGantry5 extends JPlugin
      */
     protected $app;
     protected $styles;
+    protected $modules;
 
     public function __construct(&$subject, $config = array())
     {
@@ -72,15 +73,45 @@ class plgSystemGantry5 extends JPlugin
         $type   = $document->getType();
 
         $option = $this->app->input->getString('option');
-        $view   = $this->app->input->getString('view', 'styles');
+        $view   = $this->app->input->getString('view', 'g5');
         $task   = $this->app->input->getString('task');
 
-        if (in_array($option, array('com_templates', 'com_advancedtemplates')) && $view == 'styles' && !$task && $type == 'html') {
+        if (in_array($option, array('com_templates', 'com_advancedtemplates')) && ($view == 'g5' || $view == 'styles') && !$task && $type == 'html') {
             $this->styles = $this->getStyles();
 
             $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', array($this, 'appendHtml'), $this->app->getBody());
 
             $this->app->setBody($body);
+        }
+
+        if (($option == 'com_modules' || $option == 'com_advancedmodules') && (($view == 'g5' || $view == 'modules') || empty($view)) && $type == 'html') {
+            $db    = JFactory::getDBO();
+            $query = $db->getQuery(true);
+            $query->select('id, title, params');
+            $query->from('#__modules');
+            $query->where('module = ' . $db->quote('mod_gantry5_particle'));
+            $db->setQuery($query);
+            $data = $db->loadObjectList();
+
+            if (sizeof($data) > 0) {
+                $this->modules = [];
+                $body = $this->app->getBody();
+                
+                foreach ($data as $module) {
+                    $params   = json_decode($module->params);
+                    $particle = isset($params->particle) ? json_decode($params->particle) : '';
+                    $title = isset($particle->title) ? $particle->title : $particle->particle;
+
+                    $this->modules[$module->id] = $particle;
+
+                    $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', function($matches) use ($title) {
+                        return $this->appendHtml($matches, $title);
+                    }, $body);
+                }
+
+
+                $this->app->setBody($body);
+            }
         }
     }
 
@@ -285,17 +316,20 @@ class plgSystemGantry5 extends JPlugin
      * @param array $matches
      * @return string
      */
-    private function appendHtml(array $matches)
+    private function appendHtml(array $matches, $content = 'Gantry 5')
     {
         $html = $matches[0];
 
-        if (strpos($matches[2], 'task=style.edit')) {
+        if (strpos($matches[2], 'task=style.edit') || strpos($matches[2], 'task=module.edit')) {
             $uri = new JUri($matches[2]);
             $id = (int) $uri->getVar('id');
 
-            if ($id && in_array($uri->getVar('option'), array('com_templates', 'com_advancedtemplates')) && isset($this->styles[$id])) {
+            if ($id && in_array($uri->getVar('option'), array('com_templates', 'com_advancedtemplates', 'com_modules')) && (isset($this->styles[$id]) || isset($this->modules[$id]))) {
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
-                $html .= ' <span class="label" style="background:#439a86;color:#fff;">Gantry 5</span>';
+                $html .= ' <span class="label" style="background:#439a86;color:#fff;">' . $content . '</span>';
+
+                if ($this->modules[$id]) { unset($this->modules[$id]); }
+                else { unset($this->styles[$id]); }
             }
         }
 
