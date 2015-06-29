@@ -58,6 +58,16 @@ class Menu extends AbstractMenu
     }
 
     /**
+     * Return active menu.
+     *
+     * @return string
+     */
+    public function getDActiveMenuName()
+    {
+        return $this->default;
+    }
+
+    /**
      * Get menu items from the platform.
      *
      * @param int $levels
