@@ -214,6 +214,51 @@ class plgSystemGantry5 extends JPlugin
         return true;
     }
 
+    public function onContentBeforeSave($context, $table, $isNew)
+    {
+        if ($context !== 'com_menus.item') {
+            return;
+        }
+    }
+
+    public function onContentAfterSave($context, $table, $isNew)
+    {
+        if ($context !== 'com_menus.item') {
+            return;
+        }
+    }
+
+    public function onContentBeforeDelete($context, $table)
+    {
+        if ($context !== 'com_menus.item') {
+            return;
+        }
+    }
+
+    public function onContentAfterDelete($context, $table)
+    {
+        if ($context !== 'com_menus.item') {
+            return;
+        }
+    }
+
+    public function onContentPrepareData($context, $data)
+    {
+        if ($context !== 'com_menus.item') {
+            return;
+        }
+    }
+
+    public function onContentPrepareForm($form, $data)
+    {
+        switch ($form->getName()) {
+            case 'com_menus.items.filter':
+                break;
+            case 'com_menus.item':
+                break;
+        }
+    }
+
     /**
      * Clean plugin cache just as if we were saving plugin from the plugin manager.
      *
