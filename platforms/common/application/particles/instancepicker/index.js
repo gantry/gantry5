@@ -67,6 +67,8 @@ ready(function() {
 
                         if (found.length) { $(found).removeClass('hidden'); }
                     });
+
+                    search[0].focus();
                 }
 
                 var elementData = JSON.parse(element.data('g-instancepicker'));
