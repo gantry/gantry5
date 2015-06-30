@@ -31,6 +31,7 @@ class Page extends Base\Page
         $this->layout   = $input->getCmd('layout', '');
         $this->task     = $input->getCmd('task', '');
         $this->itemid   = $input->getCmd('Itemid', '');
+        $this->printing = $input->getCmd('print', '');
 
         $templateParams = $app->getTemplate(true);
         $this->outline = $templateParams->id;
@@ -60,6 +61,7 @@ class Page extends Base\Page
         $classes[] = $this->layout ? 'layout-' . $this->layout : 'no-layout';
         $classes[] = $this->task ? 'task-' . $this->task : 'no-task';
         $classes[] = 'dir-' . $this->direction;
+        $classes[] = $this->printing ? 'print-mode' : '';
         if ($this->itemid) $classes[] = 'itemid-' . $this->itemid;
         if ($this->outline) $classes[] = 'outline-' . $this->outline;
 
