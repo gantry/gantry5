@@ -62,7 +62,7 @@ class Menu extends AbstractMenu
      *
      * @return string
      */
-    public function getDActiveMenuName()
+    public function getActiveMenuName()
     {
         return $this->default;
     }
