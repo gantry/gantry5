@@ -224,8 +224,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
         $filename = $locator->findResource("gantry-config://{$this->name}/index.yaml", true, true);
+        $cache = $locator->findResource("gantry-cache://{$this->name}/compiled/yaml", true, true);
         $file = CompiledYamlFile::instance($filename);
-        $file->settings(['inline' => 20]);
+        $file->setCachePath($cache)->settings(['inline' => 20]);
         $index = $this->buildIndex();
         $file->save($index);
 
