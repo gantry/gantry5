@@ -96,7 +96,7 @@ class plgSystemGantry5 extends JPlugin
             if (sizeof($data) > 0) {
                 $this->modules = [];
                 $body = $this->app->getBody();
-                
+
                 foreach ($data as $module) {
                     $params   = json_decode($module->params);
                     $particle = isset($params->particle) ? json_decode($params->particle) : '';
