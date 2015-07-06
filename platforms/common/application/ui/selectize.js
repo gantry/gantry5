@@ -136,7 +136,7 @@ var transferStyles = function($from, $to, properties) {
     var i, n, styles = {};
     if (properties) {
         for (i = 0, n = properties.length; i < n; i++) {
-            styles[properties[i]] = $from[0].style[properties[i]];
+            styles[properties[i]] = $from.compute(properties[i]);
         }
     } else {
         styles = $from.compute();
