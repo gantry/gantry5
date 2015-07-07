@@ -30,31 +30,31 @@ class Content extends HtmlController
 {
     protected $httpVerbs = [
         'GET' => [
-            '/'               => 'index',
-            '/content'        => 'undefined',
-            '/content/*'      => 'display',
-            '/content/*/**'   => 'formfield',
+            '/'       => 'index',
+            '/*'      => 'undefined',
+            '/*/*'    => 'display',
+            '/*/*/**' => 'formfield',
         ],
         'POST' => [
-            '/'               => 'save',
-            '/content'        => 'forbidden',
-            '/content/*'      => 'save',
-            '/content/*/**'   => 'formfield'
+            '/'       => 'save',
+            '/*'      => 'forbidden',
+            '/*/*'    => 'save',
+            '/*/*/**' => 'formfield'
         ],
         'PUT' => [
-            '/'            => 'save',
-            '/content'     => 'forbidden',
-            '/content/*'   => 'save'
+            '/'       => 'save',
+            '/*'      => 'forbidden',
+            '/*/*'    => 'save'
         ],
         'PATCH' => [
-            '/'            => 'save',
-            '/content'     => 'forbidden',
-            '/content/*'   => 'save'
+            '/'       => 'save',
+            '/*'      => 'forbidden',
+            '/*/*'    => 'save'
         ],
         'DELETE' => [
-            '/'            => 'forbidden',
-            '/content'     => 'forbidden',
-            '/content/*'   => 'reset'
+            '/'       => 'forbidden',
+            '/*'      => 'forbidden',
+            '/*/*'    => 'reset'
         ]
     ];
 
@@ -70,18 +70,18 @@ class Content extends HtmlController
         }
 
         $this->params['content'] = $this->container['content']->group();
-        $this->params['route']  = "configurations.{$this->params['configuration']}.content";
+        $this->params['route']  = "configurations.{$configuration}.content";
         $this->params['page_id'] = $configuration;
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/content/content.html.twig', $this->params);
     }
 
-    public function display($id)
+    public function display($group, $id = null)
     {
         $configuration = $this->params['configuration'];
-        $particle = $this->container['content']->get($id);
+        $particle = $this->container['content']->get("{$group}/{$id}");
         $blueprints = new BlueprintsForm($particle);
-        $prefix = 'content.' . $id;
+        $prefix = "content.{$group}.{$id}";
 
         if($configuration == 'default') {
             $this->params['overrideable'] = false;
@@ -93,7 +93,7 @@ class Content extends HtmlController
         $this->params += [
             'particle' => $blueprints,
             'data' =>  Gantry::instance()['config']->get($prefix),
-            'id' => $id,
+            'id' => "{$group}.{$id}", // FIXME?
             'parent' => "configurations/{$this->params['configuration']}/content",
             'route'  => "configurations.{$this->params['configuration']}.content.{$prefix}",
             'skip' => ['enabled']
@@ -102,7 +102,7 @@ class Content extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/content/item.html.twig', $this->params);
     }
 
-    public function formfield($id)
+    public function formfield($group, $id)
     {
         $path = func_get_args();
 
@@ -110,7 +110,7 @@ class Content extends HtmlController
             return call_user_func_array([$this, 'validate'], $path);
         }
 
-        $particle = $this->container['content']->get($id);
+        $particle = $this->container['content']->get("{$group}/{$id}");
 
         // Load blueprints.
         $blueprints = new BlueprintsForm($particle);
@@ -123,7 +123,7 @@ class Content extends HtmlController
 
         $data = $this->request->post->getJsonArray('data');
 
-        $offset = "content.{$id}." . implode('.', $path);
+        $offset = "content.{$group}.{$id}." . implode('.', $path);
         if ($value !== null) {
             $parent = $fields;
             $fields = ['fields' => $fields['fields']];
@@ -147,8 +147,8 @@ class Content extends HtmlController
                 'data' => $data,
                 'prefix' => $prefix,
                 'parent' => $path
-                    ? "$configuration/content/content/{$id}/" . implode('/', $path)
-                    : "$configuration/content/content/{$id}",
+                    ? "$configuration/content/content/{$group}/{$id}/" . implode('/', $path)
+                    : "$configuration/content/content/{$group}/{$id}",
                 'route' => 'content.' . $offset
             ] + $this->params;
 
@@ -162,17 +162,17 @@ class Content extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/content/field.html.twig', $this->params);
     }
 
-    public function validate($particle)
+    public function validate($group, $id)
     {
-        $path = implode('.', array_slice(func_get_args(), 1, -1));
+        $path = implode('.', array_slice(func_get_args(), 1, -2));
 
         // Validate only exists for JSON.
         if (empty($this->params['ajax'])) {
             $this->undefined();
         }
 
-        // Load particle blueprints.
-        $validator = $this->container['content']->get($particle);
+        // Load blueprints.
+        $validator = $this->container['content']->get("{$group}/{$id}");
 
         // Create configuration from the defaults.
         $data = new Config(
@@ -189,12 +189,14 @@ class Content extends HtmlController
         return new JsonResponse(['data' => $data->get($path)]);
     }
 
-    public function save($id = null)
+    public function save($group = null, $id = null)
     {
-        $data = $id ? [$id => $this->request->post->getArray()] : $this->request->post->getArray('content');
+        $data = $id ? [$group => [$id => $this->request->post->getArray()]] : $this->request->post->getArray('content');
 
-        foreach ($data as $name => $values) {
-            $this->saveItem($name, $values);
+        foreach ($data as $group => $subgroups) {
+            foreach ($subgroups as $name => $values) {
+                $this->saveItem($group, $name, $values);
+            }
         }
 
         // Fire save event.
@@ -205,10 +207,10 @@ class Content extends HtmlController
         $event->data = $data;
         $this->container->fireEvent('admin.content.save', $event);
 
-        return $id ? $this->display($id) : $this->index();
+        return $id ? $this->display($group, $id) : $this->index();
     }
 
-    protected function saveItem($id, $data)
+    protected function saveItem($group, $id, $data)
     {
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
@@ -216,7 +218,7 @@ class Content extends HtmlController
         // Save layout into custom directory for the current theme.
         $configuration = $this->params['configuration'];
         $save_dir = $locator->findResource("gantry-config://{$configuration}/content", true, true);
-        $filename = "{$save_dir}/{$id}.yaml";
+        $filename = "{$save_dir}/{$group}/{$id}.yaml";
 
         $file = YamlFile::instance($filename);
         if (!is_array($data)) {
@@ -224,19 +226,19 @@ class Content extends HtmlController
                 $file->delete();
             }
         } else {
-            $blueprints = new BlueprintsForm($this->container['content']->get($id));
+            $blueprints = new BlueprintsForm($this->container['content']->get("{$group}/{$id}"));
             $config = new Config($data, function() use ($blueprints) { return $blueprints; });
 
             $file->save($config->toArray());
         }
     }
 
-    public function reset($id)
+    public function reset($group, $id)
     {
         $this->params += [
             'data' => [],
         ];
 
-        return $this->display($id);
+        return $this->display($group, $id);
     }
 }
