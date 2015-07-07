@@ -14,21 +14,3 @@ form:
       type: wordpress.categories
       label: Exclude Categories
       description:
-
-    posts.leading:
-      type: input.text
-      label: Leading Posts
-      description:
-      default: 1
-
-    posts.intro:
-      type: input.text
-      label: Intro Posts
-      description:
-      default: 3
-
-    posts.columns:
-      type: input.text
-      label: Columns
-      description:
-      default: 1

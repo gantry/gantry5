@@ -5,23 +5,23 @@ type: post
 form:
   fields:
 
-    featured.image:
+    enabled:
      type: input.checkbox
      label: Enabled
      description: Display featured image on the single post page.
      default: 1
 
-    featured.image.width:
+    width:
       type: input.text
       label: Image Width
       description: Image width in pixels.
 
-    featured.image.height:
+    height:
       type: input.text
       label: Image Height
       description: Image height in pixels.
 
-    featured.image.position:
+    position:
       type: select.selectize
       label: Image Position
       description: Choose if the image should be aligned to left, right or none.

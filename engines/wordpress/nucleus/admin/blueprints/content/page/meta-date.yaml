@@ -5,19 +5,19 @@ type: page
 form:
   fields:
 
-    meta.date:
+    enabled:
      type: input.checkbox
      label: Display Date
      description: Display page publish date.
      default: 1
 
-    meta.date.link:
+    link:
       type: input.checkbox
       label: Link Date
       description: Link date to the page.
       default: 1
 
-    meta.date.format:
+    format:
       type: select.date
       label: Date Format
       description: Select preferred date format.
@@ -39,7 +39,7 @@ form:
           'l j F Y': Date11
           'j F Y': Date12
 
-    meta.date.prefix:
+    prefix:
      type: input.text
      label: Date Prefix
      description: Display text directly before the publish date.

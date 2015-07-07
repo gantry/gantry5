@@ -5,19 +5,19 @@ type: post
 form:
   fields:
 
-    meta.tags:
+    enabled:
      type: input.checkbox
      label: Display Tags
      description: Display post tags.
      default: 0
 
-    meta.tags.link:
+    link:
      type: input.checkbox
      label: Link Tags
      description: Link tags to their tag page.
      default: 1
 
-    meta.tags.prefix:
+    prefix:
      type: input.text
      label: Tags Prefix
      description: Display text directly before the tags list.

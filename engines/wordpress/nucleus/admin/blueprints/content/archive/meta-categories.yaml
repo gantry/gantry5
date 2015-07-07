@@ -5,19 +5,19 @@ type: archive
 form:
   fields:
 
-    meta.categories:
+    enabled:
      type: input.checkbox
      label: Display Categories
      description: Display categories that the post has been assigned to.
      default: 1
 
-    meta.categories.link:
+    link:
      type: input.checkbox
      label: Link Categories
      description: Link categories to their category page.
      default: 1
 
-    meta.categories.prefix:
+    prefix:
      type: input.text
      label: Categories Prefix
      description: Display text directly before the category name.

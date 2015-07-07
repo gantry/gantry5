@@ -5,7 +5,7 @@ type: post
 form:
   fields:
 
-    meta.tags:
+    enabled:
      type: input.checkbox
      label: Display Tags
      description: Display post tags.

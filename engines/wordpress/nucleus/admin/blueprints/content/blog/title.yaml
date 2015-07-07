@@ -5,13 +5,13 @@ type: blog
 form:
   fields:
 
-    title:
+    enabled:
      type: input.checkbox
      label: Display Title
      description: Display post titles.
      default: 1
 
-    title.link:
+    link:
      type: input.checkbox
      label: Link Title
      description: Link titles to the posts.

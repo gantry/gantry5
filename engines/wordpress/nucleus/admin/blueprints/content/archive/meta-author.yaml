@@ -5,19 +5,19 @@ type: archive
 form:
   fields:
 
-    meta.author:
+    enabled:
      type: input.checkbox
      label: Display Author
      description: Display author.
      default: 1
 
-    meta.author.link:
+    link:
      type: input.checkbox
      label: Link Author
      description: Link author to his archives.
      default: 1
 
-    meta.author.prefix:
+    prefix:
      type: input.text
      label: Author Prefix
      description: Display text directly before the author name.

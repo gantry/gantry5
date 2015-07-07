@@ -5,7 +5,7 @@ type: blog
 form:
   fields:
 
-    content.type:
+    type:
       type: select.selectize
       label: Content Type
       description: Choose if the blog page should display full content or excerpt of the post.
@@ -14,8 +14,8 @@ form:
         content: Full Content
         excerpt: Excerpt
 
-    content.excerpt.length:
+    excerpt.length:
       type: input.text
       label: Excerpt Length
-      description: Number of words that post excerpts should display.
+      description: Number of words that post excerpt should display.
       default: 55
