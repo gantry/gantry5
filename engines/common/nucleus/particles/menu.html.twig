@@ -93,8 +93,9 @@
 {% endmacro %}
 
 {% macro displayItems(items, menu, gantry, root) %}
+    {% import _self as SELF %}
     {% for item in items %}
-        {{ _self.displayItem(item, root|default(item), menu, gantry) }}
+        {{ SELF.displayItem(item, root, menu, gantry) }}
     {% endfor %}
 {% endmacro %}
 
