@@ -14,7 +14,9 @@ namespace Gantry\Admin;
 use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Base\Gantry;
 use Gantry\Framework\Configurations;
+use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
+use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 
@@ -27,7 +29,8 @@ class EventListener implements EventSubscriberInterface
             'admin.styles.save' => ['onStylesSave', 0],
             'admin.settings.save' => ['onSettingsSave', 0],
             'admin.layout.save' => ['onLayoutSave', 0],
-            'admin.assignments.save' => ['onAssignmentsSave', 0]
+            'admin.assignments.save' => ['onAssignmentsSave', 0],
+            'admin.menus.save' => ['onMenusSave', 0]
         ];
     }
 
@@ -62,5 +65,60 @@ class EventListener implements EventSubscriberInterface
 
     public function onAssignmentsSave(Event $event)
     {
+    }
+
+
+    public function onMenusSave(Event $event)
+    {
+        $table = \JTable::getInstance('menu');
+        $menu = $event->menu;
+
+        foreach ($menu['items'] as $key => $item) {
+            $id = !empty($item['id']) ? (int) $item['id'] : 0;
+            if ($id && $table->load($item['id'])) {
+                $params = new Registry($table->params);
+
+                // Menu item exists in Joomla, let's update it instead.
+                unset($item['type'], $item['alias'], $item['path'], $item['link'], $item['parent_id']);
+
+                $title = $menu["items.{$key}.title"];
+
+                $options = [
+                    'menu-anchor_title' => $menu["items.{$key}.subtitle"],
+                    'menu-anchor_css' => $menu["items.{$key}.anchor_class"],
+                    'menu_image' => $menu["items.{$key}.image"],
+                    'menu_text' => (int) !$menu["items.{$key}.icon_only"],
+                    'browserNav' => (int) $menu["items.{$key}.target"] === '_blank'
+                ];
+
+                $modified = false;
+                foreach ($options as $var => $value) {
+                    if ($params->get($var) != $value) {
+                        $params->set($var, $value);
+                        $modified = true;
+                    }
+                }
+
+                if ($table->title != $title) {
+                    $table->title = $title;
+                    $modified = true;
+                }
+
+                if ($modified) {
+                    $table->params = $params->toArray();
+                    if (!$table->check() || !$table->store()) {
+                        throw new \RuntimeException($table->getError());
+                    }
+
+                    // Clean the cache.
+                    CacheHelper::cleanTemplates();
+                }
+
+                // Avoid saving values which are also stored in Joomla.
+                unset($item['subtitle'], $item['anchor_class'], $item['image'], $item['icon_only'], $item['target']);
+
+                $event->menu->set("items.{$key}", $item);
+            }
+        }
     }
 }

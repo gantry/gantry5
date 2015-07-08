@@ -26,6 +26,7 @@ use Gantry\Framework\Gantry;
 use Gantry\Framework\Menu as MenuObject;
 use Gantry\Framework\Platform;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
+use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -142,6 +143,14 @@ class Menu extends HtmlController
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
         $filename = $locator->findResource("gantry-config://menu/{$resource->name()}.yaml", true, true);
+
+        // Fire save event.
+        $event = new Event;
+        $event->gantry = $this->container;
+        $event->theme = $this->container['theme'];
+        $event->controller = $this;
+        $event->menu = $data;
+        $this->container->fireEvent('admin.menus.save', $event);
 
         $file = YamlFile::instance($filename);
         $file->settings(['inline' => 99]);
