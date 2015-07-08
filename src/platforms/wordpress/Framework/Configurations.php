@@ -115,7 +115,9 @@ class Configurations extends BaseConfigurations
             throw new \RuntimeException('Outline not found', 404);
         }
 
-        Folder::delete($path);
+        if (file_exists($path)) {
+            Folder::delete($path);
+        }
     }
 
     /**
