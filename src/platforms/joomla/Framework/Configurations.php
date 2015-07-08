@@ -175,7 +175,9 @@ class Configurations extends BaseConfigurations
         $locator = $gantry['locator'];
         $path = $locator->findResource("gantry-config://{$item->id}", true, true);
         if ($path) {
-            Folder::delete($path);
+            if (file_exists($path)) {
+                Folder::delete($path);
+            }
         }
     }
 
