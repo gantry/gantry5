@@ -234,7 +234,7 @@ var Menu = new prime({
         if (!isGoingBack) {
             // if from height is < than to height set the parent height else, set the target
             if (heights.from.height < heights.to.height) { parent[0].style.height = height + 'px'; }
-            else { sublevel[0].style.height = height + 'px'; }
+            else if (isNavMenu) { sublevel[0].style.height = height + 'px'; }
 
             // fix sublevels heights in side menu (offcanvas etc)
             if (!isNavMenu) {
@@ -242,11 +242,27 @@ var Menu = new prime({
                     block = $(sublevel).parent('.g-block:not(.size-100)'),
                     column = block ? block.parent('.g-dropdown-column') : null;
                 (sublevel.parents('.g-slide-out, .g-dropdown-column') || parent).forEach(function(slideout) {
-                    maxHeight = Math.max(height, parseInt(slideout.style.height, 10));
+                    maxHeight = Math.max(height, parseInt(slideout.style.height || 0, 10));
                 });
 
-                if (column) { column[0].style.height = maxHeight + 'px'; }
-                sublevel[0].style.height = maxHeight + 'px';
+                if (column) {
+                    column[0].style.height = maxHeight + 'px';
+
+                    var blocks = column.search('> .g-grid > .g-block'),
+                        diff = maxHeight;
+
+                    blocks.forEach(function(block, i){
+                        if ((i + 1) != blocks.length) {
+                            diff -= block.getBoundingClientRect().height;
+                        } else {
+                            $(block).find('.g-sublevel')[0].style.height = diff + 'px';
+                        }
+                    });
+
+
+                } else {
+                    sublevel[0].style.height = maxHeight + 'px';
+                }
             }
         }
     },
