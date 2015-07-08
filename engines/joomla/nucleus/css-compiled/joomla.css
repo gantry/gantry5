@@ -269,6 +269,12 @@ fieldset.radio.btn-group {
   font-size: inherit;
 }
 
+.platform-content input {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
 legend {
   margin-bottom: 1.5rem;
 }
@@ -297,12 +303,6 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
   padding: 0.375rem 0.375rem;
 }
 
-.platform-content input, .platform-content textarea, .platform-content select, .platform-content .uneditable-input {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
 .uneditable-input {
   width: 100%;
 }
@@ -311,9 +311,6 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
   display: block;
   width: 100%;
   min-height: 28px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 .input-prepend .chzn-container-single .chzn-single,
@@ -366,6 +363,10 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
   padding-right: 0;
   padding-top: 0;
   text-align: left;
+}
+
+.control-label .hasTooltip {
+  display: inline-block;
 }
 
 .form-vertical .controls {
@@ -429,12 +430,6 @@ input.invalid {
 
 .dropdown-menu {
   text-align: left;
-}
-
-.platform-content *, .platform-content *::before, .platform-content *::after {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
 }
 
 body.modal {
