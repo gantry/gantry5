@@ -62,6 +62,22 @@ abstract class CssCompiler implements CssCompilerInterface
     protected $files;
 
     /**
+     * @var bool
+     */
+    protected $production;
+
+    public function __construct()
+    {
+        $gantry = static::gantry();
+
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        // In production mode we do not need to do any other checks.
+        $this->production = (bool) $global->get('production');
+    }
+
+    /**
      * @return string
      */
     public function getTarget()
@@ -173,7 +189,7 @@ abstract class CssCompiler implements CssCompilerInterface
 
     public function needsCompile($in, $variables)
     {
-        $gantry = Gantry::instance();
+        $gantry = static::gantry();
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
@@ -187,11 +203,8 @@ abstract class CssCompiler implements CssCompilerInterface
             return true;
         }
 
-        /** @var Config $global */
-        $global = $gantry['global'];
-
         // In production mode we do not need to do any other checks.
-        if ($global->get('production')) {
+        if ($this->production) {
             return false;
         }
 
@@ -257,7 +270,7 @@ abstract class CssCompiler implements CssCompilerInterface
              *      + rgba(125,200,100,0.3)
              *      - rgb(120,12,12)
              */
-            if (preg_match("/(^(#([a-fA-F0-9]{6})|(rgba\(\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*((0.[0-9]+)|[01])\s*\)))|(\d+(\.\d+){0,1}(rem|em|ex|ch|vw|vh|vmin|vmax|%|px|cm|mm|in|pt|pc))$)/i", $value)) {
+            if (preg_match('/(^(#([a-fA-F0-9]{6})|(rgba\(\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*((0.[0-9]+)|[01])\s*\)))|(\d+(\.\d+){0,1}(rem|em|ex|ch|vw|vh|vmin|vmax|%|px|cm|mm|in|pt|pc))$)/i', $value)) {
                 continue;
             }
 
@@ -289,10 +302,7 @@ abstract class CssCompiler implements CssCompilerInterface
     {
         $gantry = Gantry::instance();
 
-        /** @var Config $global */
-        $global = $gantry['global'];
-
-        if ($global->get('production')) {
+        if ($this->production) {
             return;
         }
 
