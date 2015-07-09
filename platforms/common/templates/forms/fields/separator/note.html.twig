@@ -1,4 +1,4 @@
-{% extends "forms/field.html.twig" %}
+{% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% block field %}
     <div class="{{ field.class|default("alert alert-warning")|e }}">{{ field.content|trans|raw }}</div>

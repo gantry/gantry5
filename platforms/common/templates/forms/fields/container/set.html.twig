@@ -1,4 +1,4 @@
-{% extends "forms/field.html.twig" %}
+{% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% block contents %}
     <h5>{{ field.label }}</h5>

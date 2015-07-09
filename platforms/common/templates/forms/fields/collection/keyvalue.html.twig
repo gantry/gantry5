@@ -1,4 +1,4 @@
-{% extends "forms/field.html.twig" %}
+{% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% block input %}
     <div class="g-keyvalue-field{% if field.size %} g-keyvalue-{{ field.size }}{% endif %}">
