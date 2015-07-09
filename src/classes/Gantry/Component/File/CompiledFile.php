@@ -75,10 +75,11 @@ trait CompiledFile
                 || $cache['filename'] != $this->filename
             ) {
                 // Attempt to lock the file for writing.
-                // don't throw any exception since a proper check happens later
                 try {
                     $file->lock(false);
-                } catch (\Exception $e) { }
+                } catch (\Exception $e) {
+                    // Another process has locked the file; we will check this in a bit.
+                }
 
                 // Decode RAW file into compiled array.
                 $data = $this->decode($this->raw());

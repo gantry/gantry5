@@ -113,7 +113,11 @@ WARN;
         $file = File::instance($path);
 
         // Attempt to lock the file for writing.
-        $file->lock(false);
+        try {
+            $file->lock(false);
+        } catch (\Exception $e) {
+            // Another process has locked the file; we will check this in a bit.
+        }
 
         //TODO: Better way to handle double writing files at same time.
         if ($file->locked() === false) {

@@ -189,7 +189,11 @@ abstract class CompiledBase
         $file = PhpFile::instance($filename);
 
         // Attempt to lock the file for writing.
-        $file->lock(false);
+        try {
+            $file->lock(false);
+        } catch (\Exception $e) {
+            // Another process has locked the file; we will check this in a bit.
+        }
 
         if ($file->locked() === false) {
             // File was already locked by another process.
