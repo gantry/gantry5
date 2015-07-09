@@ -34,6 +34,9 @@ class Assignments
 
     public function set($data)
     {
+        if (isset($data['assignment'])) {
+            $this->setAssignment($data['assignment']);
+        }
         if (isset($data['menu'])) {
             $this->setMenu($data['menu']);
         }
@@ -138,8 +141,38 @@ class Assignments
         return ($n > 0);
     }
 
-    public function options()
+    public function getAssignment()
     {
+        $style = StyleHelper::getStyle($this->style_id);
+
+        return $style->home;
+    }
+
+    public function setAssignment($value)
+    {
+        $options = $this->assignmentOptions();
+
+        if (!isset($options[$value])) {
+            throw new \RuntimeException('Invalid value for default assignment!', 400);
+        }
+
+        $style = StyleHelper::getStyle($this->style_id);
+        $style->home = $value;
+
+        if (!$style->check() || !$style->store()) {
+            throw new \RuntimeException($style->getError());
+        }
+
+        // Clean the cache.
+        CacheHelper::cleanTemplates();
+    }
+
+    public function assignmentOptions()
+    {
+        if ((string)(int) $this->style_id !== (string) $this->style_id) {
+            return [];
+        }
+
         $languages = \JHtml::_('contentlanguage.existing');
 
         $options = ['- Make Default -', 'All Languages'];
@@ -148,12 +181,5 @@ class Assignments
         }
 
         return $options;
-    }
-
-    public function selectedOption()
-    {
-        $style = StyleHelper::getStyle($this->style_id);
-
-        return $style->home;
     }
 }
