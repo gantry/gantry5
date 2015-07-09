@@ -203,8 +203,18 @@ abstract class CssCompiler implements CssCompilerInterface
             return true;
         }
 
-        // In production mode we do not need to do any other checks.
         if ($this->production) {
+            // Open the file to see if it contains development comment in the beginning of the file.
+            $handle = fopen($path, "rb");
+            $contents = fread($handle, 14);
+            fclose($handle);
+
+            if ($contents === '/* GANTRY5 DEV') {
+                $this->setVariables($variables());
+                return true;
+            }
+
+            // In production mode we do not need to do any other checks.
             return false;
         }
 
