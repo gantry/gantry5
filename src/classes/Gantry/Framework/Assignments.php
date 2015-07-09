@@ -33,4 +33,14 @@ class Assignments
     {
         return [];
     }
+
+    public function options()
+    {
+        return [];
+    }
+
+    public function selectedOption()
+    {
+        return null;
+    }
 }

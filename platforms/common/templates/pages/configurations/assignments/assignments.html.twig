@@ -22,6 +22,12 @@
             <label>
                 <input type="checkbox" data-assignments-enabledonly /> {{ 'GANTRY5_PLATFORM_HIDE_ASSIGNMENTS'|trans }}
             </label>
+
+            {% if options %}
+            <div class="pull-right">
+                {% include '@gantry-admin/forms/fields/select/selectize.html.twig' with {'layout': 'input', 'name': 'assignment', 'field': {'type': 'select.selectize', 'options': options}, 'value': assignment} only %}
+            </div>
+            {% endif %}
         </div>
 
         <div class="cards-wrapper clearfix">

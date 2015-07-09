@@ -29,6 +29,8 @@ class Assignments extends HtmlController
             $assignments = new AssignmentsObject($configuration);
 
             $this->params['assignments'] = $assignments->get();
+            $this->params['options'] = $assignments->options();
+            $this->params['assignment'] = $assignments->selectedOption();
         }
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/assignments/assignments.html.twig', $this->params);

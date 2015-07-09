@@ -13,6 +13,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Joomla\CacheHelper;
+use Gantry\Joomla\StyleHelper;
 use Joomla\Utilities\ArrayHelper;
 
 class Assignments
@@ -135,5 +136,24 @@ class Assignments
         CacheHelper::cleanTemplates();
 
         return ($n > 0);
+    }
+
+    public function options()
+    {
+        $languages = \JHtml::_('contentlanguage.existing');
+
+        $options = ['- Make Default -', 'All Languages'];
+        foreach ($languages as $language) {
+            $options[$language->value] = $language->text;
+        }
+
+        return $options;
+    }
+
+    public function selectedOption()
+    {
+        $style = StyleHelper::getStyle($this->style_id);
+
+        return $style->home;
     }
 }
