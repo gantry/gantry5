@@ -17,6 +17,7 @@ class Page extends Base\Page
     public $baseUrl;
     public $title;
     public $description;
+    public $direction;
 
     public function __construct($container)
     {

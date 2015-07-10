@@ -92,11 +92,6 @@ class Theme extends BaseTheme
                 // Workaround for Joomla! not loading bootstrap when it needs it.
                 \JHtml::_('bootstrap.framework');
 
-                $document = \JFactory::getDocument();
-
-                // Load optional RTL Bootstrap CSS.
-                \JHtml::_('bootstrap.loadCss', false, $document->direction);
-
                 $this->joomla = (bool) $enable;
             }
         }
