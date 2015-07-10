@@ -26,7 +26,7 @@
                     <div class="family">
                         <strong>{{ font.family }}</strong>, {{ font.variants|length }} style{% if font.variants > 1 %}s{% endif %}
                         {%- if font.subsets|length > 1 -%}
-                        , <span class="font-charsets">{{ font.subsets|length }} charsets <span class="font-charsets-selected">(1 selected)</span></span>
+                        , <span class="font-charsets">{{ font.subsets|length }} charsets <span class="font-charsets-selected">(<i class="fa fa-fw fa-check-square-o"></i> <span class="font-charsets-details">1 of {{ font.subsets|length }}</span> selected)</span></span>
                         {% endif %}
                     </div>
                     <ul>

@@ -6492,7 +6492,10 @@ var Fonts = new prime({
         }, this);
 
         var charsetSelected = element.find('.font-charsets-selected');
-        if (charsetSelected) { charsetSelected.text('(' + subset.length + ' selected)'); }
+        if (charsetSelected) {
+            var subsetsLength = element.data('subsets').split(',').length;
+            charsetSelected.html('(<i class="fa fa-fw fa-check-square-o"></i>  <span class="font-charsets-details">' + subset.length + ' of ' + subsetsLength + '</span> selected)');
+        }
 
         if (!isLocal) { $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop; }
 
@@ -6508,7 +6511,10 @@ var Fonts = new prime({
         if (!this.selected || this.selected.element != element) {
             if (variant && this.selected) {
                 var charsetSelected = this.selected.element.find('.font-charsets-selected');
-                if (charsetSelected) { charsetSelected.text('(1 selected)'); }
+                if (charsetSelected) {
+                    var subsetsLength = element.data('subsets').split(',').length;
+                    charsetSelected.html('(<i class="fa fa-fw fa-check-square-o"></i>  <span class="font-charsets-details">1 of ' + subsetsLength + '</span> selected)');
+                }
             }
             this.selected = {
                 font: element.data('font'),
@@ -6697,7 +6703,8 @@ var Fonts = new prime({
                         input = $(input);
                         checked = content.search('input[type="checkbox"]:checked');
                         this.selected.charsets = checked ? checked.map('value') : [];
-                        element.text('(' + this.selected.charsets.length + ' selected)');
+
+                        element.html('(<i class="fa fa-fw fa-check-square-o"></i>  <span class="font-charsets-details">' + this.selected.charsets.length + ' of ' + subsets.length + '</span> selected)');
                     }, this));
 
                     popover.displayContent();

@@ -25,6 +25,10 @@
             display: inline-block;
         }
 
+        .font-selected .font-charsets-details {
+            color: $blue;
+        }
+
         .font-search {
             width: 10rem !important;
         }
@@ -85,11 +89,11 @@
                 border: 1px solid #dfdfdf;
                 border-radius: 5px;
                 cursor: pointer;
-                
+
                 &.g-local-font {
                     margin-right: 0.5em;
                     display: inline-block;
-                    
+
                     .family {
                         display: inline-block;
                     }

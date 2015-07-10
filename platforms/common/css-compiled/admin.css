@@ -63,11 +63,6 @@
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-#g5-container *, #g5-container *::before, #g5-container *::after {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
 @-webkit-viewport {
   #g5-container {
     width: device-width;
@@ -98,6 +93,14 @@
   font-size: 100%;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#g5-container *, #g5-container *::before, #g5-container *::after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
 }
 #g5-container body {
   margin: 0;
@@ -5385,6 +5388,9 @@ html.g5-dialog-open {
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-selected .font-charsets-selected {
   display: inline-block;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-selected .font-charsets-details {
+  color: #3288e6;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-search {
   width: 10rem !important;
