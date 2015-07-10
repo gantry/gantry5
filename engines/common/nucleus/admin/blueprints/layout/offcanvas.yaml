@@ -27,3 +27,9 @@ form:
       key_placeholder: Key (data-*, style, ...)
       value_placeholder: Value
       exclude: ['id', 'class']
+
+    swipe:
+      type: input.checkbox
+      label: Swipe Gesture
+      description: Enables or disables the Swipe gestures for opening and closing the offcanvas.
+      default: 1

@@ -362,10 +362,10 @@ var ready     = require('domready'),
 // thanks David Walsh
 var prefix = (function() {
     var styles = window.getComputedStyle(document.documentElement, ''),
-        pre = (Array.prototype.slice.call(styles).join('')
-            .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
+        pre    = (Array.prototype.slice.call(styles).join('')
+                .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
         )[1],
-        dom = ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1];
+        dom    = ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1];
     return {
         dom: dom,
         lowercase: pre,
@@ -422,6 +422,9 @@ var Offcanvas = new prime({
         this.panel = $('#g-page-surround');
         this.offcanvas = $('#g-offcanvas');
 
+        var swipe = this.offcanvas.data('g-offcanvas-swipe');
+        this.setOptions({ touch: !!(swipe !== null ? parseInt(swipe) : 1) });
+
         if (!this.panel || !this.offcanvas) { return false; }
 
         if (!this.options.padding) {
@@ -465,7 +468,7 @@ var Offcanvas = new prime({
 
     attachTouchEvents: function() {
         var msPointerSupported = window.navigator.msPointerEnabled,
-            touch = {
+            touch              = {
                 start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
                 move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
                 end: msPointerSupported ? 'MSPointerUp' : 'touchend'
@@ -503,7 +506,7 @@ var Offcanvas = new prime({
 
     detachTouchEvents: function() {
         var msPointerSupported = window.navigator.msPointerEnabled,
-            touch = {
+            touch              = {
                 start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
                 move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
                 end: msPointerSupported ? 'MSPointerUp' : 'touchend'
@@ -586,7 +589,7 @@ var Offcanvas = new prime({
     },
 
     _translateXTo: function(x) {
-        var panel = this.panel[0],
+        var panel     = this.panel[0],
             placement = (this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left');
 
         this.offset.x.current = x;
@@ -629,8 +632,8 @@ var Offcanvas = new prime({
     _touchMove: function(event) {
         if (isScrolling || this.preventOpen || !event.touches) { return; }
 
-        var placement = (this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left'),
-            diffX = clamp(event.touches[0].clientX - this.offset.x.start, -this.options.padding, this.options.padding),
+        var placement  = (this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left'),
+            diffX      = clamp(event.touches[0].clientX - this.offset.x.start, -this.options.padding, this.options.padding),
             translateX = this.offset.x.current = diffX,
             diffY = Math.abs(event.touches[0].pageY - this.offset.y.start),
             overlayOpacity;
@@ -683,14 +686,14 @@ var Offcanvas = new prime({
     },
 
     _checkTogglers: function(mutator) {
-        var togglers = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
+        var togglers        = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
             mobileContainer = $('#g-mobilemenu-container'),
             blocks, mCtext;
 
         if (!togglers || (mutator && ((mutator.target || mutator.srcElement) !== mobileContainer[0]))) { return; }
         if (this.opened) { this.close(); }
 
-        timeout(function(){
+        timeout(function() {
             blocks = this.offcanvas.search('.g-block');
             mCtext = mobileContainer ? mobileContainer.text().length : 0;
             var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
