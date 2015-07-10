@@ -19,6 +19,8 @@ use Gantry\Joomla\Manifest;
 use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
+use RocketTheme\Toolbox\File\IniFile;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class EventListener implements EventSubscriberInterface
 {
@@ -56,11 +58,28 @@ class EventListener implements EventSubscriberInterface
 
     public function onLayoutSave(Event $event)
     {
+        $theme = $event->gantry['theme.name'];
+
         $positions = $event->gantry['configurations']->positions();
 
-        $manifest = new Manifest($event->gantry['theme.name']);
+        $manifest = new Manifest($theme);
         $manifest->setPositions(array_keys($positions));
         $manifest->save();
+
+        $translations = [];
+        foreach ($positions as $key => $translation) {
+            // Encode translation key in Joomla way.
+            $key = preg_replace('/[^A-Z0-9_\-]/', '_', strtoupper("TPL_{$theme}_POSITION_{$key}"));
+            $translations[$key] = $translation;
+        }
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $event->gantry['locator'];
+
+        $filename = "gantry-theme://language/en-GB/en-GB.tpl_{$theme}_positions.ini";
+
+        $ini = IniFile::instance($locator->findResource($filename, true, true));
+        $ini->save($translations);
     }
 
     public function onAssignmentsSave(Event $event)

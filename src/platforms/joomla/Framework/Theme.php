@@ -35,6 +35,21 @@ class Theme extends BaseTheme
         // Trigger the onGantryThemeInit event.
         $dispatcher = \JEventDispatcher::getInstance();
         $dispatcher->trigger('onGantry5ThemeInit', ['theme' => $this]);
+
+        if (\JFactory::getApplication()->isSite()) {
+            $gantry = Gantry::instance();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+
+            // Load our custom positions file as frontend requires the strings to be there.
+            $lang = \JFactory::getLanguage();
+            $filename = $locator("gantry-theme://language/en-GB/en-GB.tpl_{$this->name}_positions.ini");
+
+            if ($filename) {
+                $lang->load("tpl_{$this->name}_positions", dirname(dirname(dirname($filename))), 'en-GB');
+            }
+        }
     }
 
     public function renderer()
