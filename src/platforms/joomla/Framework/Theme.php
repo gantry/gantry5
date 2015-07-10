@@ -40,7 +40,7 @@ class Theme extends BaseTheme
     public function renderer()
     {
         if (!$this->renderer) {
-            $gantry = \Gantry\Framework\Gantry::instance();
+            $gantry = Gantry::instance();
 
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];

@@ -156,6 +156,13 @@ class plgSystemGantry5 extends JPlugin
         $configurations = $gantry['configurations'];
 
         $theme->setLayout($configurations->current());
+
+        if (!$this->params->get('production', 0) || $this->params->get('asset_timestamps', 1)) {
+            $age = (int) ($this->params->get('asset_timestamps_period', 7) * 86400);
+            Gantry\Framework\Document::$timestamp_age = $age > 0 ? $age : PHP_INT_MAX;
+        } else {
+            Gantry\Framework\Document::$timestamp_age = 0;
+        }
     }
 
     /**
