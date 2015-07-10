@@ -11,6 +11,8 @@
             <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_STYLES'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_STYLES'|trans }}</span></button>
         </span>
 
+        {% set presets = gantry.theme.presets %}
+        {% if presets.count() %}
         {% set collapsed = attribute(stored_data, 'swatches') %}
         <h2 class="page-title{{ collapsed ? ' g-collapsed-main' : '' }}" data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: 'swatches', target: '~ .swatches-container' })|json_encode|e('html_attr') }}" data-g-collapse-id="swatches">
             <span class="title">{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span>
@@ -19,7 +21,6 @@
 
         <div class="swatches-container{{ collapsed ? ' g-collapsed' : '' }}">
             <div class="swatches-block">
-                {% set presets = gantry.theme.presets %}
                 {% set presetKey = gantry.config.get('styles.preset') %}
 
                 <ul class="g-grid">
@@ -51,6 +52,8 @@
         </div>
 
         <input type="hidden" name="styles[preset]" value="{{ presetKey }}" />
+        {% endif %}
+
         {% for group, list in blocks %}
         <h2>{{ group|capitalize }} {{ 'GANTRY5_PLATFORM_STYLES'|trans }}</h2>
 
