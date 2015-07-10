@@ -5209,8 +5209,8 @@ html.g5-dialog-open {
   border: solid 1px #CCC;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   z-index: 99999;
-  -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
   box-sizing: content-box;
   display: none;
 }
@@ -5312,8 +5312,8 @@ html.g5-dialog-open {
   height: 8px;
   border-radius: 8px;
   border: solid 2px white;
-  -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
   box-sizing: content-box;
 }
 #g5-container .cp-picker {
@@ -5325,12 +5325,15 @@ html.g5-dialog-open {
   background: white;
   border: solid 1px black;
   margin-top: -2px;
-  -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
   box-sizing: content-box;
   z-index: 2;
 }
 #g5-container .cp-tabs {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   position: absolute;
   bottom: 0;
   color: #777;

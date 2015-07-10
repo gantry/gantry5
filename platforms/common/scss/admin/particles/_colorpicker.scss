@@ -36,9 +36,7 @@
         border: solid 1px #CCC;
         box-shadow: 0 0 20px rgba(0, 0, 0, .2);
         z-index: 99999;
-        -moz-box-sizing: content-box;
-        -webkit-box-sizing: content-box;
-        box-sizing: content-box;
+        @include box-sizing(content-box);
         display: none;
     }
 
@@ -162,9 +160,7 @@
         height: 8px;
         border-radius: 8px;
         border: solid 2px white;
-        -moz-box-sizing: content-box;
-        -webkit-box-sizing: content-box;
-        box-sizing: content-box;
+        @include box-sizing(content-box);
     }
 
     .cp-picker {
@@ -176,20 +172,20 @@
         background: white;
         border: solid 1px black;
         margin-top: -2px;
-        -moz-box-sizing: content-box;
-        -webkit-box-sizing: content-box;
-        box-sizing: content-box;
+        @include box-sizing(content-box);
         z-index: 2;
     }
 
     /* Tabs */
     .cp-tabs {
+        @include box-sizing(border-box);
         position: absolute;
         bottom: 0;
         color: #777;
         left: 0;
         right: 0;
         background: #eee;
+
 
         > div {
             display: inline-block;
