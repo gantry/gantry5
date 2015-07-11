@@ -6,10 +6,10 @@ form:
   fields:
 
     enabled:
-     type: input.checkbox
-     label: Display Date
-     description: Display post publish date.
-     default: 1
+      type: input.checkbox
+      label: Display Date
+      description: Display post publish date.
+      default: 1
 
     link:
       type: input.checkbox
@@ -21,7 +21,7 @@ form:
       type: select.date
       label: Date Format
       description: Select preferred date format.
-      default: l, d F Y H:i
+      default: j F Y
       placeholder: 'Select...'
       selectize:
           allowEmptyOption: true
@@ -40,6 +40,6 @@ form:
           'j F Y': Date12
 
     prefix:
-     type: input.text
-     label: Date Prefix
-     description: Display text directly before the publish date.
+      type: input.text
+      label: Date Prefix
+      description: Display text directly before the publish date.

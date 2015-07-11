@@ -6,10 +6,10 @@ form:
   fields:
 
     enabled:
-     type: input.checkbox
-     label: Enabled
-     description: Display custom heading text at the top of the page.
-     default: 1
+      type: input.checkbox
+      label: Enabled
+      description: Display custom heading text at the top of the page.
+      default: 1
 
     text:
       type: input.text

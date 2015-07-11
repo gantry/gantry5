@@ -6,13 +6,18 @@ form:
   fields:
 
     enabled:
-     type: input.checkbox
-     label: Display Comments
-     description: Display number of comments.
-     default: 1
+      type: input.checkbox
+      label: Display Comments
+      description: Display number of comments.
+      default: 1
 
     link:
-     type: input.checkbox
-     label: Link Comments
-     description: Link comment meta to the comments list.
-     default: 0
+      type: input.checkbox
+      label: Link Comments
+      description: Link comment meta to the comments list.
+      default: 0
+
+    prefix:
+      type: input.text
+      label: Comments Prefix
+      description: Display text directly before the comments count.

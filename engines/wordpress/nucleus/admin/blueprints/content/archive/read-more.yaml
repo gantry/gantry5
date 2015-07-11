@@ -6,10 +6,10 @@ form:
   fields:
 
     label:
-     type: input.text
-     label: Button Label
-     description: Default Read More button label.
-     default: Read More
+      type: input.text
+      label: Button Label
+      description: Default Read More button label.
+      default: Read More
 
     mode:
       type: select.selectize

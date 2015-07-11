@@ -6,18 +6,18 @@ form:
   fields:
 
     enabled:
-     type: input.checkbox
-     label: Display Author
-     description: Display author.
-     default: 1
+      type: input.checkbox
+      label: Display Author
+      description: Display author.
+      default: 1
 
     link:
-     type: input.checkbox
-     label: Link Author
-     description: Link author to his archives.
-     default: 1
+      type: input.checkbox
+      label: Link Author
+      description: Link author to his archives.
+      default: 1
 
     prefix:
-     type: input.text
-     label: Author Prefix
-     description: Display text directly before the author name.
+      type: input.text
+      label: Author Prefix
+      description: Display text directly before the author name.

@@ -6,13 +6,13 @@ form:
   fields:
 
     enabled:
-     type: input.checkbox
-     label: Display Title
-     description: Display post title.
-     default: 1
+      type: input.checkbox
+      label: Display Title
+      description: Display post title.
+      default: 1
 
     link:
-     type: input.checkbox
-     label: Link Title
-     description: Link title to the post.
-     default: 0
+      type: input.checkbox
+      label: Link Title
+      description: Link title to the post.
+      default: 0

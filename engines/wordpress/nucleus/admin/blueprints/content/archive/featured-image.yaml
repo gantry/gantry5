@@ -6,20 +6,22 @@ form:
   fields:
 
     enabled:
-     type: input.checkbox
-     label: Enabled
-     description: Display featured image on archive type page.
-     default: 1
+      type: input.checkbox
+      label: Enabled
+      description: Display featured image on archive type page.
+      default: 1
 
     width:
       type: input.text
       label: Image Width
       description: Image width in pixels.
+      default: 1200
 
     height:
       type: input.text
       label: Image Height
       description: Image height in pixels.
+      default: 350
 
     position:
       type: select.selectize
