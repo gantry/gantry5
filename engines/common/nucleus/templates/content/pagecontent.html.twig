@@ -14,7 +14,7 @@
 {% endset %}
 
 {% if html|trim %}
-    <div class="{{ class ~ (segment.classes ? ' ' ~ segment.classes|join(' ')) }}">
+    <div class="{{ class ~ (segment.attributes.class ? ' ' ~ segment.attributes.class|join(' ')) }}">
         {{ html|raw }}
     </div>
 {% endif %}
