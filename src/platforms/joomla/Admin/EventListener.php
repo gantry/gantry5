@@ -89,6 +89,20 @@ class EventListener implements EventSubscriberInterface
 
     public function onMenusSave(Event $event)
     {
+        $defaults = [
+            'id' => 0,
+            'layout' => 'list',
+            'target' => '_self',
+            'dropdown' => '',
+            'icon' => '',
+            'image' => '',
+            'subtitle' => '',
+            'icon_only' => false,
+            'visible' => true,
+            'group' => 0,
+            'columns' => []
+        ];
+
         $table = \JTable::getInstance('menu');
         $menu = $event->menu;
 
@@ -98,7 +112,9 @@ class EventListener implements EventSubscriberInterface
                 $params = new Registry($table->params);
 
                 // Menu item exists in Joomla, let's update it instead.
-                unset($item['type'], $item['alias'], $item['path'], $item['link'], $item['parent_id']);
+                unset($item['type'], $item['link']);
+
+                $item['id'] = $id;
 
                 $title = $menu["items.{$key}.title"];
 
@@ -134,9 +150,30 @@ class EventListener implements EventSubscriberInterface
                 }
 
                 // Avoid saving values which are also stored in Joomla.
-                unset($item['subtitle'], $item['anchor_class'], $item['image'], $item['icon_only'], $item['target']);
+                unset($item['title'], $item['subtitle'], $item['anchor_class'], $item['image'], $item['icon_only'], $item['target']);
 
-                $event->menu->set("items.{$key}", $item);
+            }
+
+            // Do not save default values.
+            foreach ($defaults as $var => $value) {
+                if (isset($item[$var]) && $item[$var] == $value) {
+                    unset($item[$var]);
+                }
+            }
+
+            // Do not save derived values.
+            unset($item['path'], $item['alias'], $item['parent_id'], $item['level'], $item['group']);
+
+            // Particles have no link.
+            if (isset($item['type']) && $item['type'] === 'particle') {
+                unset($item['link']);
+            }
+
+            if (!isset($item['type']) && isset($item['id']) && count($item) === 1) {
+                // Remove Joomla menu items which have no custom Gantry settings.
+                unset($event->menu["items.{$key}"]);
+            } else {
+                $event->menu["items.{$key}"] = $item;
             }
         }
     }
