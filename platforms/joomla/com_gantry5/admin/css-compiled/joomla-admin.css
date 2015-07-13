@@ -2,9 +2,20 @@ html {
   height: inherit !important;
 }
 
+input {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
 body.com_gantry5 {
   color: #ddd;
   background-color: #404040 !important;
+}
+body.com_gantry5 input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 body.com_gantry5 a {
   text-decoration: none;

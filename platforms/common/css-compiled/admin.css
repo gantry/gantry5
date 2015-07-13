@@ -283,6 +283,9 @@
   margin: 0 auto;
   padding: 0;
 }
+#g5-container .g-block .g-container {
+  width: auto;
+}
 #g5-container .g-grid {
   display: -webkit-box;
   display: -moz-box;
