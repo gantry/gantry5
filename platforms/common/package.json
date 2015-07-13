@@ -16,7 +16,7 @@
     "webfontloader": "^1.6.3"
   },
   "devDependencies": {
-    "browserify": "^10.2.4",
+    "browserify": "^10.2.6",
     "gulp": "^3.9.0",
     "gulp-if": "^1.2.5",
     "gulp-ruby-sass": "^1.0.5",
