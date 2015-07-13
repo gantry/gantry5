@@ -14,6 +14,7 @@
 
 namespace Gantry\Component\Config;
 
+use RocketTheme\Toolbox\ArrayTraits\Countable;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
@@ -25,9 +26,9 @@ use RocketTheme\Toolbox\Blueprints\Blueprints;
  *
  * @author RocketTheme
  */
-class Config implements \ArrayAccess, \Iterator, ExportInterface
+class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
 {
-    use NestedArrayAccessWithGetters, Iterator, Export;
+    use NestedArrayAccessWithGetters, Countable, Iterator, Export;
 
     /**
      * @var array

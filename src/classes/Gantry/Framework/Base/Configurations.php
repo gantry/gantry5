@@ -140,6 +140,15 @@ class Configurations extends AbstractConfigurationCollection
     }
 
     /**
+     * @param string $id
+     * @return boolean
+     */
+    public function canDelete($id)
+    {
+        return true;
+    }
+
+    /**
      * @param array $configurations
      * @return array
      */

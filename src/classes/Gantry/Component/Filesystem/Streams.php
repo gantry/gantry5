@@ -67,12 +67,14 @@ class Streams
     public function add(array $schemes)
     {
         foreach ($schemes as $scheme => $config) {
+            $force = !empty($config['force']);
+
             if (isset($config['paths'])) {
-                $this->locator->addPath($scheme, '', $config['paths']);
+                $this->locator->addPath($scheme, '', $config['paths'], false, $force);
             }
             if (isset($config['prefixes'])) {
                 foreach ($config['prefixes'] as $prefix => $paths) {
-                    $this->locator->addPath($scheme, $prefix, $paths);
+                    $this->locator->addPath($scheme, $prefix, $paths, false, $force);
                 }
             }
             $type = !empty($config['type']) ? $config['type'] : 'ReadOnlyStream';

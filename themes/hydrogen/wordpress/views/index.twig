@@ -1,9 +1,0 @@
-{% extends "partials/page.html.twig" %}
-{% set twigTemplate = 'index.twig' %}
-
-{% block content %}
-	{% for post in posts %}
-		{% include ['partials/tease-'~post.post_type~'.twig', 'partials/tease.twig'] %}
-	{% endfor %}
-
-{% endblock %}

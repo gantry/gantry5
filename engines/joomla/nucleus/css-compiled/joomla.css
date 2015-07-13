@@ -269,6 +269,12 @@ fieldset.radio.btn-group {
   font-size: inherit;
 }
 
+.platform-content input {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
 legend {
   margin-bottom: 1.5rem;
 }
@@ -297,12 +303,6 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
   padding: 0.375rem 0.375rem;
 }
 
-.platform-content input, .platform-content textarea, .platform-content select, .platform-content .uneditable-input {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
 .uneditable-input {
   width: 100%;
 }
@@ -311,9 +311,6 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
   display: block;
   width: 100%;
   min-height: 28px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 .input-prepend .chzn-container-single .chzn-single,
@@ -368,6 +365,10 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
   text-align: left;
 }
 
+.control-label .hasTooltip {
+  display: inline-block;
+}
+
 .form-vertical .controls {
   margin-left: 0;
 }
@@ -386,6 +387,10 @@ input.invalid {
 #modules-form .radio.btn-group input[type=radio] {
   display: inherit;
   margin-left: inherit;
+}
+
+.controls input[type="radio"] {
+  margin-right: 5px;
 }
 
 .nav-list > li.offset > a {
@@ -425,12 +430,6 @@ input.invalid {
 
 .dropdown-menu {
   text-align: left;
-}
-
-.platform-content *, .platform-content *::before, .platform-content *::after {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
 }
 
 body.modal {
@@ -533,6 +532,14 @@ th .tooltip-inner {
   display: table-cell;
   background: inherit;
   color: inherit;
+}
+
+.pull-right.item-image {
+  margin: 0 0 1.5rem 1.5rem;
+}
+
+.pull-left.item-image {
+  margin: 0 1.5rem 1.5rem 0;
 }
 
 #frame {

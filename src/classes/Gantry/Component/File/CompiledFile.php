@@ -27,12 +27,17 @@ use RocketTheme\Toolbox\File\PhpFile;
  */
 trait CompiledFile
 {
+    protected $cachePath;
+
     /**
      * @param string $path
+     * @return $this
      */
-    public static function setCachePath($path)
+    public function setCachePath($path)
     {
-        static::$cachePath = $path;
+        $this->cachePath = $path;
+
+        return $this;
     }
 
     /**
@@ -40,17 +45,18 @@ trait CompiledFile
      *
      * @param mixed $var
      * @return string
+     * @throws \BadMethodCallException
      */
     public function content($var = null)
     {
-        if (!static::$cachePath) {
-            throw new \BadMethodCallException('Cache path not defined for compiled files!');
+        if (!$this->cachePath) {
+            throw new \BadMethodCallException("Cache path not defined for compiled file ({$this->filename})!");
         }
 
         // If nothing has been loaded, attempt to get pre-compiled version of the file first.
         if ($var === null && $this->raw === null && $this->content === null) {
             $key = md5($this->filename);
-            $file = PhpFile::instance(static::$cachePath . "/{$key}{$this->extension}.php");
+            $file = PhpFile::instance($this->cachePath . "/{$key}{$this->extension}.php");
             $modified = $this->modified();
 
             if (!$modified) {
@@ -69,7 +75,11 @@ trait CompiledFile
                 || $cache['filename'] != $this->filename
             ) {
                 // Attempt to lock the file for writing.
-                $file->lock(false);
+                try {
+                    $file->lock(false);
+                } catch (\Exception $e) {
+                    // Another process has locked the file; we will check this in a bit.
+                }
 
                 // Decode RAW file into compiled array.
                 $data = $this->decode($this->raw());

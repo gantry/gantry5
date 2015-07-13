@@ -1,0 +1,16 @@
+name: Query
+description: Options for the query in the blog page
+type: blog
+
+form:
+  fields:
+
+    categories.include:
+      type: wordpress.categories
+      label: Include Categories
+      description:
+
+    categories.exclude:
+      type: wordpress.categories
+      label: Exclude Categories
+      description:

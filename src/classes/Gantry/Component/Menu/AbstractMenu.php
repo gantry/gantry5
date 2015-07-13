@@ -18,13 +18,14 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Gantry\GantryTrait;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
+use RocketTheme\Toolbox\ArrayTraits\Countable;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-abstract class AbstractMenu implements \ArrayAccess, \Iterator
+abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 {
-    use GantryTrait, ArrayAccessWithGetters, Iterator, Export;
+    use GantryTrait, ArrayAccessWithGetters, Iterator, Export, Countable;
 
     protected $default;
     protected $base;
@@ -64,14 +65,24 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
      */
     abstract public function getDefaultMenuName();
 
+    /**
+     * Return default menu.
+     *
+     * @return string
+     */
+    abstract public function getActiveMenuName();
+
     public function instance(array $params = [], Config $menu = null)
     {
         $params = $params + $this->defaults;
 
         $menus = $this->getMenus();
 
-        if (!$params['menu']) {
+        if (empty($params['menu'])) {
             $params['menu'] = $this->getDefaultMenuName();
+        }
+        if ($params['menu'] == '-active-') {
+            $params['menu'] = $this->getActiveMenuName();
         }
         if (!in_array($params['menu'], $menus)) {
             throw new \RuntimeException('Menu not found', 404);
@@ -91,7 +102,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
         $items = isset($config['items']) ? $config['items'] : [];
 
         // Create menu structure.
-        $instance->init();
+        $instance->init($params);
 
         // Get menu items from the system (if not specified otherwise).
         if ($config->get('settings.type') !== 'custom') {
@@ -123,6 +134,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
             $menu = $this->params['menu'];
 
             $this->config = new Config(CompiledYamlFile::instance($locator("gantry-config://menu/{$menu}.yaml"))->content());
+            $this->config->def('settings.title', ucfirst($menu));
         }
 
         return $this->config;
@@ -214,7 +226,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
         return $item->path == $this->getActive()->path;
     }
 
-    public function init()
+    public function init(&$params)
     {
         $this->items = ['' => new Item($this, '', ['layout' => 'horizontal'])];
     }
@@ -226,6 +238,8 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator
         // If parent exists, assign menu item to its parent; otherwise ignore menu item.
         if (isset($this->items[$item->parent_id])) {
             $this->items[$item->parent_id]->addChild($item);
+        } elseif (!$this->items['']->count()) {
+            $this->items['']->addChild($item);
         }
 
         return $this;

@@ -32,9 +32,12 @@ class Gantry extends Base\Gantry
      */
     protected static function load()
     {
+
         // Make sure Timber plugin has been loaded.
         if ( !class_exists( 'Timber' ) ) {
-            throw new \LogicException( 'Timber not activated. Make sure you activate the plugin in <a href="' . admin_url( 'plugins.php#timber' ) . '">' . admin_url( 'plugins.php' ) . '</a>' );
+            $action = 'install-plugin';
+            $slug = 'timber-library';
+            throw new \LogicException( '<strong>Timber not activated</strong>. Click <a href="' . wp_nonce_url( add_query_arg( array( 'action' => $action, 'plugin' => $slug ), admin_url( 'update.php' ) ), $action.'_'.$slug ) . '"><strong>here</strong></a> to install it or go to the <a href=" ' . admin_url( 'plugins.php#timber' ) . '"><strong>Installed Plugins</strong></a> page to activate it, if already installed.' );
         }
 
         $container = parent::load();
@@ -45,6 +48,10 @@ class Gantry extends Base\Gantry
 
         $container['page'] = function ( $c ) {
             return new Page( $c );
+        };
+
+        $container['menu'] = function ($c) {
+            return new Menu;
         };
 
         $container['global'] = function ($c) {

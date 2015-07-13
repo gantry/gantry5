@@ -12,7 +12,22 @@ var $             = require('elements'),
 
 
 ready(function() {
-    var body = $('body');
+    var body = $('body'),
+        particleField = $('[data-g-instancepicker] ~ input[type="hidden"]');
+
+    if (particleField) {
+        particleField.on('change', function(){
+            if (!this.value()) {
+                var title = this.siblings('.g-instancepicker-title'),
+                    label = this.siblings('[data-g-instancepicker]'),
+                    reset = this.sibling('.g-reset-field');
+
+                title.text('');
+                label.text(label.data('g-instancepicker-text'));
+                reset.style('display', 'none');
+            }
+        });
+    }
 
     body.delegate('click', '[data-g-instancepicker]', function(event, element) {
         if (event) { event.preventDefault(); }
@@ -67,6 +82,8 @@ ready(function() {
 
                         if (found.length) { $(found).removeClass('hidden'); }
                     });
+
+                    search[0].focus();
                 }
 
                 var elementData = JSON.parse(element.data('g-instancepicker'));

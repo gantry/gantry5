@@ -1,0 +1,67 @@
+{% extends "partials/page.html.twig" %}
+{% set twigTemplate = 'index.html.twig' %}
+{% set scope = 'content.blog' %}
+
+{% block content %}
+
+    <div class="blog">
+
+        {# Begin Page Header #}
+        {% if gantry.config.get(scope ~ '.heading.enabled', '0') and gantry.config.get(scope ~ '.heading.text') is not empty %}
+        <header class="page-header">
+            <h1>
+                {{ gantry.config.get(scope ~ '.heading.text') }}
+            </h1>
+        </header>
+        {% endif %}
+        {# End Page Header #}
+
+        {# Begin Post Entries #}
+        <div class="entries">
+            {% for post in posts %}
+                {% include ['partials/tease-blog.html.twig', 'partials/tease-' ~ post.post_type ~ '.html.twig', 'partials/tease.html.twig'] %}
+            {% endfor %}
+        </div>
+        {# End Post Entries #}
+
+        {# Begin Pagination #}
+        {% if pagination.pages and pagination.pages|length > 1 %}
+        <div class="pagination">
+
+            <p class="counter">
+                {% set current_page = '1' %}
+                {% for page in pagination.pages %}
+                    {% if page.current %}
+                        {% set current_page = page.name %}
+                    {% endif %}
+                {% endfor %}
+
+                {{ __('Page %1$s of %2$s', 'g5_hydrogen')|format(current_page, pagination.pages|length) }}
+            </p>
+
+            {% if pagination.prev %}
+                <a href="{{ pagination.prev.link }}" class="prev {{ pagination.prev.link|length ? '' : 'hide' }}">{{ __('Prev', 'g5_hydrogen') }}</a>
+            {% endif %}
+
+            <ul class="pages">
+                {% for page in pagination.pages %}
+                <li>
+                    {% if page.link %}
+                        <a href="{{ page.link }}" class="{{ page.class }}">{{ page.title }}</a>
+                    {% else %}
+                        <span class="{{ page.class }}">{{ page.title }}</span>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+
+            {% if pagination.next %}
+                <a href="{{ pagination.next.link }}" class="next {{ pagination.next.link|length ? '' : 'hide' }}">{{ __('Next', 'g5_hydrogen') }}</a>
+            {% endif %}
+        </div>
+        {% endif %}
+        {# End Pagination #}
+
+    </div>
+
+{% endblock %}

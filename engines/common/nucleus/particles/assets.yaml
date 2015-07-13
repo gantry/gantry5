@@ -32,6 +32,8 @@ form:
         .extra:
           type: collection.keyvalue
           label: Tag attributes
+          key_placeholder: Key (data-*, style, ...)
+          value_placeholder: Value
           exclude: ['rel', 'href', 'type']
 
     javascript:

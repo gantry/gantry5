@@ -41,6 +41,21 @@ class Menu extends AbstractMenu
         $this->active  = $this->menu->getActive();
     }
 
+    public function init(&$params)
+    {
+        parent::init($params);
+
+        if (!empty($params['admin'])) {
+            /** @var \JTableMenuType $table */
+            $menuType = \JTable::getInstance('MenuType');
+            $menuType->load(['menutype' => $params['menu']]);
+
+            $config = $this->config();
+            $config->set('settings.title', $menuType->title);
+            $config->set('settings.description', $menuType->description);
+        }
+    }
+
     /**
      * Return list of menus.
      *
@@ -67,6 +82,16 @@ class Menu extends AbstractMenu
     public function getDefaultMenuName()
     {
         return $this->default->menutype;
+    }
+
+    /**
+     * Return active menu.
+     *
+     * @return string
+     */
+    public function getActiveMenuName()
+    {
+        return $this->active ? $this->active->menutype : null;
     }
 
     public function isActive($item)
@@ -103,7 +128,7 @@ class Menu extends AbstractMenu
     protected function getItemsFromPlatform($params)
     {
         $attributes = ['menutype'];
-        $values = [$params['menu'] ?: $this->default->menutype];
+        $values = [$params['menu']];
 
         // Items are already filtered by access and language, in admin we need to work around that.
         if (\JFactory::getApplication()->isAdmin()) {
@@ -196,7 +221,7 @@ class Menu extends AbstractMenu
                     continue;
                 }
 
-                // These params always come from Joomla.
+                // These params always come from Joomla and cannot be overridden.
                 $itemParams = [
                     'id' => $menuItem->id,
                     'type' => $menuItem->type,

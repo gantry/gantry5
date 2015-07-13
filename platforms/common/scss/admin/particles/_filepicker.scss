@@ -1,4 +1,4 @@
-#g5-container {    
+#g5-container {
     .g-filepicker {
         > *:not(div), label {
             display: inline-block;
@@ -9,8 +9,6 @@
             cursor: pointer;
         }
     }
-
-
 
     .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content {
         width: 650px;
@@ -109,6 +107,18 @@
             }
         }
 
+        .g-particles-footer {
+            .footer-upload-info {
+                line-height: 1.1rem;
+            }
+
+            code {
+                font-size: 0.70rem;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+        }
+
         .g-folders {
             margin: 0;
             padding-left: 2.14285714em;
@@ -128,11 +138,33 @@
             li {
                 vertical-align: middle;
                 position: relative;
+                @include transition(transform 0.2s ease-out);
                 @extend .font-small;
+
+                .g-file-delete {
+                    position: absolute;
+                    z-index: 2;
+                    background-color: $red;
+                    border-radius: 16px;
+                    color: $white;
+                    right: 2px;
+                    top: 2px;
+                    line-height: 1rem;
+                    padding: 2px;
+                    opacity: 0;
+                }
+
+                &.g-file-deleted {
+                    @include transform(scale(0));
+                }
 
                 > span {
                     display: inline-block;
                     vertical-align: middle;
+                }
+
+                &:hover .g-file-delete {
+                    opacity: 1;
                 }
             }
 
@@ -221,6 +253,7 @@
                         padding: 4px;
                         background-color: rgba(255, 255, 255, 0.5);
                         border-radius: 50px;
+                        line-height: 1em;
 
                         .g-file-progress-text {
                             position: absolute;
@@ -246,7 +279,7 @@
                         }
                     }
 
-                    &.selected span {
+                    &.selected span:not(.g-file-delete) {
                         @extend .badge;
                         background-color: $core-accent !important;
                         color: $white !important;
@@ -300,7 +333,7 @@
                         .g-file-mtime, .g-file-progress-text {
                             display: none;
                         }
-                        
+
                         .g-file-mtime.g-file-progress {
                             display: block;
                         }
@@ -309,7 +342,7 @@
                             width: 20%;
                         }
                     }
-                    
+
                     &.g-file-error {
                         .g-file-progress-text {
                             display: block !important;
@@ -340,6 +373,26 @@
                     }
                 }
             }
+
+            &.g-filemode-list, &.g-filemode-thumbnails {
+                li.no-files-found {
+                    width: 100%;
+                    max-width: inherit;
+                    margin: 0;
+                    position: absolute;
+                    margin-top: -6px;
+                    transform: translateY(-50%);
+                    top: 50%;
+                    color: #c9c9c9;
+                    text-align: center;
+                    background-color: inherit;
+                }
+            }
         }
+    }
+
+    .g5-popover-filepicker {
+        max-width: 400px;
+        word-wrap: break-word;
     }
 }

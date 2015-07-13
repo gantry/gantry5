@@ -1,6 +1,9 @@
 // Load Third Party Libraries
 @import "vendor/bourbon/bourbon";
 
+// Load Theme Configuration
+@import "configuration/base";
+
 // Load Nucleus Configuration
 @import "configuration/nucleus/base";
 
@@ -11,9 +14,6 @@
 // Load Theme Variable Driven Nucleus Elements
 @import "nucleus/theme/mixins/base";
 @import "nucleus/theme/base";
-
-// Load Theme Configuration
-@import "configuration/base";
 
 // Load Theme Configuration
 @import "mixins/base";

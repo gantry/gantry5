@@ -10,7 +10,7 @@
 
         <h2 class="page-title">Assignments</h2>
 
-        <div>
+        <div class="g-filters-bar">
             <div class="g-panel-filters" data-g-global-filter>
                 <div class="search settings-block">
                     <input type="text" placeholder="Global Filter...">
@@ -19,13 +19,17 @@
                 <span data-g-assignments-uncheck class="g-tooltip g-tooltip-right" data-title="Unselect all menu items"><i class="fa fa-fw fa-toggle-off"></i></span>
                 <span data-g-assignments-check class="g-tooltip g-tooltip-right" data-title="Selects all menu items"><i class="fa fa-fw fa-toggle-on"></i></span>
             </div>
+            <label>
+                <input type="checkbox" data-assignments-enabledonly /> Hide Unassigned Items
+            </label>
         </div>
 
         <div class="cards-wrapper clearfix">
-            {% for type in assignments %}
+            {% for type, types in assignments %}
+                {% for name, list in types %}
                 <div class="card settings-block">
                     <h4>
-                        {{ type.label|e }}
+                        {{ list.label|e }}
                         <div class="g-panel-filters float-right align-right">
                             <div class="search settings-block">
                                 <input type="text" placeholder="Filter...">
@@ -37,13 +41,15 @@
                     </h4>
 
                     <div class="settings-param-wrapper">
-                        {% for link in type.items %}
-                        <label class="settings-param{% if link.section %} settings-param-section{% endif %}">
+                        {% for link in list.items %}
+                            {% set path = type ~ '.' ~ name ~ '.' ~ link.name %}
+                            {% set group = link.section ? 'data-g-assignments-group=' ~ link.name : 'data-g-assignments-parent=' ~ link.taxonomy %}
+                        <label class="settings-param{% if link.section %} settings-param-section{% endif %}"{{ group }}>
                             {% include 'forms/fields/enable/enable.html.twig' with {
                             'default': true,
-                            'name': link.name,
+                            'name': path|fieldName,
                             'field': link.field,
-                            'value': link.value,
+                            'value': link.value is defined ? link.value : gantry.config.get('assignments.' ~ path),
                             'disabled': link.disabled
                             } %}
                             <span class="settings-param-title{% if link.section %} settings-param-section-title{% endif %}">
@@ -53,6 +59,7 @@
                         {% endfor %}
                     </div>
                 </div>
+                {% endfor %}
             {% endfor %}
          </div>
     </form>

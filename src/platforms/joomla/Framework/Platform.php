@@ -31,8 +31,12 @@ class Platform extends BasePlatform
 
     public function getCachePath()
     {
-        // Cannot use JPATH_CACHE as it points to admin/site depending where you are.
-        return 'cache/gantry5';
+        $path = \JFactory::getConfig()->get('cache_path', JPATH_SITE . '/cache');
+        if (!is_dir($path)) {
+            throw new \RuntimeException('Joomla cache path does not exist!');
+        }
+
+        return $path . '/gantry5';
     }
 
     public function getThemesPaths()
@@ -89,6 +93,12 @@ class Platform extends BasePlatform
         }
 
         $module = is_object($id) ? $id : $this->getModule($id);
+
+        // Make sure that module really exists.
+        if (!is_object($module)) {
+            return '';
+        }
+
         $isGantry = \strpos($module->module, 'gantry5') !== false;
 
         $renderer = $document->loadRenderer('module');
@@ -136,14 +146,8 @@ class Platform extends BasePlatform
 
     public function displaySystemMessages($params = [])
     {
-        $document = \JFactory::getDocument();
-        if (!$document instanceof \JDocumentHTML) {
-            return '';
-        }
-
-        $renderer = $document->loadRenderer('message');
-
-        return $renderer->render(null, $params);
+        // We cannot use JDocument renderer here as it fires too early to display any messages.
+        return '<jdoc:include type="message" />';
     }
 
     public function displayContent($content, $params = [])

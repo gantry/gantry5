@@ -1,4 +1,4 @@
-{% extends "forms/fields/input/filepicker.html.twig" %}
+{% extends 'forms/fields/input/filepicker.html.twig' %}
 
 {% block input %}
     {% set field = {'icon': 'fa-file-video-o', 'filter': '\.(mp4|webm|ogv|mov)$'}|merge(field) %}

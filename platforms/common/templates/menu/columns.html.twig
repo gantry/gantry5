@@ -1,4 +1,3 @@
-{% if item.children %}
 <section class="g-grid submenu-selector">
     {% for group, children in item.groups %}
         {% set width = item.columnWidth(group)|number_format(1) %}
@@ -16,4 +15,3 @@
     {% endfor %}
 </section>
 <span class="fa fa-plus add-column"></span>
-{% endif %}

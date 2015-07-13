@@ -7,13 +7,13 @@
                 {% if gantry.theme.icon %}<i class="fa fa-{{ gantry.theme.icon }}"></i>{% endif %} {{ gantry.theme.title }}
             </h2>
             <span class="theme-version">v{{ gantry.theme.version }}</span>
-            <div>By <a href="{{ gantry.theme.author.link }}">{{ gantry.theme.author.name }}</a></div>
+            <div>{{ 'GANTRY5_PLATFORM_BY'|trans }} <a href="{{ gantry.theme.author.link }}">{{ gantry.theme.author.name }}</a></div>
         </div>
         <div class="g-block">
             <span class="float-right">
-                <button class="button button-back-to-conf"><i class="fa fa-fw fa-arrow-left"></i> <span>Back to Setup</span></button>
-                <a href="{{ gantry.theme.support.link }}" class="button button-primary"><i class="fa fa-support"></i> <span>Support</span></a>
-                <a href="{{ gantry.theme.documentation.link }}" class="button button-primary"><i class="fa fa-book"></i> <span>Documentation</span></a>
+                <button class="button button-back-to-conf"><i class="fa fa-fw fa-arrow-left"></i> <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span></button>
+                <a href="{{ gantry.theme.support.link }}" class="button button-primary"><i class="fa fa-support"></i> <span>{{ 'GANTRY5_PLATFORM_SUPPORT'|trans }}</span></a>
+                <a href="{{ gantry.theme.documentation.link }}" class="button button-primary"><i class="fa fa-book"></i> <span>{{ 'GANTRY5_PLATFORM_DOCUMENTATION'|trans }}</span></a>
             </span>
         </div>
     </div>

@@ -32,7 +32,7 @@ use RocketTheme\Toolbox\ArrayTraits\Export;
  * @property int $group
  * @property int $level
  */
-class Item implements \ArrayAccess, \Iterator, \Serializable
+class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
 {
     use ArrayAccessWithGetters, Export;
 
@@ -340,6 +340,16 @@ class Item implements \ArrayAccess, \Iterator, \Serializable
     public function rewind()
     {
         reset($this->children);
+    }
+
+    /**
+     * Count number of children.
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->children);
     }
 
     /**

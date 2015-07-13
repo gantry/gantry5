@@ -1,0 +1,126 @@
+{% extends "partials/tease.html.twig" %}
+
+{% block content %}
+
+    {# Begin Entry Header #}
+    <div class="entry-header">
+
+        {# Begin Entry Title #}
+        {% if gantry.config.get(scope ~ '.title.enabled', '1') %}
+            <h2 class="h2 post-title">
+                {% if gantry.config.get(scope ~ '.title.link', '0') %}
+                    <a href="{{ post.link }}" title="{{ post.title }}">{{ post.title }}</a>
+                {% else %}
+                    {{ post.title }}
+                {% endif %}
+            </h2>
+        {% endif %}
+        {# End Entry Title #}
+
+        {# Begin Entry Meta #}
+        {% if gantry.config.get(scope ~ '.meta-categories.enabled', '1') or gantry.config.get(scope ~ '.meta-date.enabled', '1') or gantry.config.get(scope ~ '.meta-author.enabled', '1') or gantry.config.get(scope ~ '.meta-comments.enabled', '1') or gantry.config.get(scope ~ '.meta-tags.enabled', '0') %}
+            <div class="post-meta tease-meta">
+
+                {# Begin Meta - Date #}
+                {% if gantry.config.get(scope ~ '.meta-date.enabled', '1') %}
+                    <div class="meta-date">
+                        {% if gantry.config.get(scope ~ '.meta-date.prefix', '') is not empty %}
+                            <span class="meta-prefix">{{ gantry.config.get(scope ~ '.meta-date.prefix', '') ~ ' ' }}</span>
+                        {% endif %}
+
+                        {% if gantry.config.get(scope ~ '.meta-date.link', '1') %}
+                            <a href="{{ post.link }}" title="{{ post.title }}" class="meta-date-link"><span class="date">{{ post.date(gantry.config.get(scope ~ '.meta-date.format', 'j F Y')) }}</span></a>
+                        {% else %}
+                            <span class="date">{{ post.date(gantry.config.get(scope ~ '.meta-date.format', 'j F Y')) }}</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {# End Meta - Date #}
+
+                {# Begin Meta - Author #}
+                {% if gantry.config.get(scope ~ '.meta-author.enabled', '1') %}
+                    <div class="meta-author">
+                        {% if gantry.config.get(scope ~ '.meta-author.prefix', '') is not empty %}
+                            <span class="meta-prefix">{{ gantry.config.get(scope ~ '.meta-author.prefix', '') ~ ' ' }}</span>
+                        {% endif %}
+
+                        {% if gantry.config.get(scope ~ '.meta-author.link', '1') %}
+                            <a href="{{ post.author.link }}" title="{{ post.author.name }}" class="meta-author-link"><span class="author">{{ post.author.name }}</span></a>
+                        {% else %}
+                            <span class="author">{{ post.author.name }}</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {# End Meta - Author #}
+
+                {# Begin Meta - Comments #}
+                {% if gantry.config.get(scope ~ '.meta-comments.enabled', '1') %}
+                    <div class="meta-comments-count">
+                        {% if gantry.config.get(scope ~ '.meta-comments.prefix', '') is not empty %}
+                            <span class="meta-prefix">{{ gantry.config.get(scope ~ '.meta-comments.prefix', '') ~ ' ' }}</span>
+                        {% endif %}
+
+                        {% if post.comment_count == '0' %}
+                            {% set comment_count = __('No comments', 'g5_hydrogen') %}
+                        {% elseif post.comment_count == '1' %}
+                            {% set comment_count = post.comment_count ~ ' ' ~ __('Comment', 'g5_hydrogen') %}
+                        {% else %}
+                            {% set comment_count = post.comment_count ~ ' ' ~ __('Comments', 'g5_hydrogen') %}
+                        {% endif %}
+
+                        {% if gantry.config.get(scope ~ '.meta-comments.link', '1') %}
+                            <a href="{{ post.link ~ '#comments' }}" title="{{ post.comment_count }}" class="meta-comments-link"><span class="comment-count">{{ comment_count }}</span></a>
+                        {% else %}
+                            <span class="comments-count">{{ comment_count }}</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {# End Meta - Comments #}
+
+                {# Begin Meta - Categories #}
+                {% if gantry.config.get(scope ~ '.meta-categories.enabled', '1') and (post.categories is not empty) %}
+                    <div class="meta-categories">
+                        {% if gantry.config.get(scope ~ '.meta-categories.prefix', 'Categories:') is not empty %}
+                            <span class="meta-prefix">{{ gantry.config.get(scope ~ '.meta-categories.prefix', 'Categories:') ~ ' ' }}</span>
+                        {% endif %}
+
+                        <span class="categories">
+                            {% for category in post.categories %}
+                                {% if gantry.config.get(scope ~ '.meta-categories.link', '1') %}
+                                    <a href="{{ category.link }}" title="{{ category.name }}" class="meta-category-link"><span class="single-cat">{{ category.name }}</span></a>
+                                {% else %}
+                                    <span class="single-cat">{{ category.name }}</span>
+                                {% endif %}
+                            {% endfor %}
+                        </span>
+                    </div>
+                {% endif %}
+                {# End Meta - Categories #}
+
+            </div>
+        {% endif %}
+        {# End Entry Meta #}
+
+    </div>
+    {# End Entry Header #}
+
+    {# Begin Entry Content #}
+    <div class="entry-content">
+
+        {# Begin Featured Image #}
+        {% if gantry.config.get(scope ~ '.featured-image.enabled', '1') and post.thumbnail.src %}
+            {% set position = (gantry.config.get(scope ~ '.featured-image.position', 'none') == 'none') ? '' : 'float-' ~ gantry.config.get(scope ~ '.featured-image.position', 'none') %}
+            <img src="{{ post.thumbnail.src|resize(gantry.config.get(scope ~ '.featured-image.width', '1200'), gantry.config.get(scope ~ '.featured-image.height', '350')) }}" class="featured-image tease-featured-image {{ position }}" />
+        {% endif %}
+        {# End Featured Image #}
+
+        {# Begin Tease #}
+        <p>{{ post.get_preview(gantry.config.get(scope ~ '.post-content.length', '55'), gantry.config.get(scope ~ '.excerpt.trim', '0'), false, false) }}</p>
+
+        <a href="{{ post.link }}" class="read-more button">{{ gantry.config.get(scope ~ '.read-more.label', 'Read More') }}</a>
+        {# End Tease #}
+
+    </div>
+    {# End Entry Content #}
+
+{% endblock %}

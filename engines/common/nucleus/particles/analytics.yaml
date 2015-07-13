@@ -17,7 +17,7 @@ form:
 
     ua.anonym:
       type: input.checkbox
-      description: Send only Anonymous IP Addresses (mandatory in Germany)
+      description: Send only Anonymous IP Addresses (mandatory in Europe)
       label: Anonym Statistics
       default: false
 

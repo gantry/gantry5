@@ -16,9 +16,11 @@
  * E.g., it puts together the home page when no home.php file exists
  */
 
+$chooser = new \Gantry\Framework\OutlineChooser;
+
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry[ 'theme' ];
-$theme->setLayout( 'test' );
+$theme->setLayout( $chooser->select() );
 
 if ( !class_exists( 'Timber' ) ) {
 	echo 'Timber not activated. Make sure you activate the plugin in <a href="/wp-admin/plugins.php#timber">/wp-admin/plugins.php</a>';
@@ -26,11 +28,13 @@ if ( !class_exists( 'Timber' ) ) {
 }
 
 $context = Timber::get_context();
-$context['posts'] = Timber::get_posts();
-$context['foo'] = 'bar';
+$context[ 'posts' ] = Timber::get_posts();
+$context[ 'pagination' ] = Timber::get_pagination();
 
-$templates = array( 'index.twig' );
+$templates = array( 'index.html.twig' );
+
 if ( is_home() ) {
-	array_unshift( $templates, 'home.twig' );
+	array_unshift( $templates, 'home.html.twig' );
 }
+
 Timber::render( $templates, $context );

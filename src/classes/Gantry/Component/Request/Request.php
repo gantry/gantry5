@@ -18,79 +18,56 @@ use Gantry\Framework\Base\Gantry;
 
 class Request
 {
+    /**
+     * @var string
+     */
     protected $method;
+
+    /**
+     * @var Input
+     */
+    public $get;
+
+    /**
+     * @var Input
+     */
+    public $post;
+
+    /**
+     * @var Input
+     */
+    public $cookie;
+
+    /**
+     * @var Input
+     */
+    public $server;
+
+    /**
+     * @var Input
+     */
+    public $request;
+
+    public function __construct()
+    {
+        $this->get = new Input($_GET);
+        $this->post = new Input($_POST);
+        $this->cookie = new Input($_COOKIE);
+        $this->server = new Input($_SERVER);
+        $this->request = new Input($_REQUEST);
+    }
 
     public function getMethod()
     {
         if (!$this->method) {
-            $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
+            $method = $this->server['REQUEST_METHOD'] ?: 'GET';
             if ('POST' === $method) {
-                $method = isset($_SERVER['X-HTTP-METHOD-OVERRIDE']) ? $_SERVER['X-HTTP-METHOD-OVERRIDE'] : $method;
-                $method = isset($_POST['METHOD']) ? $_POST['METHOD'] : $method;
+                $method = $this->server['X-HTTP-METHOD-OVERRIDE'] ?: $method;
+                $method = $this->post['METHOD'] ?: $method;
             }
             $this->method = strtoupper($method);
         }
 
         return $this->method;
-    }
-
-    /**
-     * Get value by using dot notation for nested arrays/objects.
-     *
-     * @example $value = $this->get('this.is.my.nested.variable');
-     *
-     * @param string  $name       Dot separated path to the requested value.
-     * @param mixed   $default    Default value (or null).
-     * @param string  $separator  Separator, defaults to '.'
-     * @return mixed  Value.
-     */
-    public function get($name = null, $default = null, $separator = '.')
-    {
-        if (!$name) {
-            return $_POST;
-        }
-        $path = explode($separator, $name);
-        $current = $_POST;
-        foreach ($path as $field) {
-            if (is_array($current) && isset($current[$field])) {
-                $current = $current[$field];
-            } else {
-                return $default;
-            }
-        }
-
-        return $current;
-    }
-
-    /**
-     * @param string $path
-     * @return array|string
-     */
-    public function getArray($path = null)
-    {
-        $data = $this->get($path);
-        return (array) $this->getChildren($data);
-    }
-
-    /**
-     * @param $current
-     * @return array|mixed
-     * @internal
-     */
-    protected function getChildren(&$current)
-    {
-        if (!is_array($current)) {
-            return $current;
-        }
-        $array = [];
-        foreach ($current as $key => &$value) {
-            if ($key === '_json') {
-                $array += json_decode($value, true);
-            } else {
-                $array[$key] = $this->getChildren($value);
-            }
-        }
-
-        return $array;
     }
 }

@@ -3,14 +3,14 @@
 {% block gantry %}
 <form method="POST">
     <div class="pull-right">
-        <button class="button">Save</button>
-        <button class="button" name="METHOD" value="DELETE">Reset</button>
-        <a class="button" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route(parent) }}">Back</a>
+        <button class="button">{{ 'GANTRY5_PLATFORM_SAVE'|trans }}</button>
+        <button class="button" name="METHOD" value="DELETE">{{ 'GANTRY5_PLATFORM_RESET'|trans }}</button>
+        <a class="button" data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route(parent) }}">{{ 'GANTRY5_PLATFORM_BACK'|trans }}</a>
     </div>
     <div id="settings" class="cards-wrapper">
         <div class="card settings-block">
             <h4>
-                Edit {{ key }}
+                {{ 'GANTRY5_PLATFORM_EDIT'|trans }} {{ key }}
             </h4>
             <div class="inner-params">
                 {% include 'forms/fields.html.twig' %}

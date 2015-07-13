@@ -2,15 +2,27 @@ html {
     height: inherit !important;
 }
 
+textarea, input, .input-append, .input-prepend, #sbox-window {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
 body.com_gantry5 {
     color: $light-gray;
     background-color: $body-bg !important;
+
+    textarea, input, .input-append, .input-prepend {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
 
     a {
         text-decoration: none;
     }
 
-    .subhead-collapse.collapse, .header {
+    .btn-subhead, .subhead-collapse.collapse, .header {
     	display: none;
     }
 
@@ -76,6 +88,10 @@ body.com_modules, body.com_menus {
         .g-content {
             margin: 0;
             padding: 0;
+        }
+
+        .settings-param-field {
+            margin-left: 0;
         }
 
         .g-instancepicker-title {

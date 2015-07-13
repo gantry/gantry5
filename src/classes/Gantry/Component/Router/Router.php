@@ -21,6 +21,7 @@ use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Router\RouterInterface;
+use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\Event\EventDispatcher;
 
@@ -40,7 +41,6 @@ abstract class Router implements RouterInterface
     public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->container['request'] = new Request();
     }
 
     public function dispatch()
@@ -118,6 +118,15 @@ abstract class Router implements RouterInterface
 
         if (isset($this->container['theme.path']) && file_exists($this->container['theme.path'] . '/includes/gantry.php')) {
             include $this->container['theme.path'] . '/includes/gantry.php';
+        }
+
+        if (isset($this->container['theme'])) {
+            // Initialize current theme if it is set.
+            $this->container['theme'];
+        } else {
+            // Otherwise initialize streams and error handler manually.
+            $this->container['streams']->register();
+            $this->container->register(new ErrorServiceProvider);
         }
 
         $this->container['admin.theme'] = function () {

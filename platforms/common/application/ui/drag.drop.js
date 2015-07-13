@@ -77,6 +77,7 @@ var DragDrop = new prime({
 
         if (event.which && event.which !== 1 || $(event.target).matches(this.options.exclude)) { return true; }
         this.element = $(element);
+        this.original = this.element;
         this.matched = false;
         if (this.options.catchClick) { this.moved = false; }
 
@@ -107,6 +108,10 @@ var DragDrop = new prime({
         var clientRect = this.element[0].getBoundingClientRect();
         this.origin.offset = {
             clientRect: clientRect,
+            scroll: {
+                x: window.scrollX,
+                y: window.scrollY
+            },
             x: this.origin.x - clientRect.right,
             y: clientRect.top - this.origin.y
         };
@@ -159,7 +164,7 @@ var DragDrop = new prime({
 
     deferStop: function(event) {
         var self = this;
-        setTimeout(function(){
+        setTimeout(function() {
             self.stop(event);
         }, 0);
     },
@@ -324,6 +329,11 @@ var DragDrop = new prime({
 
         deltaX = (event.changedTouches ? event.changedTouches[0].pageX : event.pageX) - this.origin.x;
         deltaY = (event.changedTouches ? event.changedTouches[0].pageY : event.pageY) - this.origin.y;
+
+        var isNew = this.element.parent('.particles-container');
+        if (isNew) {
+            deltaY += this.origin.offset.scroll.y - window.scrollY;
+        }
 
         this.direction = direction;
         this.element.style({ transform: 'translate(' + deltaX + 'px, ' + deltaY + 'px)' });

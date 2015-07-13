@@ -1,7 +1,17 @@
 {% set menu = gantry.menu.instance(particle) %}
 
+{% macro getCustomWidth(item, root, mode) -%}
+    {%- if (item.width|default('auto') != 'auto') and not (root.getDropdown() == 'fullwidth' and item.level > 1) -%}
+        {%- if mode == 'item' -%}
+            style="position: relative;"
+        {%- elseif mode == 'submenu' -%}
+            style="width:{{ item.width|e }};" data-g-item-width="{{ item.width|e }}"
+        {%- endif %}
+    {%- endif %}
+{%- endmacro %}
+
 {% macro displayParticle(item, gantry) %}
-    {% if item.particle.enabled is null or item.particle.enabled %}
+    {% if item.options.particle.enabled is null or item.options.particle.enabled %}
         {% set classes = item.options.block.class %}
         <div class="menu-item-particle{{ classes ? ' ' ~ classes }}">
         {% include ['particles/' ~ item.particle ~ '.html.twig', '@particles/' ~ item.particle ~ '.html.twig']
@@ -21,6 +31,7 @@
 
 {% macro displayItem(item, root, menu, gantry) %}
     {% if item.visible %}
+        {% import _self as SELF %}
         {% set title = item.icon_only ? ' title="' ~ item.title|e ~ '"' %}
         {% set active = menu.isActive(item) ? ' active' %}
         {% set dropdown = item.level == 1 ? ' g-' ~ item.getDropdown()|e %}
@@ -28,14 +39,8 @@
         {% set target = item.target != '_self' ? ' target="' ~ item.target|e ~ '"' %}
 
 
-        {% set hasCustomWidth = item.width|default('auto') != 'auto' %}
-        {% set customWidth = '' %}
-        {% if hasCustomWidth and not (root.getDropdown() == 'fullwidth' and item.level > 1) %}
-            {% set customWidth = ' style="position: relative;"' %}
-        {% endif %}
-
-        <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{{ parent|raw }}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}g-menu-item-link-parent{% endif %} {{ item.class|e|default('') }}"{{ customWidth|raw }}>
-            {% if item.url %}<a class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" href="{{ item.url|e }}"{{ (title ~ target)|raw }}>
+        <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{{ parent|raw }}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}g-menu-item-link-parent{% endif %} {{ item.class|e|default('') }}"{{ SELF.getCustomWidth(item, root, 'item') }} title="{{ item.title|e }}">
+            {% if item.url %}<a class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" href="{{ item.url|e }}{{ item.hash ? item.hash|e : '' }}"{{ (title ~ target)|raw }}>
             {% else %}<div class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" data-g-menuparent="">{% endif %}
                 {% if item.image %}
                     <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
@@ -44,18 +49,18 @@
                 {% endif %}
                 {% if item.url %}
                     <span class="g-menu-item-content">
-                        {{ _self.displayTitle(item, gantry) }}
+                        {{ SELF.displayTitle(item, gantry) }}
                     </span>
                     {% if (item.children) -%}
                         <span class="g-menu-parent-indicator" data-g-menuparent=""></span>
                     {%- endif %}
                 {% else %}
                     {% if item.type == 'particle' %}
-                        {{ _self.displayParticle(item, gantry) }}
+                        {{ SELF.displayParticle(item, gantry) }}
                     {% elseif item.type == 'heading' %}
                         <span class="g-nav-header g-menu-item-content"{{ title|raw }}>{{ item.title|e }}</span>
                     {% else %}
-                        <span class="g-separator g-menu-item-content"{{ title|raw }}>{{ _self.displayTitle(item) }}</span>
+                        <span class="g-separator g-menu-item-content"{{ title|raw }}>{{ SELF.displayTitle(item) }}</span>
                     {% endif %}
                         {% if (item.children) -%}
                             <span class="g-menu-parent-indicator"></span>
@@ -64,13 +69,14 @@
             {% if item.url %}</a>
             {% else %}</div>{% endif %}
             {% if (item.children) -%}
-                {{ _self.displaySubmenu(item, root, menu, gantry) }}
+                {{ SELF.displaySubmenu(item, root, menu, gantry) }}
             {%- endif %}
         </li>
     {% endif %}
 {% endmacro %}
 
 {% macro displayContainers(item, root, menu, gantry) %}
+    {% import _self as SELF %}
     <div class="g-grid">
         {% set groups = item.getDropdown() == 'standard' ? [item] : item.groups %}
         {% for column, items in groups %}
@@ -79,7 +85,7 @@
                 <li class="g-level-{{ item.level|e }} g-go-back">
                     <a class="g-menu-item-container" href="#" data-g-menuparent=""><span>Back</span></a>
                 </li>
-                {{ _self.displayItems(items, menu, gantry, root) }}
+                {{ SELF.displayItems(items, menu, gantry, root) }}
             </ul>
         </div>
         {% endfor %}
@@ -87,25 +93,25 @@
 {% endmacro %}
 
 {% macro displayItems(items, menu, gantry, root) %}
+    {% import _self as SELF %}
     {% for item in items %}
-        {{ _self.displayItem(item, root|default(item), menu, gantry) }}
+        {{ SELF.displayItem(item, root, menu, gantry) }}
     {% endfor %}
 {% endmacro %}
 
 {% macro displaySubmenu(item, root, menu, gantry) %}
-    {% set hasCustomWidth = item.width|default('auto') != 'auto' %}
-    {% if hasCustomWidth and not (root.getDropdown() == 'fullwidth' and item.level > 1) %}
-        {% set customWidth = ' style="width: ' ~ item.width|raw ~ '" data-g-item-width="' ~ item.width|raw ~ '"' %}
-    {% endif %}
-    <ul class="g-dropdown g-inactive {{ gantry.config.get('styles.menu.animation')|default('g-fade') }}"{{ customWidth|raw }}>
+    {% import _self as SELF %}
+    <ul class="g-dropdown g-inactive {{ gantry.config.get('styles.menu.animation')|default('g-fade') }}"{{ SELF.getCustomWidth(item, root, 'submenu') }}>
         <li class="g-dropdown-column">
-            {{ _self.displayContainers(item, root, menu, gantry) }}
+            {{ SELF.displayContainers(item, root, menu, gantry) }}
         </li>
     </ul>
 {% endmacro %}
 
+{% if menu.root.count() %}
 <nav class="g-main-nav" role="navigation"{{ particle.mobileTarget ? ' data-g-mobile-target' : '' }}>
     <ul class="g-toplevel">
         {{ _self.displayItems(menu.root, menu, gantry) }}
     </ul>
 </nav>
+{% endif %}

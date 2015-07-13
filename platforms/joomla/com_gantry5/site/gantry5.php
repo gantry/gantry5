@@ -19,6 +19,7 @@ if (!class_exists('Gantry\Framework\Gantry')) {
 }
 
 $app = JFactory::getApplication();
+$document = JFactory::getDocument();
 $input = $app->input;
 $menu = $app->getMenu();
 $menuItem = $menu->getActive();
@@ -39,6 +40,32 @@ $gantry = \Gantry\Framework\Gantry::instance();
 $theme = $gantry['theme'];
 
 $params = $app->getParams();
+
+// Set page title.
+$title = $params->get('page_title');
+if (empty($title)) {
+    $title = $app->get('sitename');
+} elseif ($app->get('sitename_pagetitles', 0) == 1) {
+    $title = JText::sprintf('JPAGETITLE', $app->get('sitename'), $title);
+} elseif ($app->get('sitename_pagetitles', 0) == 2) {
+    $title = JText::sprintf('JPAGETITLE', $title, $app->get('sitename'));
+}
+$document->setTitle($title);
+
+// Set description.
+if ($params->get('menu-meta_description')) {
+    $document->setDescription($params->get('menu-meta_description'));
+}
+
+// Set Keywords.
+if ($params->get('menu-meta_keywords')) {
+    $document->setMetadata('keywords', $params->get('menu-meta_keywords'));
+}
+
+// Set robots.
+if ($params->get('robots')) {
+    $document->setMetadata('robots', $params->get('robots'));
+}
 
 /** @var object $params */
 $data = json_decode($params->get('particle'), true);

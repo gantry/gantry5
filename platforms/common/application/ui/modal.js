@@ -349,4 +349,6 @@ var Modal = new prime({
     }
 });
 
-module.exports = Modal;
+var modal = new Modal();
+
+module.exports = modal;

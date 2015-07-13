@@ -15,6 +15,7 @@
 namespace Gantry\Component\Controller;
 
 use Gantry\Admin\Router;
+use Gantry\Framework\Request;
 use RocketTheme\Toolbox\DI\Container;
 use RuntimeException;
 
@@ -24,6 +25,11 @@ abstract class BaseController implements RestfulControllerInterface
      * @var string Default HTTP method.
      */
     protected $method = 'GET';
+
+    /**
+     * @var Request
+     */
+    protected $request;
 
     /**
      * @var array List of HTTP verbs and their actions.
@@ -62,6 +68,7 @@ abstract class BaseController implements RestfulControllerInterface
     public function __construct(Container $container)
     {
         $this->container = $container;
+        $this->request = $container['request'];
     }
 
     /**
@@ -75,6 +82,7 @@ abstract class BaseController implements RestfulControllerInterface
      */
     public function execute($method, array $path, array $params)
     {
+        $this->method = $method;
         $this->setParams($params);
         list($action, $path) = $this->resolveHttpVerb($method, $path);
 

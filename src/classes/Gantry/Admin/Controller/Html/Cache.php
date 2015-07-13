@@ -26,7 +26,8 @@ class Cache extends HtmlController
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
-        Folder::delete($locator('gantry-cache://'), false);
+        Folder::delete($locator('gantry-cache://theme'), false);
+        Folder::delete($locator('gantry-cache://admin'), false);
 
         return new JsonResponse(['html' => 'Cache was successfully cleared', 'title' => 'Cache Cleared']);
     }

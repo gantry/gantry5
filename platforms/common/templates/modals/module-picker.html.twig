@@ -5,12 +5,12 @@ module.[id | title | position | enabled | access]
 <div data-mm-particle-stepone="{{ gantry.route('menu/particle') }}" class="menu-editor-extras">
     <div class="card settings-block">
         <h4>
-            Pick a Module
+            {{ 'GANTRY5_PLATFORM_PICK_MODULE'|trans }}
         </h4>
         <div class="inner-params">
             <div class="g5-mm-modules-picker menu-editor-modules">
                 <div class="search">
-                    <input type="text" placeholder="Search..." />
+                    <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_SEARCH_ELI'|trans }}" />
                     <i class="fa fa-search"></i>
                 </div>
                 <div class="modules-wrapper">
@@ -24,8 +24,8 @@ module.[id | title | position | enabled | access]
                                 <span class="title" data-mm-title="{{ module.title }}" data-mm-filter="{{ module.title|e }}">
                                     {{ module.title }}
                                 </span>
-                                <span class="sub-title font-small" data-mm-filter="{{ module.module|default('none')|e }}"><strong>Type</strong>: {{ module.module|default('none') }}</span>
-                                <span class="sub-title font-small"><strong>Position</strong>: {{ module.position|default('none') }}</span>
+                                <span class="sub-title font-small" data-mm-filter="{{ module.module|default('none')|e }}"><strong>{{ 'GANTRY5_PLATFORM_TYPE'|trans }}</strong>: {{ module.module|default('none') }}</span>
+                                <span class="sub-title font-small"><strong>{{ 'GANTRY5_PLATFORM_POSITION'|trans }}</strong>: {{ module.position|default('none') }}</span>
                             </span>
                         </li>
                         {% endfor %}
@@ -35,8 +35,8 @@ module.[id | title | position | enabled | access]
         </div>
     </div>
     <div class="g-modal-actions">
-        {#<a class="button float-left">Defaults</a>#}
-        <button class="button button-primary" type="submit" data-mm-select disabled>Select</button>
-        <a class="button g5-dialog-close">Cancel</a>
+        {#<a class="button float-left">{{ 'GANTRY5_PLATFORM_DEFAULTS'|trans }}</a>#}
+        <button class="button button-primary" type="submit" data-mm-select disabled>{{ 'GANTRY5_PLATFORM_SELECT'|trans }}</button>
+        <a class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</a>
     </div>
 </div>

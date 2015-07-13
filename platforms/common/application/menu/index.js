@@ -152,10 +152,15 @@ ready(function() {
         body.delegate(evt, '[data-g5-menu-columns] .submenu-items:empty', function(event, element) {
             var bounding = element[0].getBoundingClientRect(),
                 x = event.pageX || event.changedTouches[0].pageX || 0, y = event.pageY || event.changedTouches[0].pageY || 0,
+                siblings = $('.submenu-selector > [data-mm-id]'),
                 deleter = {
                     width: 36,
                     height: 36
                 };
+
+            if (siblings.length <= 1) {
+                return false;
+            }
 
             if (x >= bounding.left + bounding.width - deleter.width && x <= bounding.left + bounding.width &&
                 Math.abs(window.scrollY - y) - bounding.top < deleter.height) {
@@ -165,8 +170,9 @@ ready(function() {
                     path = active ? active.data('mm-id') : null;
 
                 parent.remove();
+                siblings = $('.submenu-selector > [data-mm-id]');
                 menumanager.ordering[path].splice(index, 1);
-                menumanager.resizer.evenResize($('.submenu-selector > [data-mm-id]'));
+                menumanager.resizer.evenResize(siblings);
             }
         });
     });

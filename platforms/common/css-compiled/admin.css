@@ -17,7 +17,7 @@
   overflow: visible;
 }
 
-#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file] {
+#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file] {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -49,7 +49,7 @@
   visibility: visible;
   overflow: visible;
 }
-#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file] {
+#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file] {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -62,11 +62,6 @@
   -ms-transform: translateY(-50%);
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
-}
-#g5-container *, #g5-container *::before, #g5-container *::after {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 @-webkit-viewport {
   #g5-container {
@@ -98,6 +93,14 @@
   font-size: 100%;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#g5-container *, #g5-container *::before, #g5-container *::after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
 }
 #g5-container body {
   margin: 0;
@@ -105,6 +108,7 @@
 #g5-container #g-page-surround {
   min-height: 100vh;
   position: relative;
+  overflow: hidden;
 }
 #g5-container article,
 #g5-container aside,
@@ -278,6 +282,9 @@
 #g5-container .g-container {
   margin: 0 auto;
   padding: 0;
+}
+#g5-container .g-block .g-container {
+  width: auto;
 }
 #g5-container .g-grid {
   display: -webkit-box;
@@ -1403,37 +1410,37 @@
 #g5-container .nomarginall {
   margin: 0 !important;
 }
-#g5-container .nomarginall .content {
+#g5-container .nomarginall .g-content {
   margin: 0 !important;
 }
 #g5-container .nomargintop {
   margin-top: 0 !important;
 }
-#g5-container .nomargintop .content {
+#g5-container .nomargintop .g-content {
   margin-top: 0 !important;
 }
 #g5-container .nomarginbottom {
   margin-bottom: 0 !important;
 }
-#g5-container .nomarginbottom .content {
+#g5-container .nomarginbottom .g-content {
   margin-bottom: 0 !important;
 }
 #g5-container .nopaddingall {
   padding: 0 !important;
 }
-#g5-container .nopaddingall .content {
+#g5-container .nopaddingall .g-content {
   padding: 0 !important;
 }
 #g5-container .nopaddingtop {
   padding-top: 0 !important;
 }
-#g5-container .nopaddingtop .content {
+#g5-container .nopaddingtop .g-content {
   padding-top: 0 !important;
 }
 #g5-container .nopaddingbottom {
   padding-bottom: 0 !important;
 }
-#g5-container .nopaddingbottom .content {
+#g5-container .nopaddingbottom .g-content {
   padding-bottom: 0 !important;
 }
 #g5-container .full-width {
@@ -1535,7 +1542,7 @@
   background-image: url(data:image/jpeg;base64,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);
 }
 
-#g5-container .card .enabler [type="hidden"] + .toggle, #g5-container .card .enabler [type="radio"] + .toggle {
+#g5-container .enabler [type="hidden"] + .toggle, #g5-container .enabler [type="radio"] + .toggle {
   display: inline-block;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -1545,7 +1552,7 @@
   transition: background-color 0.3s ease-in-out;
 }
 
-#g5-container .card .enabler [type="hidden"] + .toggle .knob, #g5-container .card .enabler [type="radio"] + .toggle .knob {
+#g5-container .enabler [type="hidden"] + .toggle .knob, #g5-container .enabler [type="radio"] + .toggle .knob {
   position: absolute;
   background: #fff;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
@@ -1574,6 +1581,15 @@
 html {
   width: 100vw;
   overflow-x: hidden;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
@@ -1649,7 +1665,7 @@ body.g-prime {
   overflow: hidden;
   height: 0;
 }
-#g5-container .badge, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span {
+#g5-container .badge, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span:not(.g-file-delete) {
   border-radius: 100px;
   background-color: #eee;
   color: #9d9d9d;
@@ -1673,6 +1689,13 @@ body.g-prime {
     -moz-column-count: 1;
     column-count: 1;
   }
+}
+#g5-container .cards-wrapper .card h4, #g5-container .cards-wrapper .card input {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
 }
 #g5-container .card {
   display: inline-block;
@@ -1717,53 +1740,6 @@ body.g-prime {
 #g5-container .card h4 .enabler {
   float: right;
 }
-#g5-container .card .enabler .toggle {
-  background-color: #ed5565;
-}
-#g5-container .card .enabler .toggle .knob {
-  top: 1px;
-  left: 1px;
-}
-#g5-container .card .enabler [type="hidden"] + .toggle {
-  border-radius: 18px;
-  width: 36px;
-  height: 18px;
-}
-#g5-container .card .enabler [type="hidden"] + .toggle .knob {
-  width: 20px;
-  height: 16px;
-  border-radius: 20px;
-}
-#g5-container .card .enabler [type="radio"] {
-  display: none;
-}
-#g5-container .card .enabler [type="radio"] + .toggle {
-  border-radius: 18px;
-  width: 18px;
-  height: 18px;
-}
-#g5-container .card .enabler [type="radio"] + .toggle .knob {
-  width: 12px;
-  height: 12px;
-  border-radius: 20px;
-}
-#g5-container .card .enabler [type="radio"] + .toggle .knob {
-  left: 3px;
-  top: 3px;
-  opacity: 0;
-}
-#g5-container .card .enabler [type="hidden"][value="1"] + .toggle {
-  background-color: #a0d468;
-}
-#g5-container .card .enabler [type="hidden"][value="1"] + .toggle .knob {
-  left: 15px;
-}
-#g5-container .card .enabler [type="radio"]:checked + .toggle {
-  background-color: #a0d468;
-}
-#g5-container .card .enabler [type="radio"]:checked + .toggle .knob {
-  opacity: 1;
-}
 #g5-container .card .inner-params > :first-child:not(.alert) {
   margin: 0.625rem 0 0;
   padding-top: 1.25rem;
@@ -1783,6 +1759,53 @@ body.g-prime {
 }
 #g5-container .card .theme-screenshot a {
   display: block;
+}
+#g5-container .enabler .toggle {
+  background-color: #ed5565;
+}
+#g5-container .enabler .toggle .knob {
+  top: 1px;
+  left: 1px;
+}
+#g5-container .enabler [type="hidden"] + .toggle {
+  border-radius: 18px;
+  width: 36px;
+  height: 18px;
+}
+#g5-container .enabler [type="hidden"] + .toggle .knob {
+  width: 20px;
+  height: 16px;
+  border-radius: 20px;
+}
+#g5-container .enabler [type="radio"] {
+  display: none;
+}
+#g5-container .enabler [type="radio"] + .toggle {
+  border-radius: 18px;
+  width: 18px;
+  height: 18px;
+}
+#g5-container .enabler [type="radio"] + .toggle .knob {
+  width: 12px;
+  height: 12px;
+  border-radius: 20px;
+}
+#g5-container .enabler [type="radio"] + .toggle .knob {
+  left: 3px;
+  top: 3px;
+  opacity: 0;
+}
+#g5-container .enabler [type="hidden"][value="1"] + .toggle {
+  background-color: #a0d468;
+}
+#g5-container .enabler [type="hidden"][value="1"] + .toggle .knob {
+  left: 15px;
+}
+#g5-container .enabler [type="radio"]:checked + .toggle {
+  background-color: #a0d468;
+}
+#g5-container .enabler [type="radio"]:checked + .toggle .knob {
+  opacity: 1;
 }
 #g5-container .themes .card {
   max-width: 300px;
@@ -1983,7 +2006,7 @@ body.g-prime {
   src: url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.eot");
   src: url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.woff") format("woff"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.ttf") format("truetype"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.svg#roboto") format("svg");
 }
-.font-small, #g5-container .card h4[data-g-collapse] .g-collapse, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .fa.font-small, #g5-container .card h4[data-g-collapse] .fa.g-collapse, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.fa {
+.font-small, #g5-container .card h4[data-g-collapse] .g-collapse, #g5-container .g-filters-bar label, #g5-container .g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #menu-editor li .menu-item .menu-item-content .menu-item-subtitle, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .fa.font-small, #g5-container .card h4[data-g-collapse] .fa.g-collapse, #g5-container .g-filters-bar label.fa, #g5-container .fa.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .fa.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .fa.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .fa.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #menu-editor li .menu-item .menu-item-content .fa.menu-item-subtitle, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.fa {
   font-size: 0.8rem;
   vertical-align: middle;
 }
@@ -2335,7 +2358,7 @@ body.g-prime {
   width: 100%;
   min-width: inherit;
 }
-#g5-container .settings-block.card .badge, #g5-container .settings-block.card .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected .settings-block.card span {
+#g5-container .settings-block.card .badge, #g5-container .settings-block.card .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span:not(.g-file-delete), #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected .settings-block.card span:not(.g-file-delete) {
   margin-left: 4px;
 }
 #g5-container .settings-block.disabled {
@@ -2408,7 +2431,7 @@ body.g-prime {
   /*@include linear-gradient(90deg, transparentize($white, 0.7) 0%, transparentize($white, 0.7) 150px, transparentize($white, 0.4) 150px, transparentize($white, 0.4) 100%);*/
 }
 #g5-container .settings-block .settings-param-field {
-  margin-left: 150px;
+  margin-left: 175px;
 }
 #g5-container .settings-block .settings-param-field .g-reset-field {
   display: inline-block;
@@ -2430,7 +2453,7 @@ body.g-prime {
   transition: opacity 0.2s ease-in-out;
 }
 #g5-container .settings-block .settings-param-title {
-  max-width: 150px;
+  max-width: 175px;
   margin: 5px;
 }
 #g5-container .settings-block i {
@@ -2459,7 +2482,7 @@ body.g-prime {
   display: inline-block;
 }
 #g5-container .settings-block input:not(.settings-param-toggle):not([type="checkbox"]), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker, #g5-container .settings-block .multi.selectize-control {
-  width: 250px;
+  width: 275px;
 }
 @media only all and (max-width: 59.938rem) {
   #g5-container .settings-block input:not(.settings-param-toggle):not([type="checkbox"]), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker, #g5-container .settings-block .multi.selectize-control {
@@ -2471,7 +2494,7 @@ body.g-prime {
   min-height: 150px;
 }
 #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
-  width: 209px;
+  width: 234px;
 }
 @media only all and (max-width: 59.938rem) {
   #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
@@ -2479,7 +2502,7 @@ body.g-prime {
   }
 }
 #g5-container .settings-block .selectize-control.single {
-  width: 250px !important;
+  width: 275px !important;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
   #g5-container .settings-block .selectize-control.single {
@@ -2517,6 +2540,16 @@ body.g-prime {
 }
 #g5-container .g-panel-filters .search, #g5-container .g-panel-filters input, #g5-container .g-panel-filters .button {
   font-size: 0.85rem;
+}
+#g5-container .g-filters-bar label {
+  display: inline-block;
+  margin: 0 0 0 1rem;
+  border-left: 1px solid #ddd;
+  line-height: 30px;
+  padding-left: 1rem;
+}
+#g5-container .g-filters-bar label input {
+  display: inline-block;
 }
 #g5-container .g5-dialog .settings-block {
   width: 100%;
@@ -3109,9 +3142,21 @@ body.g-prime {
   color: #ddd;
 }
 #g5-container .g-block.navbar-icons {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 3%;
+  -moz-flex: 0 3%;
+  -ms-flex: 0 3%;
   flex: 0 3%;
 }
 #g5-container .g-block.navbar-closed {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0;
+  -moz-flex: 0;
+  -ms-flex: 0;
   flex: 0;
 }
 
@@ -3669,17 +3714,28 @@ body.g-prime {
   background-color: #ddd;
   border: 0;
   padding: 1px;
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 1 100%;
+  -moz-flex: 0 1 100%;
+  -ms-flex: 0 1 100%;
   flex: 0 1 100%;
 }
 #g5-container .lm-blocks .placeholder.in-between {
   display: block;
-  flex: 0 0 0px;
   margin: 0 2px 0 -4px;
-  width: 0px;
+  width: 0;
   padding: 1px;
   text-indent: -10000px;
-  font-size: 0px;
-  flex: 0 1 0%;
+  font-size: 0;
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 1 0;
+  -moz-flex: 0 1 0;
+  -ms-flex: 0 1 0;
+  flex: 0 1 0;
   background-color: #555;
 }
 #g5-container .lm-blocks .placeholder.in-between-grids {
@@ -3706,7 +3762,7 @@ body.g-prime {
   left: -10px;
   top: 12px;
 }
-#g5-container .lm-blocks .block-has-changes > span .title, #g5-container .lm-blocks .block-has-changes > span .font-small, #g5-container .lm-blocks .block-has-changes > span .card h4[data-g-collapse] .g-collapse, #g5-container .card h4[data-g-collapse] .lm-blocks .block-has-changes > span .g-collapse, #g5-container .lm-blocks .block-has-changes > span .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks .block-has-changes > span li {
+#g5-container .lm-blocks .block-has-changes > span .title, #g5-container .lm-blocks .block-has-changes > span .font-small, #g5-container .lm-blocks .block-has-changes > span .card h4[data-g-collapse] .g-collapse, #g5-container .card h4[data-g-collapse] .lm-blocks .block-has-changes > span .g-collapse, #g5-container .lm-blocks .block-has-changes > span .g-filters-bar label, #g5-container .g-filters-bar .lm-blocks .block-has-changes > span label, #g5-container .lm-blocks .block-has-changes > span .g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span .g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span .g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span .g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span #menu-editor li .menu-item .menu-item-content .menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content .lm-blocks .block-has-changes > span .menu-item-subtitle, #g5-container .lm-blocks .block-has-changes > span .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks .block-has-changes > span li {
   margin-left: 15px;
 }
 #g5-container .particle-disabled, #g5-container [data-lm-disabled] {
@@ -3849,68 +3905,124 @@ body.g-prime {
   padding: 1.563rem 0.938rem;
   background-color: #ebebeb;
   border-right: 1px solid #e3e3e3;
+  position: relative;
 }
-#g5-container .g5-lm-particles-picker ul, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-modules-picker ul {
+#g5-container .particles-sidebar-block {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 170px;
+  -moz-flex: 0 170px;
+  -ms-flex: 0 170px;
+  flex: 0 170px;
+  width: 170px;
+}
+@media only all and (max-width: 47.938rem) {
+  #g5-container .particles-sidebar-block {
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    box-flex: 0;
+    -webkit-flex: 0 100%;
+    -moz-flex: 0 100%;
+    -ms-flex: 0 100%;
+    flex: 0 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: inherit;
+    border: 0;
+  }
+  #g5-container .particles-sidebar-block .particles-container {
+    max-height: 300px;
+    overflow: auto;
+    margin-bottom: 1rem;
+  }
+}
+@media only all and (min-width: 48rem) {
+  #g5-container .particles-container.has-scrollbar {
+    padding-right: 0.469rem;
+  }
+}
+#g5-container .g5-lm-particles-picker ul, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-widgets-picker ul {
   padding: 1px;
   margin-bottom: 1em;
 }
-#g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker li {
-  padding: 0.469rem;
-  margin: 1px 0;
+#g5-container .g5-lm-particles-picker.menu-editor-particles li, #g5-container .g5-mm-particles-picker.menu-editor-particles li, #g5-container .g5-mm-modules-picker.menu-editor-particles li, #g5-container .g5-mm-widgets-picker.menu-editor-particles li {
+  margin: 0.3rem 0.15rem;
+  cursor: pointer !important;
+}
+#g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker li {
+  padding: 0.31267rem;
+  margin: 0.31267rem 0;
   text-align: center;
   border-radius: 0.1875rem;
   cursor: move;
 }
-#g5-container .g5-lm-particles-picker li[data-lm-nodrag], #g5-container .g5-lm-particles-picker li[data-mm-nodrag], #g5-container .g5-mm-particles-picker li[data-lm-nodrag], #g5-container .g5-mm-particles-picker li[data-mm-nodrag], #g5-container .g5-mm-modules-picker li[data-lm-nodrag], #g5-container .g5-mm-modules-picker li[data-mm-nodrag] {
+#g5-container .g5-lm-particles-picker li[data-lm-nodrag], #g5-container .g5-lm-particles-picker li[data-mm-nodrag], #g5-container .g5-mm-particles-picker li[data-lm-nodrag], #g5-container .g5-mm-particles-picker li[data-mm-nodrag], #g5-container .g5-mm-modules-picker li[data-lm-nodrag], #g5-container .g5-mm-modules-picker li[data-mm-nodrag], #g5-container .g5-mm-widgets-picker li[data-lm-nodrag], #g5-container .g5-mm-widgets-picker li[data-mm-nodrag] {
   cursor: default;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-  #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker li {
+  #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker li {
     font-size: 0.8rem;
   }
 }
-#g5-container .g5-lm-particles-picker li:first-child, #g5-container .g5-mm-particles-picker li:first-child, #g5-container .g5-mm-modules-picker li:first-child {
+#g5-container .g5-lm-particles-picker li:first-child, #g5-container .g5-mm-particles-picker li:first-child, #g5-container .g5-mm-modules-picker li:first-child, #g5-container .g5-mm-widgets-picker li:first-child {
   margin-top: 0;
 }
-#g5-container .g5-lm-particles-picker li:last-child, #g5-container .g5-mm-particles-picker li:last-child, #g5-container .g5-mm-modules-picker li:last-child {
+#g5-container .g5-lm-particles-picker li:last-child, #g5-container .g5-mm-particles-picker li:last-child, #g5-container .g5-mm-modules-picker li:last-child, #g5-container .g5-mm-widgets-picker li:last-child {
   margin-bottom: 0;
 }
-#g5-container .g5-lm-particles-picker li[data-lm-blocktype="spacer"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="spacer"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="spacer"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="spacer"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="spacer"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="spacer"] {
+#g5-container .g5-lm-particles-picker li[data-lm-blocktype="spacer"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="spacer"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="spacer"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="spacer"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="spacer"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="spacer"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="spacer"], #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="spacer"] {
   background-color: #eee;
   color: #666;
   border: 1px solid #d0d0d0;
 }
-#g5-container .g5-lm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-lm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], #g5-container .g5-mm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-mm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], #g5-container .g5-mm-modules-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-mm-modules-picker li.g5-mm-particle-spacer[data-mm-disabled] {
+#g5-container .g5-lm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-lm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], #g5-container .g5-mm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-mm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], #g5-container .g5-mm-modules-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-mm-modules-picker li.g5-mm-particle-spacer[data-mm-disabled], #g5-container .g5-mm-widgets-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-mm-widgets-picker li.g5-mm-particle-spacer[data-mm-disabled] {
   color: #fff;
 }
-#g5-container .g5-lm-particles-picker li[data-lm-blocktype="position"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="position"], #g5-container .g5-lm-particles-picker li[data-lm-blocktype="module"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="module"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="position"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="position"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="module"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="module"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="position"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="position"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="module"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="module"] {
+#g5-container .g5-lm-particles-picker li[data-lm-blocktype="position"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="position"], #g5-container .g5-lm-particles-picker li[data-lm-blocktype="module"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="module"], #g5-container .g5-lm-particles-picker li[data-lm-blocktype="widget"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="widget"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="position"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="position"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="module"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="module"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="widget"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="widget"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="position"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="position"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="module"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="module"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="widget"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="widget"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="position"], #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="position"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="module"], #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="module"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="widget"], #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="widget"] {
   color: #fff;
   background-color: #359AD9;
 }
-#g5-container .g5-lm-particles-picker li[data-lm-blocktype="particle"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="particle"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="particle"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="particle"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="particle"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="particle"] {
+#g5-container .g5-lm-particles-picker li[data-lm-blocktype="particle"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="particle"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="particle"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="particle"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="particle"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="particle"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="particle"], #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="particle"] {
   color: #fff;
   background-color: #2A82B7;
 }
-#g5-container .g5-lm-particles-picker li[data-lm-blocktype="pagecontent"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="pagecontent"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="pagecontent"] {
+#g5-container .g5-lm-particles-picker li[data-lm-blocktype="pagecontent"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="pagecontent"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="pagecontent"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="pagecontent"] {
   color: #fff;
   background-color: #20A085;
 }
-#g5-container .g5-lm-particles-picker li[data-lm-blocktype="atom"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="atom"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="atom"] {
+#g5-container .g5-lm-particles-picker li[data-lm-blocktype="atom"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="atom"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="atom"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="atom"] {
   color: #fff;
   background-color: #9055AF;
 }
-#g5-container .g5-lm-particles-picker .settings-block, #g5-container .g5-mm-particles-picker .settings-block, #g5-container .g5-mm-modules-picker .settings-block {
+#g5-container .g5-lm-particles-picker .settings-block, #g5-container .g5-mm-particles-picker .settings-block, #g5-container .g5-mm-modules-picker .settings-block, #g5-container .g5-mm-widgets-picker .settings-block {
   width: 100% !important;
 }
-#g5-container .g5-lm-particles-picker .search, #g5-container .g5-mm-particles-picker .search, #g5-container .g5-mm-modules-picker .search {
+#g5-container .g5-lm-particles-picker .search, #g5-container .g5-mm-particles-picker .search, #g5-container .g5-mm-modules-picker .search, #g5-container .g5-mm-widgets-picker .search {
   position: relative;
   margin-bottom: 10px;
 }
-#g5-container .g5-lm-particles-picker .search i, #g5-container .g5-mm-particles-picker .search i, #g5-container .g5-mm-modules-picker .search i {
+#g5-container .g5-lm-particles-picker .search i, #g5-container .g5-mm-particles-picker .search i, #g5-container .g5-mm-modules-picker .search i, #g5-container .g5-mm-widgets-picker .search i {
   position: absolute;
   right: 10px;
   top: 50%;
   margin-top: -12px;
+}
+@media only all and (min-width: 48rem) {
+  #g5-container .g5-lm-particles-picker.particles-fixed, #g5-container .g5-lm-particles-picker.particles-absolute {
+    z-index: 5;
+  }
+  #g5-container .g5-lm-particles-picker.particles-fixed .search input, #g5-container .g5-lm-particles-picker.particles-absolute .search input {
+    width: inherit;
+    margin-right: -2.0945rem;
+  }
+  #g5-container .g5-lm-particles-picker.particles-fixed {
+    position: fixed;
+  }
+  #g5-container .g5-lm-particles-picker.particles-absolute {
+    position: absolute;
+  }
 }
 
 #g5-container #menu-editor .parent-indicator:before {
@@ -3928,17 +4040,31 @@ body.g-prime {
 #g5-container #menu-editor li:hover .config-cog {
   opacity: 1;
 }
+#g5-container #menu-editor li .menu-item {
+  display: inline-block;
+}
 #g5-container #menu-editor li .menu-item .title {
   font-size: 1rem;
 }
-#g5-container #menu-editor li .menu-item .badge, #g5-container #menu-editor .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected .menu-item span, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails #menu-editor li.selected .menu-item span {
+#g5-container #menu-editor li .menu-item .badge, #g5-container #menu-editor .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected .menu-item span:not(.g-file-delete), #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails #menu-editor li.selected .menu-item span:not(.g-file-delete) {
   background-color: #aaa;
   color: #fff;
   margin-left: 0.5em;
   font-size: 0.6rem;
 }
+#g5-container #menu-editor li .menu-item .menu-item-content {
+  display: inline-block;
+  vertical-align: top;
+}
+#g5-container #menu-editor li .menu-item .menu-item-content .menu-item-subtitle {
+  display: block;
+  opacity: 0.8;
+}
 #g5-container #menu-editor li[data-mm-original-type] .fa-arrows-alt {
   display: none;
+}
+#g5-container #menu-editor .card.full-width {
+  margin: 0.625rem 0;
 }
 #g5-container .menu-header h2 {
   display: inline-block;
@@ -3966,13 +4092,17 @@ body.g-prime {
 #g5-container .menu-header .menu-select-wrap select:focus {
   outline: none;
 }
-#g5-container .g5-mm-particles-picker li {
-  display: inline-block;
+#g5-container .g5-mm-particles-picker ul {
+  margin-bottom: 0;
 }
-#g5-container .g5-mm-particles-picker li i {
+#g5-container .g5-mm-particles-picker ul li {
+  display: inline-block;
+  margin: 0;
+}
+#g5-container .g5-mm-particles-picker ul li i {
   opacity: 0.5;
 }
-#g5-container .g5-mm-particles-picker li .config-cog {
+#g5-container .g5-mm-particles-picker ul li .config-cog {
   display: none;
 }
 #g5-container .menu-selector-bar {
@@ -4000,7 +4130,8 @@ body.g-prime {
   background: #eeeeee;
   border: 1px solid #ddd;
   color: #666;
-  display: inline-block;
+  display: flex;
+  align-items: center;
   cursor: move;
   -webkit-transition: background-color 0.1s ease-out;
   -moz-transition: background-color 0.1s ease-out;
@@ -4039,7 +4170,7 @@ body.g-prime {
   margin: 3px -1px;
   border-color: #000;
 }
-#g5-container .menu-selector span {
+#g5-container .menu-selector .parent-indicator {
   font-size: 0.6rem;
   margin-left: 0.2rem;
   display: inline-block;
@@ -4100,6 +4231,7 @@ body.g-prime {
 }
 #g5-container .submenu-selector .g-block:last-child .submenu-column {
   margin-right: 0;
+  min-height: 55px;
 }
 #g5-container .submenu-selector .g-block:last-child .submenu-column:after {
   display: none;
@@ -4672,11 +4804,11 @@ html.g5-dialog-open {
   -webkit-overflow-scrolling: touch;
   z-index: 1111;
 }
-#g5-container .g5-dialog .settings-block input:not(.settings-param-toggle), #g5-container .g5-dialog .settings-block select, #g5-container .g5-dialog .settings-block .collection-list ul, #g5-container .g5-dialog .settings-block .colorpicker, #g5-container .g5-dialog .settings-block .selectize-input {
+#g5-container .g5-dialog .settings-block input:not(.settings-param-toggle):not(.g-keyvalue-input-*):not([type="checkbox"]), #g5-container .g5-dialog .settings-block select, #g5-container .g5-dialog .settings-block .collection-list ul, #g5-container .g5-dialog .settings-block .colorpicker, #g5-container .g5-dialog .settings-block .selectize-input {
   width: 250px;
 }
 @media only all and (max-width: 47.938rem) {
-  #g5-container .g5-dialog .settings-block input:not(.settings-param-toggle), #g5-container .g5-dialog .settings-block select, #g5-container .g5-dialog .settings-block .collection-list ul, #g5-container .g5-dialog .settings-block .colorpicker, #g5-container .g5-dialog .settings-block .selectize-input {
+  #g5-container .g5-dialog .settings-block input:not(.settings-param-toggle):not(.g-keyvalue-input-*):not([type="checkbox"]), #g5-container .g5-dialog .settings-block select, #g5-container .g5-dialog .settings-block .collection-list ul, #g5-container .g5-dialog .settings-block .colorpicker, #g5-container .g5-dialog .settings-block .selectize-input {
     width: 90% !important;
   }
 }
@@ -5034,12 +5166,12 @@ html.g5-dialog-open {
   left: 50%;
   position: absolute;
 }
-#g5-container .g5-popover-extras a {
+#g5-container .g5-popover-extras a, #g5-container .g5-popover-extras [data-g-devprod] {
   display: block;
   padding: 0.4rem;
   color: #666;
 }
-#g5-container .g5-popover-extras a:hover {
+#g5-container .g5-popover-extras a:hover, #g5-container .g5-popover-extras [data-g-devprod]:hover {
   color: #666;
   background-color: #eee;
   border-radius: 4px;
@@ -5080,8 +5212,8 @@ html.g5-dialog-open {
   border: solid 1px #CCC;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   z-index: 99999;
-  -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
   box-sizing: content-box;
   display: none;
 }
@@ -5183,8 +5315,8 @@ html.g5-dialog-open {
   height: 8px;
   border-radius: 8px;
   border: solid 2px white;
-  -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
   box-sizing: content-box;
 }
 #g5-container .cp-picker {
@@ -5196,12 +5328,15 @@ html.g5-dialog-open {
   background: white;
   border: solid 1px black;
   margin-top: -2px;
-  -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
   box-sizing: content-box;
   z-index: 2;
 }
 #g5-container .cp-tabs {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   position: absolute;
   bottom: 0;
   color: #777;
@@ -5268,6 +5403,9 @@ html.g5-dialog-open {
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-selected .font-charsets-selected {
   display: inline-block;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-selected .font-charsets-details {
+  color: #3288e6;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content .font-search {
   width: 10rem !important;
@@ -5532,6 +5670,14 @@ html.g5-dialog-open {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-particles-footer .footer-upload-info {
+  line-height: 1.1rem;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-particles-footer code {
+  font-size: 0.70rem;
+  padding-top: 0;
+  padding-bottom: 0;
+}
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-folders {
   margin: 0;
   padding-left: 2.14285714em;
@@ -5547,10 +5693,35 @@ html.g5-dialog-open {
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li {
   vertical-align: middle;
   position: relative;
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  -moz-transition: -moz-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li .g-file-delete {
+  position: absolute;
+  z-index: 2;
+  background-color: #ed5565;
+  border-radius: 16px;
+  color: #fff;
+  right: 2px;
+  top: 2px;
+  line-height: 1rem;
+  padding: 2px;
+  opacity: 0;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.g-file-deleted {
+  -webkit-transform: scale(0);
+  -moz-transform: scale(0);
+  -ms-transform: scale(0);
+  -o-transform: scale(0);
+  transform: scale(0);
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li > span {
   display: inline-block;
   vertical-align: middle;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li:hover .g-file-delete {
+  opacity: 1;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .g-list-labels {
   display: none;
@@ -5621,6 +5792,7 @@ html.g5-dialog-open {
   padding: 4px;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 50px;
+  line-height: 1em;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-progress .g-file-progress-text {
   position: absolute;
@@ -5640,7 +5812,7 @@ html.g5-dialog-open {
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.g-file-uploading .g-file-progress {
   display: block;
 }
-#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span {
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span:not(.g-file-delete) {
   background-color: #439A86 !important;
   color: #fff !important;
   padding: 0 6px !important;
@@ -5711,6 +5883,22 @@ html.g5-dialog-open {
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list .g-list-labels li > span {
   color: #888;
 }
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.no-files-found, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.no-files-found {
+  width: 100%;
+  max-width: inherit;
+  margin: 0;
+  position: absolute;
+  margin-top: -6px;
+  transform: translateY(-50%);
+  top: 50%;
+  color: #c9c9c9;
+  text-align: center;
+  background-color: inherit;
+}
+#g5-container .g5-popover-filepicker {
+  max-width: 400px;
+  word-wrap: break-word;
+}
 
 #g5-container .settings-block .g-keyvalue-field ul li {
   margin: 5px 0;
@@ -5740,6 +5928,7 @@ html.g5-dialog-open {
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: 1;
   color: #ddd;
   margin: -12px 0 0 -8px;
 }

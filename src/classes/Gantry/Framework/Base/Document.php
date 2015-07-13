@@ -21,6 +21,8 @@ class Document
 {
     use GantryTrait;
 
+    public static $timestamp_age = 604800;
+
     protected static $scripts = [];
     protected static $styles = [];
 
@@ -192,7 +194,7 @@ class Document
      *                             Use value <= 0 to disable the feature.
      * @return string|null         Returns url to the resource or null if resource was not found.
      */
-    public static function url($url, $domain = false, $timestamp_age = 604800)
+    public static function url($url, $domain = false, $timestamp_age = null)
     {
         if (!is_string($url) || $url === '') {
             // Return null on invalid input.
@@ -234,6 +236,9 @@ class Document
 
         // At this point URL is either relative or absolute path; let us find if it is relative.
         if ($path && '/' !== $path[0]) {
+            if ($timestamp_age === null) {
+                $timestamp_age = static::$timestamp_age;
+            }
             if ($timestamp_age > 0) {
                 // We want to add timestamp to the URI: do it only for existing files.
                 $realPath = realpath(GANTRY5_ROOT . '/' . $path);

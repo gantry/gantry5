@@ -32,6 +32,13 @@ body.gantry5 {
 
         input[type="checkbox"] {
             height: 16px;
+            &:checked:before {
+                height: 16px;
+            }
+            &:not(.settings-param-toggle) {
+                position: inherit;
+                top: 8px;
+            }
         }
 
         .main-block {
@@ -54,10 +61,9 @@ body.gantry5 {
         .search {
             background: none;
             color: inherit;
-            font-size: inherit;
         }
 
-        .g5-dialog {
+        .g5-dialog, .g5-popover.g5-popover-above-modal {
             z-index: 99999;
         }
 
@@ -86,13 +92,26 @@ body.gantry5 {
         margin-bottom: 1em;
     }
 
-    // Dialogs
-    .g5-dialog-loading-spinner.g5-dialog-theme-default {
-        top: 3em;
-    }
 
     #wpbody-content {
         padding-bottom: 0;
+    }
+
+    input[disabled],
+    select[disabled],
+    textarea[disabled],
+    input[readonly],
+    select[readonly],
+    textarea[readonly] {
+        cursor: not-allowed;
+        background-color: #eee;
+    }
+
+    input[type="radio"][disabled],
+    input[type="checkbox"][disabled],
+    input[type="radio"][readonly],
+    input[type="checkbox"][readonly] {
+        background-color: transparent;
     }
 
 }

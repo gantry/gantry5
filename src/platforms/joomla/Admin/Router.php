@@ -15,6 +15,7 @@ use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
+use Gantry\Joomla\StyleHelper;
 use Joomla\Registry\Registry;
 
 /**
@@ -28,6 +29,10 @@ class Router extends BaseRouter
 
         $app = \JFactory::getApplication();
         $input = $app->input;
+
+        // If style is set, resolve the template and load it.
+        $style = $input->getInt('style', 0);
+        $this->setStyle($style);
 
         /** @var Request $request */
         $request = $this->container['request'];
@@ -44,23 +49,19 @@ class Router extends BaseRouter
             'location' => $this->resource,
             'method' => $this->method,
             'format' => $this->format,
-            'params' => isset($_POST['params']) && is_string($_POST['params']) ? json_decode($_POST['params'], true) : []
+            'params' => $request->post->getJsonArray('params')
         ];
-
-        // If style is set, resolve the template and load it.
-        $style = $input->getInt('style', 0);
-
-        $this->setStyle($style);
 
         return $this;
     }
 
     public function setStyle($style)
     {
+        $style = $style ? $style : StyleHelper::getDefaultStyle()->id;
         if ($style) {
             \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
             $table = \JTable::getInstance('Style', 'TemplatesTable');
-            $table->load($style);
+            $table->load(['id' => $style, 'client_id' => 0]);
 
             $template = $table->template;
             $path = JPATH_SITE . '/templates/' . $template;

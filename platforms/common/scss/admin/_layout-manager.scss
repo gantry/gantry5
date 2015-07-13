@@ -465,17 +465,16 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             background-color: #ddd;
             border: 0;
             padding: 1px;
-            flex: 0 1 100%;
+            @include flex(0 1 100%);
 
             &.in-between {
                 display: block;
-                flex: 0 0 0px;
                 margin: 0 2px 0 -4px;
-                width: 0px;
+                width: 0;
                 padding: 1px;
                 text-indent: -10000px;
-                font-size: 0px;
-                flex: 0 1 0%;
+                font-size: 0;
+                @include flex(0 1 0);
                 background-color: #555;
             }
 
@@ -693,9 +692,36 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         padding: $compensate $content-padding;
         background-color: darken($main-bg, 2);
         border-right: 1px solid darken($main-bg, 5);
+        position: relative;
     }
 
-    .g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker {
+    .particles-sidebar-block {
+        @include flex(0 170px);
+        width: 170px;
+
+        @include breakpoint(mobile-only) {
+            @include flex(0 100%);
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: inherit;
+            border: 0;
+
+            .particles-container {
+                max-height: 300px;
+                overflow: auto;
+                margin-bottom: 1rem;
+            }
+        }
+    }
+
+    @include breakpoint(no-mobile) {
+        .particles-container.has-scrollbar {
+            padding-right: $content-padding / 2;
+        }
+    }
+
+    .g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker, .g5-mm-widgets-picker {
 
         ul, li {
             @extend %list-reset;
@@ -706,9 +732,20 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             margin-bottom: 1em;
         }
 
+        &:not(.menu-editor-particles) {
+            @extend .font-small;
+        }
+
+        &.menu-editor-particles {
+            li {
+                margin: 0.3rem 0.15rem;
+                cursor: pointer !important;
+            }
+        }
+
         li {
-            padding: $content-padding / 2;
-            margin: 1px 0;
+            padding: $content-padding / 3;
+            margin: ($content-padding / 3) 0;
             text-align: center;
             border-radius: $core-border-radius;
             cursor: move;
@@ -740,7 +777,8 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
 
             &[data-lm-blocktype="position"], &[data-mm-blocktype="position"],
-            &[data-lm-blocktype="module"], &[data-mm-blocktype="module"] {
+            &[data-lm-blocktype="module"], &[data-mm-blocktype="module"],
+            &[data-lm-blocktype="widget"], &[data-mm-blocktype="widget"] {
                 color: #fff;
                 background-color: $position;
             }
@@ -775,6 +813,26 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 top: 50%;
                 margin-top: -12px;
             }
+        }
+    }
+
+    @include breakpoint(no-mobile) {
+        // fixed sidebar in LM
+        .g5-lm-particles-picker.particles-fixed, .g5-lm-particles-picker.particles-absolute {
+            z-index: 5;
+
+            .search input {
+                width: inherit;
+                margin-right: -($content-padding + ($content-padding / 2) + $content-margin + rem(1px));
+            }
+        }
+
+        .g5-lm-particles-picker.particles-fixed {
+            position: fixed;
+        }
+
+        .g5-lm-particles-picker.particles-absolute {
+            position: absolute;
         }
     }
 }

@@ -165,15 +165,37 @@ class Configurations extends BaseConfigurations
                 throw new \RuntimeException($error);
             }
         } catch (\Exception $e) {
-            throw new \RuntimeException('Deleting configuration failed: ' . $e->getMessage(), 400, $e);
+            throw new \RuntimeException('Deleting outline failed: ' . $e->getMessage(), 400, $e);
         }
 
         // Remove configuration directory.
         $gantry = $this->container;
+
+        /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
-        $path = $locator("gantry-config://{$item->id}", true, true);
+        $path = $locator->findResource("gantry-config://{$item->id}", true, true);
         if ($path) {
-            Folder::delete($path);
+            if (file_exists($path)) {
+                Folder::delete($path);
+            }
         }
+    }
+
+    /**
+     * @param string $id
+     * @return boolean
+     */
+    public function canDelete($id)
+    {
+        $model = StyleHelper::loadModel();
+
+        $item = $model->getTable();
+        $item->load($id);
+
+        if (!$item->id) {
+            throw new \RuntimeException('Outline not found', 404);
+        }
+
+        return $item->home ? false : true;
     }
 }

@@ -18,6 +18,7 @@ use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Translator\TranslatorInterface;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
+use Gantry\Framework\Request;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -269,7 +270,11 @@ class TwigExtension extends \Twig_Extension
 
     public function getCookie($name)
     {
-        if (isset($_COOKIE[$name])) { return $_COOKIE[$name]; }
-        return '';
+        $gantry = Gantry::instance();
+
+        /** @var Request $request */
+        $request = $gantry['request'];
+
+        return $request->cookie[$name];
     }
 }

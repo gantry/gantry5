@@ -17,18 +17,21 @@
  * different template.
  *
  * To generate specific templates for your pages you can use:
- * /mytheme/views/page-mypage.twig
+ * /mytheme/views/page-mypage.html.twig
  * (which will still route through this PHP file)
  * OR
  * /mytheme/page-mypage.php
  * (in which case you'll want to duplicate this file and save to the above path)
  */
 
+$chooser = new \Gantry\Framework\OutlineChooser;
+
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry[ 'theme' ];
-$theme->setLayout( 'test' );
+$theme->setLayout( $chooser->select() );
 
 $context = Timber::get_context();
 $post = new TimberPost();
-$context['post'] = $post;
-Timber::render( array( 'page-' . $post->post_name . '.twig', 'page.twig' ), $context );
+$context[ 'post' ] = $post;
+
+Timber::render( array( 'page-' . $post->post_name . '.html.twig', 'page.html.twig' ), $context );

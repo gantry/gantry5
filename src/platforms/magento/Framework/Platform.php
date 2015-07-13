@@ -18,7 +18,7 @@ class Platform extends BasePlatform
      */
     public function getCachePath()
     {
-        return Folder::getRelativePath(\Mage::getBaseDir('cache')) . '/gantry5';
+        return \Mage::getBaseDir('cache') . '/gantry5';
     }
 
     /**

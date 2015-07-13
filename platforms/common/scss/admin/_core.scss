@@ -1,6 +1,11 @@
 html {
     width:100vw;
     overflow-x:hidden;
+    @include box-sizing(border-box);
+}
+
+*, *::before, *::after {
+    @include box-sizing(inherit);
 }
 
 body {
@@ -94,6 +99,10 @@ body.g-prime {
         @include breakpoint(mobile-only) {
             @include column-count(1);
         }
+
+        .card h4, .card input {
+            @include transform(translateZ(0));
+        }
     }
 
     .card {
@@ -150,10 +159,6 @@ body.g-prime {
             }
         }
 
-        .enabler {
-            @include enabler($green, $red);
-        }
-
         .inner-params > :first-child:not(.alert) {
             margin: $content-margin 0 0;
             padding-top: $content-margin * 2;
@@ -181,6 +186,11 @@ body.g-prime {
             }
         }
     }
+
+    .enabler {
+        @include enabler($green, $red);
+    }
+
     .themes {
         .card {
             max-width: 300px;

@@ -30,6 +30,8 @@ var originals,
 
         fields.forEach(function(field) {
             field = $(field);
+
+            if (field.type() == 'checkbox' && !field.value().length) { field.value('0'); }
             map.set(field.attribute('name'), field.value());
         }, this);
 
@@ -64,6 +66,10 @@ ready(function() {
 
         if (!parent) { return; }
 
+        if (element.type() == 'checkbox') {
+            element.value(Number(element.checked()).toString());
+        }
+
         if (!target || !originals || originals.get(element.attribute('name')) == null) { return; }
         if (originals.get(element.attribute('name')) !== element.value()) {
             if (isOverride && event.forceOverride && !isOverride.checked()) { isOverride[0].click(); }
@@ -95,7 +101,7 @@ ready(function() {
         if (!field || !reset) { return true; }
 
         var value = field.value();
-        if (!value) { reset.style('display', 'none'); }
+        if (!value || field.disabled()) { reset.style('display', 'none'); }
         else { reset.removeAttribute('style'); }
     };
 
@@ -143,7 +149,7 @@ ready(function() {
         if (!parent) { return; }
 
         field = parent.find('[name]');
-        if (field) {
+        if (field && !field.disabled()) {
             var selectize = field.selectizeInstance;
             if (selectize) { selectize.setValue(''); }
             else { field.value(''); }
