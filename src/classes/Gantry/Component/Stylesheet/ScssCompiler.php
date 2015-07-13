@@ -71,6 +71,9 @@ class ScssCompiler extends CssCompiler
      */
     public function compileFile($in)
     {
+        // Buy some extra time as compilation may take a lot of time in shared environments.
+        @set_time_limit(30);
+
         $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */
