@@ -2,7 +2,7 @@ html {
   height: inherit !important;
 }
 
-input, .input-append, .input-prepend {
+textarea, input, .input-append, .input-prepend, #sbox-window {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
@@ -12,7 +12,7 @@ body.com_gantry5 {
   color: #ddd;
   background-color: #404040 !important;
 }
-body.com_gantry5 input, body.com_gantry5 .input-append, body.com_gantry5 .input-prepend {
+body.com_gantry5 textarea, body.com_gantry5 input, body.com_gantry5 .input-append, body.com_gantry5 .input-prepend {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
