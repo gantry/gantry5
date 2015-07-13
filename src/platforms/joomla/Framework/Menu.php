@@ -45,7 +45,7 @@ class Menu extends AbstractMenu
     {
         parent::init($params);
 
-        if ($params['admin']) {
+        if (!empty($params['admin'])) {
             /** @var \JTableMenuType $table */
             $menuType = \JTable::getInstance('MenuType');
             $menuType->load(['menutype' => $params['menu']]);
