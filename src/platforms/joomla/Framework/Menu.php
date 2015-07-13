@@ -41,6 +41,21 @@ class Menu extends AbstractMenu
         $this->active  = $this->menu->getActive();
     }
 
+    public function init(&$params)
+    {
+        parent::init($params);
+
+        if ($params['admin']) {
+            /** @var \JTableMenuType $table */
+            $menuType = \JTable::getInstance('MenuType');
+            $menuType->load(['menutype' => $params['menu']]);
+
+            $config = $this->config();
+            $config->set('settings.title', $menuType->title);
+            $config->set('settings.description', $menuType->description);
+        }
+    }
+
     /**
      * Return list of menus.
      *

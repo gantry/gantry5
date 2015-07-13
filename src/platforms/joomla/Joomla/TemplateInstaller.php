@@ -224,7 +224,7 @@ class TemplateInstaller
      */
     public function getMenu($type)
     {
-         /** @var \JTableMenu $table */
+         /** @var \JTableMenuType $table */
         $table = \JTable::getInstance('MenuType');
         $table->load(['menutype' => $type]);
 
@@ -239,6 +239,7 @@ class TemplateInstaller
      */
     public function createMenu($type, $title, $description)
     {
+        /** @var \JTableMenuType $table */
         $table = \JTable::getInstance('MenuType');
         $data  = array(
             'menutype'    => $type,

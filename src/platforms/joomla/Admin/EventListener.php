@@ -103,8 +103,25 @@ class EventListener implements EventSubscriberInterface
             'columns' => []
         ];
 
-        $table = \JTable::getInstance('menu');
         $menu = $event->menu;
+
+        // Save global menu settings into Joomla.
+        /** @var \JTableMenuType $table */
+        $menuType = \JTable::getInstance('MenuType');
+        if (!$menuType->load(['menutype' => $event->resource])) {
+            throw new \RuntimeException("Saving menu failed: Menu type {$event->resource} not found.");
+        }
+        $options = [
+            'title' => $menu['settings.title'],
+            'description' => $menu['settings.description']
+        ];
+        if (!$menuType->save($options)) {
+            throw new \RuntimeException('Saving menu failed: '. $menuType->getError());
+        }
+
+        unset($menu['settings']);
+
+        $table = \JTable::getInstance('menu');
 
         foreach ($menu['items'] as $key => $item) {
             $id = !empty($item['id']) ? (int) $item['id'] : 0;
@@ -144,9 +161,6 @@ class EventListener implements EventSubscriberInterface
                     if (!$table->check() || !$table->store()) {
                         throw new \RuntimeException($table->getError());
                     }
-
-                    // Clean the cache.
-                    CacheHelper::cleanTemplates();
                 }
 
                 // Avoid saving values which are also stored in Joomla.
@@ -176,5 +190,8 @@ class EventListener implements EventSubscriberInterface
                 $event->menu["items.{$key}"] = $item;
             }
         }
+
+        // Clean the cache.
+        CacheHelper::cleanMenu();
     }
 }

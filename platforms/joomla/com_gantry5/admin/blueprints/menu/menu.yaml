@@ -9,7 +9,6 @@ form:
       type: input.text
       label: Title
 
-    settings.base:
+    settings.description:
       type: input.text
-      label: Base Path
-      default: /
+      label: Description

@@ -78,11 +78,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 
         $menus = $this->getMenus();
 
+        if (empty($params['menu'])) {
+            $params['menu'] = $this->getDefaultMenuName();
+        }
         if ($params['menu'] == '-active-') {
             $params['menu'] = $this->getActiveMenuName();
-        }
-        if (!$params['menu']) {
-            $params['menu'] = $this->getDefaultMenuName();
         }
         if (!in_array($params['menu'], $menus)) {
             throw new \RuntimeException('Menu not found', 404);
@@ -102,7 +102,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         $items = isset($config['items']) ? $config['items'] : [];
 
         // Create menu structure.
-        $instance->init();
+        $instance->init($params);
 
         // Get menu items from the system (if not specified otherwise).
         if ($config->get('settings.type') !== 'custom') {
@@ -226,7 +226,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         return $item->path == $this->getActive()->path;
     }
 
-    public function init()
+    public function init(&$params)
     {
         $this->items = ['' => new Item($this, '', ['layout' => 'horizontal'])];
     }

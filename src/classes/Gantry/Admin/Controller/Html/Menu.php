@@ -149,6 +149,7 @@ class Menu extends HtmlController
         $event->gantry = $this->container;
         $event->theme = $this->container['theme'];
         $event->controller = $this;
+        $event->resource = $id;
         $event->menu = $data;
         $this->container->fireEvent('admin.menus.save', $event);
 
@@ -404,7 +405,7 @@ class Menu extends HtmlController
         /** @var MenuObject $menus */
         $menus = $this->container['menu'];
 
-        return $menus->instance(['menu' => $id], $config);
+        return $menus->instance(['menu' => $id, 'admin' => true], $config);
     }
 
     /**
