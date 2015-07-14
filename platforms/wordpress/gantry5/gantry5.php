@@ -27,5 +27,9 @@ if (!defined('GANTRYADMIN_PATH')) {
     define('GANTRYADMIN_PATH', GANTRY5_PATH . '/admin');
 }
 
-// Initialize language.
-load_plugin_textdomain('gantry5', false, GANTRYADMIN_PATH . '/languages');
+// Initialize plugin language.
+$domain = 'gantry5';
+$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+
+load_textdomain($domain, WP_LANG_DIR . '/gantry5/' . $domain . '-' . $locale . '.mo');
+load_plugin_textdomain($domain, false, basename(GANTRY5_PATH) . '/admin/languages');
