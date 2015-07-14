@@ -68,9 +68,6 @@ body.com_modules #g5-container .g-content, body.com_menus #g5-container .g-conte
   margin: 0;
   padding: 0;
 }
-body.com_modules #g5-container .settings-param-field, body.com_menus #g5-container .settings-param-field {
-  margin-left: 0;
-}
 body.com_modules #g5-container .g-instancepicker-title, body.com_menus #g5-container .g-instancepicker-title {
   font-size: 1rem;
   font-style: italic;
