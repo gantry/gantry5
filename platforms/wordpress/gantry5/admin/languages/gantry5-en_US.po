@@ -1,0 +1,372 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Gantry 5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-14 09:39:35+0000\n"
+"PO-Revision-Date: 2015-07-14 09:39:35+0000\n"
+"Last-Translator: Gantry 5 Team\n"
+"Language-Team: Gantry 5 Team\n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+msgid "COM_GANTRY5"
+msgstr "Gantry 5 Themes"
+
+msgid "COM_GANTRY5_DESCRIPTION"
+msgstr "Gantry 5 component."
+
+msgid "COM_GANTRY5_COMPONENT"
+msgstr "Gantry 5 Component"
+
+msgid "COM_GANTRY5_CONFIGURATION"
+msgstr "Gantry 5 Configuration"
+
+msgid "COM_GANTRY5_PLUGIN_MISSING"
+msgstr "%s: Please enable 'System - Gantry 5 Framework' plugin!"
+
+msgid "COM_GANTRY5_PARTICLE_NOT_INITIALIZED"
+msgstr "%s: Cannot display content; not in Gantry 5 template!"
+
+msgid "GANTRY5_PARTICLE_MENU_INFO"
+msgstr "Menu particle is designed to be used in certain sections only and may need extra styling in order to look correct in another location."
+
+msgid "GANTRY5_FIELD_PARTICLE_LABEL"
+msgstr "Particle"
+
+msgid "GANTRY5_FIELD_PARTICLE_DESC"
+msgstr "Select and configure Gantry 5 particle."
+
+msgid "GANTRY5_PLATFORM_OOPS"
+msgstr "Oops"
+
+msgid "GANTRY5_PLATFORM_DELETE_OUTLINE"
+msgstr "Delete Outline"
+
+msgid "GANTRY5_PLATFORM_DELETE_OUTLINE_DESC"
+msgstr "Are you sure you want to delete this Outline?"
+
+msgid "GANTRY5_PLATFORM_CONFIRM"
+msgstr "Confirm"
+
+msgid "GANTRY5_PLATFORM_CANCEL"
+msgstr "Cancel"
+
+msgid "GANTRY5_PLATFORM_SELECT"
+msgstr "Select"
+
+msgid "GANTRY5_PLATFORM_SELECT_ELI"
+msgstr "Select..."
+
+msgid "GANTRY5_PLATFORM_CATEGORIES"
+msgstr "Categories"
+
+msgid "GANTRY5_PLATFORM_SUBSETS"
+msgstr "Subsets"
+
+msgid "GANTRY5_PLATFORM_LATIN"
+msgstr "Latin"
+
+msgid "GANTRY5_PLATFORM_CONTINUE"
+msgstr "Continue"
+
+msgid "GANTRY5_PLATFORM_TO_CONTINUE"
+msgstr "Do you want to continue?"
+
+msgid "GANTRY5_PLATFORM_UNSAVED"
+msgstr "Are you sure you want to leave this Page?"
+
+msgid "GANTRY5_PLATFORM_UNSAVED_DESC"
+msgstr "You haven't saved your changes and by leaving the page they will be lost. Do you want to leave without saving?"
+
+msgid "GANTRY5_PLATFORM_UNSAVED_SAVE"
+msgstr "Save Before Leaving"
+
+msgid "GANTRY5_PLATFORM_UNSAVED_DISCARD"
+msgstr "Discard Changes"
+
+msgid "GANTRY5_PLATFORM_UNSAVED_STAY"
+msgstr "Remain on This Page"
+
+msgid "GANTRY5_PLATFORM_NAME"
+msgstr "Name"
+
+msgid "GANTRY5_PLATFORM_SIZE"
+msgstr "Size"
+
+msgid "GANTRY5_PLATFORM_LATEST_MODIFIED"
+msgstr "Latest Modified"
+
+msgid "GANTRY5_PLATFORM_ACTION"
+msgstr "Action"
+
+msgid "GANTRY5_PLATFORM_PICK_MODULE"
+msgstr "Pick a Module"
+
+msgid "GANTRY5_PLATFORM_PICK_PARTICLE"
+msgstr "Pick a Particle"
+
+msgid "GANTRY5_PLATFORM_EDIT_PARTICLE"
+msgstr "Edit Particle"
+
+msgid "GANTRY5_PLATFORM_SAVE"
+msgstr "Save"
+
+msgid "GANTRY5_PLATFORM_LAYOUT_PRESETS"
+msgstr "Layout Presets"
+
+msgid "GANTRY5_PLATFORM_PRESETS"
+msgstr "Presets"
+
+msgid "GANTRY5_PLATFORM_OUTLINES"
+msgstr "Outlines"
+
+msgid "GANTRY5_PLATFORM_SWITCH_PRESET_DESC"
+msgstr "Keep the current Particles while changing Preset"
+
+msgid "GANTRY5_PLATFORM_SWITCH_OUTLINE_DESC"
+msgstr "Keep the current Particles while changing Outline"
+
+msgid "GANTRY5_PLATFORM_MENU_EMPTY"
+msgstr "The menu selected is empty!"
+
+msgid "GANTRY5_PLATFORM_MENU_EMPTY_DESC"
+msgstr "The menu that has been selected is empty. Before you can actually start using the Menu Editor, you need to have at least one menu item assigned to the menu"
+
+msgid "GANTRY5_PLATFORM_TYPE"
+msgstr "Type"
+
+msgid "GANTRY5_PLATFORM_POSITION"
+msgstr "Position"
+
+msgid "GANTRY5_PLATFORM_DEFAULTS"
+msgstr "Defaults"
+
+msgid "GANTRY5_PLATFORM_PARTICLE"
+msgstr "Particle"
+
+msgid "GANTRY5_PLATFORM_BLOCK"
+msgstr "Block"
+
+msgid "GANTRY5_PLATFORM_APPLY"
+msgstr "Apply"
+
+msgid "GANTRY5_PLATFORM_APPLY_SAVE"
+msgstr "Apply and Save"
+
+msgid "GANTRY5_PLATFORM_BY"
+msgstr "By"
+
+msgid "GANTRY5_PLATFORM_BACK_SETUP"
+msgstr "Back to Setup"
+
+msgid "GANTRY5_PLATFORM_SUPPORT"
+msgstr "Support"
+
+msgid "GANTRY5_PLATFORM_DOCUMENTATION"
+msgstr "Documentation"
+
+msgid "GANTRY5_PLATFORM_SAVE_ASSIGNMENTS"
+msgstr "Save Assignments"
+
+msgid "GANTRY5_PLATFORM_ASSIGNMENTS"
+msgstr "Assignments"
+
+msgid "GANTRY5_PLATFORM_HIDE_ASSIGNMENTS"
+msgstr "Hide Unassigned Items"
+
+msgid "GANTRY5_PLATFORM_FILTER"
+msgstr "Filter"
+
+msgid "GANTRY5_PLATFORM_FILTER_ELI"
+msgstr "Filter..."
+
+msgid "GANTRY5_PLATFORM_GLOBAL_FILTER_ELI"
+msgstr "Global Filter..."
+
+msgid "GANTRY5_PLATFORM_UNSELECT_ALL_MENU"
+msgstr "Unselect all menu items"
+
+msgid "GANTRY5_PLATFORM_SELECT_ALL_MENU"
+msgstr "Selects all menu items"
+
+msgid "GANTRY5_PLATFORM_ASSIGN_BASE_DESC"
+msgstr "You cannot assign Base Outline to your menu items."
+
+msgid "GANTRY5_PLATFORM_NO_ASSIGNMENTS_DESC"
+msgstr "No assignments available!"
+
+msgid "GANTRY5_PLATFORM_NEW_LAYOUT"
+msgstr "New Layout"
+
+msgid "GANTRY5_PLATFORM_IMPORT"
+msgstr "Import"
+
+msgid "GANTRY5_PLATFORM_EXPORT"
+msgstr "Export"
+
+msgid "GANTRY5_PLATFORM_NEW_PARTICLE"
+msgstr "New Particle"
+
+msgid "GANTRY5_PLATFORM_HISTORY"
+msgstr "History"
+
+msgid "GANTRY5_PLATFORM_DROP_DELETE"
+msgstr "Drop here to delete"
+
+msgid "GANTRY5_PLATFORM_PARTICLES"
+msgstr "Particles"
+
+msgid "GANTRY5_PLATFORM_PARTICLE_DISABLED"
+msgstr "This particle has been disabled from the Settings Panel and it cannot be added into the Layout"
+
+msgid "GANTRY5_PLATFORM_LOAD"
+msgstr "Load"
+
+msgid "GANTRY5_PLATFORM_CLEAR"
+msgstr "Clear"
+
+msgid "GANTRY5_PLATFORM_SAVE_LAYOUT"
+msgstr "Save Layout"
+
+msgid "GANTRY5_PLATFORM_LAYOUT"
+msgstr "Layout"
+
+msgid "GANTRY5_PLATFORM_UNKNOWN"
+msgstr "Unknown"
+
+msgid "GANTRY5_PLATFORM_UNDO"
+msgstr "Undo"
+
+msgid "GANTRY5_PLATFORM_REDO"
+msgstr "Redo"
+
+msgid "GANTRY5_PLATFORM_NO_LAYOUT"
+msgstr "No layout specified!"
+
+msgid "GANTRY5_PLATFORM_NO_LAYOUT_DESC"
+msgstr "<p>This outline has no layout specified and will use layout defined in <i>Base Outline</i>.</p><p>To use preset layout or copy layout from any existing outline:</p><ul><li>Click on <strong>Load</strong></li><li>Select a new layout from either <strong>Presets</strong> or <strong>Outlines</strong></li><li>Click on <strong>Save Layout</strong></li></ul>"
+
+msgid "GANTRY5_PLATFORM_BACK"
+msgstr "Back"
+
+msgid "GANTRY5_PLATFORM_SAVE_SETTINGS"
+msgstr "Save Settings"
+
+msgid "GANTRY5_PLATFORM_SETTINGS"
+msgstr "Settings"
+
+msgid "GANTRY5_PLATFORM_COLLAPSE_ALL"
+msgstr "Collapse All"
+
+msgid "GANTRY5_PLATFORM_EXPAND_ALL"
+msgstr "Expand All"
+
+msgid "GANTRY5_PLATFORM_RESET"
+msgstr "Reset"
+
+msgid "GANTRY5_PLATFORM_EDIT"
+msgstr "Edit"
+
+msgid "GANTRY5_PLATFORM_COLLAPSE"
+msgstr "Collapse"
+
+msgid "GANTRY5_PLATFORM_EXPAND"
+msgstr "Expand"
+
+msgid "GANTRY5_PLATFORM_RECOMPILE_CSS"
+msgstr "Recompile CSS"
+
+msgid "GANTRY5_PLATFORM_STYLES"
+msgstr "Styles"
+
+msgid "GANTRY5_PLATFORM_SAVE_STYLES"
+msgstr "Save Styles"
+
+msgid "GANTRY5_PLATFORM_DUPLICATE"
+msgstr "Duplicate"
+
+msgid "GANTRY5_PLATFORM_DELETE"
+msgstr "Delete"
+
+msgid "GANTRY5_PLATFORM_SAVE_MENU"
+msgstr "Save Menu"
+
+msgid "GANTRY5_PLATFORM_MENU_EDITOR"
+msgstr "Menu Editor"
+
+msgid "GANTRY5_PLATFORM_MODULE"
+msgstr "Module"
+
+msgid "GANTRY5_PLATFORM_AVAILABLE_THEMES"
+msgstr "Available Themes"
+
+msgid "GANTRY5_PLATFORM_PLATFORM_SETTINGS"
+msgstr "Platform Settings"
+
+msgid "GANTRY5_PLATFORM_FOOTER"
+msgstr "<a href=http://gantry.org>Gantry Administration</a> by <a href=http://www.rockettheme.com>RocketTheme</a>"
+
+msgid "GANTRY5_PLATFORM_BASE_OUTLINE"
+msgstr "Base Outline"
+
+msgid "GANTRY5_PLATFORM_GLOBAL_DEFAULTS"
+msgstr "Global Defaults"
+
+msgid "GANTRY5_PLATFORM_GANTRY_DETAILS"
+msgstr "<p>Gantry 5 is the most customizable and powerful version of the framework yet. Packed full of features such as drag-and-drop layout creation and the powerful particle system, Gantry 5 has been designed from the ground up to be lightning fast and hassle free.</p><ul class=overview-list><li><i class=fa fa-asterisk></i>Fast, flexible, easy to use framework</li><li><i class=fa fa-asterisk></i>Drag-n-drop layout controls</li><li><i class=fa fa-asterisk></i>Powerful dynamic particles system</li></ul>"
+
+msgid "GANTRY5_PLATFORM_THEME"
+msgstr "Theme"
+
+msgid "GANTRY5_PLATFORM_DEV"
+msgstr "Dev"
+
+msgid "GANTRY5_PLATFORM_PROD"
+msgstr "Prod"
+
+msgid "GANTRY5_PLATFORM_MENU"
+msgstr "Menu"
+
+msgid "GANTRY5_PLATFORM_ABOUT"
+msgstr "About"
+
+msgid "GANTRY5_PLATFORM_EXTRAS"
+msgstr "Extras"
+
+msgid "GANTRY5_PLATFORM_DEVELOPMENT"
+msgstr "Development"
+
+msgid "GANTRY5_PLATFORM_PRODUCTION"
+msgstr "Production"
+
+msgid "GANTRY5_PLATFORM_CLEAR_CACHE"
+msgstr "Clear Cache"
+
+msgid "GANTRY5_PLATFORM_UPDATES_AVAILABLE"
+msgstr "Updates Available"
+
+msgid "GANTRY5_PLATFORM_UPDATE"
+msgstr "Update"
+
+msgid "GANTRY5_PLATFORM_SYSTEM_OUTLINES"
+msgstr "System Outlines"
+
+msgid "GANTRY5_PLATFORM_THEME_OUTLINES"
+msgstr "Theme Outlines"
+
+msgid "GANTRY5_PLATFORM_SEARCH_ELI"
+msgstr "Search..."
+
+msgid "GANTRY5_PLATFORM_SEARCH"
+msgstr "Search"
+
+msgid "GANTRY5_PLATFORM_SEARCH_FONT_ELI"
+msgstr "Search Font..."
+
+msgid "GANTRY5_PLATFORM_SEARCH_FONT"
+msgstr "Search Font"
