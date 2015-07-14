@@ -26,3 +26,6 @@ if (!defined('GANTRYADMIN_PATH')) {
     // Works also with symlinks.
     define('GANTRYADMIN_PATH', GANTRY5_PATH . '/admin');
 }
+
+// Initialize language.
+load_plugin_textdomain('gantry5', false, GANTRYADMIN_PATH . '/languages');
