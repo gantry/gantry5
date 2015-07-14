@@ -78,6 +78,8 @@ class Router extends BaseRouter
             'picker/layouts' => "&view=layouts&_wpnonce={$nonce}",
         ];
 
+        $this->container['ajax_nonce'] = $nonce;
+
         return $this;
     }
 

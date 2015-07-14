@@ -70,7 +70,7 @@ ready(function() {
         request(method, parseAjaxURI(href + getAjaxSuffix()), {}, function(error, response) {
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || response.body,
+                    content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
                     afterOpen: function(container) {
                         if (!response.body.html) { container.style({ width: '90%' }); }
                     }
@@ -121,7 +121,7 @@ ready(function() {
             request(method, parseAjaxURI(href + getAjaxSuffix()), { title: trim(title) }, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
-                        content: response.body.html || response.body,
+                        content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
                         afterOpen: function(container) {
                             if (!response.body.html) { container.style({ width: '90%' }); }
                         }

@@ -38,7 +38,7 @@ ready(function() {
                 request('post', parseAjaxURI(href + getAjaxSuffix()), { title: title }, function(error, response) {
                     if (!response.body.success) {
                         modal.open({
-                            content: response.body.html || response.body,
+                            content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
                             afterOpen: function(container) {
                                 if (!response.body.html) { container.style({ width: '90%' }); }
                             }
