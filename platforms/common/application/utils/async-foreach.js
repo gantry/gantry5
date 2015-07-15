@@ -2,6 +2,7 @@
 
 // credits: https://github.com/cowboy/javascript-sync-async-foreach
 var asyncForEach = function(arr, eachFn, doneFn) {
+    arr = arr || [];
     var i = -1;
     // Resolve array length to a valid (ToUint32) number.
     var len = arr.length >>> 0;
