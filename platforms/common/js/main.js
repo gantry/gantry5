@@ -155,10 +155,15 @@ var Map         = map,
 
             if (!value && !onlyEnabled.checked()) {
                 card.style('display', 'inline-block');
-                return items.search('!> label').style('display', 'block');
+                return items ? items.search('!> label').style('display', 'block') : items;
             }
 
             var count = 0, off = 0, on = 0, text, match;
+
+            if (!items) {
+                element.parent('.card').style('display', onlyEnabled.checked() || value ? 'none' : 'inline-block');
+            }
+
             asyncForEach(items, function(item, i) {
                 item = $(item);
                 text = trim(item.text());
@@ -12403,6 +12408,7 @@ module.exports = {};
 
 // credits: https://github.com/cowboy/javascript-sync-async-foreach
 var asyncForEach = function(arr, eachFn, doneFn) {
+    arr = arr || [];
     var i = -1;
     // Resolve array length to a valid (ToUint32) number.
     var len = arr.length >>> 0;

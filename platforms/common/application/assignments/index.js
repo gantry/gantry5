@@ -62,10 +62,15 @@ var Map         = map,
 
             if (!value && !onlyEnabled.checked()) {
                 card.style('display', 'inline-block');
-                return items.search('!> label').style('display', 'block');
+                return items ? items.search('!> label').style('display', 'block') : items;
             }
 
             var count = 0, off = 0, on = 0, text, match;
+
+            if (!items) {
+                element.parent('.card').style('display', onlyEnabled.checked() || value ? 'none' : 'inline-block');
+            }
+
             asyncForEach(items, function(item, i) {
                 item = $(item);
                 text = trim(item.text());
