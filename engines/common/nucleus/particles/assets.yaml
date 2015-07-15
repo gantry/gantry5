@@ -54,8 +54,20 @@ form:
         .location:
           type: input.text
           label: File Location
+        
+        .inline:
+          type: textarea.textarea
+          label: Inline script
+          description: Add inline script
+    
+        .position:
+          type: input.checkbox
+          label: Place script in body
+          description: Chose where to load the script
+          default: false
 
         .extra:
           type: collection.keyvalue
           label: Tag attributes
           exclude: ['src', 'type']
+        
