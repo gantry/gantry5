@@ -424,6 +424,9 @@ ready(function() {
 
                 if ((!form && !fakeDOM) || !submit) { return true; }
 
+                var urlTemplate = content.elements.content.find('.g-urltemplate');
+                if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
+
                 // Particle Settings apply
                 submit.on('click', function(e) {
                     e.preventDefault();

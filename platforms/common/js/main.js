@@ -2359,6 +2359,9 @@ ready(function() {
 
                 if ((!form && !fakeDOM) || !submit) { return true; }
 
+                var urlTemplate = content.elements.content.find('.g-urltemplate');
+                if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
+
                 // Particle Settings apply
                 submit.on('click', function(e) {
                     e.preventDefault();
@@ -4214,7 +4217,10 @@ ready(function() {
 
                 var search = content.elements.content.find('.search input'),
                     blocks = content.elements.content.search('[data-mm-type]'),
-                    filters = content.elements.content.search('[data-mm-filter]');
+                    filters = content.elements.content.search('[data-mm-filter]'),
+                    urlTemplate = content.elements.content.find('.g-urltemplate');
+
+                if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
 
                 if (search && filters && blocks) {
                     search.on('input', function() {
