@@ -13,7 +13,7 @@
             <option value="{{ menu_name|e }}"
                     {% if id == menu_name %}selected="selected"{% endif %}
                     data-data="{{ {url: gantry.route('menu', menu_name)}|json_encode|e('html_attr') }}">
-                {{ menu_name|capitalize|e }}{{ default_menu == menu_name ? ' *' : '' }}
+                {{ menu_name|capitalize|e }}{{ default_menu == menu_name ? ' ★' : '' }}
             </option>
             {% endfor %}
         </select>

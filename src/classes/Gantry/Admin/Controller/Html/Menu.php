@@ -88,7 +88,7 @@ class Menu extends HtmlController
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $resource->name();
         $this->params['menus'] = $resource->getMenus();
-        $this->params['default_menu'] = $resource->getDefaultMenuName();
+        $this->params['default_menu'] = $resource->hasDefaultMenuMechanism() ? $resource->getDefaultMenuName() : false;
         $this->params['menu'] = $resource;
         $this->params['path'] = implode('/', $path);
 
