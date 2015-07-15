@@ -65,6 +65,14 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     abstract public function getDefaultMenuName();
 
+
+    /**
+     * Returns true if the platform implements a Default menu mechanism
+     *
+     * @return boolean
+     */
+    abstract public function hasDefaultMenuMechanism();
+
     /**
      * Return default menu.
      *

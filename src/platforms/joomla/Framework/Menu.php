@@ -85,6 +85,16 @@ class Menu extends AbstractMenu
     }
 
     /**
+     * Returns true if the platform implements a Default menu mechanism
+     *
+     * @return boolean
+     */
+    public function hasDefaultMenuMechanism()
+    {
+        return true;
+    }
+
+    /**
      * Return active menu.
      *
      * @return string
