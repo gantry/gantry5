@@ -296,7 +296,7 @@ ready(function() {
                 request('post', parseAjaxURI(href + getAjaxSuffix()), { title: title }, function(error, response) {
                     if (!response.body.success) {
                         modal.open({
-                            content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                            content: response.body.html || response.body,
                             afterOpen: function(container) {
                                 if (!response.body.html) { container.style({ width: '90%' }); }
                             }
@@ -404,7 +404,7 @@ ready(function() {
         request(method, parseAjaxURI(href + getAjaxSuffix()), {}, function(error, response) {
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                    content: response.body.html || response.body,
                     afterOpen: function(container) {
                         if (!response.body.html) { container.style({ width: '90%' }); }
                     }
@@ -455,7 +455,7 @@ ready(function() {
             request(method, parseAjaxURI(href + getAjaxSuffix()), { title: trim(title) }, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
-                        content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                        content: response.body.html || response.body,
                         afterOpen: function(container) {
                             if (!response.body.html) { container.style({ width: '90%' }); }
                         }
@@ -2238,7 +2238,7 @@ ready(function() {
 
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                    content: response.body.html || response.body,
                     afterOpen: function(container) {
                         if (!response.body.html) { container.style({ width: '90%' }); }
                     }
@@ -2351,7 +2351,7 @@ ready(function() {
             remote: parseAjaxURI(settingsURL + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 if (!response.body.success) { return; }
-                
+
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
                     submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
@@ -2401,7 +2401,7 @@ ready(function() {
                     request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
-                                content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                                content: response.body.html || response.body,
                                 afterOpen: function(container) {
                                     if (!response.body.html) { container.style({ width: '90%' }); }
                                 }
@@ -3305,7 +3305,7 @@ ready(function() {
         request('post', saveURL, data, function(error, response) {
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                    content: response.body.html || response.body,
                     afterOpen: function(container) {
                         if (!response.body.html) { container.style({ width: '90%' }); }
                     }
@@ -3404,7 +3404,7 @@ ready(function() {
         request(method, parseAjaxURI(href + getAjaxSuffix()), function(error, response) {
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                    content: response.body.html || response.body,
                     afterOpen: function(container) {
                         if (!response.body.html) { container.style({ width: '90%' }); }
                     }
@@ -3829,7 +3829,7 @@ var StepTwo = function(data, content, button) {
     request('post', parseAjaxURI(uri + getAjaxSuffix()), data, function(error, response) {
         if (!response.body.success) {
             modal.open({
-                content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                content: response.body.html || response.body,
                 afterOpen: function(container) {
                     if (!response.body.html) { container.style({ width: '90%' }); }
                 }
@@ -3887,7 +3887,7 @@ var StepTwo = function(data, content, button) {
             request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
-                        content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                        content: response.body.html || response.body,
                         afterOpen: function(container) {
                             if (!response.body.html) { container.style({ width: '90%' }); }
                         }
@@ -4279,7 +4279,7 @@ ready(function() {
                     request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&'), function(error, response) {
                         if (!response.body.success) {
                             modal.open({
-                                content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                                content: response.body.html || response.body,
                                 afterOpen: function(container) {
                                     if (!response.body.html) { container.style({ width: '90%' }); }
                                 }
@@ -5042,7 +5042,7 @@ ready(function() {
                     request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
-                                content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                                content: response.body.html || response.body,
                                 afterOpen: function(container) {
                                     if (!response.body.html) { container.style({ width: '90%' }); }
                                 }
@@ -6088,7 +6088,7 @@ var FilePicker = new prime({
 
                 if (!response.body.success) {
                     modal.open({
-                        content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                        content: response.body.html || response.body,
                         afterOpen: function(container) {
                             if (!response.body.html) { container.style({ width: '90%' }); }
                         }
@@ -6127,7 +6127,7 @@ var FilePicker = new prime({
             request('delete', deleteURI, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
-                        content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                        content: response.body.html || response.body,
                         afterOpen: function(container) {
                             if (!response.body.html) { container.style({ width: '90%' }); }
                         }
@@ -7335,7 +7335,7 @@ ready(function() {
                         request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                             if (!response.body.success) {
                                 modal.open({
-                                    content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                                    content: response.body.html || response.body,
                                     afterOpen: function(container) {
                                         if (!response.body.html) { container.style({ width: '90%' }); }
                                     }
@@ -11974,7 +11974,7 @@ ready(function() {
         request('post', URI, { mode: value }, function(error, response) {
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                    content: response.body.html || response.body,
                     afterOpen: function(container) {
                         if (!response.body.html) { container.style({ width: '90%' }); }
                     }
@@ -12087,7 +12087,7 @@ History.Adapter.bind(window, 'statechange', function() {
             if (!ERROR) {
                 ERROR = true;
                 modal.open({
-                    content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                    content: response.body.html || response.body,
                     afterOpen: function(container) {
                         if (!response.body.html) { container.style({ width: '90%' }); }
                     }

@@ -303,7 +303,7 @@ ready(function() {
 
             if (!response.body.success) {
                 modal.open({
-                    content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                    content: response.body.html || response.body,
                     afterOpen: function(container) {
                         if (!response.body.html) { container.style({ width: '90%' }); }
                     }
@@ -416,7 +416,7 @@ ready(function() {
             remote: parseAjaxURI(settingsURL + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 if (!response.body.success) { return; }
-                
+
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
                     submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
@@ -466,7 +466,7 @@ ready(function() {
                     request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
-                                content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                                content: response.body.html || response.body,
                                 afterOpen: function(container) {
                                     if (!response.body.html) { container.style({ width: '90%' }); }
                                 }

@@ -268,7 +268,7 @@ ready(function() {
                     request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&'), function(error, response) {
                         if (!response.body.success) {
                             modal.open({
-                                content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                                content: response.body.html || response.body,
                                 afterOpen: function(container) {
                                     if (!response.body.html) { container.style({ width: '90%' }); }
                                 }

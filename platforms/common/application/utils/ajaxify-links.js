@@ -91,7 +91,7 @@ History.Adapter.bind(window, 'statechange', function() {
             if (!ERROR) {
                 ERROR = true;
                 modal.open({
-                    content: response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body,
+                    content: response.body.html || response.body,
                     afterOpen: function(container) {
                         if (!response.body.html) { container.style({ width: '90%' }); }
                     }
