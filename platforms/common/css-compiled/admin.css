@@ -2612,7 +2612,7 @@ body.g-prime {
   margin-left: 5px;
   vertical-align: middle;
   display: table-cell;
-  padding: 0.4rem;
+  padding: 0.3rem 0.4rem;
 }
 #g5-container .collection-list .settings-param-field [data-title-edit], #g5-container .collection-list .settings-param-field [data-collection-remove] {
   cursor: pointer;
