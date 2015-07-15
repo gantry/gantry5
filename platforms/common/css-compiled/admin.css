@@ -2582,10 +2582,12 @@ body.g-prime {
 }
 #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul {
   margin: 5px 0;
+  display: table;
 }
 #g5-container .collection-list .settings-param-field ul li, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li {
-  padding: 0.1rem 0;
   position: relative;
+  display: table-row;
+  line-height: 1.3;
 }
 #g5-container .collection-list .settings-param-field ul li:only-child .fa-reorder, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li:only-child .fa-reorder {
   display: none;
@@ -2596,6 +2598,7 @@ body.g-prime {
 #g5-container .collection-list .settings-param-field .item-reorder, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field .item-reorder {
   cursor: row-resize;
   color: #999999;
+  display: table-cell;
 }
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-title-edit], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-remove] {
   color: #666;
@@ -2608,13 +2611,15 @@ body.g-prime {
   color: #666;
   margin-left: 5px;
   vertical-align: middle;
+  display: table-cell;
+  padding: 0.4rem;
 }
 #g5-container .collection-list .settings-param-field [data-title-edit], #g5-container .collection-list .settings-param-field [data-collection-remove] {
   cursor: pointer;
   color: #cccccc;
-  float: right;
-  margin-top: 0.4rem;
   opacity: 0;
+  display: table-cell;
+  padding-left: 0.4rem;
 }
 
 #g5-container #styles h2[data-g-collapse] .g-tooltip:before {

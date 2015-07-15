@@ -242,7 +242,7 @@
         border-left: 1px solid $medium-gray;
         line-height: 30px;
         padding-left: 1rem;
-        
+
         input {
             display: inline-block;
         }
@@ -291,10 +291,13 @@
     ul {
         @extend %list-reset;
         margin: 5px 0;
+        display: table;
 
         li {
-            padding: 0.1rem 0;
+            //padding: 0.1rem 0;
             position: relative;
+            display: table-row;
+            line-height: $core-line-height - 0.2;
 
             &:only-child {
                 .fa-reorder {
@@ -311,6 +314,7 @@
     .item-reorder {
         cursor: row-resize;
         color: lighten($dark-gray, 20%);
+        display: table-cell;
     }
 }
 
@@ -330,14 +334,18 @@
         color: $core-text;
         margin-left: 5px;
         vertical-align: middle;
+        display: table-cell;
+        padding: 0.4rem;
     }
 
     [data-title-edit], [data-collection-remove] {
         cursor: pointer;
         color: lighten($dark-gray, 40%);
-        float: right;
-        margin-top: 0.4rem;
+        //float: right;
+        //margin-top: 0.4rem;
         opacity: 0;
+        display: table-cell;
+        padding-left: 0.4rem;
         //@include transition(all 0.2s ease-in-out);
     }
 }
