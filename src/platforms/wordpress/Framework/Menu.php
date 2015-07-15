@@ -16,7 +16,7 @@ class Menu extends AbstractMenu
         $this->menus = $this->getMenus();
 
         $this->default = reset($this->menus);
-//        $this->active  = $this->getActive();
+        $this->active  = $this->default;
     }
 
     /**
@@ -39,9 +39,6 @@ class Menu extends AbstractMenu
             foreach($get_menus as $menu) {
                 $list[] = $menu->slug;
             }
-
-            // Always have a menu
-            if(empty($list)) $list[] = 'main-menu';
         }
 
         return $list;
@@ -64,7 +61,7 @@ class Menu extends AbstractMenu
      */
     public function getActiveMenuName()
     {
-        return $this->default;
+        return $this->active;
     }
 
     /**
@@ -77,14 +74,13 @@ class Menu extends AbstractMenu
     {
         $menu = new \TimberMenu($params['menu']);
 
-        if($menu) {
-            return $menu->items;
+        if ($menu) {
+            return $menu->get_items();
         }
 
         return null;
     }
 
-    // FIXME is this needed or even working ?
     public function isActive($item) {
 //        if($item->current)
 //            return true;
@@ -117,6 +113,28 @@ class Menu extends AbstractMenu
         return $base;
     }
 
+    protected function buildList($menuItems, $tree = [])
+    {
+        $list = [];
+
+        if (!$menuItems) {
+            return $list;
+        }
+
+        foreach ($menuItems as $menuItem) {
+            $menuItem->level = count($tree) + 1;
+            $menuItem->tree = array_merge($tree, [$menuItem->id]);
+            $menuItem->path = implode('/', $menuItem->tree);
+            $list[] = $menuItem;
+
+            if ($menuItem->children) {
+                $list = array_merge($list, $this->buildList($menuItem->children, $menuItem->tree));
+            }
+        }
+
+        return $list;
+    }
+
     /**
      * Get a list of the menu items.
      *
@@ -131,16 +149,15 @@ class Menu extends AbstractMenu
         $start   = $params['startLevel'];
         $end     = $params['endLevel'];
 
-        $menuItems = $this->getItemsFromPlatform($params);
+        $menuItems = $this->buildList($this->getItemsFromPlatform($params));
         if($menuItems === null) return;
 
-        // FIXME
-//        $itemMap = [];
-//        foreach ($items as $path => &$itemRef) {
-//            if (isset($itemRef['id']) && is_numeric($itemRef['id'])) {
-//                $itemMap[$itemRef['id']] = &$itemRef;
-//            }
-//        }
+        $itemMap = [];
+        foreach ($items as $path => &$itemRef) {
+            if (isset($itemRef['id']) && is_numeric($itemRef['id'])) {
+                $itemMap[$itemRef['id']] = &$itemRef;
+            }
+        }
 
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
@@ -148,11 +165,14 @@ class Menu extends AbstractMenu
         foreach ($menuItems as $menuItem) {
             $parent = $menuItem->menu_item_parent;
 
-//            if (($start && $start > $menuItem->level+1)
-//                || ($end && $menuItem->level+1 > $end)
-//                || ($start > 1 && !in_array($tree[$start - 2], $path))) {
-//                continue;
-//            }
+            // TODO: Path is menu path to the current page..
+            $tree = [];
+
+            if (($start && $start > $menuItem->level+1)
+                || ($end && $menuItem->level+1 > $end)
+                || ($start > 1 && !in_array($menuItem->tree[$start - 2], $tree))) {
+                continue;
+            }
 
             // These params always come from WordPress.
             $itemParams = [
@@ -178,7 +198,7 @@ class Menu extends AbstractMenu
                 'target' => $menuItem->target ?: '_self'
             ];
 
-            $item = new Item($this, $menuItem->id, $itemParams);
+            $item = new Item($this, $menuItem->path, $itemParams);
             $this->add($item);
 
             // Placeholder page.
