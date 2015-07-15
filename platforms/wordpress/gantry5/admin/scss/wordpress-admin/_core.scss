@@ -1,4 +1,8 @@
 body.gantry5 {
+    margin: 0;
+    padding: 0;
+    max-width: inherit;
+    
     &.auto-fold {
         #wpcontent {
             padding-left: 0;

@@ -1844,6 +1844,11 @@ body.g-prime {
 .Whoops.container {
   position: inherit;
 }
+.Whoops.container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 
 @-webkit-keyframes pulsate {
   0% {
