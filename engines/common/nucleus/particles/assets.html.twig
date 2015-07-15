@@ -18,6 +18,7 @@
 {% block javascript %}
     {% for script in particle.javascript %}
     {% if script.position == false %}
+        {% if script.location %}
         {% set attr_extra = '' %}
         {% if script.extra %}
             {% for attributes in script.extra %}
@@ -28,8 +29,9 @@
         {% endif %}
         
         <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
+        {% endif %}
         
-        {% if script.inline %}
+        {% elseif script.inline %}
             <script type="text/javascript">{{ script.inline }}</script>
         {% endif %}
         
@@ -41,6 +43,7 @@
     {% for script in particle.javascript %}
     
     {% if script.position == true %}
+        {% if script.location %}
         {% set attr_extra = '' %}
         {% if script.extra %}
             {% for attributes in script.extra %}
@@ -51,8 +54,9 @@
         {% endif %}
         
         <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
+        {% endif %}
         
-        {% if script.inline %}
+        {% elseif script.inline %}
             <script type="text/javascript">{{ script.inline }}</script>
         {% endif %}
         
