@@ -195,12 +195,10 @@ body.g-prime {
         .card {
             max-width: 300px;
         }
-        .theme-version {
+        .theme-info {
             display: block;
             text-align: center;
-            font-size: $core-font-size - 0.2;
-            margin-top: -10px;
-            margin-bottom: 10px;
+            font-size: $core-font-size - 0.15;
         }
     }
 

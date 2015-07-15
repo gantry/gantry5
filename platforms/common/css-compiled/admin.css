@@ -1810,12 +1810,10 @@ body.g-prime {
 #g5-container .themes .card {
   max-width: 300px;
 }
-#g5-container .themes .theme-version {
+#g5-container .themes .theme-info {
   display: block;
   text-align: center;
-  font-size: 0.8rem;
-  margin-top: -10px;
-  margin-bottom: 10px;
+  font-size: 0.85rem;
 }
 #g5-container .g-footer-actions {
   padding: 1rem 0;

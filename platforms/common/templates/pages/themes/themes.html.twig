@@ -28,9 +28,8 @@
                                             <div class="theme card">
                                                 <div class="theme-id">
                                                     {% if theme.details.icon %}<i class="fa fa-fw fa-{{ theme.details.icon|e }}"></i>{% endif %}
-                                                    {{ theme.title|e }} <small>({{ theme.name|e }})</small>
+                                                    {{ theme.title|e }} <span class="theme-info">(v{{ gantry.theme.version }} / {{ theme.name|e }})</span>
                                                 </div>
-                                                <span class="theme-version">v{{ gantry.theme.version }}</span>
                                                 <div class="theme-screenshot">
                                                     <a href="{{ theme.admin_url|e }}">
                                                         <img src="{{ url(theme.thumbnail)|default('http://www.placehold.it/206x150/f4f4f4')|e }}" />
