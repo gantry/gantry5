@@ -18,7 +18,6 @@
 {% block javascript %}
     {% for script in particle.javascript %}
     {% if script.position == false %}
-        {% if script.location %}
         {% set attr_extra = '' %}
         {% if script.extra %}
             {% for attributes in script.extra %}
@@ -27,23 +26,19 @@
                 {% endfor %}
             {% endfor %}
         {% endif %}
-        
+
         <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
-        {% endif %}
         
-        {% elseif script.inline %}
-            <script type="text/javascript">{{ script.inline }}</script>
+        {% if script.inline %}
+        <script type="text/javascript"> {{ script.inline }} </script>
         {% endif %}
-        
     {% endif %}
     {% endfor %}
 {% endblock %}
 
 {% block javascript_footer %}
     {% for script in particle.javascript %}
-    
     {% if script.position == true %}
-        {% if script.location %}
         {% set attr_extra = '' %}
         {% if script.extra %}
             {% for attributes in script.extra %}
@@ -52,14 +47,12 @@
                 {% endfor %}
             {% endfor %}
         {% endif %}
-        
+
         <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
-        {% endif %}
         
-        {% elseif script.inline %}
-            <script type="text/javascript">{{ script.inline }}</script>
+        {% if script.inline %}
+        <script type="text/javascript"> {{ script.inline }} </script>
         {% endif %}
-        
     {% endif %}
     {% endfor %}
 {% endblock %}
