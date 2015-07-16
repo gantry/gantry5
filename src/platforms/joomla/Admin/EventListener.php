@@ -109,14 +109,14 @@ class EventListener implements EventSubscriberInterface
         /** @var \JTableMenuType $table */
         $menuType = \JTable::getInstance('MenuType');
         if (!$menuType->load(['menutype' => $event->resource])) {
-            throw new \RuntimeException("Saving menu failed: Menu type {$event->resource} not found.");
+            throw new \RuntimeException("Saving menu failed: Menu type {$event->resource} not found.", 400);
         }
         $options = [
             'title' => $menu['settings.title'],
             'description' => $menu['settings.description']
         ];
         if (!$menuType->save($options)) {
-            throw new \RuntimeException('Saving menu failed: '. $menuType->getError());
+            throw new \RuntimeException('Saving menu failed: '. $menuType->getError(), 400);
         }
 
         unset($menu['settings']);
@@ -160,7 +160,7 @@ class EventListener implements EventSubscriberInterface
                 if ($modified) {
                     $table->params = (string) $params;
                     if (!$table->check() || !$table->store()) {
-                        throw new \RuntimeException($table->getError());
+                        throw new \RuntimeException("Failed to save /{$key}: {$table->getError()}", 400);
                     }
                 }
 
