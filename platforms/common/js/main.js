@@ -4222,6 +4222,16 @@ ready(function() {
 
                 if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
 
+                content.elements.content.find('[data-title-editable]').on('title-edit-end', function(title, original, canceled) {
+                    title = trim(title);
+                    if (!title) {
+                        title = trim(original) || 'Title';
+                        this.text(title).data('title-editable', title);
+
+                        return;
+                    }
+                });
+
                 if (search && filters && blocks) {
                     search.on('input', function() {
                         if (!this.value()) {
