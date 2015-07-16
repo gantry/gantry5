@@ -82,6 +82,11 @@ form:
           type: input.icon
           label: Icon
 
+        .icon_only:
+          type: input.checkbox
+          label: Icon Only
+          description: Display only icon or image. Hides title and subtitle.
+
         .subtitle:
           type: input.text
           label: Subtitle

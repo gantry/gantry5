@@ -83,6 +83,12 @@ form:
           type: input.imagepicker
           label: Image
 
+        .icon_only:
+          type: input.checkbox
+          label: Icon Only
+          description: Display only icon or image.
+
         .subtitle:
           type: input.text
           label: Subtitle
+
