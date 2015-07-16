@@ -120,3 +120,9 @@ th .tooltip-inner {
         margin: 0 $leading-margin $leading-margin 0;
     }
 }
+
+// Third Party Resets
+// RokSprocket
+.sprocket-strips.loading .sprocket-strips-overlay {
+    @include box-sizing(content-box);
+}
