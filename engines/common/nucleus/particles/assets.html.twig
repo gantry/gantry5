@@ -17,7 +17,7 @@
 
 {% block javascript %}
     {% for script in particle.javascript %}
-    {% if script.position == false %}
+    {% if script.in_footer == false %}
         {% set attr_extra = '' %}
         {% if script.extra %}
             {% for attributes in script.extra %}
@@ -28,9 +28,9 @@
         {% endif %}
 
         <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
-        
+
         {% if script.inline %}
-        <script type="text/javascript"> {{ script.inline }} </script>
+        <script type="text/javascript"{{ attr_extra|raw }}>{{ script.inline|raw }}</script>
         {% endif %}
     {% endif %}
     {% endfor %}
@@ -38,8 +38,9 @@
 
 {% block javascript_footer %}
     {% for script in particle.javascript %}
-    {% if script.position == true %}
+    {% if script.in_footer == true %}
         {% set attr_extra = '' %}
+
         {% if script.extra %}
             {% for attributes in script.extra %}
                 {% for key, value in attributes %}
@@ -49,10 +50,11 @@
         {% endif %}
 
         <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
-        
+
         {% if script.inline %}
-        <script type="text/javascript"> {{ script.inline }} </script>
+        <script type="text/javascript"{{ attr_extra|raw }}>{{ script.inline|raw }}</script>
         {% endif %}
     {% endif %}
     {% endfor %}
 {% endblock %}
+
