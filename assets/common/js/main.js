@@ -422,10 +422,10 @@ var Offcanvas = new prime({
         this.panel = $('#g-page-surround');
         this.offcanvas = $('#g-offcanvas');
 
+        if (!this.panel || !this.offcanvas) { return false; }
+
         var swipe = this.offcanvas.data('g-offcanvas-swipe');
         this.setOptions({ touch: !!(swipe !== null ? parseInt(swipe) : 1) });
-
-        if (!this.panel || !this.offcanvas) { return false; }
 
         if (!this.options.padding) {
             this.offcanvas[0].style.display = 'block';
