@@ -374,6 +374,10 @@ class Menu extends HtmlController
         $this->params['item'] = $item;
         $this->params['group'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
 
+        if (!$item->title) {
+            throw new \RuntimeException('Title from the Menu Item should not be empty', 400);
+        }
+
         $html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
 
         return new JsonResponse(['path' => implode('/', $path), 'item' => $data->toArray(), 'html' => $html]);
