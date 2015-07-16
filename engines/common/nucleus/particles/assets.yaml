@@ -26,8 +26,11 @@ form:
           skip: true
 
         .location:
-          type: input.text
+          type: input.filepicker
           label: File Location
+          icon: fa-file-code-o
+          placeholder: 'http://cdn1.remote/file.css'
+          filter: '\.(css|less|scss|sass)$'
 
         .extra:
           type: collection.keyvalue
@@ -52,10 +55,25 @@ form:
           skip: true
 
         .location:
-          type: input.text
+          type: input.filepicker
           label: File Location
+          icon: fa-file-code-o
+          placeholder: 'http://cdn1.remote/file.js'
+          filter: '\.(jsx?|coffee)$'
+
+        .inline:
+          type: textarea.textarea
+          label: Inline JavaScript
+          description: Adds inline JavaScript for quick snippets.
+
+        .in_footer:
+          type: input.checkbox
+          label: Before </body>
+          description: Whether you want the script to load at the end of the body tag or inside head
+          default: false
 
         .extra:
           type: collection.keyvalue
           label: Tag attributes
           exclude: ['src', 'type']
+
