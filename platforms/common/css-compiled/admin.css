@@ -2504,11 +2504,11 @@ body.g-prime {
   min-height: 150px;
 }
 #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
-  width: 234px;
+  width: 235px;
 }
-@media only all and (max-width: 59.938rem) {
+@media only all and (max-width: 47.938rem) {
   #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
-    width: 100%;
+    width: 100% !important;
   }
 }
 #g5-container .settings-block .selectize-control.single {
@@ -4825,14 +4825,6 @@ html.g5-dialog-open {
 @media only all and (max-width: 47.938rem) {
   #g5-container .g5-dialog .settings-block input:not(.settings-param-toggle):not(.g-keyvalue-input-*):not([type="checkbox"]), #g5-container .g5-dialog .settings-block select, #g5-container .g5-dialog .settings-block .collection-list ul, #g5-container .g5-dialog .settings-block .colorpicker, #g5-container .g5-dialog .settings-block .selectize-input {
     width: 90% !important;
-  }
-}
-#g5-container .g5-dialog .input-group.append input, #g5-container .g5-dialog .input-group.prepend input {
-  width: 209px;
-}
-@media only all and (max-width: 47.938rem) {
-  #g5-container .g5-dialog .input-group.append input, #g5-container .g5-dialog .input-group.prepend input {
-    width: 100% !important;
   }
 }
 #g5-container .g5-overlay {

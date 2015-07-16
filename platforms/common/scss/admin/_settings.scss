@@ -182,9 +182,9 @@
     .input-group {
         &.append, &.prepend {
             input {
-                width: 234px;
-                @include breakpoint(no-desktop) {
-                    width: 100%;
+                width: 235px;
+                @include breakpoint(mobile-only) {
+                    width: 100% !important;
                 }
             }
         }
