@@ -5552,6 +5552,9 @@ html.g5-dialog-open {
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .float-right input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions input, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .container-actions input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header select {
   width: auto !important;
 }
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .float-left.particle-search-wrapper input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .particle-search-wrapper.container-title input, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .particle-search-wrapper.container-title input {
+  width: 245px;
+}
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper {
   max-height: 500px;
   overflow: auto;
