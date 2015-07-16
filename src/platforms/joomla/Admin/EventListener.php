@@ -121,6 +121,7 @@ class EventListener implements EventSubscriberInterface
 
         unset($menu['settings']);
 
+        /** @var \JTableMenu $table */
         $table = \JTable::getInstance('menu');
 
         foreach ($menu['items'] as $key => $item) {
@@ -145,7 +146,7 @@ class EventListener implements EventSubscriberInterface
 
                 $modified = false;
                 foreach ($options as $var => $value) {
-                    if ($params->get($var) != $value) {
+                    if ($params->get($var) !== $value) {
                         $params->set($var, $value);
                         $modified = true;
                     }
@@ -157,7 +158,7 @@ class EventListener implements EventSubscriberInterface
                 }
 
                 if ($modified) {
-                    $table->params = $params->toArray();
+                    $table->params = (string) $params;
                     if (!$table->check() || !$table->store()) {
                         throw new \RuntimeException($table->getError());
                     }
