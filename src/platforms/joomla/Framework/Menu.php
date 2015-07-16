@@ -250,7 +250,7 @@ class Menu extends AbstractMenu
                 }
 
                 // Get default target from Joomla.
-                switch ($menuItem->params->get('browserNav', 0))
+                switch ($menuItem->browserNav)
                 {
                     default:
                     case 0:

@@ -135,26 +135,32 @@ class EventListener implements EventSubscriberInterface
                 $item['id'] = $id;
 
                 $title = $menu["items.{$key}.title"];
+                $browserNav = intval($menu["items.{$key}.target"] === '_blank');
 
                 $options = [
                     'menu-anchor_title' => $menu["items.{$key}.subtitle"],
                     'menu-anchor_css' => $menu["items.{$key}.anchor_class"],
                     'menu_image' => $menu["items.{$key}.image"],
-                    'menu_text' => (int) !$menu["items.{$key}.icon_only"],
-                    'browserNav' => (int) $menu["items.{$key}.target"] === '_blank'
+                    'menu_text' => intval(!$menu["items.{$key}.icon_only"])
                 ];
 
                 $modified = false;
+
+                if ($table->title != $title) {
+                    $table->title = $title;
+                    $modified = true;
+                }
+
+                if ($table->browserNav != $browserNav) {
+                    $table->browserNav = $browserNav;
+                    $modified = true;
+                }
+
                 foreach ($options as $var => $value) {
                     if ($params->get($var) !== $value) {
                         $params->set($var, $value);
                         $modified = true;
                     }
-                }
-
-                if ($table->title != $title) {
-                    $table->title = $title;
-                    $modified = true;
                 }
 
                 if ($modified) {
