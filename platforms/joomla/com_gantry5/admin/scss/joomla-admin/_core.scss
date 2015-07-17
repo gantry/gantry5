@@ -12,6 +12,13 @@ body.com_gantry5 {
     color: $light-gray;
     background-color: $body-bg !important;
 
+    #g5-container {
+        @media (max-width: 767px) {
+            margin-left: -20px;
+            margin-right: -5px;
+        }
+    }
+
     textarea, input, .input-append, .input-prepend {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;

@@ -1,5 +1,5 @@
-# v5.0.1
-## XX/XX/2015
+# 5.0.1
+## 07/16/2015
 
 1. [](#new)
     * Custom CSS / JS Atom now supports JavaScript to be dropped before `</body>` as well as inline scripting (thanks @adi8i)
@@ -7,6 +7,7 @@
 2. [](#improved)
     * Added version number to Theme selector and Theme Configuration header (#560)
     * Custom CSS / JS Atom now allows to pick a CSS or JS file via filepicker as well as upload them directly from the picker
+    * Minor CSS fixes for Joomla admin when in tablet and smaller viewport (#585)
 3. [](#bugfix)
     * Fixed regression with the style of Collections in admin and supporting long strings  (#569)
     * Fixed Assignments filtering failing with empty Menus (#578)
