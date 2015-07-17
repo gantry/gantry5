@@ -88,7 +88,7 @@ class Menu extends HtmlController
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $resource->name();
         $this->params['menus'] = $resource->getMenus();
-        $this->params['default_menu'] = $resource->getDefaultMenuName();
+        $this->params['default_menu'] = $resource->hasDefaultMenuMechanism() ? $resource->getDefaultMenuName() : false;
         $this->params['menu'] = $resource;
         $this->params['path'] = implode('/', $path);
 
@@ -373,6 +373,10 @@ class Menu extends HtmlController
         $this->params['id'] = $resource->name();
         $this->params['item'] = $item;
         $this->params['group'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
+
+        if (!$item->title) {
+            throw new \RuntimeException('Title from the Menu Item should not be empty', 400);
+        }
 
         $html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
 

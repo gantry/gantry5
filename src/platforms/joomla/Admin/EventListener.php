@@ -109,18 +109,19 @@ class EventListener implements EventSubscriberInterface
         /** @var \JTableMenuType $table */
         $menuType = \JTable::getInstance('MenuType');
         if (!$menuType->load(['menutype' => $event->resource])) {
-            throw new \RuntimeException("Saving menu failed: Menu type {$event->resource} not found.");
+            throw new \RuntimeException("Saving menu failed: Menu type {$event->resource} not found.", 400);
         }
         $options = [
             'title' => $menu['settings.title'],
             'description' => $menu['settings.description']
         ];
         if (!$menuType->save($options)) {
-            throw new \RuntimeException('Saving menu failed: '. $menuType->getError());
+            throw new \RuntimeException('Saving menu failed: '. $menuType->getError(), 400);
         }
 
         unset($menu['settings']);
 
+        /** @var \JTableMenu $table */
         $table = \JTable::getInstance('menu');
 
         foreach ($menu['items'] as $key => $item) {
@@ -134,32 +135,38 @@ class EventListener implements EventSubscriberInterface
                 $item['id'] = $id;
 
                 $title = $menu["items.{$key}.title"];
+                $browserNav = intval($menu["items.{$key}.target"] === '_blank');
 
                 $options = [
                     'menu-anchor_title' => $menu["items.{$key}.subtitle"],
                     'menu-anchor_css' => $menu["items.{$key}.anchor_class"],
                     'menu_image' => $menu["items.{$key}.image"],
-                    'menu_text' => (int) !$menu["items.{$key}.icon_only"],
-                    'browserNav' => (int) $menu["items.{$key}.target"] === '_blank'
+                    'menu_text' => intval(!$menu["items.{$key}.icon_only"])
                 ];
 
                 $modified = false;
-                foreach ($options as $var => $value) {
-                    if ($params->get($var) != $value) {
-                        $params->set($var, $value);
-                        $modified = true;
-                    }
-                }
 
                 if ($table->title != $title) {
                     $table->title = $title;
                     $modified = true;
                 }
 
+                if ($table->browserNav != $browserNav) {
+                    $table->browserNav = $browserNav;
+                    $modified = true;
+                }
+
+                foreach ($options as $var => $value) {
+                    if ($params->get($var) !== $value) {
+                        $params->set($var, $value);
+                        $modified = true;
+                    }
+                }
+
                 if ($modified) {
-                    $table->params = $params->toArray();
+                    $table->params = (string) $params;
                     if (!$table->check() || !$table->store()) {
-                        throw new \RuntimeException($table->getError());
+                        throw new \RuntimeException("Failed to save /{$key}: {$table->getError()}", 400);
                     }
                 }
 

@@ -15,6 +15,9 @@ var prime         = require('prime'),
     toQueryString = require('mout/queryString/encode'),
     contains      = require('mout/string/contains'),
 
+    getParam      = require('mout/queryString/getParam'),
+    setParam      = require('mout/queryString/setParam'),
+
     request       = require('agent')(),
     History       = require('./history'),
     flags         = require('./flags-state'),
@@ -38,6 +41,7 @@ History.Adapter.bind(window, 'statechange', function() {
         mainheader = $('#main-header'),
         params = '';
 
+    if (Data.doNothing) { return true; }
 
     if (size(Data) && Data.parsed !== false && storage.get(Data.uuid)) {
         Data = storage.get(Data.uuid);
@@ -225,6 +229,16 @@ var selectorChangeEvent = function() {
 
 domready(function() {
     var body = $('body');
+
+    // Update NONCE if any
+    if (GANTRY_AJAX_NONCE) {
+        var currentURI = History.getPageUrl(),
+            currentNonce = getParam(currentURI, '_wpnonce');
+        if (currentNonce !== GANTRY_AJAX_NONCE) {
+            History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, setParam(currentURI, '_wpnonce', GANTRY_AJAX_NONCE));
+            window.HHH = History;
+        }
+    }
 
     // back to configuration
     body.delegate('click', '.button-back-to-conf', function(event, element) {

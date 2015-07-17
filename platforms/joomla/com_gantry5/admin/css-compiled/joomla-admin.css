@@ -12,6 +12,12 @@ body.com_gantry5 {
   color: #ddd;
   background-color: #404040 !important;
 }
+@media (max-width: 767px) {
+  body.com_gantry5 #g5-container {
+    margin-left: -20px;
+    margin-right: -5px;
+  }
+}
 body.com_gantry5 textarea, body.com_gantry5 input, body.com_gantry5 .input-append, body.com_gantry5 .input-prepend {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -67,9 +73,6 @@ body.com_modules #g5-container .main-block, body.com_menus #g5-container .main-b
 body.com_modules #g5-container .g-content, body.com_menus #g5-container .g-content {
   margin: 0;
   padding: 0;
-}
-body.com_modules #g5-container .settings-param-field, body.com_menus #g5-container .settings-param-field {
-  margin-left: 0;
 }
 body.com_modules #g5-container .g-instancepicker-title, body.com_menus #g5-container .g-instancepicker-title {
   font-size: 1rem;

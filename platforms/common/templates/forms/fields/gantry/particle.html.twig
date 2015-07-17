@@ -8,7 +8,7 @@
     <input
             type="hidden"
             name="{{ (scope ~ name)|fieldName|e }}"
-            value="{{ value ? value|json_encode|e }}"
+            value="{{ value ? value|json_encode(constant('JSON_UNESCAPED_UNICODE'))|e }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}
             {# non-gloval attribute structures #}

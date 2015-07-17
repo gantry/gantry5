@@ -1570,6 +1570,7 @@
   line-height: inherit;
   font-weight: 500;
   cursor: pointer;
+  margin: 2px 0;
 }
 #g5-container .button:active, #g5-container .button-simple:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
   margin: 1px 0 -1px 0;
@@ -1810,6 +1811,11 @@ body.g-prime {
 #g5-container .themes .card {
   max-width: 300px;
 }
+#g5-container .themes .theme-info {
+  display: block;
+  text-align: center;
+  font-size: 0.85rem;
+}
 #g5-container .g-footer-actions {
   padding: 1rem 0;
   margin-top: 1rem;
@@ -1843,6 +1849,11 @@ body.g-prime {
 
 .Whoops.container {
   position: inherit;
+}
+.Whoops.container:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 @-webkit-keyframes pulsate {
@@ -2043,7 +2054,6 @@ body.g-prime {
 @media only all and (max-width: 47.938rem) {
   #g5-container .overview-header .button {
     float: none;
-    margin: 0;
   }
 }
 @media only all and (max-width: 47.938rem) {
@@ -2494,11 +2504,11 @@ body.g-prime {
   min-height: 150px;
 }
 #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
-  width: 234px;
+  width: 235px;
 }
-@media only all and (max-width: 59.938rem) {
+@media only all and (max-width: 47.938rem) {
   #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
-    width: 100%;
+    width: 100% !important;
   }
 }
 #g5-container .settings-block .selectize-control.single {
@@ -2582,10 +2592,12 @@ body.g-prime {
 }
 #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul {
   margin: 5px 0;
+  display: table;
 }
 #g5-container .collection-list .settings-param-field ul li, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li {
-  padding: 0.1rem 0;
   position: relative;
+  display: table-row;
+  line-height: 1.3;
 }
 #g5-container .collection-list .settings-param-field ul li:only-child .fa-reorder, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li:only-child .fa-reorder {
   display: none;
@@ -2596,6 +2608,7 @@ body.g-prime {
 #g5-container .collection-list .settings-param-field .item-reorder, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field .item-reorder {
   cursor: row-resize;
   color: #999999;
+  display: table-cell;
 }
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-title-edit], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-remove] {
   color: #666;
@@ -2608,13 +2621,15 @@ body.g-prime {
   color: #666;
   margin-left: 5px;
   vertical-align: middle;
+  display: table-cell;
+  padding: 0.3rem 0.4rem;
 }
 #g5-container .collection-list .settings-param-field [data-title-edit], #g5-container .collection-list .settings-param-field [data-collection-remove] {
   cursor: pointer;
   color: #cccccc;
-  float: right;
-  margin-top: 0.4rem;
   opacity: 0;
+  display: table-cell;
+  padding-left: 0.4rem;
 }
 
 #g5-container #styles h2[data-g-collapse] .g-tooltip:before {
@@ -4812,14 +4827,6 @@ html.g5-dialog-open {
     width: 90% !important;
   }
 }
-#g5-container .g5-dialog .input-group.append input, #g5-container .g5-dialog .input-group.prepend input {
-  width: 209px;
-}
-@media only all and (max-width: 47.938rem) {
-  #g5-container .g5-dialog .input-group.append input, #g5-container .g5-dialog .input-group.prepend input {
-    width: 100% !important;
-  }
-}
 #g5-container .g5-overlay {
   -webkit-animation: fadeIn 0.5s;
   -moz-animation: fadeIn 0.5s;
@@ -5544,6 +5551,9 @@ html.g5-dialog-open {
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .float-right input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions input, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .container-actions input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header select {
   width: auto !important;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .float-left.particle-search-wrapper input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .particle-search-wrapper.container-title input, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .particle-search-wrapper.container-title input {
+  width: 245px;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper {
   max-height: 500px;

@@ -25,16 +25,6 @@ html.g5-dialog-open {
                 width: 90% !important;
             }
         }
-        .input-group {
-            &.append, &.prepend {
-                input {
-                    width: 209px;
-                    @include breakpoint(mobile-only) {
-                        width: 100% !important;
-                    }
-                }
-            }
-        }
     }
 
     .g5-overlay {

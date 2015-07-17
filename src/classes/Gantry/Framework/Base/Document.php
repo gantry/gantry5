@@ -234,14 +234,14 @@ class Document
             return $url;
         }
 
-        // At this point URL is either relative or absolute path; let us find if it is relative.
-        if ($path && '/' !== $path[0]) {
+        // At this point URL is either relative or absolute path; let us find if it is relative and not . or ..
+        if ($path && '/' !== $path[0] && '.' !== $path[0]) {
             if ($timestamp_age === null) {
                 $timestamp_age = static::$timestamp_age;
             }
             if ($timestamp_age > 0) {
                 // We want to add timestamp to the URI: do it only for existing files.
-                $realPath = realpath(GANTRY5_ROOT . '/' . $path);
+                $realPath = @realpath(GANTRY5_ROOT . '/' . $path);
                 if ($realPath && is_file($realPath)) {
                     $time = filemtime($realPath);
                     // Only append timestamp for files that are less than the maximum age.

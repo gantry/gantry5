@@ -542,6 +542,12 @@ th .tooltip-inner {
   margin: 0 1.5rem 1.5rem 0;
 }
 
+.sprocket-strips.loading .sprocket-strips-overlay {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
 #frame {
   margin: 20px auto;
   width: 400px;

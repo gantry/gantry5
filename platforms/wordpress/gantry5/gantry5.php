@@ -26,3 +26,10 @@ if (!defined('GANTRYADMIN_PATH')) {
     // Works also with symlinks.
     define('GANTRYADMIN_PATH', GANTRY5_PATH . '/admin');
 }
+
+// Initialize plugin language.
+$domain = 'gantry5';
+$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+
+load_textdomain($domain, WP_LANG_DIR . '/gantry5/' . $domain . '-' . $locale . '.mo');
+load_plugin_textdomain($domain, false, basename(GANTRY5_PATH) . '/admin/languages');

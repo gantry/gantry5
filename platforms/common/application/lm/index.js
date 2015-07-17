@@ -415,12 +415,17 @@ ready(function() {
             data: data,
             remote: parseAjaxURI(settingsURL + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
+                if (!response.body.success) { return; }
+
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
                     submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
                     dataString = [], invalid = [];
 
                 if ((!form && !fakeDOM) || !submit) { return true; }
+
+                var urlTemplate = content.elements.content.find('.g-urltemplate');
+                if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
 
                 // Particle Settings apply
                 submit.on('click', function(e) {

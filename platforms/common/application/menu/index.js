@@ -138,10 +138,17 @@ ready(function() {
             active = $('.menu-selector .active'),
             path = active ? active.data('mm-id') : null;
 
+        // do not allow to create a new column if there's already one and it's empty
+        if (count == 1 && !children.search('.submenu-items > [data-mm-id]')) { return false; }
+
         var block = $(last[0].cloneNode(true));
         block.data('mm-id', 'list-' + count);
         block.find('.submenu-items').empty();
         block.after(last);
+
+        if (!menumanager.ordering[path]) {
+            menumanager.ordering[path] = [[]];
+        }
 
         menumanager.ordering[path].push([]);
         menumanager.resizer.evenResize($('.submenu-selector > [data-mm-id]'));
@@ -203,7 +210,20 @@ ready(function() {
 
                 var search = content.elements.content.find('.search input'),
                     blocks = content.elements.content.search('[data-mm-type]'),
-                    filters = content.elements.content.search('[data-mm-filter]');
+                    filters = content.elements.content.search('[data-mm-filter]'),
+                    urlTemplate = content.elements.content.find('.g-urltemplate');
+
+                if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
+
+                content.elements.content.find('[data-title-editable]').on('title-edit-end', function(title, original, canceled) {
+                    title = trim(title);
+                    if (!title) {
+                        title = trim(original) || 'Title';
+                        this.text(title).data('title-editable', title);
+
+                        return;
+                    }
+                });
 
                 if (search && filters && blocks) {
                     search.on('input', function() {

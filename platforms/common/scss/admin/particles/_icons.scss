@@ -1,4 +1,4 @@
-#g5-container {    
+#g5-container {
     .g-icons {
         > *:not(div), label {
             display: inline-block;
@@ -54,6 +54,10 @@
 
             .float-right input, select {
                 width: auto !important;
+            }
+
+            .float-left.particle-search-wrapper input {
+                width: 245px;
             }
         }
 

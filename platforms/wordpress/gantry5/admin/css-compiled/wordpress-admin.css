@@ -3,6 +3,9 @@
 }
 
 body.gantry5 {
+  margin: 0;
+  padding: 0;
+  max-width: inherit;
   color: #ddd;
   background-color: #F1F1F1;
 }

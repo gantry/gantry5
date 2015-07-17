@@ -85,6 +85,16 @@ class Menu extends AbstractMenu
     }
 
     /**
+     * Returns true if the platform implements a Default menu mechanism
+     *
+     * @return boolean
+     */
+    public function hasDefaultMenuMechanism()
+    {
+        return true;
+    }
+
+    /**
      * Return active menu.
      *
      * @return string
@@ -240,7 +250,7 @@ class Menu extends AbstractMenu
                 }
 
                 // Get default target from Joomla.
-                switch ($menuItem->params->get('browserNav', 0))
+                switch ($menuItem->browserNav)
                 {
                     default:
                     case 0:

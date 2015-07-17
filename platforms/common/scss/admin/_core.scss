@@ -195,6 +195,11 @@ body.g-prime {
         .card {
             max-width: 300px;
         }
+        .theme-info {
+            display: block;
+            text-align: center;
+            font-size: $core-font-size - 0.15;
+        }
     }
 
     .g-footer-actions {
@@ -236,6 +241,7 @@ body.g-prime {
 // Whoops Debug
 .Whoops.container {
     position: inherit;
+    @include clearfix;
 }
 
 // Keyframes
