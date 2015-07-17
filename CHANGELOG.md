@@ -17,6 +17,7 @@
     * Fixed Menu Item target not getting synched up between Joomla and Gantry (#584)
     * Fixed dropdowns on frontend not working when Offcanvas was disabled (#583)
     * Fixed edge case where resizing the browser wouldn't properly recalculate the Particles Picker size (#585)
+    * Fixed issue in Menu Editor where it was possible to create more than one empty Columns (#585)
 
 # 5.0.0
 ## 07/13/2015

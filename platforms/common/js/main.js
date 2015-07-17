@@ -4155,10 +4155,17 @@ ready(function() {
             active = $('.menu-selector .active'),
             path = active ? active.data('mm-id') : null;
 
+        // do not allow to create a new column if there's already one and it's empty
+        if (count == 1 && !children.search('.submenu-items > [data-mm-id]')) { return false; }
+
         var block = $(last[0].cloneNode(true));
         block.data('mm-id', 'list-' + count);
         block.find('.submenu-items').empty();
         block.after(last);
+
+        if (!menumanager.ordering[path]) {
+            menumanager.ordering[path] = [[]];
+        }
 
         menumanager.ordering[path].push([]);
         menumanager.resizer.evenResize($('.submenu-selector > [data-mm-id]'));
