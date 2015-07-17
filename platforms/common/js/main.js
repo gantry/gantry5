@@ -3098,6 +3098,9 @@ ready(function() {
     decouple(window, 'resize', function() {
         if (!particles) { return; }
 
+        sidebar.style('width', null);
+        initSizes();
+
         particles.style({
             'max-height': (window.innerHeight - heightTop - heightBottom - search[0].offsetHeight - 30)
         });

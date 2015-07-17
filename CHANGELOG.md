@@ -16,6 +16,7 @@
     * Fixed Menu Item subtitles in Menu Editor, causing any subtitle to get lost (#579)
     * Fixed Menu Item target not getting synched up between Joomla and Gantry (#584)
     * Fixed dropdowns on frontend not working when Offcanvas was disabled (#583)
+    * Fixed edge case where resizing the browser wouldn't properly recalculate the Particles Picker size (#585)
 
 # 5.0.0
 ## 07/13/2015
