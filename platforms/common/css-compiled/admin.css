@@ -1570,6 +1570,7 @@
   line-height: inherit;
   font-weight: 500;
   cursor: pointer;
+  margin: 2px 0;
 }
 #g5-container .button:active, #g5-container .button-simple:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
   margin: 1px 0 -1px 0;
@@ -6023,5 +6024,7 @@ html.g5-dialog-open {
   padding-top: 15px;
   border-top: 1px solid #ccc;
 }
+
+
 
 /*# sourceMappingURL=admin.css.map */
