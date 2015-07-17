@@ -58,27 +58,46 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     abstract public function getMenus();
 
+
     /**
      * Return default menu.
      *
      * @return string
      */
-    abstract public function getDefaultMenuName();
-
+    public function getDefaultMenuName()
+    {
+        return null;
+    }
 
     /**
-     * Returns true if the platform implements a Default menu mechanism
+     * Returns true if the platform implements a Default menu.
      *
      * @return boolean
      */
-    abstract public function hasDefaultMenuMechanism();
+    public function hasDefaultMenu()
+    {
+        return false;
+    }
 
     /**
-     * Return default menu.
+     * Return active menu.
      *
      * @return string
      */
-    abstract public function getActiveMenuName();
+    public function getActiveMenuName()
+    {
+        return null;
+    }
+
+    /**
+     * Returns true if the platform implements an Active menu.
+     *
+     * @return boolean
+     */
+    public function hasActiveMenu()
+    {
+        return false;
+    }
 
     public function instance(array $params = [], Config $menu = null)
     {

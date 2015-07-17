@@ -14,9 +14,6 @@ class Menu extends AbstractMenu
     public function __construct()
     {
         $this->menus = $this->getMenus();
-
-        $this->default = $this->menus ? reset($this->menus) : null;
-        $this->active  = $this->default;
     }
 
     /**
@@ -42,36 +39,6 @@ class Menu extends AbstractMenu
         }
 
         return $list;
-    }
-
-    /**
-     * Return default menu.
-     *
-     * @return string
-     */
-    public function getDefaultMenuName()
-    {
-        return $this->default;
-    }
-
-    /**
-     * Returns true if the platform implements a Default menu mechanism
-     *
-     * @return boolean
-     */
-    public function hasDefaultMenuMechanism()
-    {
-        return false;
-    }
-
-    /**
-     * Return active menu.
-     *
-     * @return string
-     */
-    public function getActiveMenuName()
-    {
-        return $this->active;
     }
 
     /**

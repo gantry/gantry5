@@ -85,11 +85,11 @@ class Menu extends AbstractMenu
     }
 
     /**
-     * Returns true if the platform implements a Default menu mechanism
+     * Returns true if the platform implements a Default menu.
      *
      * @return boolean
      */
-    public function hasDefaultMenuMechanism()
+    public function hasDefaultMenu()
     {
         return true;
     }
@@ -102,6 +102,16 @@ class Menu extends AbstractMenu
     public function getActiveMenuName()
     {
         return $this->active ? $this->active->menutype : null;
+    }
+
+    /**
+     * Returns true if the platform implements an Active menu.
+     *
+     * @return boolean
+     */
+    public function hasActiveMenu()
+    {
+        return true;
     }
 
     public function isActive($item)

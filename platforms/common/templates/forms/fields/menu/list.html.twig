@@ -11,6 +11,6 @@
                 value="{{ key|e }}"
                 {# non-gloval attribute structures #}
                 {% if field.options.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-                >{{ text|e }}{{ (current == key and gantry.menu.hasDefaultMenuMechanism()) ? ' ★' : '' }}</option>
+                >{{ text|e }}{{ (current == key and gantry.menu.hasDefaultMenu()) ? ' ★' : '' }}</option>
     {% endfor %}
 {% endblock %}
