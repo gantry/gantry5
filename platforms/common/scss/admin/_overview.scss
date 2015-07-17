@@ -27,7 +27,6 @@
     .button {
         @include breakpoint(mobile-only) {
             float: none;
-            margin: 0;
         }
     }
 
