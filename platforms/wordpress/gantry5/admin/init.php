@@ -1,6 +1,7 @@
 <?php
 defined('ABSPATH') or die;
 
+add_action( 'admin_init', 'gantry_admin_start_buffer', -10000 );
 add_action( 'admin_enqueue_scripts', 'gantry_admin_scripts' );
 add_action( 'admin_print_styles', 'gantry_admin_print_styles', 200 );
 add_action( 'admin_print_scripts', 'gantry_admin_print_scripts', 200 );
@@ -28,6 +29,11 @@ if ( class_exists( 'Timber' ) ) {
         },
         100
     );
+}
+
+function gantry_admin_start_buffer()
+{
+    ob_start();
 }
 
 function gantry_admin_scripts() {
