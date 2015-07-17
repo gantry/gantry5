@@ -1,6 +1,6 @@
 {
     "name": "rockettheme/gantry",
-    "version":"5.0.0@dev",
+    "version":"5.0.1@dev",
     "description": "Gantry Library",
     "license": "GPLv2",
     "type": "phpbb-extension",
