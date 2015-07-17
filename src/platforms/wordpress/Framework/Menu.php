@@ -15,7 +15,7 @@ class Menu extends AbstractMenu
     {
         $this->menus = $this->getMenus();
 
-        $this->default = reset($this->menus);
+        $this->default = $this->menus ? reset($this->menus) : null;
         $this->active  = $this->default;
     }
 
