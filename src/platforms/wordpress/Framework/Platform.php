@@ -62,7 +62,15 @@ class Platform extends BasePlatform {
     }
 
     public function errorHandlerPaths() {
-        return ['|gantry5|'];
+        // Catch errors in Gantry cache, plugin and theme only.
+        $paths = ['#[\\\/]wp-content[\\\/](cache|plugins)[\\\/]gantry5[\\\/]#', '#[\\\/]wp-content[\\\/]themes[\\\/]#'];
+
+        // But if we have symlinked git repository, we need to catch errors from there, too.
+        if (is_link(GANTRY5_PATH)) {
+           $paths = array_merge($paths, ['#[\\\/](assets|engines|platforms)[\\\/](common|wordpress)[\\\/]#', '#[\\\/]src[\\\/](classes|vendor)[\\\/]#', '#[\\\/]themes[\\\/]#']);
+        }
+
+        return $paths;
     }
 
     // getCategories logic for the categories selectize field
