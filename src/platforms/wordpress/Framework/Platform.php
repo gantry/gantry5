@@ -97,15 +97,17 @@ class Platform extends BasePlatform {
         return apply_filters( 'gantry5_form_field_selectize_categories', $new_categories );
     }
 
-    public function listModules()
+    public function listWidgets()
     {
         $widgets = $GLOBALS['wp_widget_factory']->widgets;
 
         $list = [];
         foreach ($widgets as $key => $widget) {
-            $info = ['id' => $key, 'title' => $widget->name, 'description' => $widget->widget_options['description']];
-            $list[] = $info;
+            $info = ['id' => $widget->id_base, 'title' => $widget->name, 'description' => $widget->widget_options['description'], 'class' => $key, 'widget' => $widget];
+            $list[$widget->id_base] = $info;
         }
+
+        uasort($list, function ($a, $b) { return strcmp($a['title'], $b['title']); });
 
         return $list;
     }

@@ -16,13 +16,12 @@ widget.[id | title | description]
                 <div class="modules-wrapper">
                     <ul>
                         {% for widget in gantry.platform.listWidgets %}
-                        <li data-mm-module="{{ widget.id }}" data-mm-type="module">
-                            <span class="module-wrapper">
-                                <span class="title" data-mm-title="{{ widget.title }}" data-mm-filter="{{ widget.title|e }}">
-                                    {{ widget.title }}
-                                </span>
-                                <span class="sub-title font-small" data-mm-filter="{{ widget.description|raw }}">{{ widget.description|raw }}</span>
-                            </span>
+                        <li data-lm-nodrag
+                            data-mm-type="widget"
+                            data-lm-subtype="{{ widget.id }}"
+                            data-lm-blocktype="widget"
+                            data-mm-filter="{{ widget.title }}">
+                            <span title="{{ widget.description|raw }}">{{ widget.title }}</span>
                         </li>
                         {% endfor %}
                     </ul>
@@ -31,7 +30,7 @@ widget.[id | title | description]
         </div>
     </div>
     <div class="g-modal-actions">
-        <button class="button button-primary" type="submit" data-mm-select disabled>{{ 'GANTRY5_PLATFORM_SELECT'|trans }}</button>
+        <button class="button button-primary" type="submit" data-mm-select disabled>{{ 'GANTRY5_PLATFORM_SELECT'|trans }} <i class="fa fa-fw fa-chevron-right"></i></button>
         <a class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</a>
     </div>
 </div>

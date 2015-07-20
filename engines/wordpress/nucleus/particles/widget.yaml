@@ -16,7 +16,7 @@ form:
       class: g-urltemplate input-small
       picker_label: Pick a Widget
       description: Enter widget Id.
-      pattern: '\d+'
+      pattern: '[a-z0-9_-]+'
       overridable: false
 
     chrome:
