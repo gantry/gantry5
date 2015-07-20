@@ -12,16 +12,23 @@ class Theme extends Base\Theme
     {
         parent::__construct($path, $name);
 
-        add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'widgets' ) );
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        \Timber::$locations = $locator->findResources('gantry-engine://views');
+
+        add_theme_support( 'html5', [ 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'widgets' ] );
         add_theme_support( 'title-tag' );
         add_theme_support( 'post-formats' );
         add_theme_support( 'post-thumbnails' );
         add_theme_support( 'menus' );
-        add_filter( 'timber_context', array( $this, 'add_to_context' ) );
-        add_filter( 'get_twig', array( $this, 'add_to_twig' ) );
-        add_action( 'init', array( $this, 'register_post_types' ) );
-        add_action( 'init', array( $this, 'register_taxonomies' ) );
-        add_action( 'widgets_init', array( $this, 'widgets_init' ) );
+        add_filter( 'timber_context', [ $this, 'add_to_context' ] );
+        add_filter( 'get_twig', [ $this, 'add_to_twig' ] );
+        add_action( 'init', [ $this, 'register_post_types' ] );
+        add_action( 'init', [ $this, 'register_taxonomies' ] );
+        add_action( 'widgets_init', [ $this, 'widgets_init' ] );
     }
 
     public function debug()
@@ -37,7 +44,7 @@ class Theme extends Base\Theme
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
 
-            $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-engine://twig'));
+            $loader = new \Twig_Loader_Filesystem(\Timber::$locations);
 
             $params = array(
                 'cache' => $locator->findResource('gantry-cache://theme/twig', true, true),

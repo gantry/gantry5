@@ -13,17 +13,12 @@
 // Load Theme Variable Driven Nucleus Elements
 @import "wordpress/theme/base";
 
-// Load Template Configuration
+// Load Theme Configuration
 @import "configuration/base";
 
 //-------------------------------------------
 
-// WORDPRESS TEMPLATE SPECIFIC
+// WORDPRESS THEME SPECIFIC
 @import "hydrogen-wordpress/core";
-
-//-------------------------------------------
-
-// BREAKPOINTS
-@import "wordpress/theme/breakpoints/base";
 
 //-------------------------------------------
