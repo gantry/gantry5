@@ -7268,7 +7268,7 @@ ready(function() {
             }
         });
     }
-    
+
 
     body.delegate('click', '[data-g-instancepicker]', function(event, element) {
         if (event) { event.preventDefault(); }
@@ -7282,7 +7282,7 @@ ready(function() {
 
         value = field.value();
 
-        if (data.type == 'particle' && value) {
+        if (data.type == 'particle' || data.type == 'widget' && value) {
             value = JSON.parse(value || {});
             uri = value.type + '/' + value[data.type];
         }
