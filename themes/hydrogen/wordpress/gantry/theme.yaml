@@ -51,10 +51,12 @@ configuration:
       - gantry-engine://scss
     files:
       - hydrogen
+      - hydrogen-wordpress
       - custom
     persistent:
       - hydrogen
     overrides:
+      - hydrogen-wordpress
       - custom
 
   dependencies:
