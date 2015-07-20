@@ -1,13 +1,22 @@
 {% extends "@nucleus/page_head.html.twig" %}
 
-{% block head_title %}
+{% block head_title -%}
     <meta http-equiv="Content-Type" content="text/html; charset={{ site.charset }}" />
     <title>{{ site.title }}</title>
     <meta name="description" content="{{ site.description }}">
     <link rel="pingback" href="{{ site.pingback_url }}" />
-{% endblock %}
+{%- endblock %}
 
-{% block head_application %}
+{% block head_application -%}
     {{ gantry.platform.finalize }}
     {{ function('wp_head') }}
-{% endblock %}
+{%- endblock %}
+
+{% block head_platform -%}
+    {% if 1 or gantry.theme.wordpress %}
+        <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/wordpress.css') }}" type="text/css" />
+    {% endif %}
+{%- endblock %}
+
+{% block head -%}
+{%- endblock %}
