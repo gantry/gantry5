@@ -10,13 +10,8 @@ form:
       description: Globally enable widget instances.
       default: true
 
-    _info:
-      type: separator.note
-      class: alert alert-info
-      content: TODO: Widget notification.
-
     widget_id:
-      type: gantry.module
+      type: gantry.widget
       label: Widget Id
       class: g-urltemplate input-small
       picker_label: Pick a Widget

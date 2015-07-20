@@ -46,11 +46,11 @@ class Theme extends Base\Theme
                 'autoescape' => 'html'
             );
 
-            // FIXME: Get timezone from WP.
-            $timezone = 'UTC';
-
             $twig = new \Twig_Environment($loader, $params);
-            $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
+
+            // FIXME: Get timezone from WP.
+            //$timezone = 'UTC';
+            //$twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
 
             $this->add_to_twig($twig);
 
