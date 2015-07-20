@@ -3825,13 +3825,17 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
 
 var StepTwo = function(data, content, button) {
     var uri = content.find('[data-mm-particle-stepone]').data('mm-particle-stepone'),
-        picker = data.instancepicker;
+        picker = data.instancepicker,
+        moduleType = {
+            wordpress: 'widget',
+            joomla: 'particle'
+        };
 
     if (picker) {
         var item = JSON.parse(data.item);
         picker = JSON.parse(picker);
         delete(data.instancepicker);
-        uri = getAjaxURL(item.type + '/' + item.particle);
+        uri = getAjaxURL(item.type + '/' + item[moduleType[GANTRY_PLATFORM]]);
     }
 
     request('post', parseAjaxURI(uri + getAjaxSuffix()), data, function(error, response) {
@@ -3972,7 +3976,7 @@ ready(function() {
             selected = container.find('[data-lm-blocktype].selected, [data-mm-module].selected'),
             type = selected.data('mm-type');
 
-        data = { type: 'particle' };
+        data = { type: type };
 
         switch (type) {
             case 'particle':
