@@ -27,17 +27,15 @@ class Particle extends JsonController
 {
     protected $httpVerbs = [
         'GET'    => [
-            //'/'                  => 'selectParticle',
-            // FIXME:
-            '/'                  => 'selectWidget',
+            '/'                  => 'selectParticle',
             '/widget'            => 'selectWidget',
             '/module'            => 'selectModule'
         ],
         'POST'   => [
             '/'                  => 'undefined',
-            // FIXME:
-//            '/*'                 => 'particle',
-            '/*'                 => 'widget',
+            '/widget'            => 'widget',
+            '/widget/validate'   => 'widgetValidate',
+            '/*'                 => 'particle',
             '/*/validate'        => 'validate',
         ],
         'PUT'    => [
