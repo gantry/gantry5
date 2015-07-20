@@ -27,12 +27,17 @@ class Particle extends JsonController
 {
     protected $httpVerbs = [
         'GET'    => [
-            '/'                  => 'selectParticle',
+            //'/'                  => 'selectParticle',
+            // FIXME:
+            '/'                  => 'selectWidget',
+            '/widget'            => 'selectWidget',
             '/module'            => 'selectModule'
         ],
         'POST'   => [
             '/'                  => 'undefined',
-            '/*'                 => 'particle',
+            // FIXME:
+//            '/*'                 => 'particle',
+            '/*'                 => 'widget',
             '/*/validate'        => 'validate',
         ],
         'PUT'    => [
@@ -91,6 +96,18 @@ class Particle extends JsonController
         return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/module-picker.html.twig', $this->params)]);
     }
 
+
+    /**
+     * Return a modal content for selecting a widget.
+     *
+     * @return mixed
+     * @fixme
+     */
+    public function selectWidget()
+    {
+        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/widget-picker.html.twig', $this->params)]);
+    }
+
     /**
      * Return form for the particle (filled with data coming from POST).
      *
@@ -136,6 +153,60 @@ class Particle extends JsonController
         ];
 
         return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/particle.html.twig', $this->params)]);
+    }
+
+    /**
+     * Return form for the particle (filled with data coming from POST).
+     *
+     * @param string $name
+     * @return mixed
+     * @fixme
+     */
+    public function widget($name)
+    {
+        $data = $this->request->post['item'];
+        if ($data) {
+            $data = json_decode($data, true);
+        } else {
+            $data = $this->request->post->getArray();
+        }
+
+        $widgets = $this->container['platform']->listWidgets();
+        if (!isset($widgets[$name])) {
+            throw new \RuntimeException("Widget '{$name} not found");
+        }
+
+        // Load particle blueprints and default settings.
+        $validator = $this->loadBlueprints('menu');
+        $callable = function () use ($validator) {
+            return $validator;
+        };
+
+        /** @var \WP_Widget $widget */
+        $widget = $widgets[$name]['widget'];
+        ob_start();
+        $widget->form($data);
+        $form = ob_get_clean();
+
+            // Create configuration from the defaults.
+        $item = new Config($data, $callable);
+        $item->def('type', 'particle');
+        $item->def('title', $widget->name);
+        $item->def('options.type', $widget->id_base);
+        $item->def('options.particle', []);
+        $item->def('options.block', []);
+
+        $this->params += [
+            'item'          => $item,
+            'data'          => $data,
+            'form'          => $form,
+            'parent'        => 'settings',
+            'prefix'        => "particles.{$name}.",
+            'route'         => "configurations.default.settings",
+            'action'        => "particle/{$name}/validate"
+        ];
+
+        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/widget.html.twig', $this->params)]);
     }
 
     /**

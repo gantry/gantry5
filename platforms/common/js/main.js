@@ -3979,6 +3979,10 @@ ready(function() {
                 data['particle'] = selected.data('lm-subtype');
                 break;
 
+            case 'widget':
+                data['widget'] = selected.data('lm-subtype');
+                break;
+
             case 'module':
                 data['particle'] = type;
                 data['title'] = selected.find('[data-mm-title]').data('mm-title');
@@ -7266,7 +7270,7 @@ ready(function() {
             }
         });
     }
-    
+
 
     body.delegate('click', '[data-g-instancepicker]', function(event, element) {
         if (event) { event.preventDefault(); }
@@ -7280,7 +7284,7 @@ ready(function() {
 
         value = field.value();
 
-        if (data.type == 'particle' && value) {
+        if (data.type == 'particle' || data.type == 'widget' && value) {
             value = JSON.parse(value || {});
             uri = value.type + '/' + value[data.type];
         }
