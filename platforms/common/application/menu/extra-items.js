@@ -251,6 +251,10 @@ ready(function() {
                 data['particle'] = selected.data('lm-subtype');
                 break;
 
+            case 'widget':
+                data['widget'] = selected.data('lm-subtype');
+                break;
+
             case 'module':
                 data['particle'] = type;
                 data['title'] = selected.find('[data-mm-title]').data('mm-title');
