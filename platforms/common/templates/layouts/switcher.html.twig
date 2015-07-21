@@ -1,8 +1,8 @@
 
 <div class="g-tabs">
     <ul>
-        <li class="active"><a href="#">Presets</a></li>
-        <li><a href="#">Outlines</a></li>
+        <li class="active"><a href="#">{{ 'GANTRY5_PLATFORM_PRESETS'|trans }}</a></li>
+        <li><a href="#">{{ 'GANTRY5_PLATFORM_OUTLINES'|trans }}</a></li>
     </ul>
 </div>
 
@@ -11,7 +11,7 @@
         <div class="g-preserve-particles">
             <label>
                 <input data-g-preserve="preset" type="checkbox" checked="checked" />
-                Keep the current Particles while changing Preset
+                {{ 'GANTRY5_PLATFORM_SWITCH_PRESET_DESC'|trans }}
             </label>
         </div>
 
@@ -32,7 +32,7 @@
         <div class="g-preserve-particles">
             <label>
                 <input data-g-preserve="outline" type="checkbox" checked="checked" />
-                Keep the current Particles while changing Outline
+                {{ 'GANTRY5_PLATFORM_SWITCH_OUTLINE_DESC'|trans }}
             </label>
         </div>
         <ul class="g-switch-conf-user{% if system_conf.count %} float-left{% endif %}">

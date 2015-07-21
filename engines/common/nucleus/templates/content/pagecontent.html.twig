@@ -4,18 +4,17 @@
 {% set html %}
     {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
         {% if subtype == 'pagecontent' %}
+            {% set class = 'g-content' %}
             {{ content|raw }}
         {% elseif subtype == 'system-messages' %}
+            {% set class = 'g-system-messages' %}
             {{ gantry.platform.displaySystemMessages()|raw }}
         {% endif %}
     {% endif %}
 {% endset %}
 
 {% if html|trim %}
-    {% do gantry.theme.joomla(true) %}
-    <div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
-        <div class="platform-content">
-            {{ html|raw }}
-        </div>
+    <div class="{{ class ~ (segment.attributes.class ? ' ' ~ segment.attributes.class|join(' ')) }}">
+        {{ html|raw }}
     </div>
 {% endif %}

@@ -86,7 +86,7 @@ class TemplateInstaller
     public function getDefaultStyle()
     {
         $style = \JTable::getInstance('Style', 'TemplatesTable');
-        $style->load(['home' => 1]);
+        $style->load(['home' => 1, 'client_id' => 0]);
 
         return $style;
     }
@@ -224,7 +224,7 @@ class TemplateInstaller
      */
     public function getMenu($type)
     {
-         /** @var \JTableMenu $table */
+         /** @var \JTableMenuType $table */
         $table = \JTable::getInstance('MenuType');
         $table->load(['menutype' => $type]);
 
@@ -239,6 +239,7 @@ class TemplateInstaller
      */
     public function createMenu($type, $title, $description)
     {
+        /** @var \JTableMenuType $table */
         $table = \JTable::getInstance('MenuType');
         $data  = array(
             'menutype'    => $type,

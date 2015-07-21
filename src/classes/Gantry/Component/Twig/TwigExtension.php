@@ -18,6 +18,7 @@ use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Translator\TranslatorInterface;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
+use Gantry\Framework\Request;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -48,6 +49,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('url', [$this, 'urlFunc']),
             new \Twig_SimpleFilter('trans', [$this, 'transFilter']),
             new \Twig_SimpleFilter('repeat', [$this, 'repeatFilter']),
+            new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode'),
         );
     }
@@ -63,7 +65,8 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('nested', [$this, 'nestedFunc']),
             new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
             new \Twig_SimpleFunction('parse_assets', [$this, 'parseAssetsFunc']),
-            new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc'])
+            new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc']),
+            new \Twig_SimpleFunction('get_cookie', [$this, 'getCookie']),
         );
     }
 
@@ -142,6 +145,21 @@ class TwigExtension extends \Twig_Extension
     public function repeatFilter($str, $count)
     {
         return str_repeat($str, (int) $count);
+    }
+
+
+    /**
+     * Decodes string from JSON.
+     *
+     * @param  string  $str
+     * @param  bool  $assoc
+     * @param int $depth
+     * @param int $options
+     * @return array
+     */
+    public function jsonDecodeFilter($str, $assoc = false, $depth = 512, $options = 0)
+    {
+        return json_decode($str, $assoc, $depth, $options);
     }
 
     /**
@@ -248,5 +266,15 @@ class TwigExtension extends \Twig_Extension
         $contrast = $yiq || ($opacity == 0 || (float) $opacity < 0.35);
 
         return $contrast;
+    }
+
+    public function getCookie($name)
+    {
+        $gantry = Gantry::instance();
+
+        /** @var Request $request */
+        $request = $gantry['request'];
+
+        return $request->cookie[$name];
     }
 }

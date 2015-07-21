@@ -4,6 +4,7 @@
 var ready     = require('domready'),
     menu      = require('./menu'),
     offcanvas = require('./offcanvas'),
+    totop     = require('./totop'),
     $         = require('./utils/dollar-extras'),
 
     instances = {};
@@ -18,7 +19,8 @@ ready(function() {
 });
 
 module.exports = window.G5 = instances;
-},{"./menu":2,"./offcanvas":3,"./utils/dollar-extras":5,"domready":6}],2:[function(require,module,exports){
+
+},{"./menu":2,"./offcanvas":3,"./totop":4,"./utils/dollar-extras":6,"domready":7}],2:[function(require,module,exports){
 "use strict";
 
 var ready   = require('domready'),
@@ -85,6 +87,7 @@ var Menu = new prime({
             mobileContainer = $(selectors.mobileContainer),
             body = $('body');
 
+        if (!main) { return; }
         main.on('mouseenter', this.bound('mouseenter'));
         main.on('mouseleave', this.bound('mouseleave'));
         body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
@@ -150,10 +153,13 @@ var Menu = new prime({
         }
 
         if (!isSelected) {
-            var currentlyOpen = parent.siblings().search(selectors.touchIndicator + ' !> * !> ' + selectors.item + '.' + states.selected);
-            (currentlyOpen || []).forEach(bind(function(open) {
-                this.closeDropdown(open);
-            }, this));
+            var siblings = parent.siblings();
+            if (siblings) {
+                var currentlyOpen = siblings.search(selectors.touchIndicator + ' !> * !> ' + selectors.item + '.' + states.selected);
+                (currentlyOpen || []).forEach(bind(function(open) {
+                    this.closeDropdown(open);
+                }, this));
+            }
         }
 
         if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown + ', > * > ' + selectors.dropdown) || isGoingBack)) {
@@ -251,7 +257,7 @@ var Menu = new prime({
         if (!isGoingBack) {
             // if from height is < than to height set the parent height else, set the target
             if (heights.from.height < heights.to.height) { parent[0].style.height = height + 'px'; }
-            else { sublevel[0].style.height = height + 'px'; }
+            else if (isNavMenu) { sublevel[0].style.height = height + 'px'; }
 
             // fix sublevels heights in side menu (offcanvas etc)
             if (!isNavMenu) {
@@ -259,11 +265,27 @@ var Menu = new prime({
                     block = $(sublevel).parent('.g-block:not(.size-100)'),
                     column = block ? block.parent('.g-dropdown-column') : null;
                 (sublevel.parents('.g-slide-out, .g-dropdown-column') || parent).forEach(function(slideout) {
-                    maxHeight = Math.max(height, parseInt(slideout.style.height, 10));
+                    maxHeight = Math.max(height, parseInt(slideout.style.height || 0, 10));
                 });
 
-                if (column) { column[0].style.height = maxHeight + 'px'; }
-                sublevel[0].style.height = maxHeight + 'px';
+                if (column) {
+                    column[0].style.height = maxHeight + 'px';
+
+                    var blocks = column.search('> .g-grid > .g-block'),
+                        diff = maxHeight;
+
+                    blocks.forEach(function(block, i){
+                        if ((i + 1) != blocks.length) {
+                            diff -= block.getBoundingClientRect().height;
+                        } else {
+                            $(block).find('.g-sublevel')[0].style.height = diff + 'px';
+                        }
+                    });
+
+
+                } else {
+                    sublevel[0].style.height = maxHeight + 'px';
+                }
             }
         }
     },
@@ -315,7 +337,8 @@ var Menu = new prime({
 });
 
 module.exports = Menu;
-},{"../utils/dollar-extras":5,"domready":6,"elements/zen":35,"mout/function/bind":39,"mout/function/timeout":43,"prime":77,"prime-util/prime/bound":73,"prime-util/prime/options":74}],3:[function(require,module,exports){
+
+},{"../utils/dollar-extras":6,"domready":7,"elements/zen":15,"mout/function/bind":23,"mout/function/timeout":27,"prime":71,"prime-util/prime/bound":67,"prime-util/prime/options":68}],3:[function(require,module,exports){
 // Offcanvas slide with desktop, touch and all-in-one touch devices support that supports both left and right placement.
 // Fast and optimized using CSS3 transitions
 // Based on the awesome Slideout.js <https://mango.github.io/slideout/>
@@ -339,10 +362,10 @@ var ready     = require('domready'),
 // thanks David Walsh
 var prefix = (function() {
     var styles = window.getComputedStyle(document.documentElement, ''),
-        pre = (Array.prototype.slice.call(styles).join('')
-            .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
+        pre    = (Array.prototype.slice.call(styles).join('')
+                .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
         )[1],
-        dom = ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1];
+        dom    = ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1];
     return {
         dom: dom,
         lowercase: pre,
@@ -368,6 +391,8 @@ var Offcanvas = new prime({
         touch: true,
 
         openClass: 'g-offcanvas-open',
+        openingClass: 'g-offcanvas-opening',
+        closingClass: 'g-offcanvas-closing',
         overlayClass: 'g-nav-overlay'
     },
 
@@ -398,6 +423,9 @@ var Offcanvas = new prime({
         this.offcanvas = $('#g-offcanvas');
 
         if (!this.panel || !this.offcanvas) { return false; }
+
+        var swipe = this.offcanvas.data('g-offcanvas-swipe');
+        this.setOptions({ touch: !!(swipe !== null ? parseInt(swipe) : 1) });
 
         if (!this.options.padding) {
             this.offcanvas[0].style.display = 'block';
@@ -440,7 +468,7 @@ var Offcanvas = new prime({
 
     attachTouchEvents: function() {
         var msPointerSupported = window.navigator.msPointerEnabled,
-            touch = {
+            touch              = {
                 start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
                 move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
                 end: msPointerSupported ? 'MSPointerUp' : 'touchend'
@@ -467,7 +495,6 @@ var Offcanvas = new prime({
         }, this));
 
         this.detachMutationEvent();
-
         this.overlay.remove();
 
         return this;
@@ -479,7 +506,7 @@ var Offcanvas = new prime({
 
     detachTouchEvents: function() {
         var msPointerSupported = window.navigator.msPointerEnabled,
-            touch = {
+            touch              = {
                 start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
                 move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
                 end: msPointerSupported ? 'MSPointerUp' : 'touchend'
@@ -500,9 +527,8 @@ var Offcanvas = new prime({
 
         if (this.opened) { return this; }
 
-        if (!this.htmlEl.hasClass(this.options.openClass)) {
-            this.htmlEl.addClass(this.options.openClass);
-        }
+        this.htmlEl.addClass(this.options.openClass);
+        this.htmlEl.addClass(this.options.openingClass);
 
         this.overlay[0].style.opacity = 1;
 
@@ -513,6 +539,7 @@ var Offcanvas = new prime({
         setTimeout(bind(function() {
             var panel = this.panel[0];
 
+            this.htmlEl.removeClass(this.options.openingClass);
             panel.style.transition = panel.style['-webkit-transition'] = '';
         }, this), this.options.duration);
 
@@ -528,6 +555,8 @@ var Offcanvas = new prime({
         if (!this.opened && !this.opening) { return this; }
         if (this.panel !== element && this.dragging) { return false; }
 
+        this.htmlEl.addClass(this.options.closingClass);
+
         this.overlay[0].style.opacity = 0;
 
         this._setTransition();
@@ -538,6 +567,7 @@ var Offcanvas = new prime({
             var panel = this.panel[0];
 
             this.htmlEl.removeClass(this.options.openClass);
+            this.htmlEl.removeClass(this.options.closingClass);
             panel.style.transition = panel.style['-webkit-transition'] = '';
         }, this), this.options.duration);
 
@@ -555,14 +585,15 @@ var Offcanvas = new prime({
     _setTransition: function() {
         var panel = this.panel[0];
 
-        panel.style[prefix.css + 'transition'] = panel.style.transition = prefix.css + 'transform ' + this.options.duration + 'ms ' + this.options.effect;
+        panel.style[prefix.css + 'transition'] = panel.style.transition = 'left ' + this.options.duration + 'ms ' + this.options.effect + ', right ' + this.options.duration + 'ms ' + this.options.effect;
     },
 
     _translateXTo: function(x) {
-        var panel = this.panel[0];
-        this.offset.x.current = x;
+        var panel     = this.panel[0],
+            placement = (this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left');
 
-        panel.style[prefix.css + 'transform'] = panel.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+        this.offset.x.current = x;
+        panel.style[placement] = Math.abs(x) + 'px';
     },
 
     _bodyScroll: function() {
@@ -601,36 +632,37 @@ var Offcanvas = new prime({
     _touchMove: function(event) {
         if (isScrolling || this.preventOpen || !event.touches) { return; }
 
-        var placement = (this.bodyEl.hasClass('g-offcanvas-right') ? -1 : 1), // 1: left, -1: right
-            place = placement < 0 ? 'right' : 'left',
-            diffX = clamp(event.touches[0].clientX - this.offset.x.start, -this.options.padding, this.options.padding),
+        var placement  = (this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left'),
+            diffX      = clamp(event.touches[0].clientX - this.offset.x.start, -this.options.padding, this.options.padding),
             translateX = this.offset.x.current = diffX,
             diffY = Math.abs(event.touches[0].pageY - this.offset.y.start),
             overlayOpacity;
 
         if (Math.abs(translateX) > this.options.padding) { return; }
         if (diffY > 5 && !this.moved) { return; }
+
         if (Math.abs(diffX) > 0) {
             this.opening = true;
 
             // offcanvas on left
-            if (place == 'left' && (this.opened && diffX > 0 || !this.opened && diffX < 0)) { return; }
+            if (placement == 'left' && (this.opened && diffX > 0 || !this.opened && diffX < 0)) { return; }
 
             // offcanvas on right
-            if (place == 'right' && (this.opened && diffX < 0 || !this.opened && diffX > 0)) { return; }
+            if (placement == 'right' && (this.opened && diffX < 0 || !this.opened && diffX > 0)) { return; }
 
             if (!this.moved && !this.htmlEl.hasClass(this.options.openClass)) {
                 this.htmlEl.addClass(this.options.openClass);
             }
 
-            if ((place == 'left' && diffX <= 0) || (place == 'right' && diffX >= 0)) {
-                translateX = diffX + (placement * this.options.padding);
+            if ((placement == 'left' && diffX <= 0) || (placement == 'right' && diffX >= 0)) {
+                var norm = placement == 'left' ? 1 : -1;
+                translateX = diffX + (norm * this.options.padding);
                 this.opening = false;
             }
 
             overlayOpacity = mapNumber(Math.abs(translateX), 0, this.options.padding, 0, 1);
 
-            this.panel[0].style[prefix.css + 'transform'] = this.panel[0].style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+            this.panel[0].style[placement] = Math.abs(translateX) + 'px';
             this.overlay[0].style.opacity = overlayOpacity;
 
             this.moved = true;
@@ -654,14 +686,14 @@ var Offcanvas = new prime({
     },
 
     _checkTogglers: function(mutator) {
-        var togglers = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
+        var togglers        = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
             mobileContainer = $('#g-mobilemenu-container'),
             blocks, mCtext;
 
         if (!togglers || (mutator && ((mutator.target || mutator.srcElement) !== mobileContainer[0]))) { return; }
         if (this.opened) { this.close(); }
 
-        timeout(function(){
+        timeout(function() {
             blocks = this.offcanvas.search('.g-block');
             mCtext = mobileContainer ? mobileContainer.text().length : 0;
             var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
@@ -681,7 +713,36 @@ var Offcanvas = new prime({
 });
 
 module.exports = Offcanvas;
-},{"../utils/decouple":4,"domready":6,"elements":11,"elements/zen":35,"mout/array/forEach":36,"mout/function/bind":39,"mout/function/timeout":43,"mout/math/clamp":48,"mout/math/map":50,"mout/string/trim":59,"prime":77,"prime-util/prime/bound":73,"prime-util/prime/options":74}],4:[function(require,module,exports){
+
+},{"../utils/decouple":5,"domready":7,"elements":12,"elements/zen":15,"mout/array/forEach":18,"mout/function/bind":23,"mout/function/timeout":27,"mout/math/clamp":33,"mout/math/map":35,"mout/string/trim":45,"prime":71,"prime-util/prime/bound":67,"prime-util/prime/options":68}],4:[function(require,module,exports){
+"use strict";
+
+var ready = require('domready'),
+    $     = require('../utils/dollar-extras');
+
+var timeOut,
+    scrollToTop = function() {
+        if (document.body.scrollTop != 0 || document.documentElement.scrollTop != 0) {
+            window.scrollBy(0, -50);
+            timeOut = setTimeout(scrollToTop, 10);
+        } else {
+            clearTimeout(timeOut);
+        }
+    };
+
+ready(function() {
+    var totop = $('#g-totop');
+    if (!totop) { return; }
+
+    totop.on('click', function(e) {
+        e.preventDefault();
+        scrollToTop();
+    });
+});
+
+module.exports = {};
+
+},{"../utils/dollar-extras":6,"domready":7}],5:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
@@ -717,7 +778,7 @@ var decouple = function(element, event, callback) {
 };
 
 module.exports = decouple;
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 var $          = require('elements'),
     map        = require('mout/array/map'),
@@ -746,7 +807,7 @@ $.implement({
 
 module.exports = $;
 
-},{"elements":11,"mout/array/map":37,"slick":89}],6:[function(require,module,exports){
+},{"elements":12,"mout/array/map":20,"slick":74}],7:[function(require,module,exports){
 /*!
   * domready (c) Dustin Diaz 2014 - License MIT
   */
@@ -778,7 +839,7 @@ module.exports = $;
 
 });
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /*
 attributes
 */"use strict"
@@ -997,7 +1058,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":8,"mout/array/filter":14,"mout/array/forEach":15,"mout/array/indexOf":16,"mout/string/trim":33}],8:[function(require,module,exports){
+},{"./base":9,"mout/array/filter":17,"mout/array/forEach":18,"mout/array/indexOf":19,"mout/string/trim":45}],9:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -1128,7 +1189,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":13,"mout/array/filter":14,"mout/array/forEach":15,"mout/array/map":17,"mout/array/some":18,"prime":77}],9:[function(require,module,exports){
+},{"mout/array/every":16,"mout/array/filter":17,"mout/array/forEach":18,"mout/array/map":20,"mout/array/some":22,"prime":71}],10:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -1211,7 +1272,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":10,"./traversal":34,"prime/map":78}],10:[function(require,module,exports){
+},{"./events":11,"./traversal":14,"prime/map":72}],11:[function(require,module,exports){
 /*
 events
 */"use strict"
@@ -1291,7 +1352,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":8,"prime/emitter":76}],11:[function(require,module,exports){
+},{"./base":9,"prime/emitter":70}],12:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -1305,7 +1366,7 @@ var $ = require("./base")
 
 module.exports = $
 
-},{"./attributes":7,"./base":8,"./delegation":9,"./events":10,"./insertion":12,"./traversal":34}],12:[function(require,module,exports){
+},{"./attributes":8,"./base":9,"./delegation":10,"./events":11,"./insertion":13,"./traversal":14}],13:[function(require,module,exports){
 /*
 insertion
 */"use strict"
@@ -1399,568 +1460,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":8}],13:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array every
-     */
-    function every(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var result = true;
-        if (arr == null) {
-            return result;
-        }
-
-        var i = -1, len = arr.length;
-        while (++i < len) {
-            // we iterate over sparse items since there is no way to make it
-            // work properly on IE 7-8. see #64
-            if (!callback(arr[i], i, arr) ) {
-                result = false;
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    module.exports = every;
-
-
-},{"../function/makeIterator_":20}],14:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array filter
-     */
-    function filter(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var results = [];
-        if (arr == null) {
-            return results;
-        }
-
-        var i = -1, len = arr.length, value;
-        while (++i < len) {
-            value = arr[i];
-            if (callback(value, i, arr)) {
-                results.push(value);
-            }
-        }
-
-        return results;
-    }
-
-    module.exports = filter;
-
-
-
-},{"../function/makeIterator_":20}],15:[function(require,module,exports){
-
-
-    /**
-     * Array forEach
-     */
-    function forEach(arr, callback, thisObj) {
-        if (arr == null) {
-            return;
-        }
-        var i = -1,
-            len = arr.length;
-        while (++i < len) {
-            // we iterate over sparse items since there is no way to make it
-            // work properly on IE 7-8. see #64
-            if ( callback.call(thisObj, arr[i], i, arr) === false ) {
-                break;
-            }
-        }
-    }
-
-    module.exports = forEach;
-
-
-
-},{}],16:[function(require,module,exports){
-
-
-    /**
-     * Array.indexOf
-     */
-    function indexOf(arr, item, fromIndex) {
-        fromIndex = fromIndex || 0;
-        if (arr == null) {
-            return -1;
-        }
-
-        var len = arr.length,
-            i = fromIndex < 0 ? len + fromIndex : fromIndex;
-        while (i < len) {
-            // we iterate over sparse items since there is no way to make it
-            // work properly on IE 7-8. see #64
-            if (arr[i] === item) {
-                return i;
-            }
-
-            i++;
-        }
-
-        return -1;
-    }
-
-    module.exports = indexOf;
-
-
-},{}],17:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array map
-     */
-    function map(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var results = [];
-        if (arr == null){
-            return results;
-        }
-
-        var i = -1, len = arr.length;
-        while (++i < len) {
-            results[i] = callback(arr[i], i, arr);
-        }
-
-        return results;
-    }
-
-     module.exports = map;
-
-
-},{"../function/makeIterator_":20}],18:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array some
-     */
-    function some(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var result = false;
-        if (arr == null) {
-            return result;
-        }
-
-        var i = -1, len = arr.length;
-        while (++i < len) {
-            // we iterate over sparse items since there is no way to make it
-            // work properly on IE 7-8. see #64
-            if ( callback(arr[i], i, arr) ) {
-                result = true;
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    module.exports = some;
-
-
-},{"../function/makeIterator_":20}],19:[function(require,module,exports){
-
-
-    /**
-     * Returns the first argument provided to it.
-     */
-    function identity(val){
-        return val;
-    }
-
-    module.exports = identity;
-
-
-
-},{}],20:[function(require,module,exports){
-var identity = require('./identity');
-var prop = require('./prop');
-var deepMatches = require('../object/deepMatches');
-
-    /**
-     * Converts argument into a valid iterator.
-     * Used internally on most array/object/collection methods that receives a
-     * callback/iterator providing a shortcut syntax.
-     */
-    function makeIterator(src, thisObj){
-        if (src == null) {
-            return identity;
-        }
-        switch(typeof src) {
-            case 'function':
-                // function is the first to improve perf (most common case)
-                // also avoid using `Function#call` if not needed, which boosts
-                // perf a lot in some cases
-                return (typeof thisObj !== 'undefined')? function(val, i, arr){
-                    return src.call(thisObj, val, i, arr);
-                } : src;
-            case 'object':
-                return function(val){
-                    return deepMatches(val, src);
-                };
-            case 'string':
-            case 'number':
-                return prop(src);
-        }
-    }
-
-    module.exports = makeIterator;
-
-
-
-},{"../object/deepMatches":26,"./identity":19,"./prop":21}],21:[function(require,module,exports){
-
-
-    /**
-     * Returns a function that gets a property of the passed object
-     */
-    function prop(name){
-        return function(obj){
-            return obj[name];
-        };
-    }
-
-    module.exports = prop;
-
-
-
-},{}],22:[function(require,module,exports){
-var isKind = require('./isKind');
-    /**
-     */
-    var isArray = Array.isArray || function (val) {
-        return isKind(val, 'Array');
-    };
-    module.exports = isArray;
-
-
-},{"./isKind":23}],23:[function(require,module,exports){
-var kindOf = require('./kindOf');
-    /**
-     * Check if value is from a specific "kind".
-     */
-    function isKind(val, kind){
-        return kindOf(val) === kind;
-    }
-    module.exports = isKind;
-
-
-},{"./kindOf":24}],24:[function(require,module,exports){
-
-
-    var _rKind = /^\[object (.*)\]$/,
-        _toString = Object.prototype.toString,
-        UNDEF;
-
-    /**
-     * Gets the "kind" of value. (e.g. "String", "Number", etc)
-     */
-    function kindOf(val) {
-        if (val === null) {
-            return 'Null';
-        } else if (val === UNDEF) {
-            return 'Undefined';
-        } else {
-            return _rKind.exec( _toString.call(val) )[1];
-        }
-    }
-    module.exports = kindOf;
-
-
-},{}],25:[function(require,module,exports){
-
-
-    /**
-     * Typecast a value to a String, using an empty string value for null or
-     * undefined.
-     */
-    function toString(val){
-        return val == null ? '' : val.toString();
-    }
-
-    module.exports = toString;
-
-
-
-},{}],26:[function(require,module,exports){
-var forOwn = require('./forOwn');
-var isArray = require('../lang/isArray');
-
-    function containsMatch(array, pattern) {
-        var i = -1, length = array.length;
-        while (++i < length) {
-            if (deepMatches(array[i], pattern)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    function matchArray(target, pattern) {
-        var i = -1, patternLength = pattern.length;
-        while (++i < patternLength) {
-            if (!containsMatch(target, pattern[i])) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    function matchObject(target, pattern) {
-        var result = true;
-        forOwn(pattern, function(val, key) {
-            if (!deepMatches(target[key], val)) {
-                // Return false to break out of forOwn early
-                return (result = false);
-            }
-        });
-
-        return result;
-    }
-
-    /**
-     * Recursively check if the objects match.
-     */
-    function deepMatches(target, pattern){
-        if (target && typeof target === 'object') {
-            if (isArray(target) && isArray(pattern)) {
-                return matchArray(target, pattern);
-            } else {
-                return matchObject(target, pattern);
-            }
-        } else {
-            return target === pattern;
-        }
-    }
-
-    module.exports = deepMatches;
-
-
-
-},{"../lang/isArray":22,"./forOwn":28}],27:[function(require,module,exports){
-var hasOwn = require('./hasOwn');
-
-    var _hasDontEnumBug,
-        _dontEnums;
-
-    function checkDontEnum(){
-        _dontEnums = [
-                'toString',
-                'toLocaleString',
-                'valueOf',
-                'hasOwnProperty',
-                'isPrototypeOf',
-                'propertyIsEnumerable',
-                'constructor'
-            ];
-
-        _hasDontEnumBug = true;
-
-        for (var key in {'toString': null}) {
-            _hasDontEnumBug = false;
-        }
-    }
-
-    /**
-     * Similar to Array/forEach but works over object properties and fixes Don't
-     * Enum bug on IE.
-     * based on: http://whattheheadsaid.com/2010/10/a-safer-object-keys-compatibility-implementation
-     */
-    function forIn(obj, fn, thisObj){
-        var key, i = 0;
-        // no need to check if argument is a real object that way we can use
-        // it for arrays, functions, date, etc.
-
-        //post-pone check till needed
-        if (_hasDontEnumBug == null) checkDontEnum();
-
-        for (key in obj) {
-            if (exec(fn, obj, key, thisObj) === false) {
-                break;
-            }
-        }
-
-
-        if (_hasDontEnumBug) {
-            var ctor = obj.constructor,
-                isProto = !!ctor && obj === ctor.prototype;
-
-            while (key = _dontEnums[i++]) {
-                // For constructor, if it is a prototype object the constructor
-                // is always non-enumerable unless defined otherwise (and
-                // enumerated above).  For non-prototype objects, it will have
-                // to be defined on this object, since it cannot be defined on
-                // any prototype objects.
-                //
-                // For other [[DontEnum]] properties, check if the value is
-                // different than Object prototype value.
-                if (
-                    (key !== 'constructor' ||
-                        (!isProto && hasOwn(obj, key))) &&
-                    obj[key] !== Object.prototype[key]
-                ) {
-                    if (exec(fn, obj, key, thisObj) === false) {
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    function exec(fn, obj, key, thisObj){
-        return fn.call(thisObj, obj[key], key, obj);
-    }
-
-    module.exports = forIn;
-
-
-
-},{"./hasOwn":29}],28:[function(require,module,exports){
-var hasOwn = require('./hasOwn');
-var forIn = require('./forIn');
-
-    /**
-     * Similar to Array/forEach but works over object properties and fixes Don't
-     * Enum bug on IE.
-     * based on: http://whattheheadsaid.com/2010/10/a-safer-object-keys-compatibility-implementation
-     */
-    function forOwn(obj, fn, thisObj){
-        forIn(obj, function(val, key){
-            if (hasOwn(obj, key)) {
-                return fn.call(thisObj, obj[key], key, obj);
-            }
-        });
-    }
-
-    module.exports = forOwn;
-
-
-
-},{"./forIn":27,"./hasOwn":29}],29:[function(require,module,exports){
-
-
-    /**
-     * Safer Object.hasOwnProperty
-     */
-     function hasOwn(obj, prop){
-         return Object.prototype.hasOwnProperty.call(obj, prop);
-     }
-
-     module.exports = hasOwn;
-
-
-
-},{}],30:[function(require,module,exports){
-
-    /**
-     * Contains all Unicode white-spaces. Taken from
-     * http://en.wikipedia.org/wiki/Whitespace_character.
-     */
-    module.exports = [
-        ' ', '\n', '\r', '\t', '\f', '\v', '\u00A0', '\u1680', '\u180E',
-        '\u2000', '\u2001', '\u2002', '\u2003', '\u2004', '\u2005', '\u2006',
-        '\u2007', '\u2008', '\u2009', '\u200A', '\u2028', '\u2029', '\u202F',
-        '\u205F', '\u3000'
-    ];
-
-
-},{}],31:[function(require,module,exports){
-var toString = require('../lang/toString');
-var WHITE_SPACES = require('./WHITE_SPACES');
-    /**
-     * Remove chars from beginning of string.
-     */
-    function ltrim(str, chars) {
-        str = toString(str);
-        chars = chars || WHITE_SPACES;
-
-        var start = 0,
-            len = str.length,
-            charLen = chars.length,
-            found = true,
-            i, c;
-
-        while (found && start < len) {
-            found = false;
-            i = -1;
-            c = str.charAt(start);
-
-            while (++i < charLen) {
-                if (c === chars[i]) {
-                    found = true;
-                    start++;
-                    break;
-                }
-            }
-        }
-
-        return (start >= len) ? '' : str.substr(start, len);
-    }
-
-    module.exports = ltrim;
-
-
-},{"../lang/toString":25,"./WHITE_SPACES":30}],32:[function(require,module,exports){
-var toString = require('../lang/toString');
-var WHITE_SPACES = require('./WHITE_SPACES');
-    /**
-     * Remove chars from end of string.
-     */
-    function rtrim(str, chars) {
-        str = toString(str);
-        chars = chars || WHITE_SPACES;
-
-        var end = str.length - 1,
-            charLen = chars.length,
-            found = true,
-            i, c;
-
-        while (found && end >= 0) {
-            found = false;
-            i = -1;
-            c = str.charAt(end);
-
-            while (++i < charLen) {
-                if (c === chars[i]) {
-                    found = true;
-                    end--;
-                    break;
-                }
-            }
-        }
-
-        return (end >= 0) ? str.substring(0, end + 1) : '';
-    }
-
-    module.exports = rtrim;
-
-
-},{"../lang/toString":25,"./WHITE_SPACES":30}],33:[function(require,module,exports){
-var toString = require('../lang/toString');
-var WHITE_SPACES = require('./WHITE_SPACES');
-var ltrim = require('./ltrim');
-var rtrim = require('./rtrim');
-    /**
-     * Remove white-spaces from beginning and end of string.
-     */
-    function trim(str, chars) {
-        str = toString(str);
-        chars = chars || WHITE_SPACES;
-        return ltrim(rtrim(str, chars), chars);
-    }
-
-    module.exports = trim;
-
-
-},{"../lang/toString":25,"./WHITE_SPACES":30,"./ltrim":31,"./rtrim":32}],34:[function(require,module,exports){
+},{"./base":9}],14:[function(require,module,exports){
 /*
 traversal
 */"use strict"
@@ -2065,7 +1565,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":8,"mout/array/map":17,"slick":89}],35:[function(require,module,exports){
+},{"./base":9,"mout/array/map":20,"slick":74}],15:[function(require,module,exports){
 /*
 zen
 */"use strict"
@@ -2123,11 +1623,143 @@ module.exports = function(expression, doc){
 
 }
 
-},{"./base":8,"mout/array/forEach":15,"mout/array/map":17,"slick/parser":90}],36:[function(require,module,exports){
-arguments[4][15][0].apply(exports,arguments)
-},{"dup":15}],37:[function(require,module,exports){
-arguments[4][17][0].apply(exports,arguments)
-},{"../function/makeIterator_":41,"dup":17}],38:[function(require,module,exports){
+},{"./base":9,"mout/array/forEach":18,"mout/array/map":20,"slick/parser":75}],16:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array every
+     */
+    function every(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var result = true;
+        if (arr == null) {
+            return result;
+        }
+
+        var i = -1, len = arr.length;
+        while (++i < len) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if (!callback(arr[i], i, arr) ) {
+                result = false;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    module.exports = every;
+
+
+},{"../function/makeIterator_":25}],17:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array filter
+     */
+    function filter(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var results = [];
+        if (arr == null) {
+            return results;
+        }
+
+        var i = -1, len = arr.length, value;
+        while (++i < len) {
+            value = arr[i];
+            if (callback(value, i, arr)) {
+                results.push(value);
+            }
+        }
+
+        return results;
+    }
+
+    module.exports = filter;
+
+
+
+},{"../function/makeIterator_":25}],18:[function(require,module,exports){
+
+
+    /**
+     * Array forEach
+     */
+    function forEach(arr, callback, thisObj) {
+        if (arr == null) {
+            return;
+        }
+        var i = -1,
+            len = arr.length;
+        while (++i < len) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if ( callback.call(thisObj, arr[i], i, arr) === false ) {
+                break;
+            }
+        }
+    }
+
+    module.exports = forEach;
+
+
+
+},{}],19:[function(require,module,exports){
+
+
+    /**
+     * Array.indexOf
+     */
+    function indexOf(arr, item, fromIndex) {
+        fromIndex = fromIndex || 0;
+        if (arr == null) {
+            return -1;
+        }
+
+        var len = arr.length,
+            i = fromIndex < 0 ? len + fromIndex : fromIndex;
+        while (i < len) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if (arr[i] === item) {
+                return i;
+            }
+
+            i++;
+        }
+
+        return -1;
+    }
+
+    module.exports = indexOf;
+
+
+},{}],20:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array map
+     */
+    function map(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var results = [];
+        if (arr == null){
+            return results;
+        }
+
+        var i = -1, len = arr.length;
+        while (++i < len) {
+            results[i] = callback(arr[i], i, arr);
+        }
+
+        return results;
+    }
+
+     module.exports = map;
+
+
+},{"../function/makeIterator_":25}],21:[function(require,module,exports){
 
 
     /**
@@ -2164,7 +1796,36 @@ arguments[4][17][0].apply(exports,arguments)
 
 
 
-},{}],39:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array some
+     */
+    function some(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var result = false;
+        if (arr == null) {
+            return result;
+        }
+
+        var i = -1, len = arr.length;
+        while (++i < len) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if ( callback(arr[i], i, arr) ) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    module.exports = some;
+
+
+},{"../function/makeIterator_":25}],23:[function(require,module,exports){
 var slice = require('../array/slice');
 
     /**
@@ -2185,13 +1846,73 @@ var slice = require('../array/slice');
 
 
 
-},{"../array/slice":38}],40:[function(require,module,exports){
-arguments[4][19][0].apply(exports,arguments)
-},{"dup":19}],41:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"../object/deepMatches":52,"./identity":40,"./prop":42,"dup":20}],42:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"dup":21}],43:[function(require,module,exports){
+},{"../array/slice":21}],24:[function(require,module,exports){
+
+
+    /**
+     * Returns the first argument provided to it.
+     */
+    function identity(val){
+        return val;
+    }
+
+    module.exports = identity;
+
+
+
+},{}],25:[function(require,module,exports){
+var identity = require('./identity');
+var prop = require('./prop');
+var deepMatches = require('../object/deepMatches');
+
+    /**
+     * Converts argument into a valid iterator.
+     * Used internally on most array/object/collection methods that receives a
+     * callback/iterator providing a shortcut syntax.
+     */
+    function makeIterator(src, thisObj){
+        if (src == null) {
+            return identity;
+        }
+        switch(typeof src) {
+            case 'function':
+                // function is the first to improve perf (most common case)
+                // also avoid using `Function#call` if not needed, which boosts
+                // perf a lot in some cases
+                return (typeof thisObj !== 'undefined')? function(val, i, arr){
+                    return src.call(thisObj, val, i, arr);
+                } : src;
+            case 'object':
+                return function(val){
+                    return deepMatches(val, src);
+                };
+            case 'string':
+            case 'number':
+                return prop(src);
+        }
+    }
+
+    module.exports = makeIterator;
+
+
+
+},{"../object/deepMatches":37,"./identity":24,"./prop":26}],26:[function(require,module,exports){
+
+
+    /**
+     * Returns a function that gets a property of the passed object
+     */
+    function prop(name){
+        return function(obj){
+            return obj[name];
+        };
+    }
+
+    module.exports = prop;
+
+
+
+},{}],27:[function(require,module,exports){
 var slice = require('../array/slice');
 
     /**
@@ -2210,15 +1931,85 @@ var slice = require('../array/slice');
 
 
 
-},{"../array/slice":38}],44:[function(require,module,exports){
-arguments[4][22][0].apply(exports,arguments)
-},{"./isKind":45,"dup":22}],45:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"./kindOf":46,"dup":23}],46:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"dup":24}],47:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"dup":25}],48:[function(require,module,exports){
+},{"../array/slice":21}],28:[function(require,module,exports){
+var mixIn = require('../object/mixIn');
+
+    /**
+     * Create Object using prototypal inheritance and setting custom properties.
+     * - Mix between Douglas Crockford Prototypal Inheritance <http://javascript.crockford.com/prototypal.html> and the EcmaScript 5 `Object.create()` method.
+     * @param {object} parent    Parent Object.
+     * @param {object} [props] Object properties.
+     * @return {object} Created object.
+     */
+    function createObject(parent, props){
+        function F(){}
+        F.prototype = parent;
+        return mixIn(new F(), props);
+
+    }
+    module.exports = createObject;
+
+
+
+},{"../object/mixIn":41}],29:[function(require,module,exports){
+var isKind = require('./isKind');
+    /**
+     */
+    var isArray = Array.isArray || function (val) {
+        return isKind(val, 'Array');
+    };
+    module.exports = isArray;
+
+
+},{"./isKind":30}],30:[function(require,module,exports){
+var kindOf = require('./kindOf');
+    /**
+     * Check if value is from a specific "kind".
+     */
+    function isKind(val, kind){
+        return kindOf(val) === kind;
+    }
+    module.exports = isKind;
+
+
+},{"./kindOf":31}],31:[function(require,module,exports){
+
+
+    var _rKind = /^\[object (.*)\]$/,
+        _toString = Object.prototype.toString,
+        UNDEF;
+
+    /**
+     * Gets the "kind" of value. (e.g. "String", "Number", etc)
+     */
+    function kindOf(val) {
+        if (val === null) {
+            return 'Null';
+        } else if (val === UNDEF) {
+            return 'Undefined';
+        } else {
+            return _rKind.exec( _toString.call(val) )[1];
+        }
+    }
+    module.exports = kindOf;
+
+
+},{}],32:[function(require,module,exports){
+
+
+    /**
+     * Typecast a value to a String, using an empty string value for null or
+     * undefined.
+     */
+    function toString(val){
+        return val == null ? '' : val.toString();
+    }
+
+    module.exports = toString;
+
+
+
+},{}],33:[function(require,module,exports){
 
     /**
      * Clamps value inside range.
@@ -2229,7 +2020,7 @@ arguments[4][25][0].apply(exports,arguments)
     module.exports = clamp;
 
 
-},{}],49:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 
     /**
     * Linear interpolation.
@@ -2242,7 +2033,7 @@ arguments[4][25][0].apply(exports,arguments)
     module.exports = lerp;
 
 
-},{}],50:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 var lerp = require('./lerp');
 var norm = require('./norm');
     /**
@@ -2255,7 +2046,7 @@ var norm = require('./norm');
     module.exports = map;
 
 
-},{"./lerp":49,"./norm":51}],51:[function(require,module,exports){
+},{"./lerp":34,"./norm":36}],36:[function(require,module,exports){
 
     /**
     * Gets normalized ratio of value inside range.
@@ -2270,27 +2061,333 @@ var norm = require('./norm');
     module.exports = norm;
 
 
-},{}],52:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"../lang/isArray":44,"./forOwn":54,"dup":26}],53:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./hasOwn":55,"dup":27}],54:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"./forIn":53,"./hasOwn":55,"dup":28}],55:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"dup":29}],56:[function(require,module,exports){
-arguments[4][30][0].apply(exports,arguments)
-},{"dup":30}],57:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"../lang/toString":47,"./WHITE_SPACES":56,"dup":31}],58:[function(require,module,exports){
-arguments[4][32][0].apply(exports,arguments)
-},{"../lang/toString":47,"./WHITE_SPACES":56,"dup":32}],59:[function(require,module,exports){
-arguments[4][33][0].apply(exports,arguments)
-},{"../lang/toString":47,"./WHITE_SPACES":56,"./ltrim":57,"./rtrim":58,"dup":33}],60:[function(require,module,exports){
-arguments[4][38][0].apply(exports,arguments)
-},{"dup":38}],61:[function(require,module,exports){
-arguments[4][39][0].apply(exports,arguments)
-},{"../array/slice":60,"dup":39}],62:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
+var forOwn = require('./forOwn');
+var isArray = require('../lang/isArray');
+
+    function containsMatch(array, pattern) {
+        var i = -1, length = array.length;
+        while (++i < length) {
+            if (deepMatches(array[i], pattern)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function matchArray(target, pattern) {
+        var i = -1, patternLength = pattern.length;
+        while (++i < patternLength) {
+            if (!containsMatch(target, pattern[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    function matchObject(target, pattern) {
+        var result = true;
+        forOwn(pattern, function(val, key) {
+            if (!deepMatches(target[key], val)) {
+                // Return false to break out of forOwn early
+                return (result = false);
+            }
+        });
+
+        return result;
+    }
+
+    /**
+     * Recursively check if the objects match.
+     */
+    function deepMatches(target, pattern){
+        if (target && typeof target === 'object') {
+            if (isArray(target) && isArray(pattern)) {
+                return matchArray(target, pattern);
+            } else {
+                return matchObject(target, pattern);
+            }
+        } else {
+            return target === pattern;
+        }
+    }
+
+    module.exports = deepMatches;
+
+
+
+},{"../lang/isArray":29,"./forOwn":39}],38:[function(require,module,exports){
+var hasOwn = require('./hasOwn');
+
+    var _hasDontEnumBug,
+        _dontEnums;
+
+    function checkDontEnum(){
+        _dontEnums = [
+                'toString',
+                'toLocaleString',
+                'valueOf',
+                'hasOwnProperty',
+                'isPrototypeOf',
+                'propertyIsEnumerable',
+                'constructor'
+            ];
+
+        _hasDontEnumBug = true;
+
+        for (var key in {'toString': null}) {
+            _hasDontEnumBug = false;
+        }
+    }
+
+    /**
+     * Similar to Array/forEach but works over object properties and fixes Don't
+     * Enum bug on IE.
+     * based on: http://whattheheadsaid.com/2010/10/a-safer-object-keys-compatibility-implementation
+     */
+    function forIn(obj, fn, thisObj){
+        var key, i = 0;
+        // no need to check if argument is a real object that way we can use
+        // it for arrays, functions, date, etc.
+
+        //post-pone check till needed
+        if (_hasDontEnumBug == null) checkDontEnum();
+
+        for (key in obj) {
+            if (exec(fn, obj, key, thisObj) === false) {
+                break;
+            }
+        }
+
+
+        if (_hasDontEnumBug) {
+            var ctor = obj.constructor,
+                isProto = !!ctor && obj === ctor.prototype;
+
+            while (key = _dontEnums[i++]) {
+                // For constructor, if it is a prototype object the constructor
+                // is always non-enumerable unless defined otherwise (and
+                // enumerated above).  For non-prototype objects, it will have
+                // to be defined on this object, since it cannot be defined on
+                // any prototype objects.
+                //
+                // For other [[DontEnum]] properties, check if the value is
+                // different than Object prototype value.
+                if (
+                    (key !== 'constructor' ||
+                        (!isProto && hasOwn(obj, key))) &&
+                    obj[key] !== Object.prototype[key]
+                ) {
+                    if (exec(fn, obj, key, thisObj) === false) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    function exec(fn, obj, key, thisObj){
+        return fn.call(thisObj, obj[key], key, obj);
+    }
+
+    module.exports = forIn;
+
+
+
+},{"./hasOwn":40}],39:[function(require,module,exports){
+var hasOwn = require('./hasOwn');
+var forIn = require('./forIn');
+
+    /**
+     * Similar to Array/forEach but works over object properties and fixes Don't
+     * Enum bug on IE.
+     * based on: http://whattheheadsaid.com/2010/10/a-safer-object-keys-compatibility-implementation
+     */
+    function forOwn(obj, fn, thisObj){
+        forIn(obj, function(val, key){
+            if (hasOwn(obj, key)) {
+                return fn.call(thisObj, obj[key], key, obj);
+            }
+        });
+    }
+
+    module.exports = forOwn;
+
+
+
+},{"./forIn":38,"./hasOwn":40}],40:[function(require,module,exports){
+
+
+    /**
+     * Safer Object.hasOwnProperty
+     */
+     function hasOwn(obj, prop){
+         return Object.prototype.hasOwnProperty.call(obj, prop);
+     }
+
+     module.exports = hasOwn;
+
+
+
+},{}],41:[function(require,module,exports){
+var forOwn = require('./forOwn');
+
+    /**
+    * Combine properties from all the objects into first one.
+    * - This method affects target object in place, if you want to create a new Object pass an empty object as first param.
+    * @param {object} target    Target Object
+    * @param {...object} objects    Objects to be combined (0...n objects).
+    * @return {object} Target Object.
+    */
+    function mixIn(target, objects){
+        var i = 0,
+            n = arguments.length,
+            obj;
+        while(++i < n){
+            obj = arguments[i];
+            if (obj != null) {
+                forOwn(obj, copyProp, target);
+            }
+        }
+        return target;
+    }
+
+    function copyProp(val, key){
+        this[key] = val;
+    }
+
+    module.exports = mixIn;
+
+
+},{"./forOwn":39}],42:[function(require,module,exports){
+
+    /**
+     * Contains all Unicode white-spaces. Taken from
+     * http://en.wikipedia.org/wiki/Whitespace_character.
+     */
+    module.exports = [
+        ' ', '\n', '\r', '\t', '\f', '\v', '\u00A0', '\u1680', '\u180E',
+        '\u2000', '\u2001', '\u2002', '\u2003', '\u2004', '\u2005', '\u2006',
+        '\u2007', '\u2008', '\u2009', '\u200A', '\u2028', '\u2029', '\u202F',
+        '\u205F', '\u3000'
+    ];
+
+
+},{}],43:[function(require,module,exports){
+var toString = require('../lang/toString');
+var WHITE_SPACES = require('./WHITE_SPACES');
+    /**
+     * Remove chars from beginning of string.
+     */
+    function ltrim(str, chars) {
+        str = toString(str);
+        chars = chars || WHITE_SPACES;
+
+        var start = 0,
+            len = str.length,
+            charLen = chars.length,
+            found = true,
+            i, c;
+
+        while (found && start < len) {
+            found = false;
+            i = -1;
+            c = str.charAt(start);
+
+            while (++i < charLen) {
+                if (c === chars[i]) {
+                    found = true;
+                    start++;
+                    break;
+                }
+            }
+        }
+
+        return (start >= len) ? '' : str.substr(start, len);
+    }
+
+    module.exports = ltrim;
+
+
+},{"../lang/toString":32,"./WHITE_SPACES":42}],44:[function(require,module,exports){
+var toString = require('../lang/toString');
+var WHITE_SPACES = require('./WHITE_SPACES');
+    /**
+     * Remove chars from end of string.
+     */
+    function rtrim(str, chars) {
+        str = toString(str);
+        chars = chars || WHITE_SPACES;
+
+        var end = str.length - 1,
+            charLen = chars.length,
+            found = true,
+            i, c;
+
+        while (found && end >= 0) {
+            found = false;
+            i = -1;
+            c = str.charAt(end);
+
+            while (++i < charLen) {
+                if (c === chars[i]) {
+                    found = true;
+                    end--;
+                    break;
+                }
+            }
+        }
+
+        return (end >= 0) ? str.substring(0, end + 1) : '';
+    }
+
+    module.exports = rtrim;
+
+
+},{"../lang/toString":32,"./WHITE_SPACES":42}],45:[function(require,module,exports){
+var toString = require('../lang/toString');
+var WHITE_SPACES = require('./WHITE_SPACES');
+var ltrim = require('./ltrim');
+var rtrim = require('./rtrim');
+    /**
+     * Remove white-spaces from beginning and end of string.
+     */
+    function trim(str, chars) {
+        str = toString(str);
+        chars = chars || WHITE_SPACES;
+        return ltrim(rtrim(str, chars), chars);
+    }
+
+    module.exports = trim;
+
+
+},{"../lang/toString":32,"./WHITE_SPACES":42,"./ltrim":43,"./rtrim":44}],46:[function(require,module,exports){
+
+
+    /**
+     * Get current time in miliseconds
+     */
+    function now(){
+        // yes, we defer the work to another function to allow mocking it
+        // during the tests
+        return now.get();
+    }
+
+    now.get = (typeof Date.now === 'function')? Date.now : function(){
+        return +(new Date());
+    };
+
+    module.exports = now;
+
+
+
+},{}],47:[function(require,module,exports){
+arguments[4][21][0].apply(exports,arguments)
+},{"dup":21}],48:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"../array/slice":47,"dup":23}],49:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -2341,7 +2438,7 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":72,"./isPlainObject":66,"./kindOf":67}],63:[function(require,module,exports){
+},{"../object/mixIn":59,"./isPlainObject":53,"./kindOf":54}],50:[function(require,module,exports){
 var clone = require('./clone');
 var forOwn = require('../object/forOwn');
 var kindOf = require('./kindOf');
@@ -2391,9 +2488,9 @@ var isPlainObject = require('./isPlainObject');
 
 
 
-},{"../object/forOwn":69,"./clone":62,"./isPlainObject":66,"./kindOf":67}],64:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"./kindOf":67,"dup":23}],65:[function(require,module,exports){
+},{"../object/forOwn":56,"./clone":49,"./isPlainObject":53,"./kindOf":54}],51:[function(require,module,exports){
+arguments[4][30][0].apply(exports,arguments)
+},{"./kindOf":54,"dup":30}],52:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -2403,7 +2500,7 @@ var isKind = require('./isKind');
     module.exports = isObject;
 
 
-},{"./isKind":64}],66:[function(require,module,exports){
+},{"./isKind":51}],53:[function(require,module,exports){
 
 
     /**
@@ -2418,15 +2515,15 @@ var isKind = require('./isKind');
 
 
 
-},{}],67:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"dup":24}],68:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./hasOwn":70,"dup":27}],69:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"./forIn":68,"./hasOwn":70,"dup":28}],70:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"dup":29}],71:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
+arguments[4][31][0].apply(exports,arguments)
+},{"dup":31}],55:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"./hasOwn":57,"dup":38}],56:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"./forIn":55,"./hasOwn":57,"dup":39}],57:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"dup":40}],58:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var deepClone = require('../lang/deepClone');
 var isObject = require('../lang/isObject');
@@ -2468,37 +2565,113 @@ var isObject = require('../lang/isObject');
 
 
 
-},{"../lang/deepClone":63,"../lang/isObject":65,"./hasOwn":70}],72:[function(require,module,exports){
-var forOwn = require('./forOwn');
+},{"../lang/deepClone":50,"../lang/isObject":52,"./hasOwn":57}],59:[function(require,module,exports){
+arguments[4][41][0].apply(exports,arguments)
+},{"./forOwn":56,"dup":41}],60:[function(require,module,exports){
+/*
+prime
+ - prototypal inheritance
+*/"use strict"
 
-    /**
-    * Combine properties from all the objects into first one.
-    * - This method affects target object in place, if you want to create a new Object pass an empty object as first param.
-    * @param {object} target    Target Object
-    * @param {...object} objects    Objects to be combined (0...n objects).
-    * @return {object} Target Object.
-    */
-    function mixIn(target, objects){
-        var i = 0,
-            n = arguments.length,
-            obj;
-        while(++i < n){
-            obj = arguments[i];
-            if (obj != null) {
-                forOwn(obj, copyProp, target);
+var hasOwn = require("mout/object/hasOwn"),
+    mixIn  = require("mout/object/mixIn"),
+    create = require("mout/lang/createObject"),
+    kindOf = require("mout/lang/kindOf")
+
+var hasDescriptors = true
+
+try {
+    Object.defineProperty({}, "~", {})
+    Object.getOwnPropertyDescriptor({}, "~")
+} catch (e){
+    hasDescriptors = false
+}
+
+// we only need to be able to implement "toString" and "valueOf" in IE < 9
+var hasEnumBug = !({valueOf: 0}).propertyIsEnumerable("valueOf"),
+    buggy      = ["toString", "valueOf"]
+
+var verbs = /^constructor|inherits|mixin$/
+
+var implement = function(proto){
+    var prototype = this.prototype
+
+    for (var key in proto){
+        if (key.match(verbs)) continue
+        if (hasDescriptors){
+            var descriptor = Object.getOwnPropertyDescriptor(proto, key)
+            if (descriptor){
+                Object.defineProperty(prototype, key, descriptor)
+                continue
             }
         }
-        return target;
+        prototype[key] = proto[key]
     }
 
-    function copyProp(val, key){
-        this[key] = val;
+    if (hasEnumBug) for (var i = 0; (key = buggy[i]); i++){
+        var value = proto[key]
+        if (value !== Object.prototype[key]) prototype[key] = value
     }
 
-    module.exports = mixIn;
+    return this
+}
 
+var prime = function(proto){
 
-},{"./forOwn":69}],73:[function(require,module,exports){
+    if (kindOf(proto) === "Function") proto = {constructor: proto}
+
+    var superprime = proto.inherits
+
+    // if our nice proto object has no own constructor property
+    // then we proceed using a ghosting constructor that all it does is
+    // call the parent's constructor if it has a superprime, else an empty constructor
+    // proto.constructor becomes the effective constructor
+    var constructor = (hasOwn(proto, "constructor")) ? proto.constructor : (superprime) ? function(){
+        return superprime.apply(this, arguments)
+    } : function(){}
+
+    if (superprime){
+
+        mixIn(constructor, superprime)
+
+        var superproto = superprime.prototype
+        // inherit from superprime
+        var cproto = constructor.prototype = create(superproto)
+
+        // setting constructor.parent to superprime.prototype
+        // because it's the shortest possible absolute reference
+        constructor.parent = superproto
+        cproto.constructor = constructor
+    }
+
+    if (!constructor.implement) constructor.implement = implement
+
+    var mixins = proto.mixin
+    if (mixins){
+        if (kindOf(mixins) !== "Array") mixins = [mixins]
+        for (var i = 0; i < mixins.length; i++) constructor.implement(create(mixins[i].prototype))
+    }
+
+    // implement proto and return constructor
+    return constructor.implement(proto)
+
+}
+
+module.exports = prime
+
+},{"mout/lang/createObject":61,"mout/lang/kindOf":62,"mout/object/hasOwn":65,"mout/object/mixIn":66}],61:[function(require,module,exports){
+arguments[4][28][0].apply(exports,arguments)
+},{"../object/mixIn":66,"dup":28}],62:[function(require,module,exports){
+arguments[4][31][0].apply(exports,arguments)
+},{"dup":31}],63:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"./hasOwn":65,"dup":38}],64:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"./forIn":63,"./hasOwn":65,"dup":39}],65:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"dup":40}],66:[function(require,module,exports){
+arguments[4][41][0].apply(exports,arguments)
+},{"./forOwn":64,"dup":41}],67:[function(require,module,exports){
 "use strict";
 
 // credits to @cpojer's Class.Binds, released under the MIT license
@@ -2518,7 +2691,7 @@ var bound = prime({
 
 module.exports = bound
 
-},{"mout/function/bind":61,"prime":77}],74:[function(require,module,exports){
+},{"mout/function/bind":48,"prime":60}],68:[function(require,module,exports){
 "use strict";
 
 var prime = require("prime")
@@ -2537,7 +2710,7 @@ var Options = prime({
 
 module.exports = Options
 
-},{"mout/object/merge":71,"prime":77}],75:[function(require,module,exports){
+},{"mout/object/merge":58,"prime":60}],69:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -2656,7 +2829,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":91,"mout/array/forEach":79,"mout/array/indexOf":80,"mout/lang/kindOf":82,"mout/time/now":87}],76:[function(require,module,exports){
+},{"_process":76,"mout/array/forEach":18,"mout/array/indexOf":19,"mout/lang/kindOf":31,"mout/time/now":46}],70:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -2671,6 +2844,10 @@ var slice = Array.prototype.slice;
 
 var Emitter = prime({
 
+    constructor: function(stoppable){
+        this._stoppable = stoppable
+    },
+
     on: function(event, fn){
         var listeners = this._listeners || (this._listeners = {}),
             events = listeners[event] || (listeners[event] = [])
@@ -2681,7 +2858,7 @@ var Emitter = prime({
     },
 
     off: function(event, fn){
-        var listeners = this._listeners, events, key, length = 0
+        var listeners = this._listeners, events
         if (listeners && (events = listeners[event])){
 
             var io = indexOf(events, fn)
@@ -2701,7 +2878,8 @@ var Emitter = prime({
             var listeners = self._listeners, events
             if (listeners && (events = listeners[event])){
                 forEach(events.slice(0), function(event){
-                    return event.apply(self, args)
+                    var result = event.apply(self, args)
+                    if (self._stoppable) return result
                 })
             }
         }
@@ -2722,7 +2900,7 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":75,"./index":77,"mout/array/forEach":79,"mout/array/indexOf":80}],77:[function(require,module,exports){
+},{"./defer":69,"./index":71,"mout/array/forEach":18,"mout/array/indexOf":19}],71:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -2814,7 +2992,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":81,"mout/lang/kindOf":82,"mout/object/hasOwn":85,"mout/object/mixIn":86}],78:[function(require,module,exports){
+},{"mout/lang/createObject":28,"mout/lang/kindOf":31,"mout/object/hasOwn":40,"mout/object/mixIn":41}],72:[function(require,module,exports){
 /*
 Map
 */"use strict"
@@ -2940,61 +3118,7 @@ map.prototype = Map.prototype
 
 module.exports = map
 
-},{"./index":77,"mout/array/indexOf":80}],79:[function(require,module,exports){
-arguments[4][15][0].apply(exports,arguments)
-},{"dup":15}],80:[function(require,module,exports){
-arguments[4][16][0].apply(exports,arguments)
-},{"dup":16}],81:[function(require,module,exports){
-var mixIn = require('../object/mixIn');
-
-    /**
-     * Create Object using prototypal inheritance and setting custom properties.
-     * - Mix between Douglas Crockford Prototypal Inheritance <http://javascript.crockford.com/prototypal.html> and the EcmaScript 5 `Object.create()` method.
-     * @param {object} parent    Parent Object.
-     * @param {object} [props] Object properties.
-     * @return {object} Created object.
-     */
-    function createObject(parent, props){
-        function F(){}
-        F.prototype = parent;
-        return mixIn(new F(), props);
-
-    }
-    module.exports = createObject;
-
-
-
-},{"../object/mixIn":86}],82:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"dup":24}],83:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./hasOwn":85,"dup":27}],84:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"./forIn":83,"./hasOwn":85,"dup":28}],85:[function(require,module,exports){
-arguments[4][29][0].apply(exports,arguments)
-},{"dup":29}],86:[function(require,module,exports){
-arguments[4][72][0].apply(exports,arguments)
-},{"./forOwn":84,"dup":72}],87:[function(require,module,exports){
-
-
-    /**
-     * Get current time in miliseconds
-     */
-    function now(){
-        // yes, we defer the work to another function to allow mocking it
-        // during the tests
-        return now.get();
-    }
-
-    now.get = (typeof Date.now === 'function')? Date.now : function(){
-        return +(new Date());
-    };
-
-    module.exports = now;
-
-
-
-},{}],88:[function(require,module,exports){
+},{"./index":71,"mout/array/indexOf":19}],73:[function(require,module,exports){
 /*
 Slick Finder
 */"use strict"
@@ -3825,7 +3949,7 @@ slick.parse = parse;
 
 module.exports = slick
 
-},{"./parser":90}],89:[function(require,module,exports){
+},{"./parser":75}],74:[function(require,module,exports){
 (function (global){
 /*
 slick
@@ -3835,7 +3959,7 @@ module.exports = "document" in global ? require("./finder") : { parse: require("
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./finder":88,"./parser":90}],90:[function(require,module,exports){
+},{"./finder":73,"./parser":75}],75:[function(require,module,exports){
 /*
 Slick Parser
  - originally created by the almighty Thomas Aylott <@subtlegradient> (http://subtlegradient.com)
@@ -4087,7 +4211,7 @@ var parse = function(expression){
 
 module.exports = parse
 
-},{}],91:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};

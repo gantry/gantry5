@@ -2,7 +2,7 @@ details:
   name: Hydrogen
   version: "@version@"
   icon: paper-plane
-  date: May 15, 2015
+  date: @versiondate@
   author:
     name: RocketTheme, LLC
     email: support@rockettheme.com
@@ -51,9 +51,12 @@ configuration:
       - gantry-engine://scss
     files:
       - hydrogen
+      - hydrogen-wordpress
       - custom
     persistent:
       - hydrogen
+    overrides:
+      - hydrogen-wordpress
       - custom
 
   dependencies:
@@ -70,3 +73,87 @@ admin:
       - subfeature
     core:
       - base
+  content:
+    blog:
+      - query
+      - post-content
+      - heading
+      - featured-image
+      - title
+      - meta-date
+      - meta-author
+      - meta-comments
+      - meta-categories
+      - meta-tags
+      - read-more
+    post:
+      - heading
+      - featured-image
+      - title
+      - meta-date
+      - meta-author
+      - meta-comments
+      - meta-categories
+      - meta-tags
+    page:
+      - heading
+      - featured-image
+      - title
+      - meta-date
+      - meta-author
+      - meta-comments
+    archive:
+      - post-content
+      - heading
+      - featured-image
+      - title
+      - meta-date
+      - meta-author
+      - meta-comments
+      - meta-categories
+      - meta-tags
+      - read-more
+    category:
+      - post-content
+      - heading
+      - featured-image
+      - title
+      - meta-date
+      - meta-author
+      - meta-comments
+      - meta-categories
+      - meta-tags
+      - read-more
+    tag:
+      - post-content
+      - heading
+      - featured-image
+      - title
+      - meta-date
+      - meta-author
+      - meta-comments
+      - meta-categories
+      - meta-tags
+      - read-more
+    author:
+      - post-content
+      - heading
+      - featured-image
+      - title
+      - meta-date
+      - meta-author
+      - meta-comments
+      - meta-categories
+      - meta-tags
+      - read-more
+    search:
+      - post-content
+      - heading
+      - featured-image
+      - title
+      - meta-date
+      - meta-author
+      - meta-comments
+      - meta-categories
+      - meta-tags
+      - read-more

@@ -21,10 +21,10 @@ var ready     = require('domready'),
 // thanks David Walsh
 var prefix = (function() {
     var styles = window.getComputedStyle(document.documentElement, ''),
-        pre = (Array.prototype.slice.call(styles).join('')
-            .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
+        pre    = (Array.prototype.slice.call(styles).join('')
+                .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
         )[1],
-        dom = ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1];
+        dom    = ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1];
     return {
         dom: dom,
         lowercase: pre,
@@ -50,6 +50,8 @@ var Offcanvas = new prime({
         touch: true,
 
         openClass: 'g-offcanvas-open',
+        openingClass: 'g-offcanvas-opening',
+        closingClass: 'g-offcanvas-closing',
         overlayClass: 'g-nav-overlay'
     },
 
@@ -80,6 +82,9 @@ var Offcanvas = new prime({
         this.offcanvas = $('#g-offcanvas');
 
         if (!this.panel || !this.offcanvas) { return false; }
+
+        var swipe = this.offcanvas.data('g-offcanvas-swipe');
+        this.setOptions({ touch: !!(swipe !== null ? parseInt(swipe) : 1) });
 
         if (!this.options.padding) {
             this.offcanvas[0].style.display = 'block';
@@ -122,7 +127,7 @@ var Offcanvas = new prime({
 
     attachTouchEvents: function() {
         var msPointerSupported = window.navigator.msPointerEnabled,
-            touch = {
+            touch              = {
                 start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
                 move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
                 end: msPointerSupported ? 'MSPointerUp' : 'touchend'
@@ -149,7 +154,6 @@ var Offcanvas = new prime({
         }, this));
 
         this.detachMutationEvent();
-
         this.overlay.remove();
 
         return this;
@@ -161,7 +165,7 @@ var Offcanvas = new prime({
 
     detachTouchEvents: function() {
         var msPointerSupported = window.navigator.msPointerEnabled,
-            touch = {
+            touch              = {
                 start: msPointerSupported ? 'MSPointerDown' : 'touchstart',
                 move: msPointerSupported ? 'MSPointerMove' : 'touchmove',
                 end: msPointerSupported ? 'MSPointerUp' : 'touchend'
@@ -182,9 +186,8 @@ var Offcanvas = new prime({
 
         if (this.opened) { return this; }
 
-        if (!this.htmlEl.hasClass(this.options.openClass)) {
-            this.htmlEl.addClass(this.options.openClass);
-        }
+        this.htmlEl.addClass(this.options.openClass);
+        this.htmlEl.addClass(this.options.openingClass);
 
         this.overlay[0].style.opacity = 1;
 
@@ -195,6 +198,7 @@ var Offcanvas = new prime({
         setTimeout(bind(function() {
             var panel = this.panel[0];
 
+            this.htmlEl.removeClass(this.options.openingClass);
             panel.style.transition = panel.style['-webkit-transition'] = '';
         }, this), this.options.duration);
 
@@ -210,6 +214,8 @@ var Offcanvas = new prime({
         if (!this.opened && !this.opening) { return this; }
         if (this.panel !== element && this.dragging) { return false; }
 
+        this.htmlEl.addClass(this.options.closingClass);
+
         this.overlay[0].style.opacity = 0;
 
         this._setTransition();
@@ -220,6 +226,7 @@ var Offcanvas = new prime({
             var panel = this.panel[0];
 
             this.htmlEl.removeClass(this.options.openClass);
+            this.htmlEl.removeClass(this.options.closingClass);
             panel.style.transition = panel.style['-webkit-transition'] = '';
         }, this), this.options.duration);
 
@@ -237,14 +244,15 @@ var Offcanvas = new prime({
     _setTransition: function() {
         var panel = this.panel[0];
 
-        panel.style[prefix.css + 'transition'] = panel.style.transition = prefix.css + 'transform ' + this.options.duration + 'ms ' + this.options.effect;
+        panel.style[prefix.css + 'transition'] = panel.style.transition = 'left ' + this.options.duration + 'ms ' + this.options.effect + ', right ' + this.options.duration + 'ms ' + this.options.effect;
     },
 
     _translateXTo: function(x) {
-        var panel = this.panel[0];
-        this.offset.x.current = x;
+        var panel     = this.panel[0],
+            placement = (this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left');
 
-        panel.style[prefix.css + 'transform'] = panel.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+        this.offset.x.current = x;
+        panel.style[placement] = Math.abs(x) + 'px';
     },
 
     _bodyScroll: function() {
@@ -283,36 +291,37 @@ var Offcanvas = new prime({
     _touchMove: function(event) {
         if (isScrolling || this.preventOpen || !event.touches) { return; }
 
-        var placement = (this.bodyEl.hasClass('g-offcanvas-right') ? -1 : 1), // 1: left, -1: right
-            place = placement < 0 ? 'right' : 'left',
-            diffX = clamp(event.touches[0].clientX - this.offset.x.start, -this.options.padding, this.options.padding),
+        var placement  = (this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left'),
+            diffX      = clamp(event.touches[0].clientX - this.offset.x.start, -this.options.padding, this.options.padding),
             translateX = this.offset.x.current = diffX,
             diffY = Math.abs(event.touches[0].pageY - this.offset.y.start),
             overlayOpacity;
 
         if (Math.abs(translateX) > this.options.padding) { return; }
         if (diffY > 5 && !this.moved) { return; }
+
         if (Math.abs(diffX) > 0) {
             this.opening = true;
 
             // offcanvas on left
-            if (place == 'left' && (this.opened && diffX > 0 || !this.opened && diffX < 0)) { return; }
+            if (placement == 'left' && (this.opened && diffX > 0 || !this.opened && diffX < 0)) { return; }
 
             // offcanvas on right
-            if (place == 'right' && (this.opened && diffX < 0 || !this.opened && diffX > 0)) { return; }
+            if (placement == 'right' && (this.opened && diffX < 0 || !this.opened && diffX > 0)) { return; }
 
             if (!this.moved && !this.htmlEl.hasClass(this.options.openClass)) {
                 this.htmlEl.addClass(this.options.openClass);
             }
 
-            if ((place == 'left' && diffX <= 0) || (place == 'right' && diffX >= 0)) {
-                translateX = diffX + (placement * this.options.padding);
+            if ((placement == 'left' && diffX <= 0) || (placement == 'right' && diffX >= 0)) {
+                var norm = placement == 'left' ? 1 : -1;
+                translateX = diffX + (norm * this.options.padding);
                 this.opening = false;
             }
 
             overlayOpacity = mapNumber(Math.abs(translateX), 0, this.options.padding, 0, 1);
 
-            this.panel[0].style[prefix.css + 'transform'] = this.panel[0].style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+            this.panel[0].style[placement] = Math.abs(translateX) + 'px';
             this.overlay[0].style.opacity = overlayOpacity;
 
             this.moved = true;
@@ -336,14 +345,14 @@ var Offcanvas = new prime({
     },
 
     _checkTogglers: function(mutator) {
-        var togglers = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
+        var togglers        = $('[data-offcanvas-toggle], [data-offcanvas-open], [data-offcanvas-close]'),
             mobileContainer = $('#g-mobilemenu-container'),
             blocks, mCtext;
 
         if (!togglers || (mutator && ((mutator.target || mutator.srcElement) !== mobileContainer[0]))) { return; }
         if (this.opened) { this.close(); }
 
-        timeout(function(){
+        timeout(function() {
             blocks = this.offcanvas.search('.g-block');
             mCtext = mobileContainer ? mobileContainer.text().length : 0;
             var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;

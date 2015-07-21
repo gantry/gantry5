@@ -6,51 +6,74 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class Theme extends Base\Theme
 {
     public $path;
+    protected $user;
 
     public function __construct( $path, $name = '' )
     {
         parent::__construct($path, $name);
 
-        add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'widgets' ) );
-        add_theme_support( 'title-tag' );
-        add_theme_support( 'post-formats' );
-        add_theme_support( 'post-thumbnails' );
-        add_theme_support( 'menus' );
-        add_filter( 'timber_context', array( $this, 'add_to_context' ) );
-        add_filter( 'get_twig', array( $this, 'add_to_twig' ) );
-        add_action( 'init', array( $this, 'register_post_types' ) );
-        add_action( 'init', array( $this, 'register_taxonomies' ) );
-        add_action( 'widgets_init', array( $this, 'widgets_init' ) );
-    }
-
-    public function render($file, array $context = array())
-    {
         $gantry = \Gantry\Framework\Gantry::instance();
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-engine://twig'));
+        \Timber::$locations = $locator->findResources('gantry-engine://views');
 
-        $params = array(
-            'cache' => $locator('gantry-cache://twig', true, true),
-            'debug' => true,
-            'auto_reload' => true,
-            'autoescape' => 'html'
-        );
+        add_theme_support( 'html5', [ 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'widgets' ] );
+        add_theme_support( 'title-tag' );
+        add_theme_support( 'post-formats' );
+        add_theme_support( 'post-thumbnails' );
+        add_theme_support( 'menus' );
+        add_filter( 'timber_context', [ $this, 'add_to_context' ] );
+        add_filter( 'get_twig', [ $this, 'add_to_twig' ] );
+        add_action( 'init', [ $this, 'register_post_types' ] );
+        add_action( 'init', [ $this, 'register_taxonomies' ] );
+        add_action( 'widgets_init', [ $this, 'widgets_init' ] );
+    }
 
-        // FIXME: Get timezone from WP.
-        $timezone = 'UTC';
+    public function debug()
+    {
+        return WP_DEBUG;
+    }
 
-        $twig = new \Twig_Environment($loader, $params);
-        $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
+    public function renderer()
+    {
+        if (!$this->renderer) {
+            $gantry = \Gantry\Framework\Gantry::instance();
 
-        $this->add_to_twig($twig);
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
 
+            $loader = new \Twig_Loader_Filesystem(\Timber::$locations);
+
+            $params = array(
+                'cache' => $locator->findResource('gantry-cache://theme/twig', true, true),
+                'debug' => true,
+                'auto_reload' => true,
+                'autoescape' => 'html'
+            );
+
+            // FIXME: Get timezone from WP.
+            $timezone = 'UTC';
+
+            $twig = new \Twig_Environment($loader, $params);
+            $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
+
+            $this->add_to_twig($twig);
+
+            $this->renderer = $twig;
+        }
+
+        return $this->renderer;
+    }
+
+
+    public function render($file, array $context = array())
+    {
         // Include Gantry specific things to the context.
         $context = $this->add_to_context($context);
 
-        return $twig->render($file, $context);
+        return $this->renderer()->render($file, $context);
     }
 
     public function widgets_init()
@@ -87,12 +110,14 @@ class Theme extends Base\Theme
 
     public function add_to_context( array $context )
     {
+        if (!$this->user) {
+            $this->user = new \TimberUser;
+        }
+
         $context = parent::add_to_context( $context );
 
         $this->url = $context['site']->theme->link;
-
-        $context['menu'] = new \TimberMenu;
-        $context['my'] = new \TimberUser;
+        $context['my'] = $this->user;
 
         return $context;
     }

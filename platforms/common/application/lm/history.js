@@ -8,10 +8,11 @@ var History = new prime({
 
     inherits: Emitter,
 
-    constructor: function(session) {
+    constructor: function(session, preset) {
         this.index = 0;
         session = merge({}, session);
-        this.setSession(session);
+        preset = merge({}, preset);
+        this.setSession(session, preset);
     },
 
     undo: function() {
@@ -40,13 +41,15 @@ var History = new prime({
         return session;
     },
 
-    push: function(session) {
+    push: function(session, preset) {
         session = merge({}, session);
+        preset = merge({}, preset);
         var sliced = this.index < this.session.length - 1;
         if (this.index < this.session.length - 1) this.session = slice(this.session, 0, -(this.session.length - 1 - this.index));
         session = {
             time: +(new Date()),
-            data: session
+            data: session,
+            preset: preset
         };
 
         if (this.equals(session.data)) { return session; }
@@ -68,11 +71,12 @@ var History = new prime({
         return deepEquals(session, compare);
     },
 
-    setSession: function(session) {
+    setSession: function(session, preset) {
         session = !session ? []
             : [{
             time: +(new Date()),
-            data: merge({}, session)
+            data: merge({}, session),
+            preset: preset
         }];
 
         this.session = session;

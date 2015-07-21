@@ -1,7 +1,8 @@
-{% extends "forms/fields/select/selectize.html.twig" %}
+{% extends 'forms/fields/select/selectize.html.twig' %}
 
 {% block options %}
     {{ parent() }}
+    {% set current = gantry.menu.getDefaultMenuName() %}
     {% for key in gantry.menu.getMenus() %}
         {% set text = key|capitalize %}
         <option
@@ -10,6 +11,6 @@
                 value="{{ key|e }}"
                 {# non-gloval attribute structures #}
                 {% if field.options.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-                >{{ text|e }}</option>
+                >{{ text|e }}{{ (current == key and gantry.menu.hasDefaultMenu()) ? ' ★' : '' }}</option>
     {% endfor %}
 {% endblock %}

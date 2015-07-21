@@ -1,6 +1,5 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
 {% block particle %}
-    {% do gantry.theme.joomla(true) %}
     {{ gantry.platform.displayModules(particle.key, {'style': particle.chrome|default('gantry')})|raw }}
 {% endblock %}

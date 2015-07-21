@@ -72,12 +72,6 @@ var MenuManager = new prime({
             return true;
         }
 
-        var menuItem = element.find('> .menu-item');
-        if (menuItem && menuItem.tag() == 'span') {
-            this.stopAnimation();
-            return true;
-        }
-
         var siblings = element.siblings();
         element.addClass('active');
         if (siblings) { siblings.removeClass('active'); }
@@ -159,7 +153,7 @@ var MenuManager = new prime({
         }
 
         // it's a module or a particle and we allow for them to be deleted
-        if (!this.isNewParticle && (type && type.match(/__(module|particle)-[a-z0-9]{5}$/i))) {
+        if (!this.isNewParticle && (type && type.match(/__(module|particle)(-[a-z0-9]{5})?$/i))) {
             this.eraser.show();
         }
 
@@ -270,7 +264,7 @@ var MenuManager = new prime({
 
         var target = event.type.match(/^touch/i) ? document.elementFromPoint(event.touches.item(0).clientX, event.touches.item(0).clientY) : event.target;
 
-        if (!this.isNewParticle && this.itemID.match(/__(module|particle)-[a-z0-9]{5}$/i)) {
+        if (!this.isNewParticle && this.itemID.match(/__(module|particle)(-[a-z0-9]{5})?$/i)) {
             target = $(target);
             if (target.matches(this.eraser.element) || this.eraser.element.find(target)) {
                 this.dragdrop.removeElement = true;
@@ -318,6 +312,10 @@ var MenuManager = new prime({
         this.block.remove();
         this.original.remove();
         this.root.removeClass('moving');
+
+        if (this.root.find('.submenu-items')) {
+            if (!this.root.find('.submenu-items').children()) { this.root.find('.submenu-items').text(''); }
+        }
 
         this.emit('dragEnd', this.map, 'reorder');
     },
@@ -406,6 +404,7 @@ var MenuManager = new prime({
                     return $(element).data('mm-id');
                 });
 
+                if (!this.ordering[path]) { this.ordering[path] = []; }
                 this.ordering[path][column] = items;
             }, this);
 

@@ -144,32 +144,41 @@ var transferStyles = function($from, $to, properties) {
     $to.style(styles);
 };
 
+var measured = null;
 var measureString = function(str, $parent) {
     if (!str) {
         return 0;
     }
 
-    var $test = zen('test').style({
-        position: 'absolute',
-        top: -99999,
-        left: -99999,
-        width: 'auto',
-        padding: 0,
-        whiteSpace: 'pre'
-    }).text(str).bottom('body');
+    var $test;
+    if (!measured) {
+        $test = zen('test').style({
+            position: 'absolute',
+            top: -99999,
+            left: -99999,
+            width: 'auto',
+            padding: 0,
+            whiteSpace: 'pre'
+        }).text(str).bottom('body');
 
-    transferStyles($parent, $test, [
-        'letterSpacing',
-        'fontSize',
-        'fontFamily',
-        'fontWeight',
-        'textTransform'
-    ]);
+        transferStyles($parent, $test, [
+            'letterSpacing',
+            'fontSize',
+            'fontFamily',
+            'fontWeight',
+            'textTransform'
+        ]);
 
-    var width = $test[0].offsetWidth;
-    $test.remove();
+        measured = $test;
+    } else {
+        $test = measured;
+        $test.text(str);
+    }
 
-    return width;
+    //var width = $test[0].offsetWidth;
+    //$test.remove();
+
+    return $test[0].offsetWidth;
 };
 
 var highlight = function($element, pattern) {
@@ -253,7 +262,7 @@ var autoGrow = function(input) {
         width = measureString(value, input) + 4;
         if (width !== currentWidth) {
             currentWidth = width;
-            input.style({ width: width });
+            input[0].style.width = width + 'px';
             input.emit('resize');
         }
     };
@@ -361,7 +370,7 @@ var Selectize = new prime({
         this.tagType = input.tag() == 'select' ? TAG_SELECT : TAG_INPUT;
         this.highlightedValue = null;
         this.isRequired = input.attribute('required');
-        forEach(['isOpen', 'isDisabled', 'isInvalid', 'isLocked', 'isFocused', 'isInputHidden', 'isSeup', 'isShiftDown', 'isCmdDown', 'isCtrlDown', 'ignoreFocus', 'ignoreBlur', 'ignoreHover', 'hasOptions'], function(option) {
+        forEach(['isOpen', 'isDisabled', 'isInvalid', 'isLocked', 'isFocused', 'isInputHidden', 'isSetup', 'isShiftDown', 'isCmdDown', 'isCtrlDown', 'ignoreFocus', 'ignoreBlur', 'ignoreHover', 'hasOptions'], function(option) {
             this[option] = false;
         }, this);
         this.currentResults = null;
@@ -441,7 +450,7 @@ var Selectize = new prime({
         // g5 custom
         if (inputMode == 'single') {
             $wrapper.style({
-                width: parseInt($input.compute('width')) + 12 + (24) // padding compensation
+                width: parseInt($input[0].offsetWidth) + 12 + (24) // padding compensation
             });
         }
 
@@ -1536,7 +1545,7 @@ var Selectize = new prime({
 
     registerOption: function(data) {
         var key = hash_key(data[this.options.valueField]);
-        if (!key || this.options.hasOwnProperty(key)) return false;
+        if ((!key || this.options.hasOwnProperty(key)) && !this.options.allowEmptyOption) return false;
         data.$order = data.$order || ++this.order;
         this.Options[key] = data;
 
@@ -1545,7 +1554,7 @@ var Selectize = new prime({
 
     registerOptionGroup: function(data) {
         var key = hash_key(data[this.options.optgroupValueField]);
-        if (!key) return false;
+        if (!key && !this.options.allowEmptyOption) return false;
 
         data.$order = data.$order || ++this.order;
         this.Optgroups[key] = data;
@@ -1617,11 +1626,11 @@ var Selectize = new prime({
         // update the item if it's selected
         if (this.items.indexOf(value_new) !== -1) {
             $item = this.getItem(value);
-            $item_new = $(this.render('item', data));
+            var dummy = zen('div').html(this.render('item', data));
+            $item_new = dummy.firstChild();
             if ($item.hasClass('active')) $item_new.addClass('active');
 
-            dummy = zen('div').html($item_new);
-            dummy.firstChild().after($item);
+            $item_new.after($item);
             $item.remove();
         }
 
@@ -2160,7 +2169,7 @@ $.implement({
             }
         };
 
-        return this.forEach(function($input) {
+        return this.forEach(function($input, i) {
             $input = $($input);
             if ($input.selectizeInstance) return;
 
@@ -2193,6 +2202,7 @@ $.implement({
             }
 
             instance = new Selectize($input, merge({}, defaults, settings_element, settings_user, dataOptions));
+            $input.selectizeInstance = instance;
         });
     }
 });

@@ -1,3 +1,8 @@
+// Box model Resets for Joomla / Bootstrap2
+.platform-content input {
+    @include box-sizing(content-box);
+}
+
 legend {
 	margin-bottom: $leading-margin;
 }
@@ -26,14 +31,16 @@ input[type="color"]:focus,
 	padding: ($leading-margin / 4) ($leading-margin / 4);
 }
 
-input, textarea, .uneditable-input {
-	width: 100%;
+.uneditable-input {
+    width: 100%;
 }
 
-.input-block-level {
-	display: block;
-	width: 100%;
-	min-height: 30px;
+.platform-content {
+    .input-block-level, .input-large, .input-xlarge, .input-xxlarge, .uneditable-input {
+    	display: block;
+    	width: 100%;
+    	min-height: 28px;
+    }
 }
 
 .input-prepend .chzn-container-single .chzn-single,
@@ -88,6 +95,10 @@ input, textarea, .uneditable-input {
 	text-align: left;
 }
 
+.control-label .hasTooltip {
+    display: inline-block;
+}
+
 .form-vertical .controls {
 	margin-left: 0;
 }
@@ -109,4 +120,10 @@ input.invalid {
 		display: inherit;
 		margin-left: inherit;
 	}
+}
+
+.controls {
+    input[type="radio"] {
+        margin-right: 5px;
+    }
 }

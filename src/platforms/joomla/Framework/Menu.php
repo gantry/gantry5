@@ -41,6 +41,21 @@ class Menu extends AbstractMenu
         $this->active  = $this->menu->getActive();
     }
 
+    public function init(&$params)
+    {
+        parent::init($params);
+
+        if (!empty($params['admin'])) {
+            /** @var \JTableMenuType $table */
+            $menuType = \JTable::getInstance('MenuType');
+            $menuType->load(['menutype' => $params['menu']]);
+
+            $config = $this->config();
+            $config->set('settings.title', $menuType->title);
+            $config->set('settings.description', $menuType->description);
+        }
+    }
+
     /**
      * Return list of menus.
      *
@@ -67,6 +82,36 @@ class Menu extends AbstractMenu
     public function getDefaultMenuName()
     {
         return $this->default->menutype;
+    }
+
+    /**
+     * Returns true if the platform implements a Default menu.
+     *
+     * @return boolean
+     */
+    public function hasDefaultMenu()
+    {
+        return true;
+    }
+
+    /**
+     * Return active menu.
+     *
+     * @return string
+     */
+    public function getActiveMenuName()
+    {
+        return $this->active ? $this->active->menutype : null;
+    }
+
+    /**
+     * Returns true if the platform implements an Active menu.
+     *
+     * @return boolean
+     */
+    public function hasActiveMenu()
+    {
+        return true;
     }
 
     public function isActive($item)
@@ -103,7 +148,7 @@ class Menu extends AbstractMenu
     protected function getItemsFromPlatform($params)
     {
         $attributes = ['menutype'];
-        $values = [$params['menu'] ?: $this->default->menutype];
+        $values = [$params['menu']];
 
         // Items are already filtered by access and language, in admin we need to work around that.
         if (\JFactory::getApplication()->isAdmin()) {
@@ -196,7 +241,7 @@ class Menu extends AbstractMenu
                     continue;
                 }
 
-                // These params always come from Joomla.
+                // These params always come from Joomla and cannot be overridden.
                 $itemParams = [
                     'id' => $menuItem->id,
                     'type' => $menuItem->type,
@@ -215,7 +260,7 @@ class Menu extends AbstractMenu
                 }
 
                 // Get default target from Joomla.
-                switch ($menuItem->params->get('browserNav', 0))
+                switch ($menuItem->browserNav)
                 {
                     default:
                     case 0:
@@ -233,6 +278,7 @@ class Menu extends AbstractMenu
                 $itemParams += [
                     'title' => $menuItem->title,
                     'subtitle' => $menuItem->params->get('menu-anchor_title', ''),
+                    'anchor_class' => $menuItem->params->get('menu-anchor_css', ''),
                     'image' => $menuItem->params->get('menu_image', ''),
                     'icon_only' => !$menuItem->params->get('menu_text', 1),
                     'target' => $target

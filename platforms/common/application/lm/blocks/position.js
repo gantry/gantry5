@@ -21,7 +21,7 @@ var Position = new prime({
     },
 
     getTitle: function() {
-        return (this.options.title || 'Position ' + UID);
+        return trim(this.options.title || 'Position ' + UID);
     },
 
     getKey: function() {

@@ -1,0 +1,17 @@
+{% extends "forms/fields/input/selectize.html.twig" %}
+
+{% block global_attributes %}
+    {% set categories = gantry.platform.getCategories() %}
+    {% set Options = field.selectize.Options %}
+    {% set options = [] %}
+    {% if categories %}
+        {% for id,category in categories %}
+            {% set options = options|merge([{value: id, text: category}])  %}
+        {% endfor %}
+
+        {% set field = field|merge(field.selectize.Options|default({}))|merge({selectize: { Options: options }}) %}
+    {% endif %}
+
+    data-selectize="{{ (field.selectize is defined ? field.selectize|json_encode()|e('html_attr') : '') }}"
+    {{ parent() }}
+{% endblock %}

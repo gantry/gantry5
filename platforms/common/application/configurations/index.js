@@ -11,14 +11,13 @@ var $             = require('elements'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxURL    = require('../utils/get-ajax-url').global,
 
-    flags         = require('../utils/flags-state'),
-    warningURL    = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
+    flags         = require('../utils/flags-state');
 
-
-var Configurations = {};
+require('./dropdown-edit');
 
 ready(function() {
-    var body = $('body');
+    var body = $('body'),
+        warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
 
     // Handles Configurations Duplicate / Remove
     body.delegate('click', '[data-g-config]', function(event, element) {
@@ -90,7 +89,7 @@ ready(function() {
                         reload.href(reload.href().replace('style=' + outlineDeleted, 'style=' + ids.shift()));
                     }
                 }
-                
+
                 if (!reload) { window.location = window.location; }
                 else {
                     body.emit('click', {target: reload});
@@ -109,6 +108,7 @@ ready(function() {
 
     // Handles Configurations Titles Rename
     var updateTitle = function(title, original, wasCanceled) {
+            this.style('text-overflow', 'ellipsis');
             if (wasCanceled || title == original) { return; }
             var element = this,
                 href = element.data('g-config-href'),
@@ -129,7 +129,7 @@ ready(function() {
 
                     element.data('title-editable', original).text(original);
                 } else {
-                    //console.log(response);
+                    element.parent('h4').data('title', title);
                 }
 
                 parent.hideIndicator();
@@ -142,6 +142,9 @@ ready(function() {
             editables.forEach(function(editable) {
                 editable = $(editable);
                 editable.confWasAttached = true;
+                editable.on('title-edit-start', function(){
+                    editable.style('text-overflow', 'inherit');
+                });
                 editable.on('title-edit-end', updateTitle);
             });
         };
@@ -160,4 +163,4 @@ ready(function() {
     attachEditables($('#configurations [data-title-editable]'));
 });
 
-module.exports = Configurations;
+module.exports = {};

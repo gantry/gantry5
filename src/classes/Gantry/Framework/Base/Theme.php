@@ -15,9 +15,10 @@
 namespace Gantry\Framework\Base;
 
 use Gantry\Component\Theme\ThemeDetails;
-use RocketTheme\Toolbox\File\JsonFile;
+use Gantry\Component\Theme\ThemeInterface;
+use Gantry\Component\Theme\ThemeTrait;
 
-abstract class Theme
+abstract class Theme implements ThemeInterface
 {
     use ThemeTrait;
 

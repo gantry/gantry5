@@ -33,4 +33,19 @@ class Assignments
     {
         return [];
     }
+
+    public function getAssignment()
+    {
+        return 'default';
+    }
+
+    public function setAssignment($value)
+    {
+        throw new \RuntimeException('Not implemented');
+    }
+
+    public function assignmentOptions()
+    {
+        return [];
+    }
 }

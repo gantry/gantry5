@@ -3,6 +3,7 @@
 var ready     = require('domready'),
     menu      = require('./menu'),
     offcanvas = require('./offcanvas'),
+    totop     = require('./totop'),
     $         = require('./utils/dollar-extras'),
 
     instances = {};

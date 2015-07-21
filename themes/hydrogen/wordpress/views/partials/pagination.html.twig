@@ -1,0 +1,38 @@
+{% set twigTemplate = 'pagination.html.twig' %}
+
+{% block pagination %}
+
+<div class="pagination">
+    <p class="counter">
+        {% set current_page = '1' %}
+        {% for page in pagination.pages %}
+            {% if page.current %}
+                {% set current_page = page.name %}
+            {% endif %}
+        {% endfor %}
+
+        {{ __('Page %1$s of %2$s', 'g5_hydrogen')|format(current_page, pagination.pages|length) }}
+    </p>
+
+    {% if pagination.prev %}
+        <a href="{{ pagination.prev.link }}" class="prev {{ pagination.prev.link|length ? '' : 'hide' }}">{{ __('Prev', 'g5_hydrogen') }}</a>
+    {% endif %}
+
+    <ul class="pages">
+        {% for page in pagination.pages %}
+            <li>
+                {% if page.link %}
+                    <a href="{{ page.link }}" class="{{ page.class }}">{{ page.title }}</a>
+                {% else %}
+                    <span class="{{ page.class }}">{{ page.title }}</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% if pagination.next %}
+        <a href="{{ pagination.next.link }}" class="next {{ pagination.next.link|length ? '' : 'hide' }}">{{ __('Next', 'g5_hydrogen') }}</a>
+    {% endif %}
+</div>
+
+{% endblock %}

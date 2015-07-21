@@ -53,6 +53,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
         var blocktype = this.block.data('mm-blocktype');
         this.block.attribute('data-mm-blocktype', null).addClass('g-menu-item-' + blocktype).data('mm-original-type', blocktype);
         zen('span.menu-item-type.badge').text(blocktype).after(this.block.find('.menu-item .title'));
+
         modal.open({
             content: 'Loading',
             method: 'post',
@@ -85,6 +86,8 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
 
                     if (found.length) { $(found).removeClass('hidden'); }
                 });
+
+                search[0].focus();
             }
         });
     }
@@ -148,7 +151,7 @@ var StepTwo = function(data, content, button) {
                 if (!name || input.disabled()) { return; }
 
                 input = content.find('[name="' + name + '"]');
-                var value = input.value(),
+                var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                     parent = input.parent('.settings-param'),
                     override = parent ? parent.find('> input[type="checkbox"]') : null;
 
@@ -246,6 +249,10 @@ ready(function() {
         switch (type) {
             case 'particle':
                 data['particle'] = selected.data('lm-subtype');
+                break;
+
+            case 'widget':
+                data['widget'] = selected.data('lm-subtype');
                 break;
 
             case 'module':

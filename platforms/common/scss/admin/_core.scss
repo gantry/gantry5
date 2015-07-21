@@ -1,22 +1,23 @@
 html {
     width:100vw;
     overflow-x:hidden;
+    @include box-sizing(border-box);
+}
+
+*, *::before, *::after {
+    @include box-sizing(inherit);
 }
 
 body {
     margin: 0;
 }
 
-body.g5-prime {
+body.g-prime {
     color: $white;
     background-color: $body-bg;
     font-family: $font-family-default;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-    color: $core-accent;
 }
 
 #g5-container { // wrapper
@@ -25,6 +26,11 @@ a {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: $font-family-default;
+    position: relative;
+
+    a {
+        color: $core-accent;
+    }
 
     .g-block {
         position: relative;
@@ -67,7 +73,7 @@ a {
             }
         }
 
-        .inner-params {
+        &.card .inner-params, &:not(.card) {
             overflow: hidden;
             height: 0;
         }
@@ -88,9 +94,14 @@ a {
         display: block;
         width: 100%;
         @include column-count(2);
+        @include column-gap(20px);
 
         @include breakpoint(mobile-only) {
             @include column-count(1);
+        }
+
+        .card h4, .card input {
+            @include transform(translateZ(0));
         }
     }
 
@@ -103,6 +114,8 @@ a {
         min-width: 250px;
         vertical-align: top;
         margin: 10px 0;
+        @include backface-visibility(hidden);
+
         //@include transform(translateZ(0)); // FIXME : Causes z-index issue in selectize but fixes WebKit rendering issues with Columns
 
         &.full-width {
@@ -146,10 +159,6 @@ a {
             }
         }
 
-        .enabler {
-            @include enabler($green, $red);
-        }
-
         .inner-params > :first-child:not(.alert) {
             margin: $content-margin 0 0;
             padding-top: $content-margin * 2;
@@ -177,9 +186,19 @@ a {
             }
         }
     }
+
+    .enabler {
+        @include enabler($green, $red);
+    }
+
     .themes {
         .card {
             max-width: 300px;
+        }
+        .theme-info {
+            display: block;
+            text-align: center;
+            font-size: $core-font-size - 0.15;
         }
     }
 
@@ -222,6 +241,7 @@ a {
 // Whoops Debug
 .Whoops.container {
     position: inherit;
+    @include clearfix;
 }
 
 // Keyframes

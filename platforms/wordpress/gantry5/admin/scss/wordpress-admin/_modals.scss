@@ -1,0 +1,25 @@
+body.gantry5 {
+    #g5-container {
+        .g5-dialog {
+            @include breakpoint(desktop-only) {
+                padding-left: 160px;
+            }
+            @include breakpoint(tablet-range) {
+                padding-left: 36px;
+            }
+        }
+        .g5-dialog-loading-spinner.g5-dialog-theme-default {
+            top: 3em;
+
+            @include breakpoint(desktop-only) {
+                left: 160px;
+            }
+            @include breakpoint(tablet-range) {
+                left: 36px;
+            }
+            @include breakpoint(mobile-only) {
+                top: 4em;
+            }
+        }
+    }
+}

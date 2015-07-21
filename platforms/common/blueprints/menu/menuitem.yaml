@@ -38,6 +38,11 @@ form:
           type: input.text
           label: Link
 
+        .hash:
+          type: input.text
+          label: Append Hash
+          description: "If you'd like to append an hash to the end of the URL (ie, #to-bottom)"
+
         .title:
           type: input.text
           label: Menu Title
@@ -76,6 +81,11 @@ form:
         .icon:
           type: input.icon
           label: Icon
+
+        .icon_only:
+          type: input.checkbox
+          label: Icon Only
+          description: Display only icon or image. Hides title and subtitle.
 
         .subtitle:
           type: input.text

@@ -138,7 +138,7 @@ ready(function() {
         data.splice(index, 1);
         dataField.value(JSON.stringify(data));
         item.remove();
-        if (items.length) { list.parent().find('[data-collection-editall]').style('display', 'none'); }
+        if (items.length <= 2) { list.parent().find('[data-collection-editall]').style('display', 'none'); }
         body.emit('change', { target: dataField });
     });
 
@@ -214,7 +214,7 @@ ready(function() {
                         if (!name || input.disabled()) { return; }
 
                         input = content.elements.content.find('[name="' + name + '"]');
-                        var value = input.value(),
+                        var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                             parent = input.parent('.settings-param'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 

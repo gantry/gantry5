@@ -1,4 +1,4 @@
-{% extends default ? "partials/field.html.twig" : "forms/field.html.twig" %}
+{% extends default ? "partials/field.html.twig" : 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% block group %}
     <div class="input-group

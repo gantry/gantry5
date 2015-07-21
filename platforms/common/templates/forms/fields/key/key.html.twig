@@ -1,4 +1,4 @@
-{% extends "forms/field.html.twig" %}
+{% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% set value = value ?: (scope ~ name)|split('.')|slice(-2, -1)|first %}
 

@@ -24,15 +24,13 @@ try {
     $gantry = Gantry::instance();
 
     // Initialize the template if not done already.
-    if (!isset($gantry[ 'theme.name' ]))
-    {
+    if ( !isset( $gantry[ 'theme.name' ] ) ) {
         $gantry[ 'theme.path' ] = get_stylesheet_directory();
         $gantry[ 'theme.name' ] = get_option( 'template' );
     }
 
     // Only a single template can be loaded at any time.
-    if (!isset($gantry[ 'theme' ]))
-    {
+    if ( !isset( $gantry[ 'theme' ] ) ) {
         include_once __DIR__ . '/theme.php';
     }
 
@@ -60,14 +58,11 @@ if ( is_admin() ) {
         define( 'GANTRYADMIN_PATH', __DIR__ . '/admin' );
     }
 
-    add_action(
-        'init',
-        function () {
-            if ( defined('GANTRYADMIN_PATH') ) {
-                require_once GANTRYADMIN_PATH . '/init.php';
-            }
+    add_action( 'init', function () {
+        if( defined( 'GANTRYADMIN_PATH' ) ) {
+            require_once GANTRYADMIN_PATH . '/init.php';
         }
-    );
+    } );
 }
 
 return $gantry;

@@ -26,6 +26,9 @@ $context = array(
     'message' => substr($html, $start, $end - $start)
 );
 
+// Reset used outline configuration.
+unset($gantry['configuration']);
+
 // Render the page.
 echo $theme
     ->setLayout('_offline')

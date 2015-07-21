@@ -1,24 +1,29 @@
 "use strict";
-var ready         = require('elements/domready'),
-    $             = require('elements/attributes'),
-    modal         = require('../ui').modal,
-    toastr        = require('../ui').toastr,
-    request       = require('agent'),
-    zen           = require('elements/zen'),
-    contains      = require('mout/array/contains'),
-    size          = require('mout/collection/size'),
-    trim          = require('mout/string/trim'),
-    forEach       = require('mout/collection/forEach'),
+var ready          = require('elements/domready'),
+    $              = require('elements/attributes'),
+    modal          = require('../ui').modal,
+    toastr         = require('../ui').toastr,
+    sidebar        = require('./particles-sidebar'),
+    request        = require('agent'),
+    zen            = require('elements/zen'),
+    contains       = require('mout/array/contains'),
+    size           = require('mout/collection/size'),
+    trim           = require('mout/string/trim'),
+    strReplace     = require('mout/string/replace'),
+    properCase     = require('mout/string/properCase'),
+    forEach        = require('mout/collection/forEach'),
 
-    parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
+    getAjaxURL    = require('../utils/get-ajax-url').global,
 
-    Builder       = require('./builder'),
-    History       = require('../utils/history'),
-    validateField = require('../utils/field-validation'),
-    LMHistory     = require('./history'),
-    LayoutManager = require('./layoutmanager'),
-    SaveState     = require('../utils/save-state');
+    flags         = require('../utils/flags-state'),
+    Builder        = require('./builder'),
+    History        = require('../utils/history'),
+    validateField  = require('../utils/field-validation'),
+    LMHistory      = require('./history'),
+    LayoutManager  = require('./layoutmanager'),
+    SaveState      = require('../utils/save-state');
 
 require('../ui/popover');
 
@@ -58,12 +63,15 @@ ready(function() {
 
     lmhistory.on('undo', function(session, index) {
         var notice = $('#lm-no-layout'),
+            title = $('.layout-title .title small'),
+            preset_name = session.preset.name || 'Default',
             HM = {
                 back: $('[data-lm-back]'),
                 forward: $('[data-lm-forward]')
             };
 
         if (notice) { notice.style({ display: !size(session.data) ? 'block' : 'none' }); }
+        if (title) { title.text('(' + properCase(trim(strReplace(preset_name, [/_/g, /\//g], [' ', ' / ']))) + ')'); }
 
         builder.reset(session.data);
         HM.forward.removeClass('disabled');
@@ -73,12 +81,15 @@ ready(function() {
     });
     lmhistory.on('redo', function(session, index) {
         var notice = $('#lm-no-layout'),
+            title = $('.layout-title .title small'),
+            preset_name = session.preset.name || 'Default',
             HM = {
                 back: $('[data-lm-back]'),
                 forward: $('[data-lm-forward]')
             };
 
         if (notice) { notice.style({ display: !size(session.data) ? 'block' : 'none' }); }
+        if (title) { title.text('(' + properCase(trim(strReplace(preset_name, [/_/g, /\//g], [' ', ' / ']))) + ')'); }
 
         builder.reset(session.data);
         HM.back.removeClass('disabled');
@@ -112,7 +123,7 @@ ready(function() {
         builder.setStructure(data);
         builder.load();
 
-        layoutmanager.history.setSession(builder.serialize());
+        layoutmanager.history.setSession(builder.serialize(), JSON.parse(root.data('lm-preset')));
         layoutmanager.savestate.setSession(builder.serialize(null, true));
     }
 
@@ -154,12 +165,12 @@ ready(function() {
         builder.setStructure(data);
         builder.load();
 
-        layoutmanager.history.setSession(builder.serialize());
+        layoutmanager.history.setSession(builder.serialize(), JSON.parse(root.data('lm-preset')));
         layoutmanager.savestate.setSession(builder.serialize(null, true));
 
         // refresh LM eraser
         layoutmanager.eraser.element = $('[data-lm-eraseblock]');
-        layoutmanager.eraser.hide();
+        layoutmanager.eraser.hide(true);
     });
 
     // Particles filtering
@@ -194,7 +205,7 @@ ready(function() {
                 builder.get(id).setSize(100 / blocks.length, true);
             });
 
-            lmhistory.push(builder.serialize());
+            lmhistory.push(builder.serialize(), lmhistory.get().preset);
         });
     });
 
@@ -241,23 +252,26 @@ ready(function() {
 
         layoutmanager.singles('cleanup', builder);
 
-        lmhistory.push(builder.serialize());
+        lmhistory.push(builder.serialize(), lmhistory.get().preset);
     });
 
     // Switcher
+    var SWITCHER_HIT = false;
     body.delegate('mouseover', '[data-lm-switcher]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
+        SWITCHER_HIT = element;
         if (!element.PopoverDefined) {
             element.getPopover({
                 type: 'async',
+                width: '500',
                 url: parseAjaxURI(element.data('lm-switcher') + getAjaxSuffix()),
                 allowElementsClick: '.g-tabs a'
             });
         }
     });
 
-    // Clear Layout
+    // Switch Layout
     body.delegate('mousedown', '[data-switch]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
@@ -283,7 +297,8 @@ ready(function() {
             data.layout = JSON.stringify(lm.builder.serialize());
         }
 
-        request(method, parseAjaxURI(element.data('switch') + getAjaxSuffix()), data, function(error, response) {
+        var uri = parseAjaxURI(element.data('switch') + getAjaxSuffix());
+        request(method, uri, data, function(error, response) {
             element.hideIndicator();
 
             if (!response.body.success) {
@@ -296,7 +311,48 @@ ready(function() {
                 return;
             }
 
-            var preset = response.body.preset || 'default',
+            if (response.body.message && !flags.get('lm:switcher:' + window.btoa(uri), false)) {
+                // confirm before proceeding
+                flags.warning({
+                    message: response.body.message,
+                    callback: function(response, content) {
+                        var confirm = content.find('[data-g-delete-confirm]'),
+                            cancel  = content.find('[data-g-delete-cancel]');
+
+                        if (!confirm) { return; }
+
+                        confirm.on('click', function(e) {
+                            e.preventDefault();
+                            if (this.attribute('disabled')) { return false; }
+
+                            flags.get('lm:switcher:' + window.btoa(uri), true);
+                            $([confirm, cancel]).attribute('disabled');
+                            body.emit('mousedown', { target: element });
+
+                            modal.close();
+                        });
+
+                        cancel.on('click', function(e) {
+                            e.preventDefault();
+                            if (this.attribute('disabled')) { return false; }
+
+                            $([confirm, cancel]).attribute('disabled');
+                            flags.get('lm:switcher:' + window.btoa(uri), false);
+
+                            modal.close();
+                            if (SWITCHER_HIT) {
+                                setTimeout(function(){
+                                    SWITCHER_HIT.getPopover().show();
+                                }, 5);
+                            }
+                        });
+                    }
+                });
+
+                return false;
+            }
+
+            var preset = response.body.preset || { name: 'default' },
                 preset_name = response.body.title || 'Default',
                 structure = response.body.data,
                 notice = $('#lm-no-layout'),
@@ -309,7 +365,7 @@ ready(function() {
             builder.setStructure(structure);
             builder.load();
 
-            lmhistory.push(builder.serialize());
+            lmhistory.push(builder.serialize(), JSON.parse(preset));
 
             $('[data-lm-switcher]').getPopover().hideAll().destroy();
         });
@@ -359,12 +415,17 @@ ready(function() {
             data: data,
             remote: parseAjaxURI(settingsURL + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
+                if (!response.body.success) { return; }
+
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
                     submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
                     dataString = [], invalid = [];
 
                 if ((!form && !fakeDOM) || !submit) { return true; }
+
+                var urlTemplate = content.elements.content.find('.g-urltemplate');
+                if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
 
                 // Particle Settings apply
                 submit.on('click', function(e) {
@@ -451,7 +512,7 @@ ready(function() {
                                 }
                             }
 
-                            lmhistory.push(builder.serialize());
+                            lmhistory.push(builder.serialize(), lmhistory.get().preset);
 
                             // if it's apply and save we also save the panel
                             if (target.data('apply-and-save') !== null) {

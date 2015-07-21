@@ -24,6 +24,6 @@ $gantry[ 'platform' ]->set(
 );
 
 // Define Gantry services.
-$gantry['theme'] = function ( $c )  {
+$gantry[ 'theme' ] = function ( $c )  {
     return new GantryTheme( $c[ 'theme.path' ], $c[ 'theme.name' ] );
 };

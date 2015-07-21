@@ -1,8 +1,0 @@
-supports:
-  post-formats: true
-  post-thumbnails: true
-  custom-background: false
-  custom-header: false
-  automatic-feed-links: false
-  menus: true
-  html5: [comment-list, comment-form, search-form, gallery, caption]

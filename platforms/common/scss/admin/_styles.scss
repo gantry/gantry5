@@ -1,4 +1,44 @@
 #g5-container {//wrapper
+    #styles h2[data-g-collapse] {
+        .g-tooltip {
+            &:before {
+                left: 0.3rem;
+                bottom: 2rem;
+            }
+
+            &:after {
+                left: -0.5rem;
+                bottom: 2.4rem;
+            }
+        }
+
+        i {
+            vertical-align: middle;
+            cursor: pointer;
+            display: inline-block;
+            border: 1px solid #ccc;
+            color: #aaa;
+            border-radius: 3px;
+            line-height: 1rem;
+            padding: 0 0 3px;
+            font-size: 1rem;
+
+            &:hover:before {
+                bottom: 1.65rem;
+                left: 0.25rem;
+            }
+
+            &:hover:after {
+                left: -0.5rem;
+                bottom: 2rem;
+            }
+        }
+
+        &.g-collapsed-main i {
+            @include transform(rotate(180deg));
+        }
+    }
+
     .g-preset-match {
         .swatch-matched, .swatch-title-matched {
             display: inline-block;

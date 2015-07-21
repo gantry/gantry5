@@ -42,7 +42,7 @@ var compileCSS = function(app) {
         sourcemap: !prod,
         loadPath: _load,
         style: prod ? 'compact' : 'expanded',
-        lineNumbers: !prod,
+        lineNumbers: false,
         trace: !prod
     };
 

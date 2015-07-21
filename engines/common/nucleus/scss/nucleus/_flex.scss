@@ -4,6 +4,10 @@
 	padding: 0;
 }
 
+.g-block .g-container {
+    width: auto;
+}
+
 // Grid Row and Column Setup
 .g-grid {
 	@include display(flex);

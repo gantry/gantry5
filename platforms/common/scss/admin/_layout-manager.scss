@@ -55,7 +55,48 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             display: none;
         }
 
-        /* THIS IS FOR PAGES */
+        > [data-lm-blocktype="container"] {
+            position: relative;
+            padding: 8px;
+            background: #e0e0e0;
+
+            .container-wrapper {
+                padding: 0 4px 8px;
+                color: #888;
+
+                .container-title {
+                    @extend .float-left;
+                    text-transform: capitalize;
+                    font-size: 0.95rem;
+
+                    .changes-indicator {
+                        margin-right: 5px;
+                    }
+                }
+
+                .container-actions {
+                    @extend .float-right;
+
+                    .g-tooltip {
+                        &:before {
+                            right: 0.1rem;
+                        }
+
+                        &:after {
+                            right: -0.2rem;
+                        }
+                    }
+
+                    .g-tooltip, i {
+                        cursor: pointer;
+                        @include transition(color 0.2s);
+                        &:hover {
+                            color: darken($core-text, 10%);
+                        }
+                    }
+                }
+            }
+        }
 
         .g-grid .g-block {
             .section:first-child {
@@ -95,7 +136,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             .section-actions {
                 opacity: 0;
                 @include transition(opacity 0.2s ease-out);
-                
+
                 i {
                     cursor: pointer;
                     @include transition(color 0.2s);
@@ -341,7 +382,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 font-weight: bold;
                 color: $white;
             }
-            
+
             > span {
                 position: relative;
                 z-index: 2;
@@ -424,17 +465,16 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             background-color: #ddd;
             border: 0;
             padding: 1px;
-            flex: 0 1 100%;
+            @include flex(0 1 100%);
 
             &.in-between {
                 display: block;
-                flex: 0 0 0px;
                 margin: 0 2px 0 -4px;
-                width: 0px;
+                width: 0;
                 padding: 1px;
                 text-indent: -10000px;
-                font-size: 0px;
-                flex: 0 1 0%;
+                font-size: 0;
+                @include flex(0 1 0);
                 background-color: #555;
             }
 
@@ -457,8 +497,12 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
 
         .block-has-changes {
-            &:not(.section):not(.atoms-section):not(.offcanvas-section) {
+            &:not(.section):not(.atoms-section):not(.offcanvas-section):not(.g-lm-container) {
                 box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
+            }
+
+            &.g-lm-container {
+                box-shadow: inset 0 2px rgba(0, 0, 0, 0.2);
             }
 
             > span > .changes-indicator {
@@ -529,7 +573,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     /* deletion */
     #trash {
         position: fixed;
-        top: -100px;
+        top: 0; // 0 = flushed to the top of viewport, use + px for offset, ie. 30px
         right: 0;
         left: 0;
         z-index: 1200;
@@ -538,6 +582,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         color: $white;
         padding: $content-padding;
         background: rgba(255,255,255,0.8);
+        display: none;
 
         .trash-zone {
             background-color: $red;
@@ -556,180 +601,238 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
     }
 
-}
+    .g5-dialog .g-tabs, .g5-popover-content .g-tabs {
+        @extend #navbar;
 
-.g5-dialog .g-tabs, .g5-popover-content .g-tabs {
-    @extend #navbar;
+        margin-right: 0 !important;
 
-    margin-right: 0 !important;
+        ul {
+            background-color: $navbar-bg;
+            margin: -1rem -1rem 1rem !important;
+            border-radius: $core-border-radius $core-border-radius 0 0;
 
-    ul {
-        background-color: $navbar-bg;
-        margin: -1rem -1rem 1rem !important;
-        border-radius: $core-border-radius $core-border-radius 0 0;
-
-        li:first-child {
-            border-radius: $core-border-radius 0 0 0;
+            li:first-child {
+                border-radius: $core-border-radius 0 0 0;
+            }
         }
     }
-}
 
-.g5-popover-content .g-tabs {
-    ul {
-        margin: -0.55rem -0.9rem 1rem !important;
-        background-color: $light-gray;
-
-        li.active {
-            background-color: $white !important;
-        }
-
-        li:hover:not(.active) {
-            background-color: darken($light-gray, 5%) !important;
-        }
-    }
-}
-
-.g5-dialog .g-pane, .g5-popover-content .g-pane {
-    display: none;
-    
-    &.active {
-        display: block;
-    }
-
-    li[data-switch] {
-        padding: 0.4rem;
-
-        i {
-            color: #aaa;
-        }
-
-        &:not(.g-switch-title) {
-            cursor: pointer;
-        }
-
-        &:hover:not(.g-switch-title) {
+    .g5-popover-content .g-tabs {
+        ul {
+            margin: -0.55rem -0.9rem 1rem !important;
             background-color: $light-gray;
-            border-radius: $core-border-radius;
-        }
-    }
-}
 
-.g5-popover-content .g-pane {
-    .g-switch-title {
-        padding-bottom: 7px;
-        font-weight: bold;
-        font-size: 0.85em;
-        color: #ccc;
-        text-transform: uppercase;
-    }
+            li.active {
+                background-color: $white !important;
+            }
 
-    ul {
-        @extend %list-reset;
-        word-wrap: break-word;
-        width: 50%;
-    }
-}
-
-.g-preserve-particles {
-    padding-bottom: 0.5rem;
-    font-size: 0.8rem;
-    color: $dark-gray;
-    border-bottom: 1px solid lighten($light-gray, 2%);
-    margin-bottom: 0.5rem;
-
-    label {
-        @include user-select(none);
-    }
-}
-
-.sidebar-block {
-    $negate: -($content-padding + $content-margin);
-    $compensate: $content-padding + $content-margin;
-    margin: $negate $compensate $negate $negate;
-    padding: $compensate $content-padding;
-    background-color: darken($main-bg, 2);
-    border-right: 1px solid darken($main-bg, 5);
-}
-
-.g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker {
-
-    ul, li {
-        @extend %list-reset;
-    }
-
-    ul {
-        padding: 1px;
-        margin-bottom: 1em;
-    }
-
-    li {
-        padding: $content-padding / 2;
-        margin: 1px 0;
-        text-align: center;
-        border-radius: $core-border-radius;
-        cursor: move;
-
-        &[data-lm-nodrag], &[data-mm-nodrag] {
-            cursor: default;
-        }
-
-        @include breakpoint(tablet-range) {
-            font-size: $core-font-size - 0.2;
-        }
-
-        &:first-child {
-            margin-top: 0;
-        }
-        
-        &:last-child {
-            margin-bottom: 0;
-        }
-
-        &[data-lm-blocktype="spacer"], &[data-mm-blocktype="spacer"] {
-            background-color: $spacer;
-            color: #666;
-            border: 1px solid darken($medium-gray, 5);
-        }
-
-        &.g5-lm-particle-spacer[data-lm-disabled], &.g5-mm-particle-spacer[data-mm-disabled] {
-            color: #fff;
-        }
-
-        &[data-lm-blocktype="position"], &[data-mm-blocktype="position"],
-        &[data-lm-blocktype="module"], &[data-mm-blocktype="module"] {
-            color: #fff;
-            background-color: $position;
-        }
-
-        &[data-lm-blocktype="particle"], &[data-mm-blocktype="particle"] {
-            color: #fff;
-            background-color: $particle;
-        }
-
-        &[data-lm-blocktype="pagecontent"] {
-            color: #fff;
-            background-color: $pagecontent;
-        }
-
-        &[data-lm-blocktype="atom"] {
-            color: #fff;
-            background-color: $atom;
+            li:hover:not(.active) {
+                background-color: darken($light-gray, 5%) !important;
+            }
         }
     }
 
-    .settings-block {
-        width: 100% !important;
+    .g5-dialog .g-pane, .g5-popover-content .g-pane {
+        display: none;
+
+        &.active {
+            display: block;
+        }
+
+        li[data-switch] {
+            padding: 0.4rem;
+
+            i {
+                color: #aaa;
+            }
+
+            &:not(.g-switch-title) {
+                cursor: pointer;
+            }
+
+            &:hover:not(.g-switch-title) {
+                background-color: $light-gray;
+                border-radius: $core-border-radius;
+            }
+        }
     }
 
-    .search {
+    .g5-popover-content .g-pane {
+        .g-switch-title {
+            padding-bottom: 7px;
+            font-weight: bold;
+            font-size: 0.85em;
+            color: #ccc;
+            text-transform: uppercase;
+        }
+
+        ul {
+            @extend %list-reset;
+            word-wrap: break-word;
+            width: 50%;
+        }
+    }
+
+    .g-preserve-particles {
+        padding-bottom: 0.5rem;
+        font-size: 0.8rem;
+        color: $dark-gray;
+        border-bottom: 1px solid lighten($light-gray, 2%);
+        margin-bottom: 0.5rem;
+
+        label {
+            @include user-select(none);
+        }
+    }
+
+    .sidebar-block {
+        $negate: -($content-padding + $content-margin);
+        $compensate: $content-padding + $content-margin;
+        margin: $negate $compensate $negate $negate;
+        padding: $compensate $content-padding;
+        background-color: darken($main-bg, 2);
+        border-right: 1px solid darken($main-bg, 5);
         position: relative;
-        margin-bottom: 10px;
+    }
 
-        i {
+    .particles-sidebar-block {
+        @include flex(0 170px);
+        width: 170px;
+
+        @include breakpoint(mobile-only) {
+            @include flex(0 100%);
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: inherit;
+            border: 0;
+
+            .particles-container {
+                max-height: 300px;
+                overflow: auto;
+                margin-bottom: 1rem;
+            }
+        }
+    }
+
+    @include breakpoint(no-mobile) {
+        .particles-container.has-scrollbar {
+            padding-right: $content-padding / 2;
+        }
+    }
+
+    .g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker, .g5-mm-widgets-picker {
+
+        ul, li {
+            @extend %list-reset;
+        }
+
+        ul {
+            padding: 1px;
+            margin-bottom: 1em;
+        }
+
+        &:not(.menu-editor-particles) {
+            @extend .font-small;
+        }
+
+        &.menu-editor-particles {
+            li {
+                margin: 0.3rem 0.15rem;
+                cursor: pointer !important;
+            }
+        }
+
+        li {
+            padding: $content-padding / 3;
+            margin: ($content-padding / 3) 0;
+            text-align: center;
+            border-radius: $core-border-radius;
+            cursor: move;
+
+            &[data-lm-nodrag], &[data-mm-nodrag] {
+                cursor: default;
+            }
+
+            @include breakpoint(tablet-range) {
+                font-size: $core-font-size - 0.2;
+            }
+
+            &:first-child {
+                margin-top: 0;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &[data-lm-blocktype="spacer"], &[data-mm-blocktype="spacer"] {
+                background-color: $spacer;
+                color: #666;
+                border: 1px solid darken($medium-gray, 5);
+            }
+
+            &.g5-lm-particle-spacer[data-lm-disabled], &.g5-mm-particle-spacer[data-mm-disabled] {
+                color: #fff;
+            }
+
+            &[data-lm-blocktype="position"], &[data-mm-blocktype="position"],
+            &[data-lm-blocktype="module"], &[data-mm-blocktype="module"],
+            &[data-lm-blocktype="widget"], &[data-mm-blocktype="widget"] {
+                color: #fff;
+                background-color: $position;
+            }
+
+            &[data-lm-blocktype="particle"], &[data-mm-blocktype="particle"] {
+                color: #fff;
+                background-color: $particle;
+            }
+
+            &[data-lm-blocktype="pagecontent"] {
+                color: #fff;
+                background-color: $pagecontent;
+            }
+
+            &[data-lm-blocktype="atom"] {
+                color: #fff;
+                background-color: $atom;
+            }
+        }
+
+        .settings-block {
+            width: 100% !important;
+        }
+
+        .search {
+            position: relative;
+            margin-bottom: 10px;
+
+            i {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                margin-top: -12px;
+            }
+        }
+    }
+
+    @include breakpoint(no-mobile) {
+        // fixed sidebar in LM
+        .g5-lm-particles-picker.particles-fixed, .g5-lm-particles-picker.particles-absolute {
+            z-index: 5;
+
+            .search input {
+                width: inherit;
+                margin-right: -($content-padding + ($content-padding / 2) + $content-margin + rem(1px));
+            }
+        }
+
+        .g5-lm-particles-picker.particles-fixed {
+            position: fixed;
+        }
+
+        .g5-lm-particles-picker.particles-absolute {
             position: absolute;
-            right: 10px;
-            top: 50%;
-            margin-top: -12px;
         }
     }
 }

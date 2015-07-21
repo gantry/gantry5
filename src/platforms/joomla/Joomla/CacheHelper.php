@@ -19,6 +19,12 @@ class CacheHelper
         self::cleanByType('_system');
     }
 
+    public static function cleanMenu()
+    {
+        self::cleanByType('mod_menu');
+        self::cleanByType('_system');
+    }
+
     private static function cleanByType($group)
     {
         $conf = \JFactory::getConfig();

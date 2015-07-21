@@ -35,12 +35,27 @@ class Theme extends BaseTheme
         // Trigger the onGantryThemeInit event.
         $dispatcher = \JEventDispatcher::getInstance();
         $dispatcher->trigger('onGantry5ThemeInit', ['theme' => $this]);
+
+        if (\JFactory::getApplication()->isSite()) {
+            $gantry = Gantry::instance();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+
+            // Load our custom positions file as frontend requires the strings to be there.
+            $lang = \JFactory::getLanguage();
+            $filename = $locator("gantry-theme://language/en-GB/en-GB.tpl_{$this->name}_positions.ini");
+
+            if ($filename) {
+                $lang->load("tpl_{$this->name}_positions", dirname(dirname(dirname($filename))), 'en-GB');
+            }
+        }
     }
 
     public function renderer()
     {
         if (!$this->renderer) {
-            $gantry = \Gantry\Framework\Gantry::instance();
+            $gantry = Gantry::instance();
 
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
@@ -48,7 +63,7 @@ class Theme extends BaseTheme
             $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-engine://twig'));
 
             $params = array(
-                'cache' => $locator('gantry-cache://twig', true, true),
+                'cache' => $locator->findResource('gantry-cache://theme/twig', true, true),
                 'debug' => true,
                 'auto_reload' => true,
                 'autoescape' => 'html'
@@ -91,8 +106,9 @@ class Theme extends BaseTheme
             if ($enable) {
                 // Workaround for Joomla! not loading bootstrap when it needs it.
                 \JHtml::_('bootstrap.framework');
+
+                $this->joomla = (bool) $enable;
             }
-            $this->joomla = (bool) $enable;
         }
 
         return (bool) $this->joomla;

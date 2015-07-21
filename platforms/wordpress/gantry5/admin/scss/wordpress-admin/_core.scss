@@ -1,4 +1,8 @@
 body.gantry5 {
+    margin: 0;
+    padding: 0;
+    max-width: inherit;
+    
     &.auto-fold {
         #wpcontent {
             padding-left: 0;
@@ -30,6 +34,17 @@ body.gantry5 {
             font-family: inherit;
         }
 
+        input[type="checkbox"] {
+            height: 16px;
+            &:checked:before {
+                height: 16px;
+            }
+            &:not(.settings-param-toggle) {
+                position: inherit;
+                top: 8px;
+            }
+        }
+
         .main-block {
             min-height: 81.5vh;
         }
@@ -50,7 +65,29 @@ body.gantry5 {
         .search {
             background: none;
             color: inherit;
-            font-size: inherit;
+        }
+
+        .g5-dialog, .g5-popover.g5-popover-above-modal {
+            z-index: 99999;
+        }
+
+        #assignments {
+            .settings-param-section {
+                background-color: #fafafa;
+                .enabler {
+                    display: none;
+                }
+
+                .settings-param-section-title {
+                    font-weight: bold;
+                    color: #b2b2b2;
+                    text-transform: uppercase;
+                }
+            }
+
+            .settings-param-title {
+                font-size: 0.8rem;
+            }
         }
 
     }
@@ -59,12 +96,26 @@ body.gantry5 {
         margin-bottom: 1em;
     }
 
-    .g5-dialog-loading-spinner.g5-dialog-theme-default {
-        top: 3em;
-    }
 
     #wpbody-content {
         padding-bottom: 0;
+    }
+
+    input[disabled],
+    select[disabled],
+    textarea[disabled],
+    input[readonly],
+    select[readonly],
+    textarea[readonly] {
+        cursor: not-allowed;
+        background-color: #eee;
+    }
+
+    input[type="radio"][disabled],
+    input[type="checkbox"][disabled],
+    input[type="radio"][readonly],
+    input[type="checkbox"][readonly] {
+        background-color: transparent;
     }
 
 }

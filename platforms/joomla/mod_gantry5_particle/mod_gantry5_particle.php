@@ -27,13 +27,14 @@ $theme = $gantry['theme'];
 /** @var object $params */
 $data = json_decode($params->get('particle'), true);
 
-$context = [
+$context = array(
     'gantry' => $gantry,
-    'segment' => [
+    'inContent' => true,
+    'segment' => array(
         'type' => $data['type'],
         'subtype' => $data['particle'],
         'attributes' =>  $data['options']['particle'],
-    ]
-];
+    )
+);
 
 echo $theme->render("@nucleus/content/particle.html.twig", $context);

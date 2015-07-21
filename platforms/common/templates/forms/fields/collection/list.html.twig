@@ -1,5 +1,4 @@
-{% extends "forms/field.html.twig" %}
-
+{% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% block field %}
     {% if field.is_current %}
@@ -16,6 +15,9 @@
             {% endfor %}
         </div>
     {% else %}
+        {% set can_reorder = field.reorder is defined ? field.reorder : true %}
+        {% set can_remove = field.deletion is defined ? field.deletion : true %}
+        {% set can_addnew = field.add_new is defined ? field.add_new : true %}
         <div class="settings-param {{ field.type|replace('.', '-')|e }}">
             {% if overrideable and (field.overridable is not defined or field.overridable == true) and field.type != 'container.set' %}
                 <input type="checkbox" class="settings-param-toggle" id="of-{{ (scope ~ name)|e }}"{{ value != default_value ? ' checked="checked"' }} />
@@ -41,9 +43,9 @@
                                     {% if (field.ajax == true) %}
                                         <li data-collection-item="{{ field.value|e }}">
                                             {% set itemValue = field.value == field.key ? key : val[field.value] %}
-                                            <i class="fa fa-reorder font-small item-reorder"></i>
+                                            {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder"></i>{% endif %}
                                             <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key)|e }}"><span data-title-editable="{{ itemValue|e }}" class="title">{{ itemValue|e }}</span></a>
-                                            <i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>
+                                            {% if can_remove %}<i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>{% endif %}
                                             <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
                                         </li>
                                     {% else %}
@@ -80,13 +82,13 @@
                     <div>
                         <ul style="display: none">
                             <li data-collection-nosort data-collection-template="{{ field.value|e }}" style="display: none;">
-                                <i class="fa fa-reorder font-small item-reorder"></i>
+                                {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder"></i>{% endif %}
                                 <a class="config-cog" href="{{ gantry.route(field_route ~ '/%id%')|e }}"><span data-title-editable="New item" class="title">New item</span></a>
-                                <i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>
+                                {% if can_remove %}<i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>{% endif %}
                                 <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
                             </li>
                         </ul>
-                        <span class="collection-addnew button button-simple" data-collection-addnew="" title="Add new item"><i class="fa fa-plus font-small"></i></span>
+                        {% if can_addnew %}<span class="collection-addnew button button-simple" data-collection-addnew="" title="Add new item"><i class="fa fa-plus font-small"></i></span>{% endif %}
                         <a href="{{ gantry.route(field_route)|e }}" class="collection-editall button button-simple" data-collection-editall="" title="Edit all items" {% if value|length == 0 %}style="display: none;"{% endif %}><i class="fa fa-th-large font-small"></i></a>
                     </div>
                     <input data-collection-data="" name="{{ (scope ~ name ~ '._json')|fieldName|e }}" type="hidden" value="{{ value|default({})|json_encode(constant('JSON_UNESCAPED_SLASHES'))|e('html_attr') }}"/>

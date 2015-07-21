@@ -12,36 +12,88 @@ var $             = require('elements'),
 
 
 ready(function() {
-    var body = $('body');
+    var body = $('body'),
+        particleField = $('[data-g-instancepicker] ~ input[type="hidden"]'),
+        moduleType = {
+            wordpress: 'widget',
+            joomla: 'module'
+        };
+
+    if (particleField) {
+        particleField.on('change', function(){
+            if (!this.value()) {
+                var title = this.siblings('.g-instancepicker-title'),
+                    label = this.siblings('[data-g-instancepicker]'),
+                    reset = this.sibling('.g-reset-field');
+
+                title.text('');
+                label.text(label.data('g-instancepicker-text'));
+                reset.style('display', 'none');
+            }
+        });
+    }
+
 
     body.delegate('click', '[data-g-instancepicker]', function(event, element) {
         if (event) { event.preventDefault(); }
 
         var data = JSON.parse(element.data('g-instancepicker')),
             field = $('[name="' + data.field + '"]'),
-            uri = 'particle' + ((data.type == 'module') ? '/module' : ''),
+            uri = 'particle' + ((data.type == moduleType[GANTRY_PLATFORM]) ? '/' + moduleType[GANTRY_PLATFORM] : ''),
             value;
 
         if (!field) { return false; }
 
         value = field.value();
 
-        if (data.type == 'particle' && value) {
+        if (data.type == 'particle' || data.type == 'widget' && value) {
             value = JSON.parse(value || {});
             uri = value.type + '/' + value[data.type];
         }
 
+        if (data.modal_close) { return true; }
 
         modal.open({
             content: 'Loading',
-            method: !value || data.type == 'module' ? 'get' : 'post',
-            data: !value || data.type == 'module' ? {} : value,
+            method: !value || data.type == moduleType[GANTRY_PLATFORM] ? 'get' : 'post',
+            data: !value || data.type == moduleType[GANTRY_PLATFORM] ? {} : value,
             remote: getAjaxURL(uri) + getAjaxSuffix(),
             remoteLoaded: function(response, modalInstance) {
                 var content = modalInstance.elements.content,
                     select = content.find('[data-mm-select]');
 
-                if (select) { select.data('g-instancepicker', element.data('g-instancepicker')); }
+                var search = content.find('.search input'),
+                    blocks = content.search('[data-mm-type]'),
+                    filters = content.search('[data-mm-filter]');
+
+                if (search && filters && blocks) {
+                    search.on('input', function() {
+                        if (!this.value()) {
+                            blocks.removeClass('hidden');
+                            return;
+                        }
+
+                        blocks.addClass('hidden');
+
+                        var found = [], value = this.value().toLowerCase(), text;
+
+                        filters.forEach(function(filter) {
+                            filter = $(filter);
+                            text = trim(filter.data('mm-filter')).toLowerCase();
+                            if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
+                                found.push(filter.matches('[data-mm-type]') ? filter : filter.parent('[data-mm-type]'));
+                            }
+                        }, this);
+
+                        if (found.length) { $(found).removeClass('hidden'); }
+                    });
+
+                    search[0].focus();
+                }
+
+                var elementData = JSON.parse(element.data('g-instancepicker'));
+                if (elementData.type == moduleType[GANTRY_PLATFORM]) { elementData.modal_close = true; }
+                if (select) { select.data('g-instancepicker', JSON.stringify(elementData)); }
                 else {
                     var form = content.find('form'),
                         fakeDOM = zen('div').html(response.body.html).find('form'),
@@ -70,6 +122,7 @@ ready(function() {
                                 override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                             if (override && !override.checked()) { return; }
+
                             dataString.push(name + '=' + encodeURIComponent(value));
                         });
 
@@ -78,7 +131,7 @@ ready(function() {
                             dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
                         }
 
-                        request(parseAjaxURI(fakeDOM.attribute('method'), fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                        request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
                             if (!response.body.success) {
                                 modal.open({
                                     content: response.body.html || response.body,

@@ -2,7 +2,7 @@ details:
   name: Hydrogen
   version: "@version@"
   icon: paper-plane
-  date: May 15, 2015
+  date: @versiondate@
   author:
     name: RocketTheme, LLC
     email: support@rockettheme.com
@@ -54,6 +54,7 @@ configuration:
       - custom
     persistent:
       - hydrogen
+    overrides:
       - custom
 
   dependencies:

@@ -224,8 +224,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
         $filename = $locator->findResource("gantry-config://{$this->name}/index.yaml", true, true);
+        $cache = $locator->findResource("gantry-cache://{$this->name}/compiled/yaml", true, true);
         $file = CompiledYamlFile::instance($filename);
-        $file->settings(['inline' => 20]);
+        $file->setCachePath($cache)->settings(['inline' => 20]);
         $index = $this->buildIndex();
         $file->save($index);
 
@@ -333,28 +334,51 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         /** @var Layout $old */
         $old = new static($this->name, $old);
-        $data = $old->referencesByType('section', 'section');
 
         $leftover = [];
+
+        // Copy normal sections.
+        $data = $old->referencesByType('section', 'section');
         if (isset($this->types['section']['section'])) {
             $sections = &$this->types['section']['section'];
 
-            foreach ($data as $item) {
-                $found = false;
-                foreach ($sections as &$section) {
-                    if ($section->title === $item->title) {
-                        $found = true;
-                        $section = $item;
-                        break;
-                    }
-                }
-                if (!$found && !empty($item->children)) {
-                    $leftover[] = $item->title;
-                }
-            }
+            $this->copyData($data, $sections, $leftover);
+        }
+
+        // Copy offcanvas.
+        $data = $old->referencesByType('offcanvas', 'offcanvas');
+        if (isset($this->types['offcanvas']['offcanvas'])) {
+            $offcanvas = &$this->types['offcanvas']['offcanvas'];
+
+            $this->copyData($data, $offcanvas, $leftover);
+        }
+
+        // Copy atoms.
+        $data = $old->referencesByType('atoms', 'atoms');
+        if (isset($this->types['atoms']['atoms'])) {
+            $atoms = &$this->types['atoms']['atoms'];
+
+            $this->copyData($data, $atoms, $leftover);
         }
 
         return $leftover;
+    }
+
+    protected function copyData(array $data, array &$sections, array &$leftover)
+    {
+        foreach ($data as $item) {
+            $found = false;
+            foreach ($sections as &$section) {
+                if ($section->title === $item->title) {
+                    $found = true;
+                    $section = $item;
+                    break;
+                }
+            }
+            if (!$found && !empty($item->children)) {
+                $leftover[] = $item->title;
+            }
+        }
     }
 
     /**

@@ -15,7 +15,6 @@ class Page extends Base\Page
     public function htmlAttributes()
     {
         $attributes = [
-                'xml:lang' => $this->getLang(),
                 'lang' => $this->getLang()
             ]
             + (array) $this->config->get('page.html', []);

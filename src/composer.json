@@ -7,13 +7,13 @@
 
     "require": {
         "php": ">=5.4.0",
-        "symfony/yaml": "~2.6",
+        "symfony/yaml": "~2.7",
         "twig/twig": "~1.18",
         "pimple/pimple": "~3.0",
         "filp/whoops": "~1.2",
         "rockettheme/toolbox": "dev-develop",
-        "leafo/scssphp": "dev-develop",
-        "leafo/lessphp": "dev-master"
+        "leafo/scssphp": "~0.1",
+        "leafo/lessphp": "~0.5"
     },
     "repositories": [
         {

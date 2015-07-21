@@ -1,7 +1,9 @@
 <li class="config-select-wrap">
-    {# TODO: we need to switch the selected attribute properly and update the active page based on the selected on, right now it's styles #}
+    {% set selected_title = configuration == 'default' ? 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans : '' %}
+    {% set selected_value = configuration == 'default' ? 'default' : '' %}
+    {% set selected_editable = true %}
     <select id="configuration-selector" class="config-select" data-selectize-ajaxify data-selectize="{{ {allowEmptyOption: true}|json_encode|e('html_attr') }}">
-        <optgroup label="Global Defaults">
+        <optgroup label="{{ 'GANTRY5_PLATFORM_GLOBAL_DEFAULTS'|trans }}">
             <option value="default"
                 {% if configuration == 'default' %}selected="selected"{% endif %}
                 data-data="{{ {params: {navbar: true}, url: gantry.route('configurations/default', configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
@@ -11,9 +13,13 @@
 
         {% set user_conf = gantry.configurations.user %}
         {% if user_conf.count %}
-        <optgroup label="Theme Outlines">
+        <optgroup label="{{ 'GANTRY5_PLATFORM_THEME_OUTLINES'|trans }}">
             {% for name, title in user_conf %}
-                <option value="{{ name|e }}"
+                {% if name == configuration %}
+                    {% set selected_title = title|e %}
+                    {% set selected_value = name|e %}
+                {% endif %}
+            <option value="{{ name|e }}"
                         {% if name == configuration %}selected="selected"{% endif %}
                         data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
                     {{ title|e }}
@@ -24,8 +30,13 @@
 
         {% set system_conf = gantry.configurations.system %}
         {% if system_conf.count %}
-        <optgroup label="System Outlines">
+        <optgroup label="{{ 'GANTRY5_PLATFORM_SYSTEM_OUTLINES'|trans }}">
             {% for name, title in system_conf %}
+                {% if name == configuration %}
+                    {% set selected_title = title|e %}
+                    {% set selected_value = name|e %}
+                    {% set selected_editable = false %}
+                {% endif %}
                 <option value="{{ name|e }}"
                         {% if name == configuration %}selected="selected"{% endif %}
                         data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
@@ -35,4 +46,7 @@
         </optgroup>
         {% endif %}
     </select>
+    {% if selected_editable %}
+    <span data-title-editable="{{ selected_title }}" data-g-config-href="{{ gantry.route('configurations', selected_value, 'rename')|e }}" class="title g-conf-title-edit">{{ selected_title }}</span> <i class="fa fa-pencil font-small" data-title-edit=""></i>
+    {% endif %}
 </li>

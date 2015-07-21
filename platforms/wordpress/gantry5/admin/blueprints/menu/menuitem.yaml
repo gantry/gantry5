@@ -1,0 +1,83 @@
+name: Menu Item
+description: Gantry menu item.
+
+form:
+  fields:
+    items:
+      type: collection.list
+      array: true
+      label: Items
+      key: path
+      value: path
+      ajax: true
+      skip: true
+
+      fields:
+        .path:
+          type: key.key
+          label: Path
+          skip: true
+
+        .id:
+          type: input.text
+          label: Menu Item Id
+          disabled: true
+
+        .type:
+          type: input.text
+          label: Menu Item Type
+          default: link
+          disabled: true
+
+        .link:
+          type: input.text
+          label: Link
+          disabled: true
+
+        .hash:
+          type: input.text
+          label: Append Hash
+          description: "If you'd like to append an hash to the end of the URL (ie, #to-bottom)"
+
+        .title:
+          type: input.text
+          label: Menu Title
+
+        .target:
+          type: select.selectize
+          label: Link Target
+          placeholder: 'Select...'
+          options:
+            _self: Current Window or Tab
+            _blank: New Window or Tab
+
+        .dropdown:
+          type: select.selectize
+          label: Dropdown Style
+          default: ''
+          selectize:
+            allowEmptyOption: true
+          options:
+            '': - Use Default -
+            standard: Simple
+            fullwidth: Extended
+
+        .width:
+          type: input.text
+          label: Dropdown Width
+          description: Set the width of this parent's dropdowns in rem, em, px units or auto.
+          default: "auto"
+          pattern: '((\d+(\.\d+){0,1}(rem|em|px))|auto)'
+
+        .class:
+          type: input.selectize
+          label: CSS Classes
+          description: Enter CSS class names.
+
+        .icon:
+          type: input.icon
+          label: Icon
+
+        .subtitle:
+          type: input.text
+          label: Subtitle

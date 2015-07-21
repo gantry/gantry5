@@ -19,12 +19,14 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Menu\Item;
+use Gantry\Component\Request\Input;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Menu as MenuObject;
 use Gantry\Framework\Platform;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
+use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -72,7 +74,7 @@ class Menu extends HtmlController
     public function item($id = null)
     {
         // Load the menu.
-        $resource = $this->loadResource($id, isset($_POST['items']) ? $this->build($_POST) : null);
+        $resource = $this->loadResource($id, $this->build($this->request->post));
 
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
@@ -86,19 +88,20 @@ class Menu extends HtmlController
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $resource->name();
         $this->params['menus'] = $resource->getMenus();
+        $this->params['default_menu'] = $resource->hasDefaultMenu() ? $resource->getDefaultMenuName() : false;
         $this->params['menu'] = $resource;
         $this->params['path'] = implode('/', $path);
 
         // Detect special case to fetch only single column group.
-        $group = isset($_GET['group']) ? intval($_GET['group']) : null;
+        $group = $this->request->get['group'];
 
-        if (empty($this->params['ajax']) || empty($_GET['inline'])) {
+        if (empty($this->params['ajax']) || empty($this->request->get['inline'])) {
             // Handle special case to fetch only one column group.
             if (count($path) > 0) {
                 $this->params['columns'] = $resource[$path[0]];
             }
             if (count($path) > 1) {
-                $this->params['column'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
+                $this->params['column'] = isset($group) ? (int) $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
                 $this->params['override'] = $item;
             }
 
@@ -109,7 +112,7 @@ class Menu extends HtmlController
             $layout = $this->layoutName(count($path) + (int) isset($group));
 
             $this->params['item'] = $item;
-            $this->params['group'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
+            $this->params['group'] = isset($group) ? (int) $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
 
             return $this->container['admin.theme']->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params) ?: '&nbsp;';
         }
@@ -117,10 +120,10 @@ class Menu extends HtmlController
 
     public function edit($id)
     {
-        // Load the menu.
         $resource = $this->loadResource($id);
-        if (!empty($_POST['settings'])) {
-            $resource->config()->merge(['settings' => json_decode($_POST['settings'], true)]);
+        $input = $this->build($this->request->post);
+        if ($input) {
+            $resource->config()->merge(['settings' => $input['settings']]);
         }
 
         // Fill parameters to be passed to the template file.
@@ -135,11 +138,20 @@ class Menu extends HtmlController
     {
         $resource = $this->loadResource($id);
 
-        $data = $this->build($_POST);
+        $data = $this->build($this->request->post);
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
         $filename = $locator->findResource("gantry-config://menu/{$resource->name()}.yaml", true, true);
+
+        // Fire save event.
+        $event = new Event;
+        $event->gantry = $this->container;
+        $event->theme = $this->container['theme'];
+        $event->controller = $this;
+        $event->resource = $id;
+        $event->menu = $data;
+        $this->container->fireEvent('admin.menus.save', $event);
 
         $file = YamlFile::instance($filename);
         $file->settings(['inline' => 99]);
@@ -153,7 +165,7 @@ class Menu extends HtmlController
         $keyword = end($path);
 
         // Special case: validate instead of fetching menu item.
-        if (!empty($_POST) && $keyword == 'validate') {
+        if ($this->method == 'POST' && $keyword == 'validate') {
             $params = array_slice(func_get_args(), 0, -1);
             return call_user_func_array([$this, 'validateitem'], $params);
         }
@@ -169,8 +181,9 @@ class Menu extends HtmlController
         if (!$item) {
             throw new \RuntimeException('Menu item not found', 404);
         }
-        if (!empty($_POST['item'])) {
-            $item->update(json_decode($_POST['item'], true));
+        $data = $this->request->post->getJsonArray('item');
+        if ($data) {
+            $item->update($data);
         }
 
         // Load blueprints for the menu item.
@@ -188,14 +201,11 @@ class Menu extends HtmlController
 
     public function particle()
     {
-        /** @var Request $request */
-        $request = $this->container['request'];
-
-        $data = $request->get('item');
+        $data = $this->request->post['item'];
         if ($data) {
             $data = json_decode($data, true);
         } else {
-            $data = $request->getArray();
+            $data = $this->request->post->getArray();
         }
 
         $name = isset($data['particle']) ? $data['particle'] : null;
@@ -238,9 +248,6 @@ class Menu extends HtmlController
             $this->undefined();
         }
 
-        /** @var Request $request */
-        $request = $this->container['request'];
-
         // Load particle blueprints and default settings.
         $validator = new Blueprints();
         $validator->embed('options', $this->container['particles']->get($name));
@@ -256,11 +263,11 @@ class Menu extends HtmlController
 
         $data->set('type', 'particle');
         $data->set('particle', $name);
-        $data->set('title', $request->get('title') ?: $blueprints->get('name'));
-        $data->set('options.particle', $request->getArray("particles.{$name}"));
+        $data->set('title', $this->request->post['title'] ?: $blueprints->post['name']);
+        $data->set('options.particle', $this->request->post->getArray("particles.{$name}"));
         $data->def('options.particle.enabled', 1);
 
-        $block = $request->getArray('block');
+        $block = $this->request->post->getArray('block');
         foreach ($block as $key => $param) {
             if ($param === '') {
                 unset($block[$key]);
@@ -327,11 +334,8 @@ class Menu extends HtmlController
             return $validator;
         };
 
-        /** @var Request $request */
-        $request = $this->container['request'];
-
         // Create configuration from the defaults.
-        $data = new Config($request->getArray(), $callable);
+        $data = new Config($this->request->post->getArray(), $callable);
 
         // TODO: validate
 
@@ -357,11 +361,8 @@ class Menu extends HtmlController
             return $validator;
         };
 
-        /** @var Request $request */
-        $request = $this->container['request'];
-
         // Create configuration from the defaults.
-        $data = new Config($request->getArray(), $callable);
+        $data = new Config($this->request->post->getArray(), $callable);
 
         // TODO: validate
 
@@ -372,6 +373,10 @@ class Menu extends HtmlController
         $this->params['id'] = $resource->name();
         $this->params['item'] = $item;
         $this->params['group'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
+
+        if (!$item->title) {
+            throw new \RuntimeException('Title from the Menu Item should not be empty', 400);
+        }
 
         $html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
 
@@ -404,7 +409,7 @@ class Menu extends HtmlController
         /** @var MenuObject $menus */
         $menus = $this->container['menu'];
 
-        return $menus->instance(['menu' => $id], $config);
+        return $menus->instance(['menu' => $id, 'admin' => true], $config);
     }
 
     /**
@@ -423,15 +428,20 @@ class Menu extends HtmlController
     }
 
 
-    public function build($raw)
+    public function build(Input $input)
     {
-        $settings = isset($raw['settings']) ? (array) json_decode($raw['settings'], true) : [];
-        $order = isset($raw['ordering']) ? json_decode($raw['ordering'], true) : [];
-        $items = isset($raw['items']) ? json_decode($raw['items'], true) : [];
-
-        if (!is_array($order) || !is_array($items)) {
+        try {
+            $items = $input->getJsonArray('items');
+            $settings = $input->getJsonArray('settings');
+            $order = $input->getJsonArray('ordering');
+        } catch (\Exception $e) {
             throw new \RuntimeException('Invalid menu structure', 400);
         }
+
+        if (!$items && !$settings && !$order) {
+            return null;
+        }
+
 
         krsort($order);
         $ordering = ['' => []];

@@ -1,150 +1,400 @@
-/* line 1, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+.size-100 {
+  width: 100%;
+}
+
 body.gantry5 {
+  margin: 0;
+  padding: 0;
+  max-width: inherit;
   color: #ddd;
   background-color: #F1F1F1;
 }
-/* line 3, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5.auto-fold #wpcontent {
   padding-left: 0;
 }
-/* line 12, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container a:focus {
   box-shadow: none;
 }
-/* line 16, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container dd, body.gantry5 #g5-container li {
   margin-bottom: 0;
 }
-/* line 20, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container li {
   line-height: inherit;
 }
-/* line 24, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container textarea, body.gantry5 #g5-container input {
   box-shadow: none;
   color: #666;
 }
-/* line 29, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container input, body.gantry5 #g5-container button, body.gantry5 #g5-container select, body.gantry5 #g5-container textarea {
   font-family: inherit;
 }
-/* line 33, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+body.gantry5 #g5-container input[type="checkbox"] {
+  height: 16px;
+}
+body.gantry5 #g5-container input[type="checkbox"]:checked:before {
+  height: 16px;
+}
+body.gantry5 #g5-container input[type="checkbox"]:not(.settings-param-toggle) {
+  position: inherit;
+  top: 8px;
+}
 body.gantry5 #g5-container .main-block {
   min-height: 81.5vh;
 }
-/* line 37, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .inner-container {
   margin: 0;
 }
-/* line 41, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .card {
   max-width: none;
   box-shadow: none;
 }
-/* line 46, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .preview {
   float: none;
 }
-/* line 50, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #g5-container .search {
   background: none;
   color: inherit;
-  font-size: inherit;
 }
-/* line 58, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
+body.gantry5 #g5-container .g5-dialog, body.gantry5 #g5-container .g5-popover.g5-popover-above-modal {
+  z-index: 99999;
+}
+body.gantry5 #g5-container #assignments .settings-param-section {
+  background-color: #fafafa;
+}
+body.gantry5 #g5-container #assignments .settings-param-section .enabler {
+  display: none;
+}
+body.gantry5 #g5-container #assignments .settings-param-section .settings-param-section-title {
+  font-weight: bold;
+  color: #b2b2b2;
+  text-transform: uppercase;
+}
+body.gantry5 #g5-container #assignments .settings-param-title {
+  font-size: 0.8rem;
+}
 body.gantry5 form {
   margin-bottom: 1em;
 }
-/* line 62, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
-body.gantry5 .g5-dialog-loading-spinner.g5-dialog-theme-default {
-  top: 3em;
-}
-/* line 66, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_core.scss */
 body.gantry5 #wpbody-content {
   padding-bottom: 0;
 }
+body.gantry5 input[disabled],
+body.gantry5 select[disabled],
+body.gantry5 textarea[disabled],
+body.gantry5 input[readonly],
+body.gantry5 select[readonly],
+body.gantry5 textarea[readonly] {
+  cursor: not-allowed;
+  background-color: #eee;
+}
+body.gantry5 input[type="radio"][disabled],
+body.gantry5 input[type="checkbox"][disabled],
+body.gantry5 input[type="radio"][readonly],
+body.gantry5 input[type="checkbox"][readonly] {
+  background-color: transparent;
+}
 
-/* line 11, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
+body.gantry5.admin-color-fresh #g5-container .button-primary {
+  background: #0073AA;
+  color: #fff;
+}
+body.gantry5.admin-color-fresh #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #005e8b;
+  color: #fff;
+}
+body.gantry5.admin-color-light #g5-container .button-primary {
+  background: #888888;
+  color: #fff;
+}
+body.gantry5.admin-color-light #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #797979;
+  color: #fff;
+}
+body.gantry5.admin-color-blue #g5-container .button-primary {
+  background: #096484;
+  color: #fff;
+}
+body.gantry5.admin-color-blue #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #074e67;
+  color: #fff;
+}
+body.gantry5.admin-color-coffee #g5-container .button-primary {
+  background: #C7A589;
+  color: #fff;
+}
+body.gantry5.admin-color-coffee #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #bd9574;
+  color: #fff;
+}
+body.gantry5.admin-color-ectoplasm #g5-container .button-primary {
+  background: #A3B745;
+  color: #fff;
+}
+body.gantry5.admin-color-ectoplasm #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #8fa13d;
+  color: #fff;
+}
+body.gantry5.admin-color-midnight #g5-container .button-primary {
+  background: #E14D43;
+  color: #fff;
+}
+body.gantry5.admin-color-midnight #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #dd3429;
+  color: #fff;
+}
+body.gantry5.admin-color-ocean #g5-container .button-primary {
+  background: #9EBAA0;
+  color: #fff;
+}
+body.gantry5.admin-color-ocean #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #8cad8e;
+  color: #fff;
+}
+body.gantry5.admin-color-sunrise #g5-container .button-primary {
+  background: #DD823B;
+  color: #fff;
+}
+body.gantry5.admin-color-sunrise #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+  background: #d57225;
+  color: #fff;
+}
+
 #g5-container .button {
   height: auto;
   box-shadow: none;
   border: none;
-}
-/* line 17, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
-#g5-container .button-primary {
-  background: #0073AA;
-  color: #fff;
-}
-/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
-#g5-container .button-primary:not(.disabled):not([disabled]):hover {
-  background: #005e8b;
-  color: #fff;
+  margin-bottom: 0;
 }
 
-/* line 2, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_sidebar.scss */
 #adminmenuwrap ul, #adminmenuwrap dl {
   margin-left: auto;
 }
 
-/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container [data-mode-indicator="production"] {
+body.gantry5.admin-color-fresh #g5-container [data-mode-indicator="production"] {
   background-color: #0073AA;
 }
-/* line 9, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header dd, body.gantry5 #g5-container #main-header li {
-  margin-bottom: 0;
-}
-/* line 13, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header .g-content {
-  padding: 0 1.563rem;
-}
-/* line 17, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header .dev-mode-toggle {
+body.gantry5.admin-color-fresh #g5-container #main-header .dev-mode-toggle {
   background: #005077;
 }
-/* line 20, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header .dev-mode-toggle a {
+body.gantry5.admin-color-fresh #g5-container #main-header .dev-mode-toggle a {
   background: #00a7f6;
 }
-/* line 25, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header .button-save {
+body.gantry5.admin-color-fresh #g5-container #main-header .button-save {
   background: #00a7f6;
   color: #fff;
 }
-/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
-body.gantry5 #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-fresh #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
   background: #0092d8;
   color: #fff;
 }
-/* line 32, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header ul li:hover a {
+body.gantry5.admin-color-fresh #g5-container #main-header ul li:hover a {
   background: #006290;
 }
-/* line 37, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container #main-header ul li.active a {
+body.gantry5.admin-color-fresh #g5-container #main-header ul li.active a {
   background: #003f5d;
 }
-/* line 46, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container .inner-header {
-  background-color: #222;
-  color: #0073AA;
-}
-/* line 51, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
-body.gantry5 #g5-container .settings-state {
+body.gantry5.admin-color-fresh #g5-container #main-header .settings-state {
   background: #0073AA;
+}
+body.gantry5.admin-color-light #g5-container [data-mode-indicator="production"] {
+  background-color: #888888;
+}
+body.gantry5.admin-color-light #g5-container #main-header .dev-mode-toggle {
+  background: #6f6f6f;
+}
+body.gantry5.admin-color-light #g5-container #main-header .dev-mode-toggle a {
+  background: #aeaeae;
+}
+body.gantry5.admin-color-light #g5-container #main-header .button-save {
+  background: #aeaeae;
   color: #fff;
 }
-/* line 56, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
+body.gantry5.admin-color-light #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #9f9f9f;
+  color: #fff;
+}
+body.gantry5.admin-color-light #g5-container #main-header ul li:hover a {
+  background: #7b7b7b;
+}
+body.gantry5.admin-color-light #g5-container #main-header ul li.active a {
+  background: #626262;
+}
+body.gantry5.admin-color-light #g5-container #main-header .settings-state {
+  background: #888888;
+}
+body.gantry5.admin-color-blue #g5-container [data-mode-indicator="production"] {
+  background-color: #096484;
+}
+body.gantry5.admin-color-blue #g5-container #main-header .dev-mode-toggle {
+  background: #064054;
+}
+body.gantry5.admin-color-blue #g5-container #main-header .dev-mode-toggle a {
+  background: #0e9acc;
+}
+body.gantry5.admin-color-blue #g5-container #main-header .button-save {
+  background: #0e9acc;
+  color: #fff;
+}
+body.gantry5.admin-color-blue #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #0c85af;
+  color: #fff;
+}
+body.gantry5.admin-color-blue #g5-container #main-header ul li:hover a {
+  background: #07526c;
+}
+body.gantry5.admin-color-blue #g5-container #main-header ul li.active a {
+  background: #042e3c;
+}
+body.gantry5.admin-color-blue #g5-container #main-header .settings-state {
+  background: #096484;
+}
+body.gantry5.admin-color-coffee #g5-container [data-mode-indicator="production"] {
+  background-color: #C7A589;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header .dev-mode-toggle {
+  background: #b78b66;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header .dev-mode-toggle a {
+  background: #e0cdbd;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header .button-save {
+  background: #e0cdbd;
+  color: #fff;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #d6bda8;
+  color: #fff;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header ul li:hover a {
+  background: #bf9878;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header ul li.active a {
+  background: #ae7d55;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header .settings-state {
+  background: #C7A589;
+}
+body.gantry5.admin-color-ectoplasm #g5-container [data-mode-indicator="production"] {
+  background-color: #A3B745;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .dev-mode-toggle {
+  background: #829237;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .dev-mode-toggle a {
+  background: #bfcd7b;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .button-save {
+  background: #bfcd7b;
+  color: #fff;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #b4c565;
+  color: #fff;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header ul li:hover a {
+  background: #93a43e;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header ul li.active a {
+  background: #727f30;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .settings-state {
+  background: #A3B745;
+}
+body.gantry5.admin-color-midnight #g5-container [data-mode-indicator="production"] {
+  background-color: #E14D43;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header .dev-mode-toggle {
+  background: #d02c21;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header .dev-mode-toggle a {
+  background: #ec8b85;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header .button-save {
+  background: #ec8b85;
+  color: #fff;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #e7726b;
+  color: #fff;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header ul li:hover a {
+  background: #dd382d;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header ul li.active a {
+  background: #ba281e;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header .settings-state {
+  background: #E14D43;
+}
+body.gantry5.admin-color-ocean #g5-container [data-mode-indicator="production"] {
+  background-color: #9EBAA0;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header .dev-mode-toggle {
+  background: #80a583;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header .dev-mode-toggle a {
+  background: #cbdacc;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header .button-save {
+  background: #cbdacc;
+  color: #fff;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #b9cdba;
+  color: #fff;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header ul li:hover a {
+  background: #8faf91;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header ul li.active a {
+  background: #719a74;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header .settings-state {
+  background: #9EBAA0;
+}
+body.gantry5.admin-color-sunrise #g5-container [data-mode-indicator="production"] {
+  background-color: #DD823B;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header .dev-mode-toggle {
+  background: #c36922;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header .dev-mode-toggle a {
+  background: #e8ac7c;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header .button-save {
+  background: #e8ac7c;
+  color: #fff;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+  background: #e49b62;
+  color: #fff;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header ul li:hover a {
+  background: #d97426;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header ul li.active a {
+  background: #ad5d1e;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header .settings-state {
+  background: #DD823B;
+}
+body.gantry5 #g5-container #main-header dd, body.gantry5 #g5-container #main-header li {
+  margin-bottom: 0;
+}
+body.gantry5 #g5-container #main-header .g-content {
+  padding: 0 1.563rem;
+}
+body.gantry5 #g5-container #main-header .settings-state {
+  color: #fff;
+}
 body.gantry5 #g5-container .button.button-update {
   background: #633679;
   color: #fff;
 }
-/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_buttons.scss */
 body.gantry5 #g5-container .button.button-update:not(.disabled):not([disabled]):hover {
   background: #522c64;
   color: #fff;
 }
-/* line 60, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_headers.scss */
 body.gantry5 #g5-container .tooltip {
   position: static;
   opacity: 1;
@@ -152,73 +402,180 @@ body.gantry5 #g5-container .tooltip {
   font-size: inherit;
 }
 
-/* line 3, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
-body.gantry5 #footer a {
+body.gantry5.admin-color-fresh #footer a {
   color: #0073AA;
 }
-/* line 8, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
-body.gantry5 #wpfooter {
+body.gantry5.admin-color-fresh #wpfooter {
   background-color: #e7e7e7;
 }
-/* line 10, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_footer.scss */
-body.gantry5 #wpfooter a {
+body.gantry5.admin-color-fresh #wpfooter a {
   color: #0073AA;
 }
-
-/* line 3, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_overview.scss */
-#g5-container .overview-header .theme-title {
-  color: #0073AA;
+body.gantry5.admin-color-light #footer a {
+  color: #888888;
+}
+body.gantry5.admin-color-light #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-light #wpfooter a {
+  color: #888888;
+}
+body.gantry5.admin-color-blue #footer a {
+  color: #096484;
+}
+body.gantry5.admin-color-blue #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-blue #wpfooter a {
+  color: #096484;
+}
+body.gantry5.admin-color-coffee #footer a {
+  color: #C7A589;
+}
+body.gantry5.admin-color-coffee #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-coffee #wpfooter a {
+  color: #C7A589;
+}
+body.gantry5.admin-color-ectoplasm #footer a {
+  color: #A3B745;
+}
+body.gantry5.admin-color-ectoplasm #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-ectoplasm #wpfooter a {
+  color: #A3B745;
+}
+body.gantry5.admin-color-midnight #footer a {
+  color: #E14D43;
+}
+body.gantry5.admin-color-midnight #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-midnight #wpfooter a {
+  color: #E14D43;
+}
+body.gantry5.admin-color-ocean #footer a {
+  color: #9EBAA0;
+}
+body.gantry5.admin-color-ocean #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-ocean #wpfooter a {
+  color: #9EBAA0;
+}
+body.gantry5.admin-color-sunrise #footer a {
+  color: #DD823B;
+}
+body.gantry5.admin-color-sunrise #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-sunrise #wpfooter a {
+  color: #DD823B;
 }
 
-/* line 3, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_typography.scss */
+@media only all and (min-width: 60rem) {
+  body.gantry5 #g5-container .g5-dialog {
+    padding-left: 160px;
+  }
+}
+@media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+  body.gantry5 #g5-container .g5-dialog {
+    padding-left: 36px;
+  }
+}
+body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
+  top: 3em;
+}
+@media only all and (min-width: 60rem) {
+  body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
+    left: 160px;
+  }
+}
+@media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+  body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
+    left: 36px;
+  }
+}
+@media only all and (max-width: 47.938rem) {
+  body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
+    top: 4em;
+  }
+}
+
+body.gantry5.admin-color-fresh #g5-container .overview-header .theme-title {
+  color: #0073AA;
+}
+body.gantry5.admin-color-light #g5-container .overview-header .theme-title {
+  color: #888888;
+}
+body.gantry5.admin-color-blue #g5-container .overview-header .theme-title {
+  color: #096484;
+}
+body.gantry5.admin-color-coffee #g5-container .overview-header .theme-title {
+  color: #C7A589;
+}
+body.gantry5.admin-color-ectoplasm #g5-container .overview-header .theme-title {
+  color: #A3B745;
+}
+body.gantry5.admin-color-midnight #g5-container .overview-header .theme-title {
+  color: #E14D43;
+}
+body.gantry5.admin-color-ocean #g5-container .overview-header .theme-title {
+  color: #9EBAA0;
+}
+body.gantry5.admin-color-sunrise #g5-container .overview-header .theme-title {
+  color: #DD823B;
+}
+
 #g5-container h1 {
   font-size: 2.25rem;
 }
-/* line 7, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_typography.scss */
 #g5-container h2 {
   font-size: 1.9rem;
 }
-/* line 11, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_typography.scss */
 #g5-container h3 {
   font-size: 1.5rem;
 }
-/* line 15, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_typography.scss */
 #g5-container h4 {
   font-size: 1.15rem;
 }
-/* line 19, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_typography.scss */
 #g5-container h5 {
   font-size: 1rem;
 }
-/* line 23, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_typography.scss */
 #g5-container h6 {
   font-size: 0.85rem;
 }
-/* line 27, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_typography.scss */
 #g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
   line-height: inherit;
 }
-/* line 31, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_typography.scss */
 #g5-container p {
   font-size: 1rem;
   line-height: 1.5;
 }
-/* line 36, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_typography.scss */
 #g5-container .page-title {
   color: inherit;
   text-shadow: none;
   line-height: inherit;
 }
 
-/* line 4, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_navbar.scss */
+#g5-container #trash {
+  top: 30px;
+}
+#g5-container .g5-lm-particles-picker .settings-block input:not(.settings-param-toggle):not([type="checkbox"]) {
+  width: 250px;
+}
+#g5-container .g5-lm-particles-picker .settings-block.search {
+  font-size: inherit;
+}
+
 body.gantry5 #g5-container .navbar-block #navbar {
   padding: 0 0.625rem;
 }
-/* line 8, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_navbar.scss */
 body.gantry5 #g5-container .navbar-block #gantry-logo {
   right: 2.1rem;
 }
-/* line 13, platforms/wordpress/gantry5/admin/scss/wordpress-admin/_navbar.scss */
 body.gantry5 #g5-container nav.navbar * {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;

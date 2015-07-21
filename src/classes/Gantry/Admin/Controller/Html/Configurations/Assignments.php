@@ -29,6 +29,8 @@ class Assignments extends HtmlController
             $assignments = new AssignmentsObject($configuration);
 
             $this->params['assignments'] = $assignments->get();
+            $this->params['options'] = $assignments->assignmentOptions();
+            $this->params['assignment'] = $assignments->getAssignment();
         }
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/assignments/assignments.html.twig', $this->params);
@@ -41,11 +43,8 @@ class Assignments extends HtmlController
             $this->undefined();
         }
 
-        /** @var Request $request */
-        $request = $this->container['request'];
-
         $assignments = new AssignmentsObject($configuration);
-        $assignments->set($request->getArray());
+        $assignments->set($this->request->post->getArray());
 
         // Fire save event.
         $event = new Event;

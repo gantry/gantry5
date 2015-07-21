@@ -99,17 +99,15 @@ class Particle extends JsonController
      */
     public function particle($name)
     {
-        /** @var Request $request */
-        $request = $this->container['request'];
-
-        $data = $request->get('item');
+        $data = $this->request->post['item'];
         if ($data) {
             $data = json_decode($data, true);
         } else {
-            $data = $request->getArray();
+            $data = $this->request->post->getArray();
         }
 
-        $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml")->content());
+        // TODO: add support for other block types as well, like menu.
+        // $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));
 
         // Load particle blueprints and default settings.
@@ -128,7 +126,7 @@ class Particle extends JsonController
 
         $this->params += [
             'item'          => $item,
-            'block'         => $block,
+            // 'block'         => $block,
             'data'          => ['particles' => [$name => $item->options['particle']]],
             'particle'      => $blueprints,
             'parent'        => 'settings',
@@ -137,7 +135,7 @@ class Particle extends JsonController
             'action'        => "particle/{$name}/validate"
         ];
 
-        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params)]);
+        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/particle.html.twig', $this->params)]);
     }
 
     /**
@@ -148,9 +146,6 @@ class Particle extends JsonController
      */
     public function validate($name)
     {
-        /** @var Request $request */
-        $request = $this->container['request'];
-
         // Load particle blueprints and default settings.
         $validator = new Blueprints();
         $validator->embed('options', $this->container['particles']->get($name));
@@ -166,11 +161,11 @@ class Particle extends JsonController
 
         $data->set('type', 'particle');
         $data->set('particle', $name);
-        $data->set('title', $request->get('title') ?: $blueprints->get('name'));
-        $data->set('options.particle', $request->getArray("particles.{$name}"));
+        $data->set('title', $this->request->post['title'] ?: $blueprints->get('name'));
+        $data->set('options.particle', $this->request->post->getArray("particles.{$name}"));
         $data->def('options.particle.enabled', 1);
 
-        $block = $request->getArray('block');
+        $block = $this->request->post->getArray('block');
         foreach ($block as $key => $param) {
             if ($param === '') {
                 unset($block[$key]);

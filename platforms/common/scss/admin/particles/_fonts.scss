@@ -9,128 +9,134 @@
     }
 }
 
-.g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content {
-    width: 650px;
+#g5-container {
+    .g5-dialog.g5-dialog-theme-default.g5-modal-fonts .g5-content {
+        width: 650px;
 
-    input[type="checkbox"], input[type="radio"] {
-        margin: 0 5px 0 0;
-    }
+        input[type="checkbox"], input[type="radio"] {
+            margin: 0 5px 0 0;
+        }
 
-    .g-font-hide, .g-variant-hide, .font-charsets-selected {
-        display: none;
-    }
+        .g-font-hide, .g-variant-hide, .font-charsets-selected {
+            display: none;
+        }
 
-    .font-selected .font-charsets-selected {
-        display: inline-block;
-    }
+        .font-selected .font-charsets-selected {
+            display: inline-block;
+        }
 
-    .font-search {
-        width: 10rem !important;
-    }
+        .font-selected .font-charsets-details {
+            color: $blue;
+        }
 
-    .font-preview {
-        width: 25rem !important;
-    }
+        .font-search {
+            width: 10rem !important;
+        }
 
-    input {
-        font-size: 0.8em;
-    }
-    .font-preview {
-        width: 400px;
-    }
+        .font-preview {
+            width: 25rem !important;
+        }
 
-    .g-particles-footer {
-        .font-selected {
+        input {
             font-size: 0.8em;
-            margin-right: 10px;
+        }
+        .font-preview {
+            width: 400px;
         }
 
-        .font-category {
-            font-size: 0.85em;
+        .g-particles-footer {
+            .font-selected {
+                font-size: 0.8em;
+                margin-right: 10px;
+            }
+
+            .font-category {
+                font-size: 0.85em;
+            }
+
+            .font-subsets {
+                margin-left: 0.85em !important;
+            }
         }
 
-        .font-subsets {
-            margin-left: 0.85em !important;
-        }
-    }
-
-    ul.g-fonts-list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        font-size: 13px;
-        line-height: 1.5rem;
-        max-height: 550px;
-        overflow: auto;
-        position: relative;
-
-        ul, li {
-            list-style: none;
+        ul.g-fonts-list {
             margin: 0;
             padding: 0;
-        }
+            list-style: none;
+            font-size: 13px;
+            line-height: 1.5rem;
+            max-height: 550px;
+            overflow: auto;
+            position: relative;
 
-        > li.g-font-heading {
-            text-transform: uppercase;
-            margin: 1rem 0 0.5rem;
-            font-size: 0.8rem;
-            color: #bbb;
-            text-shadow: 0 1px rgba(255, 255, 255, 0.8);
-        }
+            ul, li {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
 
-        > li[data-font] {
-            padding: 0.5em 1em;
-            margin: 0.5em 0;
-            border: 1px solid #dfdfdf;
-            border-radius: 5px;
-            cursor: pointer;
-            
-            &.g-local-font {
-                margin-right: 0.5em;
-                display: inline-block;
-                
-                .family {
+            > li.g-font-heading {
+                text-transform: uppercase;
+                margin: 1rem 0 0.5rem;
+                font-size: 0.8rem;
+                color: #bbb;
+                text-shadow: 0 1px rgba(255, 255, 255, 0.8);
+            }
+
+            > li[data-font] {
+                padding: 0.5em 1em;
+                margin: 0.5em 0;
+                border: 1px solid #dfdfdf;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &.g-local-font {
+                    margin-right: 0.5em;
                     display: inline-block;
+
+                    .family {
+                        display: inline-block;
+                    }
                 }
-            }
 
-            background-color: #eaeaea;
+                background-color: #eaeaea;
 
-            &:nth-child(odd) {
-                background-color: #f7f7f7;
-            }
+                &:nth-child(odd) {
+                    background-color: #f7f7f7;
+                }
 
-            &.selected {
-                border-color: $tertiary-accent;
-            }
+                &.selected {
+                    border-color: $tertiary-accent;
+                }
 
-            strong {
-                font-weight: bold !important;
-            }
+                strong {
+                    font-weight: bold !important;
+                }
 
-            input[type="checkbox"], .variant {
-                display: inline-block;
-                vertical-align: middle;
-            }
+                input[type="checkbox"], .variant {
+                    display: inline-block;
+                    vertical-align: middle;
+                }
 
-            .variant, .family {
-                color: #999;
-            }
+                .variant, .family {
+                    color: #999;
+                }
 
-            .preview {
-                font-size: 24px;
-                line-height: 1.3em;
-            }
+                .preview {
+                    font-size: 24px;
+                    line-height: 1.3em;
+                }
 
-            ul {
-                margin-top: 0.5em;
-            }
+                ul {
+                    margin-top: 0.5em;
+                }
 
-            li[data-font] {
-                padding: 0.5em 0;
-                border: 0;
-                border-top: 1px solid #ddd;
-                border-radius: 0;
+                li[data-font] {
+                    padding: 0.5em 0;
+                    border: 0;
+                    border-top: 1px solid #ddd;
+                    border-radius: 0;
+                }
             }
         }
     }

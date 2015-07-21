@@ -16,6 +16,12 @@ form:
       description: CSS class name for the particle.
       default: social
 
+    title:
+      type: input.text
+      label: Title
+      description: Customize the title text.
+      placeholder: Enter title
+
     target:
       type: select.selectize
       label: Target

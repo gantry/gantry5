@@ -4,6 +4,15 @@ type: section
 
 form:
   fields:
+    boxed:
+      type: select.selectize
+      label: Layout
+      description: Select between a Fullwidth and Boxed.
+      isset: true
+      options:
+        0: Fullwidth
+        1: Boxed
+
     class:
       type: input.selectize
       label: CSS Classes

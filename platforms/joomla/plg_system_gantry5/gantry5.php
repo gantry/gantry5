@@ -16,6 +16,7 @@ class plgSystemGantry5 extends JPlugin
      */
     protected $app;
     protected $styles;
+    protected $modules;
 
     public function __construct(&$subject, $config = array())
     {
@@ -72,15 +73,45 @@ class plgSystemGantry5 extends JPlugin
         $type   = $document->getType();
 
         $option = $this->app->input->getString('option');
-        $view   = $this->app->input->getString('view', 'styles');
+        $view   = $this->app->input->getString('view', 'g5');
         $task   = $this->app->input->getString('task');
 
-        if (in_array($option, ['com_templates', 'com_advancedtemplates']) && $view == 'styles' && !$task && $type == 'html') {
+        if (in_array($option, array('com_templates', 'com_advancedtemplates')) && ($view == 'g5' || $view == 'styles') && !$task && $type == 'html') {
             $this->styles = $this->getStyles();
 
             $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', array($this, 'appendHtml'), $this->app->getBody());
 
             $this->app->setBody($body);
+        }
+
+        if (($option == 'com_modules' || $option == 'com_advancedmodules') && (($view == 'g5' || $view == 'modules') || empty($view)) && $type == 'html') {
+            $db    = JFactory::getDBO();
+            $query = $db->getQuery(true);
+            $query->select('id, title, params');
+            $query->from('#__modules');
+            $query->where('module = ' . $db->quote('mod_gantry5_particle'));
+            $db->setQuery($query);
+            $data = $db->loadObjectList();
+
+            if (sizeof($data) > 0) {
+                $this->modules = [];
+                $body = $this->app->getBody();
+
+                foreach ($data as $module) {
+                    $params   = json_decode($module->params);
+                    $particle = isset($params->particle) ? json_decode($params->particle) : '';
+                    $title = isset($particle->title) ? $particle->title : (isset($particle->particle) ? $particle->particle : '');
+
+                    $this->modules[$module->id] = $particle;
+
+                    $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', function($matches) use ($title) {
+                        return $this->appendHtml($matches, $title);
+                    }, $body);
+                }
+
+
+                $this->app->setBody($body);
+            }
         }
     }
 
@@ -95,28 +126,43 @@ class plgSystemGantry5 extends JPlugin
             return;
         }
 
-        $path = JPATH_THEMES . "/{$template->template}/includes/gantry.php";
+        $gantryPath = JPATH_THEMES . "/{$template->template}/includes/gantry.php";
 
-        if (is_file($path)) {
+        if (is_file($gantryPath)) {
             // Manually setup Gantry 5 Framework from the template.
-            include $path;
+            include_once $gantryPath;
 
-            return;
+        } else {
+
+            // Setup Gantry 5 Framework or throw exception.
+            Gantry5\Loader::setup();
+
+            // Get Gantry instance.
+            $gantry = Gantry\Framework\Gantry::instance();
+
+            // Initialize the template.
+            $gantry['theme.path'] = JPATH_THEMES . "/{$template->template}";
+            $gantry['theme.name'] = $template->template;
+
+            $themePath = $gantry['theme.path'] . '/includes/theme.php';
+
+            include_once $themePath;
         }
 
-        // Setup Gantry 5 Framework or throw exception.
-        Gantry5\Loader::setup();
+        /** @var Gantry\Framework\Theme $theme */
+        $theme = $gantry['theme'];
 
-        // Get Gantry instance.
-        $gantry = Gantry\Framework\Gantry::instance();
+        /** @var \Gantry\Framework\Configurations $configurations */
+        $configurations = $gantry['configurations'];
 
-        // Initialize the template.
-        $gantry['theme.path'] = JPATH_THEMES . "/{$template->template}";
-        $gantry['theme.name'] = $template->template;
+        $theme->setLayout($configurations->current());
 
-        $themePath = $gantry['theme.path'] . '/includes/theme.php';
-
-        include_once $themePath;
+        if (!$this->params->get('production', 0) || $this->params->get('asset_timestamps', 1)) {
+            $age = (int) ($this->params->get('asset_timestamps_period', 7) * 86400);
+            Gantry\Framework\Document::$timestamp_age = $age > 0 ? $age : PHP_INT_MAX;
+        } else {
+            Gantry\Framework\Document::$timestamp_age = 0;
+        }
     }
 
     /**
@@ -129,7 +175,7 @@ class plgSystemGantry5 extends JPlugin
         $option = $input->getCmd('option');
         $task   = $input->getCmd('task');
 
-        if (in_array($option, ['com_templates', 'com_advancedtemplates']) && $task && strpos($task, 'style') === 0) {
+        if (in_array($option, array('com_templates', 'com_advancedtemplates')) && $task && strpos($task, 'style') === 0) {
             // Get all ids.
             $cid = $input->post->get('cid', (array) $input->getInt('id'), 'array');
 
@@ -156,20 +202,141 @@ class plgSystemGantry5 extends JPlugin
     }
 
     /**
+     * Save plugin parameters and trigger the save events.
+     *
+     * @param array $data
+     * @return bool
+     * @see JModelAdmin::save()
+     */
+    public function onGantry5SaveConfig(array $data)
+    {
+        $name = 'plg_' . $this->_type . '_' . $this->_name;
+
+        // Initialise variables;
+        $dispatcher = JEventDispatcher::getInstance();
+        $table = JTable::getInstance('Extension');
+
+        // Include the content plugins for the on save events.
+        JPluginHelper::importPlugin('extension');
+
+        // Load the row if saving an existing record.
+        $table->load(array('type'=>'plugin', 'folder'=>$this->_type, 'element'=>$this->_name));
+
+        $params = new Joomla\Registry\Registry($table->params);
+        $params->loadArray($data);
+
+        $table->params = $params->toString();
+
+        // Check the data.
+        if (!$table->check()) {
+            throw new RuntimeException($table->getError());
+        }
+
+        // Trigger the onContentBeforeSave event.
+        $result = $dispatcher->trigger('onExtensionBeforeSave', array($name, &$table, false));
+        if (in_array(false, $result, true)) {
+            throw new RuntimeException($table->getError());
+        }
+
+        // Store the data.
+        if (!$table->store()) {
+            throw new RuntimeException($table->getError());
+        }
+
+        // Clean the cache.
+        $this->cleanCache();
+
+        // Trigger the onExtensionAfterSave event.
+        $dispatcher->trigger('onExtensionAfterSave', array($name, &$table, false));
+
+        return true;
+    }
+
+    public function onContentBeforeSave($context, $table, $isNew)
+    {
+        if ($context !== 'com_menus.item') {
+            return;
+        }
+    }
+
+    public function onContentAfterSave($context, $table, $isNew)
+    {
+        if ($context !== 'com_menus.item') {
+            return;
+        }
+    }
+
+    public function onContentBeforeDelete($context, $table)
+    {
+        if ($context !== 'com_menus.item') {
+            return;
+        }
+    }
+
+    public function onContentAfterDelete($context, $table)
+    {
+        if ($context !== 'com_menus.item') {
+            return;
+        }
+    }
+
+    public function onContentPrepareData($context, $data)
+    {
+        if ($context !== 'com_menus.item') {
+            return;
+        }
+    }
+
+    public function onContentPrepareForm($form, $data)
+    {
+        switch ($form->getName()) {
+            case 'com_menus.items.filter':
+                break;
+            case 'com_menus.item':
+                break;
+        }
+    }
+
+    /**
+     * Clean plugin cache just as if we were saving plugin from the plugin manager.
+     *
+     * @see JModelLegacy::cleanCache()
+     */
+    protected function cleanCache($group = 'com_plugins', $client_id = 0)
+    {
+        // Initialise variables;
+        $conf = JFactory::getConfig();
+        $dispatcher = JEventDispatcher::getInstance();
+
+        $options = array(
+            'defaultgroup' => $group,
+            'cachebase' => ($client_id) ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache'));
+
+        $cache = JCache::getInstance('callback', $options);
+        $cache->clean();
+
+        // Trigger the onContentCleanCache event.
+        $dispatcher->trigger('onContentCleanCache', $options);
+    }
+
+    /**
      * @param array $matches
      * @return string
      */
-    private function appendHtml(array $matches)
+    private function appendHtml(array $matches, $content = 'Gantry 5')
     {
         $html = $matches[0];
 
-        if (strpos($matches[2], 'task=style.edit')) {
+        if (strpos($matches[2], 'task=style.edit') || strpos($matches[2], 'task=module.edit')) {
             $uri = new JUri($matches[2]);
             $id = (int) $uri->getVar('id');
 
-            if ($id && in_array($uri->getVar('option'), ['com_templates', 'com_advancedtemplates']) && isset($this->styles[$id])) {
+            if ($id && in_array($uri->getVar('option'), array('com_templates', 'com_advancedtemplates', 'com_modules')) && (isset($this->styles[$id]) || isset($this->modules[$id]))) {
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
-                $html .= ' <span class="label" style="background:#439a86;color:#fff;">Gantry 5</span>';
+                $html .= ' <span class="label" style="background:#439a86;color:#fff;">' . $content . '</span>';
+
+                if ($this->modules[$id]) { unset($this->modules[$id]); }
+                else { unset($this->styles[$id]); }
             }
         }
 

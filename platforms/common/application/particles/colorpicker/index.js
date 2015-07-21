@@ -151,19 +151,23 @@ var ColorPicker = new prime({
     },
 
     move: function(target, event) {
-        var input      = this.element,
-            picker     = target.find('.cp-picker'),
+        var input = this.element,
+            picker = target.find('.cp-picker'),
             clientRect = target[0].getBoundingClientRect(),
-            offsetX    = clientRect.left + window.scrollX,
-            offsetY    = clientRect.top + window.scrollY,
-            x          = Math.round(event.pageX - offsetX),
-            y          = Math.round(event.pageY - offsetY),
+            offsetX = clientRect.left + window.scrollX,
+            offsetY = clientRect.top + window.scrollY,
+            x = Math.round((event ? event.pageX : 0) - offsetX),
+            y = Math.round((event ? event.pageY : 0) - offsetY),
             wx, wy, r, phi;
 
         // Touch support
-        if (event.changedTouches) {
-            x = event.changedTouches[0].pageX - offsetX;
-            y = event.changedTouches[0].pageY - offsetY;
+        if (event && event.changedTouches) {
+            x = (event.changedTouches ? event.changedTouches[0].pageX : 0) - offsetX;
+            y = (event.changedTouches ? event.changedTouches[0].pageY : 0) - offsetY;
+        }
+
+        if (event && event.manualOpacity) {
+            y = clientRect.height;
         }
 
         // Constrain picker to its container
@@ -219,23 +223,34 @@ var ColorPicker = new prime({
             hue: zen('div.cp-tab-hue.active').text('HUE').bottom(tabs),
             brightness: zen('div.cp-tab-brightness').text('BRI').bottom(tabs),
             saturation: zen('div.cp-tab-saturation').text('SAT').bottom(tabs),
-            wheel: zen('div.cp-tab-wheel').text('WHEEL').bottom(tabs)
+            wheel: zen('div.cp-tab-wheel').text('WHEEL').bottom(tabs),
+            transparent: zen('div.cp-tab-transp').text('TRANSPARENT').bottom(tabs)
         };
 
-        tabs.delegate('click', '> div', bind(function(event, element) {
-            var active  = tabs.find('.active'),
-                mode    = active.attribute('class').replace(/\s|active|cp-tab-/g, ''),
-                newMode = element.attribute('class').replace(/\s|active|cp-tab-/g, '');
+        MOUSEDOWN.forEach(bind(function(mousedown) {
+            tabs.delegate(mousedown, '> div', bind(function(event, element) {
+                if (element == this.tabs.transparent) {
+                    this.opacity = 0;
+                    var sliderHeight = this.opacitySlider.position().height;
+                    this.opacitySlider.find('.cp-picker').style({ 'top': clamp(sliderHeight - (sliderHeight * this.opacity), 0, sliderHeight) });
+                    this.move(this.opacitySlider, { manualOpacity: true });
+                    return;
+                }
 
-            this.wrapper.removeClass('cp-mode-' + mode).addClass('cp-mode-' + newMode);
-            active.removeClass('active');
-            element.addClass('active');
+                var active = tabs.find('.active'),
+                    mode = active.attribute('class').replace(/\s|active|cp-tab-/g, ''),
+                    newMode = element.attribute('class').replace(/\s|active|cp-tab-/g, '');
 
-            this.mode = newMode;
-            this.updateFromInput();
+                this.wrapper.removeClass('cp-mode-' + mode).addClass('cp-mode-' + newMode);
+                active.removeClass('active');
+                element.addClass('active');
+
+                this.mode = newMode;
+                this.updateFromInput();
+            }, this));
         }, this));
 
-        this.wrapper.bottom('body');
+        this.wrapper.bottom('#g5-container');
 
         this.built = true;
         this.mode = 'hue';
@@ -243,7 +258,7 @@ var ColorPicker = new prime({
 
     updateFromInput: function(dontFireEvent, element) {
         element = this.element || element;
-        var value   = element.value(),
+        var value = element.value(),
             opacity = value.replace(/\s/g, '').match(/^rgba?\([0-9]{1,3},[0-9]{1,3},[0-9]{1,3},(.+)\)/),
             hex, hsb;
 
@@ -261,7 +276,7 @@ var ColorPicker = new prime({
 
             // bg color
             var gridHeight = this.grid.position().height,
-                gridWidth  = this.grid.position().width,
+                gridWidth = this.grid.position().width,
                 r, phi, x, y;
 
             sliderHeight = this.slider.position().height;
@@ -390,24 +405,24 @@ var ColorPicker = new prime({
         var hex, hue, saturation, brightness, x, y, r, phi,
 
             // Panel objects
-            grid                = this.wrapper.find('.cp-grid'),
-            slider              = this.wrapper.find('.cp-slider'),
-            opacitySlider       = this.wrapper.find('.cp-opacity-slider'),
+            grid = this.wrapper.find('.cp-grid'),
+            slider = this.wrapper.find('.cp-slider'),
+            opacitySlider = this.wrapper.find('.cp-opacity-slider'),
 
             // Picker objects
-            gridPicker          = grid.find('.cp-picker'),
-            sliderPicker        = slider.find('.cp-picker'),
-            opacityPicker       = opacitySlider.find('.cp-picker'),
+            gridPicker = grid.find('.cp-picker'),
+            sliderPicker = slider.find('.cp-picker'),
+            opacityPicker = opacitySlider.find('.cp-picker'),
 
             // Picker positions
-            gridPos             = getCoords(gridPicker, grid),
-            sliderPos           = getCoords(sliderPicker, slider),
-            opacityPos          = getCoords(opacityPicker, opacitySlider),
+            gridPos = getCoords(gridPicker, grid),
+            sliderPos = getCoords(sliderPicker, slider),
+            opacityPos = getCoords(opacityPicker, opacitySlider),
 
             // Sizes
-            gridWidth           = grid[0].getBoundingClientRect().width,
-            gridHeight          = grid[0].getBoundingClientRect().height,
-            sliderHeight        = slider[0].getBoundingClientRect().height,
+            gridWidth = grid[0].getBoundingClientRect().width,
+            gridHeight = grid[0].getBoundingClientRect().height,
+            sliderHeight = slider[0].getBoundingClientRect().height,
             opacitySliderHeight = opacitySlider[0].getBoundingClientRect().height;
 
         var value = this.element.value();
@@ -532,10 +547,11 @@ var ColorPicker = new prime({
     },
 
     reposition: function() {
-        var offset = this.element[0].getBoundingClientRect();
+        var offset = this.element[0].getBoundingClientRect(),
+            ct = $('#g5-container')[0].getBoundingClientRect();
         this.wrapper.style({
-            top: offset.top + offset.height + window.scrollY,
-            left: offset.left + window.scrollX
+            top: offset.top + offset.height - ct.top,
+            left: offset.left - ct.left
         });
     },
 
@@ -697,8 +713,8 @@ ready(function() {
     var x = new ColorPicker(), body = $('body');
     x.on('change', function(element, hex, opacity) {
         clearTimeout(this.timer);
-        var rgb   = hex2rgb(hex),
-            yiq   = (((rgb.r * 299) + (rgb.g * 587) + (rgb.b * 114)) / 1000) >= 128 ? 'dark' : 'light',
+        var rgb = hex2rgb(hex),
+            yiq = (((rgb.r * 299) + (rgb.g * 587) + (rgb.b * 114)) / 1000) >= 128 ? 'dark' : 'light',
             check = yiq == 'dark' || (!opacity || opacity < 0.35);
 
         if (opacity < 1) {

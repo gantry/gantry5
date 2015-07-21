@@ -1,0 +1,46 @@
+{% set headerContent %}
+{% block stylesheets %}
+{% endblock %}
+{% block javascript %}
+{% endblock %}
+{% endset %}
+{% do parse_assets(headerContent) %}
+
+{% set footerContent %}
+{% block javascript_footer %}
+{% endblock %}
+{% endset %}
+{% do parse_assets(footerContent, 'footer') %}
+
+{% set name = (name is null ? field.name : name) %}
+{% set value = (value is null ? field.default : value) %}
+{% set default_value = (default_value is null ? field.default : default_value) %}
+
+{% block field %}
+    {% if not field.isset or value is not null %}
+    {% block contents %}
+        {% block group %}
+            {% block input %}
+                <input
+                        {# required attribute structures #}
+                        name="{{ (scope ~ name)|fieldName|e }}"
+                        value="{{ value|join(', ')|e }}"
+                        {# global attribute structures #}
+                        {% block global_attributes %}
+                            {% if field.class is defined %} class="{{ field.class|e }}" {% endif %}
+                            {% if field.id is defined %} id="{{ field.id|e }}" {% endif %}
+                            {% if field.style is defined %} style="{{ field.style|e }}" {% endif %}
+                            {% if field.title is defined %} title="{{ field.title|e }}" {% endif %}
+                        {% endblock %}
+                        />
+
+                {% block reset_field -%}
+                    {% if field.reset_field is not defined or field.reset_field in ['on', 'true', 1] %}
+                        <span class="g-reset-field" data-g-reset-field="{{ (scope ~ name)|fieldName|e }}"><i class="fa  fa-fw fa-times-circle"></i></span>
+                    {% endif %}
+                {%- endblock %}
+            {% endblock %}
+        {% endblock %}
+    {% endblock %}
+    {% endif %}
+{% endblock %}

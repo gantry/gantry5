@@ -25,6 +25,7 @@ class Compiler extends BaseCompiler
     protected $basePath;
     protected $fonts;
     protected $usedFonts;
+    protected $parsedFiles;
 
     public function __construct()
     {
@@ -40,15 +41,15 @@ class Compiler extends BaseCompiler
         $this->basePath = '/' . Folder::getRelativePath($basePath);
     }
 
+    public function getParsedFiles()
+    {
+        // parsedFiles is a private variable in base class, so we need to override function to see it.
+        return $this->parsedFiles;
+    }
+
     public function setFonts(array $fonts)
     {
         $this->fonts = $fonts;
-    }
-
-    public function compileValue($value)
-    {
-        // Makes protected function public.
-        return parent::compileValue($value);
     }
 
     public function compileArgs($args)
@@ -105,7 +106,7 @@ class Compiler extends BaseCompiler
             // Only return url once per font.
             if ($font && !isset($this->usedFonts[$font])) {
                 $this->usedFonts[$font] = true;
-                return "url('http://fonts.googleapis.com/css?{$value}')";
+                return "url('//fonts.googleapis.com/css?{$value}')";
             }
         }
 

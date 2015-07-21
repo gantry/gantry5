@@ -126,13 +126,13 @@ class Layout extends HtmlController
 
     public function save()
     {
-        if (!isset($_POST['layout'])) {
+        $layout = $this->request->post->getJsonArray('layout');
+        if (!isset($layout)) {
             throw new \RuntimeException('Error while saving layout: Structure missing', 400);
         }
 
         $configuration = $this->params['configuration'];
-        $layout = json_decode($_POST['layout'], true);
-        $preset = isset($_POST['preset']) ? json_decode($_POST['preset'], true) : '';
+        $preset = $this->request->post->getJsonArray('preset');
 
         // Create layout from the data.
         $layout = new LayoutObject(
@@ -161,21 +161,23 @@ class Layout extends HtmlController
         }
 
         $item = $layout->find($id);
-        $item->type    = isset($_POST['type']) ? $_POST['type'] : $type;
-        $item->subtype = isset($_POST['subtype']) ? $_POST['subtype'] : null;
-        $item->title   = isset($_POST['title']) ? $_POST['title'] : 'Untitled';
+        $item->type    = $this->request->post['type'] ?: $type;
+        $item->subtype = $this->request->post['subtype'] ?: false;
+        $item->title   = $this->request->post['title'] ?: ucfirst($type);
         if (!isset($item->attributes)) {
             $item->attributes = new \stdClass;
         }
-        if (isset($_POST['block'])) {
-            $item->block = (object) $_POST['block'];
+
+        $block = $this->request->post->getArray('block');
+        if (isset($block)) {
+            $item->block = (object) $block;
         }
 
-        $name = isset($item->subtype) ? $item->subtype : $type;
+        $name = isset($item->subtype) && $item->subtype ? $item->subtype : $type;
 
-        $attributes = isset($_POST['options']) && is_array($_POST['options']) ? $_POST['options'] : [];
+        $attributes = $this->request->post->getArray('options');
 
-        if ($type == 'section' || $type == 'grid' || $type == 'offcanvas') {
+        if ($type == 'section' || $type == 'container' || $type == 'grid' || $type == 'offcanvas') {
             $prefix = "particles.{$type}";
             $defaults = [];
             $attributes += (array) $item->attributes + $defaults;
@@ -211,7 +213,8 @@ class Layout extends HtmlController
             $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
                 $this->params);
         } else {
-            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section.html.twig',
+            $typeLayout = $type == 'container' ? 'container' : 'section';
+            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
                 $this->params);
         }
 
@@ -239,9 +242,10 @@ class Layout extends HtmlController
             $layout = $this->getLayout('default');
         }
 
-        $deleted = isset($_POST['layout']) ? $layout->clearSections()->copySections(json_decode($_POST['layout'])): [];
+        $input = $this->request->post->getJson('layout');
+        $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];
         $message = $deleted
-            ? sprintf('Warning: Following sections could not be found from the new layout: %s.', implode(', ', $deleted))
+            ? $this->container['admin.theme']->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
             : null;
 
         return new JsonResponse([
@@ -267,9 +271,10 @@ class Layout extends HtmlController
 
         $layout = new LayoutObject($id, $layout);
 
-        $deleted = isset($_POST['layout']) ? $layout->clearSections()->copySections(json_decode($_POST['layout'])): [];
+        $input = $this->request->post->getJson('layout');
+        $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];
         $message = $deleted
-            ? sprintf('Warning: Following sections could not be found from the new layout: %s.', implode(', ', $deleted))
+            ? $this->container['admin.theme']->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
             : null;
 
         return new JsonResponse([
@@ -292,7 +297,7 @@ class Layout extends HtmlController
         $validator = new Blueprints();
 
         $name = $particle;
-        if ($particle == 'section' || $particle == 'grid' || $particle == 'offcanvas') {
+        if ($particle == 'section' || $particle == 'container' || $particle == 'grid' || $particle == 'offcanvas') {
             $type = $particle;
             $particle = null;
             $validator->embed('options', CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
@@ -313,11 +318,8 @@ class Layout extends HtmlController
             }
         );
 
-        /** @var Request $request */
-        $request = $this->container['request'];
-
         // Join POST data.
-        $data->join('options', $request->getArray("particles." . $name));
+        $data->join('options', $this->request->post->getArray("particles." . $name));
         if ($particle) {
             $data->set('options.enabled', (int) $data->get('options.enabled', 1));
         }
@@ -327,10 +329,10 @@ class Layout extends HtmlController
                 $data->set('subtype', $particle);
             }
 
-            $data->join('title', isset($_POST['title']) ? $_POST['title'] : ucfirst($particle));
-            if (isset($_POST['block'])) {
+            $data->join('title', $this->request->post['title'] ?: ucfirst($particle));
+            $block = $this->request->post->getArray('block');
+            if ($block) {
                 // TODO: remove empty items in some other way:
-                $block = $request->getArray('block');
                 foreach ($block as $key => $param) {
                     if ($param === '') {
                         unset($block[$key]);

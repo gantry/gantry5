@@ -27,8 +27,11 @@ form:
       label: Menu
       description: Select menu to be used with the particle.
       default: ''
+      selectize:
+          allowEmptyOption: true
       options:
-        '': -- Select Menu --
+        '': Use Default Menu
+        '-active-': Use Active Menu
 
     startLevel:
       type: input.text

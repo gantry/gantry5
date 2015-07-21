@@ -62,6 +62,22 @@ abstract class CssCompiler implements CssCompilerInterface
     protected $files;
 
     /**
+     * @var bool
+     */
+    protected $production;
+
+    public function __construct()
+    {
+        $gantry = static::gantry();
+
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        // In production mode we do not need to do any other checks.
+        $this->production = (bool) $global->get('production');
+    }
+
+    /**
      * @return string
      */
     public function getTarget()
@@ -173,7 +189,7 @@ abstract class CssCompiler implements CssCompilerInterface
 
     public function needsCompile($in, $variables)
     {
-        $gantry = Gantry::instance();
+        $gantry = static::gantry();
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
@@ -181,21 +197,31 @@ abstract class CssCompiler implements CssCompilerInterface
         $out = $this->getCssUrl($in);
         $path = $locator->findResource($out);
 
+        // Check if CSS file exists at all.
         if (!$path) {
             $this->setVariables($variables());
             return true;
         }
 
-        /** @var Config $global */
-        $global = $gantry['global'];
+        if ($this->production) {
+            // Open the file to see if it contains development comment in the beginning of the file.
+            $handle = fopen($path, "rb");
+            $contents = fread($handle, 14);
+            fclose($handle);
 
-        if ($global->get('production')) {
+            if ($contents === '/* GANTRY5 DEV') {
+                $this->setVariables($variables());
+                return true;
+            }
+
+            // In production mode we do not need to do any other checks.
             return false;
         }
 
         $uri = basename($out);
-        $metaFile = PhpFile::instance($locator->findResource("gantry-cache://scss/{$uri}.php", true, true));
+        $metaFile = PhpFile::instance($locator->findResource("gantry-cache://theme/scss/{$uri}.php", true, true));
 
+        // Check if meta file exists.
         if (!$metaFile->exists()) {
             $this->setVariables($variables());
             return true;
@@ -203,11 +229,13 @@ abstract class CssCompiler implements CssCompilerInterface
 
         $content = $metaFile->content();
 
+        // Check if filename in meta file matches.
         if (empty($content['file']) || $content['file'] != $out) {
             $this->setVariables($variables());
             return true;
         }
 
+        // Check if meta timestamp matches to CSS file.
         if (filemtime($path) != $content['timestamp']) {
             $this->setVariables($variables());
             return true;
@@ -215,11 +243,13 @@ abstract class CssCompiler implements CssCompilerInterface
 
         $this->setVariables($variables());
 
+        // Check if variables have been changed.
         $oldVariables = isset($content['variables']) ? $content['variables'] : [];
         if ($oldVariables != $this->getVariables()) {
             return true;
         }
 
+        // Check if any of the imported files have been changed.
         $imports = isset($content['imports']) ? $content['imports'] : [];
         foreach ($imports as $resource => $timestamp) {
             $import = $locator->findResource($resource);
@@ -250,7 +280,7 @@ abstract class CssCompiler implements CssCompilerInterface
              *      + rgba(125,200,100,0.3)
              *      - rgb(120,12,12)
              */
-            if (preg_match("/(^(#([a-fA-F0-9]{6})|(rgba\(\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*((0.[0-9]+)|[01])\s*\)))|(\d+(\.\d+){0,1}(rem|em|ex|ch|vw|vh|vmin|vmax|%|px|cm|mm|in|pt|pc))$)/i", $value)) {
+            if (preg_match('/(^(#([a-fA-F0-9]{6})|(rgba\(\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*((0.[0-9]+)|[01])\s*\)))|(\d+(\.\d+){0,1}(rem|em|ex|ch|vw|vh|vmin|vmax|%|px|cm|mm|in|pt|pc))$)/i', $value)) {
                 continue;
             }
 
@@ -282,10 +312,7 @@ abstract class CssCompiler implements CssCompilerInterface
     {
         $gantry = Gantry::instance();
 
-        /** @var Config $global */
-        $global = $gantry['global'];
-
-        if ($global->get('production')) {
+        if ($this->production) {
             return;
         }
 
@@ -293,7 +320,7 @@ abstract class CssCompiler implements CssCompilerInterface
         $locator = $gantry['locator'];
 
         $uri = basename($out);
-        $metaFile = PhpFile::instance($locator->findResource("gantry-cache://scss/{$uri}.php", true, true));
+        $metaFile = PhpFile::instance($locator->findResource("gantry-cache://theme/scss/{$uri}.php", true, true));
         $metaFile->save([
             'file' => $out,
             'timestamp' => filemtime($locator->findResource($out)),

@@ -17,6 +17,7 @@ class Page extends Base\Page
     public $baseUrl;
     public $title;
     public $description;
+    public $direction;
 
     public function __construct($container)
     {
@@ -31,7 +32,15 @@ class Page extends Base\Page
         $this->layout   = $input->getCmd('layout', '');
         $this->task     = $input->getCmd('task', '');
         $this->itemid   = $input->getCmd('Itemid', '');
+        $this->printing = $input->getCmd('print', '');
 
+        $this->class = '';
+        if ($this->itemid) {
+            $menuItem = $app->getMenu()->getActive();
+            if ($menuItem->id) {
+                $this->class = $menuItem->params->get('pageclass_sfx', '');
+            }
+        }
         $templateParams = $app->getTemplate(true);
         $this->outline = $templateParams->id;
         $this->sitename = $app->get('sitename');
@@ -46,7 +55,6 @@ class Page extends Base\Page
     public function htmlAttributes()
     {
         $attributes = [
-                'xml:lang' => $this->language,
                 'lang' => $this->language,
                 'dir' => $this->direction
             ]
@@ -61,6 +69,8 @@ class Page extends Base\Page
         $classes[] = $this->layout ? 'layout-' . $this->layout : 'no-layout';
         $classes[] = $this->task ? 'task-' . $this->task : 'no-task';
         $classes[] = 'dir-' . $this->direction;
+        if ($this->class) $classes[] = $this->class;
+        if ($this->printing) $classes[] = 'print-mode';
         if ($this->itemid) $classes[] = 'itemid-' . $this->itemid;
         if ($this->outline) $classes[] = 'outline-' . $this->outline;
 

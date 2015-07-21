@@ -1,3 +1,15 @@
+// REQUIRED DEPENDENCIES - DO NOT CHANGE
+
+// Load Third Party Libraries
+@import "vendor/bourbon/bourbon";
+
+// Load Nucleus Configuration
+@import "configuration/nucleus/base";
+
+// Load Nucleus Mixins and Functions
+@import "nucleus/functions/base";
+@import "nucleus/mixins/base";
+
 // Load Admin Configuration
 @import "configuration/admin/base";
 
@@ -16,11 +28,17 @@
 // Footer
 @import "wordpress-admin/footer";
 
+// Modals
+@import "wordpress-admin/modals";
+
 // Overview
 @import "wordpress-admin/overview";
 
 // Typography
 @import "wordpress-admin/typography";
+
+// Layout Manager
+@import "wordpress-admin/layout-manager";
 
 // Assignments
 @import "wordpress-admin/navbar";

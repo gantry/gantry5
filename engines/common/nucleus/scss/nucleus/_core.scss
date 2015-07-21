@@ -1,7 +1,3 @@
-*, *::before, *::after {
-	@include box-sizing(border-box);
-}
-
 @-webkit-viewport{width:device-width}
 @-moz-viewport{width:device-width}
 @-ms-viewport{width:device-width}
@@ -13,6 +9,11 @@ html {
 	font-size: 100%;
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
+    @include box-sizing(border-box);
+}
+
+*, *::before, *::after {
+    @include box-sizing(inherit);
 }
 
 body {
@@ -21,6 +22,8 @@ body {
 
 #g-page-surround {
 	min-height: 100vh;
+    position: relative;
+    overflow: hidden;
 }
 
 article,

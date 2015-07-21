@@ -163,7 +163,7 @@ var Modal = new prime({
                     return;
                 }
 
-                elements.content.html(response.body.html || response.body);
+                elements.content.html(response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body);
 
                 if (!response.body.success) {
                     if (!response.body.html) { elements.content.style({ width: '90%' }); }
@@ -327,7 +327,7 @@ var Modal = new prime({
 
     showLoading: function() {
         this.hideLoading();
-        return $('body').appendChild(zen('div.g5-dialog-loading-spinner.' + this.options.className));
+        return $('#g5-container').appendChild(zen('div.g5-dialog-loading-spinner.' + this.options.className));
     },
 
     hideLoading: function() {
@@ -349,4 +349,6 @@ var Modal = new prime({
     }
 });
 
-module.exports = Modal;
+var modal = new Modal();
+
+module.exports = modal;

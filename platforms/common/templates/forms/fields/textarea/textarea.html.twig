@@ -1,4 +1,4 @@
-{% extends "forms/field.html.twig" %}
+{% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% block input %}
     <textarea

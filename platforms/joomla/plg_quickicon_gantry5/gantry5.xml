@@ -12,6 +12,7 @@
 
     <files>
         <filename plugin="gantry5">gantry5.php</filename>
+        <filename>MD5SUM</filename>
         <folder>language</folder>
     </files>
 

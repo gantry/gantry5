@@ -22,7 +22,7 @@ class Theme extends Base\Theme
         $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-theme://gantry/twig'));
 
         $params = array(
-            'cache' => $locator('gantry-cache://twig', true, true),
+            'cache' => $locator->findResource('gantry-cache://theme/twig', true, true),
             'debug' => true,
             'auto_reload' => true,
             'autoescape' => 'html'

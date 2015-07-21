@@ -6,7 +6,6 @@ var prime         = require('prime'),
     domready      = require('elements/domready'),
     storage       = require('prime/map')(),
     modal         = require('../ui').modal,
-    collapsers    = require('../ui/collapse'),
 
     size          = require('mout/collection/size'),
     indexOf       = require('mout/array/indexOf'),
@@ -15,6 +14,9 @@ var prime         = require('prime'),
     guid          = require('mout/random/guid'),
     toQueryString = require('mout/queryString/encode'),
     contains      = require('mout/string/contains'),
+
+    getParam      = require('mout/queryString/getParam'),
+    setParam      = require('mout/queryString/setParam'),
 
     request       = require('agent')(),
     History       = require('./history'),
@@ -39,6 +41,7 @@ History.Adapter.bind(window, 'statechange', function() {
         mainheader = $('#main-header'),
         params = '';
 
+    if (Data.doNothing) { return true; }
 
     if (size(Data) && Data.parsed !== false && storage.get(Data.uuid)) {
         Data = storage.get(Data.uuid);
@@ -137,7 +140,6 @@ History.Adapter.bind(window, 'statechange', function() {
         var selects = $('[data-selectize]');
         if (selects) { selects.selectize(); }
         selectorChangeEvent();
-        collapsers();
 
         body.emit('statechangeEnd');
     });
@@ -227,6 +229,16 @@ var selectorChangeEvent = function() {
 
 domready(function() {
     var body = $('body');
+
+    // Update NONCE if any
+    if (GANTRY_AJAX_NONCE) {
+        var currentURI = History.getPageUrl(),
+            currentNonce = getParam(currentURI, '_wpnonce');
+        if (currentNonce !== GANTRY_AJAX_NONCE) {
+            History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, setParam(currentURI, '_wpnonce', GANTRY_AJAX_NONCE));
+            window.HHH = History;
+        }
+    }
 
     // back to configuration
     body.delegate('click', '.button-back-to-conf', function(event, element) {

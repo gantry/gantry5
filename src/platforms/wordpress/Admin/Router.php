@@ -25,12 +25,16 @@ class Router extends BaseRouter
         /** @var Request $request */
         $request = $this->container['request'];
 
+        $this->container['content'] = function ($c) {
+            return new Content($c);
+        };
+
         $this->method = $request->getMethod();
-        $this->path = explode('/', isset( $_GET['view'] ) ? $_GET['view'] : 'about');
+        $this->path = explode('/', $request->get->get('view', 'configurations/styles'));
         $this->resource = array_shift($this->path) ?: 'themes';
 
         // FIXME: make it better by detecting admin-ajax.php..
-        $ajax = isset( $_GET['action'] ) && $_GET['action'] == 'gantry5';
+        $ajax = ($request->get['action'] == 'gantry5');
         $this->format = $ajax ? 'json' : 'html';
 
         $this->params = [
@@ -38,7 +42,7 @@ class Router extends BaseRouter
             'location' => $this->resource,
             'method' => $this->method,
             'format' => $this->format,
-            'params' => isset($_POST['params']) && is_string($_POST['params']) ? json_decode($_POST['params'], true) : []
+            'params' => $request->post->getJsonArray('params')
         ];
 
         $this->setTemplate();
@@ -60,7 +64,7 @@ class Router extends BaseRouter
     public function setTemplate()
     {
         // FIXME: in here use pages.php, but in AJAX we need admin-ajax.php.
-        $this->container['base_url'] = $this->makeUri(\admin_url( 'themes.php?page=layout-manager' ));
+        $this->container['base_url'] = $this->makeUri(\admin_url( 'admin.php?page=layout-manager' ));
 
         $this->container['ajax_suffix'] = '&action=gantry5';
 
@@ -70,9 +74,11 @@ class Router extends BaseRouter
         $this->container['routes'] = [
             '1' => "&view=%s&_wpnonce={$nonce}",
 
-            'themes' => '&view=themes',
+            'themes' => "&view=themes&_wpnonce={$nonce}",
             'picker/layouts' => "&view=layouts&_wpnonce={$nonce}",
         ];
+
+        $this->container['ajax_nonce'] = $nonce;
 
         return $this;
     }
