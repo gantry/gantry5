@@ -301,8 +301,9 @@ trait ThemeTrait
     public function hasContent()
     {
         $layout = $this->loadLayout();
+        $content = $layout->referencesByType('pagecontent', 'pagecontent');
 
-        return !empty($layout->referencesByType('pagecontent', 'pagecontent'));
+        return !empty($content);
     }
 
     /**
