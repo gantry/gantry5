@@ -7261,19 +7261,20 @@ ready(function() {
             joomla: 'module'
         };
 
-    if (particleField) {
-        particleField.on('change', function(){
-            if (!this.value()) {
-                var title = this.siblings('.g-instancepicker-title'),
-                    label = this.siblings('[data-g-instancepicker]'),
-                    reset = this.sibling('.g-reset-field');
+    //if (particleField) {
+        //particleField.on('change', function(){
+        body.delegate('input', '[data-g-instancepicker] ~ input[type="hidden"]', function(event, element){
+            if (!element.value()) {
+                var title = element.siblings('.g-instancepicker-title'),
+                    label = element.siblings('[data-g-instancepicker]'),
+                    reset = element.sibling('.g-reset-field');
 
                 title.text('');
                 label.text(label.data('g-instancepicker-text'));
                 reset.style('display', 'none');
             }
         });
-    }
+    //}
 
 
     body.delegate('click', '[data-g-instancepicker]', function(event, element) {
@@ -7288,7 +7289,7 @@ ready(function() {
 
         value = field.value();
 
-        if (data.type == 'particle' || data.type == 'widget' && value) {
+        if ((data.type == 'particle' || data.type == 'widget') && value) {
             value = JSON.parse(value || {});
             uri = value.type + '/' + value[data.type];
         }
@@ -7297,8 +7298,8 @@ ready(function() {
 
         modal.open({
             content: 'Loading',
-            method: !value || data.type == moduleType[GANTRY_PLATFORM] ? 'get' : 'post',
-            data: !value || data.type == moduleType[GANTRY_PLATFORM] ? {} : value,
+            method: !value || data.type == 'module' ? 'get' : 'post', // data.type == moduleType[GANTRY_PLATFORM]
+            data: !value || data.type == 'module' ? {} : value, // data.type == moduleType[GANTRY_PLATFORM]
             remote: getAjaxURL(uri) + getAjaxSuffix(),
             remoteLoaded: function(response, modalInstance) {
                 var content = modalInstance.elements.content,
