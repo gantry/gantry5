@@ -97,6 +97,34 @@ class Platform extends BasePlatform {
         return apply_filters( 'gantry5_form_field_selectize_categories', $new_categories );
     }
 
+    public function displayWidget($instance = [], array $args = [])
+    {
+        if (is_string($instance)) {
+            $instance = json_decode($instance, true);
+        }
+        if (!isset($instance['type']) || $instance['type'] !== 'widget' || !isset($instance['widget']) || !isset($instance['options'])) {
+            return null;
+        }
+
+        $options = $instance['options'];
+        if (empty($options['enabled'])) {
+            return null;
+        }
+
+        $widgetClass = $this->getWidgetClass($instance['widget']);
+
+        return \the_widget($widgetClass, $options['widget'], $args);
+    }
+
+    protected function getWidgetClass($id)
+    {
+        $widgets = $this->listWidgets();
+        if (!isset($widgets[$id])) {
+            return null;
+        }
+        return $widgets[$id]['class'];
+    }
+
     public function listWidgets()
     {
         $widgets = $GLOBALS['wp_widget_factory']->widgets;

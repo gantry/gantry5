@@ -10,12 +10,11 @@ form:
       description: Globally enable widget instances.
       default: true
 
-    widget_id:
+    widget:
       type: gantry.widget
-      label: Widget Id
+      label: Widget
       class: g-urltemplate input-small
       picker_label: Pick a Widget
-      description: Enter widget Id.
       pattern: '[a-z0-9_-]+'
       overridable: false
 
