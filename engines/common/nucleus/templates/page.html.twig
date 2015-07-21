@@ -49,7 +49,7 @@
     {% block page_body -%}
     <body{{ gantry.page.bodyAttributes({'class': [offcanvas_position, 'g-style-' ~ gantry.theme.preset]})|raw }}>
         {{ page_offcanvas|raw }}
-        <div id="g-page-surround" class="{{ gantry.config.get('styles.base.layout')|default('g-fullwidth') }}">
+        <div id="g-page-surround">
             {% if page_offcanvas|trim %}
             <div class="g-offcanvas-hide g-offcanvas-toggle" data-offcanvas-toggle><i class="fa fa-fw fa-bars"></i></div>
             {% endif %}
