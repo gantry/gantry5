@@ -52,7 +52,9 @@
                         {{ SELF.displayTitle(item, gantry) }}
                     </span>
                     {% if (item.children) -%}
-                        <span class="g-menu-parent-indicator" data-g-menuparent=""></span>
+                        {% if item.loaddropdown|default('load') == 'load' %}
+                            <span class="g-menu-parent-indicator" data-g-menuparent=""></span>
+                        {%- endif %}
                     {%- endif %}
                 {% else %}
                     {% if item.type == 'particle' %}
@@ -101,11 +103,13 @@
 
 {% macro displaySubmenu(item, root, menu, gantry) %}
     {% import _self as SELF %}
-    <ul class="g-dropdown g-inactive {{ gantry.config.get('styles.menu.animation')|default('g-fade') }}"{{ SELF.getCustomWidth(item, root, 'submenu') }}>
-        <li class="g-dropdown-column">
-            {{ SELF.displayContainers(item, root, menu, gantry) }}
-        </li>
-    </ul>
+    {% if item.loaddropdown|default('load') == 'load' %}
+        <ul class="g-dropdown g-inactive {{ gantry.config.get('styles.menu.animation')|default('g-fade') }}"{{ SELF.getCustomWidth(item, root, 'submenu') }}>
+            <li class="g-dropdown-column">
+                {{ SELF.displayContainers(item, root, menu, gantry) }}
+            </li>
+        </ul>
+    {% endif %}
 {% endmacro %}
 
 {% if menu.root.count() %}

@@ -73,6 +73,15 @@ form:
           default: "auto"
           pattern: '((\d+(\.\d+){0,1}(rem|em|px))|auto)'
 
+        .loaddropdown:
+          type: select.selectize
+          label: Render Dropdown
+          description: Select if the dropdown menu for this Item should be rendered.
+          default: load
+          options:
+            load: Yes
+            noload: No
+
         .class:
           type: input.selectize
           label: CSS Classes
