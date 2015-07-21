@@ -115,7 +115,13 @@ class Platform extends BasePlatform {
 
         ob_start();
         \the_widget($widgetClass, $options['widget'], $args);
-        return ob_get_clean();
+        $html = ob_get_clean();
+
+        if (trim($html)) {
+            $this->container['theme']->wordpress(true);
+        }
+
+        return $html;
     }
 
     protected function getWidgetClass($id)

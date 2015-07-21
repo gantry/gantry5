@@ -39,6 +39,7 @@ trait ThemeTrait
 {
     use GantryTrait;
 
+    protected $layoutObject;
     protected $segments;
     protected $preset;
     protected $cssCache;
@@ -273,13 +274,17 @@ trait ThemeTrait
             }
         }
 
-        $layout = Layout::instance($name);
+        if (!isset($this->layoutOpject) || $this->layoutObject->name != $name) {
+            $layout = Layout::instance($name);
 
-        if (!$layout->exists()) {
-            $layout = Layout::instance('default');
+            if (!$layout->exists()) {
+                $layout = Layout::instance('default');
+            }
+
+            $this->layoutObject = $layout;
         }
 
-        return $layout;
+        return $this->layoutObject;
     }
 
     public function add_to_context(array $context)
@@ -291,6 +296,13 @@ trait ThemeTrait
         $context['theme'] = $this;
 
         return $context;
+    }
+
+    public function hasContent()
+    {
+        $layout = $this->loadLayout();
+
+        return !empty($layout->referencesByType('pagecontent', 'pagecontent'));
     }
 
     /**

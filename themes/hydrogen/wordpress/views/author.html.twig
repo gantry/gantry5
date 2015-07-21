@@ -2,9 +2,13 @@
 {% set twigTemplate = 'author.html.twig' %}
 
 {% block content %}
+    {# Enable WordPress specific CSS styling #}
+    {% do gantry.theme.wordpress(true) %}
 
-    {% for post in posts %}
-        {% include ["partials/tease-"~post.post_type~".html.twig", "partials/tease.html.twig"] %}
-    {% endfor %}
+    <div class="platform-content">
+        {% for post in posts %}
+            {% include ["partials/tease-"~post.post_type~".html.twig", "partials/tease.html.twig"] %}
+        {% endfor %}
+    </div>
 
 {% endblock %}
