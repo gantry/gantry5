@@ -15,6 +15,7 @@
 namespace Gantry\Framework\Base;
 
 use Gantry\Framework\Configurations;
+use Gantry\Framework\Document as RealDocument;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Request;
 use Gantry\Framework\Services\ConfigServiceProvider;
@@ -43,12 +44,20 @@ class Gantry extends Container
     }
 
     /**
+     * @return string
+     */
+    public function siteUrl()
+    {
+        return RealDocument::siteUrl();
+    }
+
+    /**
      * @param string $location
      * @return array
      */
     public function styles($location = 'head')
     {
-        return Document::getStyles($location);
+        return RealDocument::getStyles($location);
     }
 
     /**
@@ -57,7 +66,7 @@ class Gantry extends Container
      */
     public function scripts($location = 'head')
     {
-        return Document::getScripts($location);
+        return RealDocument::getScripts($location);
     }
 
     /**

@@ -100,6 +100,11 @@ class Document extends BaseDocument
         return $domain;
     }
 
+    public static function siteUrl()
+    {
+        return \get_site_url();
+    }
+
     public static function rootUri()
     {
         static $path;
