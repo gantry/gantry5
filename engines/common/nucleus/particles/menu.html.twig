@@ -39,7 +39,7 @@
         {% set target = item.target != '_self' ? ' target="' ~ item.target|e ~ '"' %}
 
 
-        <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{{ parent|raw }}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}g-menu-item-link-parent{% endif %} {{ item.class|e|default('') }}"{{ SELF.getCustomWidth(item, root, 'item') }} title="{{ item.title|e }}">
+        <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{% if item.dropdown != 'disabled' %}{{ parent|raw }}{% endif %}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}{% if item.dropdown != 'disabled' %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|e|default('') }}"{{ SELF.getCustomWidth(item, root, 'item') }} title="{{ item.title|e }}">
             {% if item.url %}<a class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" href="{{ item.url|e }}{{ item.hash ? item.hash|e : '' }}"{{ (title ~ target)|raw }}>
             {% else %}<div class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" data-g-menuparent="">{% endif %}
                 {% if item.image %}
@@ -52,7 +52,7 @@
                         {{ SELF.displayTitle(item, gantry) }}
                     </span>
                     {% if (item.children) -%}
-                        {% if item.loaddropdown|default('load') == 'load' %}
+                        {% if item.dropdown != 'disabled' %}
                             <span class="g-menu-parent-indicator" data-g-menuparent=""></span>
                         {%- endif %}
                     {%- endif %}
@@ -103,7 +103,7 @@
 
 {% macro displaySubmenu(item, root, menu, gantry) %}
     {% import _self as SELF %}
-    {% if item.loaddropdown|default('load') == 'load' %}
+    {% if item.dropdown != 'disabled' %}
         <ul class="g-dropdown g-inactive {{ gantry.config.get('styles.menu.animation')|default('g-fade') }}"{{ SELF.getCustomWidth(item, root, 'submenu') }}>
             <li class="g-dropdown-column">
                 {{ SELF.displayContainers(item, root, menu, gantry) }}
