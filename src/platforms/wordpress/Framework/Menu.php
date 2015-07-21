@@ -179,7 +179,7 @@ class Menu extends AbstractMenu
             $this->add($item);
 
             // Placeholder page.
-            if ($item->type == 'custom' && (trim($item->url) == '#' || trim($item->url) == '')) {
+            if ($item->type == 'custom' && (trim($item->link) == '#' || trim($item->link) == '')) {
                 $item->type = 'separator';
             }
 
