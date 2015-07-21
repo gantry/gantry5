@@ -1,5 +1,5 @@
-name: Widget Instance
-description: Display a widget instance.
+name: Widget
+description: Display a single widget.
 type: position
 
 form:
@@ -7,7 +7,7 @@ form:
     enabled:
       type: input.checkbox
       label: Enabled
-      description: Globally enable widget instances.
+      description: Globally enable widget particle.
       default: true
 
     widget:
