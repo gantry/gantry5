@@ -113,7 +113,9 @@ class Platform extends BasePlatform {
 
         $widgetClass = $this->getWidgetClass($instance['widget']);
 
-        return \the_widget($widgetClass, $options['widget'], $args);
+        ob_start();
+        \the_widget($widgetClass, $options['widget'], $args);
+        return ob_get_clean();
     }
 
     protected function getWidgetClass($id)
