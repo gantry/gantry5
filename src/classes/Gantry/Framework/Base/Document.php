@@ -172,6 +172,12 @@ class Document
     {
     }
 
+    public static function siteUrl()
+    {
+        return static::rootUri();
+    }
+
+
     public static function rootUri()
     {
         return '';
