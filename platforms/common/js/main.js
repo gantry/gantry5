@@ -7282,8 +7282,13 @@ ready(function() {
 
         var data = JSON.parse(element.data('g-instancepicker')),
             field = $('[name="' + data.field + '"]'),
-            uri = 'particle' + ((data.type == moduleType[GANTRY_PLATFORM]) ? '/' + moduleType[GANTRY_PLATFORM] : ''),
-            value;
+            value, uri; // = 'particle' + ((data.type == moduleType[GANTRY_PLATFORM]) ? '/' + moduleType[GANTRY_PLATFORM] : ''),
+
+        if (data.type == moduleType[GANTRY_PLATFORM]) {
+            uri = (data.type != 'widget' ? 'particle/' : '') + moduleType[GANTRY_PLATFORM];
+        } else {
+            uri = 'particle';
+        }
 
         if (!field) { return false; }
 
