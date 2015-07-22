@@ -2492,7 +2492,7 @@ body.g-prime {
   display: inline-block;
 }
 #g5-container .settings-block input:not(.settings-param-toggle):not([type="checkbox"]), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker, #g5-container .settings-block .multi.selectize-control {
-  width: 275px;
+  width: 250px;
 }
 @media only all and (max-width: 59.938rem) {
   #g5-container .settings-block input:not(.settings-param-toggle):not([type="checkbox"]), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker, #g5-container .settings-block .multi.selectize-control {
@@ -2504,7 +2504,12 @@ body.g-prime {
   min-height: 150px;
 }
 #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
-  width: 235px;
+  width: 210px;
+}
+@media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+  #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
+    width: 100% !important;
+  }
 }
 @media only all and (max-width: 47.938rem) {
   #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
@@ -2512,7 +2517,7 @@ body.g-prime {
   }
 }
 #g5-container .settings-block .selectize-control.single {
-  width: 275px !important;
+  width: 250px !important;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
   #g5-container .settings-block .selectize-control.single {
