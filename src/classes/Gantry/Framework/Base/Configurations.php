@@ -124,20 +124,24 @@ class Configurations extends AbstractConfigurationCollection
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $folder = trim(preg_replace('|[^a-z\d_-]|ui', '_', $title), '_');
+        $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title));
 
-        if (!$folder) {
+        if (!$name) {
             throw new \RuntimeException("Outline needs a name", 400);
         }
 
-        if ($folder === 'default') {
-            throw new \RuntimeException("Outline cannot use reserved name '{$folder}'", 400);
+        if ($name === 'default' || $name[0] === '_') {
+            throw new \RuntimeException("Outline cannot use reserved name '{$name}'", 400);
         }
 
-        $path = $locator->findResource("gantry-config://{$folder}", true, true);
+        $path = $locator->findResource("gantry-config://{$name}", true, true);
         if (is_dir($path)) {
             throw new \RuntimeException("Outline '$title' already exists.", 400);
         }
+
+        // Create index file for the new layout.
+        $layout = new Layout($name, Layout::preset($preset));
+        $layout->saveIndex();
     }
 
     /**
@@ -156,7 +160,7 @@ class Configurations extends AbstractConfigurationCollection
             throw new \RuntimeException('Outline not found', 404);
         }
 
-        $folder = $this->findFreeName(trim(preg_replace('|[^a-z\d_-]|ui', '_', $id), '_'));
+        $folder = $this->findFreeName(strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $id)));
 
         $newPath = $locator->findResource("gantry-config://{$folder}", true, true);
 
@@ -188,9 +192,9 @@ class Configurations extends AbstractConfigurationCollection
             throw new \RuntimeException('Outline not found', 404);
         }
 
-        $folder = trim(preg_replace('|[^a-z\d_-]|ui', '_', $title), '_');
+        $folder = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title));
 
-        if ($folder === 'default') {
+        if ($folder === 'default' || $name[0] === '_') {
             throw new \RuntimeException("Outline cannot use reserved name '{$folder}'", 400);
         }
 
@@ -270,7 +274,8 @@ class Configurations extends AbstractConfigurationCollection
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        if (preg_match('|^(.*?)(?:_(\d+))?$|ui', $id, $matches)) {
+        if (preg_match('|^(?:_)?(.*?)(?:_(\d+))?$|ui', $id, $matches)) {
+            $matches += ['', '', ''];
             list (, $name, $count) = $matches;
         }
 

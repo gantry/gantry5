@@ -198,7 +198,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $filename = $locator->findResource("gantry-config://{$this->name}/layout.yaml", true, true);
+        $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $this->name));
+
+        $filename = $locator->findResource("gantry-config://{$name}/layout.yaml", true, true);
         $file = CompiledYamlFile::instance($filename);
         $file->settings(['inline' => 20]);
         $file->save(['preset' => $this->preset, 'children' => json_decode(json_encode($this->items), true)]);

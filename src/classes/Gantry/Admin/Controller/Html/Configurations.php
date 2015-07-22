@@ -74,7 +74,10 @@ class Configurations extends HtmlController
         /** @var ConfigurationsObject $configurations */
         $configurations = $this->container['configurations'];
 
-        $configurations->create($this->request->post['title'], $this->request->post['preset']);
+        $title = $this->request->post->get('title', 'Untitled');
+        $preset = $this->request->post->get('preset', 'default');
+
+        $configurations->create($title, $preset);
 
         return new JsonResponse(['html' => 'Configuration created.']);
     }
