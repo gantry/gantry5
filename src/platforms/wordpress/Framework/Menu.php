@@ -156,10 +156,12 @@ class Menu extends AbstractMenu
                 'id' => $menuItem->id,
                 'type' => $menuItem->type,
                 'alias' => $menuItem->title(),
-                'link' => $menuItem->link(),
+                'link' => trim($menuItem->link()),
                 'attr_title' => $menuItem->attr_title,
                 'xfn' => $menuItem->xfn,
                 'parent_id' => $menuItem->menu_item_parent,
+                'path' => $menuItem->path,
+                'level' => $menuItem->level,
                 'current'   => $menuItem->current
             ];
 
@@ -179,7 +181,7 @@ class Menu extends AbstractMenu
             $this->add($item);
 
             // Placeholder page.
-            if ($item->type == 'custom' && (trim($item->link) == '#' || trim($item->link) == '')) {
+            if ($item->type == 'custom' && $item->link == '#' || $item->link == '') {
                 $item->type = 'separator';
             }
 
