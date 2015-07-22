@@ -428,12 +428,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         // If layout file doesn't exists, figure out what preset was used.
         if (!$filename) {
-            /** @var Configurations $configurations */
-            $configurations = $gantry['configurations'];
+            $index = static::loadIndex($name);
+            $preset = $index['preset']['name'];
 
-            $preset = $configurations->preset($name);
             try {
-                $layout = self::preset($preset);
+                $layout = static::preset($preset);
             } catch (\Exception $e) {
                 // Layout doesn't exist, do nothing.
             }
@@ -455,6 +454,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
+        // Attempt to load the index file.
+        $indexFile = $locator("gantry-config://{$name}/index.yaml");
+        if ($indexFile) {
+            $index = CompiledYamlFile::instance($indexFile)->content();
+        }
+
         // Find out the currently used layout file.
         $layoutFile = $locator("gantry-config://{$name}/layout.yaml");
         if (!$layoutFile) {
@@ -469,15 +474,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         // Get timestamp for the layout file.
         $timestamp = $layoutFile ? filemtime($layoutFile) : 0;
 
-        // Attempt to load the index file.
-        $indexFile = $locator("gantry-config://{$name}/index.yaml");
-        if ($indexFile) {
-            $index = CompiledYamlFile::instance($indexFile)->content();
-        }
-
         // If layout index file doesn't exist or is not up to date, build it.
         if (!isset($index['timestamp']) || $index['timestamp'] != $timestamp) {
-            $layout = static::instance($name);
+            $layout = isset($preset) ? new static($name, static::preset($preset)) : static::instance($name);
             $index = $layout->buildIndex();
         }
 
