@@ -1,3 +1,9 @@
+# 5.0.2
+## XX/XX/2015
+
+1. [](#new)
+    * New Menu Dropdown option "Disabled" that prevents sublevels from being rendered but still available (thanks @JoomFX)
+
 # 5.0.1
 ## 07/16/2015
 
