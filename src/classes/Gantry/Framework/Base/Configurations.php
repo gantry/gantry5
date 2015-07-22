@@ -115,6 +115,7 @@ class Configurations extends AbstractConfigurationCollection
     /**
      * @param string $title
      * @param string $preset
+     * @return string
      * @throws \RuntimeException
      */
     public function create($title = 'Untitled', $preset = 'default')
@@ -142,10 +143,13 @@ class Configurations extends AbstractConfigurationCollection
         // Create index file for the new layout.
         $layout = new Layout($name, Layout::preset($preset));
         $layout->saveIndex();
+
+        return $name;
     }
 
     /**
      * @param string $id
+     * @return string
      * @throws \RuntimeException
      */
     public function duplicate($id)
@@ -169,11 +173,14 @@ class Configurations extends AbstractConfigurationCollection
         } catch (\Exception $e) {
             throw new \RuntimeException(sprintf('Duplicating Outline failed: ', $e->getMessage()), 500, $e);
         }
+
+        return basename($folder);
     }
 
     /**
      * @param string $id
      * @param string $title
+     * @return string
      * @throws \RuntimeException
      */
     public function rename($id, $title)
@@ -194,7 +201,7 @@ class Configurations extends AbstractConfigurationCollection
 
         $folder = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title));
 
-        if ($folder === 'default' || $name[0] === '_') {
+        if ($folder === 'default' || $folder[0] === '_') {
             throw new \RuntimeException("Outline cannot use reserved name '{$folder}'", 400);
         }
 
@@ -208,6 +215,8 @@ class Configurations extends AbstractConfigurationCollection
         } catch (\Exception $e) {
             throw new \RuntimeException(sprintf('Renaming Outline failed: ', $e->getMessage()), 500, $e);
         }
+
+        return $folder;
     }
 
     /**
