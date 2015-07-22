@@ -3,33 +3,37 @@
 {% set scope = 'content.blog' %}
 
 {% block content %}
+    {# Enable WordPress specific CSS styling #}
+    {% do gantry.theme.wordpress(true) %}
 
-    <div class="blog">
+    <div class="platform-content">
+        <div class="blog">
 
-        {# Begin Page Header #}
-        {% if gantry.config.get(scope ~ '.heading.enabled', '0') and gantry.config.get(scope ~ '.heading.text') is not empty %}
-        <header class="page-header">
-            <h1>
-                {{ gantry.config.get(scope ~ '.heading.text') }}
-            </h1>
-        </header>
-        {% endif %}
-        {# End Page Header #}
+            {# Begin Page Header #}
+            {% if gantry.config.get(scope ~ '.heading.enabled', '0') and gantry.config.get(scope ~ '.heading.text') is not empty %}
+            <header class="page-header">
+                <h1>
+                    {{ gantry.config.get(scope ~ '.heading.text') }}
+                </h1>
+            </header>
+            {% endif %}
+            {# End Page Header #}
 
-        {# Begin Post Entries #}
-        <div class="entries">
-            {% for post in posts %}
-                {% include ['partials/tease-blog.html.twig', 'partials/tease-' ~ post.post_type ~ '.html.twig', 'partials/tease.html.twig'] %}
-            {% endfor %}
+            {# Begin Post Entries #}
+            <div class="entries">
+                {% for post in posts %}
+                    {% include ['partials/tease-blog.html.twig', 'partials/tease-' ~ post.post_type ~ '.html.twig', 'partials/tease.html.twig'] %}
+                {% endfor %}
+            </div>
+            {# End Post Entries #}
+
+            {# Begin Pagination #}
+            {% if pagination.pages and pagination.pages|length > 1 %}
+                {% include 'partials/pagination.html.twig' %}
+            {% endif %}
+            {# End Pagination #}
+
         </div>
-        {# End Post Entries #}
-
-        {# Begin Pagination #}
-        {% if pagination.pages and pagination.pages|length > 1 %}
-            {% include 'partials/pagination.html.twig' %}
-        {% endif %}
-        {# End Pagination #}
-
     </div>
 
 {% endblock %}

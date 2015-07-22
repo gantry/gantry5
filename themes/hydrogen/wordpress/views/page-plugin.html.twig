@@ -2,9 +2,13 @@
 {% set twigTemplate = 'page-plugin.html.twig' %}
 
 {% block content %}
+    {# Enable WordPress specific CSS styling #}
+    {% do gantry.theme.wordpress(true) %}
 
-    <div class="g-container content-wrapper">
-        {{ content }}
-    </div> <!-- /content-wrapper -->
+    <div class="platform-content">
+        <div class="g-container content-wrapper">
+            {{ content }}
+        </div> <!-- /content-wrapper -->
+    </div>
 
 {% endblock %}

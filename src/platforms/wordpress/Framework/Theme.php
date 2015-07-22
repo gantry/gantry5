@@ -6,6 +6,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class Theme extends Base\Theme
 {
     public $path;
+    protected $wordpress = false;
     protected $user;
 
     public function __construct( $path, $name = '' )
@@ -120,5 +121,14 @@ class Theme extends Base\Theme
         $context['my'] = $this->user;
 
         return $context;
+    }
+
+    public function wordpress($enable = null)
+    {
+        if ($enable) {
+            $this->wordpress = (bool) $enable;
+        }
+
+        return $this->wordpress;
     }
 }

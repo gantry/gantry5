@@ -28,7 +28,6 @@ class Particle extends JsonController
     protected $httpVerbs = [
         'GET'    => [
             '/'                  => 'selectParticle',
-            '/widget'            => 'selectWidget',
             '/module'            => 'selectModule'
         ],
         'POST'   => [
@@ -90,18 +89,6 @@ class Particle extends JsonController
     public function selectModule()
     {
         return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/module-picker.html.twig', $this->params)]);
-    }
-
-
-    /**
-     * Return a modal content for selecting a widget.
-     *
-     * @return mixed
-     * @todo Remove call after changing JS.
-     */
-    public function selectWidget()
-    {
-        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/widget-picker.html.twig', $this->params)]);
     }
 
     /**

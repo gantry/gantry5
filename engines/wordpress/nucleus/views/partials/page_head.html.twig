@@ -13,7 +13,7 @@
 {%- endblock %}
 
 {% block head_platform -%}
-    {% if 1 or gantry.theme.wordpress %}
+    {% if gantry.theme.wordpress %}
         <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/wordpress.css') }}" type="text/css" />
     {% endif %}
 {%- endblock %}
