@@ -19,7 +19,7 @@
 
         {# Begin Entry Meta #}
         {% if gantry.config.get(scope ~ '.meta-date.enabled', '1') or gantry.config.get(scope ~ '.meta-author.enabled', '1') or gantry.config.get(scope ~ '.meta-comments.enabled', '1') or gantry.config.get(scope ~ '.meta-categories.enabled', '1') or gantry.config.get(scope ~ '.meta-tags.enabled', '0') %}
-            {% include ['partials/meta-' ~ post.format ~ '.html.twig', 'partials/meta.html.twig'] %}
+            {% include 'partials/meta.html.twig' %}
         {% endif %}
         {# End Entry Meta #}
 
@@ -42,9 +42,23 @@
             {# End Featured Image #}
 
             {# Begin Tease #}
-            <p>{{ post.get_preview(gantry.config.get(scope ~ '.post-content.length', '55'), gantry.config.get(scope ~ '.excerpt.trim', '0'), false, false) }}</p>
+            {% if post.post_excerpt is not empty %}
+                <p class="tease tease-excerpt">{{ post.post_excerpt }}</p>
+            {% else %}
+                {% if '<!--more' in post.post_content  %}
+                    {% set split_content = post.post_content|split('<!--more-->', 2) %}
+                    {{ split_content[0]|apply_filters('the_content') }}
+                {% elseif '<!--nextpage' in post.post_content %}
+                    {% set split_content = post.post_content|split('<!--nextpage-->', 2) %}
+                    {{ split_content[0]|apply_filters('the_content') }}
+                {% else %}
+                    {{ post.content }}
+                {% endif %}
+            {% endif %}
 
-            <a href="{{ post.link }}" class="read-more button">{{ gantry.config.get(scope ~ '.read-more.label', 'Read More') }}</a>
+            {% if gantry.config.get(scope ~ '.read-more.mode', 'auto') == 'always' or (gantry.config.get(scope ~ '.read-more.mode', 'auto') == 'auto' and ('<!--more' in post.post_content or post.post_excerpt is not empty) )  %}
+                <a href="{{ post.link }}" class="read-more button">{{ gantry.config.get(scope ~ '.read-more.label', 'Read More') }}</a>
+            {% endif %}
             {# End Tease #}
 
         {% else %}

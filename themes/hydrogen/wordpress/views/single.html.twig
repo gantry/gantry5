@@ -13,7 +13,8 @@
 				</p>
 
 				<div class="article-body">
-					{{post.content}}
+					{{post.get_paged_content}}
+                    {{ dump(post.pagination) }}
 				</div>
 			</section>
 

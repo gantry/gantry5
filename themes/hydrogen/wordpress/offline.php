@@ -19,6 +19,5 @@ $theme = $gantry[ 'theme' ];
 $theme->setLayout( $chooser->select( '_offline' ) );
 
 $context = Timber::get_context();
-$context[ 'message' ] = 'Offline Message!';
 
 Timber::render( 'offline.html.twig', $context );
