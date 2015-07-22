@@ -51,10 +51,8 @@
                     <span class="g-menu-item-content">
                         {{ SELF.displayTitle(item, gantry) }}
                     </span>
-                    {% if (item.children) -%}
-                        {% if item.dropdown != 'disabled' %}
-                            <span class="g-menu-parent-indicator" data-g-menuparent=""></span>
-                        {%- endif %}
+                    {% if (item.children) and item.dropdown != 'disabled' -%}
+                        <span class="g-menu-parent-indicator" data-g-menuparent=""></span>
                     {%- endif %}
                 {% else %}
                     {% if item.type == 'particle' %}
