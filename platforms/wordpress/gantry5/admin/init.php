@@ -5,6 +5,8 @@ global $plugin;
 
 add_action( 'admin_init', 'gantry5_admin_start_buffer', -10000 );
 add_action( 'admin_init', 'gantry5_register_admin_settings' );
+add_filter( 'plugin_action_links', 'gantry5_modify_plugin_action_links', 10, 2 );
+add_filter( 'network_admin_plugin_action_links', 'gantry5_modify_plugin_action_links', 10, 2 );
 add_action( 'admin_enqueue_scripts', 'gantry5_admin_scripts' );
 add_action( 'admin_print_styles', 'gantry5_admin_print_styles', 200 );
 add_action( 'admin_print_scripts', 'gantry5_admin_print_scripts', 200 );
@@ -31,8 +33,7 @@ if ( class_exists( 'Timber' ) ) {
             $theme = $gantry['theme']->details()['details.name'];
             remove_submenu_page( 'themes.php', 'theme-editor.php' );
             add_menu_page( $theme . ' Theme', $theme . ' Theme', 'manage_options', 'layout-manager', 'gantry5_layout_manager' );
-            add_plugins_page( 'Gantry 5 Settings', 'Gantry 5 Settings', 'manage_options', 'g5-settings', 'gantry5_plugin_settings' );
-
+            add_submenu_page( null, 'Gantry 5 Settings', 'Gantry 5 Settings', 'manage_options', 'g5-settings', 'gantry5_plugin_settings' );
         },
         100
     );
@@ -45,7 +46,7 @@ function gantry5_admin_start_buffer()
 
 function gantry5_admin_scripts() {
     if( isset( $_GET['page'] ) && $_GET['page'] == 'layout-manager' ) {
-        gantry_layout_manager();
+        gantry5_layout_manager();
     }
 }
 function gantry5_admin_print_styles() {
@@ -100,6 +101,18 @@ function gantry5_layout_manager() {
     }
 }
 
+function gantry5_modify_plugin_action_links( $links, $file ) {
+    // Return normal links if not Gantry 5
+    if ( plugin_basename( GANTRY5_PATH . '/gantry5.php' ) != $file ) {
+        return $links;
+    }
+
+    // Add a few links to the existing links array
+    return array_merge( $links, array(
+        'settings' => '<a href="' . esc_url( add_query_arg( [ 'page' => 'g5-settings' ] ) ) . '">' . esc_html__( 'Settings', 'gantry5' ) . '</a>'
+    ) );
+
+}
 
 function gantry5_plugin_defaults() {
     $defaults = [
