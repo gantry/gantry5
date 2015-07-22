@@ -1,8 +1,8 @@
 {% set twigTemplate = 'meta.html.twig' %}
 
-{% block meta %}
+<div class="entry-meta">
 
-    <div class="entry-meta">
+    {% block meta %}
 
         {# Begin Meta - Date #}
         {% if gantry.config.get(scope ~ '.meta-date.enabled', '1') %}
@@ -100,6 +100,6 @@
         {% endif %}
         {# End Meta - Tags #}
 
-    </div>
+    {% endblock %}
 
-{% endblock %}
+</div>
