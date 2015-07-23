@@ -11,6 +11,7 @@
     * Anchor links should not be modified (#624)
     * '&' symbol in external menu item not outputting properly (#598)
     * Remove layout tab from base outline (#628)
+    * Trying to get property of non-object when accessing page without menu item (#632)
 
 # 5.0.1
 ## 07/16/2015
