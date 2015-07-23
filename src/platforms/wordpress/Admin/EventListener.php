@@ -30,7 +30,7 @@ class EventListener implements EventSubscriberInterface
 
     public function onGlobalSave(Event $event)
     {
-        $option = \get_option('gantry5_plugin');
+        $option = (array) \get_option('gantry5_plugin');
         $option['production'] = intval((bool) $event->data['production']);
         \update_option('gantry5_plugin', $option);
     }

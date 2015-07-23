@@ -55,7 +55,7 @@ class Gantry extends Base\Gantry
         };
 
         $container['global'] = function ($c) {
-            return new Config(\get_option('gantry5_plugin'));
+            return new Config((array) \get_option('gantry5_plugin'));
         };
 
         return $container;

@@ -34,9 +34,9 @@ class Theme extends Base\Theme
 
     public function debug()
     {
-        $option = get_option('gantry5_plugin');
+        $option = (array) get_option('gantry5_plugin');
 
-        return WP_DEBUG || $option['debug'];
+        return WP_DEBUG || !empty($option['debug']);
     }
 
     public function renderer()
