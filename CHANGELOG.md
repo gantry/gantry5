@@ -7,6 +7,7 @@
 2. [](#bugfix)
     * Administrator responsive issues in Settings Panel (#603)
     * Anchor links should not be modified (#624)
+    * '&' symbol in external menu item not outputting properly (#598)
 
 # 5.0.1
 ## 07/16/2015
