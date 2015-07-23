@@ -207,6 +207,11 @@ class Document
             return null;
         }
 
+        if ($url[0] === '#') {
+            // Handle fragment only.
+            return $url;
+        }
+
         $parts = self::parseUrl($url);
 
         if (!is_array($parts)) {
