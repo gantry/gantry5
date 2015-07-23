@@ -3,6 +3,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
+use Gantry\WordPress\Widgets;
 use Pimple\Container;
 
 /**
@@ -99,95 +100,16 @@ class Platform extends BasePlatform {
 
     public function displayWidgets($key, array $params = [])
     {
-        ob_start();
-        \dynamic_sidebar($key);
-        $html = ob_get_clean();
-
-        if (trim($html)) {
-            $this->container['theme']->wordpress(true);
-        }
-
-        return $html;
-    }
-
-    protected function getWidgetChrome($widgetClass, $chrome)
-    {
-        global $wp_widget_factory;
-
-        $gantry = \Gantry\Framework\Gantry::instance();
-
-        $widgetObj = $wp_widget_factory->widgets[$widgetClass];
-
-        $chromeArgs = $gantry['theme']->details()->get('chrome.' . $chrome);
-        $args = [];
-
-        $search = [
-            '%id%',
-            '%classname%'
-        ];
-
-        $replace = [
-            $widgetObj->id,
-            $widgetObj->widget_options['classname']
-        ];
-
-        foreach($chromeArgs as $key => $arg) {
-            $arg = str_replace($search, $replace, $arg);
-            $args[$key] = $arg;
-        }
-
-        return $args;
+        return Widgets::displayPosition($key, $params);
     }
 
     public function displayWidget($instance = [], array $params = [])
     {
-        if (is_string($instance)) {
-            $instance = json_decode($instance, true);
-        }
-        if (!isset($instance['type']) || $instance['type'] !== 'widget' || !isset($instance['widget']) || !isset($instance['options'])) {
-            return null;
-        }
-
-        $options = $instance['options'];
-        if (empty($options['enabled'])) {
-            return null;
-        }
-
-        $widgetClass = $this->getWidgetClass($instance['widget']);
-        $args = $this->getWidgetChrome($widgetClass, $params['chrome']);
-
-        ob_start();
-        \the_widget($widgetClass, $options['widget'], $args);
-        $html = ob_get_clean();
-
-        if (trim($html)) {
-            $this->container['theme']->wordpress(true);
-        }
-
-        return $html;
-    }
-
-    protected function getWidgetClass($id)
-    {
-        $widgets = $this->listWidgets();
-        if (!isset($widgets[$id])) {
-            return null;
-        }
-        return $widgets[$id]['class'];
+        return Widgets::displayWidget($instance, $params);
     }
 
     public function listWidgets()
     {
-        $widgets = $GLOBALS['wp_widget_factory']->widgets;
-
-        $list = [];
-        foreach ($widgets as $key => $widget) {
-            $info = ['id' => $widget->id_base, 'title' => $widget->name, 'description' => $widget->widget_options['description'], 'class' => $key, 'widget' => $widget];
-            $list[$widget->id_base] = $info;
-        }
-
-        uasort($list, function ($a, $b) { return strcmp($a['title'], $b['title']); });
-
-        return $list;
+        return Widgets::listWidgets();
     }
 }
