@@ -3,6 +3,8 @@
 
 1. [](#new)
     * New Menu Dropdown option "Disabled" that prevents sublevels from being rendered but still available (thanks @JoomFX)
+2. [](#bugfix)
+    * Anchor links should not be modified (#624)
 
 # 5.0.1
 ## 07/16/2015
