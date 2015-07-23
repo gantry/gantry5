@@ -97,12 +97,50 @@ class Platform extends BasePlatform {
         return apply_filters( 'gantry5_form_field_selectize_categories', $new_categories );
     }
 
-    public function displayWidget($instance = [], array $params = [])
+    public function displayWidgets($key, array $params = [])
+    {
+        ob_start();
+        \dynamic_sidebar($key);
+        $html = ob_get_clean();
+
+        if (trim($html)) {
+            $this->container['theme']->wordpress(true);
+        }
+
+        return $html;
+    }
+
+    protected function getWidgetChrome($widgetClass, $chrome)
     {
         global $wp_widget_factory;
 
         $gantry = \Gantry\Framework\Gantry::instance();
 
+        $widgetObj = $wp_widget_factory->widgets[$widgetClass];
+
+        $chromeArgs = $gantry['theme']->details()->get('chrome.' . $chrome);
+        $args = [];
+
+        $search = [
+            '%id%',
+            '%classname%'
+        ];
+
+        $replace = [
+            $widgetObj->id,
+            $widgetObj->widget_options['classname']
+        ];
+
+        foreach($chromeArgs as $key => $arg) {
+            $arg = str_replace($search, $replace, $arg);
+            $args[$key] = $arg;
+        }
+
+        return $args;
+    }
+
+    public function displayWidget($instance = [], array $params = [])
+    {
         if (is_string($instance)) {
             $instance = json_decode($instance, true);
         }
@@ -116,25 +154,7 @@ class Platform extends BasePlatform {
         }
 
         $widgetClass = $this->getWidgetClass($instance['widget']);
-        $widget_obj = $wp_widget_factory->widgets[$widgetClass];
-
-        $chrome_args = $gantry['theme']->details()->get('chrome.' . $params['chrome']);
-        $args = [];
-
-        $search = [
-            '%id%',
-            '%classname%'
-        ];
-
-        $replace = [
-            $widget_obj->id,
-            $widget_obj->widget_options['classname']
-        ];
-
-        foreach($chrome_args as $key => $arg) {
-            $arg = str_replace($search, $replace, $arg);
-            $args[$key] = $arg;
-        }
+        $args = $this->getWidgetChrome($widgetClass, $params['chrome']);
 
         ob_start();
         \the_widget($widgetClass, $options['widget'], $args);
