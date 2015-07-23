@@ -1,8 +1,6 @@
 <?php
 defined('ABSPATH') or die;
 
-register_activation_hook( GANTRY5_PATH . '/gantry5.php', 'gantry5_plugin_defaults' );
-
 add_action( 'admin_init', 'gantry5_admin_start_buffer', -10000 );
 add_action( 'admin_init', 'gantry5_register_admin_settings' );
 add_filter( 'plugin_action_links', 'gantry5_modify_plugin_action_links', 10, 2 );
@@ -111,21 +109,12 @@ function gantry5_modify_plugin_action_links( $links, $file ) {
 
 }
 
-function gantry5_plugin_defaults() {
-    $defaults = [
-        'production' => '1',
-        'debug' => '0',
-    ];
-
-    add_option( 'gantry5_plugin', $defaults );
-}
-
 function gantry5_register_admin_settings() {
     register_setting( 'gantry5_plugin_options', 'gantry5_plugin' );
 }
 
 function gantry5_plugin_settings() {
-    $option = get_option( 'gantry5_plugin_options' );
+    $option = get_option( 'gantry5_plugin' );
 
     if( isset( $_GET[ 'settings-updated' ] ) && $_GET[ 'settings-updated' ] == 'true' ) {
         echo '<div id="message" class="updated fade"><p>Gantry 5 plugin settings saved.</p></div>';
