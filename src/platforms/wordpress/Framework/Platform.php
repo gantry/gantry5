@@ -97,7 +97,7 @@ class Platform extends BasePlatform {
         return apply_filters( 'gantry5_form_field_selectize_categories', $new_categories );
     }
 
-    public function displayWidget($instance = [], array $args = [])
+    public function displayWidget($instance = [], array $params = [])
     {
         $gantry = \Gantry\Framework\Gantry::instance();
 
@@ -114,6 +114,7 @@ class Platform extends BasePlatform {
         }
 
         $widgetClass = $this->getWidgetClass($instance['widget']);
+        $args = [];
 
 //        $chrome_args = $gantry['theme']->details()->get('chrome.' . $instance['chrome']);
 //        $args = wp_parse_args($chrome_args, $args);
