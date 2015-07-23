@@ -97,7 +97,7 @@ class Platform extends BasePlatform {
         return apply_filters( 'gantry5_form_field_selectize_categories', $new_categories );
     }
 
-    public function displayWidget($instance = [], array $args = [])
+    public function displayWidget($instance = [], array $params = [])
     {
         if (is_string($instance)) {
             $instance = json_decode($instance, true);
@@ -112,6 +112,7 @@ class Platform extends BasePlatform {
         }
 
         $widgetClass = $this->getWidgetClass($instance['widget']);
+        $args = [];
 
         ob_start();
         \the_widget($widgetClass, $options['widget'], $args);
