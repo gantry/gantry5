@@ -3656,6 +3656,7 @@ body.g-prime {
   background: #359AD9;
   margin-right: 6px;
   position: relative;
+  white-space: nowrap;
 }
 #g5-container .lm-blocks .particle[data-lm-nodrag], #g5-container .lm-blocks .position[data-lm-nodrag], #g5-container .lm-blocks .spacer[data-lm-nodrag], #g5-container .lm-blocks .pagecontent[data-lm-nodrag], #g5-container .lm-blocks .atom[data-lm-nodrag] {
   cursor: default;

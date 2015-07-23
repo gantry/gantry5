@@ -369,6 +369,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             background: $position;
             margin-right: 6px;
             position: relative;
+            white-space: nowrap;
 
             &[data-lm-nodrag] {
                 cursor: default;
