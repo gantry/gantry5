@@ -30,7 +30,7 @@ script:
   - echo "Branch ($TRAVIS_BRANCH)"
   - cd $TRAVIS_BUILD_DIR/bin/build
   - if [ "$TRAVIS_BRANCH" == "develop" ]; then
-      php build.php joomla-dev -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dxml.version=dev-$SHORT_COMMIT -Dstr.fileversion=_develop;
+      php build.php dev -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dxml.version=dev-$SHORT_COMMIT -Dstr.fileversion=_develop;
     elif [ ! -z "$TRAVIS_TAG" ]; then
       php build.php joomla-prod -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dxml.version=$TRAVIS_TAG;
     else
