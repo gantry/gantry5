@@ -99,6 +99,8 @@ class Platform extends BasePlatform {
 
     public function displayWidget($instance = [], array $args = [])
     {
+        $gantry = \Gantry\Framework\Gantry::instance();
+
         if (is_string($instance)) {
             $instance = json_decode($instance, true);
         }
@@ -112,6 +114,9 @@ class Platform extends BasePlatform {
         }
 
         $widgetClass = $this->getWidgetClass($instance['widget']);
+
+//        $chrome_args = $gantry['theme']->details()->get('chrome.' . $instance['chrome']);
+//        $args = wp_parse_args($chrome_args, $args);
 
         ob_start();
         \the_widget($widgetClass, $options['widget'], $args);
