@@ -124,7 +124,7 @@ function gantry5_plugin_settings() {
 
     <div id="g5-options-main">
         <form method="post" action="options.php">
-            <?php settings_fields( 'gantry5_plugin' ); ?>
+            <?php settings_fields( 'gantry5_plugin_options' ); ?>
 
             <table class="widefat fixed">
                 <tfoot>
