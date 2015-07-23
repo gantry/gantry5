@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') or die;
 
-global $plugin;
+register_activation_hook( GANTRY5_PATH . '/gantry5.php', 'gantry5_plugin_defaults' );
 
 add_action( 'admin_init', 'gantry5_admin_start_buffer', -10000 );
 add_action( 'admin_init', 'gantry5_register_admin_settings' );
@@ -11,8 +11,6 @@ add_action( 'admin_enqueue_scripts', 'gantry5_admin_scripts' );
 add_action( 'admin_print_styles', 'gantry5_admin_print_styles', 200 );
 add_action( 'admin_print_scripts', 'gantry5_admin_print_scripts', 200 );
 add_action( 'wp_ajax_gantry5', 'gantry5_layout_manager' );
-
-register_activation_hook( $plugin, 'gantry5_plugin_defaults' );
 
 // Check if Timber is active before displaying sidebar button
 if ( class_exists( 'Timber' ) ) {
@@ -39,8 +37,7 @@ if ( class_exists( 'Timber' ) ) {
     );
 }
 
-function gantry5_admin_start_buffer()
-{
+function gantry5_admin_start_buffer() {
     ob_start();
 }
 

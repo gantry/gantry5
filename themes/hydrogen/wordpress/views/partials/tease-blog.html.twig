@@ -45,10 +45,11 @@
             {% if post.post_excerpt is not empty %}
                 <p class="tease tease-excerpt">{{ post.post_excerpt }}</p>
             {% else %}
-                {% if '<!--more' in post.post_content  %}
-                    {% set split_content = post.post_content|split('<!--more-->', 2) %}
+                {% set readmore = preg_match('/<!--more(.*?)?-->/', post.post_content) %}
+                {% if readmore %}
+                    {% set split_content = post.post_content|split(readmore[0], 2) %}
                     {{ split_content[0]|apply_filters('the_content') }}
-                {% elseif '<!--nextpage' in post.post_content %}
+                {% elseif '<!--nextpage-->' in post.post_content %}
                     {% set split_content = post.post_content|split('<!--nextpage-->', 2) %}
                     {{ split_content[0]|apply_filters('the_content') }}
                 {% else %}
@@ -56,8 +57,14 @@
                 {% endif %}
             {% endif %}
 
-            {% if gantry.config.get(scope ~ '.read-more.mode', 'auto') == 'always' or (gantry.config.get(scope ~ '.read-more.mode', 'auto') == 'auto' and ('<!--more' in post.post_content or post.post_excerpt is not empty) )  %}
-                <a href="{{ post.link }}" class="read-more button">{{ gantry.config.get(scope ~ '.read-more.label', 'Read More') }}</a>
+            {% if gantry.config.get(scope ~ '.read-more.mode', 'auto') == 'always' or (gantry.config.get(scope ~ '.read-more.mode', 'auto') == 'auto' and (readmore or post.post_excerpt is not empty) )  %}
+                <a href="{{ post.link }}" class="read-more button">
+                    {% if readmore[1] is not empty %}
+                        {{- readmore[1] -}}
+                    {% else %}
+                        {{ gantry.config.get(scope ~ '.read-more.label', 'Read More') }}
+                    {% endif %}
+                </a>
             {% endif %}
             {# End Tease #}
 
