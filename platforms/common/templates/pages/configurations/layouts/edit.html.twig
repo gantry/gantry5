@@ -1,7 +1,7 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-{% if configuration == 'default' %}
+{% if configuration == 'default' and gantry.platform.no_base_layout %}
 
 <h2 class="page-title">{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}</h2>
 <p>{{ 'GANTRY5_PLATFORM_BASE_LAYOUT_DESC'|trans }}</p>
