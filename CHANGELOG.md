@@ -4,9 +4,12 @@
 1. [](#new)
     * New Menu Dropdown option "Disabled" that prevents sublevels from being rendered but still available (thanks @JoomFX)
     * Add Twig function preg_match() (#627)
-2. [](#bugfix)
+2. [](#improved)
+    * Available Themes: Open Preview in a new window
+3. [](#bugfix)
     * Administrator responsive issues in Settings Panel (#603)
     * Anchor links should not be modified (#624)
+    * '&' symbol in external menu item not outputting properly (#598)
 
 # 5.0.1
 ## 07/16/2015

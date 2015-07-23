@@ -334,7 +334,8 @@ class Menu extends AbstractMenu
 
                 if ($item->type == 'url') {
                     // Moved from modules/mod_menu/tmpl/default_url.php, not sure why Joomla had application logic in there.
-                    $item->url(\JFilterOutput::ampReplace(htmlspecialchars($item->link)));
+                    // Keep compatibility to Joomla menu module, but we need non-encoded version of the url.
+                    $item->url(htmlspecialchars_decode(\JFilterOutput::ampReplace(htmlspecialchars($item->link))));
                 }
             }
             // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
