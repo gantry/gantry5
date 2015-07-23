@@ -387,14 +387,27 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 position: relative;
                 z-index: 2;
                 display: inline-block;
+                width: 100%;
 
                 span {
                     display: block;
 
                     &:last-child {
                         color: rgba($white, 0.7);
-                        margin-top: -3px;
                     }
+                }
+
+                .title {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .font-small {
+                    line-height: $core-line-height - 0.2;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin-top: -3px;
+                    margin-bottom: -3px;
                 }
             }
 
