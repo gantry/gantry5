@@ -99,6 +99,8 @@ class Platform extends BasePlatform {
 
     public function displayWidget($instance = [], array $params = [])
     {
+        global $wp_widget_factory;
+
         $gantry = \Gantry\Framework\Gantry::instance();
 
         if (is_string($instance)) {
@@ -114,10 +116,25 @@ class Platform extends BasePlatform {
         }
 
         $widgetClass = $this->getWidgetClass($instance['widget']);
+        $widget_obj = $wp_widget_factory->widgets[$widgetClass];
+
+        $chrome_args = $gantry['theme']->details()->get('chrome.' . $params['chrome']);
         $args = [];
 
-//        $chrome_args = $gantry['theme']->details()->get('chrome.' . $instance['chrome']);
-//        $args = wp_parse_args($chrome_args, $args);
+        $search = [
+            '%id%',
+            '%classname%'
+        ];
+
+        $replace = [
+            $widget_obj->id,
+            $widget_obj->widget_options['classname']
+        ];
+
+        foreach($chrome_args as $key => $arg) {
+            $arg = str_replace($search, $replace, $arg);
+            $args[$key] = $arg;
+        }
 
         ob_start();
         \the_widget($widgetClass, $options['widget'], $args);

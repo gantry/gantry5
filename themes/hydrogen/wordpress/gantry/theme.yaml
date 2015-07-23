@@ -65,6 +65,13 @@ configuration:
     asset/font-awesome: 4.2
     particle/menu: 1.0.*
 
+chrome:
+  gantry:
+    before_widget: <div id="%id%" class="widget %classname%">
+    after_widget: </div>
+    before_title: <h2 class="widgettitle">
+    after_title: </h2>
+
 admin:
   styles:
     section:
