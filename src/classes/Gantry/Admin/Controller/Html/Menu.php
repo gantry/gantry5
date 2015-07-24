@@ -50,9 +50,7 @@ class Menu extends HtmlController
             '/'                  => 'save',
             '/*'                 => 'save',
             '/*/**'              => 'item',
-            //'/particle'          => 'particle',
-            // FIXME:
-            '/particle'          => 'widget',
+            '/particle'          => 'particle',
             '/particle/*'        => 'validateParticle',
             '/select'            => 'undefined',
             '/select/particle'   => 'selectParticle',
@@ -241,35 +239,6 @@ class Menu extends HtmlController
         ];
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params);
-    }
-
-    /**
-     * Return form for the particle (filled with data coming from POST).
-     *
-     * @param string $name
-     * @return mixed
-     * @fixme
-     */
-    public function widget()
-    {
-        $data = $this->request->post['item'];
-        if ($data) {
-            $data = json_decode($data, true);
-        } else {
-            $data = $this->request->post->getArray();
-        }
-
-        $name = isset($data['particle']) ? $data['particle'] : null;
-
-        $widgets = $this->container['platform']->listWidgets();
-        if (!isset($widgets[$name])) {
-            throw new \RuntimeException("Widget '{$name}' not found");
-        }
-
-        /** @var \WP_Widget $widget */
-        $widget = $widgets[$name]['widget'];
-
-        return $widget->form($data);
     }
 
 
