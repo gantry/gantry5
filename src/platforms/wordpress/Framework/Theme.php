@@ -83,20 +83,20 @@ class Theme extends Base\Theme
     {
         $gantry = Gantry::instance();
 
+        // Positions are set inside layouts and we need to grab all of them as we do not yet know which layout will be
+        // displayed. We also need to register all the positions for the admin.
         $positions = $gantry['configurations']->positions();
 
         foreach ( $positions as $name => $title ) {
-            // FIXME
-            // This should be handled by theme so translation plugins could catch it as part of theme.
-            // This stuff might also need take Joomla chromes into account for cross-compatibility reasons
+            // We are just registering positions with defaults; there is an event to override chrome based on the
+            // template settings. See \Gantry\Wordpress\Widgets for more information.
             register_sidebar( array(
                 'name'          => __( $title, 'gantry5' ),
                 'id'            => $name,
-                'description'   => __( $title, 'gantry5' ),
-                'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'before_widget' => '<div id="%1s" class="widget %2s">',
+                'after_widget'  => '</div>',
+                'before_title'  => '<h2 class="widgettitle">',
+                'after_title'   => '</h2>',
             ) );
         }
     }
