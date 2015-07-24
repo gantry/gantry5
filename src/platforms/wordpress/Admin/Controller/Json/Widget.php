@@ -88,7 +88,11 @@ class Widget extends JsonController
         $widgetType = $this->getWidgetType($name);
         $widgetType->number = 0;
         ob_start();
-        $widgetType->form($instance);
+        $instance = apply_filters( 'widget_form_callback', $instance, $data );
+        if ( false !== $instance ) {
+            $return = $widgetType->form($instance);
+            do_action_ref_array( 'in_widget_form', array( &$widgetType, &$return, $instance ) );
+        }
         $form = ob_get_clean();
 
             // Create configuration from the defaults.
