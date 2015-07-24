@@ -93,7 +93,7 @@ class Theme extends Base\Theme
             add_action( 'load-widgets.php',
                 function() {
                     add_action( 'admin_notices', function() {
-                        echo '<div class="error"><p>No widget positions have been defined. Please read <a target="_blank" href="http://docs.gantry.org/gantry5/particles/position">documentation</a> on how to create widget positions.</p></div>';
+                        echo '<div class="error"><p>' . __('No widget positions have been defined. Please add some in Gantry 5 Layout Manger or read <a target="_blank" href="http://docs.gantry.org/gantry5/particles/position">documentation</a> on how to create widget positions.', 'gantry5') . '</p></div>';
                     } );
                 } );
         } else {
