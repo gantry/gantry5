@@ -155,7 +155,6 @@ class Menu extends AbstractMenu
             $itemParams = [
                 'id' => $menuItem->id,
                 'type' => $menuItem->type,
-                'alias' => $menuItem->title(),
                 'link' => trim($menuItem->link()),
                 // TODO: use
                 'attr_title' => $menuItem->attr_title,
