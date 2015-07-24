@@ -25,6 +25,7 @@ class Theme extends Base\Theme
         add_theme_support( 'post-formats' );
         add_theme_support( 'post-thumbnails' );
         add_theme_support( 'menus' );
+        add_theme_support( 'widgets' );
         add_filter( 'timber_context', [ $this, 'add_to_context' ] );
         add_filter( 'get_twig', [ $this, 'add_to_twig' ] );
         add_action( 'init', [ $this, 'register_post_types' ] );
@@ -87,17 +88,27 @@ class Theme extends Base\Theme
         // displayed. We also need to register all the positions for the admin.
         $positions = $gantry['configurations']->positions();
 
-        foreach ( $positions as $name => $title ) {
-            // We are just registering positions with defaults; there is an event to override chrome based on the
-            // template settings. See \Gantry\Wordpress\Widgets for more information.
-            register_sidebar( array(
-                'name'          => __( $title, 'gantry5' ),
-                'id'            => $name,
-                'before_widget' => '<div id="%1s" class="widget %2s">',
-                'after_widget'  => '</div>',
-                'before_title'  => '<h2 class="widgettitle">',
-                'after_title'   => '</h2>',
-            ) );
+        if (!$positions) {
+            // No positions are set; display notification in admin.
+            add_action( 'load-widgets.php',
+                function() {
+                    add_action( 'admin_notices', function() {
+                        echo '<div class="error"><p>No widget positions have been defined. Please read <a target="_blank" href="http://docs.gantry.org/gantry5/particles/position">documentation</a> on how to create widget positions.</p></div>';
+                    } );
+                } );
+        } else {
+            foreach ( $positions as $name => $title ) {
+                // We are just registering positions with defaults; there is an event to override chrome based on the
+                // template settings. See \Gantry\Wordpress\Widgets for more information.
+                register_sidebar( array(
+                    'name'          => __( $title, 'gantry5' ),
+                    'id'            => $name,
+                    'before_widget' => '<div id="%1s" class="widget %2s">',
+                    'after_widget'  => '</div>',
+                    'before_title'  => '<h2 class="widgettitle">',
+                    'after_title'   => '</h2>',
+                ) );
+            }
         }
     }
 
