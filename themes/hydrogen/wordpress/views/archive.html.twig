@@ -27,11 +27,11 @@
             {# End Page Header #}
 
             {# Begin Post Entries #}
-            <div class="entries">
+            <section class="entries">
                 {% for post in posts %}
                     {% include ['partials/content-' ~ scope ~ '.html.twig', 'partials/content-' ~ post.post_type ~ '.html.twig', 'partials/content.html.twig'] %}
                 {% endfor %}
-            </div>
+            </section>
             {# End Post Entries #}
 
             {# Begin Pagination #}

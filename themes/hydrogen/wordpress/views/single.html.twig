@@ -1,5 +1,6 @@
 {% extends "partials/page.html.twig" %}
 {% set twigTemplate = 'single.html.twig' %}
+{% set scope = 'single' %}
 
 {% block content %}
 
@@ -17,7 +18,7 @@
                     </p>
 
                     <div class="article-body">
-                        {{post.get_paged_content}}
+                        {{post.paged_content}}
                     </div>
                 </section>
 

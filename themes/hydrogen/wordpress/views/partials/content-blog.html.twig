@@ -3,7 +3,7 @@
 {% block content %}
 
     {# Begin Entry Header #}
-    <div class="entry-header">
+    <section class="entry-header">
 
         {# Begin Entry Title #}
         {% if gantry.config.get('content.' ~ scope ~ '.title.enabled', '1') %}
@@ -19,18 +19,18 @@
 
         {# Begin Entry Meta #}
         {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-comments.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-categories.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-tags.enabled', '0') %}
-            {% include ['partials/meta' ~ scope ~ '.html.twig', 'partials/meta.html.twig'] %}
+            {% include ['partials/meta-' ~ scope ~ '.html.twig', 'partials/meta.html.twig'] %}
         {% endif %}
         {# End Entry Meta #}
 
-    </div>
+    </section>
     {# End Entry Header #}
 
-    {# Begin Entry Content #}
-    <div class="entry-content">
+    {# Check if post is password protected #}
+    {% if not function( 'post_password_required', post.ID ) %}
 
-        {# Check if post is password protected #}
-        {% if not function( 'post_password_required', post.ID ) %}
+        {# Begin Entry Content #}
+        <section class="entry-content">
 
             {# Begin Featured Image #}
             {% if gantry.config.get('content.' ~ scope ~ '.featured-image.enabled', '1') and post.thumbnail.src %}
@@ -68,14 +68,20 @@
             {% endif %}
             {# End Tease #}
 
-        {% else %}
+        </section>
+        {# End Entry Content #}
+
+    {% else %}
+
+        {# Begin Password Protected Form #}
+        <div class="password-form">
 
             {# Include the password form #}
             {% include 'partials/password-form.html.twig' %}
 
-        {% endif %}
+        </div>
+        {# End Password Protected Form #}
 
-    </div>
-    {# End Entry Content #}
+    {% endif %}
 
 {% endblock %}
