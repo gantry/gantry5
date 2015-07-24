@@ -61,6 +61,7 @@ class Widget extends JsonController
             $data = json_decode($data, true);
         } else {
             $data = $this->request->post->getArray();
+            $cast = true;
         }
 
         if ($data && (!isset($data['type']) || $data['type'] !== 'widget' || !isset($data['widget']))) {
@@ -68,9 +69,26 @@ class Widget extends JsonController
         }
 
         $instance = isset($data['options']['widget']) ? $data['options']['widget'] : [];
+
+        if (!empty($cast)) {
+            // TODO: Following code is a hack; we really need to pass the data as JSON instead of individual HTTP fields
+            // TODO: in order to avoid casting. Main issue is that "true" could also be valid text string.
+            // Convert strings back to native values.
+            foreach ($instance as $key => $field) {
+                if (strtolower($field) === 'true') {
+                    $instance[$key] = true;
+                } elseif (strtolower($field) === 'false') {
+                    $instance[$key] = false;
+                } elseif ((string) $field === (string)(int) $field) {
+                    $instance[$key] = intval($field);
+                }
+            }
+        }
+
         $widgetType = $this->getWidgetType($name);
         $widgetType->number = 0;
         ob_start();
+        var_dump($instance);
         $widgetType->form($instance);
         $form = ob_get_clean();
 
