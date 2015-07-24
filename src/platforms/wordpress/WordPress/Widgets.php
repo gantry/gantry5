@@ -109,11 +109,13 @@ abstract class Widgets
 
         // Substitute HTML id and class attributes into before_widget
         $classname = '';
-        foreach ( (array) $wp_registered_widgets[$id]['classname'] as $cn ) {
-            if ( is_string($cn) )
-                $classname .= '_' . $cn;
-            elseif ( is_object($cn) )
-                $classname .= '_' . get_class($cn);
+        if (!empty($wp_registered_widgets[$id])) {
+            foreach ( (array) $wp_registered_widgets[$id]['classname'] as $cn ) {
+                if ( is_string($cn) )
+                    $classname .= '_' . $cn;
+                elseif ( is_object($cn) )
+                    $classname .= '_' . get_class($cn);
+            }
         }
         return ltrim($classname, '_');
     }
