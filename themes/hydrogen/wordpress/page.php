@@ -35,5 +35,6 @@ $theme->setLayout( $chooser->select() );
 $context = Timber::get_context();
 $post = new TimberPost();
 $context[ 'post' ] = $post;
+$context[ 'comment_form' ] = TimberHelper::get_comment_form();
 
 Timber::render( array( 'page-' . $post->post_name . '.html.twig', 'page.html.twig' ), $context );
