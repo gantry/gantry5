@@ -1,6 +1,6 @@
 {% extends "partials/page.html.twig" %}
-{% set twigTemplate = 'index.html.twig' %}
-{% set scope = 'blog' %}
+{% set twigTemplate = 'archive.html.twig' %}
+{% set scope = 'archive' %}
 
 {% block content %}
 
@@ -8,13 +8,19 @@
     {% do gantry.theme.wordpress(true) %}
 
     <div class="platform-content">
-        <div class="blog">
+        <div class="archive">
 
             {# Begin Page Header #}
             {% if gantry.config.get('content.' ~ scope ~ '.heading.enabled', '0') and gantry.config.get('content.' ~ scope ~ '.heading.text') is not empty %}
                 <header class="page-header">
                     <h1>
                         {{ gantry.config.get('content.' ~ scope ~ '.heading.text') }}
+                    </h1>
+                </header>
+            {% else %}
+                <header class="page-header">
+                    <h1>
+                        {{ title }}
                     </h1>
                 </header>
             {% endif %}

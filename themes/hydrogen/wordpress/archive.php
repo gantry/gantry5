@@ -29,9 +29,9 @@ $context = Timber::get_context();
 
 $context[ 'title' ] = 'Archive';
 if( is_day() ) {
-    $context[ 'title' ] = 'Archive: ' . get_the_date( 'D M Y' );
+    $context[ 'title' ] = 'Archive: ' . get_the_date( 'j F Y' );
 } else if( is_month() ) {
-    $context[ 'title' ] = 'Archive: ' . get_the_date( 'M Y' );
+    $context[ 'title' ] = 'Archive: ' . get_the_date( 'F Y' );
 } else if( is_year() ) {
     $context[ 'title' ] = 'Archive: ' . get_the_date( 'Y' );
 } else if( is_tag() ) {

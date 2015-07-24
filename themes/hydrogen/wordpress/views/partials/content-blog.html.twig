@@ -1,4 +1,4 @@
-{% extends "partials/tease.html.twig" %}
+{% extends "partials/content.html.twig" %}
 
 {% block content %}
 
@@ -6,9 +6,9 @@
     <div class="entry-header">
 
         {# Begin Entry Title #}
-        {% if gantry.config.get(scope ~ '.title.enabled', '1') %}
+        {% if gantry.config.get('content.' ~ scope ~ '.title.enabled', '1') %}
             <h2 class="entry-title">
-                {% if gantry.config.get(scope ~ '.title.link', '0') %}
+                {% if gantry.config.get('content.' ~ scope ~ '.title.link', '0') %}
                     <a href="{{ post.link }}" title="{{ post.title }}">{{ post.title }}</a>
                 {% else %}
                     {{ post.title }}
@@ -18,8 +18,8 @@
         {# End Entry Title #}
 
         {# Begin Entry Meta #}
-        {% if gantry.config.get(scope ~ '.meta-date.enabled', '1') or gantry.config.get(scope ~ '.meta-author.enabled', '1') or gantry.config.get(scope ~ '.meta-comments.enabled', '1') or gantry.config.get(scope ~ '.meta-categories.enabled', '1') or gantry.config.get(scope ~ '.meta-tags.enabled', '0') %}
-            {% include 'partials/meta.html.twig' %}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-comments.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-categories.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-tags.enabled', '0') %}
+            {% include ['partials/meta' ~ scope ~ '.html.twig', 'partials/meta.html.twig'] %}
         {% endif %}
         {# End Entry Meta #}
 
@@ -33,17 +33,17 @@
         {% if not function( 'post_password_required', post.ID ) %}
 
             {# Begin Featured Image #}
-            {% if gantry.config.get(scope ~ '.featured-image.enabled', '1') and post.thumbnail.src %}
-                {% set position = (gantry.config.get(scope ~ '.featured-image.position', 'none') == 'none') ? '' : 'float-' ~ gantry.config.get(scope ~ '.featured-image.position', 'none') %}
+            {% if gantry.config.get('content.' ~ scope ~ '.featured-image.enabled', '1') and post.thumbnail.src %}
+                {% set position = (gantry.config.get('content.' ~ scope ~ '.featured-image.position', 'none') == 'none') ? '' : 'float-' ~ gantry.config.get('content.' ~ scope ~ '.featured-image.position', 'none') %}
                 <a href="{{ post.link }}" class="post-thumbnail" aria-hidden="true">
-                    <img src="{{ post.thumbnail.src|resize(gantry.config.get(scope ~ '.featured-image.width', '1200'), gantry.config.get(scope ~ '.featured-image.height', '350')) }}" class="featured-image tease-featured-image {{ position }}" alt="{{ post.title }}" />
+                    <img src="{{ post.thumbnail.src|resize(gantry.config.get('content.' ~ scope ~ '.featured-image.width', '1200'), gantry.config.get('content.' ~ scope ~ '.featured-image.height', '350')) }}" class="featured-image tease-featured-image {{ position }}" alt="{{ post.title }}" />
                 </a>
             {% endif %}
             {# End Featured Image #}
 
             {# Begin Tease #}
             {% if post.post_excerpt is not empty %}
-                <p class="tease tease-excerpt">{{ post.post_excerpt }}</p>
+                <p class="tease excerpt">{{ post.post_excerpt }}</p>
             {% else %}
                 {% set readmore = preg_match('/<!--more(.*?)?-->/', post.post_content) %}
                 {% if readmore %}
@@ -57,12 +57,12 @@
                 {% endif %}
             {% endif %}
 
-            {% if gantry.config.get(scope ~ '.read-more.mode', 'auto') == 'always' or (gantry.config.get(scope ~ '.read-more.mode', 'auto') == 'auto' and (readmore or post.post_excerpt is not empty) )  %}
+            {% if gantry.config.get('content.' ~ scope ~ '.read-more.mode', 'auto') == 'always' or (gantry.config.get('content.' ~ scope ~ '.read-more.mode', 'auto') == 'auto' and (readmore or post.post_excerpt is not empty) )  %}
                 <a href="{{ post.link }}" class="read-more button">
                     {% if readmore[1] is not empty %}
                         {{- readmore[1] -}}
                     {% else %}
-                        {{ gantry.config.get(scope ~ '.read-more.label', 'Read More') }}
+                        {{ gantry.config.get('content.' ~ scope ~ '.read-more.label', 'Read More') }}
                     {% endif %}
                 </a>
             {% endif %}
