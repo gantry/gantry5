@@ -2,7 +2,7 @@ body.gantry5 {
     margin: 0;
     padding: 0;
     max-width: inherit;
-    
+
     &.auto-fold {
         #wpcontent {
             padding-left: 0;
@@ -36,12 +36,13 @@ body.gantry5 {
 
         input[type="checkbox"] {
             height: 16px;
+            display: inline-block;
             &:checked:before {
                 height: 16px;
             }
             &:not(.settings-param-toggle) {
                 position: inherit;
-                top: 8px;
+                top: 4px;
             }
         }
 
