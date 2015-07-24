@@ -67,10 +67,11 @@ class Widget extends JsonController
             throw new \RuntimeException('Bad request data.', 400);
         }
 
+        $instance = isset($data['options']['widget']) ? $data['options']['widget'] : [];
         $widgetType = $this->getWidgetType($name);
         $widgetType->number = 0;
         ob_start();
-        $widgetType->form($data);
+        $widgetType->form($instance);
         $form = ob_get_clean();
 
             // Create configuration from the defaults.
