@@ -88,14 +88,15 @@ class Widget extends JsonController
         $widgetType = $this->getWidgetType($name);
         $widgetType->number = 0;
         ob_start();
-        $instance = apply_filters( 'widget_form_callback', $instance, $data );
+        // TODO: We might want to add the filters back; for now we just assume that widget works like the_widget().
+        //$instance = apply_filters( 'widget_form_callback', $instance, $data );
         if ( false !== $instance ) {
             $return = $widgetType->form($instance);
-            do_action_ref_array( 'in_widget_form', array( &$widgetType, &$return, $instance ) );
+            //do_action_ref_array( 'in_widget_form', array( &$widgetType, &$return, $instance ) );
         }
         $form = ob_get_clean();
 
-            // Create configuration from the defaults.
+        // Create configuration from the defaults.
         $item = new Config($data);
         $item->def('type', 'particle');
         $item->def('title', $widgetType->name);
@@ -139,7 +140,8 @@ class Widget extends JsonController
         \wp_suspend_cache_addition($cache_state);
 
         // Apply widget filters.
-        $instance = \apply_filters('widget_update_callback', $instance, $new_instance, $old_instance, $widgetType);
+        // TODO: We might want to add the filters back; for now we just assume that widget works like the_widget().
+        //$instance = \apply_filters('widget_update_callback', $instance, $new_instance, $old_instance, $widgetType);
 
         if ($instance === false) {
             throw new \RuntimeException('Filter prevented widget from being saved.', 403);
