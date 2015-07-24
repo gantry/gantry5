@@ -115,6 +115,9 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         } elseif ($params['menu'] == '-active-') {
             $params['menu'] = $this->getActiveMenuName();
         }
+        if (!$params['menu']) {
+            throw new \RuntimeException('No menu selected', 404);
+        }
         if (!in_array($params['menu'], $menus)) {
             throw new \RuntimeException('Menu not found', 404);
         }

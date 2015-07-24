@@ -1,4 +1,8 @@
+{% try %}
 {% set menu = gantry.menu.instance(particle) %}
+{% catch %}
+<div class="alert alert-error">{{ e.getMessage }}</div>
+{% endtry %}
 
 {% macro getCustomWidth(item, root, mode) -%}
     {%- if (item.width|default('auto') != 'auto') and not (root.getDropdown() == 'fullwidth' and item.level > 1) -%}
