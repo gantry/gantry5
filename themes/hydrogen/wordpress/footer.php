@@ -8,6 +8,8 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+defined( 'ABSPATH' ) or die;
+
 /*
  * Third party plugins that hijack the theme will call wp_footer() to get the footer template.
  * We use this to end our output buffer (started in header.php) and render into the views/page-plugin.html.twig template.

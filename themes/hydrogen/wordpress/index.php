@@ -8,6 +8,8 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+defined( 'ABSPATH' ) or die;
+
 /*
  * The main template file
  * This is the most generic template file in a WordPress theme
@@ -23,7 +25,7 @@ $theme = $gantry[ 'theme' ];
 $theme->setLayout( $chooser->select() );
 
 if ( !class_exists( 'Timber' ) ) {
-	echo 'Timber not activated. Make sure you activate the plugin in <a href="/wp-admin/plugins.php#timber">/wp-admin/plugins.php</a>';
+	_e('Timber not activated. Make sure you activate the plugin in <a href="/wp-admin/plugins.php#timber">/wp-admin/plugins.php</a>', 'g5_hydrogen');
 	return;
 }
 
