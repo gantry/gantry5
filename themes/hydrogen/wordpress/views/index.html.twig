@@ -23,7 +23,7 @@
             {# Begin Post Entries #}
             <section class="entries">
                 {% for post in posts %}
-                    {% include ['partials/content-' ~ scope ~ '.html.twig', 'partials/content-' ~ post.post_type ~ '.html.twig', 'partials/content.html.twig'] %}
+                    {% include ['partials/content-' ~ scope ~ '.html.twig', (post.format) ? 'partials/content-' ~ post.format ~ '.html.twig' : '', 'partials/content.html.twig'] %}
                 {% endfor %}
             </section>
             {# End Post Entries #}
