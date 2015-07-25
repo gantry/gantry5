@@ -26,13 +26,25 @@
             {% endif %}
             {# End Page Header #}
 
-            {# Begin Post Entries #}
-            <section class="entries">
-                {% for post in posts %}
-                    {% include ['partials/content-' ~ scope ~ '.html.twig', 'partials/content-' ~ post.post_type ~ '.html.twig', 'partials/content.html.twig'] %}
-                {% endfor %}
-            </section>
-            {# End Post Entries #}
+            {% if posts is not empty %}
+
+                {# Begin Post Entries #}
+                <section class="entries">
+                    {% for post in posts %}
+                        {% include ['partials/content-' ~ scope ~ '.html.twig', 'partials/content-' ~ post.post_type ~ '.html.twig', 'partials/content.html.twig'] %}
+                    {% endfor %}
+                </section>
+                {# End Post Entries #}
+
+            {% else %}
+
+                <div class="no-matches-notice">
+                    <h1>
+                        {{ __( 'Sorry, but there aren\'t any posts matching your query.', 'g5_hydrogen' ) }}
+                    </h1>
+                </div>
+
+            {% endif %}
 
             {# Begin Pagination #}
             {% if pagination.pages and pagination.pages|length > 1 %}
