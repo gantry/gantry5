@@ -106,7 +106,6 @@ admin:
       - title
       - meta-date
       - meta-author
-      - meta-comments
     archive:
       - post-content
       - heading
