@@ -16,7 +16,7 @@
             {# End Entry Title #}
 
             {# Begin Entry Meta #}
-            {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-comments.enabled', '1') %}
+            {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') %}
                 {% include ['partials/meta-' ~ scope ~ '.html.twig', 'partials/meta.html.twig'] %}
             {% endif %}
             {# End Entry Meta #}
@@ -49,22 +49,6 @@
 
             </section>
             {# End Entry Content #}
-
-            {# Begin Page Comments #}
-            {% if post.comment_status == 'open' %}
-                <section id="comments" class="comments-area">
-                    <div class="responses">
-                        {% for cmt in post.get_comments %}
-                            {% include "partials/comment.html.twig" with {comment:cmt} %}
-                        {% endfor %}
-                    </div>
-                    <div class="respond">
-                        <h3 class="respond-header">{{ __('Comments', 'g5_hydrogen') }}</h3>
-                        {{ comment_form }}
-                    </div>
-                </section>
-            {% endif %}
-            {# End Page Comments #}
 
         {% else %}
 
