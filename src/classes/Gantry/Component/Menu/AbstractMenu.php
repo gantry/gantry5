@@ -110,6 +110,9 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
             if (!$params['menu'] && !empty($params['admin'])) {
                 // In admin just select the first menu if there isn't default menu to be selected.
                 $menus = $this->getMenus();
+                if (!$menus) {
+                    throw new \RuntimeException('Site does not have menus', 404);
+                }
                 $params['menu'] = reset($menus);
             };
         } elseif ($params['menu'] == '-active-') {
