@@ -27,6 +27,8 @@ $theme->setLayout( $chooser->select() );
 
 $context = Timber::get_context();
 
+$templates = array( 'archive.html.twig', 'index.html.twig' );
+
 $context[ 'title' ] = 'Archive';
 if( is_day() ) {
     $context[ 'title' ] = 'Archive: ' . get_the_date( 'j F Y' );
@@ -46,7 +48,5 @@ if( is_day() ) {
 
 $context[ 'posts' ] = Timber::get_posts();
 $context[ 'pagination' ] = Timber::get_pagination();
-
-$templates = array( 'archive.html.twig', 'index.html.twig' );
 
 Timber::render( $templates, $context );
