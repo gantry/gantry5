@@ -123,13 +123,15 @@ ready(function() {
                             if (!name || input.disabled()) { return; }
 
                             input = content.find('[name="' + name + '"]');
-                            var value = input.value(),
+                            var value = value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                                 parent = input.parent('.settings-param'),
                                 override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                             if (override && !override.checked()) { return; }
 
-                            dataString.push(name + '=' + encodeURIComponent(value));
+                            if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
+                                dataString.push(name + '=' + encodeURIComponent(value));
+                            }
                         });
 
                         var title = content.find('[data-title-editable]');

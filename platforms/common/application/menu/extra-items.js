@@ -160,7 +160,9 @@ var StepTwo = function(data, content, button) {
                     override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                 if (override && !override.checked()) { return; }
-                dataString.push(name + '=' + encodeURIComponent(value));
+                if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
+                    dataString.push(name + '=' + encodeURIComponent(value));
+                }
             });
 
             var title = content.find('[data-title-editable]');
