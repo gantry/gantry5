@@ -168,7 +168,7 @@
     }
 
     input:not(.settings-param-toggle):not([type="checkbox"]), select, .collection-list ul, .colorpicker, .multi.selectize-control {
-        width: 275px;
+        width: 250px;
         @include breakpoint(no-desktop) {
             width: 100%;
         }
@@ -182,7 +182,10 @@
     .input-group {
         &.append, &.prepend {
             input {
-                width: 235px;
+                width: 210px;
+                @include breakpoint(tablet-range) {
+                    width: 100% !important;
+                }
                 @include breakpoint(mobile-only) {
                     width: 100% !important;
                 }
@@ -191,7 +194,7 @@
     }
 
     .selectize-control.single {
-        width: 275px !important;
+        width: 250px !important;
         @include breakpoint(tablet-range) {
             width: 100% !important;
         }

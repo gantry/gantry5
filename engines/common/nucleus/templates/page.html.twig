@@ -1,8 +1,10 @@
 {%- do gantry.theme.setLayout() -%}
 
 {%- set content %}
-    {% block content %}
-    {% endblock %}
+    {% if gantry.theme.hasContent() %}
+        {% block content %}
+        {% endblock %}
+    {% endif %}
 {% endset -%}
 
 {%- set offcanvas = null -%}

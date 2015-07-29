@@ -30,7 +30,9 @@ class EventListener implements EventSubscriberInterface
 
     public function onGlobalSave(Event $event)
     {
-        // In this function we need to save settings into plugin.
+        $option = (array) \get_option('gantry5_plugin');
+        $option['production'] = intval((bool) $event->data['production']);
+        \update_option('gantry5_plugin', $option);
     }
 
     public function onStylesSave(Event $event)
@@ -51,6 +53,43 @@ class EventListener implements EventSubscriberInterface
 
     public function onMenusSave(Event $event)
     {
-        // Here we need to modify WP menus.
+        $defaults = [
+            'id' => 0,
+            'layout' => 'list',
+            'target' => '_self',
+            'dropdown' => '',
+            'icon' => '',
+            'image' => '',
+            'subtitle' => '',
+            'icon_only' => false,
+            'visible' => true,
+            'group' => 0,
+            'columns' => []
+        ];
+
+        $menu = $event->menu;
+
+        // TODO: Modify WP menus.
+        foreach ($menu['items'] as $key => $item) {
+            // Do not save default values.
+            foreach ($defaults as $var => $value) {
+                if (isset($item[$var]) && $item[$var] == $value) {
+                    unset($item[$var]);
+                }
+            }
+
+            // Do not save WP variables we do not use.
+            unset($item['xfn'], $item['attr_title']);
+
+            // Do not save derived values.
+            unset($item['path'], $item['alias'], $item['parent_id'], $item['level'], $item['group'], $item['current']);
+
+            // Particles have no link.
+            if (isset($item['type']) && $item['type'] === 'particle') {
+                unset($item['link']);
+            }
+
+            $event->menu["items.{$key}"] = $item;
+        }
     }
 }

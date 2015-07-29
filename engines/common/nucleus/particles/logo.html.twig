@@ -1,7 +1,12 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
 {% block particle %}
-<a href="{{ url(particle.url)|e }}" title="{{ particle.text|e }}" rel="home" class="{{ particle.class|e }}">
-    <img src="{{ url(particle.image)|e }}" alt="{{ particle.text|e }}" />
+<a href="{{ url(particle.url)|default(gantry.siteUrl()) }}" title="{{ particle.text }}" rel="home" class="{{ particle.class }}">
+    {% set image = url(particle.image) %}
+    {% if image %}
+    <img src="{{ url(particle.image) }}" alt="{{ particle.text }}" />
+    {% else %}
+    {{ particle.text|default('Logo') }}
+    {% endif %}
 </a>
 {% endblock %}

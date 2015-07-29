@@ -15,8 +15,6 @@
 namespace Gantry\Framework;
 
 use Gantry\Framework\Base\Configurations as BaseConfigurations;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Configurations extends BaseConfigurations
 {

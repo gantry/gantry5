@@ -640,8 +640,10 @@ ready(function() {
 
         previous = previous.find('[data-g-urltemplate]');
 
-        var template = previous.data('g-urltemplate');
-        previous.attribute('href', template.replace(/#ID#/g, element.value()));
+        if (previous) {
+            var template = previous.data('g-urltemplate');
+            previous.attribute('href', template.replace(/#ID#/g, element.value()));
+        }
     });
 
     // fields resets
@@ -2386,7 +2388,10 @@ ready(function() {
 
                         if (override && !override.checked()) { return; }
                         if (!validateField(input)) { invalid.push(input); }
-                        dataString.push(name + '=' + encodeURIComponent(value));
+
+                        if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
+                            dataString.push(name + '=' + encodeURIComponent(value));
+                        }
                     });
 
                     var title = content.elements.content.find('[data-title-editable]');
@@ -3823,13 +3828,17 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
 
 var StepTwo = function(data, content, button) {
     var uri = content.find('[data-mm-particle-stepone]').data('mm-particle-stepone'),
-        picker = data.instancepicker;
+        picker = data.instancepicker,
+        moduleType = {
+            wordpress: 'widget',
+            joomla: 'particle'
+        };
 
     if (picker) {
         var item = JSON.parse(data.item);
         picker = JSON.parse(picker);
         delete(data.instancepicker);
-        uri = getAjaxURL(item.type + '/' + item.particle);
+        uri = getAjaxURL(item.type + '/' + item[moduleType[GANTRY_PLATFORM]]);
     }
 
     request('post', parseAjaxURI(uri + getAjaxSuffix()), data, function(error, response) {
@@ -3882,7 +3891,9 @@ var StepTwo = function(data, content, button) {
                     override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                 if (override && !override.checked()) { return; }
-                dataString.push(name + '=' + encodeURIComponent(value));
+                if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
+                    dataString.push(name + '=' + encodeURIComponent(value));
+                }
             });
 
             var title = content.find('[data-title-editable]');
@@ -3970,7 +3981,7 @@ ready(function() {
             selected = container.find('[data-lm-blocktype].selected, [data-mm-module].selected'),
             type = selected.data('mm-type');
 
-        data = { type: 'particle' };
+        data = { type: type };
 
         switch (type) {
             case 'particle':
@@ -7255,19 +7266,20 @@ ready(function() {
             joomla: 'module'
         };
 
-    if (particleField) {
-        particleField.on('change', function(){
-            if (!this.value()) {
-                var title = this.siblings('.g-instancepicker-title'),
-                    label = this.siblings('[data-g-instancepicker]'),
-                    reset = this.sibling('.g-reset-field');
+    //if (particleField) {
+        //particleField.on('change', function(){
+        body.delegate('input', '[data-g-instancepicker] ~ input[type="hidden"]', function(event, element){
+            if (!element.value()) {
+                var title = element.siblings('.g-instancepicker-title'),
+                    label = element.siblings('[data-g-instancepicker]'),
+                    reset = element.sibling('.g-reset-field');
 
                 title.text('');
                 label.text(label.data('g-instancepicker-text'));
                 reset.style('display', 'none');
             }
         });
-    }
+    //}
 
 
     body.delegate('click', '[data-g-instancepicker]', function(event, element) {
@@ -7275,14 +7287,19 @@ ready(function() {
 
         var data = JSON.parse(element.data('g-instancepicker')),
             field = $('[name="' + data.field + '"]'),
-            uri = 'particle' + ((data.type == moduleType[GANTRY_PLATFORM]) ? '/' + moduleType[GANTRY_PLATFORM] : ''),
-            value;
+            value, uri; // = 'particle' + ((data.type == moduleType[GANTRY_PLATFORM]) ? '/' + moduleType[GANTRY_PLATFORM] : ''),
+
+        if (data.type == moduleType[GANTRY_PLATFORM]) {
+            uri = (data.type != 'widget' ? 'particle/' : '') + moduleType[GANTRY_PLATFORM];
+        } else {
+            uri = 'particle';
+        }
 
         if (!field) { return false; }
 
         value = field.value();
 
-        if (data.type == 'particle' || data.type == 'widget' && value) {
+        if ((data.type == 'particle' || data.type == 'widget') && value) {
             value = JSON.parse(value || {});
             uri = value.type + '/' + value[data.type];
         }
@@ -7291,8 +7308,8 @@ ready(function() {
 
         modal.open({
             content: 'Loading',
-            method: !value || data.type == moduleType[GANTRY_PLATFORM] ? 'get' : 'post',
-            data: !value || data.type == moduleType[GANTRY_PLATFORM] ? {} : value,
+            method: !value || data.type == 'module' ? 'get' : 'post', // data.type == moduleType[GANTRY_PLATFORM]
+            data: !value || data.type == 'module' ? {} : value, // data.type == moduleType[GANTRY_PLATFORM]
             remote: getAjaxURL(uri) + getAjaxSuffix(),
             remoteLoaded: function(response, modalInstance) {
                 var content = modalInstance.elements.content,
@@ -7353,13 +7370,15 @@ ready(function() {
                             if (!name || input.disabled()) { return; }
 
                             input = content.find('[name="' + name + '"]');
-                            var value = input.value(),
+                            var value = value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                                 parent = input.parent('.settings-param'),
                                 override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                             if (override && !override.checked()) { return; }
 
-                            dataString.push(name + '=' + encodeURIComponent(value));
+                            if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
+                                dataString.push(name + '=' + encodeURIComponent(value));
+                            }
                         });
 
                         var title = content.find('[data-title-editable]');

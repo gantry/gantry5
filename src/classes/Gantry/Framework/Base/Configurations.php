@@ -16,6 +16,7 @@ namespace Gantry\Framework\Base;
 
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Configuration\AbstractConfigurationCollection;
+use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -112,22 +113,110 @@ class Configurations extends AbstractConfigurationCollection
     }
 
     /**
+     * @param string $title
+     * @param string $preset
+     * @return string
+     * @throws \RuntimeException
+     */
+    public function create($title = 'Untitled', $preset = 'default')
+    {
+        $gantry = $this->container;
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title));
+
+        if (!$name) {
+            throw new \RuntimeException("Outline needs a name", 400);
+        }
+
+        if ($name === 'default' || $name[0] === '_') {
+            throw new \RuntimeException("Outline cannot use reserved name '{$name}'", 400);
+        }
+
+        $path = $locator->findResource("gantry-config://{$name}", true, true);
+        if (is_dir($path)) {
+            throw new \RuntimeException("Outline '$title' already exists.", 400);
+        }
+
+        // Create index file for the new layout.
+        $layout = new Layout($name, Layout::preset($preset));
+        $layout->saveIndex();
+
+        return $name;
+    }
+
+    /**
      * @param string $id
+     * @return string
      * @throws \RuntimeException
      */
     public function duplicate($id)
     {
-        throw new \RuntimeException('Not Implemented', 501);
+        $gantry = $this->container;
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $path = $locator->findResource("gantry-config://{$id}");
+        if (!$path || !is_dir($path)) {
+            throw new \RuntimeException('Outline not found', 404);
+        }
+
+        $folder = $this->findFreeName(strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $id)));
+
+        $newPath = $locator->findResource("gantry-config://{$folder}", true, true);
+
+        try {
+            Folder::copy($path, $newPath);
+        } catch (\Exception $e) {
+            throw new \RuntimeException(sprintf('Duplicating Outline failed: ', $e->getMessage()), 500, $e);
+        }
+
+        return basename($folder);
     }
 
     /**
      * @param string $id
      * @param string $title
+     * @return string
      * @throws \RuntimeException
      */
     public function rename($id, $title)
     {
-        throw new \RuntimeException('Not Implemented', 501);
+        if (!$this->canDelete($id)) {
+            throw new \RuntimeException("Outline '$id' cannot be renamed", 400);
+        }
+
+        $gantry = $this->container;
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $path = $locator->findResource("gantry-config://{$id}", true, true);
+        if (!$path || !is_dir($path)) {
+            throw new \RuntimeException('Outline not found', 404);
+        }
+
+        $folder = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title));
+
+        if ($folder === 'default' || $folder[0] === '_') {
+            throw new \RuntimeException("Outline cannot use reserved name '{$folder}'", 400);
+        }
+
+        $newPath = $locator->findResource("gantry-config://{$folder}", true, true);
+        if (is_dir($newPath)) {
+            throw new \RuntimeException("Outline '$id' already exists.", 400);
+        }
+
+        try {
+            Folder::move($path, $newPath);
+        } catch (\Exception $e) {
+            throw new \RuntimeException(sprintf('Renaming Outline failed: ', $e->getMessage()), 500, $e);
+        }
+
+        return $folder;
     }
 
     /**
@@ -136,7 +225,22 @@ class Configurations extends AbstractConfigurationCollection
      */
     public function delete($id)
     {
-        throw new \RuntimeException('Not Implemented', 501);
+        if (!$this->canDelete($id)) {
+            throw new \RuntimeException("Outline '$id' cannot be deleted", 400);
+        }
+
+        $gantry = $this->container;
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+        $path = $locator->findResource("gantry-config://{$id}", true, true);
+        if (!is_dir($path)) {
+            throw new \RuntimeException('Outline not found', 404);
+        }
+
+        if (file_exists($path)) {
+            Folder::delete($path);
+        }
     }
 
     /**
@@ -145,6 +249,10 @@ class Configurations extends AbstractConfigurationCollection
      */
     public function canDelete($id)
     {
+        if (!$id || $id[0] === '_' || $id === 'default') {
+            return false;
+        }
+
         return true;
     }
 
@@ -160,5 +268,32 @@ class Configurations extends AbstractConfigurationCollection
             '_error' => 'Error',
             '_offline' => 'Offline'
         ] + $configurations;
+    }
+
+    /**
+     * Find unused name with number appended to it when duplicating an outline.
+     *
+     * @param string $id
+     * @return string
+     */
+    protected function findFreeName($id)
+    {
+        $gantry = $this->container;
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        if (preg_match('|^(?:_)?(.*?)(?:_(\d+))?$|ui', $id, $matches)) {
+            $matches += ['', '', ''];
+            list (, $name, $count) = $matches;
+        }
+
+        $count = max(1, $count);
+
+        do {
+            $count++;
+        } while ($locator("gantry-config://{$name}_{$count}"));
+
+        return "{$name}_{$count}";
     }
 }

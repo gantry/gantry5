@@ -8,6 +8,8 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+defined( 'ABSPATH' ) or die;
+
 /*
  * The template to display when page is offline
  */
@@ -19,6 +21,5 @@ $theme = $gantry[ 'theme' ];
 $theme->setLayout( $chooser->select( '_offline' ) );
 
 $context = Timber::get_context();
-$context[ 'message' ] = 'Offline Message!';
 
 Timber::render( 'offline.html.twig', $context );

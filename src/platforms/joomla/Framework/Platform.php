@@ -25,6 +25,8 @@ use Joomla\Registry\Registry;
 
 class Platform extends BasePlatform
 {
+    public $no_base_layout = true;
+
     protected $name = 'joomla';
     protected $settings_key = 'return';
     protected $modules;

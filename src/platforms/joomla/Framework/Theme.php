@@ -16,7 +16,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Theme extends BaseTheme
 {
-    protected $joomla;
+    protected $joomla = false;
     protected $renderer;
 
     public function __construct($path, $name = '')
@@ -102,15 +102,13 @@ class Theme extends BaseTheme
 
     public function joomla($enable = null)
     {
-        if ($enable !== null) {
-            if ($enable) {
-                // Workaround for Joomla! not loading bootstrap when it needs it.
-                \JHtml::_('bootstrap.framework');
+        if ($enable) {
+            // Workaround for Joomla! not loading bootstrap when it needs it.
+            \JHtml::_('bootstrap.framework');
 
-                $this->joomla = (bool) $enable;
-            }
+            $this->joomla = (bool) $enable;
         }
 
-        return (bool) $this->joomla;
+        return $this->joomla;
     }
 }

@@ -27,6 +27,18 @@ if (!defined('GANTRYADMIN_PATH')) {
     define('GANTRYADMIN_PATH', GANTRY5_PATH . '/admin');
 }
 
+// Add Gantry 5 defaults on plugin activation
+register_activation_hook( __FILE__, 'gantry5_plugin_defaults' );
+
+function gantry5_plugin_defaults() {
+    $defaults = [
+        'production' => '1',
+        'debug' => '0',
+    ];
+
+    add_option( 'gantry5_plugin', $defaults );
+}
+
 // Initialize plugin language.
 $domain = 'gantry5';
 $locale = apply_filters( 'plugin_locale', get_locale(), $domain );

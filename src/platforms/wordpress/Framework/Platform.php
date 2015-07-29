@@ -3,6 +3,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
+use Gantry\WordPress\Widgets;
 use Pimple\Container;
 
 /**
@@ -95,5 +96,20 @@ class Platform extends BasePlatform {
         }
 
         return apply_filters( 'gantry5_form_field_selectize_categories', $new_categories );
+    }
+
+    public function displayWidgets($key, array $params = [])
+    {
+        return Widgets::displayPosition($key, $params);
+    }
+
+    public function displayWidget($instance = [], array $params = [])
+    {
+        return Widgets::displayWidget($instance, $params);
+    }
+
+    public function listWidgets()
+    {
+        return Widgets::listWidgets();
     }
 }

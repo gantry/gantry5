@@ -65,6 +65,13 @@ configuration:
     asset/font-awesome: 4.2
     particle/menu: 1.0.*
 
+chrome:
+  gantry:
+    before_widget: <div id="%1s" class="widget %2s">
+    after_widget: </div>
+    before_title: <h2 class="widgettitle">
+    after_title: </h2>
+
 admin:
   styles:
     section:
@@ -87,7 +94,6 @@ admin:
       - meta-tags
       - read-more
     post:
-      - heading
       - featured-image
       - title
       - meta-date
@@ -96,57 +102,11 @@ admin:
       - meta-categories
       - meta-tags
     page:
-      - heading
       - featured-image
       - title
       - meta-date
       - meta-author
-      - meta-comments
     archive:
-      - post-content
-      - heading
-      - featured-image
-      - title
-      - meta-date
-      - meta-author
-      - meta-comments
-      - meta-categories
-      - meta-tags
-      - read-more
-    category:
-      - post-content
-      - heading
-      - featured-image
-      - title
-      - meta-date
-      - meta-author
-      - meta-comments
-      - meta-categories
-      - meta-tags
-      - read-more
-    tag:
-      - post-content
-      - heading
-      - featured-image
-      - title
-      - meta-date
-      - meta-author
-      - meta-comments
-      - meta-categories
-      - meta-tags
-      - read-more
-    author:
-      - post-content
-      - heading
-      - featured-image
-      - title
-      - meta-date
-      - meta-author
-      - meta-comments
-      - meta-categories
-      - meta-tags
-      - read-more
-    search:
       - post-content
       - heading
       - featured-image

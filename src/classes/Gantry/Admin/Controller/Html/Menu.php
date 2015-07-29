@@ -241,6 +241,7 @@ class Menu extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params);
     }
 
+
     public function validateParticle($name)
     {
         // Validate only exists for JSON.

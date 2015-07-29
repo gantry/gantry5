@@ -6,6 +6,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class Theme extends Base\Theme
 {
     public $path;
+    protected $wordpress = false;
     protected $user;
 
     public function __construct( $path, $name = '' )
@@ -24,6 +25,7 @@ class Theme extends Base\Theme
         add_theme_support( 'post-formats' );
         add_theme_support( 'post-thumbnails' );
         add_theme_support( 'menus' );
+        add_theme_support( 'widgets' );
         add_filter( 'timber_context', [ $this, 'add_to_context' ] );
         add_filter( 'get_twig', [ $this, 'add_to_twig' ] );
         add_action( 'init', [ $this, 'register_post_types' ] );
@@ -33,7 +35,9 @@ class Theme extends Base\Theme
 
     public function debug()
     {
-        return WP_DEBUG;
+        $option = (array) get_option('gantry5_plugin');
+
+        return !empty($option['debug']);
     }
 
     public function renderer()
@@ -53,11 +57,11 @@ class Theme extends Base\Theme
                 'autoescape' => 'html'
             );
 
-            // FIXME: Get timezone from WP.
-            $timezone = 'UTC';
-
             $twig = new \Twig_Environment($loader, $params);
-            $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
+
+            // FIXME: Get timezone from WP.
+            //$timezone = 'UTC';
+            //$twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
 
             $this->add_to_twig($twig);
 
@@ -80,21 +84,31 @@ class Theme extends Base\Theme
     {
         $gantry = Gantry::instance();
 
+        // Positions are set inside layouts and we need to grab all of them as we do not yet know which layout will be
+        // displayed. We also need to register all the positions for the admin.
         $positions = $gantry['configurations']->positions();
 
-        foreach ( $positions as $name => $title ) {
-            // FIXME
-            // This should be handled by theme so translation plugins could catch it as part of theme.
-            // This stuff might also need take Joomla chromes into account for cross-compatibility reasons
-            register_sidebar( array(
-                'name'          => __( $title, 'gantry5' ),
-                'id'            => $name,
-                'description'   => __( $title, 'gantry5' ),
-                'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
-            ) );
+        if (!$positions) {
+            // No positions are set; display notification in admin.
+            add_action( 'load-widgets.php',
+                function() {
+                    add_action( 'admin_notices', function() {
+                        echo '<div class="error"><p>' . __('No widget positions have been defined. Please add some in Gantry 5 Layout Manger or read <a target="_blank" href="http://docs.gantry.org/gantry5/particles/position">documentation</a> on how to create widget positions.', 'gantry5') . '</p></div>';
+                    } );
+                } );
+        } else {
+            foreach ( $positions as $name => $title ) {
+                // We are just registering positions with defaults; there is an event to override chrome based on the
+                // template settings. See \Gantry\Wordpress\Widgets for more information.
+                register_sidebar( array(
+                    'name'          => __( $title, 'gantry5' ),
+                    'id'            => $name,
+                    'before_widget' => '<div id="%1s" class="widget %2s">',
+                    'after_widget'  => '</div>',
+                    'before_title'  => '<h2 class="widgettitle">',
+                    'after_title'   => '</h2>',
+                ) );
+            }
         }
     }
 
@@ -120,5 +134,14 @@ class Theme extends Base\Theme
         $context['my'] = $this->user;
 
         return $context;
+    }
+
+    public function wordpress($enable = null)
+    {
+        if ($enable) {
+            $this->wordpress = (bool) $enable;
+        }
+
+        return $this->wordpress;
     }
 }

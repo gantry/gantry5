@@ -67,6 +67,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('parse_assets', [$this, 'parseAssetsFunc']),
             new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc']),
             new \Twig_SimpleFunction('get_cookie', [$this, 'getCookie']),
+            new \Twig_SimpleFunction('preg_match', [$this, 'pregMatch']),
         );
     }
 
@@ -276,5 +277,15 @@ class TwigExtension extends \Twig_Extension
         $request = $gantry['request'];
 
         return $request->cookie[$name];
+    }
+
+    public function pregMatch($pattern, $subject, &$matches = []) {
+        $preg_match = preg_match($pattern, $subject, $matches);
+
+        if(isset($matches) && !empty($matches)) {
+            return $matches;
+        } else {
+            return false;
+        }
     }
 }

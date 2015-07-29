@@ -74,9 +74,17 @@ class Configurations extends HtmlController
         /** @var ConfigurationsObject $configurations */
         $configurations = $this->container['configurations'];
 
-        $configurations->create($this->request->post['title'], $this->request->post['preset']);
+        $title = $this->request->post->get('title', 'Untitled');
+        $preset = $this->request->post->get('preset', 'default');
 
-        return new JsonResponse(['html' => 'Configuration created.']);
+        $id = $configurations->create($title, $preset);
+
+        $html = $this->container['admin.theme']->render(
+            '@gantry-admin/layouts/outline.html.twig',
+            ['name' => $id, 'title' => $title]
+        );
+
+        return new JsonResponse(['html' => 'Configuration created.', 'id' => "outline-{$id}", 'outline' => $html]);
     }
 
     public function rename($configuration)
@@ -89,9 +97,15 @@ class Configurations extends HtmlController
             $this->forbidden();
         }
 
-        $configurations->rename($configuration, $this->request->post['title']);
+        $title = $this->request->post['title'];
+        $id = $configurations->rename($configuration, $title);
 
-        return new JsonResponse(['html' => 'Configuration renamed.']);
+        $html = $this->container['admin.theme']->render(
+            '@gantry-admin/layouts/outline.html.twig',
+            ['name' => $id, 'title' => $title]
+        );
+
+        return new JsonResponse(['html' => 'Configuration renamed.', 'id' => "outline-{$configuration}", 'outline' => $html]);
     }
 
     public function duplicate($configuration)
@@ -105,9 +119,11 @@ class Configurations extends HtmlController
             if (empty($preset)) {
                 throw new \RuntimeException('Preset not found');
             }
-            $configurations->create(ucwords(trim(str_replace('_', ' ', $configuration))), $configuration);
+            $id = $configurations->create(ucwords(trim(str_replace('_', ' ', $configuration))), $configuration);
 
-            return new JsonResponse(['html' => 'System configuration duplicated.']);
+            // TODO: add html output like to the others.
+
+            return new JsonResponse(['html' => 'System configuration duplicated.', 'id' => $id]);
         }
 
         $list = $configurations->user();

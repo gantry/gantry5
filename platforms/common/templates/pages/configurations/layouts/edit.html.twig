@@ -1,6 +1,13 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
+{% if configuration == 'default' and gantry.platform.no_base_layout %}
+
+<h2 class="page-title">{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}</h2>
+<p>{{ 'GANTRY5_PLATFORM_BASE_LAYOUT_DESC'|trans }}</p>
+
+{% else %}
+
 <div class="g-grid">
     <div class="g-block sidebar-block particles-sidebar-block">
         <h2 class="page-title">
@@ -74,4 +81,5 @@
     </div>
 
     <div id="trash" data-lm-eraseblock><div class="trash-zone">&times;</div><span>{{ 'GANTRY5_PLATFORM_DROP_DELETE'|trans }}</span></div>
+{% endif %}
 {% endblock %}

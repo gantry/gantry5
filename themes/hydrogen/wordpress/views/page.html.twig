@@ -1,18 +1,20 @@
 {% extends "partials/page.html.twig" %}
 {% set twigTemplate = 'page.html.twig' %}
+{% set scope = 'page' %}
 
 {% block content %}
 
-	<div class="content-wrapper">
-		<article class="post-type-{{post.post_type}}" id="post-{{post.ID}}">
-			<section class="article-content">
-				<h1 class="article-h1">{{post.title}}</h1>
+    {# Enable WordPress specific CSS styling #}
+    {% do gantry.theme.wordpress(true) %}
 
-				<div class="article-body">
-					{{post.content}}
-				</div>
-			</section>
-		</article>
-	</div> <!-- /content-wrapper -->
+    <div class="platform-content">
+        <div class="content-wrapper">
+            <section class="entry">
+
+                {% include ['partials/content-' ~ scope ~ '.html.twig', 'partials/content.html.twig'] %}
+
+            </section>
+        </div> <!-- /content-wrapper -->
+    </div>
 
 {% endblock %}

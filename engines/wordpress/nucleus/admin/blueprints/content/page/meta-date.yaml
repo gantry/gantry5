@@ -9,7 +9,7 @@ form:
       type: input.checkbox
       label: Display Date
       description: Display page publish date.
-      default: 1
+      default: 0
 
     link:
       type: input.checkbox

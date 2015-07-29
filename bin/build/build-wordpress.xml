@@ -41,6 +41,15 @@
                 <exclude name="**/*.js.map"/>
                 <exclude name="**/*.css.map"/>
             </fileset>
+            <fileset dir="${path.platforms}/wordpress/gantry5/admin">
+                <exclude name=".sass-cache/"/>
+                <exclude name="common/"/>
+                <exclude name="gulpfile.js"/>
+                <exclude name="package.json"/>
+                <exclude name="scss.sh"/>
+                <exclude name="**/*.js.map"/>
+                <exclude name="**/*.css.map"/>
+            </fileset>
         </copy>
 
         <!-- Subtasks for library, media, themes -->

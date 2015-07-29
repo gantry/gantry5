@@ -8,6 +8,8 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+defined( 'ABSPATH' ) or die;
+
 /*
  * The template for displaying Archive pages.
  *
@@ -23,15 +25,15 @@ $chooser = new \Gantry\Framework\OutlineChooser;
 $theme = $gantry[ 'theme' ];
 $theme->setLayout( $chooser->select() );
 
-$templates = array( 'archive.html.twig', 'index.html.twig' );
-
 $context = Timber::get_context();
+
+$templates = array( 'archive.html.twig', 'index.html.twig' );
 
 $context[ 'title' ] = 'Archive';
 if( is_day() ) {
-    $context[ 'title' ] = 'Archive: ' . get_the_date( 'D M Y' );
+    $context[ 'title' ] = 'Archive: ' . get_the_date( 'j F Y' );
 } else if( is_month() ) {
-    $context[ 'title' ] = 'Archive: ' . get_the_date( 'M Y' );
+    $context[ 'title' ] = 'Archive: ' . get_the_date( 'F Y' );
 } else if( is_year() ) {
     $context[ 'title' ] = 'Archive: ' . get_the_date( 'Y' );
 } else if( is_tag() ) {

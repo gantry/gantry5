@@ -172,6 +172,12 @@ class Document
     {
     }
 
+    public static function siteUrl()
+    {
+        return static::rootUri();
+    }
+
+
     public static function rootUri()
     {
         return '';
@@ -201,6 +207,11 @@ class Document
             return null;
         }
 
+        if ($url[0] === '#') {
+            // Handle fragment only.
+            return $url;
+        }
+
         $parts = self::parseUrl($url);
 
         if (!is_array($parts)) {
@@ -228,6 +239,10 @@ class Document
 
             // Attempt to find the resource (because of parse_url() we need to put host back to path).
             $path = $locator->findResource("{$scheme}://{$host}{$path}", false);
+
+            if ($path === false) {
+                return null;
+            }
 
         } elseif ($host || $port) {
             // If URL doesn't have scheme but has host or port, it is external.

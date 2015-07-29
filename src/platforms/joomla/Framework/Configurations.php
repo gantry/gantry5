@@ -100,6 +100,8 @@ class Configurations extends BaseConfigurations
         if ($error) {
             throw new \RuntimeException($error, 400);
         }
+
+        return $style->id;
     }
 
     public function duplicate($id)
@@ -118,6 +120,8 @@ class Configurations extends BaseConfigurations
         if (!$model->duplicate($pks)) {
             throw new \RuntimeException($model->getError(), 400);
         }
+
+        return null;
     }
 
     public function rename($id, $title)
@@ -140,6 +144,8 @@ class Configurations extends BaseConfigurations
         if (!$item->store()) {
             throw new \RuntimeException($item->getError(), 500);
         }
+
+        return $id;
     }
 
     public function delete($id)

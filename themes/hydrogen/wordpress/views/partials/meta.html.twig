@@ -1,33 +1,39 @@
 {% set twigTemplate = 'meta.html.twig' %}
 
-{% block meta %}
+<div class="entry-meta">
 
-    <div class="entry-meta">
+    {% block meta %}
 
         {# Begin Meta - Date #}
-        {% if gantry.config.get(scope ~ '.meta-date.enabled', '1') %}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') %}
             <div class="meta-date">
-                {% if gantry.config.get(scope ~ '.meta-date.prefix', '') is not empty %}
-                    <span class="meta-prefix">{{ gantry.config.get(scope ~ '.meta-date.prefix', '') ~ ' ' }}</span>
+                <i class="fa fa-clock-o"></i>
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-date.prefix', '') is not empty %}
+                    <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-date.prefix', '') ~ ' ' }}</span>
                 {% endif %}
 
-                {% if gantry.config.get(scope ~ '.meta-date.link', '1') %}
-                    <a href="{{ post.link }}" title="{{ post.title }}" class="meta-date-link"><span class="date">{{ post.date(gantry.config.get(scope ~ '.meta-date.format', 'j F Y')) }}</span></a>
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-date.link', '1') %}
+                    <a href="{{ post.link }}" title="{{ post.title }}" class="meta-date-link">
+                        <span class="date">{{ post.date(gantry.config.get('content.' ~ scope ~ '.meta-date.format', 'j F Y')) }}</span>
+                    </a>
                 {% else %}
-                    <span class="date">{{ post.date(gantry.config.get(scope ~ '.meta-date.format', 'j F Y')) }}</span>
+                    <span class="date">{{ post.date(gantry.config.get('content.' ~ scope ~ '.meta-date.format', 'j F Y')) }}</span>
                 {% endif %}
             </div>
         {% endif %}
         {# End Meta - Date #}
 
         {# Begin Meta - Author #}
-        {% if gantry.config.get(scope ~ '.meta-author.enabled', '1') %}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') %}
             <div class="meta-author">
-                {% if gantry.config.get(scope ~ '.meta-author.prefix', '') is not empty %}
-                    <span class="meta-prefix">{{ gantry.config.get(scope ~ '.meta-author.prefix', '') ~ ' ' }}</span>
+                <i class="fa fa-pencil"></i>
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-author.prefix', '') is not empty %}
+                    <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-author.prefix', '') ~ ' ' }}</span>
                 {% endif %}
 
-                {% if gantry.config.get(scope ~ '.meta-author.link', '1') %}
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-author.link', '1') %}
                     <a href="{{ post.author.link }}" title="{{ post.author.name }}" class="meta-author-link"><span class="author">{{ post.author.name }}</span></a>
                 {% else %}
                     <span class="author">{{ post.author.name }}</span>
@@ -37,10 +43,12 @@
         {# End Meta - Author #}
 
         {# Begin Meta - Comments #}
-        {% if gantry.config.get(scope ~ '.meta-comments.enabled', '1') %}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-comments.enabled', '1') %}
             <div class="meta-comments-count">
-                {% if gantry.config.get(scope ~ '.meta-comments.prefix', '') is not empty %}
-                    <span class="meta-prefix">{{ gantry.config.get(scope ~ '.meta-comments.prefix', '') ~ ' ' }}</span>
+                <i class="fa fa-comments"></i>
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-comments.prefix', '') is not empty %}
+                    <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-comments.prefix', '') ~ ' ' }}</span>
                 {% endif %}
 
                 {% if post.comment_count == '0' %}
@@ -51,7 +59,7 @@
                     {% set comment_count = post.comment_count ~ ' ' ~ __('Comments', 'g5_hydrogen') %}
                 {% endif %}
 
-                {% if gantry.config.get(scope ~ '.meta-comments.link', '1') %}
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-comments.link', '1') %}
                     <a href="{{ post.link ~ '#comments' }}" title="{{ post.comment_count }}" class="meta-comments-link"><span class="comment-count">{{ comment_count }}</span></a>
                 {% else %}
                     <span class="comments-count">{{ comment_count }}</span>
@@ -61,19 +69,22 @@
         {# End Meta - Comments #}
 
         {# Begin Meta - Categories #}
-        {% if gantry.config.get(scope ~ '.meta-categories.enabled', '1') and post.categories is not empty %}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-categories.enabled', '1') and post.categories is not empty %}
             <div class="meta-categories">
-                {% if gantry.config.get(scope ~ '.meta-categories.prefix', 'Categories:') is not empty %}
-                    <span class="meta-prefix">{{ gantry.config.get(scope ~ '.meta-categories.prefix', 'Categories:') ~ ' ' }}</span>
+                <i class="fa fa-folder-open"></i>
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-categories.prefix', 'Categories:') is not empty %}
+                    <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-categories.prefix', 'Categories:') ~ ' ' }}</span>
                 {% endif %}
 
                 <span class="categories">
                     {% for category in post.categories %}
-                        {% if gantry.config.get(scope ~ '.meta-categories.link', '1') %}
+                        {%- if gantry.config.get('content.' ~ scope ~ '.meta-categories.link', '1') -%}
                             <a href="{{ category.link }}" title="{{ category.name }}" class="meta-category-link"><span class="single-cat">{{ category.name }}</span></a>
-                        {% else %}
+                        {%- else -%}
                             <span class="single-cat">{{ category.name }}</span>
-                        {% endif %}
+                        {%- endif -%}
+                        {% if not loop.last %}{{ ','|trim }}{% endif %}
                     {% endfor %}
                 </span>
             </div>
@@ -81,25 +92,28 @@
         {# End Meta - Categories #}
 
         {# Begin Meta - Tags #}
-        {% if gantry.config.get(scope ~ '.meta-tags.enabled', '1') and post.tags is not empty %}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-tags.enabled', '1') and post.tags is not empty %}
             <div class="meta-tags">
-                {% if gantry.config.get(scope ~ '.meta-tags.prefix', 'Tags:') is not empty %}
-                    <span class="meta-prefix">{{ gantry.config.get(scope ~ '.meta-tags.prefix', 'Tags:') ~ ' ' }}</span>
+                <i class="fa fa-tags"></i>
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-tags.prefix', 'Tags:') is not empty %}
+                    <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-tags.prefix', 'Tags:') ~ ' ' }}</span>
                 {% endif %}
 
                 <span class="tags">
                     {% for tag in post.tags %}
-                        {% if gantry.config.get(scope ~ '.meta-tags.link', '1') %}
+                        {%- if gantry.config.get('content.' ~ scope ~ '.meta-tags.link', '1') -%}
                             <a href="{{ tag.link }}" title="{{ tag.name }}" class="meta-tag-link"><span class="single-tag">{{ tag.name }}</span></a>
-                        {% else %}
+                        {%- else -%}
                             <span class="single-tag">{{ tag.name }}</span>
-                        {% endif %}
+                        {%- endif -%}
+                        {% if not loop.last %}{{ ','|trim }}{% endif %}
                     {% endfor %}
                 </span>
             </div>
         {% endif %}
         {# End Meta - Tags #}
 
-    </div>
+    {% endblock %}
 
-{% endblock %}
+</div>
