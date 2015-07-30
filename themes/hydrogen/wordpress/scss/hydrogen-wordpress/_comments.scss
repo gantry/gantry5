@@ -3,9 +3,23 @@
         list-style: none;
         padding-left: 0;
 
+        ul.children {
+            list-style: none;
+        }
+
         li.comment {
-            background-color: #f2f2f2;
-            margin: 15px 0;
+            margin: 20px 0;
+
+            .comment-body {
+                background-color: #f2f2f2;
+            }
+
+            &.bypostauthor {
+                .comment-author {
+                    background-color: $showcase-background;
+                    color: $showcase-text-color;
+                }
+            }
 
             .comment-author {
                 height: 48px;
@@ -40,6 +54,10 @@
 
             .comment-content {
                 padding: 10px 15px;
+
+                .comment-reply {
+                    text-align: right;
+                }
             }
         }
     }

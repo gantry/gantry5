@@ -17,7 +17,7 @@
             <h3>{{ __('Comments', 'g5_hydrogen') }}</h3>
 
             <ol class="commentlist">
-                {{ function('wp_list_comments', {type: 'comment', callback: ['G5TemplateHelper', 'comments']}, post.comments) }}
+                {{ function('wp_list_comments', {type: 'comment', callback: ['G5TemplateHelper', 'comments']}, post.get_comments(0, 'wp', 'comment', 'approve', 'G5TimberComment')) }}
             </ol>
 
             <footer>

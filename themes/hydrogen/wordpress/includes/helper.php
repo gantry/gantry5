@@ -60,7 +60,7 @@ class G5TemplateHelper {
 
                     <?php comment_text(); ?>
 
-                    <?php comment_reply_link( array_merge( $args, ['before' => '<div class="reply">', 'after' => '</div>', 'depth' => $depth, 'max_depth' => $args[ 'max_depth' ] ] ) ); ?>
+                    <?php comment_reply_link( array_merge( $args, ['before' => '<div class="comment-reply">', 'after' => '</div>', 'depth' => $depth, 'max_depth' => $args[ 'max_depth' ] ] ) ); ?>
                 </section>
 
             </article>
