@@ -15,9 +15,11 @@
             }
 
             &.bypostauthor {
-                .comment-author {
-                    background-color: $showcase-background;
-                    color: $showcase-text-color;
+                > .comment-body {
+                    > .comment-author {
+                        background-color: $showcase-background;
+                        color: $showcase-text-color;
+                    }
                 }
             }
 
