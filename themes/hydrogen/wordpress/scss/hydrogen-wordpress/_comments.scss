@@ -1,0 +1,46 @@
+#comments {
+    ol.commentlist {
+        list-style: none;
+        padding-left: 0;
+
+        li.comment {
+            background-color: #f2f2f2;
+            margin: 15px 0;
+
+            .comment-author {
+                height: 48px;
+                line-height: 45px;
+                background-color: $navigation-background;
+                color: $navigation-text-color;
+
+                a {
+                    color: $navigation-text-color;
+                    &:hover {
+                        color: $showcase-background;
+                    }
+                }
+
+                .author-avatar {
+                    float: left;
+                    margin-right: 10px;
+                }
+
+                .author-meta {
+                    .author-name {
+                        font-size: 1.4rem;
+                        font-weight: bold;
+                        margin-right: 5px;
+                    }
+
+                    time, .edit-link {
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+
+            .comment-content {
+                padding: 10px 15px;
+            }
+        }
+    }
+}

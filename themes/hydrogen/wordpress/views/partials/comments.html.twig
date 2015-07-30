@@ -1,0 +1,40 @@
+{% set twigTemplate = 'comments.html.twig' %}
+
+{# TODO: add script for comments reply when thread comments are enabled #}
+{#{% set thread_comments = function('get_option', 'thread_comments') %}#}
+{#{% if thread_comments == '1' %}#}
+    {#{% block javascript %}#}
+        {#<script type="text/javascript" src="gantry-admin://test.js" />#}
+    {#{% endblock %}#}
+{#{% endif %}#}
+
+{% block comments %}
+
+    {# Begin Comments #}
+    <section id="comments" class="comments-area">
+
+        <div class="responses">
+            <h3>{{ __('Comments', 'g5_hydrogen') }}</h3>
+
+            <ol class="commentlist">
+                {{ function('wp_list_comments', {type: 'comment', callback: ['G5TemplateHelper', 'comments']}, post.comments) }}
+            </ol>
+
+            <footer>
+                <nav id="comments-nav">
+                    <div class="comments-previous">{{ function('previous_comments_link', __( '&larr; Older comments', 'g5_hydrogen')) }}</div>
+                    <div class="comments-next">{{ function('next_comments_link', __( 'Newer comments &rarr;', 'g5_hydrogen')) }}</div>
+                </nav>
+            </footer>
+        </div>
+
+        {% if post.comment_status == 'open' %}
+            <div class="respond">
+                {{ comment_form }}
+            </div>
+        {% endif %}
+
+    </section>
+    {# End Comments #}
+
+{% endblock %}

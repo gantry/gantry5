@@ -36,8 +36,15 @@
                 </section>
                 {# End Post Entries #}
 
+                {# Begin Pagination #}
+                {% if pagination.pages and pagination.pages|length > 1 %}
+                    {% include 'partials/pagination.html.twig' %}
+                {% endif %}
+                {# End Pagination #}
+
             {% else %}
 
+                {# No posts found #}
                 <div class="no-matches-notice">
                     <h1>
                         {{ __( 'Sorry, but there aren\'t any posts matching your query.', 'g5_hydrogen' ) }}
@@ -45,12 +52,6 @@
                 </div>
 
             {% endif %}
-
-            {# Begin Pagination #}
-            {% if pagination.pages and pagination.pages|length > 1 %}
-                {% include 'partials/pagination.html.twig' %}
-            {% endif %}
-            {# End Pagination #}
 
         </div>
     </div>

@@ -24,7 +24,6 @@ global $wp_query;
 
 $context = Timber::get_context();
 $context[ 'posts' ] = Timber::get_posts();
-$context[ 'pagination' ] = Timber::get_pagination();
 
 if( isset( $authordata ) ) {
 	$author = new TimberUser( $authordata->ID );
@@ -32,4 +31,4 @@ if( isset( $authordata ) ) {
 	$context[ 'title' ] = 'Author: ' . $author->name();
 }
 
-Timber::render( array( 'author.html.twig', 'archive.html.twig', 'index.html.twig' ), $context );
+Timber::render( [ 'author.html.twig', 'archive.html.twig', 'index.html.twig' ], $context );
