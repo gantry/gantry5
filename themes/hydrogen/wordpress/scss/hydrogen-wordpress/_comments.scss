@@ -1,4 +1,5 @@
 #comments {
+    // Comments List
     ol.commentlist {
         list-style: none;
         padding-left: 0;
@@ -64,6 +65,7 @@
         }
     }
 
+    // Comments Pagination
     #comments-nav {
         .comments-previous, .comments-next {
             width: 50%;
@@ -76,6 +78,7 @@
         }
     }
 
+    // Comments Reply Form
     .respond {
         margin-top: 20px;
     }
