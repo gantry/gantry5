@@ -5,6 +5,9 @@
 
 // Extend Timber context
 add_filter( 'timber_context', [ 'G5TemplateHelper', 'add_to_context' ] );
+// Add comments pagination link attributes
+add_filter( 'previous_comments_link_attributes', [ 'G5TemplateHelper', 'comments_pagination_attributes' ] );
+add_filter( 'next_comments_link_attributes', [ 'G5TemplateHelper', 'comments_pagination_attributes' ] );
 
 class G5TemplateHelper {
     /**
@@ -65,5 +68,10 @@ class G5TemplateHelper {
 
             </article>
         <?php
+    }
+
+    public static function comments_pagination_attributes( $attributes ) {
+        $attributes .= 'class="button"';
+        return $attributes;
     }
 }

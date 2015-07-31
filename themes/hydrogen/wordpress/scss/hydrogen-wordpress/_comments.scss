@@ -3,7 +3,7 @@
         list-style: none;
         padding-left: 0;
 
-        ul.children {
+        ol.children {
             list-style: none;
         }
 
@@ -62,5 +62,21 @@
                 }
             }
         }
+    }
+
+    #comments-nav {
+        .comments-previous, .comments-next {
+            width: 50%;
+            float: left;
+        }
+
+        .comments-next {
+            float: right;
+            text-align: right;
+        }
+    }
+
+    .respond {
+        margin-top: 20px;
     }
 }
