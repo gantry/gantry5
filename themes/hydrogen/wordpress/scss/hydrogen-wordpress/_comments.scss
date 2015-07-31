@@ -15,20 +15,16 @@
                 background-color: #f2f2f2;
             }
 
-            &.bypostauthor {
-                > .comment-body {
-                    > .comment-author {
-                        background-color: $showcase-background;
-                        color: $showcase-text-color;
-                    }
-                }
-            }
-
             .comment-author {
+                @include display(flex);
                 height: 48px;
                 line-height: 45px;
                 background-color: $navigation-background;
                 color: $navigation-text-color;
+
+                @include breakpoint(mobile-only) {
+                    overflow: hidden;
+                }
 
                 a {
                     color: $navigation-text-color;
@@ -38,19 +34,42 @@
                 }
 
                 .author-avatar {
-                    float: left;
+                    @include flex(0 48px);
                     margin-right: 10px;
                 }
 
                 .author-meta {
+                    @include flex(1);
+
                     .author-name {
                         font-size: 1.4rem;
                         font-weight: bold;
                         margin-right: 5px;
+
+                        @include breakpoint(mobile-only) {
+                            font-size: 0.8rem;
+                        }
                     }
 
                     time, .edit-link {
                         font-size: 0.8rem;
+
+                        @include breakpoint(mobile-only) {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            &.bypostauthor {
+                > .comment-body {
+                    > .comment-author {
+                        background-color: $showcase-background;
+                        color: $showcase-text-color;
+
+                        a:hover {
+                            color: $accent-color-1;
+                        }
                     }
                 }
             }
@@ -67,14 +86,16 @@
 
     // Comments Pagination
     #comments-nav {
-        .comments-previous, .comments-next {
-            width: 50%;
-            float: left;
-        }
+        @include display(flex);
 
         .comments-next {
-            float: right;
-            text-align: right;
+            margin-left: auto;
+        }
+
+        @include breakpoint(mobile-only) {
+            a.button {
+                font-size: 0.8rem;
+            }
         }
     }
 
