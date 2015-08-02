@@ -4,6 +4,7 @@
         list-style: none;
         padding-left: 0;
 
+        // Children Lists
         ol.children {
             list-style: none;
 
@@ -12,6 +13,7 @@
             }
         }
 
+        // Single Comment
         li.comment {
             margin: 20px 0;
 

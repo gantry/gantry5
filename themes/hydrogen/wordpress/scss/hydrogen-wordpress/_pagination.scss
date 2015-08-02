@@ -1,3 +1,13 @@
+// Pagination
 .pagination {
-    margin: 20px 0;
+    margin: 1.5rem 0;
+
+    .prev, .next, .page-numbers {
+        display: inline-block;
+        padding: 0.3rem 1rem;
+        margin-bottom: 10px;
+        background: #fafafa;
+        border: 1px solid $base-border-color;
+        border-radius: $core-border-radius;
+    }
 }
