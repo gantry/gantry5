@@ -8,9 +8,9 @@ form:
     categories.include:
       type: wordpress.categories
       label: Include Categories
-      description:
+      description: Blog view will display posts only from these categories
 
     categories.exclude:
       type: wordpress.categories
       label: Exclude Categories
-      description:
+      description: Exclude categories from the Blog query
