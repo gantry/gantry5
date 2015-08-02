@@ -124,14 +124,15 @@ class Theme extends Base\Theme
 
     public function add_to_context( array $context )
     {
+        $context = parent::add_to_context( $context );
+
+        $this->url = $context['site']->theme->link;
+
         if (!$this->user) {
             $this->user = new \TimberUser;
         }
 
-        $context = parent::add_to_context( $context );
-
-        $this->url = $context['site']->theme->link;
-        $context['my'] = $this->user;
+        $context['current_user'] = $this->user;
 
         return $context;
     }

@@ -57,9 +57,9 @@ class G5TemplateHelper {
 
                 <section class="comment-content">
                     <?php if ($comment->comment_approved == '0') : ?>
-                    <div class="notice">
-                        <p class="alert alert-info"><?php _e( 'Your comment is awaiting moderation.', 'g5_hydrogen' ); ?></p>
-                    </div>
+                        <div class="notice">
+                            <p class="alert-info"><?php _e( 'Your comment is awaiting moderation.', 'g5_hydrogen' ); ?></p>
+                        </div>
                     <?php endif; ?>
 
                     <?php comment_text(); ?>

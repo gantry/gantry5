@@ -25,6 +25,5 @@ $post = Timber::query_post();
 
 $context[ 'post' ] = $post;
 $context[ 'wp_title' ] .= ' - ' . $post->title();
-$context[ 'comment_form' ] = TimberHelper::get_comment_form();
 
 Timber::render( [ 'single-' . $post->ID . '.html.twig', 'single-' . $post->post_type . '.html.twig', 'single.html.twig' ], $context );

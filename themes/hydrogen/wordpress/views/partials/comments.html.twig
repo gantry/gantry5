@@ -31,7 +31,51 @@
 
         {% if post.comment_status == 'open' %}
             <div class="respond">
-                {{ comment_form }}
+                <h3>{{ function('comment_form_title', __('Leave a Reply', 'g5_hydrogen'), __('Leave a Reply to %s', 'g5_hydrogen')) }}</h3>
+                <p class="cancel-comment-reply">{{ function('cancel_comment_reply_link') }}</p>
+
+                {% if site.comment_registration and not is_user_logged_in %}
+
+                    <div class="notice">
+                        <p class="alert-info">{{ __('You must be <a href="%s">logged in</a> to post a comment.', 'g5_hydrogen')|format(function('wp_login_url', post.link)) }}</p>
+                    </div>
+
+                {% else %}
+
+                    {% set req = function('get_option', 'require_name_email') %}
+
+                    <form action="{{ site.url }}/wp-comments-post.php" method="post" id="commentform">
+
+                        {% if is_user_logged_in %}
+
+                            <p>{{ __('Logged in as <a href="%s/wp-admin/profile.php">%s</a>.', 'g5_hydrogen')|format(site.url, current_user.display_name) }} <a href="{{ function('wp_logout_url', post.link) }}" title="{{ __('Log out of this account', 'g5_hydrogen') }}">{{ __('Log out &raquo;', 'g5_hydrogen') }}</a></p>
+
+                        {% else %}
+
+                            <p>
+                                <input type="text" class="inputbox respond-author" name="author" id="author" placeholder="{{ __('Name', 'g5_hydrogen') }} {{ req ? __('(required)', 'g5_hydrogen') : '' }}" value="{{ comment_author|e }}" size="40" tabindex="1" aria-required='true' />
+                            </p>
+                            <p>
+                                <input type="text" class="inputbox respond-email" name="email" id="email" placeholder="{{ __('Email', 'g5_hydrogen') }} {{ req ? __('(required)', 'g5_hydrogen') : '' }}" value="{{ comment_author_email|e }}" size="40" tabindex="2" aria-required='true' />
+                            </p>
+                            <p>
+                                <input type="text" class="inputbox respond-website" name="url" id="url" placeholder="{{ __( 'Website', 'g5_hydrogen') }}" value="{{ comment_author_url|e }}" size="40" tabindex="3">
+                            </p>
+
+                        {% endif %}
+
+                        <p>
+                            <textarea  class="inputbox respond-textarea" name="comment" id="comment" placeholder="{{ __( 'Your comment goes here.', 'g5_hydrogen') }}" tabindex="4"></textarea>
+                        </p>
+
+                        <p id="allowed_tags" class="small"><strong>XHTML:</strong> {{ __('You can use these tags:', 'g5_hydrogen') }} <code>{{ function('allowed_tags') }}</code></p>
+                        <p><input name="submit" class="button" type="submit" id="submit" tabindex="5" value="{{ __('Submit Comment', 'g5_hydrogen')|e }}"></p>
+
+                        {{ function('comment_id_fields') }}
+                        {% do action('comment_form', post.id) %}
+                    </form>
+
+                {% endif %}
             </div>
         {% endif %}
 

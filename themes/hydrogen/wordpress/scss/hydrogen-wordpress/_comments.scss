@@ -6,6 +6,10 @@
 
         ol.children {
             list-style: none;
+
+            @include breakpoint(mobile-only) {
+                padding-left: 0.5rem;
+            }
         }
 
         li.comment {
@@ -47,7 +51,7 @@
                         margin-right: 5px;
 
                         @include breakpoint(mobile-only) {
-                            font-size: 0.8rem;
+                            font-size: 1rem;
                         }
                     }
 
@@ -102,5 +106,13 @@
     // Comments Reply Form
     .respond {
         margin-top: 20px;
+
+        .inputbox {
+            width: 100%;
+
+            &.respond-textarea {
+                min-height: 250px;
+            }
+        }
     }
 }
