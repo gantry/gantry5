@@ -51,9 +51,7 @@
             {# End Entry Content #}
 
             {# Begin Comments #}
-            {% if post.comments or post.comment_status == 'open' %}
-                {% include 'partials/comments.html.twig' %}
-            {% endif %}
+            {% include 'partials/comments.html.twig' %}
             {# End Comments #}
 
         {% else %}
