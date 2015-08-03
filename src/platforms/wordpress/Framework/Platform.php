@@ -18,9 +18,13 @@ class Platform extends BasePlatform {
 
     public function __construct(Container $container) {
         $this->content_dir = Folder::getRelativePath(WP_CONTENT_DIR);
+        $this->includes_dir = Folder::getRelativePath(WPINC);
         $this->gantry_dir = Folder::getRelativePath(GANTRY5_PATH);
 
         parent::__construct($container);
+
+        // Add wp-includes directory to the streams
+        $this->items['streams']['wp-includes'] = ['type' => 'ReadOnlyStream', 'prefixes' => ['' => $this->includes_dir]];
     }
 
     public function getCachePath() {

@@ -1,12 +1,10 @@
 {% set twigTemplate = 'comments.html.twig' %}
 
-{# TODO: add script for comments reply when thread comments are enabled #}
-{#{% set thread_comments = function('get_option', 'thread_comments') %}#}
-{#{% if thread_comments == '1' %}#}
-    {#{% block javascript %}#}
-        {#<script type="text/javascript" src="gantry-admin://test.js" />#}
-    {#{% endblock %}#}
-{#{% endif %}#}
+{% if function('get_option', 'thread_comments') == '1' %}
+    {% block javascript %}
+        <script type="text/javascript" src="{{ url('wp-includes://js/comment-reply.js') }}"></script>
+    {% endblock %}
+{% endif %}
 
 {% block comments %}
 
