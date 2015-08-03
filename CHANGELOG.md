@@ -13,6 +13,7 @@
     * Remove layout tab from base outline (#628)
     * Trying to get property of non-object when accessing page without menu item (#632)
     * Fixed layout manager particle titles overflowing boxes in smaller sizes (#637)
+    * Normalized height of standard select element to match other admin form elements
 
 # 5.0.1
 ## 07/16/2015

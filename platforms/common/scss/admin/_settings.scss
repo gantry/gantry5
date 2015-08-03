@@ -151,7 +151,7 @@
         vertical-align: inherit;
     }
 
-    input, textarea {
+    input, textarea, select {
         padding: 6px 12px;
         border: 1px solid $medium-gray;
         margin: 0;
@@ -165,6 +165,7 @@
     select {
         margin: 0 0 10px;
         display: inline-block;
+        height: 38px;
     }
 
     input:not(.settings-param-toggle):not([type="checkbox"]), select, .collection-list ul, .colorpicker, .multi.selectize-control {

@@ -2477,7 +2477,7 @@ body.g-prime {
   font-size: inherit;
   vertical-align: inherit;
 }
-#g5-container .settings-block input, #g5-container .settings-block textarea {
+#g5-container .settings-block input, #g5-container .settings-block textarea, #g5-container .settings-block select {
   padding: 6px 12px;
   border: 1px solid #ddd;
   margin: 0;
@@ -2490,6 +2490,7 @@ body.g-prime {
 #g5-container .settings-block select {
   margin: 0 0 10px;
   display: inline-block;
+  height: 38px;
 }
 #g5-container .settings-block input:not(.settings-param-toggle):not([type="checkbox"]), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .colorpicker, #g5-container .settings-block .multi.selectize-control {
   width: 250px;
