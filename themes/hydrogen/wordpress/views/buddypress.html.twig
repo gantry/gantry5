@@ -1,6 +1,6 @@
 {% extends "partials/page.html.twig" %}
-{% set twigTemplate = 'bbpress.html.twig' %}
-{% set scope = 'bbpress' %}
+{% set twigTemplate = 'buddypress.html.twig' %}
+{% set scope = 'buddypress' %}
 
 {% block content %}
 
@@ -8,7 +8,7 @@
     {% do gantry.theme.wordpress(true) %}
 
     <div class="platform-content">
-        <div class="bbpress-content">
+        <div class="buddypress-content">
 
             <article class="g-content post-type-{{ post.post_type }} {{ post.class }}" id="content-{{ post.ID }}">
                 {{ content }}
