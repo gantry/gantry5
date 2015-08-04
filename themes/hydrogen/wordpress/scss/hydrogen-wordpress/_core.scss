@@ -1,8 +1,18 @@
 // Sticky Posts
-.sticky {
-    background-color: #f2f2f2;
+.platform-content {
+    .sticky {
+        background-color: #f2f2f2;
 
-    .entry-title {
-        margin-top: 0;
+        .entry-title {
+            margin-top: 0;
+        }
+    }
+}
+
+// Search Form
+.search-form {
+    input.search-field {
+        height: 40px;
+        padding-top: 3px;
     }
 }
