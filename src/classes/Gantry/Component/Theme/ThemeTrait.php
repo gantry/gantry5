@@ -96,14 +96,20 @@ trait ThemeTrait
     }
 
     /**
-     * Set current layout.
+     * Set layout to be used.
      *
      * @param string $name
+     * @param bool $force
      * @return $this
      */
-    public function setLayout($name = null)
+    public function setLayout($name = null, $force = false)
     {
         $gantry = static::gantry();
+
+        // Force new layout to be set.
+        if ($force) {
+            unset($gantry['configuration']);
+        }
 
         // Set default name only if configuration has not been set before.
         if ($name === null && !isset($gantry['configuration'])) {
