@@ -7,6 +7,7 @@
         &.gallery-columns-#{$i} {
             .gallery-item {
                 @include flex(0 100% / $i);
+                width: 100% / $i;
             }
         }
     }
