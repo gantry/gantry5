@@ -41,6 +41,7 @@
 
                 .author-avatar {
                     @include flex(0 48px);
+                    width: 48px;
                     margin-right: 10px;
                 }
 
