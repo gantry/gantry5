@@ -199,6 +199,16 @@ a img.aligncenter {
   flex: 0 11.11111%;
   width: 11.11111%;
 }
+.gallery.gallery-columns-10 .gallery-item {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 10%;
+  -moz-flex: 0 10%;
+  -ms-flex: 0 10%;
+  flex: 0 10%;
+  width: 10%;
+}
 .gallery .gallery-item {
   margin: 1rem 0;
   text-align: center;

@@ -3,7 +3,7 @@
     @include display(flex);
     @include flex-flow(row wrap);
 
-    @for $i from 1 through 9 {
+    @for $i from 1 through 10 {
         &.gallery-columns-#{$i} {
             .gallery-item {
                 @include flex(0 100% / $i);

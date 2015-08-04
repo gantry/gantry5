@@ -18,12 +18,6 @@ defined( 'ABSPATH' ) or die;
  * E.g., it puts together the home page when no home.php file exists
  */
 
-$chooser = new \Gantry\Framework\OutlineChooser;
-
-/** @var \Gantry\Framework\Theme $theme */
-$theme = $gantry[ 'theme' ];
-$theme->setLayout( $chooser->select() );
-
 if ( !class_exists( 'Timber' ) ) {
 	_e('Timber not activated. Make sure you activate the plugin in <a href="/wp-admin/plugins.php#timber">/wp-admin/plugins.php</a>', 'g5_hydrogen');
 	return;
@@ -31,7 +25,6 @@ if ( !class_exists( 'Timber' ) ) {
 
 $context = Timber::get_context();
 $context[ 'posts' ] = Timber::get_posts();
-$context[ 'pagination' ] = Timber::get_pagination();
 
 $templates = [ 'index.html.twig' ];
 

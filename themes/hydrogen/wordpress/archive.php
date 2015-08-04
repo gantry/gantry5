@@ -19,12 +19,6 @@ defined( 'ABSPATH' ) or die;
  * Learn more: http://codex.wordpress.org/Template_Hierarchy
  */
 
-$chooser = new \Gantry\Framework\OutlineChooser;
-
-/** @var \Gantry\Framework\Theme $theme */
-$theme = $gantry[ 'theme' ];
-$theme->setLayout( $chooser->select() );
-
 $context = Timber::get_context();
 
 $templates = [ 'archive.html.twig', 'index.html.twig' ];
@@ -47,6 +41,5 @@ if( is_day() ) {
 }
 
 $context[ 'posts' ] = Timber::get_posts();
-$context[ 'pagination' ] = Timber::get_pagination();
 
 Timber::render( $templates, $context );

@@ -14,17 +14,10 @@ defined( 'ABSPATH' ) or die;
  * The template for displaying Author Archive pages
  */
 
-$chooser = new \Gantry\Framework\OutlineChooser;
-
-/** @var \Gantry\Framework\Theme $theme */
-$theme = $gantry[ 'theme' ];
-$theme->setLayout( $chooser->select() );
-
 global $wp_query;
 
 $context = Timber::get_context();
 $context[ 'posts' ] = Timber::get_posts();
-$context[ 'pagination' ] = Timber::get_pagination();
 
 if( isset( $authordata ) ) {
 	$author = new TimberUser( $authordata->ID );

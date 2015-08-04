@@ -13,7 +13,7 @@ class Theme extends Base\Theme
     {
         parent::__construct($path, $name);
 
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
@@ -28,7 +28,7 @@ class Theme extends Base\Theme
         add_theme_support( 'widgets' );
         add_filter( 'timber_context', [ $this, 'add_to_context' ] );
         add_filter( 'get_twig', [ $this, 'add_to_twig' ] );
-        add_action( 'parse_query', [ $this, 'set_theme_layout' ] );
+        add_action( 'template_redirect', [ $this, 'set_template_layout' ], -10000 );
         add_action( 'init', [ $this, 'register_post_types' ] );
         add_action( 'init', [ $this, 'register_taxonomies' ] );
         add_action( 'widgets_init', [ $this, 'widgets_init' ] );
@@ -44,7 +44,7 @@ class Theme extends Base\Theme
     public function renderer()
     {
         if (!$this->renderer) {
-            $gantry = \Gantry\Framework\Gantry::instance();
+            $gantry = Gantry::instance();
 
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
@@ -81,13 +81,13 @@ class Theme extends Base\Theme
         return $this->renderer()->render($file, $context);
     }
 
-    public function set_theme_layout()
+    public function set_template_layout()
     {
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = Gantry::instance();
 
-        $chooser = new \Gantry\Framework\OutlineChooser;
+        $chooser = new OutlineChooser;
 
-        /** @var \Gantry\Framework\Theme $theme */
+        /** @var Theme $theme */
         $theme = $gantry[ 'theme' ];
         $theme->setLayout( $chooser->select() );
     }
