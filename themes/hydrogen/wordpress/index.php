@@ -29,26 +29,9 @@ if ( !class_exists( 'Timber' ) ) {
 	return;
 }
 
-/** Include or exclude categories in the query */
-$query = '';
-
-$cat_include = $gantry[ 'config' ]->get( 'content.blog.query.categories.include' );
-$cat_exclude = $gantry[ 'config' ]->get( 'content.blog.query.categories.exclude' );
-
-if( $cat_include != '' ) {
-    $categories = str_replace( ' ', ',', $cat_include );
-    $query = 'cat=' . $categories;
-} elseif( $cat_exclude != '' ) {
-    $exclude = explode( ' ', $cat_exclude );
-    $categories = [];
-    foreach( $exclude as $category ) {
-        $categories[] = '-' . $category;
-    }
-    $query = 'cat=' . implode( ',', $categories );
-}
-
 $context = Timber::get_context();
-$context[ 'posts' ] = Timber::get_posts( $query );
+$context[ 'posts' ] = Timber::get_posts();
+$context[ 'pagination' ] = Timber::get_pagination();
 
 $templates = [ 'index.html.twig' ];
 

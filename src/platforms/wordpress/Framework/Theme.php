@@ -28,6 +28,7 @@ class Theme extends Base\Theme
         add_theme_support( 'widgets' );
         add_filter( 'timber_context', [ $this, 'add_to_context' ] );
         add_filter( 'get_twig', [ $this, 'add_to_twig' ] );
+        add_action( 'parse_query', [ $this, 'set_theme_layout' ] );
         add_action( 'init', [ $this, 'register_post_types' ] );
         add_action( 'init', [ $this, 'register_taxonomies' ] );
         add_action( 'widgets_init', [ $this, 'widgets_init' ] );
@@ -78,6 +79,17 @@ class Theme extends Base\Theme
         $context = $this->add_to_context($context);
 
         return $this->renderer()->render($file, $context);
+    }
+
+    public function set_theme_layout()
+    {
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        $chooser = new \Gantry\Framework\OutlineChooser;
+
+        /** @var \Gantry\Framework\Theme $theme */
+        $theme = $gantry[ 'theme' ];
+        $theme->setLayout( $chooser->select() );
     }
 
     public function widgets_init()

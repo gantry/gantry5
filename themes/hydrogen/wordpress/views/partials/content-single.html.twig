@@ -43,6 +43,8 @@
                 {{ post.paged_content }}
                 {# End Page Content #}
 
+                {{ function( 'wp_link_pages', { 'before': '<div class="page-links" itemprop="pagination">' . __( 'Pages:', 'g5_hydrogen' ), 'after': '</div>' }) }}
+
                 {# Begin Edit Link #}
                 {{ function('edit_post_link', __('Edit', 'g5_hydrogen'), '<span class="edit-link">', '</span>') }}
                 {# End Edit Link #}
