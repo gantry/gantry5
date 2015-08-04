@@ -33,7 +33,7 @@ class TwigExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'UrlExtension';
+        return 'GantryTwig';
     }
 
     /**
@@ -43,7 +43,7 @@ class TwigExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
             new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
             new \Twig_SimpleFilter('html', [$this, 'htmlFilter']),
             new \Twig_SimpleFilter('url', [$this, 'urlFunc']),
@@ -51,7 +51,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('repeat', [$this, 'repeatFilter']),
             new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode'),
-        );
+        ];
     }
 
     /**
@@ -61,14 +61,14 @@ class TwigExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new \Twig_SimpleFunction('nested', [$this, 'nestedFunc']),
             new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
             new \Twig_SimpleFunction('parse_assets', [$this, 'parseAssetsFunc']),
             new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc']),
             new \Twig_SimpleFunction('get_cookie', [$this, 'getCookie']),
             new \Twig_SimpleFunction('preg_match', [$this, 'pregMatch']),
-        );
+        ];
     }
 
     /**
@@ -76,7 +76,12 @@ class TwigExtension extends \Twig_Extension
      */
     public function getTokenParsers()
     {
-        return array(new TokenParserTry());
+        return [
+            new TokenParserAssets(),
+            new TokenParserScripts(),
+            new TokenParserStyles(),
+            new TokenParserTry(),
+        ];
     }
 
     /**
@@ -228,7 +233,7 @@ class TwigExtension extends \Twig_Extension
             foreach ($element->attributes as $attribute) {
                 $result[$attribute->name] = $attribute->value;
             }
-            $success = Document::addHeaderTag($result, $location, $priority);
+            $success = Document::addHeaderTag($result, $location, (int) $priority);
             if (!$success) {
                 $raw[] = $doc->saveHTML($element);
             }

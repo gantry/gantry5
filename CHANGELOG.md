@@ -4,6 +4,7 @@
 1. [](#new)
     * New Menu Dropdown option "Disabled" that prevents sublevels from being rendered but still available (thanks @JoomFX)
     * Add Twig function preg_match() (#627)
+    * Add support for new twig tags: assets, scripts and styles
 2. [](#improved)
     * Available Themes: Open Preview in a new window
 3. [](#bugfix)

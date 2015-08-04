@@ -1,5 +1,4 @@
-{% set headerContent %}
-
+{% assets with { priority: 10 } %}
     {% block stylesheets %}
     {% endblock %}
 
@@ -12,16 +11,10 @@
             var GANTRY_PLATFORM = 'magento';
         </script>
     {% endblock %}
-
-{% endset %}
-
-{% do parse_assets(headerContent) %}
-
+{% endassets -%}
 
 {% block content %}
-
 {% endblock %}
 
 {% block footer_section %}
-
 {% endblock %}

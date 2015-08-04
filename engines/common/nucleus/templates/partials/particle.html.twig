@@ -1,16 +1,15 @@
-{% set headerContent %}
-{% block stylesheets %}
-{% endblock %}
-{% block javascript %}
-{% endblock %}
-{% endset %}
-{% do parse_assets(headerContent) %}
+{% assets %}
+    {% block stylesheets %}
+    {% endblock %}
 
-{% set footerContent %}
-{% block javascript_footer %}
-{% endblock %}
-{% endset %}
-{% do parse_assets(footerContent, 'footer') %}
+    {% block javascript %}
+    {% endblock %}
+{% endassets -%}
+
+{% assets in 'footer' %}
+    {% block javascript_footer %}
+    {% endblock %}
+{% endassets -%}
 
 {% block particle %}
 {% endblock %}
