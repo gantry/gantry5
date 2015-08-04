@@ -74,7 +74,11 @@ class Menu extends HtmlController
     public function item($id = null)
     {
         // Load the menu.
-        $resource = $this->loadResource($id, $this->build($this->request->post));
+        try {
+            $resource = $this->loadResource($id, $this->build($this->request->post));
+        } catch (\Exception $e) {
+            return $this->container['admin.theme']->render('@gantry-admin/pages/menu/menu.html.twig', $this->params);
+        }
 
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
