@@ -16,6 +16,7 @@
     * Fixed layout manager particle titles overflowing boxes in smaller sizes (#637)
     * Normalized height of standard select element to match other admin form elements
     * Fixed label alignment in Joomla popup email form (#665)
+    * Fixed available theme notice text problems when no themes are installed (#655)
 
 # 5.0.1
 ## 07/16/2015

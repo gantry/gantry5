@@ -1698,6 +1698,14 @@ body.g-prime {
   -o-transform: translateZ(0);
   transform: translateZ(0);
 }
+#g5-container .themes.cards-wrapper {
+  -webkit-column-count: initial;
+  -moz-column-count: initial;
+  column-count: initial;
+  -webkit-column-gap: initial;
+  -moz-column-gap: initial;
+  column-gap: initial;
+}
 #g5-container .card {
   display: inline-block;
   background: #fff;
