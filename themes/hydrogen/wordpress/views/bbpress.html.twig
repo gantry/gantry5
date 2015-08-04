@@ -1,0 +1,18 @@
+{% extends "partials/page.html.twig" %}
+{% set twigTemplate = 'bbpress.html.twig' %}
+{% set scope = 'bbpress' %}
+
+{% block content %}
+
+    {# Enable WordPress specific CSS styling #}
+    {% do gantry.theme.wordpress(true) %}
+
+    <div class="platform-content">
+        <div class="bbpress-content">
+
+            {{ content }}
+
+        </div>
+    </div>
+
+{% endblock %}

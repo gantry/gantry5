@@ -117,5 +117,9 @@
                 min-height: 250px;
             }
         }
+
+        .button:focus {
+            outline: none;
+        }
     }
 }
