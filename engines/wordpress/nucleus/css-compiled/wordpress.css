@@ -97,6 +97,107 @@ a img.aligncenter {
   /* Above WP toolbar. */
 }
 
+.gallery {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  -moz-flex-flow: row wrap;
+  flex-flow: row wrap;
+}
+.gallery.gallery-columns-1 .gallery-item {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 100%;
+  -moz-flex: 0 100%;
+  -ms-flex: 0 100%;
+  flex: 0 100%;
+}
+.gallery.gallery-columns-2 .gallery-item {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 50%;
+  -moz-flex: 0 50%;
+  -ms-flex: 0 50%;
+  flex: 0 50%;
+}
+.gallery.gallery-columns-3 .gallery-item {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 33.33333%;
+  -moz-flex: 0 33.33333%;
+  -ms-flex: 0 33.33333%;
+  flex: 0 33.33333%;
+}
+.gallery.gallery-columns-4 .gallery-item {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 25%;
+  -moz-flex: 0 25%;
+  -ms-flex: 0 25%;
+  flex: 0 25%;
+}
+.gallery.gallery-columns-5 .gallery-item {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 20%;
+  -moz-flex: 0 20%;
+  -ms-flex: 0 20%;
+  flex: 0 20%;
+}
+.gallery.gallery-columns-6 .gallery-item {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 16.66667%;
+  -moz-flex: 0 16.66667%;
+  -ms-flex: 0 16.66667%;
+  flex: 0 16.66667%;
+}
+.gallery.gallery-columns-7 .gallery-item {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 14.28571%;
+  -moz-flex: 0 14.28571%;
+  -ms-flex: 0 14.28571%;
+  flex: 0 14.28571%;
+}
+.gallery.gallery-columns-8 .gallery-item {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 12.5%;
+  -moz-flex: 0 12.5%;
+  -ms-flex: 0 12.5%;
+  flex: 0 12.5%;
+}
+.gallery.gallery-columns-9 .gallery-item {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 11.11111%;
+  -moz-flex: 0 11.11111%;
+  -ms-flex: 0 11.11111%;
+  flex: 0 11.11111%;
+}
+.gallery .gallery-item {
+  margin: 1rem 0;
+  text-align: center;
+}
+.gallery .gallery-caption {
+  margin-left: 0;
+}
+
 
 
 /*# sourceMappingURL=wordpress.css.map */
