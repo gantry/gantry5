@@ -20,31 +20,9 @@ class G5ThemeHelper {
      */
     public static function add_to_context( array $context ) {
         $context[ 'is_user_logged_in' ] = is_user_logged_in();
+        $context[ 'pagination' ] = Timber::get_pagination();
 
         return $context;
-    }
-
-    public static function blog_posts_categories( $query ) {
-        $gantry = \Gantry\Framework\Gantry::instance();
-
-        if ( isset( $gantry[ 'configuration' ] ) && $query->is_home() && $query->is_main_query() ) {
-            $categories = '';
-            $cat_include = $gantry[ 'config' ]->get( 'content.blog.query.categories.include' );
-            $cat_exclude = $gantry[ 'config' ]->get( 'content.blog.query.categories.exclude' );
-
-            if( $cat_include != '' ) {
-                $categories = str_replace( ' ', ',', $cat_include );
-            } elseif( $cat_exclude != '' ) {
-                $exclude = explode( ' ', $cat_exclude );
-                $new_cats = [];
-                foreach( $exclude as $category ) {
-                    $new_cats[] = '-' . $category;
-                }
-                $categories = implode( ',', $new_cats );
-            }
-
-            $query->set( 'cat', $categories );
-        }
     }
 
     /**
