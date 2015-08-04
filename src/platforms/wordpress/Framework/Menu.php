@@ -99,7 +99,7 @@ class Menu extends AbstractMenu
         }
 
         foreach ($menuItems as $menuItem) {
-            $menuItem->level = count($tree) + 1;
+            $menuItem->level = count($tree);
             $menuItem->tree = array_merge($tree, [$menuItem->id]);
             $menuItem->path = implode('/', $menuItem->tree);
             $list[] = $menuItem;
