@@ -14,12 +14,6 @@ defined( 'ABSPATH' ) or die;
  * The Template for displaying all single posts
  */
 
-$chooser = new \Gantry\Framework\OutlineChooser;
-
-/** @var \Gantry\Framework\Theme $theme */
-$theme = $gantry[ 'theme' ];
-$theme->setLayout( $chooser->select() );
-
 $context = Timber::get_context();
 $post = Timber::query_post();
 

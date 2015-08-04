@@ -6,9 +6,6 @@
 // Extend Timber context
 add_filter( 'timber_context', [ 'G5ThemeHelper', 'add_to_context' ] );
 
-// Respect Blog include/exclude categories set in theme admin
-add_action( 'pre_get_posts', [ 'G5ThemeHelper', 'blog_posts_categories' ] );
-
 // Add comments pagination link attributes
 add_filter( 'previous_comments_link_attributes', [ 'G5ThemeHelper', 'comments_pagination_attributes' ] );
 add_filter( 'next_comments_link_attributes', [ 'G5ThemeHelper', 'comments_pagination_attributes' ] );
@@ -28,25 +25,25 @@ class G5ThemeHelper {
     }
 
     public static function blog_posts_categories( $query ) {
-        if ( $query->is_home() && $query->is_main_query() ) {
-//            $gantry = Gantry\Framework\Gantry::instance();
-//
-//            $categories = '';
-//            $cat_include = $gantry[ 'config' ]->get( 'content.blog.query.categories.include' );
-//            $cat_exclude = $gantry[ 'config' ]->get( 'content.blog.query.categories.exclude' );
-//
-//            if( $cat_include != '' ) {
-//                $categories = str_replace( ' ', ',', $cat_include );
-//            } elseif( $cat_exclude != '' ) {
-//                $exclude = explode( ' ', $cat_exclude );
-//                $new_cats = [];
-//                foreach( $exclude as $category ) {
-//                    $new_cats[] = '-' . $category;
-//                }
-//                $categories = implode( ',', $new_cats );
-//            }
-//
-//            $query->set( 'cat', '4' );
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        if ( isset( $gantry[ 'configuration' ] ) && $query->is_home() && $query->is_main_query() ) {
+            $categories = '';
+            $cat_include = $gantry[ 'config' ]->get( 'content.blog.query.categories.include' );
+            $cat_exclude = $gantry[ 'config' ]->get( 'content.blog.query.categories.exclude' );
+
+            if( $cat_include != '' ) {
+                $categories = str_replace( ' ', ',', $cat_include );
+            } elseif( $cat_exclude != '' ) {
+                $exclude = explode( ' ', $cat_exclude );
+                $new_cats = [];
+                foreach( $exclude as $category ) {
+                    $new_cats[] = '-' . $category;
+                }
+                $categories = implode( ',', $new_cats );
+            }
+
+            $query->set( 'cat', $categories );
         }
     }
 
