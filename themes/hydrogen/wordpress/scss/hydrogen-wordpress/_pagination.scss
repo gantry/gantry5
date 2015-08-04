@@ -1,5 +1,5 @@
 // Pagination
-.pagination {
+.pagination, .page-links {
     margin: 1.5rem 0;
 
     .prev, .next, .page-numbers {
@@ -10,4 +10,8 @@
         border: 1px solid $base-border-color;
         border-radius: $core-border-radius;
     }
+}
+
+.page-links {
+    text-align: center;
 }
