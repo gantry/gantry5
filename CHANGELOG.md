@@ -7,6 +7,7 @@
     * Add support for new twig tags: assets, scripts and styles
 2. [](#improved)
     * Available Themes: Open Preview in a new window
+    * Updated Google Fonts library (+2 fonts)
 3. [](#bugfix)
     * Administrator responsive issues in Settings Panel (#603)
     * Anchor links should not be modified (#624)
@@ -18,6 +19,7 @@
     * Fixed label alignment in Joomla popup email form (#665)
     * Fixed available theme notice text problems when no themes are installed (#655)
     * Enable date particle, analytics and assets atoms by default to avoid confusion (#330)
+    * Fixed collapse of cards in Assignments when filtering with a non-matching word (#672)
 
 # 5.0.1
 ## 07/16/2015
