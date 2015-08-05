@@ -12283,9 +12283,19 @@ domready(function() {
     // Update NONCE if any
     if (GANTRY_AJAX_NONCE) {
         var currentURI = History.getPageUrl(),
-            currentNonce = getParam(currentURI, '_wpnonce');
+            currentNonce = getParam(currentURI, '_wpnonce'),
+            currentView = getParam(currentURI, 'view');
+
+        // hack to inject the default view in WP in case it's missing
+        if (!currentView) {
+            currentURI = setParam(currentURI, 'view', 'configurations/default/styles');
+            History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
+        }
+
+        // refresh nonce
         if (currentNonce !== GANTRY_AJAX_NONCE) {
-            History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, setParam(currentURI, '_wpnonce', GANTRY_AJAX_NONCE));
+            currentURI = setParam(currentURI, '_wpnonce', GANTRY_AJAX_NONCE);
+            History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
             window.HHH = History;
         }
     }
