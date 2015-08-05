@@ -32,6 +32,13 @@ class Theme extends Base\Theme
         add_action( 'init', [ $this, 'register_post_types' ] );
         add_action( 'init', [ $this, 'register_taxonomies' ] );
         add_action( 'widgets_init', [ $this, 'widgets_init' ] );
+        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+        add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+        add_action( 'wp_head', [ $this, 'print_styles' ], 20 );
+        add_action( 'wp_head', [ $this, 'print_scripts' ], 30 );
+        add_action( 'admin_print_styles', [ $this, 'print_styles' ], 200 );
+        add_action( 'admin_print_scripts', [ $this, 'print_scripts' ], 200 );
+        add_action( 'wp_footer', [ $this, 'print_inline_scripts' ] );
     }
 
     public function debug()
@@ -132,6 +139,35 @@ class Theme extends Base\Theme
     public function register_taxonomies()
     {
         //this is where you can register custom taxonomies
+    }
+
+    public function enqueue_scripts()
+    {
+        Document::registerAssets();
+    }
+
+    public function print_styles()
+    {
+        $styles = Gantry::instance()->styles();
+        if ( $styles ) {
+            echo implode( "\n    ", $styles ) . "\n";
+        }
+    }
+
+    public function print_scripts()
+    {
+        $scripts = Gantry::instance()->scripts();
+        if ( $scripts ) {
+            echo implode( "\n    ", $scripts ) . "\n";
+        }
+    }
+
+    public function print_inline_scripts()
+    {
+        $scripts = Gantry::instance()->scripts('footer');
+        if ( $scripts ) {
+            echo implode( "\n    ", $scripts ) . "\n";
+        }
     }
 
     public function add_to_context( array $context )

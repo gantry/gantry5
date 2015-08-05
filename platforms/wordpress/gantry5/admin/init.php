@@ -6,8 +6,6 @@ add_action( 'admin_init', 'gantry5_register_admin_settings' );
 add_filter( 'plugin_action_links', 'gantry5_modify_plugin_action_links', 10, 2 );
 add_filter( 'network_admin_plugin_action_links', 'gantry5_modify_plugin_action_links', 10, 2 );
 add_action( 'admin_enqueue_scripts', 'gantry5_admin_scripts' );
-add_action( 'admin_print_styles', 'gantry5_admin_print_styles', 200 );
-add_action( 'admin_print_scripts', 'gantry5_admin_print_scripts', 200 );
 add_action( 'wp_ajax_gantry5', 'gantry5_layout_manager' );
 
 // Check if Timber is active before displaying sidebar button
@@ -42,18 +40,6 @@ function gantry5_admin_start_buffer() {
 function gantry5_admin_scripts() {
     if( isset( $_GET['page'] ) && $_GET['page'] == 'layout-manager' ) {
         gantry5_layout_manager();
-    }
-}
-function gantry5_admin_print_styles() {
-    $styles = \Gantry\Framework\Gantry::instance()->styles();
-    if ( $styles ) {
-        echo implode( "\n", $styles ) . "\n";
-    }
-}
-function gantry5_admin_print_scripts() {
-    $scripts = \Gantry\Framework\Gantry::instance()->scripts();
-    if ( $scripts ) {
-        echo implode( "\n", $scripts ) . "\n";
     }
 }
 

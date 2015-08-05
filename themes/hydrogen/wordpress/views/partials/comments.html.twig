@@ -1,9 +1,9 @@
 {% set twigTemplate = 'comments.html.twig' %}
 
 {% if function('get_option', 'thread_comments') == '1' %}
-    {% block javascript %}
-        <script type="text/javascript" src="{{ url('wp-includes://js/comment-reply.js') }}"></script>
-    {% endblock %}
+    {% scripts %}
+        <script type="text/javascript" src="{{ url('wp-includes://js/comment-reply.min.js') }}"></script>
+    {% endscripts %}
 {% endif %}
 
 {% block comments %}

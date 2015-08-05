@@ -7,7 +7,7 @@ use Gantry\Framework\Base\Document as BaseDocument;
 class Document extends BaseDocument
 {
     public static $wp_styles = [];
-    public static $wp_scripts = [];
+    public static $wp_scripts = ['head' => [], 'footer' => []];
 
     public static function registerAssets()
     {
@@ -16,7 +16,7 @@ class Document extends BaseDocument
         static::registerScripts('footer');
     }
 
-    protected static function registerStyles()
+    public static function registerStyles()
     {
         if (empty(self::$styles['head'])) {
             return;
@@ -29,16 +29,12 @@ class Document extends BaseDocument
                 switch ($style[':type']) {
                     case 'file':
                         $href = preg_replace('/(\?.*)$/', '', $style['href']);
-                        \wp_register_style(basename($href, '.css'), $href, array(), false, $style['media']);
-                        \wp_enqueue_style(basename($href, '.css'));
+                        $name = basename($href, '.css');
+                        \wp_enqueue_style($name, $href, array(), false, $style['media']);
                         break;
                     case 'inline':
-                        if (is_admin()) {
-                            $type = !empty($style['type']) ? $style['type'] : 'text/css';
-                            self::$wp_styles[] = "<style type=\"{$type}\">{$style['content']}</style>";
-                        } else {
-                            \wp_add_inline_style( md5($style['content']), $style['content'] );
-                        }
+                        $type = !empty($style['type']) ? $style['type'] : 'text/css';
+                        self::$wp_styles[] = "<style type=\"{$type}\">{$style['content']}</style>";
                         break;
                 }
             }
@@ -47,7 +43,7 @@ class Document extends BaseDocument
         self::$styles['head'] = [];
     }
 
-    protected static function registerScripts($pos)
+    public static function registerScripts($pos)
     {
         if (empty(self::$scripts[$pos])) {
             return;
@@ -61,16 +57,12 @@ class Document extends BaseDocument
                 switch ($script[':type']) {
                     case 'file':
                         $src = preg_replace('/(\?.*)$/', '', $script['src']);
-                        \wp_register_script(basename($src, '.js'), $src, array(), false, $in_footer);
-                        \wp_enqueue_script(basename($src, '.js'));
+                        $name = basename($src, '.js');
+                        \wp_enqueue_script($name, $src, array(), false, $in_footer);
                         break;
                     case 'inline':
-                        if (is_admin()) {
-                            $type = !empty($script['type']) ? $script['type'] : 'text/css';
-                            self::$wp_scripts[] = "<script type=\"{$type}\">{$script['content']}</script>";
-                        } else {
-                            \wp_add_inline_script( md5($script['content']), $script['content'] );
-                        }
+                        $type = !empty($script['type']) ? $script['type'] : 'text/css';
+                        self::$wp_scripts[$pos][] = "<script type=\"{$type}\">{$script['content']}</script>";
                         break;
                 }
             }
