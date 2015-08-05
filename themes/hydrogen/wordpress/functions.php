@@ -19,7 +19,6 @@ $theme = $gantry[ 'theme' ];
 // Theme helper files that can contain useful methods or filters
 $helpers = [
     'includes/helper.php', // General helper file
-    'includes/timber-comment.php', // Helper class to get flat array of comments
 ];
 
 foreach ( $helpers as $file ) {

@@ -1,7 +1,7 @@
 {% set twigTemplate = 'comments.html.twig' %}
 
 {% if function('get_option', 'thread_comments') == '1' %}
-    {% scripts %}
+    {% scripts in 'footer' %}
         <script type="text/javascript" src="{{ url('wp-includes://js/comment-reply.min.js') }}"></script>
     {% endscripts %}
 {% endif %}
@@ -16,7 +16,7 @@
                 <h3>{{ __('Comments', 'g5_hydrogen') }}</h3>
 
                 <ol class="commentlist">
-                    {{ function('wp_list_comments', {style: 'ol', type: 'comment', callback: ['G5ThemeHelper', 'comments']}, post.get_comments(0, 'wp', 'comment', 'approve', 'G5TimberComment')) }}
+                    {{ function('wp_list_comments', {style: 'ol', type: 'comment', callback: ['G5ThemeHelper', 'comments']}) }}
                 </ol>
 
                 <footer>

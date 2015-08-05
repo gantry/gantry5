@@ -53,7 +53,9 @@
             {# End Entry Content #}
 
             {# Begin Comments #}
-            {% include 'partials/comments.html.twig' %}
+            {% if (post.comment_status == 'open' or post.comment_count > 0) and post.post_type != 'product' %}
+                {{ function('comments_template') }}
+            {% endif %}
             {# End Comments #}
 
         {% else %}
