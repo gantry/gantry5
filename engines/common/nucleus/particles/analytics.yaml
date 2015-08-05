@@ -8,7 +8,7 @@ form:
       type: input.checkbox
       label: Enabled
       description: Globally enable analytic particles.
-      default: false
+      default: true
 
     ua.code:
       type: input.text
