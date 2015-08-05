@@ -61,7 +61,7 @@ class Document extends BaseDocument
                         \wp_enqueue_script($name, $src, array(), false, $in_footer);
                         break;
                     case 'inline':
-                        $type = !empty($script['type']) ? $script['type'] : 'text/css';
+                        $type = !empty($script['type']) ? $script['type'] : 'text/javascript';
                         self::$wp_scripts[$pos][] = "<script type=\"{$type}\">{$script['content']}</script>";
                         break;
                 }

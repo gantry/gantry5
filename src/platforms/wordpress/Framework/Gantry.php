@@ -23,7 +23,7 @@ class Gantry extends Base\Gantry
      */
     public function scripts($location = 'head', $force = false)
     {
-        // Do not display head, WordPress will take care of it (most of the time).
+        // Do not display head and footer, WordPress will take care of it (most of the time).
         return (!$force && in_array($location, ['head', 'footer'])) ? Document::$wp_scripts[$location] : parent::scripts($location);
     }
 

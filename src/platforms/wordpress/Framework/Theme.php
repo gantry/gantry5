@@ -164,6 +164,7 @@ class Theme extends Base\Theme
 
     public function print_inline_scripts()
     {
+        Document::registerScripts('footer');
         $scripts = Gantry::instance()->scripts('footer');
         if ( $scripts ) {
             echo implode( "\n    ", $scripts ) . "\n";
