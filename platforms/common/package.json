@@ -10,13 +10,13 @@
     "objectdiff": "^1.1.0",
     "prime": "^0.5.0",
     "prime-util": "^0.5.0",
-    "sifter": "^0.4.1",
+    "sifter": "^0.4.3",
     "slick": "^1.12.2",
     "sortablejs": "^1.2.0",
-    "webfontloader": "^1.6.3"
+    "webfontloader": "^1.6.5"
   },
   "devDependencies": {
-    "browserify": "^10.2.6",
+    "browserify": "^11.0.1",
     "gulp": "^3.9.0",
     "gulp-if": "^1.2.5",
     "gulp-ruby-sass": "^1.0.5",
@@ -26,7 +26,7 @@
     "merge-stream": "^0.1.8",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.2.3",
-    "yargs": "^3.15.0"
+    "watchify": "^3.3.1",
+    "yargs": "^3.17.1"
   }
 }
