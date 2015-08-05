@@ -12,7 +12,7 @@
     <section id="comments" class="comments-area">
 
         {% if post.comments %}
-            <div class="responses">
+            <div id="responses">
                 <h3>{{ __('Comments', 'g5_hydrogen') }}</h3>
 
                 <ol class="commentlist">
@@ -23,15 +23,18 @@
                     <nav id="comments-nav">
                         <div class="comments-previous">{{ function('previous_comments_link', '<i class="fa fa-chevron-left fa-fw"></i> ' ~ __( 'Older comments', 'g5_hydrogen')) }}</div>
                         <div class="comments-next">{{ function('next_comments_link', __( 'Newer comments', 'g5_hydrogen') ~ ' <i class="fa fa-chevron-right fa-fw"></i>') }}</div>
-                        <div class="clear"></div>
                     </nav>
                 </footer>
             </div>
         {% endif %}
 
         {% if post.comment_status == 'open' %}
-            <div class="respond">
+
+            {% do action('comment_form_before') %}
+
+            <div id="respond">
                 <h3>{{ function('comment_form_title', __('Leave a Reply', 'g5_hydrogen'), __('Leave a Reply to %s', 'g5_hydrogen')) }}</h3>
+
                 <p class="cancel-comment-reply">{{ function('cancel_comment_reply_link') }}</p>
 
                 {% if site.comment_registration and not is_user_logged_in %}
@@ -40,17 +43,25 @@
                         <p class="alert-info">{{ __('You must be <a href="%s">logged in</a> to post a comment.', 'g5_hydrogen')|format(function('wp_login_url', post.link)) }}</p>
                     </div>
 
+                    {% do action('comment_form_must_log_in_after') %}
+
                 {% else %}
 
                     {% set req = function('get_option', 'require_name_email') %}
 
                     <form action="{{ site.url }}/wp-comments-post.php" method="post" id="commentform">
 
+                        {% do action('comment_form_top') %}
+
                         {% if is_user_logged_in %}
 
                             <p>{{ __('Logged in as <a href="%s/wp-admin/profile.php">%s</a>.', 'g5_hydrogen')|format(site.url, current_user.display_name) }} <a href="{{ function('wp_logout_url', post.link) }}" title="{{ __('Log out of this account', 'g5_hydrogen') }}">{{ __('Log out &raquo;', 'g5_hydrogen') }}</a></p>
 
+                            {% do action('comment_form_logged_in_after', 'current_user', 'current_user.display_name') %}
+
                         {% else %}
+
+                            {% do action('comment_form_before_fields') %}
 
                             <p>
                                 <input type="text" class="inputbox respond-author" name="author" id="author" placeholder="{{ __('Name', 'g5_hydrogen') }} {{ req ? __('(required)', 'g5_hydrogen') : '' }}" value="{{ comment_author|e }}" size="40" tabindex="1" aria-required='true' />
@@ -61,6 +72,8 @@
                             <p>
                                 <input type="text" class="inputbox respond-website" name="url" id="url" placeholder="{{ __( 'Website', 'g5_hydrogen') }}" value="{{ comment_author_url|e }}" size="40" tabindex="3">
                             </p>
+
+                            {% do action('comment_form_after_fields') %}
 
                         {% endif %}
 
@@ -77,6 +90,13 @@
 
                 {% endif %}
             </div>
+
+            {% do action('comment_form_after') %}
+
+        {% else %}
+
+            {% do action('comment_form_comments_closed') %}
+
         {% endif %}
 
     </section>

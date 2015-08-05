@@ -40,8 +40,8 @@ class G5ThemeHelper {
     public static function comments( $comment, $args, $depth ) {
         $GLOBALS[ 'comment' ] = $comment; ?>
 
-        <li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
-            <article class="comment-body">
+        <li id="comment-<?php comment_ID(); ?>" <?php comment_class(); ?>>
+            <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
                 <header class="comment-author">
                     <div class="author-avatar">
                         <?php echo get_avatar( $comment, $size = '48' ); ?>
@@ -67,7 +67,7 @@ class G5ThemeHelper {
 
                     <?php comment_text(); ?>
 
-                    <?php comment_reply_link( array_merge( $args, ['before' => '<div class="comment-reply">', 'after' => '</div>', 'depth' => $depth, 'max_depth' => $args[ 'max_depth' ] ] ) ); ?>
+                    <?php comment_reply_link( array_merge( $args, [ 'before' => '<div class="comment-reply">', 'after' => '</div>', 'depth' => $depth, 'max_depth' => $args[ 'max_depth' ] ] ) ); ?>
                 </section>
 
             </article>

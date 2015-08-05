@@ -14,7 +14,12 @@ defined( 'ABSPATH' ) or die;
  * The template for displaying comments
  */
 
+$post = new TimberPost();
 $context = Timber::get_context();
-$context[ 'post' ] = new TimberPost();
+$context[ 'post' ] = $post;
+
+if( post_password_required( $post ) ) {
+    return;
+}
 
 Timber::render( [ 'partials/comments-' . $post->ID . '.html.twig', 'partials/comments-' . $post->post_type . '.html.twig', 'partials/comments.html.twig' ], $context );
