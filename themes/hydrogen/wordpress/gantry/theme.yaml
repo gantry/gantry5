@@ -82,7 +82,6 @@ admin:
       - base
   content:
     blog:
-      - post-content
       - heading
       - featured-image
       - title
@@ -106,7 +105,6 @@ admin:
       - meta-date
       - meta-author
     archive:
-      - post-content
       - heading
       - featured-image
       - title
