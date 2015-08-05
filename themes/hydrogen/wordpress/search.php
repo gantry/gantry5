@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) or die;
 
 $context = Timber::get_context();
 
-$context[ 'title' ] = 'Search results for '. get_search_query();
+$context[ 'title' ] = __( 'Search results for', 'g5_hydrogen' ) . ' ' . get_search_query();
 $context[ 'posts' ] = Timber::get_posts();
 
 $templates = [ 'search.html.twig', 'archive.html.twig', 'index.html.twig' ];

@@ -23,13 +23,13 @@ $context = Timber::get_context();
 
 $templates = [ 'archive.html.twig', 'index.html.twig' ];
 
-$context[ 'title' ] = 'Archive';
+$context[ 'title' ] = __( 'Archive', 'g5_hydrogen' );
 if( is_day() ) {
-    $context[ 'title' ] = 'Archive: ' . get_the_date( 'j F Y' );
+    $context[ 'title' ] = __( 'Archive:', 'g5_hydrogen' ) . ' ' . get_the_date( 'j F Y' );
 } else if( is_month() ) {
-    $context[ 'title' ] = 'Archive: ' . get_the_date( 'F Y' );
+    $context[ 'title' ] = __( 'Archive:', 'g5_hydrogen' ) . ' ' . get_the_date( 'F Y' );
 } else if( is_year() ) {
-    $context[ 'title' ] = 'Archive: ' . get_the_date( 'Y' );
+    $context[ 'title' ] = __( 'Archive:', 'g5_hydrogen' ) . ' ' . get_the_date( 'Y' );
 } else if( is_tag() ) {
     $context[ 'title' ] = single_tag_title( '', false );
 } else if( is_category() ) {
