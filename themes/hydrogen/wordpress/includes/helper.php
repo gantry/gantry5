@@ -6,6 +6,9 @@
 // Extend Timber context
 add_filter( 'timber_context', [ 'G5ThemeHelper', 'add_to_context' ] );
 
+// Modify the default Admin Bar margins to render properly in the mobile mode
+add_theme_support( 'admin-bar', [ 'callback' => [ 'G5ThemeHelper', 'admin_bar_margins' ] ] );
+
 // Add comments pagination link attributes
 add_filter( 'previous_comments_link_attributes', [ 'G5ThemeHelper', 'comments_pagination_attributes' ] );
 add_filter( 'next_comments_link_attributes', [ 'G5ThemeHelper', 'comments_pagination_attributes' ] );
@@ -74,5 +77,23 @@ class G5ThemeHelper {
     public static function comments_pagination_attributes( $attributes ) {
         $attributes .= 'class="button"';
         return $attributes;
+    }
+
+    public static function admin_bar_margins() { ?>
+        <style type="text/css" media="screen">
+            html { margin-top: 32px !important; }
+            * html body { margin-top: 32px !important; }
+            @media screen and ( max-width: 782px ) {
+                html { margin-top: 46px !important; }
+                * html body { margin-top: 46px !important; }
+                #g-offcanvas { margin-top: 46px !important; }
+            }
+            @media screen and ( max-width: 600px ) {
+                html { margin-top: 0 !important; }
+                * html body { margin-top: 0 !important; }
+                #g-page-surround { margin-top: 46px !important; }
+            }
+        </style>
+        <?php
     }
 }
