@@ -45,7 +45,10 @@ try {
     }
 
     add_filter( 'template_include', function() use ( $e ) {
-        echo 'Theme cannot be used. For more information, please login to administration.';
+        if( is_customize_preview() && !class_exists( 'Timber' ) ) {
+            _e( 'Timber library plugin not found. ', 'g5_hydrogen' );
+        }
+        _e( 'Theme cannot be used. For more information, please see the notice in administration.', 'g5_hydrogen' );
         die();
     });
 
