@@ -127,3 +127,10 @@ input.invalid {
         margin-right: 5px;
     }
 }
+
+// Editing
+.layout-edit {
+    #sbox-content.sbox-content-iframe {
+        overflow: hidden;
+    }
+}
