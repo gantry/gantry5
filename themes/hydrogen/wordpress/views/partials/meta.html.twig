@@ -59,7 +59,7 @@
                     {% set comment_count = post.comment_count ~ ' ' ~ __('Comments', 'g5_hydrogen') %}
                 {% endif %}
 
-                {% if gantry.config.get('content.' ~ scope ~ '.meta-comments.link', '1') %}
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-comments.link', '0') %}
                     <a href="{{ post.link ~ '#comments' }}" title="{{ post.comment_count }}" class="meta-comments-link"><span class="comment-count">{{ comment_count }}</span></a>
                 {% else %}
                     <span class="comments-count">{{ comment_count }}</span>
