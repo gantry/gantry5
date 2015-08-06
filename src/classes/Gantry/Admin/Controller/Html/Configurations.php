@@ -84,7 +84,7 @@ class Configurations extends HtmlController
             ['name' => $id, 'title' => $title]
         );
 
-        return new JsonResponse(['html' => 'Configuration created.', 'id' => "outline-{$id}", 'outline' => $html]);
+        return new JsonResponse(['html' => 'Outline created.', 'id' => "outline-{$id}", 'outline' => $html]);
     }
 
     public function rename($configuration)
@@ -105,7 +105,7 @@ class Configurations extends HtmlController
             ['name' => $id, 'title' => $title]
         );
 
-        return new JsonResponse(['html' => 'Configuration renamed.', 'id' => "outline-{$configuration}", 'outline' => $html]);
+        return new JsonResponse(['html' => 'Outline renamed.', 'id' => "outline-{$configuration}", 'outline' => $html]);
     }
 
     public function duplicate($configuration)
@@ -134,7 +134,7 @@ class Configurations extends HtmlController
 
         $configurations->duplicate($configuration);
 
-        return new JsonResponse(['html' => 'Configuration duplicated.']);
+        return new JsonResponse(['html' => 'Outline duplicated.']);
     }
 
     public function delete($configuration)
@@ -149,7 +149,7 @@ class Configurations extends HtmlController
 
         $configurations->delete($configuration);
 
-        return new JsonResponse(['html' => 'Configuration deleted.', 'outline' => $configuration]);
+        return new JsonResponse(['html' => 'Outline deleted.', 'outline' => $configuration]);
     }
 
     public function forward()

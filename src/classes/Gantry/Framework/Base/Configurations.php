@@ -263,7 +263,7 @@ class Configurations extends AbstractConfigurationCollection
     protected function addDefaults(array $configurations)
     {
         return [
-            'default' => 'Base Configuration',
+            'default' => 'Base Outline',
             '_body_only' => 'Body Only',
             '_error' => 'Error',
             '_offline' => 'Offline'

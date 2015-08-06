@@ -280,7 +280,7 @@ trait ThemeTrait
             try {
                 $name = static::gantry()['configuration'];
             } catch (\Exception $e) {
-                throw new \LogicException('Gantry: Configuration has not been defined yet', 500);
+                throw new \LogicException('Gantry: Outline has not been defined yet', 500);
             }
         }
 
