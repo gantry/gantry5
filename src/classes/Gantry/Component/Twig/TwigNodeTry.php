@@ -45,7 +45,7 @@ class TwigNodeTry extends \Twig_Node
                 ->outdent()
                 ->write('} catch (\Exception $e) {' . "\n")
                 ->indent()
-                ->write('if ($context[\'gantry\'][\'theme\']->debug()) throw $e;' . "\n")
+                ->write('if ($context[\'gantry\']->debug()) throw $e;' . "\n")
                 ->write('$context[\'e\'] = $e;' . "\n")
                 ->subcompile($this->getNode('catch'))
             ;

@@ -95,9 +95,12 @@ class Theme extends BaseTheme
         return $this->renderer()->render($file, $context);
     }
 
+    /**
+     * @deprecated 5.0.2
+     */
     public function debug()
     {
-        return JDEBUG;
+        return $gantry = Gantry::instance()->debug();
     }
 
     public function joomla($enable = null)

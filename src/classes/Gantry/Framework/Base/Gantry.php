@@ -26,7 +26,7 @@ use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventDispatcher;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Gantry extends Container
+abstract class Gantry extends Container
 {
     /**
      * @var static
@@ -42,6 +42,20 @@ class Gantry extends Container
 
         return self::$instance;
     }
+
+    /**
+     * Returns true if debug mode has been enabled.
+     *
+     * @return boolean
+     */
+    public abstract function debug();
+
+    /**
+     * Returns true if user has admin permissions for theme manager.
+     *
+     * @return boolean
+     */
+    public abstract function admin();
 
     /**
      * @return string

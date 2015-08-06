@@ -51,7 +51,11 @@ trait ThemeTrait
     {
         $gantry = static::gantry();
         $gantry['streams']->register();
-        $gantry->register(new ErrorServiceProvider);
+
+        // Only add error service if development or debug mode has been enabled or user is admin.
+        if (!$gantry['global']->get('production', 0) || $gantry->debug() || $gantry->admin()) {
+            $gantry->register(new ErrorServiceProvider);
+        }
 
         /** @var Platform $patform */
         $patform = $gantry['platform'];

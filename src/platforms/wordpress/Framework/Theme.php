@@ -41,11 +41,12 @@ class Theme extends Base\Theme
         add_action( 'wp_footer', [ $this, 'print_inline_scripts' ] );
     }
 
+    /**
+     * @deprecated 5.0.2
+     */
     public function debug()
     {
-        $option = (array) get_option('gantry5_plugin');
-
-        return !empty($option['debug']);
+        return Gantry::instance()->debug();
     }
 
     public function renderer()

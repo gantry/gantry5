@@ -22,6 +22,7 @@
     * Enable date particle, analytics and assets atoms by default to avoid confusion (#330)
     * Fixed collapse of cards in Assignments when filtering with a non-matching word (#672)
     * Fixed resizing Particles in LM where attached events wouldn't get properly removed and causing oddities with the History (fixes #556)
+    * Disable whoops when Gantry is in production mode, debug mode has been disabled and user isn't admin (#681)
 
 # 5.0.1
 ## 07/16/2015

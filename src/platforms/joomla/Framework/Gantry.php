@@ -14,6 +14,30 @@ namespace Gantry\Framework;
 class Gantry extends Base\Gantry
 {
     /**
+     * @return boolean
+     */
+    public function debug()
+    {
+        return JDEBUG;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function admin()
+    {
+        $user = \JFactory::getUser();
+        // ACL for hardening the access to the template manager.
+        return !$user->guest && (
+            $user->authorise('core.manage', 'com_templates')
+            || $user->authorise('core.manage', 'com_gantry5')
+            || $user->authorise('core.edit', 'com_templates')
+            || $user->authorise('core.create', 'com_templates')
+            || $user->authorise('core.admin', 'com_templates')
+        );
+    }
+
+    /**
      * @param string $location
      * @param bool   $force
      * @return array

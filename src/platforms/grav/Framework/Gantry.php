@@ -16,6 +16,24 @@ use Grav\Common\Grav;
 class Gantry extends Base\Gantry
 {
     /**
+     * @return boolean
+     */
+    public function debug()
+    {
+        // TODO:
+        return true;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function admin()
+    {
+        // TODO:
+        return false;
+    }
+
+    /**
      * @throws \LogicException
      */
     protected static function load()
