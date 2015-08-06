@@ -20,7 +20,7 @@ class Gantry extends Base\Gantry
      */
     public function admin()
     {
-        return \is_user_logged_in() && \current_user_can('edit_theme_options');
+        return \is_admin();
     }
 
     /**

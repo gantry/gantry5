@@ -29,6 +29,6 @@ class Gantry extends Base\Gantry
      */
     public function admin()
     {
-        return true;
+        return false;
     }
 }

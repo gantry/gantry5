@@ -51,7 +51,7 @@ abstract class Gantry extends Container
     public abstract function debug();
 
     /**
-     * Returns true if user has admin permissions for theme manager.
+     * Returns true if we are in administration.
      *
      * @return boolean
      */

@@ -29,8 +29,7 @@ class Gantry extends Base\Gantry
      */
     public function admin()
     {
-        // TODO:
-        return false;
+        return defined('GANTRYADMIN_PATH');
     }
 
     /**
