@@ -23,6 +23,7 @@
     * Fixed collapse of cards in Assignments when filtering with a non-matching word (#672)
     * Fixed resizing Particles in LM where attached events wouldn't get properly removed and causing oddities with the History (fixes #556)
     * Disable whoops when Gantry is in production mode and debug mode has been disabled (#681)
+    * Fixed Joomla frontend article editor and popup styling issues (#681)
 
 # 5.0.1
 ## 07/16/2015
