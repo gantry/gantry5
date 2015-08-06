@@ -41,6 +41,15 @@ class Theme extends Base\Theme
         add_action( 'wp_footer', [ $this, 'print_inline_scripts' ] );
     }
 
+    public function init()
+    {
+        parent::init();
+
+        // Load theme text domains
+        $domain = $this->details()->get('configuration.theme.textdomain', $this->name);
+        load_theme_textdomain( $domain, $this->path . '/languages' );
+    }
+
     /**
      * @deprecated 5.0.2
      */

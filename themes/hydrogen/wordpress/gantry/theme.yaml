@@ -37,6 +37,7 @@ configuration:
     base: gantry-theme://common
     file: gantry-theme://include/theme.php
     class: \Gantry\Framework\Theme
+    textdomain: g5_hydrogen
 
   fonts:
     roboto:
