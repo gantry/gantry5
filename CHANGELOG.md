@@ -9,6 +9,7 @@
     * Available Themes: Open Preview in a new window
     * Updated Google Fonts library (+2 fonts)
     * Rendered titles for Menu Items is now an option of the Menu Particle (#670)
+    * Updated Hydrogen sample content to be more platform agnostic
 3. [](#bugfix)
     * Administrator responsive issues in Settings Panel (#603)
     * Anchor links should not be modified (#624)
