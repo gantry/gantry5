@@ -55,7 +55,6 @@ class G5ThemeHelper {
                         </time>
                         <?php edit_comment_link( __( '(Edit)', 'g5_hydrogen' ), '<span class="edit-link">', '</span>' ); ?>
                     </div>
-                    <div class="clear"></div>
                 </header>
 
                 <section class="comment-content">
