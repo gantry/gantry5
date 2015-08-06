@@ -178,7 +178,7 @@ var Resizer = new prime({
         }, this));
 
         this.DRAG_EVENTS.EVENTS.STOP.forEach(bind(function(event) {
-            $(document).off(event, this.bound('move'));
+            $(document).off(event, this.bound('stop'));
         }, this));
 
         if (event.target.matches('[data-lm-back], [data-lm-forward]')) { return; }

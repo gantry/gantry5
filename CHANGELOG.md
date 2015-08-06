@@ -21,6 +21,7 @@
     * Fixed available theme notice text problems when no themes are installed (#655)
     * Enable date particle, analytics and assets atoms by default to avoid confusion (#330)
     * Fixed collapse of cards in Assignments when filtering with a non-matching word (#672)
+    * Fixed resizing Particles in LM where attached events wouldn't get properly removed and causing oddities with the History (fixes #556)
 
 # 5.0.1
 ## 07/16/2015
