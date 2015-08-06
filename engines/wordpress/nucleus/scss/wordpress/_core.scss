@@ -1,0 +1,18 @@
+.platform-content {
+    // Entries
+    .entries {
+        .tease {
+            margin: $content-margin 0;
+            padding: $content-padding 0;
+
+            // Sticky Posts
+            &.sticky {
+                padding: $content-padding;
+
+                .entry-title {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+}

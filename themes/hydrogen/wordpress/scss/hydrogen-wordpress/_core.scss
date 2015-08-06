@@ -2,17 +2,10 @@
     // Entries
     .entries {
         .tease {
-            margin: $content-margin 0 $content-margin;
-            padding: $content-padding 0 $content-padding;
 
             // Sticky Posts
             &.sticky {
-                padding: $content-padding;
                 background-color: #f2f2f2;
-
-                .entry-title {
-                    margin-top: 0;
-                }
             }
         }
     }

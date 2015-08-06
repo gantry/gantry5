@@ -1,0 +1,13 @@
+// Pagination
+.pagination, .page-links {
+    margin: 1.5rem 0;
+
+    .prev, .next, .page-numbers {
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+}
+
+.page-links {
+    text-align: center;
+}

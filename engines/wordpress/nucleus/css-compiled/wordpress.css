@@ -2,6 +2,17 @@
   width: 100%;
 }
 
+.platform-content .entries .tease {
+  margin: 0.625rem 0;
+  padding: 0.938rem 0;
+}
+.platform-content .entries .tease.sticky {
+  padding: 0.938rem;
+}
+.platform-content .entries .tease.sticky .entry-title {
+  margin-top: 0;
+}
+
 .alignnone {
   margin: 5px 20px 20px 0;
 }
@@ -215,6 +226,127 @@ a img.aligncenter {
 }
 .gallery .gallery-caption {
   margin-left: 0;
+}
+
+.platform-content .entry-meta {
+  margin: 1.5rem 0;
+}
+
+.pagination, .page-links {
+  margin: 1.5rem 0;
+}
+.pagination .prev, .pagination .next, .pagination .page-numbers, .page-links .prev, .page-links .next, .page-links .page-numbers {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.page-links {
+  text-align: center;
+}
+
+#comments ol.commentlist {
+  list-style: none;
+  padding-left: 0;
+}
+#comments ol.commentlist ol.children {
+  list-style: none;
+}
+@media only all and (max-width: 47.938rem) {
+  #comments ol.commentlist ol.children {
+    padding-left: 0.5rem;
+  }
+}
+#comments ol.commentlist li.comment {
+  margin: 20px 0;
+}
+#comments ol.commentlist li.comment .comment-author {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 48px;
+  line-height: 45px;
+}
+@media only all and (max-width: 47.938rem) {
+  #comments ol.commentlist li.comment .comment-author {
+    overflow: hidden;
+  }
+}
+#comments ol.commentlist li.comment .comment-author .author-avatar {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 48px;
+  -moz-flex: 0 48px;
+  -ms-flex: 0 48px;
+  flex: 0 48px;
+  width: 48px;
+  margin-right: 10px;
+}
+#comments ol.commentlist li.comment .comment-author .author-meta {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+#comments ol.commentlist li.comment .comment-author .author-meta .author-name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-right: 5px;
+}
+@media only all and (max-width: 47.938rem) {
+  #comments ol.commentlist li.comment .comment-author .author-meta .author-name {
+    font-size: 1rem;
+  }
+}
+#comments ol.commentlist li.comment .comment-author .author-meta time, #comments ol.commentlist li.comment .comment-author .author-meta .edit-link {
+  font-size: 0.8rem;
+}
+@media only all and (max-width: 47.938rem) {
+  #comments ol.commentlist li.comment .comment-author .author-meta time, #comments ol.commentlist li.comment .comment-author .author-meta .edit-link {
+    display: none;
+  }
+}
+#comments ol.commentlist li.comment .comment-content {
+  padding: 10px 15px;
+}
+#comments ol.commentlist li.comment .comment-content .comment-reply {
+  text-align: right;
+}
+#comments #comments-nav {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+#comments #comments-nav .comments-next {
+  margin-left: auto;
+}
+@media only all and (max-width: 47.938rem) {
+  #comments #comments-nav a.button {
+    font-size: 0.8rem;
+  }
+}
+#comments #respond {
+  margin-top: 20px;
+}
+#comments #respond .inputbox {
+  width: 100%;
+}
+#comments #respond .inputbox.respond-textarea {
+  min-height: 250px;
+}
+#comments #respond .button:focus {
+  outline: none;
 }
 
 
