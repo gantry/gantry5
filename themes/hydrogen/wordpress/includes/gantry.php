@@ -15,7 +15,7 @@ use Gantry\Framework\Gantry;
 try {
     // Attempt to locate Gantry Framework if it hasn't already been loaded.
     if ( !class_exists( 'Gantry5\\Loader' ) ) {
-        throw new LogicException( 'Gantry Framework not found!' );
+        throw new LogicException( 'Gantry 5 Framework not found!' );
     }
 
     Gantry5\Loader::setup();
