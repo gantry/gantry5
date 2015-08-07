@@ -11,16 +11,14 @@
         <div class="archive">
 
             {# Begin Page Header #}
-            {% if gantry.config.get('content.' ~ scope ~ '.heading.enabled', '0') and gantry.config.get('content.' ~ scope ~ '.heading.text') is not empty %}
+            {% if gantry.config.get('content.' ~ scope ~ '.heading.enabled', '0') %}
                 <header class="page-header">
                     <h1>
-                        {{ gantry.config.get('content.' ~ scope ~ '.heading.text') }}
-                    </h1>
-                </header>
-            {% else %}
-                <header class="page-header">
-                    <h1>
-                        {{ title }}
+                        {% if gantry.config.get('content.' ~ scope ~ '.heading.text') is not empty %}
+                            {{ gantry.config.get('content.' ~ scope ~ '.heading.text') }}
+                        {% else %}
+                            {{ title }}
+                        {% endif %}
                     </h1>
                 </header>
             {% endif %}
