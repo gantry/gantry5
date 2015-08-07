@@ -28,6 +28,12 @@
 		float: none;
 		margin-left: 0;
 	}
+
+    .manager.thumbnails > li {
+        float: left;
+        margin-left: 20px;
+    }
+
 	[class*="span"],
 	.uneditable-input[class*="span"],
 	.row-fluid [class*="span"] {
