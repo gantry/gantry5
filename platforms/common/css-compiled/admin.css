@@ -2821,9 +2821,6 @@ body.g-prime {
   line-height: 2;
 }
 
-#g5-container #configurations {
-  margin: -10px -1%;
-}
 #g5-container #configurations .card {
   margin: 10px 1%;
 }
@@ -2843,6 +2840,9 @@ body.g-prime {
 #g5-container #configurations h4 > *.float-right, #g5-container #configurations .lm-blocks > [data-lm-blocktype="container"] .container-wrapper h4 > *.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations h4 > *.container-actions {
   margin-top: 5px;
   color: #999999;
+}
+#g5-container #configurations ul {
+  margin: -10px -1%;
 }
 #g5-container #configurations ul .size-1-4 {
   -webkit-box-flex: 0;
