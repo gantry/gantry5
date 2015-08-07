@@ -14,6 +14,7 @@ namespace Gantry\WordPress\Assignments;
 class AssignmentsPost implements AssignmentsInterface
 {
     public $type = 'post';
+    public $priority = 6;
 
     /**
      * Returns list of rules which apply to the current page.
@@ -47,7 +48,7 @@ class AssignmentsPost implements AssignmentsInterface
                     $terms = wp_get_post_terms($id, $tax, $args);
 
                     foreach($terms as $term) {
-                        $rules[$post_type . '-terms'][$tax . '-' . $term->term_id] = 1;
+                        $rules[$post_type . '-terms'][$tax . '-' . $term->term_id] = $this->priority;
                     }
                 }
             }

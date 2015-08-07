@@ -15,6 +15,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
 {
     public $type = 'taxonomy';
     public $label = 'Taxonomies: %s';
+    public $priority = 8;
 
     /**
      * Returns list of rules which apply to the current page.
@@ -34,7 +35,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
                 $taxonomy = $queried_object->taxonomy;
                 $id = $queried_object->term_id;
 
-                $rules[$taxonomy][$id] = 1;
+                $rules[$taxonomy][$id] = $this->priority;
             }
         }
 

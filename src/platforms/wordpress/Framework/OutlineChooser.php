@@ -50,7 +50,7 @@ class OutlineChooser
             foreach ($candidate as $section => $list) {
                 foreach ($list as $name => $rules) {
                     if (isset($page[$section][$name])) {
-                        $match =\array_intersect_key($rules, $page[$section][$name]);
+                        $match =\array_intersect_key($page[$section][$name], $rules);
                         if ($match) {
                             $matches[$type][$section][$name] = $match;
                         }
@@ -69,7 +69,7 @@ class OutlineChooser
             'context',
             'menu',
             'post',
-            // 'taxonomy',
+            'taxonomy',
             'archive'
         ];
 

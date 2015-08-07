@@ -14,6 +14,7 @@ namespace Gantry\WordPress\Assignments;
 class AssignmentsMenu implements AssignmentsInterface
 {
     public $type = 'menu';
+    public $priority = 3;
 
     /**
      * Returns list of rules which apply to the current page.
@@ -40,7 +41,7 @@ class AssignmentsMenu implements AssignmentsInterface
 
                 foreach($menu_items as $menu_item) {
                     if($menu_item->url == $current_url) {
-                        $rules[$menu->slug][$menu_item->ID] = 1;
+                        $rules[$menu->slug][$menu_item->ID] = $this->priority;
                     }
                 }
             }
