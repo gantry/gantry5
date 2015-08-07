@@ -26,6 +26,9 @@
     * Disable whoops when Gantry is in production mode and debug mode has been disabled (#681)
     * Fixed Joomla frontend article editor and popup styling issues (#681)
     * Load missing Joomla assets on AJAX popups (#683, #684)
+    * Added missing size class rules for Joomla frontend editing views
+    * Fixed Joomla frontend image manager alignment issues
+    * Removed additional padding from modals that were incorrectly inheriting it
 
 # 5.0.1
 ## 07/16/2015
