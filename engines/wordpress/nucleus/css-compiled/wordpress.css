@@ -241,7 +241,6 @@ a img.aligncenter {
 }
 .pagination ul.pagination-list li.pagination-list-item, .page-links ul.pagination-list li.pagination-list-item {
   display: inline-block;
-  margin-bottom: 10px;
 }
 
 .page-links {
