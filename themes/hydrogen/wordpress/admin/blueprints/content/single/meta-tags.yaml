@@ -1,6 +1,6 @@
 name: Tags Meta
 description: Options for displaying tags meta
-type: post
+type: single
 
 form:
   fields:

@@ -92,7 +92,7 @@ admin:
       - meta-categories
       - meta-tags
       - read-more
-    post:
+    single:
       - featured-image
       - title
       - meta-date

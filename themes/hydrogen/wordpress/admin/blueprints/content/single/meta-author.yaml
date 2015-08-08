@@ -1,6 +1,6 @@
 name: Author Meta
 description: Options for displaying author meta
-type: post
+type: single
 
 form:
   fields:
