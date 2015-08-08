@@ -243,10 +243,6 @@ a img.aligncenter {
   display: inline-block;
   margin-bottom: 10px;
 }
-.pagination .page-numbers, .page-links .page-numbers {
-  display: inline-block;
-  margin-bottom: 10px;
-}
 
 .page-links {
   text-align: center;
