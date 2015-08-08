@@ -16,7 +16,7 @@ form:
       description: CSS class name for the particle.
       default: totop
 
-    .icon:
+    icon:
       type: input.icon
       label: Icon
       description: A Font Awesome icon to be displayed for the link.
