@@ -2,6 +2,25 @@
   width: 100%;
 }
 
+dl {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+dd {
+  margin-left: 1.5rem;
+}
+
+ul.menu ul {
+  margin-left: 1.5rem;
+}
+
+ul.unstyled,
+ol.unstyled {
+  margin-left: 0;
+  list-style: none;
+}
+
 .platform-content .entries .tease {
   margin: 0.625rem 0;
   padding: 0.938rem 0;
