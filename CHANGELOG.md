@@ -31,6 +31,7 @@
     * Fixed Joomla frontend image manager alignment issues
     * Removed additional padding from modals that were incorrectly inheriting it
     * Added missing responsive bootstrap classes required for Joomla editing views (#684)
+    * Logo Particle now properly redirects to Home even if clicked from a subpage (#676)
 
 # 5.0.1
 ## 07/16/2015
