@@ -10,6 +10,7 @@
     * Updated Google Fonts library (+2 fonts)
     * Rendered titles for Menu Items is now an option of the Menu Particle (#670)
     * Updated Hydrogen sample content to be more platform agnostic
+    * Menu Items rendering on frontend do not render an `id` anymore, since the id is already available in the classname (#629)
 3. [](#bugfix)
     * Administrator responsive issues in Settings Panel (#603)
     * Anchor links should not be modified (#624)
