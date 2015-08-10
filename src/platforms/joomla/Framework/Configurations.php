@@ -81,6 +81,7 @@ class Configurations extends BaseConfigurations
 
 
         $gantry = $this->container;
+        /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
         $preset = $template->params->get('preset', 'default');
@@ -203,5 +204,14 @@ class Configurations extends BaseConfigurations
         }
 
         return $item->home ? false : true;
+    }
+
+    /**
+     * @param string $id
+     * @return boolean
+     */
+    public function isDefault($id)
+    {
+        return !$this->canDelete($id);
     }
 }
