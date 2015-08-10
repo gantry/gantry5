@@ -65,7 +65,12 @@ form:
             '': - Use Default -
             standard: Simple
             fullwidth: Extended
-            disabled: Disabled
+
+        .dropdown_hide:
+          type: input.checkbox
+          label: Disable Dropdowns
+          description: If checked and the item has dropdowns, they won't be rendered.
+          default: ''
 
         .width:
           type: input.text

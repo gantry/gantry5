@@ -2,7 +2,7 @@
 ## XX/XX/2015
 
 1. [](#new)
-    * New Menu Dropdown option "Disabled" that prevents sublevels from being rendered but still available (thanks @JoomFX)
+    * New Menu Item `Disable Dropdowns` option that allows parents to not render sublevels and still be available (thanks @JoomFX)
     * Add Twig function preg_match() (#627)
     * Add support for new twig tags: assets, scripts and styles
 2. [](#improved)
