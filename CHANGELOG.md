@@ -35,6 +35,7 @@
     * Added missing responsive bootstrap classes required for Joomla editing views (#684)
     * Logo Particle now properly redirects to Home even if clicked from a subpage (#676)
     * Menu Particle: max levels does not work (#698)
+    * Ignore non-overrideable values in Settings page (#621)
 
 # 5.0.1
 ## 07/16/2015
