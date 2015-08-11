@@ -7,9 +7,8 @@ use Gantry\Component\Menu\Item;
 
 class Menu extends AbstractMenu
 {
-    use GantryTrait;
-
     protected $menus;
+    protected $wp_menu;
 
     public function __construct()
     {
@@ -34,11 +33,39 @@ class Menu extends AbstractMenu
             $get_menus = wp_get_nav_menus(apply_filters('g5_menu_get_menus_args', $args));
 
             foreach($get_menus as $menu) {
-                $list[] = $menu->slug;
+                $list[$menu->term_id] = $menu->slug;
             }
         }
 
         return $list;
+    }
+
+    /**
+     * Get menu configuration.
+     *
+     * @return Config
+     */
+    public function config()
+    {
+        if ($this->config) {
+            return $this->config;
+        }
+
+        $config = parent::config();
+
+        $menu = $this->getWPMenu($this->params);
+
+        $config->set('settings.title', $menu->name);
+
+        return $config;
+    }
+
+    protected function getWPMenu($params) {
+        if (!isset($this->wp_menu)) {
+            $this->wp_menu = new \TimberMenu($params['menu']);
+        }
+
+        return $this->wp_menu;
     }
 
     /**
@@ -49,7 +76,7 @@ class Menu extends AbstractMenu
      */
     protected function getItemsFromPlatform($params)
     {
-        $menu = new \TimberMenu($params['menu']);
+        $menu = $this->getWPMenu($params);
 
         if ($menu) {
             return $menu->get_items();
