@@ -9,6 +9,8 @@ class Menu extends AbstractMenu
 {
     protected $menus;
     protected $wp_menu;
+    protected $current;
+    protected $active = [];
 
     public function __construct()
     {
@@ -114,16 +116,14 @@ class Menu extends AbstractMenu
         return null;
     }
 
-    public function isActive($item) {
-//        if($item->current)
-//            return true;
-
-        return false;
+    public function isActive($item)
+    {
+        return isset($this->active[$item->id]);
     }
 
     public function isCurrent($item)
     {
-        return $item->current;
+        return $this->current == $item->id;
     }
 
     /**
@@ -139,8 +139,8 @@ class Menu extends AbstractMenu
      */
     protected function calcBase($itemid = null)
     {
-        // Use active menu item or fall back to default menu item.
-        $base = $this->active ?: $this->default;
+        // Use current menu item or fall back to default menu item.
+        $base = $this->current ?: $this->default;
 
         // Return base menu item.
         return $base;
@@ -155,7 +155,6 @@ class Menu extends AbstractMenu
         }
 
         foreach ($menuItems as $menuItem) {
-            //print_r($menuItems);die();
             $menuItem->level = count($tree);
             $menuItem->tree = array_merge($tree, [$menuItem->db_id]);
             $menuItem->path = implode('/', $menuItem->tree);
@@ -163,6 +162,11 @@ class Menu extends AbstractMenu
 
             if ($menuItem->children) {
                 $list = array_merge($list, $this->buildList($menuItem->children, $menuItem->tree));
+            }
+
+            if ($menuItem->current) {
+                $this->current = $menuItem->db_id;
+                $this->active += array_flip($menuItem->tree);
             }
         }
 
