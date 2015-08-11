@@ -288,6 +288,12 @@ msgstr "Recompile CSS"
 msgid "GANTRY5_PLATFORM_STYLES"
 msgstr "Styles"
 
+msgid "GANTRY5_PLATFORM_STYLES_APPLY"
+msgstr "Apply"
+
+msgid "GANTRY5_PLATFORM_STYLES_PREVIEW"
+msgstr "Preview"
+
 msgid "GANTRY5_PLATFORM_CONTENT"
 msgstr "Content"
 

@@ -70,6 +70,9 @@
 			border-radius: $core-border-radius;
 			border: 1px solid $medium-gray;
 			position: relative;
+            &:focus {
+                box-shadow: 0 0 7px rgba(0, 0, 0, 0.6);
+            }
 		}
 
 		.swatch-image {
@@ -89,6 +92,7 @@
     	right: 4px;
     	color: $white;
     	background: rgba(0,0,0,0.4);
+        border: none;
     	padding: 0.5rem;
     	border-radius: 0 0 0 $core-border-radius;
     	@include transition(background 0.2s);

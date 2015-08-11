@@ -2719,6 +2719,9 @@ body.g-prime {
   border: 1px solid #ddd;
   position: relative;
 }
+#g5-container .swatches-block .swatch:focus {
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.6);
+}
 #g5-container .swatches-block .swatch-image {
   display: block;
   margin-bottom: 2px;
@@ -2733,6 +2736,7 @@ body.g-prime {
   right: 4px;
   color: #fff;
   background: rgba(0, 0, 0, 0.4);
+  border: none;
   padding: 0.5rem;
   border-radius: 0 0 0 0.1875rem;
   -webkit-transition: background 0.2s;
