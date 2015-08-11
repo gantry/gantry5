@@ -11,6 +11,8 @@
  */
 defined( 'ABSPATH' ) or die;
 
+// NOTE: This file needs to be PHP 5.2 compatible.
+
 require_once __DIR__ . '/src/Loader.php';
 
 if (!defined('GANTRY5_PATH')) {
@@ -31,10 +33,10 @@ if (!defined('GANTRYADMIN_PATH')) {
 register_activation_hook( __FILE__, 'gantry5_plugin_defaults' );
 
 function gantry5_plugin_defaults() {
-    $defaults = [
+    $defaults = array(
         'production' => '1',
         'debug' => '0',
-    ];
+    );
 
     add_option( 'gantry5_plugin', $defaults );
 }
