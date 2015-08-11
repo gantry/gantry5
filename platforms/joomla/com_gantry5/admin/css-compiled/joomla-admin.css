@@ -87,7 +87,7 @@ body.com_modules #g5-container .g-instancepicker-title:empty, body.com_menus #g5
   background: #3180C2;
   color: #fff;
 }
-#g5-container .button-primary:not(.disabled):not([disabled]):hover {
+#g5-container .button-primary:not(.disabled):not([disabled]):hover, #g5-container .button-primary:focus {
   background: #2b70aa;
   color: #fff;
 }
@@ -108,12 +108,15 @@ body.com_gantry5 #g5-container #main-header .button-save {
   background: #67a5d9;
   color: #fff;
 }
-body.com_gantry5 #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+body.com_gantry5 #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.com_gantry5 #g5-container #main-header .button-save:focus {
   background: #4e96d2;
   color: #fff;
 }
+body.com_gantry5 #g5-container #main-header ul li a:focus {
+  background: #296ba1;
+}
 body.com_gantry5 #g5-container #main-header ul li:hover a {
-  background: #2c73ae;
+  background: #296ba1;
 }
 body.com_gantry5 #g5-container #main-header ul li.active a {
   background: #225885;
@@ -133,7 +136,7 @@ body.com_gantry5 #g5-container .button.button-update {
   background: #633679;
   color: #fff;
 }
-body.com_gantry5 #g5-container .button.button-update:not(.disabled):not([disabled]):hover {
+body.com_gantry5 #g5-container .button.button-update:not(.disabled):not([disabled]):hover, body.com_gantry5 #g5-container .button.button-update:focus {
   background: #522c64;
   color: #fff;
 }

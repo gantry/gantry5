@@ -1575,6 +1575,10 @@
 #g5-container .button:active, #g5-container .button-simple:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
   margin: 1px 0 -1px 0;
 }
+#g5-container .button:focus, #g5-container .button-simple:focus, #g5-container .button-primary:focus, #g5-container .button-secondary:focus {
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+  outline: none;
+}
 #g5-container .button i + span, #g5-container .button-simple i + span, #g5-container .button-primary i + span, #g5-container .button-secondary i + span, #g5-container .button.disabled i + span, #g5-container .button[disabled] i + span, #g5-container .button.red i + span, #g5-container .button.yellow i + span {
   margin-left: 8px;
 }
@@ -2962,8 +2966,11 @@ body.g-prime {
     padding: 0.938rem 0.638rem;
   }
 }
+#g5-container #main-header ul li a:focus {
+  background: #377e6d;
+}
 #g5-container #main-header ul li:hover a {
-  background: #3b8877;
+  background: #377e6d;
 }
 #g5-container #main-header ul li.active a {
   background: #354D59;
@@ -3061,7 +3068,7 @@ body.g-prime {
   background: #633679;
   color: rgba(255, 255, 255, 0.9);
 }
-#g5-container .button.button-update:hover {
+#g5-container .button.button-update:hover, #g5-container .button.button-update:focus {
   background: #522c64;
   color: #fff;
 }
@@ -3104,12 +3111,17 @@ body.g-prime {
   transition: background-color 0.2s ease-in-out;
 }
 #g5-container #navbar ul li:not(.config-select-wrap):hover, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap):hover, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap):hover {
-  background-color: #d2d2d2;
+  background-color: #c8c8c8;
+  color: darken #666, 15%;
 }
 #g5-container #navbar ul li:not(.config-select-wrap).active, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap).active, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap).active {
   background-color: #f0f0f0;
 }
 #g5-container #navbar ul li:not(.config-select-wrap).active a, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap).active a, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap).active a {
+  color: #314C59;
+}
+#g5-container #navbar ul li:not(.config-select-wrap).active a:focus, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap).active a:focus, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap).active a:focus {
+  background-color: inherit;
   color: #314C59;
 }
 #g5-container #navbar ul li:not(.config-select-wrap) a, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap) a {
@@ -3130,6 +3142,10 @@ body.g-prime {
     text-align: center;
     padding: 0.938rem 1.038rem;
   }
+}
+#g5-container #navbar ul li:not(.config-select-wrap) a:focus, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a:focus, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap) a:focus {
+  background-color: #c8c8c8;
+  color: darken #666, 15%;
 }
 #g5-container #navbar ul li:not(.config-select-wrap) a i, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a i, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap) a i {
   margin-right: 0.6rem;
@@ -3265,7 +3281,7 @@ body.g-prime {
   background: #999999;
   color: rgba(255, 255, 255, 0.9);
 }
-#g5-container .button:hover {
+#g5-container .button:hover, #g5-container .button:focus {
   background: #8a8a8a;
   color: #fff;
 }
@@ -3276,7 +3292,7 @@ body.g-prime {
   background: #439A86;
   color: rgba(255, 255, 255, 0.9);
 }
-#g5-container .button-primary:hover {
+#g5-container .button-primary:hover, #g5-container .button-primary:focus {
   background: #3a8573;
   color: #fff;
 }
@@ -3284,7 +3300,7 @@ body.g-prime {
   background: #314C59;
   color: rgba(255, 255, 255, 0.9);
 }
-#g5-container .button-secondary:hover {
+#g5-container .button-secondary:hover, #g5-container .button-secondary:focus {
   background: #263b45;
   color: #fff;
 }
@@ -3300,7 +3316,7 @@ body.g-prime {
   background: #ed5565;
   color: rgba(255, 255, 255, 0.9);
 }
-#g5-container .button.red:hover {
+#g5-container .button.red:hover, #g5-container .button.red:focus {
   background: #ea394c;
   color: #fff;
 }
@@ -3308,7 +3324,7 @@ body.g-prime {
   background: #ffce54;
   color: rgba(135, 96, 0, 0.9);
 }
-#g5-container .button.yellow:hover {
+#g5-container .button.yellow:hover, #g5-container .button.yellow:focus {
   background: #ffc535;
   color: #876000;
 }
@@ -3316,7 +3332,7 @@ body.g-prime {
   background: #f6f6f6;
   color: rgba(102, 102, 102, 0.9);
 }
-#g5-container .input-group-btn .button:hover {
+#g5-container .input-group-btn .button:hover, #g5-container .input-group-btn .button:focus {
   background: #e7e7e7;
   color: #666;
 }

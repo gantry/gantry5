@@ -35,10 +35,13 @@
                     @include breakpoint(tablet-range) {
                         padding: $content-padding $content-padding - 0.3;
                     }
+                    &:focus {
+                        background: darken($core-accent, 8%);
+                    }
                 }
                 &:hover {
                     a {
-                        background: darken($core-accent, 5%);
+                        background: darken($core-accent, 8%);
                     }
                 }
                 &.active {
