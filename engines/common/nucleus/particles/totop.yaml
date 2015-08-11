@@ -25,4 +25,4 @@ form:
       type: intput.text
       label: Text
       description: The text to be displayed for the link. HTML is allowed.
-      default: To Top
+      default: ""
