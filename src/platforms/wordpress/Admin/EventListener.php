@@ -53,6 +53,23 @@ class EventListener implements EventSubscriberInterface
 
     public function onMenusSave(Event $event)
     {
+        /*
+         * Add widgets and particles to any menu:
+         * http://www.wpbeginner.com/wp-themes/how-to-add-custom-items-to-specific-wordpress-menus/
+         *
+         * Skip menu items dynamically:
+         * http://wordpress.stackexchange.com/questions/31748/dynamically-exclude-menu-items-from-wp-nav-menu
+         *
+         * Updating menu item (extra data goes to wp_postmeta table):
+         *   get_post()
+         *   wp_insert_post()
+         *   wp_update_post($menu_item_data)
+         *   register_post_type()
+         *   update_post_meta()
+         *
+         * https://github.com/WordPress/WordPress/blob/master/wp-admin/nav-menus.php#L65
+         */
+
         $defaults = [
             'id' => 0,
             'layout' => 'list',
@@ -69,7 +86,28 @@ class EventListener implements EventSubscriberInterface
 
         $menu = $event->menu;
 
+        $menus = array_flip($event->gantry['menu']->getMenus());
+        $id = isset($menus[$event->resource]) ? $menus[$event->resource] : 0;
+
+        // Save global menu settings into Wordpress.
+        $menuObject = wp_get_nav_menu_object($id);
+        if (is_wp_error($menuObject)) {
+            throw new \RuntimeException("Saving menu failed: Menu {$event->resource} ({$id}) not found", 400);
+        }
+
+        $options = [
+            'menu-name' => trim(esc_html($menu['settings.title']))
+        ];
+
+        $id = wp_update_nav_menu_object($id, $options);
+        if (is_wp_error($id)) {
+            throw new \RuntimeException("Saving menu failed: Failed to update {$event->resource}", 400);
+        }
+
+        unset($menu['settings']);
+
         // TODO: Modify WP menus.
+        // Each menu has ordering from 1..n counting all menu items. Children come right after parent ordering.
         foreach ($menu['items'] as $key => $item) {
             // Do not save default values.
             foreach ($defaults as $var => $value) {
