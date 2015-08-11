@@ -11,7 +11,7 @@
     &:active {
         margin: 1px 0 -1px 0;
     }
-    &:focus {
+    &:not(.disabled):focus {
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
         outline: none;
     }
@@ -24,7 +24,7 @@
     background: $color;
     color: rgba($text, 0.9);
     &:hover, &:focus {
-        background: darken($color, 6%);
+        background: darken($color, 8%);
         color: $text;
     }
 }

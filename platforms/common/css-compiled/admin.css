@@ -1575,7 +1575,7 @@
 #g5-container .button:active, #g5-container .button-simple:active, #g5-container .button-primary:active, #g5-container .button-secondary:active {
   margin: 1px 0 -1px 0;
 }
-#g5-container .button:focus, #g5-container .button-simple:focus, #g5-container .button-primary:focus, #g5-container .button-secondary:focus {
+#g5-container .button:not(.disabled):focus, #g5-container .button-simple:not(.disabled):focus, #g5-container .button-primary:not(.disabled):focus, #g5-container .button-secondary:not(.disabled):focus {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
   outline: none;
 }
@@ -3080,7 +3080,7 @@ body.g-prime {
   color: rgba(255, 255, 255, 0.9);
 }
 #g5-container .button.button-update:hover, #g5-container .button.button-update:focus {
-  background: #522c64;
+  background: #4c295d;
   color: #fff;
 }
 
@@ -3293,7 +3293,7 @@ body.g-prime {
   color: rgba(255, 255, 255, 0.9);
 }
 #g5-container .button:hover, #g5-container .button:focus {
-  background: #8a8a8a;
+  background: #858585;
   color: #fff;
 }
 #g5-container .button-simple {
@@ -3304,7 +3304,7 @@ body.g-prime {
   color: rgba(255, 255, 255, 0.9);
 }
 #g5-container .button-primary:hover, #g5-container .button-primary:focus {
-  background: #3a8573;
+  background: #377e6d;
   color: #fff;
 }
 #g5-container .button-secondary {
@@ -3312,7 +3312,7 @@ body.g-prime {
   color: rgba(255, 255, 255, 0.9);
 }
 #g5-container .button-secondary:hover, #g5-container .button-secondary:focus {
-  background: #263b45;
+  background: #23363f;
   color: #fff;
 }
 #g5-container .button.disabled, #g5-container .button[disabled] {
@@ -3328,7 +3328,7 @@ body.g-prime {
   color: rgba(255, 255, 255, 0.9);
 }
 #g5-container .button.red:hover, #g5-container .button.red:focus {
-  background: #ea394c;
+  background: #e93044;
   color: #fff;
 }
 #g5-container .button.yellow {
@@ -3336,7 +3336,7 @@ body.g-prime {
   color: rgba(135, 96, 0, 0.9);
 }
 #g5-container .button.yellow:hover, #g5-container .button.yellow:focus {
-  background: #ffc535;
+  background: #ffc22b;
   color: #876000;
 }
 #g5-container .input-group-btn .button {
@@ -3344,7 +3344,7 @@ body.g-prime {
   color: rgba(102, 102, 102, 0.9);
 }
 #g5-container .input-group-btn .button:hover, #g5-container .input-group-btn .button:focus {
-  background: #e7e7e7;
+  background: #e2e2e2;
   color: #666;
 }
 
