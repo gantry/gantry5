@@ -2,9 +2,10 @@
 ## XX/XX/2015
 
 1. [](#new)
-    * New Menu Item `Disable Dropdowns` option that allows parents to not render sublevels and still be available (thanks @JoomFX)
+    * New Menu Item `Disable Dropdowns` option that allows parents to not render sublevels and still be available (thanks @JoomFX - #611 / #675)
     * Add Twig function preg_match() (#627)
     * Add support for new twig tags: assets, scripts and styles
+    * Added Icon picker for the To Top Particle, you can now have Icon only, Text only or both (thanks @adi8i - #696)
 2. [](#improved)
     * Available Themes: Open Preview in a new window
     * Updated Google Fonts library (+2 fonts)
