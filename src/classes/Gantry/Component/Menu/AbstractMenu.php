@@ -43,7 +43,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         'menu' => '',
         'base' => '/',
         'startLevel' => 1,
-        'endLevel' => 0,
+        'maxLevels' => 0,
         'showAllChildren' => true,
         'highlightAlias' => true,
         'highlightParentAlias' => true
@@ -319,7 +319,8 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     public function addCustom(array $params, array $items)
     {
         $start   = $params['startLevel'];
-        $end     = $params['endLevel'];
+        $max     = $params['maxLevels'];
+        $end     = $max ? $start + $max - 1 : 0;
 
         $config = $this->config();
         $type = $config->get('settings.type');

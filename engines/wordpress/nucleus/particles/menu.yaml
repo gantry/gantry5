@@ -38,7 +38,7 @@ form:
       description: Set the start level of the menu.
       default: 1
 
-    endLevel:
+    maxLevels:
       type: input.text
       label: Max Levels
       description: Set the maximum number of menu levels to display.

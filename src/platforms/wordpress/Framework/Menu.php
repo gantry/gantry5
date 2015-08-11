@@ -151,7 +151,8 @@ class Menu extends AbstractMenu
     public function getList(array $params, array $items)
     {
         $start   = $params['startLevel'];
-        $end     = $params['endLevel'];
+        $max     = $params['maxLevels'];
+        $end     = $max ? $start + $max - 1 : 0;
 
         $menuItems = $this->buildList($this->getItemsFromPlatform($params));
         if($menuItems === null) return;

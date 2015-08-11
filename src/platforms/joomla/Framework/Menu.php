@@ -223,7 +223,8 @@ class Menu extends AbstractMenu
         if (1) {
             $path    = $this->base->tree;
             $start   = $params['startLevel'];
-            $end     = $params['endLevel'];
+            $max     = $params['maxLevels'];
+            $end     = $max ? $start + $max - 1 : 0;
 
             $menuItems = $this->getItemsFromPlatform($params);
 
