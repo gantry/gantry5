@@ -73,11 +73,13 @@ class G5ThemeHelper {
         <?php
     }
 
+    // Add comments pagination link attributes
     public static function comments_pagination_attributes( $attributes ) {
         $attributes .= 'class="button"';
         return $attributes;
     }
 
+    // Modify the default Admin Bar margins to render properly in the mobile mode
     public static function admin_bar_margins() { ?>
         <style type="text/css" media="screen">
             html { margin-top: 32px !important; }

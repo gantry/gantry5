@@ -2,9 +2,13 @@
 .pagination, .page-links {
     margin: 1.5rem 0;
 
-    .prev, .next, .page-numbers {
-        display: inline-block;
-        margin-bottom: 10px;
+    ul.pagination-list {
+        list-style: none;
+        margin: 0;
+
+        li.pagination-list-item {
+            display: inline-block;
+        }
     }
 }
 

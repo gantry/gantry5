@@ -257,6 +257,15 @@ class Configurations extends AbstractConfigurationCollection
     }
 
     /**
+     * @param string $id
+     * @return boolean
+     */
+    public function isDefault($id)
+    {
+        return $id === 'default';
+    }
+
+    /**
      * @param array $configurations
      * @return array
      */

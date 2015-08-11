@@ -1,6 +1,6 @@
 name: Comments Meta
 description: Options for displaying comments meta
-type: post
+type: single
 
 form:
   fields:

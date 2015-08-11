@@ -2,6 +2,25 @@
   width: 100%;
 }
 
+dl {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+dd {
+  margin-left: 1.5rem;
+}
+
+ul.menu ul {
+  margin-left: 1.5rem;
+}
+
+ul.unstyled,
+ol.unstyled {
+  margin-left: 0;
+  list-style: none;
+}
+
 .platform-content .entries .tease {
   margin: 0.625rem 0;
   padding: 0.938rem 0;
@@ -73,7 +92,7 @@ a img.aligncenter {
   width: auto;
 }
 .wp-caption .wp-caption-text {
-  font-size: 11px;
+  font-size: 0.8rem;
   line-height: 17px;
   margin: 0;
   padding: 0 4px 5px;
@@ -235,9 +254,12 @@ a img.aligncenter {
 .pagination, .page-links {
   margin: 1.5rem 0;
 }
-.pagination .prev, .pagination .next, .pagination .page-numbers, .page-links .prev, .page-links .next, .page-links .page-numbers {
+.pagination ul.pagination-list, .page-links ul.pagination-list {
+  list-style: none;
+  margin: 0;
+}
+.pagination ul.pagination-list li.pagination-list-item, .page-links ul.pagination-list li.pagination-list-item {
   display: inline-block;
-  margin-bottom: 10px;
 }
 
 .page-links {

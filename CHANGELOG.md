@@ -2,7 +2,7 @@
 ## XX/XX/2015
 
 1. [](#new)
-    * New Menu Dropdown option "Disabled" that prevents sublevels from being rendered but still available (thanks @JoomFX)
+    * New Menu Item `Disable Dropdowns` option that allows parents to not render sublevels and still be available (thanks @JoomFX)
     * Add Twig function preg_match() (#627)
     * Add support for new twig tags: assets, scripts and styles
 2. [](#improved)
@@ -10,6 +10,8 @@
     * Updated Google Fonts library (+2 fonts)
     * Rendered titles for Menu Items is now an option of the Menu Particle (#670)
     * Updated Hydrogen sample content to be more platform agnostic
+    * Menu Items rendering on frontend do not render an `id` anymore, since the id is already available in the classname (#629)
+    * Improved UI/UX for Atoms section. A maximum of 5 Atoms are now ever displayed per row, returning to a new one if needed (#451)
 3. [](#bugfix)
     * Administrator responsive issues in Settings Panel (#603)
     * Anchor links should not be modified (#624)
@@ -26,6 +28,11 @@
     * Disable whoops when Gantry is in production mode and debug mode has been disabled (#681)
     * Fixed Joomla frontend article editor and popup styling issues (#681)
     * Load missing Joomla assets on AJAX popups (#683, #684)
+    * Added missing size class rules for Joomla frontend editing views
+    * Fixed Joomla frontend image manager alignment issues
+    * Removed additional padding from modals that were incorrectly inheriting it
+    * Added missing responsive bootstrap classes required for Joomla editing views (#684)
+    * Logo Particle now properly redirects to Home even if clicked from a subpage (#676)
 
 # 5.0.1
 ## 07/16/2015

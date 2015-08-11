@@ -1,10 +1,17 @@
 #g5-container {//wrapper
 
 #configurations {
-    margin: -10px -1%;
 
     .card {
         margin: 10px 1%;
+    }
+
+    .outline-is-default {
+        border-color: $tertiary-accent;
+
+        .float-right.font-small {
+            color: $tertiary-accent;
+        }
     }
 
     h4 {
@@ -25,6 +32,7 @@
 
     ul {
         @extend %list-reset;
+        margin: -10px -1%;
         .size-1-4 {
             @include flex(0 23%);
 

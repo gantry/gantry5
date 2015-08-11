@@ -1,6 +1,6 @@
 name: Featured Image
 description: Options for displaying featured image
-type: post
+type: single
 
 form:
   fields:

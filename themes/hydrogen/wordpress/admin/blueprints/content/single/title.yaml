@@ -1,6 +1,6 @@
 name: Post Title
 description: Options for displaying title
-type: post
+type: single
 
 form:
   fields:

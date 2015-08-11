@@ -2821,11 +2821,14 @@ body.g-prime {
   line-height: 2;
 }
 
-#g5-container #configurations {
-  margin: -10px -1%;
-}
 #g5-container #configurations .card {
   margin: 10px 1%;
+}
+#g5-container #configurations .outline-is-default {
+  border-color: #48B0D7;
+}
+#g5-container #configurations .outline-is-default .float-right.font-small, #g5-container #configurations .outline-is-default .card h4[data-g-collapse] .float-right.g-collapse, #g5-container .card h4[data-g-collapse] #configurations .outline-is-default .float-right.g-collapse, #g5-container #configurations .outline-is-default .card h4[data-g-collapse] .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g-collapse.container-actions, #g5-container .card h4[data-g-collapse] .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .g-collapse.container-actions, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .card h4[data-g-collapse] .g-collapse.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .card h4[data-g-collapse] #configurations .outline-is-default .g-collapse.container-actions, #g5-container #configurations .outline-is-default .g-filters-bar label.float-right, #g5-container .g-filters-bar #configurations .outline-is-default label.float-right, #g5-container #configurations .outline-is-default .g-filters-bar .lm-blocks > [data-lm-blocktype="container"] .container-wrapper label.container-actions, #g5-container .g-filters-bar .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default label.container-actions, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g-filters-bar label.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g-filters-bar #configurations .outline-is-default label.container-actions, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .font-small.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .font-small.container-actions, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #menu-editor li .menu-item .menu-item-content .container-actions.menu-item-subtitle, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #menu-editor li .menu-item .menu-item-content #configurations .outline-is-default .container-actions.menu-item-subtitle, #g5-container #configurations .outline-is-default #menu-editor li .menu-item .menu-item-content .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.menu-item-subtitle, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #configurations .outline-is-default li.container-actions, #g5-container #configurations .outline-is-default .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks > [data-lm-blocktype="container"] .container-wrapper li.container-actions, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default li.container-actions, #g5-container #configurations .outline-is-default .float-right.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default #menu-editor li .menu-item .menu-item-content .float-right.menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content #configurations .outline-is-default .float-right.menu-item-subtitle, #g5-container #configurations .outline-is-default .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.float-right, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #configurations .outline-is-default li.float-right {
+  color: #48B0D7;
 }
 #g5-container #configurations h4 {
   display: block;
@@ -2843,6 +2846,9 @@ body.g-prime {
 #g5-container #configurations h4 > *.float-right, #g5-container #configurations .lm-blocks > [data-lm-blocktype="container"] .container-wrapper h4 > *.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations h4 > *.container-actions {
   margin-top: 5px;
   color: #999999;
+}
+#g5-container #configurations ul {
+  margin: -10px -1%;
 }
 #g5-container #configurations ul .size-1-4 {
   -webkit-box-flex: 0;
@@ -3578,6 +3584,20 @@ body.g-prime {
 #g5-container .lm-blocks .atoms-section .g-grid, #g5-container .lm-blocks .offcanvas-section .g-grid {
   background: #fff;
 }
+#g5-container .lm-blocks .atoms-section {
+            /* sets the atoms margin-right to 0 for the last item or in case of nowrap to every 5th
+            .g-block
+                &:nth-child(5n+5) .atom {
+                    margin-right: 0;
+                }
+
+                &:last-child {
+                .particle, .position, .spacer, .pagecontent {
+                    margin-right: 0;
+                }
+            }
+            */
+}
 #g5-container .lm-blocks .atoms-section:empty:after {
   content: "Drop atoms here...";
 }
@@ -3589,13 +3609,13 @@ body.g-prime {
 #g5-container .lm-blocks .atoms-section .g-grid > .g-tooltip {
   display: none;
 }
+#g5-container .lm-blocks .atoms-section .g-block {
+  min-width: 20%;
+}
 #g5-container .lm-blocks .atoms-section > .g-block > .particle:after, #g5-container .lm-blocks .atoms-section > .g-block > .position:after, #g5-container .lm-blocks .atoms-section > .g-block > .spacer:after, #g5-container .lm-blocks .atoms-section > .g-block > .pagecontent:after {
   display: none;
   opacity: 0;
   visibility: hidden;
-}
-#g5-container .lm-blocks .atoms-section .g-block:last-child .particle, #g5-container .lm-blocks .atoms-section .g-block:last-child .position, #g5-container .lm-blocks .atoms-section .g-block:last-child .spacer, #g5-container .lm-blocks .atoms-section .g-block:last-child .pagecontent, #g5-container .lm-blocks .atoms-section .g-block:last-child .atom {
-  margin-right: 0;
 }
 #g5-container .lm-blocks .offcanvas-section .g-grid:empty:after {
   content: "Drop particles here...";
@@ -3714,6 +3734,9 @@ body.g-prime {
   position: relative;
   z-index: 2;
 }
+#g5-container .lm-blocks .atom {
+  margin: 0 6px 6px 0px;
+}
 #g5-container .lm-blocks .particle-size {
   font-weight: 300;
   font-size: 1.2rem;
@@ -3791,6 +3814,9 @@ body.g-prime {
 }
 #g5-container .lm-blocks .placeholder.in-between.in-between-sections {
   width: auto;
+}
+#g5-container .lm-blocks .atoms-section .placeholder.in-between {
+  margin-bottom: 6px;
 }
 #g5-container .lm-blocks .block-has-changes:not(.section):not(.atoms-section):not(.offcanvas-section):not(.g-lm-container) {
   box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
