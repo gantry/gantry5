@@ -3584,6 +3584,20 @@ body.g-prime {
 #g5-container .lm-blocks .atoms-section .g-grid, #g5-container .lm-blocks .offcanvas-section .g-grid {
   background: #fff;
 }
+#g5-container .lm-blocks .atoms-section {
+            /* sets the atoms margin-right to 0 for the last item or in case of nowrap to every 5th
+            .g-block
+                &:nth-child(5n+5) .atom {
+                    margin-right: 0;
+                }
+
+                &:last-child {
+                .particle, .position, .spacer, .pagecontent {
+                    margin-right: 0;
+                }
+            }
+            */
+}
 #g5-container .lm-blocks .atoms-section:empty:after {
   content: "Drop atoms here...";
 }
@@ -3595,13 +3609,13 @@ body.g-prime {
 #g5-container .lm-blocks .atoms-section .g-grid > .g-tooltip {
   display: none;
 }
+#g5-container .lm-blocks .atoms-section .g-block {
+  min-width: 20%;
+}
 #g5-container .lm-blocks .atoms-section > .g-block > .particle:after, #g5-container .lm-blocks .atoms-section > .g-block > .position:after, #g5-container .lm-blocks .atoms-section > .g-block > .spacer:after, #g5-container .lm-blocks .atoms-section > .g-block > .pagecontent:after {
   display: none;
   opacity: 0;
   visibility: hidden;
-}
-#g5-container .lm-blocks .atoms-section .g-block:last-child .particle, #g5-container .lm-blocks .atoms-section .g-block:last-child .position, #g5-container .lm-blocks .atoms-section .g-block:last-child .spacer, #g5-container .lm-blocks .atoms-section .g-block:last-child .pagecontent, #g5-container .lm-blocks .atoms-section .g-block:last-child .atom {
-  margin-right: 0;
 }
 #g5-container .lm-blocks .offcanvas-section .g-grid:empty:after {
   content: "Drop particles here...";
@@ -3720,6 +3734,9 @@ body.g-prime {
   position: relative;
   z-index: 2;
 }
+#g5-container .lm-blocks .atom {
+  margin: 0 6px 6px 0px;
+}
 #g5-container .lm-blocks .particle-size {
   font-weight: 300;
   font-size: 1.2rem;
@@ -3797,6 +3814,9 @@ body.g-prime {
 }
 #g5-container .lm-blocks .placeholder.in-between.in-between-sections {
   width: auto;
+}
+#g5-container .lm-blocks .atoms-section .placeholder.in-between {
+  margin-bottom: 6px;
 }
 #g5-container .lm-blocks .block-has-changes:not(.section):not(.atoms-section):not(.offcanvas-section):not(.g-lm-container) {
   box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);

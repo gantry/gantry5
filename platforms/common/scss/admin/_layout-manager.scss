@@ -256,6 +256,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 }
             }
 
+            .g-block {
+                min-width: 20%;
+            }
+
             > .g-block {
                 > .particle, > .position, > .spacer, > .pagecontent {
                     &:after {
@@ -266,11 +270,18 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 }
             }
 
-            .g-block:last-child {
-                .particle, .position, .spacer, .pagecontent, .atom {
+            /* sets the atoms margin-right to 0 for the last item or in case of nowrap to every 5th
+            .g-block
+                &:nth-child(5n+5) .atom {
+                    margin-right: 0;
+                }
+
+                &:last-child {
+                .particle, .position, .spacer, .pagecontent {
                     margin-right: 0;
                 }
             }
+            */
         }
 
         .offcanvas-section {
@@ -429,6 +440,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
+        .atom {
+            margin: 0 6px 6px 0px;
+        }
+
         .particle-size {
             font-weight: 300;
             font-size: $core-font-size + 0.2;
@@ -508,6 +523,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             &.in-between.in-between-sections {
                 width: auto;
             }
+        }
+
+        .atoms-section .placeholder.in-between {
+            margin-bottom: 6px;
         }
 
         .block-has-changes {
