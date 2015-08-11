@@ -26,8 +26,8 @@ form:
         .type:
           type: input.text
           label: Menu Item Type
-          disabled: true
           default: link
+          disabled: true
 
         .link:
           type: input.text
@@ -92,9 +92,8 @@ form:
         .icon_only:
           type: input.checkbox
           label: Icon Only
-          description: Display only icon or image.
+          description: Display only icon or image. Hides title and subtitle.
 
         .subtitle:
           type: input.text
           label: Subtitle
-
