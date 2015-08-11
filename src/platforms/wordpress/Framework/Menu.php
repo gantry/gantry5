@@ -224,8 +224,7 @@ class Menu extends AbstractMenu
                 'xfn' => $menuItem->xfn,
                 'parent_id' => $menuItem->menu_item_parent,
                 'path' => $menuItem->path,
-                'level' => $menuItem->level,
-                'current'   => !empty($menuItem->current)
+                'level' => $menuItem->level
             ];
 
             // Rest of the items will come from saved configuration.
