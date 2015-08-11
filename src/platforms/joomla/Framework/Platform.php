@@ -269,11 +269,10 @@ class Platform extends BasePlatform
         $updates = $db->loadObjectList();
 
         $list = [];
-        foreach ($updates as $update)
-        {
-            // Remove number from Gantry 5.
+        foreach ($updates as $update) {
+            // Rename Gantry 5 package.
             if ($update->element == 'pkg_gantry5') {
-                $update->name = preg_replace('|[\d\s]|', '', $update->name);
+                $update->name = 'Gantry';
             }
             $list[] = $update->name . ' ' . $update->version;
         }
