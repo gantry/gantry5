@@ -76,10 +76,39 @@ class Menu extends AbstractMenu
      */
     protected function getItemsFromPlatform($params)
     {
+        if (is_admin()) {
+            $gantry = static::gantry();
+            $menus = array_flip($gantry['menu']->getMenus());
+            $id = isset($menus[$params['menu']]) ? $menus[$params['menu']] : 0;
+
+            // Save global menu settings into Wordpress.
+            $menuObject = wp_get_nav_menu_object($id);
+            if (is_wp_error($menuObject)) {
+                return null;
+            }
+
+            // Get all menu items.
+            $unsorted_menu_items = wp_get_nav_menu_items(
+                $id,
+                ['post_status' => 'draft,publish']
+            );
+
+            $menuItems = [];
+            foreach ($unsorted_menu_items as $menuItem) {
+                $tree = $menuItem->menu_item_parent ? $menuItems[$menuItem->menu_item_parent]->tree : [];
+                $menuItem->level = count($tree);
+                $menuItem->tree = array_merge($tree, [$menuItem->db_id]);
+                $menuItem->path = implode('/', $menuItem->tree);
+                $menuItems[$menuItem->db_id] = $menuItem;
+            }
+
+            return $menuItems;
+        }
+
         $menu = $this->getWPMenu($params);
 
         if ($menu) {
-            return $menu->get_items();
+            return $this->buildList($menu->get_items());
         }
 
         return null;
@@ -126,8 +155,9 @@ class Menu extends AbstractMenu
         }
 
         foreach ($menuItems as $menuItem) {
+            //print_r($menuItems);die();
             $menuItem->level = count($tree);
-            $menuItem->tree = array_merge($tree, [$menuItem->id]);
+            $menuItem->tree = array_merge($tree, [$menuItem->db_id]);
             $menuItem->path = implode('/', $menuItem->tree);
             $list[] = $menuItem;
 
@@ -154,7 +184,7 @@ class Menu extends AbstractMenu
         $max     = $params['maxLevels'];
         $end     = $max ? $start + $max - 1 : 0;
 
-        $menuItems = $this->buildList($this->getItemsFromPlatform($params));
+        $menuItems = $this->getItemsFromPlatform($params);
         if($menuItems === null) return;
 
         $itemMap = [];
@@ -181,9 +211,9 @@ class Menu extends AbstractMenu
 
             // These params always come from WordPress.
             $itemParams = [
-                'id' => $menuItem->id,
+                'id' => $menuItem->db_id,
                 'type' => $menuItem->type,
-                'link' => trim($menuItem->link()),
+                'link' => is_admin() ? $menuItem->url : $menuItem->link(),
                 // TODO: use
                 'attr_title' => $menuItem->attr_title,
                 // TODO: use
@@ -191,19 +221,20 @@ class Menu extends AbstractMenu
                 'parent_id' => $menuItem->menu_item_parent,
                 'path' => $menuItem->path,
                 'level' => $menuItem->level,
-                'current'   => $menuItem->current
+                'current'   => !empty($menuItem->current)
             ];
 
             // Rest of the items will come from saved configuration.
-            if (isset($itemMap[$menuItem->id])) {
+            if (isset($itemMap[$menuItem->db_id])) {
                 // ID found, use it.
-                $itemParams += $itemMap[$menuItem->id];
+                $itemParams += $itemMap[$menuItem->db_id];
             }
 
             // And if not available in configuration, default to WordPress.
             $itemParams += [
-                'title' => $menuItem->title(),
-                'target' => $menuItem->target ?: '_self'
+                'title' => is_admin() ? $menuItem->title : $menuItem->title(),
+                'target' => $menuItem->target ?: '_self',
+                'class' => implode(' ', $menuItem->classes)
             ];
 
             $item = new Item($this, $menuItem->path, $itemParams);

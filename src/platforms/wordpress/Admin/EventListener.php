@@ -106,9 +106,45 @@ class EventListener implements EventSubscriberInterface
 
         unset($menu['settings']);
 
+        // Get all menu items.
+        $unsorted_menu_items = wp_get_nav_menu_items(
+            $id,
+            ['orderby' => 'ID', 'output' => ARRAY_A, 'output_key' => 'ID', 'post_status' => 'draft,publish']
+        );
+
+        $menu_items = [];
+        foreach ($unsorted_menu_items as $_item) {
+            $menu_items[$_item->db_id] = $_item;
+        }
+
+        wp_defer_term_counting(true);
+
         // TODO: Modify WP menus.
         // Each menu has ordering from 1..n counting all menu items. Children come right after parent ordering.
         foreach ($menu['items'] as $key => $item) {
+            if (!empty($item['id']) && $menu_items[$item['id']]) {
+                $wpItem = $menu_items[$item['id']];
+
+                $args = [
+                    'menu-item-db-id' => $wpItem->db_id,
+                    'menu-item-object-id' => $wpItem->object_id,
+                    'menu-item-object' => $wpItem->object,
+                    'menu-item-parent-id' => $wpItem->menu_item_parent,
+                    'menu-item-position' => $wpItem->menu_order,
+                    'menu-item-type' => $wpItem->type,
+                    'menu-item-title' => trim($item['title']),
+                    'menu-item-url' => trim($item['link']),
+                    'menu-item-description' => $wpItem->description,
+                    'menu-item-attr-title' => $wpItem->attr_title,
+                    'menu-item-target' => $item['target'] != '_self' ? $item['target'] : '',
+                    'menu-item-classes' => trim($item['class']),
+                    'menu-item-xfn' => $wpItem->xfn
+                ];
+
+                wp_update_nav_menu_item($id, $wpItem->db_id, $args);
+
+                unset($item['title'], $item['link'], $item['class'], $item['target']);
+            }
             // Do not save default values.
             foreach ($defaults as $var => $value) {
                 if (isset($item[$var]) && $item[$var] == $value) {
@@ -116,11 +152,11 @@ class EventListener implements EventSubscriberInterface
                 }
             }
 
-            // Do not save WP variables we do not use.
-            unset($item['xfn'], $item['attr_title']);
-
             // Do not save derived values.
             unset($item['path'], $item['alias'], $item['parent_id'], $item['level'], $item['group'], $item['current']);
+
+            // Do not save WP variables we do not use.
+            unset($item['xfn'], $item['attr_title']);
 
             // Particles have no link.
             if (isset($item['type']) && $item['type'] === 'particle') {
@@ -129,5 +165,7 @@ class EventListener implements EventSubscriberInterface
 
             $event->menu["items.{$key}"] = $item;
         }
+
+        wp_defer_term_counting(false);
     }
 }
