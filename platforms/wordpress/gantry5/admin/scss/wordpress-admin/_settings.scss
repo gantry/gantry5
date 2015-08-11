@@ -1,0 +1,9 @@
+#g5-container {
+    .settings-block {
+        input, textarea, select {
+            &:focus {
+                border-color: rgba($core-accent, .5);
+            }
+        }
+    }
+}

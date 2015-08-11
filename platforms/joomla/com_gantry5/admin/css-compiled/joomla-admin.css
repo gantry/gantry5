@@ -182,6 +182,10 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   right: 2.1rem;
 }
 
+#g5-container .settings-block input:focus, #g5-container .settings-block textarea:focus, #g5-container .settings-block select:focus {
+  border: 1px solid rgba(49, 128, 194, 0.5);
+}
+
 
 
 /*# sourceMappingURL=joomla-admin.css.map */

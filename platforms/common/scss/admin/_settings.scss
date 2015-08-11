@@ -160,6 +160,18 @@
         font-size: $core-font-size;
         line-height: $core-line-height;
         border-radius: $core-border-radius;
+
+        &:focus {
+            border-color: rgba($core-accent, .5);
+        }
+    }
+
+    .colorpicker {
+        input {
+            &:focus {
+                border-color: $medium-gray;
+            }
+        }
     }
 
     select {

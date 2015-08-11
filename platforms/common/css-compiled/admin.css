@@ -2124,6 +2124,7 @@ body.g-prime {
   display: inline-block;
   vertical-align: middle;
   line-height: 1rem;
+  height: 38px;
 }
 
 .selectize-dropdown, .selectize-input, .selectize-input input {
@@ -2498,6 +2499,12 @@ body.g-prime {
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.1875rem;
+}
+#g5-container .settings-block input:focus, #g5-container .settings-block textarea:focus, #g5-container .settings-block select:focus {
+  border-color: rgba(67, 154, 134, 0.5);
+}
+#g5-container .settings-block .colorpicker input:focus {
+  border-color: #ddd;
 }
 #g5-container .settings-block select {
   margin: 0 0 10px;
@@ -3351,6 +3358,10 @@ body.g-prime {
     width: 90%;
   }
 }
+#g5-container .input-group input {
+  position: relative;
+  z-index: 2;
+}
 #g5-container .input-group input, #g5-container .input-group-addon, #g5-container .input-group-btn {
   display: table-cell;
 }
@@ -3379,6 +3390,7 @@ body.g-prime {
   position: relative;
   font-size: 0;
   white-space: nowrap;
+  z-index: 1;
 }
 @media only all and (max-width: 47.938rem) {
   #g5-container .input-group-btn {
@@ -3394,8 +3406,10 @@ body.g-prime {
   border-radius: 0.1875rem;
   margin: -1px;
 }
+#g5-container .input-group-btn .button:focus {
+  box-shadow: none;
+}
 #g5-container .input-group.append input {
-  border-right: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -3403,14 +3417,19 @@ body.g-prime {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-#g5-container .input-group.prepend input {
+#g5-container .input-group.append .button {
   border-left: 0;
+}
+#g5-container .input-group.prepend input {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 #g5-container .input-group.prepend .input-group-addon, #g5-container .input-group.prepend .button {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+#g5-container .input-group.prepend .button {
+  border-right: 0;
 }
 
 #g5-container {
