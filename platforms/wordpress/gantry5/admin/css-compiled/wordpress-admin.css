@@ -1,120 +1,718 @@
-/*
-Error: Undefined variable: "$core-accent".
-        on line 5 of platforms/wordpress/gantry5/admin/scss/wordpress-admin/_settings.scss
-        from line 50 of ./platforms/wordpress/gantry5/admin/scss/wordpress-admin.scss
+.size-100 {
+  width: 100%;
+}
 
-1: // REQUIRED DEPENDENCIES - DO NOT CHANGE
-2: 
-3: // Load Third Party Libraries
-4: @import "vendor/bourbon/bourbon";
-5: 
-6: // Load Nucleus Configuration
-7: @import "configuration/nucleus/base";
-8: 
-9: // Load Nucleus Mixins and Functions
-10: @import "nucleus/functions/base";
+.alert {
+  border-radius: 0.1875rem;
+  padding: 0.938rem;
+  margin-bottom: 1.5rem;
+  text-shadow: none;
+}
 
-Backtrace:
-platforms/wordpress/gantry5/admin/scss/wordpress-admin/_settings.scss:5
-./platforms/wordpress/gantry5/admin/scss/wordpress-admin.scss:50
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/script/tree/variable.rb:49:in `_perform'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/script/tree/node.rb:50:in `perform'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/script/tree/funcall.rb:170:in `perform_arg'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/script/tree/funcall.rb:124:in `block in _perform'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/script/tree/funcall.rb:124:in `each'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/script/tree/funcall.rb:124:in `each_with_index'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/script/tree/funcall.rb:124:in `each'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/script/tree/funcall.rb:124:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/script/tree/funcall.rb:124:in `_perform'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/script/tree/node.rb:50:in `perform'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:394:in `visit_prop'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:115:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:430:in `block (2 levels) in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:430:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:430:in `block in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:428:in `visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:115:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:430:in `block (2 levels) in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:430:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:430:in `block in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:428:in `visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:115:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:430:in `block (2 levels) in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:430:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:430:in `block in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:428:in `visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:115:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:430:in `block (2 levels) in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:430:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:430:in `block in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:428:in `visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:115:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:325:in `block (2 levels) in visit_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:325:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:325:in `block in visit_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:88:in `block in with_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:115:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:88:in `with_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:322:in `visit_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:115:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/base.rb:52:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/base.rb:36:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:157:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/visitors/perform.rb:8:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/root_node.rb:36:in `css_tree'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/engine.rb:368:in `_render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/engine.rb:285:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/exec/sass_scss.rb:407:in `run'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/exec/sass_scss.rb:63:in `process_result'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/exec/base.rb:52:in `parse'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/lib/sass/exec/base.rb:19:in `parse!'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.14/bin/sass:13:in `<top (required)>'
-/usr/bin/sass:23:in `load'
-/usr/bin/sass:23:in `<main>'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: Undefined variable: \"$core-accent\".\A         on line 5 of platforms/wordpress/gantry5/admin/scss/wordpress-admin/_settings.scss\A         from line 50 of ./platforms/wordpress/gantry5/admin/scss/wordpress-admin.scss\A \A 1: // REQUIRED DEPENDENCIES - DO NOT CHANGE\A 2: \A 3: // Load Third Party Libraries\A 4: @import \"vendor/bourbon/bourbon\";\A 5: \A 6: // Load Nucleus Configuration\A 7: @import \"configuration/nucleus/base\";\A 8: \A 9: // Load Nucleus Mixins and Functions\A 10: @import \"nucleus/functions/base\";"; }
+.alert {
+  background-color: #fcf8e3;
+  border: 1px solid #fbeed5;
+  border-radius: 4px;
+}
+
+.alert,
+.alert h4 {
+  color: #c09853;
+}
+
+.alert h4 {
+  margin: 0;
+}
+
+.alert .close {
+  position: relative;
+  top: -2px;
+  right: -21px;
+  line-height: 20px;
+}
+
+.alert-success {
+  color: #468847;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.alert-success h4 {
+  color: #468847;
+}
+
+.alert-danger,
+.alert-error {
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #eed3d7;
+}
+
+.alert-danger h4,
+.alert-error h4 {
+  color: #b94a48;
+}
+
+.alert-info {
+  color: #3a87ad;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+.alert-info h4 {
+  color: #3a87ad;
+}
+
+.alert-block {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.alert-block > p,
+.alert-block > ul {
+  margin-bottom: 0;
+}
+
+.alert-block p + p {
+  margin-top: 5px;
+}
+
+body.gantry5 {
+  margin: 0;
+  padding: 0;
+  max-width: inherit;
+  color: #ddd;
+  background-color: #F1F1F1;
+}
+body.gantry5.auto-fold #wpcontent {
+  padding-left: 0;
+}
+body.gantry5 #g5-container a:focus {
+  box-shadow: none;
+}
+body.gantry5 #g5-container dd, body.gantry5 #g5-container li {
+  margin-bottom: 0;
+}
+body.gantry5 #g5-container li {
+  line-height: inherit;
+}
+body.gantry5 #g5-container textarea, body.gantry5 #g5-container input {
+  box-shadow: none;
+  color: #666;
+}
+body.gantry5 #g5-container input, body.gantry5 #g5-container button, body.gantry5 #g5-container select, body.gantry5 #g5-container textarea {
+  font-family: inherit;
+}
+body.gantry5 #g5-container input[type="checkbox"] {
+  height: 16px;
+  display: inline-block;
+}
+body.gantry5 #g5-container input[type="checkbox"]:checked:before {
+  height: 16px;
+}
+body.gantry5 #g5-container input[type="checkbox"]:not(.settings-param-toggle) {
+  position: inherit;
+}
+body.gantry5 #g5-container .main-block {
+  min-height: 81.5vh;
+}
+body.gantry5 #g5-container .inner-container {
+  margin: 0;
+}
+body.gantry5 #g5-container .card {
+  max-width: none;
+  box-shadow: none;
+}
+body.gantry5 #g5-container .preview {
+  float: none;
+}
+body.gantry5 #g5-container .search {
+  background: none;
+  color: inherit;
+}
+body.gantry5 #g5-container .g5-dialog, body.gantry5 #g5-container .g5-popover.g5-popover-above-modal {
+  z-index: 99999;
+}
+body.gantry5 #g5-container #assignments .settings-param-section {
+  background-color: #fafafa;
+}
+body.gantry5 #g5-container #assignments .settings-param-section .enabler {
+  display: none;
+}
+body.gantry5 #g5-container #assignments .settings-param-section .settings-param-section-title {
+  font-weight: bold;
+  color: #b2b2b2;
+  text-transform: uppercase;
+}
+body.gantry5 #g5-container #assignments .settings-param-title {
+  font-size: 0.8rem;
+}
+body.gantry5 form {
+  margin-bottom: 1em;
+}
+body.gantry5 #wpbody-content {
+  padding-bottom: 0;
+}
+body.gantry5 input[disabled],
+body.gantry5 select[disabled],
+body.gantry5 textarea[disabled],
+body.gantry5 input[readonly],
+body.gantry5 select[readonly],
+body.gantry5 textarea[readonly] {
+  cursor: not-allowed;
+  background-color: #eee;
+}
+body.gantry5 input[type="radio"][disabled],
+body.gantry5 input[type="checkbox"][disabled],
+body.gantry5 input[type="radio"][readonly],
+body.gantry5 input[type="checkbox"][readonly] {
+  background-color: transparent;
+}
+
+body.gantry5.admin-color-fresh #g5-container .button-primary {
+  background: #0073AA;
+  color: #fff;
+}
+body.gantry5.admin-color-fresh #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-fresh #g5-container .button-primary:focus {
+  background: #005e8b;
+  color: #fff;
+}
+body.gantry5.admin-color-light #g5-container .button-primary {
+  background: #888888;
+  color: #fff;
+}
+body.gantry5.admin-color-light #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-light #g5-container .button-primary:focus {
+  background: #797979;
+  color: #fff;
+}
+body.gantry5.admin-color-blue #g5-container .button-primary {
+  background: #096484;
+  color: #fff;
+}
+body.gantry5.admin-color-blue #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-blue #g5-container .button-primary:focus {
+  background: #074e67;
+  color: #fff;
+}
+body.gantry5.admin-color-coffee #g5-container .button-primary {
+  background: #C7A589;
+  color: #fff;
+}
+body.gantry5.admin-color-coffee #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-coffee #g5-container .button-primary:focus {
+  background: #bd9574;
+  color: #fff;
+}
+body.gantry5.admin-color-ectoplasm #g5-container .button-primary {
+  background: #A3B745;
+  color: #fff;
+}
+body.gantry5.admin-color-ectoplasm #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-ectoplasm #g5-container .button-primary:focus {
+  background: #8fa13d;
+  color: #fff;
+}
+body.gantry5.admin-color-midnight #g5-container .button-primary {
+  background: #E14D43;
+  color: #fff;
+}
+body.gantry5.admin-color-midnight #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-midnight #g5-container .button-primary:focus {
+  background: #dd3429;
+  color: #fff;
+}
+body.gantry5.admin-color-ocean #g5-container .button-primary {
+  background: #9EBAA0;
+  color: #fff;
+}
+body.gantry5.admin-color-ocean #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-ocean #g5-container .button-primary:focus {
+  background: #8cad8e;
+  color: #fff;
+}
+body.gantry5.admin-color-sunrise #g5-container .button-primary {
+  background: #DD823B;
+  color: #fff;
+}
+body.gantry5.admin-color-sunrise #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-sunrise #g5-container .button-primary:focus {
+  background: #d57225;
+  color: #fff;
+}
+
+#g5-container .button {
+  height: auto;
+  box-shadow: none;
+  border: none;
+  margin-bottom: 0;
+}
+
+#adminmenuwrap ul, #adminmenuwrap dl {
+  margin-left: auto;
+}
+
+body.gantry5.admin-color-fresh #g5-container [data-mode-indicator="production"] {
+  background-color: #0073AA;
+}
+body.gantry5.admin-color-fresh #g5-container #main-header .dev-mode-toggle {
+  background: #005177;
+}
+body.gantry5.admin-color-fresh #g5-container #main-header .dev-mode-toggle a {
+  background: #00a7f7;
+}
+body.gantry5.admin-color-fresh #g5-container #main-header .button-save {
+  background: #00a7f7;
+  color: #fff;
+}
+body.gantry5.admin-color-fresh #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-fresh #g5-container #main-header .button-save:focus {
+  background: #0092d8;
+  color: #fff;
+}
+body.gantry5.admin-color-fresh #g5-container #main-header ul li a:focus {
+  background: #005781;
+}
+body.gantry5.admin-color-fresh #g5-container #main-header ul li:hover a {
+  background: #005781;
+}
+body.gantry5.admin-color-fresh #g5-container #main-header ul li.active a {
+  background: #003f5e;
+}
+body.gantry5.admin-color-fresh #g5-container #main-header .settings-state {
+  background: #0073AA;
+}
+body.gantry5.admin-color-light #g5-container [data-mode-indicator="production"] {
+  background-color: #888888;
+}
+body.gantry5.admin-color-light #g5-container #main-header .dev-mode-toggle {
+  background: #6f6f6f;
+}
+body.gantry5.admin-color-light #g5-container #main-header .dev-mode-toggle a {
+  background: #aeaeae;
+}
+body.gantry5.admin-color-light #g5-container #main-header .button-save {
+  background: #aeaeae;
+  color: #fff;
+}
+body.gantry5.admin-color-light #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-light #g5-container #main-header .button-save:focus {
+  background: #9f9f9f;
+  color: #fff;
+}
+body.gantry5.admin-color-light #g5-container #main-header ul li a:focus {
+  background: #747474;
+}
+body.gantry5.admin-color-light #g5-container #main-header ul li:hover a {
+  background: #747474;
+}
+body.gantry5.admin-color-light #g5-container #main-header ul li.active a {
+  background: #626262;
+}
+body.gantry5.admin-color-light #g5-container #main-header .settings-state {
+  background: #888888;
+}
+body.gantry5.admin-color-blue #g5-container [data-mode-indicator="production"] {
+  background-color: #096484;
+}
+body.gantry5.admin-color-blue #g5-container #main-header .dev-mode-toggle {
+  background: #064054;
+}
+body.gantry5.admin-color-blue #g5-container #main-header .dev-mode-toggle a {
+  background: #0e9acc;
+}
+body.gantry5.admin-color-blue #g5-container #main-header .button-save {
+  background: #0e9acc;
+  color: #fff;
+}
+body.gantry5.admin-color-blue #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-blue #g5-container #main-header .button-save:focus {
+  background: #0c85af;
+  color: #fff;
+}
+body.gantry5.admin-color-blue #g5-container #main-header ul li a:focus {
+  background: #06475e;
+}
+body.gantry5.admin-color-blue #g5-container #main-header ul li:hover a {
+  background: #06475e;
+}
+body.gantry5.admin-color-blue #g5-container #main-header ul li.active a {
+  background: #042e3c;
+}
+body.gantry5.admin-color-blue #g5-container #main-header .settings-state {
+  background: #096484;
+}
+body.gantry5.admin-color-coffee #g5-container [data-mode-indicator="production"] {
+  background-color: #C7A589;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header .dev-mode-toggle {
+  background: #b78b66;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header .dev-mode-toggle a {
+  background: #e0cdbd;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header .button-save {
+  background: #e0cdbd;
+  color: #fff;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-coffee #g5-container #main-header .button-save:focus {
+  background: #d6bda8;
+  color: #fff;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header ul li a:focus {
+  background: #ba906d;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header ul li:hover a {
+  background: #ba906d;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header ul li.active a {
+  background: #ae7d55;
+}
+body.gantry5.admin-color-coffee #g5-container #main-header .settings-state {
+  background: #C7A589;
+}
+body.gantry5.admin-color-ectoplasm #g5-container [data-mode-indicator="production"] {
+  background-color: #A3B745;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .dev-mode-toggle {
+  background: #829237;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .dev-mode-toggle a {
+  background: #bfcd7b;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .button-save {
+  background: #bfcd7b;
+  color: #fff;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-ectoplasm #g5-container #main-header .button-save:focus {
+  background: #b4c565;
+  color: #fff;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header ul li a:focus {
+  background: #89993a;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header ul li:hover a {
+  background: #89993a;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header ul li.active a {
+  background: #727f30;
+}
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .settings-state {
+  background: #A3B745;
+}
+body.gantry5.admin-color-midnight #g5-container [data-mode-indicator="production"] {
+  background-color: #E14D43;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header .dev-mode-toggle {
+  background: #d02c21;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header .dev-mode-toggle a {
+  background: #ec8b85;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header .button-save {
+  background: #ec8b85;
+  color: #fff;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-midnight #g5-container #main-header .button-save:focus {
+  background: #e7726b;
+  color: #fff;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header ul li a:focus {
+  background: #d92e23;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header ul li:hover a {
+  background: #d92e23;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header ul li.active a {
+  background: #ba281e;
+}
+body.gantry5.admin-color-midnight #g5-container #main-header .settings-state {
+  background: #E14D43;
+}
+body.gantry5.admin-color-ocean #g5-container [data-mode-indicator="production"] {
+  background-color: #9EBAA0;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header .dev-mode-toggle {
+  background: #80a583;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header .dev-mode-toggle a {
+  background: #cbdacc;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header .button-save {
+  background: #cbdacc;
+  color: #fff;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-ocean #g5-container #main-header .button-save:focus {
+  background: #b9cdba;
+  color: #fff;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header ul li a:focus {
+  background: #86a989;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header ul li:hover a {
+  background: #86a989;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header ul li.active a {
+  background: #719a74;
+}
+body.gantry5.admin-color-ocean #g5-container #main-header .settings-state {
+  background: #9EBAA0;
+}
+body.gantry5.admin-color-sunrise #g5-container [data-mode-indicator="production"] {
+  background-color: #DD823B;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header .dev-mode-toggle {
+  background: #c36922;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header .dev-mode-toggle a {
+  background: #e8ac7c;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header .button-save {
+  background: #e8ac7c;
+  color: #fff;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-sunrise #g5-container #main-header .button-save:focus {
+  background: #e49b62;
+  color: #fff;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header ul li a:focus {
+  background: #cc6d23;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header ul li:hover a {
+  background: #cc6d23;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header ul li.active a {
+  background: #ad5d1e;
+}
+body.gantry5.admin-color-sunrise #g5-container #main-header .settings-state {
+  background: #DD823B;
+}
+body.gantry5 #g5-container #main-header dd, body.gantry5 #g5-container #main-header li {
+  margin-bottom: 0;
+}
+body.gantry5 #g5-container #main-header .g-content {
+  padding: 0 1.563rem;
+}
+body.gantry5 #g5-container #main-header .settings-state {
+  color: #fff;
+}
+body.gantry5 #g5-container .button.button-update {
+  background: #633679;
+  color: #fff;
+}
+body.gantry5 #g5-container .button.button-update:not(.disabled):not([disabled]):hover, body.gantry5 #g5-container .button.button-update:focus {
+  background: #522c64;
+  color: #fff;
+}
+body.gantry5 #g5-container .tooltip {
+  position: static;
+  opacity: 1;
+  line-height: inherit;
+  font-size: inherit;
+}
+
+body.gantry5.admin-color-fresh #footer a {
+  color: #0073AA;
+}
+body.gantry5.admin-color-fresh #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-fresh #wpfooter a {
+  color: #0073AA;
+}
+body.gantry5.admin-color-light #footer a {
+  color: #888888;
+}
+body.gantry5.admin-color-light #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-light #wpfooter a {
+  color: #888888;
+}
+body.gantry5.admin-color-blue #footer a {
+  color: #096484;
+}
+body.gantry5.admin-color-blue #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-blue #wpfooter a {
+  color: #096484;
+}
+body.gantry5.admin-color-coffee #footer a {
+  color: #C7A589;
+}
+body.gantry5.admin-color-coffee #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-coffee #wpfooter a {
+  color: #C7A589;
+}
+body.gantry5.admin-color-ectoplasm #footer a {
+  color: #A3B745;
+}
+body.gantry5.admin-color-ectoplasm #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-ectoplasm #wpfooter a {
+  color: #A3B745;
+}
+body.gantry5.admin-color-midnight #footer a {
+  color: #E14D43;
+}
+body.gantry5.admin-color-midnight #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-midnight #wpfooter a {
+  color: #E14D43;
+}
+body.gantry5.admin-color-ocean #footer a {
+  color: #9EBAA0;
+}
+body.gantry5.admin-color-ocean #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-ocean #wpfooter a {
+  color: #9EBAA0;
+}
+body.gantry5.admin-color-sunrise #footer a {
+  color: #DD823B;
+}
+body.gantry5.admin-color-sunrise #wpfooter {
+  background-color: #e7e7e7;
+}
+body.gantry5.admin-color-sunrise #wpfooter a {
+  color: #DD823B;
+}
+
+@media only all and (min-width: 60rem) {
+  body.gantry5 #g5-container .g5-dialog {
+    padding-left: 160px;
+  }
+}
+@media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+  body.gantry5 #g5-container .g5-dialog {
+    padding-left: 36px;
+  }
+}
+body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
+  top: 3em;
+}
+@media only all and (min-width: 60rem) {
+  body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
+    left: 160px;
+  }
+}
+@media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+  body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
+    left: 36px;
+  }
+}
+@media only all and (max-width: 47.938rem) {
+  body.gantry5 #g5-container .g5-dialog-loading-spinner.g5-dialog-theme-default {
+    top: 4em;
+  }
+}
+
+body.gantry5.admin-color-fresh #g5-container .overview-header .theme-title {
+  color: #0073AA;
+}
+body.gantry5.admin-color-light #g5-container .overview-header .theme-title {
+  color: #888888;
+}
+body.gantry5.admin-color-blue #g5-container .overview-header .theme-title {
+  color: #096484;
+}
+body.gantry5.admin-color-coffee #g5-container .overview-header .theme-title {
+  color: #C7A589;
+}
+body.gantry5.admin-color-ectoplasm #g5-container .overview-header .theme-title {
+  color: #A3B745;
+}
+body.gantry5.admin-color-midnight #g5-container .overview-header .theme-title {
+  color: #E14D43;
+}
+body.gantry5.admin-color-ocean #g5-container .overview-header .theme-title {
+  color: #9EBAA0;
+}
+body.gantry5.admin-color-sunrise #g5-container .overview-header .theme-title {
+  color: #DD823B;
+}
+
+#g5-container h1 {
+  font-size: 2.25rem;
+}
+#g5-container h2 {
+  font-size: 1.9rem;
+}
+#g5-container h3 {
+  font-size: 1.5rem;
+}
+#g5-container h4 {
+  font-size: 1.15rem;
+}
+#g5-container h5 {
+  font-size: 1rem;
+}
+#g5-container h6 {
+  font-size: 0.85rem;
+}
+#g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
+  line-height: inherit;
+}
+#g5-container p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+#g5-container .page-title {
+  color: inherit;
+  text-shadow: none;
+  line-height: inherit;
+}
+
+#g5-container #trash {
+  top: 30px;
+}
+#g5-container .g5-lm-particles-picker .settings-block input:not(.settings-param-toggle):not([type="checkbox"]) {
+  width: 250px;
+}
+#g5-container .g5-lm-particles-picker .settings-block.search {
+  font-size: inherit;
+}
+
+body.gantry5 #g5-container .navbar-block #navbar {
+  padding: 0 0.625rem;
+}
+body.gantry5 #g5-container .navbar-block #gantry-logo {
+  right: 2.1rem;
+}
+body.gantry5 #g5-container nav.navbar * {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.admin-color-fresh #g5-container .settings-block input:focus, .admin-color-fresh #g5-container .settings-block textarea:focus, .admin-color-fresh #g5-container .settings-block select:focus {
+  border-color: rgba(0, 115, 170, 0.5);
+}
+
+.admin-color-light #g5-container .settings-block input:focus, .admin-color-light #g5-container .settings-block textarea:focus, .admin-color-light #g5-container .settings-block select:focus {
+  border-color: rgba(136, 136, 136, 0.5);
+}
+
+.admin-color-blue #g5-container .settings-block input:focus, .admin-color-blue #g5-container .settings-block textarea:focus, .admin-color-blue #g5-container .settings-block select:focus {
+  border-color: rgba(9, 100, 132, 0.5);
+}
+
+.admin-color-coffee #g5-container .settings-block input:focus, .admin-color-coffee #g5-container .settings-block textarea:focus, .admin-color-coffee #g5-container .settings-block select:focus {
+  border-color: rgba(199, 165, 137, 0.5);
+}
+
+.admin-color-ectoplasm #g5-container .settings-block input:focus, .admin-color-ectoplasm #g5-container .settings-block textarea:focus, .admin-color-ectoplasm #g5-container .settings-block select:focus {
+  border-color: rgba(163, 183, 69, 0.5);
+}
+
+.admin-color-midnight #g5-container .settings-block input:focus, .admin-color-midnight #g5-container .settings-block textarea:focus, .admin-color-midnight #g5-container .settings-block select:focus {
+  border-color: rgba(225, 77, 67, 0.5);
+}
+
+.admin-color-ocean #g5-container .settings-block input:focus, .admin-color-ocean #g5-container .settings-block textarea:focus, .admin-color-ocean #g5-container .settings-block select:focus {
+  border-color: rgba(158, 186, 160, 0.5);
+}
+
+.admin-color-sunrise #g5-container .settings-block input:focus, .admin-color-sunrise #g5-container .settings-block textarea:focus, .admin-color-sunrise #g5-container .settings-block select:focus {
+  border-color: rgba(221, 130, 59, 0.5);
+}
+
+
+
+/*# sourceMappingURL=wordpress-admin.css.map */
