@@ -15,6 +15,7 @@
     * Improved UI/UX for Atoms section. A maximum of 5 Atoms are now ever displayed per row, returning to a new one if needed (#451)
     * Improved SCSS 3.3/3.4 compatibility
     * Accessibility improvements in admin (#673)
+    * Improve error message when parsing JS/CSS assets block fails (#704)
 3. [](#bugfix)
     * Administrator responsive issues in Settings Panel (#603)
     * Anchor links should not be modified (#624)

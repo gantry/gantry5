@@ -214,6 +214,36 @@ class TwigExtension extends \Twig_Extension
     }
 
     /**
+     * @param \libXMLError $error
+     * @param string $input
+     * @throws \RuntimeException
+     */
+    protected function dealXmlError(\libXMLError $error, $input)
+    {
+        switch ($error->level) {
+            case LIBXML_ERR_WARNING:
+                $level = 1;
+                $message = "DOM Warning {$error->code}: ";
+                break;
+            case LIBXML_ERR_ERROR:
+                $level = 2;
+                $message = "DOM Error {$error->code}: ";
+                break;
+            case LIBXML_ERR_FATAL:
+                $level = 3;
+                $message = "Fatal DOM Error {$error->code}: ";
+                break;
+        }
+        $message .= "{$error->message} while parsing:\n{$input}\n";
+
+        if ($level <= 2 && !Gantry::instance()->debug()) {
+            return;
+        }
+
+        throw new \RuntimeException($message, 500);
+    }
+
+    /**
      * Move supported document head elements into platform document object, return all
      * unsupported tags in a string.
      *
@@ -224,11 +254,31 @@ class TwigExtension extends \Twig_Extension
      */
     public function parseAssetsFunc($input, $location = 'head', $priority = 0)
     {
+        if ($location == 'head') {
+            $scope = 'head';
+        } else {
+            $scope = 'body';
+        }
+        $html = "<html><{$scope}>{$input}</{$scope}></html>";
+
+        $internal = libxml_use_internal_errors(true);
+
         $doc = new \DOMDocument();
-        $doc->loadHTML('<html><head>' . $input . '</head><body></body></html>');
+        $doc->loadHTML($html);
+        foreach (libxml_get_errors() as $error) {
+            $this->dealXmlError($error, $html);
+        }
+
+        libxml_clear_errors();
+
+        libxml_use_internal_errors($internal);
+
         $raw = [];
         /** @var \DomElement $element */
-        foreach ($doc->getElementsByTagName('head')->item(0)->childNodes as $element) {
+        foreach ($doc->getElementsByTagName($scope)->item(0)->childNodes as $element) {
+            if (empty($element->tagName)) {
+                continue;
+            }
             $result = ['tag' => $element->tagName, 'content' => $element->textContent];
             foreach ($element->attributes as $attribute) {
                 $result[$attribute->name] = $attribute->value;
