@@ -176,9 +176,6 @@ class Menu extends AbstractMenu
     /**
      * Get a list of the menu items.
      *
-     * Logic has been mostly copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
-     * We should keep the contents of the function similar to Joomla in order to review it against any changes.
-     *
      * @param  array  $params
      * @param  array  $items
      */
