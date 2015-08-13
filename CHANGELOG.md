@@ -1,48 +1,54 @@
 # 5.1.0
 ## XX/08/2015
 
-1. [](#new)
-    * New Menu Item `Disable Dropdowns` option that allows parents to not render sublevels and still be available (thanks @JoomFX - #611 / #675)
-    * Add Twig function preg_match() (#627)
-    * Add support for new twig tags: assets, scripts and styles
-    * Added Icon picker for the To Top Particle, you can now have Icon only, Text only or both (thanks @adi8i - #696)
-    * You can now consult the `Changelog` within the admin. A Changelog link can be found in the footer (for the current version), and a button will show up in the updates area when a new version is available.
-    * Add an example how to inject custom twig variables from the theme (see index.php in hydrogen)
-2. [](#improved)
-    * Available Themes: Open Preview in a new window
-    * Updated Google Fonts library (+2 fonts)
-    * Rendered titles for Menu Items is now an option of the Menu Particle (#670)
-    * Updated Hydrogen sample content to be more platform agnostic
-    * Menu Items rendering on frontend do not render an `id` anymore, since the id is already available in the classname (#629)
-    * Improved UI/UX for Atoms section. A maximum of 5 Atoms are now ever displayed per row, returning to a new one if needed (#451)
-    * Improved SCSS 3.3/3.4 compatibility
-    * Accessibility improvements in admin (#673)
-    * Improve error message when parsing JS/CSS assets block fails (#704)
-3. [](#bugfix)
-    * Administrator responsive issues in Settings Panel (#603)
-    * Anchor links should not be modified (#624)
-    * '&' symbol in external menu item not outputting properly (#598)
-    * Remove layout tab from base outline (#628)
-    * Trying to get property of non-object when accessing page without menu item (#632)
-    * Fixed layout manager particle titles overflowing boxes in smaller sizes (#637)
-    * Normalized height of standard select element to match other admin form elements
-    * Fixed label alignment in Joomla popup email form (#665)
-    * Fixed available theme notice text problems when no themes are installed (#655)
-    * Enable date particle, analytics and assets atoms by default to avoid confusion (#330)
-    * Fixed collapse of cards in Assignments when filtering with a non-matching word (#672)
-    * Fixed resizing Particles in LM where attached events wouldn't get properly removed and causing oddities with the History (fixes #556)
-    * Disable whoops when Gantry is in production mode and debug mode has been disabled (#681)
-    * Fixed Joomla frontend article editor and popup styling issues (#681)
-    * Load missing Joomla assets on AJAX popups (#683, #684)
-    * Added missing size class rules for Joomla frontend editing views
-    * Fixed Joomla frontend image manager alignment issues
-    * Removed additional padding from modals that were incorrectly inheriting it
-    * Added missing responsive bootstrap classes required for Joomla editing views (#684)
-    * Logo Particle now properly redirects to Home even if clicked from a subpage (#676)
-    * Menu Particle: max levels does not work (#698)
-    * Ignore non-overrideable values in Settings page (#621)
-    * Exceptions thrown outside Gantry are not triggering the default error page, but intercepted by Whoops (#649)
-    * Fix missing preview image in Hydrogen template (#707)
+1. [Common](#common)
+    1. [](#new)
+        - New Menu Item `Disable Dropdowns` option that allows parents to not render sublevels and still be available (thanks @JoomFX - #611 / #675)
+        - Add Twig function preg_match() (#627)
+        - Add support for new twig tags: assets, scripts and styles
+        - Added Icon picker for the To Top Particle, you can now have Icon only, Text only or both (thanks @adi8i - #696)
+        - You can now consult the `Changelog` within the admin. A Changelog link can be found in the footer (for the current version), and a button will show up in the updates area when a new version is available.
+        - Add an example how to inject custom twig variables from the theme (see index.php in hydrogen)
+    2. [](#improved)
+        - Available Themes: Open Preview in a new window
+        - Updated Google Fonts library (+2 fonts)
+        - Rendered titles for Menu Items is now an option of the Menu Particle (#670)
+        - Updated Hydrogen sample content to be more platform agnostic
+        - Menu Items rendering on frontend do not render an `id` anymore, since the id is already available in the classname (#629)
+        - Improved UI/UX for Atoms section. A maximum of 5 Atoms are now ever displayed per row, returning to a new one if needed (#451)
+        - Improved SCSS 3.3/3.4 compatibility
+        - Accessibility improvements in admin (#673)
+        - Improve error message when parsing JS/CSS assets block fails (#704)
+    3. [](#bugfix)
+        - Administrator responsive issues in Settings Panel (#603)
+        - Anchor links should not be modified (#624)
+        - '&' symbol in external menu item not outputting properly (#598)
+        - Remove layout tab from base outline (#628)
+        - Trying to get property of non-object when accessing page without menu item (#632)
+        - Fixed layout manager particle titles overflowing boxes in smaller sizes (#637)
+        - Normalized height of standard select element to match other admin form elements
+        - Enable date particle, analytics and assets atoms by default to avoid confusion (#330)
+        - Fixed collapse of cards in Assignments when filtering with a non-matching word (#672)
+        - Fixed resizing Particles in LM where attached events wouldn't get properly removed and causing oddities with the History (fixes #556)
+        - Disable whoops when Gantry is in production mode and debug mode has been disabled (#681)
+        - Removed additional padding from modals that were incorrectly inheriting it
+        - Logo Particle now properly redirects to Home even if clicked from a subpage (#676)
+        - Menu Particle: max levels does not work (#698)
+        - Ignore non-overrideable values in Settings page (#621)
+        - Exceptions thrown outside Gantry are not triggering the default error page, but intercepted by Whoops (#649)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fixed available theme notice text problems when no themes are installed (#655)
+        - Fixed label alignment in Joomla popup email form (#665)
+        - Load missing Joomla assets on AJAX popups (#683, #684)
+        - Added missing responsive bootstrap classes required for Joomla editing views (#684)
+        - Fix missing preview image in Hydrogen template (#707)
+        - Fixed Joomla frontend article editor and popup styling issues (#681)
+        - Added missing size class rules for Joomla frontend editing views
+        - Fixed Joomla frontend image manager alignment issues
+3. [Wordpress](#wordpress)
+    1. [](#new)
+        * Wordpress is now integrated with Gantry 5!
 
 # 5.0.1
 ## 07/16/2015
