@@ -3136,6 +3136,7 @@ var $              = require('elements'),
     toastr         = ui.toastr,
 
     parseAjaxURI   = require('./utils/get-ajax-url').parse,
+    getAjaxURL     = require('./utils/get-ajax-url').global,
     getAjaxSuffix  = require('./utils/get-ajax-suffix'),
 
     flags          = require('./utils/flags-state'),
@@ -3154,9 +3155,9 @@ require('./ui/popover');
 require('./utils/ajaxify-links');
 require('./utils/rAF-polyfill');
 
-var createHandler = function(divisor,noun,restOfString){
-    return function(diff){
-        var n = Math.floor(diff/divisor);
+var createHandler = function(divisor, noun, restOfString) {
+    return function(diff) {
+        var n = Math.floor(diff / divisor);
         var pluralizedNoun = noun + ( n > 1 ? 's' : '' );
         return "" + n + " " + pluralizedNoun + " " + restOfString;
     }
@@ -3183,10 +3184,10 @@ var formatters = [
 ];
 
 var prettyDate = {
-    format: function (date) {
+    format: function(date) {
         var diff = (((new Date()).getTime() - date.getTime()) / 1000);
-        for( var i=0; i<formatters.length; i++ ){
-            if( diff < formatters[i].threshold ){
+        for (var i = 0; i < formatters.length; i++) {
+            if (diff < formatters[i].threshold) {
                 return formatters[i].handler(diff);
             }
         }
@@ -3194,7 +3195,7 @@ var prettyDate = {
     }
 };
 
-window.onbeforeunload = function(){
+window.onbeforeunload = function() {
     if (flags.get('pending')) {
         return 'You haven\'t saved your changes and by leaving the page they will be lost.\nDo you want to leave without saving?';
     }
@@ -3216,7 +3217,7 @@ ready(function() {
     });
 
     // Extras
-    body.delegate('click', '[data-g-extras]', function(event, element){
+    body.delegate('click', '[data-g-extras]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
         if (!element.PopoverDefined) {
@@ -3233,13 +3234,13 @@ ready(function() {
     });
 
     // Platform Settings redirect
-    body.delegate('mousedown', '[data-settings-key]', function(event, element){
+    body.delegate('mousedown', '[data-settings-key]', function(event, element) {
         var key = element.data('settings-key');
         if (!key) { return true; }
 
         var redirect = window.location.search,
             settings = element.attribute('href'),
-            uri = window.location.href.split('?');
+            uri      = window.location.href.split('?');
         if (uri.length > 1 && uri[0].match(/index.php$/)) { redirect = 'index.php' + redirect; }
 
         redirect = setParam(settings, key, btoa(redirect));
@@ -3247,7 +3248,7 @@ ready(function() {
     });
 
     // Save Tooltip
-    body.delegate('mouseover', '.button-save', function(event, element){
+    body.delegate('mouseover', '.button-save', function(event, element) {
         if (!element.lastSaved) { return true; }
         element.addClass('g-tooltip').addClass('g-tooltip-right').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
     });
@@ -3433,6 +3434,22 @@ ready(function() {
 
             indicator.hideIndicator();
         })
+    });
+
+    // Changelog
+    body.delegate('click', '[data-changelog]', function(event, element) {
+        event.preventDefault();
+
+        modal.open({
+            content: 'Loading',
+            method: 'post',
+            className: 'g5-dialog-theme-default g5-modal-changelog',
+            data: { version: element.data('changelog') },
+            remote: parseAjaxURI(getAjaxURL('changelog') + getAjaxSuffix()),
+            remoteLoaded: function(response, content) {
+                if (!response.body.success) { return; }
+            }
+        });
     });
 
 });
