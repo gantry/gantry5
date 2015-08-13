@@ -27,5 +27,5 @@
 {% endif %}
 </a>
 <a class="config-cog" href="{{ item.type == 'particle' ? gantry.route('menu/particle')|e : gantry.route('menu/edit', id, item.path)|e }}">
-    <i class="fa fa-cog"></i>
+    <i aria-label="Menu Item Settings" class="fa fa-cog"></i>
 </a>
