@@ -2029,9 +2029,41 @@ body.g-prime {
   src: url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.eot");
   src: url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.woff") format("woff"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.ttf") format("truetype"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.svg#roboto") format("svg");
 }
+@font-face {
+  font-family: "grav";
+  font-weight: normal;
+  font-style: normal;
+  src: url("../fonts/grav/grav.eot");
+  src: url("../fonts/grav/grav.eot?#iefix") format("embedded-opentype"), url("../fonts/grav/grav.woff") format("woff"), url("../fonts/grav/grav.ttf") format("truetype"), url("../fonts/grav/grav.svg#grav") format("svg");
+}
 .font-small, #g5-container .card h4[data-g-collapse] .g-collapse, #g5-container .g-filters-bar label, #g5-container .g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #menu-editor li .menu-item .menu-item-content .menu-item-subtitle, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .fa.font-small, #g5-container .card h4[data-g-collapse] .fa.g-collapse, #g5-container .g-filters-bar label.fa, #g5-container .fa.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .fa.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .fa.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .fa.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #menu-editor li .menu-item .menu-item-content .fa.menu-item-subtitle, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.fa {
   font-size: 0.8rem;
   vertical-align: middle;
+}
+
+i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
+  font-family: 'grav';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fa-grav-full:before {
+  content: "\e600";
+}
+
+.fa-grav-text:before {
+  content: "\e601";
+}
+
+.fa-grav:before, .fa-grav-spaceman:before {
+  content: "\e602";
 }
 
 #g5-container .main-block {
