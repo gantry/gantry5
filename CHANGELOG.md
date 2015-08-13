@@ -1,5 +1,5 @@
-# 5.0.2
-## XX/XX/2015
+# 5.1.0
+## XX/08/2015
 
 1. [](#new)
     * New Menu Item `Disable Dropdowns` option that allows parents to not render sublevels and still be available (thanks @JoomFX - #611 / #675)
@@ -42,7 +42,7 @@
     * Menu Particle: max levels does not work (#698)
     * Ignore non-overrideable values in Settings page (#621)
     * Exceptions thrown outside Gantry are not triggering the default error page, but intercepted by Whoops (#649)
-    * Fix missing preview image in Hydrogen template
+    * Fix missing preview image in Hydrogen template (#707)
 
 # 5.0.1
 ## 07/16/2015
