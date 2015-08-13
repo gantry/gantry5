@@ -22,6 +22,7 @@ use Symfony\Component\Yaml\Yaml as YamlParser;
 class Changelog extends JsonController
 {
     protected $url = 'https://raw.githubusercontent.com/gantry/gantry5';
+    protected $fullurl = 'https://github.com/gantry/gantry5/blob/develop/CHANGELOG.md';
     protected $issues = 'https://github.com/gantry/gantry5/issues/';
     protected $contrib = 'https://github.com/';
     protected $file = 'CHANGELOG.md';
@@ -58,8 +59,9 @@ class Changelog extends JsonController
 
         $response = [
             'html' => $this->container['admin.theme']->render('@gantry-admin/ajax/changelog.html.twig', [
-                'changelog' => $changelog,
-                'version'   => $version
+                'changelog'     => $changelog,
+                'version'       => $version,
+                'fullchangelog' => $this->fullurl
             ])
         ];
 
