@@ -1,0 +1,15 @@
+// Widgets - global
+.widget {
+
+    // Custom Menu Widget
+    &.widget_nav_menu {
+        ul.menu {
+            margin-left: 0;
+            list-style: none;
+
+            ul.sub-menu {
+                list-style: none;
+            }
+        }
+    }
+}

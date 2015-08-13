@@ -371,6 +371,14 @@ a img.aligncenter {
   outline: none;
 }
 
+.widget.widget_nav_menu ul.menu {
+  margin-left: 0;
+  list-style: none;
+}
+.widget.widget_nav_menu ul.menu ul.sub-menu {
+  list-style: none;
+}
+
 
 
 /*# sourceMappingURL=wordpress.css.map */
