@@ -8519,7 +8519,7 @@ var Modal = new prime({
                     return;
                 }
 
-                elements.content.html(response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body);
+                elements.content.html(response.body.html || response.body);
 
                 if (!response.body.success) {
                     if (!response.body.html) { elements.content.style({ width: '90%' }); }
