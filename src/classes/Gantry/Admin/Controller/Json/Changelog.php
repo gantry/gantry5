@@ -17,14 +17,13 @@ namespace Gantry\Admin\Controller\Json;
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\Remote\Response as RemoteResponse;
 use Gantry\Component\Response\JsonResponse;
-use Symfony\Component\Yaml\Yaml as YamlParser;
 
 class Changelog extends JsonController
 {
     protected $url = 'https://raw.githubusercontent.com/gantry/gantry5';
-    protected $fullurl = 'https://github.com/gantry/gantry5/blob/develop/CHANGELOG.md';
-    protected $issues = 'https://github.com/gantry/gantry5/issues/';
-    protected $contrib = 'https://github.com/';
+    protected $fullurl = 'https://github.com/gantry/gantry5/blob/develop';
+    protected $issues = 'https://github.com/gantry/gantry5/issues';
+    protected $contrib = 'https://github.com';
     protected $file = 'CHANGELOG.md';
     protected $httpVerbs = [
         'POST' => [
@@ -38,15 +37,15 @@ class Changelog extends JsonController
 
         if ($version == '@version@') {
             $version = 'develop';
-            $lookup = '';
+            $lookup  = '';
         }
 
         if (substr($version, 0, 4) == 'dev-') {
             $version = preg_replace('/^dev-/i', '', $version);
-            $lookup = '';
+            $lookup  = '';
         }
 
-        $url = $this->url . '/' . $version . '/' . $this->file;
+        $url       = $this->url . '/' . $version . '/' . $this->file;
         $changelog = RemoteResponse::get($url);
 
         if ($changelog) {
@@ -56,10 +55,10 @@ class Changelog extends JsonController
                 $changelog = \Parsedown::instance()->parse($changelog[0]);
 
                 // fix issues links
-                $changelog = preg_replace("/#(\\d{1,})/uis", '<a target="_blank" href="' . $this->issues . '$1">#$1</a>', $changelog);
+                $changelog = preg_replace("/#(\\d{1,})/uis", '<a target="_blank" href="' . $this->issues . '/$1">#$1</a>', $changelog);
 
                 // fix contributors links
-                $changelog = preg_replace("/@([\\w]+)[^\\w]/uis", '<a target="_blank" href="' . $this->contrib . '$1">@$1</a> ', $changelog);
+                $changelog = preg_replace("/@([\\w]+)[^\\w]/uis", '<a target="_blank" href="' . $this->contrib . '/$1">@$1</a> ', $changelog);
             } else {
                 $changelog = 'No changelog for version <strong>' . $version . '</strong> was found.';
             }
@@ -67,10 +66,10 @@ class Changelog extends JsonController
 
         $response = [
             'html' => $this->container['admin.theme']->render('@gantry-admin/ajax/changelog.html.twig', [
-                'changelog'     => $changelog,
-                'version'       => $version,
-                'url'           => $url,
-                'fullchangelog' => $this->fullurl
+                'changelog' => $changelog,
+                'version'   => $version,
+                'url'       => $url,
+                'fullurl'   => $this->fullurl . '/' . $this->file
             ])
         ];
 
