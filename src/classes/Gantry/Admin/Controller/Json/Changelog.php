@@ -35,14 +35,22 @@ class Changelog extends JsonController
     public function index()
     {
         $version = $this->request->post['version'];
+
         if ($version == '@version@') {
             $version = 'develop';
+            $lookup = '';
         }
 
-        $changelog = RemoteResponse::get($this->url . '/' . $version . '/' . $this->file);
+        if (substr($version, 0, 4) == 'dev-') {
+            $version = preg_replace('/^dev-/i', '', $version);
+            $lookup = '';
+        }
+
+        $url = $this->url . '/' . $version . '/' . $this->file;
+        $changelog = RemoteResponse::get($url);
 
         if ($changelog) {
-            $found = preg_match("/(#\\s" . ($version == 'develop' ? '' : $version) . ".+?\\n.*?)(?=\\n{1,}#|$)/uis", $changelog, $changelog);
+            $found = preg_match("/(#\\s" . $lookup . ".+?\\n.*?)(?=\\n{1,}#|$)/uis", $changelog, $changelog);
 
             if ($found) {
                 $changelog = \Parsedown::instance()->parse($changelog[0]);
@@ -61,6 +69,7 @@ class Changelog extends JsonController
             'html' => $this->container['admin.theme']->render('@gantry-admin/ajax/changelog.html.twig', [
                 'changelog'     => $changelog,
                 'version'       => $version,
+                'url'           => $url,
                 'fullchangelog' => $this->fullurl
             ])
         ];
