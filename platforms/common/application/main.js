@@ -18,7 +18,8 @@ var $              = require('elements'),
     validateField  = require('./utils/field-validation'),
     lm             = require('./lm'),
     mm             = require('./menu'),
-    configurations = require('./configurations');
+    configurations = require('./configurations'),
+    changelog      = require('./changelog');
 
 require('elements/attributes');
 require('elements/events');
@@ -309,22 +310,6 @@ ready(function() {
 
             indicator.hideIndicator();
         })
-    });
-
-    // Changelog
-    body.delegate('click', '[data-changelog]', function(event, element) {
-        event.preventDefault();
-
-        modal.open({
-            content: 'Loading',
-            method: 'post',
-            className: 'g5-dialog-theme-default g5-modal-changelog',
-            data: { version: element.data('changelog') },
-            remote: parseAjaxURI(getAjaxURL('changelog') + getAjaxSuffix()),
-            remoteLoaded: function(response, content) {
-                if (!response.body.success) { return; }
-            }
-        });
     });
 
 });

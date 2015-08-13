@@ -6133,6 +6133,14 @@ html.g5-dialog-open {
   margin-bottom: 1.5rem;
   color: #999;
 }
+#g5-container #g-changelog > ol > li > a {
+  display: block;
+  font-size: 1.5rem;
+  color: #888;
+  text-align: center;
+  padding: 1rem 0 0;
+  text-transform: uppercase;
+}
 #g5-container #g-changelog ol a[href='#bugfix'] + ul > li:before {
   background-color: #fc2929;
   content: 'Bugfix';
@@ -6145,6 +6153,9 @@ html.g5-dialog-open {
   background-color: #fbca04;
   color: #333;
   content: "Improved";
+}
+#g5-container #g-changelog ol > li:last-child > ul > li:last-child {
+  border-bottom: 0;
 }
 #g5-container #g-changelog ul li {
   padding: 0.5rem 0;
@@ -6167,6 +6178,13 @@ html.g5-dialog-open {
   font-size: 0.8rem;
   vertical-align: middle;
   padding: 0 2px;
+}
+#g5-container #g-changelog .g-changelog-toggle {
+  font-size: 0.85rem;
+  vertical-align: middle;
+  display: inline-block;
+  margin: -6px 0 0 6px;
+  color: #a2a2a2;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-changelog .g5-content {
   width: 700px;

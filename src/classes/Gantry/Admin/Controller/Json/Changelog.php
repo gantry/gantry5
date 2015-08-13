@@ -25,6 +25,9 @@ class Changelog extends JsonController
     protected $issues = 'https://github.com/gantry/gantry5/issues';
     protected $contrib = 'https://github.com';
     protected $file = 'CHANGELOG.md';
+
+    protected $platforms = ['common' => 'share-alt', 'joomla' => '', 'wordpress' => '', 'grav' => ''];
+
     protected $httpVerbs = [
         'POST' => [
             '/' => 'index'
@@ -54,11 +57,16 @@ class Changelog extends JsonController
             if ($found) {
                 $changelog = \Parsedown::instance()->parse($changelog[0]);
 
-                // fix issues links
+                // auto-link issues
                 $changelog = preg_replace("/#(\\d{1,})/uis", '<a target="_blank" href="' . $this->issues . '/$1">#$1</a>', $changelog);
 
-                // fix contributors links
+                // auto-link contributors
                 $changelog = preg_replace("/@([\\w]+)[^\\w]/uis", '<a target="_blank" href="' . $this->contrib . '/$1">@$1</a> ', $changelog);
+
+                // add icons for platforms
+                foreach($this->platforms as $platform => $icon) {
+                    $changelog = preg_replace('/(<a href="\#' . $platform . '">)/uis', '$1<i class="fa fa-' . ($icon ?: $platform) . '"></i> ', $changelog);
+                }
             } else {
                 $changelog = 'No changelog for version <strong>' . $version . '</strong> was found.';
             }
