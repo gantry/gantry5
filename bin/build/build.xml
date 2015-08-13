@@ -207,7 +207,7 @@
     </target>
 
     <target name="checksum">
-        <manifest file="${source}/MD5SUM" checksum="md5">
+        <manifest file="${source}/MD5SUMS" checksum="md5">
             <fileset dir="${source}" />
         </manifest>
     </target>

@@ -42,6 +42,7 @@
     * Menu Particle: max levels does not work (#698)
     * Ignore non-overrideable values in Settings page (#621)
     * Exceptions thrown outside Gantry are not triggering the default error page, but intercepted by Whoops (#649)
+    * Fix missing preview image in Hydrogen template
 
 # 5.0.1
 ## 07/16/2015
