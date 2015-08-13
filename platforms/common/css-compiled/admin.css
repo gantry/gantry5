@@ -6147,7 +6147,8 @@ html.g5-dialog-open {
   content: "Improved";
 }
 #g5-container #g-changelog ul li {
-  margin-bottom: .1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
   padding-left: 6rem;
 }
 #g5-container #g-changelog ul li:before {

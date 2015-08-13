@@ -42,7 +42,8 @@
         }
 
         ul li {
-            margin-bottom: .1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid $light-gray;
             padding-left: 6rem;
 
             &:before {
