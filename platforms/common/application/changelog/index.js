@@ -37,12 +37,11 @@ ready(function() {
 
                     if (!trim(section.text())) {
                         // no platforms
-                        return; 
+                        return;
                     }
 
                     // if it's not common but the current platform, move it after common
                     if (i && !collapsed) {
-                        console.log('a');
                         section.parent('li').after(section.parent('ol').find('> li'));
                     }
 
