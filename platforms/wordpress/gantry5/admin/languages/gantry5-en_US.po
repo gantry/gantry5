@@ -366,6 +366,9 @@ msgstr "Updates Available"
 msgid "GANTRY5_PLATFORM_UPDATE"
 msgstr "Update"
 
+msgid "GANTRY5_PLATFORM_CHANGELOG"
+msgstr "Changelog"
+
 msgid "GANTRY5_PLATFORM_SYSTEM_OUTLINES"
 msgstr "System Outlines"
 
