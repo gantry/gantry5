@@ -128,10 +128,7 @@ class Configurations extends AbstractConfigurationCollection
             throw new \RuntimeException("Outline cannot use reserved name '{$name}'", 400);
         }
 
-        $path = $locator->findResource("gantry-config://{$name}", true, true);
-        if (is_dir($path)) {
-            throw new \RuntimeException("Outline '$title' already exists.", 400);
-        }
+        $name = $this->findFreeName($name);
 
         // Create index file for the new layout.
         $layout = new Layout($name, Layout::preset($preset));
@@ -280,6 +277,10 @@ class Configurations extends AbstractConfigurationCollection
      */
     protected function findFreeName($id)
     {
+        if (!isset($this->items[$id])) {
+            return $id;
+        }
+
         $gantry = $this->container;
 
         /** @var UniformResourceLocator $locator */
