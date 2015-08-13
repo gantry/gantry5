@@ -7,6 +7,7 @@
     * Add support for new twig tags: assets, scripts and styles
     * Added Icon picker for the To Top Particle, you can now have Icon only, Text only or both (thanks @adi8i - #696)
     * You can now consult the `Changelog` within the admin. A Changelog link can be found in the footer (for the current version), and a button will show up in the updates area when a new version is available.
+    * Add an example how to inject custom twig variables from the theme (see index.php in hydrogen)
 2. [](#improved)
     * Available Themes: Open Preview in a new window
     * Updated Google Fonts library (+2 fonts)
