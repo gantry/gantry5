@@ -14,6 +14,7 @@
 
 namespace Gantry\Framework\Base;
 
+use FilesystemIterator;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Configuration\AbstractConfigurationCollection;
 use Gantry\Component\Filesystem\Folder;
@@ -30,18 +31,10 @@ class Configurations extends AbstractConfigurationCollection
      */
     public function load($path = 'gantry-config://')
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        /** @var UniformResourceIterator $iterator */
-        $iterator = $locator->getIterator(
-            $path,
-            UniformResourceIterator::CURRENT_AS_SELF | UniformResourceIterator::KEY_AS_FILENAME |
-            UniformResourceIterator::UNIX_PATHS | UniformResourceIterator::SKIP_DOTS
-        );
+        $iterator = $this->getFilesystemIterator($path);
 
         $files = [];
-        /** @var UniformResourceIterator $info */
+        /** @var FilesystemIterator $info */
         foreach ($iterator as $name => $info) {
             if (!$info->isDir() || $name[0] == '.') {
                 continue;
@@ -301,8 +294,33 @@ class Configurations extends AbstractConfigurationCollection
 
         do {
             $count++;
-        } while ($locator("gantry-config://{$name}_{$count}"));
+        } while (isset($this->items["{$name}_{$count}"]));
 
         return "{$name}_{$count}";
+    }
+
+    protected function getFilesystemIterator($path)
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        $custom = $locator->findResource($path, true, true);
+        if (is_dir($custom)) {
+            /** @var FilesystemIterator $iterator */
+            $iterator = new FilesystemIterator(
+                $custom,
+                FilesystemIterator::CURRENT_AS_SELF | FilesystemIterator::KEY_AS_FILENAME |
+                FilesystemIterator::UNIX_PATHS | FilesystemIterator::SKIP_DOTS
+            );
+        } else {
+            /** @var UniformResourceIterator $iterator */
+            $iterator = $locator->getIterator(
+                $path,
+                UniformResourceIterator::CURRENT_AS_SELF | UniformResourceIterator::KEY_AS_FILENAME |
+                UniformResourceIterator::UNIX_PATHS | UniformResourceIterator::SKIP_DOTS
+            );
+        }
+
+        return $iterator;
     }
 }
