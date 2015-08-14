@@ -279,7 +279,7 @@ a img.aligncenter {
   }
 }
 #comments ol.commentlist li.comment {
-  margin: 20px 0;
+  margin: 20px 0 0;
 }
 #comments ol.commentlist li.comment .comment-author {
   display: -webkit-box;
