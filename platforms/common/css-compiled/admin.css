@@ -2156,7 +2156,6 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   display: inline-block;
   vertical-align: middle;
   line-height: 1rem;
-  height: 38px;
 }
 
 .selectize-dropdown, .selectize-input, .selectize-input input {
@@ -2178,7 +2177,6 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   padding: 6px 12px;
   display: inline-block;
   width: 100%;
-  overflow: hidden;
   position: relative;
   z-index: 1;
   -webkit-box-sizing: border-box;
@@ -2371,6 +2369,9 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 }
 .selectize-control.multi .selectize-input [data-value].active {
   background-color: #2a98c2;
+}
+.selectize-control.single .selectize-input {
+  height: 38px;
 }
 
 .selectize-control.single .selectize-input, .selectize-dropdown.single {
