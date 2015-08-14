@@ -59,7 +59,7 @@ class Document extends BaseDocument
                 switch ($script[':type']) {
                     case 'file':
                         $array = explode('?', $script['src']);
-                        $href = array_shift($array);
+                        $src = array_shift($array);
                         $version = array_shift($array) ?: false;
                         $name = basename($src, '.js');
                         \wp_enqueue_script($name, $src, array(), $version, $in_footer);
