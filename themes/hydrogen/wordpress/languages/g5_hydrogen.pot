@@ -59,24 +59,9 @@ msgstr ""
 #: search.php:19
 msgid "Search results for:"
 msgstr ""
-#. Theme Name of the plugin/theme
-msgid "Hydrogen"
-msgstr ""
-
-#. Theme URI of the plugin/theme
-msgid "http://gantry.org"
-msgstr ""
 
 #. Description of the plugin/theme
 msgid "Default Gantry 5 theme. Provides a simple, clean and fast design to get you started on developing your own theme or setting up a quick new site"
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "RocketTheme, LLC"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "http://rockettheme.com"
 msgstr ""
 
 #. views/404.html.twig
