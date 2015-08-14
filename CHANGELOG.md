@@ -42,7 +42,7 @@
         - Fixed label alignment in Joomla popup email form (#665)
         - Load missing Joomla assets on AJAX popups (#683, #684)
         - Added missing responsive bootstrap classes required for Joomla editing views (#684)
-        - Fix missing preview image in Hydrogen template (#707)
+        - Fix missing preview image in template manager, fix gets applied after upgrading template (#707)
         - Fixed Joomla frontend article editor and popup styling issues (#681)
         - Added missing size class rules for Joomla frontend editing views
         - Fixed Joomla frontend image manager alignment issues
