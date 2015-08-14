@@ -28,9 +28,11 @@ class Document extends BaseDocument
             foreach ($styles as $style) {
                 switch ($style[':type']) {
                     case 'file':
-                        $href = preg_replace('/(\?.*)$/', '', $style['href']);
+                        $array = explode('?', $style['href']);
+                        $href = array_shift($array);
+                        $version = array_shift($array) ?: false;
                         $name = basename($href, '.css');
-                        \wp_enqueue_style($name, $href, array(), false, $style['media']);
+                        \wp_enqueue_style($name, $href, array(), $version, $style['media']);
                         break;
                     case 'inline':
                         $type = !empty($style['type']) ? $style['type'] : 'text/css';
@@ -56,9 +58,11 @@ class Document extends BaseDocument
             foreach ($scripts as $script) {
                 switch ($script[':type']) {
                     case 'file':
-                        $src = preg_replace('/(\?.*)$/', '', $script['src']);
+                        $array = explode('?', $script['src']);
+                        $href = array_shift($array);
+                        $version = array_shift($array) ?: false;
                         $name = basename($src, '.js');
-                        \wp_enqueue_script($name, $src, array(), false, $in_footer);
+                        \wp_enqueue_script($name, $src, array(), $version, $in_footer);
                         break;
                     case 'inline':
                         $type = !empty($script['type']) ? $script['type'] : 'text/javascript';
