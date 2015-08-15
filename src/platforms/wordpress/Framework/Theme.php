@@ -45,6 +45,8 @@ class Theme extends Base\Theme
     {
         parent::init();
 
+        $this->preset_styles_init();
+
         // Load theme text domains
         $domain = $this->details()->get('configuration.theme.textdomain', $this->name);
         load_theme_textdomain( $domain, $this->path . '/languages' );
@@ -203,5 +205,54 @@ class Theme extends Base\Theme
         }
 
         return $this->wordpress;
+    }
+
+    public function preset_styles_init()
+    {
+        if(!is_admin()) {
+            $gantry = Gantry::instance();
+
+            $cookie = md5($this->name);
+            $request = $gantry['request'];
+
+            $presetVar = 'presets';
+            $resetVar = 'reset-settings';
+
+            if ($request->request[$resetVar] !== null) {
+                $preset = false;
+            } else {
+                $preset = $request->request[$presetVar];
+            }
+
+            if ($preset !== null) {
+                if ($preset === false) {
+                    // Invalidate the cookie.
+                    $this->updateCookie($cookie, false, time() - 42000);
+                } else {
+                    // Update the cookie.
+                    $this->updateCookie($cookie, sanitize_html_class($preset), 0);
+                }
+            } else {
+                $preset = $request->cookie[$cookie];
+            }
+
+            $preset = ($preset) ? sanitize_html_class($preset) : null;
+            $this->setPreset($preset);
+        }
+    }
+
+    public function preset_styles_update_css()
+    {
+        $cookie = md5($this->name);
+
+        $this->updateCookie($cookie, false, time() - 42000);
+    }
+
+    protected function updateCookie($name, $value, $expire = 0)
+    {
+        $path   = SITECOOKIEPATH;
+        $domain = COOKIE_DOMAIN;
+
+        setcookie($name, $value, $expire, $path, $domain);
     }
 }
