@@ -158,10 +158,10 @@ class Menu extends AbstractMenu
             $menuItem->level = count($tree);
             $menuItem->tree = array_merge($tree, [$menuItem->db_id]);
             $menuItem->path = implode('/', $menuItem->tree);
-            $list[] = $menuItem;
+            $list[$menuItem->db_id] = $menuItem;
 
             if ($menuItem->children) {
-                $list = array_merge($list, $this->buildList($menuItem->children, $menuItem->tree));
+                $list += $this->buildList($menuItem->children, $menuItem->tree);
             }
 
             if ($menuItem->current) {
@@ -171,6 +171,22 @@ class Menu extends AbstractMenu
         }
 
         return $list;
+    }
+
+    protected function getMenuSlug(array &$menuItems, $tree)
+    {
+        $result = [];
+        foreach ($tree as $id) {
+            if (!isset($menuItems[$id])) {
+                throw new \RuntimeException("Menu item parent ($id) cannot be found");
+            }
+            $slug = is_admin() ? $menuItems[$id]->title : $menuItems[$id]->title();
+            $slug = str_replace(' ', '-', strtolower($slug));
+            $slug = preg_replace('/[^a-z0-9-_]*/u', '', $slug);
+            $result[] = $slug;
+        }
+
+        return implode('/', $result);
     }
 
     /**
@@ -194,12 +210,16 @@ class Menu extends AbstractMenu
                 $itemMap[$itemRef['id']] = &$itemRef;
             }
         }
+        $slugMap = [];
 
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
 
         foreach ($menuItems as $menuItem) {
             $parent = $menuItem->menu_item_parent;
+
+            $slugPath = $this->getMenuSlug($menuItems, $menuItem->tree);
+            $slugMap[$slugPath] = $menuItem->db_id;
 
             // TODO: Path is menu path to the current page..
             $tree = [];
@@ -219,9 +239,9 @@ class Menu extends AbstractMenu
                 'attr_title' => $menuItem->attr_title,
                 // TODO: use
                 'xfn' => $menuItem->xfn,
-                'parent_id' => $menuItem->menu_item_parent,
-                'path' => $menuItem->path,
-                'level' => $menuItem->level
+                'path' => $slugPath,
+                'alias' => basename($slugPath),
+                'level' => $menuItem->level + 1
             ];
 
             // Rest of the items will come from saved configuration.
@@ -237,7 +257,7 @@ class Menu extends AbstractMenu
                 'class' => implode(' ', $menuItem->classes)
             ];
 
-            $item = new Item($this, $menuItem->path, $itemParams);
+            $item = new Item($this, $slugPath, $itemParams);
             $this->add($item);
 
             // Placeholder page.
@@ -261,5 +281,4 @@ class Menu extends AbstractMenu
             }
         }
     }
-
 }
