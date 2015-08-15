@@ -19,6 +19,7 @@
         - Improved SCSS 3.3/3.4 compatibility
         - Accessibility improvements in admin (#673)
         - Improve error message when parsing JS/CSS assets block fails (#704)
+        - Change url() logic for plain ?foo=bar urls to avoid issues when url is requested together with domain
     3. [](#bugfix)
         - Administrator responsive issues in Settings Panel (#603)
         - Anchor links should not be modified (#624)

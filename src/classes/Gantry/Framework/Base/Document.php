@@ -275,11 +275,13 @@ class Document
 
         // Add query string back.
         if (!empty($parts['query'])) {
+            if (!$uri) $uri = static::rootUri();
             $uri .= '?' . $parts['query'];
         }
 
         // Add fragment back.
         if (!empty($parts['fragment'])) {
+            if (!$uri) $uri = static::rootUri();
             $uri .= '#' . $parts['fragment'];
         }
 
