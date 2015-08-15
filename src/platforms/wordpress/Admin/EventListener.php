@@ -37,6 +37,7 @@ class EventListener implements EventSubscriberInterface
 
     public function onStylesSave(Event $event)
     {
+        $event->theme->preset_styles_update_css();
     }
 
     public function onSettingsSave(Event $event)
