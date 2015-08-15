@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 class G5_HydrogenInstallerScript
 {
-    public $requiredGantryVersion = '@version@';
+    public $requiredGantryVersion = '5.0.1';
 
     public function preflight($type, $parent)
     {
@@ -31,9 +31,11 @@ class G5_HydrogenInstallerScript
 
             Gantry5\Loader::setup();
 
-            //if (version_compare(GANTRY5_VERSION, $this->requiredGantryVersion, '<')) {
-            //  throw new \RuntimeException(sprintf('Please upgrade Gantry 5 Framework to v%s (or later) before installing %s template!', strtoupper($this->requiredGantryVersion), $name));
-            //}
+            $gantry = Gantry\Framework\Gantry::instance();
+
+            if (!method_exists($gantry, 'isCompatible') || !$gantry->isCompatible($this->requiredGantryVersion)) {
+              throw new \RuntimeException(sprintf('Please upgrade Gantry 5 Framework to v%s (or later) before installing %s template!', strtoupper($this->requiredGantryVersion), $name));
+            }
 
         } catch (Exception $e) {
             $app = JFactory::getApplication();
