@@ -46,6 +46,7 @@ class Assignments
      */
     public function save(array $data)
     {
+        $data = $data['assignments'];
         foreach ($data as $tname => &$type) {
             foreach ($type as $gname => &$group) {
                 foreach ($group as $key => $value) {
