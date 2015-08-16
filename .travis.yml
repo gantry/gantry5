@@ -32,7 +32,7 @@ script:
   - if [ "$TRAVIS_BRANCH" == "develop" ]; then
       php build.php dev -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dxml.version=dev-$SHORT_COMMIT -Dstr.fileversion=_develop;
     elif [ ! -z "$TRAVIS_TAG" ]; then
-      php build.php joomla-prod -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dxml.version=$TRAVIS_TAG;
+      php build.php prod -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dxml.version=$TRAVIS_TAG;
     else
       echo "($TRAVIS_BRANCH) is not a supported branch for builds";
     fi
