@@ -132,7 +132,7 @@ class EventListener implements EventSubscriberInterface
                     'menu-item-object-id' => $wpItem->object_id,
                     'menu-item-object' => $wpItem->object,
                     'menu-item-parent-id' => $wpItem->menu_item_parent,
-                    'menu-item-position' => $ordering[$item['id']],
+                    'menu-item-position' => isset($ordering[$item['path']]) ? $ordering[$item['path']] : 0,
                     'menu-item-type' => $wpItem->type,
                     'menu-item-title' => trim($item['title']),
                     'menu-item-url' => trim($item['link']),
@@ -171,16 +171,19 @@ class EventListener implements EventSubscriberInterface
         wp_defer_term_counting(false);
     }
 
-    protected function flattenOrdering(array $ordering, &$i = 0)
+    protected function flattenOrdering(array $ordering, $parents = [], &$i = 0)
     {
         $list = [];
         $group = isset($ordering[0]);
         foreach ($ordering as $id => $children) {
-            if (!$group) {
-                $list[$id] = ++$i;
+            $tree = $parents;
+            if (!$group && !preg_match('/^__particle/', $id)) {
+                $tree[] = $id;
+                $name = implode('/', $tree);
+                $list[$name] = ++$i;
             }
             if (is_array($children)) {
-                $list += $this->flattenOrdering($children, $i);
+                $list += $this->flattenOrdering($children, $tree, $i);
             }
         }
 
