@@ -2,8 +2,8 @@
 Contributors: gantry
 Author URI: http://gantry.org
 Tags: gantry, gantry5, framework, template, theme, yaml, twig, timber, scss, less, html5, css3, bourbon, layout, builder, widgets, flexible, extensible, configurable, flex, grid, columns, powerful, buddypress, woocommerce, bbpress
-Requires at least: 4.2.2+
-Tested up to: 4.2.2
+Requires at least: 4.2+
+Tested up to: 4.3
 Stable tag: @version@
 
 Gantry is a comprehensive set of building blocks to enable the rapid development and realization of a design into a flexible and powerful web platform
@@ -24,7 +24,7 @@ Gantry 5 uses the **Nucleus** grid system, built from scratch using Flexbox and 
 
 ==== Cross-platform Support ====
 
-The new responsive Gantry 5 framework is available for **Joomla 3.4+**, **WordPress 4.2.2++**, **phpBB 3.1+**, **Grav 1.0+**, and **Magento CE 1.9.1+**.
+The new responsive Gantry 5 framework is available for **Joomla 3.4+**, **WordPress 4.2++**, **phpBB 3.1+**, **Grav 1.0+**, and **Magento CE 1.9.1+**.
 
 >>> Gantry 5's initial beta launch will only be compatible with Joomla 3.4+. Additional platforms will be added as development continues.
 
@@ -96,7 +96,7 @@ Please note that Gantry Framework plugin doesn't come up with the default theme.
 
 We try to ensure that any Gantry theme and the Gantry Plugin specifically will work with any modern and secure server environment. The recommended minimum requirements are :
 
-* WordPress 4.2.2 or higher
+* WordPress 4.2 or higher
 * PHP 5.4+ (5.5+ recommended)
 * MySQL 3.23 (5+ recommended)
 * Apache 1.3 (2.2+ recommended)
