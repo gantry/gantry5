@@ -14,6 +14,7 @@ namespace Gantry\WordPress\Assignments;
 class AssignmentsContext implements AssignmentsInterface
 {
     public $type = 'context';
+    public $priority = 1;
 
     protected $context = [
         'is_404'            => '404 Not Found Page',
@@ -44,7 +45,7 @@ class AssignmentsContext implements AssignmentsInterface
         $rules = [];
         foreach($this->context as $var => $label) {
             if (isset($wp_query->$var) && $wp_query->$var === true) {
-                $rules[$var] = 1;
+                $rules[$var] = $this->priority;
             }
         }
 

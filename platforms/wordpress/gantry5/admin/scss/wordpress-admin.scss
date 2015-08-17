@@ -10,6 +10,9 @@
 @import "nucleus/functions/base";
 @import "nucleus/mixins/base";
 
+// Load Optional Nucleus Assets
+@import "nucleus/theme/alerts";
+
 // Load Admin Configuration
 @import "configuration/admin/base";
 
@@ -40,5 +43,8 @@
 // Layout Manager
 @import "wordpress-admin/layout-manager";
 
-// Assignments
+// Navbar
 @import "wordpress-admin/navbar";
+
+// Settings
+@import "wordpress-admin/settings";

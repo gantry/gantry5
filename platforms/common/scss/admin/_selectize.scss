@@ -83,7 +83,6 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     padding: $selectize-padding-y $selectize-padding-x;
     display: inline-block;
     width: 100%;
-    overflow: hidden;
     position: relative;
     z-index: 1;
     @include box-sizing(border-box);
@@ -289,6 +288,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     }
     &.single {
         .selectize-input {
+            height: 38px;
             //box-shadow: 0 1px 0 rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);
             //@include linear-gradient(#fefefe, #f2f2f2);
         }

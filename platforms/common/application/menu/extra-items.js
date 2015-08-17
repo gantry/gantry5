@@ -97,13 +97,17 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
 
 var StepTwo = function(data, content, button) {
     var uri = content.find('[data-mm-particle-stepone]').data('mm-particle-stepone'),
-        picker = data.instancepicker;
+        picker = data.instancepicker,
+        moduleType = {
+            wordpress: 'widget',
+            joomla: 'particle'
+        };
 
     if (picker) {
         var item = JSON.parse(data.item);
         picker = JSON.parse(picker);
         delete(data.instancepicker);
-        uri = getAjaxURL(item.type + '/' + item.particle);
+        uri = getAjaxURL(item.type + '/' + item[moduleType[GANTRY_PLATFORM]]);
     }
 
     request('post', parseAjaxURI(uri + getAjaxSuffix()), data, function(error, response) {
@@ -156,7 +160,9 @@ var StepTwo = function(data, content, button) {
                     override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                 if (override && !override.checked()) { return; }
-                dataString.push(name + '=' + encodeURIComponent(value));
+                if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
+                    dataString.push(name + '=' + encodeURIComponent(value));
+                }
             });
 
             var title = content.find('[data-title-editable]');
@@ -244,11 +250,15 @@ ready(function() {
             selected = container.find('[data-lm-blocktype].selected, [data-mm-module].selected'),
             type = selected.data('mm-type');
 
-        data = { type: 'particle' };
+        data = { type: type };
 
         switch (type) {
             case 'particle':
                 data['particle'] = selected.data('lm-subtype');
+                break;
+
+            case 'widget':
+                data['widget'] = selected.data('lm-subtype');
                 break;
 
             case 'module':

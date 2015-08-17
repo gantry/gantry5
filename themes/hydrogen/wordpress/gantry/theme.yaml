@@ -37,6 +37,7 @@ configuration:
     base: gantry-theme://common
     file: gantry-theme://include/theme.php
     class: \Gantry\Framework\Theme
+    textdomain: g5_hydrogen
 
   fonts:
     roboto:
@@ -51,10 +52,12 @@ configuration:
       - gantry-engine://scss
     files:
       - hydrogen
+      - hydrogen-wordpress
       - custom
     persistent:
       - hydrogen
     overrides:
+      - hydrogen-wordpress
       - custom
 
   dependencies:
@@ -62,6 +65,13 @@ configuration:
     engine/nucleus: 1.0.*
     asset/font-awesome: 4.2
     particle/menu: 1.0.*
+
+chrome:
+  gantry:
+    before_widget: <div id="%1s" class="widget %2s">
+    after_widget: </div>
+    before_title: <h2 class="widgettitle">
+    after_title: </h2>
 
 admin:
   styles:
@@ -73,8 +83,6 @@ admin:
       - base
   content:
     blog:
-      - query
-      - post-content
       - heading
       - featured-image
       - title
@@ -84,8 +92,7 @@ admin:
       - meta-categories
       - meta-tags
       - read-more
-    post:
-      - heading
+    single:
       - featured-image
       - title
       - meta-date
@@ -94,58 +101,11 @@ admin:
       - meta-categories
       - meta-tags
     page:
-      - heading
       - featured-image
       - title
       - meta-date
       - meta-author
-      - meta-comments
     archive:
-      - post-content
-      - heading
-      - featured-image
-      - title
-      - meta-date
-      - meta-author
-      - meta-comments
-      - meta-categories
-      - meta-tags
-      - read-more
-    category:
-      - post-content
-      - heading
-      - featured-image
-      - title
-      - meta-date
-      - meta-author
-      - meta-comments
-      - meta-categories
-      - meta-tags
-      - read-more
-    tag:
-      - post-content
-      - heading
-      - featured-image
-      - title
-      - meta-date
-      - meta-author
-      - meta-comments
-      - meta-categories
-      - meta-tags
-      - read-more
-    author:
-      - post-content
-      - heading
-      - featured-image
-      - title
-      - meta-date
-      - meta-author
-      - meta-comments
-      - meta-categories
-      - meta-tags
-      - read-more
-    search:
-      - post-content
       - heading
       - featured-image
       - title

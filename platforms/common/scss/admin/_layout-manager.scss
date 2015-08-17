@@ -256,6 +256,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 }
             }
 
+            .g-block {
+                min-width: 20%;
+            }
+
             > .g-block {
                 > .particle, > .position, > .spacer, > .pagecontent {
                     &:after {
@@ -266,11 +270,18 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 }
             }
 
-            .g-block:last-child {
-                .particle, .position, .spacer, .pagecontent, .atom {
+            /* sets the atoms margin-right to 0 for the last item or in case of nowrap to every 5th
+            .g-block
+                &:nth-child(5n+5) .atom {
+                    margin-right: 0;
+                }
+
+                &:last-child {
+                .particle, .position, .spacer, .pagecontent {
                     margin-right: 0;
                 }
             }
+            */
         }
 
         .offcanvas-section {
@@ -369,6 +380,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             background: $position;
             margin-right: 6px;
             position: relative;
+            white-space: nowrap;
 
             &[data-lm-nodrag] {
                 cursor: default;
@@ -387,14 +399,27 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 position: relative;
                 z-index: 2;
                 display: inline-block;
+                width: 100%;
 
                 span {
                     display: block;
 
                     &:last-child {
                         color: rgba($white, 0.7);
-                        margin-top: -3px;
                     }
+                }
+
+                .title {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .font-small {
+                    line-height: $core-line-height - 0.2;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin-top: -3px;
+                    margin-bottom: -3px;
                 }
             }
 
@@ -413,6 +438,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                     z-index: 2;
                 }
             }
+        }
+
+        .atom {
+            margin: 0 6px 6px 0px;
         }
 
         .particle-size {
@@ -494,6 +523,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             &.in-between.in-between-sections {
                 width: auto;
             }
+        }
+
+        .atoms-section .placeholder.in-between {
+            margin-bottom: 6px;
         }
 
         .block-has-changes {

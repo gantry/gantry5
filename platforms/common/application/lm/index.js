@@ -451,7 +451,10 @@ ready(function() {
 
                         if (override && !override.checked()) { return; }
                         if (!validateField(input)) { invalid.push(input); }
-                        dataString.push(name + '=' + encodeURIComponent(value));
+
+                        if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
+                            dataString.push(name + '=' + encodeURIComponent(value));
+                        }
                     });
 
                     var title = content.elements.content.find('[data-title-editable]');

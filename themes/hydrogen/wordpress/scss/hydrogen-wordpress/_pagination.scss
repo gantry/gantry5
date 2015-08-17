@@ -1,0 +1,10 @@
+// Pagination
+.pagination, .page-links {
+
+    .page-numbers, .prev, .next {
+        padding: 0.3rem 1rem;
+        background: #fafafa;
+        border: 1px solid $base-border-color;
+        border-radius: $core-border-radius;
+    }
+}

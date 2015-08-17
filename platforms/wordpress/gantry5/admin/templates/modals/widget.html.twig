@@ -1,0 +1,48 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+<form method="post" action="{{ gantry.route(action) }}">
+    <div class="g-tabs">
+        <ul>
+            <li class="active"><a href="#">{{ 'Widget'|trans }}</a></li>
+            {% if block %}
+            <li><a href="#">{{ 'GANTRY5_PLATFORM_BLOCK'|trans }}</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="g-panes">
+        <div class="g-pane active">
+            <div class="card settings-block">
+                <h4>
+                    <span data-title-editable="{{ item.title }}" class="title">{{ item.title }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
+                    <span class="badge font-small">{{ item.options.type }}</span>
+                </h4>
+
+                <div class="wp-form-params">
+                    {{ form|raw }}
+                </div>
+            </div>
+        </div>
+
+        {% if block %}
+        <div class="g-pane">
+            <div class="card settings-block">
+                <h4>
+                    {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
+                </h4>
+                <div class="inner-params">
+                    {% include 'forms/fields.html.twig' with {'blueprints': block.form, 'data': item.options, 'prefix': 'block.'} %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="g-modal-actions">
+        <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
+        <button class="button button-primary" data-apply-and-save>{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
+        <a class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</a>
+    </div>
+</form>
+{% endblock %}

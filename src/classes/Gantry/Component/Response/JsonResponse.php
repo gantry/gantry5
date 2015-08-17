@@ -54,7 +54,7 @@ class JsonResponse extends Response
         // Empty output buffer to make sure that the response is clean and valid.
         while (($output = ob_get_clean()) !== false) {
             // In debug mode send also output buffers (debug dumps, PHP notices and warnings).
-            if ($output && defined(GANTRY5_DEBUG)) {
+            if ($output && (defined(GANTRY5_DEBUG) || headers_sent())) {
                 $this->messages['php'][] = $output;
             }
         }

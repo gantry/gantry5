@@ -37,7 +37,7 @@ class Page extends Base\Page
         $this->class = '';
         if ($this->itemid) {
             $menuItem = $app->getMenu()->getActive();
-            if ($menuItem->id) {
+            if ($menuItem && $menuItem->id) {
                 $this->class = $menuItem->params->get('pageclass_sfx', '');
             }
         }

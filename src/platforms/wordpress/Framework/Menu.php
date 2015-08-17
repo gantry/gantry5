@@ -7,16 +7,14 @@ use Gantry\Component\Menu\Item;
 
 class Menu extends AbstractMenu
 {
-    use GantryTrait;
-
     protected $menus;
+    protected $wp_menu;
+    protected $current;
+    protected $active = [];
 
     public function __construct()
     {
         $this->menus = $this->getMenus();
-
-        $this->default = reset($this->menus);
-        $this->active  = $this->default;
     }
 
     /**
@@ -37,7 +35,7 @@ class Menu extends AbstractMenu
             $get_menus = wp_get_nav_menus(apply_filters('g5_menu_get_menus_args', $args));
 
             foreach($get_menus as $menu) {
-                $list[] = $menu->slug;
+                $list[$menu->term_id] = $menu->slug;
             }
         }
 
@@ -45,33 +43,31 @@ class Menu extends AbstractMenu
     }
 
     /**
-     * Return default menu.
+     * Get menu configuration.
      *
-     * @return string
+     * @return Config
      */
-    public function getDefaultMenuName()
+    public function config()
     {
-        return $this->default;
+        if ($this->config) {
+            return $this->config;
+        }
+
+        $config = parent::config();
+
+        $menu = $this->getWPMenu($this->params);
+
+        $config->set('settings.title', $menu->name);
+
+        return $config;
     }
 
-    /**
-     * Returns true if the platform implements a Default menu mechanism
-     *
-     * @return boolean
-     */
-    public function hasDefaultMenuMechanism()
-    {
-        return false;
-    }
+    protected function getWPMenu($params) {
+        if (!isset($this->wp_menu)) {
+            $this->wp_menu = new \TimberMenu($params['menu']);
+        }
 
-    /**
-     * Return active menu.
-     *
-     * @return string
-     */
-    public function getActiveMenuName()
-    {
-        return $this->active;
+        return $this->wp_menu;
     }
 
     /**
@@ -82,25 +78,52 @@ class Menu extends AbstractMenu
      */
     protected function getItemsFromPlatform($params)
     {
-        $menu = new \TimberMenu($params['menu']);
+        if (is_admin()) {
+            $gantry = static::gantry();
+            $menus = array_flip($gantry['menu']->getMenus());
+            $id = isset($menus[$params['menu']]) ? $menus[$params['menu']] : 0;
+
+            // Save global menu settings into Wordpress.
+            $menuObject = wp_get_nav_menu_object($id);
+            if (is_wp_error($menuObject)) {
+                return null;
+            }
+
+            // Get all menu items.
+            $unsorted_menu_items = wp_get_nav_menu_items(
+                $id,
+                ['post_status' => 'draft,publish']
+            );
+
+            $menuItems = [];
+            foreach ($unsorted_menu_items as $menuItem) {
+                $tree = $menuItem->menu_item_parent ? $menuItems[$menuItem->menu_item_parent]->tree : [];
+                $menuItem->level = count($tree);
+                $menuItem->tree = array_merge($tree, [$menuItem->db_id]);
+                $menuItem->path = implode('/', $menuItem->tree);
+                $menuItems[$menuItem->db_id] = $menuItem;
+            }
+
+            return $menuItems;
+        }
+
+        $menu = $this->getWPMenu($params);
 
         if ($menu) {
-            return $menu->get_items();
+            return $this->buildList($menu->get_items());
         }
 
         return null;
     }
 
-    public function isActive($item) {
-//        if($item->current)
-//            return true;
-
-        return false;
+    public function isActive($item)
+    {
+        return isset($this->active[$item->id]);
     }
 
     public function isCurrent($item)
     {
-        return $item->current;
+        return $this->current == $item->id;
     }
 
     /**
@@ -116,8 +139,8 @@ class Menu extends AbstractMenu
      */
     protected function calcBase($itemid = null)
     {
-        // Use active menu item or fall back to default menu item.
-        $base = $this->active ?: $this->default;
+        // Use current menu item or fall back to default menu item.
+        $base = $this->current ?: $this->default;
 
         // Return base menu item.
         return $base;
@@ -132,24 +155,42 @@ class Menu extends AbstractMenu
         }
 
         foreach ($menuItems as $menuItem) {
-            $menuItem->level = count($tree) + 1;
-            $menuItem->tree = array_merge($tree, [$menuItem->id]);
+            $menuItem->level = count($tree);
+            $menuItem->tree = array_merge($tree, [$menuItem->db_id]);
             $menuItem->path = implode('/', $menuItem->tree);
-            $list[] = $menuItem;
+            $list[$menuItem->db_id] = $menuItem;
 
             if ($menuItem->children) {
-                $list = array_merge($list, $this->buildList($menuItem->children, $menuItem->tree));
+                $list += $this->buildList($menuItem->children, $menuItem->tree);
+            }
+
+            if ($menuItem->current) {
+                $this->current = $menuItem->db_id;
+                $this->active += array_flip($menuItem->tree);
             }
         }
 
         return $list;
     }
 
+    protected function getMenuSlug(array &$menuItems, $tree)
+    {
+        $result = [];
+        foreach ($tree as $id) {
+            if (!isset($menuItems[$id])) {
+                throw new \RuntimeException("Menu item parent ($id) cannot be found");
+            }
+            $slug = is_admin() ? $menuItems[$id]->title : $menuItems[$id]->title();
+            $slug = str_replace(' ', '-', strtolower($slug));
+            $slug = preg_replace('/[^a-z0-9-_]*/u', '', $slug);
+            $result[] = $slug;
+        }
+
+        return implode('/', $result);
+    }
+
     /**
      * Get a list of the menu items.
-     *
-     * Logic has been mostly copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
-     * We should keep the contents of the function similar to Joomla in order to review it against any changes.
      *
      * @param  array  $params
      * @param  array  $items
@@ -157,9 +198,10 @@ class Menu extends AbstractMenu
     public function getList(array $params, array $items)
     {
         $start   = $params['startLevel'];
-        $end     = $params['endLevel'];
+        $max     = $params['maxLevels'];
+        $end     = $max ? $start + $max - 1 : 0;
 
-        $menuItems = $this->buildList($this->getItemsFromPlatform($params));
+        $menuItems = $this->getItemsFromPlatform($params);
         if($menuItems === null) return;
 
         $itemMap = [];
@@ -168,12 +210,16 @@ class Menu extends AbstractMenu
                 $itemMap[$itemRef['id']] = &$itemRef;
             }
         }
+        $slugMap = [];
 
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
 
         foreach ($menuItems as $menuItem) {
             $parent = $menuItem->menu_item_parent;
+
+            $slugPath = $this->getMenuSlug($menuItems, $menuItem->tree);
+            $slugMap[$slugPath] = $menuItem->db_id;
 
             // TODO: Path is menu path to the current page..
             $tree = [];
@@ -186,33 +232,36 @@ class Menu extends AbstractMenu
 
             // These params always come from WordPress.
             $itemParams = [
-                'id' => $menuItem->id,
+                'id' => $menuItem->db_id,
                 'type' => $menuItem->type,
-                'alias' => $menuItem->title(),
-                'link' => $menuItem->link(),
+                'link' => is_admin() ? $menuItem->url : $menuItem->link(),
+                // TODO: use
                 'attr_title' => $menuItem->attr_title,
+                // TODO: use
                 'xfn' => $menuItem->xfn,
-                'parent_id' => $menuItem->menu_item_parent,
-                'current'   => $menuItem->current
+                'path' => $slugPath,
+                'alias' => basename($slugPath),
+                'level' => $menuItem->level + 1
             ];
 
             // Rest of the items will come from saved configuration.
-            if (isset($itemMap[$menuItem->id])) {
+            if (isset($itemMap[$menuItem->db_id])) {
                 // ID found, use it.
-                $itemParams += $itemMap[$menuItem->id];
+                $itemParams += $itemMap[$menuItem->db_id];
             }
 
             // And if not available in configuration, default to WordPress.
             $itemParams += [
-                'title' => $menuItem->title(),
-                'target' => $menuItem->target ?: '_self'
+                'title' => is_admin() ? $menuItem->title : $menuItem->title(),
+                'target' => $menuItem->target ?: '_self',
+                'class' => implode(' ', $menuItem->classes)
             ];
 
-            $item = new Item($this, $menuItem->path, $itemParams);
+            $item = new Item($this, $slugPath, $itemParams);
             $this->add($item);
 
             // Placeholder page.
-            if ($item->type == 'custom' && (trim($item->url) == '#' || trim($item->url) == '')) {
+            if ($item->type == 'custom' && $item->link == '#' || $item->link == '') {
                 $item->type = 'separator';
             }
 
@@ -232,5 +281,4 @@ class Menu extends AbstractMenu
             }
         }
     }
-
 }

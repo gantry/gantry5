@@ -8,20 +8,17 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+defined( 'ABSPATH' ) or die;
+
 /*
  * Search results page
  */
 
-$chooser = new \Gantry\Framework\OutlineChooser;
-
-/** @var \Gantry\Framework\Theme $theme */
-$theme = $gantry[ 'theme' ];
-$theme->setLayout( $chooser->select() );
-
-$templates = array( 'search.html.twig', 'archive.html.twig', 'index.html.twig' );
 $context = Timber::get_context();
 
-$context[ 'title' ] = 'Search results for '. get_search_query();
+$context[ 'title' ] = __( 'Search results for:', 'g5_hydrogen' ) . ' ' . get_search_query();
 $context[ 'posts' ] = Timber::get_posts();
+
+$templates = [ 'search.html.twig', 'archive.html.twig', 'index.html.twig' ];
 
 Timber::render( $templates, $context );

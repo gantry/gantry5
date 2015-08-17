@@ -37,7 +37,8 @@
             @include transition (background-color 0.2s ease-in-out);
 
             &:hover {
-                background-color: darken($navbar-bg, 3%);
+                background-color: darken($navbar-bg, 7%);
+                color: darken ($navbar-color, 15%);
             }
 
             &.active {
@@ -45,6 +46,11 @@
 
                 a {
                     color: $navbar-active-color;
+
+                    &:focus {
+                        background-color: inherit;
+                        color: $navbar-active-color;
+                    }
                 }
             }
 
@@ -61,6 +67,11 @@
                 @include breakpoint(mobile-only) {
                     text-align: center;
                     padding: $content-padding $content-padding + 0.1;
+                }
+
+                &:focus {
+                    background-color: darken($navbar-bg, 7%);
+                    color: darken ($navbar-color, 15%);
                 }
 
                 i {

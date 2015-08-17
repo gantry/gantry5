@@ -1,0 +1,189 @@
+# Copyright (C) 2015 RocketTheme, LLC
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Hydrogen @version@\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/theme/wordpress\n"
+"POT-Creation-Date: 2015-08-06 20:21:49+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: archive.php:26
+msgid "Archive"
+msgstr ""
+
+#: archive.php:28 archive.php:30 archive.php:32
+msgid "Archive:"
+msgstr ""
+
+#: author.php:25
+msgid "Author:"
+msgstr ""
+
+#: functions.php:26
+msgid "Error locating %s for inclusion"
+msgstr ""
+
+#: includes/gantry.php:49
+msgid "Timber library plugin not found. "
+msgstr ""
+
+#: includes/gantry.php:51
+msgid "Theme cannot be used. For more information, please see the notice in administration."
+msgstr ""
+
+#: includes/helper.php:50
+msgid "<span class=\"author-name\">%s</span>"
+msgstr ""
+
+#: includes/helper.php:53
+msgid "%1$s"
+msgstr ""
+
+#: includes/helper.php:56
+msgid "(Edit)"
+msgstr ""
+
+#: includes/helper.php:63
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: index.php:22
+msgid "Timber not activated. Make sure you activate the plugin in <a href=\"/wp-admin/plugins.php#timber\">/wp-admin/plugins.php</a>"
+msgstr ""
+
+#: search.php:19
+msgid "Search results for:"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Default Gantry 5 theme. Provides a simple, clean and fast design to get you started on developing your own theme or setting up a quick new site"
+msgstr ""
+
+#. views/404.html.twig
+msgid "404 Not Found"
+msgstr ""
+
+#. views/404.html.twig
+msgid "Sorry, we couldn\'t find what you\'re looking for."
+msgstr ""
+
+#. views/archive.html.twig
+msgid "Sorry, but there aren\'t any posts matching your query."
+msgstr ""
+
+#. views/offline.html.twig
+msgid "Page Offline"
+msgstr ""
+
+#. views/offline.html.twig
+msgid "Offline Message!"
+msgstr ""
+
+#. views/searchform.html.twig
+msgid "Search for:"
+msgstr ""
+
+#. views/searchform.html.twig
+msgid "Search …"
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "Comments"
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "Older comments"
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "Newer comments"
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "Leave a Reply"
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "Leave a Reply to %s"
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "You must be <a href="%s">logged in</a> to post a comment."
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "Logged in as <a href="%s/wp-admin/profile.php">%s</a>."
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "Log out of this account"
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "Log out &raquo;"
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "Name"
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "(required)"
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "Email"
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "Website"
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "Your comment goes here."
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "You can use these tags:"
+msgstr ""
+
+#. views/partials/comments.html.twig
+msgid "Submit Comment"
+msgstr ""
+
+#. views/partials/content-page.html.twig
+msgid "Edit"
+msgstr ""
+
+#. views/partials/meta.html.twig
+msgid "No comments"
+msgstr ""
+
+#. views/partials/meta.html.twig
+msgid "Comment"
+msgstr ""
+
+#. views/partials/meta.html.twig
+msgid "Comments"
+msgstr ""
+
+#. views/partials/pagination.html.twig
+msgid "Prev"
+msgstr ""
+
+#. views/partials/pagination.html.twig
+msgid "Next"
+msgstr ""
+
+#. views/partials/password-form.html.twig
+msgid "Password"
+msgstr ""
+
+#. views/partials/password-form.html.twig
+msgid "Submit"
+msgstr ""

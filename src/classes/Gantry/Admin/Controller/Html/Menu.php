@@ -74,7 +74,11 @@ class Menu extends HtmlController
     public function item($id = null)
     {
         // Load the menu.
-        $resource = $this->loadResource($id, $this->build($this->request->post));
+        try {
+            $resource = $this->loadResource($id, $this->build($this->request->post));
+        } catch (\Exception $e) {
+            return $this->container['admin.theme']->render('@gantry-admin/pages/menu/menu.html.twig', $this->params);
+        }
 
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
@@ -88,7 +92,7 @@ class Menu extends HtmlController
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $resource->name();
         $this->params['menus'] = $resource->getMenus();
-        $this->params['default_menu'] = $resource->hasDefaultMenuMechanism() ? $resource->getDefaultMenuName() : false;
+        $this->params['default_menu'] = $resource->hasDefaultMenu() ? $resource->getDefaultMenuName() : false;
         $this->params['menu'] = $resource;
         $this->params['path'] = implode('/', $path);
 
@@ -240,6 +244,7 @@ class Menu extends HtmlController
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params);
     }
+
 
     public function validateParticle($name)
     {

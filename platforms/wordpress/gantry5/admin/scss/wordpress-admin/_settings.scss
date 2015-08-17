@@ -1,0 +1,13 @@
+@each $preset, $core-accent in $wp-admin-presets {
+    .admin-color-#{$preset} {
+        #g5-container {
+            .settings-block {
+                input, textarea, select {
+                    &:focus {
+                        border-color: rgba($core-accent, .5);
+                    }
+                }
+            }
+        }
+    }
+}

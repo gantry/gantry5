@@ -42,7 +42,7 @@ var Map         = map,
             });
         },
 
-        filterSection: function(e, element, value) {
+        filterSection: function(e, element, value, global) {
             if (element.parent('[data-g-global-filter]')) { return Assignments.globalFilterSection(e, element); }
 
             var card        = element.parent('.card'),
@@ -95,7 +95,7 @@ var Map         = map,
                 }
 
                 count++;
-                if (count == items.length) {
+                if (count == items.length && global) {
                     card.style('display', !on ? 'none' : 'inline-block');
                 }
             });
@@ -146,7 +146,7 @@ var Map         = map,
             if (!search && !onlyEnabled.checked()) { return; }
 
             asyncForEach(search, function(item) {
-                Assignments.filterSection(e, $(item), value);
+                Assignments.filterSection(e, $(item), value, 'global');
             });
         }
     };

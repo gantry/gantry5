@@ -8,25 +8,21 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+defined( 'ABSPATH' ) or die;
+
 /*
  * The template for displaying Author Archive pages
  */
-
-$chooser = new \Gantry\Framework\OutlineChooser;
-
-/** @var \Gantry\Framework\Theme $theme */
-$theme = $gantry[ 'theme' ];
-$theme->setLayout( $chooser->select() );
 
 global $wp_query;
 
 $context = Timber::get_context();
 $context[ 'posts' ] = Timber::get_posts();
 
-if( isset( $query_vars[ 'author' ] ) ) {
-	$author = new TimberUser( $wp_query->query_vars[ 'author' ] );
+if( isset( $authordata ) ) {
+	$author = new TimberUser( $authordata->ID );
 	$context[ 'author' ] = $author;
-	$context[ 'title' ] = 'Author Archives: ' . $author->name();
+	$context[ 'title' ] = __( 'Author:', 'g5_hydrogen' ) . ' ' . $author->name();
 }
 
-Timber::render( array( 'author.html.twig', 'archive.html.twig' ), $context );
+Timber::render( [ 'author.html.twig', 'archive.html.twig', 'index.html.twig' ], $context );

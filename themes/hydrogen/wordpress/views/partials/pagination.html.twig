@@ -1,0 +1,33 @@
+{% set twigTemplate = 'pagination.html.twig' %}
+
+<div class="pagination">
+
+    {% block pagination %}
+
+        <ul class="pagination-list">
+            {% if pagination.prev %}
+                <li class="pagination-list-item pagination-prev {{ pagination.prev.link|length ? '' : 'hide' }}">
+                    <a href="{{ pagination.prev.link }}" class="prev">{{ __('Prev', 'g5_callisto') }}</a>
+                </li>
+            {% endif %}
+
+            {% for page in pagination.pages %}
+                <li class="pagination-list-item {{ page.current ? 'current-item' }}">
+                    {% if page.link %}
+                        <a href="{{ page.link }}" class="{{ page.class }}">{{ page.title }}</a>
+                    {% else %}
+                        <span class="{{ page.class }}">{{ page.title }}</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+
+            {% if pagination.next %}
+                <li class="pagination-list-item pagination-next {{ pagination.next.link|length ? '' : 'hide' }}">
+                    <a href="{{ pagination.next.link }}" class="next">{{ __('Next', 'g5_callisto') }}</a>
+                </li>
+            {% endif %}
+        </ul>
+
+    {% endblock %}
+
+</div>

@@ -20,8 +20,8 @@
                                 <input type="text" data-g-collapse-filter placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}...">
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
-                            <div class="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</div>
-                            <div class="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</div>
+                            <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
+                            <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
                         </div>
                     </div>
 
@@ -42,7 +42,7 @@
                                     </h4>
 
                                     <div class="inner-params">
-                                        {% include 'forms/fields.html.twig' with {'overrideable': overrideable, 'blueprints': particle.form, skip: ['enabled'], data: gantry.config, "prefix": prefix} %}
+                                        {% include 'forms/fields.html.twig' with {'ignore_not_overrideable': true, 'overrideable': overrideable, 'blueprints': particle.form, skip: ['enabled'], data: gantry.config, "prefix": prefix} %}
                                     </div>
                                 </div>
                             {% endif %}

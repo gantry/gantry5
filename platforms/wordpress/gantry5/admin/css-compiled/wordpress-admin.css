@@ -2,6 +2,81 @@
   width: 100%;
 }
 
+.alert {
+  border-radius: 0.1875rem;
+  padding: 0.938rem;
+  margin-bottom: 1.5rem;
+  text-shadow: none;
+}
+
+.alert {
+  background-color: #fcf8e3;
+  border: 1px solid #fbeed5;
+  border-radius: 4px;
+}
+
+.alert,
+.alert h4 {
+  color: #c09853;
+}
+
+.alert h4 {
+  margin: 0;
+}
+
+.alert .close {
+  position: relative;
+  top: -2px;
+  right: -21px;
+  line-height: 20px;
+}
+
+.alert-success {
+  color: #468847;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.alert-success h4 {
+  color: #468847;
+}
+
+.alert-danger,
+.alert-error {
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #eed3d7;
+}
+
+.alert-danger h4,
+.alert-error h4 {
+  color: #b94a48;
+}
+
+.alert-info {
+  color: #3a87ad;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+.alert-info h4 {
+  color: #3a87ad;
+}
+
+.alert-block {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.alert-block > p,
+.alert-block > ul {
+  margin-bottom: 0;
+}
+
+.alert-block p + p {
+  margin-top: 5px;
+}
+
 body.gantry5 {
   margin: 0;
   padding: 0;
@@ -30,13 +105,13 @@ body.gantry5 #g5-container input, body.gantry5 #g5-container button, body.gantry
 }
 body.gantry5 #g5-container input[type="checkbox"] {
   height: 16px;
+  display: inline-block;
 }
 body.gantry5 #g5-container input[type="checkbox"]:checked:before {
   height: 16px;
 }
 body.gantry5 #g5-container input[type="checkbox"]:not(.settings-param-toggle) {
   position: inherit;
-  top: 8px;
 }
 body.gantry5 #g5-container .main-block {
   min-height: 81.5vh;
@@ -98,7 +173,7 @@ body.gantry5.admin-color-fresh #g5-container .button-primary {
   background: #0073AA;
   color: #fff;
 }
-body.gantry5.admin-color-fresh #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-fresh #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-fresh #g5-container .button-primary:focus {
   background: #005e8b;
   color: #fff;
 }
@@ -106,7 +181,7 @@ body.gantry5.admin-color-light #g5-container .button-primary {
   background: #888888;
   color: #fff;
 }
-body.gantry5.admin-color-light #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-light #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-light #g5-container .button-primary:focus {
   background: #797979;
   color: #fff;
 }
@@ -114,7 +189,7 @@ body.gantry5.admin-color-blue #g5-container .button-primary {
   background: #096484;
   color: #fff;
 }
-body.gantry5.admin-color-blue #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-blue #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-blue #g5-container .button-primary:focus {
   background: #074e67;
   color: #fff;
 }
@@ -122,7 +197,7 @@ body.gantry5.admin-color-coffee #g5-container .button-primary {
   background: #C7A589;
   color: #fff;
 }
-body.gantry5.admin-color-coffee #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-coffee #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-coffee #g5-container .button-primary:focus {
   background: #bd9574;
   color: #fff;
 }
@@ -130,7 +205,7 @@ body.gantry5.admin-color-ectoplasm #g5-container .button-primary {
   background: #A3B745;
   color: #fff;
 }
-body.gantry5.admin-color-ectoplasm #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-ectoplasm #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-ectoplasm #g5-container .button-primary:focus {
   background: #8fa13d;
   color: #fff;
 }
@@ -138,7 +213,7 @@ body.gantry5.admin-color-midnight #g5-container .button-primary {
   background: #E14D43;
   color: #fff;
 }
-body.gantry5.admin-color-midnight #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-midnight #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-midnight #g5-container .button-primary:focus {
   background: #dd3429;
   color: #fff;
 }
@@ -146,7 +221,7 @@ body.gantry5.admin-color-ocean #g5-container .button-primary {
   background: #9EBAA0;
   color: #fff;
 }
-body.gantry5.admin-color-ocean #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-ocean #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-ocean #g5-container .button-primary:focus {
   background: #8cad8e;
   color: #fff;
 }
@@ -154,7 +229,7 @@ body.gantry5.admin-color-sunrise #g5-container .button-primary {
   background: #DD823B;
   color: #fff;
 }
-body.gantry5.admin-color-sunrise #g5-container .button-primary:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-sunrise #g5-container .button-primary:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-sunrise #g5-container .button-primary:focus {
   background: #d57225;
   color: #fff;
 }
@@ -183,12 +258,15 @@ body.gantry5.admin-color-fresh #g5-container #main-header .button-save {
   background: #00a7f6;
   color: #fff;
 }
-body.gantry5.admin-color-fresh #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-fresh #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-fresh #g5-container #main-header .button-save:focus {
   background: #0092d8;
   color: #fff;
 }
+body.gantry5.admin-color-fresh #g5-container #main-header ul li a:focus {
+  background: #005781;
+}
 body.gantry5.admin-color-fresh #g5-container #main-header ul li:hover a {
-  background: #006290;
+  background: #005781;
 }
 body.gantry5.admin-color-fresh #g5-container #main-header ul li.active a {
   background: #003f5d;
@@ -209,12 +287,15 @@ body.gantry5.admin-color-light #g5-container #main-header .button-save {
   background: #aeaeae;
   color: #fff;
 }
-body.gantry5.admin-color-light #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-light #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-light #g5-container #main-header .button-save:focus {
   background: #9f9f9f;
   color: #fff;
 }
+body.gantry5.admin-color-light #g5-container #main-header ul li a:focus {
+  background: #747474;
+}
 body.gantry5.admin-color-light #g5-container #main-header ul li:hover a {
-  background: #7b7b7b;
+  background: #747474;
 }
 body.gantry5.admin-color-light #g5-container #main-header ul li.active a {
   background: #626262;
@@ -235,12 +316,15 @@ body.gantry5.admin-color-blue #g5-container #main-header .button-save {
   background: #0e9acc;
   color: #fff;
 }
-body.gantry5.admin-color-blue #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-blue #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-blue #g5-container #main-header .button-save:focus {
   background: #0c85af;
   color: #fff;
 }
+body.gantry5.admin-color-blue #g5-container #main-header ul li a:focus {
+  background: #06475e;
+}
 body.gantry5.admin-color-blue #g5-container #main-header ul li:hover a {
-  background: #07526c;
+  background: #06475e;
 }
 body.gantry5.admin-color-blue #g5-container #main-header ul li.active a {
   background: #042e3c;
@@ -261,12 +345,15 @@ body.gantry5.admin-color-coffee #g5-container #main-header .button-save {
   background: #e0cdbd;
   color: #fff;
 }
-body.gantry5.admin-color-coffee #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-coffee #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-coffee #g5-container #main-header .button-save:focus {
   background: #d6bda8;
   color: #fff;
 }
+body.gantry5.admin-color-coffee #g5-container #main-header ul li a:focus {
+  background: #ba906d;
+}
 body.gantry5.admin-color-coffee #g5-container #main-header ul li:hover a {
-  background: #bf9878;
+  background: #ba906d;
 }
 body.gantry5.admin-color-coffee #g5-container #main-header ul li.active a {
   background: #ae7d55;
@@ -287,12 +374,15 @@ body.gantry5.admin-color-ectoplasm #g5-container #main-header .button-save {
   background: #bfcd7b;
   color: #fff;
 }
-body.gantry5.admin-color-ectoplasm #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-ectoplasm #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-ectoplasm #g5-container #main-header .button-save:focus {
   background: #b4c565;
   color: #fff;
 }
+body.gantry5.admin-color-ectoplasm #g5-container #main-header ul li a:focus {
+  background: #89993a;
+}
 body.gantry5.admin-color-ectoplasm #g5-container #main-header ul li:hover a {
-  background: #93a43e;
+  background: #89993a;
 }
 body.gantry5.admin-color-ectoplasm #g5-container #main-header ul li.active a {
   background: #727f30;
@@ -313,12 +403,15 @@ body.gantry5.admin-color-midnight #g5-container #main-header .button-save {
   background: #ec8b85;
   color: #fff;
 }
-body.gantry5.admin-color-midnight #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-midnight #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-midnight #g5-container #main-header .button-save:focus {
   background: #e7726b;
   color: #fff;
 }
+body.gantry5.admin-color-midnight #g5-container #main-header ul li a:focus {
+  background: #d92e23;
+}
 body.gantry5.admin-color-midnight #g5-container #main-header ul li:hover a {
-  background: #dd382d;
+  background: #d92e23;
 }
 body.gantry5.admin-color-midnight #g5-container #main-header ul li.active a {
   background: #ba281e;
@@ -339,12 +432,15 @@ body.gantry5.admin-color-ocean #g5-container #main-header .button-save {
   background: #cbdacc;
   color: #fff;
 }
-body.gantry5.admin-color-ocean #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-ocean #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-ocean #g5-container #main-header .button-save:focus {
   background: #b9cdba;
   color: #fff;
 }
+body.gantry5.admin-color-ocean #g5-container #main-header ul li a:focus {
+  background: #86a989;
+}
 body.gantry5.admin-color-ocean #g5-container #main-header ul li:hover a {
-  background: #8faf91;
+  background: #86a989;
 }
 body.gantry5.admin-color-ocean #g5-container #main-header ul li.active a {
   background: #719a74;
@@ -365,12 +461,15 @@ body.gantry5.admin-color-sunrise #g5-container #main-header .button-save {
   background: #e8ac7c;
   color: #fff;
 }
-body.gantry5.admin-color-sunrise #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover {
+body.gantry5.admin-color-sunrise #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-sunrise #g5-container #main-header .button-save:focus {
   background: #e49b62;
   color: #fff;
 }
+body.gantry5.admin-color-sunrise #g5-container #main-header ul li a:focus {
+  background: #cc6d23;
+}
 body.gantry5.admin-color-sunrise #g5-container #main-header ul li:hover a {
-  background: #d97426;
+  background: #cc6d23;
 }
 body.gantry5.admin-color-sunrise #g5-container #main-header ul li.active a {
   background: #ad5d1e;
@@ -391,7 +490,7 @@ body.gantry5 #g5-container .button.button-update {
   background: #633679;
   color: #fff;
 }
-body.gantry5 #g5-container .button.button-update:not(.disabled):not([disabled]):hover {
+body.gantry5 #g5-container .button.button-update:not(.disabled):not([disabled]):hover, body.gantry5 #g5-container .button.button-update:focus {
   background: #522c64;
   color: #fff;
 }
@@ -580,6 +679,38 @@ body.gantry5 #g5-container nav.navbar * {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+}
+
+.admin-color-fresh #g5-container .settings-block input:focus, .admin-color-fresh #g5-container .settings-block textarea:focus, .admin-color-fresh #g5-container .settings-block select:focus {
+  border-color: rgba(0, 115, 170, 0.5);
+}
+
+.admin-color-light #g5-container .settings-block input:focus, .admin-color-light #g5-container .settings-block textarea:focus, .admin-color-light #g5-container .settings-block select:focus {
+  border-color: rgba(136, 136, 136, 0.5);
+}
+
+.admin-color-blue #g5-container .settings-block input:focus, .admin-color-blue #g5-container .settings-block textarea:focus, .admin-color-blue #g5-container .settings-block select:focus {
+  border-color: rgba(9, 100, 132, 0.5);
+}
+
+.admin-color-coffee #g5-container .settings-block input:focus, .admin-color-coffee #g5-container .settings-block textarea:focus, .admin-color-coffee #g5-container .settings-block select:focus {
+  border-color: rgba(199, 165, 137, 0.5);
+}
+
+.admin-color-ectoplasm #g5-container .settings-block input:focus, .admin-color-ectoplasm #g5-container .settings-block textarea:focus, .admin-color-ectoplasm #g5-container .settings-block select:focus {
+  border-color: rgba(163, 183, 69, 0.5);
+}
+
+.admin-color-midnight #g5-container .settings-block input:focus, .admin-color-midnight #g5-container .settings-block textarea:focus, .admin-color-midnight #g5-container .settings-block select:focus {
+  border-color: rgba(225, 77, 67, 0.5);
+}
+
+.admin-color-ocean #g5-container .settings-block input:focus, .admin-color-ocean #g5-container .settings-block textarea:focus, .admin-color-ocean #g5-container .settings-block select:focus {
+  border-color: rgba(158, 186, 160, 0.5);
+}
+
+.admin-color-sunrise #g5-container .settings-block input:focus, .admin-color-sunrise #g5-container .settings-block textarea:focus, .admin-color-sunrise #g5-container .settings-block select:focus {
+  border-color: rgba(221, 130, 59, 0.5);
 }
 
 

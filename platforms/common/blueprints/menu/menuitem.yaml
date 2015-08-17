@@ -46,6 +46,7 @@ form:
         .title:
           type: input.text
           label: Menu Title
+          required: true
 
         .target:
           type: select.selectize
@@ -66,6 +67,12 @@ form:
             standard: Simple
             fullwidth: Extended
 
+        .dropdown_hide:
+          type: input.checkbox
+          label: Disable Dropdowns
+          description: If checked and the item has dropdowns, they won't be rendered.
+          default: ''
+
         .width:
           type: input.text
           label: Dropdown Width
@@ -81,6 +88,10 @@ form:
         .icon:
           type: input.icon
           label: Icon
+
+        .image:
+          type: input.imagepicker
+          label: Image
 
         .icon_only:
           type: input.checkbox

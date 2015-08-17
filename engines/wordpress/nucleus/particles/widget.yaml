@@ -1,5 +1,5 @@
-name: Widget Instance
-description: Display a widget instance.
+name: Widget
+description: Display a single widget.
 type: position
 
 form:
@@ -7,21 +7,15 @@ form:
     enabled:
       type: input.checkbox
       label: Enabled
-      description: Globally enable widget instances.
+      description: Globally enable widget particle.
       default: true
 
-    _info:
-      type: separator.note
-      class: alert alert-info
-      content: TODO: Widget notification.
-
-    widget_id:
-      type: gantry.module
-      label: Widget Id
+    widget:
+      type: gantry.widget
+      label: Widget
       class: g-urltemplate input-small
       picker_label: Pick a Widget
-      description: Enter widget Id.
-      pattern: '\d+'
+      pattern: '[a-z0-9_-]+'
       overridable: false
 
     chrome:

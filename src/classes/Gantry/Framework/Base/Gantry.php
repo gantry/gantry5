@@ -15,6 +15,7 @@
 namespace Gantry\Framework\Base;
 
 use Gantry\Framework\Configurations;
+use Gantry\Framework\Document as RealDocument;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Request;
 use Gantry\Framework\Services\ConfigServiceProvider;
@@ -25,7 +26,7 @@ use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventDispatcher;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Gantry extends Container
+abstract class Gantry extends Container
 {
     /**
      * @var static
@@ -43,12 +44,34 @@ class Gantry extends Container
     }
 
     /**
+     * Returns true if debug mode has been enabled.
+     *
+     * @return boolean
+     */
+    public abstract function debug();
+
+    /**
+     * Returns true if we are in administration.
+     *
+     * @return boolean
+     */
+    public abstract function admin();
+
+    /**
+     * @return string
+     */
+    public function siteUrl()
+    {
+        return RealDocument::siteUrl();
+    }
+
+    /**
      * @param string $location
      * @return array
      */
     public function styles($location = 'head')
     {
-        return Document::getStyles($location);
+        return RealDocument::getStyles($location);
     }
 
     /**
@@ -57,7 +80,7 @@ class Gantry extends Container
      */
     public function scripts($location = 'head')
     {
-        return Document::getScripts($location);
+        return RealDocument::getScripts($location);
     }
 
     /**

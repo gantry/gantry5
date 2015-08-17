@@ -15,3 +15,16 @@ $gantry = include_once __DIR__ . '/includes/gantry.php';
 
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry[ 'theme' ];
+
+// Theme helper files that can contain useful methods or filters
+$helpers = [
+    'includes/helper.php', // General helper file
+];
+
+foreach ( $helpers as $file ) {
+    if ( !$filepath = locate_template( $file ) ) {
+        trigger_error( sprintf( __( 'Error locating %s for inclusion', 'g5_hydrogen' ), $file ), E_USER_ERROR );
+    }
+
+    require $filepath;
+}

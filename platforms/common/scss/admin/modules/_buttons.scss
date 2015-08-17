@@ -11,6 +11,10 @@
     &:active {
         margin: 1px 0 -1px 0;
     }
+    &:not(.disabled):focus {
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+        outline: none;
+    }
     i + span {
         margin-left: 8px;
     }
@@ -19,8 +23,8 @@
 @mixin button-color($color, $text: $white) {
     background: $color;
     color: rgba($text, 0.9);
-    &:hover {
-        background: darken($color, 6%);
+    &:hover, &:focus {
+        background: darken($color, 8%);
         color: $text;
     }
 }

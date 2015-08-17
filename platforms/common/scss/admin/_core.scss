@@ -105,6 +105,13 @@ body.g-prime {
         }
     }
 
+    .themes {
+        &.cards-wrapper {
+            @include column-count(initial);
+            @include column-gap(initial);
+        }
+    }
+
     .card {
         display: inline-block;
         background: $white;

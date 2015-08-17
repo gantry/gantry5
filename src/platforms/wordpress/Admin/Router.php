@@ -101,18 +101,22 @@ class Router extends BaseRouter
     protected function send(Response $response)
     {
         // Output HTTP header.
-        header("HTTP/1.1 {$response->getStatus()}", true, $response->getStatusCode());
-        header("Content-Type: {$response->mimeType}; charset={$response->charset}");
-        foreach ($response->getHeaders() as $key => $values) {
-            $replace = true;
-            foreach ($values as $value) {
-                header("{$key}: {$value}", $replace);
-                $replace = false;
+        $headersSent = headers_sent($file, $line);
+
+        if (!$headersSent) {
+            header("HTTP/1.1 {$response->getStatus()}", true, $response->getStatusCode());
+            header("Content-Type: {$response->mimeType}; charset={$response->charset}");
+            foreach ($response->getHeaders() as $key => $values) {
+                $replace = true;
+                foreach ($values as $value) {
+                    header("{$key}: {$value}", $replace);
+                    $replace = false;
+                }
             }
         }
 
         if ($response instanceof JsonResponse) {
-            // Output Gantry response.
+            // Output Gantry JSON response.
             echo $response;
             die();
         }

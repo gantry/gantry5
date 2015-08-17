@@ -15,4 +15,5 @@ class AssignmentsArchive extends AssignmentsTaxonomy
 {
     public $type = 'archive';
     public $label = 'Archives: %s';
+    public $priority = 6;
 }

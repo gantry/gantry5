@@ -1,23 +1,106 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "957f11e28dd331f4cdcde47b3a54ae32",
+    "hash": "1db4ef5217d732832728a80de226f58a",
     "packages": [
+        {
+            "name": "erusev/parsedown",
+            "version": "1.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown.git",
+                "reference": "0e89e3714bda18973184d30646306bb0a482bd96"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/0e89e3714bda18973184d30646306bb0a482bd96",
+                "reference": "0e89e3714bda18973184d30646306bb0a482bd96",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Parsedown": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "Parser for Markdown.",
+            "homepage": "http://parsedown.org",
+            "keywords": [
+                "markdown",
+                "parser"
+            ],
+            "time": "2015-08-03 09:24:05"
+        },
+        {
+            "name": "erusev/parsedown-extra",
+            "version": "0.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown-extra.git",
+                "reference": "11a44e076d02ffcc4021713398a60cd73f78b6f5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown-extra/zipball/11a44e076d02ffcc4021713398a60cd73f78b6f5",
+                "reference": "11a44e076d02ffcc4021713398a60cd73f78b6f5",
+                "shasum": ""
+            },
+            "require": {
+                "erusev/parsedown": "~1.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ParsedownExtra": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "An extension of Parsedown that adds support for Markdown Extra.",
+            "homepage": "https://github.com/erusev/parsedown-extra",
+            "keywords": [
+                "markdown",
+                "markdown extra",
+                "parsedown",
+                "parser"
+            ],
+            "time": "2015-01-25 14:52:34"
+        },
         {
             "name": "filp/whoops",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "72538eeb70bbfb11964412a3d098d109efd012f7"
+                "reference": "494fa733db16e2ac66c514621150bd97a0a4eb37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/72538eeb70bbfb11964412a3d098d109efd012f7",
-                "reference": "72538eeb70bbfb11964412a3d098d109efd012f7",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/494fa733db16e2ac66c514621150bd97a0a4eb37",
+                "reference": "494fa733db16e2ac66c514621150bd97a0a4eb37",
                 "shasum": ""
             },
             "require": {
@@ -62,7 +145,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2015-06-29 05:42:04"
+            "time": "2015-06-30 08:10:58"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -149,23 +232,24 @@
         },
         {
             "name": "leafo/scssphp",
-            "version": "v0.1.7",
+            "version": "v0.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/scssphp.git",
-                "reference": "59e7ee0eb46ee531afa1723c143c45d696a3519e"
+                "reference": "609c08586d583fc7d1db78b7edd8b4ac57fa5137"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/59e7ee0eb46ee531afa1723c143c45d696a3519e",
-                "reference": "59e7ee0eb46ee531afa1723c143c45d696a3519e",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/609c08586d583fc7d1db78b7edd8b4ac57fa5137",
+                "reference": "609c08586d583fc7d1db78b7edd8b4ac57fa5137",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*",
+                "kherge/box": "~2.5",
+                "phpunit/phpunit": "~3.7",
                 "squizlabs/php_codesniffer": "~2.3"
             },
             "bin": [
@@ -192,7 +276,7 @@
                 }
             ],
             "description": "scssphp is a compiler for SCSS written in PHP.",
-            "homepage": "http://leafo.net/scssphp/",
+            "homepage": "http://leafo.github.io/scssphp/",
             "keywords": [
                 "css",
                 "less",
@@ -200,7 +284,7 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2015-07-02 01:33:11"
+            "time": "2015-08-01 16:04:21"
         },
         {
             "name": "pimple/pimple",
@@ -208,12 +292,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Pimple.git",
-                "reference": "976f9b385ff8e850e967ba6dd99071df11488f17"
+                "reference": "62b5d317a83b02eea42b5b785b62a29fba458bcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/976f9b385ff8e850e967ba6dd99071df11488f17",
-                "reference": "976f9b385ff8e850e967ba6dd99071df11488f17",
+                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/62b5d317a83b02eea42b5b785b62a29fba458bcf",
+                "reference": "62b5d317a83b02eea42b5b785b62a29fba458bcf",
                 "shasum": ""
             },
             "require": {
@@ -246,7 +330,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2015-05-29 22:13:37"
+            "time": "2015-08-01 06:02:40"
         },
         {
             "name": "rockettheme/toolbox",
@@ -364,12 +448,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "000e7fc2653335cd42c6d21405dac1c74224a387"
+                "reference": "6eef1477f3c4451b6024fadb1254009be4602908"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/000e7fc2653335cd42c6d21405dac1c74224a387",
-                "reference": "000e7fc2653335cd42c6d21405dac1c74224a387",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/6eef1477f3c4451b6024fadb1254009be4602908",
+                "reference": "6eef1477f3c4451b6024fadb1254009be4602908",
                 "shasum": ""
             },
             "require": {
@@ -405,7 +489,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-07-01 14:16:54"
+            "time": "2015-07-29 07:12:56"
         },
         {
             "name": "twig/twig",
@@ -413,12 +497,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "1ded65daeb8da1fb0d22016e53c2e7026557f040"
+                "reference": "61d45b3e24598605211a2d9eb453082d12d2f766"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/1ded65daeb8da1fb0d22016e53c2e7026557f040",
-                "reference": "1ded65daeb8da1fb0d22016e53c2e7026557f040",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/61d45b3e24598605211a2d9eb453082d12d2f766",
+                "reference": "61d45b3e24598605211a2d9eb453082d12d2f766",
                 "shasum": ""
             },
             "require": {
@@ -427,7 +511,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.19-dev"
+                    "dev-master": "1.20-dev"
                 }
             },
             "autoload": {
@@ -462,7 +546,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-07-05 08:50:23"
+            "time": "2015-08-11 13:57:52"
         }
     ],
     "packages-dev": null,

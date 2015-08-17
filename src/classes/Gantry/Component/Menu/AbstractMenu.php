@@ -43,7 +43,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         'menu' => '',
         'base' => '/',
         'startLevel' => 1,
-        'endLevel' => 0,
+        'maxLevels' => 0,
         'showAllChildren' => true,
         'highlightAlias' => true,
         'highlightParentAlias' => true
@@ -58,27 +58,46 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     abstract public function getMenus();
 
+
     /**
      * Return default menu.
      *
      * @return string
      */
-    abstract public function getDefaultMenuName();
-
+    public function getDefaultMenuName()
+    {
+        return null;
+    }
 
     /**
-     * Returns true if the platform implements a Default menu mechanism
+     * Returns true if the platform implements a Default menu.
      *
      * @return boolean
      */
-    abstract public function hasDefaultMenuMechanism();
+    public function hasDefaultMenu()
+    {
+        return false;
+    }
 
     /**
-     * Return default menu.
+     * Return active menu.
      *
      * @return string
      */
-    abstract public function getActiveMenuName();
+    public function getActiveMenuName()
+    {
+        return null;
+    }
+
+    /**
+     * Returns true if the platform implements an Active menu.
+     *
+     * @return boolean
+     */
+    public function hasActiveMenu()
+    {
+        return false;
+    }
 
     public function instance(array $params = [], Config $menu = null)
     {
@@ -86,11 +105,20 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 
         $menus = $this->getMenus();
 
+        if (!$menus) {
+            throw new \RuntimeException('Site does not have menus', 404);
+        }
         if (empty($params['menu'])) {
             $params['menu'] = $this->getDefaultMenuName();
-        }
-        if ($params['menu'] == '-active-') {
+            if (!$params['menu'] && !empty($params['admin'])) {
+                // In admin just select the first menu if there isn't default menu to be selected.
+                $params['menu'] = reset($menus);
+            };
+        } elseif ($params['menu'] == '-active-') {
             $params['menu'] = $this->getActiveMenuName();
+        }
+        if (!$params['menu']) {
+            throw new \RuntimeException('No menu selected', 404);
         }
         if (!in_array($params['menu'], $menus)) {
             throw new \RuntimeException('Menu not found', 404);
@@ -291,7 +319,8 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     public function addCustom(array $params, array $items)
     {
         $start   = $params['startLevel'];
-        $end     = $params['endLevel'];
+        $max     = $params['maxLevels'];
+        $end     = $max ? $start + $max - 1 : 0;
 
         $config = $this->config();
         $type = $config->get('settings.type');

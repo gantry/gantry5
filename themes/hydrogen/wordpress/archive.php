@@ -8,6 +8,8 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+defined( 'ABSPATH' ) or die;
+
 /*
  * The template for displaying Archive pages.
  *
@@ -17,23 +19,17 @@
  * Learn more: http://codex.wordpress.org/Template_Hierarchy
  */
 
-$chooser = new \Gantry\Framework\OutlineChooser;
-
-/** @var \Gantry\Framework\Theme $theme */
-$theme = $gantry[ 'theme' ];
-$theme->setLayout( $chooser->select() );
-
-$templates = array( 'archive.html.twig', 'index.html.twig' );
-
 $context = Timber::get_context();
 
-$context[ 'title' ] = 'Archive';
+$templates = [ 'archive.html.twig', 'index.html.twig' ];
+
+$context[ 'title' ] = __( 'Archive', 'g5_hydrogen' );
 if( is_day() ) {
-    $context[ 'title' ] = 'Archive: ' . get_the_date( 'D M Y' );
+    $context[ 'title' ] = __( 'Archive:', 'g5_hydrogen' ) . ' ' . get_the_date( 'j F Y' );
 } else if( is_month() ) {
-    $context[ 'title' ] = 'Archive: ' . get_the_date( 'M Y' );
+    $context[ 'title' ] = __( 'Archive:', 'g5_hydrogen' ) . ' ' . get_the_date( 'F Y' );
 } else if( is_year() ) {
-    $context[ 'title' ] = 'Archive: ' . get_the_date( 'Y' );
+    $context[ 'title' ] = __( 'Archive:', 'g5_hydrogen' ) . ' ' . get_the_date( 'Y' );
 } else if( is_tag() ) {
     $context[ 'title' ] = single_tag_title( '', false );
 } else if( is_category() ) {
@@ -45,6 +41,5 @@ if( is_day() ) {
 }
 
 $context[ 'posts' ] = Timber::get_posts();
-$context[ 'pagination' ] = Timber::get_pagination();
 
 Timber::render( $templates, $context );

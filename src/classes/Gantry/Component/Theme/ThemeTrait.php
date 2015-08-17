@@ -39,6 +39,7 @@ trait ThemeTrait
 {
     use GantryTrait;
 
+    protected $layoutObject;
     protected $segments;
     protected $preset;
     protected $cssCache;
@@ -50,7 +51,11 @@ trait ThemeTrait
     {
         $gantry = static::gantry();
         $gantry['streams']->register();
-        $gantry->register(new ErrorServiceProvider);
+
+        // Only add error service if development or debug mode has been enabled or user is admin.
+        if (!$gantry['global']->get('production', 0) || $gantry->debug() || $gantry->admin()) {
+            $gantry->register(new ErrorServiceProvider);
+        }
 
         /** @var Platform $patform */
         $patform = $gantry['platform'];
@@ -95,14 +100,20 @@ trait ThemeTrait
     }
 
     /**
-     * Set current layout.
+     * Set layout to be used.
      *
      * @param string $name
+     * @param bool $force
      * @return $this
      */
-    public function setLayout($name = null)
+    public function setLayout($name = null, $force = false)
     {
         $gantry = static::gantry();
+
+        // Force new layout to be set.
+        if ($force) {
+            unset($gantry['configuration']);
+        }
 
         // Set default name only if configuration has not been set before.
         if ($name === null && !isset($gantry['configuration'])) {
@@ -269,17 +280,21 @@ trait ThemeTrait
             try {
                 $name = static::gantry()['configuration'];
             } catch (\Exception $e) {
-                throw new \LogicException('Gantry: Configuration has not been defined yet', 500);
+                throw new \LogicException('Gantry: Outline has not been defined yet', 500);
             }
         }
 
-        $layout = Layout::instance($name);
+        if (!isset($this->layoutOpject) || $this->layoutObject->name != $name) {
+            $layout = Layout::instance($name);
 
-        if (!$layout->exists()) {
-            $layout = Layout::instance('default');
+            if (!$layout->exists()) {
+                $layout = Layout::instance('default');
+            }
+
+            $this->layoutObject = $layout;
         }
 
-        return $layout;
+        return $this->layoutObject;
     }
 
     public function add_to_context(array $context)
@@ -291,6 +306,14 @@ trait ThemeTrait
         $context['theme'] = $this;
 
         return $context;
+    }
+
+    public function hasContent()
+    {
+        $layout = $this->loadLayout();
+        $content = $layout->referencesByType('pagecontent', 'pagecontent');
+
+        return !empty($content);
     }
 
     /**

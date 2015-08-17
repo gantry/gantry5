@@ -9,6 +9,10 @@
         @include breakpoint(mobile-only) {
             width: 90%;
         }
+        input {
+            position: relative;
+            z-index: 2;
+        }
     }
 
     .input-group input, .input-group-addon, .input-group-btn {
@@ -44,6 +48,7 @@
         position: relative;
         font-size: 0;
         white-space: nowrap;
+        z-index: 1;
         @include breakpoint(mobile-only) {
             width: 42px;
         }
@@ -57,30 +62,39 @@
             border: 1px solid $medium-gray;
             border-radius: $core-border-radius;
             margin: -1px;
+
+            &:focus {
+                box-shadow: none;
+            }
         }
     }
 
     .input-group.append {
         input {
-            border-right: 0;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
         }
         .input-group-addon, .button {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
+        }
+
+        .button {
+            border-left: 0
         }
     }
 
     .input-group.prepend {
         input {
-            border-left: 0;
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
         }
         .input-group-addon, .button {
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
+        }
+        .button {
+            border-right: 0;
         }
     }
 

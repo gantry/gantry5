@@ -1,0 +1,23 @@
+{% extends default ? "partials/field.html.twig" : 'forms/' ~ layout|default('field') ~ '.html.twig' %}
+
+{% block input %}
+    <div class="settings-block"><div class="input-group">
+                {% set label = field.picker_label|default('Pick a Widget'|trans) %}
+                {% set alt_label = field.picker_label_alt|default('Edit Widget'|trans) %}
+                {% set value_json = value ? value|json_decode|e('html_attr') : false %}
+                <span class="g-instancepicker-title">{{ value_json.title|default('') }}</span><button class="button" data-g-instancepicker="{{ { type: 'widget', field: (scope ~ name)|fieldName }|json_encode|e('html_attr') }}" data-g-instancepicker-text="{{ label }}" data-g-instancepicker-alttext="{{ alt_label }}">{{ value ? alt_label : label }}</button>
+                <input
+                        type="hidden"
+                        name="{{ (scope ~ name)|fieldName }}"
+                        {# value="{{ value ? value|json_encode(constant('JSON_UNESCAPED_UNICODE')) }}" #}
+                        value="{{ value }}"
+                        {# global attribute structures #}
+                        {{ block('global_attributes') }}
+                        {# non-gloval attribute structures #}
+                        {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
+                        {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
+                        />
+
+                <span class="g-reset-field" data-g-reset-field="{{ (scope ~ name)|fieldName }}"><i class="fa  fa-fw fa-times-circle"></i></span>
+            </div></div>
+{% endblock %}

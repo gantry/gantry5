@@ -1,0 +1,21 @@
+.platform-content {
+    // Entries
+    .entries {
+        .tease {
+
+            // Sticky Posts
+            &.sticky {
+                background-color: #f2f2f2;
+            }
+        }
+    }
+}
+
+// Search Form
+.search-form {
+    input.search-field {
+        height: 40px;
+        padding-top: 3px;
+        color: $base-text-color;
+    }
+}

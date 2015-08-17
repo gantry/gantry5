@@ -3,8 +3,13 @@
 
 {% block content %}
 
-    <div class="g-container content-wrapper">
-        {{content}}
-    </div> <!-- /content-wrapper -->
+    {# Enable WordPress specific CSS styling #}
+    {% do gantry.theme.wordpress(true) %}
+
+    <div class="platform-content">
+        <div class="plugin-content">
+            {{ content }}
+        </div> <!-- /content-wrapper -->
+    </div>
 
 {% endblock %}

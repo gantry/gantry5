@@ -3,6 +3,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
+use Gantry\WordPress\Widgets;
 use Pimple\Container;
 
 /**
@@ -17,9 +18,13 @@ class Platform extends BasePlatform {
 
     public function __construct(Container $container) {
         $this->content_dir = Folder::getRelativePath(WP_CONTENT_DIR);
+        $this->includes_dir = Folder::getRelativePath(WPINC);
         $this->gantry_dir = Folder::getRelativePath(GANTRY5_PATH);
 
         parent::__construct($container);
+
+        // Add wp-includes directory to the streams
+        $this->items['streams']['wp-includes'] = ['type' => 'ReadOnlyStream', 'prefixes' => ['' => $this->includes_dir]];
     }
 
     public function getCachePath() {
@@ -62,7 +67,15 @@ class Platform extends BasePlatform {
     }
 
     public function errorHandlerPaths() {
-        return ['|gantry5|'];
+        // Catch errors in Gantry cache, plugin and theme only.
+        $paths = ['#[\\\/]wp-content[\\\/](cache|plugins)[\\\/]gantry5[\\\/]#', '#[\\\/]wp-content[\\\/]themes[\\\/]#'];
+
+        // But if we have symlinked git repository, we need to catch errors from there, too.
+        if (is_link(GANTRY5_PATH)) {
+           $paths = array_merge($paths, ['#[\\\/](assets|engines|platforms)[\\\/](common|wordpress)[\\\/]#', '#[\\\/]src[\\\/](classes|vendor)[\\\/]#', '#[\\\/]themes[\\\/]#']);
+        }
+
+        return $paths;
     }
 
     // getCategories logic for the categories selectize field
@@ -87,5 +100,20 @@ class Platform extends BasePlatform {
         }
 
         return apply_filters( 'gantry5_form_field_selectize_categories', $new_categories );
+    }
+
+    public function displayWidgets($key, array $params = [])
+    {
+        return Widgets::displayPosition($key, $params);
+    }
+
+    public function displayWidget($instance = [], array $params = [])
+    {
+        return Widgets::displayWidget($instance, $params);
+    }
+
+    public function listWidgets()
+    {
+        return Widgets::listWidgets();
     }
 }

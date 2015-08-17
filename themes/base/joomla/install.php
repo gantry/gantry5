@@ -31,7 +31,9 @@ class G5_BaseInstallerScript
 
             Gantry5\Loader::setup();
 
-            if (version_compare(GANTRY5_VERSION, $this->requiredGantryVersion, '<')) {
+            $gantry = Gantry\Framework\Gantry::instance();
+
+            if (!method_exists($gantry, 'isCompatible') || !$gantry->isCompatible($this->requiredGantryVersion)) {
                 throw new \RuntimeException(sprintf('Please upgrade Gantry 5 Framework to v%s (or later) before installing %s template!', strtoupper($this->requiredGantryVersion), $name));
             }
 

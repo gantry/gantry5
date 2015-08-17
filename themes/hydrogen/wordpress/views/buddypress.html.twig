@@ -1,0 +1,20 @@
+{% extends "partials/page.html.twig" %}
+{% set twigTemplate = 'buddypress.html.twig' %}
+{% set scope = 'buddypress' %}
+
+{% block content %}
+
+    {# Enable WordPress specific CSS styling #}
+    {% do gantry.theme.wordpress(true) %}
+
+    <div class="platform-content">
+        <div class="buddypress-content">
+
+            <article class="g-content {{ post.class }}" id="content-{{ scope }}">
+                {{ content }}
+            </article>
+
+        </div>
+    </div>
+
+{% endblock %}

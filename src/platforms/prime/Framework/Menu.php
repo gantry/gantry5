@@ -64,13 +64,13 @@ class Menu extends AbstractMenu
     }
 
     /**
-     * Returns true if the platform implements a Default menu mechanism
+     * Returns true if the platform implements a Default menu.
      *
      * @return boolean
      */
-    public function hasDefaultMenuMechanism()
+    public function hasDefaultMenu()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -81,6 +81,16 @@ class Menu extends AbstractMenu
     public function getActiveMenuName()
     {
         return 'mainmenu';
+    }
+
+    /**
+     * Returns true if the platform implements an Active menu.
+     *
+     * @return boolean
+     */
+    public function hasActiveMenu()
+    {
+        return true;
     }
 
     /**
@@ -136,7 +146,8 @@ class Menu extends AbstractMenu
     public function getList(array $params, array $items)
     {
         $start   = $params['startLevel'];
-        $end     = $params['endLevel'];
+        $max     = $params['maxLevels'];
+        $end     = $max ? $start + $max - 1 : 0;
 
         $menuItems = array_unique(array_merge($this->getItemsFromPlatform($start <= $end ? $end : -1), array_keys($items)));
         sort($menuItems);

@@ -151,7 +151,7 @@
         vertical-align: inherit;
     }
 
-    input, textarea {
+    input, textarea, select {
         padding: 6px 12px;
         border: 1px solid $medium-gray;
         margin: 0;
@@ -160,15 +160,28 @@
         font-size: $core-font-size;
         line-height: $core-line-height;
         border-radius: $core-border-radius;
+
+        &:focus {
+            border-color: rgba($core-accent, .5);
+        }
+    }
+
+    .colorpicker {
+        input {
+            &:focus {
+                border-color: $medium-gray;
+            }
+        }
     }
 
     select {
         margin: 0 0 10px;
         display: inline-block;
+        height: 38px;
     }
 
     input:not(.settings-param-toggle):not([type="checkbox"]), select, .collection-list ul, .colorpicker, .multi.selectize-control {
-        width: 275px;
+        width: 250px;
         @include breakpoint(no-desktop) {
             width: 100%;
         }
@@ -182,7 +195,10 @@
     .input-group {
         &.append, &.prepend {
             input {
-                width: 235px;
+                width: 210px;
+                @include breakpoint(tablet-range) {
+                    width: 100% !important;
+                }
                 @include breakpoint(mobile-only) {
                     width: 100% !important;
                 }
@@ -191,7 +207,7 @@
     }
 
     .selectize-control.single {
-        width: 275px !important;
+        width: 250px !important;
         @include breakpoint(tablet-range) {
             width: 100% !important;
         }

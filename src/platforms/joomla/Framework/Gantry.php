@@ -14,6 +14,22 @@ namespace Gantry\Framework;
 class Gantry extends Base\Gantry
 {
     /**
+     * @return boolean
+     */
+    public function debug()
+    {
+        return JDEBUG;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function admin()
+    {
+        return \JFactory::getApplication()->isAdmin();
+    }
+
+    /**
      * @param string $location
      * @param bool   $force
      * @return array

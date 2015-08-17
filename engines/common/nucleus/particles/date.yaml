@@ -8,7 +8,7 @@ form:
       type: input.checkbox
       label: Enabled
       description: Globally enable date particles.
-      default: false
+      default: true
 
     css.class:
       type: input.selectize

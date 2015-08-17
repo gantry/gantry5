@@ -85,11 +85,11 @@ class Menu extends AbstractMenu
     }
 
     /**
-     * Returns true if the platform implements a Default menu mechanism
+     * Returns true if the platform implements a Default menu.
      *
      * @return boolean
      */
-    public function hasDefaultMenuMechanism()
+    public function hasDefaultMenu()
     {
         return true;
     }
@@ -102,6 +102,16 @@ class Menu extends AbstractMenu
     public function getActiveMenuName()
     {
         return $this->active ? $this->active->menutype : null;
+    }
+
+    /**
+     * Returns true if the platform implements an Active menu.
+     *
+     * @return boolean
+     */
+    public function hasActiveMenu()
+    {
+        return true;
     }
 
     public function isActive($item)
@@ -182,7 +192,7 @@ class Menu extends AbstractMenu
     /**
      * Get a list of the menu items.
      *
-     * Logic has been mostly copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
+     * Logic was originally copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
      * We should keep the contents of the function similar to Joomla in order to review it against any changes.
      *
      * @param  array  $params
@@ -213,7 +223,8 @@ class Menu extends AbstractMenu
         if (1) {
             $path    = $this->base->tree;
             $start   = $params['startLevel'];
-            $end     = $params['endLevel'];
+            $max     = $params['maxLevels'];
+            $end     = $max ? $start + $max - 1 : 0;
 
             $menuItems = $this->getItemsFromPlatform($params);
 
@@ -324,7 +335,8 @@ class Menu extends AbstractMenu
 
                 if ($item->type == 'url') {
                     // Moved from modules/mod_menu/tmpl/default_url.php, not sure why Joomla had application logic in there.
-                    $item->url(\JFilterOutput::ampReplace(htmlspecialchars($item->link)));
+                    // Keep compatibility to Joomla menu module, but we need non-encoded version of the url.
+                    $item->url(htmlspecialchars_decode(\JFilterOutput::ampReplace(htmlspecialchars($item->link))));
                 }
             }
             // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.

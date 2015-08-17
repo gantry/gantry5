@@ -19,6 +19,32 @@ use Whoops\Exception\ErrorException;
 class Run extends \Whoops\Run
 {
     protected $registeredPatterns = [];
+    protected $oldExceptionHandler;
+
+
+    /**
+     * Registers this instance as an error handler.
+     * @return Run
+     */
+    public function register()
+    {
+        if (!$this->isRegistered) {
+            // Workaround PHP bug 42098
+            // https://bugs.php.net/bug.php?id=42098
+            class_exists("\\Whoops\\Exception\\ErrorException");
+            class_exists("\\Whoops\\Exception\\FrameCollection");
+            class_exists("\\Whoops\\Exception\\Frame");
+            class_exists("\\Whoops\\Exception\\Inspector");
+
+            set_error_handler(array($this, self::ERROR_HANDLER));
+            $this->oldExceptionHandler = set_exception_handler(array($this, self::EXCEPTION_HANDLER));
+            register_shutdown_function(array($this, self::SHUTDOWN_HANDLER));
+
+            $this->isRegistered = true;
+        }
+
+        return $this;
+    }
 
     /**
      * Silence particular errors in particular files
@@ -42,8 +68,30 @@ class Run extends \Whoops\Run
     }
 
     /**
-     * Converts generic PHP errors to \ErrorException
-     * instances, before passing them off to be handled.
+     * Handles an exception, ultimately generating a Whoops error page.
+     *
+     * @param  \Exception $exception
+     */
+    public function handleException(\Exception $exception)
+    {
+        // If there are registered patterns, only handle errors if error matches one of the patterns.
+        if ($this->registeredPatterns) {
+            foreach ($this->registeredPatterns as $entry) {
+                $pathMatches = (bool) preg_match($entry["pattern"], $exception->getFile());
+                if ($pathMatches) {
+                    return parent::handleException($exception);
+                }
+            }
+        }
+
+        // Propagate error to the next handler.
+        if ($this->oldExceptionHandler) {
+            call_user_func($this->oldExceptionHandler, $exception);
+        }
+    }
+
+    /**
+     * Converts generic PHP errors to \ErrorException instances, before passing them off to be handled.
      *
      * This method MUST be compatible with set_error_handler.
      *

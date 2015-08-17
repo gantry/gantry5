@@ -1,0 +1,99 @@
+#comments {
+    // Comments List
+    ol.commentlist {
+        list-style: none;
+        padding-left: 0;
+
+        // Children Lists
+        ol.children {
+            list-style: none;
+
+            @include breakpoint(mobile-only) {
+                padding-left: 0.5rem;
+            }
+        }
+
+        // Single Comment
+        li.comment {
+            margin: 20px 0 0;
+
+            .comment-author {
+                @include display(flex);
+                height: 48px;
+                line-height: 45px;
+
+                @include breakpoint(mobile-only) {
+                    overflow: hidden;
+                }
+
+                .author-avatar {
+                    @include flex(0 48px);
+                    width: 48px;
+                    margin-right: 10px;
+                }
+
+                .author-meta {
+                    @include flex(1);
+
+                    .author-name {
+                        font-size: 1.4rem;
+                        font-weight: bold;
+                        margin-right: 5px;
+
+                        @include breakpoint(mobile-only) {
+                            font-size: 1rem;
+                        }
+                    }
+
+                    time, .edit-link {
+                        font-size: 0.8rem;
+
+                        @include breakpoint(mobile-only) {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            .comment-content {
+                padding: 10px 15px;
+
+                .comment-reply {
+                    text-align: right;
+                }
+            }
+        }
+    }
+
+    // Comments Pagination
+    #comments-nav {
+        @include display(flex);
+
+        .comments-next {
+            margin-left: auto;
+        }
+
+        @include breakpoint(mobile-only) {
+            a.button {
+                font-size: 0.8rem;
+            }
+        }
+    }
+
+    // Comments Reply Form
+    #respond {
+        margin-top: 20px;
+
+        .inputbox {
+            width: 100%;
+
+            &.respond-textarea {
+                min-height: 250px;
+            }
+        }
+
+        .button:focus {
+            outline: none;
+        }
+    }
+}

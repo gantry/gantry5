@@ -1,8 +1,10 @@
 {%- do gantry.theme.setLayout() -%}
 
 {%- set content %}
-    {% block content %}
-    {% endblock %}
+    {% if gantry.theme.hasContent() %}
+        {% block content %}
+        {% endblock %}
+    {% endif %}
 {% endset -%}
 
 {%- set offcanvas = null -%}
@@ -36,6 +38,11 @@
 
 {%- set page_bottom %}
     {% block page_bottom %}
+    {% endblock %}
+{% endset -%}
+
+{%- set page_footer %}
+    {% block page_footer %}
         {{ gantry.scripts('footer')|join("\n    ")|raw }}
     {% endblock %}
 {% endset -%}
@@ -58,6 +65,7 @@
             {{ page_bottom|raw }}
         </div>
         <script type="text/javascript" src="{{ url('gantry-assets://js/main.js') }}"></script>
+        {{ page_footer|raw }}
     </body>
     {%- endblock %}
 

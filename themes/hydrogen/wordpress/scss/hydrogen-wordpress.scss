@@ -1,0 +1,29 @@
+// REQUIRED DEPENDENCIES - DO NOT CHANGE
+
+// Load Third Party Libraries
+@import "vendor/bourbon/bourbon";
+
+// Load Nucleus Configuration
+@import "configuration/nucleus/base";
+
+// Load Nucleus Mixins and Functions
+@import "nucleus/functions/base";
+@import "nucleus/mixins/base";
+
+// Load Optional Nucleus Assets
+@import "nucleus/theme/alerts";
+
+// Load Theme Variable Driven Nucleus Elements
+@import "wordpress/theme/base";
+
+// Load Theme Configuration
+@import "configuration/base";
+
+//-------------------------------------------
+
+// WORDPRESS THEME SPECIFIC
+@import "hydrogen-wordpress/core";
+@import "hydrogen-wordpress/pagination";
+@import "hydrogen-wordpress/comments";
+
+//-------------------------------------------

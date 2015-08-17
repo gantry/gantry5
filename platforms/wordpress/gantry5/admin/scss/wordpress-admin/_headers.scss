@@ -21,9 +21,14 @@ body.gantry5 {
 
 				    ul {
 					    li {
+                            a {
+                                &:focus {
+                                    background: darken($core-accent, 8%);
+                                }
+                            }
 					        &:hover {
 						        a {
-						            background: darken($core-accent, 5%);
+						            background: darken($core-accent, 8%);
 						        }
 					        }
 					        &.active {

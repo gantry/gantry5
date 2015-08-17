@@ -8,8 +8,10 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+defined( 'ABSPATH' ) or die;
+
 /*
  * The Template for displaying sidebar
  */
 
-Timber::render( array( 'partials/sidebar.html.twig' ), isset( $context ) ? $context : [] );
+Timber::render( [ 'partials/sidebar.html.twig' ], isset( $context ) ? $context : [] );

@@ -1,10 +1,5 @@
-{% set headerContent %}
+{% assets with { priority: 10 } %}
     {% block stylesheets %}
-        <style>
-            #wpcontent {
-                padding-left: 0;
-            }
-        </style>
         <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/wordpress-admin.css') }}" type="text/css" />
     {% endblock %}
 
@@ -17,8 +12,7 @@
             var GANTRY_PLATFORM = 'wordpress';
         </script>
     {% endblock %}
-{% endset %}
-{% do parse_assets(headerContent, 'head', 10) %}
+{% endassets -%}
 
 <div id="g5-container">
     {% block content %}

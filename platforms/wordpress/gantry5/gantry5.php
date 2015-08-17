@@ -11,6 +11,8 @@
  */
 defined( 'ABSPATH' ) or die;
 
+// NOTE: This file needs to be PHP 5.2 compatible.
+
 require_once __DIR__ . '/src/Loader.php';
 
 if (!defined('GANTRY5_PATH')) {
@@ -25,6 +27,18 @@ if ( !is_admin() ) {
 if (!defined('GANTRYADMIN_PATH')) {
     // Works also with symlinks.
     define('GANTRYADMIN_PATH', GANTRY5_PATH . '/admin');
+}
+
+// Add Gantry 5 defaults on plugin activation
+register_activation_hook( __FILE__, 'gantry5_plugin_defaults' );
+
+function gantry5_plugin_defaults() {
+    $defaults = array(
+        'production' => '1',
+        'debug' => '0',
+    );
+
+    add_option( 'gantry5_plugin', $defaults );
 }
 
 // Initialize plugin language.

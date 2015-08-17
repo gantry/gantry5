@@ -138,8 +138,10 @@ ready(function() {
 
         previous = previous.find('[data-g-urltemplate]');
 
-        var template = previous.data('g-urltemplate');
-        previous.attribute('href', template.replace(/#ID#/g, element.value()));
+        if (previous) {
+            var template = previous.data('g-urltemplate');
+            previous.attribute('href', template.replace(/#ID#/g, element.value()));
+        }
     });
 
     // fields resets

@@ -302,9 +302,16 @@ class TemplateInstaller
         $name = $this->extension->name;
         $path = JPATH_SITE . '/templates/' . $name;
 
+        // Remove compiled CSS files if they exist.
         $cssPath = $path . '/custom/css-compiled';
         if (is_dir($cssPath)) {
             \JFolder::delete($cssPath);
+        }
+
+        // Remove wrongly named file if it exists.
+        $md5path = $path . '/MD5SUM';
+        if (is_file($md5path)) {
+            \JFile::delete($md5path);
         }
     }
 

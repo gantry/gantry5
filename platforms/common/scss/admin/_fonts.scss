@@ -1,8 +1,34 @@
 @include font-face('roboto', '../fonts/roboto_regular_macroman/Roboto-Regular-webfont', 400);
 @include font-face('roboto', '../fonts/roboto_medium_macroman/Roboto-Medium-webfont', 500);
 @include font-face('roboto', '../fonts/roboto_bold_macroman/Roboto-Bold-webfont', 700);
+@include font-face('grav', '../fonts/grav/grav');
 
 .font-small, .fa.font-small {
     font-size: $core-font-size - 0.2rem;
     vertical-align: middle;
+}
+
+// Grav Logo support
+i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
+    font-family: 'grav';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.fa-grav-full:before {
+    content: "\e600";
+}
+.fa-grav-text:before {
+    content: "\e601";
+}
+.fa-grav:before, .fa-grav-spaceman:before {
+    content: "\e602";
 }
