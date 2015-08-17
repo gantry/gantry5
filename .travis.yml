@@ -109,7 +109,7 @@ after_deploy:
       php build.php prod-versions -Dupdate_versions=true -Dxml.version=$TRAVIS_TAG;
       cd $TRAVIS_BUILD_DIR;
       git commit -am "Release [$TRAVIS_TAG] - Automatic Version Number Updates";
-      git push --force --set-upstream https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git develop:master;
+      git push --force --quiet --set-upstream https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git develop:master &>/dev/null;
     fi
   - if [ "$TRAVIS_BRANCH" == 'develop' ]; then
       curl -L http://gantry.org/cibuilds >/dev/null 2>&1;
