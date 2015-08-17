@@ -37,7 +37,8 @@ class Changelog extends JsonController
     public function index()
     {
         $version = $this->request->post['version'];
-
+        $lookup = $version;
+        
         if ($version == '@version@') {
             $version = 'develop';
             $lookup  = '';
