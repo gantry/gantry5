@@ -108,11 +108,18 @@
   	display: inherit !important;
 }
 
+.g-block.visible-desktop {
+    display: block !important;
+}
+
 @media print {
 	.visible-print {
-	display: inherit !important;
+	   display: inherit !important;
 	}
+    .g-block.visible-print {
+        display: block !important;
+    }
 	.hidden-print {
-	display: none !important;
+	   display: none !important;
 	}
 }
