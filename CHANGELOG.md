@@ -1,3 +1,10 @@
+# 5.1.1
+## XX/XX/2015
+
+1. [Common](#common)
+    1. [](#bugfix)
+        - ToTop Particle allows HTML again in the content field (#720, #721)
+
 # 5.1.0
 ## 16/08/2015
 
