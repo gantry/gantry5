@@ -2121,7 +2121,7 @@ ready(function() {
     var body = $('body'), root = $('[data-lm-root]'), data;
 
     // Layout Manager
-    layoutmanager = new LayoutManager('body', {
+    layoutmanager = new LayoutManager('[data-lm-container]', {
         delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
         droppables: '[data-lm-dropzone]',
         exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
@@ -4138,7 +4138,7 @@ var FOCUSIN   = isFirefox ? 'focus' : 'focusin',
 ready(function() {
     var body = $('body');
 
-    menumanager = new MenuManager('body', {
+    menumanager = new MenuManager('[data-mm-container]', {
         delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li, .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
         exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
