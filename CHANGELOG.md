@@ -4,6 +4,9 @@
 1. [Common](#common)
     1. [](#bugfix)
         - ToTop Particle allows HTML again in the content field (#720, #721)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fixed blocks using bootstrap responsive utility classes displaying improperly (#722)
 
 # 5.1.0
 ## 16/08/2015
