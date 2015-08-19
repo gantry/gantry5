@@ -15,6 +15,7 @@
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Admin language will fallback to en_US if the locale based .mo couldn't be loaded
+        - Extra location of the plugin translation .mo file changed to the default value WP_LANG_DIR/plugins/
         - Fix fatal error in PHP 5.2: while unsupported, it should still fail gracefully
         - Uninstall is leaving behind cache files and options (#659)
 
