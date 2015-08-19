@@ -35,6 +35,7 @@ if ( class_exists( 'Timber' ) ) {
 
 function gantry5_admin_start_buffer() {
     ob_start();
+    ob_implicit_flush(false);
 }
 
 function gantry5_admin_scripts() {
