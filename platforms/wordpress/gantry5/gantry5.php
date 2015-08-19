@@ -51,7 +51,7 @@ $languages_path = basename( GANTRY5_PATH ) . '/admin/languages';
 load_plugin_textdomain( $domain, false, $languages_path );
 
 if( load_plugin_textdomain( $domain, false, $languages_path ) === false ) {
-    add_filter( 'plugin_locale', 'modify_gantry5_locale' );
+    add_filter( 'plugin_locale', 'modify_gantry5_locale', 10, 2 );
 }
 
 function modify_gantry5_locale( $locale, $domain ) {

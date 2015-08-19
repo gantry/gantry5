@@ -5,7 +5,7 @@
     1. [](#improved)
         - Dramatically improved the click/touch response in the whole Admin and G5 Particle Module (fixes #551)
         - WAI-ARIA: Improved accessibility for Togglers, Override checkboxes, Dialogs, Extras dropdown, Modals, Tabs within Modals, Popovers, Assignments, Settings, Outlines, Selectize, Editable Titles [wip] (#713)
-        -  Catch and display warnings from SCSS compiler (#705)
+        - Catch and display warnings from SCSS compiler (#705)
     3. [](#bugfix)
         - ToTop Particle allows HTML again in the content field (#720, #721)
         - Fixed issue in Selectize preventing the dropdown to close when loosing focus in non-IE browsers
@@ -14,6 +14,7 @@
         - Fixed blocks using bootstrap responsive utility classes displaying improperly (#722)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
+        - Admin language will fallback to en_US if the locale based .mo couldn't be loaded
         - Fix fatal error in PHP 5.2: while unsupported, it should still fail gracefully
         - Uninstall is leaving behind cache files and options (#659)
 
@@ -66,9 +67,9 @@
         - Fixed Joomla frontend article editor and popup styling issues (#681)
         - Added missing size class rules for Joomla frontend editing views
         - Fixed Joomla frontend image manager alignment issues
-3. [Wordpress](#wordpress)
+3. [WordPress](#wordpress)
     1. [](#new)
-        * Wordpress is now integrated with Gantry 5!
+        * WordPress is now integrated with Gantry 5!
 
 # 5.0.1
 ## 07/16/2015
