@@ -129,10 +129,6 @@ var Popover = new prime({
                 target.find('.close').off('click').remove();
             }
 
-            setTimeout(bind(function(){
-                target[0].focus();
-            }, this), 0);
-
             if (!this.isAsync()) {
                 this.setContent(this.getContent());
             } else {
@@ -146,6 +142,10 @@ var Popover = new prime({
 
         this.displayContent();
         this.bindBodyEvents();
+        
+        setTimeout(bind(function(){
+            target[0].focus();
+        }, this), 0);
     },
 
     displayContent: function() {
