@@ -188,8 +188,6 @@ ready(function() {
                         data[name] = value;
                     });
                 }
-
-                if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
         }
 
         if (invalid.length) {
@@ -212,7 +210,12 @@ ready(function() {
                 });
             } else {
                 modal.close();
-                toastr.success(interpolate(sentence, {
+
+                if ($('#styles')) {
+                    extras = '<br />' + (response.body.warning ? '<hr />' + response.body.title + '<br />' + response.body.html : 'The CSS was successfully compiled!');
+                }
+
+                toastr[response.body.warning ? 'warning' : 'success'](interpolate(sentence, {
                     verb: type.slice(-1) == 's' ? 'have' : 'has',
                     type: type,
                     extras: extras
@@ -321,7 +324,7 @@ ready(function() {
                 indicator.hideIndicator();
                 return false;
             } else {
-                toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+                toastr[response.body.warning ? 'warning' : 'success'](response.body.html || 'Action successfully completed.', response.body.title || '');
             }
 
             indicator.hideIndicator();

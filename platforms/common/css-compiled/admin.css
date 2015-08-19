@@ -4929,6 +4929,17 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   background: #ed5565;
   border: 1px solid #e8273b;
 }
+#g5-container #g-notifications-container .g-notifications-theme-warning {
+  background: #ffce54;
+  color: #ba8500;
+  border: 1px solid #ffbf21;
+}
+#g5-container #g-notifications-container .g-notifications-theme-warning hr {
+  border-bottom-color: #ba8500;
+}
+#g5-container #g-notifications-container .g-notifications-theme-warning h3, #g5-container #g-notifications-container .g-notifications-theme-warning h4 {
+  margin: 0;
+}
 
 html.g5-dialog-open {
   overflow: hidden;

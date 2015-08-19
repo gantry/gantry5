@@ -109,5 +109,19 @@
             border: 1px solid darken($red, 10);
         }
 
+        .g-notifications-theme-warning {
+            background: $yellow;
+            color: darken($yellow, 30);
+            border: 1px solid darken($yellow, 10);
+
+            hr {
+                border-bottom-color: darken($yellow, 30);
+            }
+
+            h3, h4 {
+                margin: 0;
+            }
+        }
+
     }
 }
